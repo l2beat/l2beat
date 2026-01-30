@@ -1,257 +1,33 @@
-import { useState, useEffect } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import type { DependencyModuleScore, LetterGrade, Likelihood, Impact } from '../api/types'
+import { getProject, updateContractTag, updateFunction } from '../api/api'
+import type {
+  AdminModuleScore,
+  DependencyModuleScore,
+  Impact,
+  Likelihood,
+} from '../api/types'
+import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
 import { useContractTags } from '../hooks/useContractTags'
-import { updateContractTag, updateFunction } from '../api/api'
+import {
+  computeWorstGrade,
+  formatUsdValue,
+  getGradeBadgeStyles,
+  getGradeColor,
+  getLikelihoodColor,
+  hasCapitalData,
+  ImpactPicker,
+  impactToScore,
+  isZeroAddress,
+  LikelihoodPicker,
+  OwnerSection,
+} from './scoringShared'
 
 interface DependencyInventoryBreakdownProps {
   score: DependencyModuleScore
-}
-
-/**
- * Get semantic color class for a letter grade
- */
-function getGradeColor(grade: LetterGrade): string {
-  switch (grade) {
-    case 'AAA':
-    case 'AA':
-    case 'A':
-      return 'text-green-400'
-    case 'BBB':
-    case 'BB':
-    case 'B':
-      return 'text-yellow-400'
-    case 'CCC':
-    case 'CC':
-    case 'C':
-      return 'text-orange-400'
-    case 'D':
-      return 'text-red-400'
-  }
-}
-
-/**
- * Get inline styles for grade badge
- */
-function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; borderColor: string; color: string } {
-  switch (grade) {
-    case 'AAA':
-    case 'AA':
-    case 'A':
-      return {
-        backgroundColor: 'rgba(20, 83, 45, 0.5)', // green-900/50
-        borderColor: 'rgba(34, 197, 94, 0.3)', // green-500/30
-        color: '#4ade80' // green-400
-      }
-    case 'BBB':
-    case 'BB':
-    case 'B':
-      return {
-        backgroundColor: 'rgba(113, 63, 18, 0.5)', // yellow-900/50
-        borderColor: 'rgba(234, 179, 8, 0.3)', // yellow-500/30
-        color: '#facc15' // yellow-400
-      }
-    case 'CCC':
-    case 'CC':
-    case 'C':
-      return {
-        backgroundColor: 'rgba(124, 45, 18, 0.5)', // orange-900/50
-        borderColor: 'rgba(249, 115, 22, 0.3)', // orange-500/30
-        color: '#fb923c' // orange-400
-      }
-    case 'D':
-      return {
-        backgroundColor: 'rgba(127, 29, 29, 0.5)', // red-900/50
-        borderColor: 'rgba(239, 68, 68, 0.3)', // red-500/30
-        color: '#f87171' // red-400
-      }
-  }
-}
-
-/**
- * Get color value for impact level (inline style)
- */
-function getImpactColor(impact: string): string {
-  switch (impact) {
-    case 'critical':
-      return '#c084fc' // purple-400
-    case 'high':
-      return '#f87171' // red-400
-    case 'medium':
-      return '#fbbf24' // yellow-400
-    case 'low':
-      return '#10b981' // green-500
-    default:
-      return '#9ca3af' // gray-400
-  }
-}
-
-/**
- * Get color value for likelihood level (inline style)
- */
-function getLikelihoodColor(likelihood: string): string {
-  switch (likelihood) {
-    case 'high':
-      return '#f87171' // red-400
-    case 'medium':
-      return '#fb923c' // orange-400
-    case 'low':
-      return '#10b981' // green-500
-    case 'mitigated':
-      return '#60a5fa' // blue-400
-    default:
-      return '#9ca3af' // gray-400 (unassigned)
-  }
-}
-
-/**
- * Convert Impact to score string for API
- */
-function impactToScore(impact: Impact): 'low-risk' | 'medium-risk' | 'high-risk' | 'critical' {
-  switch (impact) {
-    case 'low':
-      return 'low-risk'
-    case 'medium':
-      return 'medium-risk'
-    case 'high':
-      return 'high-risk'
-    case 'critical':
-      return 'critical'
-  }
-}
-
-/**
- * Impact inline editor dropdown
- */
-function ImpactPicker({
-  currentImpact,
-  onUpdate,
-}: {
-  currentImpact: Impact
-  onUpdate: (impact: Impact) => void
-}) {
-  const [isOpen, setIsOpen] = useState(false)
-  const impactOptions: Impact[] = ['low', 'medium', 'high', 'critical']
-
-  const handleSelect = (impact: Impact) => {
-    onUpdate(impact)
-    setIsOpen(false)
-  }
-
-  return (
-    <div className="relative inline-block">
-      <button
-        onClick={(e) => {
-          e.stopPropagation()
-          setIsOpen(!isOpen)
-        }}
-        className="text-xs px-2 py-0.5 rounded border border-coffee-600 bg-coffee-700 hover:bg-coffee-600 capitalize"
-        style={{ color: getImpactColor(currentImpact) }}
-      >
-        {currentImpact}
-      </button>
-
-      {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-40"
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="absolute right-0 z-50 mt-1 flex flex-col gap-2 rounded border border-coffee-600 bg-coffee-800 p-2 shadow-xl min-w-[120px]">
-            <div className="text-xs font-semibold text-coffee-300">Impact</div>
-            {impactOptions.map((imp) => (
-              <button
-                key={imp}
-                className={`rounded border border-coffee-600 px-2 py-1 text-xs capitalize ${
-                  currentImpact === imp
-                    ? 'bg-coffee-600'
-                    : 'bg-coffee-700 hover:bg-coffee-600'
-                }`}
-                onClick={() => handleSelect(imp)}
-              >
-                {imp}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  )
-}
-
-/**
- * Likelihood inline editor dropdown
- */
-function LikelihoodPicker({
-  currentLikelihood,
-  onUpdate,
-}: {
-  currentLikelihood: Likelihood
-  onUpdate: (likelihood: Likelihood) => void
-}) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedLikelihood, setSelectedLikelihood] = useState<Likelihood>(currentLikelihood)
-  const likelihoodOptions: Likelihood[] = ['high', 'medium', 'low', 'mitigated']
-
-  // Sync internal state when prop changes
-  useEffect(() => {
-    setSelectedLikelihood(currentLikelihood)
-  }, [currentLikelihood])
-
-  const handleApply = () => {
-    onUpdate(selectedLikelihood)
-    setIsOpen(false)
-  }
-
-  const handleOpen = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    setIsOpen(!isOpen)
-  }
-
-  return (
-    <div className="relative inline-block">
-      <button
-        onClick={handleOpen}
-        className="text-xs px-2 py-0.5 rounded border border-coffee-600 bg-coffee-700 hover:bg-coffee-600 capitalize"
-        style={{ color: getLikelihoodColor(currentLikelihood) }}
-      >
-        {currentLikelihood}
-      </button>
-
-      {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-40"
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="absolute right-0 z-50 mt-1 flex flex-col gap-2 rounded border border-coffee-600 bg-coffee-800 p-2 shadow-xl min-w-[120px]">
-            <div className="text-xs font-semibold text-coffee-300">Likelihood</div>
-            {likelihoodOptions.map((lik) => (
-              <button
-                key={lik}
-                className={`rounded border border-coffee-600 px-2 py-1 text-xs capitalize ${
-                  selectedLikelihood === lik
-                    ? 'bg-coffee-600'
-                    : 'bg-coffee-700 hover:bg-coffee-600'
-                }`}
-                onClick={() => setSelectedLikelihood(lik)}
-              >
-                {lik}
-              </button>
-            ))}
-            <button
-              className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-xs hover:bg-coffee-600"
-              onClick={handleApply}
-            >
-              Apply
-            </button>
-          </div>
-        </>
-      )}
-    </div>
-  )
+  adminScore?: AdminModuleScore
 }
 
 /**
@@ -264,41 +40,34 @@ function DependencySection({
 }: {
   dependency: any
   onUpdateLikelihood: (contractAddress: string, likelihood: Likelihood) => void
-  onUpdateImpact: (contractAddress: string, functionName: string, impact: Impact) => void
+  onUpdateImpact: (
+    contractAddress: string,
+    functionName: string,
+    impact: Impact,
+  ) => void
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const selectGlobal = usePanelStore((state) => state.select)
 
-  // Calculate worst grade among all functions for this dependency
-  const worstGrade = dependency.functions.length > 0
-    ? dependency.functions.reduce((worst: LetterGrade, func: any) => {
-        const gradeValues: Record<LetterGrade, number> = {
-          'AAA': 10, 'AA': 9, 'A': 8,
-          'BBB': 7, 'BB': 6, 'B': 5,
-          'CCC': 4, 'CC': 3, 'C': 2, 'D': 1
-        }
-        return gradeValues[func.grade] < gradeValues[worst] ? func.grade : worst
-      }, dependency.functions[0].grade)
-    : null
-
+  const worstGrade = computeWorstGrade(dependency.functions)
   const badgeStyles = worstGrade ? getGradeBadgeStyles(worstGrade) : null
 
   return (
-    <div className="ml-4 mb-2">
+    <div className="mb-1 ml-4">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-2 w-full text-left hover:bg-coffee-800/30 p-2 rounded transition-colors"
+        className="flex w-full items-center gap-2 rounded px-2 py-1 text-left transition-colors hover:bg-coffee-800/30"
       >
         <span className="text-coffee-400 text-xs">
           {isExpanded ? '▼' : '▶'}
         </span>
         {badgeStyles && (
           <span
-            className="inline-block px-2 py-0.5 rounded border text-xs font-mono"
+            className="inline-block rounded border px-2 py-0.5 font-mono text-xs"
             style={{
               backgroundColor: badgeStyles.backgroundColor,
               borderColor: badgeStyles.borderColor,
-              color: badgeStyles.color
+              color: badgeStyles.color,
             }}
           >
             {worstGrade}
@@ -309,54 +78,79 @@ function DependencySection({
             e.stopPropagation()
             selectGlobal(dependency.dependencyAddress)
           }}
-          className="font-medium text-coffee-200 hover:text-blue-400 cursor-pointer transition-colors text-sm"
+          className="cursor-pointer font-medium text-coffee-200 text-sm transition-colors hover:text-blue-400"
         >
           {dependency.dependencyName}
         </button>
-        <span className="text-coffee-500 text-xs mx-1">|</span>
-        <span className="text-xs text-coffee-400">Likelihood:</span>
+        <span className="mx-1 text-coffee-500 text-xs">|</span>
+        <span className="text-coffee-400 text-xs">Likelihood:</span>
         <LikelihoodPicker
           currentLikelihood={dependency.likelihood}
-          onUpdate={(likelihood) => onUpdateLikelihood(dependency.dependencyAddress, likelihood)}
+          onUpdate={(likelihood) =>
+            onUpdateLikelihood(dependency.dependencyAddress, likelihood)
+          }
+          allowUnscored={true}
         />
-        <span className="text-coffee-400 text-xs ml-2">
-          ({dependency.functions.length} function{dependency.functions.length !== 1 ? 's' : ''})
+        <span className="ml-2 text-coffee-400 text-xs">
+          ({dependency.functions.length} function
+          {dependency.functions.length !== 1 ? 's' : ''})
         </span>
       </button>
 
       {isExpanded && (
-        <ul className="ml-8 mt-2 space-y-1.5">
+        <ul className="mt-2 ml-8 space-y-1.5">
           {dependency.functions.map((func: any, idx: number) => {
-            const likelihoodColor = getLikelihoodColor(dependency.likelihood)
-            const gradeBadgeStyles = getGradeBadgeStyles(func.grade)
+            const likelihoodColor = getLikelihoodColor(
+              dependency.likelihood || '',
+            )
+            const gradeBadgeStyles = func.grade
+              ? getGradeBadgeStyles(func.grade)
+              : null
 
             return (
-              <li key={idx} className="text-xs text-coffee-300 flex items-center gap-2">
-                <span
-                  className="inline-block px-1.5 py-0.5 rounded border text-xs font-mono"
-                  style={{
-                    backgroundColor: gradeBadgeStyles.backgroundColor,
-                    borderColor: gradeBadgeStyles.borderColor,
-                    color: gradeBadgeStyles.color
-                  }}
-                >
-                  {func.grade}
-                </span>
+              <li
+                key={idx}
+                className="flex items-center gap-2 text-coffee-300 text-xs"
+              >
+                {gradeBadgeStyles ? (
+                  <span
+                    className="inline-block rounded border px-1.5 py-0.5 font-mono text-xs"
+                    style={{
+                      backgroundColor: gradeBadgeStyles.backgroundColor,
+                      borderColor: gradeBadgeStyles.borderColor,
+                      color: gradeBadgeStyles.color,
+                    }}
+                  >
+                    {func.grade}
+                  </span>
+                ) : (
+                  <span className="inline-block px-1.5 py-0.5 text-coffee-500 text-xs">
+                    -
+                  </span>
+                )}
                 <button
                   onClick={() => selectGlobal(func.contractAddress)}
-                  className="font-medium text-coffee-200 hover:text-blue-400 cursor-pointer transition-colors"
+                  className="cursor-pointer font-medium text-coffee-200 transition-colors hover:text-blue-400"
                 >
                   {func.contractName}
                 </button>
                 <span className="text-coffee-500">.</span>
                 <span className="text-blue-400">{func.functionName}()</span>
-                <span className="text-coffee-500 ml-2">(Impact: </span>
+                <span className="ml-2 text-coffee-500">(Impact: </span>
                 <ImpactPicker
                   currentImpact={func.impact}
-                  onUpdate={(impact) => onUpdateImpact(func.contractAddress, func.functionName, impact)}
+                  onUpdate={(impact) =>
+                    onUpdateImpact(
+                      func.contractAddress,
+                      func.functionName,
+                      impact,
+                    )
+                  }
                 />
                 <span className="text-coffee-500">, Likelihood: </span>
-                <span style={{ color: likelihoodColor }}>{dependency.likelihood}</span>
+                <span style={{ color: likelihoodColor }}>
+                  {dependency.likelihood || 'unscored'}
+                </span>
                 <span className="text-coffee-500">)</span>
               </li>
             )
@@ -369,23 +163,44 @@ function DependencySection({
 
 /**
  * Dependency Inventory Breakdown Component
- * Displays breakdown of dependencies by external contract
+ * Displays breakdown of dependencies by external contract,
+ * including external owners from the admin breakdown.
  */
-export function DependencyInventoryBreakdown({ score }: DependencyInventoryBreakdownProps) {
+export function DependencyInventoryBreakdown({
+  score,
+  adminScore,
+}: DependencyInventoryBreakdownProps) {
   const { project } = useParams()
   const queryClient = useQueryClient()
   const { data: contractTags } = useContractTags(project!)
   const gradeColor = getGradeColor(score.grade)
 
+  // Fetch project data for proxy type information (needed for external owners)
+  const { data: projectData } = useQuery({
+    queryKey: ['projects', project],
+    queryFn: () => getProject(project!),
+    enabled: !!project,
+  })
+
+  const proxyTypeMap = useMemo(
+    () => buildProxyTypeMap(projectData),
+    [projectData],
+  )
+
   // Mutation for updating likelihood
   const updateLikelihoodMutation = useMutation({
-    mutationFn: ({ contractAddress, likelihood }: { contractAddress: string; likelihood: Likelihood }) => {
+    mutationFn: ({
+      contractAddress,
+      likelihood,
+    }: {
+      contractAddress: string
+      likelihood: Likelihood
+    }) => {
       if (!project) throw new Error('Project not found')
 
-      // Get existing tag to preserve other attributes
-      // IMPORTANT: Keep the eth: prefix for matching!
-      const existingTag = contractTags?.tags.find(tag =>
-        tag.contractAddress.toLowerCase() === contractAddress.toLowerCase()
+      const existingTag = contractTags?.tags.find(
+        (tag) =>
+          tag.contractAddress.toLowerCase() === contractAddress.toLowerCase(),
       )
 
       return updateContractTag(project, {
@@ -396,19 +211,29 @@ export function DependencyInventoryBreakdown({ score }: DependencyInventoryBreak
       })
     },
     onSuccess: () => {
-      // Invalidate queries to refetch data
       queryClient.invalidateQueries({ queryKey: ['contract-tags', project] })
       queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
     },
   })
 
-  const handleUpdateLikelihood = (contractAddress: string, likelihood: Likelihood) => {
+  const handleUpdateLikelihood = (
+    contractAddress: string,
+    likelihood: Likelihood,
+  ) => {
     updateLikelihoodMutation.mutate({ contractAddress, likelihood })
   }
 
   // Mutation for updating impact
   const updateImpactMutation = useMutation({
-    mutationFn: ({ contractAddress, functionName, impact }: { contractAddress: string; functionName: string; impact: Impact }) => {
+    mutationFn: ({
+      contractAddress,
+      functionName,
+      impact,
+    }: {
+      contractAddress: string
+      functionName: string
+      impact: Impact
+    }) => {
       if (!project) throw new Error('Project not found')
 
       return updateFunction(project, {
@@ -418,49 +243,147 @@ export function DependencyInventoryBreakdown({ score }: DependencyInventoryBreak
       })
     },
     onSuccess: () => {
-      // Invalidate queries to refetch data
       queryClient.invalidateQueries({ queryKey: ['functions', project] })
       queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
     },
   })
 
-  const handleUpdateImpact = (contractAddress: string, functionName: string, impact: Impact) => {
+  const handleUpdateImpact = (
+    contractAddress: string,
+    functionName: string,
+    impact: Impact,
+  ) => {
     updateImpactMutation.mutate({ contractAddress, functionName, impact })
   }
 
-  // Count functions across all dependencies
-  const totalFunctionCount = score.breakdown
-    ? score.breakdown.reduce((sum, dep) => sum + dep.functions.length, 0)
-    : 0
+  // Toggle for showing/hiding immutable dependencies (default: on)
+  const [showImmutable, setShowImmutable] = useState(true)
+
+  // Extract external owners from admin breakdown
+  const allExternalOwners = useMemo(() => {
+    if (!adminScore?.breakdown || !contractTags?.tags) return []
+
+    return adminScore.breakdown.filter((admin) => {
+      return contractTags.tags.some(
+        (tag) =>
+          tag.contractAddress.toLowerCase() ===
+            admin.adminAddress.toLowerCase() && tag.isExternal,
+      )
+    })
+  }, [adminScore, contractTags])
+
+  // Filter immutable/revoked external owners based on toggle
+  const isImmutableOrRevoked = (admin: any) =>
+    proxyTypeMap.get(admin.adminAddress.toLowerCase()) === 'immutable' ||
+    isZeroAddress(admin.adminAddress)
+
+  const displayedExternalOwners = useMemo(() => {
+    if (showImmutable) {
+      // Show all, but put immutable/revoked at the end
+      const mutable = allExternalOwners.filter((a) => !isImmutableOrRevoked(a))
+      const immutable = allExternalOwners.filter((a) => isImmutableOrRevoked(a))
+      return [...mutable, ...immutable]
+    }
+    return allExternalOwners.filter((a) => !isImmutableOrRevoked(a))
+  }, [allExternalOwners, proxyTypeMap, showImmutable])
+
+  const hasImmutableExternalOwners = useMemo(() => {
+    return allExternalOwners.some((a) => isImmutableOrRevoked(a))
+  }, [allExternalOwners, proxyTypeMap])
+
+  // Regular dependencies (from call graph / function dependencies)
+  const regularDeps = score.breakdown || []
+
+  // Count functions across regular dependencies
+  const depFunctionCount = regularDeps.reduce(
+    (sum, dep) => sum + dep.functions.length,
+    0,
+  )
+
+  // Count functions across displayed external owners
+  const extOwnerFunctionCount = displayedExternalOwners.reduce(
+    (sum, admin) => sum + admin.functions.length,
+    0,
+  )
+
+  // Aggregate capital at risk across displayed external owners
+  const displayedCapitalAtRisk = useMemo(() => {
+    return displayedExternalOwners.reduce((sum, admin) => {
+      if (hasCapitalData(admin)) {
+        return sum + admin.totalReachableCapital
+      }
+      return sum
+    }, 0)
+  }, [displayedExternalOwners])
+
+  const totalFunctionCount = depFunctionCount + extOwnerFunctionCount
+  const totalContractCount = regularDeps.length + displayedExternalOwners.length
+  const hasAnyEntries = regularDeps.length > 0 || allExternalOwners.length > 0
 
   return (
     <div className="text-coffee-300">
-      {/* Main header - non-expandable, consistent with other inventory items */}
+      {/* Main header */}
       <div className="flex items-center justify-between">
-        <span className="font-medium">Dependencies:</span>
-        <span>
-          {score.inventory}{' '}
-          <span className={`font-semibold ${gradeColor}`}>
-            (Grade: {score.grade})
+        <span className="font-medium">
+          Dependencies:
+          {displayedCapitalAtRisk > 0 && (
+            <span className="ml-2 font-normal text-green-400 text-sm">
+              {formatUsdValue(displayedCapitalAtRisk)} at risk
+            </span>
+          )}
+        </span>
+        <span className="flex items-center gap-2">
+          {hasImmutableExternalOwners && (
+            <label className="flex cursor-pointer items-center gap-1.5 text-coffee-400 text-xs">
+              <input
+                type="checkbox"
+                checked={showImmutable}
+                onChange={(e) => setShowImmutable(e.target.checked)}
+                className="h-3 w-3 cursor-pointer accent-coffee-500"
+              />
+              Show immutable
+            </label>
+          )}
+          <span>
+            {score.inventory}{' '}
+            <span className={`font-semibold ${gradeColor}`}>
+              (Grade: {score.grade})
+            </span>
           </span>
         </span>
       </div>
 
-      {/* Dependency breakdown - always shown */}
+      {/* Dependency breakdown */}
       <div className="mt-3 ml-2">
-        {!score.breakdown || score.breakdown.length === 0 ? (
-          <p className="text-xs text-coffee-400 ml-4">
+        {!hasAnyEntries ? (
+          <p className="ml-4 text-coffee-400 text-xs">
             No functions with dependencies on external contracts
           </p>
         ) : (
           <>
-            <p className="text-xs text-coffee-400 ml-4 mb-3">
-              {totalFunctionCount} function{totalFunctionCount !== 1 ? 's' : ''} using {score.breakdown.length} external contract{score.breakdown.length !== 1 ? 's' : ''}
+            <p className="mb-3 ml-4 text-coffee-400 text-xs">
+              {totalFunctionCount} function
+              {totalFunctionCount !== 1 ? 's' : ''} using {totalContractCount}{' '}
+              external contract
+              {totalContractCount !== 1 ? 's' : ''}
             </p>
-            {score.breakdown.map((dep) => (
+
+            {/* Regular dependencies */}
+            {regularDeps.map((dep) => (
               <DependencySection
                 key={dep.dependencyAddress}
                 dependency={dep}
+                onUpdateLikelihood={handleUpdateLikelihood}
+                onUpdateImpact={handleUpdateImpact}
+              />
+            ))}
+
+            {/* External owners (rendered with OwnerSection for full tags/funds) */}
+            {displayedExternalOwners.map((admin) => (
+              <OwnerSection
+                key={admin.adminAddress}
+                admin={admin}
+                proxyType={proxyTypeMap.get(admin.adminAddress.toLowerCase())}
                 onUpdateLikelihood={handleUpdateLikelihood}
                 onUpdateImpact={handleUpdateImpact}
               />

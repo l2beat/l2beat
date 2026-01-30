@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-11-13T14:47:00.496Z",
+  "lastModified": "2026-01-27T15:37:21.499Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -3326,6 +3326,74 @@
             }
           ],
           "timestamp": "2025-11-13T14:47:00.496Z"
+        }
+      ]
+    },
+    "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": {
+      "functions": [
+        {
+          "functionName": "proxy__ossify",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-01-27T15:37:21.486Z"
+        },
+        {
+          "functionName": "proxy__changeAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-01-27T15:37:21.488Z"
+        },
+        {
+          "functionName": "proxy__upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-01-27T15:37:21.494Z"
+        },
+        {
+          "functionName": "proxy__upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-01-27T15:37:21.496Z"
+        }
+      ]
+    },
+    "eth:0xE42C659Dc09109566720EA8b2De186c2Be7D94D9": {
+      "functions": [
+        {
+          "functionName": "setBaseURI",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_TOKEN_URI_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-27T15:37:21.498Z"
+        },
+        {
+          "functionName": "setNFTDescriptorAddress",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MANAGE_TOKEN_URI_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-27T15:37:21.499Z"
         }
       ]
     }

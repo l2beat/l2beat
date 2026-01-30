@@ -1,11 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import {
   detectPermissionsWithAI,
+  getAIModels,
   getFunctions,
   getProject,
-  getAIModels,
 } from '../../../api/api'
 import type { ApiProjectContract } from '../../../api/types'
 import { Checkbox } from '../../../components/Checkbox'
@@ -197,11 +197,12 @@ export function AIPermissionsScanDialog({ project, onClose }: Props) {
         return 'Scanning...'
       case 'success':
         return `Found ${result.detectedCount} function${result.detectedCount === 1 ? '' : 's'}`
-      case 'error':
+      case 'error': {
         const errorText = `Error: ${result.error}`
         return result.suggestedAction
           ? `${errorText}. ${result.suggestedAction}`
           : errorText
+      }
       default:
         return ''
     }
@@ -226,14 +227,14 @@ export function AIPermissionsScanDialog({ project, onClose }: Props) {
               </p>
             </div>
             <div className="ml-4">
-              <label className="block text-coffee-400 text-xs mb-1">
+              <label className="mb-1 block text-coffee-400 text-xs">
                 AI Model
               </label>
               <select
                 value={selectedModel}
                 onChange={(e) => setSelectedModel(e.target.value)}
                 disabled={isScanning}
-                className="rounded border border-coffee-600 bg-coffee-700 px-3 py-2 text-sm text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded border border-coffee-600 bg-coffee-700 px-3 py-2 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {availableModels?.map((model) => (
                   <option key={model.key} value={model.key}>

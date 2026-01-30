@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-12-22T07:46:33.268Z",
+  "lastModified": "2026-01-23T10:43:01.119Z",
   "contracts": {
     "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": {
       "functions": [
@@ -14,6 +14,12 @@
             }
           ],
           "timestamp": "2025-12-15T09:30:45.137Z"
+        },
+        {
+          "functionName": "triggerBoldRewards",
+          "isPermissioned": false,
+          "score": "unscored",
+          "timestamp": "2026-01-23T10:43:01.119Z"
         }
       ]
     },
@@ -58,6 +64,18 @@
             }
           ],
           "timestamp": "2025-12-22T07:31:59.777Z"
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": false,
+          "score": "high-risk",
+          "timestamp": "2026-01-23T09:36:34.750Z"
+        },
+        {
+          "functionName": "burn",
+          "isPermissioned": false,
+          "score": "low-risk",
+          "timestamp": "2026-01-23T08:36:30.344Z"
         }
       ]
     },

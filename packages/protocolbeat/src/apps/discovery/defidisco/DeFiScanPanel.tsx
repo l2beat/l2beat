@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getFunctions, getProject } from '../../../api/api'
+import { getFunctions, getFundsData, getProject } from '../../../api/api'
+import type { ApiFundsDataResponse } from '../../../api/types'
 import { Checkbox } from '../../../components/Checkbox'
 import { V2ScoringSection } from '../../../defidisco/V2ScoringSection'
 import { useContractTags } from '../../../hooks/useContractTags'
 import { usePanelStore } from '../store/panel-store'
 import { FundsSection } from './FundsSection'
+import { formatUsdValue } from './formatUtils'
 import { resolvePathExpression, UIContractDataAccess } from './ownerResolution'
 import { ProxyTypeTag } from './ProxyTypeTag'
 import { buildProxyTypeMap } from './proxyTypeUtils'
@@ -30,6 +32,10 @@ export function DeFiScanPanel() {
     queryKey: ['functions', project],
     queryFn: () => (project ? getFunctions(project) : null),
     enabled: !!project,
+  })
+  const { data: fundsData } = useQuery({
+    queryKey: ['funds-data', project],
+    queryFn: () => getFundsData(project),
   })
 
   if (!response.data || !contractTags || !functions) {
@@ -80,6 +86,7 @@ export function DeFiScanPanel() {
           projectData={response.data}
           contractTags={contractTags}
           functions={filteredFunctions}
+          fundsData={fundsData}
         />
         <ResultsSection
           projectData={response.data}
@@ -95,10 +102,12 @@ function StatusOfReviewSection({
   projectData,
   contractTags,
   functions,
+  fundsData,
 }: {
   projectData: any
   contractTags: any
   functions: any
+  fundsData: ApiFundsDataResponse | undefined
 }) {
   // Get all contracts from all entries
   const allContracts: any[] = []
@@ -277,6 +286,7 @@ function StatusOfReviewSection({
               <ContractsWithPermissionsTable
                 projectData={projectData}
                 functions={functions}
+                fundsData={fundsData}
               />
             </div>
           </div>
@@ -401,9 +411,11 @@ function buildContractsMap(
 function ContractsWithPermissionsTable({
   projectData,
   functions,
+  fundsData,
 }: {
   projectData: any
   functions: any
+  fundsData: ApiFundsDataResponse | undefined
 }) {
   const selectGlobal = usePanelStore((state) => state.select)
 
@@ -412,6 +424,22 @@ function ContractsWithPermissionsTable({
     () => buildProxyTypeMap(projectData),
     [projectData],
   )
+
+  // Helper to get funds for a contract address (case-insensitive lookup)
+  const getContractFunds = (address: string): number => {
+    if (!fundsData?.contracts) return 0
+    // Funds data keys may have different case, so do case-insensitive lookup
+    const normalizedAddress = address.toLowerCase()
+    const fundsEntry = Object.entries(fundsData.contracts).find(
+      ([key]) => key.toLowerCase() === normalizedAddress,
+    )
+    if (!fundsEntry) return 0
+    const funds = fundsEntry[1]
+    return (
+      (funds.balances?.totalUsdValue ?? 0) +
+      (funds.positions?.totalUsdValue ?? 0)
+    )
+  }
 
   // Build list of contracts with permissions
   // Permissions can be stored under proxy addresses, implementation addresses, or both
@@ -422,6 +450,7 @@ function ContractsWithPermissionsTable({
       name: string
       permissions: { checked: number; total: number }
       owners: Set<string>
+      fundsUsd: number
     }
   >()
 
@@ -516,6 +545,7 @@ function ContractsWithPermissionsTable({
             total: implData.total + proxyData.total,
           },
           owners: allOwners,
+          fundsUsd: getContractFunds(proxyAddr),
         })
       } else {
         // This is either a proxy or standalone contract
@@ -550,6 +580,7 @@ function ContractsWithPermissionsTable({
           name: contractInfo.name,
           permissions: data,
           owners: data.owners,
+          fundsUsd: getContractFunds(displayAddress),
         })
       }
     })
@@ -573,14 +604,35 @@ function ContractsWithPermissionsTable({
     return address.slice(0, 10) + '...'
   }
 
+  // Sort contracts by funds (descending), then by name
+  const sortedContracts = [...contractsWithPermissions].sort((a, b) => {
+    if (b.fundsUsd !== a.fundsUsd) return b.fundsUsd - a.fundsUsd
+    return a.name.localeCompare(b.name)
+  })
+
+  // Calculate total funds at risk
+  const totalFundsAtRisk = contractsWithPermissions.reduce(
+    (sum, c) => sum + c.fundsUsd,
+    0,
+  )
+
   return (
     <div className="mt-1">
+      {totalFundsAtRisk > 0 && (
+        <div className="mb-1 text-xs">
+          <span className="font-semibold">Funds at Risk: </span>
+          <span className="text-aux-green">
+            {formatUsdValue(totalFundsAtRisk)}
+          </span>
+        </div>
+      )}
       <div className="text-xs">
-        {contractsWithPermissions.map((contract) => {
+        {sortedContracts.map((contract) => {
           const isIncomplete =
             contract.permissions.checked < contract.permissions.total
           const ownerCount = contract.owners.size
           const ownersList = Array.from(contract.owners)
+          const hasFunds = contract.fundsUsd > 0
 
           return (
             <div
@@ -596,6 +648,11 @@ function ContractsWithPermissionsTable({
                   <ProxyTypeTag
                     proxyType={proxyTypeMap.get(contract.address.toLowerCase())}
                   />
+                  {hasFunds && (
+                    <span className="text-aux-green">
+                      {formatUsdValue(contract.fundsUsd)}
+                    </span>
+                  )}
                 </span>
                 <span style={{ color: isIncomplete ? '#f87171' : 'white' }}>
                   ({contract.permissions.checked}/{contract.permissions.total})

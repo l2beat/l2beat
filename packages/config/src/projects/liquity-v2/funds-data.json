@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "lastModified": "2026-01-08T16:41:01.728Z",
+  "lastModified": "2026-01-22T14:43:06.288Z",
   "contracts": {
     "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": {
-      "lastFetched": "2026-01-08T16:41:01.686Z",
+      "lastFetched": "2026-01-22T14:43:06.238Z",
       "balances": {
         "tokens": [
           {
@@ -26,10 +26,11 @@
         "totalUsdValue": 7958840.338577171,
         "timestamp": "2026-01-08T16:40:51.468Z",
         "source": "debank"
-      }
+      },
+      "error": "fetch failed"
     },
     "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B": {
-      "lastFetched": "2026-01-08T16:41:01.691Z",
+      "lastFetched": "2026-01-22T14:43:06.274Z",
       "balances": {
         "tokens": [
           {
@@ -52,10 +53,11 @@
         "totalUsdValue": 19595737.67020148,
         "timestamp": "2026-01-08T16:40:52.635Z",
         "source": "debank"
-      }
+      },
+      "error": "fetch failed"
     },
     "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695": {
-      "lastFetched": "2026-01-08T16:41:01.696Z",
+      "lastFetched": "2026-01-22T14:43:06.277Z",
       "balances": {
         "tokens": [
           {
@@ -70,10 +72,11 @@
         "totalUsdValue": 2186778.2639084253,
         "timestamp": "2026-01-08T16:40:53.408Z",
         "source": "debank"
-      }
+      },
+      "error": "fetch failed"
     },
     "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE": {
-      "lastFetched": "2026-01-08T16:41:01.704Z",
+      "lastFetched": "2026-01-22T14:43:06.280Z",
       "balances": {
         "tokens": [
           {
@@ -88,10 +91,11 @@
         "totalUsdValue": 17531570.669431005,
         "timestamp": "2026-01-08T16:40:54.417Z",
         "source": "debank"
-      }
+      },
+      "error": "fetch failed"
     },
     "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": {
-      "lastFetched": "2026-01-08T16:41:01.711Z",
+      "lastFetched": "2026-01-22T14:43:06.282Z",
       "balances": {
         "tokens": [
           {
@@ -114,10 +118,11 @@
         "totalUsdValue": 96436884.39601468,
         "timestamp": "2026-01-08T16:40:55.683Z",
         "source": "debank"
-      }
+      },
+      "error": "fetch failed"
     },
     "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F": {
-      "lastFetched": "2026-01-08T16:41:01.719Z",
+      "lastFetched": "2026-01-22T14:43:06.286Z",
       "balances": {
         "tokens": [
           {
@@ -132,7 +137,8 @@
         "totalUsdValue": 15170938.88841042,
         "timestamp": "2026-01-08T16:40:56.630Z",
         "source": "debank"
-      }
+      },
+      "error": "fetch failed"
     }
   }
 }

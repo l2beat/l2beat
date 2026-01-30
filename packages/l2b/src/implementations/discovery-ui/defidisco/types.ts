@@ -59,6 +59,73 @@ export interface AdminDetail {
   }[]
 }
 
+// ============================================================================
+// Capital Analysis Types (Cross-analysis: Admin → Call Graph → Funds)
+// ============================================================================
+
+// A contract reachable via call graph traversal
+export interface ReachableContract {
+  contractAddress: string
+  contractName: string
+  // True if this contract is ONLY reachable via view/pure calls
+  viewOnlyPath: boolean
+  // Functions that are called on this contract
+  calledFunctions: string[]
+  // Funds in this contract (from funds-data.json)
+  fundsUsd: number
+  // Whether funds are counted (true if at least one called function has impact != unscored)
+  fundsAtRisk: boolean
+}
+
+// Capital analysis for a single permissioned function
+export interface FunctionCapitalAnalysis {
+  contractAddress: string
+  contractName: string
+  functionName: string
+  impact: Impact
+  // Direct funds in the contract containing this function
+  directFundsUsd: number
+  // Contracts reachable via call graph from this function
+  reachableContracts: ReachableContract[]
+  // Total funds in reachable contracts
+  totalReachableFundsUsd: number
+  // Number of external calls that couldn't be resolved
+  unresolvedCallsCount: number
+}
+
+// Extended admin detail with capital analysis
+export interface AdminDetailWithCapital extends AdminDetail {
+  // Per-function capital analysis (only for functions with call graph data)
+  functionsWithCapital: FunctionCapitalAnalysis[]
+  // Sum of funds in contracts where this admin has direct permissions
+  totalDirectCapital: number
+  // Sum of funds in all reachable contracts (deduplicated across functions)
+  totalReachableCapital: number
+  // Number of unique contracts this admin can affect
+  uniqueContractsAffected: number
+}
+
+// Result of call graph traversal from a starting function
+export interface CallGraphTraversalResult {
+  // Contracts reachable from the starting function
+  reachableContracts: Map<
+    string,
+    {
+      contractName?: string
+      // True if ALL paths to this contract are view-only
+      viewOnlyPath: boolean
+      // Functions that are called on this contract (from the call graph)
+      calledFunctions: Set<string>
+    }
+  >
+  // External calls that couldn't be resolved (no resolvedAddress)
+  unresolvedCalls: {
+    storageVariable: string
+    interfaceType: string
+    calledFunction: string
+  }[]
+}
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {

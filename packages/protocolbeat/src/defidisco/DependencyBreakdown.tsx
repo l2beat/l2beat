@@ -1,10 +1,10 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getProject, getFunctions, updateContractTag } from '../api/api'
-import { useContractTags } from '../hooks/useContractTags'
+import { getFunctions, getProject, updateContractTag } from '../api/api'
+import type { Impact, LetterGrade, Likelihood } from '../api/types'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
-import type { LetterGrade, Likelihood, Impact } from '../api/types'
+import { useContractTags } from '../hooks/useContractTags'
 
 /**
  * Grade mapping: Impact × Likelihood → LetterGrade
@@ -66,10 +66,12 @@ const GRADE_TO_NUMERIC: Record<LetterGrade, number> = {
 function getWorstGrade(grades: LetterGrade[]): LetterGrade | null {
   if (grades.length === 0) return null
 
-  const numericGrades = grades.map(g => GRADE_TO_NUMERIC[g])
+  const numericGrades = grades.map((g) => GRADE_TO_NUMERIC[g])
   const worstNumeric = Math.min(...numericGrades)
 
-  const entry = Object.entries(GRADE_TO_NUMERIC).find(([_, value]) => value === worstNumeric)
+  const entry = Object.entries(GRADE_TO_NUMERIC).find(
+    ([_, value]) => value === worstNumeric,
+  )
   return entry ? (entry[0] as LetterGrade) : null
 }
 
@@ -98,7 +100,11 @@ function getGradeColor(grade: LetterGrade): string {
 /**
  * Get inline styles for grade badge
  */
-function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; borderColor: string; color: string } {
+function getGradeBadgeStyles(grade: LetterGrade): {
+  backgroundColor: string
+  borderColor: string
+  color: string
+} {
   switch (grade) {
     case 'AAA':
     case 'AA':
@@ -106,7 +112,7 @@ function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; bor
       return {
         backgroundColor: 'rgba(20, 83, 45, 0.5)', // green-900/50
         borderColor: 'rgba(34, 197, 94, 0.3)', // green-500/30
-        color: '#4ade80' // green-400
+        color: '#4ade80', // green-400
       }
     case 'BBB':
     case 'BB':
@@ -114,7 +120,7 @@ function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; bor
       return {
         backgroundColor: 'rgba(113, 63, 18, 0.5)', // yellow-900/50
         borderColor: 'rgba(234, 179, 8, 0.3)', // yellow-500/30
-        color: '#facc15' // yellow-400
+        color: '#facc15', // yellow-400
       }
     case 'CCC':
     case 'CC':
@@ -122,13 +128,13 @@ function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; bor
       return {
         backgroundColor: 'rgba(124, 45, 18, 0.5)', // orange-900/50
         borderColor: 'rgba(249, 115, 22, 0.3)', // orange-500/30
-        color: '#fb923c' // orange-400
+        color: '#fb923c', // orange-400
       }
     case 'D':
       return {
         backgroundColor: 'rgba(127, 29, 29, 0.5)', // red-900/50
         borderColor: 'rgba(239, 68, 68, 0.3)', // red-500/30
-        color: '#f87171' // red-400
+        color: '#f87171', // red-400
       }
   }
 }
@@ -195,7 +201,8 @@ function LikelihoodPicker({
   onUpdate: (likelihood: Likelihood) => void
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedLikelihood, setSelectedLikelihood] = useState<Likelihood>(currentLikelihood)
+  const [selectedLikelihood, setSelectedLikelihood] =
+    useState<Likelihood>(currentLikelihood)
   const likelihoodOptions: Likelihood[] = ['high', 'medium', 'low', 'mitigated']
 
   const handleApply = () => {
@@ -207,15 +214,17 @@ function LikelihoodPicker({
     <div className="relative inline-block">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="text-xs px-2 py-0.5 rounded border border-coffee-600 bg-coffee-700 hover:bg-coffee-600 capitalize"
+        className="rounded border border-coffee-600 bg-coffee-700 px-2 py-0.5 text-xs capitalize hover:bg-coffee-600"
         style={{ color: getLikelihoodColor(currentLikelihood) }}
       >
         {currentLikelihood}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 z-50 mt-1 flex flex-col gap-2 rounded border border-coffee-600 bg-coffee-800 p-2 shadow-xl min-w-[120px]">
-          <div className="text-xs font-semibold text-coffee-300">Likelihood</div>
+        <div className="absolute right-0 z-50 mt-1 flex min-w-[120px] flex-col gap-2 rounded border border-coffee-600 bg-coffee-800 p-2 shadow-xl">
+          <div className="font-semibold text-coffee-300 text-xs">
+            Likelihood
+          </div>
           {likelihoodOptions.map((lik) => (
             <button
               key={lik}
@@ -255,26 +264,26 @@ function DependencySection({
   const selectGlobal = usePanelStore((state) => state.select)
 
   // Calculate worst grade among all functions
-  const worstGrade = getWorstGrade(dependency.functions.map(f => f.grade))
+  const worstGrade = getWorstGrade(dependency.functions.map((f) => f.grade))
   const badgeStyles = worstGrade ? getGradeBadgeStyles(worstGrade) : null
 
   return (
-    <div className="ml-4 mb-2">
-      <div className="flex items-center gap-2 w-full p-2 rounded">
+    <div className="mb-2 ml-4">
+      <div className="flex w-full items-center gap-2 rounded p-2">
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center gap-2 hover:bg-coffee-800/30 px-2 py-1 rounded transition-colors"
+          className="flex items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-coffee-800/30"
         >
           <span className="text-coffee-400 text-xs">
             {isExpanded ? '▼' : '▶'}
           </span>
           {badgeStyles && (
             <span
-              className="inline-block px-2 py-0.5 rounded border text-xs font-mono"
+              className="inline-block rounded border px-2 py-0.5 font-mono text-xs"
               style={{
                 backgroundColor: badgeStyles.backgroundColor,
                 borderColor: badgeStyles.borderColor,
-                color: badgeStyles.color
+                color: badgeStyles.color,
               }}
             >
               {worstGrade}
@@ -283,52 +292,60 @@ function DependencySection({
         </button>
         <button
           onClick={() => selectGlobal(dependency.contractAddress)}
-          className="font-medium text-coffee-200 hover:text-blue-400 cursor-pointer transition-colors text-sm"
+          className="cursor-pointer font-medium text-coffee-200 text-sm transition-colors hover:text-blue-400"
         >
           {dependency.contractName}
         </button>
-        <span className="text-coffee-500 text-xs mx-1">|</span>
-        <span className="text-xs text-coffee-400">Likelihood:</span>
+        <span className="mx-1 text-coffee-500 text-xs">|</span>
+        <span className="text-coffee-400 text-xs">Likelihood:</span>
         <LikelihoodPicker
           currentLikelihood={dependency.likelihood}
-          onUpdate={(likelihood) => onUpdateLikelihood(dependency.contractAddress, likelihood)}
+          onUpdate={(likelihood) =>
+            onUpdateLikelihood(dependency.contractAddress, likelihood)
+          }
         />
-        <span className="text-coffee-400 text-xs ml-2">
-          ({dependency.functions.length} function{dependency.functions.length !== 1 ? 's' : ''})
+        <span className="ml-2 text-coffee-400 text-xs">
+          ({dependency.functions.length} function
+          {dependency.functions.length !== 1 ? 's' : ''})
         </span>
       </div>
 
       {isExpanded && (
-        <ul className="ml-8 mt-2 space-y-1.5">
+        <ul className="mt-2 ml-8 space-y-1.5">
           {dependency.functions.map((func, idx) => {
             const impactColor = getImpactColor(func.impact)
             const likelihoodColor = getLikelihoodColor(dependency.likelihood)
             const gradeBadgeStyles = getGradeBadgeStyles(func.grade)
 
             return (
-              <li key={idx} className="text-xs text-coffee-300 flex items-center gap-2">
+              <li
+                key={idx}
+                className="flex items-center gap-2 text-coffee-300 text-xs"
+              >
                 <span
-                  className="inline-block px-1.5 py-0.5 rounded border text-xs font-mono"
+                  className="inline-block rounded border px-1.5 py-0.5 font-mono text-xs"
                   style={{
                     backgroundColor: gradeBadgeStyles.backgroundColor,
                     borderColor: gradeBadgeStyles.borderColor,
-                    color: gradeBadgeStyles.color
+                    color: gradeBadgeStyles.color,
                   }}
                 >
                   {func.grade}
                 </span>
                 <button
                   onClick={() => selectGlobal(func.contractAddress)}
-                  className="font-medium text-coffee-200 hover:text-blue-400 cursor-pointer transition-colors"
+                  className="cursor-pointer font-medium text-coffee-200 transition-colors hover:text-blue-400"
                 >
                   {func.contractName}
                 </button>
                 <span className="text-coffee-500">.</span>
                 <span className="text-blue-400">{func.functionName}()</span>
-                <span className="text-coffee-500 ml-2">(</span>
+                <span className="ml-2 text-coffee-500">(</span>
                 <span style={{ color: impactColor }}>{func.impact}</span>
                 <span className="text-coffee-500"> × </span>
-                <span style={{ color: likelihoodColor }}>{dependency.likelihood}</span>
+                <span style={{ color: likelihoodColor }}>
+                  {dependency.likelihood}
+                </span>
                 <span className="text-coffee-500">)</span>
               </li>
             )
@@ -359,7 +376,7 @@ export function DependencyBreakdown() {
 
   const { data: functions } = useQuery({
     queryKey: ['functions', project],
-    queryFn: () => project ? getFunctions(project) : null,
+    queryFn: () => (project ? getFunctions(project) : null),
     enabled: !!project,
   })
 
@@ -367,11 +384,19 @@ export function DependencyBreakdown() {
 
   // Mutation for updating likelihood
   const updateLikelihoodMutation = useMutation({
-    mutationFn: ({ contractAddress, likelihood }: { contractAddress: string; likelihood: Likelihood }) => {
+    mutationFn: ({
+      contractAddress,
+      likelihood,
+    }: {
+      contractAddress: string
+      likelihood: Likelihood
+    }) => {
       // Get existing tag to preserve other attributes
-      const normalizedAddress = contractAddress.replace('eth:', '').toLowerCase()
-      const existingTag = contractTags?.tags.find(tag =>
-        tag.contractAddress.toLowerCase() === normalizedAddress
+      const normalizedAddress = contractAddress
+        .replace('eth:', '')
+        .toLowerCase()
+      const existingTag = contractTags?.tags.find(
+        (tag) => tag.contractAddress.toLowerCase() === normalizedAddress,
       )
 
       return updateContractTag(project, {
@@ -390,9 +415,9 @@ export function DependencyBreakdown() {
   if (!projectData || !functions || !contractTags) {
     return (
       <div className="border-b border-b-coffee-600 pb-2">
-        <h2 className="p-2 font-bold text-xl text-orange-400">Dependencies</h2>
-        <div className="mb-1 flex flex-col gap-2 border-l-4 border-transparent p-2 pl-1">
-          <p className="text-coffee-400 text-sm ml-4">Loading...</p>
+        <h2 className="p-2 font-bold text-orange-400 text-xl">Dependencies</h2>
+        <div className="mb-1 flex flex-col gap-2 border-transparent border-l-4 p-2 pl-1">
+          <p className="ml-4 text-coffee-400 text-sm">Loading...</p>
         </div>
       </div>
     )
@@ -401,7 +426,10 @@ export function DependencyBreakdown() {
   // Build contract name lookup map
   const contractNameMap = new Map<string, string>()
   projectData.entries?.forEach((entry: any) => {
-    [...(entry.initialContracts || []), ...(entry.discoveredContracts || [])].forEach((contract: any) => {
+    ;[
+      ...(entry.initialContracts || []),
+      ...(entry.discoveredContracts || []),
+    ].forEach((contract: any) => {
       contractNameMap.set(contract.address, contract.name || 'Unknown Contract')
     })
   })
@@ -410,64 +438,82 @@ export function DependencyBreakdown() {
   const dependenciesMap = new Map<string, DependencyData>()
 
   if (functions.contracts) {
-    Object.entries(functions.contracts).forEach(([contractAddress, contractData]: [string, any]) => {
-      contractData.functions.forEach((func: any) => {
-        // Only process functions that have dependencies and required scoring attributes
-        if (func.dependencies && func.dependencies.length > 0 && func.impact) {
-          func.dependencies.forEach((dep: { contractAddress: string }) => {
-            const depAddress = dep.contractAddress
+    Object.entries(functions.contracts).forEach(
+      ([contractAddress, contractData]: [string, any]) => {
+        contractData.functions.forEach((func: any) => {
+          // Only process functions that have dependencies and required scoring attributes
+          if (
+            func.dependencies &&
+            func.dependencies.length > 0 &&
+            func.impact
+          ) {
+            func.dependencies.forEach((dep: { contractAddress: string }) => {
+              const depAddress = dep.contractAddress
 
-            // Get likelihood from contract tags
-            const normalizedAddress = depAddress.replace('eth:', '').toLowerCase()
-            const tag = contractTags.tags.find(tag =>
-              tag.contractAddress.toLowerCase() === normalizedAddress
-            )
+              // Get likelihood from contract tags
+              const normalizedAddress = depAddress
+                .replace('eth:', '')
+                .toLowerCase()
+              const tag = contractTags.tags.find(
+                (tag) =>
+                  tag.contractAddress.toLowerCase() === normalizedAddress,
+              )
 
-            // Skip if not external or no likelihood
-            if (!tag?.isExternal || !tag.likelihood) {
-              return
-            }
+              // Skip if not external or no likelihood
+              if (!tag?.isExternal || !tag.likelihood) {
+                return
+              }
 
-            // Calculate grade for this function
-            const grade = getSeverityGrade(func.impact as Impact, tag.likelihood)
+              // Calculate grade for this function
+              const grade = getSeverityGrade(
+                func.impact as Impact,
+                tag.likelihood,
+              )
 
-            // Get or create dependency entry
-            if (!dependenciesMap.has(depAddress)) {
-              dependenciesMap.set(depAddress, {
-                contractAddress: depAddress,
-                contractName: contractNameMap.get(depAddress) || 'Unknown Contract',
-                likelihood: tag.likelihood,
-                functions: []
+              // Get or create dependency entry
+              if (!dependenciesMap.has(depAddress)) {
+                dependenciesMap.set(depAddress, {
+                  contractAddress: depAddress,
+                  contractName:
+                    contractNameMap.get(depAddress) || 'Unknown Contract',
+                  likelihood: tag.likelihood,
+                  functions: [],
+                })
+              }
+
+              // Add function to dependency
+              const depData = dependenciesMap.get(depAddress)!
+              depData.functions.push({
+                contractAddress,
+                contractName:
+                  contractNameMap.get(contractAddress) || 'Unknown Contract',
+                functionName: func.functionName,
+                impact: func.impact as Impact,
+                grade,
               })
-            }
-
-            // Add function to dependency
-            const depData = dependenciesMap.get(depAddress)!
-            depData.functions.push({
-              contractAddress,
-              contractName: contractNameMap.get(contractAddress) || 'Unknown Contract',
-              functionName: func.functionName,
-              impact: func.impact as Impact,
-              grade,
             })
-          })
-        }
-      })
-    })
+          }
+        })
+      },
+    )
   }
 
   const dependencies = Array.from(dependenciesMap.values())
 
   // Calculate overall worst grade
-  const allGrades = dependencies.flatMap(dep => dep.functions.map(f => f.grade))
+  const allGrades = dependencies.flatMap((dep) =>
+    dep.functions.map((f) => f.grade),
+  )
   const overallGrade = getWorstGrade(allGrades)
 
   if (dependencies.length === 0) {
     return (
       <div className="border-b border-b-coffee-600 pb-2">
-        <h2 className="p-2 font-bold text-xl text-orange-400">Dependencies</h2>
-        <div className="mb-1 flex flex-col gap-2 border-l-4 border-transparent p-2 pl-1">
-          <p className="text-coffee-400 text-sm ml-4">No external dependencies with scored functions</p>
+        <h2 className="p-2 font-bold text-orange-400 text-xl">Dependencies</h2>
+        <div className="mb-1 flex flex-col gap-2 border-transparent border-l-4 p-2 pl-1">
+          <p className="ml-4 text-coffee-400 text-sm">
+            No external dependencies with scored functions
+          </p>
         </div>
       </div>
     )
@@ -477,19 +523,21 @@ export function DependencyBreakdown() {
 
   return (
     <div className="border-b border-b-coffee-600 pb-2">
-      <h2 className="p-2 font-bold text-xl text-orange-400">Dependencies</h2>
-      <div className="mb-1 flex flex-col gap-2 border-l-4 border-transparent p-2 pl-1">
-
+      <h2 className="p-2 font-bold text-orange-400 text-xl">Dependencies</h2>
+      <div className="mb-1 flex flex-col gap-2 border-transparent border-l-4 p-2 pl-1">
         {/* Overall grade */}
-        <div className="ml-4 mb-3 flex items-center gap-2">
-          <span className="text-sm text-coffee-300 font-medium">Overall Grade:</span>
+        <div className="mb-3 ml-4 flex items-center gap-2">
+          <span className="font-medium text-coffee-300 text-sm">
+            Overall Grade:
+          </span>
           {overallGrade && (
             <span className={`font-semibold text-lg ${overallGradeColor}`}>
               {overallGrade}
             </span>
           )}
-          <span className="text-xs text-coffee-400 ml-2">
-            ({dependencies.length} external contract{dependencies.length !== 1 ? 's' : ''})
+          <span className="ml-2 text-coffee-400 text-xs">
+            ({dependencies.length} external contract
+            {dependencies.length !== 1 ? 's' : ''})
           </span>
         </div>
 

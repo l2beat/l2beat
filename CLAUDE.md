@@ -322,6 +322,38 @@ PORT=3001
 }
 ```
 
+### V2 Scoring UI ✅
+
+**Scoring Dashboard**: V2 scoring breakdown in DeFiScan panel (`/defidisco/V2ScoringSection.tsx`)
+
+- **Inventory Sections**: Contracts, Functions, Dependencies, Owners — each with grade and breakdown
+- **Shared Scoring Module**: `/defidisco/scoringShared.tsx` — **single source of truth** for all scoring UI utilities and components
+
+**Shared Module (`scoringShared.tsx`)** — DO NOT duplicate code from this file:
+
+- **Utility Functions**: `formatUsdValue`, `hasCapitalData`, `isZeroAddress`, `getGradeColor`, `getGradeBadgeStyles`, `getAdminTypeColor`, `getImpactColor`, `getLikelihoodColor`, `impactToScore`, `computeWorstGrade`
+- **Picker Components**: `ImpactPicker`, `LikelihoodPicker` — dropdown pickers for impact/likelihood scoring
+- **Display Components**: `TreeNode`, `FundsDisplay`, `FunctionCapitalBreakdown` — tree-structured capital breakdown
+- **`OwnerSection`**: Shared component used by **both** Owners and Dependencies sections to render an owner/admin with admin type badges, proxy type tags, likelihood picker, capital-at-risk, and expandable function list with capital breakdown trees
+
+**Section Architecture**:
+
+- **Owners** (`AdminsInventoryBreakdown.tsx`): Displays non-external permission owners
+  - Filters out external owners (shown in Dependencies instead)
+  - "Show immutable" toggle (default: **off**) — includes immutable + revoked (0x0) addresses
+  - Uses `OwnerSection` from `scoringShared.tsx`
+- **Dependencies** (`DependencyInventoryBreakdown.tsx`): Displays call-graph dependencies + external owners
+  - Regular dependencies: `DependencySection` (local component for call-graph entries)
+  - External owners: extracted from admin breakdown via `isExternal` contract tag, rendered with `OwnerSection`
+  - "Show immutable" toggle (default: **on**) — for external owners only
+  - Receives `adminScore` prop from `V2ScoringSection` to access admin breakdown data
+
+**Key Design Decisions**:
+
+- External owners (`isExternal: true` in contract-tags) appear in Dependencies, not Owners
+- Immutable contracts and revoked addresses (0x0) are grouped together for toggle filtering
+- `OwnerSection` is shared to avoid duplicating admin type badges, proxy type tags, funds display, and capital breakdown logic
+
 ---
 
 ## Development Guidelines
@@ -363,6 +395,7 @@ PORT=3001
 - ❌ Address format mismatches (contracts use `eth:0x...`, tags use `0x...`)
 - ❌ Using `??` instead of `!== undefined` for optional fields that can be explicitly cleared
 - ❌ Forgetting to rebuild both `protocolbeat` AND `l2b` after backend changes
+- ❌ Duplicating scoring utilities — use `scoringShared.tsx` (`OwnerSection`, pickers, grade helpers, capital display)
 
 **Proxy/Implementation Pattern:**
 
@@ -385,6 +418,11 @@ packages/
 │   ├── PermissionsDisplay.tsx
 │   ├── FunctionFolder.tsx
 │   ├── ExternalButton.tsx
+│   ├── V2ScoringSection.tsx          # V2 scoring entry point
+│   ├── scoringShared.tsx             # Shared scoring utilities & components (DO NOT DUPLICATE)
+│   ├── AdminsInventoryBreakdown.tsx  # Owners section (imports from scoringShared)
+│   ├── DependencyInventoryBreakdown.tsx  # Dependencies section (imports from scoringShared)
+│   ├── FunctionBreakdown.tsx         # Functions section
 │   └── icons/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts

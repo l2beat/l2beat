@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { getV2Score } from '../api/api'
 import type { LetterGrade, ModuleScore } from '../api/types'
-import { FunctionBreakdown } from './FunctionBreakdown'
-import { DependencyInventoryBreakdown } from './DependencyInventoryBreakdown'
 import { AdminsInventoryBreakdown } from './AdminsInventoryBreakdown'
+import { DependencyInventoryBreakdown } from './DependencyInventoryBreakdown'
+import { FunctionBreakdown } from './FunctionBreakdown'
 
 interface V2ScoringSectionProps {
   project: string
@@ -63,7 +63,11 @@ function InventoryItem({
  * Displays V2 framework scoring with inventory counts and letter grades
  */
 export function V2ScoringSection({ project }: V2ScoringSectionProps) {
-  const { data: scoreData, isLoading, error } = useQuery({
+  const {
+    data: scoreData,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['v2-score', project],
     queryFn: () => getV2Score(project),
   })
@@ -72,7 +76,7 @@ export function V2ScoringSection({ project }: V2ScoringSectionProps) {
     return (
       <div className="border-b border-b-coffee-600 pb-2">
         <h2 className="p-2 font-bold text-2xl text-blue-600">V2 Scoring:</h2>
-        <div className="mb-1 flex flex-col gap-2 border-l-4 border-transparent p-2 pl-1">
+        <div className="mb-1 flex flex-col gap-2 border-transparent border-l-4 p-2 pl-1">
           <p className="text-coffee-400">Loading V2 scores...</p>
         </div>
       </div>
@@ -83,8 +87,10 @@ export function V2ScoringSection({ project }: V2ScoringSectionProps) {
     return (
       <div className="border-b border-b-coffee-600 pb-2">
         <h2 className="p-2 font-bold text-2xl text-blue-600">V2 Scoring:</h2>
-        <div className="mb-1 flex flex-col gap-2 border-l-4 border-transparent p-2 pl-1">
-          <p className="text-red-400">Error loading V2 scores: {String(error)}</p>
+        <div className="mb-1 flex flex-col gap-2 border-transparent border-l-4 p-2 pl-1">
+          <p className="text-red-400">
+            Error loading V2 scores: {String(error)}
+          </p>
         </div>
       </div>
     )
@@ -99,30 +105,29 @@ export function V2ScoringSection({ project }: V2ScoringSectionProps) {
   return (
     <div className="border-b border-b-coffee-600 pb-2">
       <h2 className="p-2 font-bold text-2xl text-blue-600">V2 Scoring:</h2>
-      <div className="mb-1 flex flex-col gap-4 border-l-4 border-transparent p-2 pl-1">
+      <div className="mb-1 flex flex-col gap-4 border-transparent border-l-4 p-2 pl-1">
         {/* Inventory Subsection */}
         <div>
-          <h3 className="font-semibold text-lg text-orange-400 mb-2">Inventory</h3>
+          <h3 className="mb-2 font-semibold text-lg text-orange-400">
+            Inventory
+          </h3>
           <div className="ml-4 flex flex-col gap-3 text-sm">
             <InventoryItem
               label="Contracts"
               score={scoreData.inventory.contracts}
             />
-            <FunctionBreakdown
-              score={scoreData.inventory.functions}
-            />
+            <FunctionBreakdown score={scoreData.inventory.functions} />
             <DependencyInventoryBreakdown
               score={scoreData.inventory.dependencies}
+              adminScore={scoreData.inventory.admins}
             />
-            <AdminsInventoryBreakdown
-              score={scoreData.inventory.admins}
-            />
+            <AdminsInventoryBreakdown score={scoreData.inventory.admins} />
           </div>
         </div>
 
         {/* Score Subsection */}
         <div>
-          <h3 className="font-semibold text-lg text-orange-400 mb-2">Score</h3>
+          <h3 className="mb-2 font-semibold text-lg text-orange-400">Score</h3>
           <div className="ml-4 text-sm">
             <p className="text-coffee-300">
               Final score:{' '}

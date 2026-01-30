@@ -1,9 +1,14 @@
-import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import type { FunctionModuleScore, LetterGrade, FunctionDetail, Impact } from '../api/types'
-import { usePanelStore } from '../apps/discovery/store/panel-store'
 import { updateFunction } from '../api/api'
+import type {
+  FunctionDetail,
+  FunctionModuleScore,
+  Impact,
+  LetterGrade,
+} from '../api/types'
+import { usePanelStore } from '../apps/discovery/store/panel-store'
 
 interface FunctionBreakdownProps {
   score: FunctionModuleScore
@@ -36,7 +41,11 @@ function getGradeColor(grade: LetterGrade): string {
 /**
  * Get inline styles for grade badge
  */
-function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; borderColor: string; color: string } {
+function getGradeBadgeStyles(grade: LetterGrade): {
+  backgroundColor: string
+  borderColor: string
+  color: string
+} {
   switch (grade) {
     case 'AAA':
     case 'AA':
@@ -44,7 +53,7 @@ function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; bor
       return {
         backgroundColor: 'rgba(20, 83, 45, 0.5)', // green-900/50
         borderColor: 'rgba(34, 197, 94, 0.3)', // green-500/30
-        color: '#4ade80' // green-400
+        color: '#4ade80', // green-400
       }
     case 'BBB':
     case 'BB':
@@ -52,7 +61,7 @@ function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; bor
       return {
         backgroundColor: 'rgba(113, 63, 18, 0.5)', // yellow-900/50
         borderColor: 'rgba(234, 179, 8, 0.3)', // yellow-500/30
-        color: '#facc15' // yellow-400
+        color: '#facc15', // yellow-400
       }
     case 'CCC':
     case 'CC':
@@ -60,19 +69,19 @@ function getGradeBadgeStyles(grade: LetterGrade): { backgroundColor: string; bor
       return {
         backgroundColor: 'rgba(124, 45, 18, 0.5)', // orange-900/50
         borderColor: 'rgba(249, 115, 22, 0.3)', // orange-500/30
-        color: '#fb923c' // orange-400
+        color: '#fb923c', // orange-400
       }
     case 'D':
       return {
         backgroundColor: 'rgba(127, 29, 29, 0.5)', // red-900/50
         borderColor: 'rgba(239, 68, 68, 0.3)', // red-500/30
-        color: '#f87171' // red-400
+        color: '#f87171', // red-400
       }
     case 'Unscored':
       return {
         backgroundColor: 'rgba(55, 65, 81, 0.5)', // gray-700/50
         borderColor: 'rgba(156, 163, 175, 0.3)', // gray-400/30
-        color: '#9ca3af' // gray-400
+        color: '#9ca3af', // gray-400
       }
   }
 }
@@ -116,7 +125,9 @@ function getLikelihoodColor(likelihood: string): string {
 /**
  * Convert Impact to score string for API
  */
-function impactToScore(impact: Impact): 'low-risk' | 'medium-risk' | 'high-risk' | 'critical' {
+function impactToScore(
+  impact: Impact,
+): 'low-risk' | 'medium-risk' | 'high-risk' | 'critical' {
   switch (impact) {
     case 'low':
       return 'low-risk'
@@ -154,7 +165,7 @@ function ImpactPicker({
           e.stopPropagation()
           setIsOpen(!isOpen)
         }}
-        className="text-xs px-2 py-0.5 rounded border border-coffee-600 bg-coffee-700 hover:bg-coffee-600 capitalize"
+        className="rounded border border-coffee-600 bg-coffee-700 px-2 py-0.5 text-xs capitalize hover:bg-coffee-600"
         style={{ color: getImpactColor(currentImpact) }}
       >
         {currentImpact}
@@ -166,8 +177,8 @@ function ImpactPicker({
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 z-50 mt-1 flex flex-col gap-2 rounded border border-coffee-600 bg-coffee-800 p-2 shadow-xl min-w-[120px]">
-            <div className="text-xs font-semibold text-coffee-300">Impact</div>
+          <div className="absolute right-0 z-50 mt-1 flex min-w-[120px] flex-col gap-2 rounded border border-coffee-600 bg-coffee-800 p-2 shadow-xl">
+            <div className="font-semibold text-coffee-300 text-xs">Impact</div>
             {impactOptions.map((imp) => (
               <button
                 key={imp}
@@ -198,7 +209,11 @@ function GradeSection({
 }: {
   grade: LetterGrade
   functions: FunctionDetail[]
-  onUpdateImpact: (contractAddress: string, functionName: string, impact: Impact) => void
+  onUpdateImpact: (
+    contractAddress: string,
+    functionName: string,
+    impact: Impact,
+  ) => void
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const badgeStyles = getGradeBadgeStyles(grade)
@@ -206,20 +221,20 @@ function GradeSection({
   if (functions.length === 0) return null
 
   return (
-    <div className="ml-4 mb-2">
+    <div className="mb-2 ml-4">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center gap-2 w-full text-left hover:bg-coffee-800/30 p-2 rounded transition-colors"
+        className="flex w-full items-center gap-2 rounded p-2 text-left transition-colors hover:bg-coffee-800/30"
       >
         <span className="text-coffee-400 text-xs">
           {isExpanded ? '▼' : '▶'}
         </span>
         <span
-          className="inline-block px-2 py-0.5 rounded border text-xs font-mono"
+          className="inline-block rounded border px-2 py-0.5 font-mono text-xs"
           style={{
             backgroundColor: badgeStyles.backgroundColor,
             borderColor: badgeStyles.borderColor,
-            color: badgeStyles.color
+            color: badgeStyles.color,
           }}
         >
           {grade}
@@ -230,27 +245,37 @@ function GradeSection({
       </button>
 
       {isExpanded && (
-        <ul className="ml-8 mt-2 space-y-1.5">
+        <ul className="mt-2 ml-8 space-y-1.5">
           {functions.map((func, idx) => {
             const likelihoodColor = getLikelihoodColor(func.likelihood)
 
             return (
-              <li key={idx} className="text-xs text-coffee-300">
+              <li key={idx} className="text-coffee-300 text-xs">
                 <button
-                  onClick={() => usePanelStore.getState().select(func.contractAddress)}
-                  className="font-medium text-coffee-200 hover:text-blue-400 cursor-pointer transition-colors"
+                  onClick={() =>
+                    usePanelStore.getState().select(func.contractAddress)
+                  }
+                  className="cursor-pointer font-medium text-coffee-200 transition-colors hover:text-blue-400"
                 >
                   {func.contractName}
                 </button>
-                <span className="text-coffee-500 mx-1">.</span>
+                <span className="mx-1 text-coffee-500">.</span>
                 <span className="text-blue-400">{func.functionName}()</span>
-                <span className="text-coffee-500 ml-2">(Impact: </span>
+                <span className="ml-2 text-coffee-500">(Impact: </span>
                 <ImpactPicker
                   currentImpact={func.impact}
-                  onUpdate={(impact) => onUpdateImpact(func.contractAddress, func.functionName, impact)}
+                  onUpdate={(impact) =>
+                    onUpdateImpact(
+                      func.contractAddress,
+                      func.functionName,
+                      impact,
+                    )
+                  }
                 />
                 <span className="text-coffee-500">, Likelihood: </span>
-                <span style={{ color: likelihoodColor }}>{func.likelihood}</span>
+                <span style={{ color: likelihoodColor }}>
+                  {func.likelihood}
+                </span>
                 <span className="text-coffee-500">)</span>
               </li>
             )
@@ -271,7 +296,18 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
   const gradeColor = getGradeColor(score.grade)
 
   // Get grade order from worst to best (excluding Unscored)
-  const gradeOrder: LetterGrade[] = ['D', 'C', 'CC', 'CCC', 'B', 'BB', 'BBB', 'A', 'AA', 'AAA']
+  const gradeOrder: LetterGrade[] = [
+    'D',
+    'C',
+    'CC',
+    'CCC',
+    'B',
+    'BB',
+    'BBB',
+    'A',
+    'AA',
+    'AAA',
+  ]
 
   // Count scored functions (excluding Unscored)
   const scoredFunctionCount = score.breakdown
@@ -286,7 +322,15 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
 
   // Mutation for updating impact
   const updateImpactMutation = useMutation({
-    mutationFn: ({ contractAddress, functionName, impact }: { contractAddress: string; functionName: string; impact: Impact }) => {
+    mutationFn: ({
+      contractAddress,
+      functionName,
+      impact,
+    }: {
+      contractAddress: string
+      functionName: string
+      impact: Impact
+    }) => {
       if (!project) throw new Error('Project not found')
 
       return updateFunction(project, {
@@ -302,7 +346,11 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
     },
   })
 
-  const handleUpdateImpact = (contractAddress: string, functionName: string, impact: Impact) => {
+  const handleUpdateImpact = (
+    contractAddress: string,
+    functionName: string,
+    impact: Impact,
+  ) => {
     updateImpactMutation.mutate({ contractAddress, functionName, impact })
   }
 
@@ -322,20 +370,22 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
       {/* Grade breakdown - always shown */}
       <div className="mt-3 ml-2">
         {scoredFunctionCount === 0 && unscoredCount === 0 ? (
-          <p className="text-xs text-coffee-400 ml-4">
+          <p className="ml-4 text-coffee-400 text-xs">
             No functions with impact scores
           </p>
         ) : (
           <>
             {scoredFunctionCount > 0 && (
-              <p className="text-xs text-coffee-400 ml-4 mb-3">
-                {scoredFunctionCount} scored function{scoredFunctionCount !== 1 ? 's' : ''}
+              <p className="mb-3 ml-4 text-coffee-400 text-xs">
+                {scoredFunctionCount} scored function
+                {scoredFunctionCount !== 1 ? 's' : ''}
                 {unscoredCount > 0 && ` + ${unscoredCount} unscored`}
               </p>
             )}
             {scoredFunctionCount === 0 && unscoredCount > 0 && (
-              <p className="text-xs text-coffee-400 ml-4 mb-3">
-                {unscoredCount} unscored function{unscoredCount !== 1 ? 's' : ''} (missing likelihood)
+              <p className="mb-3 ml-4 text-coffee-400 text-xs">
+                {unscoredCount} unscored function
+                {unscoredCount !== 1 ? 's' : ''} (missing likelihood)
               </p>
             )}
             {gradeOrder.map((grade) => (

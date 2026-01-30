@@ -1,0 +1,781 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-01-09T09:48:39.844Z",
+  "contracts": {
+    "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A": {
+      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+      "name": "UniswapV2Pair",
+      "externalCalls": [
+        {
+          "callerFunction": "burn",
+          "storageVariable": "TMP_190",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "burn",
+          "storageVariable": "TMP_193",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "burn",
+          "storageVariable": "TMP_210",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "burn",
+          "storageVariable": "TMP_213",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "burn",
+          "storageVariable": "TMP_144",
+          "interfaceType": "IUniswapV2Factory",
+          "calledFunction": "feeTo"
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "TMP_162",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "TMP_165",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "TMP_144",
+          "interfaceType": "IUniswapV2Factory",
+          "calledFunction": "feeTo"
+        },
+        {
+          "callerFunction": "skim",
+          "storageVariable": "TMP_274",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "skim",
+          "storageVariable": "TMP_279",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swap",
+          "storageVariable": "TMP_238",
+          "interfaceType": "IUniswapV2Callee",
+          "calledFunction": "uniswapV2Call"
+        },
+        {
+          "callerFunction": "swap",
+          "storageVariable": "TMP_240",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swap",
+          "storageVariable": "TMP_243",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "sync",
+          "storageVariable": "TMP_285",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "sync",
+          "storageVariable": "TMP_288",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        }
+      ],
+      "generatedAt": "2026-01-09T09:48:24.706Z"
+    },
+    "eth:0x18e433c7Bf8A2E1d0197CE5d8f9AFAda1A771360": {
+      "address": "eth:0x18e433c7Bf8A2E1d0197CE5d8f9AFAda1A771360",
+      "name": "FeeToSetter",
+      "externalCalls": [
+        {
+          "callerFunction": "setFeeToSetter",
+          "storageVariable": "TMP_8",
+          "interfaceType": "IUniswapV2Factory",
+          "calledFunction": "setFeeToSetter"
+        },
+        {
+          "callerFunction": "toggleFees",
+          "storageVariable": "TMP_14",
+          "interfaceType": "IUniswapV2Factory",
+          "calledFunction": "setFeeTo"
+        },
+        {
+          "callerFunction": "toggleFees",
+          "storageVariable": "TMP_16",
+          "interfaceType": "IUniswapV2Factory",
+          "calledFunction": "setFeeTo"
+        }
+      ],
+      "generatedAt": "2026-01-09T09:48:26.133Z"
+    },
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
+      "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "name": "Timelock",
+      "externalCalls": [],
+      "generatedAt": "2026-01-09T09:48:27.873Z"
+    },
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
+      "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "name": "GovernorBravoDelegator",
+      "externalCalls": [],
+      "generatedAt": "2026-01-09T09:48:29.490Z"
+    },
+    "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": {
+      "address": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
+      "name": "GovernorBravoDelegate",
+      "externalCalls": [
+        {
+          "callerFunction": "_initiate",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "acceptAdmin",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "cancel",
+          "storageVariable": "uni",
+          "interfaceType": "UniInterface",
+          "calledFunction": "getPriorVotes",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "cancel",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "cancelTransaction",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "cancel",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "GRACE_PERIOD",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "castVote",
+          "storageVariable": "uni",
+          "interfaceType": "UniInterface",
+          "calledFunction": "getPriorVotes",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "castVote",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "GRACE_PERIOD",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "castVoteBySig",
+          "storageVariable": "uni",
+          "interfaceType": "UniInterface",
+          "calledFunction": "getPriorVotes",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "castVoteBySig",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "GRACE_PERIOD",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "castVoteWithReason",
+          "storageVariable": "uni",
+          "interfaceType": "UniInterface",
+          "calledFunction": "getPriorVotes",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "castVoteWithReason",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "GRACE_PERIOD",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "execute",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "executeTransaction",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "execute",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "GRACE_PERIOD",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "propose",
+          "storageVariable": "uni",
+          "interfaceType": "UniInterface",
+          "calledFunction": "getPriorVotes",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "propose",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "GRACE_PERIOD",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "queue",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "delay",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "queue",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "GRACE_PERIOD",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "queue",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "queuedTransactions",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "queue",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "queueTransaction",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+        },
+        {
+          "callerFunction": "state",
+          "storageVariable": "timelock",
+          "interfaceType": "TimelockInterface",
+          "calledFunction": "GRACE_PERIOD",
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "callerIsView": true,
+          "isViewCall": true
+        }
+      ],
+      "generatedAt": "2026-01-09T09:48:31.613Z"
+    },
+    "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": {
+      "address": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+      "name": "UniswapV2Factory",
+      "externalCalls": [
+        {
+          "callerFunction": "createPair",
+          "storageVariable": "TMP_284",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "initialize"
+        }
+      ],
+      "generatedAt": "2026-01-09T09:48:33.905Z"
+    },
+    "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D": {
+      "address": "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+      "name": "UniswapV2Router02",
+      "externalCalls": [
+        {
+          "callerFunction": "addLiquidity",
+          "storageVariable": "TMP_23",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "mint"
+        },
+        {
+          "callerFunction": "addLiquidity",
+          "storageVariable": "TMP_2",
+          "interfaceType": "IUniswapV2Factory",
+          "calledFunction": "getPair"
+        },
+        {
+          "callerFunction": "addLiquidity",
+          "storageVariable": "TMP_6",
+          "interfaceType": "IUniswapV2Factory",
+          "calledFunction": "createPair"
+        },
+        {
+          "callerFunction": "addLiquidity",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "addLiquidityETH",
+          "storageVariable": "TMP_28",
+          "interfaceType": "IWETH",
+          "calledFunction": "deposit"
+        },
+        {
+          "callerFunction": "addLiquidityETH",
+          "storageVariable": "TMP_30",
+          "interfaceType": "IWETH",
+          "calledFunction": "transfer"
+        },
+        {
+          "callerFunction": "addLiquidityETH",
+          "storageVariable": "TMP_33",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "mint"
+        },
+        {
+          "callerFunction": "addLiquidityETH",
+          "storageVariable": "TMP_2",
+          "interfaceType": "IUniswapV2Factory",
+          "calledFunction": "getPair"
+        },
+        {
+          "callerFunction": "addLiquidityETH",
+          "storageVariable": "TMP_6",
+          "interfaceType": "IUniswapV2Factory",
+          "calledFunction": "createPair"
+        },
+        {
+          "callerFunction": "addLiquidityETH",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "getAmountsIn",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "getAmountsOut",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "removeLiquidity",
+          "storageVariable": "TMP_40",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "transferFrom"
+        },
+        {
+          "callerFunction": "removeLiquidity",
+          "storageVariable": "TMP_42",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "burn"
+        },
+        {
+          "callerFunction": "removeLiquidityETH",
+          "storageVariable": "TMP_51",
+          "interfaceType": "IWETH",
+          "calledFunction": "withdraw"
+        },
+        {
+          "callerFunction": "removeLiquidityETH",
+          "storageVariable": "TMP_40",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "transferFrom"
+        },
+        {
+          "callerFunction": "removeLiquidityETH",
+          "storageVariable": "TMP_42",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "burn"
+        },
+        {
+          "callerFunction": "removeLiquidityETHSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_68",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "removeLiquidityETHSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_72",
+          "interfaceType": "IWETH",
+          "calledFunction": "withdraw"
+        },
+        {
+          "callerFunction": "removeLiquidityETHSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_40",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "transferFrom"
+        },
+        {
+          "callerFunction": "removeLiquidityETHSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_42",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "burn"
+        },
+        {
+          "callerFunction": "removeLiquidityETHWithPermit",
+          "storageVariable": "TMP_62",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "permit"
+        },
+        {
+          "callerFunction": "removeLiquidityETHWithPermit",
+          "storageVariable": "TMP_51",
+          "interfaceType": "IWETH",
+          "calledFunction": "withdraw"
+        },
+        {
+          "callerFunction": "removeLiquidityETHWithPermit",
+          "storageVariable": "TMP_40",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "transferFrom"
+        },
+        {
+          "callerFunction": "removeLiquidityETHWithPermit",
+          "storageVariable": "TMP_42",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "burn"
+        },
+        {
+          "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_77",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "permit"
+        },
+        {
+          "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_68",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_72",
+          "interfaceType": "IWETH",
+          "calledFunction": "withdraw"
+        },
+        {
+          "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_40",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "transferFrom"
+        },
+        {
+          "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_42",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "burn"
+        },
+        {
+          "callerFunction": "removeLiquidityWithPermit",
+          "storageVariable": "TMP_56",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "permit"
+        },
+        {
+          "callerFunction": "removeLiquidityWithPermit",
+          "storageVariable": "TMP_40",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "transferFrom"
+        },
+        {
+          "callerFunction": "removeLiquidityWithPermit",
+          "storageVariable": "TMP_42",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "burn"
+        },
+        {
+          "callerFunction": "swapETHForExactTokens",
+          "storageVariable": "TMP_167",
+          "interfaceType": "IWETH",
+          "calledFunction": "deposit"
+        },
+        {
+          "callerFunction": "swapETHForExactTokens",
+          "storageVariable": "TMP_169",
+          "interfaceType": "IWETH",
+          "calledFunction": "transfer"
+        },
+        {
+          "callerFunction": "swapETHForExactTokens",
+          "storageVariable": "TMP_88",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "swap"
+        },
+        {
+          "callerFunction": "swapETHForExactTokens",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "swapExactETHForTokens",
+          "storageVariable": "TMP_121",
+          "interfaceType": "IWETH",
+          "calledFunction": "deposit"
+        },
+        {
+          "callerFunction": "swapExactETHForTokens",
+          "storageVariable": "TMP_123",
+          "interfaceType": "IWETH",
+          "calledFunction": "transfer"
+        },
+        {
+          "callerFunction": "swapExactETHForTokens",
+          "storageVariable": "TMP_88",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "swap"
+        },
+        {
+          "callerFunction": "swapExactETHForTokens",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_215",
+          "interfaceType": "IWETH",
+          "calledFunction": "deposit"
+        },
+        {
+          "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_217",
+          "interfaceType": "IWETH",
+          "calledFunction": "transfer"
+        },
+        {
+          "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_222",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_226",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "pair",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_183",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "pair",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "swap"
+        },
+        {
+          "callerFunction": "swapExactTokensForETH",
+          "storageVariable": "TMP_156",
+          "interfaceType": "IWETH",
+          "calledFunction": "withdraw"
+        },
+        {
+          "callerFunction": "swapExactTokensForETH",
+          "storageVariable": "TMP_88",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "swap"
+        },
+        {
+          "callerFunction": "swapExactTokensForETH",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_239",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_244",
+          "interfaceType": "IWETH",
+          "calledFunction": "withdraw"
+        },
+        {
+          "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
+          "storageVariable": "pair",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_183",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
+          "storageVariable": "pair",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "swap"
+        },
+        {
+          "callerFunction": "swapExactTokensForTokens",
+          "storageVariable": "TMP_88",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "swap"
+        },
+        {
+          "callerFunction": "swapExactTokensForTokens",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_203",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_207",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "pair",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "TMP_183",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+          "storageVariable": "pair",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "swap"
+        },
+        {
+          "callerFunction": "swapTokensForExactETH",
+          "storageVariable": "TMP_139",
+          "interfaceType": "IWETH",
+          "calledFunction": "withdraw"
+        },
+        {
+          "callerFunction": "swapTokensForExactETH",
+          "storageVariable": "TMP_88",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "swap"
+        },
+        {
+          "callerFunction": "swapTokensForExactETH",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        },
+        {
+          "callerFunction": "swapTokensForExactTokens",
+          "storageVariable": "TMP_88",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "swap"
+        },
+        {
+          "callerFunction": "swapTokensForExactTokens",
+          "storageVariable": "TMP_280",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "getReserves"
+        }
+      ],
+      "generatedAt": "2026-01-09T09:48:36.975Z"
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "name": "Wrapped Ether Token",
+      "externalCalls": [],
+      "generatedAt": "2026-01-09T09:48:38.462Z"
+    },
+    "eth:0xDAF819c2437a82f9e01f6586207ebF961a7f0970": {
+      "address": "eth:0xDAF819c2437a82f9e01f6586207ebF961a7f0970",
+      "name": "FeeTo",
+      "externalCalls": [
+        {
+          "callerFunction": "claim",
+          "storageVariable": "TMP_31",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "token0"
+        },
+        {
+          "callerFunction": "claim",
+          "storageVariable": "TMP_33",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "token1"
+        },
+        {
+          "callerFunction": "claim",
+          "storageVariable": "TMP_43",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "claim",
+          "storageVariable": "TMP_47",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "transfer"
+        },
+        {
+          "callerFunction": "renounce",
+          "storageVariable": "TMP_12",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "token0"
+        },
+        {
+          "callerFunction": "renounce",
+          "storageVariable": "TMP_14",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "token1"
+        },
+        {
+          "callerFunction": "renounce",
+          "storageVariable": "TMP_23",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "balanceOf"
+        },
+        {
+          "callerFunction": "renounce",
+          "storageVariable": "TMP_27",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "transfer"
+        },
+        {
+          "callerFunction": "renounce",
+          "storageVariable": "TMP_30",
+          "interfaceType": "IUniswapV2Pair",
+          "calledFunction": "burn"
+        }
+      ],
+      "generatedAt": "2026-01-09T09:48:39.843Z"
+    }
+  }
+}

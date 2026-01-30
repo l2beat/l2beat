@@ -8,22 +8,13 @@ import type {
 } from '../../../api/types'
 import { useContractTags } from '../../../hooks/useContractTags'
 import { usePanelStore } from '../store/panel-store'
+import { formatUsdValue } from './formatUtils'
 import { ProxyTypeTag } from './ProxyTypeTag'
 import { buildProxyTypeMap } from './proxyTypeUtils'
 
 interface FundsSectionProps {
   project: string
   projectData: any
-}
-
-function formatUsdValue(value: number): string {
-  if (value >= 1_000_000) {
-    return `$${(value / 1_000_000).toFixed(2)}M`
-  }
-  if (value >= 1_000) {
-    return `$${(value / 1_000).toFixed(2)}K`
-  }
-  return `$${value.toFixed(2)}`
 }
 
 function formatTimestamp(timestamp: string): string {

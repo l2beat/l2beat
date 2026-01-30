@@ -67,8 +67,8 @@ export function ClearPermissionsDialog({
             </div>
           </div>
 
-          <div className="mt-4 rounded bg-yellow-900/30 border border-yellow-600/50 p-3">
-            <p className="text-yellow-200 text-sm">
+          <div className="mt-4 rounded border border-yellow-600/50 bg-yellow-900/30 p-3">
+            <p className="text-sm text-yellow-200">
               ⚠️ This action cannot be undone. You will need to re-scan
               permissions if you want to restore this data.
             </p>
