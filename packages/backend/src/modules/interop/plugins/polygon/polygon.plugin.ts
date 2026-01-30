@@ -131,21 +131,7 @@ export class PolygonPlugin implements InteropPluginResyncable {
   getDataRequests(): DataRequest[] {
     const config = this.configs.get(PolygonConfig)
     if (!config) {
-      return [
-        {
-          type: 'event',
-          signature: stateSyncedLog,
-          includeTxEvents: [transferLog, lockedEtherLog],
-          addresses: [ChainSpecificAddress.fromLong('ethereum', STATE_SENDER)],
-        },
-        {
-          type: 'event',
-          signature: stateCommittedLog,
-          addresses: [
-            ChainSpecificAddress.fromLong('polygonpos', STATE_RECEIVER),
-          ],
-        },
-      ]
+      return []
     }
 
     const rootTokens = config.rootTokens ?? []

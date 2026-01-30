@@ -79,6 +79,14 @@ export const polygonpos: ScalingProject = {
   stage: {
     stage: 'NotApplicable',
   },
+  interopConfig: {
+    bridgeType: 'lockAndMint',
+    plugins: [
+      {
+        plugin: 'polygon',
+      },
+    ],
+  },
   config: {
     associatedTokens: ['POL', 'MATIC'],
     escrows: [
