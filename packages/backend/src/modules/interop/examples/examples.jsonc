@@ -2445,6 +2445,15 @@
       {
         "chain": "polygonpos",
         "tx": "0xbaad5b4d133b7b45a60673ba34a024201e8da0b300fba3a55aaebface16af506"
+      },
+      // message only
+      {
+        "chain": "ethereum",
+        "tx": "0xa3902f2de62c48541dbcf6bc923224842f699a97632a4d4cc25a52c02cefcc07"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xb999af0a60e66dc2e1b203357bc076759c4feb83cfa46719526257a4180a0bb9"
       }
     ],
     "events": [
