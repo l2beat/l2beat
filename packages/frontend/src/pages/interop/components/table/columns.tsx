@@ -67,6 +67,8 @@ const last24hVolumeColumn = columnHelper.accessor('volume', {
   meta: {
     align: 'right',
     headClassName: 'text-2xs text-right',
+    tooltip:
+      'The total USD value of all token transfers completed in the past 24 hours.',
   },
 })
 
@@ -75,6 +77,8 @@ const tokensByVolumeColumn = columnHelper.accessor('tokens', {
   meta: {
     cellClassName: '!pr-0',
     headClassName: 'text-2xs',
+    tooltip:
+      'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
   },
   cell: (ctx) => (
     <TopTokensCell
@@ -100,6 +104,8 @@ const averageDurationColumn = columnHelper.accessor(
     meta: {
       align: 'right',
       headClassName: 'text-2xs',
+      tooltip:
+        'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
     },
     cell: (ctx) => (
       <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
@@ -115,6 +121,8 @@ const averageInFlightValueColumn = columnHelper.accessor(
     meta: {
       align: 'right',
       headClassName: 'text-2xs',
+      tooltip:
+        'The average USD value of funds in transit at any given second over the past 24 hours. For non-minting protocols it represents the average value at risk at any given second.',
     },
     cell: (ctx) => {
       if (ctx.row.original.averageValueInFlight === undefined) return '-'
@@ -184,6 +192,8 @@ export function getAllProtocolsColumns(
       meta: {
         align: 'right',
         headClassName: 'text-2xs',
+        tooltip:
+          'The total number of token transfer transactions completed in the past 24 hours.',
       },
     }),
     averageDurationColumn,
@@ -192,6 +202,8 @@ export function getAllProtocolsColumns(
       meta: {
         align: 'right',
         headClassName: 'text-2xs',
+        tooltip:
+          'The average USD value per token transfer completed in the past 24 hours.',
       },
       cell: (ctx) => (
         <span className="font-medium text-label-value-15">
@@ -206,6 +218,8 @@ export function getAllProtocolsColumns(
       meta: {
         cellClassName: '!pr-0',
         headClassName: 'text-2xs',
+        tooltip:
+          'Chains involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination chain.',
       },
       cell: (ctx) => (
         <TopChainsCell
