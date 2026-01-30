@@ -431,7 +431,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         expect(all).toEqualUnsorted([a1, a2, b1])
       })
 
-      it('deletes all records when list is empty except returns 0', async () => {
+      it('does not delete any records when list is empty', async () => {
         await repository.upsert(
           state({ pluginName: 'plugin-a', chain: 'ethereum' }),
         )
