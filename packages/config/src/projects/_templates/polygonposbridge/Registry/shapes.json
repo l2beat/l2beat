@@ -3,5 +3,11 @@
     "hash": "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba",
     "address": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
     "blockNumber": 22231805
+  },
+  "Registry.sol": {
+    "hash": "0x918d93a767fea4cb4801e9046bb76680284c46253d3d3f38614e9999be36e5e8",
+    "address": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
+    "chain": "ethereum",
+    "blockNumber": 24283297
   }
 }

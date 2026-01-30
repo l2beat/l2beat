@@ -107,9 +107,27 @@ const averageDurationColumn = columnHelper.accessor(
   },
 )
 
+const averageValueAtRiskColumn = columnHelper.accessor('averageValueAtRisk', {
+  header: 'Last 24h avg.\nvalue at risk',
+  invertSorting: true,
+  meta: {
+    align: 'right',
+    headClassName: 'text-2xs',
+  },
+  cell: (ctx) => {
+    if (ctx.row.original.averageValueAtRisk === undefined) return '-'
+    return (
+      <span className="font-medium text-label-value-15">
+        {formatCurrency(ctx.row.original.averageValueAtRisk, 'usd')}
+      </span>
+    )
+  },
+})
+
 export const nonMintingColumns = [
   ...commonColumns,
   last24hVolumeColumn,
+  averageValueAtRiskColumn,
   tokensByVolumeColumn,
 ]
 
@@ -126,7 +144,10 @@ export const omniChainColumns = [
   tokensByVolumeColumn,
 ]
 
-export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
+export function getAllProtocolsColumns(
+  hideTypeColumn?: boolean,
+  showAverageValueAtRiskColumn?: boolean,
+) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
@@ -175,6 +196,7 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
         </span>
       ),
     }),
+    showAverageValueAtRiskColumn && averageValueAtRiskColumn,
     tokensByVolumeColumn,
     columnHelper.accessor('chains', {
       header: 'Chains\nby volume',

@@ -12,11 +12,6 @@ on:
         required: false
         type: string
         default: packages/${{ inputs.project }}/Dockerfile
-      environment:
-        description: "Environment (production or staging)"
-        required: false
-        type: string
-        default: "production"
     secrets:
       COOLIFY_SERVER:
         required: true
@@ -95,5 +90,5 @@ jobs:
 
       - name: Deploy to Coolify
         run: |
-          echo "Deploying ${{ inputs.project }} (${{ inputs.environment }}) to Coolify..."
+          echo "Deploying ${{ inputs.project }} to Coolify..."
           coolify deploy uuid ${{ secrets.COOLIFY_UUID }}
