@@ -9,7 +9,7 @@ import type {
 } from '../../provider/DebugTransactionTrace'
 import type { IProvider } from '../../provider/IProvider'
 import { getSighash } from '../getSighash'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 
@@ -140,3 +140,9 @@ function decodeWithNames(abi: string[], fn: string, data: string) {
   }
   return named
 }
+
+export const EventTraceHandlerBundle = declareHandler('eventTrace', {
+  definition: EventTraceHandlerDefinition,
+  create: ({ field, definition, abi }) =>
+    new EventTraceHandler(field, definition, abi),
+})

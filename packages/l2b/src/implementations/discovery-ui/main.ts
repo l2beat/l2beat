@@ -216,13 +216,11 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
     app.get('/api/handlers', (_req, res) => {
       res.json({
-        handlers: Object.entries(UserHandlers).map(([type, definition]) => ({
+        handlers: Object.entries(UserHandlers).map(([type, handler]) => ({
           type,
-          schema: toJsonSchema(definition),
-          // TODO: add docs
-          docs: '',
-          // TODO: add examples
-          examples: [],
+          schema: toJsonSchema(handler.definition),
+          docs: handler.documentation?.description,
+          examples: handler.documentation?.examples ?? [],
         })),
       })
     })
