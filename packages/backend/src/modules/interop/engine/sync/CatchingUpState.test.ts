@@ -354,6 +354,59 @@ describe(CatchingUpState.name, () => {
       expect(captured?.tx.to).toEqual(transaction.to?.toString())
     })
 
+    it('retries with smaller ranges after log response size exceeded', async () => {
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const getLogs = mockFn()
+        .throwsOnce(new Error('Log response size exceeded'))
+        .throwsOnce(new Error('Log response size exceeded'))
+
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 0n }),
+        ),
+        buildLogQuery: mockFn().returns(makeNonEmptyLogQuery()),
+        getLogs,
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const firstState = await state.catchUp()
+
+      expect(firstState).toEqual(state)
+      expect(syncer.logRangeDivider).toEqual(1)
+      expect(saveProducedInteropEvents).not.toHaveBeenCalled()
+
+      const secondState = await state.catchUp()
+
+      expect(secondState).toEqual(state)
+      expect(syncer.logRangeDivider).toEqual(2)
+      const secondCall = getLogs.calls[1]?.args[0]
+      expect(secondCall?.fromBlock).toEqual(1n)
+      expect(secondCall?.toBlock).toEqual(5n)
+    })
+
+    it('throws after too many log range divider increments', async () => {
+      const getLogs = mockFn().throws(new Error('Log response size exceeded'))
+
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 0n }),
+        ),
+        buildLogQuery: mockFn().returns(makeNonEmptyLogQuery()),
+        getLogs,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      await state.catchUp()
+      await state.catchUp()
+      await state.catchUp()
+      await expect(async () => await state.catchUp()).toBeRejectedWith(
+        /Log range divider exceeded/,
+      )
+    })
+
     it('throws when no synced range and no resync timestamp', async () => {
       const syncer = createSyncer({
         latestBlockNumber: 10n,
@@ -379,6 +432,7 @@ function createSyncer(
     } as InteropEventSyncer['cluster'],
     latestBlockNumber: 10n,
     waitingForWipe: false,
+    logRangeDivider: undefined,
     getResyncState: mockFn().resolvesTo({
       resyncFrom: undefined,
       wipeRequired: false,
