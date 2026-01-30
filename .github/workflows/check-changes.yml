@@ -12,6 +12,10 @@ on:
         description: "Package name for turbo-ignore (e.g., @l2beat/backend)"
         required: true
         type: string
+    outputs:
+      should_deploy:
+        description: "Bool whether deployment should run"
+        value: ${{ jobs.check-changes.outputs.should_deploy }}
 
 permissions:
   contents: read
