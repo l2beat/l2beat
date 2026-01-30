@@ -113,29 +113,32 @@ const averageDurationColumn = columnHelper.accessor(
   },
 )
 
-const averageValueAtRiskColumn = columnHelper.accessor('averageValueAtRisk', {
-  header: 'Last 24h avg.\nvalue at risk',
-  invertSorting: true,
-  meta: {
-    align: 'right',
-    headClassName: 'text-2xs',
-    tooltip:
-      'The average USD value of funds in transit at any given second over the past 24 hours. For non-minting protocols it represents the average value at risk at any given second.',
+const averageInFlightValueColumn = columnHelper.accessor(
+  'averageValueInFlight',
+  {
+    header: 'Last 24h avg.\nin-flight value',
+    invertSorting: true,
+    meta: {
+      align: 'right',
+      headClassName: 'text-2xs',
+      tooltip:
+        'The average USD value of funds in transit at any given second over the past 24 hours. For non-minting protocols it represents the average value at risk at any given second.',
+    },
+    cell: (ctx) => {
+      if (ctx.row.original.averageValueInFlight === undefined) return '-'
+      return (
+        <span className="font-medium text-label-value-15">
+          {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
+        </span>
+      )
+    },
   },
-  cell: (ctx) => {
-    if (ctx.row.original.averageValueAtRisk === undefined) return '-'
-    return (
-      <span className="font-medium text-label-value-15">
-        {formatCurrency(ctx.row.original.averageValueAtRisk, 'usd')}
-      </span>
-    )
-  },
-})
+)
 
 export const nonMintingColumns = [
   ...commonColumns,
   last24hVolumeColumn,
-  averageValueAtRiskColumn,
+  averageInFlightValueColumn,
   tokensByVolumeColumn,
 ]
 
@@ -154,7 +157,7 @@ export const omniChainColumns = [
 
 export function getAllProtocolsColumns(
   hideTypeColumn?: boolean,
-  showAverageValueAtRiskColumn?: boolean,
+  showAverageInFlightValueColumn?: boolean,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -208,7 +211,7 @@ export function getAllProtocolsColumns(
         </span>
       ),
     }),
-    showAverageValueAtRiskColumn && averageValueAtRiskColumn,
+    showAverageInFlightValueColumn && averageInFlightValueColumn,
     tokensByVolumeColumn,
     columnHelper.accessor('chains', {
       header: 'Chains\nby volume',

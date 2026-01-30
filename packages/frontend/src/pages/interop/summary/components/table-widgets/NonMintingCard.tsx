@@ -5,6 +5,7 @@ import type { InteropDashboardData } from '~/server/features/scaling/interop/get
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
+import { Top5Badge } from '../Top5Badge'
 import { NonMintingTable } from './tables/NonMintingTable'
 
 export function NonMintingCard({
@@ -24,9 +25,12 @@ export function NonMintingCard({
   return (
     <PrimaryCard className="flex flex-col border-t-blue-600 max-md:border-b max-md:border-b-divider md:border-t-4">
       <div className="flex items-center justify-between">
-        <h2 className="font-bold text-heading-20 decoration-blue-600 underline-offset-6 max-md:underline md:text-heading-24">
-          Non-minting
-        </h2>
+        <div className="flex items-center gap-2">
+          <h2 className="font-bold text-heading-20 decoration-blue-600 underline-offset-6 max-md:underline md:text-heading-24">
+            Non-minting
+          </h2>
+          <Top5Badge />
+        </div>
         <a href={viewAllUrl}>
           <Button
             variant="outline"
@@ -41,8 +45,9 @@ export function NonMintingCard({
         In-flight risk only. Tokens are therefore first bridged using a
         different minting bridge that needs to be separately assessed.
       </div>
-      {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries && entries.length > 0 ? (
+      {isLoading ? (
+        <Skeleton className="mt-2 h-62 w-full rounded-sm" />
+      ) : entries && entries.length > 0 ? (
         <NonMintingTable entries={entries} />
       ) : (
         <NoResultsInfo />

@@ -8,12 +8,12 @@ export function AllProtocolsCard({
   entries,
   isLoading,
   hideTypeColumn,
-  showAverageValueAtRiskColumn,
+  showAverageInFlightValueColumn,
 }: {
   entries: InteropDashboardData['entries'] | undefined
   isLoading: boolean
   hideTypeColumn?: boolean
-  showAverageValueAtRiskColumn?: boolean
+  showAverageInFlightValueColumn?: boolean
 }) {
   return (
     <PrimaryCard className="col-span-full flex flex-col max-md:border-divider max-md:border-b">
@@ -28,7 +28,7 @@ export function AllProtocolsCard({
           <AllProtocolsTable
             entries={entries}
             hideTypeColumn={hideTypeColumn}
-            showAverageValueAtRiskColumn={showAverageValueAtRiskColumn}
+            showAverageInFlightValueColumn={showAverageInFlightValueColumn}
           />
         )
       ) : null}
