@@ -47,8 +47,10 @@ jobs:
       - name: Check if package changed
         id: check
         run: |
+          set +e
           npx turbo-ignore ${{ inputs.package }} --fallback=HEAD~1
           exit_code=$?
+          set -e
 
           if ${{ inputs.force }}; then
             echo "should_deploy=true" >> $GITHUB_OUTPUT
@@ -56,7 +58,10 @@ jobs:
           elif [ $exit_code -eq 1 ]; then
             echo "should_deploy=true" >> $GITHUB_OUTPUT
             echo "✓ ${{ inputs.package }} package changed, will deploy"
-          else
+          elif [ $exit_code -eq 0 ];
             echo "should_deploy=false" >> $GITHUB_OUTPUT
             echo "✗ ${{ inputs.package }} package unchanged, skipping deployment"
+          else
+            echo "✗ package detection script failed"
+            exit $exit_code
           fi
