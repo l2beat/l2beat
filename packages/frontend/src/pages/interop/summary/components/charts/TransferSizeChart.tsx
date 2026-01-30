@@ -19,7 +19,9 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
+import { Logo } from '~/components/Logo'
 import { useIsClient } from '~/hooks/useIsClient'
+import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
@@ -78,56 +80,64 @@ export function TransferSizeChart({ data, isLoading }: Props) {
   }
 
   return (
-    <SimpleChartContainer
-      meta={chartMeta}
-      className="h-full [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.yAxis_.recharts-cartesian-axis-tick_text]:font-bold [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-subtitle-11"
-    >
-      <BarChart
-        accessibilityLayer
-        data={data}
-        margin={{ top: 20 }}
-        maxBarSize={24}
-        barGap={4}
+    <div className="relative size-full">
+      <SimpleChartContainer
+        meta={chartMeta}
+        className="size-full [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.yAxis_.recharts-cartesian-axis-tick_text]:font-bold [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-subtitle-11"
       >
-        <ChartLegend
-          verticalAlign="top"
-          align="left"
-          content={<ChartLegendContent />}
-        />
-        {Object.keys(chartMeta).map((bucket) => {
-          const actualKey = bucket as keyof typeof chartMeta
-          return [
-            <Bar
-              key={actualKey}
-              dataKey={actualKey}
-              stackId="a"
-              fill={chartMeta[actualKey].color}
-              fillOpacity={0.8}
-              isAnimationActive={false}
-            />,
-          ]
-        })}
-        <CartesianGrid vertical={false} strokeDasharray="5 5" />
-        <YAxis
-          tickCount={5}
-          axisLine={false}
-          tickLine={false}
-          width={30}
-          dx={5}
-          unit="%"
-          domain={[0, 100]}
-          allowDataOverflow={true}
-        />
-        <XAxis
-          tickLine={false}
-          dataKey="name"
-          type="category"
-          interval={0}
-          tick={(props) => <XAxisTick {...props} data={data} />}
-        />
-        <ChartTooltip filterNull={false} content={<CustomTooltip />} />
-      </BarChart>
-    </SimpleChartContainer>
+        <BarChart
+          accessibilityLayer
+          data={data}
+          margin={{ top: 20 }}
+          maxBarSize={24}
+          barGap={4}
+        >
+          <ChartLegend
+            verticalAlign="top"
+            align="left"
+            content={<ChartLegendContent />}
+          />
+          {Object.keys(chartMeta).map((bucket) => {
+            const actualKey = bucket as keyof typeof chartMeta
+            return [
+              <Bar
+                key={actualKey}
+                dataKey={actualKey}
+                stackId="a"
+                fill={chartMeta[actualKey].color}
+                fillOpacity={0.8}
+                isAnimationActive={false}
+              />,
+            ]
+          })}
+          <CartesianGrid vertical={false} strokeDasharray="5 5" />
+          <YAxis
+            tickCount={5}
+            axisLine={false}
+            tickLine={false}
+            width={30}
+            dx={5}
+            unit="%"
+            domain={[0, 100]}
+            allowDataOverflow={true}
+          />
+          <XAxis
+            tickLine={false}
+            dataKey="name"
+            type="category"
+            interval={0}
+            tick={(props) => <XAxisTick {...props} data={data} />}
+          />
+          <ChartTooltip filterNull={false} content={<CustomTooltip />} />
+        </BarChart>
+      </SimpleChartContainer>
+      <Logo
+        animated={false}
+        className={cn(
+          'pointer-events-none absolute right-3 bottom-10 h-8 w-20 opacity-50',
+        )}
+      />
+    </div>
   )
 }
 
