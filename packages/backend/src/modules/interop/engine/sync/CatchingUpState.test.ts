@@ -361,7 +361,7 @@ describe(CatchingUpState.name, () => {
         .throwsOnce(new Error('Log response size exceeded'))
 
       const syncer = createSyncer({
-        latestBlockNumber: 10n,
+        latestBlockNumber: 20_000n,
         getLastSyncedRange: mockFn().resolvesTo(
           makeSyncedRange({ fromBlock: 1n, toBlock: 0n }),
         ),
@@ -383,7 +383,7 @@ describe(CatchingUpState.name, () => {
       expect(syncer.logRangeDivider).toEqual(2)
       const secondCall = getLogs.calls[1]?.args[0]
       expect(secondCall?.fromBlock).toEqual(1n)
-      expect(secondCall?.toBlock).toEqual(5n)
+      expect(secondCall?.toBlock).toEqual(5_000n)
     })
 
     it('throws after too many log range divider increments', async () => {

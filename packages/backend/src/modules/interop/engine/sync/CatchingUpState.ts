@@ -286,11 +286,9 @@ export class CatchingUpState implements TimeloopState {
 
     const queryRange =
       LOG_QUERY_RANGE[this.syncer.chain] ?? LOG_QUERY_RANGE.DEFAULT
-    const availableRange = latestBlock.number - nextFrom + 1n
-    const maxRange = queryRange < availableRange ? queryRange : availableRange
     const divider = this.syncer.logRangeDivider ?? 0
     const divisor = 2n ** BigInt(divider)
-    let effectiveRange = maxRange / divisor
+    let effectiveRange = queryRange / divisor
     if (effectiveRange < 1n) {
       effectiveRange = 1n
     }
