@@ -111,47 +111,45 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getAnomalyStats(): Promise<AggregatedInteropTransferAnomalyRow[]> {
+  async getDailySeries(): Promise<AggregatedInteropTransferAnomalyRow[]> {
     const rows = await this.db
       .with('squashed', (db) =>
         db
           .selectFrom('AggregatedInteropTransfer')
           .select((eb) => [
-            'timestamp',
+            sql<Date>`date_trunc('day', timestamp)`.as('day'),
             'id',
             eb.fn.sum('transferCount').as('transfer_count'),
           ])
-          .groupBy(['timestamp', 'id']),
+          .groupBy(['id', sql`date_trunc('day', timestamp)`]),
       )
       .with('windowed', (db) =>
         db.selectFrom('squashed').select([
-          'timestamp',
+          'day',
           'id',
           'transfer_count',
-          sql<number>`lag(transfer_count) over (partition by id order by timestamp)`.as(
+          sql<number>`lag(transfer_count) over (partition by id order by day)`.as(
             'prev_day_count',
           ),
-          sql<number>`lag(transfer_count, 7) over (partition by id order by timestamp)`.as(
+          sql<number>`lag(transfer_count, 7) over (partition by id order by day)`.as(
             'prev_7d_count',
           ),
-          // NOTE: This uses last 7 rows per id, not calendar days.
-          // Missing days are skipped; consider filling gaps if needed.
           sql<number>`avg(transfer_count) over (
             partition by id
-            order by timestamp
+            order by day
             rows between 7 preceding and 1 preceding
           )`.as('mean_7d'),
           sql<number>`stddev_samp(transfer_count) over (
             partition by id
-            order by timestamp
+            order by day
             rows between 7 preceding and 1 preceding
           )`.as('std_7d'),
-          sql<Date>`max(timestamp) over (partition by id)`.as('latest_ts'),
+          sql<Date>`max(day) over (partition by id)`.as('latest_ts'),
         ]),
       )
       .selectFrom('windowed')
       .select([
-        'timestamp',
+        'day',
         'id',
         'transfer_count',
         'prev_day_count',
@@ -159,12 +157,12 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         'mean_7d',
         'std_7d',
       ])
-      .whereRef('timestamp', '=', 'latest_ts')
+      .whereRef('day', '=', 'latest_ts')
       .orderBy('id', 'asc')
       .execute()
 
     return rows.map((row) => ({
-      timestamp: UnixTime.fromDate(row.timestamp),
+      timestamp: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
       prevDayCount:
@@ -176,7 +174,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     }))
   }
 
-  async getSeriesById(
+  async getDailySeriesById(
     id: string,
   ): Promise<AggregatedInteropTransferIdSeriesRecord[]> {
     const rows = await this.db
@@ -184,40 +182,40 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         db
           .selectFrom('AggregatedInteropTransfer')
           .select((eb) => [
-            'timestamp',
             'id',
+            sql<Date>`date_trunc('day', timestamp)`.as('day'),
             eb.fn.sum('transferCount').as('transfer_count'),
             eb.fn.sum('totalDurationSum').as('total_duration_sum'),
             eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
             eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
           ])
           .where('id', '=', id)
-          .groupBy(['timestamp', 'id']),
+          .groupBy(['id', 'day']),
       )
       .selectFrom('squashed')
       .select([
-        'timestamp',
         'id',
+        'day',
         'transfer_count',
         'total_duration_sum',
         'total_src_value_usd',
         'total_dst_value_usd',
         sql<number>`avg(transfer_count) over (
           partition by id
-          order by timestamp
+          order by day
           rows between 7 preceding and 1 preceding
         )`.as('mean_7d'),
         sql<number>`stddev_samp(transfer_count) over (
           partition by id
-          order by timestamp
+          order by day
           rows between 7 preceding and 1 preceding
         )`.as('std_7d'),
       ])
-      .orderBy('timestamp', 'asc')
+      .orderBy('day', 'asc')
       .execute()
 
     return rows.map((row) => ({
-      timestamp: UnixTime.fromDate(row.timestamp),
+      timestamp: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
       mean7d: row.mean_7d === null ? null : Number(row.mean_7d),

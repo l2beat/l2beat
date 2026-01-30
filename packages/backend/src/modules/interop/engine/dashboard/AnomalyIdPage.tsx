@@ -53,17 +53,17 @@ function TransferIdPageLayout(props: {
           <div style={{ width: '100%' }}>
             <canvas
               id="transfer-id-count-chart"
-              height={140}
+              height={400}
               style={{ width: '100%' }}
             />
             <canvas
               id="transfer-id-duration-chart"
-              height={140}
+              height={400}
               style={{ width: '100%' }}
             />
             <canvas
               id="transfer-id-volume-chart"
-              height={140}
+              height={400}
               style={{ width: '100%' }}
             />
           </div>
@@ -89,7 +89,7 @@ function TransferIdPageLayout(props: {
                         lower.push(null);
                       } else {
                         upper.push(mean + zScore * std);
-                        lower.push(mean - zScore * std);
+                        lower.push(Math.max(0, mean - zScore * std));
                       }
                     }
                     return { upper, lower };

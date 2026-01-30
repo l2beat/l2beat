@@ -1,22 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Z_SCORE_THRESHOLD } from './anomalyStats'
+import {
+  type AggregatedInteropTransferAnomalyStats,
+  Z_SCORE_THRESHOLD,
+} from './anomalyStats'
 import { DataTablePage } from './DataTablePage'
-
-type AggregatedInteropTransferAnomalyStats = {
-  timestamp: number
-  id: string
-  transferCount: number
-  prevDayCount: number | null
-  prev7dCount: number | null
-  mean7d: number | null
-  diffDay: number | null
-  diff7d: number | null
-  zScore7d: number | null
-  pctDiffDay: number | null
-  pctDiff7d: number | null
-}
 
 function formatCount(value: number | null) {
   return value === null ? '-' : value.toFixed(0)
