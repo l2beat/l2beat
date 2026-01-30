@@ -8,7 +8,7 @@ Generated with discovered.json: 0x3dd71ee0500996a6a06a6682f926fa4d62b4285e
 
 ## Description
 
-A new 1/1 Safe (GnosisSafeL2) was added as a validator and set as the anyTrustFastConfirmer, enabling fast confirmations before the challenge period ends. The minimumAssertionPeriod was reduced from 75 blocks to 1 block. The Safe is owned by a single EOA (0xa017149a752BDd8723a09Cd6f40c388D38B8d202).
+Add 1/1 fastConfirmer. Reduced minimumAssertionPeriod from 75 to 1.
 
 ## Watched changes
 
