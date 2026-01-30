@@ -7,56 +7,33 @@ permissions:
   packages: write
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force deployment"
+        required: false
+        default: false
+        type: boolean
   push:
     branches:
       - main
 
 jobs:
-  deploy-backend:
-    name: Deploy backend
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v3
-        with:
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
-      - name: Install heroku CLI
-        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - name: Login to heroku container registry
-        uses: docker/login-action@v3
-        with:
-          username: "_"
-          password: ${{ secrets.HEROKU_TOKEN }}
-          registry: registry.heroku.com
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and publish containers
-        run: |
-          docker build --push \
-            --build-arg TURBO_TEAM=${TURBO_TEAM} \
-            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
-            -t ${HEROKU_TAG} -t ${GH_TAG_LATEST} -t ${GH_TAG_SHA} \
-            -f ${DOCKERFILE} .
-        env:
-          DOCKERFILE: Dockerfile.backend
-          HEROKU_TAG: registry.heroku.com/${{ secrets.HEROKU_BACKEND_PROD }}/web
-          GH_TAG_LATEST: ghcr.io/${{ github.repository }}/backend:latest
-          GH_TAG_SHA: ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      - name: Release published container
-        run: |
-          heroku container:release -a ${{ secrets.HEROKU_BACKEND_PROD }} -v web
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+  check-changes:
+    uses: ./.github/workflows/check-changes.yml
+    with:
+      package: '@l2beat/backend'
+      force: ${{ github.event.inputs.force == 'true' }}
+
+  deploy:
+    needs: check-changes
+    if: needs.check-changes.outputs.should_deploy == 'true'
+    uses: ./.github/workflows/build-deploy-coolify.yml
+    with:
+      project: backend
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_BACKEND_PROD_ID }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}

@@ -6,6 +6,7 @@ import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
+import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
@@ -95,6 +96,7 @@ export const refactored: BaseProject[] = [
   usdt0,
   debridgeDln,
   hyperlaneHwr,
+  ccip,
   cctpv1,
   cctpv2,
   relay,

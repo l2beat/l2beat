@@ -28,6 +28,12 @@ describe('aggregation', () => {
         totalDurationSum: 5000,
         srcValueUsd: 2000,
         dstValueUsd: 2000,
+        avgValueInFlight: undefined,
+        countUnder100: 0,
+        count100To1K: 0,
+        count1KTo10K: 1,
+        count10KTo100K: 0,
+        countOver100K: 0,
       })
     })
 
@@ -68,6 +74,12 @@ describe('aggregation', () => {
         totalDurationSum: 15000,
         srcValueUsd: 6500.5,
         dstValueUsd: 6500.5,
+        avgValueInFlight: undefined,
+        countUnder100: 0,
+        count100To1K: 0,
+        count1KTo10K: 3,
+        count10KTo100K: 0,
+        countOver100K: 0,
       })
     })
 
@@ -100,6 +112,12 @@ describe('aggregation', () => {
         totalDurationSum: 11000,
         srcValueUsd: 3000,
         dstValueUsd: undefined,
+        avgValueInFlight: undefined,
+        countUnder100: 0,
+        count100To1K: 0,
+        count1KTo10K: 1,
+        count10KTo100K: 0,
+        countOver100K: 0,
       })
     })
 
@@ -127,6 +145,146 @@ describe('aggregation', () => {
 
       expect(result.srcValueUsd).toEqual(3000.23)
       expect(result.dstValueUsd).toEqual(5001.21)
+    })
+
+    it('correctly buckets transfers by size', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 1000,
+          srcValueUsd: 50, // under 100
+          dstValueUsd: 50,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 2000,
+          srcValueUsd: undefined, // 100-1K
+          dstValueUsd: 500,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 3000,
+          srcValueUsd: 5000, // 1K-10K
+          dstValueUsd: 5000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 4000,
+          srcValueUsd: 50000, // 10K-100K
+          dstValueUsd: 50000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 5000,
+          srcValueUsd: 200000, // over 100K
+          dstValueUsd: 200000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 5000,
+          srcValueUsd: undefined,
+          dstValueUsd: undefined,
+        }),
+      ]
+
+      const result = getAggregatedTransfer(transfers)
+
+      expect(result).toEqual({
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        transferCount: 6,
+        totalDurationSum: 20000,
+        srcValueUsd: 255050,
+        dstValueUsd: 255550,
+        avgValueInFlight: undefined,
+        countUnder100: 1,
+        count100To1K: 1,
+        count1KTo10K: 1,
+        count10KTo100K: 1,
+        countOver100K: 1,
+      })
+    })
+
+    it('calculates average value at risk correctly', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 6000,
+          srcValueUsd: 3000,
+          dstValueUsd: 3000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 4000,
+          srcValueUsd: 1500,
+          dstValueUsd: 1500,
+        }),
+      ]
+
+      const result = getAggregatedTransfer(transfers, {
+        calculateValueInFlight: true,
+      })
+
+      // valueInFlight = (2000 * 5000) + (3000 * 6000) + (1500 * 4000)
+      //             = 10,000,000 + 18,000,000 + 6,000,000
+      //             = 34,000,000
+      // avgValueInFlight = 34,000,000 / 86,400 ≈ 393.52
+      expect(result.avgValueInFlight).toEqual(393.52)
+    })
+
+    it('calculates average value at risk using dstValueUsd when srcValueUsd is undefined', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 5000,
+          srcValueUsd: undefined,
+          dstValueUsd: 2000,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 6000,
+          srcValueUsd: 3000,
+          dstValueUsd: undefined,
+        }),
+      ]
+
+      const result = getAggregatedTransfer(transfers, {
+        calculateValueInFlight: true,
+      })
+
+      // valueInFlight = (2000 * 5000) + (3000 * 6000)
+      //             = 10,000,000 + 18,000,000
+      //             = 28,000,000
+      // avgValueInFlight = 28,000,000 / 86,400 ≈ 324.07
+      expect(result.avgValueInFlight).toEqual(324.07)
     })
 
     it('throws error when group is empty', () => {

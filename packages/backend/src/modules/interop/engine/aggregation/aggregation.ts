@@ -3,10 +3,29 @@ import type {
   AggregatedInteropTransferRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+
+type Bucket =
+  | 'under100'
+  | '100to1k'
+  | '1kto10k'
+  | '10kto100k'
+  | 'over100k'
+  | 'unknown'
+function getBucket(valueUsd: number | undefined): Bucket {
+  if (valueUsd === undefined) return 'unknown'
+  if (valueUsd < 100) return 'under100'
+  if (valueUsd < 1000) return '100to1k'
+  if (valueUsd < 10000) return '1kto10k'
+  if (valueUsd < 100000) return '10kto100k'
+  return 'over100k'
+}
 
 export function getAggregatedTransfer(
   group: InteropTransferRecord[],
+  options?: {
+    calculateValueInFlight?: boolean
+  },
 ): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp'> {
   const first = group[0]
   assert(first, 'Group is empty')
@@ -14,6 +33,12 @@ export function getAggregatedTransfer(
   let totalDurationSum = 0
   let srcValueUsd: number | undefined = undefined
   let dstValueUsd: number | undefined = undefined
+  let valueInFlight: number | undefined = undefined
+  let countUnder100 = 0
+  let count100To1K = 0
+  let count1KTo10K = 0
+  let count10KTo100K = 0
+  let countOver100K = 0
 
   for (const transfer of group) {
     totalDurationSum += transfer.duration
@@ -28,6 +53,36 @@ export function getAggregatedTransfer(
     } else {
       dstValueUsd += transfer.dstValueUsd ?? 0
     }
+
+    // Count transfers by bucket based on srcValueUsd
+    const bucket = getBucket(transfer.srcValueUsd ?? transfer.dstValueUsd)
+    switch (bucket) {
+      case 'under100':
+        countUnder100++
+        break
+      case '100to1k':
+        count100To1K++
+        break
+      case '1kto10k':
+        count1KTo10K++
+        break
+      case '10kto100k':
+        count10KTo100K++
+        break
+      case 'over100k':
+        countOver100K++
+        break
+      case 'unknown':
+        break
+      default:
+        assertUnreachable(bucket)
+    }
+
+    if (options?.calculateValueInFlight) {
+      valueInFlight =
+        (valueInFlight ?? 0) +
+        (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0) * transfer.duration
+    }
   }
 
   return {
@@ -37,6 +92,14 @@ export function getAggregatedTransfer(
     totalDurationSum,
     srcValueUsd: srcValueUsd ? Math.round(srcValueUsd * 100) / 100 : undefined,
     dstValueUsd: dstValueUsd ? Math.round(dstValueUsd * 100) / 100 : undefined,
+    avgValueInFlight: valueInFlight
+      ? Math.round((valueInFlight / UnixTime.DAY) * 100) / 100
+      : undefined,
+    countUnder100,
+    count100To1K,
+    count1KTo10K,
+    count10KTo100K,
+    countOver100K,
   }
 }
 

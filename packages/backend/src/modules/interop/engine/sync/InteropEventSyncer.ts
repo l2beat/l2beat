@@ -10,6 +10,7 @@ import {
   type RpcBlock,
   type RpcLog,
   type RpcReceipt,
+  type RpcTransaction,
   UpsertMap,
 } from '@l2beat/shared'
 import {
@@ -35,6 +36,7 @@ export class LogQuery {
   topic0s = new Set<string>()
   addresses = new Set<EthereumAddress>()
   topicToTxEvents = new UpsertMap<string, Set<string>>()
+  topic0sWithTx = new Set<string>()
   isEmpty() {
     return this.topic0s.size === 0 || this.addresses.size === 0
   }
@@ -88,6 +90,9 @@ function addPluginDataRequests(
         for (const signature of eventRequest.includeTxEvents) {
           txEvents.add(toEventSelector(signature))
         }
+      }
+      if (eventRequest.includeTx) {
+        result.topic0sWithTx.add(topic0)
       }
     }
   }
@@ -256,6 +261,10 @@ export class InteropEventSyncer extends TimeLoop {
 
   getTransactionReceipt(hash: string): Promise<RpcReceipt | null> {
     return this.rpcClient.getTransactionReceipt(hash)
+  }
+
+  getTransactionByHash(hash: string): Promise<RpcTransaction | null> {
+    return this.rpcClient.getTransactionByHash(hash)
   }
 
   getLastSyncedRange(): Promise<InteropPluginSyncedRangeRecord | undefined> {

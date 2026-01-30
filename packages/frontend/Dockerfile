@@ -2,7 +2,7 @@ ARG TURBO_TEAM
 ARG TURBO_TOKEN
 ARG COREPACK_VERSION="^0.31.0"
 
-FROM node:22 AS pruner
+FROM node:22.22.0 AS pruner
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ARG TURBO_TEAM
@@ -14,7 +14,7 @@ COPY . .
 RUN pnpm add -g turbo
 RUN turbo prune --docker @l2beat/frontend
 
-FROM node:22 AS builder
+FROM node:22.22.0 AS builder
 ARG TURBO_TEAM
 ARG TURBO_TOKEN
 ARG COREPACK_VERSION
@@ -26,14 +26,19 @@ COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
 RUN pnpm build:frontend
 
-FROM node:22-slim AS release
-WORKDIR /app/
+FROM node:22.22.0-slim AS release
+
+# Install curl for healthcheck and create non-root user
 RUN apt update && \
-  apt install -y openssh-server curl bash iproute2 jq && \
+  apt install -y curl && \
   apt clean && \
-  rm -rf /var/lib/apt/lists/*
-COPY --from=builder /src/ .
-COPY docker/.profile.d .profile.d
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+  rm -rf /var/lib/apt/lists/* && \
+  groupadd -r appgroup && useradd -r -g appgroup -m appuser
+
+WORKDIR /app/
+COPY --from=builder --chown=appuser:appgroup /src/ .
 WORKDIR /app/packages/frontend/
+
+USER appuser
+
 CMD node ./dist/server/index.js

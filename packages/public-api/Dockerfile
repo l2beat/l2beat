@@ -3,7 +3,7 @@ ARG TURBO_TEAM
 ARG TURBO_TOKEN
 ARG COREPACK_VERSION="^0.31.0"
 
-FROM node:22 as pruner
+FROM node:22.22.0 as pruner
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ARG TURBO_TEAM
@@ -15,7 +15,7 @@ COPY . .
 RUN pnpm add -g turbo
 RUN turbo prune --docker @l2beat/public-api
 
-FROM node:22 as builder
+FROM node:22.22.0 as builder
 ARG ARCH
 ARG TURBO_TEAM
 ARG TURBO_TOKEN
@@ -23,7 +23,7 @@ ARG COREPACK_VERSION
 RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
 COPY --from=pruner /src/out/json/ .
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
 RUN pnpm build:public-api
@@ -35,14 +35,19 @@ RUN mkdir /dist/ && \
   rm -f difft-$ARCH-unknown-linux-gnu.tar.gz
 
 
-FROM node:22-slim as release
-WORKDIR /app/
+FROM node:22.22.0-slim as release
+
+# Install curl for healthcheck and create non-root user
 RUN apt update && \
-  apt install -y openssh-server curl bash iproute2 jq && \
+  apt install -y curl && \
   apt clean && \
-  rm -rf /var/lib/apt/lists/*
-COPY --from=builder /src/ .
-COPY --from=builder /dist/difft /usr/local/bin/difft
-COPY docker/.profile.d .profile.d
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+  rm -rf /var/lib/apt/lists/* && \
+  groupadd -r appgroup && useradd -r -g appgroup -m appuser
+
+WORKDIR /app/
+COPY --from=builder --chown=appuser:appgroup /src/ .
+COPY --from=builder --chown=appuser:appgroup /dist/difft /usr/local/bin/difft
+
+USER appuser
+
 CMD cd packages/public-api && node build/index.js

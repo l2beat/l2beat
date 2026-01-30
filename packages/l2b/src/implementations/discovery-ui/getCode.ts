@@ -1,7 +1,6 @@
 import {
   type ConfigReader,
   combineImplementationHashes,
-  type DiscoveryPaths,
   flatteningHash,
   get$Implementations,
 } from '@l2beat/discovery'
@@ -76,18 +75,12 @@ function isFlatCodeCurrent(
 }
 
 export function getCode(
-  paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
   address: ChainSpecificAddress,
   checkFlatCode = false,
 ): ApiCodeResponse {
-  const { entryName, codePaths } = getCodePaths(
-    paths,
-    configReader,
-    project,
-    address,
-  )
+  const { entryName, codePaths } = getCodePaths(configReader, project, address)
 
   if (checkFlatCode) {
     if (!isFlatCodeCurrent(configReader, project, address, codePaths)) {
@@ -107,7 +100,6 @@ export function getCode(
 }
 
 export function getAllCode(
-  paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
 ): Record<string, ApiCodeResponse> {
@@ -124,7 +116,6 @@ export function getAllCode(
   for (const fullAddress of allAddresses) {
     try {
       const { entryName, codePaths } = getCodePaths(
-        paths,
         configReader,
         project,
         fullAddress,
@@ -152,7 +143,6 @@ export function getAllCode(
 }
 
 export function getCodePaths(
-  paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
   address: ChainSpecificAddress,

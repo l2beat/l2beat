@@ -1,4 +1,38 @@
-Generated with discovered.json: 0xa2b52bde21ece72c0d01fa1e252e748c0455f45e
+Generated with discovered.json: 0x09c8e4f08050e7e81b826460c34bc6320f87a782
+
+# Diff at Wed, 28 Jan 2026 12:49:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c9622efccc03e90f3e3da4283b4873ee6b8197d6 block: 1769598027
+- current timestamp: 1769604483
+
+## Description
+
+Roles discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769598027 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824","role":".challenger"}
+    }
+```
+
+```diff
+    EOA  (eth:0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"propose","from":"eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824","role":".proposer"}
+    }
+```
+
+Generated with discovered.json: 0xd038087a3d1a598e55357dff30a7943cf5f12cfa
 
 # Diff at Tue, 27 Jan 2026 16:56:39 GMT:
 

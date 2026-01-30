@@ -1,7 +1,7 @@
 {
   "name": "phala",
-  "timestamp": 1769532933,
-  "configHash": "0x72696c4eb7450c6fb0563b9ba0d44e15f6820682f47d6f3e67a4843862573c6b",
+  "timestamp": 1769604483,
+  "configHash": "0xd1fa79dbca1deaf58eb68a2d4fd42b2ecf5b7bedaaed6de2d7a65dce1154f07b",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -271,7 +271,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1756389311,
       "sinceBlock": 23240047,
       "values": {
@@ -303,7 +303,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 280,
+        "gameCount": 281,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
@@ -317,7 +317,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 3,
+        "permissionedGamesTotal": 4,
         "proxyAdmin": "eth:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "version": "1.3.0"
@@ -462,6 +462,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
+          "role": ".challenger"
+        },
         {
           "permission": "guard",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
@@ -1337,6 +1342,11 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
+          "role": ".proposer"
+        },
         {
           "permission": "propose",
           "from": "eth:0xb45440830bd8D288bB2B5B01Be303ae60fc855d8",
@@ -2305,6 +2315,6 @@
     "succinct/OPSuccinct/OPSuccinctDisputeGame": "0x405a65bfa65673c1ee3d040cdeb0ac4bd18c8b092ad1271c30f4781759b27c1b",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_phala": "0x4342677410b67fb7bc701eb3f57360f9f6a8eaac289a8b2fd9b756b172358ef1"
   },
-  "usedBlockNumbers": { "ethereum": 24327499 },
-  "permissionsConfigHash": "0xc0f43e7704f99d18279c33529ea14811553810f5c4ff398377aeb78743896045"
+  "usedBlockNumbers": { "ethereum": 24333435 },
+  "permissionsConfigHash": "0xd19ab8df14c2335122a27209a609a059564c465f11d4c299ad2d62674fdd622c"
 }

@@ -104,6 +104,12 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 11000,
           srcValueUsd: 5000,
           dstValueUsd: 5000,
+          avgValueInFlight: undefined,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 2,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
       ])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
@@ -285,6 +291,12 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 5000,
           srcValueUsd: 2000,
           dstValueUsd: 2000,
+          avgValueInFlight: undefined,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 1,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
         // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum)
         {
@@ -296,6 +308,12 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 7000,
           srcValueUsd: 1000,
           dstValueUsd: 1000,
+          avgValueInFlight: undefined,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 1,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
         // Config2: Chain plugin filter - should match msg5 (arbitrum->ethereum)
         {
@@ -307,6 +325,12 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 9000,
           srcValueUsd: 2500,
           dstValueUsd: 2500,
+          avgValueInFlight: undefined,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 1,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
         // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth)
         {
@@ -318,6 +342,12 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 28000,
           srcValueUsd: 10500,
           dstValueUsd: 10000,
+          avgValueInFlight: undefined,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 3,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
       ])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
@@ -370,6 +400,87 @@ describe(InteropAggregatingIndexer.name, () => {
           transferCount: 1,
           totalDurationSum: 12000,
           volume: 3000,
+        },
+      ])
+    })
+
+    it('calculates average value at risk for nonMinting bridge type', async () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          duration: UnixTime.DAY,
+          srcValueUsd: 1,
+          dstValueUsd: 1,
+        }),
+      ]
+
+      const configs: InteropAggregationConfig[] = [
+        {
+          id: 'config1',
+          bridgeType: 'nonMinting',
+          plugins: [{ plugin: 'across' }],
+        },
+      ]
+
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getByRange: mockFn().resolvesTo(transfers),
+      })
+
+      const aggregatedInteropTransfer = mockObject<
+        Database['aggregatedInteropTransfer']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(1),
+      })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(1),
+      })
+
+      const transaction = mockFn(async (fn: any) => await fn())
+
+      const db = mockDatabase({
+        transaction,
+        interopTransfer,
+        aggregatedInteropTransfer,
+        aggregatedInteropToken,
+      })
+
+      const indexer = new InteropAggregatingIndexer({
+        db,
+        configs,
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+        logger: Logger.SILENT,
+        minHeight: 0,
+      })
+
+      await indexer.update(from, to)
+
+      expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 1,
+          totalDurationSum: UnixTime.DAY,
+          srcValueUsd: 1,
+          dstValueUsd: 1,
+          // avgValueInFlight = (1 * 86400) / 86400 = 1
+          avgValueInFlight: 1,
+          countUnder100: 1,
+          count100To1K: 0,
+          count1KTo10K: 0,
+          count10KTo100K: 0,
+          countOver100K: 0,
         },
       ])
     })

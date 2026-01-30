@@ -121,9 +121,11 @@ export class SorareBasePlugin implements InteropPluginResyncable {
           srcEvent: transferRegistered,
           srcAmount: transferRegistered.args.amount,
           srcTokenAddress: Address32.NATIVE,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: transferRegistered.args.amount,
           dstTokenAddress: Address32.NATIVE,
+          dstWasMinted: false,
         }),
       ]
     }

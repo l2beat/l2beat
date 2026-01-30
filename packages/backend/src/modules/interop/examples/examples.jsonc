@@ -25,6 +25,7 @@
     "transfers": ["allbridge.Transfer"]
   },
   "ccip": {
+    "loadConfigs": ["ccip"],
     "txs": [
       // Arbitrum → Base (old Minted event format)
       {
@@ -1877,7 +1878,7 @@
   },
   "hwr": {
     // 4 hwr transfers, one is USDC via cctp
-    "loadConfigs": ["cctp-v2"],
+    // "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "base",
@@ -1910,6 +1911,15 @@
       {
         "chain": "base",
         "tx": "0x4ee250794e41620b5103ee898062188e7ce4acaec045addee1ac22cba2cd0718"
+      },
+      // smolcoin
+      {
+        "chain": "arbitrum",
+        "tx": "0xf32c41db9377c65d3c542b8cc6b1575fe2b539fac640ae2bfc65929970f65adb"
+      },
+      {
+        "chain": "base",
+        "tx": "0x6fd7165f4087a39c6e4519a41607c74d1c4b965445babdcabacd08d5fa5e8b1c"
       }
     ]
   },
@@ -2213,6 +2223,39 @@
     ],
     "transfers": ["canonical-erc20.Transfer", "canonical-erc20.Transfer"]
   },
+  "zkstack-unsupported": {
+    "loadConfigs": ["zkstack"],
+    "tags": ["zkstack"],
+    "txs": [
+      // 'legacy' deposit erc-20
+      {
+        "chain": "ethereum",
+        "tx": "0x1f090ee0f3ff13c2681800b388a7177e6a22c99edfc2b565a00d43e541931dea"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0xf01dbaf12640a53a1f101ae71ffbe7dbf39b232622b662fd4ba0d708f74e8240"
+      },
+      // zklink message
+      {
+        "chain": "ethereum",
+        "tx": "0x9222223d139c1c95b2cca9174db6f8bc82c1dda45a0dfe6aa1f9b0d1bb7dee58"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x926ad40e0da97e84ade4ce52b4a8c488f0588b75db1730da58f513b47101369c"
+      },
+      // 'AccessControlledOCR2Aggregator' message
+      {
+        "chain": "ethereum",
+        "tx": "0xe0194201751283be901e44b8ab744055eacab9fdf3f8df71ff160cc9341406aa"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x4679a9290df4277ecdec5171be31a3a379550823458388c95659a7c9035a79fb"
+      }
+    ]
+  },
   "zkstack-deposit-message": {
     "loadConfigs": ["zkstack"],
     "tags": ["zkstack"],
@@ -2381,6 +2424,74 @@
       { "type": "opstack.L2ToL1Message", "app": "maker-bridge" }
     ],
     "transfers": ["maker-bridge.L1ToL2Transfer", "maker-bridge.L2ToL1Transfer"]
+  },
+  "polygon-deposit": {
+    "loadConfigs": ["polygon"],
+    "txs": [
+      // Plasma bridge deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x8a93efe609b9ad991dc70b152b6a575a8f601650cf9c73c1bda2bce4477d288f"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x7a29792add2a082c18c35a758fe823368a34537eb7f980fc6722489a949cc914"
+      },
+      // PoS bridge deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xa374c8585cb595df46b23b5cf2aa20aac14fc66a78eacf8bbe45323b36e12c36"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xbaad5b4d133b7b45a60673ba34a024201e8da0b300fba3a55aaebface16af506"
+      }
+    ],
+    "events": [
+      "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
+      "polygon.StateCommitted"
+    ],
+    "messages": [
+      { "type": "polygon.Message", "app": "polygonpos" },
+      { "type": "polygon.Message", "app": "polygonpos" }
+    ],
+    "transfers": ["polygon.Transfer", "polygon.Transfer"]
+  },
+  "polygon-withdrawal": {
+    "loadConfigs": ["polygon"],
+    "txs": [
+      // Plasma bridge withdrawal
+      {
+        "chain": "polygonpos",
+        "tx": "0x2161831d33d492d84c84bc81c1b821ec24a8460a56718e0828a374439a348280"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6d5463530e31301203093cf3cbd4a2b58750a91e068b648e6c81a21f6bd9a2d5"
+      },
+      // PoS bridge withdrawal
+      {
+        "chain": "polygonpos",
+        "tx": "0xf0ff5f2c0297fe741751ae507fa8517a7642405554753e853ca5a20b638b8fc2"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xe6e2b3d8093f37a86d9fb2c959daf04e634a0b7521df214012a59a4f399bc96c"
+      }
+    ],
+    "events": [
+      "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized",
+      "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized"
+    ],
+    "messages": [
+      { "type": "polygon.Message", "app": "polygonpos" },
+      { "type": "polygon.Message", "app": "polygonpos" }
+    ],
+    "transfers": ["polygon.Transfer", "polygon.Transfer"]
   },
   "sky-bridge": {
     "txs": [

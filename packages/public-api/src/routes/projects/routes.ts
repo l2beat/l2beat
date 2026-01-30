@@ -26,7 +26,7 @@ export function addProjectsRoutes(
       tags: ['projects'],
       result: v.array(ProjectSchema),
     },
-    async (req, res) => {
+    async (_, res) => {
       const projects = await ps.getProjects({
         optional: ['chainConfig'],
       })

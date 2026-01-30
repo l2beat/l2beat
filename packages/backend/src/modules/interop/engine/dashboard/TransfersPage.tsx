@@ -10,6 +10,25 @@ import {
 } from './ProcessorsStatusTable'
 import { ShortenedHash } from './ShortenedHash'
 
+function BooleanCell({
+  value,
+  trueLabel,
+  falseLabel,
+}: {
+  value: boolean | undefined
+  trueLabel: string
+  falseLabel: string
+}) {
+  if (value === undefined) {
+    return <span style={{ color: '#888' }}>-</span>
+  }
+  return (
+    <span style={{ color: value ? '#e67e22' : '#3498db' }}>
+      {value ? trueLabel : falseLabel}
+    </span>
+  )
+}
+
 function TransfersTable(props: {
   transfers: InteropTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
@@ -23,8 +42,10 @@ function TransfersTable(props: {
           <th>Duration</th>
           <th>srcToken</th>
           <th>srcValue</th>
+          <th>srcBurned</th>
           <th>dstToken</th>
           <th>dstValue</th>
+          <th>dstMinted</th>
           <th>srcChain</th>
           <th>srcTx</th>
           <th>srcToken</th>
@@ -52,9 +73,23 @@ function TransfersTable(props: {
               </td>
               <td data-order={e.srcValueUsd}>{formatDollars(e.srcValueUsd)}</td>
               <td>
+                <BooleanCell
+                  value={e.srcWasBurned}
+                  trueLabel="burned"
+                  falseLabel="locked"
+                />
+              </td>
+              <td>
                 {e.dstAmount} {e.dstSymbol}
               </td>
               <td data-order={e.dstValueUsd}>{formatDollars(e.dstValueUsd)}</td>
+              <td>
+                <BooleanCell
+                  value={e.dstWasMinted}
+                  trueLabel="minted"
+                  falseLabel="released"
+                />
+              </td>
               <td>{e.srcChain}</td>
               <td>
                 {srcExplorerUrl ? (

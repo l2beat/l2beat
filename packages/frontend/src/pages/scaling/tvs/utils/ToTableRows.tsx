@@ -3,12 +3,10 @@ import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTv
 
 export function toTableRows({
   projects,
-  excludeAssociatedTokens,
   sevenDayBreakdown,
 }: {
   projects: ScalingTvsEntry[]
   sevenDayBreakdown: SevenDayTvsBreakdown | undefined
-  excludeAssociatedTokens?: boolean
 }) {
   return projects.map((project) => {
     const sevenDayBreakdownProject = sevenDayBreakdown?.projects[project.id]

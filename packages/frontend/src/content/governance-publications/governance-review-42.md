@@ -53,7 +53,7 @@ You can find us to discuss everything related to Optimism’s governance, from c
 
 **Upcoming Events (Times in UTC):**
 
-[Grants Council Office Hours]( meet.google.com/vkn-qnwy-qqy) - on 11.3 at 17:30.
+[Grants Council Office Hours](https://meet.google.com/vkn-qnwy-qqy) - on 11.3 at 17:30.
 
 [Token House Community Call](https://meet.google.com/vme-ovto-jcn) - on 11.3 at 19:00.
 
@@ -82,7 +82,7 @@ Entropy has made an update regarding the SOS proposal [announcing](https://forum
 
 ### **Curia Forum Score Integration: Measuring Delegate Engagement Beyond Voting**
 
-Curia has [created a post ](https://forum.arbitrum.foundation/t/curia-forum-score-integration-measuring-delegate-engagement-beyond-voting/28570)to announce the introduction of a Forum Score Integration aimed at quantifying a delegate’s off-chain engagement in Arbitrum governance. By tracking participation—such as proposal creation, discussions, and time spent reading forum posts—this new score complements on-chain voting records, offering a more holistic view of each delegate's contributions. Forum Score calculates three main metrics (Proposal, Engagement, and Activeness), normalizes them, and aggregates them into a final rating. Delegates can verify their forum accounts on [arbitrum.curiahub.xyz](arbitrum.curiahub.xyz), enabling a more transparent display of their overall involvement. Curia encourages feedback on refining the scoring process—adjusting metrics, revising forum categories, or enhancing user experience—so that governance participants receive more apparent recognition for their off-chain efforts.
+Curia has [created a post ](https://forum.arbitrum.foundation/t/curia-forum-score-integration-measuring-delegate-engagement-beyond-voting/28570)to announce the introduction of a Forum Score Integration aimed at quantifying a delegate’s off-chain engagement in Arbitrum governance. By tracking participation—such as proposal creation, discussions, and time spent reading forum posts—this new score complements on-chain voting records, offering a more holistic view of each delegate's contributions. Forum Score calculates three main metrics (Proposal, Engagement, and Activeness), normalizes them, and aggregates them into a final rating. Delegates can verify their forum accounts on [arbitrum.curiahub.xyz](https://arbitrum.curiahub.xyz/), enabling a more transparent display of their overall involvement. Curia encourages feedback on refining the scoring process—adjusting metrics, revising forum categories, or enhancing user experience—so that governance participants receive more apparent recognition for their off-chain efforts.
 
 
 ### **The Bible ‹› Delegate Incentive Program (DIP) - Manual for Delegates**
@@ -354,5 +354,6 @@ You can find us to discuss everything related to Scroll’s governance, from cur
 [Weekly DAO & Governance Call](https://meet.google.com/smr-hxgd-btt) - on 12.3 at 11:30.
 
 [Delegate Training Call](https://meet.google.com/yaj-mpsb-yng) - on 12.3 at 18:30.
+
 
 [Protocol Upgrade - Weekly DAO & Governance Call](https://meet.google.com/mhz-ncvc-ipd) - on 12.3 at 17:00.

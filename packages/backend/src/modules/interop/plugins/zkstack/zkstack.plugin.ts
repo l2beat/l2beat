@@ -210,7 +210,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: withdrawalLog,
-        addresses: SUPPORTED_CHAINS.map((n) => n.l2EthToken),
+        addresses: SUPPORTED_CHAINS.map((n) => n.l2GasToken),
       },
       {
         type: 'event',
@@ -393,7 +393,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     }
 
     const withdrawal = parseWithdrawal(input.log, [
-      ChainSpecificAddress.address(network.l2EthToken),
+      ChainSpecificAddress.address(network.l2GasToken),
     ])
     if (withdrawal) {
       const receiver = EthereumAddress(withdrawal.l1Receiver)
@@ -475,9 +475,14 @@ export class ZkStackPlugin implements InteropPluginResyncable {
       })
       if (!l2LogSent) return
 
-      const baseTokenDeposit = db.find(BridgehubDepositBaseTokenInitiated, {
+      let baseTokenDeposit = db.find(BridgehubDepositBaseTokenInitiated, {
         sameTxBefore: event,
       })
+      if (!baseTokenDeposit) {
+        baseTokenDeposit = db.find(BridgehubDepositBaseTokenInitiated, {
+          sameTxAfter: event,
+        })
+      }
       if (!baseTokenDeposit) return
 
       const depositInitiated = db.find(BridgehubDepositInitiated, {
@@ -558,10 +563,14 @@ export class ZkStackPlugin implements InteropPluginResyncable {
 
     // WITHDRAWAL
     if (BridgeMintL1.checkType(event)) {
-      const gasWithdrawal = db.find(Withdrawal, {
+      const gasWithdrawals = db.findAll(Withdrawal, {
         matchId: event.args.matchId,
       })
-      if (gasWithdrawal) {
+      if (gasWithdrawals.length > 0) {
+        // pick earliest, more deterministic for spam cases
+        const gasWithdrawal = gasWithdrawals.sort(
+          (a, b) => a.ctx.timestamp - b.ctx.timestamp,
+        )[0]
         const l1MessageSent = db.find(L1MessageSent, {
           sameTxBefore: gasWithdrawal,
         })
@@ -644,7 +653,7 @@ export class ZkStackPlugin implements InteropPluginResyncable {
     if (!assets) return
     const entry = assets[assetId.toLowerCase()]
     if (!entry) return
-    const unfiltered = entry.implementationAddresses[chain]
+    const unfiltered = entry.deployedTokenAddresses[chain]
     // hack for building a bridge between zkstack and l2 beets understanding of a native token address
     if (
       unfiltered ===

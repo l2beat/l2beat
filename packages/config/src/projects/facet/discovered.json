@@ -1,6 +1,6 @@
 {
   "name": "facet",
-  "timestamp": 1768391906,
+  "timestamp": 1769601687,
   "configHash": "0x668768bdc2deaaf17983133f822fd00a47d1802f9de00ee74aa57e4e67bafe5c",
   "entries": [
     {
@@ -178,15 +178,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 2828260,
-        "anchorProposalId": 621,
-        "anchorRoot": "0x85a315b9016d7e4b843284b4323fa7153b87fcfac90bc87acfd3cc38a5b2df35",
+        "anchorL2BlockNumber": 2929060,
+        "anchorProposalId": 700,
+        "anchorRoot": "0x3ba41fb743c9ce2c712f374ee3498cf3c53790056fefc409121ede472fe2d236",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 650,
+        "getProposalsLength": 729,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1754499659,
@@ -333,7 +333,7 @@
           "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
         ],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 327,
+        "nonce": 330,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -402,7 +402,7 @@
       "type": "Contract",
       "template": "facet/L2ToL1MessagePasser",
       "sourceHashes": [
-        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x702c17f55cd06de3274ea8306900257e19dc09f5ffeb15cd67a6efb43a2354b6",
         "0x6b028499b0f22cef9cbca4b978fff42eab473a6826e795939827875790a562b2"
       ],
       "proxyType": "EIP1967 proxy",
@@ -832,6 +832,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24232790, "facet": 2878947 },
+  "usedBlockNumbers": { "ethereum": 24333205, "facet": 2979762 },
   "permissionsConfigHash": "0x804277fe3ef466ad4a6f1643551094a2daca80f97376fbc270e197e312316767"
 }
