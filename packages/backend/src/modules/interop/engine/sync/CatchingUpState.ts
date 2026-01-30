@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import {
   getBlockNumberAtOrBefore,
+  isLimitExceededError,
   type RpcLog,
   type RpcTransaction,
   toEVMLog,
@@ -107,7 +108,7 @@ export class CatchingUpState implements TimeloopState {
       try {
         interopEvents = await this.captureRange(rangeData.nextRange, logQuery)
       } catch (error) {
-        if (isLogResponseSizeExceeded(error)) {
+        if (error instanceof Error && isLimitExceededError(error)) {
           this.increaseLogRangeDivider()
           return 'retrySmallerRange'
         }
@@ -356,16 +357,4 @@ function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
     type: tx.type?.toString(),
     value: tx.value,
   }
-}
-
-function isLogResponseSizeExceeded(error: unknown): boolean {
-  if (!(error instanceof Error)) {
-    return false
-  }
-  return (
-    error.message.includes('Log response size exceeded') ||
-    error.message.includes('query exceeds max block range 100000') ||
-    error.message.includes('eth_getLogs is limited to a 10,000 range') ||
-    error.message.includes('returned more than 10000')
-  )
 }
