@@ -76,9 +76,7 @@ function AnomaliesTable(props: {
                   {UnixTime.toYYYYMMDD(row.timestamp)}
                 </td>
                 <td>{row.id}</td>
-                <td>
-                  {formatCount(row.transferCount)}
-                </td>
+                <td>{formatCount(row.transferCount)}</td>
                 <td>{formatCount(row.prevDayCount)}</td>
                 <td>{formatCount(row.prev7dCount)}</td>
                 <td>{formatMetric(row.zScore7d)}</td>
