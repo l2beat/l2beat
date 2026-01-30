@@ -66,6 +66,10 @@ export const nillion: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp,
+  celestiaDa: {
+    sinceBlock: 8976650, // https://celenium.io/tx/1477fe4e04ea83b101b9b8c957c6072f966f61ef14f71a563a14fc631b9e004c
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBOFuc8Ges=',
+  },
   isNodeAvailable: true,
   milestones: [
     {
