@@ -117,6 +117,8 @@ export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
   public waitingForWipe = false
+  // Number of times the log range has been halved due to size-limit errors.
+  public logRangeDivider?: number
 
   constructor(
     readonly chain: LongChainName,
