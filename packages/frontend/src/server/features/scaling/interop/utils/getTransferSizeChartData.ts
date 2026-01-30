@@ -52,6 +52,7 @@ export function getTransferSizeChartData(
   return Object.fromEntries(
     Array.from(data.entries())
       .sort((a, b) => b[1].volume - a[1].volume)
+      .slice(0, 15)
       .map(([key, value]) => [
         key,
         {
@@ -63,7 +64,6 @@ export function getTransferSizeChartData(
           count10KTo100K: value.count10KTo100K,
           countOver100K: value.countOver100K,
         },
-      ])
-    .slice(0, 15),
+      ]),
   )
 }
