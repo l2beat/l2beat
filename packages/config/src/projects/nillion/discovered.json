@@ -1,7 +1,7 @@
 {
   "name": "nillion",
-  "timestamp": 1769785218,
-  "configHash": "0x2275c1a4bc9ecbcf3b5fff22d13d9f43d3ea50a7a37979e0ca2aad27982d17a7",
+  "timestamp": 1769787652,
+  "configHash": "0x233db7b6ce5df40fdca7f52d3d2af95d51f411af4dbebb73627596308e57d541",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -129,6 +129,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x64A42dB261E1a19a56C51E541F45b42139a4488a",
+          "role": ".challenger"
+        },
         {
           "permission": "guard",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
@@ -467,7 +472,14 @@
     {
       "address": "eth:0x6303836F83B9bC24F80bE698D97256DAf688905E",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x64A42dB261E1a19a56C51E541F45b42139a4488a",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "DelayedWETH",
@@ -1951,6 +1963,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24348441 },
-  "permissionsConfigHash": "0x2fbe501e1dec48fc1583a748775ae46c7b962ec035ca16abf14fd17e24cc9463"
+  "usedBlockNumbers": { "ethereum": 24348644 },
+  "permissionsConfigHash": "0x679f3a3124dc1aa602851b6a12f6537476a1d8b34f266c99f6ee3861ef611eec"
 }

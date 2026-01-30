@@ -9,10 +9,13 @@ const discovery = new ProjectDiscovery('nillion')
 const genesisTimestamp = UnixTime(1765911289)
 
 export const nillion: ScalingProject = opStackL2({
-  addedAt: UnixTime.now(),
+  addedAt: UnixTime(1769731200), // 2026-01-30
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Other.MigratedFromL1],
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Nillion',
     slug: 'nillion',
@@ -35,6 +38,7 @@ export const nillion: ScalingProject = opStackL2({
   chainConfig: {
     name: 'nillion',
     chainId: 98875,
+    gasTokens: ['ETH'],
     explorerUrl: 'https://explorer.nillion.network',
     sinceTimestamp: genesisTimestamp,
     multicallContracts: [
@@ -62,7 +66,7 @@ export const nillion: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp,
-  isNodeAvailable: false,
+  isNodeAvailable: true,
   milestones: [
     {
       title: 'Nillion Migrates to Ethereum',
