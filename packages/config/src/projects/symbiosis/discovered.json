@@ -1,7 +1,7 @@
 {
   "name": "symbiosis",
   "timestamp": 1762264533,
-  "configHash": "0x82336732bff28bc9ae5fa2877fa6bdcee952d0656cff7154774024029dc02a42",
+  "configHash": "0xc9fed47eaac652859a0b4c6a13880dbe49ccce7d963a56c5a866fa0052448198",
   "entries": [
     {
       "address": "eth:0x0ee552336134B6f8F0a72927b6124f8A81865928",
@@ -67,7 +67,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ProxyAdminBridge",
+      "name": "ProxyAdmin",
       "address": "eth:0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA",
       "type": "Contract",
       "template": "global/ProxyAdmin",
@@ -556,5 +556,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23726387 },
-  "permissionsConfigHash": "0x325afe6d8f82474439aa3a03eb23b4835a2bcc9309ffb68a0f48cec0b70a05cf"
+  "permissionsConfigHash": "0x2d26875747665ec494dc593b3e90737758122f7a726524828f33bbf42a8a6ffa"
 }
