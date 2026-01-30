@@ -34,6 +34,7 @@ describe('aggregation', () => {
         count1KTo10K: 1,
         count10KTo100K: 0,
         countOver100K: 0,
+        identifiedCount: 0,
       })
     })
 
@@ -80,6 +81,7 @@ describe('aggregation', () => {
         count1KTo10K: 3,
         count10KTo100K: 0,
         countOver100K: 0,
+        identifiedCount: 0,
       })
     })
 
@@ -118,6 +120,7 @@ describe('aggregation', () => {
         count1KTo10K: 1,
         count10KTo100K: 0,
         countOver100K: 0,
+        identifiedCount: 0,
       })
     })
 
@@ -214,6 +217,7 @@ describe('aggregation', () => {
         count1KTo10K: 1,
         count10KTo100K: 1,
         countOver100K: 1,
+        identifiedCount: 0,
       })
     })
 
@@ -285,6 +289,55 @@ describe('aggregation', () => {
       //             = 28,000,000
       // avgValueInFlight = 28,000,000 / 86,400 ≈ 324.07
       expect(result.avgValueInFlight).toEqual(324.07)
+    })
+
+    it('correctly counts identified transfers', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 6000,
+          srcValueUsd: 3000,
+          dstValueUsd: 3000,
+          srcAbstractTokenId: undefined,
+          dstAbstractTokenId: 'usdc',
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 4000,
+          srcValueUsd: 1500,
+          dstValueUsd: 1500,
+          srcAbstractTokenId: 'btc',
+          dstAbstractTokenId: undefined,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 3000,
+          srcValueUsd: 1000,
+          dstValueUsd: 1000,
+          srcAbstractTokenId: undefined,
+          dstAbstractTokenId: undefined,
+        }),
+      ]
+
+      const result = getAggregatedTransfer(transfers)
+
+      expect(result.identifiedCount).toEqual(3)
     })
 
     it('throws error when group is empty', () => {
