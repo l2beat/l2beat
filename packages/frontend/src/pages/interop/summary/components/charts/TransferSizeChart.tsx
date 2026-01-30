@@ -20,6 +20,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
+import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
   data: TransferSizeDataPoint[] | undefined
@@ -184,11 +185,6 @@ function CustomTooltip({
     data.count10KTo100K +
     data.countOver100K
 
-  // Format number with commas
-  const formatCount = (count: number): string => {
-    return count.toLocaleString('en-US')
-  }
-
   // To match with bar order
   const reversedPayload = [...payload].reverse()
 
@@ -228,7 +224,7 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {formatCount(count)} transfers
+                {formatInteger(count)} transfers
               </span>
             </div>
           )
@@ -238,7 +234,7 @@ function CustomTooltip({
       <div className="flex items-center justify-between gap-x-6">
         <span className="font-medium text-label-value-14">Total transfers</span>
         <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatCount(totalTransfers)} transfers
+          {formatInteger(totalTransfers)} transfers
         </span>
       </div>
     </ChartTooltipWrapper>
