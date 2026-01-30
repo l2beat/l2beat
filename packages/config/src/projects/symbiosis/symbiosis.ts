@@ -51,7 +51,6 @@ export const symbiosis: Bridge = {
       'Telos',
       'Kava',
       'Boba Ethereum',
-      'Boba BNB',
       'ZkSync',
       'Arbitrum One',
       'Optimism',
@@ -121,10 +120,10 @@ export const symbiosis: Bridge = {
       ethereum: [
         discovery.getContractDetails(
           'MetaRouter',
-          'An upgradeable contract to process funds by provided route.',
+          'A not-upgradeable contract to process funds by provided route.',
         ),
         discovery.getContractDetails(
-          'Bridge',
+          'BridgeV2',
           'A contract that generates Oracle requests for the Symbiosis relayers network.',
         ),
         discovery.getContractDetails(
