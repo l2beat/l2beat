@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "nillion",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x7b96e2c80696D5D2d673f0EA62b67352E18747C0"],
+  "overrides": {
+    "eth:0x5931f05809932a43C2A6c86f3F9BC2788f840b1C": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    }
+  }
+}
