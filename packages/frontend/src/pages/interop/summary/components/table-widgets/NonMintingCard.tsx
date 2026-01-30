@@ -45,8 +45,9 @@ export function NonMintingCard({
         In-flight risk only. Tokens are therefore first bridged using a
         different minting bridge that needs to be separately assessed.
       </div>
-      {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries && entries.length > 0 ? (
+      {isLoading ? (
+        <Skeleton className="mt-2 h-62 w-full rounded-sm" />
+      ) : entries && entries.length > 0 ? (
         <NonMintingTable entries={entries} />
       ) : (
         <NoResultsInfo />
