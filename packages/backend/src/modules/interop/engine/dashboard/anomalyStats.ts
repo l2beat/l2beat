@@ -23,6 +23,8 @@ export interface AggregatedInteropTransferAnomalyStats {
   pctDiff7d: number | null
 }
 
+export const Z_SCORE_THRESHOLD = 5
+
 export function calculateAnomalyStats(
   rows: AggregatedInteropTransferAnomalyRow[],
 ): AggregatedInteropTransferAnomalyStats[] {

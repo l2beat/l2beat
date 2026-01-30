@@ -1,9 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { Z_SCORE_THRESHOLD } from './anomalyStats'
 import { DataTablePage } from './DataTablePage'
-
-const Z_SCORE_THRESHOLD = 5
 
 type AggregatedInteropTransferAnomalyStats = {
   timestamp: number
@@ -75,7 +74,17 @@ function AnomaliesTable(props: {
                 <td data-order={row.timestamp}>
                   {UnixTime.toYYYYMMDD(row.timestamp)}
                 </td>
-                <td>{row.id}</td>
+                <td>
+                  <a
+                    href={`/interop/anomalies/${encodeURIComponent(row.id)}`}
+                    title="View chart for this id"
+                  >
+                    {row.id}
+                  </a>
+                  <div style={{ fontSize: '11px', color: '#6b7280' }}>
+                    chart
+                  </div>
+                </td>
                 <td>{formatCount(row.transferCount)}</td>
                 <td>{formatCount(row.prevDayCount)}</td>
                 <td>{formatCount(row.prev7dCount)}</td>

@@ -31,6 +31,17 @@ export interface AggregatedInteropTransferAnomalyRow {
   std7d: number | null
 }
 
+export interface AggregatedInteropTransferIdSeriesRecord {
+  timestamp: UnixTime
+  id: string
+  transferCount: number
+  mean7d: number | null
+  std7d: number | null
+  totalDurationSum: number
+  totalSrcValueUsd: number
+  totalDstValueUsd: number
+}
+
 export function toRecord(
   row: Selectable<AggregatedInteropTransfer>,
 ): AggregatedInteropTransferRecord {
@@ -162,6 +173,58 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         row.prev_7d_count === null ? null : Number(row.prev_7d_count),
       mean7d: row.mean_7d === null ? null : Number(row.mean_7d),
       std7d: row.std_7d === null ? null : Number(row.std_7d),
+    }))
+  }
+
+  async getSeriesById(
+    id: string,
+  ): Promise<AggregatedInteropTransferIdSeriesRecord[]> {
+    const rows = await this.db
+      .with('squashed', (db) =>
+        db
+          .selectFrom('AggregatedInteropTransfer')
+          .select((eb) => [
+            'timestamp',
+            'id',
+            eb.fn.sum('transferCount').as('transfer_count'),
+            eb.fn.sum('totalDurationSum').as('total_duration_sum'),
+            eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
+            eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
+          ])
+          .where('id', '=', id)
+          .groupBy(['timestamp', 'id']),
+      )
+      .selectFrom('squashed')
+      .select([
+        'timestamp',
+        'id',
+        'transfer_count',
+        'total_duration_sum',
+        'total_src_value_usd',
+        'total_dst_value_usd',
+        sql<number>`avg(transfer_count) over (
+          partition by id
+          order by timestamp
+          rows between 7 preceding and 1 preceding
+        )`.as('mean_7d'),
+        sql<number>`stddev_samp(transfer_count) over (
+          partition by id
+          order by timestamp
+          rows between 7 preceding and 1 preceding
+        )`.as('std_7d'),
+      ])
+      .orderBy('timestamp', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      id: row.id,
+      transferCount: Number(row.transfer_count ?? 0),
+      mean7d: row.mean_7d === null ? null : Number(row.mean_7d),
+      std7d: row.std_7d === null ? null : Number(row.std_7d),
+      totalDurationSum: Number(row.total_duration_sum ?? 0),
+      totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
+      totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),
     }))
   }
 
