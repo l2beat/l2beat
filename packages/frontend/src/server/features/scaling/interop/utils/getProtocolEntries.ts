@@ -14,10 +14,10 @@ export type TokenData = {
   id: string
   symbol: string
   iconUrl: string
-  volume: number
+  volume: number | null
   transferCount: number
-  avgDuration: { type: 'single'; duration: number } | DurationSplit
-  avgValue: number
+  avgDuration: { type: 'single'; duration: number } | DurationSplit | null
+  avgValue: number | null
 }
 
 export type ChainData = {
@@ -112,11 +112,14 @@ export function getProtocolEntries(
           tokensDetailsMap,
           durationSplitMap,
           logger,
+          data.transferCount - data.identifiedTransferCount,
         ),
         chains: getChainsData(key, data.chains, durationSplitMap, logger),
         transferCount: data.transferCount,
         averageValue:
-          data.transferCount > 0 ? data.volume / data.transferCount : 0,
+          data.identifiedTransferCount > 0
+            ? data.volume / data.identifiedTransferCount
+            : 0,
         averageDuration: getAverageDuration(key, data, durationSplitMap),
         averageValueInFlight: data.averageValueInFlight,
       }
@@ -130,8 +133,9 @@ function getTokensData(
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
   logger: Logger,
-) {
-  return Array.from(tokens.entries())
+  unknownTransfersCount: number,
+): TokenData[] {
+  const tokensData: TokenData[] = Array.from(tokens.entries())
     .map(([tokenId, token]) => {
       const tokenDetails = tokensDetailsMap.get(tokenId)
 
@@ -160,6 +164,20 @@ function getTokensData(
     })
     .filter(notUndefined)
     .toSorted((a, b) => b.volume - a.volume)
+
+  if (unknownTransfersCount > 0) {
+    tokensData.push({
+      id: 'unknown',
+      symbol: 'Unknown',
+      iconUrl: manifest.getUrl('/images/token-placeholder.png'),
+      transferCount: unknownTransfersCount,
+      avgDuration: null,
+      avgValue: null,
+      volume: null,
+    })
+  }
+
+  return tokensData
 }
 
 function getChainsData(

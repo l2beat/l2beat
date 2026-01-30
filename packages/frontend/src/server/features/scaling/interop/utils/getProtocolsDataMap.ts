@@ -9,6 +9,7 @@ interface ProtocolData extends AverageDurationData {
   tokens: Map<string, AverageDurationData & { volume: number }>
   chains: Map<string, AverageDurationData & { volume: number }>
   averageValueInFlight: number | undefined
+  identifiedTransferCount: number
 }
 
 const INITIAL_DATA: AverageDurationData & { volume: number } = {
@@ -39,6 +40,7 @@ export function getProtocolsDataMap(
       outTransferCount: 0,
       outDurationSum: 0,
       averageValueInFlight: undefined,
+      identifiedTransferCount: 0,
     }
 
     const durationSplit = durationSplitMap.get(record.id)
@@ -84,6 +86,8 @@ export function getProtocolsDataMap(
         record.avgValueInFlight !== undefined
           ? (current.averageValueInFlight ?? 0) + record.avgValueInFlight
           : current.averageValueInFlight,
+      identifiedTransferCount:
+        current.identifiedTransferCount + (record.identifiedCount ?? 0),
     })
   }
 

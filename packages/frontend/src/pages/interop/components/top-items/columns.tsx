@@ -2,6 +2,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
+import { EM_DASH } from '~/consts/characters'
 import type { DurationSplit } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from '../table/AvgDurationCell'
@@ -10,10 +11,10 @@ export type TopItem = {
   id: string
   displayName: string
   iconUrl: string
-  volume: number
+  volume: number | null
   transferCount: number
-  avgDuration: { type: 'single'; duration: number } | DurationSplit
-  avgValue: number
+  avgDuration: { type: 'single'; duration: number } | DurationSplit | null
+  avgValue: number | null
 }
 export type TopItemType = 'tokens' | 'chains'
 
@@ -49,11 +50,14 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
   }),
   columnHelper.accessor('volume', {
     header: 'Last 24h\nVolume',
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {formatCurrency(ctx.row.original.volume, 'usd')}
-      </span>
-    ),
+    cell: (ctx) => {
+      if (ctx.row.original.volume === null) return EM_DASH
+      return (
+        <span className="font-medium text-label-value-15">
+          {formatCurrency(ctx.row.original.volume, 'usd')}
+        </span>
+      )
+    },
     meta: {
       align: 'right',
     },
@@ -71,23 +75,29 @@ export const getTopItemsColumns = (itemType: TopItemType) => [
   }),
   columnHelper.accessor('avgDuration', {
     header: 'Last 24h avg.\ntransfer time',
-    cell: (ctx) => (
-      <AvgDurationCell
-        averageDuration={ctx.row.original.avgDuration}
-        disableTooltip
-      />
-    ),
+    cell: (ctx) => {
+      if (ctx.row.original.avgDuration === null) return EM_DASH
+      return (
+        <AvgDurationCell
+          averageDuration={ctx.row.original.avgDuration}
+          disableTooltip
+        />
+      )
+    },
     meta: {
       align: 'right',
     },
   }),
   columnHelper.accessor('avgValue', {
     header: 'Last 24h avg.\ntransfer value',
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {formatCurrency(ctx.row.original.avgValue, 'usd')}
-      </span>
-    ),
+    cell: (ctx) => {
+      if (ctx.row.original.avgValue === null) return EM_DASH
+      return (
+        <span className="font-medium text-label-value-15">
+          {formatCurrency(ctx.row.original.avgValue, 'usd')}
+        </span>
+      )
+    },
   }),
 ]
 
