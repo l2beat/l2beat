@@ -45,15 +45,13 @@ describe(InteropCleanerLoop.name, () => {
       const plugins: InteropPlugins = {
         comparePlugins: [],
         configPlugins: [],
-        eventPlugins: [{ name: 'plugin-a' }, { name: 'plugin-b' }] as InteropPlugins['eventPlugins'],
+        eventPlugins: [
+          { name: 'plugin-a' },
+          { name: 'plugin-b' },
+        ] as InteropPlugins['eventPlugins'],
       }
 
-      const cleaner = new InteropCleanerLoop(
-        store,
-        db,
-        plugins,
-        Logger.SILENT,
-      )
+      const cleaner = new InteropCleanerLoop(store, db, plugins, Logger.SILENT)
 
       await cleaner.run()
 
@@ -61,8 +59,14 @@ describe(InteropCleanerLoop.name, () => {
       expect(deleteMessageBefore).toHaveBeenCalledTimes(1)
       expect(deleteTransferBefore).toHaveBeenCalledTimes(1)
       expect(deletePricesBefore).toHaveBeenCalledTimes(1)
-      expect(deleteSyncStateNotIn).toHaveBeenCalledWith(['plugin-a', 'plugin-b'])
-      expect(deleteSyncedRangeNotIn).toHaveBeenCalledWith(['plugin-a', 'plugin-b'])
+      expect(deleteSyncStateNotIn).toHaveBeenCalledWith([
+        'plugin-a',
+        'plugin-b',
+      ])
+      expect(deleteSyncedRangeNotIn).toHaveBeenCalledWith([
+        'plugin-a',
+        'plugin-b',
+      ])
     })
 
     it('passes empty list to deleteNotInPluginNames when no plugins', async () => {
