@@ -2,7 +2,6 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import {
   getBlockNumberAtOrBefore,
-  isLimitExceededError,
   type RpcLog,
   type RpcTransaction,
   toEVMLog,
@@ -25,7 +24,6 @@ const LOG_QUERY_RANGE: Record<string, bigint> = {
   DEFAULT: 10_000n,
   arbitrum: 100_000n,
 }
-const MAX_LOG_RANGE_DIVIDER = 3
 
 interface RangeData {
   nextRange: { from: bigint; to: bigint }
@@ -41,10 +39,7 @@ export class CatchingUpState implements TimeloopState {
   constructor(
     private readonly syncer: InteropEventSyncer,
     private readonly logger: Logger,
-  ) {
-    // Reset when new resync begins
-    this.syncer.logRangeDivider = undefined
-  }
+  ) {}
 
   async run(): Promise<SyncerState> {
     return await this.catchUp()
@@ -74,11 +69,7 @@ export class CatchingUpState implements TimeloopState {
       )
       if (rangeData) {
         const logQuery = this.syncer.buildLogQuery()
-        const syncResult = await this.syncRange(logQuery, rangeData)
-        if (syncResult === 'retrySmallerRange') {
-          this.status = 'waiting for smaller range'
-          return this
-        }
+        await this.syncRange(logQuery, rangeData)
 
         if (resyncFrom) {
           await this.clearResyncRequestFlagUnlessWipePending()
@@ -99,22 +90,10 @@ export class CatchingUpState implements TimeloopState {
     }
   }
 
-  private async syncRange(
-    logQuery: LogQuery,
-    rangeData: RangeData,
-  ): Promise<'synced' | 'retrySmallerRange'> {
-    let interopEvents: InteropEvent[] = []
-    if (!logQuery.isEmpty()) {
-      try {
-        interopEvents = await this.captureRange(rangeData.nextRange, logQuery)
-      } catch (error) {
-        if (error instanceof Error && isLimitExceededError(error)) {
-          this.increaseLogRangeDivider()
-          return 'retrySmallerRange'
-        }
-        throw error
-      }
-    }
+  private async syncRange(logQuery: LogQuery, rangeData: RangeData) {
+    const interopEvents = logQuery.isEmpty()
+      ? []
+      : await this.captureRange(rangeData.nextRange, logQuery)
 
     await this.syncer.saveProducedInteropEvents(
       interopEvents,
@@ -126,8 +105,6 @@ export class CatchingUpState implements TimeloopState {
       pluginName: this.syncer.cluster.name,
       range: rangeData.nextRange,
     })
-
-    return 'synced'
   }
 
   private async fetchLogsForRange(
@@ -286,16 +263,8 @@ export class CatchingUpState implements TimeloopState {
 
     const queryRange =
       LOG_QUERY_RANGE[this.syncer.chain] ?? LOG_QUERY_RANGE.DEFAULT
-    const availableRange = latestBlock.number - nextFrom + 1n
-    const maxRange = queryRange < availableRange ? queryRange : availableRange
-    const divider = this.syncer.logRangeDivider ?? 0
-    const divisor = 2n ** BigInt(divider)
-    let effectiveRange = maxRange / divisor
-    if (effectiveRange < 1n) {
-      effectiveRange = 1n
-    }
-    nextTo = nextFrom + effectiveRange - 1n
-    assert(nextTo >= nextFrom)
+    nextTo = nextFrom + queryRange - 1n
+    assert(nextTo > nextFrom)
     if (nextTo >= latestBlock.number) {
       nextTo = latestBlock.number
       fullTo = nextTo
@@ -317,16 +286,6 @@ export class CatchingUpState implements TimeloopState {
       },
       latestBlockNumber: latestBlock.number,
     }
-  }
-
-  private increaseLogRangeDivider() {
-    const current = this.syncer.logRangeDivider ?? 0
-    if (current >= MAX_LOG_RANGE_DIVIDER) {
-      throw new Error(
-        `Log range divider exceeded max of ${MAX_LOG_RANGE_DIVIDER}`,
-      )
-    }
-    this.syncer.logRangeDivider = current + 1
   }
 
   private async getBlockNumberAtOrBefore(

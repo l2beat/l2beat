@@ -181,7 +181,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
     if (!logsResponse.success) {
       // in EVM chains there can be a limit on the number of logs returned
       const parsedError = RPCError.safeParse(response)
-      if (parsedError.success && isLimitExceededError(parsedError.data.error)) {
+      if (parsedError.success && isLimitExceededError(parsedError.data)) {
         const midpoint = Math.floor((from + to) / 2)
 
         this.$.logger.warn('Limit exceeded for logs. Splitting in half', {
@@ -362,7 +362,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
 
     if (parsedError.success) {
       // no retry in this case
-      if (isLimitExceededError(parsedError.data.error)) {
+      if (isLimitExceededError(parsedError.data)) {
         return { success: true }
       }
 
@@ -393,11 +393,18 @@ function buildCallObject(callParams: CallParameters): Record<string, string> {
   }
 }
 
-export function isLimitExceededError({ message }: { message: string }) {
-  return (
-    message.includes('Log response size exceeded') ||
-    message.includes('query exceeds max block range 100000') ||
-    message.includes('eth_getLogs is limited to a 10,000 range') ||
-    message.includes('returned more than 10000')
-  )
+function isLimitExceededError(response: RPCError) {
+  if (
+    response.error &&
+    (response.error.message.includes('Log response size exceeded') ||
+      response.error.message.includes('query exceeds max block range 100000') ||
+      response.error.message.includes(
+        'eth_getLogs is limited to a 10,000 range',
+      ) ||
+      response.error.message.includes('returned more than 10000'))
+  ) {
+    return true
+  }
+
+  return false
 }
