@@ -72,6 +72,7 @@ export function DataTablePage(props: DataTablePageProps) {
         <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js" />
         <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js" />
         <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" />
 
         <style>{`
           body {
@@ -80,6 +81,14 @@ export function DataTablePage(props: DataTablePageProps) {
           }
           table {
             margin: 20px 0;
+          }
+          .center {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
           }
         `}</style>
       </head>

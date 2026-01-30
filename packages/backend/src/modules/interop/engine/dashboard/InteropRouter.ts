@@ -10,6 +10,9 @@ import type {
   SerializableInteropTransfer,
 } from '../stream/InteropTransferStream'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
+import { renderAnomaliesPage } from './AnomaliesPage'
+import { renderAnomalyIdPage } from './AnomalyIdPage'
+import { calculateAnomalyStats } from './anomalyStats'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
@@ -69,6 +72,21 @@ export function createInteropRouter(
     const showResyncControls = ctx.query.showResync !== undefined
 
     ctx.body = renderStatusPage({ pluginSyncStatuses, showResyncControls })
+  })
+
+  router.get('/interop/anomalies', async (ctx) => {
+    const rows = await db.aggregatedInteropTransfer.getDailySeries()
+    const stats = calculateAnomalyStats(rows)
+
+    ctx.body = renderAnomaliesPage({ stats })
+  })
+
+  router.get('/interop/anomalies/:id', async (ctx) => {
+    const params = v.object({ id: v.string() }).validate(ctx.params)
+    const series = await db.aggregatedInteropTransfer.getDailySeriesById(
+      params.id,
+    )
+    ctx.body = renderAnomalyIdPage({ id: params.id, series })
   })
 
   router.get('/interop/memory', (ctx) => {

@@ -21,6 +21,27 @@ export interface AggregatedInteropTransferRecord {
   countOver100K: number
 }
 
+export interface AggregatedInteropTransferAnomalyRow {
+  timestamp: UnixTime
+  id: string
+  transferCount: number
+  prevDayCount: number | null
+  prev7dCount: number | null
+  mean7d: number | null
+  std7d: number | null
+}
+
+export interface AggregatedInteropTransferIdSeriesRecord {
+  timestamp: UnixTime
+  id: string
+  transferCount: number
+  mean7d: number | null
+  std7d: number | null
+  totalDurationSum: number
+  totalSrcValueUsd: number
+  totalDstValueUsd: number
+}
+
 export function toRecord(
   row: Selectable<AggregatedInteropTransfer>,
 ): AggregatedInteropTransferRecord {
@@ -88,6 +109,121 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getDailySeries(): Promise<AggregatedInteropTransferAnomalyRow[]> {
+    const rows = await this.db
+      .with('squashed', (db) =>
+        db
+          .selectFrom('AggregatedInteropTransfer')
+          .select((eb) => [
+            sql<Date>`date_trunc('day', timestamp)`.as('day'),
+            'id',
+            eb.fn.sum('transferCount').as('transfer_count'),
+          ])
+          .groupBy(['id', sql`date_trunc('day', timestamp)`]),
+      )
+      .with('windowed', (db) =>
+        db.selectFrom('squashed').select([
+          'day',
+          'id',
+          'transfer_count',
+          sql<number>`lag(transfer_count) over (partition by id order by day)`.as(
+            'prev_day_count',
+          ),
+          sql<number>`lag(transfer_count, 7) over (partition by id order by day)`.as(
+            'prev_7d_count',
+          ),
+          sql<number>`avg(transfer_count) over (
+            partition by id
+            order by day
+            rows between 7 preceding and 1 preceding
+          )`.as('mean_7d'),
+          sql<number>`stddev_samp(transfer_count) over (
+            partition by id
+            order by day
+            rows between 7 preceding and 1 preceding
+          )`.as('std_7d'),
+          sql<Date>`max(day) over (partition by id)`.as('latest_ts'),
+        ]),
+      )
+      .selectFrom('windowed')
+      .select([
+        'day',
+        'id',
+        'transfer_count',
+        'prev_day_count',
+        'prev_7d_count',
+        'mean_7d',
+        'std_7d',
+      ])
+      .whereRef('day', '=', 'latest_ts')
+      .orderBy('id', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.day),
+      id: row.id,
+      transferCount: Number(row.transfer_count ?? 0),
+      prevDayCount:
+        row.prev_day_count === null ? null : Number(row.prev_day_count),
+      prev7dCount:
+        row.prev_7d_count === null ? null : Number(row.prev_7d_count),
+      mean7d: row.mean_7d === null ? null : Number(row.mean_7d),
+      std7d: row.std_7d === null ? null : Number(row.std_7d),
+    }))
+  }
+
+  async getDailySeriesById(
+    id: string,
+  ): Promise<AggregatedInteropTransferIdSeriesRecord[]> {
+    const rows = await this.db
+      .with('squashed', (db) =>
+        db
+          .selectFrom('AggregatedInteropTransfer')
+          .select((eb) => [
+            'id',
+            sql<Date>`date_trunc('day', timestamp)`.as('day'),
+            eb.fn.sum('transferCount').as('transfer_count'),
+            eb.fn.sum('totalDurationSum').as('total_duration_sum'),
+            eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
+            eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
+          ])
+          .where('id', '=', id)
+          .groupBy(['id', 'day']),
+      )
+      .selectFrom('squashed')
+      .select([
+        'id',
+        'day',
+        'transfer_count',
+        'total_duration_sum',
+        'total_src_value_usd',
+        'total_dst_value_usd',
+        sql<number>`avg(transfer_count) over (
+          partition by id
+          order by day
+          rows between 7 preceding and 1 preceding
+        )`.as('mean_7d'),
+        sql<number>`stddev_samp(transfer_count) over (
+          partition by id
+          order by day
+          rows between 7 preceding and 1 preceding
+        )`.as('std_7d'),
+      ])
+      .orderBy('day', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.day),
+      id: row.id,
+      transferCount: Number(row.transfer_count ?? 0),
+      mean7d: row.mean_7d === null ? null : Number(row.mean_7d),
+      std7d: row.std_7d === null ? null : Number(row.std_7d),
+      totalDurationSum: Number(row.total_duration_sum ?? 0),
+      totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
+      totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),
+    }))
   }
 
   async deleteAllButEarliestPerDayBefore(timestamp: UnixTime): Promise<number> {
