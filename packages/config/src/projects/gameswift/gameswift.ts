@@ -17,7 +17,7 @@ export const gameswift: ScalingProject = upcomingL2({
       websites: ['https://gameswift.io/'],
       bridges: ['https://platform.gameswift.io/games'],
       documentation: ['https://docs.gameswift.io/'],
-      explorers: [],
+      explorers: ['https://mainnet.gameswift.io/'],
       repositories: [],
       socialMedia: [
         'https://twitter.com/GameSwift_io',
