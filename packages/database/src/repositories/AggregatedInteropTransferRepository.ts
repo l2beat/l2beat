@@ -21,6 +21,16 @@ export interface AggregatedInteropTransferRecord {
   countOver100K: number
 }
 
+export interface AggregatedInteropTransferAnomalyRow {
+  timestamp: UnixTime
+  id: string
+  transferCount: number
+  prevDayCount: number | null
+  prev7dCount: number | null
+  mean7d: number | null
+  std7d: number | null
+}
+
 export function toRecord(
   row: Selectable<AggregatedInteropTransfer>,
 ): AggregatedInteropTransferRecord {
@@ -88,6 +98,71 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getAnomalyStats(): Promise<AggregatedInteropTransferAnomalyRow[]> {
+    const rows = await this.db
+      .with('squashed', (db) =>
+        db
+          .selectFrom('AggregatedInteropTransfer')
+          .select((eb) => [
+            'timestamp',
+            'id',
+            eb.fn.sum('transferCount').as('transfer_count'),
+          ])
+          .groupBy(['timestamp', 'id']),
+      )
+      .with('windowed', (db) =>
+        db.selectFrom('squashed').select([
+          'timestamp',
+          'id',
+          'transfer_count',
+          sql<number>`lag(transfer_count) over (partition by id order by timestamp)`.as(
+            'prev_day_count',
+          ),
+          sql<number>`lag(transfer_count, 7) over (partition by id order by timestamp)`.as(
+            'prev_7d_count',
+          ),
+          // NOTE: This uses last 7 rows per id, not calendar days.
+          // Missing days are skipped; consider filling gaps if needed.
+          sql<number>`avg(transfer_count) over (
+            partition by id
+            order by timestamp
+            rows between 7 preceding and 1 preceding
+          )`.as('mean_7d'),
+          sql<number>`stddev_samp(transfer_count) over (
+            partition by id
+            order by timestamp
+            rows between 7 preceding and 1 preceding
+          )`.as('std_7d'),
+          sql<Date>`max(timestamp) over (partition by id)`.as('latest_ts'),
+        ]),
+      )
+      .selectFrom('windowed')
+      .select([
+        'timestamp',
+        'id',
+        'transfer_count',
+        'prev_day_count',
+        'prev_7d_count',
+        'mean_7d',
+        'std_7d',
+      ])
+      .whereRef('timestamp', '=', 'latest_ts')
+      .orderBy('id', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      id: row.id,
+      transferCount: Number(row.transfer_count ?? 0),
+      prevDayCount:
+        row.prev_day_count === null ? null : Number(row.prev_day_count),
+      prev7dCount:
+        row.prev_7d_count === null ? null : Number(row.prev_7d_count),
+      mean7d: row.mean_7d === null ? null : Number(row.mean_7d),
+      std7d: row.std_7d === null ? null : Number(row.std_7d),
+    }))
   }
 
   async deleteAllButEarliestPerDayBefore(timestamp: UnixTime): Promise<number> {
