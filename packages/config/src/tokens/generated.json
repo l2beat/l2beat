@@ -3881,6 +3881,20 @@
       "supply": "zero"
     },
     {
+      "name": "Nillion",
+      "coingeckoId": "nillion",
+      "address": "0x7Cf9a80db3B29eE8efE3710AadB7b95270572d47",
+      "symbol": "NIL",
+      "decimals": 6,
+      "deploymentTimestamp": 1648598273,
+      "coingeckoListingTimestamp": 1742774400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39082/large/nillion.jpg?1723033507",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Nostra",
       "coingeckoId": "nostra",
       "address": "0x610dBd98A28EbbA525e9926b6aaF88f9159edbfd",

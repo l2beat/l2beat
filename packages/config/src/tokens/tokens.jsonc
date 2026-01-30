@@ -1,6 +1,12 @@
 {
   "ethereum": [
     {
+      "symbol": "NIL",
+      "address": "0x7cf9a80db3b29ee8efe3710aadb7b95270572d47",
+      "coingeckoId": "nillion",
+      "deploymentTimestamp": 1648598273
+    },
+    {
       "symbol": "SKY",
       "address": "0x56072C95FAA701256059aa122697B133aDEd9279"
     },
