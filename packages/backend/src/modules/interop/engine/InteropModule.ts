@@ -105,7 +105,7 @@ export function createInteropModule({
   )
 
   const indexerService = new IndexerService(db)
-  const cleaner = new InteropCleanerLoop(eventStore, db, logger)
+  const cleaner = new InteropCleanerLoop(eventStore, db, plugins, logger)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const recentPricesIndexer = new InteropRecentPricesIndexer({
