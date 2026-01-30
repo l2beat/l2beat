@@ -5,7 +5,7 @@ import type { InteropDashboardData } from '~/server/features/scaling/interop/get
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
-import { Top5Badge } from '../Top5Badge'
+import { TopNBadge } from '../TopNBadge'
 import { NonMintingTable } from './tables/NonMintingTable'
 
 export function NonMintingCard({
@@ -29,7 +29,7 @@ export function NonMintingCard({
           <h2 className="font-bold text-heading-20 decoration-blue-600 underline-offset-6 max-md:underline md:text-heading-24">
             Non-minting
           </h2>
-          <Top5Badge />
+          <TopNBadge n={5} />
         </div>
         <a href={viewAllUrl}>
           <Button

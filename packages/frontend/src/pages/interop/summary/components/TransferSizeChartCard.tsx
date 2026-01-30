@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { TransferSizeChartData } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { TransferSizeChart } from './charts/TransferSizeChart'
+import { TopNBadge } from './TopNBadge'
 
 export function TransferSizeChartCard({
   transferSizeChartData,
@@ -39,9 +40,12 @@ export function TransferSizeChartCard({
 
   return (
     <PrimaryCard className="flex flex-col">
-      <h2 className="font-bold text-heading-20 md:text-heading-24">
-        Protocol transfer size
-      </h2>
+      <div className="flex items-center gap-2">
+        <h2 className="font-bold text-heading-20 md:text-heading-24">
+          Protocol transfer size
+        </h2>
+        <TopNBadge n={15} />
+      </div>
 
       <TransferSizeChart data={chartData} isLoading={isLoading} />
     </PrimaryCard>
