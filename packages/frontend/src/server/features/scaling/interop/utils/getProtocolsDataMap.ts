@@ -159,7 +159,7 @@ function updateChainData(
   if (record.dstChain !== record.srcChain) {
     const dstChain = chains.get(record.dstChain) ?? INITIAL_DATA
     chains.set(record.dstChain, {
-      volume: dstChain.volume + (record.srcValueUsd ?? 0),
+      volume: dstChain.volume + (record.dstValueUsd ?? 0),
       inDurationSum: dstChain.inDurationSum + (record.totalDurationSum ?? 0),
       outDurationSum: dstChain.outDurationSum,
       inTransferCount: dstChain.inTransferCount + (record.transferCount ?? 0),
