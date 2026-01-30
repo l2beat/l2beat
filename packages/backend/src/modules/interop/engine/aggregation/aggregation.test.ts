@@ -34,7 +34,7 @@ describe('aggregation', () => {
         count1KTo10K: 1,
         count10KTo100K: 0,
         countOver100K: 0,
-        identifiedCount: 0,
+        identifiedCount: 1,
       })
     })
 
@@ -81,7 +81,7 @@ describe('aggregation', () => {
         count1KTo10K: 3,
         count10KTo100K: 0,
         countOver100K: 0,
-        identifiedCount: 0,
+        identifiedCount: 3,
       })
     })
 
@@ -120,7 +120,7 @@ describe('aggregation', () => {
         count1KTo10K: 1,
         count10KTo100K: 0,
         countOver100K: 0,
-        identifiedCount: 0,
+        identifiedCount: 1,
       })
     })
 
@@ -217,7 +217,7 @@ describe('aggregation', () => {
         count1KTo10K: 1,
         count10KTo100K: 1,
         countOver100K: 1,
-        identifiedCount: 0,
+        identifiedCount: 5,
       })
     })
 
@@ -337,7 +337,7 @@ describe('aggregation', () => {
 
       const result = getAggregatedTransfer(transfers)
 
-      expect(result.identifiedCount).toEqual(3)
+      expect(result.identifiedCount).toEqual(4)
     })
 
     it('throws error when group is empty', () => {

@@ -55,7 +55,10 @@ export function getAggregatedTransfer(
       dstValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
     }
 
-    if (transfer.srcAbstractTokenId || transfer.dstAbstractTokenId) {
+    if (
+      transfer.srcValueUsd !== undefined ||
+      transfer.dstValueUsd !== undefined
+    ) {
       identifiedCount++
     }
 
