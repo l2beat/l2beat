@@ -39,8 +39,8 @@ export function TransferSizeChartCard({
   }, [transferSizeChartData])
 
   return (
-    <PrimaryCard className="flex flex-col">
-      <div className="flex items-center gap-2">
+    <PrimaryCard className="flex flex-col border-transparent md:border-t-4">
+      <div className="flex h-[34px] shrink-0 items-center gap-2">
         <h2 className="font-bold text-heading-20 md:text-heading-24">
           Protocol transfer size
         </h2>
