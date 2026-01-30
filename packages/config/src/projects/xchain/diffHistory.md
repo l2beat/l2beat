@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x3dd71ee0500996a6a06a6682f926fa4d62b4285e
+
+# Diff at Fri, 30 Jan 2026 11:42:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@179241847ec22c24aeac96158d21e3a19cd42138 block: 1769514789
+- current timestamp: 1769773251
+
+## Description
+
+Add 1/1 fastConfirmer. Reduced minimumAssertionPeriod from 75 to 1.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0xa017149a752BDd8723a09Cd6f40c388D38B8d202) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"fastconfirm","from":"eth:0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"eth:0x6d9BbB2e3E7d13727deb2249E13B9D86A62CbcE0"}]}
+      receivedPermissions.1:
++        {"permission":"validate","from":"eth:0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"eth:0x6d9BbB2e3E7d13727deb2249E13B9D86A62CbcE0"}]}
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.anyTrustFastConfirmer:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x6d9BbB2e3E7d13727deb2249E13B9D86A62CbcE0"
++++ description: Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s.
+      values.minimumAssertionPeriod:
+-        75
++        1
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        4
+      values.validators.5:
++        "eth:0x6d9BbB2e3E7d13727deb2249E13B9D86A62CbcE0"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (eth:0x6d9BbB2e3E7d13727deb2249E13B9D86A62CbcE0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../xchain/.flat/GnosisSafeL2/GnosisSafeL2.sol     | 1032 ++++++++++++++++++++
+ .../.flat/GnosisSafeL2/GnosisSafeProxy.p.sol       |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
 Generated with discovered.json: 0x82fc9aacf947539d3c8c34c728b057e013a317d3
 
 # Diff at Tue, 27 Jan 2026 11:55:03 GMT:

@@ -45,8 +45,9 @@ export function LockAndMintCard({
         One-sided risk. If user bridge back, the original tokens are unlocked
         and the bridge risk is removed.
       </div>
-      {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries && entries.length > 0 ? (
+      {isLoading ? (
+        <Skeleton className="mt-2 h-62 w-full rounded-sm" />
+      ) : entries && entries.length > 0 ? (
         <LockAndMintTable entries={entries} />
       ) : (
         <NoResultsInfo />

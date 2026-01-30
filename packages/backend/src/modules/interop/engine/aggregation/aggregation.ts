@@ -43,15 +43,15 @@ export function getAggregatedTransfer(
   for (const transfer of group) {
     totalDurationSum += transfer.duration
     if (srcValueUsd === undefined) {
-      srcValueUsd = transfer.srcValueUsd
+      srcValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd
     } else {
-      srcValueUsd += transfer.srcValueUsd ?? 0
+      srcValueUsd += transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
     }
 
     if (dstValueUsd === undefined) {
-      dstValueUsd = transfer.dstValueUsd
+      dstValueUsd = transfer.dstValueUsd ?? transfer.srcValueUsd
     } else {
-      dstValueUsd += transfer.dstValueUsd ?? 0
+      dstValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
     }
 
     // Count transfers by bucket based on srcValueUsd

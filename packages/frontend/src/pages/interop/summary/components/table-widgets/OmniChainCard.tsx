@@ -45,8 +45,9 @@ export function OmniChainCard({
         The bridge risk is present at all times, as it can mint tokens on all
         chains. Flow limits might be applied.
       </div>
-      {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries && entries.length > 0 ? (
+      {isLoading ? (
+        <Skeleton className="mt-2 h-62 w-full rounded-sm" />
+      ) : entries && entries.length > 0 ? (
         <OmniChainTable entries={entries} />
       ) : (
         <NoResultsInfo />
