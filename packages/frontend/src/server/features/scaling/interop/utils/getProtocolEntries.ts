@@ -116,7 +116,9 @@ export function getProtocolEntries(
         chains: getChainsData(key, data.chains, durationSplitMap, logger),
         transferCount: data.transferCount,
         averageValue:
-          data.transferCount > 0 ? data.volume / data.transferCount : 0,
+          data.identifiedTransferCount > 0
+            ? data.volume / data.identifiedTransferCount
+            : 0,
         averageDuration: getAverageDuration(key, data, durationSplitMap),
         averageValueInFlight: data.averageValueInFlight,
       }
@@ -130,7 +132,7 @@ function getTokensData(
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
   logger: Logger,
-) {
+): TokenData[] {
   return Array.from(tokens.entries())
     .map(([tokenId, token]) => {
       const tokenDetails = tokensDetailsMap.get(tokenId)
