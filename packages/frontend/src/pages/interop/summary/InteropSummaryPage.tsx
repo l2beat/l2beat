@@ -70,10 +70,11 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     return <InteropEmptyState isDirty={isDirty} />
   }
 
-  const groupedEntries = groupBy(data?.entries, (e) => e.bridgeType) as Record<
-    ProtocolEntry['bridgeType'],
-    ProtocolEntry[]
-  >
+  const groupedEntries = Object.fromEntries(
+    Object.entries(groupBy(data?.entries, (e) => e.bridgeType)).map(
+      ([key, value]) => [key, value.slice(0, 5)],
+    ),
+  ) as Record<ProtocolEntry['bridgeType'], ProtocolEntry[]>
 
   return (
     <div
