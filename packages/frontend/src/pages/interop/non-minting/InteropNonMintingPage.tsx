@@ -102,7 +102,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         entries={data?.entries}
         isLoading={isLoading}
         hideTypeColumn
-        showAverageValueAtRiskColumn
+        showAverageInFlightValueColumn
       />
     </div>
   )

@@ -52,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: Dockerfile.backend
+          file: packages/backend/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/update-monitor:latest
