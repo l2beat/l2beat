@@ -64,6 +64,6 @@ export function getTransferSizeChartData(
           countOver100K: value.countOver100K,
         },
       ])
-      .slice(0, 15),
+    .slice(0, 15),
   )
 }
