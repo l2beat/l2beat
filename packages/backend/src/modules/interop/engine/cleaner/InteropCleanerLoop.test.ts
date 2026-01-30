@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropPlugins } from '../../plugins'
 import type { InteropEventStore } from '../capture/InteropEventStore'
@@ -9,8 +8,6 @@ import { InteropCleanerLoop } from './InteropCleanerLoop'
 describe(InteropCleanerLoop.name, () => {
   describe(InteropCleanerLoop.prototype.run.name, () => {
     it('cleans expired data and orphaned plugin entries', async () => {
-      const now = UnixTime.now()
-
       const deleteExpired = mockFn().resolvesTo(5)
       const deleteMessageBefore = mockFn().resolvesTo(10)
       const deleteTransferBefore = mockFn().resolvesTo(15)
