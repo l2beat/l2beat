@@ -1,28 +1,36 @@
-import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { MAYAN_SWIFT } from '../mayan-swift.utils'
 import {
   createEventParser,
   createInteropEventType,
-  type InteropPlugin,
+  type DataRequest,
+  type InteropPluginResyncable,
   type LogToCapture,
 } from '../types'
 import { FOLKS_CHAIN_ID_TO_CHAIN } from './folks-finance'
 import { WormholeConfig } from './wormhole.config'
 
-const parseLogMessagePublished = createEventParser(
-  'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)',
-)
+const logMessagePublishedLog =
+  'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
 
-const parseTransfer = createEventParser(
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
-)
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
 
-// Folks Finance uses Wormhole for cross-chain messaging and emits SendMessage with destination chain.
-// This might need a separate plugin in the future if more Folks-specific logic is needed.
-const parseFolksSendMessage = createEventParser(
-  'event SendMessage(bytes32 operationId, ((uint16,uint16,uint256,uint256,uint256),bytes32,uint16,bytes32,bytes,uint64,bytes) message)',
-)
+// Folks Finance uses Wormhole for cross-chain messaging
+const folksSendMessageLog =
+  'event SendMessage(bytes32 operationId, ((uint16,uint16,uint256,uint256,uint256),bytes32,uint16,bytes32,bytes,uint64,bytes) message)'
+
+const parseLogMessagePublished = createEventParser(logMessagePublishedLog)
+
+const parseTransfer = createEventParser(transferLog)
+
+const parseFolksSendMessage = createEventParser(folksSendMessageLog)
 
 export const LogMessagePublished = createInteropEventType<{
   payload: `0x${string}`
@@ -34,10 +42,34 @@ export const LogMessagePublished = createInteropEventType<{
   $dstChain?: string
 }>('wormhole.LogMessagePublished')
 
-export class WormholePlugin implements InteropPlugin {
+export class WormholePlugin implements InteropPluginResyncable {
   readonly name = 'wormhole'
 
   constructor(private configs: InteropConfigStore) {}
+
+  getDataRequests(): DataRequest[] {
+    const networks = this.configs.get(WormholeConfig) ?? []
+    const coreContractAddresses: ChainSpecificAddress[] = []
+    for (const network of networks) {
+      if (!network.coreContract) continue
+      try {
+        coreContractAddresses.push(
+          ChainSpecificAddress.fromLong(network.chain, network.coreContract),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
+
+    return [
+      {
+        type: 'event',
+        signature: logMessagePublishedLog,
+        includeTxEvents: [transferLog, folksSendMessageLog],
+        addresses: coreContractAddresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const networks = this.configs.get(WormholeConfig)

@@ -8,16 +8,26 @@ Mayan MCTP Protocol
 import { CCTPv1MessageReceived, CCTPv1MessageSent } from './cctp/cctp-v1.plugin'
 import { MayanForwarded } from './mayan-forwarder'
 import {
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type MatchResult,
   Result,
 } from './types'
 import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
-export class MayanMctpPlugin implements InteropPlugin {
+export class MayanMctpPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-mctp'
+
+  // Matcher-only plugin - relies on events captured by other plugins
+  getDataRequests(): DataRequest[] {
+    return []
+  }
+
+  capture() {
+    return undefined
+  }
 
   matchTypes = [MayanForwarded]
   //TODO: This plugin starts from the SRC (ForwardedERC20) but CCTP plugin starts from DST and clears events. This needs to be solved somehow...

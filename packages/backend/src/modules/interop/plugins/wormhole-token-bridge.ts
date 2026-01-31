@@ -1,12 +1,17 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -14,13 +19,15 @@ import {
 import { WormholeConfig } from './wormhole/wormhole.config'
 import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
-const parseLogTransferRedeemed = createEventParser(
-  'event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress,uint64 indexed sequence)',
-)
+const transferRedeemedLog =
+  'event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress,uint64 indexed sequence)'
 
-const parseTransfer = createEventParser(
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
-)
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
+
+const parseLogTransferRedeemed = createEventParser(transferRedeemedLog)
+
+const parseTransfer = createEventParser(transferLog)
 
 export const TransferRedeemed = createInteropEventType<{
   sequence: bigint
@@ -31,10 +38,34 @@ export const TransferRedeemed = createInteropEventType<{
   dstAmount?: bigint | undefined
 }>('wormhole.LogTransferRedeemed')
 
-export class WormholeTokenBridgePlugin implements InteropPlugin {
+export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
   readonly name = 'wormhole-token-bridge'
 
   constructor(private configs: InteropConfigStore) {}
+
+  getDataRequests(): DataRequest[] {
+    const networks = this.configs.get(WormholeConfig) ?? []
+    const tokenBridgeAddresses: ChainSpecificAddress[] = []
+    for (const network of networks) {
+      if (!network.tokenBridge) continue
+      try {
+        tokenBridgeAddresses.push(
+          ChainSpecificAddress.fromLong(network.chain, network.tokenBridge),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
+
+    return [
+      {
+        type: 'event',
+        signature: transferRedeemedLog,
+        includeTxEvents: [transferLog],
+        addresses: tokenBridgeAddresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const wormholeNetworks = this.configs.get(WormholeConfig)
