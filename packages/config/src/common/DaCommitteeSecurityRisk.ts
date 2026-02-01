@@ -61,7 +61,7 @@ function NoHonestMinimumCommitteeSecurity(
     value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee should require an honest minority (33% or less) of members to prevent the DA bridge from accepting an unavailable data commitment.
-   Currently, an honest minority is not able to prevent an unavailable data commitment from being accepted, as this committee requires ${honestMembersPercentage}% of members to be honest. `,
+    Currently, an honest minority cannot prevent an unavailable data commitment from being accepted, as this committee requires ${honestMembersPercentage}% of members to be honest. `,
     orderHint: -1,
   }
 }
@@ -91,7 +91,7 @@ function AutoDAC(params: {
       sentiment === 'bad'
         ? NoCommitteeSecurity().description
         : LimitedCommitteeSecurity().description,
-    // We need the `-` because the higher the probability the worse outcome
+    // We need the `-` because the higher the probability, the worse outcome
     orderHint: -probabilityOfCompromise(
       params.requiredMembers,
       params.membersCount,
@@ -108,7 +108,7 @@ function getDacSentiment(params: {
 
   const assumedHonestMembers = params.membersCount - params.requiredMembers + 1
 
-  // If less than 6 members or more than 1/3 of members need to be honest, the sentiment is bad
+  // If fewer than 6 members or more than 1/3 of members need to be honest, the sentiment is bad
   if (
     params.knownMembers.length < 6 ||
     assumedHonestMembers / params.knownMembers.length > 1 / 3
@@ -116,7 +116,7 @@ function getDacSentiment(params: {
     return 'bad'
   }
 
-  // If less than 5 members are external, the sentiment is bad
+  // If fewer than 5 members are external, the sentiment is bad
   if (params.knownMembers.filter((member) => member.external).length < 5) {
     return 'bad'
   }
