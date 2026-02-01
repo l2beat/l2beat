@@ -12,11 +12,11 @@ import type {
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { renderAnomaliesPage } from './AnomaliesPage'
 import { renderAnomalyIdPage } from './AnomalyIdPage'
-import { calculateAnomalyStats } from './anomalyStats'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
+import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
 
 export function createInteropRouter(
@@ -76,9 +76,8 @@ export function createInteropRouter(
 
   router.get('/interop/anomalies', async (ctx) => {
     const rows = await db.aggregatedInteropTransfer.getDailySeries()
-    const stats = calculateAnomalyStats(rows)
-
-    ctx.body = renderAnomaliesPage({ stats })
+    const explored = explore(rows)
+    ctx.body = renderAnomaliesPage({ stats: explored })
   })
 
   router.get('/interop/anomalies/:id', async (ctx) => {

@@ -1,15 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Z_SCORE_THRESHOLD } from './anomalyStats'
 import { DataTablePage } from './DataTablePage'
 
 type AggregatedInteropTransferIdSeriesRecord = {
   timestamp: UnixTime
   id: string
   transferCount: number
-  mean7d: number | null
-  std7d: number | null
   totalDurationSum: number
   totalSrcValueUsd: number
   totalDstValueUsd: number
@@ -35,9 +32,6 @@ function TransferIdPageLayout(props: {
     avgDuration,
     srcValue,
     dstValue,
-    mean7d: props.series.map((row) => row.mean7d),
-    std7d: props.series.map((row) => row.std7d),
-    zThreshold: Z_SCORE_THRESHOLD,
   })
 
   return (
@@ -78,23 +72,6 @@ function TransferIdPageLayout(props: {
                   const volumeCanvas = document.getElementById('transfer-id-volume-chart');
                   if (!countCanvas || !durationCanvas || !volumeCanvas) return;
 
-                  function computeZScoreBand(means, stds, zScore) {
-                    const upper = [];
-                    const lower = [];
-                    for (let i = 0; i < means.length; i++) {
-                      const mean = means[i];
-                      const std = stds[i];
-                      if (mean === null || mean === undefined || std === null || std === undefined || std === 0) {
-                        upper.push(null);
-                        lower.push(null);
-                      } else {
-                        upper.push(mean + zScore * std);
-                        lower.push(Math.max(0, mean - zScore * std));
-                      }
-                    }
-                    return { upper, lower };
-                  }
-
                   function formatCount(value) {
                     if (value === null || value === undefined || Number.isNaN(value)) return '—';
                     return Math.round(value).toLocaleString();
@@ -116,30 +93,11 @@ function TransferIdPageLayout(props: {
                     scales: { y: { beginAtZero: true } },
                   };
 
-                  const countBand = computeZScoreBand(data.mean7d, data.std7d, data.zThreshold);
-
                   new window.Chart(countCanvas.getContext('2d'), {
                     type: 'line',
                     data: {
                       labels: data.labels,
                       datasets: [
-                        {
-                          label: 'Z-score band (lower)',
-                          data: countBand.lower,
-                          borderColor: 'rgba(37, 99, 235, 0.0)',
-                          backgroundColor: 'rgba(37, 99, 235, 0.08)',
-                          pointRadius: 0,
-                          tension: 0.2,
-                        },
-                        {
-                          label: 'Z-score band (upper)',
-                          data: countBand.upper,
-                          borderColor: 'rgba(37, 99, 235, 0.0)',
-                          backgroundColor: 'rgba(37, 99, 235, 0.08)',
-                          pointRadius: 0,
-                          fill: '-1',
-                          tension: 0.2,
-                        },
                         {
                           label: 'Transfers count',
                           data: data.count,

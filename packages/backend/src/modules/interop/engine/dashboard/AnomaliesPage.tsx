@@ -1,17 +1,19 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import {
-  type AggregatedInteropTransferAnomalyStats,
-  Z_SCORE_THRESHOLD,
-} from './anomalyStats'
 import { DataTablePage } from './DataTablePage'
+import type { DataRowResult } from './stats'
 
-function formatCount(value: number | null) {
-  return value === null ? '-' : value.toFixed(0)
+function formatCount(value: number) {
+  return Math.round(value).toLocaleString()
 }
 
-function formatMetric(value: number | null, digits = 2) {
+function formatZ(value: number) {
+  if (Number.isNaN(value)) return '-'
+  if (!Number.isFinite(value)) return value > 0 ? '∞' : '-∞'
+  return value.toFixed(2)
+}
+
+function formatDiff(value: number | null, digits = 2) {
   return value === null ? '-' : value.toFixed(digits)
 }
 
@@ -30,16 +32,37 @@ function getPercentColor(value: number | null) {
   return `hsl(${hue}, 80%, ${lightness}%)`
 }
 
-function getStatus(zScore: number | null) {
-  if (zScore === null) return { label: '-', color: '#6b7280' }
-  return Math.abs(zScore) >= Z_SCORE_THRESHOLD
+function getSummaryValues(row: DataRowResult) {
+  const diffDay =
+    row.prevDayCount === null ? null : row.lastCount - row.prevDayCount
+  const diff7d =
+    row.prev7dCount === null ? null : row.lastCount - row.prev7dCount
+  const prevDay = row.prevDayCount
+  const prev7d = row.prev7dCount
+  const pctDiffDay =
+    diffDay === null || prevDay === null || prevDay === 0
+      ? null
+      : (diffDay / prevDay) * 100
+  const pctDiff7d =
+    diff7d === null || prev7d === null || prev7d === 0
+      ? null
+      : (diff7d / prev7d) * 100
+  return { diffDay, diff7d, pctDiffDay, pctDiff7d }
+}
+
+function getStatus(row: DataRowResult) {
+  const isAnomaly =
+    row.z.robust.isAnomaly ||
+    row.z.classic.isAnomaly ||
+    row.isFlatLine ||
+    row.isRatioDrop ||
+    row.isRatioSpike
+  return isAnomaly
     ? { label: 'not ok', color: '#dc2626' }
     : { label: 'ok', color: '#16a34a' }
 }
 
-function AnomaliesTable(props: {
-  stats: AggregatedInteropTransferAnomalyStats[]
-}) {
+function AnomaliesTable(props: { stats: DataRowResult[] }) {
   return (
     <table id="anomalies" className="display">
       <thead>
@@ -49,19 +72,27 @@ function AnomaliesTable(props: {
           <th>Count</th>
           <th>Prev Day</th>
           <th>Prev 7d</th>
-          <th>Z-Score 7d</th>
+          <th>Z-Robust</th>
+          <th>Z-Classic</th>
           <th>Summary</th>
+          <th>Flat line</th>
+          <th>Ratio drop</th>
+          <th>Ratio spike</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
         {props.stats.map((row, idx) =>
           (() => {
-            const status = getStatus(row.zScore7d)
+            const status = getStatus(row)
+            const summary = getSummaryValues(row)
             return (
               <tr key={`${row.id}-${row.timestamp}-${idx}`}>
                 <td data-order={row.timestamp}>
-                  {UnixTime.toYYYYMMDD(row.timestamp)}
+                  {row.timestamp}{' '}
+                  <span style={{ fontSize: '11px', color: '#6b7280' }}>
+                    ({row.dataPoints.length}d)
+                  </span>
                 </td>
                 <td>
                   <a
@@ -74,36 +105,48 @@ function AnomaliesTable(props: {
                     chart
                   </div>
                 </td>
-                <td>{formatCount(row.transferCount)}</td>
-                <td>{formatCount(row.prevDayCount)}</td>
-                <td>{formatCount(row.prev7dCount)}</td>
-                <td>{formatMetric(row.zScore7d)}</td>
+                <td>{formatCount(row.lastCount)}</td>
+                <td>
+                  {row.prevDayCount === null
+                    ? '-'
+                    : formatCount(row.prevDayCount)}
+                </td>
+                <td>
+                  {row.prev7dCount === null
+                    ? '-'
+                    : formatCount(row.prev7dCount)}
+                </td>
+                <td>{formatZ(row.z.robust.value)}</td>
+                <td>{formatZ(row.z.classic.value)}</td>
                 <td>
                   <div style={{ fontSize: '11px', color: '#6b7280' }}>
-                    Δ1d {formatMetric(row.diffDay)} · Δ7d{' '}
-                    {formatMetric(row.diff7d)}
+                    Δ1d {formatDiff(summary.diffDay)} · Δ7d{' '}
+                    {formatDiff(summary.diff7d)}
                   </div>
                   <div style={{ fontSize: '11px', color: '#6b7280' }}>
                     1d{' '}
                     <span
                       style={{
-                        color: getPercentColor(row.pctDiffDay),
+                        color: getPercentColor(summary.pctDiffDay),
                         fontWeight: 600,
                       }}
                     >
-                      {formatPercent(row.pctDiffDay)}
+                      {formatPercent(summary.pctDiffDay)}
                     </span>{' '}
                     · 7d{' '}
                     <span
                       style={{
-                        color: getPercentColor(row.pctDiff7d),
+                        color: getPercentColor(summary.pctDiff7d),
                         fontWeight: 600,
                       }}
                     >
-                      {formatPercent(row.pctDiff7d)}
+                      {formatPercent(summary.pctDiff7d)}
                     </span>
                   </div>
                 </td>
+                <td>{row.isFlatLine ? 'yes' : 'no'}</td>
+                <td>{row.isRatioDrop ? 'yes' : 'no'}</td>
+                <td>{row.isRatioSpike ? 'yes' : 'no'}</td>
                 <td>
                   <span style={{ color: status.color, fontWeight: 600 }}>
                     {status.label}
@@ -118,9 +161,7 @@ function AnomaliesTable(props: {
   )
 }
 
-function AnomaliesPageLayout(props: {
-  stats: AggregatedInteropTransferAnomalyStats[]
-}) {
+function AnomaliesPageLayout(props: { stats: DataRowResult[] }) {
   const anomaliesTable = <AnomaliesTable stats={props.stats} />
 
   return (
@@ -128,7 +169,7 @@ function AnomaliesPageLayout(props: {
       showHome={true}
       tables={[
         {
-          title: 'Aggregated Transfer Anomalies (Latest per ID, 7-row window)',
+          title: 'Aggregated Transfer Anomalies (Latest per ID)',
           table: anomaliesTable,
           tableId: 'anomalies',
           dataTableOptions: {
@@ -138,11 +179,11 @@ function AnomaliesPageLayout(props: {
             ],
             columnDefs: [
               {
-                targets: [2, 3, 4, 5],
+                targets: [2, 3, 4, 5, 6],
                 type: 'num',
               },
               {
-                targets: [6, 7],
+                targets: [7, 8, 9, 10, 11],
                 orderable: false,
               },
             ],
@@ -153,9 +194,7 @@ function AnomaliesPageLayout(props: {
   )
 }
 
-export function renderAnomaliesPage(props: {
-  stats: AggregatedInteropTransferAnomalyStats[]
-}) {
+export function renderAnomaliesPage(props: { stats: DataRowResult[] }) {
   return (
     '<!DOCTYPE html>' + renderToStaticMarkup(<AnomaliesPageLayout {...props} />)
   )

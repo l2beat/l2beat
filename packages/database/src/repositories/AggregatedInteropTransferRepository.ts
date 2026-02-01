@@ -21,22 +21,16 @@ export interface AggregatedInteropTransferRecord {
   countOver100K: number
 }
 
-export interface AggregatedInteropTransferAnomalyRow {
-  timestamp: UnixTime
+export interface AggregatedInteropTransferSeriesRecord {
+  day: UnixTime
   id: string
   transferCount: number
-  prevDayCount: number | null
-  prev7dCount: number | null
-  mean7d: number | null
-  std7d: number | null
 }
 
 export interface AggregatedInteropTransferIdSeriesRecord {
   timestamp: UnixTime
   id: string
   transferCount: number
-  mean7d: number | null
-  std7d: number | null
   totalDurationSum: number
   totalSrcValueUsd: number
   totalDstValueUsd: number
@@ -111,7 +105,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getDailySeries(): Promise<AggregatedInteropTransferAnomalyRow[]> {
+  async getDailySeries(): Promise<AggregatedInteropTransferSeriesRecord[]> {
     const rows = await this.db
       .with('squashed', (db) =>
         db
@@ -123,54 +117,15 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
           ])
           .groupBy(['id', sql`date_trunc('day', timestamp)`]),
       )
-      .with('windowed', (db) =>
-        db.selectFrom('squashed').select([
-          'day',
-          'id',
-          'transfer_count',
-          sql<number>`lag(transfer_count) over (partition by id order by day)`.as(
-            'prev_day_count',
-          ),
-          sql<number>`lag(transfer_count, 7) over (partition by id order by day)`.as(
-            'prev_7d_count',
-          ),
-          sql<number>`avg(transfer_count) over (
-            partition by id
-            order by day
-            rows between 7 preceding and 1 preceding
-          )`.as('mean_7d'),
-          sql<number>`stddev_samp(transfer_count) over (
-            partition by id
-            order by day
-            rows between 7 preceding and 1 preceding
-          )`.as('std_7d'),
-          sql<Date>`max(day) over (partition by id)`.as('latest_ts'),
-        ]),
-      )
-      .selectFrom('windowed')
-      .select([
-        'day',
-        'id',
-        'transfer_count',
-        'prev_day_count',
-        'prev_7d_count',
-        'mean_7d',
-        'std_7d',
-      ])
-      .whereRef('day', '=', 'latest_ts')
+      .selectFrom('squashed')
+      .select(['day', 'id', 'transfer_count'])
       .orderBy('id', 'asc')
       .execute()
 
     return rows.map((row) => ({
-      timestamp: UnixTime.fromDate(row.day),
+      day: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
-      prevDayCount:
-        row.prev_day_count === null ? null : Number(row.prev_day_count),
-      prev7dCount:
-        row.prev_7d_count === null ? null : Number(row.prev_7d_count),
-      mean7d: row.mean_7d === null ? null : Number(row.mean_7d),
-      std7d: row.std_7d === null ? null : Number(row.std_7d),
     }))
   }
 
@@ -200,16 +155,6 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         'total_duration_sum',
         'total_src_value_usd',
         'total_dst_value_usd',
-        sql<number>`avg(transfer_count) over (
-          partition by id
-          order by day
-          rows between 7 preceding and 1 preceding
-        )`.as('mean_7d'),
-        sql<number>`stddev_samp(transfer_count) over (
-          partition by id
-          order by day
-          rows between 7 preceding and 1 preceding
-        )`.as('std_7d'),
       ])
       .orderBy('day', 'asc')
       .execute()
@@ -218,8 +163,6 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
-      mean7d: row.mean_7d === null ? null : Number(row.mean_7d),
-      std7d: row.std_7d === null ? null : Number(row.std_7d),
       totalDurationSum: Number(row.total_duration_sum ?? 0),
       totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
       totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),
