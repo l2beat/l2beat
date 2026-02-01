@@ -58,7 +58,7 @@ function getStatus(row: DataRowResult) {
     row.isRatioDrop ||
     row.isRatioSpike
   return isAnomaly
-    ? { label: 'not ok', color: '#dc2626' }
+    ? { label: 'sus', color: '#dc2626' }
     : { label: 'ok', color: '#16a34a' }
 }
 
