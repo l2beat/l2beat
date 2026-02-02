@@ -101,7 +101,7 @@ export const zksync2: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
-  validatorTimelockOnGateway: discovery.getContract('ZKsyncValidatorTimelock'),
+  // validatorTimelockOnGateway: discovery.getContract('ZKsyncValidatorTimelock'),
   nonTemplateDaTracking: [
     {
       // tracks old Era DA on ethereum
@@ -194,6 +194,20 @@ export const zksync2: ScalingProject = zkStackL2({
       query: {
         formula: 'sharedBridge',
         firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0db9eb87',
+        functionSignature:
+          'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: UnixTime(1769900651),
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
           '0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9',
         ), // gateway diamond on ethereum
         address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
@@ -201,6 +215,7 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function precommitSharedBridge(address _chainAddress, uint256, bytes)',
         sinceTimestamp: UnixTime(1761146555),
+        untilTimestamp: UnixTime(1769900651),
       },
     },
     {
@@ -290,6 +305,23 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1761146555),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: UnixTime(1769900651),
       },
     },
     {
@@ -415,6 +447,24 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
         sinceTimestamp: UnixTime(1761146555),
+        untilTimestamp: UnixTime(1769900651),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: UnixTime(1769900651),
       },
     },
     {
@@ -542,6 +592,7 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1761146555),
+        untilTimestamp: UnixTime(1769900651),
       },
     },
   ],

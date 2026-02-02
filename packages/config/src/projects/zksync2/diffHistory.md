@@ -1,3 +1,333 @@
+Generated with discovered.json: 0x118a9ce903f9f09f9ff3245995f05742061d96f9
+
+# Diff at Mon, 02 Feb 2026 16:04:50 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1769426961
+- current timestamp: 1770040942
+
+## Description
+
+Zksync Era migrated its settlement layer from Gateway back to Ethereum. See migration initiated event here: https://gateway.explorer.zksync.io/address/0x000000000000000000000000000000000001000a#events and migration finalized event here: https://etherscan.io/address/0xDd5CB8B9037357B4cD37391A073798f8aaB61076#events. Bridgehub on L1 returns settlement layer 1 for chain ID 324 (zksync era): https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#readProxyContract#F28.
+
+Commented out all gateway-related discovery for zksync2 in config.jsonc.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorVTL:
++        {"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7","eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd","eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7","eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd","eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7","eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd","eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7","eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd","eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7","eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd","eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"]}}
+      errors:
+-        {"validatorVTL":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      values.getSettlementLayer:
+-        "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x3F0009D00cc78979d00Eb635490F23E8d6aCc481)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x4A333c167Ce76C46149c6B0197977ae02aaeC929)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x7408A268e5E6e8F08917c5b71015F4B9044970C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xAf0B2B58289857e9A6Cf91Fd30410dDcad9D9B28)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xd972d03C8A45eF3c7937a279d998E4AeCCc2b63D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExecutionMultisigValidator (eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping and updates emit no events, so the only way to track them is to manually analyze all trxs from the owner.
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xFAdb20191Ab38362C50f52909817B74214CA79AE)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../zksync2/.flat/ExecutionMultisigValidator.sol   | 1797 ++++++++++++++++++++
+ .../src/projects/zksync2/.flat/Safe/Safe.sol       | 1088 ++++++++++++
+ .../projects/zksync2/.flat/Safe/SafeProxy.p.sol    |   37 +
+ 3 files changed, 2922 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769426961 (main branch discovery), not current.
+
+```diff
+    reference BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      targetType:
+-        "Reference"
++        "Contract"
+      targetProject:
+-        "gateway"
++        "shared-zk-stack"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      template:
+-        "shared-zk-stack/Diamond_NotSettlementLayer"
++        "shared-zk-stack/Diamond"
+      fieldMeta.getDAValidatorPair.description:
++        "l1da, l2da"
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type.
+      type:
+-        "Reference"
++        "Contract"
+      targetType:
+-        "Contract"
+      targetProject:
+-        "gateway"
+      template:
++        "shared-zk-stack/DualVerifier"
+      sourceHashes:
++        ["0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"]
+      proxyType:
++        "immutable"
+      description:
++        "A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type."
+      sinceTimestamp:
++        1769014463
+      sinceBlock:
++        24284492
+      values:
++        {"$immutable":true,"FFLONK_VERIFIER":"eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d","PLONK_VERIFIER":"eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026","verificationKeyHash":"0x93e83aa1ec05a2ac4de1f0b241394efb9f94a4e7c1784a5a9bf6b85eb930c62a"}
+      fieldMeta:
++        {"verificationKeyHash":{"description":"Verification key hash for the PLONK verifier ONLY (backwards compatibility)."}}
+    }
+```
+
+```diff
+    reference RollupL1DAValidator (eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119) {
+    +++ description: None
+      targetType:
+-        "Reference"
++        "Contract"
+      targetProject:
+-        "gateway"
++        "shared-zk-stack"
+    }
+```
+
+```diff
+    reference L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56) {
+    +++ description: None
+      targetType:
+-        "Reference"
++        "Contract"
+      targetProject:
+-        "gateway"
++        "shared-zk-stack"
+    }
+```
+
+```diff
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      targetType:
+-        "Reference"
++        "Contract"
+      targetProject:
+-        "gateway"
++        "shared-zk-stack"
+    }
+```
+
+```diff
+    reference ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      targetType:
+-        "Reference"
++        "Contract"
+      targetProject:
+-        "gateway"
++        "shared-zk-stack"
+    }
+```
+
+```diff
+    reference RollupDAManager (eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45) {
+    +++ description: None
+      targetType:
+-        "Reference"
++        "Contract"
+      targetProject:
+-        "gateway"
++        "shared-zk-stack"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Bridgehub (gateway:0x0000000000000000000000000000000000010002)
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+```
+
+```diff
+-   Status: DELETED
+    contract L2AssetRouter (gateway:0x0000000000000000000000000000000000010003)
+    +++ description: Bridge routing contract that exists once on every zk stack chain and keeps mappings of assets to their escrows (asset handlers) and deployment trackers.
+```
+
+```diff
+-   Status: DELETED
+    contract MessageRoot (gateway:0x0000000000000000000000000000000000010005)
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+```
+
+```diff
+-   Status: DELETED
+    contract ChainAssetHandler (gateway:0x000000000000000000000000000000000001000a)
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (gateway:0x0A8a176B6F5962122C6E8F8815278f873D74021f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RelayedSLDAValidator (gateway:0x595b8C88B9e5f3a4c596C3e81BE6e11D53Bb9200)
+    +++ description: Plugs into the DAValidator interface of zk stack Diamond contracts. This 'DA validator' simply checks correct formatting and encoding of data and relays it via the L1Messenger to L1 to guarantee data availability.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupDAManager (gateway:0x5E12D7E0bB68029afbeC83ccB9E8eDE6019ef073)
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
+```
+
+```diff
+-   Status: DELETED
+    contract L1GenesisUpgrade (gateway:0x67b069aB0c634B03427ca284F701BE92d84d78ad)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
+-   Status: DELETED
+    contract ServerNotifier (gateway:0x796b7bDba8B8027Aa79BE96a0D5368FB86df560a)
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (gateway:0x7e81F6502209F1A114065A8f70820Ab5e28EE369)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract ChainTypeManager (gateway:0x912B84EEEEBeca74d307b9a2b09c68332aa5426C)
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,3.
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (gateway:0x9A9Cc7ca19F340C0084aDf2D20acbD2F2735A0d0)
+    +++ description: A router contract for verifiers. Routes verification requests to gateway:0xA14909eE4D20ebefd039094De75Fb440538799C1 or gateway:0x7e81F6502209F1A114065A8f70820Ab5e28EE369 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (gateway:0xA14909eE4D20ebefd039094De75Fb440538799C1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract DiamondProxy (gateway:0xCE7CBd23193d029410b40e0fD8a79a5121f9250C)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+```
+
+```diff
+-   Status: DELETED
+    contract ZKsyncValidatorTimelock (gateway:0xe279aF77D3C1685022641ffE1b9b538c5eA0Ae24)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
 Generated with discovered.json: 0x136d6fb4baf45f41e902629eadbe6c6de140db2b
 
 # Diff at Mon, 26 Jan 2026 12:10:15 GMT:
