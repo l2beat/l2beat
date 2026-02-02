@@ -13,10 +13,15 @@ import {
   getTopProtocols,
   type InteropProtocolData,
 } from './utils/getTopProtocols'
+import {
+  getTransferSizeChartData,
+  type TransferSizeChartData,
+} from './utils/getTransferSizeChartData'
 
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
+  transferSizeChartData: TransferSizeChartData | undefined
   entries: ProtocolEntry[]
 }
 
@@ -43,6 +48,7 @@ export async function getInteropDashboardData(
     return {
       top3Paths: [],
       topProtocols: [],
+      transferSizeChartData: undefined,
       entries: [],
     }
   }
@@ -83,6 +89,7 @@ export async function getInteropDashboardData(
     return {
       top3Paths: [],
       topProtocols: [],
+      transferSizeChartData: undefined,
       entries: [],
     }
   }
@@ -103,6 +110,7 @@ export async function getInteropDashboardData(
   return {
     top3Paths: getTopPaths(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
+    transferSizeChartData: getTransferSizeChartData(records, interopProjects),
     entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
   }
 }
@@ -184,9 +192,40 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     averageDuration: { type: 'single', duration: 100_000 },
   }))
 
+  const transferSizeChartData: TransferSizeChartData = {
+    arbitrum: {
+      name: 'Arbitrum Canonical',
+      iconUrl: manifest.getUrl('/icons/arbitrum.png'),
+      countUnder100: 10,
+      count100To1K: 12,
+      count1KTo10K: 50,
+      count10KTo100K: 35,
+      countOver100K: 1,
+    },
+    optimism: {
+      name: 'Optimism Canonical',
+      iconUrl: manifest.getUrl('/icons/optimism.png'),
+      countUnder100: 5,
+      count100To1K: 8,
+      count1KTo10K: 10,
+      count10KTo100K: 4,
+      countOver100K: 0,
+    },
+    base: {
+      name: 'Base Canonical',
+      iconUrl: manifest.getUrl('/icons/base.png'),
+      countUnder100: 5,
+      count100To1K: 8,
+      count1KTo10K: 10,
+      count10KTo100K: 4,
+      countOver100K: 0,
+    },
+  }
+
   return {
     top3Paths,
     topProtocols,
+    transferSizeChartData,
     entries: allProtocols,
   }
 }
