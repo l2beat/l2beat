@@ -26,6 +26,8 @@ interface InteropSelectedChainsContextType {
   isDirty: boolean
   setPath: (paths: { from: string; to: string }) => void
   swapPaths: () => void
+  selectAll: (type?: 'from' | 'to') => void
+  deselectAll: (type?: 'from' | 'to') => void
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -125,6 +127,25 @@ export function InteropSelectedChainsProvider({
     }))
   }, [])
 
+  const selectAll = useCallback(
+    (type?: 'from' | 'to') => {
+      setSelectedChains((prev) => ({
+        ...prev,
+        ...(type
+          ? { [type]: allChainIds }
+          : { from: allChainIds, to: allChainIds }),
+      }))
+    },
+    [allChainIds],
+  )
+
+  const deselectAll = useCallback((type?: 'from' | 'to') => {
+    setSelectedChains((prev) => ({
+      ...prev,
+      ...(type ? { [type]: [] } : { from: [], to: [] }),
+    }))
+  }, [])
+
   return (
     <InteropSelectedChainsContext.Provider
       value={{
@@ -136,6 +157,8 @@ export function InteropSelectedChainsProvider({
         isDirty,
         setPath,
         swapPaths,
+        selectAll,
+        deselectAll,
       }}
     >
       {children}

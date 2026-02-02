@@ -15,6 +15,7 @@ import {
   PopoverTrigger,
 } from '~/components/core/Popover'
 import { SwapIcon } from '~/icons/Swap'
+import { cn } from '~/utils/cn'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
 import type { InteropChainWithIcon } from './types'
@@ -26,8 +27,16 @@ export function ChainSelectorButton({
   allChains: InteropChainWithIcon[]
   type: 'from' | 'to'
 }) {
-  const { selectedChains, toggleFrom, toggleTo, isDirty, reset, swapPaths } =
-    useInteropSelectedChains()
+  const {
+    selectedChains,
+    toggleFrom,
+    toggleTo,
+    isDirty,
+    reset,
+    swapPaths,
+    selectAll,
+    deselectAll,
+  } = useInteropSelectedChains()
 
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
@@ -136,6 +145,27 @@ export function ChainSelectorButton({
                 toggleSelected={type === 'from' ? toggleFrom : toggleTo}
               />
             ))}
+          </div>
+          <div className="mt-2.5 flex items-center justify-between">
+            <div
+              className={cn(
+                'cursor-pointer font-medium text-brand text-label-value-15 underline',
+                selectedChains[type].length === allChains.length &&
+                  'text-secondary',
+              )}
+              onClick={() => selectAll(type)}
+            >
+              Select all
+            </div>
+            <div
+              className={cn(
+                'cursor-pointer font-medium text-brand text-label-value-15 underline',
+                selectedChains[type].length === 0 && 'text-secondary',
+              )}
+              onClick={() => deselectAll(type)}
+            >
+              Deselect all
+            </div>
           </div>
         </PopoverContent>
       </Popover>
