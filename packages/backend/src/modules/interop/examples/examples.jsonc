@@ -2562,7 +2562,7 @@
       }
     ],
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
-    "messages": [{ "type": "agglayer.Message", "app": "shared-bridge" }],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
   },
   "agglayer-ethereum-katana-vbusdt": {
@@ -2579,7 +2579,7 @@
       }
     ],
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
-    "messages": [{ "type": "agglayer.Message", "app": "shared-bridge" }],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
   },
   "agglayer-katana-forknet-vbeth": {
@@ -2596,7 +2596,7 @@
       }
     ],
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
-    "messages": [{ "type": "agglayer.Message", "app": "shared-bridge" }],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
   },
   "agglayer-katana-ethereum-vbwbtc": {
@@ -2613,7 +2613,7 @@
       }
     ],
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
-    "messages": [{ "type": "agglayer.Message", "app": "shared-bridge" }],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
   }
 }
