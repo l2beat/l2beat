@@ -48,7 +48,7 @@ export const stargatev2: Bridge = {
   id: ProjectId('stargatev2'),
   addedAt: UnixTime(1718620600), // 2024-06-17T10:36:40Z
   display: {
-    name: 'Stargate v2 (LayerZero v2)',
+    name: 'Stargate v2',
     shortName: 'Stargate v2',
     slug: 'stargatev2',
     links: {
@@ -80,6 +80,16 @@ export const stargatev2: Bridge = {
       sentiment: 'bad',
     },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL, // TODO: find Hydra onchain
+  },
+  interopConfig: {
+    bridgeType: 'nonMinting',
+    plugins: [
+      {
+        plugin: 'stargate',
+      },
+      // TODO: needs bus/taxi duration split
+      // TODO: needs hydra filtering by minted label
+    ],
   },
   technology: {
     destination: [
