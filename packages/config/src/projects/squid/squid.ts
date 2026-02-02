@@ -7,15 +7,19 @@ export const squid: BaseProject = {
   name: 'Squid',
   shortName: undefined,
   addedAt: UnixTime(1769520298),
-  interopConfig: {
-    bridgeType: 'nonMinting',
-    plugins: [
+  interop: {
+    configs: [
       {
-        plugin: 'axelar',
-        transferType: 'axelar-squid.Transfer',
-      },
-      {
-        plugin: 'squid-coral',
+        bridgeType: 'nonMinting',
+        plugins: [
+          {
+            plugin: 'axelar',
+            transferType: 'axelar-squid.Transfer',
+          },
+          {
+            plugin: 'squid-coral',
+          },
+        ],
       },
     ],
   },

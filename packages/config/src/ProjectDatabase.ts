@@ -51,7 +51,7 @@ const schema = {
   proofVerification: 'TEXT',
   zkCatalogInfo: 'TEXT',
 
-  interopConfig: 'TEXT',
+  interop: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',

@@ -7,11 +7,15 @@ export const cctpv1: BaseProject = {
   name: 'CCTP v1',
   shortName: undefined,
   addedAt: UnixTime(1769523398),
-  interopConfig: {
-    bridgeType: 'omnichain',
-    plugins: [
+  interop: {
+    configs: [
       {
-        plugin: 'cctp-v1',
+        bridgeType: 'omnichain',
+        plugins: [
+          {
+            plugin: 'cctp-v1',
+          },
+        ],
       },
     ],
   },

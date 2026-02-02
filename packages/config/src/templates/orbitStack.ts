@@ -185,7 +185,12 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   upgradesAndGovernance?: string
-  interopConfig?: InteropConfig
+  interop?: {
+    name?: string
+    isAggregate?: boolean
+    subgroupId?: ProjectId
+    configs: InteropConfig[]
+  }
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
@@ -825,7 +830,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
     },
-    interopConfig: templateVars.interopConfig,
+    interop: templateVars.interop,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }

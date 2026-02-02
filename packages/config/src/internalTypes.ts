@@ -105,7 +105,10 @@ export interface ScalingProject {
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
   /** Interop configuration */
-  interopConfig?: InteropConfig
+  interop?: {
+    name?: string
+    configs: InteropConfig[]
+  }
 }
 
 export interface ProjectScalingConfig {
@@ -252,7 +255,10 @@ export interface Bridge {
   archivedAt?: UnixTime
   isUpcoming?: boolean
   reviewStatus?: ProjectReviewStatus
-  interopConfig?: InteropConfig
+  interop?: {
+    name?: string
+    configs: InteropConfig[]
+  }
   display: BridgeDisplay
   colors?: ProjectCustomColors
   config: BridgeConfig

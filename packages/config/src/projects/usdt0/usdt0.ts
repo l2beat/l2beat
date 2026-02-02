@@ -9,17 +9,21 @@ export const usdt0: BaseProject = {
   name: 'USDT0',
   shortName: undefined,
   addedAt: UnixTime(1767959267),
-  interopConfig: {
-    bridgeType: 'omnichain',
+  interop: {
     subgroupId: ProjectId('layerzero'),
-    plugins: [
+    configs: [
       {
-        abstractTokenId: ABSTRACT_TOKEN_ID,
-        plugin: 'layerzero-v2',
-      },
-      {
-        abstractTokenId: ABSTRACT_TOKEN_ID,
-        plugin: 'layerzero-v2-ofts',
+        bridgeType: 'omnichain',
+        plugins: [
+          {
+            abstractTokenId: ABSTRACT_TOKEN_ID,
+            plugin: 'layerzero-v2',
+          },
+          {
+            abstractTokenId: ABSTRACT_TOKEN_ID,
+            plugin: 'layerzero-v2-ofts',
+          },
+        ],
       },
     ],
   },

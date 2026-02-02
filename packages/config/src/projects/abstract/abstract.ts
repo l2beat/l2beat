@@ -65,26 +65,30 @@ export const abstract: ScalingProject = zkStackL2({
       },
     ],
   },
-  interopConfig: {
-    bridgeType: 'lockAndMint',
-    plugins: [
+  interop: {
+    configs: [
       {
-        plugin: 'zkstack',
-        chain: 'abstract',
+        bridgeType: 'lockAndMint',
+        plugins: [
+          {
+            plugin: 'zkstack',
+            chain: 'abstract',
+          },
+        ],
+        durationSplit: {
+          in: {
+            label: 'L1 -> L2',
+            from: 'ethereum',
+            to: 'abstract',
+          },
+          out: {
+            label: 'L2 -> L1',
+            from: 'abstract',
+            to: 'ethereum',
+          },
+        },
       },
     ],
-    durationSplit: {
-      in: {
-        label: 'L1 -> L2',
-        from: 'ethereum',
-        to: 'abstract',
-      },
-      out: {
-        label: 'L2 -> L1',
-        from: 'abstract',
-        to: 'ethereum',
-      },
-    },
   },
   discovery,
   nonTemplateEscrows: [

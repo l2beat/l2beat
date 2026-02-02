@@ -147,11 +147,15 @@ export const acrossV3: Bridge = {
       // },
     ],
   },
-  interopConfig: {
-    bridgeType: 'nonMinting',
-    plugins: [
+  interop: {
+    configs: [
       {
-        plugin: 'across',
+        bridgeType: 'nonMinting',
+        plugins: [
+          {
+            plugin: 'across',
+          },
+        ],
       },
     ],
   },

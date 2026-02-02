@@ -7,11 +7,15 @@ export const relay: BaseProject = {
   name: 'Relay',
   shortName: undefined,
   addedAt: UnixTime(1769070497),
-  interopConfig: {
-    bridgeType: 'nonMinting',
-    plugins: [
+  interop: {
+    configs: [
       {
-        plugin: 'relay',
+        bridgeType: 'nonMinting',
+        plugins: [
+          {
+            plugin: 'relay',
+          },
+        ],
       },
     ],
   },

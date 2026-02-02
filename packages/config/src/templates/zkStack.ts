@@ -122,7 +122,10 @@ export interface ZkStackConfigCommon {
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
-  interopConfig?: InteropConfig
+  interop?: {
+    name?: string
+    configs: InteropConfig[]
+  }
 }
 
 export type Upgradeability = {
@@ -357,7 +360,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.STATE_DIFFS_COMPRESSED,
     },
-    interopConfig: templateVars.interopConfig,
+    interop: templateVars.interop,
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,

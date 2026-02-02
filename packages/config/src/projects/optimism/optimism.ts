@@ -54,41 +54,45 @@ export const optimism: ScalingProject = opStackL2({
       ],
     },
   },
-  interopConfig: {
+  interop: {
     name: 'OP Canonical',
-    bridgeType: 'lockAndMint',
-    durationSplit: {
-      in: {
-        label: 'L1 -> L2',
-        from: 'ethereum',
-        to: 'optimism',
-      },
-      out: {
-        label: 'L2 -> L1',
-        from: 'optimism',
-        to: 'ethereum',
-      },
-    },
-    plugins: [
+    configs: [
       {
-        chain: 'optimism',
-        plugin: 'opstack',
-      },
-      {
-        chain: 'optimism',
-        plugin: 'opstack-standardbridge',
-      },
-      {
-        chain: 'optimism',
-        plugin: 'beefy-bridge',
-      },
-      {
-        chain: 'optimism',
-        plugin: 'maker-bridge',
-      },
-      {
-        chain: 'optimism',
-        plugin: 'sorare-base',
+        bridgeType: 'lockAndMint',
+        durationSplit: {
+          in: {
+            label: 'L1 -> L2',
+            from: 'ethereum',
+            to: 'optimism',
+          },
+          out: {
+            label: 'L2 -> L1',
+            from: 'optimism',
+            to: 'ethereum',
+          },
+        },
+        plugins: [
+          {
+            chain: 'optimism',
+            plugin: 'opstack',
+          },
+          {
+            chain: 'optimism',
+            plugin: 'opstack-standardbridge',
+          },
+          {
+            chain: 'optimism',
+            plugin: 'beefy-bridge',
+          },
+          {
+            chain: 'optimism',
+            plugin: 'maker-bridge',
+          },
+          {
+            chain: 'optimism',
+            plugin: 'sorare-base',
+          },
+        ],
       },
     ],
   },
