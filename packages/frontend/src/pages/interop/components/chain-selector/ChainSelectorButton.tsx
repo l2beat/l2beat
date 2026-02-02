@@ -1,14 +1,13 @@
 import { pluralize } from '@l2beat/shared-pure'
-import { Button } from '~/components/core/Button'
 import {
   Drawer,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/Drawer'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   Popover,
   PopoverContent,
@@ -31,8 +30,6 @@ export function ChainSelectorButton({
     selectedChains,
     toggleFrom,
     toggleTo,
-    isDirty,
-    reset,
     swapPaths,
     selectAll,
     deselectAll,
@@ -80,7 +77,7 @@ export function ChainSelectorButton({
       {/* Mobile */}
       <Drawer>
         <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
-        <DrawerContent className={isDirty ? 'pb-0' : 'pb-12'}>
+        <DrawerContent className="pb-4">
           <DrawerHeader className="mb-4 gap-2">
             <DrawerTitle className="mb-0 font-semibold text-lg text-primary leading-none">
               Chains
@@ -117,13 +114,27 @@ export function ChainSelectorButton({
               />
             ))}
           </div>
-          {isDirty && (
-            <DrawerFooter className="px-0 pt-6">
-              <Button variant="outline" className="w-full" onClick={reset}>
-                Reset all filters
-              </Button>
-            </DrawerFooter>
-          )}
+          <HorizontalSeparator className="mt-6 mb-3.5" />
+          <div className="flex items-center justify-between">
+            <ModifierButton
+              label="Select all"
+              className="p-2.5"
+              onClick={() => selectAll()}
+              disabled={
+                selectedChains.from.length === allChains.length &&
+                selectedChains.to.length === allChains.length
+              }
+            />
+            <ModifierButton
+              label="Deselect all"
+              className="p-2.5"
+              onClick={() => deselectAll()}
+              disabled={
+                selectedChains.from.length === 0 &&
+                selectedChains.to.length === 0
+              }
+            />
+          </div>
         </DrawerContent>
       </Drawer>
       {/* Desktop */}
@@ -147,28 +158,44 @@ export function ChainSelectorButton({
             ))}
           </div>
           <div className="mt-2.5 flex items-center justify-between">
-            <div
-              className={cn(
-                'cursor-pointer font-medium text-brand text-label-value-15 underline',
-                selectedChains[type].length === allChains.length &&
-                  'text-secondary',
-              )}
+            <ModifierButton
+              label="Select all"
               onClick={() => selectAll(type)}
-            >
-              Select all
-            </div>
-            <div
-              className={cn(
-                'cursor-pointer font-medium text-brand text-label-value-15 underline',
-                selectedChains[type].length === 0 && 'text-secondary',
-              )}
+              disabled={selectedChains[type].length === allChains.length}
+            />
+            <ModifierButton
+              label="Deselect all"
               onClick={() => deselectAll(type)}
-            >
-              Deselect all
-            </div>
+              disabled={selectedChains[type].length === 0}
+            />
           </div>
         </PopoverContent>
       </Popover>
+    </div>
+  )
+}
+
+function ModifierButton({
+  label,
+  onClick,
+  className,
+  disabled,
+}: {
+  label: string
+  onClick: () => void
+  disabled: boolean
+  className?: string
+}) {
+  return (
+    <div
+      className={cn(
+        'cursor-pointer font-medium text-brand text-label-value-15 underline',
+        className,
+        disabled && 'text-secondary',
+      )}
+      onClick={onClick}
+    >
+      {label}
     </div>
   )
 }
