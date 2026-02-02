@@ -6,6 +6,7 @@ import type { AggregatedInteropToken } from '../kysely/generated/types'
 export interface AggregatedInteropTokenRecord {
   timestamp: UnixTime
   id: string
+  bridgeType: 'lockAndMint' | 'omnichain' | 'nonMinting'
   srcChain: string
   dstChain: string
   abstractTokenId: string
@@ -20,6 +21,7 @@ export function toRecord(
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     id: row.id,
+    bridgeType: row.bridgeType as 'lockAndMint' | 'omnichain' | 'nonMinting',
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
     abstractTokenId: row.abstractTokenId,
@@ -35,6 +37,7 @@ export function toRow(
   return {
     timestamp: UnixTime.toDate(record.timestamp),
     id: record.id,
+    bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
     abstractTokenId: record.abstractTokenId,

@@ -26,7 +26,7 @@ export function getAggregatedTransfer(
   options?: {
     calculateValueInFlight?: boolean
   },
-): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp'> {
+): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp' | 'bridgeType'> {
   const first = group[0]
   assert(first, 'Group is empty')
 
@@ -114,7 +114,7 @@ export function getAggregatedTransfer(
 
 export function getAggregatedTokens(
   group: InteropTransferRecord[],
-): Omit<AggregatedInteropTokenRecord, 'id' | 'timestamp'>[] {
+): Omit<AggregatedInteropTokenRecord, 'id' | 'timestamp' | 'bridgeType'>[] {
   const first = group[0]
   assert(first, 'Group is empty')
   const tokens: Record<

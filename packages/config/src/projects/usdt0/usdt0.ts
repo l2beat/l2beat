@@ -25,6 +25,19 @@ export const usdt0: BaseProject = {
           },
         ],
       },
+      {
+        bridgeType: 'lockAndMint',
+        plugins: [
+          {
+            abstractTokenId: ABSTRACT_TOKEN_ID,
+            plugin: 'layerzero-v2',
+          },
+          {
+            abstractTokenId: ABSTRACT_TOKEN_ID,
+            plugin: 'layerzero-v2-ofts',
+          },
+        ],
+      },
     ],
   },
   isInteropProtocol: true,

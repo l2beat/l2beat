@@ -6,6 +6,7 @@ import type { AggregatedInteropTransfer } from '../kysely/generated/types'
 export interface AggregatedInteropTransferRecord {
   timestamp: UnixTime
   id: string
+  bridgeType: 'lockAndMint' | 'omnichain' | 'nonMinting'
   srcChain: string
   dstChain: string
   transferCount: number
@@ -27,6 +28,7 @@ export function toRecord(
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     id: row.id,
+    bridgeType: row.bridgeType as 'lockAndMint' | 'omnichain' | 'nonMinting',
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
     transferCount: row.transferCount,
@@ -49,6 +51,7 @@ export function toRow(
   return {
     timestamp: UnixTime.toDate(record.timestamp),
     id: record.id,
+    bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
     transferCount: record.transferCount,

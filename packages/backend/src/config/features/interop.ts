@@ -6,6 +6,8 @@ export interface InteropAggregationConfig extends InteropConfig {
 export async function getInteropAggregationConfigs(
   ps: ProjectService,
 ): Promise<InteropAggregationConfig[]> {
-  const projects = await ps.getProjects({ select: ['interopConfig'] })
-  return projects.map((p) => ({ ...p.interopConfig, id: p.id }))
+  const projects = await ps.getProjects({ select: ['interop'] })
+  return projects.flatMap((p) =>
+    p.interop.configs.map((c) => ({ ...c, id: p.id })),
+  )
 }

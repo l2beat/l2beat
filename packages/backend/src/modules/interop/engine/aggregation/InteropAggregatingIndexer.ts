@@ -37,12 +37,35 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       const filtered = transfers.filter((transfer) =>
         conditions.some((pConditions) => pConditions.every((c) => c(transfer))),
       )
-      const grouped = groupBy(filtered, (x) => `${x.srcChain}-${x.dstChain}`)
+      const groupedByBridgeType = this.groupByBridgeType(filtered)
+      for (const [bridgeType, actualRecords] of Object.entries(
+        groupedByBridgeType,
+      )) {
+        if (bridgeType === config.bridgeType) {
+          continue
+        }
+
+        if (actualRecords.length === 0) {
+          continue
+        }
+
+        this.logger.warn('Config is missing bridge type', {
+          protocol: config.id,
+          bridgeType,
+        })
+      }
+      const actualRecords = groupedByBridgeType[config.bridgeType]
+
+      const grouped = groupBy(
+        actualRecords,
+        (x) => `${x.srcChain}-${x.dstChain}`,
+      )
 
       for (const group of Object.values(grouped)) {
         aggregatedTransfers.push({
           timestamp: to,
           id: config.id,
+          bridgeType: config.bridgeType,
           ...getAggregatedTransfer(group, {
             calculateValueInFlight: config.bridgeType === 'nonMinting',
           }),
@@ -52,6 +75,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
           ...getAggregatedTokens(group).map((token) => ({
             timestamp: to,
             id: config.id,
+            bridgeType: config.bridgeType,
             ...token,
           })),
         )
@@ -81,6 +105,26 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
   // Invalidate on every restart
   override invalidate(_: number): Promise<number> {
     return Promise.resolve(0)
+  }
+
+  private groupByBridgeType(records: InteropTransferRecord[]): {
+    [key: string]: InteropTransferRecord[]
+  } {
+    return {
+      lockAndMint: records.filter(
+        (transfer) =>
+          (transfer.srcWasBurned === false && transfer.dstWasMinted === true) ||
+          (transfer.srcWasBurned === true && transfer.dstWasMinted === false),
+      ),
+      omnichain: records.filter(
+        (transfer) =>
+          transfer.srcWasBurned === true && transfer.dstWasMinted === true,
+      ),
+      nonMinting: records.filter(
+        (transfer) =>
+          transfer.srcWasBurned === false && transfer.dstWasMinted === false,
+      ),
+    }
   }
 
   private txMatchers(config: InteropAggregationConfig) {
