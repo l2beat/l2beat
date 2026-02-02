@@ -347,7 +347,7 @@ function ChartLegendContent({
 }
 ChartLegendContent.displayName = 'ChartLegend'
 
-export function ChartLegendItemLabel({
+function ChartLegendItemLabel({
   children,
   className,
 }: {
@@ -367,7 +367,7 @@ export function ChartLegendItemLabel({
 }
 
 // Helper to extract item config from a payload.
-export function getPayloadConfigFromPayload(
+function getPayloadConfigFromPayload(
   config: ChartMeta,
   payload: unknown,
   key: string,
