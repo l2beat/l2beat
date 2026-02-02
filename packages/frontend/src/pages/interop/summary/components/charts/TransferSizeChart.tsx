@@ -80,10 +80,10 @@ export function TransferSizeChart({ data, isLoading }: Props) {
   }
 
   return (
-    <div className="relative">
+    <div className="relative size-full">
       <SimpleChartContainer
         meta={chartMeta}
-        className="h-[350px] w-full [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.yAxis_.recharts-cartesian-axis-tick_text]:font-bold [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-subtitle-11"
+        className="aspect-auto size-full [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.yAxis_.recharts-cartesian-axis-tick_text]:font-bold [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-subtitle-11"
       >
         <BarChart
           accessibilityLayer
