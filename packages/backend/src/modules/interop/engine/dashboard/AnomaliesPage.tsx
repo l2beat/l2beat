@@ -1,16 +1,10 @@
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
-import type { DataRowResult } from './stats'
+import { type DataRowResult, interpret } from './stats'
 
 function formatCount(value: number) {
   return Math.round(value).toLocaleString()
-}
-
-function formatZ(value: number) {
-  if (Number.isNaN(value)) return '-'
-  if (!Number.isFinite(value)) return value > 0 ? '∞' : '-∞'
-  return value.toFixed(2)
 }
 
 function formatDiff(value: number | null, digits = 2) {
@@ -50,18 +44,6 @@ function getSummaryValues(row: DataRowResult) {
   return { diffDay, diff7d, pctDiffDay, pctDiff7d }
 }
 
-function getStatus(row: DataRowResult) {
-  const isAnomaly =
-    row.z.robust.isAnomaly ||
-    row.z.classic.isAnomaly ||
-    row.isFlatLine ||
-    row.isRatioDrop ||
-    row.isRatioSpike
-  return isAnomaly
-    ? { label: 'sus', color: '#dc2626' }
-    : { label: 'ok', color: '#16a34a' }
-}
-
 function AnomaliesTable(props: { stats: DataRowResult[] }) {
   return (
     <table id="anomalies" className="display">
@@ -72,20 +54,15 @@ function AnomaliesTable(props: { stats: DataRowResult[] }) {
           <th>Count</th>
           <th>Prev Day</th>
           <th>Prev 7d</th>
-          <th>Z-Robust</th>
-          <th>Z-Classic</th>
           <th>Summary</th>
-          <th>Flat line</th>
-          <th>Ratio drop</th>
-          <th>Ratio spike</th>
-          <th>Status</th>
+          <th>Interpretation</th>
         </tr>
       </thead>
       <tbody>
         {props.stats.map((row, idx) =>
           (() => {
-            const status = getStatus(row)
             const summary = getSummaryValues(row)
+            const interpretation = interpret(row)
             return (
               <tr key={`${row.id}-${row.timestamp}-${idx}`}>
                 <td data-order={row.timestamp}>
@@ -116,8 +93,6 @@ function AnomaliesTable(props: { stats: DataRowResult[] }) {
                     ? '-'
                     : formatCount(row.prev7dCount)}
                 </td>
-                <td>{formatZ(row.z.robust.value)}</td>
-                <td>{formatZ(row.z.classic.value)}</td>
                 <td>
                   <div style={{ fontSize: '11px', color: '#6b7280' }}>
                     Δ1d {formatDiff(summary.diffDay)} · Δ7d{' '}
@@ -144,14 +119,7 @@ function AnomaliesTable(props: { stats: DataRowResult[] }) {
                     </span>
                   </div>
                 </td>
-                <td>{row.isFlatLine ? 'yes' : 'no'}</td>
-                <td>{row.isRatioDrop ? 'yes' : 'no'}</td>
-                <td>{row.isRatioSpike ? 'yes' : 'no'}</td>
-                <td>
-                  <span style={{ color: status.color, fontWeight: 600 }}>
-                    {status.label}
-                  </span>
-                </td>
+                <td>{interpretation || '-'}</td>
               </tr>
             )
           })(),
@@ -179,11 +147,11 @@ function AnomaliesPageLayout(props: { stats: DataRowResult[] }) {
             ],
             columnDefs: [
               {
-                targets: [2, 3, 4, 5, 6],
+                targets: [2, 3, 4],
                 type: 'num',
               },
               {
-                targets: [7, 8, 9, 10, 11],
+                targets: [5, 6],
                 orderable: false,
               },
             ],

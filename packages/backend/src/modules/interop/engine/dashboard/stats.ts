@@ -2,7 +2,15 @@ import type { AggregatedInteropTransferSeriesRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
-export const Z_SCORE_THRESHOLD = 3
+export const Z_CLASSIC_THRESHOLD = 7
+export const Z_ROBUST_THRESHOLD = {
+  warn: 4,
+  drop: -6,
+  spike: 6,
+}
+
+const FLAT_LINE_WINDOW_DAYS = 3
+const RATIO_WINDOW_DAYS = 14
 
 export type DataRow = AggregatedInteropTransferSeriesRecord
 export type DataRowResult = {
@@ -12,14 +20,8 @@ export type DataRowResult = {
   prevDayCount: number | null
   prev7dCount: number | null
   z: {
-    robust: {
-      value: number
-      isAnomaly: boolean
-    }
-    classic: {
-      value: number
-      isAnomaly: boolean
-    }
+    robust: number
+    classic: number
   }
   isFlatLine: boolean
   isRatioDrop: boolean
@@ -80,8 +82,8 @@ export function explore(rows: DataRow[]) {
     const zR = zRobust(zWindow)
     const zC = zClassic(zWindow)
 
-    const ratioWindow = pick.lastNDays(counts, 14)
-    const flatLineWindow = pick.lastNDays(counts, 3)
+    const ratioWindow = pick.lastNDays(counts, RATIO_WINDOW_DAYS)
+    const flatLineWindow = pick.lastNDays(counts, FLAT_LINE_WINDOW_DAYS)
 
     const isFlatLine = detect.flatLine(flatLineWindow)
     const isRatioDrop = detect.ratioDrop(ratioWindow)
@@ -94,14 +96,8 @@ export function explore(rows: DataRow[]) {
       prevDayCount,
       prev7dCount,
       z: {
-        robust: {
-          value: zR,
-          isAnomaly: Math.abs(zR) > Z_SCORE_THRESHOLD,
-        },
-        classic: {
-          value: zC,
-          isAnomaly: Math.abs(zC) > Z_SCORE_THRESHOLD,
-        },
+        robust: zR,
+        classic: zC,
       },
       isFlatLine,
       isRatioDrop,
@@ -114,6 +110,49 @@ export function explore(rows: DataRow[]) {
   }
 
   return results
+}
+
+export function interpret(result: DataRowResult) {
+  const outputs: string[] = []
+
+  if (result.isFlatLine) {
+    outputs.push('Flat line')
+  }
+
+  if (result.isRatioDrop) {
+    outputs.push('Ratio drop')
+  }
+
+  if (result.isRatioSpike) {
+    outputs.push('Ratio spike')
+  }
+
+  if (Math.abs(result.z.classic) > Z_CLASSIC_THRESHOLD) {
+    outputs.push('Z-classic: spike/drop')
+  }
+
+  const zRobustInterpreted = interpretZRobust(result.z.robust)
+  if (zRobustInterpreted) {
+    outputs.push(zRobustInterpreted)
+  }
+
+  return outputs.join(', ')
+}
+
+export function interpretZRobust(value: number) {
+  const abs = Math.abs(value)
+
+  if (value > Z_ROBUST_THRESHOLD.spike) {
+    return 'Z-robust - big spike'
+  }
+
+  if (value < Z_ROBUST_THRESHOLD.drop) {
+    return 'Z-robust - big drop'
+  }
+
+  if (abs > Z_ROBUST_THRESHOLD.warn) {
+    return 'Z-robust - moderate spike/drop'
+  }
 }
 
 function log1Plus(x: number) {
