@@ -87,8 +87,13 @@ describe('InteropStats', () => {
       id,
       transferCount,
     })
+    const series = (values: number[], id = 'id-1') =>
+      values.map((value, index) => row(index, value, id))
 
     it('flags flat lines in the series', () => {
+      // 3d example
+      // 5 5 5
+      // ---
       const results = explore([row(0, 5), row(1, 5), row(2, 5)])
 
       expect(results).toHaveLength(1)
@@ -99,6 +104,9 @@ describe('InteropStats', () => {
     })
 
     it('flags sudden ratio drops in the series', () => {
+      // 4d example
+      // 100 120 80 0
+      //  ---\__
       const results = explore([row(0, 100), row(1, 120), row(2, 80), row(3, 0)])
 
       expect(results).toHaveLength(1)
@@ -106,6 +114,52 @@ describe('InteropStats', () => {
       expect(results[0]?.isRatioDrop).toEqual(true)
       expect(results[0]?.prevDayCount).toEqual(80)
       expect(results[0]?.prev7dCount).toEqual(null)
+    })
+
+    it('flags flat lines in a 14d window', () => {
+      // 14d example
+      // 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+      // ------------------------------
+      const results = explore(series(new Array(14).fill(5)))
+
+      expect(results).toHaveLength(1)
+      expect(results[0]?.isFlatLine).toEqual(true)
+      expect(results[0]?.isRatioDrop).toEqual(false)
+      expect(results[0]?.isRatioSpike).toEqual(false)
+      expect(results[0]?.prevDayCount).toEqual(5)
+      expect(results[0]?.prev7dCount).toEqual(5)
+    })
+
+    it('flags a ratio drop in a 14d window', () => {
+      // 14d example
+      // 100 110 90 105 95 100 98 102 101 99 100 97 103 0
+      //  ...........'''''''''''''''''\_
+      const results = explore(
+        series([100, 110, 90, 105, 95, 100, 98, 102, 101, 99, 100, 97, 103, 0]),
+      )
+
+      expect(results).toHaveLength(1)
+      expect(results[0]?.isFlatLine).toEqual(false)
+      expect(results[0]?.isRatioDrop).toEqual(true)
+      expect(results[0]?.isRatioSpike).toEqual(false)
+      expect(results[0]?.prevDayCount).toEqual(103)
+      expect(results[0]?.prev7dCount).toEqual(98)
+    })
+
+    it('flags a ratio spike in a 14d window', () => {
+      // 14d example
+      // 10 9 11 10 10 9 10 10 9 11 10 10 9 30
+      //  .............'''''''''''''''''/^^
+      const results = explore(
+        series([10, 9, 11, 10, 10, 9, 10, 10, 9, 11, 10, 10, 9, 30]),
+      )
+
+      expect(results).toHaveLength(1)
+      expect(results[0]?.isFlatLine).toEqual(false)
+      expect(results[0]?.isRatioDrop).toEqual(false)
+      expect(results[0]?.isRatioSpike).toEqual(true)
+      expect(results[0]?.prevDayCount).toEqual(9)
+      expect(results[0]?.prev7dCount).toEqual(10)
     })
   })
 })
