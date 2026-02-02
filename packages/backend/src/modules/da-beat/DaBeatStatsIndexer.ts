@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { DaBeatStatsProvider } from '@l2beat/shared'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
@@ -8,23 +9,29 @@ import {
 } from '../../tools/uif/ManagedChildIndexer'
 
 export interface DaBeatStatsIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
   projectId: ProjectId
   db: Database
   statsProvider: DaBeatStatsProvider
 }
 
 export class DaBeatStatsIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: DaBeatStatsIndexerDeps) {
-    super({
-      ...$,
-      name: 'dabeat_stats_indexer',
-      tags: {
-        tag: $.projectId,
-        project: $.projectId,
+  constructor(
+    private readonly $: DaBeatStatsIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: 'dabeat_stats_indexer',
+        tags: {
+          tag: $.projectId,
+          project: $.projectId,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {

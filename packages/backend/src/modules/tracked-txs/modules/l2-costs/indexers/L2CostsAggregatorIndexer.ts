@@ -26,7 +26,7 @@ export interface ProjectL2Cost extends L2CostRecord {
 }
 
 export interface L2CostsAggregatorIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
   db: Database
   projects: TrackedTxProject[]
 }
@@ -36,9 +36,14 @@ export interface TrackedTxMultiplier {
   factor: number
 }
 
+import type { Logger } from '@l2beat/backend-tools'
+
 export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: L2CostsAggregatorIndexerDeps) {
-    super({ ...$, name: 'l2_costs_aggregator' })
+  constructor(
+    private readonly $: L2CostsAggregatorIndexerDeps,
+    logger: Logger,
+  ) {
+    super({ ...$, name: 'l2_costs_aggregator' }, logger)
   }
 
   override async update(from: number, to: number): Promise<number> {

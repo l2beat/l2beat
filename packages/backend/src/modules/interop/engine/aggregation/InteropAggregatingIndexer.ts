@@ -14,14 +14,19 @@ import {
 import { getAggregatedTokens, getAggregatedTransfer } from './aggregation'
 
 export interface InteropAggregatingIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
   db: Database
   configs: InteropAggregationConfig[]
 }
 
+import type { Logger } from '@l2beat/backend-tools'
+
 export class InteropAggregatingIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: InteropAggregatingIndexerDeps) {
-    super({ ...$, name: 'interop_aggregating' })
+  constructor(
+    private readonly $: InteropAggregatingIndexerDeps,
+    logger: Logger,
+  ) {
+    super({ ...$, name: 'interop_aggregating' }, logger)
   }
 
   override async update(_: number, to: number): Promise<number> {

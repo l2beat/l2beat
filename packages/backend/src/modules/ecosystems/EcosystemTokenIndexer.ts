@@ -11,16 +11,28 @@ import type {
 } from '../../tools/uif/multi/types'
 
 export interface EcosystemTokenIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<EcosystemTokenConfig>, 'name'> {
+  extends Omit<
+    ManagedMultiIndexerOptions<EcosystemTokenConfig>,
+    'name' | 'logger'
+  > {
   db: Database
   coingeckoClient: CoingeckoClient
 }
+
+import type { Logger } from '@l2beat/backend-tools'
+
 export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenConfig> {
-  constructor(private readonly $: EcosystemTokenIndexerDeps) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.ECOSYSTEM_TOKEN,
-    })
+  constructor(
+    private readonly $: EcosystemTokenIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.ECOSYSTEM_TOKEN,
+      },
+      logger,
+    )
   }
 
   override async multiUpdate(

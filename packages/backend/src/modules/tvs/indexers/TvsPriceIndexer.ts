@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import {
@@ -16,18 +17,24 @@ import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
 
 export interface TvsPriceIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<PriceConfig>, 'name'> {
+  extends Omit<ManagedMultiIndexerOptions<PriceConfig>, 'name' | 'logger'> {
   syncOptimizer: SyncOptimizer
   priceProvider: PriceProvider
 }
 
 export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
-  constructor(private readonly $: TvsPriceIndexerDeps) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.TVS_PRICE,
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+  constructor(
+    private readonly $: TvsPriceIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.TVS_PRICE,
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+      },
+      logger,
+    )
   }
 
   override async multiUpdate(

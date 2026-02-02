@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { DaProvider } from '@l2beat/shared'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -7,7 +8,8 @@ import {
 } from '../../../tools/uif/ManagedChildIndexer'
 import type { BlobService } from '../services/BlobService'
 
-export interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
+export interface Dependencies
+  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
   daProvider: DaProvider
   blobService: BlobService
   daLayer: string
@@ -15,13 +17,19 @@ export interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
 }
 
 export class BlobIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: Dependencies) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.BLOB,
-      tags: { tag: $.daLayer },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+  constructor(
+    private readonly $: Dependencies,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.BLOB,
+        tags: { tag: $.daLayer },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+      },
+      logger,
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -70,7 +78,7 @@ export class BlobIndexer extends ManagedChildIndexer {
     )
 
     if (deletedRows > 0) {
-      this.$.logger.info('Deleted rows', { deletedRows })
+      this.logger.info('Deleted rows', { deletedRows })
     }
 
     return Promise.resolve(targetHeight)

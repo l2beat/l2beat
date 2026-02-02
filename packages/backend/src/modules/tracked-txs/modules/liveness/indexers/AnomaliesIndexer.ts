@@ -26,15 +26,20 @@ import {
 import { RunningStatistics } from '../utils/RollingVariance'
 
 export interface AnomaliesIndexerIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
   db: Database
   projects: TrackedTxProject[]
 }
 
+import type { Logger } from '@l2beat/backend-tools'
+
 export class AnomaliesIndexer extends ManagedChildIndexer {
   private readonly SYNC_RANGE = 30
-  constructor(private readonly $: AnomaliesIndexerIndexerDeps) {
-    super({ ...$, name: 'anomalies' })
+  constructor(
+    private readonly $: AnomaliesIndexerIndexerDeps,
+    logger: Logger,
+  ) {
+    super({ ...$, name: 'anomalies' }, logger)
   }
 
   override async update(from: number, to: number): Promise<number> {

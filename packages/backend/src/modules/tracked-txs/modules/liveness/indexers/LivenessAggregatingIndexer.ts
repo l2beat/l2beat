@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { AggregatedLivenessRecord, Database } from '@l2beat/database'
 import {
   clampRangeToDay,
@@ -22,14 +23,17 @@ import {
 } from '../utils/mapToRecordWithConfig'
 
 export interface LivenessAggregatingIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
   db: Database
   projects: TrackedTxProject[]
 }
 
 export class LivenessAggregatingIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: LivenessAggregatingIndexerDeps) {
-    super({ ...$, name: 'liveness_aggregating' })
+  constructor(
+    private readonly $: LivenessAggregatingIndexerDeps,
+    logger: Logger,
+  ) {
+    super({ ...$, name: 'liveness_aggregating' }, logger)
   }
 
   override async update(

@@ -18,19 +18,27 @@ import type { SyncOptimizer } from '../tools/SyncOptimizer'
 export interface CirculatingSupplyAmountIndexerDeps
   extends Omit<
     ManagedMultiIndexerOptions<CirculatingSupplyAmountFormula>,
-    'name'
+    'name' | 'logger'
   > {
   syncOptimizer: SyncOptimizer
   circulatingSupplyProvider: CirculatingSupplyProvider
 }
 
+import type { Logger } from '@l2beat/backend-tools'
+
 export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<CirculatingSupplyAmountFormula> {
-  constructor(private readonly $: CirculatingSupplyAmountIndexerDeps) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.TVS_CIRCULATING_SUPPLY,
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+  constructor(
+    private readonly $: CirculatingSupplyAmountIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.TVS_CIRCULATING_SUPPLY,
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+      },
+      logger,
+    )
   }
 
   override async multiUpdate(

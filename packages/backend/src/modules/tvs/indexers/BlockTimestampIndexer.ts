@@ -13,29 +13,40 @@ import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { BlockTimestampConfig } from '../types'
 
 interface BlockTimestampIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<BlockTimestampConfig>, 'name'> {
+  extends Omit<
+    ManagedMultiIndexerOptions<BlockTimestampConfig>,
+    'name' | 'logger'
+  > {
   syncOptimizer: SyncOptimizer
   blockTimestampProvider: BlockTimestampProvider
 }
+
+import type { Logger } from '@l2beat/backend-tools'
 
 export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampConfig> {
   // used only for runtime invalidation protection
   blockHeight = 0
 
-  constructor(private readonly $: BlockTimestampIndexerDeps) {
+  constructor(
+    private readonly $: BlockTimestampIndexerDeps,
+    logger: Logger,
+  ) {
     assert(
       $.configurations.length === 1,
       'This indexer should take only one configuration',
     )
-    super({
-      ...$,
-      name: INDEXER_NAMES.TVS_BLOCK_TIMESTAMP,
-      tags: {
-        tag: $.configurations[0].properties.chainName,
-        chain: $.configurations[0].properties.chainName,
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.TVS_BLOCK_TIMESTAMP,
+        tags: {
+          tag: $.configurations[0].properties.chainName,
+          chain: $.configurations[0].properties.chainName,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
   }
 
   override async multiUpdate(

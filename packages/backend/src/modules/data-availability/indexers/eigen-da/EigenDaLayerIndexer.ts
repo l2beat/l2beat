@@ -12,21 +12,32 @@ import type {
 } from '../../../../tools/uif/multi/types'
 
 export interface Dependencies
-  extends Omit<ManagedMultiIndexerOptions<TimestampDaIndexedConfig>, 'name'> {
+  extends Omit<
+    ManagedMultiIndexerOptions<TimestampDaIndexedConfig>,
+    'name' | 'logger'
+  > {
   daLayer: string
   eigenClient: EigenApiClient
 }
 
+import type { Logger } from '@l2beat/backend-tools'
+
 export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedConfig> {
-  constructor(private readonly $: Dependencies) {
-    super({
-      ...$,
-      name: 'eigenda_layer_indexer',
-      tags: { tag: $.daLayer },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-      configurationsTrimmingDisabled: true,
-      dataWipingAfterDeleteDisabled: false,
-    })
+  constructor(
+    private readonly $: Dependencies,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: 'eigenda_layer_indexer',
+        tags: { tag: $.daLayer },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        configurationsTrimmingDisabled: true,
+        dataWipingAfterDeleteDisabled: false,
+      },
+      logger,
+    )
 
     assert(
       $.configurations.every(

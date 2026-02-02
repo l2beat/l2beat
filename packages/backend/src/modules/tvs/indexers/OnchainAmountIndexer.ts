@@ -25,7 +25,10 @@ export type OnchainAmountConfig =
   | StarknetTotalSupplyAmountFormula
 
 interface OnchainAmountIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<OnchainAmountConfig>, 'name'> {
+  extends Omit<
+    ManagedMultiIndexerOptions<OnchainAmountConfig>,
+    'name' | 'logger'
+  > {
   syncOptimizer: SyncOptimizer
   chain: string
   totalSupplyProvider: TotalSupplyProvider
@@ -33,17 +36,25 @@ interface OnchainAmountIndexerDeps
   balanceProvider: BalanceProvider
 }
 
+import type { Logger } from '@l2beat/backend-tools'
+
 export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfig> {
-  constructor(private readonly $: OnchainAmountIndexerDeps) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.TVS_CHAIN_AMOUNT,
-      tags: {
-        tag: $.chain,
-        chain: $.chain,
+  constructor(
+    private readonly $: OnchainAmountIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.TVS_CHAIN_AMOUNT,
+        tags: {
+          tag: $.chain,
+          chain: $.chain,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
   }
 
   override async multiUpdate(

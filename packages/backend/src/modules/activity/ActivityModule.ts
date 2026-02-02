@@ -67,16 +67,18 @@ export function initActivityModule({
           logger,
         })
 
-        const activityIndexer = new BlockActivityIndexer({
+        const activityIndexer = new BlockActivityIndexer(
+          {
+            projectId: project.id,
+            batchSize: project.activityConfig.batchSize ?? 100,
+            minHeight: project.activityConfig.startBlock ?? 1,
+            parents: [blockTargetIndexer],
+            txsCountService,
+            indexerService,
+            db: database,
+          },
           logger,
-          projectId: project.id,
-          batchSize: project.activityConfig.batchSize ?? 100,
-          minHeight: project.activityConfig.startBlock ?? 1,
-          parents: [blockTargetIndexer],
-          txsCountService,
-          indexerService,
-          db: database,
-        })
+        )
 
         indexers.push(blockTargetIndexer, activityIndexer)
         break
@@ -113,16 +115,18 @@ export function initActivityModule({
           logger,
         })
 
-        const activityIndexer = new BlockActivityIndexer({
+        const activityIndexer = new BlockActivityIndexer(
+          {
+            projectId: project.id,
+            batchSize: project.activityConfig.batchSize ?? 100,
+            minHeight: project.activityConfig.startSlot ?? 1,
+            parents: [slotTargetIndexer],
+            txsCountService,
+            indexerService,
+            db: database,
+          },
           logger,
-          projectId: project.id,
-          batchSize: project.activityConfig.batchSize ?? 100,
-          minHeight: project.activityConfig.startSlot ?? 1,
-          parents: [slotTargetIndexer],
-          txsCountService,
-          indexerService,
-          db: database,
-        })
+        )
 
         indexers.push(slotTargetIndexer, activityIndexer)
         break
@@ -153,20 +157,22 @@ export function initActivityModule({
           projectId: project.id,
         })
 
-        const activityIndexer = new DayActivityIndexer({
+        const activityIndexer = new DayActivityIndexer(
+          {
+            projectId: project.id,
+            minHeight: UnixTime.toDays(
+              UnixTime.toStartOf(project.activityConfig.sinceTimestamp, 'day'),
+            ),
+            parents: [dayTargetIndexer],
+            txsCountService,
+            indexerService,
+            db: database,
+            batchSize:
+              project.activityConfig.batchSize ?? Number.POSITIVE_INFINITY,
+            uncertaintyBuffer: project.activityConfig.resyncLastDays ?? 0,
+          },
           logger,
-          projectId: project.id,
-          minHeight: UnixTime.toDays(
-            UnixTime.toStartOf(project.activityConfig.sinceTimestamp, 'day'),
-          ),
-          parents: [dayTargetIndexer],
-          txsCountService,
-          indexerService,
-          db: database,
-          batchSize:
-            project.activityConfig.batchSize ?? Number.POSITIVE_INFINITY,
-          uncertaintyBuffer: project.activityConfig.resyncLastDays ?? 0,
-        })
+        )
 
         indexers.push(dayTargetIndexer, activityIndexer)
         break

@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import type { Block, Log } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -8,7 +9,7 @@ import {
 import type { BlockProcessor } from '../types'
 
 export interface BlockIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
   source: string
   blockProvider: BlockProvider
   logsProvider: LogsProvider
@@ -18,16 +19,22 @@ export interface BlockIndexerDeps
 }
 
 export class BlockIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: BlockIndexerDeps) {
-    super({
-      ...$,
-      name: 'block_indexer',
-      tags: {
-        tag: $.source,
-        chain: $.source,
+  constructor(
+    private readonly $: BlockIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: 'block_indexer',
+        tags: {
+          tag: $.source,
+          chain: $.source,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {

@@ -20,7 +20,7 @@ import {
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 interface TokenValueIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<TvsToken>, 'name'> {
+  extends Omit<ManagedMultiIndexerOptions<TvsToken>, 'name' | 'logger'> {
   syncOptimizer: SyncOptimizer
   dbStorage: DBStorage
   valueService: ValueService
@@ -28,17 +28,25 @@ interface TokenValueIndexerDeps
   maxTimestampsToProcessAtOnce: number
 }
 
+import type { Logger } from '@l2beat/backend-tools'
+
 export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
-  constructor(private readonly $: TokenValueIndexerDeps) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.TVS_TOKEN_VALUE,
-      tags: {
-        tag: $.project,
-        project: $.project,
+  constructor(
+    private readonly $: TokenValueIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.TVS_TOKEN_VALUE,
+        tags: {
+          tag: $.project,
+          project: $.project,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
   }
 
   override async multiUpdate(

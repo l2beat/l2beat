@@ -14,7 +14,10 @@ import type { BlobService } from '../services/BlobService'
 import type { DaService } from '../services/DaService'
 
 export interface Dependencies
-  extends Omit<ManagedMultiIndexerOptions<BlockDaIndexedConfig>, 'name'> {
+  extends Omit<
+    ManagedMultiIndexerOptions<BlockDaIndexedConfig>,
+    'name' | 'logger'
+  > {
   daService: DaService
   daProvider: DaProvider
   daLayer: string
@@ -22,16 +25,24 @@ export interface Dependencies
   blobService?: BlobService
 }
 
+import type { Logger } from '@l2beat/backend-tools'
+
 export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
-  constructor(private readonly $: Dependencies) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.DA2,
-      tags: { tag: $.daLayer },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-      configurationsTrimmingDisabled: true,
-      dataWipingAfterDeleteDisabled: false,
-    })
+  constructor(
+    private readonly $: Dependencies,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.DA2,
+        tags: { tag: $.daLayer },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        configurationsTrimmingDisabled: true,
+        dataWipingAfterDeleteDisabled: false,
+      },
+      logger,
+    )
 
     assert(
       $.configurations.every((c) => c.properties.daLayer === $.daLayer),
