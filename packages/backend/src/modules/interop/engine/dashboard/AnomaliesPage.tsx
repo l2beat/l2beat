@@ -95,8 +95,8 @@ function AnomaliesTable(props: { stats: DataRowResult[] }) {
                 </td>
                 <td>
                   <div style={{ fontSize: '11px', color: '#6b7280' }}>
-                    Δ1d {formatDiff(summary.diffDay)} · Δ7d{' '}
-                    {formatDiff(summary.diff7d)}
+                    Δ1d {formatDiff(summary.diffDay, 0)} · Δ7d{' '}
+                    {formatDiff(summary.diff7d, 0)}
                   </div>
                   <div style={{ fontSize: '11px', color: '#6b7280' }}>
                     1d{' '}
