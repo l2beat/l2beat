@@ -77,7 +77,11 @@ export function createInteropRouter(
   router.get('/interop/anomalies', async (ctx) => {
     const rows = await db.aggregatedInteropTransfer.getDailySeries()
     const explored = explore(rows)
-    ctx.body = renderAnomaliesPage({ stats: explored })
+    if (ctx.query.raw === 'true') {
+      ctx.body = explored
+    } else {
+      ctx.body = renderAnomaliesPage({ stats: explored })
+    }
   })
 
   router.get('/interop/anomalies/:id', async (ctx) => {

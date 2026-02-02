@@ -20,8 +20,8 @@ export type DataRowResult = {
   prevDayCount: number | null
   prev7dCount: number | null
   z: {
-    robust: number
-    classic: number
+    robust: number | null
+    classic: number | null
   }
   isFlatLine: boolean
   isRatioDrop: boolean
@@ -127,13 +127,18 @@ export function interpret(result: DataRowResult) {
     outputs.push('Ratio spike')
   }
 
-  if (Math.abs(result.z.classic) > Z_CLASSIC_THRESHOLD) {
+  if (
+    result.z.classic !== null &&
+    Math.abs(result.z.classic) > Z_CLASSIC_THRESHOLD
+  ) {
     outputs.push('Z-classic: spike/drop')
   }
 
-  const zRobustInterpreted = interpretZRobust(result.z.robust)
-  if (zRobustInterpreted) {
-    outputs.push(zRobustInterpreted)
+  if (result.z.robust !== null) {
+    const zRobustInterpreted = interpretZRobust(result.z.robust)
+    if (zRobustInterpreted) {
+      outputs.push(zRobustInterpreted)
+    }
   }
 
   return outputs.join(', ')
@@ -187,7 +192,10 @@ export function MAD(values: number[]) {
  * σ ≈ MAD / 0.67449 ≈ MAD × 1.4826
  */
 export function zRobust(values: number[]) {
-  assert(values.length >= 2, 'Need at least 2 points')
+  if (values.length < 2) {
+    return null
+  }
+
   const prev = values.slice(0, -1)
   const current = values.at(-1)
   assert(current !== undefined, 'Current value must be defined')
@@ -198,14 +206,17 @@ export function zRobust(values: number[]) {
 }
 
 export function zClassic(values: number[]) {
-  assert(values.length >= 2, 'Need at least 2 points')
+  if (values.length < 2) {
+    return null
+  }
+
   const prev = values.slice(0, -1)
   const current = values.at(-1)
   assert(current !== undefined, 'Current value must be defined')
   const mean = sum(prev) / prev.length
   const varPop = prev.reduce((acc, v) => acc + (v - mean) ** 2, 0) / prev.length
   const std = Math.sqrt(varPop)
-  if (std === 0) return current === mean ? 0 : Number.POSITIVE_INFINITY
+  if (std === 0) return current === mean ? 0 : null
   return (current - mean) / std
 }
 
