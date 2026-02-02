@@ -7,7 +7,13 @@ permissions:
   packages: write
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force deployment"
+        required: false
+        default: false
+        type: boolean
   push:
     branches:
       - main
@@ -17,6 +23,7 @@ jobs:
     uses: ./.github/workflows/check-changes.yml
     with:
       package: '@l2beat/frontend'
+      force: ${{ github.event.inputs.force == 'true' }}
 
   deploy:
     needs: check-changes

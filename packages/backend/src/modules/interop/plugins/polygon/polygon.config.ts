@@ -1,3 +1,13 @@
+/**
+ * config recipe for polygon plasma- and pos bridges
+ * deposits are easy to track with specific events, but
+ * withdrawals for either of the two bridges
+ * do not emit anything but `Transfer` reliably
+ *
+ * 1. get 'predicate' escrow addresses on ethereum and DepositManager to use as `from` addresses
+ * 2. get root<->child token map to map all supported tokens across both chains and the two bridges
+ * 3. remove the USDT mapping because it uses LayerZero
+ */
 import type { Logger } from '@l2beat/backend-tools'
 import type { EVMLog, IRpcClient } from '@l2beat/shared'
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
@@ -28,6 +38,10 @@ const REGISTRY = EthereumAddress('0x33a02E6cC863D393d6Bf231B697b82F6e499cA71')
 
 const ROOT_CHAIN_MANAGER_MIN_BLOCK = 10735430
 const REGISTRY_MIN_BLOCK = 10167710
+
+const BLACKLISTED_ROOT_TOKENS: Address32[] = [
+  Address32.from('0xdAC17F958D2ee523a2206206994597C13D831ec7'), // USDT, uses LayerZero
+]
 
 const predicateRegisteredLog =
   'event PredicateRegistered(bytes32 indexed tokenType, address indexed predicateAddress)'
@@ -200,6 +214,10 @@ export class PolygonConfigPlugin
       }
 
       rootToChild.set(entry.rootToken, entry.childToken)
+    }
+
+    for (const rootToken of BLACKLISTED_ROOT_TOKENS) {
+      rootToChild.delete(rootToken)
     }
 
     const childToRoot: Record<Address32, Address32> = {}

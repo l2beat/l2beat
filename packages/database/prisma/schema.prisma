@@ -544,6 +544,7 @@ model AggregatedInteropTransfer {
   srcChain         String   @db.VarChar(255)
   dstChain         String   @db.VarChar(255)
   transferCount    Int
+  identifiedCount  Int      @default(0)
   totalDurationSum Int
   srcValueUsd      Float?   @db.Real
   dstValueUsd      Float?   @db.Real

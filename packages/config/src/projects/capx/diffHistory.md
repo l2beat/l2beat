@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x7b1e2dc07ee4997005a3b4e232e2dafea7f610a0
+
+# Diff at Fri, 30 Jan 2026 11:41:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@179241847ec22c24aeac96158d21e3a19cd42138 block: 1766142818
+- current timestamp: 1769773244
+
+## Description
+
+Caldera Multisig 3 added a new signer, increasing from 4 of 7 (57%) to 4 of 8 (50%) threshold.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x1e83ab4ee554a3a489f158b7449fe10a8563692c
 
 # Diff at Mon, 05 Jan 2026 17:44:08 GMT:

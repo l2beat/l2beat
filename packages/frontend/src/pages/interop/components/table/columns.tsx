@@ -67,6 +67,8 @@ const last24hVolumeColumn = columnHelper.accessor('volume', {
   meta: {
     align: 'right',
     headClassName: 'text-2xs text-right',
+    tooltip:
+      'The total USD value of all token transfers completed in the past 24 hours.',
   },
 })
 
@@ -75,6 +77,8 @@ const tokensByVolumeColumn = columnHelper.accessor('tokens', {
   meta: {
     cellClassName: '!pr-0',
     headClassName: 'text-2xs',
+    tooltip:
+      'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
   },
   cell: (ctx) => (
     <TopTokensCell
@@ -100,6 +104,8 @@ const averageDurationColumn = columnHelper.accessor(
     meta: {
       align: 'right',
       headClassName: 'text-2xs',
+      tooltip:
+        'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
     },
     cell: (ctx) => (
       <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
@@ -107,9 +113,32 @@ const averageDurationColumn = columnHelper.accessor(
   },
 )
 
+const averageInFlightValueColumn = columnHelper.accessor(
+  'averageValueInFlight',
+  {
+    header: 'Last 24h avg.\nin-flight value',
+    invertSorting: true,
+    meta: {
+      align: 'right',
+      headClassName: 'text-2xs',
+      tooltip:
+        'The average USD value of funds in transit at any given second over the past 24 hours. For non-minting protocols it represents the average value at risk at any given second.',
+    },
+    cell: (ctx) => {
+      if (ctx.row.original.averageValueInFlight === undefined) return '-'
+      return (
+        <span className="font-medium text-label-value-15">
+          {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
+        </span>
+      )
+    },
+  },
+)
+
 export const nonMintingColumns = [
   ...commonColumns,
   last24hVolumeColumn,
+  averageInFlightValueColumn,
   tokensByVolumeColumn,
 ]
 
@@ -126,7 +155,10 @@ export const omniChainColumns = [
   tokensByVolumeColumn,
 ]
 
-export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
+export function getAllProtocolsColumns(
+  hideTypeColumn?: boolean,
+  showAverageInFlightValueColumn?: boolean,
+) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
       header: '#',
@@ -136,7 +168,7 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
         align: 'right',
         headClassName: 'w-0',
       },
-      size: 48,
+      size: 44,
     }),
     ...commonColumns,
     !hideTypeColumn &&
@@ -160,6 +192,8 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
       meta: {
         align: 'right',
         headClassName: 'text-2xs',
+        tooltip:
+          'The total number of token transfer transactions completed in the past 24 hours.',
       },
     }),
     averageDurationColumn,
@@ -168,6 +202,8 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
       meta: {
         align: 'right',
         headClassName: 'text-2xs',
+        tooltip:
+          'The average USD value per token transfer completed in the past 24 hours.',
       },
       cell: (ctx) => (
         <span className="font-medium text-label-value-15">
@@ -175,12 +211,15 @@ export function getAllProtocolsColumns(hideTypeColumn?: boolean) {
         </span>
       ),
     }),
+    showAverageInFlightValueColumn && averageInFlightValueColumn,
     tokensByVolumeColumn,
     columnHelper.accessor('chains', {
       header: 'Chains\nby volume',
       meta: {
         cellClassName: '!pr-0',
         headClassName: 'text-2xs',
+        tooltip:
+          'Chains involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination chain.',
       },
       cell: (ctx) => (
         <TopChainsCell
