@@ -37,11 +37,12 @@ const AGGLAYER_NETWORKS = defineNetworks<AgglayerNetwork>('agglayer', [
     chain: 'katana',
     bridge: ChainSpecificAddress(`katana:${BRIDGE_ADDRESS}`),
   },
-  {
-    networkId: 22,
-    chain: 'forknet',
-    bridge: ChainSpecificAddress(`forknet:${BRIDGE_ADDRESS}`),
-  },
+  // TODO: add forknet RPC
+  // {
+  //   networkId: 22,
+  //   chain: 'forknet',
+  //   bridge: ChainSpecificAddress(`forknet:${BRIDGE_ADDRESS}`),
+  // },
 ])
 
 function getNetworkById(networkId: number): AgglayerNetwork | undefined {
