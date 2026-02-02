@@ -51,7 +51,7 @@ export const zkprover: BaseProject = {
     
     ## Description
 
-    zkProver is a STARK proving system designed to implement the zkEVM component of Polygon zkEVM. It proves the execution of EVM transactions in a zkVM running on [zkASM](https://docs.polygon.technology/tools/zkevm/architecture/zkprover/#zero-knowledge-assembly) ISA. zkProver allows recursive STARK aggregation as well as the final wrap in a [Fflonk](https://hecmas.github.io/events/2023fflonk/) SNARK for efficient onchain verification. zkProver onchain verifier targets 128 bits of security.
+    zkProver is a STARK proving system designed to implement the zkEVM component of Polygon zkEVM. It proves the execution of EVM transactions in a zkVM running on [zkASM](https://docs.polygon.technology/tools/zkevm/architecture/zkprover/#zero-knowledge-assembly) ISA. zkProver allows recursive STARK aggregation as well as the final wrap in a [Fflonk](https://hecmas.github.io/uploads/fflonk.pdf) SNARK for efficient onchain verification. zkProver onchain verifier targets 128 bits of security.
 
     ## Proof system
 
