@@ -54,6 +54,10 @@
       "ecosystemId": "superchain",
       "news": [
         {
+          "title": "Optimism Introduces OP Enterprise",
+          "content": "Optimism introduced [OP Enterprise](https://www.optimism.io/blog/introducing-op-enterprise), a suite of managed blockchain infrastructure products designed for enterprises that want to deploy on the OP Stack without operating the full blockchain themselves. It includes three tiers: OP Mainnet (deploy on public network with enterprise support), Self Managed (operate your own chain with 40 hours/month engineering support), and Fully Managed (end-to-end operations with 99.99% uptime SLOs and 15-minute P1 response). The offering includes pre-negotiated vendor partnerships across wallets, indexers, oracles, and compliance providers, eliminating negotiations that typically take 6-12 months. The infrastructure is MIT licensed and open source, with direct access to the engineers who built the OP Stack."
+        },
+        {
           "title": "Upgrade 18: Custom Gas Token v2 and Kona Proofs on the OP Stack",
           "content": "Paul Dowman (OP Labs) [posted](https://gov.optimism.io/t/upgrade-18-custom-gas-token-v2-and-kona-proofs/10576) the Upgrade 18 proposal detailing three major OP Stack advancements: Custom Gas Token v2 (CGT v2), a creator-pattern dispute game refactor, and Cannon + Kona fault proofs. CGT v2 enables OP Stack chains to use any asset (not just ETH) as the native gas token, unlocking designs like stablecoin-fee rollups, while explicitly noting that there is no migration path from legacy CGT to v2.\n\nThe proposal also adds [Kona](https://github.com/ethereum-optimism/optimism/tree/develop/kona/crates/proof/proof), a second Rust-based fault-proof implementation alongside Cannon, increasing redundancy (via the new CANNON_KONA game type, not yet canonical). It outlines the operational plan (Security Council signing + pre-states) and targets mainnet execution after Feb 5, 2026, with bundled upgrades across multiple Superchain networks."
         },
