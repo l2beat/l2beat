@@ -15,9 +15,9 @@ import {
  * minimally tracks the 1inch Fusion+ HTLC-based intent protocol, mainly all messages.
  * the two events tracked do not track whether the user withdraws, meaning it can happen that we track intents that were not fully completed.
  * if we track the withdrawal as completion, we will see higher latency, but more solid crosschain events.
- * only supports token IDs for now, which are 1inch-specific.
  */
 
+// https://business.1inch.com/portal/documentation/overview#supported-chains
 const ONEINCH_FUSIONPLUS_NETWORKS = defineNetworks('oneinch-fusion-plus', [
   {
     chain: 'ethereum',
@@ -39,6 +39,14 @@ const ONEINCH_FUSIONPLUS_NETWORKS = defineNetworks('oneinch-fusion-plus', [
     chainId: 10,
     address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
   },
+  // no apechain
+  {
+    chain: 'polygonpos',
+    chainId: 137,
+    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
+  },
+  // no zksync
+  // no abstract
 ])
 
 const parseSrcEscrowCreated = createEventParser(
@@ -61,7 +69,7 @@ const DstEscrowCreated = createInteropEventType<{
   hashlock: `0x${string}`
   dstTokenAddress?: Address32
   dstAmount?: bigint
-}>('oneinch-fusion-plus.DstEscrowCreated')
+}>('oneinch-fusion-plus.DstEscrowCreated', { direction: 'incoming' })
 
 const SrcEscrowCreated = createInteropEventType<{
   hashlock: string
@@ -69,7 +77,7 @@ const SrcEscrowCreated = createInteropEventType<{
   srcTokenAddress?: Address32
   srcAmount: bigint
   dstAmount: bigint
-}>('oneinch-fusion-plus.SrcEscrowCreated')
+}>('oneinch-fusion-plus.SrcEscrowCreated', { direction: 'outgoing' })
 
 export class OneinchFusionPlusPlugin implements InteropPlugin {
   readonly name = 'oneinch-fusion-plus'
@@ -178,10 +186,12 @@ export class OneinchFusionPlusPlugin implements InteropPlugin {
           srcEvent: srcEscrowCreated,
           srcTokenAddress: srcEscrowCreated.args.srcTokenAddress,
           srcAmount: srcEscrowCreated.args.srcAmount,
+          srcWasBurned: false,
           dstEvent: dstEscrowCreated,
           dstTokenAddress: dstEscrowCreated.args.dstTokenAddress,
           dstAmount:
             dstEscrowCreated.args.dstAmount ?? srcEscrowCreated.args.dstAmount,
+          dstWasMinted: false,
         }),
       ]
     }

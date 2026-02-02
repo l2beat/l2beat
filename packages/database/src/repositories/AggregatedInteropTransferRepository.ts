@@ -9,9 +9,11 @@ export interface AggregatedInteropTransferRecord {
   srcChain: string
   dstChain: string
   transferCount: number
+  identifiedCount: number
   totalDurationSum: number
   srcValueUsd: number | undefined
   dstValueUsd: number | undefined
+  avgValueInFlight: number | undefined
   countUnder100: number
   count100To1K: number
   count1KTo10K: number
@@ -28,9 +30,11 @@ export function toRecord(
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
     transferCount: row.transferCount,
+    identifiedCount: row.identifiedCount,
     totalDurationSum: row.totalDurationSum,
     srcValueUsd: row.srcValueUsd ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
+    avgValueInFlight: row.avgValueInFlight ?? undefined,
     countUnder100: row.countUnder100 ?? 0,
     count100To1K: row.count100To1K ?? 0,
     count1KTo10K: row.count1KTo10K ?? 0,
@@ -48,9 +52,11 @@ export function toRow(
     srcChain: record.srcChain,
     dstChain: record.dstChain,
     transferCount: record.transferCount,
+    identifiedCount: record.identifiedCount,
     totalDurationSum: record.totalDurationSum,
     srcValueUsd: record.srcValueUsd,
     dstValueUsd: record.dstValueUsd,
+    avgValueInFlight: record.avgValueInFlight,
     countUnder100: record.countUnder100,
     count100To1K: record.count100To1K,
     count1KTo10K: record.count1KTo10K,

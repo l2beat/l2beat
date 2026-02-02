@@ -1878,7 +1878,7 @@
   },
   "hwr": {
     // 4 hwr transfers, one is USDC via cctp
-    "loadConfigs": ["cctp-v2"],
+    // "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "base",
@@ -1911,6 +1911,15 @@
       {
         "chain": "base",
         "tx": "0x4ee250794e41620b5103ee898062188e7ce4acaec045addee1ac22cba2cd0718"
+      },
+      // smolcoin
+      {
+        "chain": "arbitrum",
+        "tx": "0xf32c41db9377c65d3c542b8cc6b1575fe2b539fac640ae2bfc65929970f65adb"
+      },
+      {
+        "chain": "base",
+        "tx": "0x6fd7165f4087a39c6e4519a41607c74d1c4b965445babdcabacd08d5fa5e8b1c"
       }
     ]
   },
@@ -2436,19 +2445,43 @@
       {
         "chain": "polygonpos",
         "tx": "0xbaad5b4d133b7b45a60673ba34a024201e8da0b300fba3a55aaebface16af506"
+      },
+      // message only
+      {
+        "chain": "ethereum",
+        "tx": "0xa3902f2de62c48541dbcf6bc923224842f699a97632a4d4cc25a52c02cefcc07"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xb999af0a60e66dc2e1b203357bc076759c4feb83cfa46719526257a4180a0bb9"
+      },
+      // ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x5bb751e109aa729e493493629e5d2285a83a320ffede1904c288842bdaeb4330"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x03de08cd274dc0f9eedb5ab659b8745d96d5126334869d5a7a9313a88ae88bb4"
       }
     ],
     "events": [
       "polygon.StateSynced",
       "polygon.StateCommitted",
       "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
       "polygon.StateCommitted"
     ],
     "messages": [
-      { "type": "polygon.Message", "app": "polygonpos" },
-      { "type": "polygon.Message", "app": "polygonpos" }
+      { "type": "polygon.Message", "app": "canonical-deposit" },
+      { "type": "polygon.Message", "app": "canonical-deposit" },
+      { "type": "polygon.Message", "app": "canonical-deposit" },
+      { "type": "polygon.Message", "app": "unknown" }
     ],
-    "transfers": ["polygon.Transfer", "polygon.Transfer"]
+    "transfers": ["polygon.Transfer", "polygon.Transfer", "polygon.Transfer"]
   },
   "polygon-withdrawal": {
     "loadConfigs": ["polygon"],
@@ -2470,19 +2503,31 @@
       {
         "chain": "ethereum",
         "tx": "0xe6e2b3d8093f37a86d9fb2c959daf04e634a0b7521df214012a59a4f399bc96c"
+      },
+      // eth withdrawal
+      {
+        "chain": "polygonpos",
+        "tx": "0x5a7d4b2851bc6d98e3ceae4a0fecba4d601c4a89bad57c2ca468952de00e7d90"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x29c2e92eab9465afb840e364f7df8fcf59034e12ff8e5bf29a96d7a4de58b79d"
       }
     ],
     "events": [
       "polygon.WithdrawalInitiated",
       "polygon.WithdrawalFinalized",
       "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized",
+      "polygon.WithdrawalInitiated",
       "polygon.WithdrawalFinalized"
     ],
     "messages": [
-      { "type": "polygon.Message", "app": "polygonpos" },
-      { "type": "polygon.Message", "app": "polygonpos" }
+      { "type": "polygon.Message", "app": "canonical-withdrawal" },
+      { "type": "polygon.Message", "app": "canonical-withdrawal" },
+      { "type": "polygon.Message", "app": "canonical-withdrawal" }
     ],
-    "transfers": ["polygon.Transfer", "polygon.Transfer"]
+    "transfers": ["polygon.Transfer", "polygon.Transfer", "polygon.Transfer"]
   },
   "sky-bridge": {
     "txs": [

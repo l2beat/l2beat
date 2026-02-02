@@ -57,6 +57,7 @@ export type ProtocolEntry = {
   transferCount: number
   averageValue: number
   averageDuration: { type: 'single'; duration: number } | DurationSplit
+  averageValueInFlight?: number
 }
 
 export function getProtocolEntries(
@@ -117,6 +118,7 @@ export function getProtocolEntries(
         averageValue:
           data.transferCount > 0 ? data.volume / data.transferCount : 0,
         averageDuration: getAverageDuration(key, data, durationSplitMap),
+        averageValueInFlight: data.averageValueInFlight,
       }
     })
     .sort((a, b) => b.volume - a.volume)

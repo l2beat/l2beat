@@ -500,6 +500,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           'arbitrum',
           7,
           3000,
+          150,
         )
         const record4 = record(
           'id4',
@@ -555,6 +556,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           'optimism',
           2,
           4000,
+          250,
         )
         const records = [record1, record2, record3, record4]
 
@@ -690,9 +692,11 @@ function record(
   srcChain: string,
   dstChain: string,
   transferCount = 1,
+  identifiedCount = 1,
   totalDurationSum = 0,
   srcValueUsd?: number,
   dstValueUsd?: number,
+  avgValueInFlight?: number,
   countUnder100 = 0,
   count100To1K = 0,
   count1KTo10K = 0,
@@ -705,9 +709,11 @@ function record(
     srcChain,
     dstChain,
     transferCount,
+    identifiedCount,
     totalDurationSum,
     srcValueUsd,
     dstValueUsd,
+    avgValueInFlight,
     countUnder100,
     count100To1K,
     count1KTo10K,

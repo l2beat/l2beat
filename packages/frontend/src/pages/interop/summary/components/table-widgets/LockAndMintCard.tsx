@@ -5,6 +5,7 @@ import type { InteropDashboardData } from '~/server/features/scaling/interop/get
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
+import { TopNBadge } from '../TopNBadge'
 import { LockAndMintTable } from './tables/LockAndMintTable'
 
 export function LockAndMintCard({
@@ -24,9 +25,12 @@ export function LockAndMintCard({
   return (
     <PrimaryCard className="flex flex-col max-md:border-b max-md:border-b-divider md:border-t-4 md:border-t-yellow-700">
       <div className="flex items-center justify-between">
-        <h2 className="font-bold text-heading-20 decoration-yellow-700 underline-offset-6 max-md:underline md:text-heading-24">
-          Lock & Mint
-        </h2>
+        <div className="flex items-center gap-2">
+          <h2 className="font-bold text-heading-20 decoration-yellow-700 underline-offset-6 max-md:underline md:text-heading-24">
+            Lock & Mint
+          </h2>
+          <TopNBadge n={5} />
+        </div>
         <a href={viewAllUrl}>
           <Button
             variant="outline"
@@ -41,14 +45,13 @@ export function LockAndMintCard({
         One-sided risk. If user bridge back, the original tokens are unlocked
         and the bridge risk is removed.
       </div>
-      {isLoading && <Skeleton className="mt-2 h-62 w-full rounded-sm" />}
-      {entries ? (
-        entries.length === 0 ? (
-          <NoResultsInfo />
-        ) : (
-          <LockAndMintTable entries={entries} />
-        )
-      ) : null}
+      {isLoading ? (
+        <Skeleton className="mt-2 h-62 w-full rounded-sm" />
+      ) : entries && entries.length > 0 ? (
+        <LockAndMintTable entries={entries} />
+      ) : (
+        <NoResultsInfo />
+      )}
     </PrimaryCard>
   )
 }

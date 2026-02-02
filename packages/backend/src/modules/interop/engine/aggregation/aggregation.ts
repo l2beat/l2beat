@@ -3,7 +3,7 @@ import type {
   AggregatedInteropTransferRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
-import { assert, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 
 type Bucket =
   | 'under100'
@@ -23,6 +23,9 @@ function getBucket(valueUsd: number | undefined): Bucket {
 
 export function getAggregatedTransfer(
   group: InteropTransferRecord[],
+  options?: {
+    calculateValueInFlight?: boolean
+  },
 ): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp'> {
   const first = group[0]
   assert(first, 'Group is empty')
@@ -30,6 +33,8 @@ export function getAggregatedTransfer(
   let totalDurationSum = 0
   let srcValueUsd: number | undefined = undefined
   let dstValueUsd: number | undefined = undefined
+  let valueInFlight: number | undefined = undefined
+  let identifiedCount = 0
   let countUnder100 = 0
   let count100To1K = 0
   let count1KTo10K = 0
@@ -39,15 +44,22 @@ export function getAggregatedTransfer(
   for (const transfer of group) {
     totalDurationSum += transfer.duration
     if (srcValueUsd === undefined) {
-      srcValueUsd = transfer.srcValueUsd
+      srcValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd
     } else {
-      srcValueUsd += transfer.srcValueUsd ?? 0
+      srcValueUsd += transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
     }
 
     if (dstValueUsd === undefined) {
-      dstValueUsd = transfer.dstValueUsd
+      dstValueUsd = transfer.dstValueUsd ?? transfer.srcValueUsd
     } else {
-      dstValueUsd += transfer.dstValueUsd ?? 0
+      dstValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
+    }
+
+    if (
+      transfer.srcValueUsd !== undefined ||
+      transfer.dstValueUsd !== undefined
+    ) {
+      identifiedCount++
     }
 
     // Count transfers by bucket based on srcValueUsd
@@ -73,6 +85,12 @@ export function getAggregatedTransfer(
       default:
         assertUnreachable(bucket)
     }
+
+    if (options?.calculateValueInFlight) {
+      valueInFlight =
+        (valueInFlight ?? 0) +
+        (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0) * transfer.duration
+    }
   }
 
   return {
@@ -82,11 +100,15 @@ export function getAggregatedTransfer(
     totalDurationSum,
     srcValueUsd: srcValueUsd ? Math.round(srcValueUsd * 100) / 100 : undefined,
     dstValueUsd: dstValueUsd ? Math.round(dstValueUsd * 100) / 100 : undefined,
+    avgValueInFlight: valueInFlight
+      ? Math.round((valueInFlight / UnixTime.DAY) * 100) / 100
+      : undefined,
     countUnder100,
     count100To1K,
     count1KTo10K,
     count10KTo100K,
     countOver100K,
+    identifiedCount,
   }
 }
 
