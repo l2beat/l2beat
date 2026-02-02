@@ -17,7 +17,7 @@ import {
  * if we track the withdrawal as completion, we will see higher latency, but more solid crosschain events.
  */
 
-//
+// https://business.1inch.com/portal/documentation/overview#supported-chains
 const ONEINCH_FUSIONPLUS_NETWORKS = defineNetworks('oneinch-fusion-plus', [
   {
     chain: 'ethereum',
