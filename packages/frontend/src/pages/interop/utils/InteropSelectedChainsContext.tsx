@@ -25,6 +25,7 @@ interface InteropSelectedChainsContextType {
   reset: () => void
   isDirty: boolean
   setPath: (paths: { from: string; to: string }) => void
+  swapPaths: () => void
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -117,6 +118,13 @@ export function InteropSelectedChainsProvider({
     })
   }, [])
 
+  const swapPaths = useCallback(() => {
+    setSelectedChains((prev) => ({
+      from: prev.to,
+      to: prev.from,
+    }))
+  }, [])
+
   return (
     <InteropSelectedChainsContext.Provider
       value={{
@@ -127,6 +135,7 @@ export function InteropSelectedChainsProvider({
         reset,
         isDirty,
         setPath,
+        swapPaths,
       }}
     >
       {children}

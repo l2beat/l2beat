@@ -14,6 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/Popover'
+import { SwapIcon } from '~/icons/Swap'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
 import type { InteropChainWithIcon } from './types'
@@ -25,7 +26,7 @@ export function ChainSelectorButton({
   allChains: InteropChainWithIcon[]
   type: 'from' | 'to'
 }) {
-  const { selectedChains, toggleFrom, toggleTo, isDirty, reset } =
+  const { selectedChains, toggleFrom, toggleTo, isDirty, reset, swapPaths } =
     useInteropSelectedChains()
 
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
@@ -90,7 +91,13 @@ export function ChainSelectorButton({
               />
             ))}
           </div>
-          <div className="mt-4 mb-2 font-semibold text-xs leading-none">To</div>
+          <div
+            className="mt-3 w-fit cursor-pointer rounded-sm border border-brand p-[7px]"
+            onClick={swapPaths}
+          >
+            <SwapIcon className="size-4 rotate-90 fill-brand" />
+          </div>
+          <div className="mt-3 mb-2 font-semibold text-xs leading-none">To</div>
           <div className="flex flex-wrap gap-2">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
