@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/Popover'
+import { InfoIcon } from '~/icons/Info'
 import { SwapIcon } from '~/icons/Swap'
 import { cn } from '~/utils/cn'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
@@ -85,9 +86,11 @@ export function ChainSelectorButton({
             <DrawerDescription className="font-semibold text-secondary text-xs leading-none">
               Select the chains you want to include
             </DrawerDescription>
+            {(selectedChains.from.length === 0 ||
+              selectedChains.to.length === 0) && <EmptyStateError />}
           </DrawerHeader>
           <div className="mb-2 font-semibold text-xs leading-none">From</div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
@@ -104,7 +107,7 @@ export function ChainSelectorButton({
             <SwapIcon className="size-4 rotate-90 fill-brand" />
           </div>
           <div className="mt-3 mb-2 font-semibold text-xs leading-none">To</div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
@@ -147,7 +150,8 @@ export function ChainSelectorButton({
           align="start"
           side="bottom"
         >
-          <div className="flex flex-wrap gap-1">
+          {selectedChains[type].length === 0 && <EmptyStateError />}
+          <div className="mt-2.5 flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
@@ -196,6 +200,17 @@ function ModifierButton({
       onClick={onClick}
     >
       {label}
+    </div>
+  )
+}
+
+function EmptyStateError() {
+  return (
+    <div className="flex items-center gap-1">
+      <InfoIcon className="fill-negative" />
+      <div className="font-medium text-negative text-paragraph-14">
+        Select at least one pair of chains to display results.
+      </div>
     </div>
   )
 }
