@@ -20,6 +20,7 @@ import type {
   ApiFundsDataResponse,
   ApiCallGraphResponse,
   ApiAIModelsResponse,
+  ApiTokenInfoResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -443,6 +444,19 @@ export function executeFetchFunds(project: string, contractAddress?: string, for
   })
 
   return eventSource
+}
+
+export async function getTokenInfo(
+  chainId: string,
+  tokenId: string,
+): Promise<ApiTokenInfoResponse> {
+  const params = new URLSearchParams({ chain_id: chainId, id: tokenId })
+  const res = await fetch(`/api/token-info?${params}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiTokenInfoResponse
 }
 
 export async function getCallGraphData(project: string): Promise<ApiCallGraphResponse> {

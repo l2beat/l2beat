@@ -14,6 +14,35 @@ import type {
 const DEFISCAN_ENDPOINTS_URL =
   process.env.DEFISCAN_ENDPOINTS_URL || 'http://localhost:3001'
 
+export interface TokenInfo {
+  id: string
+  chain: string
+  name: string
+  symbol: string
+  decimals: number
+  price: number
+}
+
+export async function fetchTokenInfo(
+  chainId: string,
+  tokenId: string,
+): Promise<TokenInfo> {
+  const params = new URLSearchParams({
+    chain_id: chainId,
+    id: tokenId.toLowerCase(),
+  })
+  const url = `${DEFISCAN_ENDPOINTS_URL}/token?${params}`
+  const response = await fetch(url)
+
+  if (!response.ok) {
+    throw new Error(
+      `Token API returned ${response.status}: ${response.statusText}`,
+    )
+  }
+
+  return (await response.json()) as TokenInfo
+}
+
 export function getFundsData(
   paths: DiscoveryPaths,
   project: string,
@@ -65,21 +94,29 @@ function getFundsDataPath(paths: DiscoveryPaths, project: string): string {
 export function getContractsToFetch(
   paths: DiscoveryPaths,
   project: string,
-): { address: string; fetchBalances: boolean; fetchPositions: boolean }[] {
+): {
+  address: string
+  fetchBalances: boolean
+  fetchPositions: boolean
+  isToken: boolean
+}[] {
   const tags = getContractTags(paths, project)
 
   return tags.tags
-    .filter((tag) => tag.fetchBalances || tag.fetchPositions)
+    .filter((tag) => tag.fetchBalances || tag.fetchPositions || tag.isToken)
     .map((tag) => ({
       address: tag.contractAddress,
       fetchBalances: tag.fetchBalances ?? false,
       fetchPositions: tag.fetchPositions ?? false,
+      isToken: tag.isToken ?? false,
     }))
 }
 
 interface FetchOptions {
   fetchBalances?: boolean
   fetchPositions?: boolean
+  isToken?: boolean
+  discoveredData?: any
   forceRefresh?: boolean
 }
 
@@ -231,6 +268,50 @@ export async function fetchFundsForContract(
         source: 'debank',
       }
     }
+
+    if (options.isToken) {
+      const tokenData = await fetchTokenInfo('eth', cleanAddress)
+
+      // Look up totalSupply and decimals from discovered.json
+      let totalSupply: string | undefined
+      let decimals: number | undefined
+
+      // discovered.json entries is a flat array of contracts with values
+      if (options.discoveredData?.entries) {
+        const contract = options.discoveredData.entries.find(
+          (c: any) =>
+            c.address?.toLowerCase() === contractAddress.toLowerCase(),
+        )
+        if (contract?.values) {
+          if (contract.values.totalSupply != null)
+            totalSupply = String(contract.values.totalSupply)
+          if (contract.values.decimals != null)
+            decimals = Number(contract.values.decimals)
+        }
+      }
+
+      let tokenValue = 0
+      if (totalSupply !== undefined && decimals !== undefined) {
+        // Safe BigInt computation for large totalSupply values
+        const raw = BigInt(totalSupply)
+        const divisor = BigInt(10) ** BigInt(decimals)
+        // Convert to float: integer part + fractional remainder
+        const integerPart = Number(raw / divisor)
+        const remainder = Number(raw % divisor) / Number(divisor)
+        tokenValue = (integerPart + remainder) * tokenData.price
+      }
+
+      result.tokenInfo = {
+        symbol: tokenData.symbol,
+        name: tokenData.name,
+        decimals: tokenData.decimals,
+        price: tokenData.price,
+        totalSupply: totalSupply ?? '0',
+        tokenValue,
+        timestamp: new Date().toISOString(),
+        source: 'debank',
+      }
+    }
   } catch (error) {
     result.error = error instanceof Error ? error.message : 'Unknown error'
     console.error(`Error fetching funds for ${contractAddress}:`, error)
@@ -257,6 +338,24 @@ export async function fetchAllFundsForProject(
     `Found ${contractsToFetch.length} contracts to fetch funds for${forceRefresh ? ' (force refresh)' : ''}`,
   )
 
+  // Load discovered data once for token totalSupply lookups
+  const hasTokenContracts = contractsToFetch.some((c) => c.isToken)
+  let discoveredData: any = undefined
+  if (hasTokenContracts) {
+    const discoveredPath = path.join(
+      paths.discovery,
+      project,
+      'discovered.json',
+    )
+    if (fs.existsSync(discoveredPath)) {
+      try {
+        discoveredData = JSON.parse(fs.readFileSync(discoveredPath, 'utf8'))
+      } catch (error) {
+        console.error('Error loading discovered.json for token data:', error)
+      }
+    }
+  }
+
   const contracts = { ...existingData.contracts }
   let fetchedFromApi = 0
   let returnedFromCache = 0
@@ -265,12 +364,14 @@ export async function fetchAllFundsForProject(
     const contract = contractsToFetch[i]
 
     onProgress?.(
-      `[${i + 1}/${contractsToFetch.length}] Requesting ${contract.address}...`,
+      `[${i + 1}/${contractsToFetch.length}] Requesting ${contract.address}${contract.isToken ? ' (token)' : ''}...`,
     )
 
     const fetchResult = await fetchFundsForContract(contract.address, {
       fetchBalances: contract.fetchBalances,
       fetchPositions: contract.fetchPositions,
+      isToken: contract.isToken,
+      discoveredData,
       forceRefresh,
     })
 
@@ -280,7 +381,12 @@ export async function fetchAllFundsForProject(
     } else {
       // Preserve existing data but update the error field and timestamp
       const existingData = contracts[contract.address]
-      if (existingData && (existingData.balances || existingData.positions)) {
+      if (
+        existingData &&
+        (existingData.balances ||
+          existingData.positions ||
+          existingData.tokenInfo)
+      ) {
         contracts[contract.address] = {
           ...existingData,
           lastFetched: fetchResult.data.lastFetched,
@@ -352,18 +458,37 @@ export async function fetchFundsForSingleContract(
     (t) => t.contractAddress.toLowerCase() === contractAddress.toLowerCase(),
   )
 
-  if (!tag || (!tag.fetchBalances && !tag.fetchPositions)) {
+  if (!tag || (!tag.fetchBalances && !tag.fetchPositions && !tag.isToken)) {
     onProgress?.(`Contract ${contractAddress} is not marked for funds fetching`)
     return getFundsData(paths, project)
   }
 
+  // Load discovered data for token totalSupply lookups
+  let discoveredData: any = undefined
+  if (tag.isToken) {
+    const discoveredPath = path.join(
+      paths.discovery,
+      project,
+      'discovered.json',
+    )
+    if (fs.existsSync(discoveredPath)) {
+      try {
+        discoveredData = JSON.parse(fs.readFileSync(discoveredPath, 'utf8'))
+      } catch (error) {
+        console.error('Error loading discovered.json for token data:', error)
+      }
+    }
+  }
+
   onProgress?.(
-    `Requesting ${contractAddress}${forceRefresh ? ' (force refresh)' : ''}...`,
+    `Requesting ${contractAddress}${tag.isToken ? ' (token)' : ''}${forceRefresh ? ' (force refresh)' : ''}...`,
   )
 
   const fetchResult = await fetchFundsForContract(contractAddress, {
     fetchBalances: tag.fetchBalances,
     fetchPositions: tag.fetchPositions,
+    isToken: tag.isToken,
+    discoveredData,
     forceRefresh,
   })
 
@@ -376,7 +501,9 @@ export async function fetchFundsForSingleContract(
     newContractData = fetchResult.data
   } else if (
     existingContractData &&
-    (existingContractData.balances || existingContractData.positions)
+    (existingContractData.balances ||
+      existingContractData.positions ||
+      existingContractData.tokenInfo)
   ) {
     // Preserve existing data but update the error field and timestamp
     newContractData = {

@@ -38,9 +38,10 @@ export function FundsTagsButton() {
       return {
         fetchBalances: tag?.fetchBalances ?? false,
         fetchPositions: tag?.fetchPositions ?? false,
+        isToken: tag?.isToken ?? false,
       }
     }
-    return { fetchBalances: false, fetchPositions: false }
+    return { fetchBalances: false, fetchPositions: false, isToken: false }
   }
 
   const currentSettings = getCurrentSettings()
@@ -98,6 +99,19 @@ export function FundsTagsButton() {
     )
   }
 
+  const handleToggleIsToken = async () => {
+    const newValue = !currentSettings.isToken
+
+    await Promise.all(
+      selectedNodes.map((node) => {
+        return updateContractTag.mutateAsync({
+          contractAddress: node.address,
+          isToken: newValue,
+        })
+      }),
+    )
+  }
+
   // Count selected nodes that have funds fetching enabled
   const fundsEnabledCount = selectedNodes.filter((node) => {
     const normalizedNodeAddress = node.address.toLowerCase().replace('eth:', '')
@@ -106,7 +120,7 @@ export function FundsTagsButton() {
         tag.contractAddress.toLowerCase().replace('eth:', '') ===
         normalizedNodeAddress,
     )
-    return tag?.fetchBalances || tag?.fetchPositions
+    return tag?.fetchBalances || tag?.fetchPositions || tag?.isToken
   }).length
 
   return (
@@ -151,6 +165,21 @@ export function FundsTagsButton() {
               />
               <span className="text-coffee-200 text-xs">
                 Fetch DeFi Positions
+              </span>
+            </label>
+
+            <label
+              className="flex cursor-pointer items-center gap-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <input
+                type="checkbox"
+                checked={currentSettings.isToken}
+                onChange={handleToggleIsToken}
+                className="h-4 w-4 cursor-pointer accent-yellow-500"
+              />
+              <span className="text-coffee-200 text-xs">
+                Token Contract
               </span>
             </label>
 

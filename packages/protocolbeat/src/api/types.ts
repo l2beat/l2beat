@@ -450,6 +450,7 @@ export interface ContractTag {
   likelihood?: Likelihood
   fetchBalances?: boolean
   fetchPositions?: boolean
+  isToken?: boolean
   timestamp: string
 }
 
@@ -460,6 +461,7 @@ export interface ApiContractTagsUpdateRequest {
   likelihood?: Likelihood
   fetchBalances?: boolean
   fetchPositions?: boolean
+  isToken?: boolean
 }
 
 // V2 Scoring types
@@ -514,6 +516,16 @@ export interface ContractFundsData {
     timestamp: string
     source: string
   }
+  tokenInfo?: {
+    symbol: string
+    name: string
+    decimals: number
+    price: number
+    totalSupply: string
+    tokenValue: number
+    timestamp: string
+    source: string
+  }
   lastFetched: string
   error?: string
 }
@@ -550,6 +562,16 @@ export interface FundsPositionToken {
   symbol: string
   name: string
   amount: number
+  price: number
+}
+
+// Token info types
+export interface ApiTokenInfoResponse {
+  id: string
+  chain: string
+  name: string
+  symbol: string
+  decimals: number
   price: number
 }
 

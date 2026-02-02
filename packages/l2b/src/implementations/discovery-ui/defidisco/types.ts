@@ -392,6 +392,7 @@ export interface ContractTag {
   likelihood?: Likelihood
   fetchBalances?: boolean
   fetchPositions?: boolean
+  isToken?: boolean
   timestamp: string
 }
 
@@ -402,6 +403,7 @@ export interface ApiContractTagsUpdateRequest {
   likelihood?: Likelihood
   fetchBalances?: boolean
   fetchPositions?: boolean
+  isToken?: boolean
 }
 
 // Funds data types
@@ -421,6 +423,16 @@ export interface ContractFundsData {
   positions?: {
     protocols: FundsPositionProtocol[]
     totalUsdValue: number
+    timestamp: string
+    source: string
+  }
+  tokenInfo?: {
+    symbol: string
+    name: string
+    decimals: number
+    price: number
+    totalSupply: string
+    tokenValue: number
     timestamp: string
     source: string
   }

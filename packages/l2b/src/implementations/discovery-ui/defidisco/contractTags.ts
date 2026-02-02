@@ -73,6 +73,8 @@ export function updateContractTag(
     updateRequest.fetchBalances ?? existingTag?.fetchBalances ?? false
   const newFetchPositions =
     updateRequest.fetchPositions ?? existingTag?.fetchPositions ?? false
+  const newIsToken =
+    updateRequest.isToken ?? existingTag?.isToken ?? false
   const newCentralization =
     updateRequest.centralization !== undefined
       ? updateRequest.centralization
@@ -87,6 +89,7 @@ export function updateContractTag(
     newIsExternal ||
     newFetchBalances ||
     newFetchPositions ||
+    newIsToken ||
     newLikelihood !== undefined
 
   if (hasAnyTagData) {
@@ -98,6 +101,7 @@ export function updateContractTag(
       likelihood: newLikelihood,
       fetchBalances: newFetchBalances || undefined, // Only store if true
       fetchPositions: newFetchPositions || undefined, // Only store if true
+      isToken: newIsToken || undefined, // Only store if true
       timestamp: new Date().toISOString(),
     }
 

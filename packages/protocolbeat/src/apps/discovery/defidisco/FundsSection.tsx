@@ -110,7 +110,7 @@ function ContractFundsRow({
           {/* Balances Section */}
           {fundsData.balances && fundsData.balances.tokens.length > 0 && (
             <div className="mb-3">
-              <div className="mb-1 font-semibold text-aux-orange">
+              <div className="mb-1 font-semibold text-aux-blue">
                 Token Balances (
                 {formatUsdValue(fundsData.balances.totalUsdValue)})
               </div>
@@ -138,7 +138,7 @@ function ContractFundsRow({
           {/* Positions Section */}
           {fundsData.positions && fundsData.positions.protocols.length > 0 && (
             <div>
-              <div className="mb-1 font-semibold text-aux-orange">
+              <div className="mb-1 font-semibold text-aux-blue">
                 DeFi Positions (
                 {formatUsdValue(fundsData.positions.totalUsdValue)})
               </div>
@@ -152,6 +152,177 @@ function ContractFundsRow({
 
           {!fundsData.balances && !fundsData.positions && !fundsData.error && (
             <div className="text-coffee-500">No funds data available</div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function TokenContractRow({
+  contractAddress,
+  fundsData,
+  contractName,
+  proxyType,
+  onSelect,
+}: {
+  contractAddress: string
+  fundsData: ContractFundsData
+  contractName?: string
+  proxyType?: string
+  onSelect?: () => void
+}) {
+  const [isExpanded, setIsExpanded] = useState(false)
+  const tokenInfo = fundsData.tokenInfo
+
+  const shortAddress = contractAddress.replace('eth:', '').slice(0, 10) + '...'
+  const displayName = contractName || shortAddress
+
+  const handleSelectClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    onSelect?.()
+  }
+
+  const formatSupply = (totalSupply: string, decimals: number): string => {
+    try {
+      const raw = BigInt(totalSupply)
+      const divisor = BigInt(10) ** BigInt(decimals)
+      const integerPart = Number(raw / divisor)
+      return integerPart.toLocaleString()
+    } catch {
+      return totalSupply
+    }
+  }
+
+  return (
+    <div className="border-coffee-700 border-b last:border-b-0">
+      <div
+        className="flex cursor-pointer items-center justify-between px-2 py-1 hover:bg-coffee-700"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-coffee-400">{isExpanded ? 'v' : '>'}</span>
+          <span className="text-coffee-200">{displayName}</span>
+          <span className="rounded bg-yellow-900 px-1.5 py-0.5 text-xs text-yellow-300">
+            Token
+          </span>
+          <ProxyTypeTag proxyType={proxyType} />
+          <span className="text-coffee-500 text-xs">({shortAddress})</span>
+          {onSelect && (
+            <button
+              onClick={handleSelectClick}
+              className="px-1 text-aux-blue hover:opacity-80"
+              title="Select contract in graph"
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </button>
+          )}
+        </div>
+        <div className="flex items-center gap-4">
+          {fundsData.error && (
+            <span className="text-aux-red text-xs">Error</span>
+          )}
+          {tokenInfo && (
+            <span className="font-medium text-aux-green">
+              {formatUsdValue(tokenInfo.tokenValue)}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {isExpanded && (
+        <div className="bg-coffee-800 px-4 py-2 text-xs">
+          {fundsData.error && (
+            <div className="mb-2 text-aux-red">Error: {fundsData.error}</div>
+          )}
+
+          <div className="mb-2 text-coffee-500">
+            Last fetched: {formatTimestamp(fundsData.lastFetched)}
+          </div>
+
+          {tokenInfo ? (
+            <div className="mb-3">
+              <div className="mb-1 font-semibold text-aux-blue">
+                Token Info ({formatUsdValue(tokenInfo.tokenValue)})
+              </div>
+              <div className="ml-2 flex flex-col gap-1">
+                <div className="flex items-center justify-between text-coffee-300">
+                  <span>
+                    {formatSupply(tokenInfo.totalSupply, tokenInfo.decimals)}{' '}
+                    {tokenInfo.symbol}
+                  </span>
+                  <span className="text-aux-green">
+                    {formatUsdValue(tokenInfo.tokenValue)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-coffee-400">
+                  <span>Price</span>
+                  <span>
+                    ${tokenInfo.price.toLocaleString(undefined, {
+                      maximumFractionDigits: 6,
+                    })}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="text-coffee-500">No token data available</div>
+          )}
+
+          {/* Balances Section (token contracts can also hold other tokens) */}
+          {fundsData.balances && fundsData.balances.tokens.length > 0 && (
+            <div className="mb-3">
+              <div className="mb-1 font-semibold text-aux-blue">
+                Token Balances (
+                {formatUsdValue(fundsData.balances.totalUsdValue)})
+              </div>
+              <div className="ml-2 flex flex-col gap-1">
+                {fundsData.balances.tokens
+                  .filter((t) => t.usdValue > 0)
+                  .sort((a, b) => b.usdValue - a.usdValue)
+                  .slice(0, 10)
+                  .map((token, idx) => (
+                    <TokenRow key={idx} token={token} />
+                  ))}
+                {fundsData.balances.tokens.filter((t) => t.usdValue > 0)
+                  .length > 10 && (
+                  <div className="text-coffee-500">
+                    +
+                    {fundsData.balances.tokens.filter((t) => t.usdValue > 0)
+                      .length - 10}{' '}
+                    more tokens
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Positions Section */}
+          {fundsData.positions && fundsData.positions.protocols.length > 0 && (
+            <div>
+              <div className="mb-1 font-semibold text-aux-blue">
+                DeFi Positions (
+                {formatUsdValue(fundsData.positions.totalUsdValue)})
+              </div>
+              <div className="ml-2 flex flex-col gap-2">
+                {fundsData.positions.protocols.map((protocol, idx) => (
+                  <ProtocolRow key={idx} protocol={protocol} />
+                ))}
+              </div>
+            </div>
           )}
         </div>
       )}
@@ -262,10 +433,43 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     [projectData],
   )
 
+  // Build set of token contract addresses (normalized lowercase with eth: prefix)
+  const tokenAddressSet = useMemo(() => {
+    const set = new Set<string>()
+    if (contractTags?.tags) {
+      for (const tag of contractTags.tags) {
+        if (tag.isToken) {
+          const normalized = tag.contractAddress.toLowerCase().startsWith('eth:')
+            ? tag.contractAddress.toLowerCase()
+            : `eth:${tag.contractAddress.toLowerCase()}`
+          set.add(normalized)
+        }
+      }
+    }
+    return set
+  }, [contractTags])
+
+  // Split funds data into token contracts vs fund contracts
+  const { tokenEntries, fundsEntries } = useMemo(() => {
+    const tokenEntries: [string, ContractFundsData][] = []
+    const fundsEntries: [string, ContractFundsData][] = []
+    if (fundsData?.contracts) {
+      for (const [address, data] of Object.entries(fundsData.contracts)) {
+        if (tokenAddressSet.has(address.toLowerCase())) {
+          tokenEntries.push([address, data])
+        } else {
+          fundsEntries.push([address, data])
+        }
+      }
+    }
+    return { tokenEntries, fundsEntries }
+  }, [fundsData, tokenAddressSet])
+
   // Count contracts with funds fetching enabled
   const contractsWithFundsEnabled =
-    contractTags?.tags.filter((t) => t.fetchBalances || t.fetchPositions)
-      .length ?? 0
+    contractTags?.tags.filter(
+      (t) => t.fetchBalances || t.fetchPositions || t.isToken,
+    ).length ?? 0
 
   const handleFetchFunds = () => {
     if (isFetching) return
@@ -294,19 +498,21 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     }
   }
 
-  // Calculate totals
+  // Calculate totals separately for tokens and funds
   let totalBalancesValue = 0
   let totalPositionsValue = 0
-  const contractCount = fundsData ? Object.keys(fundsData.contracts).length : 0
+  let totalTokenMarketCap = 0
 
-  if (fundsData) {
-    Object.values(fundsData.contracts).forEach((data) => {
-      totalBalancesValue += data.balances?.totalUsdValue ?? 0
-      totalPositionsValue += data.positions?.totalUsdValue ?? 0
-    })
+  for (const [, data] of fundsEntries) {
+    totalBalancesValue += data.balances?.totalUsdValue ?? 0
+    totalPositionsValue += data.positions?.totalUsdValue ?? 0
+  }
+  for (const [, data] of tokenEntries) {
+    totalTokenMarketCap += data.tokenInfo?.tokenValue ?? 0
   }
 
-  const totalValue = totalBalancesValue + totalPositionsValue
+  const totalFundsValue = totalBalancesValue + totalPositionsValue
+  const hasAnyData = tokenEntries.length > 0 || fundsEntries.length > 0
 
   if (isLoading) {
     return (
@@ -381,7 +587,7 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
         )}
 
         {/* Summary */}
-        {contractCount > 0 ? (
+        {hasAnyData ? (
           <>
             <div className="ml-2 text-sm">
               <div className="mb-2 flex gap-8">
@@ -394,43 +600,92 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
                   </span>
                 </span>
               </div>
-              <div className="mb-2 flex gap-8">
-                <span className="font-semibold">
-                  Total Value:{' '}
-                  <span className="text-aux-green text-lg">
-                    {formatUsdValue(totalValue)}
+              <div className="mb-2 flex flex-col gap-1">
+                {tokenEntries.length > 0 && (
+                  <span className="font-semibold">
+                    Token Market Cap:{' '}
+                    <span className="text-aux-green text-lg">
+                      {formatUsdValue(totalTokenMarketCap)}
+                    </span>
                   </span>
-                </span>
+                )}
+                {fundsEntries.length > 0 && (
+                  <span className="font-semibold">
+                    Contract Funds:{' '}
+                    <span className="text-aux-green text-lg">
+                      {formatUsdValue(totalFundsValue)}
+                    </span>
+                  </span>
+                )}
               </div>
               <div className="mb-3 flex gap-6 text-coffee-400 text-xs">
-                <span>Balances: {formatUsdValue(totalBalancesValue)}</span>
-                <span>Positions: {formatUsdValue(totalPositionsValue)}</span>
-                <span>Contracts: {contractCount}</span>
+                {fundsEntries.length > 0 && (
+                  <>
+                    <span>Balances: {formatUsdValue(totalBalancesValue)}</span>
+                    <span>
+                      Positions: {formatUsdValue(totalPositionsValue)}
+                    </span>
+                  </>
+                )}
+                <span>
+                  Contracts: {tokenEntries.length + fundsEntries.length}
+                </span>
               </div>
             </div>
 
-            {/* Contract List */}
-            <div className="ml-2 rounded border border-coffee-700">
-              {Object.entries(fundsData?.contracts ?? {}).map(
-                ([address, data]) => (
-                  <ContractFundsRow
-                    key={address}
-                    contractAddress={address}
-                    fundsData={data}
-                    contractName={contractNameMap.get(address.toLowerCase())}
-                    proxyType={proxyTypeMap.get(address.toLowerCase())}
-                    onSelect={() => usePanelStore.getState().select(address)}
-                  />
-                ),
-              )}
-            </div>
+            {/* Protocol Tokens Section */}
+            {tokenEntries.length > 0 && (
+              <div className="ml-2 mb-3">
+                <div className="mb-1 font-semibold text-aux-blue text-sm">
+                  Protocol Tokens ({tokenEntries.length})
+                </div>
+                <div className="rounded border border-coffee-700">
+                  {tokenEntries.map(([address, data]) => (
+                    <TokenContractRow
+                      key={address}
+                      contractAddress={address}
+                      fundsData={data}
+                      contractName={contractNameMap.get(address.toLowerCase())}
+                      proxyType={proxyTypeMap.get(address.toLowerCase())}
+                      onSelect={() =>
+                        usePanelStore.getState().select(address)
+                      }
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Contract Funds Section */}
+            {fundsEntries.length > 0 && (
+              <div className="ml-2">
+                <div className="mb-1 font-semibold text-aux-blue text-sm">
+                  Contract Funds ({fundsEntries.length})
+                </div>
+                <div className="rounded border border-coffee-700">
+                  {fundsEntries.map(([address, data]) => (
+                    <ContractFundsRow
+                      key={address}
+                      contractAddress={address}
+                      fundsData={data}
+                      contractName={contractNameMap.get(address.toLowerCase())}
+                      proxyType={proxyTypeMap.get(address.toLowerCase())}
+                      onSelect={() =>
+                        usePanelStore.getState().select(address)
+                      }
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </>
         ) : (
           <div className="ml-2 text-coffee-400 text-sm">
             <p>No funds data available.</p>
             <p className="mt-1 text-coffee-500">
-              Mark contracts with "Fetch Balances" or "Fetch Positions" in
-              contract tags, then click "Fetch Funds" to retrieve data.
+              Mark contracts with "Fetch Balances", "Fetch Positions", or
+              "Token Contract" in contract tags, then click "Fetch Funds" to
+              retrieve data.
             </p>
           </div>
         )}
