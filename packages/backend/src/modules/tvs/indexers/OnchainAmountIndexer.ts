@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   BalanceOfEscrowAmountFormula,
   StarknetTotalSupplyAmountFormula,
@@ -35,8 +36,6 @@ interface OnchainAmountIndexerDeps
   starknetTotalSupplyProvider: StarknetTotalSupplyProvider
   balanceProvider: BalanceProvider
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfig> {
   constructor(

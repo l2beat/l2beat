@@ -9,7 +9,7 @@ import {
 } from '../../tools/uif/ManagedChildIndexer'
 
 export interface DaBeatStatsIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   projectId: ProjectId
   db: Database
   statsProvider: DaBeatStatsProvider

@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { InteropRecentPricesRecord } from '@l2beat/database/dist/repositories/InteropRecentPricesRepository'
 import type { PriceProvider } from '@l2beat/shared'
@@ -8,13 +9,10 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
 
-export interface Dependencies
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+export interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   priceProvider: PriceProvider
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class InteropRecentPricesIndexer extends ManagedChildIndexer {
   constructor(

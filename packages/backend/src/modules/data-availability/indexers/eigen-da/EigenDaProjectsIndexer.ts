@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
 import {
@@ -19,8 +20,6 @@ export interface Dependencies
   daLayer: string
   eigenClient: EigenApiClient
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndexedConfig> {
   constructor(

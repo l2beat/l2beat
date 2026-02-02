@@ -8,7 +8,7 @@ import {
 } from '../../../../../tools/uif/ManagedChildIndexer'
 
 export interface L2CostsPricesIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   coingeckoQueryService: CoingeckoQueryService
 }

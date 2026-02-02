@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -14,12 +15,10 @@ import {
 import { getAggregatedTokens, getAggregatedTransfer } from './aggregation'
 
 export interface InteropAggregatingIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configs: InteropAggregationConfig[]
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class InteropAggregatingIndexer extends ManagedChildIndexer {
   constructor(

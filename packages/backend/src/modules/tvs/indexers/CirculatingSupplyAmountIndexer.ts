@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { CirculatingSupplyAmountFormula } from '@l2beat/config'
 import type { TvsAmountRecord } from '@l2beat/database'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
@@ -23,8 +24,6 @@ export interface CirculatingSupplyAmountIndexerDeps
   syncOptimizer: SyncOptimizer
   circulatingSupplyProvider: CirculatingSupplyProvider
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<CirculatingSupplyAmountFormula> {
   constructor(

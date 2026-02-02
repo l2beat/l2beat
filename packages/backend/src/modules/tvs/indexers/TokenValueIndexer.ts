@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -20,15 +21,13 @@ import {
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 interface TokenValueIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<TvsToken>, 'name' | 'logger'> {
+  extends Omit<ManagedMultiIndexerOptions<TvsToken>, 'name'> {
   syncOptimizer: SyncOptimizer
   dbStorage: DBStorage
   valueService: ValueService
   project: string
   maxTimestampsToProcessAtOnce: number
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
   constructor(

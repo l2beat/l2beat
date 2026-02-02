@@ -8,7 +8,7 @@ import type { DayTargetIndexer } from './DayTargetIndexer'
 import type { SlotTargetIndexer } from './SlotTargetIndexer'
 
 export interface ActivityIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   projectId: ProjectId
   txsCountService: TxsCountService
   db: Database

@@ -23,7 +23,7 @@ import {
 } from '../utils/mapToRecordWithConfig'
 
 export interface LivenessAggregatingIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   projects: TrackedTxProject[]
 }

@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { PriceProvider } from '@l2beat/shared'
 import {
   assert,
@@ -14,14 +15,9 @@ interface DaBeatPricesConfig {
 }
 
 interface DaBeatPricesIndexerDeps
-  extends Omit<
-    ManagedMultiIndexerOptions<DaBeatPricesConfig>,
-    'name' | 'logger'
-  > {
+  extends Omit<ManagedMultiIndexerOptions<DaBeatPricesConfig>, 'name'> {
   priceProvider: PriceProvider
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig> {
   constructor(

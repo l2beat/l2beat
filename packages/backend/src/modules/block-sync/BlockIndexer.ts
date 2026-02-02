@@ -9,7 +9,7 @@ import {
 import type { BlockProcessor } from '../types'
 
 export interface BlockIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   source: string
   blockProvider: BlockProvider
   logsProvider: LogsProvider

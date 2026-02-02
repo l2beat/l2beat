@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   AggregatedL2CostRecord,
   Database,
@@ -26,7 +27,7 @@ export interface ProjectL2Cost extends L2CostRecord {
 }
 
 export interface L2CostsAggregatorIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   projects: TrackedTxProject[]
 }
@@ -35,8 +36,6 @@ export interface TrackedTxMultiplier {
   id: TrackedTxId
   factor: number
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   constructor(

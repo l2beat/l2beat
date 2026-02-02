@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -24,8 +25,6 @@ export interface Dependencies
   batchSize: number
   blobService?: BlobService
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
   constructor(

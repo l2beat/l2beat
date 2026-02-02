@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import {
   assert,
@@ -20,8 +21,6 @@ interface BlockTimestampIndexerDeps
   syncOptimizer: SyncOptimizer
   blockTimestampProvider: BlockTimestampProvider
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampConfig> {
   // used only for runtime invalidation protection

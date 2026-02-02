@@ -17,7 +17,7 @@ import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
 
 export interface TvsPriceIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<PriceConfig>, 'name' | 'logger'> {
+  extends Omit<ManagedMultiIndexerOptions<PriceConfig>, 'name'> {
   syncOptimizer: SyncOptimizer
   priceProvider: PriceProvider
 }

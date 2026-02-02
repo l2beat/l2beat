@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { CoingeckoClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
@@ -18,8 +19,6 @@ export interface EcosystemTokenIndexerDeps
   db: Database
   coingeckoClient: CoingeckoClient
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenConfig> {
   constructor(

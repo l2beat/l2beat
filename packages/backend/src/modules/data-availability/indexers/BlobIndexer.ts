@@ -8,8 +8,7 @@ import {
 } from '../../../tools/uif/ManagedChildIndexer'
 import type { BlobService } from '../services/BlobService'
 
-export interface Dependencies
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+export interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   daProvider: DaProvider
   blobService: BlobService
   daLayer: string

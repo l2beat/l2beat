@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   AnomalyRecord,
   AnomalyStatsRecord,
@@ -26,12 +27,10 @@ import {
 import { RunningStatistics } from '../utils/RollingVariance'
 
 export interface AnomaliesIndexerIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name' | 'logger'> {
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   projects: TrackedTxProject[]
 }
-
-import type { Logger } from '@l2beat/backend-tools'
 
 export class AnomaliesIndexer extends ManagedChildIndexer {
   private readonly SYNC_RANGE = 30
