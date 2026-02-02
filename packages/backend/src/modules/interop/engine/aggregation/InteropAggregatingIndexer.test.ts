@@ -110,6 +110,7 @@ describe(InteropAggregatingIndexer.name, () => {
           count1KTo10K: 2,
           count10KTo100K: 0,
           countOver100K: 0,
+          identifiedCount: 2,
         },
       ])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
@@ -297,6 +298,7 @@ describe(InteropAggregatingIndexer.name, () => {
           count1KTo10K: 1,
           count10KTo100K: 0,
           countOver100K: 0,
+          identifiedCount: 1,
         },
         // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum)
         {
@@ -314,6 +316,7 @@ describe(InteropAggregatingIndexer.name, () => {
           count1KTo10K: 1,
           count10KTo100K: 0,
           countOver100K: 0,
+          identifiedCount: 1,
         },
         // Config2: Chain plugin filter - should match msg5 (arbitrum->ethereum)
         {
@@ -331,6 +334,7 @@ describe(InteropAggregatingIndexer.name, () => {
           count1KTo10K: 1,
           count10KTo100K: 0,
           countOver100K: 0,
+          identifiedCount: 1,
         },
         // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth)
         {
@@ -348,6 +352,7 @@ describe(InteropAggregatingIndexer.name, () => {
           count1KTo10K: 3,
           count10KTo100K: 0,
           countOver100K: 0,
+          identifiedCount: 3,
         },
       ])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
@@ -481,6 +486,7 @@ describe(InteropAggregatingIndexer.name, () => {
           count1KTo10K: 0,
           count10KTo100K: 0,
           countOver100K: 0,
+          identifiedCount: 1,
         },
       ])
     })

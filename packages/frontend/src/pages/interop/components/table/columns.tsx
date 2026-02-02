@@ -168,7 +168,7 @@ export function getAllProtocolsColumns(
         align: 'right',
         headClassName: 'w-0',
       },
-      size: 48,
+      size: 44,
     }),
     ...commonColumns,
     !hideTypeColumn &&

@@ -34,6 +34,7 @@ export function getAggregatedTransfer(
   let srcValueUsd: number | undefined = undefined
   let dstValueUsd: number | undefined = undefined
   let valueInFlight: number | undefined = undefined
+  let identifiedCount = 0
   let countUnder100 = 0
   let count100To1K = 0
   let count1KTo10K = 0
@@ -52,6 +53,13 @@ export function getAggregatedTransfer(
       dstValueUsd = transfer.dstValueUsd ?? transfer.srcValueUsd
     } else {
       dstValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
+    }
+
+    if (
+      transfer.srcValueUsd !== undefined ||
+      transfer.dstValueUsd !== undefined
+    ) {
+      identifiedCount++
     }
 
     // Count transfers by bucket based on srcValueUsd
@@ -100,6 +108,7 @@ export function getAggregatedTransfer(
     count1KTo10K,
     count10KTo100K,
     countOver100K,
+    identifiedCount,
   }
 }
 
