@@ -2,8 +2,8 @@ import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
+import { useDevice } from '~/hooks/useDevice'
 import { useEventListener } from '~/hooks/useEventListener'
-import { useIsMobile } from '~/hooks/useIsMobile'
 import { ChevronIcon } from '~/icons/Chevron'
 import { IncidentIcon } from '~/icons/Incident'
 import { MilestoneIcon } from '~/icons/Milestone'
@@ -91,7 +91,7 @@ function ChartMilestone({
   milestoneIndex: number
   allMilestones: Milestone[]
 }) {
-  const isMobile = useIsMobile()
+  const { isDesktop } = useDevice()
   const triggerMilestone = allMilestones[milestoneIndex]
   assert(triggerMilestone)
   const { interactiveLegend } = useChart()
@@ -107,50 +107,50 @@ function ChartMilestone({
       !interactiveLegend.disableOnboarding &&
       'group-has-[.recharts-legend-wrapper]:bottom-[46px]',
   )
-  if (isMobile) {
+  if (isDesktop) {
     return (
-      <Drawer>
-        <DrawerTrigger asChild>
-          <Icon className={cn(common, 'scale-75')} style={{ left }} />
-        </DrawerTrigger>
-        <DrawerContent>
-          <MilestoneDrawerContent
-            milestoneIndex={milestoneIndex}
-            allMilestones={allMilestones}
-          />
-        </DrawerContent>
-      </Drawer>
+      <Tooltip delayDuration={0}>
+        <TooltipTrigger asChild>
+          <a
+            className={common}
+            href={triggerMilestone.url}
+            style={{ left }}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Icon />
+          </a>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          <div className="mb-1 whitespace-nowrap">
+            {formatDate(triggerMilestone.date.slice(0, 10))}
+          </div>
+          <div className="flex max-w-[216px] font-bold">
+            <Icon className="mt-px size-3.5 shrink-0" />
+            <span className="ml-1.5 text-left">{triggerMilestone.title}</span>
+          </div>
+          {triggerMilestone.description && (
+            <div className="mt-2 max-w-[216px] text-left">
+              {triggerMilestone.description}
+            </div>
+          )}
+        </TooltipContent>
+      </Tooltip>
     )
   }
 
   return (
-    <Tooltip delayDuration={0}>
-      <TooltipTrigger asChild>
-        <a
-          className={common}
-          href={triggerMilestone.url}
-          style={{ left }}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Icon />
-        </a>
-      </TooltipTrigger>
-      <TooltipContent side="bottom">
-        <div className="mb-1 whitespace-nowrap">
-          {formatDate(triggerMilestone.date.slice(0, 10))}
-        </div>
-        <div className="flex max-w-[216px] font-bold">
-          <Icon className="mt-px size-3.5 shrink-0" />
-          <span className="ml-1.5 text-left">{triggerMilestone.title}</span>
-        </div>
-        {triggerMilestone.description && (
-          <div className="mt-2 max-w-[216px] text-left">
-            {triggerMilestone.description}
-          </div>
-        )}
-      </TooltipContent>
-    </Tooltip>
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Icon className={cn(common, 'scale-75')} style={{ left }} />
+      </DrawerTrigger>
+      <DrawerContent>
+        <MilestoneDrawerContent
+          milestoneIndex={milestoneIndex}
+          allMilestones={allMilestones}
+        />
+      </DrawerContent>
+    </Drawer>
   )
 }
 

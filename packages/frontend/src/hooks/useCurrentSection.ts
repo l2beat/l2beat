@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useDevice } from './useDevice'
 import { useEventListener } from './useEventListener'
-import { useIsMobile } from './useIsMobile'
 
 const DEFAULT_THRESHOLD = '20%'
 
@@ -12,7 +12,7 @@ interface Threshold {
 }
 
 export function useCurrentSection(threshold?: Threshold) {
-  const isMobile = useIsMobile()
+  const { isMobile } = useDevice()
   const [currentSection, setCurrentSection] = useState<HTMLElement>()
 
   const findCurrentSection = useCallback(() => {

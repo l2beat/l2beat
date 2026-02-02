@@ -112,6 +112,10 @@ export const risc0: BaseProject = {
         projectId: ProjectId('bob'),
         sinceTimestamp: UnixTime(1752703200),
       },
+      {
+        projectId: ProjectId('megaeth'),
+        sinceTimestamp: UnixTime(1763954183),
+      },
     ],
     verifierHashes: [
       {
@@ -133,7 +137,7 @@ export const risc0: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_1, bytes16 value of CONTROL_ROOT_2.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_0, bytes16 value of CONTROL_ROOT_1.',
       },
       {
         hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
@@ -151,10 +155,16 @@ export const risc0: BaseProject = {
             ),
             chain: 'ethereum',
           },
+          {
+            address: EthereumAddress(
+              '0x411e56a890c5fe0712f6F345977815Ba8E7785C3',
+            ),
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_1, bytes16 value of CONTROL_ROOT_2.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_0, bytes16 value of CONTROL_ROOT_1.',
       },
     ],
   },

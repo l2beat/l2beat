@@ -331,9 +331,11 @@ export class OpStackPlugin implements InteropPluginResyncable {
             srcEvent: messagePassed,
             srcAmount: messagePassed.args.value,
             srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: true,
             dstEvent: event,
             dstAmount: messagePassed.args.value,
             dstTokenAddress: Address32.NATIVE,
+            dstWasMinted: false,
           }),
         )
       }
@@ -364,9 +366,11 @@ export class OpStackPlugin implements InteropPluginResyncable {
             srcEvent: sentMessage,
             srcAmount: sentMessage.args.value,
             srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: false,
             dstEvent: event,
             dstAmount: sentMessage.args.value,
             dstTokenAddress: Address32.NATIVE,
+            dstWasMinted: true,
           }),
         )
       }

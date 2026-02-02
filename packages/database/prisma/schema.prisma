@@ -522,6 +522,7 @@ model InteropPluginSyncState {
   chain               String    @db.VarChar(255)
   lastError           String?   @db.Text
   resyncRequestedFrom DateTime? @db.Timestamp(6)
+  wipeRequired        Boolean   @default(false)
 
   @@id([pluginName, chain])
 }
@@ -543,9 +544,16 @@ model AggregatedInteropTransfer {
   srcChain         String   @db.VarChar(255)
   dstChain         String   @db.VarChar(255)
   transferCount    Int
+  identifiedCount  Int      @default(0)
   totalDurationSum Int
   srcValueUsd      Float?   @db.Real
   dstValueUsd      Float?   @db.Real
+  avgValueInFlight Float?   @db.Real
+  countUnder100    Int      @default(0)
+  count100To1K     Int      @default(0)
+  count1KTo10K     Int      @default(0)
+  count10KTo100K   Int      @default(0)
+  countOver100K    Int      @default(0)
 
   @@id([timestamp, srcChain, dstChain, id])
 }

@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export type InteropPathData = {
@@ -9,10 +9,14 @@ export type InteropPathData = {
 
 export function getTopPaths(
   records: AggregatedInteropTransferWithTokens[],
+  subgroupProjects: Set<ProjectId>,
 ): InteropPathData[] {
   const map = new Map<string, number>()
 
   for (const record of records) {
+    // Skip projects that are part of other projects to not double count
+    if (subgroupProjects.has(record.id as ProjectId)) continue
+
     const key = `${record.srcChain}::${record.dstChain}`
     const current = map.get(key) ?? 0
     map.set(key, current + (record.srcValueUsd ?? record.dstValueUsd ?? 0))

@@ -1,15 +1,14 @@
-import { Slot } from '@radix-ui/react-slot'
 import type { CSSProperties } from 'react'
 import { Fragment, useCallback, useEffect, useRef } from 'react'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
+import { SummaryIcon } from '~/icons/Summary'
 import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scrollToItem'
 
 export interface SectionNavigationItem {
   id: string
   title: string
-  icon?: React.ReactNode
   subsections?: Omit<SectionNavigationItem, 'subsections'>[]
 }
 
@@ -17,13 +16,14 @@ export function SectionNavigation({
   sections,
   style,
   className,
-  indexOffset = 0,
 }: {
   sections: SectionNavigationItem[]
   className?: string
   style?: CSSProperties
-  indexOffset?: number
 }) {
+  const indexOffset = sections.some((section) => section.id === 'summary')
+    ? -1
+    : 0
   const currentSection = useCurrentSection()
   const currentMenuEntry = useRef<HTMLAnchorElement>(null)
   const menuContainer = useRef<HTMLDivElement>(null)
@@ -68,10 +68,8 @@ export function SectionNavigation({
               className="group flex flex-row gap-1.5"
               data-selected={selected}
             >
-              {item.icon ? (
-                <Slot className="size-5 opacity-80 group-hover:opacity-100 group-data-[selected=true]:opacity-100">
-                  {item.icon}
-                </Slot>
+              {item.id === 'summary' ? (
+                <SummaryIcon className="-left-px relative size-5 opacity-80 group-hover:opacity-100 group-data-[selected=true]:opacity-100" />
               ) : (
                 <NavigationListIndex index={i + indexOffset + 1} />
               )}

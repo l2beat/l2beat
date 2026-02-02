@@ -265,9 +265,11 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
           srcEvent: depositInitiated,
           srcAmount: depositInitiated.args.amount,
           srcTokenAddress: L1_WSTETH,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
+          dstWasMinted: true,
         }),
       ]
     }
@@ -306,9 +308,11 @@ export class LidoWstethPlugin implements InteropPluginResyncable {
           srcEvent: withdrawalInitiated,
           srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: withdrawalInitiated.args.l2Token,
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: L1_WSTETH,
+          dstWasMinted: false,
         }),
       ]
     }
