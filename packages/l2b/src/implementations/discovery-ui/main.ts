@@ -39,6 +39,7 @@ import {
   getFundsData,
   fetchAllFundsForProject,
   fetchFundsForSingleContract,
+  fetchTokenInfo,
 } from './defidisco/fundsData'
 import {
   getCallGraphData,
@@ -653,6 +654,34 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     }
 
     res.end()
+  })
+
+  // Token info endpoint (proxies to defiscan-endpoints)
+  app.get('/api/token-info', async (req, res) => {
+    const { chain_id, id } = req.query
+
+    if (!chain_id || typeof chain_id !== 'string') {
+      res.status(400).json({ error: 'chain_id query parameter is required' })
+      return
+    }
+
+    if (!id || typeof id !== 'string') {
+      res.status(400).json({ error: 'id query parameter is required' })
+      return
+    }
+
+    try {
+      const tokenInfo = await fetchTokenInfo(chain_id, id)
+      res.json(tokenInfo)
+    } catch (error) {
+      console.error('Error fetching token info:', error)
+      res.status(502).json({
+        error:
+          error instanceof Error
+            ? error.message
+            : 'Failed to fetch token info',
+      })
+    }
   })
 
   // Call graph endpoints

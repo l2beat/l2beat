@@ -53,6 +53,17 @@ export const DebankComplexProtocolListResponse = v.array(
   }),
 )
 
+// Single token info response schema
+// DeBank API: GET /v1/token
+export const DebankTokenInfoResponse = v.object({
+  id: v.string(),
+  chain: v.string(),
+  name: v.string(),
+  symbol: v.string(),
+  decimals: v.number(),
+  price: v.number(),
+})
+
 // Type exports
 export type DebankTokenBalance = v.infer<
   typeof DebankTokenBalanceListResponse
@@ -60,3 +71,4 @@ export type DebankTokenBalance = v.infer<
 export type DebankComplexProtocol = v.infer<
   typeof DebankComplexProtocolListResponse
 >[0]
+export type DebankTokenInfo = v.infer<typeof DebankTokenInfoResponse>

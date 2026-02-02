@@ -20,6 +20,15 @@ import type { DebankComplexProtocol } from './debank'
 // Keep this type alias so we can customize it later without breaking the API
 export type PositionResponse = DebankComplexProtocol[]
 
+export interface TokenInfoResponse {
+  id: string
+  chain: string
+  name: string
+  symbol: string
+  decimals: number
+  price: number
+}
+
 export interface ErrorResponse {
   error: string
   message: string

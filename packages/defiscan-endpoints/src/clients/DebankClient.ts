@@ -3,8 +3,10 @@ import { type EthereumAddress, type json } from '@l2beat/shared-pure'
 import {
   DebankComplexProtocolListResponse,
   DebankTokenBalanceListResponse,
+  DebankTokenInfoResponse,
   type DebankComplexProtocol,
   type DebankTokenBalance,
+  type DebankTokenInfo,
 } from '../types/debank'
 
 // DeBank API documentation: https://docs.open.debank.com/
@@ -77,6 +79,33 @@ export class DebankClient extends ClientCore {
     )
 
     return DebankComplexProtocolListResponse.parse(data)
+  }
+
+  /**
+   * Get token information
+   * DeBank API: GET /v1/token
+   * Docs: https://docs.open.debank.com/en/reference/api-pro-reference/token#get-token-info
+   */
+  async getTokenInfo(
+    chainId: string,
+    tokenId: string,
+  ): Promise<DebankTokenInfo> {
+    const params = new URLSearchParams({
+      chain_id: chainId,
+      id: tokenId.toLowerCase(),
+    })
+
+    const data = await this.fetch(
+      `${this.baseUrl}/v1/token?${params}`,
+      {
+        timeout: 15_000,
+        headers: {
+          AccessKey: this.apiKey,
+        },
+      },
+    )
+
+    return DebankTokenInfoResponse.parse(data)
   }
 
   validateResponse(response: json): { success: boolean; message?: string } {

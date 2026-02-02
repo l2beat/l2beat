@@ -8,9 +8,15 @@ import { getConfig } from './config'
 import { balancesRouter } from './routes/balances'
 import { healthRouter } from './routes/health'
 import { positionsRouter } from './routes/positions'
+import { tokenRouter } from './routes/token'
 import { BalanceService } from './services/BalanceService'
 import { PositionService } from './services/PositionService'
-import type { BalanceResponse, PositionResponse } from './types/api'
+import { TokenService } from './services/TokenService'
+import type {
+  BalanceResponse,
+  PositionResponse,
+  TokenInfoResponse,
+} from './types/api'
 import { Cache } from './utils/cache'
 
 dotenv()
@@ -47,6 +53,7 @@ async function main() {
   // Initialize caches
   const balanceCache = new Cache<BalanceResponse>(config.cache.balancesTTL)
   const positionCache = new Cache<PositionResponse>(config.cache.positionsTTL)
+  const tokenCache = new Cache<TokenInfoResponse>(config.cache.balancesTTL)
 
   // Initialize services
   const balanceService = new BalanceService(
@@ -58,6 +65,11 @@ async function main() {
     debankClient,
     positionCache,
     logger.for('PositionService'),
+  )
+  const tokenService = new TokenService(
+    debankClient,
+    tokenCache,
+    logger.for('TokenService'),
   )
 
   // Initialize Express app
@@ -80,6 +92,7 @@ async function main() {
   app.use('/health', healthRouter)
   app.use('/balances', balancesRouter(balanceService, logger))
   app.use('/positions', positionsRouter(positionService, logger))
+  app.use('/token', tokenRouter(tokenService, logger))
 
   // Error handling middleware
   app.use((err: Error, req: Request, res: Response, next: unknown) => {
