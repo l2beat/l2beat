@@ -1,3 +1,7 @@
+import type {
+  AggregatedInteropTokenRecord,
+  AggregatedInteropTransferRecord,
+} from '@l2beat/database'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
@@ -14,13 +18,20 @@ import {
   type InteropProtocolData,
 } from './utils/getTopProtocols'
 import {
+  getTokenTotals,
+  getTopTokenWidgetData,
+  type InteropTopTokenData,
+} from './utils/getTopTokenWidgetData'
+import {
   getTransferSizeChartData,
   type TransferSizeChartData,
 } from './utils/getTransferSizeChartData'
+import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
+  topToken: InteropTopTokenData | undefined
   transferSizeChartData: TransferSizeChartData | undefined
   entries: ProtocolEntry[]
 }
@@ -48,10 +59,14 @@ export async function getInteropDashboardData(
     return {
       top3Paths: [],
       topProtocols: [],
+      topToken: undefined,
       transferSizeChartData: undefined,
       entries: [],
     }
   }
+
+  const previousTimestamp =
+    await db.aggregatedInteropTransfer.getPreviousTimestamp(latestTimestamp)
 
   const [transfers, tokens] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsTimestampAndId(
@@ -68,27 +83,13 @@ export async function getInteropDashboardData(
     ),
   ])
 
-  const records = transfers.map((transfer) => ({
-    ...transfer,
-    tokens: tokens
-      .filter(
-        (token) =>
-          token.id === transfer.id &&
-          token.srcChain === transfer.srcChain &&
-          token.dstChain === transfer.dstChain,
-      )
-      .map((token) => ({
-        abstractTokenId: token.abstractTokenId,
-        transferCount: token.transferCount,
-        totalDurationSum: token.totalDurationSum,
-        volume: token.volume,
-      })),
-  }))
+  const records = buildInteropRecords(transfers, tokens)
 
   if (records.length === 0) {
     return {
       top3Paths: [],
       topProtocols: [],
+      topToken: undefined,
       transferSizeChartData: undefined,
       entries: [],
     }
@@ -99,7 +100,7 @@ export async function getInteropDashboardData(
   )
   const tokensDetailsDataMap = new Map<
     string,
-    { symbol: string; iconUrl: string | null }
+    { symbol: string; iconUrl: string | null; issuer?: string | null }
   >(tokensDetailsData.map((t) => [t.id, t]))
 
   // Projects that are part of other projects
@@ -107,9 +108,58 @@ export async function getInteropDashboardData(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
 
+  const topToken = getTopTokenWidgetData(
+    records,
+    tokensDetailsDataMap,
+    interopProjects,
+    subgroupProjects,
+  )
+
+  let topTokenWithChanges = topToken
+  if (topToken && previousTimestamp) {
+    const [previousTransfers, previousTokens] = await Promise.all([
+      db.aggregatedInteropTransfer.getByChainsTimestampAndId(
+        previousTimestamp,
+        params.from,
+        params.to,
+        filteredProjects?.map((p) => p.id),
+      ),
+      db.aggregatedInteropToken.getByChainsTimestampAndId(
+        previousTimestamp,
+        params.from,
+        params.to,
+        filteredProjects?.map((p) => p.id),
+      ),
+    ])
+
+    const previousRecords = buildInteropRecords(
+      previousTransfers,
+      previousTokens,
+    )
+
+    const previousTotals = getTokenTotals(
+      previousRecords,
+      topToken.token.id,
+      subgroupProjects,
+    )
+
+    topTokenWithChanges = {
+      ...topToken,
+      volumeChange: calculatePercentageChange(
+        topToken.volume,
+        previousTotals.volume,
+      ),
+      transferCountChange: calculatePercentageChange(
+        topToken.transferCount,
+        previousTotals.transferCount,
+      ),
+    }
+  }
+
   return {
     top3Paths: getTopPaths(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
+    topToken: topTokenWithChanges,
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
     entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
   }
@@ -138,6 +188,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     {
       id: 'eth001',
       symbol: 'ETH',
+      issuer: 'Ethereum',
       iconUrl:
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       volume: 10_000_000,
@@ -148,6 +199,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     {
       id: 'usdc01',
       symbol: 'USDC',
+      issuer: 'Circle',
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
       volume: 5_000_000,
@@ -222,10 +274,56 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     },
   }
 
+  const topToken = {
+    token: {
+      id: mockTokens[0].id,
+      name: mockTokens[0].issuer ?? mockTokens[0].symbol,
+      symbol: mockTokens[0].symbol,
+      iconUrl:
+        mockTokens[0].iconUrl ??
+        manifest.getUrl('/images/token-placeholder.png'),
+    },
+    volume: mockTokens[0].volume,
+    transferCount: mockTokens[0].transferCount,
+    volumeChange: -0.2279,
+    transferCountChange: -0.2279,
+    topProtocol: {
+      id: interopProjects[0].id,
+      name: interopProjects[0].interopConfig.name ?? interopProjects[0].name,
+      iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
+    },
+    topPath: top3Paths[0]
+      ? { srcChain: top3Paths[0].srcChain, dstChain: top3Paths[0].dstChain }
+      : undefined,
+  }
+
   return {
     top3Paths,
     topProtocols,
+    topToken,
     transferSizeChartData,
     entries: allProtocols,
   }
+}
+
+function buildInteropRecords(
+  transfers: AggregatedInteropTransferRecord[],
+  tokens: AggregatedInteropTokenRecord[],
+) {
+  return transfers.map((transfer) => ({
+    ...transfer,
+    tokens: tokens
+      .filter(
+        (token) =>
+          token.id === transfer.id &&
+          token.srcChain === transfer.srcChain &&
+          token.dstChain === transfer.dstChain,
+      )
+      .map((token) => ({
+        abstractTokenId: token.abstractTokenId,
+        transferCount: token.transferCount,
+        totalDurationSum: token.totalDurationSum,
+        volume: token.volume,
+      })),
+  }))
 }

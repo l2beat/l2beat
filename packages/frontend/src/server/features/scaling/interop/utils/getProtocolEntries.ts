@@ -62,7 +62,10 @@ export type ProtocolEntry = {
 
 export function getProtocolEntries(
   records: AggregatedInteropTransferWithTokens[],
-  tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
+  tokensDetailsMap: Map<
+    string,
+    { symbol: string; iconUrl: string | null; issuer?: string | null }
+  >,
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolEntry[] {
   const logger = getLogger().for('getProtocolsByType')

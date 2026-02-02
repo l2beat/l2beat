@@ -109,12 +109,14 @@ export class AbstractTokenRepository extends BaseRepository {
 
   async getByIds(
     ids: string[],
-  ): Promise<Pick<AbstractTokenRecord, 'id' | 'symbol' | 'iconUrl'>[]> {
+  ): Promise<
+    Pick<AbstractTokenRecord, 'id' | 'symbol' | 'iconUrl' | 'issuer'>
+  >[] {
     if (ids.length === 0) return []
 
     const result = await this.db
       .selectFrom('AbstractToken')
-      .select(['id', 'symbol', 'iconUrl'])
+      .select(['id', 'symbol', 'iconUrl', 'issuer'])
       .where('id', 'in', ids)
       .execute()
 
