@@ -107,19 +107,39 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
 
   async getDailySeries(): Promise<AggregatedInteropTransferSeriesRecord[]> {
     const rows = await this.db
-      .with('squashed', (db) =>
+      .with('latest_per_day', (db) =>
         db
           .selectFrom('AggregatedInteropTransfer')
           .select((eb) => [
             sql<Date>`date_trunc('day', timestamp)`.as('day'),
             'id',
-            eb.fn.sum('transferCount').as('transfer_count'),
+            eb.fn.max('timestamp').as('latest_ts'),
           ])
           .groupBy(['id', sql`date_trunc('day', timestamp)`]),
       )
-      .selectFrom('squashed')
-      .select(['day', 'id', 'transfer_count'])
-      .orderBy('id', 'asc')
+      .selectFrom('AggregatedInteropTransfer')
+      .innerJoin('latest_per_day', (join) =>
+        join
+          .onRef('AggregatedInteropTransfer.id', '=', 'latest_per_day.id')
+          .on(
+            sql`date_trunc('day', "AggregatedInteropTransfer"."timestamp")`,
+            '=',
+            sql`"latest_per_day"."day"`,
+          )
+          .onRef(
+            'AggregatedInteropTransfer.timestamp',
+            '=',
+            'latest_per_day.latest_ts',
+          ),
+      )
+      .select((eb) => [
+        sql<Date>`"latest_per_day"."day"`.as('day'),
+        sql<string>`"latest_per_day"."id"`.as('id'),
+        eb.fn.sum('transferCount').as('transfer_count'),
+      ])
+      .groupBy(['latest_per_day.day', 'latest_per_day.id'])
+      .orderBy('latest_per_day.id', 'asc')
+      .orderBy('latest_per_day.day', 'asc')
       .execute()
 
     return rows.map((row) => ({
@@ -133,30 +153,42 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     id: string,
   ): Promise<AggregatedInteropTransferIdSeriesRecord[]> {
     const rows = await this.db
-      .with('squashed', (db) =>
+      .with('latest_per_day', (db) =>
         db
           .selectFrom('AggregatedInteropTransfer')
           .select((eb) => [
-            'id',
             sql<Date>`date_trunc('day', timestamp)`.as('day'),
-            eb.fn.sum('transferCount').as('transfer_count'),
-            eb.fn.sum('totalDurationSum').as('total_duration_sum'),
-            eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
-            eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
+            'id',
+            eb.fn.max('timestamp').as('latest_ts'),
           ])
           .where('id', '=', id)
-          .groupBy(['id', 'day']),
+          .groupBy(['id', sql`date_trunc('day', timestamp)`]),
       )
-      .selectFrom('squashed')
-      .select([
-        'id',
-        'day',
-        'transfer_count',
-        'total_duration_sum',
-        'total_src_value_usd',
-        'total_dst_value_usd',
+      .selectFrom('AggregatedInteropTransfer')
+      .innerJoin('latest_per_day', (join) =>
+        join
+          .onRef('AggregatedInteropTransfer.id', '=', 'latest_per_day.id')
+          .on(
+            sql`date_trunc('day', "AggregatedInteropTransfer"."timestamp")`,
+            '=',
+            sql`"latest_per_day"."day"`,
+          )
+          .onRef(
+            'AggregatedInteropTransfer.timestamp',
+            '=',
+            'latest_per_day.latest_ts',
+          ),
+      )
+      .select((eb) => [
+        sql<string>`"latest_per_day"."id"`.as('id'),
+        sql<Date>`"latest_per_day"."day"`.as('day'),
+        eb.fn.sum('transferCount').as('transfer_count'),
+        eb.fn.sum('totalDurationSum').as('total_duration_sum'),
+        eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
+        eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
       ])
-      .orderBy('day', 'asc')
+      .groupBy(['latest_per_day.day', 'latest_per_day.id'])
+      .orderBy('latest_per_day.day', 'asc')
       .execute()
 
     return rows.map((row) => ({
