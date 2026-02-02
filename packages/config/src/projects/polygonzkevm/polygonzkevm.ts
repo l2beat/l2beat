@@ -22,7 +22,7 @@ export const polygonzkevm: ScalingProject = agglayer({
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
       bridges: ['https://portal.polygon.technology/bridge'],
-      documentation: ['https://docs.polygon.technology/zkEVM/'],
+      documentation: ['https://docs.polygon.technology/tools/zkevm/overview/'],
       explorers: ['https://zkevm.polygonscan.com/'],
       repositories: [
         'https://github.com/0xPolygon/zkevm-node',
