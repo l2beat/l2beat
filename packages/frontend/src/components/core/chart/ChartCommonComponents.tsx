@@ -27,7 +27,7 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
   chartType = 'line',
   syncedUntil,
 }: ChartCommonComponentsProps<T>) {
-  const { tickCount, ...rest } = yAxis ?? {}
+  const { tickCount, yAxisId, ...rest } = yAxis ?? {}
   const lastSyncedTimestamp =
     syncedUntil &&
     (chartType === 'line'
@@ -41,6 +41,7 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
         key="cartesian-grid"
         vertical={false}
         syncWithTicks={!isLoading}
+        yAxisId={yAxisId}
       />
       <YAxis
         key="y-axis"
@@ -50,6 +51,7 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
         tickCount={tickCount ?? 3}
         dy={-10}
         tick={{ width: 350 }}
+        yAxisId={yAxisId}
         {...rest}
       />
       <XAxis key="x-axis" {...getXAxisProps(data)} />
