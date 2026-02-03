@@ -280,13 +280,6 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
-          'base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2',
-        ),
-        tokens: ['EURC'],
-        description: 'Stargate liquidity pool for EURC on Base.',
-      }),
-      discovery.getEscrowDetails({
-        address: ChainSpecificAddress(
           'base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26',
         ),
         tokens: ['USDC'],
