@@ -1,10 +1,12 @@
-import type { InteropConfig } from '@l2beat/config'
+import type { InteropDurationSplit } from '@l2beat/config'
+import { type InteropBridgeType, unique } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   AverageDurationData,
 } from '../types'
 
 interface ProtocolData extends AverageDurationData {
+  bridgeTypes: InteropBridgeType[]
   volume: number
   tokens: Map<string, AverageDurationData & { volume: number }>
   chains: Map<string, AverageDurationData & { volume: number }>
@@ -24,7 +26,7 @@ const INITIAL_DATA: AverageDurationData & { volume: number } = {
 
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  durationSplitMap: Map<string, InteropDurationSplit>,
   makeKey: (record: AggregatedInteropTransferWithTokens) => string,
 ) {
   const protocolsDataMap = new Map<string, ProtocolData>()
@@ -32,6 +34,7 @@ export function getProtocolsDataMap(
   for (const record of records) {
     const key = makeKey(record)
     const current = protocolsDataMap.get(key) ?? {
+      bridgeTypes: [],
       volume: 0,
       tokens: new Map<string, AverageDurationData & { volume: number }>(),
       chains: new Map<string, AverageDurationData & { volume: number }>(),
@@ -77,6 +80,7 @@ export function getProtocolsDataMap(
     )
 
     protocolsDataMap.set(key, {
+      bridgeTypes: unique([...current.bridgeTypes, record.bridgeType]),
       volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
       tokens: current.tokens,
       chains: current.chains,
@@ -98,7 +102,7 @@ export function getProtocolsDataMap(
 
 function getDirection(
   record: { srcChain: string; dstChain: string },
-  durationSplit: NonNullable<InteropConfig['durationSplit']> | undefined,
+  durationSplit: InteropDurationSplit | undefined,
 ): 'in' | 'out' | null {
   if (!durationSplit) return null
   if (

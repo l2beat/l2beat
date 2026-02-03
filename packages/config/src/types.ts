@@ -1270,7 +1270,7 @@ export type InteropPlugin = {
   transferType?: string
 }
 
-type InteropDurationSplit = {
+export type InteropDurationSplit = {
   in: {
     /** Custom label to be shown in the UI */
     label: string

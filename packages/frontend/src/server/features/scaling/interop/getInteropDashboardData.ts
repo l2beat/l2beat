@@ -43,14 +43,12 @@ export async function getInteropDashboardData(
   const tokenDb = getTokenDb()
 
   const interopProjects = await ps.getProjects({
-    select: ['interop'],
+    select: ['interopConfig'],
   })
 
   const type = params.type
   const filteredProjects = type
-    ? interopProjects.filter((p) =>
-        p.interop.configs.map((c) => c.bridgeType).includes(type),
-      )
+    ? interopProjects.filter((p) => p.interopConfig.showAlways?.includes(type))
     : undefined
 
   const db = getDb()
@@ -134,7 +132,7 @@ export async function getInteropDashboardData(
 
   // Projects that are part of other projects
   const subgroupProjects = new Set(
-    interopProjects.filter((p) => p.interop.subgroupId).map((p) => p.id),
+    interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
 
   const groupedEntries = groupByInteropBridgeType(
@@ -160,7 +158,7 @@ export async function getInteropDashboardData(
 
 async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   const interopProjects = await ps.getProjects({
-    select: ['interop'],
+    select: ['interopConfig'],
   })
 
   const top3Paths: InteropPathData[] = [
@@ -172,7 +170,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   const topProtocols: InteropProtocolData[] = interopProjects
     .slice(0, 5)
     .map((project, i) => ({
-      protocolName: project.interop.name ?? project.name,
+      protocolName: project.interopConfig.name ?? project.name,
       volume: { value: 20_000_000 - i * 3_000_000, share: 20 - i * 3 },
       transfers: { value: 5000 - i * 800, share: 20 - i * 3 },
     }))
@@ -221,31 +219,31 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     },
   ]
 
-  const protocolEntries: ProtocolEntry[] = interopProjects.flatMap((project) =>
-    project.interop.configs.map((config) => ({
+  const protocolEntries: ProtocolEntry[] = interopProjects.flatMap(
+    (project) => ({
       id: project.id,
-      protocolName: project.interop.name ?? project.name,
-      isAggregate: project.interop.isAggregate,
+      protocolName: project.interopConfig.name ?? project.name,
+      isAggregate: project.interopConfig.isAggregate,
       iconSlug: project.slug,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      bridgeType: config.bridgeType,
+      bridgeType: 'lockAndMint',
       volume: 15_000_000,
       tokens: mockTokens,
       chains: mockChains,
       transferCount: 5000,
       averageValue: 3000,
       averageDuration: { type: 'single', duration: 100_000 },
-    })),
+    }),
   )
 
   const allProtocolEntries: AllProtocolsEntry[] = interopProjects.flatMap(
     (project) => ({
       id: project.id,
-      protocolName: project.interop.name ?? project.name,
-      isAggregate: project.interop.isAggregate,
+      protocolName: project.interopConfig.name ?? project.name,
+      isAggregate: project.interopConfig.isAggregate,
       iconSlug: project.slug,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      bridgeTypes: project.interop.configs.map((c) => c.bridgeType),
+      bridgeTypes: ['lockAndMint', 'nonMinting', 'omnichain'],
       volume: 15_000_000,
       tokens: mockTokens,
       chains: mockChains,

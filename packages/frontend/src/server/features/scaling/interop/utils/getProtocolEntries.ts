@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
   INTEROP_CHAINS,
-  type InteropConfig,
+  type InteropDurationSplit,
   type Project,
 } from '@l2beat/config'
 import {
@@ -72,22 +72,19 @@ export type ProtocolEntry = {
 export function getProtocolEntries(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
-  interopProjects: Project<'interop'>[],
+  interopProjects: Project<'interopConfig'>[],
 ): ProtocolEntry[] {
   const logger = getLogger().for('getProtocolsByType')
 
-  const durationSplitMap = new Map<
-    string,
-    NonNullable<InteropConfig['durationSplit']>
-  >()
+  const durationSplitMap = new Map<string, InteropDurationSplit>()
   for (const project of interopProjects) {
-    for (const config of project.interop.configs) {
-      if (config.durationSplit) {
-        durationSplitMap.set(
-          makeProtocolEntriesKey(project.id, config.bridgeType),
-          config.durationSplit,
-        )
-      }
+    for (const [bridgeType, durationSplit] of Object.entries(
+      project.interopConfig.durationSplit ?? {},
+    )) {
+      durationSplitMap.set(
+        makeProtocolEntriesKey(project.id, bridgeType as InteropBridgeType),
+        durationSplit,
+      )
     }
   }
 
@@ -108,15 +105,15 @@ export function getProtocolEntries(
       assert(project, `Project not found: ${id}`)
 
       const subgroupProject = interopProjects.find(
-        (p) => p.id === project.interop.subgroupId,
+        (p) => p.id === project.interopConfig.subgroupId,
       )
 
       return {
         id: project.id,
         iconSlug: project.slug,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        protocolName: project.interop.name ?? project.name,
-        isAggregate: project.interop.isAggregate,
+        protocolName: project.interopConfig.name ?? project.name,
+        isAggregate: project.interopConfig.isAggregate,
         subgroup: subgroupProject
           ? {
               name: subgroupProject.name,
@@ -150,7 +147,7 @@ function getTokensData(
   protocolId: string,
   tokens: Map<string, AverageDurationData & { volume: number }>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  durationSplitMap: Map<string, InteropDurationSplit>,
   logger: Logger,
   unknownTransfersCount: number,
 ): TokenData[] {
@@ -202,7 +199,7 @@ function getTokensData(
 function getChainsData(
   protocolId: string,
   chains: Map<string, AverageDurationData & { volume: number }>,
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  durationSplitMap: Map<string, InteropDurationSplit>,
   logger: Logger,
 ): ChainData[] {
   return Array.from(chains.entries())
@@ -245,7 +242,7 @@ type AverageDurationData = {
 function getAverageDuration(
   key: string,
   data: AverageDurationData,
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  durationSplitMap: Map<string, InteropDurationSplit>,
 ): ProtocolEntry['averageDuration'] {
   const durationSplit = durationSplitMap.get(key)
 

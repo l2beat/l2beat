@@ -17,7 +17,7 @@ type TransferSizeData = {
 
 export function getTransferSizeChartData(
   records: AggregatedInteropTransferRecord[],
-  interopProjects: Project<'interop'>[],
+  interopProjects: Project<'interopConfig'>[],
 ): TransferSizeChartData | undefined {
   const data = new Map<string, TransferSizeData & { volume: number }>()
 
@@ -29,7 +29,7 @@ export function getTransferSizeChartData(
     const project = interopProjects.find((p) => p.id === record.id)
     assert(project, `Project not found: ${record.id}`)
     const current = data.get(record.id) || {
-      name: project.interop.name ?? project.name,
+      name: project.interopConfig.name ?? project.name,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       countUnder100: 0,
       count100To1K: 0,
