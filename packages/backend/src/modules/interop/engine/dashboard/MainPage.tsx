@@ -156,7 +156,10 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                         </a>
                       )}
                     </td>
-                    <td data-order={srcDstDuration ?? ''} data-sort={srcDstDuration ?? ''}>
+                    <td
+                      data-order={srcDstDuration ?? ''}
+                      data-sort={srcDstDuration ?? ''}
+                    >
                       {srcDstDuration && formatSeconds(srcDstDuration)}
                     </td>
                     <td>
@@ -168,7 +171,10 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                         </a>
                       )}
                     </td>
-                    <td data-order={dstSrcDuration ?? ''} data-sort={dstSrcDuration ?? ''}>
+                    <td
+                      data-order={dstSrcDuration ?? ''}
+                      data-sort={dstSrcDuration ?? ''}
+                    >
                       {dstSrcDuration && formatSeconds(dstSrcDuration)}
                     </td>
                   </React.Fragment>
@@ -267,13 +273,22 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                         </a>
                       }
                     </td>
-                    <td data-order={forwardDuration} data-sort={forwardDuration}>
+                    <td
+                      data-order={forwardDuration}
+                      data-sort={forwardDuration}
+                    >
                       {forwardDuration && formatSeconds(forwardDuration)}
                     </td>
-                    <td data-order={forwardSrcValue} data-sort={forwardSrcValue}>
+                    <td
+                      data-order={forwardSrcValue}
+                      data-sort={forwardSrcValue}
+                    >
                       {formatDollars(forwardSrcValue)}
                     </td>
-                    <td data-order={forwardDstValue} data-sort={forwardDstValue}>
+                    <td
+                      data-order={forwardDstValue}
+                      data-sort={forwardDstValue}
+                    >
                       {formatDollars(forwardDstValue)}
                     </td>
                     <td>
@@ -285,13 +300,22 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                         </a>
                       }
                     </td>
-                    <td data-order={backwardDuration} data-sort={backwardDuration}>
+                    <td
+                      data-order={backwardDuration}
+                      data-sort={backwardDuration}
+                    >
                       {backwardDuration && formatSeconds(backwardDuration)}
                     </td>
-                    <td data-order={backwardSrcValue} data-sort={backwardSrcValue}>
+                    <td
+                      data-order={backwardSrcValue}
+                      data-sort={backwardSrcValue}
+                    >
                       {formatDollars(backwardSrcValue)}
                     </td>
-                    <td data-order={backwardDstValue} data-sort={backwardDstValue}>
+                    <td
+                      data-order={backwardDstValue}
+                      data-sort={backwardDstValue}
+                    >
                       {formatDollars(backwardDstValue)}
                     </td>
                   </React.Fragment>
