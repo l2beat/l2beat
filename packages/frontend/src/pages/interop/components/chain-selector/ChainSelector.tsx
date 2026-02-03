@@ -22,12 +22,12 @@ export function ChainSelector({ chains }: Props) {
           <div className="flex items-center gap-3">
             <ChainSelectorButton allChains={chains} type="from" />
             <ChainSelectorButton allChains={chains} type="to" />
-            <div
+            <button
               className="cursor-pointer rounded-lg border border-brand p-[11px] max-md:hidden"
               onClick={swapPaths}
             >
               <SwapIcon className="size-4 fill-brand" />
-            </div>
+            </button>
           </div>
         </div>
         {isDirty && (

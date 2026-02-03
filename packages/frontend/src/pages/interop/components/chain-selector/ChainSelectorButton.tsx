@@ -100,12 +100,12 @@ export function ChainSelectorButton({
               />
             ))}
           </div>
-          <div
+          <button
             className="mt-3 w-fit cursor-pointer rounded-sm border border-brand p-[7px]"
             onClick={swapPaths}
           >
             <SwapIcon className="size-4 rotate-90 fill-brand" />
-          </div>
+          </button>
           <div className="mt-3 mb-2 font-semibold text-xs leading-none">To</div>
           <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
@@ -191,7 +191,7 @@ function ModifierButton({
   className?: string
 }) {
   return (
-    <div
+    <button
       className={cn(
         'cursor-pointer font-medium text-brand text-label-value-15 underline',
         className,
@@ -200,7 +200,7 @@ function ModifierButton({
       onClick={onClick}
     >
       {label}
-    </div>
+    </button>
   )
 }
 
