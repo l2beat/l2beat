@@ -122,7 +122,7 @@ const averageInFlightValueColumn = columnHelper.accessor(
       align: 'right',
       headClassName: 'text-2xs',
       tooltip:
-        'The average USD value of funds in transit at any given second over the past 24 hours. For non-minting protocols it represents the average value at risk at any given second.',
+        'The average USD value of funds in transit at any given second over the past 24 hours.',
     },
     cell: (ctx) => {
       if (ctx.row.original.averageValueInFlight === undefined) return '-'
