@@ -9,6 +9,7 @@ export const circlegateway: BaseProject = {
   addedAt: UnixTime(1770115878),
   interopConfig: {
     bridgeType: 'omnichain',
+    transfersTimeMode: 'unknown',
     plugins: [
       {
         plugin: 'circle-gateway',
