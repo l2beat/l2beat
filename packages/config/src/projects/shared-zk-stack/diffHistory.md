@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x40959d6f33b253974660d667936a1ba4673c45a5
+
+# Diff at Mon, 02 Feb 2026 13:18:54 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1769425693
+- current timestamp: 1770038258
+
+## Description
+
+Rotated a multisig.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2"
++        "eth:0xAf0B2B58289857e9A6Cf91Fd30410dDcad9D9B28"
+    }
+```
+
 Generated with discovered.json: 0x13ff4196acb704ee05709ec17c1efaa106d6e174
 
 # Diff at Mon, 26 Jan 2026 11:09:20 GMT:
