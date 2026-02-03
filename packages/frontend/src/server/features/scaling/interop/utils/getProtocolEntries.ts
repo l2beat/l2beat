@@ -152,7 +152,7 @@ function getTokensData(
   protocolId: string,
   tokens: Map<string, AverageDurationData & { volume: number }>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
-  durationSplitMap: Map<
+  customDurationConfigMap: Map<
     string,
     NonNullable<
       InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
@@ -173,7 +173,7 @@ function getTokensData(
       const avgDuration = getAverageDuration(
         protocolId,
         token,
-        durationSplitMap,
+        customDurationConfigMap,
       )
 
       return {
@@ -209,7 +209,7 @@ function getTokensData(
 function getChainsData(
   protocolId: string,
   chains: Map<string, AverageDurationData & { volume: number }>,
-  durationSplitMap: Map<
+  customDurationConfigMap: Map<
     string,
     NonNullable<
       InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
@@ -228,7 +228,7 @@ function getChainsData(
       const avgDuration = getAverageDuration(
         protocolId,
         chainData,
-        durationSplitMap,
+        customDurationConfigMap,
       )
 
       return {
@@ -257,14 +257,14 @@ type AverageDurationData = {
 function getAverageDuration(
   key: string,
   data: AverageDurationData,
-  durationSplitMap: Map<
+  customDurationConfigMap: Map<
     string,
     NonNullable<
       InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
     >
   >,
 ): ProtocolEntry['averageDuration'] {
-  const durationSplit = durationSplitMap.get(key)
+  const durationSplit = customDurationConfigMap.get(key)
   if (durationSplit === 'unknown') return 'unknown'
 
   if (durationSplit) {
