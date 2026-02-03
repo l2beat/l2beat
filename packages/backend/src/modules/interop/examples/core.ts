@@ -52,28 +52,40 @@ const TxEntry = v.object({
 })
 
 export type Example = v.infer<typeof Example>
-export const Example = v.object({
-  name: v.string().optional(),
-  tags: v.array(v.string()).optional(),
-  loadConfigs: v.array(v.string()).optional(),
-  txs: v.array(TxEntry),
-  // New structured expectations field
-  expects: Expects.optional(),
-  // Legacy fields - kept for backward compatibility
-  events: v.array(v.string()).optional(),
-  messages: v
-    .array(
-      v.union([
-        v.string(),
-        v.object({
-          type: v.string(),
-          app: v.string().optional(),
-        }),
-      ]),
-    )
-    .optional(),
-  transfers: v.array(v.string()).optional(),
-})
+export const Example = v
+  .object({
+    name: v.string().optional(),
+    tags: v.array(v.string()).optional(),
+    loadConfigs: v.array(v.string()).optional(),
+    txs: v.array(TxEntry),
+    // New structured expectations field
+    expects: Expects.optional(),
+    // Legacy fields - kept for backward compatibility
+    events: v.array(v.string()).optional(),
+    messages: v
+      .array(
+        v.union([
+          v.string(),
+          v.object({
+            type: v.string(),
+            app: v.string().optional(),
+          }),
+        ]),
+      )
+      .optional(),
+    transfers: v.array(v.string()).optional(),
+  })
+  .check((example) => {
+    const hasExpects = example.expects !== undefined
+    const hasLegacy =
+      example.events !== undefined ||
+      example.messages !== undefined ||
+      example.transfers !== undefined
+    if (hasExpects && hasLegacy) {
+      return 'Use either expects or legacy expectations, not both.'
+    }
+    return true
+  })
 
 function readJsonc(path: string): JSON {
   const contents = readFileSync(path, 'utf-8')

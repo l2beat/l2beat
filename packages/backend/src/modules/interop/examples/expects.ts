@@ -1,4 +1,5 @@
 import { diffLines } from 'diff'
+import { inspect } from 'util'
 import type {
   InteropEvent,
   InteropMessage,
@@ -9,11 +10,12 @@ import { shapeMatches } from './shapeMatching'
 
 export interface CheckResult {
   success: boolean
-  missing: ExpectedShape[]
+  missing: ExpectedShapeEntry[]
   unexpected: unknown[]
 }
 
 type ExpectedShape = string | Record<string, unknown>
+type ExpectedShapeEntry = { shape: ExpectedShape; index: number }
 
 const PASS = '[\x1B[1;32mPASS\x1B[0m]'
 const XTRA = '[\x1B[1;34mXTRA\x1B[0m]'
@@ -110,11 +112,16 @@ function checkTypedSimple(
   values: InteropTransfer[],
   verbose: boolean,
 ): CheckResult {
-  const normalizedExpected = [...expected]
+  const normalizedExpected = expected.map((shape, index) => ({
+    shape,
+    index,
+  }))
   const unexpected: unknown[] = []
 
   for (const value of values) {
-    const idx = normalizedExpected.findIndex((e) => matchesShape(value, e))
+    const idx = normalizedExpected.findIndex((e) =>
+      matchesShape(value, e.shape),
+    )
     if (idx !== -1) {
       normalizedExpected.splice(idx, 1)
     } else {
@@ -122,12 +129,12 @@ function checkTypedSimple(
     }
     const tag = idx !== -1 ? PASS : XTRA
     const display = verbose
-      ? value
+      ? formatVerbose(value)
       : `${value.type} (${value.src.event.ctx.chain} → ${value.dst.event.ctx.chain})`
     console.log(tag, name, display)
   }
   for (const exp of normalizedExpected) {
-    console.log(FAIL, name, displayExpectedShape(exp))
+    console.log(FAIL, name, displayExpectedEntry(exp))
   }
   return {
     success: normalizedExpected.length === 0,
@@ -167,11 +174,16 @@ function checkEvents(
   matchedEventIds: Set<string>,
   verbose: boolean,
 ): CheckResult {
-  const normalizedExpected = [...expected]
+  const normalizedExpected = expected.map((shape, index) => ({
+    shape,
+    index,
+  }))
   const unexpected: unknown[] = []
 
   for (const event of events) {
-    const idx = normalizedExpected.findIndex((e) => matchesShape(event, e))
+    const idx = normalizedExpected.findIndex((e) =>
+      matchesShape(event, e.shape),
+    )
     if (idx !== -1) {
       normalizedExpected.splice(idx, 1)
     } else {
@@ -181,12 +193,12 @@ function checkEvents(
     const matchTag = isMatched ? MTCH : UNMT
     const expectedTag = idx !== -1 ? PASS : XTRA
     const display = verbose
-      ? event
+      ? formatVerbose(event)
       : `${event.type} (chain: ${event.ctx.chain})`
     console.log(expectedTag, matchTag, name, display)
   }
   for (const exp of normalizedExpected) {
-    console.log(FAIL, name, displayExpectedShape(exp))
+    console.log(FAIL, name, displayExpectedEntry(exp))
   }
   return {
     success: normalizedExpected.length === 0,
@@ -201,11 +213,16 @@ function checkTypedWithApp(
   values: InteropMessage[],
   verbose: boolean,
 ): CheckResult {
-  const normalizedExpected = [...expected]
+  const normalizedExpected = expected.map((shape, index) => ({
+    shape,
+    index,
+  }))
   const unexpected: unknown[] = []
 
   for (const value of values) {
-    const idx = normalizedExpected.findIndex((e) => matchesShape(value, e))
+    const idx = normalizedExpected.findIndex((e) =>
+      matchesShape(value, e.shape),
+    )
     if (idx !== -1) {
       normalizedExpected.splice(idx, 1)
     } else {
@@ -213,12 +230,12 @@ function checkTypedWithApp(
     }
     const tag = idx !== -1 ? PASS : XTRA
     const display = verbose
-      ? value
+      ? formatVerbose(value)
       : `${value.type} (app: ${value.app}, ${value.src.ctx.chain} → ${value.dst.ctx.chain})`
     console.log(tag, name, display)
   }
   for (const exp of normalizedExpected) {
-    console.log(FAIL, name, displayExpectedShape(exp))
+    console.log(FAIL, name, displayExpectedEntry(exp))
   }
   return {
     success: normalizedExpected.length === 0,
@@ -275,11 +292,15 @@ function printExpectsSummary(results: {
         const actual = result.unexpected[i]
 
         if (expected && actual) {
-          console.log('\n  Comparison ' + (i + 1) + ':')
-          printDiff(expected, actual)
+          console.log(
+            `\n  Comparison ${i + 1} (expected idx=${expected.index}):`,
+          )
+          printDiff(expected.shape, actual)
         } else if (expected) {
-          console.log('\n  Missing (Expected but not found):')
-          console.log(formatJson(expected, '\x1B[31m'))
+          console.log(
+            `\n  Missing (Expected idx=${expected.index} but not found):`,
+          )
+          console.log(formatJson(expected.shape, '\x1B[31m'))
         } else if (actual) {
           console.log('\n  Unexpected (Received but not expected):')
           console.log(formatJson(actual, '\x1B[33m'))
@@ -289,7 +310,8 @@ function printExpectsSummary(results: {
       if (result.missing.length > 0) {
         console.log('\n  Missing (Expected but not found):')
         for (const expected of result.missing) {
-          console.log(formatJson(expected, '\x1B[31m'))
+          const prefix = `  [idx=${expected.index}]\n`
+          console.log(prefix + formatJson(expected.shape, '\x1B[31m'))
         }
       }
 
@@ -303,6 +325,19 @@ function printExpectsSummary(results: {
   }
 
   console.log('\n' + '='.repeat(80) + '\n')
+}
+
+function displayExpectedEntry(expected: ExpectedShapeEntry): string {
+  return `[idx=${expected.index}] ${displayExpectedShape(expected.shape)}`
+}
+
+function formatVerbose(value: unknown): string {
+  return inspect(value, {
+    depth: null,
+    colors: true,
+    compact: false,
+    maxArrayLength: null,
+  })
 }
 
 function formatJson(value: unknown, color?: string): string {
