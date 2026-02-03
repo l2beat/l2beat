@@ -26,7 +26,6 @@ interface Props {
   className?: string
   noL2ClassName?: string
   maxProjects?: number
-  noTooltip?: boolean
   noLink?: boolean
 }
 
@@ -35,7 +34,6 @@ export function ProjectsUsedIn({
   className,
   noL2ClassName,
   maxProjects = 5,
-  noTooltip,
   noLink,
 }: Props) {
   const [open, setOpen] = useState(false)

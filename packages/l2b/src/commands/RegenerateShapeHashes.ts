@@ -52,7 +52,7 @@ export const RegenerateShapeHashes = command({
       defaultValue: () => true,
     }),
   },
-  handler: async (args) => {
+  handler: async () => {
     const paths = getDiscoveryPaths()
 
     const httpClient = new HttpClient()

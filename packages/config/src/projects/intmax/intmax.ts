@@ -88,7 +88,7 @@ export const intmax: ScalingProject = {
       references: [
         {
           title: 'INTMAX Block Builder - INTMAX docs',
-          url: 'https://intmax-wallet.gitbook.io/intmax-developers-hub/intmax-block-builder',
+          url: 'https://docs.network.intmax.io/developers-hub/intmax-block-builder',
         },
       ],
     },

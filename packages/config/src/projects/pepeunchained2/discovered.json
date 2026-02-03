@@ -1,6 +1,6 @@
 {
   "name": "pepeunchained2",
-  "timestamp": 1768984447,
+  "timestamp": 1769514452,
   "configHash": "0x770be542ca876b6ecffdc082842971ce07acfd87579ba6e65e939589e92b113e",
   "entries": [
     {
@@ -322,6 +322,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
@@ -339,8 +340,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 215,
+        "multisigThreshold": "4 of 13 (31%)",
+        "nonce": 219,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -587,7 +588,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 11836,
+        "batchCount": 11974,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -627,7 +628,7 @@
         "rollup": "eth:0xf8b75AB2df57bB2d1EfC90dD218821E0314f5143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 8417,
+        "totalDelayedMessagesRead": 8492,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -718,6 +719,11 @@
           "role": ".batchPosters"
         }
       ]
+    },
+    {
+      "address": "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xb9B2AeAe8D160a5bF9cb7FE7B2c8B58c0293FD5e",
@@ -879,7 +885,7 @@
           "eth:0xd1AF4aD8Be9a8A2f288048140c6E6380420c55fA"
         ],
         "allowedOutboxList": ["eth:0xd2E3B3be0ddA5E3214f551aF5A4f4049b9D031A9"],
-        "delayedMessageCount": 8417,
+        "delayedMessageCount": 8493,
         "inboxHistory": [
           "eth:0xE92Df19F4e0Fd067FE3b788Cf03ffD06Cd9Be4A7",
           "eth:0xd1AF4aD8Be9a8A2f288048140c6E6380420c55fA"
@@ -889,8 +895,8 @@
         "outboxHistory": ["eth:0xd2E3B3be0ddA5E3214f551aF5A4f4049b9D031A9"],
         "rollup": "eth:0xf8b75AB2df57bB2d1EfC90dD218821E0314f5143",
         "sequencerInbox": "eth:0x93CA3db0dF3e78e798004bbE14e1ADE222B14dFa",
-        "sequencerMessageCount": 11836,
-        "sequencerReportedSubMessageCount": 10274628
+        "sequencerMessageCount": 11974,
+        "sequencerReportedSubMessageCount": 10281245
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1009,13 +1015,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 447,
+        "firstUnresolvedNode": 459,
         "inbox": "eth:0xE92Df19F4e0Fd067FE3b788Cf03ffD06Cd9Be4A7",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22739172,
-        "latestConfirmed": 446,
-        "latestNodeCreated": 457,
+        "latestConfirmed": 458,
+        "latestNodeCreated": 469,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xd2E3B3be0ddA5E3214f551aF5A4f4049b9D031A9",
@@ -1743,6 +1749,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24281995 },
-  "permissionsConfigHash": "0x9dd8742a220502900b7b334ad9f11d1017c5b2ccff9b698fc3b661b919809d6b"
+  "usedBlockNumbers": { "ethereum": 24325966 },
+  "permissionsConfigHash": "0x913a8481f7f472cc38858290cc39bb7eb8f47629fcab3c1d54c392157cc60792"
 }

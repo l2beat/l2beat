@@ -37,10 +37,9 @@ export function ScalingTvsTable({
     () =>
       toTableRows({
         projects: entries,
-        excludeAssociatedTokens: display.excludeAssociatedTokens,
         sevenDayBreakdown,
       }),
-    [entries, display, sevenDayBreakdown],
+    [entries, sevenDayBreakdown],
   )
 
   const columns = useMemo(

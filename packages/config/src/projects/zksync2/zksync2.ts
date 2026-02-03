@@ -15,6 +15,8 @@ const discovery = new ProjectDiscovery('zksync2')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 const chainId = 324
+// https://etherscan.io/tx/0x2829993f6183647fc954ec75b67441ab0e597f445a3f5d6f976733775ca06f26#eventlog
+const l1migrationTs = UnixTime(1769897051) // 2023-11-03T00:32:11Z
 
 export const zksync2: ScalingProject = zkStackL2({
   chainId,
@@ -49,6 +51,27 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
     },
   },
+  interopConfig: {
+    bridgeType: 'lockAndMint',
+    plugins: [
+      {
+        plugin: 'zkstack',
+        chain: 'zksync2',
+      },
+    ],
+    durationSplit: {
+      in: {
+        label: 'L1 -> L2',
+        from: 'ethereum',
+        to: 'zksync2',
+      },
+      out: {
+        label: 'L2 -> L1',
+        from: 'zksync2',
+        to: 'ethereum',
+      },
+    },
+  },
   chainConfig: {
     name: 'zksync2',
     chainId,
@@ -80,7 +103,7 @@ export const zksync2: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
-  validatorTimelockOnGateway: discovery.getContract('ZKsyncValidatorTimelock'),
+  // validatorTimelockOnGateway: discovery.getContract('ZKsyncValidatorTimelock'),
   nonTemplateDaTracking: [
     {
       // tracks old Era DA on ethereum
@@ -180,6 +203,21 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function precommitSharedBridge(address _chainAddress, uint256, bytes)',
         sinceTimestamp: UnixTime(1761146555),
+        untilTimestamp: l1migrationTs,
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0b6db820',
+        functionSignature:
+          'function precommitSharedBridge(address _chainAddress, uint256, bytes)',
+        sinceTimestamp: l1migrationTs,
       },
     },
     {
@@ -269,6 +307,21 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1761146555),
+        untilTimestamp: l1migrationTs,
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0db9eb87',
+        functionSignature:
+          'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: l1migrationTs,
       },
     },
     {
@@ -394,6 +447,24 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
         sinceTimestamp: UnixTime(1761146555),
+        untilTimestamp: l1migrationTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: l1migrationTs,
       },
     },
     {
@@ -521,10 +592,36 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1761146555),
+        untilTimestamp: l1migrationTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: l1migrationTs,
       },
     },
   ],
   milestones: [
+    {
+      title: 'V29 Interop Messaging Upgrade',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2025-10-06T00:00:00Z',
+      description:
+        'A protocol upgrade introducing native interop messaging between chains connected to ZKsync Gateway.',
+      type: 'general',
+    },
     {
       title: 'Proof system intervention',
       url: 'https://x.com/zksync/status/1951434107575214429',
@@ -542,12 +639,44 @@ export const zksync2: ScalingProject = zkStackL2({
       type: 'general',
     },
     {
+      title: 'V28 Precompile Upgrade',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/54063168049426383294336598998322383147338444177076559098597792110160570100155?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2025-05-29T00:00:00Z',
+      description:
+        'A performance upgrade enabling circuit-backed cryptographic precompiles.',
+      type: 'general',
+    },
+    {
+      title: 'V27 EVM Emulation Upgrade',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/112142012854508751423955156601121618924383324119199970784935099214632480260394?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2025-04-18T00:00:00Z',
+      description:
+        'This implementation adds 2 features: EVM emulation and Fflonk verifier.',
+      type: 'general',
+    },
+    {
       title: 'ZK token minter key compromised',
       url: 'https://zksync.mirror.xyz/W5vPDZqEqf2NuwQ5x7SyFnIxqqpE1szAFD69iaaBFnI',
       date: '2025-04-13T00:00:00Z',
       description:
         '1/1 signer key of a ZK airdrop admin multisig is compromised. ZKsync deploys TransactionFilterer.',
       type: 'incident',
+    },
+    {
+      title: 'ZKsync Protocol Upgrade v26',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/67712324710515983914473127418805437707715095849437613773846173900686148862581?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2025-02-27T00:00:00Z',
+      description:
+        'A foundational upgrade enabling custom settlement layers, custom DA, and new asset routing.',
+      type: 'general',
+    },
+    {
+      title: 'ZKsync Protocol Upgrade v25',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/39897055470405054808751466940888279812739313934036970931300785151980460250983?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2024-12-27T00:00:00Z',
+      description:
+        'A protocol hardening upgrade improving code quality, gas efficiency, and internal stability.',
+      type: 'general',
     },
     {
       title: 'Onchain Governance Launch',

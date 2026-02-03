@@ -11,7 +11,7 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ProjectBadge } from '~/components/projects/ProjectBadge'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useDevice } from '~/hooks/useDevice'
 import { Layer3Icon } from '~/icons/Layer3'
 import { SuperchainIcon } from '~/icons/providers/SuperchainIcon'
 import { ShieldIcon } from '~/icons/Shield'
@@ -149,12 +149,12 @@ function NameWithProjectInfoTooltip({
   project,
   withInfoTooltip,
 }: NameWithProjectInfoTooltipProps) {
-  const isMobile = useIsMobile()
+  const { isDesktop } = useDevice()
   const projectName = project.shortName ?? project.name
 
   if (
     !withInfoTooltip ||
-    isMobile ||
+    !isDesktop ||
     (!project.description && !project.badges)
   ) {
     return projectName

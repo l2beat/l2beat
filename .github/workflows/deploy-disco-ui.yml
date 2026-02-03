@@ -1,51 +1,40 @@
-name: Deploy disco UI
+name: Deploy disco-ui
 
 concurrency:
   group: disco-ui-deployment
-permissions: {}
+permissions:
+  contents: read
+  packages: write
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force deployment"
+        required: false
+        default: false
+        type: boolean
   push:
     branches:
       - main
 
 jobs:
-  deploy-disco-ui:
-    name: Deploy disco-ui
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v3
-        with:
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
-      - name: Install heroku CLI
-        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - name: Login to heroku container registry
-        uses: docker/login-action@v3
-        with:
-          username: "_"
-          password: ${{ secrets.HEROKU_TOKEN }}
-          registry: registry.heroku.com
-      - name: Build and publish container
-        run: |
-          docker build --push \
-            --build-arg TURBO_TEAM=${TURBO_TEAM} \
-            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
-            -t ${TAG} -f ${DOCKERFILE} .
-        env:
-          DOCKERFILE: Dockerfile.discoui
-          TAG: registry.heroku.com/${{ secrets.HEROKU_DISCOVERY_UI }}/web
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      - name: Release published container
-        run: |
-          heroku container:release -a ${{ secrets.HEROKU_DISCOVERY_UI }} -v web
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+  check-changes:
+    uses: ./.github/workflows/check-changes.yml
+    with:
+      package: '@l2beat/l2b'
+      force: ${{ github.event.inputs.force == 'true' }}
+
+  deploy:
+    needs: check-changes
+    if: needs.check-changes.outputs.should_deploy == 'true'
+    uses: ./.github/workflows/build-deploy-coolify.yml
+    with:
+      project: disco-ui
+      dockerfile: packages/l2b/Dockerfile.disco-ui
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_DISCO_UI_ID }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}

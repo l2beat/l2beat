@@ -108,9 +108,11 @@ export class AcrossSettlementOrbitPlugin implements InteropPlugin {
             srcEvent: messageDelivered,
             srcAmount: messageDelivered.args.txValue,
             srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: false,
             dstEvent: event,
             dstAmount: event.args.ethAmount,
             dstTokenAddress: Address32.NATIVE,
+            dstWasMinted: false,
             extraEvents: [acrossEvent],
           }),
         )

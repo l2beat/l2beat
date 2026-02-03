@@ -36,13 +36,13 @@ export const GasZipDeposit = createInteropEventType<{
   depositType: string
   destinationChains: string
   destinationAddress?: Address32
-}>('gaszip.Deposit')
+}>('gaszip.Deposit', { direction: 'outgoing' })
 
 export const GasZipFill = createInteropEventType<{
   receiver: Address32
   amount: bigint
   tokenAddress: Address32
-}>('gaszip.Fill')
+}>('gaszip.Fill', { direction: 'incoming' })
 
 export class GasZipPlugin implements InteropPlugin {
   readonly name = 'gaszip'
@@ -159,6 +159,7 @@ export class GasZipPlugin implements InteropPlugin {
         key: 'amount',
         valueBigInt: gasZipFill.args.amount,
         toleranceUp: 0.1, // see examples, 5% was too low
+        toleranceDown: 0.03, // for some reason some fills are more
       },
     )
     const gasZipDeposit = gasZipDeposits[0]
@@ -174,9 +175,11 @@ export class GasZipPlugin implements InteropPlugin {
         srcEvent: gasZipDeposit,
         srcTokenAddress: gasZipDeposit.args.tokenAddress,
         srcAmount: BigInt(gasZipDeposit.args.amount),
+        srcWasBurned: false,
         dstEvent: gasZipFill,
         dstTokenAddress: gasZipFill.args.tokenAddress,
         dstAmount: BigInt(gasZipFill.args.amount),
+        dstWasMinted: false,
       }),
     ]
   }

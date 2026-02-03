@@ -13,10 +13,15 @@ import {
   getTopProtocols,
   type InteropProtocolData,
 } from './utils/getTopProtocols'
+import {
+  getTransferSizeChartData,
+  type TransferSizeChartData,
+} from './utils/getTransferSizeChartData'
 
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
+  transferSizeChartData: TransferSizeChartData | undefined
   entries: ProtocolEntry[]
 }
 
@@ -43,6 +48,7 @@ export async function getInteropDashboardData(
     return {
       top3Paths: [],
       topProtocols: [],
+      transferSizeChartData: undefined,
       entries: [],
     }
   }
@@ -83,6 +89,7 @@ export async function getInteropDashboardData(
     return {
       top3Paths: [],
       topProtocols: [],
+      transferSizeChartData: undefined,
       entries: [],
     }
   }
@@ -95,9 +102,15 @@ export async function getInteropDashboardData(
     { symbol: string; iconUrl: string | null }
   >(tokensDetailsData.map((t) => [t.id, t]))
 
+  // Projects that are part of other projects
+  const subgroupProjects = new Set(
+    interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
+  )
+
   return {
-    top3Paths: getTopPaths(records),
-    topProtocols: getTopProtocols(records, interopProjects),
+    top3Paths: getTopPaths(records, subgroupProjects),
+    topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
+    transferSizeChartData: getTransferSizeChartData(records, interopProjects),
     entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
   }
 }
@@ -128,6 +141,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       iconUrl:
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       volume: 10_000_000,
+      transferCount: 1000,
+      avgDuration: { type: 'single', duration: 100_000 } as const,
+      avgValue: 10_000,
     },
     {
       id: 'usdc01',
@@ -135,6 +151,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
       volume: 5_000_000,
+      transferCount: 500,
+      avgDuration: { type: 'single', duration: 50_000 } as const,
+      avgValue: 10_000,
     },
   ]
 
@@ -144,17 +163,24 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       name: 'Ethereum',
       iconUrl: manifest.getUrl('/icons/ethereum.png'),
       volume: 8_000_000,
+      transferCount: 1000,
+      avgDuration: { type: 'single', duration: 100_000 } as const,
+      avgValue: 8_000,
     },
     {
       id: 'arbitrum',
       name: 'Arbitrum',
       iconUrl: manifest.getUrl('/icons/arbitrum.png'),
       volume: 5_000_000,
+      transferCount: 500,
+      avgDuration: { type: 'single', duration: 50_000 } as const,
+      avgValue: 10_000,
     },
   ]
 
   const allProtocols: ProtocolEntry[] = interopProjects.map((project) => ({
     protocolName: project.interopConfig.name ?? project.name,
+    isAggregate: project.interopConfig.isAggregate,
     iconSlug: project.slug,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     bridgeType: project.interopConfig.bridgeType,
@@ -166,9 +192,40 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     averageDuration: { type: 'single', duration: 100_000 },
   }))
 
+  const transferSizeChartData: TransferSizeChartData = {
+    arbitrum: {
+      name: 'Arbitrum Canonical',
+      iconUrl: manifest.getUrl('/icons/arbitrum.png'),
+      countUnder100: 10,
+      count100To1K: 12,
+      count1KTo10K: 50,
+      count10KTo100K: 35,
+      countOver100K: 1,
+    },
+    optimism: {
+      name: 'Optimism Canonical',
+      iconUrl: manifest.getUrl('/icons/optimism.png'),
+      countUnder100: 5,
+      count100To1K: 8,
+      count1KTo10K: 10,
+      count10KTo100K: 4,
+      countOver100K: 0,
+    },
+    base: {
+      name: 'Base Canonical',
+      iconUrl: manifest.getUrl('/icons/base.png'),
+      countUnder100: 5,
+      count100To1K: 8,
+      count1KTo10K: 10,
+      count10KTo100K: 4,
+      countOver100K: 0,
+    },
+  }
+
   return {
     top3Paths,
     topProtocols,
+    transferSizeChartData,
     entries: allProtocols,
   }
 }

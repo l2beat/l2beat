@@ -1,11 +1,11 @@
-import { getEnv, Logger } from '@l2beat/backend-tools'
+import { type Env, getEnv, Logger } from '@l2beat/backend-tools'
 import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
 } from '@l2beat/shared'
 import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
-import { getTokenDbClient } from '@l2beat/token-backend'
+import { getTokenDbClient, type TokenDbClient } from '@l2beat/token-backend'
 import {
   boolean,
   command,
@@ -22,10 +22,16 @@ import {
   getTokenInfos,
   type TokenInfos,
 } from '../engine/financials/InteropFinancialsLoop'
-import { type CoreResult, type Example, readExamples, Separated } from './core'
+import {
+  type CoreResult,
+  type Example,
+  type RunResult,
+  readExamples,
+  Separated,
+} from './core'
 import { checkExpects, printExpectsResult } from './expects'
 import { ExampleRunner } from './runner'
-import { hashExampleDefinition, SnapshotService } from './snapshot/service'
+import { SnapshotService } from './snapshot/service'
 
 const cmd = command({
   name: 'interop:example',
@@ -74,6 +80,75 @@ const cmd = command({
 
     const examplesToRun = getExamplesToRun()
 
+    const env = getEnv()
+    const http = new HttpClient()
+    const tokenDbClient = getTokenDbClient({
+      apiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
+      authToken: env.string('TOKEN_BACKEND_CF_TOKEN'),
+      callSource: 'interop',
+    })
+    const snapshotService = new SnapshotService({
+      rootDir: join(__dirname, 'snapshots'),
+      noCompression: args.uncompressed,
+    })
+    const coingecko = new CoingeckoQueryService(
+      new CoingeckoClient({
+        callsPerMinute: 60,
+        sourceName: 'coingecko',
+        retryStrategy: 'SCRIPT',
+        http,
+        logger: Logger.SILENT,
+        apiKey: undefined,
+      }),
+    )
+
+    console.log('Running examples:', examplesToRun.join(', '))
+
+    const coreResults: {
+      exampleId: string
+      example: Example
+      result: RunResult
+    }[] = []
+    for (const exampleId of examplesToRun) {
+      const example = examples[exampleId]
+      console.log(
+        'Running example -',
+        exampleId,
+        example.description ? `(${example.description})` : '',
+      )
+      const result = await runExampleCore(exampleId, example, {
+        seal: args.seal,
+        uncompressed: args.uncompressed,
+        env,
+        http,
+        tokenDbClient,
+        snapshotService,
+      })
+      coreResults.push({ exampleId, example, result })
+    }
+
+    const allTokenIds = unique(
+      coreResults
+        .flatMap((r) => r.result.transfers)
+        .flatMap((t) => [t.srcId, t.dstId])
+        .filter((x) => x !== undefined),
+    )
+
+    const tokenInfos =
+      allTokenIds.length > 0
+        ? await getTokenInfos(allTokenIds, tokenDbClient, Logger.SILENT)
+        : new Map()
+    const prices =
+      allTokenIds.length > 0
+        ? await coingecko.getLatestMarketData(
+            unique(
+              Array.from(tokenInfos.values())
+                .map((t) => CoingeckoId(t.coingeckoId))
+                .filter((u) => u !== undefined),
+            ),
+          )
+        : new Map()
+
     let success = true
     const bigResult: CoreResult = {
       events: [],
@@ -81,25 +156,23 @@ const cmd = command({
       messages: [],
       transfers: [],
     }
-
-    console.log('Running examples:', examplesToRun.join(', '))
-
-    for (const exampleId of examplesToRun) {
-      const example = examples[exampleId]
-      console.log('\nExample:', exampleId, '\n')
-      const result = await runExample(exampleId, example, {
-        seal: args.seal,
-        uncompressed: args.uncompressed,
-      })
-      bigResult.events.push(...result.events)
-      for (const id of result.matchedEventIds) {
+    for (const { exampleId, example, result } of coreResults) {
+      const withFinancials = applyFinancials(result, tokenInfos, prices)
+      bigResult.events.push(...withFinancials.events)
+      for (const id of withFinancials.matchedEventIds) {
         bigResult.matchedEventIds.add(id)
       }
-      bigResult.messages.push(...result.messages)
-      bigResult.transfers.push(...result.transfers)
-      const partial = checkExample(exampleId, example, result, !args.simple)
+      bigResult.messages.push(...withFinancials.messages)
+      bigResult.transfers.push(...withFinancials.transfers)
+      const partial = checkExample(
+        exampleId,
+        example,
+        withFinancials,
+        !args.simple,
+      )
       success &&= partial
     }
+
     summarize(bigResult)
     if (!success) {
       console.log('Tests failed')
@@ -108,82 +181,49 @@ const cmd = command({
   },
 })
 
-async function runExample(
+async function runExampleCore(
   exampleId: string,
   example: Example,
   opts: {
     seal: boolean
     uncompressed: boolean
+    env: Env
+    http: HttpClient
+    tokenDbClient: TokenDbClient
+    snapshotService: SnapshotService
   },
 ) {
-  const env = getEnv()
-  const tokenDbClient = getTokenDbClient({
-    apiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
-    authToken: env.string('TOKEN_BACKEND_CF_TOKEN'),
-    callSource: 'interop',
-  })
-
-  const snapshotService = new SnapshotService({
-    rootDir: join(__dirname, 'snapshots'),
-    noCompression: opts.uncompressed,
-  })
-  const exampleInputs = snapshotService.createEmptyExampleInputs()
+  const exampleInputs = opts.snapshotService.createEmptyExampleInputs()
 
   const runner = new ExampleRunner({
     exampleId,
     example,
     logger: Logger.ERROR,
-    http: new HttpClient(),
-    snapshotService,
-    env: getEnv(),
+    http: opts.http,
+    tokenDbClient: opts.tokenDbClient,
+    snapshotService: opts.snapshotService,
+    env: opts.env,
     mode: opts.seal ? 'capture' : 'live',
     inputs: exampleInputs,
   })
 
-  const coingecko = new CoingeckoQueryService(
-    new CoingeckoClient({
-      callsPerMinute: 60,
-      sourceName: 'coingecko',
-      retryStrategy: 'SCRIPT',
-      http: new HttpClient(),
-      logger: Logger.SILENT,
-      apiKey: undefined,
-    }),
-  )
-
   const coreResult = await runner.run()
 
   if (opts.seal) {
-    await snapshotService.saveInputs(exampleId, exampleInputs)
-    await snapshotService.saveOutputs(exampleId, coreResult)
+    await runner.flush(coreResult)
     if (!opts.uncompressed) {
-      const definitionHash = hashExampleDefinition(example)
-      await snapshotService.updateManifest(exampleId, definitionHash)
+      await runner.updateManifest()
     }
   }
 
-  // Second pass: batch fetch token info and prices for all groups
-  const allTokenIds = unique(
-    coreResult.transfers
-      .flatMap((t) => [t.srcId, t.dstId])
-      .filter((x) => x !== undefined),
-  )
+  return coreResult
+}
 
-  const tokenInfos = await getTokenInfos(
-    allTokenIds,
-    tokenDbClient,
-    Logger.SILENT,
-  )
-
-  const prices = await coingecko.getLatestMarketData(
-    unique(
-      Array.from(tokenInfos.values())
-        .map((t) => CoingeckoId(t.coingeckoId))
-        .filter((u) => u !== undefined),
-    ),
-  )
-
-  // Third pass: enrich transfers with financials and build final results
+function applyFinancials(
+  coreResult: RunResult,
+  tokenInfos: TokenInfos,
+  prices: Map<CoingeckoId, { price: number; circulating: number }>,
+): CoreResult {
   const transfersWithFinancials = coreResult.transfers.map((transfer) => ({
     ...transfer.transfer,
     src: {
@@ -231,7 +271,9 @@ function checkExample(
     verbose,
   )
 
-  const header = example.name ? `${example.name} (${exampleId})` : exampleId
+  const header = example.description
+    ? `${example.description} (${exampleId})`
+    : exampleId
 
   console.log(`\n--- ${header} ---`)
   console.log(

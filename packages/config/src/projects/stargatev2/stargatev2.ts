@@ -48,12 +48,13 @@ export const stargatev2: Bridge = {
   id: ProjectId('stargatev2'),
   addedAt: UnixTime(1718620600), // 2024-06-17T10:36:40Z
   display: {
-    name: 'Stargate v2 (LayerZero v2)',
+    name: 'Stargate v2',
     shortName: 'Stargate v2',
     slug: 'stargatev2',
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
       bridges: ['https://layerzeroscan.com/'],
+      documentation: ['https://docs.stargate.finance/introduction/overview'],
       repositories: [
         'https://github.com/stargate-protocol/stargate-v2',
         'https://github.com/LayerZero-Labs/LayerZero-v2',
@@ -79,6 +80,16 @@ export const stargatev2: Bridge = {
       sentiment: 'bad',
     },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL, // TODO: find Hydra onchain
+  },
+  interopConfig: {
+    bridgeType: 'nonMinting',
+    plugins: [
+      {
+        plugin: 'stargate',
+      },
+      // TODO: needs bus/taxi duration split
+      // TODO: needs hydra filtering by minted label
+    ],
   },
   technology: {
     destination: [
@@ -266,13 +277,6 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
         ),
         tokens: ['USDT'],
         description: 'Stargate liquidity pool for USDT on Optimism.',
-      }),
-      discovery.getEscrowDetails({
-        address: ChainSpecificAddress(
-          'base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2',
-        ),
-        tokens: ['EURC'],
-        description: 'Stargate liquidity pool for EURC on Base.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(

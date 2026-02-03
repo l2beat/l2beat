@@ -10,6 +10,7 @@ import {
   type RpcBlock,
   type RpcLog,
   type RpcReceipt,
+  type RpcTransaction,
   UpsertMap,
 } from '@l2beat/shared'
 import {
@@ -35,6 +36,7 @@ export class LogQuery {
   topic0s = new Set<string>()
   addresses = new Set<EthereumAddress>()
   topicToTxEvents = new UpsertMap<string, Set<string>>()
+  topic0sWithTx = new Set<string>()
   isEmpty() {
     return this.topic0s.size === 0 || this.addresses.size === 0
   }
@@ -89,6 +91,9 @@ function addPluginDataRequests(
           txEvents.add(toEventSelector(signature))
         }
       }
+      if (eventRequest.includeTx) {
+        result.topic0sWithTx.add(topic0)
+      }
     }
   }
 }
@@ -108,11 +113,10 @@ export interface BlockProcessorState {
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
 }
 
-const dbClearedFor = new Map<string, UnixTime>()
-
 export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
+  public waitingForWipe = false
 
   constructor(
     readonly chain: LongChainName,
@@ -215,12 +219,23 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async isResyncRequestedFrom(): Promise<UnixTime | undefined> {
+    const { resyncFrom } = await this.getResyncState()
+    return resyncFrom
+  }
+
+  async getResyncState(): Promise<{
+    resyncFrom?: UnixTime
+    wipeRequired: boolean
+  }> {
     const syncState =
       await this.db.interopPluginSyncState.findByPluginNameAndChain(
         this.cluster.name,
         this.chain,
       )
-    return syncState?.resyncRequestedFrom ?? undefined
+    return {
+      resyncFrom: syncState?.resyncRequestedFrom ?? undefined,
+      wipeRequired: syncState?.wipeRequired ?? false,
+    }
   }
 
   buildLogQuery() {
@@ -248,6 +263,10 @@ export class InteropEventSyncer extends TimeLoop {
     return this.rpcClient.getTransactionReceipt(hash)
   }
 
+  getTransactionByHash(hash: string): Promise<RpcTransaction | null> {
+    return this.rpcClient.getTransactionByHash(hash)
+  }
+
   getLastSyncedRange(): Promise<InteropPluginSyncedRangeRecord | undefined> {
     return this.db.interopPluginSyncedRange.findByPluginNameAndChain(
       this.cluster.name,
@@ -264,25 +283,5 @@ export class InteropEventSyncer extends TimeLoop {
 
   getItemsToCapture(block: Block, logs: Log[]) {
     return getItemsToCapture(this.chain, block, logs)
-  }
-
-  async deleteAllClusterData(forRequest?: UnixTime) {
-    if (forRequest) {
-      if (dbClearedFor.get(this.cluster.name) === forRequest) {
-        return
-      }
-      dbClearedFor.set(this.cluster.name, forRequest)
-    }
-
-    await this.db.transaction(async () => {
-      for (const plugin of this.cluster.plugins) {
-        // Delete messages:
-        await this.db.interopMessage.deleteForPlugin(plugin.name)
-        // Delete transfers:
-        await this.db.interopTransfer.deleteForPlugin(plugin.name)
-        // Delete events:
-        await this.store.deleteAllForPlugin(plugin.name)
-      }
-    })
   }
 }

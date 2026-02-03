@@ -5,7 +5,12 @@ import type {
   InteropEventRecord,
   InteropPluginSyncedRangeRecord,
 } from '@l2beat/database'
-import type { RpcBlock, RpcLog, RpcReceipt } from '@l2beat/shared'
+import type {
+  RpcBlock,
+  RpcLog,
+  RpcReceipt,
+  RpcTransaction,
+} from '@l2beat/shared'
 import {
   type Block,
   ChainSpecificAddress,
@@ -260,6 +265,7 @@ describe(InteropEventSyncer.name, () => {
           >({
             findByPluginNameAndChain: mockFn().resolvesTo({
               resyncRequestedFrom: UnixTime(123),
+              wipeRequired: false,
             }),
           }),
         }),
@@ -290,6 +296,7 @@ describe(InteropEventSyncer.name, () => {
             type: 'event',
             signature,
             includeTxEvents: [extraSignature, extraSignatureTwo],
+            includeTx: true,
             addresses: [ethAddress, arbAddress],
           },
         ],
@@ -311,6 +318,7 @@ describe(InteropEventSyncer.name, () => {
         toEventSelector(extraSignature),
         toEventSelector(extraSignatureTwo),
       ])
+      expect(query.topic0sWithTx.has(toEventSelector(signature))).toEqual(true)
       expect(query.isEmpty()).toEqual(false)
     })
 
@@ -394,76 +402,6 @@ describe(InteropEventSyncer.name, () => {
     })
   })
 
-  describe(InteropEventSyncer.prototype.deleteAllClusterData.name, () => {
-    it('wipes data for cluster and plugin names', async () => {
-      const deleteMessage = mockFn().resolvesTo(undefined)
-      const deleteTransfer = mockFn().resolvesTo(undefined)
-      const deleteEvents = mockFn().resolvesTo(undefined)
-      const transaction = mockFn().executes(async (cb) => await cb())
-      const syncer = createSyncer({
-        cluster: makeCluster({
-          name: 'clusterName',
-          plugins: [
-            makePlugin({ name: 'across' }),
-            makePlugin({ name: 'wormhole' }),
-          ],
-        }),
-        db: mockObject<InteropEventSyncer['db']>({
-          transaction,
-          interopMessage: mockObject<
-            InteropEventSyncer['db']['interopMessage']
-          >({ deleteForPlugin: deleteMessage }),
-          interopTransfer: mockObject<
-            InteropEventSyncer['db']['interopTransfer']
-          >({ deleteForPlugin: deleteTransfer }),
-        }),
-        store: mockObject<InteropEventStore>({
-          deleteAllForPlugin: deleteEvents,
-        }),
-      })
-
-      await syncer.deleteAllClusterData()
-
-      expect(transaction).toHaveBeenCalled()
-      expect(deleteMessage).toHaveBeenCalledTimes(2)
-      expect(deleteTransfer).toHaveBeenCalledTimes(2)
-      expect(deleteEvents).toHaveBeenCalledTimes(2)
-      expect(deleteMessage).toHaveBeenCalledWith('across')
-      expect(deleteMessage).toHaveBeenCalledWith('wormhole')
-    })
-
-    it('deduplicates cluster and plugin names', async () => {
-      const deleteMessage = mockFn().resolvesTo(undefined)
-      const deleteTransfer = mockFn().resolvesTo(undefined)
-      const deleteEvents = mockFn().resolvesTo(undefined)
-      const transaction = mockFn().executes(async (cb) => await cb())
-      const syncer = createSyncer({
-        cluster: makeCluster({
-          name: 'clusterName',
-          plugins: [makePlugin({ name: 'across' })],
-        }),
-        db: mockObject<InteropEventSyncer['db']>({
-          transaction,
-          interopMessage: mockObject<
-            InteropEventSyncer['db']['interopMessage']
-          >({ deleteForPlugin: deleteMessage }),
-          interopTransfer: mockObject<
-            InteropEventSyncer['db']['interopTransfer']
-          >({ deleteForPlugin: deleteTransfer }),
-        }),
-        store: mockObject<InteropEventStore>({
-          deleteAllForPlugin: deleteEvents,
-        }),
-      })
-
-      await syncer.deleteAllClusterData()
-
-      expect(deleteMessage).toHaveBeenCalledTimes(1)
-      expect(deleteTransfer).toHaveBeenCalledTimes(1)
-      expect(deleteEvents).toHaveBeenCalledTimes(1)
-    })
-  })
-
   describe('db wrapper methods', () => {
     it('returns last synced range and oldest event', async () => {
       const lastRange = makeSyncedRangeRecord()
@@ -525,17 +463,20 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe('rpc wrapper methods', () => {
-    it('passes through getBlockByNumber, getLogs, and getTransactionReceipt', async () => {
+    it('passes through getBlockByNumber, getLogs, getTransactionReceipt, and getTransactionByHash', async () => {
       const getBlockByNumber = mockFn().resolvesTo(makeRpcBlock(5n))
       const log = makeRpcLog()
       const getLogs = mockFn().resolvesTo([log])
       const receipt = makeRpcReceipt()
       const getTransactionReceipt = mockFn().resolvesTo(receipt)
+      const transaction = makeRpcTransaction()
+      const getTransactionByHash = mockFn().resolvesTo(transaction)
       const syncer = createSyncer({
         rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
           getBlockByNumber,
           getLogs,
           getTransactionReceipt,
+          getTransactionByHash,
         }),
       })
 
@@ -547,10 +488,12 @@ describe(InteropEventSyncer.name, () => {
         topics: [[]],
       })
       const txReceipt = await syncer.getTransactionReceipt(ZERO_HASH)
+      const tx = await syncer.getTransactionByHash(ZERO_HASH)
 
       expect(block).toEqual(makeRpcBlock(5n))
       expect(logs).toEqual([log])
       expect(txReceipt).toEqual(receipt)
+      expect(tx).toEqual(transaction)
     })
   })
 })
@@ -771,11 +714,29 @@ function makeRpcReceipt(): RpcReceipt {
   }
 }
 
+function makeRpcTransaction(
+  overrides: Partial<RpcTransaction> = {},
+): RpcTransaction {
+  return {
+    blockHash: ZERO_HASH,
+    blockNumber: 1n,
+    from: EthereumAddress.random(),
+    gas: 0n,
+    hash: ZERO_HASH,
+    input: '0x',
+    to: EthereumAddress.random(),
+    transactionIndex: 0n,
+    value: 0n,
+    ...overrides,
+  }
+}
+
 function mockRpcClient(): InteropEventSyncer['rpcClient'] {
   return mockObject<InteropEventSyncer['rpcClient']>({
     getBlockByNumber: mockFn().resolvesTo(makeRpcBlock(1n)),
     getLogs: mockFn().resolvesTo([]),
     getTransactionReceipt: mockFn().resolvesTo(null),
+    getTransactionByHash: mockFn().resolvesTo(null),
   })
 }
 

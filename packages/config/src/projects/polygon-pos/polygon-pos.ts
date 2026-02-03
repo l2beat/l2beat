@@ -79,6 +79,26 @@ export const polygonpos: ScalingProject = {
   stage: {
     stage: 'NotApplicable',
   },
+  interopConfig: {
+    bridgeType: 'lockAndMint',
+    plugins: [
+      {
+        plugin: 'polygon',
+      },
+    ],
+    durationSplit: {
+      in: {
+        label: 'L1 -> L2',
+        from: 'ethereum',
+        to: 'polygonpos',
+      },
+      out: {
+        label: 'L2 -> L1',
+        from: 'polygonpos',
+        to: 'ethereum',
+      },
+    },
+  },
   config: {
     associatedTokens: ['POL', 'MATIC'],
     escrows: [
@@ -329,4 +349,53 @@ export const polygonpos: ScalingProject = {
     },
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
+  milestones: [
+    {
+      title: 'Rio upgrade',
+      url: 'https://polygon.technology/blog/polygon-launches-major-payments-upgrade-with-rio-faster-lighter-and-easier-to-build',
+      date: '2025-10-08T00:00:00Z',
+      description:
+        'Performance-focused Polygon PoS upgrade improving block production and network efficiency.',
+      type: 'general',
+    },
+    {
+      title: 'Heimdall v2 upgrade',
+      url: 'https://polygon.technology/blog/polygon-5-second-fast-finality-upgrade',
+      date: '2025-07-10T00:00:00Z',
+      description:
+        'Major consensus upgrade replacing Heimdall v1 with Heimdall v2.',
+      type: 'general',
+    },
+    {
+      title: 'Ahmedabad hard fork',
+      url: 'https://polygon.technology/blog/polygon-pos-the-ahmedabad-upgrade-is-live-on-mainnet',
+      date: '2024-09-26T00:00:00Z',
+      description:
+        'Hard fork increasing maximum contract size and improving bridge observability on Polygon PoS.',
+      type: 'general',
+    },
+    {
+      title: 'POL becomes native gas token',
+      url: 'https://polygon.technology/blog/matic-to-pol-migration-is-now-live-everything-you-need-to-know',
+      date: '2024-09-04T00:00:00Z',
+      description:
+        'Migration from MATIC to POL as the native gas and staking token on Polygon PoS.',
+      type: 'general',
+    },
+    {
+      title: 'EIP-1559 activated on Polygon PoS',
+      url: 'https://polygon.technology/blog/eip-1559-upgrades-are-going-live-on-polygon-mainnet',
+      date: '2022-01-17T00:00:00Z',
+      description:
+        'Polygon PoS implements EIP-1559, introducing base fee burn and a new gas fee mechanism.',
+      type: 'general',
+    },
+    {
+      title: 'Matic rebrands to Polygon',
+      url: 'https://polygon.technology/blog/matic-network-becomes-polygon-ethereums-internet-of-blockchains-expands-mission-and-tech-scope',
+      date: '2021-02-09T00:00:00Z',
+      description: 'Launch of the Polygon Proof-of-Stake chain.',
+      type: 'general',
+    },
+  ],
 }

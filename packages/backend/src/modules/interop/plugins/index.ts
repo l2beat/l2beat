@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient, IRpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import type { InteropComparePlugin } from '../engine/compare/InteropCompareLoop'
 import type {
   InteropConfigPlugin,
@@ -16,7 +17,8 @@ import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { BeefyBridgePlugin } from './beefy-bridge'
-import { CCIPPlugIn } from './ccip'
+import { CCIPConfigPlugin } from './ccip/ccip.config'
+import { CCIPPlugin } from './ccip/ccip.plugin'
 import { CCTPConfigPlugin } from './cctp/cctp.config'
 import { CCTPV1Plugin } from './cctp/cctp-v1.plugin'
 import { CCTPV2Plugin } from './cctp/cctp-v2.plugin'
@@ -48,6 +50,8 @@ import { OrbitStackPlugin } from './orbitstack/orbitstack'
 import { OrbitStackCustomGatewayPlugin } from './orbitstack/orbitstack-customgateway'
 import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standardgateway'
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
+import { PolygonConfigPlugin } from './polygon/polygon.config'
+import { PolygonPlugin } from './polygon/polygon.plugin'
 import { RelayPlugin } from './relay/relay.plugin'
 import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
@@ -61,13 +65,14 @@ import { WormholeNTTPlugin } from './wormhole-ntt'
 import { WormholeRelayerPlugin } from './wormhole-relayer'
 import { WormholeTokenBridgePlugin } from './wormhole-token-bridge'
 import { ZklinkNovaPlugin } from './zklink-nova'
+import { ZkStackConfigPlugin } from './zkstack/zkstack.config'
 
 export interface PluginCluster {
   name: string
   plugins: InteropPlugin[]
 }
 
-import { ZkStackPlugin } from './zkstack'
+import { ZkStackPlugin } from './zkstack/zkstack.plugin'
 
 export interface InteropPlugins {
   comparePlugins: InteropComparePlugin[]
@@ -81,6 +86,7 @@ export interface InteropPluginDependencies {
   rpcClients: IRpcClient[]
   logger: Logger
   configs: InteropConfigStore
+  tokenDbClient: TokenDbClient
 }
 
 export function createInteropPlugins(
@@ -89,7 +95,6 @@ export function createInteropPlugins(
   const ethereumRpc = deps.rpcClients.find((c) => c.chain === 'ethereum')
   assert(ethereumRpc)
   const rpcs = new Map(deps.rpcClients.map((r) => [r.chain, r]))
-
   return {
     comparePlugins: [new AcrossComparePlugin()],
     configPlugins: [
@@ -113,6 +118,19 @@ export function createInteropPlugins(
         deps.httpClient,
         rpcs,
       ),
+      new CCIPConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+      ),
+      new ZkStackConfigPlugin(
+        deps.configs,
+        deps.logger,
+        rpcs,
+        deps.tokenDbClient,
+      ),
+      new PolygonConfigPlugin(deps.configs, deps.logger, rpcs),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
@@ -121,7 +139,7 @@ export function createInteropPlugins(
       new MayanForwarderPlugin(deps.configs),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
-      new CCIPPlugIn(),
+      new CCIPPlugin(deps.configs),
       new CentriFugePlugin(),
       {
         name: 'cctp',
@@ -199,7 +217,8 @@ export function createInteropPlugins(
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),
       new GasZipPlugin(deps.logger),
-      new ZkStackPlugin(),
+      new PolygonPlugin(deps.configs),
+      new ZkStackPlugin(deps.configs),
     ],
   }
 }

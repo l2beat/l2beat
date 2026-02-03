@@ -1,9 +1,13 @@
 import { airbender } from '../projects/airbender/airbender'
 import { avail } from '../projects/avail/avail'
+import { axelar } from '../projects/axelar/axelar'
+import { axelarits } from '../projects/axelar-its/axelar-its'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
+import { ccip } from '../projects/ccip/ccip'
+import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
@@ -12,6 +16,7 @@ import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
@@ -33,6 +38,7 @@ import { soulwallet } from '../projects/soulwallet/soulwallet'
 import { sp1 } from '../projects/sp1/sp1'
 import { sp1blobstream } from '../projects/sp1blobstream/sp1blobstream'
 import { sp1vector } from '../projects/sp1vector/sp1vector'
+import { squid } from '../projects/squid/squid'
 import { stone } from '../projects/stone/stone'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
@@ -91,8 +97,14 @@ export const refactored: BaseProject[] = [
   usdt0,
   debridgeDln,
   hyperlaneHwr,
+  ccip,
+  cctpv1,
   cctpv2,
   relay,
   gaszip,
   layerzero,
+  axelar,
+  axelarits,
+  squid,
+  fusionplus,
 ]

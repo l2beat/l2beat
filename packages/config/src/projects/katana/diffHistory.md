@@ -1,3 +1,121 @@
+Generated with discovered.json: 0xcc5abe7a160f6cc4630420978f3c205c212ae816
+
+# Diff at Mon, 02 Feb 2026 14:49:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1769516922
+- current timestamp: 1770035635
+
+## Description
+
+upgrade admin change.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) {
+    +++ description: None
+      values.owner:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      receivedPermissions.4:
+-        {"permission":"interact","from":"eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x1AaA08d577cbC3da3b955DC1B7a281D7b8fE3372","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811","role":"admin","via":[{"address":"eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52"}]}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.11:
+-        {"permission":"upgrade","from":"eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.12:
+-        {"permission":"upgrade","from":"eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.13:
+-        {"permission":"upgrade","from":"eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      receivedPermissions.14:
+-        {"permission":"upgrade","from":"eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832","role":".owner"},{"permission":"act","from":"eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52) {
+    +++ description: None
+      values.owner:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"eth:0x1AaA08d577cbC3da3b955DC1B7a281D7b8fE3372","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811","role":"admin","via":[{"address":"eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52"}]},{"permission":"upgrade","from":"eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe","role":"admin","via":[{"address":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832","role":".owner"},{"permission":"act","from":"eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52","role":".owner"}]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769516922 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-polygon-cdk"
+      proxyType:
++        "EOA"
+    }
+```
+
+Generated with discovered.json: 0x44fa3718720375e57085f34a83bba8db4f0772e7
+
+# Diff at Tue, 27 Jan 2026 12:37:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1768998796
+- current timestamp: 1769516922
+
+## Description
+
+New member added to Conduit Multisig 1, increasing from 4 of 12 to 4 of 13 threshold.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 13 (31%)"
+    }
+```
+
 Generated with discovered.json: 0xa5c83ac44e30555c8dfe15b131dfd20f73aa13cd
 
 # Diff at Wed, 21 Jan 2026 12:34:25 GMT:

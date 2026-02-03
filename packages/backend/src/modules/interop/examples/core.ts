@@ -8,6 +8,7 @@ import type {
   InteropMessage,
   InteropTransfer,
 } from '../plugins/types'
+import type { ExampleRunner } from './runner'
 
 export const ExpectedEvent = v.union([
   v.string(),
@@ -41,6 +42,8 @@ export interface CoreResult {
   transfers: InteropTransfer[]
 }
 
+export type RunResult = Awaited<ReturnType<ExampleRunner['run']>>
+
 export interface TransactionSpec {
   chain: string
   tx: string
@@ -54,7 +57,7 @@ const TxEntry = v.object({
 export type Example = v.infer<typeof Example>
 export const Example = v
   .object({
-    name: v.string().optional(),
+    description: v.string().optional(),
     tags: v.array(v.string()).optional(),
     loadConfigs: v.array(v.string()).optional(),
     txs: v.array(TxEntry),
