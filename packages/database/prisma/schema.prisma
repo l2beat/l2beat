@@ -556,7 +556,7 @@ model AggregatedInteropTransfer {
   count10KTo100K   Int      @default(0)
   countOver100K    Int      @default(0)
 
-  @@id([timestamp, srcChain, dstChain, id])
+  @@id([timestamp, srcChain, dstChain, bridgeType, id])
 }
 
 model AggregatedInteropToken {
@@ -570,5 +570,5 @@ model AggregatedInteropToken {
   totalDurationSum Int
   volume           Float    @db.Real
 
-  @@id([timestamp, srcChain, dstChain, id, abstractTokenId])
+  @@id([timestamp, srcChain, dstChain, bridgeType, id, abstractTokenId])
 }
