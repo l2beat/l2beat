@@ -16,7 +16,7 @@ export type InteropProtocolData = {
 
 export function getTopProtocols(
   records: AggregatedInteropTransferWithTokens[],
-  interopProjects: Project<'interopConfig'>[],
+  interopProjects: Project<'interop'>[],
   subgroupProjects: Set<ProjectId>,
 ): InteropProtocolData[] {
   const map = new Map<string, { volume: number; transfers: number }>()
@@ -44,7 +44,7 @@ export function getTopProtocols(
     assert(project, `Project not found: ${key}`)
 
     return {
-      protocolName: project?.interopConfig.name ?? project.name,
+      protocolName: project.interop.name ?? project.name,
       volume: {
         value: data.volume,
         share: totalVolume > 0 ? (data.volume / totalVolume) * 100 : 0,

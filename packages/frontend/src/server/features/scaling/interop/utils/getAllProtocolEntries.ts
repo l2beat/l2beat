@@ -13,10 +13,6 @@ import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 import { getProtocolsDataMap } from './getProtocolsDataMap'
-import {
-  makeProtocolEntriesKey,
-  parseProtocolEntriesKey,
-} from './protocolEntriesKey'
 
 export type TokenData = {
   id: string
@@ -50,7 +46,7 @@ export type DurationSplit = {
   }
 }
 
-export type ProtocolEntry = {
+export type AllProtocolsEntry = {
   id: string
   iconUrl: string
   protocolName: string
@@ -59,7 +55,7 @@ export type ProtocolEntry = {
     name: string
     iconUrl: string
   }
-  bridgeType: InteropBridgeType
+  bridgeTypes: InteropBridgeType[]
   volume: number
   tokens: TokenData[]
   chains: ChainData[]
@@ -69,11 +65,11 @@ export type ProtocolEntry = {
   averageValueInFlight?: number
 }
 
-export function getProtocolEntries(
+export function getAllProtocolEntries(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interop'>[],
-): ProtocolEntry[] {
+): AllProtocolsEntry[] {
   const logger = getLogger().for('getProtocolsByType')
 
   const durationSplitMap = new Map<
@@ -83,10 +79,7 @@ export function getProtocolEntries(
   for (const project of interopProjects) {
     for (const config of project.interop.configs) {
       if (config.durationSplit) {
-        durationSplitMap.set(
-          makeProtocolEntriesKey(project.id, config.bridgeType),
-          config.durationSplit,
-        )
+        durationSplitMap.set(project.id, config.durationSplit)
       }
     }
   }
@@ -94,7 +87,7 @@ export function getProtocolEntries(
   const protocolsDataMap = getProtocolsDataMap(
     records,
     durationSplitMap,
-    (record) => makeProtocolEntriesKey(record.id, record.bridgeType),
+    (record) => record.id,
   )
 
   const protocolsData = Array.from(protocolsDataMap.entries()).sort(
@@ -103,9 +96,8 @@ export function getProtocolEntries(
 
   return protocolsData
     .map(([key, data]) => {
-      const { id, bridgeType } = parseProtocolEntriesKey(key)
-      const project = interopProjects.find((p) => p.id === id)
-      assert(project, `Project not found: ${id}`)
+      const project = interopProjects.find((p) => p.id === key)
+      assert(project, `Project not found: ${key}`)
 
       const subgroupProject = interopProjects.find(
         (p) => p.id === project.interop.subgroupId,
@@ -123,7 +115,7 @@ export function getProtocolEntries(
               iconUrl: manifest.getUrl(`/icons/${subgroupProject.slug}.png`),
             }
           : undefined,
-        bridgeType,
+        bridgeTypes: project.interop.configs.map((c) => c.bridgeType),
         volume: data.volume,
         tokens: getTokensData(
           key,
@@ -246,7 +238,7 @@ function getAverageDuration(
   key: string,
   data: AverageDurationData,
   durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
-): ProtocolEntry['averageDuration'] {
+): AllProtocolsEntry['averageDuration'] {
   const durationSplit = durationSplitMap.get(key)
 
   if (durationSplit) {

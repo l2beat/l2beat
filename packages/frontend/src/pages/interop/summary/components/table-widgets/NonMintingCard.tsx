@@ -1,7 +1,7 @@
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
@@ -12,7 +12,7 @@ export function NonMintingCard({
   entries,
   isLoading,
 }: {
-  entries: InteropDashboardData['entries'] | undefined
+  entries: ProtocolEntry[] | undefined
   isLoading: boolean
 }) {
   const { selectedChains, allChainIds } = useInteropSelectedChains()

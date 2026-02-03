@@ -25,11 +25,13 @@ const INITIAL_DATA: AverageDurationData & { volume: number } = {
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
   durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  makeKey: (record: AggregatedInteropTransferWithTokens) => string,
 ) {
   const protocolsDataMap = new Map<string, ProtocolData>()
 
   for (const record of records) {
-    const current = protocolsDataMap.get(record.id) ?? {
+    const key = makeKey(record)
+    const current = protocolsDataMap.get(key) ?? {
       volume: 0,
       tokens: new Map<string, AverageDurationData & { volume: number }>(),
       chains: new Map<string, AverageDurationData & { volume: number }>(),
@@ -43,7 +45,7 @@ export function getProtocolsDataMap(
       identifiedTransferCount: 0,
     }
 
-    const durationSplit = durationSplitMap.get(record.id)
+    const durationSplit = durationSplitMap.get(key)
     const direction = getDirection(record, durationSplit)
 
     for (const token of record.tokens) {
@@ -74,7 +76,7 @@ export function getProtocolsDataMap(
       record.totalDurationSum ?? 0,
     )
 
-    protocolsDataMap.set(record.id, {
+    protocolsDataMap.set(key, {
       volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
       tokens: current.tokens,
       chains: current.chains,

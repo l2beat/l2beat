@@ -16,7 +16,7 @@ export type AggregatedInteropTransferWithTokens =
   AggregatedInteropTransferRecord & {
     tokens: Omit<
       AggregatedInteropTokenRecord,
-      'id' | 'timestamp' | 'srcChain' | 'dstChain'
+      'id' | 'timestamp' | 'srcChain' | 'dstChain' | 'bridgeType'
     >[]
   }
 

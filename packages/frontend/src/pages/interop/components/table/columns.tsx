@@ -1,3 +1,4 @@
+import type { InteropBridgeType } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import type { BasicTableRow } from '~/components/table/BasicTable'
@@ -12,7 +13,12 @@ import { BridgeTypeBadge } from './BridgeTypeBadge'
 import { SubgroupTooltip } from './SubgroupTooltip'
 
 export type ProtocolRow = ProtocolEntry & BasicTableRow
-const columnHelper = createColumnHelper<ProtocolRow>()
+export type AllProtocolsEntry = Omit<ProtocolEntry, 'bridgeType'> & {
+  bridgeTypes: InteropBridgeType[]
+}
+export type AllProtocolsRow = AllProtocolsEntry & BasicTableRow
+
+const columnHelper = createColumnHelper<AllProtocolsRow>()
 
 const commonColumns = [
   columnHelper.display({
@@ -172,10 +178,10 @@ export function getAllProtocolsColumns(
     }),
     ...commonColumns,
     !hideTypeColumn &&
-      columnHelper.accessor('bridgeType', {
+      columnHelper.accessor('bridgeTypes', {
         header: 'Type',
         cell: (ctx) => (
-          <BridgeTypeBadge bridgeType={ctx.row.original.bridgeType} />
+          <BridgeTypeBadge bridgeTypes={ctx.row.original.bridgeTypes} />
         ),
         meta: {
           headClassName: 'text-2xs',

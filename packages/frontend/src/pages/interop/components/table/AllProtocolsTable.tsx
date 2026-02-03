@@ -2,15 +2,18 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
-import { getAllProtocolsColumns, type ProtocolRow } from './columns'
+import {
+  type AllProtocolsEntry,
+  type AllProtocolsRow,
+  getAllProtocolsColumns,
+} from './columns'
 
 export function AllProtocolsTable({
   hideTypeColumn,
   entries,
   showAverageInFlightValueColumn,
 }: {
-  entries: ProtocolEntry[]
+  entries: AllProtocolsEntry[]
   hideTypeColumn?: boolean
   showAverageInFlightValueColumn?: boolean
 }) {
@@ -20,7 +23,7 @@ export function AllProtocolsTable({
     [hideTypeColumn, showAverageInFlightValueColumn],
   )
 
-  const table = useTable<ProtocolRow>({
+  const table = useTable<AllProtocolsRow>({
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

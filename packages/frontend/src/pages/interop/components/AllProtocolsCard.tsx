@@ -1,6 +1,6 @@
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import type { AllProtocolsEntry } from '~/server/features/scaling/interop/utils/getAllProtocolEntries'
 import { NoResultsInfo } from '../summary/components/NoResultsInfo'
 import { AllProtocolsTable } from './table/AllProtocolsTable'
 
@@ -10,7 +10,7 @@ export function AllProtocolsCard({
   hideTypeColumn,
   showAverageInFlightValueColumn,
 }: {
-  entries: InteropDashboardData['entries'] | undefined
+  entries: AllProtocolsEntry[] | undefined
   isLoading: boolean
   hideTypeColumn?: boolean
   showAverageInFlightValueColumn?: boolean

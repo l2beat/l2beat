@@ -61,7 +61,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   })
 
   if (
-    data?.entries.length === 0 &&
+    data?.allProtocolsEntries.length === 0 &&
     data.top3Paths.length === 0 &&
     data.topProtocols.length === 0
   ) {

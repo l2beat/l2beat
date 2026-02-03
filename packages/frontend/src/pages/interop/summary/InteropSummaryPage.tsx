@@ -1,10 +1,8 @@
 import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
-import groupBy from 'lodash/groupBy'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
@@ -63,18 +61,12 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   })
 
   if (
-    data?.entries.length === 0 &&
+    data?.allProtocolsEntries.length === 0 &&
     data.top3Paths.length === 0 &&
     data.topProtocols.length === 0
   ) {
     return <InteropEmptyState isDirty={isDirty} />
   }
-
-  const groupedEntries = Object.fromEntries(
-    Object.entries(groupBy(data?.entries, (e) => e.bridgeType)).map(
-      ([key, value]) => [key, value.slice(0, 5)],
-    ),
-  ) as Record<ProtocolEntry['bridgeType'], ProtocolEntry[]>
 
   return (
     <div
@@ -108,15 +100,15 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       />
       <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
         <NonMintingCard
-          entries={groupedEntries.nonMinting}
+          entries={data?.top5Cards.nonMinting}
           isLoading={isLoading}
         />
         <LockAndMintCard
-          entries={groupedEntries.lockAndMint}
+          entries={data?.top5Cards.lockAndMint}
           isLoading={isLoading}
         />
         <OmniChainCard
-          entries={groupedEntries.omnichain}
+          entries={data?.top5Cards.omnichain}
           isLoading={isLoading}
         />
         <TransferSizeChartCard
@@ -124,7 +116,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
           isLoading={isLoading}
         />
       </div>
-      <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
+      <AllProtocolsCard
+        entries={data?.allProtocolsEntries}
+        isLoading={isLoading}
+      />
     </div>
   )
 }

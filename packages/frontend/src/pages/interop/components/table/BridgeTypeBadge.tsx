@@ -1,4 +1,4 @@
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
+import type { InteropBridgeType } from '@l2beat/shared-pure'
 import { cn } from '~/utils/cn'
 
 const typeToLabel = {
@@ -17,25 +17,32 @@ const typeToLabel = {
 } as const
 
 interface BridgeTypeBadgeProps {
-  bridgeType: ProtocolEntry['bridgeType']
+  bridgeTypes: InteropBridgeType[]
   className?: string
 }
 
 export function BridgeTypeBadge({
-  bridgeType,
+  bridgeTypes,
   className,
 }: BridgeTypeBadgeProps) {
-  const config = typeToLabel[bridgeType]
-
   return (
-    <div
-      className={cn(
-        config.bgColor,
-        'flex h-min w-max items-center justify-center rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
-        className,
-      )}
-    >
-      {config.label}
+    <div className="flex items-center gap-1">
+      {bridgeTypes.map((bridgeType) => {
+        const config = typeToLabel[bridgeType]
+
+        return (
+          <div
+            key={bridgeType}
+            className={cn(
+              config.bgColor,
+              'flex h-min w-max items-center justify-center rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
+              className,
+            )}
+          >
+            {config.label}
+          </div>
+        )
+      })}
     </div>
   )
 }
