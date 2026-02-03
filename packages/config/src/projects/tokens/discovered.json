@@ -1,6 +1,6 @@
 {
   "name": "tokens",
-  "timestamp": 1768372202,
+  "timestamp": 1770041583,
   "configHash": "0xc85bebc78e82be6af50bb2565e541cf6d471c63cace747b2c2561539ee515ec5",
   "entries": [
     {
@@ -140,7 +140,7 @@
         "owner": "arb1:0x0000000000000000000000000000000000000000",
         "paused": false,
         "symbol": "EUTBL",
-        "totalSupply": 19404103637044,
+        "totalSupply": 19556470486354,
         "trustedForwarder": "arb1:0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -556,7 +556,7 @@
           "base:0x362DBD4Ff662b2E2b05b9cEDC91da2Dd2c655b26"
         ],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 368,
+        "nonce": 382,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -789,7 +789,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "base:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 4471450298826373,
+        "totalSupply": 4207577565411759,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -959,7 +959,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 759392,
+        "nextAvailableNonce": 766731,
         "owner": "base:0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "base:0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -1058,7 +1058,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Wrapped OETH",
         "symbol": "wOETH",
-        "totalSupply": "13690908482967104607985"
+        "totalSupply": "11964554358918232286037"
       },
       "implementationNames": {
         "base:0xD8724322f44E5c58D7A815F542036fb17DbbF839": "BridgedBaseWOETHProxy",
@@ -1242,8 +1242,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x3030240000000000",
-        "get_deposit_root": "0xc71572eae80e23dff5c9eaa1280acadb3d74dc628525e21a8234cfa78f0ae9c4"
+        "get_deposit_count": "0xbdbc240000000000",
+        "get_deposit_root": "0x1c7c3203cb4851cbed1f82919a4c9d2f5891a51b0bf72454d9e2f15ec7525731"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -1487,9 +1487,9 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
         "getConsensusReport": {
-          "hash": "0xe115d4664fe1a7601750914adea69e9661f6fe215e749967028ad92f5f179d2b",
-          "refSlot": 13461599,
-          "processingDeadlineTime": 1768392011,
+          "hash": "0x1932bf7d2751afe4a7e47aac929e5e571d46035d251c4ec302d6c330bb047d31",
+          "refSlot": 13600799,
+          "processingDeadlineTime": 1770062411,
           "processingStarted": true
         },
         "getConsensusVersion": 4,
@@ -1503,16 +1503,16 @@
         },
         "getMaxValidatorsPerReport": 600,
         "getProcessingState": {
-          "currentFrameRefSlot": 13461599,
-          "processingDeadlineTime": 1768392011,
-          "dataHash": "0xe115d4664fe1a7601750914adea69e9661f6fe215e749967028ad92f5f179d2b",
+          "currentFrameRefSlot": 13600799,
+          "processingDeadlineTime": 1770062411,
+          "dataHash": "0x1932bf7d2751afe4a7e47aac929e5e571d46035d251c4ec302d6c330bb047d31",
           "dataSubmitted": true,
           "dataFormat": 1,
           "requestsCount": 0,
           "requestsSubmitted": 0
         },
         "getResumeSinceTimestamp": 1684163759,
-        "getTotalRequestsProcessed": 112133,
+        "getTotalRequestsProcessed": 112369,
         "isPaused": false,
         "MANAGE_CONSENSUS_CONTRACT_ROLE": "0x04a0afbbd09d5ad397fc858789da4f8edd59f5ca5098d70faa490babee945c3b",
         "MANAGE_CONSENSUS_VERSION_ROLE": "0xc31b1e4b732c5173dc51d519dfa432bad95550ecc4b0f9a61c2a558a2a8e4341",
@@ -1607,7 +1607,7 @@
           "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
           "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4"
         ],
-        "vaultsCount": 4
+        "vaultsCount": 9
       },
       "implementationNames": {
         "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709": "OssifiableProxy",
@@ -1811,7 +1811,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 298,
+        "nonce": 345,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2091,7 +2091,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "availableBalance": "2791000000000000000",
+        "availableBalance": "2792000000000000000",
         "beaconChainDepositsPaused": false,
         "DEPOSIT_CONTRACT": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositor": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
@@ -2164,7 +2164,7 @@
         "proposedOwner": "eth:0x0000000000000000000000000000000000000000",
         "supplyController": "eth:0x2fb074FA59c9294c71246825C1c9A0c7782d41a4",
         "symbol": "PAXG",
-        "totalSupply": "382446329000000000000000"
+        "totalSupply": "434112434000000000000000"
       },
       "implementationNames": {
         "eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78": "AdminUpgradeabilityProxy",
@@ -2295,7 +2295,7 @@
         "RECOVERER_ROLE": "0xb3e25b5404b87e5a838579cb5d7481d61ad96ee284d38ec1e97c07ba64e7f6fc",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "SET_BOND_CURVE_ROLE": "0x645c9e6d2a86805cb5a28b1e4751c0dab493df7cf935070ce405489ba1a7bf72",
-        "totalBondShares": "19744410398543403827785",
+        "totalBondShares": "21903406379333519196765",
         "WITHDRAWAL_QUEUE": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
@@ -2340,9 +2340,9 @@
         "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
         "getRewardDistributionState": 2,
         "getStakingModuleSummary": {
-          "totalExitedValidators": 141572,
-          "totalDepositedValidators": 394321,
-          "depositableValidatorsCount": 38266
+          "totalExitedValidators": 144987,
+          "totalDepositedValidators": 415936,
+          "depositableValidatorsCount": 32551
         },
         "getStuckPenaltyDelay": 0,
         "getType": "0x637572617465642d6f6e636861696e2d76310000000000000000000000000000",
@@ -2390,7 +2390,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "availableBalance": "2000320000000000000",
+        "availableBalance": "2001520000000000000",
         "beaconChainDepositsPaused": false,
         "DEPOSIT_CONTRACT": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositor": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
@@ -2465,12 +2465,12 @@
         "$upgradeCount": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "latestReportData": {
-          "timestamp": 1768305611,
-          "refSlot": 13456799,
-          "treeRoot": "0xa10adac3da1ff93dd68938d49572bea48a44afc1fb09485bddd2489d99fb20d6",
-          "reportCid": "QmQ35K36j4ZjfPpQiJiY4YfsYZnTmFsuVggxRJQwPM9Nsc"
+          "timestamp": 1770033611,
+          "refSlot": 13600799,
+          "treeRoot": "0xa8c94ab2443ae7e745ccc900d32d10329c44533c62ce546a2b03b5b67b0d095f",
+          "reportCid": "QmcS3g6K8hLDoXv1mQDNUGiHQYHViXjd1Z2UGtA6R7cGiv"
         },
-        "latestReportTimestamp": 1768305611,
+        "latestReportTimestamp": 1770033611,
         "LIDO_LOCATOR": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "MAX_LIDO_FEE_RATE_PER_SECOND": "10000000000000000000",
         "MAX_QUARANTINE_PERIOD": 2592000,
@@ -2482,7 +2482,7 @@
         "proxy__getIsOssified": false,
         "quarantinePeriod": 259200,
         "UPDATE_SANITY_PARAMS_ROLE": "0x7baf7f4a9784fa74c97162de631a3eb567edeb85878cb6965945310f2c512c63",
-        "vaultsCount": 4
+        "vaultsCount": 9
       },
       "implementationNames": {
         "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c": "OssifiableProxy",
@@ -2553,7 +2553,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "availableBalance": "720001543138203792",
+        "availableBalance": "2324411543138203792",
         "beaconChainDepositsPaused": false,
         "DEPOSIT_CONTRACT": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositor": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
@@ -2621,6 +2621,10 @@
           "MANAGE_MEMBERS_AND_QUORUM_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+          },
+          "MANAGE_FRAME_CONFIG_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1"]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2631,24 +2635,24 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 13277279,
-          "consensusReport": "0x37259870f24d071add5c68193f6dbdf3b83dce72736fa76a47d8ec8a84cc7809",
+          "refSlot": 13478879,
+          "consensusReport": "0x4966819f0f56cc9df4390277735e4d7abfbb70feb70cfa9a56c8355d0bc45268",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 13277279,
-          "reportProcessingDeadlineSlot": 13478879
+          "refSlot": 13478879,
+          "reportProcessingDeadlineSlot": 13680479
         },
         "getFastLaneMembers": {
           "addresses": [
-            "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
             "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
             "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
             "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
-            "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12"
+            "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
+            "eth:0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB"
           ],
           "lastReportedRefSlots": [
-            13277279, 13277279, 13075679, 13277279, 13277279
+            13478879, 13478879, 13478879, 13478879, 13478879
           ]
         },
         "getFrameConfig": {
@@ -2670,17 +2674,17 @@
             "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
           ],
           "lastReportedRefSlots": [
-            13277279, 13277279, 13277279, 13277279, 13277279, 13277279,
-            13277279, 13075679, 13277279
+            13478879, 13478879, 13277279, 13277279, 13277279, 13277279,
+            13478879, 13478879, 13478879
           ]
         },
         "getQuorum": 5,
         "getReportProcessor": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
         "getReportVariants": {
           "variants": [
-            "0x37259870f24d071add5c68193f6dbdf3b83dce72736fa76a47d8ec8a84cc7809"
+            "0x4966819f0f56cc9df4390277735e4d7abfbb70feb70cfa9a56c8355d0bc45268"
           ],
-          "support": [8]
+          "support": [5]
         },
         "MANAGE_FAST_LANE_CONFIG_ROLE": "0x4af6faa30fabb2c4d8d567d06168f9be8adb583156c1ecb424b4832a7e4d6717",
         "MANAGE_FRAME_CONFIG_ROLE": "0x921f40f434e049d23969cbe68d9cf3ac1013fbe8945da07963af6f3142de6afe",
@@ -2726,7 +2730,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 4,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2777,10 +2781,10 @@
         "DOMAIN_SEPARATOR": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe",
         "name": "Wrapped liquid staked Ether 2.0",
         "stETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "stEthPerToken": "1224353203241445119",
+        "stEthPerToken": "1226010751677615969",
         "symbol": "wstETH",
-        "tokensPerStEth": "816757776557062529",
-        "totalSupply": "3259267127634593350392446"
+        "tokensPerStEth": "815653532101285905",
+        "totalSupply": "3584809006317183571294134"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -2830,24 +2834,24 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 13461599,
-          "consensusReport": "0xe115d4664fe1a7601750914adea69e9661f6fe215e749967028ad92f5f179d2b",
+          "refSlot": 13600799,
+          "consensusReport": "0x1932bf7d2751afe4a7e47aac929e5e571d46035d251c4ec302d6c330bb047d31",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 13461599,
-          "reportProcessingDeadlineSlot": 13463999
+          "refSlot": 13600799,
+          "reportProcessingDeadlineSlot": 13603199
         },
         "getFastLaneMembers": {
           "addresses": [
-            "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
-            "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
-            "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
-            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
-            "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12"
+            "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
+            "eth:0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB",
+            "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
+            "eth:0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
+            "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5"
           ],
           "lastReportedRefSlots": [
-            13461599, 13461599, 13461599, 13461599, 13461599
+            13600799, 13600799, 13600799, 13600799, 13586399
           ]
         },
         "getFrameConfig": {
@@ -2869,17 +2873,17 @@
             "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
           ],
           "lastReportedRefSlots": [
-            13461599, 13456799, 13459199, 13459199, 13298399, 13461599,
-            13461599, 13461599, 13461599
+            13600799, 13600799, 13600799, 13600799, 13586399, 13591199,
+            13600799, 13600799, 13598399
           ]
         },
         "getQuorum": 5,
         "getReportProcessor": "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
         "getReportVariants": {
           "variants": [
-            "0xe115d4664fe1a7601750914adea69e9661f6fe215e749967028ad92f5f179d2b"
+            "0x1932bf7d2751afe4a7e47aac929e5e571d46035d251c4ec302d6c330bb047d31"
           ],
-          "support": [5]
+          "support": [6]
         },
         "MANAGE_FAST_LANE_CONFIG_ROLE": "0x4af6faa30fabb2c4d8d567d06168f9be8adb583156c1ecb424b4832a7e4d6717",
         "MANAGE_FRAME_CONFIG_ROLE": "0x921f40f434e049d23969cbe68d9cf3ac1013fbe8945da07963af6f3142de6afe",
@@ -2947,23 +2951,23 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
         "getConsensusReport": {
-          "hash": "0x96b668dde2bb021ac1f5dfae17883255dd22d9a1c61140cb19db6107b5844486",
-          "refSlot": 13456799,
-          "processingDeadlineTime": 1768392011,
+          "hash": "0x501c5e81bcf097ec45ed095d084b9e2cfefe45b8f0a5839b398af2a21f94743b",
+          "refSlot": 13600799,
+          "processingDeadlineTime": 1770120011,
           "processingStarted": true
         },
         "getConsensusVersion": 5,
         "getContractVersion": 4,
         "getProcessingState": {
-          "currentFrameRefSlot": 13456799,
-          "processingDeadlineTime": 1768392011,
-          "mainDataHash": "0x96b668dde2bb021ac1f5dfae17883255dd22d9a1c61140cb19db6107b5844486",
+          "currentFrameRefSlot": 13600799,
+          "processingDeadlineTime": 1770120011,
+          "mainDataHash": "0x501c5e81bcf097ec45ed095d084b9e2cfefe45b8f0a5839b398af2a21f94743b",
           "mainDataSubmitted": true,
-          "extraDataHash": "0x1feea0474e81ebf015665c7816875ea59f3b6d1b8dd48619d7f83d884c1bb5f0",
+          "extraDataHash": "0x15f189441572671f9225d03b0cab50ea9c20092993b86667764a0464adab6977",
           "extraDataFormat": 1,
           "extraDataSubmitted": true,
-          "extraDataItemsCount": 3,
-          "extraDataItemsSubmitted": 3
+          "extraDataItemsCount": 1,
+          "extraDataItemsSubmitted": 1
         },
         "LOCATOR": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "MANAGE_CONSENSUS_CONTRACT_ROLE": "0x04a0afbbd09d5ad397fc858789da4f8edd59f5ca5098d70faa490babee945c3b",
@@ -3053,9 +3057,9 @@
         "FINALIZE_ROLE": "0x485191a2ef18512555bd4426d18a716ce8e98c80ec2de16394dcf86d7d91bc80",
         "getBaseURI": "https://wq-api.lido.fi/v1/nft",
         "getContractVersion": 1,
-        "getLastFinalizedRequestId": 110995,
-        "getLastRequestId": 111137,
-        "getLockedEtherAmount": "41460261982018320997639",
+        "getLastFinalizedRequestId": 113171,
+        "getLastRequestId": 113299,
+        "getLockedEtherAmount": "31426733435808419056087",
         "getNFTDescriptorAddress": "eth:0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -3074,8 +3078,8 @@
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "symbol": "unstETH",
-        "unfinalizedRequestNumber": 142,
-        "unfinalizedStETH": "8578145743955857912650",
+        "unfinalizedRequestNumber": 128,
+        "unfinalizedStETH": "15122621317701962877368",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
@@ -3331,8 +3335,8 @@
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "proxy__getImplementation": "eth:0x3E5021424c9e13FC853e523Cd68ebBec848956a0",
         "proxy__getIsOssified": false,
-        "treeCid": "QmSc5PoARsf2AYPSQYM7gQgwU5R4zc7xyyoBouVUesKaiV",
-        "treeRoot": "0x3aa813d14c31ea1c75fb56495578a940ef07653cfd2468e1bc8781bf7889820f"
+        "treeCid": "QmexJ88JRSdpN67oFKWNjyDBEGB82FXS21AosLeDC322Bu",
+        "treeRoot": "0xa8ecb19105eed3595393ee2d085ba0e673d4a116e2078204a9be233a9ba7e530"
       },
       "implementationNames": {
         "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f": "OssifiableProxy",
@@ -3377,7 +3381,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3425,28 +3429,28 @@
           "verifyingContract": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
         },
         "getBeaconStat": {
-          "depositedValidators": 420645,
-          "beaconValidators": 414305,
-          "beaconBalance": "8725441250357537000000000"
+          "depositedValidators": 446198,
+          "beaconValidators": 418197,
+          "beaconBalance": "8682395311495364000000000"
         },
-        "getBufferedEther": "8640901167835338092124",
+        "getBufferedEther": "1182631487642766074671",
         "getContractVersion": 3,
         "getCurrentStakeLimit": "150000000000000000000000",
-        "getDepositableEther": "62755423879480179474",
+        "getDepositableEther": 0,
         "getEIP712StETH": "eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7",
         "getEVMScriptRegistry": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
-        "getExternalEther": "33004426533821879932",
-        "getExternalShares": "26956622032305276778",
+        "getExternalEther": "988388902774024585235",
+        "getExternalShares": "806182899637347615868",
         "getFee": 999,
         "getFeeDistribution": {
-          "treasuryFeeBasisPoints": 3793,
+          "treasuryFeeBasisPoints": 3803,
           "insuranceFeeBasisPoints": 0,
-          "operatorsFeeBasisPoints": 6206
+          "operatorsFeeBasisPoints": 6196
         },
         "getInitializationBlock": 11473216,
         "getLidoLocator": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-        "getMaxExternalRatioBP": 300,
-        "getMaxMintableExternalShares": "225725620781714649293758",
+        "getMaxExternalRatioBP": 3000,
+        "getMaxMintableExternalShares": "3347897825448943032132625",
         "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
         "getStakeLimitFullInfo": {
           "isStakingPaused_": false,
@@ -3454,11 +3458,11 @@
           "currentStakeLimit": "150000000000000000000000",
           "maxStakeLimit": "150000000000000000000000",
           "maxStakeLimitGrowthBlocks": 6400,
-          "prevStakeLimit": "149999996900000000000000",
-          "prevStakeBlockNumber": 24231150
+          "prevStakeLimit": "149999631253031788687178",
+          "prevStakeBlockNumber": 24369687
         },
-        "getTotalPooledEther": "8936995155951906159972056",
-        "getTotalShares": "7299360292676517169724116",
+        "getTotalPooledEther": "9580598331885780790659906",
+        "getTotalShares": "7814448869046324900362352",
         "getTreasury": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -3475,7 +3479,7 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "8936995155951906159972056",
+        "totalSupply": "9580598331885780790659906",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
       "implementationNames": {
@@ -3515,8 +3519,8 @@
         "getRewardDistributionState": 2,
         "getStakingModuleSummary": {
           "totalExitedValidators": 1319,
-          "totalDepositedValidators": 11599,
-          "depositableValidatorsCount": 0
+          "totalDepositedValidators": 11759,
+          "depositableValidatorsCount": 320
         },
         "getStuckPenaltyDelay": 0,
         "getType": "0x637572617465642d6f6e636861696e2d76310000000000000000000000000000",
@@ -3584,6 +3588,49 @@
       "implementationNames": {
         "eth:0xB18BB767638Bca324d158B7C7189e1a28aeB9EB4": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "TwoPhaseFrameConfigUpdate",
+      "address": "eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9cf42584a30426fd9b0753e26157c4773a657abfe6cd4eeb48d9d8e880ece9d3"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1767797807,
+      "sinceBlock": 24183541,
+      "values": {
+        "$immutable": true,
+        "GENESIS_TIME": 1606824023,
+        "getExpirationStatus": {
+          "offsetExpired": false,
+          "restoreExpired": false
+        },
+        "HASH_CONSENSUS": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
+        "isReadyForOffsetPhase": false,
+        "isReadyForRestorePhase": false,
+        "OFFSET_PHASE_FAST_LANE_LENGTH": 0,
+        "offsetPhase": {
+          "expectedProcessingRefSlot": 13680479,
+          "expirationSlot": 13882079,
+          "epochsPerFrame": 6975,
+          "fastLaneLengthSlots": 0,
+          "executed": false
+        },
+        "ORACLE": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
+        "restorePhase": {
+          "expectedProcessingRefSlot": 13903679,
+          "expirationSlot": 14105279,
+          "epochsPerFrame": 6300,
+          "fastLaneLengthSlots": 300,
+          "executed": false
+        },
+        "SECONDS_PER_SLOT": 12,
+        "SLOTS_PER_EPOCH": 32
+      },
+      "implementationNames": {
+        "eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1": "TwoPhaseFrameConfigUpdate"
       }
     },
     {
@@ -3880,12 +3927,12 @@
         "LIDO_LOCATOR": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "MAX_CONFIRM_EXPIRY": 2592000,
         "MIN_CONFIRM_EXPIRY": 3600,
-        "nodeOperatorCount": 23,
+        "nodeOperatorCount": 31,
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "proxy__getImplementation": "eth:0xA612E30D71d7D54aEaf4e5A21023F3F270932C2C",
         "proxy__getIsOssified": false,
         "REGISTRY_ROLE": "0xa495a3428837724c7f7648cda02eb83c9c4c778c8688d6f254c7f3f80c154d55",
-        "tiersCount": 25
+        "tiersCount": 33
       },
       "implementationNames": {
         "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d": "OssifiableProxy",
@@ -3979,7 +4026,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "StarkNet Token",
         "symbol": "STRK",
-        "totalSupply": "10067600000000000000000000000"
+        "totalSupply": "10075400000000000000000000000"
       },
       "implementationNames": {
         "eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766": "StarkNetToken"
@@ -4065,7 +4112,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "availableBalance": "71000000000000000000",
+        "availableBalance": "7000000000000000000",
         "beaconChainDepositsPaused": false,
         "DEPOSIT_CONTRACT": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositor": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
@@ -4159,24 +4206,24 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 13456799,
-          "consensusReport": "0x96b668dde2bb021ac1f5dfae17883255dd22d9a1c61140cb19db6107b5844486",
+          "refSlot": 13600799,
+          "consensusReport": "0x501c5e81bcf097ec45ed095d084b9e2cfefe45b8f0a5839b398af2a21f94743b",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 13456799,
-          "reportProcessingDeadlineSlot": 13463999
+          "refSlot": 13600799,
+          "reportProcessingDeadlineSlot": 13607999
         },
         "getFastLaneMembers": {
           "addresses": [
-            "eth:0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB",
-            "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
             "eth:0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
             "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
-            "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
+            "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
+            "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
+            "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9"
           ],
           "lastReportedRefSlots": [
-            13456799, 13456799, 13456799, 13456799, 13312799
+            13600799, 13600799, 13600799, 13593599, 13600799
           ]
         },
         "getFrameConfig": {
@@ -4198,17 +4245,17 @@
             "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
           ],
           "lastReportedRefSlots": [
-            13449599, 13456799, 13456799, 13456799, 13456799, 13312799,
-            13427999, 13456799, 13312799
+            13600799, 13600799, 13593599, 13600799, 13600799, 13600799,
+            13593599, 13600799, 13600799
           ]
         },
         "getQuorum": 5,
         "getReportProcessor": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
         "getReportVariants": {
           "variants": [
-            "0x96b668dde2bb021ac1f5dfae17883255dd22d9a1c61140cb19db6107b5844486"
+            "0x501c5e81bcf097ec45ed095d084b9e2cfefe45b8f0a5839b398af2a21f94743b"
           ],
-          "support": [5]
+          "support": [7]
         },
         "MANAGE_FAST_LANE_CONFIG_ROLE": "0x4af6faa30fabb2c4d8d567d06168f9be8adb583156c1ecb424b4832a7e4d6717",
         "MANAGE_FRAME_CONFIG_ROLE": "0x921f40f434e049d23969cbe68d9cf3ac1013fbe8945da07963af6f3142de6afe",
@@ -4255,18 +4302,18 @@
         "$upgradeCount": 2,
         "ACCOUNTING": "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "distributionDataHistoryCount": 3,
+        "distributionDataHistoryCount": 4,
         "getInitializedVersion": 2,
         "ORACLE": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
-        "pendingSharesToDistribute": "41522568495831455252",
+        "pendingSharesToDistribute": "30469046553264105876",
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "proxy__getImplementation": "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1",
         "proxy__getIsOssified": false,
         "rebateRecipient": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "RECOVERER_ROLE": "0xb3e25b5404b87e5a838579cb5d7481d61ad96ee284d38ec1e97c07ba64e7f6fc",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "totalClaimableShares": "56784476221469677740",
-        "treeRoot": "0xac661e8a0a5c032a4e1240898d118462c0c3edde45cd99cac6dd9dd14d642736"
+        "totalClaimableShares": "67115245041033235878",
+        "treeRoot": "0x027577f05c479f7704cd1cc50cb9b0ff03867d684c037d4022a814b2d7b7d834"
       },
       "implementationNames": {
         "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0": "OssifiableProxy",
@@ -4314,14 +4361,14 @@
         "DEPOSIT_SIZE": "32000000000000000000",
         "EXIT_PENALTIES": "eth:0x06cd61045f958A209a0f8D746e103eCc625f4193",
         "FEE_DISTRIBUTOR": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-        "getActiveNodeOperatorsCount": 530,
+        "getActiveNodeOperatorsCount": 539,
         "getInitializedVersion": 2,
-        "getNodeOperatorsCount": 530,
+        "getNodeOperatorsCount": 539,
         "getResumeSinceTimestamp": 1729872203,
         "getStakingModuleSummary": {
-          "totalExitedValidators": 808,
-          "totalDepositedValidators": 14725,
-          "depositableValidatorsCount": 4403
+          "totalExitedValidators": 819,
+          "totalDepositedValidators": 18503,
+          "depositableValidatorsCount": 2716
         },
         "getType": "0x636f6d6d756e6974792d6f6e636861696e2d7631000000000000000000000000",
         "isPaused": false,
@@ -4367,7 +4414,7 @@
           "maxExitRequestsLimit": 11200,
           "exitsPerFrame": 1,
           "frameDurationInSec": 48,
-          "prevExitRequestsLimit": 11186,
+          "prevExitRequestsLimit": 11195,
           "currentExitRequestsLimit": 11200
         },
         "getResumeSinceTimestamp": 0,
@@ -4436,7 +4483,7 @@
         "getContractVersion": 1,
         "getCoverSharesBurnt": "14684898881648297203",
         "getExcessStETH": 0,
-        "getNonCoverSharesBurnt": "11607951634050304451650384",
+        "getNonCoverSharesBurnt": "11739287504989629613435798",
         "getSharesRequestedToBurn": { "coverShares": 0, "nonCoverShares": 0 },
         "isMigrationAllowed": false,
         "LIDO": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -4511,32 +4558,37 @@
       "type": "Contract",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0xbef895dd049014e691abbbf0048dc8ec551a0d604137c85206db9e7e675aafe9"
+        "0x95ddbbdfb56975dd1a0b91463d3e9a4362231c44b46f40b47781724ceef477c5"
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1764766415,
       "sinceBlock": 23933043,
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-        "$implementation": "eth:0xCC08C36BD5bb78FDcB10F35B404ada6Ffc71a023",
+        "$implementation": "eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D",
         "$pastUpgrades": [
           [
             "2025-12-03T12:53:35.000Z",
             "0xfd1b90b1797f0728db5453713513a823a5b2751e5a6947d103c2f4d0bcc15f83",
             ["eth:0xCC08C36BD5bb78FDcB10F35B404ada6Ffc71a023"]
+          ],
+          [
+            "2026-01-29T13:21:47.000Z",
+            "0x8edb8008fdc48301db7b4f40ab520ba6f8b9354452fc52faf2092eb7df31c24c",
+            ["eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "ACTIVATION_DEPOSIT_AMOUNT": "31000000000000000000",
         "BEACON_ROOTS": "eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_DOMAIN": "0x03000000f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a9",
-        "getResumeSinceTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "getResumeSinceTimestamp": 1769692907,
         "GI_FIRST_VALIDATOR_CURR": "0x0000000000000000000000000000000000000000000000000096000000000028",
         "GI_FIRST_VALIDATOR_PREV": "0x0000000000000000000000000000000000000000000000000096000000000028",
         "GI_PUBKEY_WC_PARENT": "0x0000000000000000000000000000000000000000000000000000000000000402",
         "GI_STATE_ROOT": "0x0000000000000000000000000000000000000000000000000000000000000b03",
-        "isPaused": true,
+        "isPaused": false,
         "MAX_SUPPORTED_WC_VERSION": 2,
         "MAX_TOPUP_AMOUNT": "2016000000000000000000",
         "MIN_SUPPORTED_WC_VERSION": 1,
@@ -4545,13 +4597,13 @@
         "PIVOT_SLOT": 0,
         "PREDEPOSIT_AMOUNT": "1000000000000000000",
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-        "proxy__getImplementation": "eth:0xCC08C36BD5bb78FDcB10F35B404ada6Ffc71a023",
+        "proxy__getImplementation": "eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D",
         "proxy__getIsOssified": false,
         "RESUME_ROLE": "0xa79a6aede309e0d48bf2ef0f71355c06ad317956d4c0da2deb0dc47cc34f826c"
       },
       "implementationNames": {
         "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3": "OssifiableProxy",
-        "eth:0xCC08C36BD5bb78FDcB10F35B404ada6Ffc71a023": "PredepositGuarantee"
+        "eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D": "PredepositGuarantee"
       }
     },
     {
@@ -4636,17 +4688,17 @@
               "stakeShareLimit": 10000,
               "status": 0,
               "name": "curated-onchain-v1",
-              "lastDepositAt": 1768371767,
-              "lastDepositBlock": 24231124,
-              "exitedValidatorsCount": 141572,
+              "lastDepositAt": 1769689547,
+              "lastDepositBlock": 24340496,
+              "exitedValidatorsCount": 144987,
               "priorityExitShareThreshold": 10000,
               "maxDepositsPerBlock": 150,
               "minDepositBlockDistance": 25
             },
             "summary": {
-              "totalExitedValidators": 141572,
-              "totalDepositedValidators": 394321,
-              "depositableValidatorsCount": 38266
+              "totalExitedValidators": 144987,
+              "totalDepositedValidators": 415936,
+              "depositableValidatorsCount": 32551
             }
           },
           {
@@ -4660,8 +4712,8 @@
               "stakeShareLimit": 430,
               "status": 0,
               "name": "SimpleDVT",
-              "lastDepositAt": 1764630251,
-              "lastDepositBlock": 23921792,
+              "lastDepositAt": 1769172983,
+              "lastDepositBlock": 24297626,
               "exitedValidatorsCount": 1319,
               "priorityExitShareThreshold": 478,
               "maxDepositsPerBlock": 150,
@@ -4669,51 +4721,51 @@
             },
             "summary": {
               "totalExitedValidators": 1319,
-              "totalDepositedValidators": 11599,
-              "depositableValidatorsCount": 0
+              "totalDepositedValidators": 11759,
+              "depositableValidatorsCount": 320
             }
           },
           {
-            "nodeOperatorsCount": 530,
-            "activeNodeOperatorsCount": 530,
+            "nodeOperatorsCount": 539,
+            "activeNodeOperatorsCount": 539,
             "state": {
               "id": 3,
               "stakingModuleAddress": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
               "stakingModuleFee": 600,
               "treasuryFee": 400,
-              "stakeShareLimit": 500,
+              "stakeShareLimit": 750,
               "status": 0,
               "name": "Community Staking",
-              "lastDepositAt": 1768213103,
-              "lastDepositBlock": 24217986,
-              "exitedValidatorsCount": 808,
-              "priorityExitShareThreshold": 625,
+              "lastDepositAt": 1769949095,
+              "lastDepositBlock": 24362031,
+              "exitedValidatorsCount": 819,
+              "priorityExitShareThreshold": 900,
               "maxDepositsPerBlock": 30,
               "minDepositBlockDistance": 25
             },
             "summary": {
-              "totalExitedValidators": 808,
-              "totalDepositedValidators": 14725,
-              "depositableValidatorsCount": 4403
+              "totalExitedValidators": 819,
+              "totalDepositedValidators": 18503,
+              "depositableValidatorsCount": 2716
             }
           }
         ],
         "getContractVersion": 3,
         "getLido": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "getStakingFeeAggregateDistribution": {
-          "modulesFee": "3792665357145436293",
-          "treasuryFee": "6207334642854563705",
+          "modulesFee": "3804908834966713810",
+          "treasuryFee": "6195091165033286186",
           "basePrecision": "100000000000000000000"
         },
-        "getStakingModuleActiveValidatorsCount": [252749, 10280, 13917],
+        "getStakingModuleActiveValidatorsCount": [270949, 10440, 17684],
         "getStakingModuleIds": [1, 2, 3],
         "getStakingModuleIsActive": [true, true, true],
         "getStakingModuleIsDepositsPaused": [false, false, false],
         "getStakingModuleIsStopped": [false, false, false],
-        "getStakingModuleLastDepositBlock": [24231124, 23921792, 24217986],
+        "getStakingModuleLastDepositBlock": [24340496, 24297626, 24362031],
         "getStakingModuleMaxDepositsPerBlock": [150, 150, 30],
         "getStakingModuleMinDepositBlockDistance": [25, 25, 25],
-        "getStakingModuleNonce": [16843, 1052, 3060],
+        "getStakingModuleNonce": [17581, 1076, 3441],
         "getStakingModules": [
           {
             "id": 1,
@@ -4723,9 +4775,9 @@
             "stakeShareLimit": 10000,
             "status": 0,
             "name": "curated-onchain-v1",
-            "lastDepositAt": 1768371767,
-            "lastDepositBlock": 24231124,
-            "exitedValidatorsCount": 141572,
+            "lastDepositAt": 1769689547,
+            "lastDepositBlock": 24340496,
+            "exitedValidatorsCount": 144987,
             "priorityExitShareThreshold": 10000,
             "maxDepositsPerBlock": 150,
             "minDepositBlockDistance": 25
@@ -4738,8 +4790,8 @@
             "stakeShareLimit": 430,
             "status": 0,
             "name": "SimpleDVT",
-            "lastDepositAt": 1764630251,
-            "lastDepositBlock": 23921792,
+            "lastDepositAt": 1769172983,
+            "lastDepositBlock": 24297626,
             "exitedValidatorsCount": 1319,
             "priorityExitShareThreshold": 478,
             "maxDepositsPerBlock": 150,
@@ -4750,13 +4802,13 @@
             "stakingModuleAddress": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
             "stakingModuleFee": 600,
             "treasuryFee": 400,
-            "stakeShareLimit": 500,
+            "stakeShareLimit": 750,
             "status": 0,
             "name": "Community Staking",
-            "lastDepositAt": 1768213103,
-            "lastDepositBlock": 24217986,
-            "exitedValidatorsCount": 808,
-            "priorityExitShareThreshold": 625,
+            "lastDepositAt": 1769949095,
+            "lastDepositBlock": 24362031,
+            "exitedValidatorsCount": 819,
+            "priorityExitShareThreshold": 900,
             "maxDepositsPerBlock": 30,
             "minDepositBlockDistance": 25
           }
@@ -4771,11 +4823,11 @@
           ],
           "stakingModuleIds": [1, 2, 3],
           "stakingModuleFees": [
-            "3194202118824608407",
-            "296953196652054913",
-            "301510041668772973"
+            "3170869653897209042",
+            "279262922430309656",
+            "354776258639195112"
           ],
-          "totalFee": "9999999999999999998",
+          "totalFee": "9999999999999999996",
           "precisionPoints": "100000000000000000000"
         },
         "getTotalFeeE4Precision": 999,
@@ -8386,6 +8438,36 @@
     "eth:0xB18BB767638Bca324d158B7C7189e1a28aeB9EB4": [
       "constructor(address _singleton)"
     ],
+    "eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1": [
+      "constructor(address oracle, tuple(uint256 reportsToProcessBeforeOffsetPhase, uint256 reportsToProcessBeforeRestorePhase, uint256 offsetPhaseEpochsPerFrame, uint256 restorePhaseFastLaneLengthSlots) phasesConfig)",
+      "error CurrentReportMainPhaseIsNotCompleted()",
+      "error FastLanePeriodCannotBeLongerThanFrame()",
+      "error FastLaneTooShort()",
+      "error NoneOfPhasesExpired()",
+      "error OffsetPhaseNotExecuted()",
+      "error PhaseAlreadyExecuted()",
+      "error PhaseExpired(uint256 currentSlot, uint256 deadlineSlot)",
+      "error UnexpectedLastProcessingRefSlot(uint256 actual, uint256 expected)",
+      "error ZeroEpochsPerFrame()",
+      "error ZeroOracleAddress()",
+      "error ZeroReportsToEnableUpdate()",
+      "event OffsetPhaseExecuted()",
+      "event RestorePhaseExecuted()",
+      "function GENESIS_TIME() view returns (uint256)",
+      "function HASH_CONSENSUS() view returns (address)",
+      "function OFFSET_PHASE_FAST_LANE_LENGTH() view returns (uint256)",
+      "function ORACLE() view returns (address)",
+      "function SECONDS_PER_SLOT() view returns (uint256)",
+      "function SLOTS_PER_EPOCH() view returns (uint256)",
+      "function executeOffsetPhase()",
+      "function executeRestorePhase()",
+      "function getExpirationStatus() view returns (bool offsetExpired, bool restoreExpired)",
+      "function isReadyForOffsetPhase() view returns (bool ready)",
+      "function isReadyForRestorePhase() view returns (bool ready)",
+      "function offsetPhase() view returns (uint256 expectedProcessingRefSlot, uint256 expirationSlot, uint256 epochsPerFrame, uint256 fastLaneLengthSlots, bool executed)",
+      "function renounceRoleWhenExpired()",
+      "function restorePhase() view returns (uint256 expectedProcessingRefSlot, uint256 expirationSlot, uint256 epochsPerFrame, uint256 fastLaneLengthSlots, bool executed)"
+    ],
     "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function apps(bytes32, bytes32) view returns (address)",
@@ -8656,122 +8738,6 @@
       "function revokeTokenAdmin(address account)",
       "function revokeUpgradeGovernor(address account)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
-    ],
-    "eth:0xCC08C36BD5bb78FDcB10F35B404ada6Ffc71a023": [
-      "constructor(bytes4 _genesisForkVersion, bytes32 _gIFirstValidator, bytes32 _gIFirstValidatorAfterChange, uint64 _pivotSlot)",
-      "error AccessControlBadConfirmation()",
-      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
-      "error ArrayLengthsNotMatch()",
-      "error CompensateFailed()",
-      "error EmptyDeposits()",
-      "error IndexOutOfRange()",
-      "error InputHasInfinityPoints()",
-      "error InvalidDepositYLength()",
-      "error InvalidInitialization()",
-      "error InvalidPubkeyLength()",
-      "error InvalidSignature()",
-      "error InvalidSlot()",
-      "error InvalidTopUpAmount(uint256 amount)",
-      "error InvalidValidatorStage(bytes validatorPubkey, uint8 stage)",
-      "error LockedIsNotZero(uint256 locked)",
-      "error NotDepositor()",
-      "error NotEnoughUnlocked(uint256 unlocked, uint256 amount)",
-      "error NotGuarantor()",
-      "error NotInitializing()",
-      "error NotStakingVaultOwner()",
-      "error NothingToRefund()",
-      "error PauseUntilMustBeInFuture()",
-      "error PausedExpected()",
-      "error PredepositAmountInvalid(bytes validatorPubkey, uint256 depositAmount)",
-      "error RefundFailed()",
-      "error ResumedExpected()",
-      "error RootNotFound()",
-      "error SameDepositor()",
-      "error SameGuarantor()",
-      "error ValidatorNotActivated(bytes validatorPubkey, uint8 stage)",
-      "error ValidatorNotEligibleForActivation(bytes validatorPubkey)",
-      "error ValidatorNotNew(bytes validatorPubkey, uint8 stage)",
-      "error ValidatorNotPreDeposited(bytes validatorPubkey, uint8 stage)",
-      "error ValidatorNotProven(bytes validatorPubkey, uint8 stage)",
-      "error ValueNotMultipleOfPredepositAmount(uint256 value)",
-      "error WithdrawalCredentialsInvalidVersion(uint8 version)",
-      "error WithdrawalCredentialsMatch()",
-      "error WithdrawalCredentialsMisformed(bytes32 withdrawalCredentials)",
-      "error WithdrawalCredentialsMismatch(address stakingVault, address withdrawalCredentialsAddress)",
-      "error WithdrawalFailed()",
-      "error ZeroArgument(string argument)",
-      "error ZeroPauseDuration()",
-      "event BalanceLocked(address indexed nodeOperator, uint128 total, uint128 locked)",
-      "event BalanceRefunded(address indexed nodeOperator, address indexed to)",
-      "event BalanceToppedUp(address indexed nodeOperator, address indexed sender, uint256 amount)",
-      "event BalanceUnlocked(address indexed nodeOperator, uint128 total, uint128 locked)",
-      "event BalanceWithdrawn(address indexed nodeOperator, address indexed recipient, uint256 amount)",
-      "event DepositorSet(address indexed nodeOperator, address indexed newDepositor, address indexed prevDepositor)",
-      "event GuarantorRefundAdded(address indexed guarantor, address indexed nodeOperator, uint256 amount)",
-      "event GuarantorRefundClaimed(address indexed guarantor, address indexed recipient, uint256 amount)",
-      "event GuarantorSet(address indexed nodeOperator, address indexed newGuarantor, address indexed prevGuarantor)",
-      "event Initialized(uint64 version)",
-      "event Paused(uint256 duration)",
-      "event Resumed()",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event ValidatorActivated(bytes indexed validatorPubkey, address indexed nodeOperator, address indexed stakingVault, bytes32 withdrawalCredentials)",
-      "event ValidatorCompensated(address indexed stakingVault, address indexed nodeOperator, bytes indexed validatorPubkey, uint256 guaranteeTotal, uint256 guaranteeLocked)",
-      "event ValidatorPreDeposited(bytes indexed validatorPubkey, address indexed nodeOperator, address indexed stakingVault, bytes32 withdrawalCredentials)",
-      "event ValidatorProven(bytes indexed validatorPubkey, address indexed nodeOperator, address indexed stakingVault, bytes32 withdrawalCredentials)",
-      "function ACTIVATION_DEPOSIT_AMOUNT() view returns (uint256)",
-      "function BEACON_ROOTS() view returns (address)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DEPOSIT_DOMAIN() view returns (bytes32)",
-      "function GI_FIRST_VALIDATOR_CURR() view returns (bytes32)",
-      "function GI_FIRST_VALIDATOR_PREV() view returns (bytes32)",
-      "function GI_PUBKEY_WC_PARENT() view returns (bytes32)",
-      "function GI_STATE_ROOT() view returns (bytes32)",
-      "function MAX_SUPPORTED_WC_VERSION() view returns (uint8)",
-      "function MAX_TOPUP_AMOUNT() view returns (uint256)",
-      "function MIN_SUPPORTED_WC_VERSION() view returns (uint8)",
-      "function PAUSE_INFINITELY() view returns (uint256)",
-      "function PAUSE_ROLE() view returns (bytes32)",
-      "function PIVOT_SLOT() view returns (uint64)",
-      "function PREDEPOSIT_AMOUNT() view returns (uint128)",
-      "function RESUME_ROLE() view returns (bytes32)",
-      "function activateValidator(bytes _pubkey)",
-      "function claimGuarantorRefund(address _recipient) returns (uint256 claimedEther)",
-      "function claimableRefund(address _guarantor) view returns (uint256)",
-      "function getResumeSinceTimestamp() view returns (uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function getRoleMembers(bytes32 role) view returns (address[])",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _defaultAdmin)",
-      "function isPaused() view returns (bool)",
-      "function nodeOperatorBalance(address _nodeOperator) view returns (tuple(uint128 total, uint128 locked))",
-      "function nodeOperatorDepositor(address _nodeOperator) view returns (address)",
-      "function nodeOperatorGuarantor(address _nodeOperator) view returns (address)",
-      "function pauseFor(uint256 _duration)",
-      "function pauseUntil(uint256 _pauseUntilInclusive)",
-      "function pendingActivations(address _vault) view returns (uint256)",
-      "function predeposit(address _stakingVault, tuple(bytes pubkey, bytes signature, uint256 amount, bytes32 depositDataRoot)[] _deposits, tuple(tuple(bytes32 a, bytes32 b) pubkeyY, tuple(bytes32 c0_a, bytes32 c0_b, bytes32 c1_a, bytes32 c1_b) signatureY)[] _depositsY) payable",
-      "function proveInvalidValidatorWC(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness, bytes32 _invalidWithdrawalCredentials)",
-      "function proveUnknownValidator(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness, address _stakingVault)",
-      "function proveWCActivateAndTopUpValidators(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex)[] _witnesses, uint256[] _amounts)",
-      "function proveWCAndActivate(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness)",
-      "function renounceRole(bytes32 role, address callerConfirmation)",
-      "function resume()",
-      "function revokeRole(bytes32 role, address account)",
-      "function setNodeOperatorDepositor(address _newDepositor)",
-      "function setNodeOperatorGuarantor(address _newGuarantor)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function topUpExistingValidators(tuple(bytes pubkey, uint256 amount)[] _topUps)",
-      "function topUpNodeOperatorBalance(address _nodeOperator) payable",
-      "function unlockedBalance(address _nodeOperator) view returns (uint256 unlocked)",
-      "function validatePubKeyWCProof(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness, bytes32 _withdrawalCredentials) view",
-      "function validatorStatus(bytes _validatorPubkey) view returns (tuple(uint8 stage, address stakingVault, address nodeOperator))",
-      "function verifyDepositMessage(tuple(bytes pubkey, bytes signature, uint256 amount, bytes32 depositDataRoot) _deposit, tuple(tuple(bytes32 a, bytes32 b) pubkeyY, tuple(bytes32 c0_a, bytes32 c0_b, bytes32 c1_a, bytes32 c1_b) signatureY) _depositsY, bytes32 _withdrawalCredentials) view",
-      "function withdrawNodeOperatorBalance(address _nodeOperator, uint256 _amount, address _recipient)"
     ],
     "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711": [
       "constructor(address beacon, bytes data) payable",
@@ -9289,6 +9255,126 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
+    "eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D": [
+      "constructor(bytes4 _genesisForkVersion, bytes32 _gIFirstValidator, bytes32 _gIFirstValidatorAfterChange, uint64 _pivotSlot)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error ArrayLengthsNotMatch()",
+      "error CompensateFailed()",
+      "error EmptyDeposits()",
+      "error IndexOutOfRange()",
+      "error InputHasInfinityPoints()",
+      "error InvalidCompressedComponent(uint8 component)",
+      "error InvalidCompressedComponentSignBit(uint8 component)",
+      "error InvalidDepositAmount()",
+      "error InvalidDepositYLength()",
+      "error InvalidInitialization()",
+      "error InvalidPubkeyLength()",
+      "error InvalidSignature()",
+      "error InvalidSignatureLength()",
+      "error InvalidSlot()",
+      "error InvalidTopUpAmount(uint256 amount)",
+      "error InvalidValidatorStage(bytes validatorPubkey, uint8 stage)",
+      "error LockedIsNotZero(uint256 locked)",
+      "error NotDepositor()",
+      "error NotEnoughUnlocked(uint256 unlocked, uint256 amount)",
+      "error NotGuarantor()",
+      "error NotInitializing()",
+      "error NotStakingVaultOwner()",
+      "error NothingToRefund()",
+      "error PauseUntilMustBeInFuture()",
+      "error PausedExpected()",
+      "error PredepositAmountInvalid(bytes validatorPubkey, uint256 depositAmount)",
+      "error RefundFailed()",
+      "error ResumedExpected()",
+      "error RootNotFound()",
+      "error SameDepositor()",
+      "error SameGuarantor()",
+      "error ValidatorNotActivated(bytes validatorPubkey, uint8 stage)",
+      "error ValidatorNotEligibleForActivation(bytes validatorPubkey)",
+      "error ValidatorNotNew(bytes validatorPubkey, uint8 stage)",
+      "error ValidatorNotPreDeposited(bytes validatorPubkey, uint8 stage)",
+      "error ValidatorNotProven(bytes validatorPubkey, uint8 stage)",
+      "error ValueNotMultipleOfPredepositAmount(uint256 value)",
+      "error WithdrawalCredentialsInvalidVersion(uint8 version)",
+      "error WithdrawalCredentialsMatch()",
+      "error WithdrawalCredentialsMisformed(bytes32 withdrawalCredentials)",
+      "error WithdrawalCredentialsMismatch(address stakingVault, address withdrawalCredentialsAddress)",
+      "error WithdrawalFailed()",
+      "error ZeroArgument(string argument)",
+      "error ZeroPauseDuration()",
+      "event BalanceLocked(address indexed nodeOperator, uint128 total, uint128 locked)",
+      "event BalanceRefunded(address indexed nodeOperator, address indexed to)",
+      "event BalanceToppedUp(address indexed nodeOperator, address indexed sender, uint256 amount)",
+      "event BalanceUnlocked(address indexed nodeOperator, uint128 total, uint128 locked)",
+      "event BalanceWithdrawn(address indexed nodeOperator, address indexed recipient, uint256 amount)",
+      "event DepositorSet(address indexed nodeOperator, address indexed newDepositor, address indexed prevDepositor)",
+      "event GuarantorRefundAdded(address indexed guarantor, address indexed nodeOperator, uint256 amount)",
+      "event GuarantorRefundClaimed(address indexed guarantor, address indexed recipient, uint256 amount)",
+      "event GuarantorSet(address indexed nodeOperator, address indexed newGuarantor, address indexed prevGuarantor)",
+      "event Initialized(uint64 version)",
+      "event Paused(uint256 duration)",
+      "event Resumed()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event ValidatorActivated(bytes indexed validatorPubkey, address indexed nodeOperator, address indexed stakingVault, bytes32 withdrawalCredentials)",
+      "event ValidatorCompensated(address indexed stakingVault, address indexed nodeOperator, bytes indexed validatorPubkey, uint256 guaranteeTotal, uint256 guaranteeLocked)",
+      "event ValidatorPreDeposited(bytes indexed validatorPubkey, address indexed nodeOperator, address indexed stakingVault, bytes32 withdrawalCredentials)",
+      "event ValidatorProven(bytes indexed validatorPubkey, address indexed nodeOperator, address indexed stakingVault, bytes32 withdrawalCredentials)",
+      "function ACTIVATION_DEPOSIT_AMOUNT() view returns (uint256)",
+      "function BEACON_ROOTS() view returns (address)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSIT_DOMAIN() view returns (bytes32)",
+      "function GI_FIRST_VALIDATOR_CURR() view returns (bytes32)",
+      "function GI_FIRST_VALIDATOR_PREV() view returns (bytes32)",
+      "function GI_PUBKEY_WC_PARENT() view returns (bytes32)",
+      "function GI_STATE_ROOT() view returns (bytes32)",
+      "function MAX_SUPPORTED_WC_VERSION() view returns (uint8)",
+      "function MAX_TOPUP_AMOUNT() view returns (uint256)",
+      "function MIN_SUPPORTED_WC_VERSION() view returns (uint8)",
+      "function PAUSE_INFINITELY() view returns (uint256)",
+      "function PAUSE_ROLE() view returns (bytes32)",
+      "function PIVOT_SLOT() view returns (uint64)",
+      "function PREDEPOSIT_AMOUNT() view returns (uint128)",
+      "function RESUME_ROLE() view returns (bytes32)",
+      "function activateValidator(bytes _pubkey)",
+      "function claimGuarantorRefund(address _recipient) returns (uint256 claimedEther)",
+      "function claimableRefund(address _guarantor) view returns (uint256)",
+      "function getResumeSinceTimestamp() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getRoleMembers(bytes32 role) view returns (address[])",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _defaultAdmin)",
+      "function isPaused() view returns (bool)",
+      "function nodeOperatorBalance(address _nodeOperator) view returns (tuple(uint128 total, uint128 locked))",
+      "function nodeOperatorDepositor(address _nodeOperator) view returns (address)",
+      "function nodeOperatorGuarantor(address _nodeOperator) view returns (address)",
+      "function pauseFor(uint256 _duration)",
+      "function pauseUntil(uint256 _pauseUntilInclusive)",
+      "function pendingActivations(address _vault) view returns (uint256)",
+      "function predeposit(address _stakingVault, tuple(bytes pubkey, bytes signature, uint256 amount, bytes32 depositDataRoot)[] _deposits, tuple(tuple(bytes32 a, bytes32 b) pubkeyY, tuple(bytes32 c0_a, bytes32 c0_b, bytes32 c1_a, bytes32 c1_b) signatureY)[] _depositsY) payable",
+      "function proveInvalidValidatorWC(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness, bytes32 _invalidWithdrawalCredentials)",
+      "function proveUnknownValidator(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness, address _stakingVault)",
+      "function proveWCActivateAndTopUpValidators(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex)[] _witnesses, uint256[] _amounts)",
+      "function proveWCAndActivate(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function resume()",
+      "function revokeRole(bytes32 role, address account)",
+      "function setNodeOperatorDepositor(address _newDepositor)",
+      "function setNodeOperatorGuarantor(address _newGuarantor)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function topUpExistingValidators(tuple(bytes pubkey, uint256 amount)[] _topUps)",
+      "function topUpNodeOperatorBalance(address _nodeOperator) payable",
+      "function unlockedBalance(address _nodeOperator) view returns (uint256 unlocked)",
+      "function validatePubKeyWCProof(tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness, bytes32 _withdrawalCredentials) view",
+      "function validatorStatus(bytes _validatorPubkey) view returns (tuple(uint8 stage, address stakingVault, address nodeOperator))",
+      "function verifyDepositMessage(tuple(bytes pubkey, bytes signature, uint256 amount, bytes32 depositDataRoot) _deposit, tuple(tuple(bytes32 a, bytes32 b) pubkeyY, tuple(bytes32 c0_a, bytes32 c0_b, bytes32 c1_a, bytes32 c1_b) signatureY) _depositsY, bytes32 _withdrawalCredentials) view",
+      "function withdrawNodeOperatorBalance(address _nodeOperator, uint256 _amount, address _recipient)"
+    ],
     "eth:0xEe1E3B4f047122650086985f794f0dB5f10Ae49D": [
       "constructor(address _locator, address _stETH)",
       "error AppAuthFailed()",
@@ -9572,9 +9658,9 @@
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
   "usedBlockNumbers": {
-    "arbitrum": 421182527,
-    "base": 40791427,
-    "ethereum": 24231160
+    "arbitrum": 427867303,
+    "base": 41626118,
+    "ethereum": 24369694
   },
-  "permissionsConfigHash": "0xe3dc06fb0f64298807f67cb79d761d81bbb3420531e6fcdaec2727994f67bac2"
+  "permissionsConfigHash": "0x7d1a8c8d0145ac68e582554fea4cc408b64dce9a632916909cd47f6243981eb6"
 }
