@@ -3,6 +3,7 @@ import compact from 'lodash/compact'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { EM_DASH } from '~/consts/characters'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopChainsCell } from '../top-items/TopChainsCell'
@@ -160,6 +161,7 @@ export const omniChainColumns = [
 export function getAllProtocolsColumns(
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
+  showNetMintedValueColumn?: boolean,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -214,6 +216,21 @@ export function getAllProtocolsColumns(
       ),
     }),
     showAverageInFlightValueColumn && averageInFlightValueColumn,
+    showNetMintedValueColumn &&
+      columnHelper.accessor('netMintedValue', {
+        header: 'Last 24h net\nminted value',
+        meta: {
+          align: 'right',
+          headClassName: 'text-2xs',
+        },
+        cell: (ctx) => (
+          <span className="font-medium text-label-value-15">
+            {ctx.row.original.netMintedValue
+              ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
+              : EM_DASH}
+          </span>
+        ),
+      }),
     tokensByVolumeColumn,
     columnHelper.accessor('chains', {
       header: 'Chains\nby volume',

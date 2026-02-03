@@ -63,6 +63,7 @@ export type ProtocolEntry = {
   averageValue: number
   averageDuration: AverageDuration
   averageValueInFlight?: number
+  netMintedValue?: number
 }
 
 export function getProtocolEntries(
@@ -143,6 +144,7 @@ export function getProtocolEntries(
             : 0,
         averageDuration: getAverageDuration(key, data, customDurationConfigMap),
         averageValueInFlight: data.averageValueInFlight,
+        netMintedValue: data.netMintedValue,
       }
     })
     .sort((a, b) => b.volume - a.volume)

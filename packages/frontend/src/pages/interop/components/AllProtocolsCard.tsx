@@ -9,11 +9,13 @@ export function AllProtocolsCard({
   isLoading,
   hideTypeColumn,
   showAverageInFlightValueColumn,
+  showNetMintedValueColumn,
 }: {
   entries: InteropDashboardData['entries'] | undefined
   isLoading: boolean
   hideTypeColumn?: boolean
   showAverageInFlightValueColumn?: boolean
+  showNetMintedValueColumn?: boolean
 }) {
   return (
     <PrimaryCard className="col-span-full flex flex-col max-md:border-divider max-md:border-b">
@@ -29,6 +31,7 @@ export function AllProtocolsCard({
             entries={entries}
             hideTypeColumn={hideTypeColumn}
             showAverageInFlightValueColumn={showAverageInFlightValueColumn}
+            showNetMintedValueColumn={showNetMintedValueColumn}
           />
         )
       ) : null}
