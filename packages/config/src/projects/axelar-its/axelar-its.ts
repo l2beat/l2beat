@@ -7,15 +7,11 @@ export const axelarits: BaseProject = {
   name: 'Axelar ITS',
   shortName: undefined,
   addedAt: UnixTime(1769520298),
-  interop: {
-    configs: [
+  interopConfig: {
+    showAlways: ['omnichain'],
+    plugins: [
       {
-        bridgeType: 'omnichain',
-        plugins: [
-          {
-            plugin: 'axelar-its',
-          },
-        ],
+        plugin: 'axelar-its',
       },
     ],
   },

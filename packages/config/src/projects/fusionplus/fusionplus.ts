@@ -7,15 +7,11 @@ export const fusionplus: BaseProject = {
   name: '1inch Fusion+',
   shortName: undefined,
   addedAt: UnixTime(1770021647),
-  interop: {
-    configs: [
+  interopConfig: {
+    showAlways: ['nonMinting'],
+    plugins: [
       {
-        bridgeType: 'nonMinting',
-        plugins: [
-          {
-            plugin: 'oneinch-fusion-plus',
-          },
-        ],
+        plugin: 'oneinch-fusion-plus',
       },
     ],
   },

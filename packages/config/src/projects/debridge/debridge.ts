@@ -52,16 +52,12 @@ export const debridge: Bridge = {
     ],
   },
   // this is only the debridge messaging and token bridge
-  interop: {
+  interopConfig: {
     name: 'deBridge',
-    configs: [
+    showAlways: ['lockAndMint'],
+    plugins: [
       {
-        bridgeType: 'lockAndMint',
-        plugins: [
-          {
-            plugin: 'debridge',
-          },
-        ],
+        plugin: 'debridge',
       },
     ],
   },

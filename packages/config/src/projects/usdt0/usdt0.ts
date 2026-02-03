@@ -9,34 +9,17 @@ export const usdt0: BaseProject = {
   name: 'USDT0',
   shortName: undefined,
   addedAt: UnixTime(1767959267),
-  interop: {
+  interopConfig: {
     subgroupId: ProjectId('layerzero'),
-    configs: [
+    showAlways: ['omnichain', 'lockAndMint'],
+    plugins: [
       {
-        bridgeType: 'omnichain',
-        plugins: [
-          {
-            abstractTokenId: ABSTRACT_TOKEN_ID,
-            plugin: 'layerzero-v2',
-          },
-          {
-            abstractTokenId: ABSTRACT_TOKEN_ID,
-            plugin: 'layerzero-v2-ofts',
-          },
-        ],
+        abstractTokenId: ABSTRACT_TOKEN_ID,
+        plugin: 'layerzero-v2',
       },
       {
-        bridgeType: 'lockAndMint',
-        plugins: [
-          {
-            abstractTokenId: ABSTRACT_TOKEN_ID,
-            plugin: 'layerzero-v2',
-          },
-          {
-            abstractTokenId: ABSTRACT_TOKEN_ID,
-            plugin: 'layerzero-v2-ofts',
-          },
-        ],
+        abstractTokenId: ABSTRACT_TOKEN_ID,
+        plugin: 'layerzero-v2-ofts',
       },
     ],
   },

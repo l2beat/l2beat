@@ -7,16 +7,12 @@ export const axelar: BaseProject = {
   name: 'Axelar',
   shortName: undefined,
   addedAt: UnixTime(1769520298),
-  interop: {
-    configs: [
+  interopConfig: {
+    showAlways: ['lockAndMint'],
+    plugins: [
       {
-        bridgeType: 'lockAndMint',
-        plugins: [
-          {
-            plugin: 'axelar',
-            transferType: 'axelar.Transfer',
-          },
-        ],
+        plugin: 'axelar',
+        transferType: 'axelar.Transfer',
       },
     ],
   },

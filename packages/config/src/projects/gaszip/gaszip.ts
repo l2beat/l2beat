@@ -7,15 +7,11 @@ export const gaszip: BaseProject = {
   name: 'Gas.zip',
   shortName: undefined,
   addedAt: UnixTime(1769070497),
-  interop: {
-    configs: [
+  interopConfig: {
+    showAlways: ['nonMinting'],
+    plugins: [
       {
-        bridgeType: 'nonMinting',
-        plugins: [
-          {
-            plugin: 'gaszip',
-          },
-        ],
+        plugin: 'gaszip',
       },
     ],
   },

@@ -255,10 +255,7 @@ interface OpStackConfigCommon {
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
   upgradesAndGovernance?: string
-  interop?: {
-    name?: string
-    configs: InteropConfig[]
-  }
+  interopConfig?: InteropConfig
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
 }
 
@@ -567,7 +564,7 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
       ...common.config,
       trackedTxs: getTrackedTxs(templateVars),
     },
-    interop: templateVars.interop,
+    interopConfig: templateVars.interopConfig,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }

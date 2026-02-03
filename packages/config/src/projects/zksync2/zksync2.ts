@@ -49,28 +49,26 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
     },
   },
-  interop: {
-    configs: [
-      {
-        bridgeType: 'lockAndMint',
-        plugins: [
-          {
-            plugin: 'zkstack',
-            chain: 'zksync2',
-          },
-        ],
-        durationSplit: {
-          in: {
-            label: 'L1 -> L2',
-            from: 'ethereum',
-            to: 'zksync2',
-          },
-          out: {
-            label: 'L2 -> L1',
-            from: 'zksync2',
-            to: 'ethereum',
-          },
+  interopConfig: {
+    showAlways: ['lockAndMint'],
+    durationSplit: {
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'zksync2',
         },
+        out: {
+          label: 'L2 -> L1',
+          from: 'zksync2',
+          to: 'ethereum',
+        },
+      },
+    },
+    plugins: [
+      {
+        plugin: 'zkstack',
+        chain: 'zksync2',
       },
     ],
   },

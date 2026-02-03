@@ -104,18 +104,7 @@ export interface BaseProject {
   proofVerification?: ProjectProofVerification
 
   // interop data
-  interop?: {
-    name?: string
-    /** If true we show `Aggregated` as second line in table under project name. Should be configured
-     * for projects that include multiple projects (e.g. layerzero which aggregates all tokens + USDT0
-     * which is a separate project)
-     */
-    isAggregate?: boolean
-    /** Should be configured for projects that are part of other project (e.g. USDT0 is part of LayerZero,
-     * so layerzero id should be configured in usdt0 config) */
-    subgroupId?: ProjectId
-    configs: InteropConfig[]
-  }
+  interopConfig?: InteropConfig
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -1253,24 +1242,25 @@ export type InteropPluginName =
   | 'zklink-nova'
 
 export interface InteropConfig {
-  bridgeType: InteropBridgeType
+  name?: string
+  /** If true we show `Aggregated` as second line in table under project name. Should be configured
+   * for projects that include multiple projects (e.g. layerzero which aggregates all tokens + USDT0
+   * which is a separate project)
+   */
+  isAggregate?: boolean
+  /** Should be configured for projects that are part of other project (e.g. USDT0 is part of LayerZero,
+   * so layerzero id should be configured in usdt0 config)
+   */
+  subgroupId?: ProjectId
+  /** We auto discover bridge types based on the records. Then frontend uses them to show entries on the dashboard.
+   * However if there is no records for a given bridge type, we don't show it on the dashboard.
+   * You can configure which bridge types to show always.
+   */
+  showAlways?: InteropBridgeType[]
   plugins: InteropPlugin[]
   /** If configured avg. duration it able will be split into two parts, depending on the config.
    Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
-  durationSplit?: {
-    in: {
-      /** Custom label to be shown in the UI */
-      label: string
-      from: string
-      to: string
-    }
-    out: {
-      /** Custom label to be shown in the UI */
-      label: string
-      from: string
-      to: string
-    }
-  }
+  durationSplit?: Partial<Record<InteropBridgeType, InteropDurationSplit>>
 }
 
 export type InteropPlugin = {
@@ -1278,6 +1268,21 @@ export type InteropPlugin = {
   chain?: string
   abstractTokenId?: string
   transferType?: string
+}
+
+type InteropDurationSplit = {
+  in: {
+    /** Custom label to be shown in the UI */
+    label: string
+    from: string
+    to: string
+  }
+  out: {
+    /** Custom label to be shown in the UI */
+    label: string
+    from: string
+    to: string
+  }
 }
 
 // #endregion

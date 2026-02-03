@@ -7,23 +7,11 @@ export const ccip: BaseProject = {
   name: 'Chainlink CCIP',
   shortName: 'CCIP',
   addedAt: UnixTime(1769526436),
-  interop: {
-    configs: [
+  interopConfig: {
+    showAlways: ['lockAndMint', 'omnichain'],
+    plugins: [
       {
-        bridgeType: 'omnichain',
-        plugins: [
-          {
-            plugin: 'ccip',
-          },
-        ],
-      },
-      {
-        bridgeType: 'lockAndMint',
-        plugins: [
-          {
-            plugin: 'ccip',
-          },
-        ],
+        plugin: 'ccip',
       },
     ],
   },

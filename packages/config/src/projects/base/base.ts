@@ -48,45 +48,43 @@ export const base: ScalingProject = opStackL2({
       ],
     },
   },
-  interop: {
+  interopConfig: {
     name: 'Base Canonical',
-    configs: [
-      {
-        bridgeType: 'lockAndMint',
-        durationSplit: {
-          in: {
-            label: 'L1 -> L2',
-            from: 'ethereum',
-            to: 'base',
-          },
-          out: {
-            label: 'L2 -> L1',
-            from: 'base',
-            to: 'ethereum',
-          },
+    showAlways: ['lockAndMint'],
+    durationSplit: {
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'base',
         },
-        plugins: [
-          {
-            chain: 'base',
-            plugin: 'opstack',
-          },
-          {
-            chain: 'base',
-            plugin: 'opstack-standardbridge',
-          },
-          {
-            chain: 'base',
-            plugin: 'beefy-bridge',
-          },
-          {
-            chain: 'base',
-            plugin: 'maker-bridge',
-          },
-          {
-            chain: 'base',
-            plugin: 'sorare-base',
-          },
-        ],
+        out: {
+          label: 'L2 -> L1',
+          from: 'base',
+          to: 'ethereum',
+        },
+      },
+    },
+    plugins: [
+      {
+        chain: 'base',
+        plugin: 'opstack',
+      },
+      {
+        chain: 'base',
+        plugin: 'opstack-standardbridge',
+      },
+      {
+        chain: 'base',
+        plugin: 'beefy-bridge',
+      },
+      {
+        chain: 'base',
+        plugin: 'maker-bridge',
+      },
+      {
+        chain: 'base',
+        plugin: 'sorare-base',
       },
     ],
   },

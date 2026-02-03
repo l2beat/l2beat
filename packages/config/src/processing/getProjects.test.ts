@@ -57,7 +57,7 @@ describe('getProjects', () => {
   describe('every project has statuses and display (except ecosystems and interop protocols)', () => {
     for (const project of projects) {
       if (
-        (project.ecosystemConfig || project.interop) &&
+        (project.ecosystemConfig || project.interopConfig) &&
         (!project.statuses || !project.display)
       ) {
         continue

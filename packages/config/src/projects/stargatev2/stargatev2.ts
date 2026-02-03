@@ -81,18 +81,14 @@ export const stargatev2: Bridge = {
     },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL, // TODO: find Hydra onchain
   },
-  interop: {
-    configs: [
+  interopConfig: {
+    showAlways: ['nonMinting'],
+    plugins: [
       {
-        bridgeType: 'nonMinting',
-        plugins: [
-          {
-            plugin: 'stargate',
-          },
-          // TODO: needs bus/taxi duration split
-          // TODO: needs hydra filtering by minted label
-        ],
+        plugin: 'stargate',
       },
+      // TODO: needs bus/taxi duration split
+      // TODO: needs hydra filtering by minted label
     ],
   },
   technology: {

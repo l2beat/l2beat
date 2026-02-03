@@ -7,25 +7,21 @@ export const hyperlaneHwr: BaseProject = {
   name: 'Hyperlane Warp Routes',
   shortName: undefined,
   addedAt: UnixTime(1768926236),
-  interop: {
-    configs: [
+  interopConfig: {
+    showAlways: ['omnichain'],
+    plugins: [
       {
-        bridgeType: 'omnichain',
-        plugins: [
-          {
-            plugin: 'hyperlane-hwr',
-          },
-          // TODO: where should we count the AMB apps below? (messages without transfer)
-          {
-            plugin: 'hyperlane',
-          },
-          {
-            plugin: 'hyperlane-simple-apps',
-          },
-          {
-            plugin: 'hyperlane-eco',
-          },
-        ],
+        plugin: 'hyperlane-hwr',
+      },
+      // TODO: where should we count the AMB apps below? (messages without transfer)
+      {
+        plugin: 'hyperlane',
+      },
+      {
+        plugin: 'hyperlane-simple-apps',
+      },
+      {
+        plugin: 'hyperlane-eco',
       },
     ],
   },

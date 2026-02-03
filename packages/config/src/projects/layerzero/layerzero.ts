@@ -7,19 +7,15 @@ export const layerzero: BaseProject = {
   name: 'LayerZero',
   shortName: undefined,
   addedAt: UnixTime(1769421770),
-  interop: {
+  interopConfig: {
     isAggregate: true,
-    configs: [
+    showAlways: ['omnichain'],
+    plugins: [
       {
-        bridgeType: 'omnichain',
-        plugins: [
-          {
-            plugin: 'layerzero-v2',
-          },
-          {
-            plugin: 'layerzero-v2-ofts',
-          },
-        ],
+        plugin: 'layerzero-v2',
+      },
+      {
+        plugin: 'layerzero-v2-ofts',
       },
     ],
   },
