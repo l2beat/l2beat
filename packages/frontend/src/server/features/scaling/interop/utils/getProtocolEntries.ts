@@ -30,7 +30,7 @@ export type ChainData = {
   avgValue: number
 }
 
-type AverageDuration =
+export type AverageDuration =
   | { type: 'single'; duration: number }
   | DurationSplit
   | 'unknown'
