@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropTransfer } from '../kysely/generated/types'
@@ -139,13 +139,9 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     timestamp: UnixTime,
     srcChains: string[],
     dstChains: string[],
-    protocolIds?: string[],
+    type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
     if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
-    if (protocolIds && protocolIds.length === 0) {
       return []
     }
 
@@ -156,8 +152,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', srcChains)
       .where('dstChain', 'in', dstChains)
 
-    if (protocolIds) {
-      query = query.where('id', 'in', protocolIds)
+    if (type) {
+      query = query.where('bridgeType', '=', type)
     }
 
     const rows = await query.execute()

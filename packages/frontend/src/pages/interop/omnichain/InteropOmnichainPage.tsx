@@ -54,14 +54,14 @@ export function InteropOmnichainPage({
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains, isDirty } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
+  const { data, isLoading } = api.interop.subpage.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
     type: 'omnichain',
   })
 
   if (
-    data?.entries.length === 0 &&
+    data?.allProtocolsEntries.length === 0 &&
     data.top3Paths.length === 0 &&
     data.topProtocols.length === 0
   ) {
@@ -99,7 +99,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
       />
       <AllProtocolsCard
-        entries={data?.entries}
+        entries={data?.allProtocolsEntries}
         isLoading={isLoading}
         hideTypeColumn
       />

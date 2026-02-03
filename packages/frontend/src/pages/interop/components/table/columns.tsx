@@ -12,13 +12,11 @@ import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
 import { SubgroupTooltip } from './SubgroupTooltip'
 
-export type ProtocolRow = ProtocolEntry & BasicTableRow
-export type AllProtocolsEntry = Omit<ProtocolEntry, 'bridgeType'> & {
-  bridgeTypes: InteropBridgeType[]
-}
-export type AllProtocolsRow = AllProtocolsEntry & BasicTableRow
+export type ProtocolRow = Omit<ProtocolEntry, 'bridgeType'> & {
+  bridgeTypes?: InteropBridgeType[]
+} & BasicTableRow
 
-const columnHelper = createColumnHelper<AllProtocolsRow>()
+const columnHelper = createColumnHelper<Omit<ProtocolRow, 'bridgeType'>>()
 
 const commonColumns = [
   columnHelper.display({
@@ -178,10 +176,10 @@ export function getAllProtocolsColumns(
     }),
     ...commonColumns,
     !hideTypeColumn &&
-      columnHelper.accessor('bridgeTypes', {
+      columnHelper.accessor((row) => row.bridgeTypes, {
         header: 'Type',
         cell: (ctx) => (
-          <BridgeTypeBadge bridgeTypes={ctx.row.original.bridgeTypes} />
+          <BridgeTypeBadge bridgeTypes={ctx.row.original.bridgeTypes ?? []} />
         ),
         meta: {
           headClassName: 'text-2xs',

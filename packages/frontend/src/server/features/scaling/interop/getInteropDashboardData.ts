@@ -1,5 +1,4 @@
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
@@ -8,6 +7,7 @@ import {
   type AllProtocolsEntry,
   getAllProtocolEntries,
 } from './utils/getAllProtocolEntries'
+import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import {
   getProtocolEntries,
   type ProtocolEntry,
@@ -46,81 +46,10 @@ export async function getInteropDashboardData(
     select: ['interopConfig'],
   })
 
-  const type = params.type
-  const filteredProjects = type
-    ? interopProjects.filter((p) => p.interopConfig.showAlways?.includes(type))
-    : undefined
-
-  const db = getDb()
-  const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
-  if (!latestTimestamp) {
-    console.error('No latest timestamp found')
-    return {
-      top3Paths: [],
-      topProtocols: [],
-      transferSizeChartData: undefined,
-      top5Cards: {
-        nonMinting: [],
-        lockAndMint: [],
-        omnichain: [],
-      },
-      allProtocolsEntries: [],
-    }
-  }
-
-  const [transfers, tokens] = await Promise.all([
-    db.aggregatedInteropTransfer.getByChainsTimestampAndId(
-      latestTimestamp,
-      params.from,
-      params.to,
-      filteredProjects?.map((p) => p.id),
-    ),
-    db.aggregatedInteropToken.getByChainsTimestampAndId(
-      latestTimestamp,
-      params.from,
-      params.to,
-      filteredProjects?.map((p) => p.id),
-    ),
-  ])
-
-  const filteredTransfers = transfers.filter((transfer) =>
-    type ? transfer.bridgeType === type : true,
+  const records = await getLatestAggregatedInteropTransferWithTokens(
+    params.from,
+    params.to,
   )
-  const filteredTokens = tokens.filter((token) =>
-    type ? token.bridgeType === type : true,
-  )
-
-  const records = filteredTransfers.map((transfer) => ({
-    ...transfer,
-    tokens: filteredTokens
-      .filter(
-        (token) =>
-          token.id === transfer.id &&
-          token.srcChain === transfer.srcChain &&
-          token.dstChain === transfer.dstChain,
-      )
-      .map((token) => ({
-        abstractTokenId: token.abstractTokenId,
-        transferCount: token.transferCount,
-        totalDurationSum: token.totalDurationSum,
-        volume: token.volume,
-      })),
-  }))
-
-  if (records.length === 0) {
-    return {
-      top3Paths: [],
-      topProtocols: [],
-      transferSizeChartData: undefined,
-      top5Cards: {
-        nonMinting: [],
-        lockAndMint: [],
-        omnichain: [],
-      },
-      allProtocolsEntries: [],
-    }
-  }
 
   const tokensDetailsData = await tokenDb.abstractToken.getByIds(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),

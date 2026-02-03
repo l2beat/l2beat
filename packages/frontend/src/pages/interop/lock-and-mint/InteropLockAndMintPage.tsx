@@ -54,7 +54,7 @@ export function InteropLockAndMintPage({
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains, isDirty } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
+  const { data, isLoading } = api.interop.subpage.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
     type: 'lockAndMint',
@@ -99,7 +99,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
       />
       <AllProtocolsCard
-        entries={data?.entries}
+        entries={data?.allProtocolsEntries}
         isLoading={isLoading}
         hideTypeColumn
       />

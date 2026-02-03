@@ -39,7 +39,7 @@ export async function getInteropLockAndMintData(
       staleWhileRevalidate: 25 * 60,
     },
     async () => {
-      await helpers.interop.dashboard.prefetch({
+      await helpers.interop.subpage.prefetch({
         from: initialSelectedChains.from,
         to: initialSelectedChains.to,
         type: 'lockAndMint',
