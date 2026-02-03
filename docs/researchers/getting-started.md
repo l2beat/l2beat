@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide walks you through setting up Defi Disco and analyzing your first DeFi protocol with our tool.
+This guide walks you through setting up DeFiScan V2 and analyzing your first DeFi protocol with our tool.
 
 ## Installation
 
@@ -81,7 +81,7 @@ To see the project in the UI, head to `packages/config/src/defidisco-config.json
 ```json
 {
   "version": "1.0",
-  "description": "DeFiDisco configuration for DeFi project filtering",
+  "description": "DeFiScan V2 configuration for DeFi project filtering",
   "defiProjects": [
     "compound-v3",
     "uniswap-v2",
@@ -143,7 +143,7 @@ flowchart TD
     %% =====================
     %% Continue Analysis UI
     %% =====================
-    subgraph UI["Local UI (DeFiDisco)"]
+    subgraph UI["Local UI (DeFiScan V2)"]
         direction LR
 
         subgraph ListPanel["List Panel"]

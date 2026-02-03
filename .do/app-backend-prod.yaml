@@ -2,7 +2,7 @@ name: defidisco-backend-prod
 services:
   - name: l2b-api
     github:
-      repo: deficollective/defi-disco
+      repo: deficollective/defiscan-v2
       branch: main
       deploy_on_push: true
     dockerfile_path: Dockerfile.discoui

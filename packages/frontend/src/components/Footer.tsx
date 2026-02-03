@@ -32,7 +32,7 @@ export function Footer({ className, innerContainerClassName }: Props) {
           </CustomLink>
         </p>
         <p className="text-center font-medium text-xs leading-none md:text-right">
-          Copyright {currentYear} L2BEAT
+          Copyright {currentYear} DeFiCollective
         </p>
       </div>
     </footer>

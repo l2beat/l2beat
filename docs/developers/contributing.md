@@ -6,7 +6,7 @@
 
 ### Code Organization
 
-**DeFiDisco folders** (keep all new code here):
+**DeFiScan V2 folders** (keep all new code here):
 
 - `packages/protocolbeat/src/defidisco/` - All UI components, extensions, icons
 - `packages/l2b/src/implementations/discovery-ui/defidisco/` - All backend modules
@@ -17,4 +17,4 @@
 - `ValuesPanel.tsx` - Single `<ValuesPanelExtensions>` line
 - `TerminalPanel.tsx` - Single `<TerminalExtensions>` line
 - `main.ts` - API endpoint registrations (unavoidable)
-- `api.ts` - DeFiDisco API functions (unavoidable)
+- `api.ts` - DeFiScan V2 API functions (unavoidable)

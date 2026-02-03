@@ -1,6 +1,6 @@
-# DeFiDisco Documentation
+# DeFiScan V2 Documentation
 
-Welcome to the DeFiDisco documentation.
+Welcome to the DeFiScan V2 documentation.
 
 ## Sections
 

@@ -2,7 +2,7 @@ name: defidisco-preview
 services:
   - name: l2b-ui
     github:
-      repo: deficollective/defi-disco
+      repo: deficollective/defiscan-v2
       branch: main
       deploy_on_push: false
     dockerfile_path: Dockerfile.discoui
