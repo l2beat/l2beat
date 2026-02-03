@@ -9,6 +9,7 @@ export const ccip: BaseProject = {
   addedAt: UnixTime(1769526436),
   interopConfig: {
     bridgeType: 'omnichain',
+    transfersTimeMode: 'unknown',
     plugins: [
       {
         plugin: 'ccip',
