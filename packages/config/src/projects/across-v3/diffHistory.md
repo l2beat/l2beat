@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xda0c26d6822a0801b8305ef42c04efd6870d4702
+
+# Diff at Tue, 03 Feb 2026 11:18:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a94928de2efc98d55da2625bd62f96eb1c25b904 block: 1769431719
+- current timestamp: 1770116349
+
+## Description
+
+Upgrades SpokePool to support OFT transfers (spokepool wraps the OApp). This is strictly used for refunds, meaning a given SpokePool that is not on Ethereum would be able to send the OFT that was used to fill an intent back to Ethereum to refund the filler (`executeRelayerRefundLeaf`). Each OFT needs to be added to a mapping before it is supported. E.g. on Arbitrum, USDT0 is the only such token atm.
+
+https://disco.l2beat.com/diff/eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80/eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B
+
+## Watched changes
+
+```diff
+    contract Ethereum_SpokePool (eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.
+      sourceHashes.1:
+-        "0x40060e8b2904995f3cb0149fcbf73924c9b1e2e164a823a7957d703a9f7c6fe5"
++        "0x51fe389d737f63ba780131cbcd7de767178890a9783c26f10a7914e04b8cccf8"
+      values.$implementation:
+-        "eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80"
++        "eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B"
+      values.$pastUpgrades.10:
++        ["2026-02-02T18:01:11.000Z","0xce91ef569315a356ecbf8133df44de6a7f0cbbcc8f50433eb3ab5116d71a111f",["eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.EMPTY_MSG_BYTES:
++        "0x"
+      values.OFT_DST_EID:
++        0
+      values.OFT_FEE_CAP:
++        0
+      implementationNames.eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80:
+-        "Ethereum_SpokePool"
+      implementationNames.eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B:
++        "Ethereum_SpokePool"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Ethereum_SpokePool/Ethereum_SpokePool.sol      | 1089 +++++++++++++++-----
+ 1 file changed, 815 insertions(+), 274 deletions(-)
+```
+
 Generated with discovered.json: 0x758791ddb7ad54da9864519ecbc5ea873154a269
 
 # Diff at Mon, 26 Jan 2026 12:50:22 GMT:
