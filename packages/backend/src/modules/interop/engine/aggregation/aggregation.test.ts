@@ -29,6 +29,7 @@ describe('aggregation', () => {
         srcValueUsd: 2000,
         dstValueUsd: 2000,
         avgValueInFlight: undefined,
+        netMinted: undefined,
         countUnder100: 0,
         count100To1K: 0,
         count1KTo10K: 1,
@@ -76,6 +77,7 @@ describe('aggregation', () => {
         srcValueUsd: 6500.5,
         dstValueUsd: 6500.5,
         avgValueInFlight: undefined,
+        netMinted: undefined,
         countUnder100: 0,
         count100To1K: 0,
         count1KTo10K: 3,
@@ -115,6 +117,7 @@ describe('aggregation', () => {
         srcValueUsd: 3000,
         dstValueUsd: 3000,
         avgValueInFlight: undefined,
+        netMinted: undefined,
         countUnder100: 0,
         count100To1K: 0,
         count1KTo10K: 1,
@@ -212,6 +215,7 @@ describe('aggregation', () => {
         srcValueUsd: 255550,
         dstValueUsd: 255550,
         avgValueInFlight: undefined,
+        netMinted: undefined,
         countUnder100: 1,
         count100To1K: 1,
         count1KTo10K: 1,
@@ -289,6 +293,95 @@ describe('aggregation', () => {
       //             = 28,000,000
       // avgValueInFlight = 28,000,000 / 86,400 ≈ 324.07
       expect(result.avgValueInFlight).toEqual(324.07)
+    })
+
+    it('calculates net minted correctly with mixed minting and burning', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 6000,
+          srcValueUsd: 3000,
+          dstValueUsd: 3000,
+          srcWasBurned: true,
+          dstWasMinted: false,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 4000,
+          srcValueUsd: 1000,
+          dstValueUsd: 1000,
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+      ]
+
+      const result = getAggregatedTransfer(transfers, {
+        calculateNetMinted: true,
+      })
+
+      // mintedValueUsd = 2000 + 1000 = 3000
+      // burnedValueUsd = 3000
+      // netMinted = 3000 - 3000 = 0
+      expect(result.netMinted).toEqual(0)
+    })
+
+    it('ignores transfers that are not minting or burning', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 6000,
+          srcValueUsd: 3000,
+          dstValueUsd: 3000,
+          srcWasBurned: true,
+          dstWasMinted: true, // both burned and minted - should be ignored
+        }),
+        createTransfer({
+          timestamp,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 4000,
+          srcValueUsd: 1000,
+          dstValueUsd: 1000,
+          srcWasBurned: false,
+          dstWasMinted: false, // neither burned nor minted - should be ignored
+        }),
+      ]
+
+      const result = getAggregatedTransfer(transfers, {
+        calculateNetMinted: true,
+      })
+
+      // Only the first transfer counts (minting)
+      // mintedValueUsd = 2000
+      // burnedValueUsd = 0
+      // netMinted = 2000 - 0 = 2000
+      expect(result.netMinted).toEqual(2000)
     })
 
     it('correctly counts identified transfers', () => {
@@ -562,6 +655,8 @@ function createTransfer(overrides: {
   duration: number
   srcValueUsd?: number
   dstValueUsd?: number
+  srcWasBurned?: boolean
+  dstWasMinted?: boolean
 }): InteropTransferRecord {
   return {
     plugin: 'test-plugin',
@@ -574,7 +669,7 @@ function createTransfer(overrides: {
     srcEventId: 'random-event-id',
     srcTokenAddress: undefined,
     srcRawAmount: undefined,
-    srcWasBurned: undefined,
+    srcWasBurned: overrides.srcWasBurned ?? undefined,
     srcSymbol: undefined,
     srcAmount: undefined,
     srcPrice: undefined,
@@ -584,7 +679,7 @@ function createTransfer(overrides: {
     dstEventId: 'random-event-id',
     dstTokenAddress: undefined,
     dstRawAmount: undefined,
-    dstWasMinted: undefined,
+    dstWasMinted: overrides.dstWasMinted ?? undefined,
     dstSymbol: undefined,
     dstAmount: undefined,
     dstPrice: undefined,
