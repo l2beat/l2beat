@@ -8,7 +8,7 @@ Generated with discovered.json: 0x118a9ce903f9f09f9ff3245995f05742061d96f9
 
 ## Description
 
-Zksync Era migrated its settlement layer from Gateway back to Ethereum. See migration initiated event here: https://gateway.explorer.zksync.io/address/0x000000000000000000000000000000000001000a#events and migration finalized event here: https://etherscan.io/address/0xDd5CB8B9037357B4cD37391A073798f8aaB61076#events. Bridgehub on L1 returns settlement layer 1 for chain ID 324 (zksync era): https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#readProxyContract#F28.
+Zksync Era migrated its settlement layer from Gateway back to Ethereum. See migration initiated event here: https://gateway.explorer.zksync.io/address/0x000000000000000000000000000000000001000a#events and migration finalized event here: https://etherscan.io/tx/0x2829993f6183647fc954ec75b67441ab0e597f445a3f5d6f976733775ca06f26#eventlog. Bridgehub on L1 returns settlement layer 1 for chain ID 324 (zksync era): https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#readProxyContract#F28.
 
 Commented out all gateway-related discovery for zksync2 in config.jsonc.
 
