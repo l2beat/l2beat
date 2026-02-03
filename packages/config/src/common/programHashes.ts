@@ -593,7 +593,30 @@ Verify:
       programUrl:
         'https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/applicative_bootloader',
       proverSystemProject: ProjectId('stwo'),
-      verificationStatus: 'notVerified',
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
+
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending this snippet at the end.
+5. Copy this hash_bootloaders.py script that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
     },
   '37889379279861089970868356983774360253508326951064758033885675883862334778':
     {
@@ -604,7 +627,30 @@ Verify:
       programUrl:
         'https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/simple_bootloader',
       proverSystemProject: ProjectId('stwo'),
-      verificationStatus: 'notVerified',
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
+
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending this snippet at the end.
+5. Copy this hash_bootloaders.py script that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
     },
   '3480185788024326007166778030599498673382667448173974782477620863541158415714':
     {
