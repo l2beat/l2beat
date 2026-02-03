@@ -12,6 +12,7 @@ import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
 import { useContractTags } from '../hooks/useContractTags'
 import {
+  computeDeduplicatedCapital,
   computeWorstGrade,
   formatUsdValue,
   getGradeBadgeStyles,
@@ -306,14 +307,13 @@ export function DependencyInventoryBreakdown({
     0,
   )
 
-  // Aggregate capital at risk across displayed external owners
-  const displayedCapitalAtRisk = useMemo(() => {
-    return displayedExternalOwners.reduce((sum, admin) => {
-      if (hasCapitalData(admin)) {
-        return sum + admin.totalReachableCapital
-      }
-      return sum
-    }, 0)
+  // Aggregate capital at risk across displayed external owners (deduplicated by contract)
+  const {
+    totalFunds: displayedCapitalAtRisk,
+    totalTokenValue: displayedTokenValueAtRisk,
+  } = useMemo(() => {
+    const adminsWithCapital = displayedExternalOwners.filter(hasCapitalData)
+    return computeDeduplicatedCapital(adminsWithCapital)
   }, [displayedExternalOwners])
 
   const totalFunctionCount = depFunctionCount + extOwnerFunctionCount
@@ -329,6 +329,11 @@ export function DependencyInventoryBreakdown({
           {displayedCapitalAtRisk > 0 && (
             <span className="ml-2 font-normal text-green-400 text-sm">
               {formatUsdValue(displayedCapitalAtRisk)} at risk
+            </span>
+          )}
+          {displayedTokenValueAtRisk > 0 && (
+            <span className="ml-2 font-normal text-aux-yellow text-sm">
+              + {formatUsdValue(displayedTokenValueAtRisk)} protocol tokens
             </span>
           )}
         </span>

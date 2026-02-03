@@ -178,9 +178,7 @@ export function FundsTagsButton() {
                 onChange={handleToggleIsToken}
                 className="h-4 w-4 cursor-pointer accent-yellow-500"
               />
-              <span className="text-coffee-200 text-xs">
-                Token Contract
-              </span>
+              <span className="text-coffee-200 text-xs">Token Contract</span>
             </label>
 
             <div className="mt-1 text-coffee-500 text-xs">

@@ -59,6 +59,8 @@ export interface AdminModuleScore extends ModuleScore {
   breakdown?: AdminDetail[] | AdminDetailWithCapital[]
   // Total capital at risk across all admins (when capital analysis is available)
   totalCapitalAtRisk?: number
+  // Total token market cap at risk across all admins
+  totalTokenValueAtRisk?: number
 }
 
 // ============================================================================
@@ -838,16 +840,47 @@ class AdminInventoryModule implements ScoringModule {
       )
 
       const adminsWithCapital: AdminDetailWithCapital[] = []
-      let totalCapitalAtRisk = 0
 
       for (const admin of adminsMap.values()) {
         const adminWithCapital = capitalCalculator.analyzeAdminCapital(admin)
         adminsWithCapital.push(adminWithCapital)
-        // Use reachable capital (includes direct + call graph reachable)
-        totalCapitalAtRisk = Math.max(
-          totalCapitalAtRisk,
-          adminWithCapital.totalReachableCapital,
-        )
+      }
+
+      // Deduplicate capital across all admins by contract address
+      const contractCapitalMap = new Map<
+        string,
+        { funds: number; tokenValue: number }
+      >()
+      for (const admin of adminsWithCapital) {
+        // Direct contracts (all functions, including those without call graph)
+        for (const func of admin.functions) {
+          const addr = func.contractAddress.toLowerCase()
+          if (!contractCapitalMap.has(addr)) {
+            contractCapitalMap.set(addr, {
+              funds: capitalCalculator.getContractFunds(addr),
+              tokenValue: capitalCalculator.getContractTokenValue(addr),
+            })
+          }
+        }
+        // Reachable contracts from capital analysis
+        for (const funcAnalysis of admin.functionsWithCapital) {
+          for (const rc of funcAnalysis.reachableContracts) {
+            if (!rc.fundsAtRisk) continue
+            const addr = rc.contractAddress.toLowerCase()
+            if (!contractCapitalMap.has(addr)) {
+              contractCapitalMap.set(addr, {
+                funds: rc.fundsUsd,
+                tokenValue: rc.tokenValueUsd,
+              })
+            }
+          }
+        }
+      }
+      let totalCapitalAtRisk = 0
+      let totalTokenValueAtRisk = 0
+      for (const { funds, tokenValue } of contractCapitalMap.values()) {
+        totalCapitalAtRisk += funds
+        totalTokenValueAtRisk += tokenValue
       }
 
       return {
@@ -855,6 +888,7 @@ class AdminInventoryModule implements ScoringModule {
         inventory: adminsMap.size,
         breakdown: adminsWithCapital,
         totalCapitalAtRisk,
+        totalTokenValueAtRisk,
       }
     }
 

@@ -271,7 +271,8 @@ function TokenContractRow({
                 <div className="flex items-center justify-between text-coffee-400">
                   <span>Price</span>
                   <span>
-                    ${tokenInfo.price.toLocaleString(undefined, {
+                    $
+                    {tokenInfo.price.toLocaleString(undefined, {
                       maximumFractionDigits: 6,
                     })}
                   </span>
@@ -439,7 +440,9 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     if (contractTags?.tags) {
       for (const tag of contractTags.tags) {
         if (tag.isToken) {
-          const normalized = tag.contractAddress.toLowerCase().startsWith('eth:')
+          const normalized = tag.contractAddress
+            .toLowerCase()
+            .startsWith('eth:')
             ? tag.contractAddress.toLowerCase()
             : `eth:${tag.contractAddress.toLowerCase()}`
           set.add(normalized)
@@ -647,9 +650,7 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
                       fundsData={data}
                       contractName={contractNameMap.get(address.toLowerCase())}
                       proxyType={proxyTypeMap.get(address.toLowerCase())}
-                      onSelect={() =>
-                        usePanelStore.getState().select(address)
-                      }
+                      onSelect={() => usePanelStore.getState().select(address)}
                     />
                   ))}
                 </div>
@@ -670,9 +671,7 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
                       fundsData={data}
                       contractName={contractNameMap.get(address.toLowerCase())}
                       proxyType={proxyTypeMap.get(address.toLowerCase())}
-                      onSelect={() =>
-                        usePanelStore.getState().select(address)
-                      }
+                      onSelect={() => usePanelStore.getState().select(address)}
                     />
                   ))}
                 </div>
@@ -683,9 +682,9 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
           <div className="ml-2 text-coffee-400 text-sm">
             <p>No funds data available.</p>
             <p className="mt-1 text-coffee-500">
-              Mark contracts with "Fetch Balances", "Fetch Positions", or
-              "Token Contract" in contract tags, then click "Fetch Funds" to
-              retrieve data.
+              Mark contracts with "Fetch Balances", "Fetch Positions", or "Token
+              Contract" in contract tags, then click "Fetch Funds" to retrieve
+              data.
             </p>
           </div>
         )}

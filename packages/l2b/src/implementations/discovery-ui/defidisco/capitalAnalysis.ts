@@ -104,6 +104,25 @@ export class CapitalAnalysisCalculator {
   }
 
   /**
+   * Get token market cap for a contract address (from tokenInfo.tokenValue).
+   * Returns 0 if the contract is not a token or has no token info.
+   * Performs case-insensitive lookup.
+   */
+  getContractTokenValue(contractAddress: string): number {
+    if (!this.fundsData?.contracts) return 0
+
+    const normalizedAddress = contractAddress.toLowerCase()
+    const fundsEntry = Object.entries(this.fundsData.contracts).find(
+      ([key]) => key.toLowerCase() === normalizedAddress,
+    )
+
+    if (!fundsEntry) return 0
+    const funds = fundsEntry[1]
+
+    return funds.tokenInfo?.tokenValue ?? 0
+  }
+
+  /**
    * Analyze capital exposure for a single permissioned function.
    */
   analyzeFunctionCapital(
@@ -112,8 +131,9 @@ export class CapitalAnalysisCalculator {
     functionName: string,
     impact: Impact,
   ): FunctionCapitalAnalysis {
-    // Get direct funds in the contract containing this function
+    // Get direct funds and token value in the contract containing this function
     const directFundsUsd = this.getContractFunds(contractAddress)
+    const directTokenValueUsd = this.getContractTokenValue(contractAddress)
 
     // Traverse call graph from this function
     const traversalResult = this.traverser.traverseFromFunction(
@@ -130,6 +150,7 @@ export class CapitalAnalysisCalculator {
       if (addr.toLowerCase() === contractAddress.toLowerCase()) continue
 
       const fundsUsd = this.getContractFunds(addr)
+      const tokenValueUsd = this.getContractTokenValue(addr)
       const calledFunctions = Array.from(data.calledFunctions)
 
       // Only count funds as "at risk" if at least one called function has impact
@@ -144,13 +165,18 @@ export class CapitalAnalysisCalculator {
         viewOnlyPath: data.viewOnlyPath,
         calledFunctions,
         fundsUsd,
+        tokenValueUsd,
         fundsAtRisk,
       })
     }
 
-    // Calculate totals - only count funds where fundsAtRisk is true
+    // Calculate totals - only count where fundsAtRisk is true
     const totalReachableFundsUsd = reachableContracts.reduce(
       (sum, c) => (c.fundsAtRisk ? sum + c.fundsUsd : sum),
+      0,
+    )
+    const totalReachableTokenValueUsd = reachableContracts.reduce(
+      (sum, c) => (c.fundsAtRisk ? sum + c.tokenValueUsd : sum),
       0,
     )
 
@@ -160,8 +186,10 @@ export class CapitalAnalysisCalculator {
       functionName,
       impact,
       directFundsUsd,
+      directTokenValueUsd,
       reachableContracts,
       totalReachableFundsUsd,
+      totalReachableTokenValueUsd,
       unresolvedCallsCount: traversalResult.unresolvedCalls.length,
     }
   }
@@ -217,20 +245,22 @@ export class CapitalAnalysisCalculator {
       }
     }
 
-    // Calculate direct capital (sum of funds in contracts with permissioned functions)
-    // Direct contracts are always counted since the admin's permissioned function has impact
+    // Calculate direct capital and token value
     let totalDirectCapital = 0
+    let totalDirectTokenValue = 0
     for (const addr of directContracts) {
       totalDirectCapital += this.getContractFunds(addr)
+      totalDirectTokenValue += this.getContractTokenValue(addr)
     }
 
-    // Calculate reachable capital (deduplicated - each contract counted once)
+    // Calculate reachable capital and token value (deduplicated)
     // Only count reachable contracts where fundsAtRisk is true
     let totalReachableCapital = totalDirectCapital
+    let totalReachableTokenValue = totalDirectTokenValue
     for (const [addr, atRisk] of contractsAtRisk) {
-      // Skip direct contracts (already counted) and contracts not at risk
       if (directContracts.has(addr) || !atRisk) continue
       totalReachableCapital += this.getContractFunds(addr)
+      totalReachableTokenValue += this.getContractTokenValue(addr)
     }
 
     // Count all affected contracts (for display purposes)
@@ -240,12 +270,12 @@ export class CapitalAnalysisCalculator {
     ])
 
     return {
-      // Spread original admin properties
       ...admin,
-      // Add capital analysis
       functionsWithCapital,
       totalDirectCapital,
       totalReachableCapital,
+      totalDirectTokenValue,
+      totalReachableTokenValue,
       uniqueContractsAffected: allAffectedContracts.size,
     }
   }

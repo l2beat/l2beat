@@ -73,8 +73,7 @@ export function updateContractTag(
     updateRequest.fetchBalances ?? existingTag?.fetchBalances ?? false
   const newFetchPositions =
     updateRequest.fetchPositions ?? existingTag?.fetchPositions ?? false
-  const newIsToken =
-    updateRequest.isToken ?? existingTag?.isToken ?? false
+  const newIsToken = updateRequest.isToken ?? existingTag?.isToken ?? false
   const newCentralization =
     updateRequest.centralization !== undefined
       ? updateRequest.centralization

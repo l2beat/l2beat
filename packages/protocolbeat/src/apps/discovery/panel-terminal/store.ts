@@ -7,12 +7,13 @@ import {
   executeGeneratePermissionsReport,
   executeFetchFunds,
   executeGenerateCallGraph,
+  type SSELike,
 } from '../../../api/api'
 import { truncateOutput } from '../defidisco/terminalUtils'
 
 interface CommandState {
   inFlight: boolean
-  stream?: EventSource
+  stream?: SSELike
 
   devMode: boolean
 }
@@ -93,7 +94,7 @@ function executeStreaming(
   set: (
     update: (state: TerminalState) => TerminalState | Partial<TerminalState>,
   ) => void,
-  cmd: () => EventSource,
+  cmd: () => SSELike,
   truncate = false,
 ) {
   return new Promise<boolean>((resolve, reject) => {
@@ -102,7 +103,7 @@ function executeStreaming(
     }
 
     try {
-      let stream: EventSource | undefined
+      let stream: SSELike | undefined
       let exitCode: number | undefined
 
       set((state) => {

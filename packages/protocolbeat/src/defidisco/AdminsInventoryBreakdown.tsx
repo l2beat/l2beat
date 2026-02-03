@@ -6,6 +6,7 @@ import type { AdminModuleScore, Impact, Likelihood } from '../api/types'
 import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import { useContractTags } from '../hooks/useContractTags'
 import {
+  computeDeduplicatedCapital,
   formatUsdValue,
   getGradeColor,
   hasCapitalData,
@@ -149,13 +150,12 @@ export function AdminsInventoryBreakdown({
     (sum, admin) => sum + admin.functions.length,
     0,
   )
-  const displayedCapitalAtRisk = useMemo(() => {
-    return displayedAdmins.reduce((sum, admin) => {
-      if (hasCapitalData(admin)) {
-        return sum + admin.totalReachableCapital
-      }
-      return sum
-    }, 0)
+  const {
+    totalFunds: displayedCapitalAtRisk,
+    totalTokenValue: displayedTokenValueAtRisk,
+  } = useMemo(() => {
+    const adminsWithCapital = displayedAdmins.filter(hasCapitalData)
+    return computeDeduplicatedCapital(adminsWithCapital)
   }, [displayedAdmins])
 
   const hasAnyCapital =
@@ -176,6 +176,11 @@ export function AdminsInventoryBreakdown({
           {hasAnyCapital && displayedCapitalAtRisk > 0 && (
             <span className="ml-2 font-normal text-green-400 text-sm">
               {formatUsdValue(displayedCapitalAtRisk)} controlled
+            </span>
+          )}
+          {displayedTokenValueAtRisk > 0 && (
+            <span className="ml-2 font-normal text-aux-yellow text-sm">
+              + {formatUsdValue(displayedTokenValueAtRisk)} protocol tokens
             </span>
           )}
         </span>

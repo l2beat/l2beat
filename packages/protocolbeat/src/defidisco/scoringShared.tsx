@@ -230,6 +230,64 @@ export function FundsDisplay({ value }: { value: number }) {
   return <span className="mr-1.5 text-coffee-400">{formatUsdValue(value)}</span>
 }
 
+export function TokenValueDisplay({ value }: { value: number }) {
+  if (value <= 0) return null
+  return <span className="mr-1.5 text-aux-yellow">{formatUsdValue(value)}</span>
+}
+
+export function hasTokenValueData(admin: any): boolean {
+  return (
+    hasCapitalData(admin) &&
+    'totalReachableTokenValue' in admin &&
+    typeof admin.totalReachableTokenValue === 'number' &&
+    admin.totalReachableTokenValue > 0
+  )
+}
+
+/**
+ * Compute deduplicated capital totals across multiple admins.
+ * Avoids double-counting when the same contract is reachable by multiple admins.
+ */
+export function computeDeduplicatedCapital(admins: AdminDetailWithCapital[]): {
+  totalFunds: number
+  totalTokenValue: number
+} {
+  const contractMap = new Map<string, { funds: number; tokenValue: number }>()
+
+  for (const admin of admins) {
+    for (const funcAnalysis of admin.functionsWithCapital) {
+      // Direct contract
+      const directAddr = funcAnalysis.contractAddress.toLowerCase()
+      if (!contractMap.has(directAddr)) {
+        contractMap.set(directAddr, {
+          funds: funcAnalysis.directFundsUsd,
+          tokenValue: funcAnalysis.directTokenValueUsd,
+        })
+      }
+      // Reachable contracts (only those with fundsAtRisk)
+      for (const rc of funcAnalysis.reachableContracts) {
+        if (!rc.fundsAtRisk) continue
+        const addr = rc.contractAddress.toLowerCase()
+        if (!contractMap.has(addr)) {
+          contractMap.set(addr, {
+            funds: rc.fundsUsd,
+            tokenValue: rc.tokenValueUsd,
+          })
+        }
+      }
+    }
+  }
+
+  let totalFunds = 0
+  let totalTokenValue = 0
+  for (const { funds, tokenValue } of contractMap.values()) {
+    totalFunds += funds
+    totalTokenValue += tokenValue
+  }
+
+  return { totalFunds, totalTokenValue }
+}
+
 export function ImpactPicker({
   currentImpact,
   onUpdate,
@@ -407,6 +465,7 @@ export function FunctionCapitalBreakdown({
         </span>
         <span className="flex items-center gap-1">
           <FundsDisplay value={analysis.directFundsUsd} />
+          <TokenValueDisplay value={analysis.directTokenValueUsd} />
           <button
             onClick={(e) => {
               e.stopPropagation()
@@ -441,6 +500,7 @@ export function FunctionCapitalBreakdown({
                 }
               >
                 <FundsDisplay value={contract.fundsUsd} />
+                <TokenValueDisplay value={contract.tokenValueUsd} />
                 <span>{contract.contractName}</span>
                 {contract.viewOnlyPath && (
                   <span className="ml-1 text-coffee-600 italic">
@@ -608,14 +668,25 @@ export function OwnerSection({
           <>
             <span className="mx-1 text-coffee-500 text-xs">|</span>
             <span className="font-medium text-green-400 text-xs">
-              {formatUsdValue(admin.totalReachableCapital)} at risk
+              {formatUsdValue(admin.totalReachableCapital)} impacted
             </span>
+          </>
+        )}
+        {hasTokenValueData(admin) && (
+          <>
+            <span className="mx-1 text-coffee-500 text-xs">|</span>
+            <span className="font-medium text-aux-yellow text-xs">
+              {formatUsdValue(admin.totalReachableTokenValue)} token
+            </span>
+          </>
+        )}
+        {hasCapitalData(admin) &&
+          (admin.totalReachableCapital > 0 || hasTokenValueData(admin)) && (
             <span className="ml-1 text-coffee-500 text-xs">
               ({admin.uniqueContractsAffected} contract
               {admin.uniqueContractsAffected !== 1 ? 's' : ''})
             </span>
-          </>
-        )}
+          )}
       </button>
 
       {isExpanded && (
@@ -634,6 +705,10 @@ export function OwnerSection({
             const totalFundsForFunc = capitalAnalysis
               ? capitalAnalysis.directFundsUsd +
                 capitalAnalysis.totalReachableFundsUsd
+              : 0
+            const totalTokenValueForFunc = capitalAnalysis
+              ? capitalAnalysis.directTokenValueUsd +
+                capitalAnalysis.totalReachableTokenValueUsd
               : 0
 
             return (
@@ -661,6 +736,11 @@ export function OwnerSection({
                   {totalFundsForFunc > 0 && (
                     <span className="mr-1.5 text-coffee-400">
                       {formatUsdValue(totalFundsForFunc)}
+                    </span>
+                  )}
+                  {totalTokenValueForFunc > 0 && (
+                    <span className="mr-1.5 text-aux-yellow">
+                      {formatUsdValue(totalTokenValueForFunc)}
                     </span>
                   )}
                   <button

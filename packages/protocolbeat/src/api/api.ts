@@ -401,23 +401,32 @@ export async function getFundsData(project: string): Promise<ApiFundsDataRespons
   return data as ApiFundsDataResponse
 }
 
-export function executeFetchFunds(project: string, contractAddress?: string, forceRefresh?: boolean): EventSource {
-  // For SSE with POST, we need a workaround since EventSource only supports GET
-  // We'll use fetch with a ReadableStream instead, but for simplicity, we'll use a pattern
-  // that works with the existing terminal pattern
+export interface SSELike {
+  onmessage: ((event: MessageEvent) => void) | null
+  onerror: ((event: Event) => void) | null
+  close(): void
+}
 
-  // Create an EventSource-like wrapper using fetch
+export function executeFetchFunds(project: string, contractAddress?: string, forceRefresh?: boolean): SSELike {
   const url = `/api/projects/${project}/funds-data/fetch`
   const body = JSON.stringify({ contractAddress, forceRefresh })
+  const controller = new AbortController()
+  let closed = false
 
-  // Use a custom approach - create a fetch request and return a mock EventSource
-  const eventSource = new EventSource('about:blank')
+  const handler: SSELike = {
+    onmessage: null,
+    onerror: null,
+    close() {
+      closed = true
+      controller.abort()
+    },
+  }
 
-  // Override with actual fetch
   fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body,
+    signal: controller.signal,
   }).then(async (response) => {
     const reader = response.body?.getReader()
     if (!reader) return
@@ -435,15 +444,22 @@ export function executeFetchFunds(project: string, contractAddress?: string, for
         if (line.startsWith('data: ')) {
           const data = line.slice(6)
           const event = new MessageEvent('message', { data })
-          eventSource.dispatchEvent(event)
+          handler.onmessage?.(event)
         }
       }
     }
+    // Stream ended — mimic EventSource connection-close behavior
+    if (!closed) {
+      handler.onerror?.(new Event('error'))
+    }
   }).catch((error) => {
-    console.error('Fetch funds error:', error)
+    if (!closed) {
+      console.error('Fetch funds error:', error)
+      handler.onerror?.(new Event('error'))
+    }
   })
 
-  return eventSource
+  return handler
 }
 
 export async function getTokenInfo(

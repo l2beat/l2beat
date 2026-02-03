@@ -61,6 +61,8 @@ export interface ReachableContract {
   calledFunctions: string[]
   // Funds in this contract (from funds-data.json)
   fundsUsd: number
+  // Token market cap if contract IS a token (from tokenInfo.tokenValue)
+  tokenValueUsd: number
   // Whether funds are counted (true if at least one called function has impact != unscored)
   fundsAtRisk: boolean
 }
@@ -73,10 +75,14 @@ export interface FunctionCapitalAnalysis {
   impact: Impact
   // Direct funds in the contract containing this function
   directFundsUsd: number
+  // Token market cap if the function's contract IS a token
+  directTokenValueUsd: number
   // Contracts reachable via call graph from this function
   reachableContracts: ReachableContract[]
   // Total funds in reachable contracts
   totalReachableFundsUsd: number
+  // Total token market cap in reachable contracts
+  totalReachableTokenValueUsd: number
   // Number of external calls that couldn't be resolved
   unresolvedCallsCount: number
 }
@@ -89,6 +95,10 @@ export interface AdminDetailWithCapital extends AdminDetail {
   totalDirectCapital: number
   // Sum of funds in all reachable contracts (deduplicated across functions)
   totalReachableCapital: number
+  // Sum of token market caps in direct contracts
+  totalDirectTokenValue: number
+  // Sum of token market caps in all reachable contracts (deduplicated)
+  totalReachableTokenValue: number
   // Number of unique contracts this admin can affect
   uniqueContractsAffected: number
 }
@@ -484,6 +494,7 @@ export interface DependencyModuleScore extends ModuleScore {
 export interface AdminModuleScore extends ModuleScore {
   breakdown?: AdminDetail[] | AdminDetailWithCapital[]
   totalCapitalAtRisk?: number
+  totalTokenValueAtRisk?: number
 }
 
 export interface ApiV2ScoreResponse {
