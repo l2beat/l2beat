@@ -25,6 +25,7 @@ export function getAggregatedTransfer(
   group: InteropTransferRecord[],
   options?: {
     calculateValueInFlight?: boolean
+    calculateNetMinted?: boolean
   },
 ): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp'> {
   const first = group[0]
@@ -34,6 +35,8 @@ export function getAggregatedTransfer(
   let srcValueUsd: number | undefined = undefined
   let dstValueUsd: number | undefined = undefined
   let valueInFlight: number | undefined = undefined
+  let mintedValueUsd = 0
+  let burnedValueUsd = 0
   let identifiedCount = 0
   let countUnder100 = 0
   let count100To1K = 0
@@ -91,6 +94,15 @@ export function getAggregatedTransfer(
         (valueInFlight ?? 0) +
         (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0) * transfer.duration
     }
+
+    if (options?.calculateNetMinted) {
+      if (transfer.srcWasBurned === false && transfer.dstWasMinted) {
+        mintedValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
+      }
+      if (transfer.srcWasBurned && transfer.dstWasMinted === false) {
+        burnedValueUsd += transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
+      }
+    }
   }
 
   return {
@@ -102,6 +114,9 @@ export function getAggregatedTransfer(
     dstValueUsd: dstValueUsd ? Math.round(dstValueUsd * 100) / 100 : undefined,
     avgValueInFlight: valueInFlight
       ? Math.round((valueInFlight / UnixTime.DAY) * 100) / 100
+      : undefined,
+    netMinted: options?.calculateNetMinted
+      ? Math.round((mintedValueUsd - burnedValueUsd) * 100) / 100
       : undefined,
     countUnder100,
     count100To1K,

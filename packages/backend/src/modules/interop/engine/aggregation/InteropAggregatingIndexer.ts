@@ -45,6 +45,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
           id: config.id,
           ...getAggregatedTransfer(group, {
             calculateValueInFlight: config.bridgeType === 'nonMinting',
+            calculateNetMinted: config.bridgeType === 'lockAndMint',
           }),
         })
 
