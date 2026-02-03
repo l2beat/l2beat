@@ -4,7 +4,7 @@ import type {
   Database,
   InteropTransferRecord,
 } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import {
@@ -41,7 +41,10 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       for (const [bridgeType, actualRecords] of Object.entries(
         groupedByBridgeType,
       )) {
-        if (bridgeType === config.bridgeType) {
+        if (
+          !config.showAlways ||
+          config.showAlways.includes(bridgeType as InteropBridgeType)
+        ) {
           continue
         }
 
@@ -54,31 +57,30 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
           bridgeType,
         })
       }
-      const actualRecords = groupedByBridgeType[config.bridgeType]
 
-      const grouped = groupBy(
-        actualRecords,
-        (x) => `${x.srcChain}-${x.dstChain}`,
-      )
+      for (const [type, records] of Object.entries(groupedByBridgeType)) {
+        const grouped = groupBy(records, (x) => `${x.srcChain}-${x.dstChain}`)
+        const bridgeType = type as InteropBridgeType
 
-      for (const group of Object.values(grouped)) {
-        aggregatedTransfers.push({
-          timestamp: to,
-          id: config.id,
-          bridgeType: config.bridgeType,
-          ...getAggregatedTransfer(group, {
-            calculateValueInFlight: config.bridgeType === 'nonMinting',
-          }),
-        })
-
-        aggregatedTokens.push(
-          ...getAggregatedTokens(group).map((token) => ({
+        for (const group of Object.values(grouped)) {
+          aggregatedTransfers.push({
             timestamp: to,
             id: config.id,
-            bridgeType: config.bridgeType,
-            ...token,
-          })),
-        )
+            bridgeType,
+            ...getAggregatedTransfer(group, {
+              calculateValueInFlight: bridgeType === 'nonMinting',
+            }),
+          })
+
+          aggregatedTokens.push(
+            ...getAggregatedTokens(group).map((token) => ({
+              timestamp: to,
+              id: config.id,
+              bridgeType,
+              ...token,
+            })),
+          )
+        }
       }
     }
 
