@@ -85,7 +85,9 @@ export function explore(rows: DataRow[]) {
     const ratioWindow = pick.lastNDays(counts, RATIO_WINDOW_DAYS)
     const flatLineWindow = pick.lastNDays(counts, FLAT_LINE_WINDOW_DAYS)
 
-    const isFlatLine = detect.flatLine(flatLineWindow)
+    const isFlatLine =
+      flatLineWindow.length >= FLAT_LINE_WINDOW_DAYS &&
+      detect.flatLine(flatLineWindow)
     const isRatioDrop = detect.ratioDrop(ratioWindow)
     const isRatioSpike = detect.ratioSpike(ratioWindow)
 
