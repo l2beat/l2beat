@@ -24,7 +24,12 @@ const INITIAL_DATA: AverageDurationData & { volume: number } = {
 
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  durationSplitMap: Map<
+    string,
+    NonNullable<
+      InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
+    >
+  >,
 ) {
   const protocolsDataMap = new Map<string, ProtocolData>()
 
@@ -96,9 +101,14 @@ export function getProtocolsDataMap(
 
 function getDirection(
   record: { srcChain: string; dstChain: string },
-  durationSplit: NonNullable<InteropConfig['durationSplit']> | undefined,
+  durationSplit:
+    | NonNullable<
+        InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
+      >
+    | undefined,
 ): 'in' | 'out' | null {
-  if (!durationSplit) return null
+  if (!durationSplit || durationSplit === 'unknown') return null
+
   if (
     record.srcChain === durationSplit.in.from &&
     record.dstChain === durationSplit.in.to

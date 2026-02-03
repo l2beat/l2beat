@@ -584,12 +584,25 @@ Verify:
 4. From the repo root dir:  \`cargo risczero build --manifest-path crates/aggregation/guest/set-builder/Cargo.toml\` to build elf binaries from sources. This command should output correct ImageID.
     `,
   },
+  '989994135429182905628199499137734285064642484443466268071170571058909750176':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2026_13)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/applicative_bootloader',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
   '37889379279861089970868356983774360253508326951064758033885675883862334778':
     {
       title:
         'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
       description:
         'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/simple_bootloader',
       proverSystemProject: ProjectId('stwo'),
       verificationStatus: 'notVerified',
     },
