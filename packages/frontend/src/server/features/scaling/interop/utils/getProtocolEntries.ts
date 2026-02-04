@@ -1,13 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
-import {
-  INTEROP_CHAINS,
-  type InteropConfig,
-  type Project,
-} from '@l2beat/config'
+import type { InteropChain, InteropConfig, Project } from '@l2beat/config'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import type { AggregatedInteropTransferWithTokens } from '../types'
+import { getInteropChains } from './getInteropChains'
 import { getProtocolsDataMap } from './getProtocolsDataMap'
 
 export type TokenData = {
@@ -71,6 +68,7 @@ export function getProtocolEntries(
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolEntry[] {
   const logger = getLogger().for('getProtocolsByType')
+  const interopChains = getInteropChains()
 
   const customDurationConfigMap = new Map<
     string,
@@ -133,6 +131,7 @@ export function getProtocolEntries(
         chains: getChainsData(
           key,
           data.chains,
+          interopChains,
           customDurationConfigMap,
           logger,
         ),
@@ -209,6 +208,7 @@ function getTokensData(
 function getChainsData(
   protocolId: string,
   chains: Map<string, AverageDurationData & { volume: number }>,
+  enabledInteropChains: InteropChain[],
   customDurationConfigMap: Map<
     string,
     NonNullable<
@@ -219,7 +219,7 @@ function getChainsData(
 ): ChainData[] {
   return Array.from(chains.entries())
     .map(([chainId, chainData]) => {
-      const chain = INTEROP_CHAINS.find((c) => c.id === chainId)
+      const chain = enabledInteropChains.find((c) => c.id === chainId)
       if (!chain) {
         logger.warn(`Chain not found: ${chainId}`)
         return undefined
