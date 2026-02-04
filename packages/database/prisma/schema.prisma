@@ -566,6 +566,8 @@ model AggregatedInteropToken {
   srcChain         String   @db.VarChar(255)
   dstChain         String   @db.VarChar(255)
   abstractTokenId  String   @db.VarChar(6)
+  mintedValueUsd   Float?   @db.Real
+  burnedValueUsd   Float?   @db.Real
   transferCount    Int
   totalDurationSum Int
   volume           Float    @db.Real
