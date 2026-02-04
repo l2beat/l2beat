@@ -596,3 +596,12 @@ This repository is a fork of L2BEAT. To maintain easy upstream merges:
    - `packages/discovery/src/discovery/handlers/defidisco/`
 3. **If a PR contains formatting changes to upstream files**, request that the author revert those changes before approval
 4. **Biome is configured project-wide** but should only be enforced on DefidDisco code to avoid massive diffs with upstream
+
+### Documentation Requirements
+
+**PRs that add or change features must include documentation updates:**
+
+1. **CLAUDE.md** — Update the relevant feature section with new function names, file paths, data structures, or design decisions
+2. **`docs/researchers/getting-started.md`** — If the feature affects the researcher workflow, add or update the relevant section
+3. **`docs/developers/architecture.md`** — If the feature changes backend data flow or system architecture, update the relevant subsection
+4. **Request changes** on PRs that introduce new features without corresponding documentation
