@@ -123,6 +123,19 @@ export class WormholePlugin implements InteropPluginResyncable {
     // Try to find destination chain
     let $dstChain: string | undefined
 
+    // Portal Token Bridge: extract destination chain from payload
+    if (
+      !$dstChain &&
+      network.tokenBridge &&
+      senderAddress === network.tokenBridge
+    ) {
+      const toChainId = extractTokenBridgeDestChain(parsed.payload)
+      if (toChainId !== undefined) {
+        const dstNetwork = networks.find((n) => n.wormholeChainId === toChainId)
+        $dstChain = dstNetwork?.chain ?? `Unknown_${toChainId}`
+      }
+    }
+
     // Folks Finance: find SendMessage event after LogMessagePublished
     if (!$dstChain) {
       for (const candidateLog of input.txLogs) {
@@ -159,4 +172,31 @@ export class WormholePlugin implements InteropPluginResyncable {
   }
   // no matching because wormhole matches by (msg.sender,sequence) (sender=emitter in wormhole core contracts, not to be confused with event emitter),
   // of which the destination event depends on the app layer
+}
+
+// Portal Token Bridge transfer payload format:
+// [0..1)    payloadType (1 byte) - 0x01 for transfer, 0x03 for transferWithPayload
+// [1..33)   amount (32 bytes)
+// [33..65)  tokenAddress (32 bytes)
+// [65..67)  tokenChain (2 bytes)
+// [67..99)  to (32 bytes)
+// [99..101) toChain (2 bytes)
+function extractTokenBridgeDestChain(payload: string): number | undefined {
+  try {
+    // Remove 0x prefix if present
+    const data = payload.startsWith('0x') ? payload.slice(2) : payload
+
+    // Check minimum length: payloadType(2) + amount(64) + tokenAddr(64) + tokenChain(4) + to(64) + toChain(4) = 202
+    if (data.length < 202) return undefined
+
+    // Check payload type (first byte)
+    const payloadType = Number.parseInt(data.slice(0, 2), 16)
+    if (payloadType !== 1 && payloadType !== 3) return undefined
+
+    // Extract toChain at chars 198-202 (bytes 99-101)
+    const toChainHex = data.slice(198, 202)
+    return Number.parseInt(toChainHex, 16)
+  } catch {
+    return undefined
+  }
 }
