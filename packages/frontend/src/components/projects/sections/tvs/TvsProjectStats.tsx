@@ -1,4 +1,6 @@
 import type { ProjectTvsInfo } from '@l2beat/config'
+import { useEffect } from 'react'
+import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
@@ -14,12 +16,23 @@ export function TvsProjectStats({
   tvsInfo: ProjectTvsInfo | undefined
   projectId: string
 }) {
+  const { range } = useTvsChartControlsContext()
+  const utils = api.useUtils()
   const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { data, isLoading } = api.tvs.table.useQuery({
     type: 'projects',
     projectIds: [projectId],
     excludeRwaRestrictedTokens,
   })
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we want to invalidate on range change, to have chart and stats in sync
+  useEffect(() => {
+    utils.tvs.table.invalidate({
+      type: 'projects',
+      projectIds: [projectId],
+      excludeRwaRestrictedTokens,
+    })
+  }, [range, utils, projectId, excludeRwaRestrictedTokens])
 
   const projectData = data?.projects[projectId]
 
