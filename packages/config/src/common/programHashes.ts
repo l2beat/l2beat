@@ -613,8 +613,8 @@ cd cairo-lang
 git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
 \`\`\`
 
-4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](https://l2beat.com/files/BUILD_ADDITION) at the end.
-5. Copy [this hash_bootloaders.py script](https://l2beat.com/files/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
 6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
       `,
     },
@@ -647,8 +647,8 @@ cd cairo-lang
 git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
 \`\`\`
 
-4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](https://l2beat.com/files/BUILD_ADDITION) at the end.
-5. Copy [this hash_bootloaders.py script](https://l2beat.com/files/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
 6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
       `,
     },
