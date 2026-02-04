@@ -4,7 +4,7 @@ import {
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
-  type InteropBridgeType,
+  type KnownInteropBridgeType,
   type ProjectId,
   type StringWithAutocomplete,
   TokenId,
@@ -1258,11 +1258,11 @@ export interface InteropConfig {
    * However if there is no records for a given bridge type, we don't show it on the dashboard.
    * You can configure which bridge types to show always.
    */
-  showAlways?: InteropBridgeType[]
+  showAlways?: KnownInteropBridgeType[]
   plugins: InteropPlugin[]
   /** If configured avg. duration it able will be split into two parts, depending on the config.
    Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
-  durationSplit?: Partial<Record<InteropBridgeType, InteropDurationSplit>>
+  durationSplit?: Partial<Record<KnownInteropBridgeType, InteropDurationSplit>>
 }
 
 export type InteropPlugin = {

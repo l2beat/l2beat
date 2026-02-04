@@ -1,11 +1,11 @@
-import type { InteropBridgeType } from '@l2beat/shared-pure'
+import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
   from: string[],
   to: string[],
-  type?: InteropBridgeType,
+  type?: KnownInteropBridgeType,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
   const db = getDb()
   const latestTimestamp =

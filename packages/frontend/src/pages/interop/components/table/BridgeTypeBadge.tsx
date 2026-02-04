@@ -1,4 +1,4 @@
-import type { InteropBridgeType } from '@l2beat/shared-pure'
+import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { cn } from '~/utils/cn'
 
 const typeToLabel = {
@@ -17,7 +17,7 @@ const typeToLabel = {
 } as const
 
 interface BridgeTypeBadgeProps {
-  bridgeTypes: InteropBridgeType[]
+  bridgeTypes: KnownInteropBridgeType[]
   className?: string
 }
 

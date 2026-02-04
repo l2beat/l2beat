@@ -3,7 +3,7 @@ import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
 } from '@l2beat/database'
-import { InteropBridgeType } from '@l2beat/shared-pure'
+import { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 export type ProtocolEntry = {
@@ -15,7 +15,7 @@ export type ProtocolEntry = {
     name: string
     iconUrl: string
   }
-  bridgeTypes: InteropBridgeType[]
+  bridgeTypes: KnownInteropBridgeType[]
   volume: number
   tokens: TokenData[]
   chains: ChainData[]
@@ -29,12 +29,12 @@ export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
   from: v.array(v.string()),
   to: v.array(v.string()),
-  type: InteropBridgeType.optional(),
+  type: KnownInteropBridgeType.optional(),
 })
 
 export type InteropSubpageParams = v.infer<typeof InteropSubpageParams>
 export const InteropSubpageParams = v.object({
-  type: InteropBridgeType,
+  type: KnownInteropBridgeType,
   from: v.array(v.string()),
   to: v.array(v.string()),
 })
@@ -104,5 +104,5 @@ export type AverageDuration =
 
 export type DurationSplitMap = Map<
   string,
-  Map<InteropBridgeType, NonNullable<InteropDurationSplit>>
+  Map<KnownInteropBridgeType, NonNullable<InteropDurationSplit>>
 >

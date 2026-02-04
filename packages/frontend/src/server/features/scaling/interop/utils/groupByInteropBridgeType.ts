@@ -1,8 +1,8 @@
-import type { InteropBridgeType } from '@l2beat/shared-pure'
+import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 
 export type GroupedInteropEntries<
-  T extends { bridgeTypes: InteropBridgeType[] },
+  T extends { bridgeTypes: KnownInteropBridgeType[] },
 > = {
   nonMinting: T[]
   lockAndMint: T[]
@@ -10,7 +10,7 @@ export type GroupedInteropEntries<
 }
 
 export function groupByInteropBridgeType<
-  T extends { bridgeTypes: InteropBridgeType[] },
+  T extends { bridgeTypes: KnownInteropBridgeType[] },
 >(projects: T[]): GroupedInteropEntries<T> {
   const result: GroupedInteropEntries<T> = {
     nonMinting: [],

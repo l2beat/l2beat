@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { INTEROP_CHAINS } from '@l2beat/config'
-import type { InteropBridgeType } from '@l2beat/shared-pure'
+import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
 import type { AverageDurationData, ChainData, DurationSplitMap } from '../types'
@@ -8,7 +8,7 @@ import { getAverageDuration } from './getAverageDuration'
 
 type Params = {
   projectId: string
-  bridgeType: InteropBridgeType | undefined
+  bridgeType: KnownInteropBridgeType | undefined
   chains: Map<
     string,
     AverageDurationData & {

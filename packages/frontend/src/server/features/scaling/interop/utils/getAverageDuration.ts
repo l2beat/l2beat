@@ -1,5 +1,5 @@
 import type { InteropDurationSplit, Project } from '@l2beat/config'
-import type { InteropBridgeType } from '@l2beat/shared-pure'
+import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import type {
   AverageDuration,
   AverageDurationData,
@@ -9,7 +9,7 @@ import type {
 
 export function getAverageDuration(
   projectId: string,
-  bridgeType: InteropBridgeType | undefined,
+  bridgeType: KnownInteropBridgeType | undefined,
   data: AverageDurationData,
   durationSplitMap: DurationSplitMap | undefined,
 ): Exclude<AverageDuration, UnknownAverageDuration> {
@@ -57,14 +57,14 @@ export function buildDurationSplitMap(
     if (!projectDurationSplits) continue
 
     const bridgeTypeMap = new Map<
-      InteropBridgeType,
+      KnownInteropBridgeType,
       NonNullable<InteropDurationSplit>
     >()
 
     for (const [bridgeType, durationSplit] of Object.entries(
       projectDurationSplits,
     )) {
-      bridgeTypeMap.set(bridgeType as InteropBridgeType, durationSplit)
+      bridgeTypeMap.set(bridgeType as KnownInteropBridgeType, durationSplit)
     }
 
     durationSplitMap.set(project.id, bridgeTypeMap)

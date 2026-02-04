@@ -1,5 +1,5 @@
 import type { InteropDurationSplit } from '@l2beat/config'
-import { type InteropBridgeType, unique } from '@l2beat/shared-pure'
+import { type KnownInteropBridgeType, unique } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   AverageDurationData,
@@ -9,7 +9,7 @@ import type {
 type TokensAndChainsData = AverageDurationData & { volume: number }
 
 export interface ProtocolData extends AverageDurationData {
-  bridgeTypes: InteropBridgeType[]
+  bridgeTypes: KnownInteropBridgeType[]
   volume: number
   tokens: Map<string, TokensAndChainsData>
   chains: Map<string, TokensAndChainsData>
@@ -35,10 +35,10 @@ export function getProtocolsDataMapByBridgeType(
   records: AggregatedInteropTransferWithTokens[],
   durationSplitMap: DurationSplitMap | undefined,
   transfersTimeModeMap: Map<string, 'unknown'>,
-): Map<string, Map<InteropBridgeType, ProtocolData>> {
+): Map<string, Map<KnownInteropBridgeType, ProtocolData>> {
   const protocolsDataMap = new Map<
     string,
-    Map<InteropBridgeType, ProtocolData>
+    Map<KnownInteropBridgeType, ProtocolData>
   >()
 
   for (const record of records) {
