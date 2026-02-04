@@ -18,8 +18,8 @@ import {
   type InteropPlugins,
 } from '../plugins'
 import type { InteropEvent } from '../plugins/types'
-import type { Example, RunResult } from './core'
 import { getAdditionalChainsForConfigs } from './configAdditionalChains'
+import type { Example, RunResult } from './core'
 import { RpcReplay } from './snapshot/replay'
 import {
   type ExampleInputs,
