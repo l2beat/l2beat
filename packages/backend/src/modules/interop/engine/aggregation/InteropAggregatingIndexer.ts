@@ -86,12 +86,19 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       }
     }
 
-    this.logger.warn(
-      'Some bridge types were automatically detected and are not defined in configs',
-      {
-        missingInConfigMap: Object.fromEntries(missingInConfigMap.entries()),
-      },
-    )
+    if (missingInConfigMap.size > 0) {
+      this.logger.warn(
+        'Some bridge types were automatically detected and are not defined in configs',
+        {
+          missingInConfigs: Array.from(missingInConfigMap.entries()).map(
+            ([key, value]) => ({
+              id: key,
+              ...Object.fromEntries(value.entries()),
+            }),
+          ),
+        },
+      )
+    }
 
     await this.$.db.transaction(async () => {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
