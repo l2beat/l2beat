@@ -97,8 +97,8 @@ const tokensByVolumeColumn = columnHelper.accessor('tokens', {
 
 const averageDurationColumn = columnHelper.accessor(
   (row) =>
-    row.averageDuration === 'unknown'
-      ? 'unknown'
+    row.averageDuration.type === 'unknown'
+      ? undefined
       : row.averageDuration.type === 'single'
         ? row.averageDuration.duration
         : (row.averageDuration.in.duration ??
@@ -107,6 +107,7 @@ const averageDurationColumn = columnHelper.accessor(
   {
     header: 'Last 24h avg.\ntransfer time',
     invertSorting: true,
+    sortUndefined: 'last',
     meta: {
       align: 'right',
       headClassName: 'text-2xs',

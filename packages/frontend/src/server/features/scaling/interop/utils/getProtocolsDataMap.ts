@@ -1,9 +1,10 @@
-import type { InteropConfig, InteropDurationSplit } from '@l2beat/config'
+import type { InteropDurationSplit } from '@l2beat/config'
 import { type InteropBridgeType, unique } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   AverageDurationData,
 } from '../types'
+import type { DurationSplitMap } from './interopEntriesCommon'
 
 interface ProtocolData extends AverageDurationData {
   bridgeTypes: InteropBridgeType[]
@@ -26,10 +27,8 @@ const INITIAL_DATA: AverageDurationData & { volume: number } = {
 
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
-  durationSplitMap: Map<
-    string,
-    NonNullable<InteropDurationSplit | InteropConfig['transfersTimeMode']>
-  >,
+  durationSplitMap: DurationSplitMap | undefined,
+  transfersTimeModeMap: Map<string, 'unknown'>,
   makeKey: (record: AggregatedInteropTransferWithTokens) => string,
 ) {
   const protocolsDataMap = new Map<string, ProtocolData>()
@@ -51,8 +50,9 @@ export function getProtocolsDataMap(
       identifiedTransferCount: 0,
     }
 
-    const durationSplit = durationSplitMap.get(key)
-    const direction = getDirection(record, durationSplit)
+    const durationSplit = durationSplitMap?.get(key)
+    const transfersTimeMode = transfersTimeModeMap.get(key)
+    const direction = getDirection(record, durationSplit, transfersTimeMode)
 
     for (const token of record.tokens) {
       const currentToken = current.tokens.get(token.abstractTokenId)
@@ -105,11 +105,10 @@ export function getProtocolsDataMap(
 
 function getDirection(
   record: { srcChain: string; dstChain: string },
-  durationSplit:
-    | NonNullable<InteropDurationSplit | InteropConfig['transfersTimeMode']>
-    | undefined,
+  durationSplit: InteropDurationSplit | undefined,
+  transfersTimeMode: 'unknown' | undefined,
 ): 'in' | 'out' | null {
-  if (!durationSplit || durationSplit === 'unknown') return null
+  if (!durationSplit || transfersTimeMode === 'unknown') return null
 
   if (
     record.srcChain === durationSplit.in.from &&

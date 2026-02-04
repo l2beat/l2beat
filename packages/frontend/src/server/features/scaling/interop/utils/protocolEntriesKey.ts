@@ -1,13 +1,10 @@
 import { assert, type InteropBridgeType } from '@l2beat/shared-pure'
 
-export function makeProtocolEntriesKey(
-  id: string,
-  bridgeType: InteropBridgeType,
-) {
+export function makeByBridgeTypeKey(id: string, bridgeType: InteropBridgeType) {
   return `${id}::${bridgeType}`
 }
 
-export function parseProtocolEntriesKey(key: string): {
+export function parseByBridgeTypeKey(key: string): {
   id: string
   bridgeType: InteropBridgeType
 } {

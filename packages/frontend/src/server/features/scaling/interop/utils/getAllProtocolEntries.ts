@@ -1,8 +1,4 @@
-import type {
-  InteropConfig,
-  InteropDurationSplit,
-  Project,
-} from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import { assert, type InteropBridgeType } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
 import type { AggregatedInteropTransferWithTokens } from '../types'
@@ -15,7 +11,6 @@ import {
   getTokensData,
   type TokenData,
 } from './interopEntriesCommon'
-import { makeProtocolEntriesKey } from './protocolEntriesKey'
 
 export type AllProtocolsEntry = {
   id: string
@@ -41,21 +36,10 @@ export function getAllProtocolEntries(
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
 ): AllProtocolsEntry[] {
-  const customDurationConfigMap = new Map<
-    string,
-    NonNullable<InteropDurationSplit | InteropConfig['transfersTimeMode']>
-  >()
+  const transfersTimeModeMap = new Map<string, 'unknown'>()
   for (const project of interopProjects) {
-    for (const [bridgeType, durationSplit] of Object.entries(
-      project.interopConfig.durationSplit ?? {},
-    )) {
-      customDurationConfigMap.set(
-        makeProtocolEntriesKey(project.id, bridgeType as InteropBridgeType),
-        durationSplit,
-      )
-    }
     if (project.interopConfig.transfersTimeMode) {
-      customDurationConfigMap.set(
+      transfersTimeModeMap.set(
         project.id,
         project.interopConfig.transfersTimeMode,
       )
@@ -64,7 +48,8 @@ export function getAllProtocolEntries(
 
   const protocolsDataMap = getProtocolsDataMap(
     records,
-    customDurationConfigMap,
+    undefined,
+    transfersTimeModeMap,
     (record) => record.id,
   )
 
@@ -99,16 +84,19 @@ export function getAllProtocolEntries(
           key,
           data.tokens,
           tokensDetailsMap,
-          customDurationConfigMap,
+          undefined,
           data.transferCount - data.identifiedTransferCount,
         ),
-        chains: getChainsData(key, data.chains, customDurationConfigMap),
+        chains: getChainsData(key, data.chains, undefined),
         transferCount: data.transferCount,
         averageValue:
           data.identifiedTransferCount > 0
             ? data.volume / data.identifiedTransferCount
             : 0,
-        averageDuration: getAverageDuration(key, data, customDurationConfigMap),
+        averageDuration:
+          project.interopConfig.transfersTimeMode === 'unknown'
+            ? { type: 'unknown' as const }
+            : getAverageDuration(key, data, undefined),
         averageValueInFlight: data.averageValueInFlight,
       }
     })
