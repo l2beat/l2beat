@@ -672,6 +672,12 @@ function makeInteropEventRecord(
     matched: false,
     unsupported: false,
     direction: undefined,
+    abstractTokenId: undefined,
+    symbol: undefined,
+    amount: undefined,
+    price: undefined,
+    valueUsd: undefined,
+    isProcessed: false,
     ...overrides,
   }
 }

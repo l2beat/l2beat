@@ -77,6 +77,8 @@ describe(InteropFinancialsLoop.name, () => {
       const mockTransfers = [
         {
           transferId: 'msg1',
+          srcEventId: 'evt1-src',
+          dstEventId: 'evt1-dst',
           srcChain: 'ethereum',
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken1)),
           srcRawAmount: BigInt('1000000000000000000'),
@@ -86,6 +88,8 @@ describe(InteropFinancialsLoop.name, () => {
         },
         {
           transferId: 'msg2',
+          srcEventId: 'evt2-src',
+          dstEventId: 'evt2-dst',
           srcChain: 'ethereum',
           srcTokenAddress: 'native',
           srcRawAmount: BigInt('500000000000000000'),
@@ -95,6 +99,8 @@ describe(InteropFinancialsLoop.name, () => {
         },
         {
           transferId: 'msg3',
+          srcEventId: 'evt3-src',
+          dstEventId: 'evt3-dst',
           srcChain: 'unsupported',
           dstChain: 'ethereum',
           dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken3)),
@@ -117,10 +123,14 @@ describe(InteropFinancialsLoop.name, () => {
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
+      const interopEvent = mockObject<Database['interopEvent']>({
+        updateFinancials: mockFn().resolvesTo(undefined),
+      })
       const transaction = mockFn(async (fn: any) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
         interopTransfer,
+        interopEvent,
         transaction,
       })
 
@@ -210,6 +220,7 @@ describe(InteropFinancialsLoop.name, () => {
       )
 
       expect(interopTransfer.updateFinancials).toHaveBeenCalledTimes(3)
+      expect(interopEvent.updateFinancials).toHaveBeenCalledTimes(6)
 
       const firstUpdate: InteropTransferUpdate = {
         srcAbstractTokenId: '123456:ethereum:ETH',
@@ -227,6 +238,26 @@ describe(InteropFinancialsLoop.name, () => {
         'msg1',
         firstUpdate,
       )
+      expect(interopEvent.updateFinancials).toHaveBeenCalledWith(
+        'evt1-src',
+        {
+          abstractTokenId: '123456:ethereum:ETH',
+          symbol: 'ETH',
+          price: 3000,
+          amount: 1,
+          valueUsd: 3000,
+        },
+      )
+      expect(interopEvent.updateFinancials).toHaveBeenCalledWith(
+        'evt1-dst',
+        {
+          abstractTokenId: 'abcdef:arbitrum:ARB',
+          symbol: 'ARB',
+          price: 1.5,
+          amount: 2,
+          valueUsd: 3,
+        },
+      )
 
       const secondUpdate: InteropTransferUpdate = {
         srcAbstractTokenId: 'ethereum+native',
@@ -239,6 +270,17 @@ describe(InteropFinancialsLoop.name, () => {
         'msg2',
         secondUpdate,
       )
+      expect(interopEvent.updateFinancials).toHaveBeenCalledWith(
+        'evt2-src',
+        {
+          abstractTokenId: 'ethereum+native',
+          symbol: 'ETH',
+          price: 3000,
+          amount: 0.5,
+          valueUsd: 1500,
+        },
+      )
+      expect(interopEvent.updateFinancials).toHaveBeenCalledWith('evt2-dst', {})
 
       const thirdUpdate: InteropTransferUpdate = {
         dstSymbol: 'TOKEN',
@@ -250,6 +292,17 @@ describe(InteropFinancialsLoop.name, () => {
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith(
         'msg3',
         thirdUpdate,
+      )
+      expect(interopEvent.updateFinancials).toHaveBeenCalledWith('evt3-src', {})
+      expect(interopEvent.updateFinancials).toHaveBeenCalledWith(
+        'evt3-dst',
+        {
+          abstractTokenId: '222222:ethereum:TOKEN',
+          symbol: 'TOKEN',
+          price: 50,
+          amount: 200000000000,
+          valueUsd: 10000000000000,
+        },
       )
 
       expect(transaction).toHaveBeenCalledTimes(1)
@@ -269,6 +322,8 @@ describe(InteropFinancialsLoop.name, () => {
         {
           plugin: 'plugin',
           transferId: 'msg1',
+          srcEventId: 'evt1-src',
+          dstEventId: 'evt1-dst',
           srcChain: 'ethereum',
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken1)),
           srcRawAmount: '1000000000000000000',
@@ -286,10 +341,14 @@ describe(InteropFinancialsLoop.name, () => {
         getUnprocessed: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
+      const interopEvent = mockObject<Database['interopEvent']>({
+        updateFinancials: mockFn().resolvesTo(undefined),
+      })
       const transaction = mockFn(async (fn: any) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
         interopTransfer,
+        interopEvent,
         transaction,
       })
 
@@ -321,6 +380,14 @@ describe(InteropFinancialsLoop.name, () => {
 
       // Should still update with empty financials
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {})
+      expect(interopEvent.updateFinancials).toHaveBeenCalledWith(
+        'evt1-src',
+        {},
+      )
+      expect(interopEvent.updateFinancials).toHaveBeenCalledWith(
+        'evt1-dst',
+        {},
+      )
     })
   })
 })

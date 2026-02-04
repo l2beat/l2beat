@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database, InteropTransferUpdate } from '@l2beat/database'
+import type {
+  Database,
+  InteropEventUpdate,
+  InteropTransferUpdate,
+} from '@l2beat/database'
 import {
   Address32,
   assertUnreachable,
@@ -80,11 +84,17 @@ export class InteropFinancialsLoop extends TimeLoop {
       UnixTime.DAY,
     )
 
-    const updates: { id: string; update: InteropTransferUpdate }[] =
-      unprocessed.map((t) => {
-        const update: InteropTransferUpdate = {}
-        if (t.srcId) {
-          this.applyTokenUpdate(
+    const updates: {
+      id: string
+      update: InteropTransferUpdate
+      srcEventId: string
+      dstEventId: string
+      srcEventUpdate: InteropEventUpdate
+      dstEventUpdate: InteropEventUpdate
+    }[] = unprocessed.map((t) => {
+      const update: InteropTransferUpdate = {}
+      const srcTokenUpdate = t.srcId
+        ? this.applyTokenUpdate(
             tokenInfos,
             prices,
             t.srcId,
@@ -92,9 +102,9 @@ export class InteropFinancialsLoop extends TimeLoop {
             'src',
             update,
           )
-        }
-        if (t.dstId) {
-          this.applyTokenUpdate(
+        : undefined
+      const dstTokenUpdate = t.dstId
+        ? this.applyTokenUpdate(
             tokenInfos,
             prices,
             t.dstId,
@@ -102,13 +112,30 @@ export class InteropFinancialsLoop extends TimeLoop {
             'dst',
             update,
           )
-        }
-        return { id: t.transfer.transferId, update }
-      })
+        : undefined
+
+      return {
+        id: t.transfer.transferId,
+        update,
+        srcEventId: t.transfer.srcEventId,
+        dstEventId: t.transfer.dstEventId,
+        srcEventUpdate: srcTokenUpdate ?? {},
+        dstEventUpdate: dstTokenUpdate ?? {},
+      }
+    })
 
     await this.db.transaction(async () => {
-      for (const { id, update } of updates) {
+      for (const {
+        id,
+        update,
+        srcEventId,
+        dstEventId,
+        srcEventUpdate,
+        dstEventUpdate,
+      } of updates) {
         await this.db.interopTransfer.updateFinancials(id, update)
+        await this.db.interopEvent.updateFinancials(srcEventId, srcEventUpdate)
+        await this.db.interopEvent.updateFinancials(dstEventId, dstEventUpdate)
       }
     })
 
@@ -127,7 +154,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     rawAmount: bigint | undefined,
     prefix: 'src' | 'dst',
     update: InteropTransferUpdate,
-  ) {
+  ): InteropEventUpdate | undefined {
     const tokenUpdate = this.generateTokenUpdate(
       tokenInfos,
       prices,
@@ -151,6 +178,8 @@ export class InteropFinancialsLoop extends TimeLoop {
         ;(update as any)[updateKey] = value
       }
     })
+
+    return tokenUpdate
   }
 
   private generateTokenUpdate(
