@@ -248,6 +248,7 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
             app: 'm0-index',
             srcEvent: logMessagePublished,
             dstEvent: delivery,
+            extraEvents: [sentTransceiverMessage],
           }),
         ]
       }
@@ -319,6 +320,7 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
             app: 'm0-index',
             srcEvent: logMessagePublished,
             dstEvent: received,
+            extraEvents: [sentTransceiverMessage],
           }),
         ]
       }
