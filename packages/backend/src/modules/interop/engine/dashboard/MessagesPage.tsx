@@ -40,7 +40,9 @@ function MessagesTable(props: {
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
-              <td>{e.duration && formatSeconds(e.duration)}</td>
+              <td data-order={e.duration} data-sort={e.duration}>
+                {e.duration && formatSeconds(e.duration)}
+              </td>
               <td>{e.app}</td>
               <td>{e.srcChain}</td>
               <td>

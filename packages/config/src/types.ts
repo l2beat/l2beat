@@ -1243,6 +1243,8 @@ export type InteropPluginName =
 
 export interface InteropConfig {
   name?: string
+  /** If set to `unknown` we show `Unknown` for transfers time. */
+  transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured
    * for projects that include multiple projects (e.g. layerzero which aggregates all tokens + USDT0
    * which is a separate project)

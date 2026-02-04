@@ -1,6 +1,6 @@
 {
   "name": "shared-sharp-verifier",
-  "timestamp": 1768823299,
+  "timestamp": 1770030445,
   "configHash": "0x6bee813c1b46f75d22129b0931ea2f27541a2f65588d1249aa8224674ee9f16e",
   "entries": [
     {
@@ -167,7 +167,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -176,834 +176,22 @@
       }
     },
     {
-      "name": "CpuFrilessVerifier",
-      "address": "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
-      "sourceHashes": [
-        "0x683cac2609eeb80f624fedec43b3622138b0579960bf74162c2f49eebd1e1b4d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907615,
-      "sinceBlock": 23531473,
-      "values": {
-        "$immutable": true,
-        "constructorArgs": [
-          [
-            "eth:0x1BdE14B50e7dAeD71eE14F7e8defaa3d8A7D4420",
-            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
-            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2"
-          ],
-          "eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb",
-          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
-          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
-          "96",
-          "30"
-        ],
-        "getLayoutInfo": { "publicMemoryOffset": 19, "selectedBuiltins": 23 },
-        "PAGE_INFO_ADDRESS_OFFSET": 0,
-        "PAGE_INFO_HASH_OFFSET": 2,
-        "PAGE_INFO_SIZE": 3,
-        "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1
-      },
-      "implementationNames": {
-        "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B": "CpuFrilessVerifier"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "address": "eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x5595d4856475241caf1eea25b1f3921875fcd4f8f0481ef29d2cae21d74394fb"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1": "CpuConstraintPoly"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "FriStatementContract",
-      "address": "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0xdb6522c746b47c8025bdd3942737207a45de03416b891219d4ad3328e3cbcb07"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1721828687,
-      "sinceBlock": 20376781,
-      "values": { "$immutable": true, "hasRegisteredFact": true },
-      "implementationNames": {
-        "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400": "FriStatementContract"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuFrilessVerifier",
-      "address": "eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
-      "sourceHashes": [
-        "0x0bb18873bc3a6a2cc498c681c3bc67777185bf377294eb531123d4529deb8b38"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907591,
-      "sinceBlock": 23531471,
-      "values": {
-        "$immutable": true,
-        "constructorArgs": [
-          [
-            "eth:0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9",
-            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
-            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
-            "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce",
-            "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771"
-          ],
-          "eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4",
-          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
-          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
-          "96",
-          "30"
-        ],
-        "getLayoutInfo": { "publicMemoryOffset": 19, "selectedBuiltins": 15 },
-        "PAGE_INFO_ADDRESS_OFFSET": 0,
-        "PAGE_INFO_HASH_OFFSET": 2,
-        "PAGE_INFO_SIZE": 3,
-        "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1
-      },
-      "implementationNames": {
-        "eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b": "CpuFrilessVerifier"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "MerkleStatementContract",
-      "address": "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x353a1ed6ef3ef47ed725cf0832c357c4e71680318751a7bbd706d607d8acb7aa"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1721828687,
-      "sinceBlock": 20376781,
-      "values": { "$immutable": true, "hasRegisteredFact": true },
-      "implementationNames": {
-        "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd": "MerkleStatementContract"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuOods",
-      "address": "eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x6e983e16c9f7b72cb7f29f2e7fcb0061acc1622409a2e45534fa03fd05ff9672"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907615,
-      "sinceBlock": 23531473,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb": "CpuOods"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "address": "eth:0x3E727f44Fd2c92bd960AAb86DaAcD1A831B16eba",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x8caeb68cf2d1508fc57800f8ff78ad1b3c9ad8d0f1f6e30998fd012c9b6182ba"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907615,
-      "sinceBlock": 23531473,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x3E727f44Fd2c92bd960AAb86DaAcD1A831B16eba": "CpuConstraintPoly"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "PoseidonPoseidonFullRoundKey2Column",
-      "address": "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b": "PoseidonPoseidonFullRoundKey2Column"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "SHARPVerifierCallProxy",
-      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/SHARPVerifierCallProxy",
-      "sourceHashes": [
-        "0x1cfb47b7d41edbe1b49e9d32ab6b39caae53d74feac405b948cc774b2d8db7a5",
-        "0x7477a4b1d5db367c21e2c2d493553a2f519bd0d4305433a902d9b9322e7b81cb"
-      ],
-      "proxyType": "StarkWare proxy",
-      "description": "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.",
-      "sinceTimestamp": 1635077695,
-      "sinceBlock": 13480127,
-      "values": {
-        "$admin": "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
-        "$immutable": false,
-        "$implementation": "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb",
-        "$pastUpgrades": [
-          [
-            "2021-10-24T13:06:25.000Z",
-            "0x80ebb7a22a207d00e26464db2f8a719d43eb3b836740a693aad13d5ef922f5e4",
-            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
-          ],
-          [
-            "2022-05-02T16:49:21.000Z",
-            "0x604e235c6207b7909f6fc8dc0bd86b410e935dcf2f6f6bd37a5567a89379353a",
-            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
-          ],
-          [
-            "2022-08-07T10:50:09.000Z",
-            "0xc31b74237a0c68aa1b95fe2ed28ad54cf6d7df42a8beab1ea947532c95dda20a",
-            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
-          ],
-          [
-            "2023-03-06T12:34:23.000Z",
-            "0xbaa8ffb1b7e5177dbf75de753b9b2ff2fc313b244ff910cfd6d7f1f6254b6e1a",
-            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
-          ],
-          [
-            "2024-02-26T09:25:23.000Z",
-            "0x31e3caf3940dde662a1e98580259f79963dc5e098793b6519311e201d4e19312",
-            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
-          ],
-          [
-            "2024-02-26T09:25:23.000Z",
-            "0x31e3caf3940dde662a1e98580259f79963dc5e098793b6519311e201d4e19312",
-            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
-          ],
-          [
-            "2024-07-28T10:07:47.000Z",
-            "0x7c71592ea4c455371365d843f1a21bbf647aad7d6fae12f7187650ce24805f00",
-            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
-          ],
-          [
-            "2024-07-28T20:08:35.000Z",
-            "0x4b25445a8e86b4620b9a19f747122b518d8973975ea73aa474b210395e277b66",
-            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
-          ],
-          [
-            "2025-05-12T16:09:35.000Z",
-            "0x0764cd09cc5c9a96b151dd222bf14b9c33111c80bdddf27721a6406f4c0e1f3f",
-            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
-          ],
-          [
-            "2025-10-19T08:27:47.000Z",
-            "0x7b4a25af246b28b6d5bed86942696273a84e57abc629b83072be370df2bdb797",
-            ["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]
-          ],
-          [
-            "2025-12-08T11:08:11.000Z",
-            "0xed93cf713d33ac63297d8c7e2eafc0d9f277b718b4074600536eb9a4205bcb81",
-            ["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]
-          ]
-        ],
-        "$upgradeCount": 11,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
-          "GOVERNANCE_ADMIN": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
-          },
-          "APP_GOVERNOR": {
-            "adminRole": "APP_ROLE_ADMIN",
-            "members": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
-          },
-          "APP_ROLE_ADMIN": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
-          },
-          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "UPGRADE_GOVERNOR": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": []
-          },
-          "SECURITY_ADMIN": {
-            "adminRole": "SECURITY_ADMIN",
-            "members": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
-          },
-          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
-        },
-        "appGovernorAC": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"],
-        "callProxyImplementation": "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066",
-        "customImplOperators": [
-          "eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c",
-          "eth:0xfE325F97146124F3767bFA59899Fa4177fd46D2f",
-          "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284",
-          "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526",
-          "eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C",
-          "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A"
-        ],
-        "customProxyImplementations": [
-          "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
-          "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934",
-          "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
-        ],
-        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
-        "getUpgradeActivationDelay": 691200,
-        "governanceAdminAC": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"],
-        "implementation": "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb",
-        "isFrozen": false,
-        "isNotFinalized": true,
-        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
-        "PROXY_VERSION": "3.0.0",
-        "StarkWareProxy_callImplementation": "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066",
-        "StarkWareProxy_upgradeDelay": 691200,
-        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "upgradeActivationDelayFmt": "8d"
-      },
-      "fieldMeta": {
-        "$admin": { "severity": "HIGH" },
-        "customProxyImplementations": {
-          "severity": "HIGH",
-          "description": "Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call."
-        },
-        "customImplOperators": {
-          "severity": "HIGH",
-          "description": "Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers."
-        }
-      },
-      "implementationNames": {
-        "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "Proxy",
-        "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb": "CallProxy"
-      },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "name": "PoseidonPoseidonPartialRoundKey0Column",
-      "address": "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E": "PoseidonPoseidonPartialRoundKey0Column"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "PoseidonPoseidonFullRoundKey2Column",
-      "address": "eth:0x69833933e59269aB062eAfDe074C059ce5DC7755",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x69833933e59269aB062eAfDe074C059ce5DC7755": "PoseidonPoseidonFullRoundKey2Column"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuFrilessVerifier",
-      "address": "eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
-      "sourceHashes": [
-        "0xdea77b54fa6a0489f5a57f0dc4ade2e0082aa3017b33bb8b4c47b5c693c65383"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": {
-        "$immutable": true,
-        "constructorArgs": [
-          [
-            "eth:0xC716C4E3f68ad6785524f65Df129fC090339dBD8",
-            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
-            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
-            "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce",
-            "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771"
-          ],
-          "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766",
-          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
-          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
-          "96",
-          "30"
-        ],
-        "getLayoutInfo": { "publicMemoryOffset": 21, "selectedBuiltins": 31 },
-        "PAGE_INFO_ADDRESS_OFFSET": 0,
-        "PAGE_INFO_HASH_OFFSET": 2,
-        "PAGE_INFO_SIZE": 3,
-        "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1
-      },
-      "implementationNames": {
-        "eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11": "CpuFrilessVerifier"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuFrilessVerifier",
-      "address": "eth:0x71574057D12541ccDa98643aC56441838353A26D",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
-      "sourceHashes": [
-        "0x16540ae818b59b005fe1cee4b1fbc4d3e29806d95076929b196adc7e3f347522"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": {
-        "$immutable": true,
-        "constructorArgs": [
-          [
-            "eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1",
-            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
-            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
-            "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce",
-            "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771",
-            "eth:0x21578B24F86AdF6f59C406f641F693745C31Ea8F",
-            "eth:0xE5AC9312f30623EB20D435533A4205790aF68Fd0",
-            "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b",
-            "eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0",
-            "eth:0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc"
-          ],
-          "eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA",
-          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
-          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
-          "96",
-          "30"
-        ],
-        "getLayoutInfo": { "publicMemoryOffset": 25, "selectedBuiltins": 191 },
-        "PAGE_INFO_ADDRESS_OFFSET": 0,
-        "PAGE_INFO_HASH_OFFSET": 2,
-        "PAGE_INFO_SIZE": 3,
-        "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1
-      },
-      "implementationNames": {
-        "eth:0x71574057D12541ccDa98643aC56441838353A26D": "CpuFrilessVerifier"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuOods",
-      "address": "eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x01d75ee9eb5d04eb0bdef657f41a7a4953dfc1dbb219b2c2c4504f988d4054da"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907651,
-      "sinceBlock": 23531476,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e": "CpuOods"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "CpuOods",
-      "address": "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x2263b0314ef958372095f3d5a50817b8f1de525cc589a9a6acd462814968c84a"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907615,
-      "sinceBlock": 23531473,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775": "CpuOods"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "CpuOods",
-      "address": "eth:0x99480b7c32C4F8965fF1929a368Dd586C6DC3595",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x0436bd83534187cf17ffbb4cc97b6caab2a1ac66d80a9daef6d6589e93bb4c77"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907615,
-      "sinceBlock": 23531473,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x99480b7c32C4F8965fF1929a368Dd586C6DC3595": "CpuOods"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "address": "eth:0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x7022113b2e37d8a13b820de3fc4a30b173169193b244b19c704a5d9411e37ad0"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907591,
-      "sinceBlock": 23531471,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9": "CpuConstraintPoly"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "address": "eth:0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x23119114187536afb19dd113fa8b7a5e59da2d76ff5ad78bde5efe9dabe09c67"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F": "CpuConstraintPoly"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "EcdsaPointsXColumn",
-      "address": "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907591,
-      "sinceBlock": 23531471,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce": "EcdsaPointsXColumn"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuOods",
-      "address": "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0xeb39302b38f5f5b329700407c9c1c9f7b90dd0550f5bc4d1273e365ff48b5eb3"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766": "CpuOods"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuOods",
-      "address": "eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0xea43d74304db71ee531509d5f054b9172347c79c10ce2ef9fe7da542b11b420b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907591,
-      "sinceBlock": 23531471,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4": "CpuOods"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "PedersenHashPointsYColumn",
-      "address": "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907591,
-      "sinceBlock": 23531471,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2": "PedersenHashPointsYColumn"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuOods",
-      "address": "eth:0xaE325CE505AA13EDC30d48187B05c24A3BaC2707",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x996c7267677d4955986302f31421117e77179197ff49e9dab8e8fff5c0f41257"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907603,
-      "sinceBlock": 23531472,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xaE325CE505AA13EDC30d48187B05c24A3BaC2707": "CpuOods"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "PoseidonPoseidonPartialRoundKey0Column",
-      "address": "eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0": "PoseidonPoseidonPartialRoundKey0Column"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "CpuFrilessVerifier",
-      "address": "eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/CpuFrilessVerifier",
-      "sourceHashes": [
-        "0xcc5a725835dea04291bf4edd2b8b39c4d15358a01b6baa116e9aede7b897fdf4"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907651,
-      "sinceBlock": 23531476,
-      "values": {
-        "$immutable": true,
-        "constructorArgs": [
-          [
-            "eth:0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F",
-            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
-            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
-            "eth:0xdf10757de64811df030cf88bB700B8CC63bAB090",
-            "eth:0xe58327a05F21ab12AB33A4408003A87e571f810D",
-            "eth:0x69833933e59269aB062eAfDe074C059ce5DC7755",
-            "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E",
-            "eth:0xECc282Dc2571E43696d3259490faFa3b98790e20"
-          ],
-          "eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e",
-          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
-          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
-          "96",
-          "30"
-        ],
-        "getLayoutInfo": { "publicMemoryOffset": 21, "selectedBuiltins": 151 },
-        "PAGE_INFO_ADDRESS_OFFSET": 0,
-        "PAGE_INFO_HASH_OFFSET": 2,
-        "PAGE_INFO_SIZE": 3,
-        "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1
-      },
-      "implementationNames": {
-        "eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3": "CpuFrilessVerifier"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "PoseidonPoseidonPartialRoundKey1Column",
-      "address": "eth:0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc": "PoseidonPoseidonPartialRoundKey1Column"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "address": "eth:0xC716C4E3f68ad6785524f65Df129fC090339dBD8",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0xa863111e2d969c242b95e592a09048d8ae0e7c2b8c4e5d237f420f2ae9d6b6b0"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xC716C4E3f68ad6785524f65Df129fC090339dBD8": "CpuConstraintPoly"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "EcdsaPointsYColumn",
-      "address": "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907591,
-      "sinceBlock": 23531471,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771": "EcdsaPointsYColumn"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuOods",
-      "address": "eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x9c476ab40346f6531ff512dbd20c84273a3cca2fb0e870b6aed5c67aa20d32f8"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907627,
-      "sinceBlock": 23531474,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA": "CpuOods"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "address": "eth:0xd8e47340bdC4fB06D37056b1725c653836Cc81E5",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x7deae45fbdef9d73c9faefb89a11904e2f2bd48e4cb9365f1ba55739857cbc62"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907591,
-      "sinceBlock": 23531471,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xd8e47340bdC4fB06D37056b1725c653836Cc81E5": "CpuConstraintPoly"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "PedersenHashPointsXColumn",
-      "address": "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/ignoreComputeSpam",
-      "sourceHashes": [
-        "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1759907591,
-      "sinceBlock": 23531471,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70": "PedersenHashPointsXColumn"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
       "name": "CairoBootloaderProgram",
-      "address": "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917",
+      "address": "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47",
       "type": "Contract",
-      "template": "shared-sharp-verifier/CairoBootloaderProgram",
       "sourceHashes": [
-        "0x42d3a15726c4bd738b1226f33f49c774be8d9cfb84489033d992c4b6c22f4037"
+        "0xf5024ac4eb50233c89b413be0a009ce68c921f1dad29809c3e5a3551b074ca6e"
       ],
       "proxyType": "immutable",
-      "description": "Bootloader program for the SHARPVerifier.",
-      "sinceTimestamp": 1764258527,
-      "sinceBlock": 23891041,
+      "sinceTimestamp": 1768486895,
+      "sinceBlock": 24240673,
       "values": {
         "$immutable": true,
         "getCompiledProgram": [
           "290341444919459839",
           11,
           "1226245742482522112",
-          1147,
+          1148,
           "74168662805676031",
           0,
           "2345108766317314046",
@@ -1913,11 +1101,12 @@
           "5193354012702769152",
           "5191102307378364416",
           "1226245742482522112",
-          74,
+          78,
           "4617174774030761997",
           "5198420613823102976",
           1,
           "5193354051357474816",
+          "5191102285903527936",
           "5191102264428691456",
           "5189976364521848832",
           0,
@@ -1931,20 +1120,21 @@
           16,
           "4617174778325729290",
           "4612389708017532926",
-          "5193354038472572928",
-          "5193354038472572928",
+          "5193354034177605632",
+          "5193354034177605632",
           "5193354038472572928",
           "5191102268723658752",
           "5191102273018626048",
           "5191102277313593344",
           "5191102281608560640",
-          "5191102285903527936",
+          "5193354012702769152",
           "5191102290198495232",
           "5191102294493462528",
           "5191102298788429824",
           "2345108766317314046",
           "146226256843603963",
-          8,
+          9,
+          "5191102208594116608",
           "5191102212889083904",
           "5191102217184051200",
           "5191102221479018496",
@@ -1956,7 +1146,8 @@
           "290341444919459839",
           1,
           "145944781866893311",
-          14,
+          15,
+          "5191102208594116608",
           "5191102212889083904",
           "5191102217184051200",
           "5191102221479018496",
@@ -1966,9 +1157,10 @@
           "5191102242953854976",
           "5191102247248822272",
           "1226245742482522112",
-          73,
+          77,
           "74168662805676031",
-          11,
+          12,
+          "5191102208594116608",
           "5191102212889083904",
           "5191102217184051200",
           "5191102221479018496",
@@ -1977,20 +1169,20 @@
           "5191102234363920384",
           "5191102242953854976",
           "1226245742482522112",
-          121,
+          117,
           "5191102234363920384",
           "5198983563776327680",
           "3618502788666131213697322783095070105623107215331596699973092056135872020480",
           "5191102242953854976",
           "5191102247248822272",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020441",
+          "3618502788666131213697322783095070105623107215331596699973092056135872020438",
           "2345108766317314046",
           "5191102242953854976",
           "5188850464614875136",
           "5188850460319907840",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020364",
+          "3618502788666131213697322783095070105623107215331596699973092056135872020360",
           "4612389708016353279",
           "5188850477499777024",
           "4612389712311320575",
@@ -1998,7 +1190,7 @@
           "5188850473204809728",
           "5188850468909842432",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020356",
+          "3618502788666131213697322783095070105623107215331596699973092056135872020352",
           "4612389716606287871",
           "5198983563776327680",
           3,
@@ -2008,41 +1200,44 @@
           2,
           "5191102247248822272",
           "2345108766317314046",
-          "5188850464614744064",
-          "4622241336496455677",
-          4,
-          "5188850464614744064",
-          "5198420613823168512",
-          2,
-          "5202361254906920960",
-          "5191102242953854976",
-          "5198983563776327680",
-          2,
-          "5188850464614744064",
-          "5188850460319776768",
-          "2345108766317314046",
           "290341444919459839",
           2,
-          "5191102242953854976",
+          "146226256843603965",
+          11,
+          "5191102234363920384",
           "5191102260133724160",
           "5191102264428691456",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872019885",
+          "3618502788666131213697322783095070105623107215331596699973092056135872019892",
+          "5193354051357474816",
+          "5191102238658887680",
+          "74168662805676031",
+          11,
           "4613797087195135997",
+          1,
+          "5191102238658887680",
+          "5191102260133724160",
+          "5191102264428691456",
+          "1226245742482522112",
+          "3618502788666131213697322783095070105623107215331596699973092056135872019532",
+          "5191102234363920384",
+          "5193354047062507520",
+          "4613797087195135996",
           4,
-          "4612389712311320575",
-          "5198983563776327680",
+          "4612389712311189501",
+          "5198983563776196608",
           2,
+          "5193354047062507520",
           "5193354047062507520",
           "5191102264428691456",
           "5191102260133724160",
-          "5188850460319776768",
+          "5188850460319645696",
           "2345108766317314046",
           "290341444919459839",
           3,
           "5191102234363920384",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020444",
+          "3618502788666131213697322783095070105623107215331596699973092056135872020441",
           "4617174778325729280",
           "5191102225773985792",
           "5188850473204678656",
@@ -2051,57 +1246,50 @@
           "5188850468909711360",
           "5188850464615071744",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020226",
-          "146226256843603965",
-          9,
+          "3618502788666131213697322783095070105623107215331596699973092056135872020219",
           "5193353918213488640",
           "5193354047062507520",
+          "5191102221479018496",
           "5188850460320104448",
+          "5191102247248822272",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020432",
-          "74168662805676031",
-          9,
-          "4613797087195135997",
-          1,
-          "5193353918213488640",
-          "5193354047062507520",
-          "5188850460320104448",
-          "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020436",
-          "4617174761145860097",
-          "5193354042767540224",
+          "3618502788666131213697322783095070105623107215331596699973092056135872020429",
+          "4617174756850892801",
+          "5193354038472572928",
           "5188850464614744064",
           "5189976364521848832",
           1,
           "5188850460319776768",
           "5193354038472572928",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020201",
+          "3618502788666131213697322783095070105623107215331596699973092056135872020203",
           "4625618890185932802",
+          "5191102212889083904",
           "5191102217184051200",
-          "5191102221479018496",
-          "5193354042767540224",
+          "5193353901033619456",
+          "5193354038472572928",
           "5191102230068953088",
-          "5198420613820743680",
+          "5198420613820678144",
           1,
           "5191102238658887680",
-          "5188287510364061696",
+          "5188287510363996160",
           "5191102242953854976",
           "5191102247248822272",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020336",
+          "3618502788666131213697322783095070105623107215331596699973092056135872020338",
           "4614641516420235263",
-          "5193354038472572928",
-          "5193354038472572928",
-          "5193354038472572928",
-          "5193354038472572928",
+          "5193354034177605632",
+          "5193354034177605632",
+          "5193354034177605632",
+          "5193354034177605632",
+          "5193354034177605632",
           "5191102264428691456",
           "2345108766317314046",
           "290341444919459839",
           4,
           "5191102238658887680",
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020385",
+          "3618502788666131213697322783095070105623107215331596699973092056135872020389",
           "4617174774030761984",
           "5188287514661584896",
           "5188850477499711488",
@@ -2126,16 +1314,16 @@
           "4612108237334675458",
           "4613797087195136003",
           0,
-          "4612671182992801793",
-          "4612671187287769090",
-          "5198983563776065536",
+          "4612671182992736257",
+          "4612671187287703554",
+          "5198983563776000000",
           2,
           "5200109472273432576",
           "5198983563776720896",
           "3618502788666131213697322783095070105623107215331596699973092056135872020479",
           "1226245742482522112",
           "3618502788666131213697322783095070105623107215331596699973092056135872019588",
-          "5198983563776065536",
+          "5198983563776000000",
           2,
           "5198983563776720896",
           "3618502788666131213697322783095070105623107215331596699973092056135872020479",
@@ -2143,11 +1331,12 @@
           "5198983563776720896",
           "3618502788666131213697322783095070105623107215331596699973092056135872020479",
           "5201798296363630592",
+          "5191102221479018496",
           "5191102225773985792",
           "5191102230068953088",
           "5198983563776262144",
           1,
-          "5201798287773564928",
+          "5201798283478532096",
           "2345108766317314046",
           "5191102204299149312",
           "5191102208594116608",
@@ -2161,14 +1350,874 @@
           "5191102242953854976",
           "5191102247248822272",
           "5189976364521848832",
-          0,
+          1,
           "1226245742482522112",
-          "3618502788666131213697322783095070105623107215331596699973092056135872020202",
+          "3618502788666131213697322783095070105623107215331596699973092056135872020201",
           "2345108766317314046"
         ]
       },
       "implementationNames": {
-        "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917": "CairoBootloaderProgram"
+        "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47": "CairoBootloaderProgram"
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "address": "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "sourceHashes": [
+        "0x683cac2609eeb80f624fedec43b3622138b0579960bf74162c2f49eebd1e1b4d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907615,
+      "sinceBlock": 23531473,
+      "values": {
+        "$immutable": true,
+        "constructorArgs": [
+          [
+            "eth:0x1BdE14B50e7dAeD71eE14F7e8defaa3d8A7D4420",
+            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
+            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2"
+          ],
+          "eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb",
+          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "96",
+          "30"
+        ],
+        "getLayoutInfo": { "publicMemoryOffset": 19, "selectedBuiltins": 23 },
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1
+      },
+      "implementationNames": {
+        "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B": "CpuFrilessVerifier"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x5595d4856475241caf1eea25b1f3921875fcd4f8f0481ef29d2cae21d74394fb"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1": "CpuConstraintPoly"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "FriStatementContract",
+      "address": "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xdb6522c746b47c8025bdd3942737207a45de03416b891219d4ad3328e3cbcb07"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "implementationNames": {
+        "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400": "FriStatementContract"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "address": "eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "sourceHashes": [
+        "0x0bb18873bc3a6a2cc498c681c3bc67777185bf377294eb531123d4529deb8b38"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907591,
+      "sinceBlock": 23531471,
+      "values": {
+        "$immutable": true,
+        "constructorArgs": [
+          [
+            "eth:0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9",
+            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
+            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
+            "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce",
+            "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771"
+          ],
+          "eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4",
+          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "96",
+          "30"
+        ],
+        "getLayoutInfo": { "publicMemoryOffset": 19, "selectedBuiltins": 15 },
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1
+      },
+      "implementationNames": {
+        "eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b": "CpuFrilessVerifier"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "MerkleStatementContract",
+      "address": "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x353a1ed6ef3ef47ed725cf0832c357c4e71680318751a7bbd706d607d8acb7aa"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "implementationNames": {
+        "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd": "MerkleStatementContract"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x6e983e16c9f7b72cb7f29f2e7fcb0061acc1622409a2e45534fa03fd05ff9672"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907615,
+      "sinceBlock": 23531473,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb": "CpuOods"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "eth:0x3E727f44Fd2c92bd960AAb86DaAcD1A831B16eba",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x8caeb68cf2d1508fc57800f8ff78ad1b3c9ad8d0f1f6e30998fd012c9b6182ba"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907615,
+      "sinceBlock": 23531473,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x3E727f44Fd2c92bd960AAb86DaAcD1A831B16eba": "CpuConstraintPoly"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "address": "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b": "PoseidonPoseidonFullRoundKey2Column"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "SHARPVerifierCallProxy",
+      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/SHARPVerifierCallProxy",
+      "sourceHashes": [
+        "0x1cfb47b7d41edbe1b49e9d32ab6b39caae53d74feac405b948cc774b2d8db7a5",
+        "0x7477a4b1d5db367c21e2c2d493553a2f519bd0d4305433a902d9b9322e7b81cb"
+      ],
+      "proxyType": "StarkWare proxy",
+      "description": "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.",
+      "sinceTimestamp": 1635077695,
+      "sinceBlock": 13480127,
+      "values": {
+        "$admin": "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
+        "$immutable": false,
+        "$implementation": "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb",
+        "$pastUpgrades": [
+          [
+            "2021-10-24T13:06:25.000Z",
+            "0x80ebb7a22a207d00e26464db2f8a719d43eb3b836740a693aad13d5ef922f5e4",
+            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2022-05-02T16:49:21.000Z",
+            "0x604e235c6207b7909f6fc8dc0bd86b410e935dcf2f6f6bd37a5567a89379353a",
+            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2022-08-07T10:50:09.000Z",
+            "0xc31b74237a0c68aa1b95fe2ed28ad54cf6d7df42a8beab1ea947532c95dda20a",
+            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2023-03-06T12:34:23.000Z",
+            "0xbaa8ffb1b7e5177dbf75de753b9b2ff2fc313b244ff910cfd6d7f1f6254b6e1a",
+            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-02-26T09:25:23.000Z",
+            "0x31e3caf3940dde662a1e98580259f79963dc5e098793b6519311e201d4e19312",
+            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-02-26T09:25:23.000Z",
+            "0x31e3caf3940dde662a1e98580259f79963dc5e098793b6519311e201d4e19312",
+            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-07-28T10:07:47.000Z",
+            "0x7c71592ea4c455371365d843f1a21bbf647aad7d6fae12f7187650ce24805f00",
+            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2024-07-28T20:08:35.000Z",
+            "0x4b25445a8e86b4620b9a19f747122b518d8973975ea73aa474b210395e277b66",
+            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2025-05-12T16:09:35.000Z",
+            "0x0764cd09cc5c9a96b151dd222bf14b9c33111c80bdddf27721a6406f4c0e1f3f",
+            ["eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"]
+          ],
+          [
+            "2025-10-19T08:27:47.000Z",
+            "0x7b4a25af246b28b6d5bed86942696273a84e57abc629b83072be370df2bdb797",
+            ["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]
+          ],
+          [
+            "2025-12-08T11:08:11.000Z",
+            "0xed93cf713d33ac63297d8c7e2eafc0d9f277b718b4074600536eb9a4205bcb81",
+            ["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]
+          ],
+          [
+            "2026-02-01T14:05:59.000Z",
+            "0x257cfdefacd18f0c221b1e486ee002cb974d14bb292884dfaf7f5aa987cc7170",
+            ["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]
+          ]
+        ],
+        "$upgradeCount": 12,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
+          },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
+          },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "appGovernorAC": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"],
+        "callProxyImplementation": "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe",
+        "customImplOperators": [
+          "eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c",
+          "eth:0xfE325F97146124F3767bFA59899Fa4177fd46D2f",
+          "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284",
+          "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526",
+          "eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C",
+          "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A"
+        ],
+        "customProxyImplementations": [
+          "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
+          "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934",
+          "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
+        ],
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "getUpgradeActivationDelay": 691200,
+        "governanceAdminAC": ["eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"],
+        "implementation": "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.0",
+        "StarkWareProxy_callImplementation": "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe",
+        "StarkWareProxy_upgradeDelay": 691200,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "upgradeActivationDelayFmt": "8d"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "customProxyImplementations": {
+          "severity": "HIGH",
+          "description": "Non-default targets for call proxy delegation. These targets are automatically chosen based on which operator makes a call."
+        },
+        "customImplOperators": {
+          "severity": "HIGH",
+          "description": "Calls of these operators are redirected to custom proxy implementations, usually older versions of verifiers."
+        }
+      },
+      "implementationNames": {
+        "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "Proxy",
+        "eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb": "CallProxy"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "address": "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E": "PoseidonPoseidonPartialRoundKey0Column"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x54B839D988C9E712cd36cBf7C95dedC2B9F9aE6c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SHARPVerifier",
+      "address": "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/SHARPVerifier",
+      "sourceHashes": [
+        "0xb9dd070b540ba3bad7b65f9cd4ed80b62e8cf034bd4f4acdf0373e4af46068f3"
+      ],
+      "proxyType": "immutable",
+      "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+      "sinceTimestamp": 1768486907,
+      "sinceBlock": 24240674,
+      "values": {
+        "$immutable": true,
+        "bootloaderProgramContractAddress": "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47",
+        "cpuFrilessVerifiers": [
+          "eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b",
+          "eth:0x0cD0cDf0132c566db61B691BCEEBA2c4D8cA5CdC",
+          "eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44",
+          "eth:0x015381651F240Ed6C44122dCba6Cf807c9442CD6",
+          "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B",
+          "eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11",
+          "eth:0x71574057D12541ccDa98643aC56441838353A26D",
+          "eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3"
+        ],
+        "getBootloaderConfig": [
+          "37889379279861089970868356983774360253508326951064758033885675883862334778",
+          "989994135429182905628199499137734285064642484443466268071170571058909750176",
+          "2989448937132554463006794084002640731746256535824175616421304143852713734169"
+        ],
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_GpsStatementVerifier_2026_13",
+        "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1,
+        "referenceFactRegistry": "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066",
+        "referralExpirationTime": 20690086907
+      },
+      "implementationNames": {
+        "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe": "GpsStatementVerifier"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "address": "eth:0x69833933e59269aB062eAfDe074C059ce5DC7755",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x69833933e59269aB062eAfDe074C059ce5DC7755": "PoseidonPoseidonFullRoundKey2Column"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "address": "eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "sourceHashes": [
+        "0xdea77b54fa6a0489f5a57f0dc4ade2e0082aa3017b33bb8b4c47b5c693c65383"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": {
+        "$immutable": true,
+        "constructorArgs": [
+          [
+            "eth:0xC716C4E3f68ad6785524f65Df129fC090339dBD8",
+            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
+            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
+            "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce",
+            "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771"
+          ],
+          "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766",
+          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "96",
+          "30"
+        ],
+        "getLayoutInfo": { "publicMemoryOffset": 21, "selectedBuiltins": 31 },
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1
+      },
+      "implementationNames": {
+        "eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11": "CpuFrilessVerifier"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "address": "eth:0x71574057D12541ccDa98643aC56441838353A26D",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "sourceHashes": [
+        "0x16540ae818b59b005fe1cee4b1fbc4d3e29806d95076929b196adc7e3f347522"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": {
+        "$immutable": true,
+        "constructorArgs": [
+          [
+            "eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1",
+            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
+            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
+            "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce",
+            "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771",
+            "eth:0x21578B24F86AdF6f59C406f641F693745C31Ea8F",
+            "eth:0xE5AC9312f30623EB20D435533A4205790aF68Fd0",
+            "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b",
+            "eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0",
+            "eth:0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc"
+          ],
+          "eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA",
+          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "96",
+          "30"
+        ],
+        "getLayoutInfo": { "publicMemoryOffset": 25, "selectedBuiltins": 191 },
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1
+      },
+      "implementationNames": {
+        "eth:0x71574057D12541ccDa98643aC56441838353A26D": "CpuFrilessVerifier"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x01d75ee9eb5d04eb0bdef657f41a7a4953dfc1dbb219b2c2c4504f988d4054da"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907651,
+      "sinceBlock": 23531476,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e": "CpuOods"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "CpuOods",
+      "address": "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x2263b0314ef958372095f3d5a50817b8f1de525cc589a9a6acd462814968c84a"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907615,
+      "sinceBlock": 23531473,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775": "CpuOods"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "CpuOods",
+      "address": "eth:0x99480b7c32C4F8965fF1929a368Dd586C6DC3595",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x0436bd83534187cf17ffbb4cc97b6caab2a1ac66d80a9daef6d6589e93bb4c77"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907615,
+      "sinceBlock": 23531473,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x99480b7c32C4F8965fF1929a368Dd586C6DC3595": "CpuOods"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "eth:0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x7022113b2e37d8a13b820de3fc4a30b173169193b244b19c704a5d9411e37ad0"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907591,
+      "sinceBlock": 23531471,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9": "CpuConstraintPoly"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "eth:0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x23119114187536afb19dd113fa8b7a5e59da2d76ff5ad78bde5efe9dabe09c67"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F": "CpuConstraintPoly"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "EcdsaPointsXColumn",
+      "address": "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907591,
+      "sinceBlock": 23531471,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce": "EcdsaPointsXColumn"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xeb39302b38f5f5b329700407c9c1c9f7b90dd0550f5bc4d1273e365ff48b5eb3"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766": "CpuOods"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xea43d74304db71ee531509d5f054b9172347c79c10ce2ef9fe7da542b11b420b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907591,
+      "sinceBlock": 23531471,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4": "CpuOods"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PedersenHashPointsYColumn",
+      "address": "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907591,
+      "sinceBlock": 23531471,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2": "PedersenHashPointsYColumn"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "eth:0xaE325CE505AA13EDC30d48187B05c24A3BaC2707",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x996c7267677d4955986302f31421117e77179197ff49e9dab8e8fff5c0f41257"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907603,
+      "sinceBlock": 23531472,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xaE325CE505AA13EDC30d48187B05c24A3BaC2707": "CpuOods"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "address": "eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0": "PoseidonPoseidonPartialRoundKey0Column"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "address": "eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
+      "sourceHashes": [
+        "0xcc5a725835dea04291bf4edd2b8b39c4d15358a01b6baa116e9aede7b897fdf4"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907651,
+      "sinceBlock": 23531476,
+      "values": {
+        "$immutable": true,
+        "constructorArgs": [
+          [
+            "eth:0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F",
+            "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
+            "eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2",
+            "eth:0xdf10757de64811df030cf88bB700B8CC63bAB090",
+            "eth:0xe58327a05F21ab12AB33A4408003A87e571f810D",
+            "eth:0x69833933e59269aB062eAfDe074C059ce5DC7755",
+            "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E",
+            "eth:0xECc282Dc2571E43696d3259490faFa3b98790e20"
+          ],
+          "eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e",
+          "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "96",
+          "30"
+        ],
+        "getLayoutInfo": { "publicMemoryOffset": 21, "selectedBuiltins": 151 },
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1
+      },
+      "implementationNames": {
+        "eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3": "CpuFrilessVerifier"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "address": "eth:0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc": "PoseidonPoseidonPartialRoundKey1Column"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "eth:0xC716C4E3f68ad6785524f65Df129fC090339dBD8",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xa863111e2d969c242b95e592a09048d8ae0e7c2b8c4e5d237f420f2ae9d6b6b0"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xC716C4E3f68ad6785524f65Df129fC090339dBD8": "CpuConstraintPoly"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "EcdsaPointsYColumn",
+      "address": "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907591,
+      "sinceBlock": 23531471,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771": "EcdsaPointsYColumn"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x9c476ab40346f6531ff512dbd20c84273a3cca2fb0e870b6aed5c67aa20d32f8"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907627,
+      "sinceBlock": 23531474,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA": "CpuOods"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "eth:0xd8e47340bdC4fB06D37056b1725c653836Cc81E5",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x7deae45fbdef9d73c9faefb89a11904e2f2bd48e4cb9365f1ba55739857cbc62"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907591,
+      "sinceBlock": 23531471,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xd8e47340bdC4fB06D37056b1725c653836Cc81E5": "CpuConstraintPoly"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PedersenHashPointsXColumn",
+      "address": "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1759907591,
+      "sinceBlock": 23531471,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70": "PedersenHashPointsXColumn"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
@@ -2285,52 +2334,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SHARPVerifier",
-      "address": "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066",
-      "type": "Contract",
-      "template": "shared-sharp-verifier/SHARPVerifier",
-      "sourceHashes": [
-        "0x114aa5977a86555ce5c1db3a96c7348dff6f5792982e1f284652996af22cfe4f"
-      ],
-      "proxyType": "immutable",
-      "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
-      "sinceTimestamp": 1764258527,
-      "sinceBlock": 23891041,
-      "values": {
-        "$immutable": true,
-        "bootloaderProgramContractAddress": "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917",
-        "cpuFrilessVerifiers": [
-          "eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b",
-          "eth:0x0cD0cDf0132c566db61B691BCEEBA2c4D8cA5CdC",
-          "eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44",
-          "eth:0x015381651F240Ed6C44122dCba6Cf807c9442CD6",
-          "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B",
-          "eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11",
-          "eth:0x71574057D12541ccDa98643aC56441838353A26D",
-          "eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3"
-        ],
-        "getBootloaderConfig": [
-          "37889379279861089970868356983774360253508326951064758033885675883862334778",
-          "3480185788024326007166778030599498673382667448173974782477620863541158415714",
-          "2932072919023221119013858170796075739921358449313810261427542077330086829225"
-        ],
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_GpsStatementVerifier_2025_12",
-        "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
-        "PAGE_INFO_ADDRESS_OFFSET": 0,
-        "PAGE_INFO_HASH_OFFSET": 2,
-        "PAGE_INFO_SIZE": 3,
-        "PAGE_INFO_SIZE_IN_BYTES": 96,
-        "PAGE_INFO_SIZE_OFFSET": 1,
-        "referenceFactRegistry": "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934",
-        "referralExpirationTime": 20685858527
-      },
-      "implementationNames": {
-        "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066": "GpsStatementVerifier"
-      },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
       "name": "CpuFrilessVerifier",
       "address": "eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44",
       "type": "Contract",
@@ -2410,6 +2413,9 @@
     ],
     "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": [
       "constructor(address _singleton)"
+    ],
+    "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47": [
+      "function getCompiledProgram() pure returns (uint256[1166])"
     ],
     "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
@@ -2532,6 +2538,23 @@
     "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
+    "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe": [
+      "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 simpleBootloaderProgramHash, uint256 applicativeBootloaderProgramHash, uint256 hashedSupportedCairoVerifiers, address referenceVerifier, uint256 referralDurationSeconds)",
+      "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
+      "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_HASH_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_SIZE() view returns (uint256)",
+      "function PAGE_INFO_SIZE_IN_BYTES() view returns (uint256)",
+      "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
+      "function getBootloaderConfig() view returns (uint256, uint256, uint256)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function localIsValid(bytes32 fact) view returns (bool)",
+      "function referenceFactRegistry() view returns (address)",
+      "function referralExpirationTime() view returns (uint256)",
+      "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
+    ],
     "eth:0x69833933e59269aB062eAfDe074C059ce5DC7755": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
@@ -2653,9 +2676,6 @@
     "eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917": [
-      "function getCompiledProgram() pure returns (uint256[1165])"
-    ],
     "eth:0xdf10757de64811df030cf88bB700B8CC63bAB090": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
@@ -2677,23 +2697,6 @@
     "eth:0xECc282Dc2571E43696d3259490faFa3b98790e20": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066": [
-      "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 simpleBootloaderProgramHash, uint256 applicativeBootloaderProgramHash, uint256 hashedSupportedCairoVerifiers, address referenceVerifier, uint256 referralDurationSeconds)",
-      "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
-      "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
-      "function PAGE_INFO_HASH_OFFSET() view returns (uint256)",
-      "function PAGE_INFO_SIZE() view returns (uint256)",
-      "function PAGE_INFO_SIZE_IN_BYTES() view returns (uint256)",
-      "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
-      "function getBootloaderConfig() view returns (uint256, uint256, uint256)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function localIsValid(bytes32 fact) view returns (bool)",
-      "function referenceFactRegistry() view returns (address)",
-      "function referralExpirationTime() view returns (uint256)",
-      "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
-    ],
     "eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
@@ -2714,13 +2717,12 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "shared-sharp-verifier/CairoBootloaderProgram": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-sharp-verifier/CpuFrilessVerifier": "0x7c6992d8b819382607fb02323da862e54bd127ec825697d5d9d8b20a2961d1b1",
     "shared-sharp-verifier/ignoreComputeSpam": "0x267b15793053816118dde43f1cfe44b29b6496604275660ece4f747b85bab98e",
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-sharp-verifier/SHARPVerifier": "0x5ddc350d207181dc4b0b73ef2f493ee3afbaf139e29f26420b57497c7259afc5",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xcbc3662577ca6bc2de4ebf8583008543e01742f079dd46e757b4abe24d694805"
   },
-  "usedBlockNumbers": { "ethereum": 24268619 },
-  "permissionsConfigHash": "0x417b6cfc83629593ce1296d4dd60523726b812664c1a4bc06d0dbcf974f8e8d4"
+  "usedBlockNumbers": { "ethereum": 24368772 },
+  "permissionsConfigHash": "0x4a34845fb2899f6c562689fdb75320cf9b9b7e2b9998a38b675e0bae5ae637f8"
 }

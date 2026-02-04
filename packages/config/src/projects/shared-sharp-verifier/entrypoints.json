@@ -29,6 +29,11 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
+    "eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47": {
+      "name": "CairoBootloaderProgram",
+      "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B": {
       "name": "CpuFrilessVerifier",
       "type": "Contract",
@@ -89,6 +94,11 @@
     },
     "eth:0x59232aC80E6d403b6381393e52f4665ECA328558": {
       "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
       "project": "shared-sharp-verifier"
     },
     "eth:0x69833933e59269aB062eAfDe074C059ce5DC7755": {
@@ -212,11 +222,6 @@
       "type": "Contract",
       "project": "shared-sharp-verifier"
     },
-    "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917": {
-      "name": "CairoBootloaderProgram",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
     "eth:0xdf10757de64811df030cf88bB700B8CC63bAB090": {
       "name": "PoseidonPoseidonFullRoundKey0Column",
       "type": "Contract",
@@ -255,15 +260,22 @@
       "type": "EOA",
       "project": "shared-sharp-verifier"
     },
-    "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066": {
-      "name": "SHARPVerifier",
-      "type": "Contract",
-      "project": "shared-sharp-verifier"
-    },
     "eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44": {
       "name": "CpuFrilessVerifier",
       "type": "Contract",
       "project": "shared-sharp-verifier"
+    },
+    "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917": {
+      "name": "CairoBootloaderProgram",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
+    },
+    "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066": {
+      "name": "SHARPVerifier",
+      "type": "Contract",
+      "project": "shared-sharp-verifier",
+      "isLegacy": true
     },
     "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934": {
       "name": "SHARPVerifier",

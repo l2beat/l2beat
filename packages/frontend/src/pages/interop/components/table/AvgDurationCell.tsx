@@ -15,6 +15,14 @@ export function AvgDurationCell({
   averageDuration: ProtocolEntry['averageDuration']
   disableTooltip?: boolean
 }) {
+  if (averageDuration === 'unknown') {
+    return (
+      <Badge type="gray" size="small">
+        Unknown
+      </Badge>
+    )
+  }
+
   if (averageDuration.type === 'single') {
     return (
       <div className="font-medium text-label-value-15">
