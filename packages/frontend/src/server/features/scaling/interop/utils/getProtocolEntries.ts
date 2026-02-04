@@ -14,10 +14,10 @@ export type TokenData = {
   id: string
   symbol: string
   iconUrl: string
-  volume: number
+  volume: number | null
   transferCount: number
-  avgDuration: { type: 'single'; duration: number } | DurationSplit
-  avgValue: number
+  avgDuration: AverageDuration | null
+  avgValue: number | null
 }
 
 export type ChainData = {
@@ -26,9 +26,14 @@ export type ChainData = {
   iconUrl: string
   volume: number
   transferCount: number
-  avgDuration: { type: 'single'; duration: number } | DurationSplit
+  avgDuration: AverageDuration
   avgValue: number
 }
+
+export type AverageDuration =
+  | { type: 'single'; duration: number }
+  | DurationSplit
+  | 'unknown'
 
 export type DurationSplit = {
   type: 'split'
@@ -56,7 +61,7 @@ export type ProtocolEntry = {
   chains: ChainData[]
   transferCount: number
   averageValue: number
-  averageDuration: { type: 'single'; duration: number } | DurationSplit
+  averageDuration: AverageDuration
   averageValueInFlight?: number
 }
 
@@ -67,17 +72,28 @@ export function getProtocolEntries(
 ): ProtocolEntry[] {
   const logger = getLogger().for('getProtocolsByType')
 
-  const durationSplitMap = new Map<
+  const customDurationConfigMap = new Map<
     string,
-    NonNullable<InteropConfig['durationSplit']>
+    NonNullable<
+      InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
+    >
   >()
   for (const project of interopProjects) {
     if (project.interopConfig.durationSplit) {
-      durationSplitMap.set(project.id, project.interopConfig.durationSplit)
+      customDurationConfigMap.set(
+        project.id,
+        project.interopConfig.durationSplit,
+      )
+    }
+    if (project.interopConfig.transfersTimeMode) {
+      customDurationConfigMap.set(
+        project.id,
+        project.interopConfig.transfersTimeMode,
+      )
     }
   }
 
-  const protocolsDataMap = getProtocolsDataMap(records, durationSplitMap)
+  const protocolsDataMap = getProtocolsDataMap(records, customDurationConfigMap)
 
   const protocolsData = Array.from(protocolsDataMap.entries()).sort(
     (a, b) => b[1].volume - a[1].volume,
@@ -110,14 +126,22 @@ export function getProtocolEntries(
           key,
           data.tokens,
           tokensDetailsMap,
-          durationSplitMap,
+          customDurationConfigMap,
+          logger,
+          data.transferCount - data.identifiedTransferCount,
+        ),
+        chains: getChainsData(
+          key,
+          data.chains,
+          customDurationConfigMap,
           logger,
         ),
-        chains: getChainsData(key, data.chains, durationSplitMap, logger),
         transferCount: data.transferCount,
         averageValue:
-          data.transferCount > 0 ? data.volume / data.transferCount : 0,
-        averageDuration: getAverageDuration(key, data, durationSplitMap),
+          data.identifiedTransferCount > 0
+            ? data.volume / data.identifiedTransferCount
+            : 0,
+        averageDuration: getAverageDuration(key, data, customDurationConfigMap),
         averageValueInFlight: data.averageValueInFlight,
       }
     })
@@ -128,10 +152,16 @@ function getTokensData(
   protocolId: string,
   tokens: Map<string, AverageDurationData & { volume: number }>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  customDurationConfigMap: Map<
+    string,
+    NonNullable<
+      InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
+    >
+  >,
   logger: Logger,
-) {
-  return Array.from(tokens.entries())
+  unknownTransfersCount: number,
+): TokenData[] {
+  const tokensData: TokenData[] = Array.from(tokens.entries())
     .map(([tokenId, token]) => {
       const tokenDetails = tokensDetailsMap.get(tokenId)
 
@@ -143,7 +173,7 @@ function getTokensData(
       const avgDuration = getAverageDuration(
         protocolId,
         token,
-        durationSplitMap,
+        customDurationConfigMap,
       )
 
       return {
@@ -160,12 +190,31 @@ function getTokensData(
     })
     .filter(notUndefined)
     .toSorted((a, b) => b.volume - a.volume)
+
+  if (unknownTransfersCount > 0) {
+    tokensData.push({
+      id: 'unknown',
+      symbol: 'Unknown',
+      iconUrl: manifest.getUrl('/images/token-placeholder.png'),
+      transferCount: unknownTransfersCount,
+      avgDuration: null,
+      avgValue: null,
+      volume: null,
+    })
+  }
+
+  return tokensData
 }
 
 function getChainsData(
   protocolId: string,
   chains: Map<string, AverageDurationData & { volume: number }>,
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  customDurationConfigMap: Map<
+    string,
+    NonNullable<
+      InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
+    >
+  >,
   logger: Logger,
 ): ChainData[] {
   return Array.from(chains.entries())
@@ -179,7 +228,7 @@ function getChainsData(
       const avgDuration = getAverageDuration(
         protocolId,
         chainData,
-        durationSplitMap,
+        customDurationConfigMap,
       )
 
       return {
@@ -208,9 +257,15 @@ type AverageDurationData = {
 function getAverageDuration(
   key: string,
   data: AverageDurationData,
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  customDurationConfigMap: Map<
+    string,
+    NonNullable<
+      InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
+    >
+  >,
 ): ProtocolEntry['averageDuration'] {
-  const durationSplit = durationSplitMap.get(key)
+  const durationSplit = customDurationConfigMap.get(key)
+  if (durationSplit === 'unknown') return 'unknown'
 
   if (durationSplit) {
     return {

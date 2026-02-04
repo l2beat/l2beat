@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x286e9f66c31330470d29f0daaa8c346abeac74f9
+
+# Diff at Mon, 02 Feb 2026 11:17:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1768823299
+- current timestamp: 1770030445
+
+## Description
+
+Upgraded Stwo verifier to a version with the new bootloader program. Diff here: https://disco.l2beat.com/diff/eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066/eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+      values.$pastUpgrades.11:
++        ["2026-02-01T14:05:59.000Z","0x257cfdefacd18f0c221b1e486ee002cb974d14bb292884dfaf7f5aa987cc7170",["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.callProxyImplementation:
+-        "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
++        "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe"
+      values.StarkWareProxy_callImplementation:
+-        "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
++        "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CairoBootloaderProgram (eth:0xdf0B63653E86995556079cbc09594BCD88D1D917)
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
+-   Status: DELETED
+    contract SHARPVerifier (eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+```diff
++   Status: CREATED
+    contract CairoBootloaderProgram (eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SHARPVerifier (eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+## Source code changes
+
+```diff
+.../CairoBootloaderProgram.sol                     | 133 +++++++++++----------
+ .../{.flat@1768823299 => .flat}/SHARPVerifier.sol  |   4 +-
+ 2 files changed, 69 insertions(+), 68 deletions(-)
+```
+
 Generated with discovered.json: 0xac929868294f09d85b4bff505e17b13b7d150d8f
 
 # Diff at Mon, 19 Jan 2026 11:49:27 GMT:

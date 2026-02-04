@@ -93,11 +93,13 @@ const tokensByVolumeColumn = columnHelper.accessor('tokens', {
 
 const averageDurationColumn = columnHelper.accessor(
   (row) =>
-    row.averageDuration.type === 'single'
-      ? row.averageDuration.duration
-      : (row.averageDuration.in.duration ??
-        row.averageDuration.out.duration ??
-        Number.POSITIVE_INFINITY),
+    row.averageDuration === 'unknown'
+      ? 'unknown'
+      : row.averageDuration.type === 'single'
+        ? row.averageDuration.duration
+        : (row.averageDuration.in.duration ??
+          row.averageDuration.out.duration ??
+          Number.POSITIVE_INFINITY),
   {
     header: 'Last 24h avg.\ntransfer time',
     invertSorting: true,
@@ -122,7 +124,7 @@ const averageInFlightValueColumn = columnHelper.accessor(
       align: 'right',
       headClassName: 'text-2xs',
       tooltip:
-        'The average USD value of funds in transit at any given second over the past 24 hours. For non-minting protocols it represents the average value at risk at any given second.',
+        'The average USD value of funds in transit at any given second over the past 24 hours.',
     },
     cell: (ctx) => {
       if (ctx.row.original.averageValueInFlight === undefined) return '-'
@@ -168,7 +170,7 @@ export function getAllProtocolsColumns(
         align: 'right',
         headClassName: 'w-0',
       },
-      size: 48,
+      size: 44,
     }),
     ...commonColumns,
     !hideTypeColumn &&

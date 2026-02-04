@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x800770a71240bb75ae6629bb71b398830b2a3e8a
+
+# Diff at Mon, 02 Feb 2026 14:13:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1769432500
+- current timestamp: 1770041480
+
+## Description
+
+operator rotation.
+
+## Watched changes
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
++        "eth:0xCf76A87E24FE2054DCF02a5f65eAc0F24A34c439"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
+      values.operatorCount:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x6f94a9ee932957b95b0b9da57bcde8e9f10ee03c
 
 # Diff at Mon, 26 Jan 2026 13:03:00 GMT:

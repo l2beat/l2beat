@@ -2279,6 +2279,9 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   if (respectedGameType === 1) {
     return 'Permissioned'
   }
+  if (respectedGameType === 6) {
+    return 'OpSuccinct'
+  }
   if (respectedGameType === 1337) {
     return 'Kailua'
   }

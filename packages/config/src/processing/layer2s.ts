@@ -37,7 +37,6 @@ import { creatorchain } from '../projects/creatorchain/creatorchain'
 import { cronoszkevm } from '../projects/cronoszkevm/cronoszkevm'
 import { cyber } from '../projects/cyber/cyber'
 import { dbk } from '../projects/dbk/dbk'
-import { dcamonster } from '../projects/dcamonster/dcamonster'
 import { degate } from '../projects/degate/degate'
 import { degate2 } from '../projects/degate2/degate2'
 import { degate3 } from '../projects/degate3/degate3'
@@ -273,7 +272,6 @@ export const layer2s: ScalingProject[] = [
   cronoszkevm,
   cyber,
   dbk,
-  dcamonster,
   degate,
   degate2,
   degate3,
