@@ -21,6 +21,7 @@ export type TokenData = {
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number | null
+  netMintedValue?: number
 }
 
 export type ChainData = {
@@ -149,8 +150,8 @@ export function getProtocolEntries(
         averageDuration: getAverageDuration(key, data, customDurationConfigMap),
         averageValueInFlight: data.averageValueInFlight,
         netMintedValue:
-          data.mintedValueUsd && data.burnedValueUsd
-            ? data.mintedValueUsd - data.burnedValueUsd
+          data.mintedValueUsd !== undefined || data.burnedValueUsd !== undefined
+            ? (data.mintedValueUsd ?? 0) - (data.burnedValueUsd ?? 0)
             : undefined,
       }
     })
@@ -195,6 +196,11 @@ function getTokensData(
         transferCount: token.transferCount,
         avgDuration: avgDuration,
         avgValue: Math.floor(token.volume / token.transferCount),
+        netMintedValue:
+          token.mintedValueUsd !== undefined ||
+          token.burnedValueUsd !== undefined
+            ? (token.mintedValueUsd ?? 0) - (token.burnedValueUsd ?? 0)
+            : undefined,
       }
     })
     .filter(notUndefined)

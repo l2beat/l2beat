@@ -5,12 +5,14 @@ import { InteropTopItemsCell } from './TopItemsCell'
 export function TopTokensCell({
   tokens,
   protocol,
+  showNetMintedValueColumn,
 }: {
   tokens: TokenData[]
   protocol: {
     name: string
     iconUrl: string
   }
+  showNetMintedValueColumn?: boolean
 }) {
   const items: TopItem[] = tokens.map((token) => ({
     id: token.id,
@@ -20,9 +22,15 @@ export function TopTokensCell({
     transferCount: token.transferCount,
     avgDuration: token.avgDuration,
     avgValue: token.avgValue,
+    netMintedValue: token.netMintedValue,
   }))
 
   return (
-    <InteropTopItemsCell items={items} itemType="tokens" protocol={protocol} />
+    <InteropTopItemsCell
+      items={items}
+      itemType="tokens"
+      protocol={protocol}
+      showNetMintedValueColumn={showNetMintedValueColumn}
+    />
   )
 }

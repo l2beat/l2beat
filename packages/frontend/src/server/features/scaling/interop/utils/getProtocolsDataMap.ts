@@ -65,8 +65,14 @@ export function getProtocolsDataMap(
           (currentToken?.totalDurationSum ?? 0) + (token.totalDurationSum ?? 0),
         volume: (currentToken?.volume ?? 0) + (token.volume ?? 0),
         ...tokenDurationSplits,
-        mintedValueUsd: currentToken?.mintedValueUsd,
-        burnedValueUsd: currentToken?.burnedValueUsd,
+        mintedValueUsd:
+          currentToken?.mintedValueUsd !== undefined
+            ? (currentToken?.mintedValueUsd ?? 0) + (token.mintedValueUsd ?? 0)
+            : token.mintedValueUsd,
+        burnedValueUsd:
+          currentToken?.burnedValueUsd !== undefined
+            ? (currentToken?.burnedValueUsd ?? 0) + (token.burnedValueUsd ?? 0)
+            : token.burnedValueUsd,
       })
     }
 

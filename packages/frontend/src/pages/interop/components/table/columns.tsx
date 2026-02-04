@@ -73,24 +73,27 @@ const last24hVolumeColumn = columnHelper.accessor('volume', {
   },
 })
 
-const tokensByVolumeColumn = columnHelper.accessor('tokens', {
-  header: 'Tokens\nby volume',
-  meta: {
-    cellClassName: '!pr-0',
-    headClassName: 'text-2xs',
-    tooltip:
-      'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
-  },
-  cell: (ctx) => (
-    <TopTokensCell
-      tokens={ctx.row.original.tokens}
-      protocol={{
-        name: ctx.row.original.protocolName,
-        iconUrl: ctx.row.original.iconUrl,
-      }}
-    />
-  ),
-})
+function getTokensByVolumeColumn(showNetMintedValueColumn?: boolean) {
+  return columnHelper.accessor('tokens', {
+    header: 'Tokens\nby volume',
+    meta: {
+      cellClassName: '!pr-0',
+      headClassName: 'text-2xs',
+      tooltip:
+        'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
+    },
+    cell: (ctx) => (
+      <TopTokensCell
+        tokens={ctx.row.original.tokens}
+        protocol={{
+          name: ctx.row.original.protocolName,
+          iconUrl: ctx.row.original.iconUrl,
+        }}
+        showNetMintedValueColumn={showNetMintedValueColumn}
+      />
+    ),
+  })
+}
 
 const averageDurationColumn = columnHelper.accessor(
   (row) =>
@@ -142,20 +145,20 @@ export const nonMintingColumns = [
   ...commonColumns,
   last24hVolumeColumn,
   averageInFlightValueColumn,
-  tokensByVolumeColumn,
+  getTokensByVolumeColumn(),
 ]
 
 export const lockAndMintColumns = [
   ...commonColumns,
   last24hVolumeColumn,
   averageDurationColumn,
-  tokensByVolumeColumn,
+  getTokensByVolumeColumn(),
 ]
 
 export const omniChainColumns = [
   ...commonColumns,
   last24hVolumeColumn,
-  tokensByVolumeColumn,
+  getTokensByVolumeColumn(),
 ]
 
 export function getAllProtocolsColumns(
@@ -231,7 +234,7 @@ export function getAllProtocolsColumns(
           </span>
         ),
       }),
-    tokensByVolumeColumn,
+    getTokensByVolumeColumn(showNetMintedValueColumn),
     columnHelper.accessor('chains', {
       header: 'Chains\nby volume',
       meta: {
