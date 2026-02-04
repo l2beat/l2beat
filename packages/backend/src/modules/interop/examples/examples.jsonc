@@ -174,13 +174,8 @@
         "tx": "0x57fcb2aa31b96ed2c753e9d0853f3c4f6dd34260d506ebc274a8002d2d656ec5"
       }
     ],
-    "events": [
-      "ccip.CCIPSendRequested",
-      "ccip.ExecutionStateChanged"
-    ],
-    "messages": [
-      { "type": "ccip.Message", "app": "unknown" }
-    ],
+    "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+    "messages": [{ "type": "ccip.Message", "app": "unknown" }],
     "transfers": []
   },
   "celer": {
