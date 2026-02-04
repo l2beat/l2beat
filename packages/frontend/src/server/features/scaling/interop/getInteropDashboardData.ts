@@ -3,9 +3,8 @@ import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
 import type { InteropDashboardParams, ProtocolEntry } from './types'
-import { getAllProtocolEntries } from './utils/getAllProtocolEntries'
+import { getProtocolEntries } from './utils/getAllProtocolEntries'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
-import { getProtocolEntries } from './utils/getProtocolEntries'
 import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
 import {
   getTopProtocols,
@@ -15,16 +14,11 @@ import {
   getTransferSizeChartData,
   type TransferSizeChartData,
 } from './utils/getTransferSizeChartData'
-import {
-  type GroupedInteropEntries,
-  groupByInteropBridgeType,
-} from './utils/groupByInteropBridgeType'
 
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
   transferSizeChartData: TransferSizeChartData | undefined
-  splitByBridgeTypeEntries?: GroupedInteropEntries<ProtocolEntry>
   entries: ProtocolEntry[]
 }
 
@@ -59,29 +53,12 @@ export async function getInteropDashboardData(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
 
-  const common = {
+  return {
     top3Paths: getTopPaths(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
-    entries: getAllProtocolEntries(records, tokensDetailsMap, interopProjects),
+    entries: getProtocolEntries(records, tokensDetailsMap, interopProjects),
   }
-
-  if (!params.type) {
-    const groupedEntries = groupByInteropBridgeType(
-      getProtocolEntries(records, tokensDetailsMap, interopProjects),
-    )
-
-    return {
-      ...common,
-      splitByBridgeTypeEntries: {
-        lockAndMint: groupedEntries.lockAndMint.slice(0, 5),
-        nonMinting: groupedEntries.nonMinting.slice(0, 5),
-        omnichain: groupedEntries.omnichain.slice(0, 5),
-      },
-    }
-  }
-
-  return common
 }
 
 async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
@@ -147,27 +124,11 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     },
   ]
 
-  const splitByBridgeTypeEntries: ProtocolEntry[] = interopProjects.map(
-    (project) => ({
-      id: project.id,
-      protocolName: project.interopConfig.name ?? project.name,
-      isAggregate: project.interopConfig.isAggregate,
-      iconSlug: project.slug,
-      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      bridgeTypes: ['lockAndMint'],
-      volume: 15_000_000,
-      tokens: mockTokens,
-      chains: mockChains,
-      transferCount: 5000,
-      averageValue: 3000,
-      averageDuration: { type: 'single', duration: 100_000 },
-    }),
-  )
-
   const entries: ProtocolEntry[] = interopProjects.map((project) => ({
     id: project.id,
     protocolName: project.interopConfig.name ?? project.name,
     isAggregate: project.interopConfig.isAggregate,
+    subgroup: undefined,
     iconSlug: project.slug,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     bridgeTypes: ['lockAndMint', 'nonMinting', 'omnichain'],
@@ -177,6 +138,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     transferCount: 5000,
     averageValue: 3000,
     averageDuration: { type: 'single', duration: 100_000 },
+    byBridgeType: undefined,
+    averageValueInFlight: undefined,
   }))
 
   const transferSizeChartData: TransferSizeChartData = {
@@ -209,17 +172,10 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     },
   }
 
-  const grouped = groupByInteropBridgeType(splitByBridgeTypeEntries)
-
   return {
     top3Paths,
     topProtocols,
     transferSizeChartData,
-    splitByBridgeTypeEntries: {
-      lockAndMint: grouped.lockAndMint.slice(0, 5),
-      nonMinting: grouped.nonMinting.slice(0, 5),
-      omnichain: grouped.omnichain.slice(0, 5),
-    },
     entries,
   }
 }

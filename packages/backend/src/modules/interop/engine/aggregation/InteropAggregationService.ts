@@ -40,7 +40,11 @@ export class InteropAggregationService {
 
       for (const [type, records] of Object.entries(classifiedTransfers)) {
         const bridgeType = type as InteropBridgeType
-        if (!config.showAlways || config.showAlways.includes(bridgeType)) {
+        if (
+          !config.showAlways ||
+          bridgeType === 'unknown' ||
+          config.showAlways.includes(bridgeType)
+        ) {
           continue
         }
 

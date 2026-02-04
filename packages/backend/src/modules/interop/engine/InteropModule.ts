@@ -142,7 +142,7 @@ export function createInteropModule({
   let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
   if (config.interop.aggregation) {
     const classifier = new InteropTransferClassifier()
-    const aggregationService = new InteropAggregationService(classifier)
+    const aggregationService = new InteropAggregationService(classifier, logger)
     interopAggregatingIndexer = new InteropAggregatingIndexer({
       db,
       configs: config.interop.aggregation.configs,

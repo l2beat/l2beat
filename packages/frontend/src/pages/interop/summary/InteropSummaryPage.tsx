@@ -20,6 +20,7 @@ import { TransferSizeChartCard } from './components/TransferSizeChartCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { OmniChainCard } from './components/table-widgets/OmniChainCard'
+import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridgeTypeEntries'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
@@ -62,12 +63,15 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
 
   if (
     data?.entries.length === 0 &&
-    !data?.splitByBridgeTypeEntries &&
     data.top3Paths.length === 0 &&
     data.topProtocols.length === 0
   ) {
     return <InteropEmptyState isDirty={isDirty} />
   }
+
+  const { lockAndMint, nonMinting, omnichain } = getBridgeTypeEntries(
+    data?.entries ?? [],
+  )
 
   return (
     <div
@@ -100,18 +104,9 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
       />
       <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
-        <NonMintingCard
-          entries={data?.splitByBridgeTypeEntries?.nonMinting}
-          isLoading={isLoading}
-        />
-        <LockAndMintCard
-          entries={data?.splitByBridgeTypeEntries?.lockAndMint}
-          isLoading={isLoading}
-        />
-        <OmniChainCard
-          entries={data?.splitByBridgeTypeEntries?.omnichain}
-          isLoading={isLoading}
-        />
+        <NonMintingCard entries={nonMinting} isLoading={isLoading} />
+        <LockAndMintCard entries={lockAndMint} isLoading={isLoading} />
+        <OmniChainCard entries={omnichain} isLoading={isLoading} />
         <TransferSizeChartCard
           transferSizeChartData={data?.transferSizeChartData}
           isLoading={isLoading}

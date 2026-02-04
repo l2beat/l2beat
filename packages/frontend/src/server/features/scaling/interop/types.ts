@@ -10,19 +10,44 @@ export type ProtocolEntry = {
   id: string
   iconUrl: string
   protocolName: string
-  isAggregate?: boolean
-  subgroup?: {
-    name: string
-    iconUrl: string
-  }
-  bridgeTypes: KnownInteropBridgeType[]
+  isAggregate: boolean | undefined
+  subgroup:
+    | {
+        name: string
+        iconUrl: string
+      }
+    | undefined
   volume: number
   tokens: TokenData[]
   chains: ChainData[]
   transferCount: number
   averageValue: number
   averageDuration: AverageDuration
-  averageValueInFlight?: number
+  byBridgeType: ByBridgeTypeData | undefined
+  averageValueInFlight: number | undefined
+}
+
+export type ByBridgeTypeData = {
+  lockAndMint: LockAndMintProtocolData | undefined
+  nonMinting: NonMintingProtocolData | undefined
+  omnichain: OmniChainProtocolData | undefined
+}
+
+export type LockAndMintProtocolData = {
+  volume: number
+  tokens: TokenData[]
+  averageDuration: AverageDuration
+}
+
+export type NonMintingProtocolData = {
+  volume: number
+  tokens: TokenData[]
+  averageValueInFlight: number
+}
+
+export type OmniChainProtocolData = {
+  volume: number
+  tokens: TokenData[]
 }
 
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>

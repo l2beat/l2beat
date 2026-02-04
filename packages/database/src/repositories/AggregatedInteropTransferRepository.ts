@@ -243,7 +243,9 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .selectFrom('AggregatedInteropTransfer')
       .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
       .executeTakeFirst()
-    return result ? UnixTime.fromDate(result.max_timestamp) : undefined
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
   }
 
   async getByChainsTimestampAndId(

@@ -1,18 +1,18 @@
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
+import type { OmniChainProtocolEntry } from './tables/getBridgeTypeEntries'
 import { OmniChainTable } from './tables/OmniChainTable'
 
 export function OmniChainCard({
   entries,
   isLoading,
 }: {
-  entries: ProtocolEntry[] | undefined
+  entries: OmniChainProtocolEntry[] | undefined
   isLoading: boolean
 }) {
   const { selectedChains, allChainIds } = useInteropSelectedChains()

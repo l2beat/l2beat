@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { KnownInteropBridgeType, notUndefined } from '@l2beat/shared-pure'
+import { type KnownInteropBridgeType, notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
 import type { AverageDurationData, DurationSplitMap, TokenData } from '../types'
 import { getAverageDuration } from './getAverageDuration'

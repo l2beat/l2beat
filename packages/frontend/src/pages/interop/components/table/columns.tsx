@@ -1,3 +1,4 @@
+import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import type { BasicTableRow } from '~/components/table/BasicTable'
@@ -139,26 +140,6 @@ const averageInFlightValueColumn = columnHelper.accessor(
   },
 )
 
-export const nonMintingColumns = [
-  ...commonColumns,
-  last24hVolumeColumn,
-  averageInFlightValueColumn,
-  tokensByVolumeColumn,
-]
-
-export const lockAndMintColumns = [
-  ...commonColumns,
-  last24hVolumeColumn,
-  averageDurationColumn,
-  tokensByVolumeColumn,
-]
-
-export const omniChainColumns = [
-  ...commonColumns,
-  last24hVolumeColumn,
-  tokensByVolumeColumn,
-]
-
 export function getAllProtocolsColumns(
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
@@ -176,10 +157,16 @@ export function getAllProtocolsColumns(
     }),
     ...commonColumns,
     !hideTypeColumn &&
-      columnHelper.accessor((row) => row.bridgeTypes, {
+      columnHelper.accessor((row) => Object.keys(row.byBridgeType ?? {}), {
         header: 'Type',
         cell: (ctx) => (
-          <BridgeTypeBadge bridgeTypes={ctx.row.original.bridgeTypes ?? []} />
+          <BridgeTypeBadge
+            bridgeTypes={
+              Object.keys(
+                ctx.row.original.byBridgeType ?? {},
+              ) as KnownInteropBridgeType[]
+            }
+          />
         ),
         meta: {
           headClassName: 'text-2xs',
