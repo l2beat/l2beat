@@ -29,7 +29,8 @@ describe('aggregation', () => {
         srcValueUsd: 2000,
         dstValueUsd: 2000,
         avgValueInFlight: undefined,
-        netMinted: undefined,
+        mintedValueUsd: undefined,
+        burnedValueUsd: undefined,
         countUnder100: 0,
         count100To1K: 0,
         count1KTo10K: 1,
@@ -77,7 +78,8 @@ describe('aggregation', () => {
         srcValueUsd: 6500.5,
         dstValueUsd: 6500.5,
         avgValueInFlight: undefined,
-        netMinted: undefined,
+        mintedValueUsd: undefined,
+        burnedValueUsd: undefined,
         countUnder100: 0,
         count100To1K: 0,
         count1KTo10K: 3,
@@ -117,7 +119,8 @@ describe('aggregation', () => {
         srcValueUsd: 3000,
         dstValueUsd: 3000,
         avgValueInFlight: undefined,
-        netMinted: undefined,
+        mintedValueUsd: undefined,
+        burnedValueUsd: undefined,
         countUnder100: 0,
         count100To1K: 0,
         count1KTo10K: 1,
@@ -215,7 +218,8 @@ describe('aggregation', () => {
         srcValueUsd: 255550,
         dstValueUsd: 255550,
         avgValueInFlight: undefined,
-        netMinted: undefined,
+        mintedValueUsd: undefined,
+        burnedValueUsd: undefined,
         countUnder100: 1,
         count100To1K: 1,
         count1KTo10K: 1,
@@ -295,7 +299,7 @@ describe('aggregation', () => {
       expect(result.avgValueInFlight).toEqual(324.07)
     })
 
-    it('calculates net minted correctly with mixed minting and burning', () => {
+    it('calculates minted & burned value correctly', () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer({
           timestamp,
@@ -312,8 +316,8 @@ describe('aggregation', () => {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           duration: 6000,
-          srcValueUsd: 3000,
-          dstValueUsd: 3000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
           srcWasBurned: true,
           dstWasMinted: false,
         }),
@@ -334,9 +338,9 @@ describe('aggregation', () => {
       })
 
       // mintedValueUsd = 2000 + 1000 = 3000
-      // burnedValueUsd = 3000
-      // netMinted = 3000 - 3000 = 0
-      expect(result.netMinted).toEqual(0)
+      // burnedValueUsd = 2000
+      expect(result.mintedValueUsd).toEqual(3000)
+      expect(result.burnedValueUsd).toEqual(2000)
     })
 
     it('ignores transfers that are not minting or burning', () => {
@@ -380,8 +384,8 @@ describe('aggregation', () => {
       // Only the first transfer counts (minting)
       // mintedValueUsd = 2000
       // burnedValueUsd = 0
-      // netMinted = 2000 - 0 = 2000
-      expect(result.netMinted).toEqual(2000)
+      expect(result.mintedValueUsd).toEqual(2000)
+      expect(result.burnedValueUsd).toEqual(0)
     })
 
     it('correctly counts identified transfers', () => {

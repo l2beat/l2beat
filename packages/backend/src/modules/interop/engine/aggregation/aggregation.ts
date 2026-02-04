@@ -115,8 +115,11 @@ export function getAggregatedTransfer(
     avgValueInFlight: valueInFlight
       ? Math.round((valueInFlight / UnixTime.DAY) * 100) / 100
       : undefined,
-    netMinted: options?.calculateNetMinted
-      ? Math.round((mintedValueUsd - burnedValueUsd) * 100) / 100
+    mintedValueUsd: options?.calculateNetMinted
+      ? Math.round(mintedValueUsd * 100) / 100
+      : undefined,
+    burnedValueUsd: options?.calculateNetMinted
+      ? Math.round(burnedValueUsd * 100) / 100
       : undefined,
     countUnder100,
     count100To1K,

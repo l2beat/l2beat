@@ -105,7 +105,8 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 5000,
           dstValueUsd: 5000,
           avgValueInFlight: undefined,
-          netMinted: undefined,
+          mintedValueUsd: 0,
+          burnedValueUsd: 0,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 2,
@@ -221,7 +222,7 @@ describe(InteropAggregatingIndexer.name, () => {
         // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum) and msg5 (arbitrum->ethereum)
         {
           id: 'config2',
-          bridgeType: 'lockAndMint',
+          bridgeType: 'omnichain',
           plugins: [{ chain: 'ethereum', plugin: 'cctp-v1' }],
         },
         // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth) and msg8 (eth->usdc, src is eth)
@@ -294,7 +295,8 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 2000,
           dstValueUsd: 2000,
           avgValueInFlight: undefined,
-          netMinted: undefined,
+          mintedValueUsd: 0,
+          burnedValueUsd: 0,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 1,
@@ -313,7 +315,8 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 1000,
           dstValueUsd: 1000,
           avgValueInFlight: undefined,
-          netMinted: undefined,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 1,
@@ -332,7 +335,8 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 2500,
           dstValueUsd: 2500,
           avgValueInFlight: undefined,
-          netMinted: undefined,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 1,
@@ -351,7 +355,8 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 10500,
           dstValueUsd: 10000,
           avgValueInFlight: undefined,
-          netMinted: undefined,
+          mintedValueUsd: 0,
+          burnedValueUsd: 0,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 3,
@@ -486,7 +491,8 @@ describe(InteropAggregatingIndexer.name, () => {
           dstValueUsd: 1,
           // avgValueInFlight = (1 * 86400) / 86400 = 1
           avgValueInFlight: 1,
-          netMinted: undefined,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
           countUnder100: 1,
           count100To1K: 0,
           count1KTo10K: 0,
@@ -592,10 +598,8 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 6000,
           dstValueUsd: 6000,
           avgValueInFlight: undefined,
-          // mintedValueUsd = 2000 + 1000 = 3000
-          // burnedValueUsd = 3000
-          // netMinted = 3000 - 3000 = 0
-          netMinted: 0,
+          burnedValueUsd: 3000, //2000 + 1000 = 3000
+          mintedValueUsd: 3000,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 3,
