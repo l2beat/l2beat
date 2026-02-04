@@ -1,7 +1,7 @@
 import { getCoreRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import {
   nonMintingColumns,
   type ProtocolRow,

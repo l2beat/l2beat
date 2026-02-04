@@ -1,11 +1,11 @@
 import type { InteropDurationSplit, Project } from '@l2beat/config'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
-import type { AverageDurationData } from '../types'
 import type {
   AverageDuration,
+  AverageDurationData,
   DurationSplitMap,
   UnknownAverageDuration,
-} from './types'
+} from '../types'
 
 export function getAverageDuration(
   projectId: string,

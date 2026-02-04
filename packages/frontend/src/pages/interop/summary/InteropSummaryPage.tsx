@@ -61,8 +61,8 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   })
 
   if (
-    data?.allProtocolsEntries.length === 0 &&
-    !data?.top5Cards &&
+    data?.entries.length === 0 &&
+    !data?.splitByBridgeTypeEntries &&
     data.top3Paths.length === 0 &&
     data.topProtocols.length === 0
   ) {
@@ -101,15 +101,15 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       />
       <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
         <NonMintingCard
-          entries={data?.top5Cards?.nonMinting}
+          entries={data?.splitByBridgeTypeEntries?.nonMinting}
           isLoading={isLoading}
         />
         <LockAndMintCard
-          entries={data?.top5Cards?.lockAndMint}
+          entries={data?.splitByBridgeTypeEntries?.lockAndMint}
           isLoading={isLoading}
         />
         <OmniChainCard
-          entries={data?.top5Cards?.omnichain}
+          entries={data?.splitByBridgeTypeEntries?.omnichain}
           isLoading={isLoading}
         />
         <TransferSizeChartCard
@@ -117,10 +117,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
           isLoading={isLoading}
         />
       </div>
-      <AllProtocolsCard
-        entries={data?.allProtocolsEntries}
-        isLoading={isLoading}
-      />
+      <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
     </div>
   )
 }

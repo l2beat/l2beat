@@ -2,16 +2,10 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
-import type { InteropDashboardParams } from './types'
-import {
-  type AllProtocolsEntry,
-  getAllProtocolEntries,
-} from './utils/getAllProtocolEntries'
+import type { InteropDashboardParams, ProtocolEntry } from './types'
+import { getAllProtocolEntries } from './utils/getAllProtocolEntries'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
-import {
-  getProtocolEntries,
-  type ProtocolEntry,
-} from './utils/getProtocolEntries'
+import { getProtocolEntries } from './utils/getProtocolEntries'
 import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
 import {
   getTopProtocols,
@@ -30,8 +24,8 @@ export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
   transferSizeChartData: TransferSizeChartData | undefined
-  top5Cards?: GroupedInteropEntries<ProtocolEntry>
-  allProtocolsEntries: AllProtocolsEntry[]
+  splitByBridgeTypeEntries?: GroupedInteropEntries<ProtocolEntry>
+  entries: ProtocolEntry[]
 }
 
 export async function getInteropDashboardData(
@@ -69,11 +63,7 @@ export async function getInteropDashboardData(
     top3Paths: getTopPaths(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
-    allProtocolsEntries: getAllProtocolEntries(
-      records,
-      tokensDetailsMap,
-      interopProjects,
-    ),
+    entries: getAllProtocolEntries(records, tokensDetailsMap, interopProjects),
   }
 
   if (!params.type) {
@@ -83,7 +73,7 @@ export async function getInteropDashboardData(
 
     return {
       ...common,
-      top5Cards: {
+      splitByBridgeTypeEntries: {
         lockAndMint: groupedEntries.lockAndMint.slice(0, 5),
         nonMinting: groupedEntries.nonMinting.slice(0, 5),
         omnichain: groupedEntries.omnichain.slice(0, 5),
@@ -157,29 +147,14 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     },
   ]
 
-  const protocolEntries: ProtocolEntry[] = interopProjects.map((project) => ({
-    id: project.id,
-    protocolName: project.interopConfig.name ?? project.name,
-    isAggregate: project.interopConfig.isAggregate,
-    iconSlug: project.slug,
-    iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    bridgeType: 'lockAndMint',
-    volume: 15_000_000,
-    tokens: mockTokens,
-    chains: mockChains,
-    transferCount: 5000,
-    averageValue: 3000,
-    averageDuration: { type: 'single', duration: 100_000 },
-  }))
-
-  const allProtocolEntries: AllProtocolsEntry[] = interopProjects.map(
+  const splitByBridgeTypeEntries: ProtocolEntry[] = interopProjects.map(
     (project) => ({
       id: project.id,
       protocolName: project.interopConfig.name ?? project.name,
       isAggregate: project.interopConfig.isAggregate,
       iconSlug: project.slug,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      bridgeTypes: ['lockAndMint', 'nonMinting', 'omnichain'],
+      bridgeTypes: ['lockAndMint'],
       volume: 15_000_000,
       tokens: mockTokens,
       chains: mockChains,
@@ -188,6 +163,21 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       averageDuration: { type: 'single', duration: 100_000 },
     }),
   )
+
+  const entries: ProtocolEntry[] = interopProjects.map((project) => ({
+    id: project.id,
+    protocolName: project.interopConfig.name ?? project.name,
+    isAggregate: project.interopConfig.isAggregate,
+    iconSlug: project.slug,
+    iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+    bridgeTypes: ['lockAndMint', 'nonMinting', 'omnichain'],
+    volume: 15_000_000,
+    tokens: mockTokens,
+    chains: mockChains,
+    transferCount: 5000,
+    averageValue: 3000,
+    averageDuration: { type: 'single', duration: 100_000 },
+  }))
 
   const transferSizeChartData: TransferSizeChartData = {
     arbitrum: {
@@ -219,17 +209,17 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     },
   }
 
-  const grouped = groupByInteropBridgeType(protocolEntries)
+  const grouped = groupByInteropBridgeType(splitByBridgeTypeEntries)
 
   return {
     top3Paths,
     topProtocols,
     transferSizeChartData,
-    top5Cards: {
+    splitByBridgeTypeEntries: {
       lockAndMint: grouped.lockAndMint.slice(0, 5),
       nonMinting: grouped.nonMinting.slice(0, 5),
       omnichain: grouped.omnichain.slice(0, 5),
     },
-    allProtocolsEntries: allProtocolEntries,
+    entries,
   }
 }

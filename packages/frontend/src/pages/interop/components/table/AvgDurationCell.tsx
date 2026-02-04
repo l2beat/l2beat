@@ -8,7 +8,7 @@ import {
 import type {
   AverageDuration,
   SplitAverageDuration,
-} from '~/server/features/scaling/interop/utils/types'
+} from '~/server/features/scaling/interop/types'
 
 export function AvgDurationCell({
   averageDuration,

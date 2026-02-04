@@ -1,9 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { type InteropBridgeType, notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
-import type { AverageDurationData } from '../types'
+import type { AverageDurationData, DurationSplitMap, TokenData } from '../types'
 import { getAverageDuration } from './getAverageDuration'
-import type { DurationSplitMap, TokenData } from './types'
 
 type Params = {
   projectId: string

@@ -3,8 +3,8 @@ import { type InteropBridgeType, unique } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   AverageDurationData,
+  DurationSplitMap,
 } from '../types'
-import type { DurationSplitMap } from './types'
 
 type TokensAndChainsData = AverageDurationData & { volume: number }
 

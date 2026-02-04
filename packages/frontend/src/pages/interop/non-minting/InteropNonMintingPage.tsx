@@ -61,7 +61,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   })
 
   if (
-    data?.allProtocolsEntries.length === 0 &&
+    data?.entries.length === 0 &&
     data.top3Paths.length === 0 &&
     data.topProtocols.length === 0
   ) {
@@ -99,7 +99,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
       />
       <AllProtocolsCard
-        entries={data?.allProtocolsEntries}
+        entries={data?.entries}
         isLoading={isLoading}
         hideTypeColumn
         showAverageInFlightValueColumn

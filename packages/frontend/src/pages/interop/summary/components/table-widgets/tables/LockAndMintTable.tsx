@@ -1,11 +1,14 @@
 import { getCoreRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
-import { lockAndMintColumns } from '../../../../components/table/columns'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
+import {
+  lockAndMintColumns,
+  type ProtocolRow,
+} from '../../../../components/table/columns'
 
 export function LockAndMintTable({ entries }: { entries: ProtocolEntry[] }) {
-  const table = useTable({
+  const table = useTable<ProtocolRow>({
     data: entries,
     columns: lockAndMintColumns,
     getCoreRowModel: getCoreRowModel(),

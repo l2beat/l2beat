@@ -1,4 +1,4 @@
-import type { TokenData } from '~/server/features/scaling/interop/utils/types'
+import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItem } from './columns'
 import { InteropTopItemsCell } from './TopItemsCell'
 

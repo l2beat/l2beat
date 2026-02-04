@@ -3,9 +3,8 @@ import { INTEROP_CHAINS } from '@l2beat/config'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
 import { notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
-import type { AverageDurationData } from '../types'
+import type { AverageDurationData, ChainData, DurationSplitMap } from '../types'
 import { getAverageDuration } from './getAverageDuration'
-import type { ChainData, DurationSplitMap } from './types'
 
 type Params = {
   projectId: string

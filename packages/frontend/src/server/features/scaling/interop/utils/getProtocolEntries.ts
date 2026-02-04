@@ -1,33 +1,16 @@
 import type { Project } from '@l2beat/config'
-import { assert, type InteropBridgeType } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import type {
+  AggregatedInteropTransferWithTokens,
+  ProtocolEntry,
+} from '../types'
 import { buildTransfersTimeModeMap } from './buildTransfersTimeModeMap'
 import { buildDurationSplitMap, getAverageDuration } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
 import { getProtocolsDataMapByBridgeType } from './getProtocolsDataMap'
 import { getTokensData } from './getTokensData'
-import type { AverageDuration, ChainData, TokenData } from './types'
-
-export type ProtocolEntry = {
-  id: string
-  iconUrl: string
-  protocolName: string
-  isAggregate?: boolean
-  subgroup?: {
-    name: string
-    iconUrl: string
-  }
-  bridgeType: InteropBridgeType
-  volume: number
-  tokens: TokenData[]
-  chains: ChainData[]
-  transferCount: number
-  averageValue: number
-  averageDuration: AverageDuration
-  averageValueInFlight?: number
-}
 
 const logger = getLogger().for('getProtocolEntries')
 
@@ -68,7 +51,7 @@ export function getProtocolEntries(
               iconUrl: manifest.getUrl(`/icons/${subgroupProject.slug}.png`),
             }
           : undefined,
-        bridgeType,
+        bridgeTypes: [bridgeType],
         volume: data.volume,
         tokens: getTokensData({
           projectId,
