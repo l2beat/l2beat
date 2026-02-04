@@ -9,6 +9,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { Skeleton } from '~/components/core/Skeleton'
+import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
@@ -28,9 +29,10 @@ export function ProtocolsPieChart({
   isLoading: boolean
   containerWidth: number | undefined
 }) {
+  const isClient = useIsClient()
   const showSmallerChart = containerWidth && containerWidth < 373
 
-  if (isLoading && containerWidth) {
+  if (!isClient || (isLoading && containerWidth)) {
     return (
       <div className="flex h-full items-center">
         <Skeleton

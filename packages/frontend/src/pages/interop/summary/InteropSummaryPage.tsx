@@ -18,6 +18,7 @@ import {
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
 import { InteropEmptyState } from './components/InteropEmptyState'
+import { TransferSizeChartCard } from './components/TransferSizeChartCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { OmniChainCard } from './components/table-widgets/OmniChainCard'
@@ -105,15 +106,24 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
-      <NonMintingCard
-        entries={groupedEntries.nonMinting}
-        isLoading={isLoading}
-      />
-      <LockAndMintCard
-        entries={groupedEntries.lockAndMint}
-        isLoading={isLoading}
-      />
-      <OmniChainCard entries={groupedEntries.omnichain} isLoading={isLoading} />
+      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
+        <NonMintingCard
+          entries={groupedEntries.nonMinting}
+          isLoading={isLoading}
+        />
+        <LockAndMintCard
+          entries={groupedEntries.lockAndMint}
+          isLoading={isLoading}
+        />
+        <OmniChainCard
+          entries={groupedEntries.omnichain}
+          isLoading={isLoading}
+        />
+        <TransferSizeChartCard
+          transferSizeChartData={data?.transferSizeChartData}
+          isLoading={isLoading}
+        />
+      </div>
       <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
     </div>
   )
