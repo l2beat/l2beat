@@ -217,7 +217,7 @@ interface EventDataRequest {
   signature: string
   includeTxEvents?: string[]
   includeTx?: boolean
-  addresses: ChainSpecificAddress[]
+  addresses: ChainSpecificAddress[] | '*'
 }
 
 export interface InteropPlugin {
