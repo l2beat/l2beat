@@ -101,16 +101,24 @@ function addPluginDataRequests(
 export type SyncerState = TimeloopState | BlockProcessorState
 
 export interface TimeloopState {
-  type: 'timeLoop'
+  type: 'timeLoop' | 'hybrid'
   name: string
   status: string
   run(): Promise<SyncerState>
 }
 export interface BlockProcessorState {
-  type: 'blockProcessor'
+  type: 'blockProcessor' | 'hybrid'
   name: string
   status: string
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
+}
+
+function isTimeLoopState(state: SyncerState): state is TimeloopState {
+  return state.type === 'timeLoop' || state.type === 'hybrid'
+}
+
+function isBlockProcessorState(state: SyncerState): state is BlockProcessorState {
+  return state.type === 'blockProcessor' || state.type === 'hybrid'
 }
 
 export class InteropEventSyncer extends TimeLoop {
@@ -119,6 +127,8 @@ export class InteropEventSyncer extends TimeLoop {
   public waitingForWipe = false
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
+  private processingBlock = false
+  private loopPaused: boolean | undefined
 
   constructor(
     readonly chain: LongChainName,
@@ -141,11 +151,7 @@ export class InteropEventSyncer extends TimeLoop {
     try {
       await this.clearChainSyncError()
       this.state = await fn(state)
-      if (this.state.type === 'timeLoop') {
-        this.unpause()
-      } else {
-        this.pause()
-      }
+      this.updateLoopScheduling()
     } catch (error) {
       this.logger.error('Error syncing chain', error, {
         pluginName: this.cluster.name,
@@ -158,7 +164,10 @@ export class InteropEventSyncer extends TimeLoop {
 
   async run() {
     const state = this.state
-    if (state.type === 'timeLoop') {
+    if (this.processingBlock) {
+      return
+    }
+    if (isTimeLoopState(state)) {
       await this.triggerState(state, (current) => current.run())
     }
   }
@@ -166,11 +175,43 @@ export class InteropEventSyncer extends TimeLoop {
   async processNewestBlock(block: Block, logs: Log[]) {
     this.latestBlockNumber = BigInt(block.number)
     const state = this.state
-    if (state.type === 'blockProcessor') {
-      await this.triggerState(state, (current) =>
-        current.processNewestBlock(block, logs),
-      )
+    if (isBlockProcessorState(state)) {
+      this.processingBlock = true
+      this.updateLoopScheduling()
+      try {
+        await this.triggerState(state, (current) =>
+          current.processNewestBlock(block, logs),
+        )
+      } finally {
+        this.processingBlock = false
+        this.updateLoopScheduling()
+      }
     }
+  }
+
+  private updateLoopScheduling() {
+    const shouldPause = this.processingBlock || !isTimeLoopState(this.state)
+    if (shouldPause) {
+      this.requestPause()
+    } else {
+      this.requestUnpause()
+    }
+  }
+
+  private requestPause() {
+    if (this.loopPaused === true) {
+      return
+    }
+    this.loopPaused = true
+    this.pause()
+  }
+
+  private requestUnpause() {
+    if (this.loopPaused === false) {
+      return
+    }
+    this.loopPaused = false
+    this.unpause()
   }
 
   captureLog(logToCapture: LogToCapture) {
