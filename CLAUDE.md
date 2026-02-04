@@ -331,9 +331,9 @@ PORT=3001
 
 **Shared Module (`scoringShared.tsx`)** — DO NOT duplicate code from this file:
 
-- **Utility Functions**: `formatUsdValue`, `hasCapitalData`, `isZeroAddress`, `getGradeColor`, `getGradeBadgeStyles`, `getAdminTypeColor`, `getImpactColor`, `getLikelihoodColor`, `impactToScore`, `computeWorstGrade`
+- **Utility Functions**: `formatUsdValue`, `hasCapitalData`, `hasTokenValueData`, `isZeroAddress`, `getGradeColor`, `getGradeBadgeStyles`, `getAdminTypeColor`, `getImpactColor`, `getLikelihoodColor`, `impactToScore`, `computeWorstGrade`, `computeDeduplicatedCapital`
 - **Picker Components**: `ImpactPicker`, `LikelihoodPicker` — dropdown pickers for impact/likelihood scoring
-- **Display Components**: `TreeNode`, `FundsDisplay`, `FunctionCapitalBreakdown` — tree-structured capital breakdown
+- **Display Components**: `TreeNode`, `FundsDisplay`, `TokenValueDisplay`, `FunctionCapitalBreakdown` — tree-structured capital breakdown
 - **`OwnerSection`**: Shared component used by **both** Owners and Dependencies sections to render an owner/admin with admin type badges, proxy type tags, likelihood picker, capital-at-risk, and expandable function list with capital breakdown trees
 
 **Section Architecture**:
@@ -353,6 +353,14 @@ PORT=3001
 - External owners (`isExternal: true` in contract-tags) appear in Dependencies, not Owners
 - Immutable contracts and revoked addresses (0x0) are grouped together for toggle filtering
 - `OwnerSection` is shared to avoid duplicating admin type badges, proxy type tags, funds display, and capital breakdown logic
+
+**Capital & Token Value Display**:
+
+- Capital at risk (green, `text-green-400`) shows contract funds (balances + positions)
+- Token value (yellow, `text-aux-yellow`) shows protocol token market cap, displayed separately
+- Both computed in `capitalAnalysis.ts` via `getContractFunds()` and `getContractTokenValue()`
+- Token market cap is pre-computed during funds fetching (stored in `funds-data.json` under `tokenInfo.tokenValue`)
+- Header totals in Owners/Dependencies use `computeDeduplicatedCapital()` to avoid double-counting the same contract across multiple admins
 
 ---
 
