@@ -181,6 +181,24 @@
       "ccip.Transfer"
     ]
   },
+  "ccip-messaging": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // LaPoste (Abracadabra) - pure messaging, no token transfer through CCIP
+      // Arbitrum → Ethereum
+      {
+        "chain": "arbitrum",
+        "tx": "0xf393fcfb456ae71c6cd1e326ae1a1630d3ed7f80501b72586194ba66be05edd8"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x57fcb2aa31b96ed2c753e9d0853f3c4f6dd34260d506ebc274a8002d2d656ec5"
+      }
+    ],
+    "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+    "messages": [{ "type": "ccip.Message", "app": "unknown" }],
+    "transfers": []
+  },
   "celer": {
     "txs": [
       {
