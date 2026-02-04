@@ -1,6 +1,6 @@
-name: defidisco-backend-prod
+name: defiscan-v2-backend-prod
 services:
-  - name: l2b-api
+  - name: disco-api
     github:
       repo: deficollective/defiscan-v2
       branch: main

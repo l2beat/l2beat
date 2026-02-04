@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://defidisco-backend-prod-mac9m.ondigitalocean.app/api/:match*"
+      "destination": "https://defiscan-v2-backend-prod-pzz23.ondigitalocean.app/api/:match*"
     }
   ],
   "trailingSlash": false
