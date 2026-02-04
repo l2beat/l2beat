@@ -1,4 +1,8 @@
-import { INTEROP_CHAINS, type InteropDurationSplit } from '@l2beat/config'
+import {
+  INTEROP_CHAINS,
+  type InteropConfig,
+  type InteropDurationSplit,
+} from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
@@ -10,7 +14,7 @@ export type TokenData = {
   iconUrl: string
   volume: number | null
   transferCount: number
-  avgDuration: { type: 'single'; duration: number } | DurationSplit | null
+  avgDuration: AverageDuration | null
   avgValue: number | null
 }
 
@@ -20,7 +24,7 @@ export type ChainData = {
   iconUrl: string
   volume: number
   transferCount: number
-  avgDuration: { type: 'single'; duration: number } | DurationSplit
+  avgDuration: AverageDuration | null
   avgValue: number
 }
 
@@ -36,9 +40,10 @@ export type DurationSplit = {
   }
 }
 
-export type AverageDurationResult =
+export type AverageDuration =
   | { type: 'single'; duration: number }
   | DurationSplit
+  | 'unknown'
 
 const logger = getLogger().for('interopEntriesCommon')
 
@@ -46,7 +51,10 @@ export function getTokensData(
   protocolId: string,
   tokens: Map<string, AverageDurationData & { volume: number }>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
-  durationSplitMap: Map<string, InteropDurationSplit>,
+  customDurationConfigMap: Map<
+    string,
+    NonNullable<InteropDurationSplit | InteropConfig['transfersTimeMode']>
+  >,
   unknownTransfersCount: number,
 ): TokenData[] {
   const tokensData: TokenData[] = Array.from(tokens.entries())
@@ -61,7 +69,7 @@ export function getTokensData(
       const avgDuration = getAverageDuration(
         protocolId,
         token,
-        durationSplitMap,
+        customDurationConfigMap,
       )
 
       return {
@@ -97,7 +105,10 @@ export function getTokensData(
 export function getChainsData(
   protocolId: string,
   chains: Map<string, AverageDurationData & { volume: number }>,
-  durationSplitMap: Map<string, InteropDurationSplit>,
+  customDurationConfigMap: Map<
+    string,
+    NonNullable<InteropDurationSplit | InteropConfig['transfersTimeMode']>
+  >,
 ): ChainData[] {
   return Array.from(chains.entries())
     .map(([chainId, chainData]) => {
@@ -110,7 +121,7 @@ export function getChainsData(
       const avgDuration = getAverageDuration(
         protocolId,
         chainData,
-        durationSplitMap,
+        customDurationConfigMap,
       )
 
       return {
@@ -130,10 +141,13 @@ export function getChainsData(
 export function getAverageDuration(
   key: string,
   data: AverageDurationData,
-  durationSplitMap: Map<string, InteropDurationSplit>,
-): AverageDurationResult {
-  const durationSplit = durationSplitMap.get(key)
-
+  customDurationConfigMap: Map<
+    string,
+    NonNullable<InteropDurationSplit | InteropConfig['transfersTimeMode']>
+  >,
+): AverageDuration {
+  const durationSplit = customDurationConfigMap.get(key)
+  if (durationSplit === 'unknown') return 'unknown'
   if (durationSplit) {
     return {
       type: 'split',
