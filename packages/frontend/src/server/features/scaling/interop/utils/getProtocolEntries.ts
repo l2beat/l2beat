@@ -144,7 +144,10 @@ export function getProtocolEntries(
             : 0,
         averageDuration: getAverageDuration(key, data, customDurationConfigMap),
         averageValueInFlight: data.averageValueInFlight,
-        netMintedValue: data.netMintedValue,
+        netMintedValue:
+          data.mintedValueUsd && data.burnedValueUsd
+            ? data.mintedValueUsd - data.burnedValueUsd
+            : undefined,
       }
     })
     .sort((a, b) => b.volume - a.volume)
