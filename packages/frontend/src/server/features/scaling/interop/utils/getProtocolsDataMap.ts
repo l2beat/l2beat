@@ -70,7 +70,7 @@ export function getProtocolsDataMap(
       })
     }
 
-    updateChainData(current.chains, record)
+    accumulateChainData(current.chains, record)
 
     const protocolDurationSplits = updateDurationSplits(
       current,
@@ -150,7 +150,7 @@ function updateDurationSplits(
   }
 }
 
-function updateChainData(
+function accumulateChainData(
   chains: Map<string, AverageDurationData & { volume: number }>,
   record: AggregatedInteropTransferWithTokens,
 ): void {

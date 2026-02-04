@@ -5,10 +5,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import type {
-  DurationSplit,
-  ProtocolEntry,
-} from '~/server/features/scaling/interop/utils/getProtocolEntries'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
+import type { DurationSplit } from '~/server/features/scaling/interop/utils/interopEntriesCommon'
 
 export function AvgDurationCell({
   averageDuration,
