@@ -549,7 +549,8 @@ model AggregatedInteropTransfer {
   srcValueUsd      Float?   @db.Real
   dstValueUsd      Float?   @db.Real
   avgValueInFlight Float?   @db.Real
-  netMinted        Float?   @db.Real
+  mintedValueUsd   Float?   @db.Real
+  burnedValueUsd   Float?   @db.Real
   countUnder100    Int      @default(0)
   count100To1K     Int      @default(0)
   count1KTo10K     Int      @default(0)
