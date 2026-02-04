@@ -4,18 +4,20 @@ import type {
   AggregatedInteropTransferWithTokens,
   AverageDurationData,
 } from '../types'
-import type { DurationSplitMap } from './interopEntriesCommon'
+import type { DurationSplitMap } from './types'
 
-interface ProtocolData extends AverageDurationData {
+type TokensAndChainsData = AverageDurationData & { volume: number }
+
+export interface ProtocolData extends AverageDurationData {
   bridgeTypes: InteropBridgeType[]
   volume: number
-  tokens: Map<string, AverageDurationData & { volume: number }>
-  chains: Map<string, AverageDurationData & { volume: number }>
+  tokens: Map<string, TokensAndChainsData>
+  chains: Map<string, TokensAndChainsData>
   averageValueInFlight: number | undefined
   identifiedTransferCount: number
 }
 
-const INITIAL_DATA: AverageDurationData & { volume: number } = {
+const INITIAL_DATA: TokensAndChainsData = {
   volume: 0,
   transferCount: 0,
   totalDurationSum: 0,
@@ -25,72 +27,45 @@ const INITIAL_DATA: AverageDurationData & { volume: number } = {
   outDurationSum: 0,
 }
 
-export function getProtocolsDataMap(
+/**
+ * Returns a two-level map: projectId -> bridgeType -> ProtocolData
+ * Used by getProtocolEntries where we need separate entries per bridge type.
+ */
+export function getProtocolsDataMapByBridgeType(
   records: AggregatedInteropTransferWithTokens[],
   durationSplitMap: DurationSplitMap | undefined,
   transfersTimeModeMap: Map<string, 'unknown'>,
-  makeKey: (record: AggregatedInteropTransferWithTokens) => string,
-) {
-  const protocolsDataMap = new Map<string, ProtocolData>()
+): Map<string, Map<InteropBridgeType, ProtocolData>> {
+  const protocolsDataMap = new Map<
+    string,
+    Map<InteropBridgeType, ProtocolData>
+  >()
 
   for (const record of records) {
-    const key = makeKey(record)
-    const current = protocolsDataMap.get(key) ?? {
-      bridgeTypes: [],
-      volume: 0,
-      tokens: new Map<string, AverageDurationData & { volume: number }>(),
-      chains: new Map<string, AverageDurationData & { volume: number }>(),
-      transferCount: 0,
-      totalDurationSum: 0,
-      inTransferCount: 0,
-      inDurationSum: 0,
-      outTransferCount: 0,
-      outDurationSum: 0,
-      averageValueInFlight: undefined,
-      identifiedTransferCount: 0,
+    let bridgeTypeMap = protocolsDataMap.get(record.id)
+    if (!bridgeTypeMap) {
+      bridgeTypeMap = new Map()
+      protocolsDataMap.set(record.id, bridgeTypeMap)
     }
 
-    const durationSplit = durationSplitMap?.get(key)
-    const transfersTimeMode = transfersTimeModeMap.get(key)
+    const current =
+      bridgeTypeMap.get(record.bridgeType) ?? createInitialProtocolData()
+
+    const durationSplit = durationSplitMap
+      ?.get(record.id)
+      ?.get(record.bridgeType)
+    const transfersTimeMode = transfersTimeModeMap.get(record.id)
     const direction = getDirection(record, durationSplit, transfersTimeMode)
 
-    for (const token of record.tokens) {
-      const currentToken = current.tokens.get(token.abstractTokenId)
-      const tokenDurationSplits = updateDurationSplits(
-        currentToken ?? INITIAL_DATA,
-        direction,
-        token.transferCount ?? 0,
-        token.totalDurationSum ?? 0,
-      )
-
-      current.tokens.set(token.abstractTokenId, {
-        transferCount:
-          (currentToken?.transferCount ?? 0) + (token.transferCount ?? 0),
-        totalDurationSum:
-          (currentToken?.totalDurationSum ?? 0) + (token.totalDurationSum ?? 0),
-        volume: (currentToken?.volume ?? 0) + (token.volume ?? 0),
-        ...tokenDurationSplits,
-      })
-    }
-
-    accumulateChainData(current.chains, record)
-
-    const protocolDurationSplits = updateDurationSplits(
-      current,
-      direction,
-      record.transferCount ?? 0,
-      record.totalDurationSum ?? 0,
-    )
-
-    protocolsDataMap.set(key, {
+    bridgeTypeMap.set(record.bridgeType, {
       bridgeTypes: unique([...current.bridgeTypes, record.bridgeType]),
       volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
-      tokens: current.tokens,
-      chains: current.chains,
+      tokens: mergeTokensData(current.tokens, record.tokens, direction),
+      chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),
-      ...protocolDurationSplits,
+      ...computeDurationSplits(current, direction, record),
       averageValueInFlight:
         record.avgValueInFlight !== undefined
           ? (current.averageValueInFlight ?? 0) + record.avgValueInFlight
@@ -101,6 +76,62 @@ export function getProtocolsDataMap(
   }
 
   return protocolsDataMap
+}
+
+/**
+ * Returns a flat map: projectId -> ProtocolData (aggregated across all bridge types)
+ * Used by getAllProtocolEntries where we aggregate all bridge types together.
+ */
+export function getProtocolsDataMap(
+  records: AggregatedInteropTransferWithTokens[],
+  transfersTimeModeMap: Map<string, 'unknown'>,
+): Map<string, ProtocolData> {
+  const protocolsDataMap = new Map<string, ProtocolData>()
+
+  for (const record of records) {
+    const current =
+      protocolsDataMap.get(record.id) ?? createInitialProtocolData()
+
+    // No duration split for aggregated view
+    const transfersTimeMode = transfersTimeModeMap.get(record.id)
+    const direction = getDirection(record, undefined, transfersTimeMode)
+
+    protocolsDataMap.set(record.id, {
+      bridgeTypes: unique([...current.bridgeTypes, record.bridgeType]),
+      volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+      tokens: mergeTokensData(current.tokens, record.tokens, direction),
+      chains: mergeChainsData(current.chains, record),
+      transferCount: current.transferCount + (record.transferCount ?? 0),
+      totalDurationSum:
+        current.totalDurationSum + (record.totalDurationSum ?? 0),
+      ...computeDurationSplits(current, direction, record),
+      averageValueInFlight:
+        record.avgValueInFlight !== undefined
+          ? (current.averageValueInFlight ?? 0) + record.avgValueInFlight
+          : current.averageValueInFlight,
+      identifiedTransferCount:
+        current.identifiedTransferCount + (record.identifiedCount ?? 0),
+    })
+  }
+
+  return protocolsDataMap
+}
+
+function createInitialProtocolData(): ProtocolData {
+  return {
+    bridgeTypes: [],
+    volume: 0,
+    tokens: new Map<string, TokensAndChainsData>(),
+    chains: new Map<string, TokensAndChainsData>(),
+    transferCount: 0,
+    totalDurationSum: 0,
+    inTransferCount: 0,
+    inDurationSum: 0,
+    outTransferCount: 0,
+    outDurationSum: 0,
+    averageValueInFlight: undefined,
+    identifiedTransferCount: 0,
+  }
 }
 
 function getDirection(
@@ -125,63 +156,99 @@ function getDirection(
   return null
 }
 
-function updateDurationSplits(
+function computeDurationSplits(
   current: AverageDurationData,
   direction: 'in' | 'out' | null,
-  transferCount: number,
-  durationSum: number,
+  record: AggregatedInteropTransferWithTokens,
 ): Pick<
   AverageDurationData,
   'inTransferCount' | 'inDurationSum' | 'outTransferCount' | 'outDurationSum'
 > {
-  let inTransferCount = current.inTransferCount
-  let inDurationSum = current.inDurationSum
-  let outTransferCount = current.outTransferCount
-  let outDurationSum = current.outDurationSum
-
-  if (direction === 'in') {
-    inTransferCount += transferCount
-    inDurationSum += durationSum
-  } else if (direction === 'out') {
-    outTransferCount += transferCount
-    outDurationSum += durationSum
-  }
+  const transferCount = record.transferCount ?? 0
+  const durationSum = record.totalDurationSum ?? 0
 
   return {
-    inTransferCount,
-    inDurationSum,
-    outTransferCount,
-    outDurationSum,
+    inTransferCount:
+      current.inTransferCount + (direction === 'in' ? transferCount : 0),
+    inDurationSum:
+      current.inDurationSum + (direction === 'in' ? durationSum : 0),
+    outTransferCount:
+      current.outTransferCount + (direction === 'out' ? transferCount : 0),
+    outDurationSum:
+      current.outDurationSum + (direction === 'out' ? durationSum : 0),
   }
 }
 
-function accumulateChainData(
-  chains: Map<string, AverageDurationData & { volume: number }>,
-  record: AggregatedInteropTransferWithTokens,
-): void {
-  const srcChain = chains.get(record.srcChain) ?? INITIAL_DATA
-  chains.set(record.srcChain, {
-    volume: srcChain.volume + (record.srcValueUsd ?? 0),
-    inDurationSum: srcChain.inDurationSum,
-    outDurationSum: srcChain.outDurationSum + (record.totalDurationSum ?? 0),
-    inTransferCount: srcChain.inTransferCount,
-    outTransferCount: srcChain.outTransferCount + (record.transferCount ?? 0),
-    transferCount: srcChain.transferCount + (record.transferCount ?? 0),
-    totalDurationSum:
-      srcChain.totalDurationSum + (record.totalDurationSum ?? 0),
-  })
+type TokenRecord = {
+  abstractTokenId: string
+  transferCount: number | null
+  totalDurationSum: number | null
+  volume: number | null
+}
 
-  if (record.dstChain !== record.srcChain) {
-    const dstChain = chains.get(record.dstChain) ?? INITIAL_DATA
-    chains.set(record.dstChain, {
-      volume: dstChain.volume + (record.dstValueUsd ?? 0),
-      inDurationSum: dstChain.inDurationSum + (record.totalDurationSum ?? 0),
-      outDurationSum: dstChain.outDurationSum,
-      inTransferCount: dstChain.inTransferCount + (record.transferCount ?? 0),
-      outTransferCount: dstChain.outTransferCount,
-      transferCount: dstChain.transferCount + (record.transferCount ?? 0),
-      totalDurationSum:
-        dstChain.totalDurationSum + (record.totalDurationSum ?? 0),
+function mergeTokensData(
+  currentTokens: Map<string, TokensAndChainsData>,
+  recordTokens: TokenRecord[],
+  direction: 'in' | 'out' | null,
+): Map<string, TokensAndChainsData> {
+  const result = new Map(currentTokens)
+
+  for (const token of recordTokens) {
+    const current = result.get(token.abstractTokenId) ?? INITIAL_DATA
+    const transferCount = token.transferCount ?? 0
+    const durationSum = token.totalDurationSum ?? 0
+
+    result.set(token.abstractTokenId, {
+      volume: current.volume + (token.volume ?? 0),
+      transferCount: current.transferCount + transferCount,
+      totalDurationSum: current.totalDurationSum + durationSum,
+      inTransferCount:
+        current.inTransferCount + (direction === 'in' ? transferCount : 0),
+      inDurationSum:
+        current.inDurationSum + (direction === 'in' ? durationSum : 0),
+      outTransferCount:
+        current.outTransferCount + (direction === 'out' ? transferCount : 0),
+      outDurationSum:
+        current.outDurationSum + (direction === 'out' ? durationSum : 0),
     })
   }
+
+  return result
+}
+
+function mergeChainsData(
+  currentChains: Map<string, TokensAndChainsData>,
+  record: AggregatedInteropTransferWithTokens,
+): Map<string, TokensAndChainsData> {
+  const result = new Map(currentChains)
+  const transferCount = record.transferCount ?? 0
+  const durationSum = record.totalDurationSum ?? 0
+
+  // Source chain: transfers go OUT
+  const srcChain = result.get(record.srcChain) ?? INITIAL_DATA
+  result.set(record.srcChain, {
+    volume: srcChain.volume + (record.srcValueUsd ?? 0),
+    transferCount: srcChain.transferCount + transferCount,
+    totalDurationSum: srcChain.totalDurationSum + durationSum,
+    inTransferCount: srcChain.inTransferCount,
+    inDurationSum: srcChain.inDurationSum,
+    outTransferCount: srcChain.outTransferCount + transferCount,
+    outDurationSum: srcChain.outDurationSum + durationSum,
+  })
+
+  // Destination chain: transfers come IN (only if different from source)
+  if (record.dstChain !== record.srcChain) {
+    const dstChain = result.get(record.dstChain) ?? INITIAL_DATA
+    result.set(record.dstChain, {
+      volume: dstChain.volume + (record.dstValueUsd ?? 0),
+      transferCount: dstChain.transferCount + transferCount,
+      totalDurationSum: dstChain.totalDurationSum + durationSum,
+      inTransferCount: dstChain.inTransferCount + transferCount,
+      inDurationSum: dstChain.inDurationSum + durationSum,
+      outTransferCount: dstChain.outTransferCount,
+      outDurationSum: dstChain.outDurationSum,
+    })
+  }
+
+  return result
 }

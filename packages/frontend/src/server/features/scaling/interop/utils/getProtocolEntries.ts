@@ -1,17 +1,14 @@
-import type { InteropDurationSplit, Project } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import { assert, type InteropBridgeType } from '@l2beat/shared-pure'
+import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import type { AggregatedInteropTransferWithTokens } from '../types'
-import { getProtocolsDataMap } from './getProtocolsDataMap'
-import {
-  type AverageDuration,
-  type ChainData,
-  getAverageDuration,
-  getChainsData,
-  getTokensData,
-  type TokenData,
-} from './interopEntriesCommon'
-import { makeByBridgeTypeKey, parseByBridgeTypeKey } from './protocolEntriesKey'
+import { buildTransfersTimeModeMap } from './buildTransfersTimeModeMap'
+import { buildDurationSplitMap, getAverageDuration } from './getAverageDuration'
+import { getChainsData } from './getChainsData'
+import { getProtocolsDataMapByBridgeType } from './getProtocolsDataMap'
+import { getTokensData } from './getTokensData'
+import type { AverageDuration, ChainData, TokenData } from './types'
 
 export type ProtocolEntry = {
   id: string
@@ -32,56 +29,36 @@ export type ProtocolEntry = {
   averageValueInFlight?: number
 }
 
+const logger = getLogger().for('getProtocolEntries')
+
 export function getProtocolEntries(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
 ): ProtocolEntry[] {
-  const durationSplitMap = new Map<string, NonNullable<InteropDurationSplit>>()
-  for (const project of interopProjects) {
-    for (const [bridgeType, durationSplit] of Object.entries(
-      project.interopConfig.durationSplit ?? {},
-    )) {
-      durationSplitMap.set(
-        makeByBridgeTypeKey(project.id, bridgeType as InteropBridgeType),
-        durationSplit,
-      )
-    }
-  }
-  const transfersTimeModeMap = new Map<string, 'unknown'>()
-  for (const project of interopProjects) {
-    if (project.interopConfig.transfersTimeMode) {
-      transfersTimeModeMap.set(
-        project.id,
-        project.interopConfig.transfersTimeMode,
-      )
-    }
-  }
+  const durationSplitMap = buildDurationSplitMap(interopProjects)
+  const transfersTimeModeMap = buildTransfersTimeModeMap(interopProjects)
 
-  const protocolsDataMap = getProtocolsDataMap(
+  const protocolsDataMap = getProtocolsDataMapByBridgeType(
     records,
     durationSplitMap,
     transfersTimeModeMap,
-    (record) => makeByBridgeTypeKey(record.id, record.bridgeType),
   )
 
-  const protocolsData = Array.from(protocolsDataMap.entries()).sort(
-    (a, b) => b[1].volume - a[1].volume,
-  )
+  // Flatten the two-level map into a sorted array of entries
+  const entries: ProtocolEntry[] = []
 
-  return protocolsData
-    .map(([key, data]) => {
-      const { id, bridgeType } = parseByBridgeTypeKey(key)
-      const project = interopProjects.find((p) => p.id === id)
-      assert(project, `Project not found: ${id}`)
+  for (const [projectId, bridgeTypeMap] of protocolsDataMap) {
+    const project = interopProjects.find((p) => p.id === projectId)
+    assert(project, `Project not found: ${projectId}`)
 
-      const subgroupProject = interopProjects.find(
-        (p) => p.id === project.interopConfig.subgroupId,
-      )
+    const subgroupProject = interopProjects.find(
+      (p) => p.id === project.interopConfig.subgroupId,
+    )
 
-      return {
+    for (const [bridgeType, data] of bridgeTypeMap) {
+      entries.push({
         id: project.id,
-        iconSlug: project.slug,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         protocolName: project.interopConfig.name ?? project.name,
         isAggregate: project.interopConfig.isAggregate,
@@ -93,14 +70,23 @@ export function getProtocolEntries(
           : undefined,
         bridgeType,
         volume: data.volume,
-        tokens: getTokensData(
-          key,
-          data.tokens,
+        tokens: getTokensData({
+          projectId,
+          bridgeType,
+          tokens: data.tokens,
           tokensDetailsMap,
           durationSplitMap,
-          data.transferCount - data.identifiedTransferCount,
-        ),
-        chains: getChainsData(key, data.chains, durationSplitMap),
+          unknownTransfersCount:
+            data.transferCount - data.identifiedTransferCount,
+          logger,
+        }),
+        chains: getChainsData({
+          projectId,
+          bridgeType,
+          chains: data.chains,
+          durationSplitMap,
+          logger,
+        }),
         transferCount: data.transferCount,
         averageValue:
           data.identifiedTransferCount > 0
@@ -109,9 +95,11 @@ export function getProtocolEntries(
         averageDuration:
           project.interopConfig.transfersTimeMode === 'unknown'
             ? { type: 'unknown' as const }
-            : getAverageDuration(key, data, durationSplitMap),
+            : getAverageDuration(projectId, bridgeType, data, durationSplitMap),
         averageValueInFlight: data.averageValueInFlight,
-      }
-    })
-    .sort((a, b) => b.volume - a.volume)
+      })
+    }
+  }
+
+  return entries.sort((a, b) => b.volume - a.volume)
 }

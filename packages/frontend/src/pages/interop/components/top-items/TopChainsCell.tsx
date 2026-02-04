@@ -1,4 +1,4 @@
-import type { ChainData } from '~/server/features/scaling/interop/utils/interopEntriesCommon'
+import type { ChainData } from '~/server/features/scaling/interop/utils/types'
 import type { TopItem } from './columns'
 import { InteropTopItemsCell } from './TopItemsCell'
 

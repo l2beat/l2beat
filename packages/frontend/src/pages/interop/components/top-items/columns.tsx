@@ -3,7 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
 import { EM_DASH } from '~/consts/characters'
-import type { AverageDuration } from '~/server/features/scaling/interop/utils/interopEntriesCommon'
+import type { AverageDuration } from '~/server/features/scaling/interop/utils/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from '../table/AvgDurationCell'
 

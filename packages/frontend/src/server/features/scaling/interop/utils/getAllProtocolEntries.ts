@@ -1,16 +1,14 @@
 import type { Project } from '@l2beat/config'
 import { assert, type InteropBridgeType } from '@l2beat/shared-pure'
+import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import type { AggregatedInteropTransferWithTokens } from '../types'
+import { buildTransfersTimeModeMap } from './buildTransfersTimeModeMap'
+import { getAverageDuration } from './getAverageDuration'
+import { getChainsData } from './getChainsData'
 import { getProtocolsDataMap } from './getProtocolsDataMap'
-import {
-  type AverageDuration,
-  type ChainData,
-  getAverageDuration,
-  getChainsData,
-  getTokensData,
-  type TokenData,
-} from './interopEntriesCommon'
+import { getTokensData } from './getTokensData'
+import type { AverageDuration, ChainData, TokenData } from './types'
 
 export type AllProtocolsEntry = {
   id: string
@@ -31,36 +29,25 @@ export type AllProtocolsEntry = {
   averageValueInFlight?: number
 }
 
+const logger = getLogger().for('getAllProtocolEntries')
+
 export function getAllProtocolEntries(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
 ): AllProtocolsEntry[] {
-  const transfersTimeModeMap = new Map<string, 'unknown'>()
-  for (const project of interopProjects) {
-    if (project.interopConfig.transfersTimeMode) {
-      transfersTimeModeMap.set(
-        project.id,
-        project.interopConfig.transfersTimeMode,
-      )
-    }
-  }
+  const transfersTimeModeMap = buildTransfersTimeModeMap(interopProjects)
 
-  const protocolsDataMap = getProtocolsDataMap(
-    records,
-    undefined,
-    transfersTimeModeMap,
-    (record) => record.id,
-  )
+  const protocolsDataMap = getProtocolsDataMap(records, transfersTimeModeMap)
 
   const protocolsData = Array.from(protocolsDataMap.entries()).sort(
     (a, b) => b[1].volume - a[1].volume,
   )
 
   return protocolsData
-    .map(([key, data]) => {
-      const project = interopProjects.find((p) => p.id === key)
-      assert(project, `Project not found: ${key}`)
+    .map(([projectId, data]) => {
+      const project = interopProjects.find((p) => p.id === projectId)
+      assert(project, `Project not found: ${projectId}`)
 
       const subgroupProject = interopProjects.find(
         (p) => p.id === project.interopConfig.subgroupId,
@@ -68,7 +55,6 @@ export function getAllProtocolEntries(
 
       return {
         id: project.id,
-        iconSlug: project.slug,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         protocolName: project.interopConfig.name ?? project.name,
         isAggregate: project.interopConfig.isAggregate,
@@ -80,14 +66,23 @@ export function getAllProtocolEntries(
           : undefined,
         bridgeTypes: data.bridgeTypes,
         volume: data.volume,
-        tokens: getTokensData(
-          key,
-          data.tokens,
+        tokens: getTokensData({
+          projectId,
+          bridgeType: undefined, // No bridge type split for aggregated view
+          tokens: data.tokens,
           tokensDetailsMap,
-          undefined,
-          data.transferCount - data.identifiedTransferCount,
-        ),
-        chains: getChainsData(key, data.chains, undefined),
+          durationSplitMap: undefined, // No duration split map for aggregated view
+          unknownTransfersCount:
+            data.transferCount - data.identifiedTransferCount,
+          logger,
+        }),
+        chains: getChainsData({
+          projectId,
+          bridgeType: undefined, // No bridge type split for aggregated view
+          chains: data.chains,
+          durationSplitMap: undefined, // No duration split map for aggregated view
+          logger,
+        }),
         transferCount: data.transferCount,
         averageValue:
           data.identifiedTransferCount > 0
@@ -96,7 +91,7 @@ export function getAllProtocolEntries(
         averageDuration:
           project.interopConfig.transfersTimeMode === 'unknown'
             ? { type: 'unknown' as const }
-            : getAverageDuration(key, data, undefined),
+            : getAverageDuration(projectId, undefined, data, undefined),
         averageValueInFlight: data.averageValueInFlight,
       }
     })
