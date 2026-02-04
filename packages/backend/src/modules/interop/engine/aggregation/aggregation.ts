@@ -132,15 +132,27 @@ export function getAggregatedTransfer(
 
 export function getAggregatedTokens(
   group: InteropTransferRecord[],
+  options?: {
+    calculateNetMinted?: boolean
+  },
 ): Omit<AggregatedInteropTokenRecord, 'id' | 'timestamp'>[] {
   const first = group[0]
   assert(first, 'Group is empty')
   const tokens: Record<
     string,
-    { transferCount: number; totalDurationSum: number; volume: number }
+    {
+      transferCount: number
+      totalDurationSum: number
+      volume: number
+      mintedValueUsd: number | undefined
+      burnedValueUsd: number | undefined
+    }
   > = {}
 
   for (const transfer of group) {
+    const isSameToken =
+      transfer.srcAbstractTokenId === transfer.dstAbstractTokenId
+
     if (transfer.srcAbstractTokenId) {
       tokens[transfer.srcAbstractTokenId] = {
         transferCount:
@@ -151,6 +163,29 @@ export function getAggregatedTokens(
         volume:
           (tokens[transfer.srcAbstractTokenId]?.volume ?? 0) +
           (transfer.srcValueUsd ?? 0),
+        mintedValueUsd: tokens[transfer.srcAbstractTokenId]?.mintedValueUsd,
+        burnedValueUsd: tokens[transfer.srcAbstractTokenId]?.burnedValueUsd,
+      }
+
+      if (
+        options?.calculateNetMinted &&
+        transfer.srcWasBurned &&
+        transfer.dstWasMinted === false
+      ) {
+        tokens[transfer.srcAbstractTokenId].burnedValueUsd =
+          (tokens[transfer.srcAbstractTokenId]?.burnedValueUsd ?? 0) +
+          (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0)
+      }
+
+      if (
+        isSameToken &&
+        options?.calculateNetMinted &&
+        transfer.srcWasBurned === false &&
+        transfer.dstWasMinted
+      ) {
+        tokens[transfer.srcAbstractTokenId].mintedValueUsd =
+          (tokens[transfer.srcAbstractTokenId]?.mintedValueUsd ?? 0) +
+          (transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0)
       }
     }
 
@@ -167,6 +202,18 @@ export function getAggregatedTokens(
         volume:
           (tokens[transfer.dstAbstractTokenId]?.volume ?? 0) +
           (transfer.dstValueUsd ?? 0),
+        mintedValueUsd: tokens[transfer.dstAbstractTokenId]?.mintedValueUsd,
+        burnedValueUsd: tokens[transfer.dstAbstractTokenId]?.burnedValueUsd,
+      }
+
+      if (
+        options?.calculateNetMinted &&
+        transfer.srcWasBurned === false &&
+        transfer.dstWasMinted
+      ) {
+        tokens[transfer.dstAbstractTokenId].mintedValueUsd =
+          (tokens[transfer.dstAbstractTokenId]?.mintedValueUsd ?? 0) +
+          (transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0)
       }
     }
   }
@@ -178,5 +225,7 @@ export function getAggregatedTokens(
     transferCount: data.transferCount,
     totalDurationSum: data.totalDurationSum,
     volume: data.volume,
+    mintedValueUsd: data.mintedValueUsd,
+    burnedValueUsd: data.burnedValueUsd,
   }))
 }

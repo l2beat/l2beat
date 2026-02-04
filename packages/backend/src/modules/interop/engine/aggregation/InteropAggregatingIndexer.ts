@@ -50,7 +50,9 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
         })
 
         aggregatedTokens.push(
-          ...getAggregatedTokens(group).map((token) => ({
+          ...getAggregatedTokens(group, {
+            calculateNetMinted: config.bridgeType === 'lockAndMint',
+          }).map((token) => ({
             timestamp: to,
             id: config.id,
             ...token,
