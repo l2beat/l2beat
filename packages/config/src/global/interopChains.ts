@@ -57,4 +57,18 @@ export const INTEROP_CHAINS: InteropChain[] = [
     type: 'evm',
     display: 'ABS',
   },
+  {
+    id: 'katana',
+    iconSlug: 'katana',
+    name: 'katana',
+    type: 'evm',
+    display: 'KAT',
+  },
+  {
+    id: 'bsc',
+    iconSlug: 'bsc',
+    name: 'binance-smart-chain',
+    type: 'evm',
+    display: 'BSC',
+  },
 ]
