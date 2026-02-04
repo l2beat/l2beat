@@ -60,14 +60,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
   {
     id: 'katana',
     iconSlug: 'katana',
-    name: 'katana',
+    name: 'Katana',
     type: 'evm',
     display: 'KAT',
   },
   {
     id: 'bsc',
     iconSlug: 'bsc',
-    name: 'binance-smart-chain',
+    name: 'BNB Smart Chain',
     type: 'evm',
     display: 'BSC',
   },
