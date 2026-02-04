@@ -75,6 +75,7 @@ export const automata: ScalingProject = opStackL2({
         'https://x.com/AutomataNetwork',
         'https://discord.com/invite/automata',
         'https://blog.ata.network/',
+        `https://t.me/ata_network`,
         'https://ata.ws/telegram',
       ],
     },
