@@ -31,6 +31,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     const aggregatedTransfers: AggregatedInteropTransferRecord[] = []
     const aggregatedTokens: AggregatedInteropTokenRecord[] = []
+    const missingInConfigMap = new Map<string, Map<InteropBridgeType, number>>()
 
     for (const config of this.$.configs) {
       const conditions = this.txMatchers(config)
@@ -38,24 +39,25 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
         conditions.some((pConditions) => pConditions.every((c) => c(transfer))),
       )
       const groupedByBridgeType = this.groupByBridgeType(filtered)
-      for (const [bridgeType, actualRecords] of Object.entries(
-        groupedByBridgeType,
-      )) {
-        if (
-          !config.showAlways ||
-          config.showAlways.includes(bridgeType as InteropBridgeType)
-        ) {
+      for (const [type, actualRecords] of Object.entries(groupedByBridgeType)) {
+        const bridgeType = type as InteropBridgeType
+
+        if (!config.showAlways || config.showAlways.includes(bridgeType)) {
           continue
         }
 
         if (actualRecords.length === 0) {
           continue
         }
-
-        this.logger.warn('Config is missing bridge type', {
-          protocol: config.id,
-          bridgeType,
-        })
+        const current = missingInConfigMap.get(config.id)
+        if (current) {
+          current.set(bridgeType, actualRecords.length)
+        } else {
+          missingInConfigMap.set(
+            config.id,
+            new Map([[bridgeType, actualRecords.length]]),
+          )
+        }
       }
 
       for (const [type, records] of Object.entries(groupedByBridgeType)) {
@@ -84,6 +86,13 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       }
     }
 
+    this.logger.warn(
+      'Some bridge types were automatically detected and are not defined in configs',
+      {
+        missingInConfigMap: Object.fromEntries(missingInConfigMap.entries()),
+      },
+    )
+
     await this.$.db.transaction(async () => {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
         from,
@@ -109,24 +118,23 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     return Promise.resolve(0)
   }
 
-  private groupByBridgeType(records: InteropTransferRecord[]): {
-    [key: string]: InteropTransferRecord[]
-  } {
-    return {
-      lockAndMint: records.filter(
-        (transfer) =>
-          (transfer.srcWasBurned === false && transfer.dstWasMinted === true) ||
-          (transfer.srcWasBurned === true && transfer.dstWasMinted === false),
-      ),
-      omnichain: records.filter(
-        (transfer) =>
-          transfer.srcWasBurned === true && transfer.dstWasMinted === true,
-      ),
-      nonMinting: records.filter(
-        (transfer) =>
-          transfer.srcWasBurned === false && transfer.dstWasMinted === false,
-      ),
+  private groupByBridgeType(records: InteropTransferRecord[]) {
+    const lockAndMint = []
+    const omnichain = []
+    const nonMinting = []
+    for (const record of records) {
+      if (record.srcWasBurned === false && record.dstWasMinted === true) {
+        lockAndMint.push(record)
+      } else if (record.srcWasBurned === true && record.dstWasMinted === true) {
+        omnichain.push(record)
+      } else if (
+        record.srcWasBurned === false &&
+        record.dstWasMinted === false
+      ) {
+        nonMinting.push(record)
+      }
     }
+    return { lockAndMint, omnichain, nonMinting }
   }
 
   private txMatchers(config: InteropAggregationConfig) {
