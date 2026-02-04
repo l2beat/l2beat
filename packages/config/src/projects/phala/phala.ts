@@ -1,6 +1,5 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
-import { REASON_FOR_BEING_OTHER } from '../../common/reasonsForBeingOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -14,8 +13,8 @@ export const phala: ScalingProject = opStackL2({
   display: {
     name: 'Phala',
     slug: 'phala',
-    description: `Phala is a cloud computing protocol aiming to offer developers a secure and efficient platform for deploying AI-ready applications in a trusted environment (TEE).
-      Phala uses the OP Stack. Originally deployed with OPSuccinct (SP1 ZK proofs), it currently operates with standard PermissionedDisputeGame (optimistic).`,
+    description: `Phala is a cloud computing protocol which aims at offering developers a secure and efficient platform for deploying and managing AI-ready applications in a trusted environment (TEE).
+      Phala rollup on Ethereum leverages the Op-Succinct stack, a combination of OP stack contracts and Zero-Knowledge Proofs (ZK) using the SP1 zkVM.`,
     links: {
       websites: ['https://phala.network/'],
       bridges: ['https://subbridge.io'],
@@ -48,6 +47,10 @@ export const phala: ScalingProject = opStackL2({
         callsPerMinute: 300,
       },
     ],
+  },
+  nonTemplateProofSystem: {
+    type: 'Validity',
+    zkCatalogId: ProjectId('sp1'),
   },
   nonTemplateTrackedTxs: [
     {
@@ -141,6 +144,7 @@ export const phala: ScalingProject = opStackL2({
         untilTimestamp: UnixTime(1768923887), // switched to PermissionedDisputeGame
       },
     },
+    // This state update tracked trxs still work after switching back to op-succinct
     {
       uses: [
         { type: 'liveness', subtype: 'stateUpdates' },
@@ -159,9 +163,15 @@ export const phala: ScalingProject = opStackL2({
     },
   ],
   associatedTokens: ['PHA', 'vPHA'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
-  additionalBadges: [BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPSuccinct],
   milestones: [
+    {
+      title: 'Switched back to Validity Proofs',
+      url: 'https://etherscan.io/tx/0x45c9051bb25548d87a1498ea18f50c1c396c2c13494fbc60c947d367bb000a47',
+      date: '2026-02-02T00:00:00Z',
+      description: 'Phala switched back to OPSuccinct (SP1 ZK proofs).',
+      type: 'general',
+    },
     {
       title: 'Switched to Optimistic Proofs',
       url: 'https://etherscan.io/tx/0x72fd82354124671e3b28d78e70d9eec692ae7f119281ab473aa75f394f1b52ab',

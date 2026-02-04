@@ -231,11 +231,12 @@ const ChartLegend = RechartsPrimitive.Legend
 function ChartLegendContent({
   className,
   payload,
-  verticalAlign = 'bottom',
+  verticalAlign,
+  align,
   nameKey,
   children,
 }: React.ComponentProps<'div'> &
-  Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
+  Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign' | 'align'> & {
     nameKey?: string
   }) {
   const id = React.useId()
@@ -263,17 +264,20 @@ function ChartLegendContent({
           !hasFinishedOnboardingInitial &&
           !interactiveLegend.disableOnboarding &&
           'mb-3',
+        verticalAlign === 'top' && 'pb-4 md:pb-8',
       )}
     >
-      <div className="mx-auto flex w-max max-w-full items-center">
+      <div
+        className={cn(
+          'flex w-max max-w-full items-center',
+          align === 'center' && 'mx-auto',
+          align === 'right' && 'ml-auto',
+        )}
+      >
         {children}
         <OverflowWrapper childrenRef={contentRef} className="min-w-0">
           <div
-            className={cn(
-              'flex h-3.5 w-max items-center gap-2',
-              verticalAlign === 'top' && 'pb-3',
-              className,
-            )}
+            className={cn('flex h-3.5 w-max items-center gap-2', className)}
             ref={contentRef}
           >
             {actualPayload.map((item) => {
@@ -307,9 +311,8 @@ function ChartLegendContent({
                     type={itemConfig.indicatorType}
                     backgroundColor={itemConfig.color}
                   />
-                  <span
+                  <ChartLegendItemLabel
                     className={cn(
-                      'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
                       !isHidden &&
                         interactiveLegend &&
                         'group-hover/legend-item:opacity-50',
@@ -317,7 +320,7 @@ function ChartLegendContent({
                     )}
                   >
                     {itemConfig.legendLabel ?? itemConfig.label}
-                  </span>
+                  </ChartLegendItemLabel>
                 </div>
               )
             })}
@@ -343,6 +346,25 @@ function ChartLegendContent({
   )
 }
 ChartLegendContent.displayName = 'ChartLegend'
+
+function ChartLegendItemLabel({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <span
+      className={cn(
+        'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
+        className,
+      )}
+    >
+      {children}
+    </span>
+  )
+}
 
 // Helper to extract item config from a payload.
 function getPayloadConfigFromPayload(

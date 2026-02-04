@@ -28,6 +28,12 @@ const STATE_RECEIVER = EthereumAddress(
 const DEPOSIT_MANAGER = EthereumAddress(
   '0x401F6c983eA34274ec46f84D70b31C151321188b',
 )
+const ETHER_PREDICATE = EthereumAddress(
+  '0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
+)
+const ETHER_FAKE_ADDRESS = EthereumAddress(
+  '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+)
 
 const stateSyncedLog =
   'event StateSynced(uint256 indexed id, address indexed contractAddress, bytes data)'
@@ -37,11 +43,17 @@ const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
 const withdrawLog =
   'event Withdraw(address indexed token, address indexed from, uint256 amount, uint256 input1, uint256 output1)'
+const lockedEtherLog =
+  'event LockedEther(address indexed depositor, address indexed depositReceiver, uint256 amount)'
+const exitedEtherLog =
+  'event ExitedEther(address indexed exitor, uint256 amount)'
 
 const parseStateSynced = createEventParser(stateSyncedLog)
 const parseStateCommitted = createEventParser(stateCommittedLog)
 const parseTransfer = createEventParser(transferLog)
 const parseWithdraw = createEventParser(withdrawLog)
+const parseLockedEther = createEventParser(lockedEtherLog)
+const parseExitedEther = createEventParser(exitedEtherLog)
 
 const L1StateSynced = createInteropEventType<{
   stateId: bigint
@@ -119,21 +131,7 @@ export class PolygonPlugin implements InteropPluginResyncable {
   getDataRequests(): DataRequest[] {
     const config = this.configs.get(PolygonConfig)
     if (!config) {
-      return [
-        {
-          type: 'event',
-          signature: stateSyncedLog,
-          includeTxEvents: [transferLog],
-          addresses: [ChainSpecificAddress.fromLong('ethereum', STATE_SENDER)],
-        },
-        {
-          type: 'event',
-          signature: stateCommittedLog,
-          addresses: [
-            ChainSpecificAddress.fromLong('polygonpos', STATE_RECEIVER),
-          ],
-        },
-      ]
+      return []
     }
 
     const rootTokens = config.rootTokens ?? []
@@ -143,7 +141,7 @@ export class PolygonPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: stateSyncedLog,
-        includeTxEvents: [transferLog],
+        includeTxEvents: [transferLog, lockedEtherLog],
         addresses: [ChainSpecificAddress.fromLong('ethereum', STATE_SENDER)],
       },
       {
@@ -183,23 +181,68 @@ export class PolygonPlugin implements InteropPluginResyncable {
           ),
         ),
       },
+      {
+        type: 'event',
+        signature: exitedEtherLog,
+        addresses: [ChainSpecificAddress.fromLong('ethereum', ETHER_PREDICATE)],
+      },
     ]
   }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
+      const exitedEther = parseExitedEther(input.log, [ETHER_PREDICATE])
+      if (exitedEther) {
+        return [
+          L1WithdrawalFinalized.create(input, {
+            matchId: polygonWithdrawMatchId(
+              Address32.from(ETHER_FAKE_ADDRESS),
+              EthereumAddress(exitedEther.exitor),
+              exitedEther.amount,
+            ),
+            rootToken: Address32.NATIVE,
+            recipient: EthereumAddress(exitedEther.exitor),
+            amount: exitedEther.amount,
+          }),
+        ]
+      }
+
       const stateSynced = parseStateSynced(input.log, [STATE_SENDER])
       if (stateSynced) {
-        const transfer = findClosestTransfer(
+        let srcTokenAddress: Address32 | undefined
+        let srcAmount: bigint | undefined
+
+        const lockedEtherData = findParsedAround(
           input.txLogs,
           input.log.logIndex ?? -1,
+          (log) => {
+            const lockedEther = parseLockedEther(log, [ETHER_PREDICATE])
+            if (!lockedEther) return
+
+            return {
+              tokenAddress: Address32.NATIVE,
+              amount: lockedEther.amount,
+            }
+          },
         )
+
+        if (lockedEtherData) {
+          srcTokenAddress = lockedEtherData.tokenAddress
+          srcAmount = lockedEtherData.amount
+        } else {
+          const transfer = findClosestTransfer(
+            input.txLogs,
+            input.log.logIndex ?? -1,
+          )
+          srcTokenAddress = transfer?.tokenAddress
+          srcAmount = transfer?.amount
+        }
 
         return [
           L1StateSynced.create(input, {
             stateId: stateSynced.id,
-            srcTokenAddress: transfer?.tokenAddress,
-            srcAmount: transfer?.amount,
+            srcTokenAddress,
+            srcAmount,
           }),
         ]
       }
@@ -308,13 +351,28 @@ export class PolygonPlugin implements InteropPluginResyncable {
 
       const config = this.configs.get(PolygonConfig)
       const srcTokenAddress = stateSynced.args.srcTokenAddress
-      const dstTokenAddress = srcTokenAddress
-        ? config?.rootToChild?.[srcTokenAddress]
+      // polygon to l2b translation for ETH
+      const srcTokenAddress_polygon =
+        srcTokenAddress === Address32.NATIVE
+          ? Address32.from(ETHER_FAKE_ADDRESS)
+          : srcTokenAddress
+      const dstTokenAddress = srcTokenAddress_polygon
+        ? config?.rootToChild?.[srcTokenAddress_polygon]
         : undefined
+
+      if (!dstTokenAddress) {
+        return [
+          Result.Message('polygon.Message', {
+            app: 'unknown',
+            srcEvent: stateSynced,
+            dstEvent: event,
+          }),
+        ]
+      }
 
       return [
         Result.Message('polygon.Message', {
-          app: 'polygonpos',
+          app: 'canonical-deposit',
           srcEvent: stateSynced,
           dstEvent: event,
         }),
@@ -344,7 +402,7 @@ export class PolygonPlugin implements InteropPluginResyncable {
 
       return [
         Result.Message('polygon.Message', {
-          app: 'polygonpos',
+          app: 'canonical-withdrawal',
           srcEvent: withdrawal,
           dstEvent: event,
         }),

@@ -1,3 +1,90 @@
+Generated with discovered.json: 0xbbfe047f6e65ff6c38c624b6918cf564fc40c871
+
+# Diff at Mon, 02 Feb 2026 14:42:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1768372202
+- current timestamp: 1770041583
+
+## Description
+
+lidos 'PredepositGuarantee' contract upgraded: https://disco.l2beat.com/diff/eth:0xCC08C36BD5bb78FDcB10F35B404ada6Ffc71a023/eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D.
+
+## Watched changes
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) {
+    +++ description: None
+      values.accessControl.MANAGE_FRAME_CONFIG_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1"]}
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) {
+    +++ description: None
+      values.getMaxExternalRatioBP:
+-        300
++        3000
+    }
+```
+
+```diff
+    contract OperatorGrid (eth:0xC69685E89Cefc327b43B7234AC646451B27c544d) {
+    +++ description: None
+      values.nodeOperatorCount:
+-        23
++        31
+      values.tiersCount:
+-        25
++        33
+    }
+```
+
+```diff
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xbef895dd049014e691abbbf0048dc8ec551a0d604137c85206db9e7e675aafe9"
++        "0x95ddbbdfb56975dd1a0b91463d3e9a4362231c44b46f40b47781724ceef477c5"
+      values.$implementation:
+-        "eth:0xCC08C36BD5bb78FDcB10F35B404ada6Ffc71a023"
++        "eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D"
+      values.$pastUpgrades.1:
++        ["2026-01-29T13:21:47.000Z","0x8edb8008fdc48301db7b4f40ab520ba6f8b9354452fc52faf2092eb7df31c24c",["eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.getResumeSinceTimestamp:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        1769692907
+      values.isPaused:
+-        true
++        false
+      values.proxy__getImplementation:
+-        "eth:0xCC08C36BD5bb78FDcB10F35B404ada6Ffc71a023"
++        "eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D"
+      implementationNames.eth:0xCC08C36BD5bb78FDcB10F35B404ada6Ffc71a023:
+-        "PredepositGuarantee"
+      implementationNames.eth:0xE78717192C45736DF0E4be55c0219Ee7f9aDdd0D:
++        "PredepositGuarantee"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TwoPhaseFrameConfigUpdate (eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../PredepositGuarantee/PredepositGuarantee.sol    | 257 ++++++--
+ .../tokens/.flat/TwoPhaseFrameConfigUpdate.sol     | 692 +++++++++++++++++++++
+ 2 files changed, 884 insertions(+), 65 deletions(-)
+```
+
 Generated with discovered.json: 0xab5a1c06e16c207961f4d125d45da63d22ed8d40
 
 # Diff at Wed, 14 Jan 2026 06:34:32 GMT:

@@ -18,6 +18,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { BasicTable } from '~/components/table/BasicTable'
+import { EM_DASH } from '~/consts/characters'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -150,7 +151,7 @@ function ItemIconWithTooltip({
       <TooltipContent>
         <p className="font-bold text-label-value-15">{item.displayName}</p>
         <p className="text-label-value-13 text-secondary">
-          {formatCurrency(item.volume, 'usd')}
+          {item.volume ? formatCurrency(item.volume, 'usd') : EM_DASH}
         </p>
       </TooltipContent>
     </Tooltip>

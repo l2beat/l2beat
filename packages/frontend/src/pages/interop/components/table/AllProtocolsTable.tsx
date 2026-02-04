@@ -8,13 +8,16 @@ import { getAllProtocolsColumns, type ProtocolRow } from './columns'
 export function AllProtocolsTable({
   hideTypeColumn,
   entries,
+  showAverageInFlightValueColumn,
 }: {
   entries: ProtocolEntry[]
   hideTypeColumn?: boolean
+  showAverageInFlightValueColumn?: boolean
 }) {
   const columns = useMemo(
-    () => getAllProtocolsColumns(hideTypeColumn),
-    [hideTypeColumn],
+    () =>
+      getAllProtocolsColumns(hideTypeColumn, showAverageInFlightValueColumn),
+    [hideTypeColumn, showAverageInFlightValueColumn],
   )
 
   const table = useTable<ProtocolRow>({

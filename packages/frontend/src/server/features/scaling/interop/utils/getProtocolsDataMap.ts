@@ -8,6 +8,8 @@ interface ProtocolData extends AverageDurationData {
   volume: number
   tokens: Map<string, AverageDurationData & { volume: number }>
   chains: Map<string, AverageDurationData & { volume: number }>
+  averageValueInFlight: number | undefined
+  identifiedTransferCount: number
 }
 
 const INITIAL_DATA: AverageDurationData & { volume: number } = {
@@ -22,7 +24,12 @@ const INITIAL_DATA: AverageDurationData & { volume: number } = {
 
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
+  durationSplitMap: Map<
+    string,
+    NonNullable<
+      InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
+    >
+  >,
 ) {
   const protocolsDataMap = new Map<string, ProtocolData>()
 
@@ -37,6 +44,8 @@ export function getProtocolsDataMap(
       inDurationSum: 0,
       outTransferCount: 0,
       outDurationSum: 0,
+      averageValueInFlight: undefined,
+      identifiedTransferCount: 0,
     }
 
     const durationSplit = durationSplitMap.get(record.id)
@@ -78,6 +87,12 @@ export function getProtocolsDataMap(
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),
       ...protocolDurationSplits,
+      averageValueInFlight:
+        record.avgValueInFlight !== undefined
+          ? (current.averageValueInFlight ?? 0) + record.avgValueInFlight
+          : current.averageValueInFlight,
+      identifiedTransferCount:
+        current.identifiedTransferCount + (record.identifiedCount ?? 0),
     })
   }
 
@@ -86,9 +101,14 @@ export function getProtocolsDataMap(
 
 function getDirection(
   record: { srcChain: string; dstChain: string },
-  durationSplit: NonNullable<InteropConfig['durationSplit']> | undefined,
+  durationSplit:
+    | NonNullable<
+        InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
+      >
+    | undefined,
 ): 'in' | 'out' | null {
-  if (!durationSplit) return null
+  if (!durationSplit || durationSplit === 'unknown') return null
+
   if (
     record.srcChain === durationSplit.in.from &&
     record.dstChain === durationSplit.in.to
@@ -153,7 +173,7 @@ function updateChainData(
   if (record.dstChain !== record.srcChain) {
     const dstChain = chains.get(record.dstChain) ?? INITIAL_DATA
     chains.set(record.dstChain, {
-      volume: dstChain.volume + (record.srcValueUsd ?? 0),
+      volume: dstChain.volume + (record.dstValueUsd ?? 0),
       inDurationSum: dstChain.inDurationSum + (record.totalDurationSum ?? 0),
       outDurationSum: dstChain.outDurationSum,
       inTransferCount: dstChain.inTransferCount + (record.transferCount ?? 0),
