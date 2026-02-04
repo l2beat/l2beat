@@ -125,6 +125,8 @@ describe(InteropAggregatingIndexer.name, () => {
           transferCount: 2,
           totalDurationSum: 11000,
           volume: 5000,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
         },
       ])
       expect(
@@ -144,6 +146,8 @@ describe(InteropAggregatingIndexer.name, () => {
           duration: 5000,
           srcValueUsd: 2000,
           dstValueUsd: 2000,
+          srcWasBurned: true,
+          dstWasMinted: false,
         }),
         createTransfer('stargate', 'msg2', 'deposit', to - 2 * UnixTime.HOUR, {
           srcChain: 'ethereum',
@@ -182,7 +186,7 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 2500,
           dstValueUsd: 2500,
         }),
-        // AbstractTokenId plugin filter: stargate with eth token (should match config3)
+        // AbstractTokenId plugin filter: stargate with eth token (should match config3) - lockAndMint
         createTransfer('stargate', 'msg6', 'deposit', to - 6 * UnixTime.HOUR, {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
@@ -191,6 +195,8 @@ describe(InteropAggregatingIndexer.name, () => {
           duration: 10000,
           srcValueUsd: 4000,
           dstValueUsd: 4000,
+          srcWasBurned: false,
+          dstWasMinted: true,
         }),
         createTransfer('stargate', 'msg7', 'deposit', to - 7 * UnixTime.HOUR, {
           srcChain: 'ethereum',
@@ -209,6 +215,8 @@ describe(InteropAggregatingIndexer.name, () => {
           duration: 12000,
           srcValueUsd: 3500,
           dstValueUsd: 3000,
+          srcWasBurned: false,
+          dstWasMinted: true,
         }),
       ]
 
@@ -284,7 +292,7 @@ describe(InteropAggregatingIndexer.name, () => {
         to,
       )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
-        // Config1: Plain plugin filter - should match msg1 (across)
+        // Config1: Plain plugin filter - should match msg1 (across) - lockAndMint calculates burned
         {
           timestamp: to,
           id: 'config1',
@@ -296,7 +304,7 @@ describe(InteropAggregatingIndexer.name, () => {
           dstValueUsd: 2000,
           avgValueInFlight: undefined,
           mintedValueUsd: 0,
-          burnedValueUsd: 0,
+          burnedValueUsd: 2000,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 1,
@@ -344,7 +352,7 @@ describe(InteropAggregatingIndexer.name, () => {
           countOver100K: 0,
           identifiedCount: 1,
         },
-        // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth)
+        // Config3: AbstractTokenId plugin filter - should match msg6, msg8 (lockAndMint calculates minted)
         {
           timestamp: to,
           id: 'config3',
@@ -355,7 +363,7 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 10500,
           dstValueUsd: 10000,
           avgValueInFlight: undefined,
-          mintedValueUsd: 0,
+          mintedValueUsd: 7000, // msg6: 4000 (same token), msg8: 3000 (different token)
           burnedValueUsd: 0,
           countUnder100: 0,
           count100To1K: 0,
@@ -375,6 +383,8 @@ describe(InteropAggregatingIndexer.name, () => {
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 2000,
+          mintedValueUsd: undefined,
+          burnedValueUsd: 2000, // lockAndMint calculates burned
         },
         {
           timestamp: to,
@@ -385,6 +395,8 @@ describe(InteropAggregatingIndexer.name, () => {
           transferCount: 1,
           totalDurationSum: 7000,
           volume: 1000,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
         },
         {
           timestamp: to,
@@ -395,6 +407,8 @@ describe(InteropAggregatingIndexer.name, () => {
           transferCount: 1,
           totalDurationSum: 9000,
           volume: 2500,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
         },
         {
           timestamp: to,
@@ -405,6 +419,8 @@ describe(InteropAggregatingIndexer.name, () => {
           transferCount: 3,
           totalDurationSum: 28000,
           volume: 10500,
+          mintedValueUsd: 4000, // msg6: same token minted
+          burnedValueUsd: undefined,
         },
         {
           timestamp: to,
@@ -415,6 +431,8 @@ describe(InteropAggregatingIndexer.name, () => {
           transferCount: 1,
           totalDurationSum: 12000,
           volume: 3000,
+          mintedValueUsd: 3000, // msg8: different token minted
+          burnedValueUsd: undefined,
         },
       ])
     })

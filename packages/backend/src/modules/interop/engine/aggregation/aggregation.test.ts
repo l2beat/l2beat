@@ -469,6 +469,8 @@ describe('aggregation', () => {
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 2000,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
         },
       ])
     })
@@ -498,6 +500,8 @@ describe('aggregation', () => {
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 2000,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
         },
         {
           srcChain: 'ethereum',
@@ -506,6 +510,8 @@ describe('aggregation', () => {
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 1500,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
         },
       ])
     })
@@ -555,6 +561,8 @@ describe('aggregation', () => {
           transferCount: 2,
           totalDurationSum: 11000,
           volume: 5000,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
         },
         {
           srcChain: 'ethereum',
@@ -563,6 +571,8 @@ describe('aggregation', () => {
           transferCount: 1,
           totalDurationSum: 4000,
           volume: 1000,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
         },
       ])
     })
@@ -601,6 +611,8 @@ describe('aggregation', () => {
         transferCount: 1,
         totalDurationSum: 6000,
         volume: 3000,
+        mintedValueUsd: undefined,
+        burnedValueUsd: undefined,
       })
     })
 
@@ -638,6 +650,8 @@ describe('aggregation', () => {
           transferCount: 2,
           totalDurationSum: 11000,
           volume: 3000,
+          mintedValueUsd: undefined,
+          burnedValueUsd: undefined,
         },
       ])
     })
@@ -646,6 +660,137 @@ describe('aggregation', () => {
       const transfers: InteropTransferRecord[] = []
 
       expect(() => getAggregatedTokens(transfers)).toThrow('Group is empty')
+    })
+
+    describe('burned and minted value calculations', () => {
+      it('calculates burned and minted values correctly for various scenarios', () => {
+        const transfers: InteropTransferRecord[] = [
+          // ETH burned (srcWasBurned=true, dstWasMinted=false)
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: 'eth',
+            dstAbstractTokenId: 'usdc',
+            duration: 5000,
+            srcValueUsd: 2000,
+            dstValueUsd: 1500,
+            srcWasBurned: true,
+            dstWasMinted: false,
+          }),
+          // ETH burned again
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: 'eth',
+            dstAbstractTokenId: 'usdc',
+            duration: 6000,
+            srcValueUsd: 3000,
+            dstValueUsd: 2500,
+            srcWasBurned: true,
+            dstWasMinted: false,
+          }),
+          // ETH minted (same token, srcWasBurned=false, dstWasMinted=true)
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: 'eth',
+            dstAbstractTokenId: 'eth',
+            duration: 4000,
+            srcValueUsd: 1000,
+            dstValueUsd: 1000,
+            srcWasBurned: false,
+            dstWasMinted: true,
+          }),
+          // USDC minted (different token, srcWasBurned=false, dstWasMinted=true)
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: 'btc',
+            dstAbstractTokenId: 'usdc',
+            duration: 3000,
+            srcValueUsd: 5000,
+            dstValueUsd: 4000,
+            srcWasBurned: false,
+            dstWasMinted: true,
+          }),
+          // BTC minted (same token)
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: 'btc',
+            dstAbstractTokenId: 'btc',
+            duration: 2000,
+            srcValueUsd: 3000,
+            dstValueUsd: 3000,
+            srcWasBurned: false,
+            dstWasMinted: true,
+          }),
+        ]
+
+        const result = getAggregatedTokens(transfers, {
+          calculateNetMinted: true,
+        })
+
+        const ethToken = result.find((t) => t.abstractTokenId === 'eth')
+        const usdcToken = result.find((t) => t.abstractTokenId === 'usdc')
+        const btcToken = result.find((t) => t.abstractTokenId === 'btc')
+
+        // ETH: burned 5000, minted 1000
+        expect(ethToken?.burnedValueUsd).toEqual(5000)
+        expect(ethToken?.mintedValueUsd).toEqual(1000)
+
+        // USDC: minted 4000 (from different token transfer)
+        expect(usdcToken?.mintedValueUsd).toEqual(4000)
+        expect(usdcToken?.burnedValueUsd).toEqual(undefined)
+
+        // BTC: minted 3000 (from same token transfer)
+        expect(btcToken?.mintedValueUsd).toEqual(3000)
+        expect(btcToken?.burnedValueUsd).toEqual(undefined)
+      })
+
+      it('handles undefined USD values by using fallback values', () => {
+        const transfers: InteropTransferRecord[] = [
+          // Burned with undefined srcValueUsd (uses dstValueUsd)
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: 'eth',
+            dstAbstractTokenId: 'usdc',
+            duration: 5000,
+            srcValueUsd: undefined,
+            dstValueUsd: 1500,
+            srcWasBurned: true,
+            dstWasMinted: false,
+          }),
+          // Minted with undefined dstValueUsd (uses srcValueUsd)
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: 'eth',
+            dstAbstractTokenId: 'eth',
+            duration: 4000,
+            srcValueUsd: 2000,
+            dstValueUsd: undefined,
+            srcWasBurned: false,
+            dstWasMinted: true,
+          }),
+        ]
+
+        const result = getAggregatedTokens(transfers, {
+          calculateNetMinted: true,
+        })
+
+        const ethToken = result.find((t) => t.abstractTokenId === 'eth')
+        expect(ethToken?.burnedValueUsd).toEqual(1500) // uses dstValueUsd fallback
+        expect(ethToken?.mintedValueUsd).toEqual(2000) // uses srcValueUsd fallback
+      })
     })
   })
 })
