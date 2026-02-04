@@ -127,6 +127,7 @@ import { myshell } from '../projects/myshell/myshell'
 import { nal } from '../projects/nal/nal'
 import { namechain } from '../projects/namechain/namechain'
 import { nil } from '../projects/nil/nil'
+import { nillion } from '../projects/nillion/nillion'
 import { nova } from '../projects/nova/nova'
 import { oevnetwork } from '../projects/oevnetwork/oevnetwork'
 import { okto } from '../projects/okto/okto'
@@ -361,6 +362,7 @@ export const layer2s: ScalingProject[] = [
   nal,
   namechain,
   nil,
+  nillion,
   nova,
   oevnetwork,
   okto,
