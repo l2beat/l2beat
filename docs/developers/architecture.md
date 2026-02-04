@@ -22,6 +22,8 @@ The discovery process is mostly untouched from the initial [l2beat deployment](h
 
 Funds data in the backend relies on the [defiscan endpoint](). It calls this endpoint to fetch the data for the given addresses. Note that the service has to be running (separately). It stores the data locally in a `funds-data.json` file linked to the project.
 
+We support fetching information regarding all balances and DeFi positions a contract might hold, as well as token price and market cap of token contracts.
+
 ### Callgraph
 
 The callgraph is a tool that deterministically detects all possible external contract calls made by each function of a contract. It then attempts to maps those calls to known contracts in the discovery. This resolution to known contracts can only be done usually for 10-30% of cases because the contracts called might not be deterministic. Detecting those calls is made using Slither's slitherir feature, which we then parse in `/packages/l2b/src/implementations/discovery-ui/defidisco/callGraph.ts` and store in `call-graph-data.json`.

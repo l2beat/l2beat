@@ -126,7 +126,12 @@ When you think you have the whole system mapped, choose the `Scan Permissions` b
 
 Once you have a clear overview of the permissions, it's important to know which funds are controlled by these permissions.
 
-Use the button `Fetch Funds` inside the terminal. Make sure the DeFiScan API service is running.
+
+Start by marking which contract you want funds data on using the `Nodes` panel of the UI. You can decide to fetch all balances or DeFi positions for a given contract, and/or mark it as a token contract to know its the token price and market capitalization. Use the button `Fetch Funds` inside the terminal to fetch the data. Make sure the DeFiScan API service is running.
+
+## DeFiScan Panel
+
+After running discovery, scanning permissions, and fetching funds, open the DeFiScan panel to see the scoring dashboard. This panel combines all collected data into a structured breakdown.
 
 ## Flow Chart
 
