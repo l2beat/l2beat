@@ -114,6 +114,8 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       const transferMatch = findBestTransferLog(
         input.txLogs,
         depositForBurn?.amount ?? sentTransferRemote.amount,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
       )
       const amountWhenNoTransfer = input.tx.value ?? 0n
       if (depositForBurn) {
@@ -183,6 +185,8 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       const transferMatch = findBestTransferLog(
         input.txLogs,
         receivedTransferRemote.amount,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
       )
       const amountWhenNoTransfer = input.tx.value ?? 0n
       const dstTokenData = transferMatch.transfer
@@ -301,9 +305,11 @@ type ParsedTransferLog = {
 function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,
+  startLogIndex: number,
 ): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
   let closestMatch: ParsedTransferLog | undefined
   let closestDelta: bigint | undefined
+  let closestDistance: number | undefined
   let hasTransfer = false
 
   for (const log of logs) {
@@ -318,13 +324,20 @@ function findBestTransferLog(
       value: transfer.value,
     }
 
-    if (transfer.value === targetAmount) {
-      return { transfer: parsed, hasTransfer }
-    }
-
     const delta = absDiff(transfer.value, targetAmount)
-    if (closestDelta === undefined || delta < closestDelta) {
+    const distance =
+      log.logIndex === null
+        ? Number.POSITIVE_INFINITY
+        : Math.abs(log.logIndex - startLogIndex)
+
+    if (
+      closestDelta === undefined ||
+      delta < closestDelta ||
+      (delta === closestDelta &&
+        (closestDistance === undefined || distance < closestDistance))
+    ) {
       closestDelta = delta
+      closestDistance = distance
       closestMatch = parsed
     }
   }
