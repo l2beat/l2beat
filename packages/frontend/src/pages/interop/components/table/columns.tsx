@@ -247,6 +247,7 @@ export function getAllProtocolsColumns(
             name: ctx.row.original.protocolName,
             iconUrl: ctx.row.original.iconUrl,
           }}
+          showNetMintedValueColumn={showNetMintedValueColumn}
         />
       ),
     }),

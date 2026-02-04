@@ -7,7 +7,10 @@ import {
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import type {
+  AggregatedInteropTransferWithTokens,
+  CommonInteropData,
+} from '../types'
 import { getProtocolsDataMap } from './getProtocolsDataMap'
 
 export type TokenData = {
@@ -28,6 +31,7 @@ export type ChainData = {
   transferCount: number
   avgDuration: AverageDuration
   avgValue: number
+  netMintedValue?: number
 }
 
 export type AverageDuration =
@@ -155,7 +159,7 @@ export function getProtocolEntries(
 
 function getTokensData(
   protocolId: string,
-  tokens: Map<string, AverageDurationData & { volume: number }>,
+  tokens: Map<string, CommonInteropData>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   customDurationConfigMap: Map<
     string,
@@ -213,7 +217,7 @@ function getTokensData(
 
 function getChainsData(
   protocolId: string,
-  chains: Map<string, AverageDurationData & { volume: number }>,
+  chains: Map<string, CommonInteropData>,
   customDurationConfigMap: Map<
     string,
     NonNullable<
@@ -244,24 +248,20 @@ function getChainsData(
         transferCount: chainData.transferCount,
         avgDuration: avgDuration,
         avgValue: Math.floor(chainData.volume / chainData.transferCount),
+        netMintedValue:
+          chainData.mintedValueUsd !== undefined &&
+          chainData.burnedValueUsd !== undefined
+            ? chainData.mintedValueUsd - chainData.burnedValueUsd
+            : undefined,
       }
     })
     .filter(notUndefined)
     .toSorted((a, b) => b.volume - a.volume)
 }
 
-type AverageDurationData = {
-  transferCount: number
-  totalDurationSum: number
-  inTransferCount: number
-  inDurationSum: number
-  outTransferCount: number
-  outDurationSum: number
-}
-
 function getAverageDuration(
   key: string,
-  data: AverageDurationData,
+  data: CommonInteropData,
   customDurationConfigMap: Map<
     string,
     NonNullable<
