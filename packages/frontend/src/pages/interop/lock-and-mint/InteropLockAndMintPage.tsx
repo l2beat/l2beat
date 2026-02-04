@@ -54,7 +54,7 @@ export function InteropLockAndMintPage({
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains, isDirty } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.subpage.useQuery({
+  const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
     type: 'lockAndMint',

@@ -9,6 +9,7 @@ export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
   from: v.array(v.string()),
   to: v.array(v.string()),
+  type: InteropBridgeType.optional(),
 })
 
 export type InteropSubpageParams = v.infer<typeof InteropSubpageParams>

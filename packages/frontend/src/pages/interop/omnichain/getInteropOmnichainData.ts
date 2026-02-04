@@ -39,7 +39,7 @@ export async function getInteropOmnichainData(
       staleWhileRevalidate: 25 * 60,
     },
     async () => {
-      await helpers.interop.subpage.prefetch({
+      await helpers.interop.dashboard.prefetch({
         from: initialSelectedChains.from,
         to: initialSelectedChains.to,
         type: 'omnichain',

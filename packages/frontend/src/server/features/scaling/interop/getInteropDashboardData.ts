@@ -1,11 +1,13 @@
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
 import type { InteropDashboardParams } from './types'
 import {
   type AllProtocolsEntry,
   getAllProtocolEntries,
 } from './utils/getAllProtocolEntries'
+import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import {
   getProtocolEntries,
   type ProtocolEntry,
@@ -23,13 +25,12 @@ import {
   type GroupedInteropEntries,
   groupByInteropBridgeType,
 } from './utils/groupByInteropBridgeType'
-import { prepareInteropData } from './utils/prepareInteropData'
 
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
   transferSizeChartData: TransferSizeChartData | undefined
-  top5Cards: GroupedInteropEntries<ProtocolEntry>
+  top5Cards?: GroupedInteropEntries<ProtocolEntry>
   allProtocolsEntries: AllProtocolsEntry[]
 }
 
@@ -40,28 +41,57 @@ export async function getInteropDashboardData(
     return getMockInteropDashboardData()
   }
 
-  const { records, tokensDetailsMap, interopProjects, subgroupProjects } =
-    await prepareInteropData(params.from, params.to)
+  const tokenDb = getTokenDb()
+  const interopProjects = await ps.getProjects({
+    select: ['interopConfig'],
+  })
 
-  const groupedEntries = groupByInteropBridgeType(
-    getProtocolEntries(records, tokensDetailsMap, interopProjects),
+  const records = await getLatestAggregatedInteropTransferWithTokens(
+    params.from,
+    params.to,
+    params.type,
   )
 
-  return {
+  const tokensDetailsData = await tokenDb.abstractToken.getByIds(
+    records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
+  )
+  const tokensDetailsMap = new Map<
+    string,
+    { symbol: string; iconUrl: string | null }
+  >(tokensDetailsData.map((t) => [t.id, t]))
+
+  // Projects that are part of other projects
+  const subgroupProjects = new Set(
+    interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
+  )
+
+  const common = {
     top3Paths: getTopPaths(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
-    top5Cards: {
-      lockAndMint: groupedEntries.lockAndMint.slice(0, 5),
-      nonMinting: groupedEntries.nonMinting.slice(0, 5),
-      omnichain: groupedEntries.omnichain.slice(0, 5),
-    },
     allProtocolsEntries: getAllProtocolEntries(
       records,
       tokensDetailsMap,
       interopProjects,
     ),
   }
+
+  if (!params.type) {
+    const groupedEntries = groupByInteropBridgeType(
+      getProtocolEntries(records, tokensDetailsMap, interopProjects),
+    )
+
+    return {
+      ...common,
+      top5Cards: {
+        lockAndMint: groupedEntries.lockAndMint.slice(0, 5),
+        nonMinting: groupedEntries.nonMinting.slice(0, 5),
+        omnichain: groupedEntries.omnichain.slice(0, 5),
+      },
+    }
+  }
+
+  return common
 }
 
 async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
