@@ -75,11 +75,14 @@ export class InteropAggregationService {
             bridgeType,
             ...getAggregatedTransfer(group, {
               calculateValueInFlight: bridgeType === 'nonMinting',
+              calculateNetMinted: bridgeType === 'lockAndMint',
             }),
           })
 
           aggregatedTokens.push(
-            ...getAggregatedTokens(group).map((token) => ({
+            ...getAggregatedTokens(group, {
+              calculateNetMinted: bridgeType === 'lockAndMint',
+            }).map((token) => ({
               timestamp,
               id: config.id,
               bridgeType,

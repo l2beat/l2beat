@@ -695,6 +695,8 @@ function record(
   transferCount = 1,
   totalDurationSum = 0,
   volume = 1000,
+  mintedValueUsd?: number,
+  burnedValueUsd?: number,
 ): AggregatedInteropTokenRecord {
   return {
     timestamp,
@@ -705,5 +707,7 @@ function record(
     transferCount,
     totalDurationSum,
     volume,
+    mintedValueUsd,
+    burnedValueUsd,
   }
 }

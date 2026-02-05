@@ -4,6 +4,7 @@ import compact from 'lodash/compact'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { EM_DASH } from '~/consts/characters'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopChainsCell } from '../top-items/TopChainsCell'
@@ -74,24 +75,27 @@ const last24hVolumeColumn = columnHelper.accessor('volume', {
   },
 })
 
-const tokensByVolumeColumn = columnHelper.accessor('tokens', {
-  header: 'Tokens\nby volume',
-  meta: {
-    cellClassName: '!pr-0',
-    headClassName: 'text-2xs',
-    tooltip:
-      'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
-  },
-  cell: (ctx) => (
-    <TopTokensCell
-      tokens={ctx.row.original.tokens}
-      protocol={{
-        name: ctx.row.original.protocolName,
-        iconUrl: ctx.row.original.iconUrl,
-      }}
-    />
-  ),
-})
+function getTokensByVolumeColumn(showNetMintedValueColumn?: boolean) {
+  return columnHelper.accessor('tokens', {
+    header: 'Tokens\nby volume',
+    meta: {
+      cellClassName: '!pr-0',
+      headClassName: 'text-2xs',
+      tooltip:
+        'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
+    },
+    cell: (ctx) => (
+      <TopTokensCell
+        tokens={ctx.row.original.tokens}
+        protocol={{
+          name: ctx.row.original.protocolName,
+          iconUrl: ctx.row.original.iconUrl,
+        }}
+        showNetMintedValueColumn={showNetMintedValueColumn}
+      />
+    ),
+  })
+}
 
 const averageDurationColumn = columnHelper.accessor(
   (row) =>
@@ -143,6 +147,7 @@ const averageInFlightValueColumn = columnHelper.accessor(
 export function getAllProtocolsColumns(
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
+  showNetMintedValueColumn?: boolean,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -207,7 +212,22 @@ export function getAllProtocolsColumns(
       ),
     }),
     showAverageInFlightValueColumn && averageInFlightValueColumn,
-    tokensByVolumeColumn,
+    showNetMintedValueColumn &&
+      columnHelper.accessor('netMintedValue', {
+        header: 'Last 24h net\nminted value',
+        meta: {
+          align: 'right',
+          headClassName: 'text-2xs',
+        },
+        cell: (ctx) => (
+          <span className="font-medium text-label-value-15">
+            {ctx.row.original.netMintedValue
+              ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
+              : EM_DASH}
+          </span>
+        ),
+      }),
+    getTokensByVolumeColumn(showNetMintedValueColumn),
     columnHelper.accessor('chains', {
       header: 'Chains\nby volume',
       meta: {
@@ -223,6 +243,7 @@ export function getAllProtocolsColumns(
             name: ctx.row.original.protocolName,
             iconUrl: ctx.row.original.iconUrl,
           }}
+          showNetMintedValueColumn={showNetMintedValueColumn}
         />
       ),
     }),

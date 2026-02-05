@@ -95,6 +95,10 @@ export function getProtocolEntries(
             ? { type: 'unknown' as const }
             : getAverageDuration(projectId, undefined, data, undefined),
         averageValueInFlight: data.averageValueInFlight,
+        netMintedValue:
+          data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
+            ? data.mintedValueUsd - data.burnedValueUsd
+            : undefined,
       }
 
       return record

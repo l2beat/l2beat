@@ -2,15 +2,13 @@ import type { InteropDurationSplit } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
-  AverageDurationData,
+  CommonInteropData,
   DurationSplitMap,
 } from '../types'
 import type { TransfersTimeModeMap } from './buildTransfersTimeModeMap'
 
-type TokensAndChainsData = AverageDurationData & { volume: number }
-
 export interface ProtocolDataByBridgeType {
-  lockAndMint?: ProtocolDataByBridgeTypeCommon & AverageDurationData
+  lockAndMint?: ProtocolDataByBridgeTypeCommon & CommonInteropData
   nonMinting?: {
     averageValueInFlight: number
   } & ProtocolDataByBridgeTypeCommon
@@ -19,20 +17,22 @@ export interface ProtocolDataByBridgeType {
 
 type ProtocolDataByBridgeTypeCommon = {
   volume: number
-  tokens: Map<string, TokensAndChainsData>
+  tokens: Map<string, CommonInteropData>
   transferCount: number
   identifiedTransferCount: number
 }
 
-export interface ProtocolData extends AverageDurationData {
+export interface ProtocolData extends CommonInteropData {
   volume: number
-  tokens: Map<string, TokensAndChainsData>
-  chains: Map<string, TokensAndChainsData>
+  tokens: Map<string, CommonInteropData>
+  chains: Map<string, CommonInteropData>
   averageValueInFlight: number | undefined
   identifiedTransferCount: number
+  mintedValueUsd: number | undefined
+  burnedValueUsd: number | undefined
 }
 
-const INITIAL_DATA: TokensAndChainsData = {
+const INITIAL_DATA: CommonInteropData = {
   volume: 0,
   transferCount: 0,
   totalDurationSum: 0,
@@ -40,6 +40,8 @@ const INITIAL_DATA: TokensAndChainsData = {
   inDurationSum: 0,
   outTransferCount: 0,
   outDurationSum: 0,
+  mintedValueUsd: undefined,
+  burnedValueUsd: undefined,
 }
 
 /**
@@ -88,6 +90,13 @@ export function getProtocolsDataMapByBridgeType(
           totalDurationSum:
             (bridgeTypeMap.lockAndMint?.totalDurationSum ?? 0) +
             (record.totalDurationSum ?? 0),
+
+          mintedValueUsd:
+            (bridgeTypeMap.lockAndMint?.mintedValueUsd ?? 0) +
+            (record.mintedValueUsd ?? 0),
+          burnedValueUsd:
+            (bridgeTypeMap.lockAndMint?.burnedValueUsd ?? 0) +
+            (record.burnedValueUsd ?? 0),
           ...computeDurationSplits(
             bridgeTypeMap.lockAndMint,
             direction,
@@ -175,6 +184,14 @@ export function getProtocolsDataMap(
           : current.averageValueInFlight,
       identifiedTransferCount:
         current.identifiedTransferCount + (record.identifiedCount ?? 0),
+      mintedValueUsd:
+        record.mintedValueUsd !== undefined
+          ? (current.mintedValueUsd ?? 0) + record.mintedValueUsd
+          : current.mintedValueUsd,
+      burnedValueUsd:
+        record.burnedValueUsd !== undefined
+          ? (current.burnedValueUsd ?? 0) + record.burnedValueUsd
+          : current.burnedValueUsd,
     })
   }
 
@@ -184,8 +201,8 @@ export function getProtocolsDataMap(
 function createInitialProtocolData(): ProtocolData {
   return {
     volume: 0,
-    tokens: new Map<string, TokensAndChainsData>(),
-    chains: new Map<string, TokensAndChainsData>(),
+    tokens: new Map<string, CommonInteropData>(),
+    chains: new Map<string, CommonInteropData>(),
     transferCount: 0,
     totalDurationSum: 0,
     inTransferCount: 0,
@@ -194,6 +211,8 @@ function createInitialProtocolData(): ProtocolData {
     outDurationSum: 0,
     averageValueInFlight: undefined,
     identifiedTransferCount: 0,
+    mintedValueUsd: undefined,
+    burnedValueUsd: undefined,
   }
 }
 
@@ -220,11 +239,11 @@ function getDirection(
 }
 
 function computeDurationSplits(
-  current: AverageDurationData | undefined,
+  current: CommonInteropData | undefined,
   direction: 'in' | 'out' | null,
   record: AggregatedInteropTransferWithTokens,
 ): Pick<
-  AverageDurationData,
+  CommonInteropData,
   'inTransferCount' | 'inDurationSum' | 'outTransferCount' | 'outDurationSum'
 > {
   const transferCount = record.transferCount ?? 0
@@ -244,18 +263,11 @@ function computeDurationSplits(
   }
 }
 
-type TokenRecord = {
-  abstractTokenId: string
-  transferCount: number | null
-  totalDurationSum: number | null
-  volume: number | null
-}
-
 function mergeTokensData(
-  currentTokens: Map<string, TokensAndChainsData> | undefined,
-  recordTokens: TokenRecord[],
+  currentTokens: Map<string, CommonInteropData> | undefined,
+  recordTokens: AggregatedInteropTransferWithTokens['tokens'],
   direction: 'in' | 'out' | null,
-): Map<string, TokensAndChainsData> {
+): Map<string, CommonInteropData> {
   const result = new Map(currentTokens)
 
   for (const token of recordTokens) {
@@ -275,6 +287,14 @@ function mergeTokensData(
         current.outTransferCount + (direction === 'out' ? transferCount : 0),
       outDurationSum:
         current.outDurationSum + (direction === 'out' ? durationSum : 0),
+      mintedValueUsd:
+        current?.mintedValueUsd !== undefined
+          ? (current?.mintedValueUsd ?? 0) + (token.mintedValueUsd ?? 0)
+          : token.mintedValueUsd,
+      burnedValueUsd:
+        current?.burnedValueUsd !== undefined
+          ? (current?.burnedValueUsd ?? 0) + (token.burnedValueUsd ?? 0)
+          : token.burnedValueUsd,
     })
   }
 
@@ -282,9 +302,9 @@ function mergeTokensData(
 }
 
 function mergeChainsData(
-  currentChains: Map<string, TokensAndChainsData>,
+  currentChains: Map<string, CommonInteropData>,
   record: AggregatedInteropTransferWithTokens,
-): Map<string, TokensAndChainsData> {
+): Map<string, CommonInteropData> {
   const result = new Map(currentChains)
   const transferCount = record.transferCount ?? 0
   const durationSum = record.totalDurationSum ?? 0
@@ -299,6 +319,11 @@ function mergeChainsData(
     inDurationSum: srcChain.inDurationSum,
     outTransferCount: srcChain.outTransferCount + transferCount,
     outDurationSum: srcChain.outDurationSum + durationSum,
+    mintedValueUsd: srcChain.mintedValueUsd,
+    burnedValueUsd:
+      srcChain.burnedValueUsd !== undefined
+        ? srcChain.burnedValueUsd + (record.burnedValueUsd ?? 0)
+        : record.burnedValueUsd,
   })
 
   // Destination chain: transfers come IN (only if different from source)
@@ -312,6 +337,11 @@ function mergeChainsData(
       inDurationSum: dstChain.inDurationSum + durationSum,
       outTransferCount: dstChain.outTransferCount,
       outDurationSum: dstChain.outDurationSum,
+      burnedValueUsd: dstChain.burnedValueUsd,
+      mintedValueUsd:
+        dstChain.mintedValueUsd !== undefined
+          ? dstChain.mintedValueUsd + (record.mintedValueUsd ?? 0)
+          : record.mintedValueUsd,
     })
   }
 

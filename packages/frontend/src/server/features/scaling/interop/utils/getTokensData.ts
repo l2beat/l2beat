@@ -1,18 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { type KnownInteropBridgeType, notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
-import type { AverageDurationData, DurationSplitMap, TokenData } from '../types'
+import type { CommonInteropData, DurationSplitMap, TokenData } from '../types'
 import { getAverageDuration } from './getAverageDuration'
 
 type Params = {
   projectId: string
   bridgeType: KnownInteropBridgeType | undefined
-  tokens: Map<
-    string,
-    AverageDurationData & {
-      volume: number
-    }
-  >
+  tokens: Map<string, CommonInteropData>
   tokensDetailsMap: Map<
     string,
     {
@@ -60,6 +55,11 @@ export function getTokensData({
         transferCount: token.transferCount,
         avgDuration: avgDuration,
         avgValue: Math.floor(token.volume / token.transferCount),
+        netMintedValue:
+          token.mintedValueUsd !== undefined &&
+          token.burnedValueUsd !== undefined
+            ? token.mintedValueUsd - token.burnedValueUsd
+            : undefined,
       }
     })
     .filter(notUndefined)
@@ -74,6 +74,7 @@ export function getTokensData({
       avgDuration: null,
       avgValue: null,
       volume: null,
+      netMintedValue: undefined,
     })
   }
 

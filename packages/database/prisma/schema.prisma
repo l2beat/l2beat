@@ -550,6 +550,8 @@ model AggregatedInteropTransfer {
   srcValueUsd      Float?   @db.Real
   dstValueUsd      Float?   @db.Real
   avgValueInFlight Float?   @db.Real
+  mintedValueUsd   Float?   @db.Real
+  burnedValueUsd   Float?   @db.Real
   countUnder100    Int      @default(0)
   count100To1K     Int      @default(0)
   count1KTo10K     Int      @default(0)
@@ -566,6 +568,8 @@ model AggregatedInteropToken {
   dstChain         String   @db.VarChar(255)
   bridgeType       String   @default("unknown") @db.VarChar(255)
   abstractTokenId  String   @db.VarChar(6)
+  mintedValueUsd   Float?   @db.Real
+  burnedValueUsd   Float?   @db.Real
   transferCount    Int
   totalDurationSum Int
   volume           Float    @db.Real

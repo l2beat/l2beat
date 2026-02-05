@@ -25,6 +25,7 @@ export type ProtocolEntry = {
   averageDuration: AverageDuration
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
+  netMintedValue: number | undefined
 }
 
 export type ByBridgeTypeData = {
@@ -72,14 +73,18 @@ export type AggregatedInteropTransferWithTokens =
     >[]
   }
 
-export type AverageDurationData = {
+export type CommonInteropData = {
+  volume: number
   transferCount: number
   totalDurationSum: number
   inTransferCount: number
   inDurationSum: number
   outTransferCount: number
   outDurationSum: number
+  mintedValueUsd: number | undefined
+  burnedValueUsd: number | undefined
 }
+
 export type TokenData = {
   id: string
   symbol: string
@@ -88,6 +93,7 @@ export type TokenData = {
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number | null
+  netMintedValue: number | undefined
 }
 
 export type ChainData = {
@@ -98,6 +104,7 @@ export type ChainData = {
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number
+  netMintedValue: number | undefined
 }
 
 export type SingleAverageDuration = {

@@ -54,6 +54,8 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 2000,
           dstValueUsd: 2000,
           avgValueInFlight: undefined,
+          mintedValueUsd: 0,
+          burnedValueUsd: 2000,
           countUnder100: 0,
           count100To1K: 0,
           count1KTo10K: 1,
@@ -75,6 +77,8 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 5000,
           volume: 2000,
           bridgeType: 'lockAndMint',
+          mintedValueUsd: 0,
+          burnedValueUsd: 2000,
         },
       ]
 
@@ -239,6 +243,8 @@ function createTransfer(
     duration: number
     srcValueUsd?: number
     dstValueUsd?: number
+    srcWasBurned?: boolean
+    dstWasMinted?: boolean
   },
 ): InteropTransferRecord {
   return {
@@ -252,7 +258,7 @@ function createTransfer(
     srcEventId: 'random-event-id',
     srcTokenAddress: undefined,
     srcRawAmount: undefined,
-    srcWasBurned: undefined,
+    srcWasBurned: overrides.srcWasBurned ?? undefined,
     srcSymbol: undefined,
     srcAmount: undefined,
     srcPrice: undefined,
@@ -262,7 +268,7 @@ function createTransfer(
     dstEventId: 'random-event-id',
     dstTokenAddress: undefined,
     dstRawAmount: undefined,
-    dstWasMinted: undefined,
+    dstWasMinted: overrides.dstWasMinted ?? undefined,
     dstSymbol: undefined,
     dstAmount: undefined,
     dstPrice: undefined,
