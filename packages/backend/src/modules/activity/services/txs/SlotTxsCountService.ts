@@ -8,11 +8,15 @@ import { aggregatePerDay } from '../../utils/aggregatePerDay'
 interface Dependencies {
   provider: SvmBlockProvider
   projectId: ProjectId
-  logger: Logger
 }
 
 export class SlotTxsCountService {
-  constructor(private readonly $: Dependencies) {}
+  constructor(
+    private readonly $: Dependencies,
+    private readonly logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async getTxsCount(
     from: number,
@@ -25,7 +29,7 @@ export class SlotTxsCountService {
       const block = await this.$.provider.getBlockWithTransactions(slot)
 
       if (!block) {
-        this.$.logger.warn('Empty slot found', {
+        this.logger.warn('Empty slot found', {
           slot,
           projectId: this.$.projectId.toString(),
         })

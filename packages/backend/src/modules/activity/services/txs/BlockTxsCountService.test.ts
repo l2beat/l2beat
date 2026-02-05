@@ -22,13 +22,15 @@ describe(BlockTxsCountService.name, () => {
         { timestamp: START + 2 * UnixTime.DAY, count: 5, number: 3 },
       ])
 
-      const txsCountProvider = new BlockTxsCountService({
-        projectId: ProjectId('a'),
-        provider: client,
-        uopsAnalyzer: analyzer,
-        assessCount: (count) => count,
-        logger: mockObject<Logger>(),
-      })
+      const txsCountProvider = new BlockTxsCountService(
+        {
+          projectId: ProjectId('a'),
+          provider: client,
+          uopsAnalyzer: analyzer,
+          assessCount: (count) => count,
+        },
+        mockObject<Logger>(),
+      )
 
       const result = await txsCountProvider.getTxsCount(1, 3)
       expect(result).toEqual({
@@ -58,13 +60,15 @@ describe(BlockTxsCountService.name, () => {
       const assessCount = mockFn((count) => count - 1)
 
       analyzer.calculateUops = mockFn().returnsOnce(2).returnsOnce(3)
-      const txsCountProvider = new BlockTxsCountService({
-        projectId: ProjectId('a'),
-        provider: client,
-        uopsAnalyzer: analyzer,
-        assessCount,
-        logger: mockObject<Logger>(),
-      })
+      const txsCountProvider = new BlockTxsCountService(
+        {
+          projectId: ProjectId('a'),
+          provider: client,
+          uopsAnalyzer: analyzer,
+          assessCount,
+        },
+        mockObject<Logger>(),
+      )
       const result = await txsCountProvider.getTxsCount(1, 2)
       expect(result).toEqual({
         records: [
@@ -93,13 +97,15 @@ describe(BlockTxsCountService.name, () => {
         .returnsOnce(0)
         .returnsOnce(3)
         .returnsOnce(0)
-      const txsCountProvider = new BlockTxsCountService({
-        projectId: ProjectId('a'),
-        provider: client,
-        uopsAnalyzer: analyzer,
-        assessCount,
+      const txsCountProvider = new BlockTxsCountService(
+        {
+          projectId: ProjectId('a'),
+          provider: client,
+          uopsAnalyzer: analyzer,
+          assessCount,
+        },
         logger,
-      })
+      )
       const result = await txsCountProvider.getTxsCount(1, 3)
       expect(result).toEqual({
         records: [

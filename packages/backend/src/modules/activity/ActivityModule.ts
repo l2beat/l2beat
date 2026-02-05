@@ -59,13 +59,15 @@ export function initActivityModule({
 
         const provider = providers.block.getBlockProvider(project.chainName)
         const analyzer = providers.uops.getUopsAnalyzer(project.chainName)
-        const txsCountService = new BlockTxsCountService({
-          provider,
-          projectId: project.id,
-          assessCount: assessCount(project.activityConfig.adjustCount),
-          uopsAnalyzer: analyzer,
+        const txsCountService = new BlockTxsCountService(
+          {
+            provider,
+            projectId: project.id,
+            assessCount: assessCount(project.activityConfig.adjustCount),
+            uopsAnalyzer: analyzer,
+          },
           logger,
-        })
+        )
 
         const activityIndexer = new BlockActivityIndexer(
           {
@@ -109,11 +111,13 @@ export function initActivityModule({
         )
 
         const provider = providers.svmBlock.getBlockProvider(project.chainName)
-        const txsCountService = new SlotTxsCountService({
-          provider,
-          projectId: project.id,
+        const txsCountService = new SlotTxsCountService(
+          {
+            provider,
+            projectId: project.id,
+          },
           logger,
-        })
+        )
 
         const activityIndexer = new BlockActivityIndexer(
           {
