@@ -1,9 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
+  AbstractTokenRecord,
   Database,
   InteropMessageRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   generateId,
@@ -13,6 +16,7 @@ import {
   type InteropEventQuery,
   type InteropEventType,
   type InteropMessage,
+  type InteropMatchContext,
   type InteropPlugin,
   type InteropTransfer,
   type MatchResult,
@@ -20,10 +24,15 @@ import {
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import type { InteropTransferStream } from '../stream/InteropTransferStream'
 
+const EMPTY_MATCH_CONTEXT: InteropMatchContext = {
+  getAbstractToken: (_deployedToken) => undefined,
+}
+
 export class InteropMatchingLoop extends TimeLoop {
   constructor(
     private store: InteropEventStore,
     private db: Database,
+    private tokenDbClient: TokenDbClient,
     private plugins: InteropPlugin[],
     private supportedChains: string[],
     protected logger: Logger,
@@ -35,6 +44,7 @@ export class InteropMatchingLoop extends TimeLoop {
   }
 
   async run() {
+    const matchContext = await this.buildMatchContext()
     const result = await match(
       this.store,
       (type) => this.store.getEvents(type),
@@ -43,6 +53,7 @@ export class InteropMatchingLoop extends TimeLoop {
       this.plugins,
       this.supportedChains,
       this.logger,
+      matchContext,
     )
 
     const messageRecords = result.messages.map(toMessageRecord)
@@ -69,6 +80,19 @@ export class InteropMatchingLoop extends TimeLoop {
       this.transferStream?.publishBulk(transferRecords, this.intervalMs)
     }
   }
+
+  private async buildMatchContext(): Promise<InteropMatchContext> {
+    try {
+      const { abstractTokens } =
+        await this.tokenDbClient.abstractTokens.getAllWithDeployedTokens.query()
+      return {
+        getAbstractToken: createAbstractTokenLookup(abstractTokens),
+      }
+    } catch (error) {
+      this.logger.error('Failed to load abstract tokens', error)
+      return EMPTY_MATCH_CONTEXT
+    }
+  }
 }
 
 export async function match(
@@ -79,6 +103,7 @@ export async function match(
   plugins: InteropPlugin[],
   supportedChains: string[],
   logger: Logger,
+  matchContext: InteropMatchContext = EMPTY_MATCH_CONTEXT,
 ) {
   const start = Date.now()
   logger.info('Matching started', {
@@ -118,7 +143,7 @@ export async function match(
         }
         let result: MatchResult | undefined
         try {
-          result = await plugin.match?.(event, filteredDb)
+          result = await plugin.match?.(event, filteredDb, matchContext)
         } catch (e) {
           logger.error('Matching failed', e, {
             plugin: plugin.name,
@@ -207,6 +232,28 @@ export async function match(
   }
 }
 
+export function createAbstractTokenLookup(
+  abstractTokens: (AbstractTokenRecord & {
+    deployedTokens: { chain: string; address: string }[]
+  })[],
+): (deployedToken: ChainSpecificAddress) => AbstractTokenRecord | undefined {
+  const byDeployed = new Map<string, AbstractTokenRecord>()
+
+  for (const abstractToken of abstractTokens) {
+    const { deployedTokens, ...record } = abstractToken
+    for (const deployedToken of deployedTokens) {
+      const key = toChainSpecificKeyFromDeployedToken(deployedToken)
+      if (!key) {
+        continue
+      }
+      byDeployed.set(key, record)
+    }
+  }
+
+  return (deployedToken) =>
+    byDeployed.get(toChainSpecificKey(deployedToken))
+}
+
 function createFilteredDb(
   db: InteropEventDb,
   isExcluded: (event: InteropEvent) => boolean,
@@ -228,6 +275,39 @@ function createFilteredDb(
     ) {
       return filterEvents(db.findApproximate(type, query, approximate))
     },
+  }
+}
+
+function toChainSpecificKey(value: ChainSpecificAddress) {
+  const chain = ChainSpecificAddress.chain(value).toLowerCase()
+  const address = ChainSpecificAddress.address(value).toLowerCase()
+  return `${chain}:${address}`
+}
+
+function toChainSpecificKeyFromDeployedToken(deployedToken: {
+  chain: string
+  address: string
+}) {
+  if (deployedToken.address === 'native') {
+    return
+  }
+
+  try {
+    const chainSpecific = ChainSpecificAddress.fromLong(
+      deployedToken.chain,
+      deployedToken.address,
+    )
+    return toChainSpecificKey(chainSpecific)
+  } catch {
+    try {
+      const chainSpecific = ChainSpecificAddress.from(
+        deployedToken.chain,
+        deployedToken.address,
+      )
+      return toChainSpecificKey(chainSpecific)
+    } catch {
+      return
+    }
   }
 }
 

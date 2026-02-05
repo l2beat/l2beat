@@ -1,5 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { InteropPluginName } from '@l2beat/config'
+import type { AbstractTokenRecord } from '@l2beat/database'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
   createInteropEventType,
@@ -7,7 +9,7 @@ import {
   type InteropPlugin,
 } from '../../plugins/types'
 import { InMemoryEventDb } from '../capture/InMemoryEventDb'
-import { match } from './InteropMatchingLoop'
+import { createAbstractTokenLookup, match } from './InteropMatchingLoop'
 
 describe('match', () => {
   it('does not expose already matched events to later matches', async () => {
@@ -68,5 +70,68 @@ describe('match', () => {
     expect(matchedLookup).toEqual(undefined)
     expect(result.messages.length).toEqual(1)
     expect(result.unsupported.length).toEqual(0)
+  })
+
+  it('passes match context to plugins', async () => {
+    const Event = createInteropEventType<{ id: string }>('test.Event')
+    const db = new InMemoryEventDb()
+
+    const event = Event.mock({ id: 'a' }, 1)
+    db.addEvent(event)
+
+    const tokenAddress = ChainSpecificAddress.fromLong(
+      'ethereum',
+      '0x1111111111111111111111111111111111111111',
+    )
+    const abstractToken = {
+      symbol: 'ABC',
+      id: 'TK0001',
+      issuer: null,
+      category: 'other',
+      iconUrl: null,
+      coingeckoId: null,
+      coingeckoListingTimestamp: null,
+      comment: null,
+      reviewed: false,
+    } satisfies AbstractTokenRecord
+
+    let seen: AbstractTokenRecord | undefined
+
+    const plugin: InteropPlugin = {
+      name: 'mock-plugin' as InteropPluginName,
+      matchTypes: [Event],
+      match(event, _eventDb, ctx) {
+        if (!Event.checkType(event)) {
+          return
+        }
+        seen = ctx.getAbstractToken(tokenAddress)
+        return [{ kind: 'InteropIgnore', events: [event] }]
+      },
+    }
+
+    const getAbstractToken = createAbstractTokenLookup([
+      {
+        ...abstractToken,
+        deployedTokens: [
+          {
+            chain: 'ethereum',
+            address: '0x1111111111111111111111111111111111111111',
+          },
+        ],
+      },
+    ])
+
+    await match(
+      db,
+      (type) => db.getEvents(type),
+      db.getEventTypes(),
+      db.getEventCount(),
+      [plugin],
+      [],
+      Logger.SILENT,
+      { getAbstractToken },
+    )
+
+    expect(seen).toEqual(abstractToken)
   })
 })
