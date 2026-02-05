@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { InteropRecentPricesRecord } from '@l2beat/database/dist/repositories/InteropRecentPricesRepository'
 import type { PriceProvider } from '@l2beat/shared'
@@ -14,8 +15,11 @@ export interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
 }
 
 export class InteropRecentPricesIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: Dependencies) {
-    super({ ...$, name: INDEXER_NAMES.INTEROP_RECENT_PRICES })
+  constructor(
+    private readonly $: Dependencies,
+    logger: Logger,
+  ) {
+    super({ ...$, name: INDEXER_NAMES.INTEROP_RECENT_PRICES }, logger)
   }
 
   override async update(from: number, to: number): Promise<number> {

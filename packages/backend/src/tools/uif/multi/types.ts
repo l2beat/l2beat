@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 import type { IndexerService } from '../IndexerService'
@@ -40,7 +39,6 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   configurations: Configuration<T>[]
   serializeConfiguration?: (value: T) => string
   db: Database
-  logger: Logger
   // Optionals
   tags?: IndexerTags
   updateRetryStrategy?: RetryStrategy
