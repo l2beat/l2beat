@@ -45,18 +45,20 @@ export function createBlockSyncModule({
             config.blockSync.delayFromTipInSeconds,
           )
 
-    const blockIndexer = new BlockIndexer({
+    const blockIndexer = new BlockIndexer(
+      {
+        minHeight: 1,
+        parents: [blockNumberIndexer],
+        blockProcessors: blockProcessors.filter((x) => x.chain === chain),
+        source: chain,
+        blockProvider: providers.block.getBlockProvider(chain),
+        logsProvider: providers.logs.getLogsProvider(chain),
+        indexerService,
+        batchSize:
+          env.optionalInteger(Env.key(chain, 'BLOCKSYNC_BATCH_SIZE')) ?? 50,
+      },
       logger,
-      minHeight: 1,
-      parents: [blockNumberIndexer],
-      blockProcessors: blockProcessors.filter((x) => x.chain === chain),
-      source: chain,
-      blockProvider: providers.block.getBlockProvider(chain),
-      logsProvider: providers.logs.getLogsProvider(chain),
-      indexerService,
-      batchSize:
-        env.optionalInteger(Env.key(chain, 'BLOCKSYNC_BATCH_SIZE')) ?? 50,
-    })
+    )
 
     indexers.push(blockNumberIndexer)
     indexers.push(blockIndexer)

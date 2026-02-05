@@ -125,26 +125,28 @@ function activityRecord(
 function createIndexer(
   deps?: Partial<DayActivityIndexerDeps>,
 ): DayActivityIndexer {
-  return new DayActivityIndexer({
-    logger: Logger.SILENT,
-    parents: [],
-    txsCountService: mockObject<TxsCountService>({
-      getTxsCount: mockFn().resolvesTo([]),
-    }),
-    db: mockDatabase({
-      activity: mockObject<Database['activity']>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([]),
-        upsertMany: mockFn().resolvesTo(undefined),
+  return new DayActivityIndexer(
+    {
+      parents: [],
+      txsCountService: mockObject<TxsCountService>({
+        getTxsCount: mockFn().resolvesTo([]),
       }),
-      syncMetadata: mockObject<Database['syncMetadata']>({
-        updateSyncedUntil: mockFn().resolvesTo(undefined),
+      db: mockDatabase({
+        activity: mockObject<Database['activity']>({
+          getByProjectAndTimeRange: mockFn().resolvesTo([]),
+          upsertMany: mockFn().resolvesTo(undefined),
+        }),
+        syncMetadata: mockObject<Database['syncMetadata']>({
+          updateSyncedUntil: mockFn().resolvesTo(undefined),
+        }),
       }),
-    }),
-    projectId: ProjectId('a'),
-    indexerService: mockObject<IndexerService>({}),
-    minHeight: 0,
-    batchSize: 1,
-    uncertaintyBuffer: 0,
-    ...deps,
-  })
+      projectId: ProjectId('a'),
+      indexerService: mockObject<IndexerService>({}),
+      minHeight: 0,
+      batchSize: 1,
+      uncertaintyBuffer: 0,
+      ...deps,
+    },
+    Logger.SILENT,
+  )
 }

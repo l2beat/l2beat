@@ -67,11 +67,15 @@ function TransfersTable(props: {
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
-              <td>{e.duration && formatSeconds(e.duration)}</td>
+              <td data-order={e.duration} data-sort={e.duration}>
+                {e.duration && formatSeconds(e.duration)}
+              </td>
               <td>
                 {e.srcAmount} {e.srcSymbol}
               </td>
-              <td data-order={e.srcValueUsd}>{formatDollars(e.srcValueUsd)}</td>
+              <td data-order={e.srcValueUsd} data-sort={e.srcValueUsd}>
+                {formatDollars(e.srcValueUsd)}
+              </td>
               <td>
                 <BooleanCell
                   value={e.srcWasBurned}
@@ -82,7 +86,9 @@ function TransfersTable(props: {
               <td>
                 {e.dstAmount} {e.dstSymbol}
               </td>
-              <td data-order={e.dstValueUsd}>{formatDollars(e.dstValueUsd)}</td>
+              <td data-order={e.dstValueUsd} data-sort={e.dstValueUsd}>
+                {formatDollars(e.dstValueUsd)}
+              </td>
               <td>
                 <BooleanCell
                   value={e.dstWasMinted}

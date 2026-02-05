@@ -74,14 +74,16 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
       })
 
-      const indexer = new InteropAggregatingIndexer({
-        db,
-        configs,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
-      })
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
 
       const result = await indexer.update(from, to)
 
@@ -274,14 +276,16 @@ describe(InteropAggregatingIndexer.name, () => {
         transaction,
       })
 
-      const indexer = new InteropAggregatingIndexer({
-        db,
-        configs,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
-      })
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
 
       await indexer.update(0, to)
 
@@ -486,14 +490,16 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
       })
 
-      const indexer = new InteropAggregatingIndexer({
-        db,
-        configs,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
-      })
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
 
       await indexer.update(from, to)
 

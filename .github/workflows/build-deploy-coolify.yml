@@ -9,9 +9,8 @@ on:
         type: string
       dockerfile:
         description: "Dockerfile path (e.g., packages/frontend/Dockerfile)"
-        required: false
+        required: true
         type: string
-        default: packages/${{ inputs.project }}/Dockerfile
     secrets:
       COOLIFY_SERVER:
         required: true
@@ -85,8 +84,7 @@ jobs:
           build-args: |
             TURBO_TEAM=${{ secrets.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          no-cache: true
 
       - name: Deploy to Coolify
         run: |

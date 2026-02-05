@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -20,8 +21,11 @@ export interface InteropAggregatingIndexerDeps
 }
 
 export class InteropAggregatingIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: InteropAggregatingIndexerDeps) {
-    super({ ...$, name: 'interop_aggregating' })
+  constructor(
+    private readonly $: InteropAggregatingIndexerDeps,
+    logger: Logger,
+  ) {
+    super({ ...$, name: 'interop_aggregating' }, logger)
   }
 
   override async update(_: number, to: number): Promise<number> {
