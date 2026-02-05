@@ -155,7 +155,6 @@ export class AcrossPlugin implements InteropPluginResyncable {
     if (!fundsDeposited) return
 
     return [
-      // TODO: Should there be a message at all?
       Result.Message('across.Message', {
         app: 'across',
         srcEvent: fundsDeposited,

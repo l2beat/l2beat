@@ -114,15 +114,17 @@ describe(InteropAggregatingIndexer.name, () => {
         }),
       })
 
-      const indexer = new InteropAggregatingIndexer({
-        db,
-        configs,
-        aggregationService,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
-      })
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs,
+          aggregationService,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
 
       const result = await indexer.update(from, to)
 
@@ -198,15 +200,17 @@ describe(InteropAggregatingIndexer.name, () => {
         }),
       })
 
-      const indexer = new InteropAggregatingIndexer({
-        db,
-        configs,
-        aggregationService,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
-      })
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs,
+          aggregationService,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
 
       const result = await indexer.update(from, to)
 

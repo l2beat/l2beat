@@ -12,9 +12,6 @@ export const layerzero: BaseProject = {
     showAlways: ['omnichain'],
     plugins: [
       {
-        plugin: 'layerzero-v2',
-      },
-      {
         plugin: 'layerzero-v2-ofts',
       },
     ],

@@ -110,14 +110,16 @@ export function createInteropModule({
   const cleaner = new InteropCleanerLoop(eventStore, db, plugins, logger)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
-  const recentPricesIndexer = new InteropRecentPricesIndexer({
-    db,
-    priceProvider: providers.price,
+  const recentPricesIndexer = new InteropRecentPricesIndexer(
+    {
+      db,
+      priceProvider: providers.price,
+      parents: [hourlyIndexer],
+      minHeight: 1,
+      indexerService,
+    },
     logger,
-    parents: [hourlyIndexer],
-    minHeight: 1,
-    indexerService,
-  })
+  )
 
   const financialsService = new InteropFinancialsLoop(
     config.interop.capture.chains,
@@ -143,15 +145,17 @@ export function createInteropModule({
   if (config.interop.aggregation) {
     const classifier = new InteropTransferClassifier()
     const aggregationService = new InteropAggregationService(classifier, logger)
-    interopAggregatingIndexer = new InteropAggregatingIndexer({
-      db,
-      configs: config.interop.aggregation.configs,
-      aggregationService,
+    interopAggregatingIndexer = new InteropAggregatingIndexer(
+      {
+        db,
+        configs: config.interop.aggregation.configs,
+        aggregationService,
+        indexerService,
+        parents: [hourlyIndexer],
+        minHeight: 1,
+      },
       logger,
-      indexerService,
-      parents: [hourlyIndexer],
-      minHeight: 1,
-    })
+    )
   }
 
   const start = async () => {
