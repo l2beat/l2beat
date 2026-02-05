@@ -2,7 +2,7 @@ import type { InteropDurationSplit, Project } from '@l2beat/config'
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import type {
   AverageDuration,
-  AverageDurationData,
+  CommonInteropData,
   DurationSplitMap,
   UnknownAverageDuration,
 } from '../types'
@@ -10,7 +10,7 @@ import type {
 export function getAverageDuration(
   projectId: string,
   bridgeType: KnownInteropBridgeType | undefined,
-  data: AverageDurationData,
+  data: CommonInteropData,
   durationSplitMap: DurationSplitMap | undefined,
 ): Exclude<AverageDuration, UnknownAverageDuration> {
   const durationSplit =

@@ -3,18 +3,13 @@ import { INTEROP_CHAINS } from '@l2beat/config'
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
-import type { AverageDurationData, ChainData, DurationSplitMap } from '../types'
+import type { ChainData, CommonInteropData, DurationSplitMap } from '../types'
 import { getAverageDuration } from './getAverageDuration'
 
 type Params = {
   projectId: string
   bridgeType: KnownInteropBridgeType | undefined
-  chains: Map<
-    string,
-    AverageDurationData & {
-      volume: number
-    }
-  >
+  chains: Map<string, CommonInteropData>
   durationSplitMap: DurationSplitMap | undefined
   logger: Logger
 }
@@ -49,6 +44,11 @@ export function getChainsData({
         transferCount: chainData.transferCount,
         avgDuration: avgDuration,
         avgValue: Math.floor(chainData.volume / chainData.transferCount),
+        netMintedValue:
+          chainData.mintedValueUsd !== undefined &&
+          chainData.burnedValueUsd !== undefined
+            ? chainData.mintedValueUsd - chainData.burnedValueUsd
+            : undefined,
       }
     })
     .filter(notUndefined)

@@ -90,6 +90,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 1000,
       avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 10_000,
+      netMintedValue: undefined,
     },
     {
       id: 'usdc01',
@@ -100,6 +101,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 500,
       avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
+      netMintedValue: undefined,
     },
   ]
 
@@ -112,6 +114,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 1000,
       avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 8_000,
+      netMintedValue: undefined,
     },
     {
       id: 'arbitrum',
@@ -121,6 +124,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 500,
       avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
+      netMintedValue: undefined,
     },
   ]
 
@@ -140,6 +144,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     averageDuration: { type: 'single', duration: 100_000 },
     byBridgeType: undefined,
     averageValueInFlight: undefined,
+    netMintedValue: undefined,
   }))
 
   const transferSizeChartData: TransferSizeChartData = {

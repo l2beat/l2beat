@@ -88,8 +88,7 @@ function DurationTooltipItem({
   averageDuration: SplitAverageDuration
   type: 'in' | 'out'
 }) {
-  const message =
-    'No transfers detected. Reset selection to include all transfers.'
+  const message = 'No transfers detected.'
   return (
     <div>
       <span className="text-[13px] text-secondary leading-none">
