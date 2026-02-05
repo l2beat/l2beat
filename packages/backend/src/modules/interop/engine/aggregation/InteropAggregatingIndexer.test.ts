@@ -600,14 +600,16 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
       })
 
-      const indexer = new InteropAggregatingIndexer({
-        db,
-        configs,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
-      })
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
 
       await indexer.update(from, to)
 
