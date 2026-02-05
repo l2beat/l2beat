@@ -102,6 +102,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         entries={data?.entries}
         isLoading={isLoading}
         hideTypeColumn
+        showNetMintedValueColumn
       />
     </div>
   )

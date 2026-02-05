@@ -49,11 +49,14 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
           id: config.id,
           ...getAggregatedTransfer(group, {
             calculateValueInFlight: config.bridgeType === 'nonMinting',
+            calculateNetMinted: config.bridgeType === 'lockAndMint',
           }),
         })
 
         aggregatedTokens.push(
-          ...getAggregatedTokens(group).map((token) => ({
+          ...getAggregatedTokens(group, {
+            calculateNetMinted: config.bridgeType === 'lockAndMint',
+          }).map((token) => ({
             timestamp: to,
             id: config.id,
             ...token,

@@ -20,11 +20,14 @@ export type AggregatedInteropTransferWithTokens =
     >[]
   }
 
-export type AverageDurationData = {
+export type CommonInteropData = {
+  volume: number
   transferCount: number
   totalDurationSum: number
   inTransferCount: number
   inDurationSum: number
   outTransferCount: number
   outDurationSum: number
+  mintedValueUsd: number | undefined
+  burnedValueUsd: number | undefined
 }
