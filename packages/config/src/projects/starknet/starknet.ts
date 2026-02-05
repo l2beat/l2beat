@@ -287,6 +287,7 @@ export const starknet: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
+        noRedTrustedSetups: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

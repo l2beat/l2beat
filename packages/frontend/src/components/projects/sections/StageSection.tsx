@@ -195,10 +195,13 @@ export function StageSection({
       <HorizontalSeparator className="my-4" />
       <div className="space-y-2">
         {stageConfig.summary.map((stage) => {
+          const nonUpcomingRequirements = stage.requirements.filter(
+            (r) => !r.upcoming,
+          )
           const requirementsForLabel =
             stage.principle && featureFlags.stageOneRequirementsChanged()
               ? [stage.principle]
-              : stage.requirements
+              : nonUpcomingRequirements
           const satisfiedForLabel = requirementsForLabel.filter(
             (r) => r.satisfied === true,
           )

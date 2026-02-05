@@ -358,7 +358,7 @@ describe(createGetStage.name, () => {
         stage: 'Stage 1',
         downgradePending: {
           expiresAt: FUTURE_TIME,
-          reason: 'PRINCIPLE_FALSE',
+          reasons: ['PRINCIPLE_FALSE'],
           toStage: 'Stage 0',
         },
         missing: undefined,
@@ -702,6 +702,179 @@ describe(createGetStage.name, () => {
           },
         }),
       ).toThrow('We are currently not handling multiple messages')
+    })
+  })
+
+  describe('upcomingItems', () => {
+    const FUTURE_TIME = UnixTime.now() + 30 * UnixTime.DAY
+    const PAST_TIME = UnixTime.now() - 30 * UnixTime.DAY
+
+    const getUpcomingTestStage = (expiresAt: number) =>
+      createGetStage({
+        stage0: {
+          name: 'Stage 0',
+          items: {
+            callsItselfRollup: {
+              positive: 'ROLLUP_TRUE',
+              negative: 'ROLLUP_FALSE',
+            },
+          },
+        },
+        stage1: {
+          name: 'Stage 1',
+          principle: {
+            positive: 'PRINCIPLE_TRUE',
+            negative: 'PRINCIPLE_FALSE',
+          },
+          items: {
+            hasEscapeHatch: {
+              positive: 'ESCAPE_HATCH_TRUE',
+              negative: 'ESCAPE_HATCH_FALSE',
+            },
+          },
+          upcomingItems: {
+            expiresAt,
+            items: {
+              upcomingA: {
+                positive: 'UPCOMING_A_TRUE',
+                negative: 'UPCOMING_A_FALSE',
+              },
+              upcomingB: {
+                positive: 'UPCOMING_B_TRUE',
+                negative: 'UPCOMING_B_FALSE',
+              },
+            },
+          },
+        },
+      })
+
+    it('not expired + all satisfied → no downgradePending, requirements shown with upcoming: true', () => {
+      const getStage = getUpcomingTestStage(FUTURE_TIME)
+      const result = getStage({
+        stage0: { callsItselfRollup: true },
+        stage1: {
+          principle: true,
+          hasEscapeHatch: true,
+          upcomingA: true,
+          upcomingB: true,
+        },
+      })
+
+      expect(result.stage).toEqual('Stage 1')
+      expect(result.downgradePending).toEqual(undefined)
+      expect(result.missing).toEqual(undefined)
+      const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
+      expect(stage1Summary?.requirements).toEqual([
+        { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+        { satisfied: true, description: 'UPCOMING_A_TRUE', upcoming: true },
+        { satisfied: true, description: 'UPCOMING_B_TRUE', upcoming: true },
+      ])
+    })
+
+    it('not expired + some failing → downgradePending set with failing reasons', () => {
+      const getStage = getUpcomingTestStage(FUTURE_TIME)
+      const result = getStage({
+        stage0: { callsItselfRollup: true },
+        stage1: {
+          principle: true,
+          hasEscapeHatch: true,
+          upcomingA: false,
+          upcomingB: false,
+        },
+      })
+
+      expect(result.stage).toEqual('Stage 1')
+      expect(result.downgradePending).toEqual({
+        expiresAt: FUTURE_TIME,
+        reasons: ['UPCOMING_A_FALSE', 'UPCOMING_B_FALSE'],
+        toStage: 'Stage 0',
+      })
+      expect(result.missing).toEqual(undefined)
+    })
+
+    it('not expired + some failing + regular requirements also failing → missing set, no downgradePending', () => {
+      const getStage = getUpcomingTestStage(FUTURE_TIME)
+      const result = getStage({
+        stage0: { callsItselfRollup: true },
+        stage1: {
+          principle: true,
+          hasEscapeHatch: false,
+          upcomingA: false,
+          upcomingB: true,
+        },
+      })
+
+      expect(result.stage).toEqual('Stage 0')
+      expect(result.missing).toEqual({
+        nextStage: 'Stage 1',
+        requirements: ['ESCAPE_HATCH_FALSE'],
+        principle: undefined,
+      })
+      // downgradePending should NOT be set because there's already a missing
+      expect(result.downgradePending).toEqual(undefined)
+    })
+
+    it('expired + some failing → added to missing, project downgraded', () => {
+      const getStage = getUpcomingTestStage(PAST_TIME)
+      const result = getStage({
+        stage0: { callsItselfRollup: true },
+        stage1: {
+          principle: true,
+          hasEscapeHatch: true,
+          upcomingA: false,
+          upcomingB: true,
+        },
+      })
+
+      expect(result.stage).toEqual('Stage 0')
+      expect(result.missing).toEqual({
+        nextStage: 'Stage 1',
+        requirements: ['UPCOMING_A_FALSE'],
+        principle: undefined,
+      })
+      expect(result.downgradePending).toEqual(undefined)
+    })
+
+    it('expired + all satisfied → no effect, requirements shown without upcoming flag', () => {
+      const getStage = getUpcomingTestStage(PAST_TIME)
+      const result = getStage({
+        stage0: { callsItselfRollup: true },
+        stage1: {
+          principle: true,
+          hasEscapeHatch: true,
+          upcomingA: true,
+          upcomingB: true,
+        },
+      })
+
+      expect(result.stage).toEqual('Stage 1')
+      expect(result.downgradePending).toEqual(undefined)
+      expect(result.missing).toEqual(undefined)
+      const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
+      expect(stage1Summary?.requirements).toEqual([
+        { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+        { satisfied: true, description: 'UPCOMING_A_TRUE' },
+        { satisfied: true, description: 'UPCOMING_B_TRUE' },
+      ])
+    })
+
+    it('upcoming items not provided (undefined/omitted) → no effect', () => {
+      const getStage = getUpcomingTestStage(FUTURE_TIME)
+      const result = getStage({
+        stage0: { callsItselfRollup: true },
+        stage1: {
+          principle: true,
+          hasEscapeHatch: true,
+        },
+      })
+
+      expect(result.stage).toEqual('Stage 1')
+      expect(result.downgradePending).toEqual(undefined)
+      expect(result.missing).toEqual(undefined)
+      const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
+      expect(stage1Summary?.requirements).toEqual([
+        { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+      ])
     })
   })
 })

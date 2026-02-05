@@ -24,6 +24,10 @@ type StageBlueprint = Record<
     name: Stage
     principle?: BlueprintItem
     items: Record<string, BlueprintItem>
+    upcomingItems?: {
+      expiresAt: number
+      items: Record<string, BlueprintItem>
+    }
   }
 >
 
@@ -44,7 +48,11 @@ export type ChecklistTemplate<T extends StageBlueprint> = {
         principle: ChecklistValue
       }
     : // biome-ignore lint/complexity/noBannedTypes: it's needed
-      {})
+      {}) &
+    (T[K] extends { upcomingItems: { items: infer U } }
+      ? Partial<{ [L in keyof U & string]: ChecklistValue }>
+      : // biome-ignore lint/complexity/noBannedTypes: it's needed
+        {})
 }
 
 export function createGetStage<T extends StageBlueprint>(
@@ -137,7 +145,62 @@ export function createGetStage<T extends StageBlueprint>(
         if (!missing && !countdownExpired) {
           downgradePending = {
             expiresAt: PROJECT_COUNTDOWNS.stageChanges,
-            reason: principle.description,
+            reasons: [principle.description],
+            toStage: highestStageReached,
+          }
+        }
+      }
+
+      // Process upcoming items
+      if (blueprintStage.upcomingItems) {
+        const upcomingCountdownExpired =
+          blueprintStage.upcomingItems.expiresAt < UnixTime.now()
+        const pendingReasons: string[] = []
+
+        for (const [key, blueprintItem] of Object.entries(
+          blueprintStage.upcomingItems.items,
+        )) {
+          const requirement = evaluate(blueprintItem, checklist[stage][key])
+          if (!requirement || requirement.isOmitted) {
+            continue
+          }
+
+          // Always add to summary
+          summaryStage.requirements.push({
+            satisfied: requirement.satisfied,
+            description: requirement.description,
+            ...(!upcomingCountdownExpired ? { upcoming: true } : {}),
+          })
+
+          if (requirement.satisfied !== true) {
+            if (upcomingCountdownExpired) {
+              // Treat as regular requirement
+              if (blueprintStage.name !== 'Stage 0') {
+                if (missing === undefined) {
+                  missing = {
+                    nextStage: blueprintStage.name,
+                    requirements: [],
+                    principle: undefined,
+                  }
+                }
+                if (missing.nextStage === blueprintStage.name) {
+                  missing.requirements.push(requirement.description)
+                }
+              }
+            } else {
+              pendingReasons.push(requirement.description)
+            }
+          }
+        }
+
+        if (
+          !upcomingCountdownExpired &&
+          pendingReasons.length > 0 &&
+          !missing
+        ) {
+          downgradePending = {
+            expiresAt: blueprintStage.upcomingItems.expiresAt,
+            reasons: pendingReasons,
             toStage: highestStageReached,
           }
         }
