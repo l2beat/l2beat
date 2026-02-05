@@ -108,7 +108,7 @@ const getBlueprint = (opts?: GetStageOptions) =>
         },
       },
       upcomingItems: {
-        expiresAt: PROJECT_COUNTDOWNS.stageRequirementChanges,
+        expiresAt: PROJECT_COUNTDOWNS.stageChanges,
         items: {
           noRedTrustedSetups: {
             positive:

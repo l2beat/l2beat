@@ -5,6 +5,4 @@ import { UnixTime } from '@l2beat/shared-pure'
 export const featureFlags = {
   stageOneRequirementsChanged: () =>
     PROJECT_COUNTDOWNS.stageChanges < UnixTime.now(),
-  stageOneNewRequirementsChanged: () =>
-    PROJECT_COUNTDOWNS.stageRequirementChanges < UnixTime.now(),
 }

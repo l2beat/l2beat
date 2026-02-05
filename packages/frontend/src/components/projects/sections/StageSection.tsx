@@ -18,7 +18,6 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { StageOneRequirementsChangeStageSectionNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { CustomLink } from '~/components/link/CustomLink'
-import { featureFlags } from '~/consts/featureFlags'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { InfoIcon } from '~/icons/Info'
 import { MissingIcon } from '~/icons/Missing'
@@ -198,10 +197,9 @@ export function StageSection({
           const nonUpcomingRequirements = stage.requirements.filter(
             (r) => !r.upcoming,
           )
-          const requirementsForLabel =
-            stage.principle && featureFlags.stageOneRequirementsChanged()
-              ? [stage.principle]
-              : nonUpcomingRequirements
+          const requirementsForLabel = stage.principle
+            ? [stage.principle]
+            : nonUpcomingRequirements
           const satisfiedForLabel = requirementsForLabel.filter(
             (r) => r.satisfied === true,
           )
@@ -264,9 +262,7 @@ export function StageSection({
                     <div className="space-y-2">
                       <div className="flex items-center gap-1">
                         <span className="font-bold text-brand text-label-value-14">
-                          {featureFlags.stageOneRequirementsChanged()
-                            ? 'Principle'
-                            : 'Upcoming Principle'}
+                          Principle
                         </span>
                         <Tooltip>
                           <TooltipTrigger>
@@ -302,8 +298,7 @@ export function StageSection({
                     </div>
                   )}
 
-                  {featureFlags.stageOneRequirementsChanged() &&
-                    stage.principle && (
+                  {stage.principle && (
                       <p className="font-bold text-label-value-14 text-secondary">
                         Guidelines
                       </p>

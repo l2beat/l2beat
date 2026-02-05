@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import range from 'lodash/range'
-import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import type { Stage } from '../../types'
 import { createGetStage } from './stage'
 
@@ -285,230 +284,46 @@ describe(createGetStage.name, () => {
     })
   })
 
-  describe('principle', () => {
-    const expiresAt = PROJECT_COUNTDOWNS.stageChanges
-    afterEach(() => {
-      PROJECT_COUNTDOWNS.stageChanges = expiresAt
+  it('downgrades if principle is not met but all requirements are met', () => {
+    const result = getTestStage({
+      stage0: {
+        callsItselfRollup: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        principle: false,
+        hasEscapeHatch: true,
+        isCouncil8Members: true,
+      },
     })
 
-    const FUTURE_TIME = UnixTime.now() + 30 * UnixTime.DAY
-    const PAST_TIME = UnixTime.now() - 30 * UnixTime.DAY
-
-    it('keeps current stage and has missing requirements if principle and requirements are not met and timer not expired', () => {
-      PROJECT_COUNTDOWNS.stageChanges = FUTURE_TIME
-
-      const result = getTestStage({
-        stage0: {
-          callsItselfRollup: true,
-          rollupNodeSourceAvailable: true,
+    expect(result).toEqual({
+      stage: 'Stage 0',
+      downgradePending: undefined,
+      missing: {
+        nextStage: 'Stage 1',
+        requirements: [],
+        principle: 'PRINCIPLE_FALSE',
+      },
+      message: undefined,
+      summary: [
+        {
+          stage: 'Stage 0',
+          principle: undefined,
+          requirements: [
+            { satisfied: true, description: 'ROLLUP_TRUE' },
+            { satisfied: true, description: 'SOURCE_TRUE' },
+          ],
         },
-        stage1: {
-          principle: false,
-          hasEscapeHatch: false,
-          isCouncil8Members: true,
+        {
+          stage: 'Stage 1',
+          principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
+          requirements: [
+            { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+            { satisfied: true, description: 'COUNCIL_TRUE' },
+          ],
         },
-      })
-
-      expect(result).toEqual({
-        stage: 'Stage 0',
-        missing: {
-          nextStage: 'Stage 1',
-          requirements: ['ESCAPE_HATCH_FALSE'],
-          principle: 'PRINCIPLE_FALSE',
-        },
-        downgradePending: undefined,
-        message: undefined,
-        summary: [
-          {
-            stage: 'Stage 0',
-            principle: undefined,
-            requirements: [
-              { satisfied: true, description: 'ROLLUP_TRUE' },
-              { satisfied: true, description: 'SOURCE_TRUE' },
-            ],
-          },
-          {
-            stage: 'Stage 1',
-            principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
-            requirements: [
-              { satisfied: false, description: 'ESCAPE_HATCH_FALSE' },
-              { satisfied: true, description: 'COUNCIL_TRUE' },
-            ],
-          },
-        ],
-      })
-    })
-
-    it('does not downgrade and has downgradePending if principle is not met and timer not expired', () => {
-      PROJECT_COUNTDOWNS.stageChanges = FUTURE_TIME
-
-      const result = getTestStage({
-        stage0: {
-          callsItselfRollup: true,
-          rollupNodeSourceAvailable: true,
-        },
-        stage1: {
-          principle: false,
-          hasEscapeHatch: true,
-          isCouncil8Members: true,
-        },
-      })
-
-      expect(result).toEqual({
-        stage: 'Stage 1',
-        downgradePending: {
-          expiresAt: FUTURE_TIME,
-          reasons: ['PRINCIPLE_FALSE'],
-          toStage: 'Stage 0',
-        },
-        missing: undefined,
-        message: undefined,
-        summary: [
-          {
-            stage: 'Stage 0',
-            principle: undefined,
-            requirements: [
-              { satisfied: true, description: 'ROLLUP_TRUE' },
-              { satisfied: true, description: 'SOURCE_TRUE' },
-            ],
-          },
-          {
-            stage: 'Stage 1',
-            principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
-            requirements: [
-              { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
-              { satisfied: true, description: 'COUNCIL_TRUE' },
-            ],
-          },
-        ],
-      })
-    })
-
-    it('downgrades if principle is not met and timer expired', () => {
-      PROJECT_COUNTDOWNS.stageChanges = PAST_TIME
-
-      const result = getTestStage({
-        stage0: {
-          callsItselfRollup: true,
-          rollupNodeSourceAvailable: true,
-        },
-        stage1: {
-          principle: false,
-          hasEscapeHatch: true,
-          isCouncil8Members: true,
-        },
-      })
-
-      expect(result).toEqual({
-        stage: 'Stage 0',
-        downgradePending: undefined,
-        missing: {
-          nextStage: 'Stage 1',
-          requirements: [],
-          principle: 'PRINCIPLE_FALSE',
-        },
-        message: undefined,
-        summary: [
-          {
-            stage: 'Stage 0',
-            principle: undefined,
-            requirements: [
-              { satisfied: true, description: 'ROLLUP_TRUE' },
-              { satisfied: true, description: 'SOURCE_TRUE' },
-            ],
-          },
-          {
-            stage: 'Stage 1',
-            principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
-            requirements: [
-              { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
-              { satisfied: true, description: 'COUNCIL_TRUE' },
-            ],
-          },
-        ],
-      })
-    })
-
-    it('handles stage assessment normally if principle met and timer not expired', () => {
-      PROJECT_COUNTDOWNS.stageChanges = FUTURE_TIME
-
-      const result = getTestStage({
-        stage0: {
-          callsItselfRollup: true,
-          rollupNodeSourceAvailable: true,
-        },
-        stage1: {
-          principle: true,
-          hasEscapeHatch: true,
-          isCouncil8Members: true,
-        },
-      })
-
-      expect(result).toEqual({
-        stage: 'Stage 1',
-        downgradePending: undefined,
-        missing: undefined,
-        message: undefined,
-        summary: [
-          {
-            stage: 'Stage 0',
-            principle: undefined,
-            requirements: [
-              { satisfied: true, description: 'ROLLUP_TRUE' },
-              { satisfied: true, description: 'SOURCE_TRUE' },
-            ],
-          },
-          {
-            stage: 'Stage 1',
-            principle: { satisfied: true, description: 'PRINCIPLE_TRUE' },
-            requirements: [
-              { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
-              { satisfied: true, description: 'COUNCIL_TRUE' },
-            ],
-          },
-        ],
-      })
-    })
-
-    it('handles stage assessment normally if principle met and timer expired', () => {
-      PROJECT_COUNTDOWNS.stageChanges = PAST_TIME
-
-      const result = getTestStage({
-        stage0: {
-          callsItselfRollup: true,
-          rollupNodeSourceAvailable: true,
-        },
-        stage1: {
-          principle: true,
-          hasEscapeHatch: true,
-          isCouncil8Members: true,
-        },
-      })
-
-      expect(result).toEqual({
-        stage: 'Stage 1',
-        downgradePending: undefined,
-        missing: undefined,
-        message: undefined,
-        summary: [
-          {
-            stage: 'Stage 0',
-            principle: undefined,
-            requirements: [
-              { satisfied: true, description: 'ROLLUP_TRUE' },
-              { satisfied: true, description: 'SOURCE_TRUE' },
-            ],
-          },
-          {
-            stage: 'Stage 1',
-            principle: { satisfied: true, description: 'PRINCIPLE_TRUE' },
-            requirements: [
-              { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
-              { satisfied: true, description: 'COUNCIL_TRUE' },
-            ],
-          },
-        ],
-      })
+      ],
     })
   })
 

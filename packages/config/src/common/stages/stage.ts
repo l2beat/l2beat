@@ -1,5 +1,4 @@
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import type {
   MissingStageDetails,
   Stage,
@@ -59,7 +58,6 @@ export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
 ): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
-    const countdownExpired = PROJECT_COUNTDOWNS.stageChanges < UnixTime.now()
     const summary: StageSummary[] = []
     let highestStageReached: Stage = 'Stage 0'
     let missing: MissingStageDetails | undefined
@@ -134,19 +132,11 @@ export function createGetStage<T extends StageBlueprint>(
           missing.principle = principle.description
         }
 
-        if (!missing && countdownExpired) {
+        if (!missing) {
           missing = {
             nextStage: blueprintStage.name,
             requirements: [],
             principle: principle.description,
-          }
-        }
-
-        if (!missing && !countdownExpired) {
-          downgradePending = {
-            expiresAt: PROJECT_COUNTDOWNS.stageChanges,
-            reasons: [principle.description],
-            toStage: highestStageReached,
           }
         }
       }
