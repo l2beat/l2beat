@@ -183,9 +183,10 @@ function CustomTooltip({
   label,
 }: TooltipProps<number, string>) {
   const { meta } = useChart()
-  if (!active || !payload || typeof label !== 'string') return null
+  if (!active || !payload || typeof label !== 'string' || !payload[0])
+    return null
 
-  const data = payload[0]?.payload as TransferSizeDataPoint
+  const data = payload[0].payload as TransferSizeDataPoint
 
   // Calculate total transfers
   const totalTransfers =

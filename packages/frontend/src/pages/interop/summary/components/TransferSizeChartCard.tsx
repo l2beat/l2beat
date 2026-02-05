@@ -25,15 +25,20 @@ export function TransferSizeChartCard({
         name: data.name,
         iconUrl: data.iconUrl,
         countUnder100: data.countUnder100,
-        percentageUnder100: round((data.countUnder100 / total) * 100, 2),
+        percentageUnder100:
+          total > 0 ? round((data.countUnder100 / total) * 100, 2) : 0,
         count100To1K: data.count100To1K,
-        percentage100To1K: round((data.count100To1K / total) * 100, 2),
+        percentage100To1K:
+          total > 0 ? round((data.count100To1K / total) * 100, 2) : 0,
         count1KTo10K: data.count1KTo10K,
-        percentage1KTo10K: round((data.count1KTo10K / total) * 100, 2),
+        percentage1KTo10K:
+          total > 0 ? round((data.count1KTo10K / total) * 100, 2) : 0,
         count10KTo100K: data.count10KTo100K,
-        percentage10KTo100K: round((data.count10KTo100K / total) * 100, 2),
+        percentage10KTo100K:
+          total > 0 ? round((data.count10KTo100K / total) * 100, 2) : 0,
         countOver100K: data.countOver100K,
-        percentageOver100K: round((data.countOver100K / total) * 100, 2),
+        percentageOver100K:
+          total > 0 ? round((data.countOver100K / total) * 100, 2) : 0,
       }
     })
   }, [transferSizeChartData])

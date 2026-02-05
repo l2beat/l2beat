@@ -128,10 +128,10 @@ const parseTransfer = createEventParser(transferLog)
 export const CCIPSendRequested = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
-  token: Address32
-  amount: bigint
-  index: number // Position in tokenAmounts array for matching
-  wasBurned?: boolean // Whether the source token was burned (vs locked)
+  token?: Address32
+  amount?: bigint
+  index?: number
+  wasBurned?: boolean
 }>('ccip.CCIPSendRequested')
 
 export const ExecutionStateChanged = createInteropEventType<{
@@ -257,6 +257,15 @@ export class CCIPPlugin implements InteropPluginResyncable {
       // Collect source-side lock/burn info from TokenPool events
       // Events are emitted in same order as tokenAmounts[]
       const srcTokenInfo = this.collectSourceTokenInfo(input)
+
+      if (ccipSendRequested.message.tokenAmounts.length === 0) {
+        return [
+          CCIPSendRequested.create(input, {
+            messageId: ccipSendRequested.message.messageId,
+            $dstChain: dstChainEntry[0],
+          }),
+        ]
+      }
 
       return ccipSendRequested.message.tokenAmounts.map((ta, index) =>
         CCIPSendRequested.create(input, {
@@ -487,9 +496,12 @@ export class CCIPPlugin implements InteropPluginResyncable {
         }
       }
 
+      const hasTokenTransfer = ccipSendRequests.some(
+        (req) => req.args.token !== undefined,
+      )
       result.push(
         Result.Message('ccip.Message', {
-          app: 'CCIP Token Transfer',
+          app: hasTokenTransfer ? 'CCIP Token Transfer' : 'unknown',
           srcEvent: ccipSendRequests[0],
           dstEvent: delivery,
         }),
