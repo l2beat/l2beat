@@ -164,6 +164,7 @@ export function getAllProtocolsColumns(
     !hideTypeColumn &&
       columnHelper.accessor((row) => Object.keys(row.byBridgeType ?? {}), {
         header: 'Type',
+        enableSorting: false,
         cell: (ctx) => {
           return (
             <div className="flex items-center gap-1" key={ctx.row.original.id}>
