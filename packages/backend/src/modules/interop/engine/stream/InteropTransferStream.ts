@@ -30,6 +30,7 @@ export class InteropTransferStream {
           plugin: 'WARNING',
           transferId: 'too many events',
           type: 'too many events',
+          category: undefined,
           duration: -1,
           timestamp: UnixTime(100),
           srcTime: -1,

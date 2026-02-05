@@ -1,9 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { Selectable } from 'kysely'
+import type { InteropTransfer } from '../kysely/generated/types'
 import { describeDatabase } from '../test/database'
 import {
   type InteropTransferRecord,
   InteropTransferRepository,
+  toRecord,
+  toRow,
 } from './InteropTransferRepository'
 
 describeDatabase(InteropTransferRepository.name, (db) => {
@@ -47,6 +51,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         plugin: 'test-plugin',
         transferId: 'test-transfer',
         type: 'deposit',
+        category: undefined,
         duration: 0,
         timestamp: UnixTime(100),
         srcTime: UnixTime(100),
@@ -125,6 +130,25 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const result = await repository.getAll()
       expect(result[0]?.srcSymbol).toEqual('USDC')
       expect(result[0]?.dstSymbol).toEqual('USDC.e')
+    })
+
+    it('persists category field', async () => {
+      const record = transfer(
+        'plugin1',
+        'msg1',
+        'deposit',
+        UnixTime(100),
+        'ethereum',
+        'arbitrum',
+        5000,
+      )
+      record.category = 'lock-and-mint'
+
+      const inserted = await repository.insertMany([record])
+      expect(inserted).toEqual(1)
+
+      const result = await repository.getAll()
+      expect(result[0]?.category).toEqual('lock-and-mint')
     })
 
     it('preserves symbol fields when they are undefined', async () => {
@@ -578,6 +602,28 @@ describeDatabase(InteropTransferRepository.name, (db) => {
   })
 })
 
+describe('InteropTransferRepository toRecord', () => {
+  it('throws on invalid category', () => {
+    const record = transfer(
+      'plugin1',
+      'msg1',
+      'deposit',
+      UnixTime(100),
+      'ethereum',
+      'arbitrum',
+      5000,
+    )
+    const row = {
+      ...toRow(record),
+      category: 'invalid-category',
+    } as Selectable<InteropTransfer>
+
+    expect(() => toRecord(row)).toThrow(
+      'Invalid interop transfer category: invalid-category',
+    )
+  })
+})
+
 function transfer(
   plugin: string,
   transferId: string,
@@ -591,6 +637,7 @@ function transfer(
     plugin,
     transferId,
     type,
+    category: undefined,
     duration: duration ?? 0,
     timestamp,
     srcTime: timestamp,

@@ -1,5 +1,8 @@
 import type { InteropPluginName } from '@l2beat/config'
-import type { InteropEventContext } from '@l2beat/database'
+import type {
+  InteropEventContext,
+  InteropTransferCategory,
+} from '@l2beat/database'
 import {
   type Address32,
   type Block,
@@ -51,6 +54,7 @@ export interface InteropTransfer {
   kind: 'InteropTransfer'
   plugin: string
   type: string
+  category?: InteropTransferCategory
   events: InteropEvent[]
   src: TransferSide
   dst: TransferSide
@@ -337,6 +341,7 @@ export interface InteropTransferOptions {
   dstAmount?: bigint
   dstWasMinted?: boolean
 
+  category?: InteropTransferCategory
   extraEvents?: InteropEvent[]
 }
 
@@ -352,6 +357,7 @@ function Transfer(
   return {
     kind: 'InteropTransfer',
     type,
+    category: options.category,
     events: [
       options.srcEvent,
       options.dstEvent,

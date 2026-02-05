@@ -3,10 +3,28 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
+export const InteropTransferCategories = [
+  'non-minting',
+  'lock-and-mint',
+  'omnichain',
+] as const
+
+export type InteropTransferCategory = (typeof InteropTransferCategories)[number]
+
+function isInteropTransferCategory(
+  value: string,
+): value is InteropTransferCategory {
+  return (
+    value !== null &&
+    (InteropTransferCategories as readonly string[]).includes(value)
+  )
+}
+
 export interface InteropTransferRecord {
   plugin: string
   transferId: string
   type: string
+  category?: InteropTransferCategory
   duration: number
   timestamp: UnixTime
   srcTime: UnixTime
@@ -61,10 +79,17 @@ export interface InteropMissingTokenInfo {
 export function toRecord(
   row: Selectable<InteropTransfer>,
 ): InteropTransferRecord {
+  if (row.category !== null && !isInteropTransferCategory(row.category)) {
+    throw new Error(
+      `Invalid interop transfer category: ${row.category} for transfer ${row.transferId}`,
+    )
+  }
+
   return {
     plugin: row.plugin,
     transferId: row.transferId,
     type: row.type,
+    category: row.category === null ? undefined : row.category,
     duration: row.duration,
     timestamp: UnixTime.fromDate(row.timestamp),
     srcTime: UnixTime.fromDate(row.srcTime),
@@ -104,6 +129,7 @@ export function toRow(
     plugin: record.plugin,
     transferId: record.transferId,
     type: record.type,
+    category: record.category,
     duration: record.duration,
     timestamp: UnixTime.toDate(record.timestamp),
     srcTime: UnixTime.toDate(record.srcTime),

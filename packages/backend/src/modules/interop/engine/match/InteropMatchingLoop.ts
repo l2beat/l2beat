@@ -262,6 +262,7 @@ function toTransferRecord(transfer: InteropTransfer): InteropTransferRecord {
     plugin: transfer.plugin,
     transferId: generateId('T'),
     type: transfer.type,
+    category: transfer.category,
     duration: Math.max(
       transfer.dst.event.ctx.timestamp - transfer.src.event.ctx.timestamp,
       0,

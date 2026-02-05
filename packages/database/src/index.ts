@@ -53,11 +53,13 @@ export type {
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
 export type {
   InteropMissingTokenInfo,
+  InteropTransferCategory,
   InteropTransferRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
   InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
+export { InteropTransferCategories } from './repositories/InteropTransferRepository'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
