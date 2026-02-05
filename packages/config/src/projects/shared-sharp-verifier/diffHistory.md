@@ -2,13 +2,13 @@ Generated with discovered.json: 0x0d8d92af58a08a07ec75807b8b3d2dcb3608b39c
 
 # Diff at Wed, 04 Feb 2026 15:50:25 GMT:
 
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@f2185b73306696aeeb886f57aa0d588decafd3b4 block: 1770030445
 - current timestamp: 1770030445
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Stopped ignoring all old gps statement verifier smart contracts to be able to fetch their bootloader program hashes.
 
 ## Config/verification related changes
 
