@@ -44,6 +44,7 @@ import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
 import { MayanSwiftSettlementPlugin } from './mayan-swift-settlement'
+import { MesonPlugin } from './meson'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack/orbitstack'
@@ -139,6 +140,7 @@ export function createInteropPlugins(
       new MayanForwarderPlugin(deps.configs),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
+      new MesonPlugin(),
       new CCIPPlugin(deps.configs),
       new CentriFugePlugin(),
       {
