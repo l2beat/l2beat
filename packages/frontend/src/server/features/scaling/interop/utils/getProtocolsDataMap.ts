@@ -5,6 +5,7 @@ import type {
   AverageDurationData,
   DurationSplitMap,
 } from '../types'
+import type { TransfersTimeModeMap } from './buildTransfersTimeModeMap'
 
 type TokensAndChainsData = AverageDurationData & { volume: number }
 
@@ -48,7 +49,7 @@ const INITIAL_DATA: TokensAndChainsData = {
 export function getProtocolsDataMapByBridgeType(
   records: AggregatedInteropTransferWithTokens[],
   durationSplitMap: DurationSplitMap | undefined,
-  transfersTimeModeMap: Map<string, 'unknown'>,
+  transfersTimeModeMap: TransfersTimeModeMap,
 ): Map<string, ProtocolDataByBridgeType> {
   const protocolsDataMap = new Map<string, ProtocolDataByBridgeType>()
 
@@ -148,7 +149,7 @@ export function getProtocolsDataMapByBridgeType(
  */
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
-  transfersTimeModeMap: Map<string, 'unknown'>,
+  transfersTimeModeMap: TransfersTimeModeMap,
 ): Map<string, ProtocolData> {
   const protocolsDataMap = new Map<string, ProtocolData>()
 
