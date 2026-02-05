@@ -5,6 +5,9 @@ yarn-error.log
 .turbo
 .copilotignore
 
+# AI stuff
+.codex
+
 # IDEs
 .vscode
 .idea
