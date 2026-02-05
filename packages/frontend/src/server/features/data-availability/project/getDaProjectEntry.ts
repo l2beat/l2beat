@@ -259,11 +259,13 @@ export async function getDaProjectEntry(
       grissiniValues: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       name: 'No DA Bridge',
       tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)).latest,
-      usedIn: layer.daLayer.usedWithoutBridgeIn.map((x) => ({
-        ...x,
-        icon: manifest.getUrl(`/icons/${x.slug}.png`),
-        url: `/scaling/projects/${x.slug}`,
-      })),
+      usedIn: layer.daLayer.usedWithoutBridgeIn
+        .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
+        .map((x) => ({
+          ...x,
+          icon: manifest.getUrl(`/icons/${x.slug}.png`),
+          url: `/scaling/projects/${x.slug}`,
+        })),
     })
     result.projectVariants?.unshift({
       title: 'No DA Bridge',

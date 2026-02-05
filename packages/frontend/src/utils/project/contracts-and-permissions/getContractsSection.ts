@@ -14,6 +14,7 @@ import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import type { TechnologyContract } from '../../../components/projects/sections/ContractEntry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/ContractsSection'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
+import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { ContractUtils } from './getContractUtils'
 import { getPastUpgradesData } from './getPastUpgradesData'
 import { getProgramHashes } from './getProgramHashes'
@@ -39,6 +40,7 @@ export function getContractsSection(
   projectsChangeReport: ProjectsChangeReport,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   allProjects: Project<'contracts'>[],
+  tvs?: SevenDayTvsBreakdown,
 ): ContractsSection | undefined {
   if (!projectParams.contracts) {
     return undefined
@@ -101,6 +103,7 @@ export function getContractsSection(
       projectParams.contracts.programHashes,
       zkCatalogProjects,
       allProjects,
+      tvs,
     ),
   }
 }
