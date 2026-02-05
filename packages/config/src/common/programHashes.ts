@@ -598,7 +598,7 @@ Verify:
   '37889379279861089970868356983774360253508326951064758033885675883862334778':
     {
       title:
-        'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
+        'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_12)',
       description:
         'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
       programUrl:
@@ -606,10 +606,47 @@ Verify:
       proverSystemProject: ProjectId('stwo'),
       verificationStatus: 'notVerified',
     },
-  '3480185788024326007166778030599498673382667448173974782477620863541158415714':
+  '3035974089339935040143966034750116008615662951603253398063766337728525196711':
+    {
+      title:
+        'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
+      description:
+        'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
+  '160268921359133235574810995023520895391777547407923205700393332203861498631':
+    {
+      title:
+        'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2024_10)',
+      description:
+        'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
+
+  '3585039955034622347908243360088523999417661979601115750324841620224559981237':
     {
       title:
         'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
+  '1104316318711847786071125527957082259001554753246760931396914052122269757907':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2024_10)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
+  '3480185788024326007166778030599498673382667448173974782477620863541158415714':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_12)',
       description:
         'Cairo program that verifies the correct aggregation of several proofs of a base program.',
       proverSystemProject: ProjectId('stwo'),

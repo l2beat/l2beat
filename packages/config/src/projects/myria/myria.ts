@@ -27,6 +27,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
+import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('myria')
 
@@ -50,12 +51,7 @@ const myriaProgramHashes = []
 myriaProgramHashes.push(
   discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-myriaProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-myriaProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+myriaProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const myria: ScalingProject = {
   type: 'layer2',
