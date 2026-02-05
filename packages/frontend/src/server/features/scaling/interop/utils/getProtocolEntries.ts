@@ -3,7 +3,10 @@ import type { InteropChain, InteropConfig, Project } from '@l2beat/config'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import type {
+  AggregatedInteropTransferWithTokens,
+  CommonInteropData,
+} from '../types'
 import { getInteropChains } from './getInteropChains'
 import { getProtocolsDataMap } from './getProtocolsDataMap'
 
@@ -15,6 +18,7 @@ export type TokenData = {
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number | null
+  netMintedValue?: number
 }
 
 export type ChainData = {
@@ -25,6 +29,7 @@ export type ChainData = {
   transferCount: number
   avgDuration: AverageDuration
   avgValue: number
+  netMintedValue?: number
 }
 
 export type AverageDuration =
@@ -60,6 +65,7 @@ export type ProtocolEntry = {
   averageValue: number
   averageDuration: AverageDuration
   averageValueInFlight?: number
+  netMintedValue?: number
 }
 
 export function getProtocolEntries(
@@ -142,6 +148,10 @@ export function getProtocolEntries(
             : 0,
         averageDuration: getAverageDuration(key, data, customDurationConfigMap),
         averageValueInFlight: data.averageValueInFlight,
+        netMintedValue:
+          data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
+            ? data.mintedValueUsd - data.burnedValueUsd
+            : undefined,
       }
     })
     .sort((a, b) => b.volume - a.volume)
@@ -149,7 +159,7 @@ export function getProtocolEntries(
 
 function getTokensData(
   protocolId: string,
-  tokens: Map<string, AverageDurationData & { volume: number }>,
+  tokens: Map<string, CommonInteropData>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   customDurationConfigMap: Map<
     string,
@@ -185,6 +195,11 @@ function getTokensData(
         transferCount: token.transferCount,
         avgDuration: avgDuration,
         avgValue: Math.floor(token.volume / token.transferCount),
+        netMintedValue:
+          token.mintedValueUsd !== undefined &&
+          token.burnedValueUsd !== undefined
+            ? token.mintedValueUsd - token.burnedValueUsd
+            : undefined,
       }
     })
     .filter(notUndefined)
@@ -207,7 +222,7 @@ function getTokensData(
 
 function getChainsData(
   protocolId: string,
-  chains: Map<string, AverageDurationData & { volume: number }>,
+  chains: Map<string, CommonInteropData>,
   enabledInteropChains: InteropChain[],
   customDurationConfigMap: Map<
     string,
@@ -239,24 +254,20 @@ function getChainsData(
         transferCount: chainData.transferCount,
         avgDuration: avgDuration,
         avgValue: Math.floor(chainData.volume / chainData.transferCount),
+        netMintedValue:
+          chainData.mintedValueUsd !== undefined &&
+          chainData.burnedValueUsd !== undefined
+            ? chainData.mintedValueUsd - chainData.burnedValueUsd
+            : undefined,
       }
     })
     .filter(notUndefined)
     .toSorted((a, b) => b.volume - a.volume)
 }
 
-type AverageDurationData = {
-  transferCount: number
-  totalDurationSum: number
-  inTransferCount: number
-  inDurationSum: number
-  outTransferCount: number
-  outDurationSum: number
-}
-
 function getAverageDuration(
   key: string,
-  data: AverageDurationData,
+  data: CommonInteropData,
   customDurationConfigMap: Map<
     string,
     NonNullable<

@@ -31,15 +31,17 @@ describe(BlockTimestampIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new BlockTimestampIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum')],
-        blockTimestampProvider,
-        db: mockDatabase({ tvsBlockTimestamp: tvsBlockTimestampRepository }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new BlockTimestampIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          blockTimestampProvider,
+          db: mockDatabase({ tvsBlockTimestamp: tvsBlockTimestampRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [
         config('config-1', 'ethereum'),
@@ -72,15 +74,17 @@ describe(BlockTimestampIndexer.name, () => {
         getTimestampToSync: mockFn().returnsOnce(timestampToSync),
       })
 
-      const indexer = new BlockTimestampIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum')],
-        blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
-        db: mockDatabase({ tvsBlockTimestamp: mockObject() }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new BlockTimestampIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+          db: mockDatabase({ tvsBlockTimestamp: mockObject() }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [
         config('config-1', 'ethereum'),
@@ -106,15 +110,17 @@ describe(BlockTimestampIndexer.name, () => {
           .returnsOnce(BLOCK_NUMBER - 1),
       })
 
-      const indexer = new BlockTimestampIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum')],
-        blockTimestampProvider,
-        db: mockDatabase({ tvsBlockTimestamp: mockObject() }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new BlockTimestampIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          blockTimestampProvider,
+          db: mockDatabase({ tvsBlockTimestamp: mockObject() }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       await indexer.multiUpdate(from, to, [config('config-1', 'ethereum')])
       await expect(
@@ -132,15 +138,17 @@ describe(BlockTimestampIndexer.name, () => {
         deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(2),
       })
 
-      const indexer = new BlockTimestampIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum')],
-        blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
-        db: mockDatabase({ tvsBlockTimestamp: tvsBlockTimestampRepository }),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new BlockTimestampIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+          db: mockDatabase({ tvsBlockTimestamp: tvsBlockTimestampRepository }),
+          syncOptimizer: mockObject<SyncOptimizer>({}),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const removalConfigs = [
         {
@@ -183,18 +191,20 @@ describe(BlockTimestampIndexer.name, () => {
 
     expect(
       () =>
-        new BlockTimestampIndexer({
-          logger: Logger.SILENT,
-          configurations: [
-            config('config-1', 'ethereum'),
-            config('config-1', 'ethereum'),
-          ], // Two configs
-          blockTimestampProvider,
-          db: mockDatabase(),
-          syncOptimizer,
-          parents: [],
-          indexerService: mockObject<IndexerService>({}),
-        }),
+        new BlockTimestampIndexer(
+          {
+            configurations: [
+              config('config-1', 'ethereum'),
+              config('config-1', 'ethereum'),
+            ], // Two configs
+            blockTimestampProvider,
+            db: mockDatabase(),
+            syncOptimizer,
+            parents: [],
+            indexerService: mockObject<IndexerService>({}),
+          },
+          Logger.SILENT,
+        ),
     ).toThrow('This indexer should take only one configuration')
   })
 

@@ -9,15 +9,21 @@ export function AllProtocolsTable({
   hideTypeColumn,
   entries,
   showAverageInFlightValueColumn,
+  showNetMintedValueColumn,
 }: {
   entries: ProtocolEntry[]
   hideTypeColumn?: boolean
   showAverageInFlightValueColumn?: boolean
+  showNetMintedValueColumn?: boolean
 }) {
   const columns = useMemo(
     () =>
-      getAllProtocolsColumns(hideTypeColumn, showAverageInFlightValueColumn),
-    [hideTypeColumn, showAverageInFlightValueColumn],
+      getAllProtocolsColumns(
+        hideTypeColumn,
+        showAverageInFlightValueColumn,
+        showNetMintedValueColumn,
+      ),
+    [hideTypeColumn, showAverageInFlightValueColumn, showNetMintedValueColumn],
   )
 
   const table = useTable<ProtocolRow>({

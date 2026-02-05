@@ -53,21 +53,23 @@ describe(TokenValueIndexer.name, () => {
         updateSyncedUntil: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TokenValueIndexer({
-        logger: Logger.SILENT,
-        configurations: configs,
-        db: mockDatabase({
-          tvsTokenValue: tvsTokenValueRepository,
-          syncMetadata: syncMetadataRepository,
-        }),
-        syncOptimizer,
-        dbStorage,
-        valueService,
-        project,
-        maxTimestampsToProcessAtOnce: 10,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new TokenValueIndexer(
+        {
+          configurations: configs,
+          db: mockDatabase({
+            tvsTokenValue: tvsTokenValueRepository,
+            syncMetadata: syncMetadataRepository,
+          }),
+          syncOptimizer,
+          dbStorage,
+          valueService,
+          project,
+          maxTimestampsToProcessAtOnce: 10,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
@@ -122,18 +124,20 @@ describe(TokenValueIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce(timestamps),
       })
 
-      const indexer = new TokenValueIndexer({
-        logger: Logger.SILENT,
-        configurations: configs,
-        db: mockDatabase({}),
-        syncOptimizer,
-        dbStorage: mockObject<DBStorage>({}),
-        valueService: mockObject<ValueService>({}),
-        project,
-        maxTimestampsToProcessAtOnce: 10,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new TokenValueIndexer(
+        {
+          configurations: configs,
+          db: mockDatabase({}),
+          syncOptimizer,
+          dbStorage: mockObject<DBStorage>({}),
+          valueService: mockObject<ValueService>({}),
+          project,
+          maxTimestampsToProcessAtOnce: 10,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
@@ -156,20 +160,22 @@ describe(TokenValueIndexer.name, () => {
       const mockToken = createMockToken('token-1')
       const configs = [config(mockToken)]
 
-      const indexer = new TokenValueIndexer({
-        logger: Logger.SILENT,
-        configurations: configs,
-        db: mockDatabase({
-          tvsTokenValue: tvsTokenValueRepository,
-        }),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
-        dbStorage: mockObject<DBStorage>({}),
-        valueService: mockObject<ValueService>({}),
-        project: 'test-project',
-        maxTimestampsToProcessAtOnce: 10,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new TokenValueIndexer(
+        {
+          configurations: configs,
+          db: mockDatabase({
+            tvsTokenValue: tvsTokenValueRepository,
+          }),
+          syncOptimizer: mockObject<SyncOptimizer>({}),
+          dbStorage: mockObject<DBStorage>({}),
+          valueService: mockObject<ValueService>({}),
+          project: 'test-project',
+          maxTimestampsToProcessAtOnce: 10,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const removalConfigs = [
         {

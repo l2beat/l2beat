@@ -12,6 +12,8 @@ export interface AggregatedInteropTokenRecord {
   transferCount: number
   totalDurationSum: number
   volume: number
+  mintedValueUsd: number | undefined
+  burnedValueUsd: number | undefined
 }
 
 export function toRecord(
@@ -26,6 +28,8 @@ export function toRecord(
     transferCount: row.transferCount,
     totalDurationSum: row.totalDurationSum,
     volume: row.volume,
+    mintedValueUsd: row.mintedValueUsd ?? undefined,
+    burnedValueUsd: row.burnedValueUsd ?? undefined,
   }
 }
 
@@ -41,6 +45,8 @@ export function toRow(
     transferCount: record.transferCount,
     totalDurationSum: record.totalDurationSum,
     volume: record.volume,
+    mintedValueUsd: record.mintedValueUsd,
+    burnedValueUsd: record.burnedValueUsd,
   }
 }
 

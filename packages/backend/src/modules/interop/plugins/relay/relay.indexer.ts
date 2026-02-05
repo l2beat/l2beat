@@ -48,14 +48,16 @@ export class RelayIndexer extends ManagedChildIndexer {
     indexerService: IndexerService,
     logger: Logger,
   ) {
-    super({
-      parents: [parent],
-      indexerService,
-      minHeight: 1,
+    super(
+      {
+        parents: [parent],
+        indexerService,
+        minHeight: 1,
+        name: 'relay_indexer',
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+      },
       logger,
-      name: 'relay_indexer',
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+    )
   }
 
   override async start(): Promise<void> {
