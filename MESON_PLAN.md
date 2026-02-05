@@ -7,7 +7,7 @@ Modes to support:
 - Liquidity network (nonMinting): match `SwapExecuted` (outgoing) with `SwapReleased` (incoming) by `encodedSwap`.
 - Tunnel (burn/mint): match `TokenBurnExecuted` (outgoing) with `TokenMintExecuted` (incoming) by `reqId`.
 
-The plugin must be event-driven only. Extra RPC/API calls are allowed only inside a `meson.config.ts` config plugin that runs periodically.
+The plugin is event-driven only and does not rely on contract addresses or a config plugin.
 
 ---
 
@@ -15,12 +15,10 @@ The plugin must be event-driven only. Extra RPC/API calls are allowed only insid
 
 ### Add
 - `packages/backend/src/modules/interop/plugins/meson.ts`
-- `packages/backend/src/modules/interop/plugins/meson.config.ts`
-- `packages/backend/src/modules/interop/plugins/meson.networks.ts` (static mapping helpers)
 - `MESON_PLAN.md` (this file)
 
 ### Modify
-- `packages/backend/src/modules/interop/plugins/index.ts` (register config plugin + event plugin)
+- `packages/backend/src/modules/interop/plugins/index.ts` (register event plugin)
 - `packages/config/src/types.ts` (add `'meson'` to `InteropPluginName`)
 - `packages/backend/src/modules/interop/examples/examples.jsonc` (add sample flows)
 
@@ -62,38 +60,13 @@ Token mapping is on-chain via `tokenForIndex(uint8)` and `getSupportedTokens()`.
 
 ---
 
-## Proposed Config Plugin (`meson.config.ts`)
+## Minimal Setup (No Contract Addresses)
 
-### Purpose
-Provide stable mapping for:
-- Meson **chain identifiers** (SLIP-44 short coin types for swaps, hub ids for tunnel) to L2BEAT chain names.
-- Meson **token index** to token address per chain for both Swap and Tunnel contracts.
+We do not require contract addresses or a config plugin. The plugin is purely event-driven and derives token data from `Transfer` logs (plus `tx.value` for native).
 
-### Suggested config shape
-```
-export interface MesonConfigState {
-  swaps: Record<string, { chain: string; slip44: number; tokenIndexToAddress: Record<string, Address32> }>
-  tunnels: Record<string, { chain: string; hubId: number; tokenIndexToAddress: Record<string, Address32> }>
-  slip44ToChain: Record<number, string>
-  hubIdToChain: Record<number, string>
-}
-
-export const MesonConfig = defineConfig<MesonConfigState>('meson')
-```
-
-### How to build it
-Maintain a **static map** in `meson.networks.ts` for known deployments that includes chain name, MesonSwap contract address, tunnel contract address, slip44 short coin type, and hubId. Start with chains we have example txs for (arbitrum, optimism, bob) and grow later.
-
-On each `run()`:
-- For each known swap contract: call `getSupportedTokens()` and build `tokenIndex -> address` map.
-- For each known tunnel contract: call `getSupportedTokens()` and build `tokenIndex -> address` map.
-- Build `slip44ToChain` and `hubIdToChain` maps from static networks.
-
-Store only if changed, using the `isEqual` pattern like `zkstack.config.ts`.
-
-### RPC usage
-- Use rpcs from `packages/config/.env` via provided `rpcs` map
-- If a chain RPC is missing, log and skip that chain, but keep the previous data for it
+Implications:
+- No `meson.networks.ts` and no `meson.config.ts`.
+- No `$srcChain` / `$dstChain` mapping from Meson identifiers; keep decoded chain ids as raw numbers on events.
 
 ---
 
@@ -116,22 +89,15 @@ const transferLog = 'event Transfer(address indexed from, address indexed to, ui
 
 Each event should carry:
 - matching key (`encodedSwap` or `reqId`)
-- `$srcChain` or `$dstChain`
-- decoded metadata (inChain/outChain or from/to hub ids)
+- decoded metadata (inChain/outChain or from/to hub ids as raw numbers)
 - token address + amount if available
 - optional flags `wasBurned` / `wasMinted` inferred from Transfer logs
 
 ### Transfer detection strategy
 - Use Transfer logs in the same tx to resolve token address and actual amount.
 - Reuse helper pattern from `hyperlane-hwr.ts` to find the closest `Transfer` by logIndex.
-- If no Transfer is found, fall back to config mapping for ERC20 tokens.
-- If no Transfer is found and the token is native, use `tx.value` (requires `includeTx: true`).
+- If no Transfer is found and the token is native, use `tx.value` when available.
 - For burn/mint flows, check Transfer to/from `Address32.ZERO` to set burn/mint flags.
-
-### Data requests (resync-safe)
-We do not need to follow the `InteropPluginResyncable` standard (this would require all addresses of the emitting contracts on all supported chains) and can instead use `InteropPlugin`.
-
----
 
 ## Matching Logic
 
@@ -149,13 +115,11 @@ Create Transfer: `Result.Transfer('meson.TunnelTransfer', { srcEvent, dstEvent, 
 
 ## Implementation Steps
 
-1. Add `meson.networks.ts` with a small initial static mapping of known deployments.
-2. Implement `meson.config.ts` with the `MesonConfig` key, token index lookups via `getSupportedTokens()`, and chain id maps.
-3. Implement `meson.ts` with event parsers, decoding helpers, Transfer matching, and `match()` logic for swap + tunnel flows.
-4. Register `MesonConfigPlugin` and `MesonPlugin` in `packages/backend/src/modules/interop/plugins/index.ts`.
-5. Add `'meson'` to `InteropPluginName` in `packages/config/src/types.ts`.
-6. Add `examples.jsonc` entries for the liquidity and tunnel sample tx pairs from the prompt.
-7. Validate with `pnpm interop:example meson --simple`.
+1. Implement `meson.ts` with event parsers, decoding helpers, Transfer matching, and `match()` logic for swap + tunnel flows.
+2. Register `MesonPlugin` in `packages/backend/src/modules/interop/plugins/index.ts`.
+3. Add `'meson'` to `InteropPluginName` in `packages/config/src/types.ts`.
+4. Add `examples.jsonc` entries for the liquidity and tunnel sample tx pairs from the prompt.
+5. Validate with `pnpm interop:example meson --simple`.
 
 ---
 
@@ -172,6 +136,5 @@ Use `cast receipt` and `cast 4byte-event` to confirm topics and to extract `enco
 
 ## Open Questions / Risks
 
-- Mapping `slip44` short coin types and tunnel `hubId` to L2BEAT chain names requires a trusted source. If that mapping is incomplete, matches should still be made on the basis on reqId and encodedSwap but the other metadata will be undefined or null (or for networks we usually use the UNKNOWN_xxxslip44 to designate that the decoding failed).
 - Some swaps may use core tokens (address `0x1`) or native token paths where no Transfer log exists. Ensure `tx.value` fallback is wired and `Address32.NATIVE` is used consistently.
 - `encodedSwap` is only 40-bit for amount (6 decimals). If a Transfer log is found, prefer it over the encoded amount for correctness.
