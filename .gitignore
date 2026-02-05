@@ -1,17 +1,9 @@
 node_modules
-.pnpm-store
 yarn-error.log
-.DS_Store
-.turbo
-.copilotignore
 
-# IDEs
-.vscode
-.idea
-.*.sw[op]
+# Everything starting with .
+.*
 
-# Next.js
-.next
 # Not ignoring next-env.d.ts as it's needed for type checking on CI
 out
 build
