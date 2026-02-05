@@ -1,6 +1,6 @@
 {
   "name": "hyperlane",
-  "timestamp": 1770040360,
+  "timestamp": 1770118520,
   "configHash": "0xa5cbc225cf96257b228c222c5843b8f14b20b2f6f33061d2b052541a8a942ab6",
   "entries": [
     {
@@ -1643,6 +1643,6 @@
     "hyperlane/Mailbox": "0xe22d3d5e3098b17b9c38a147e885155b739913b845a7ce90bdb7c76debbf8674",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "usedBlockNumbers": { "ethereum": 24369592 },
+  "usedBlockNumbers": { "ethereum": 24376064 },
   "permissionsConfigHash": "0xb3c923f9509c1bcaa98ecafb41f0500c69728c31ae247f3f44f6a2ed2a55c370"
 }

@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { ActivityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -5,16 +6,22 @@ import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import type { ActivityIndexerDeps } from './types'
 
 export class BlockActivityIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: ActivityIndexerDeps) {
-    super({
-      ...$,
-      name: 'activity_block_indexer',
-      tags: {
-        tag: $.projectId,
-        project: $.projectId,
+  constructor(
+    private readonly $: ActivityIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: 'activity_block_indexer',
+        tags: {
+          tag: $.projectId,
+          project: $.projectId,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -115,10 +122,10 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     )
 
     if (deletedRows > 0) {
-      this.$.logger.info('Deleted rows', { deletedRows })
+      this.logger.info('Deleted rows', { deletedRows })
     }
 
-    this.$.logger.info('Invalidated activity', {
+    this.logger.info('Invalidated activity', {
       projectId: this.$.projectId,
       targetHeight,
       adjustedTargetHeight,

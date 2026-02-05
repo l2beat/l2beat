@@ -15,14 +15,35 @@
         "tx": "0x158ead7fb516fb23fd2da016d4e704c9623af497b6a8303d68388020f07ef3bd"
       }
     ],
-    "events": [
-      "allbridge.MessageSent",
-      "allbridge.MessageReceived",
-      "allbridge.TokensSent",
-      "allbridge.TokensReceived"
-    ],
-    "messages": ["allbridge.Message"],
-    "transfers": ["allbridge.Transfer"]
+    "expects": {
+      "events": [
+        {
+          "type": "allbridge.MessageSent"
+        },
+        {
+          "type": "allbridge.TokensSent"
+        },
+        {
+          "type": "allbridge.MessageReceived"
+        },
+        {
+          "type": "allbridge.TokensReceived"
+        }
+      ],
+      "messages": [{ "type": "allbridge.Message", "app": "allbridge" }],
+      "transfers": [
+        {
+          "type": "allbridge.Transfer",
+          "events": [
+            { "type": "allbridge.TokensSent", "args": { "amount": "39870" } },
+            {
+              "type": "allbridge.TokensReceived",
+              "args": { "amount": "39898063" }
+            }
+          ]
+        }
+      ]
+    }
   },
   "ccip": {
     "loadConfigs": ["ccip"],
@@ -159,6 +180,24 @@
       "ccip.Transfer",
       "ccip.Transfer"
     ]
+  },
+  "ccip-messaging": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // LaPoste (Abracadabra) - pure messaging, no token transfer through CCIP
+      // Arbitrum → Ethereum
+      {
+        "chain": "arbitrum",
+        "tx": "0xf393fcfb456ae71c6cd1e326ae1a1630d3ed7f80501b72586194ba66be05edd8"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x57fcb2aa31b96ed2c753e9d0853f3c4f6dd34260d506ebc274a8002d2d656ec5"
+      }
+    ],
+    "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+    "messages": [{ "type": "ccip.Message", "app": "unknown" }],
+    "transfers": []
   },
   "celer": {
     "txs": [

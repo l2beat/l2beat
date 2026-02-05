@@ -49,7 +49,7 @@ export const stargatev2: Bridge = {
   addedAt: UnixTime(1718620600), // 2024-06-17T10:36:40Z
   display: {
     name: 'Stargate v2',
-    shortName: 'Stargate v2',
+    shortName: 'Stargate',
     slug: 'stargatev2',
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
@@ -86,6 +86,7 @@ export const stargatev2: Bridge = {
     plugins: [
       {
         plugin: 'stargate',
+        transferType: 'stargate-v2-taxi.Transfer',
       },
       // TODO: needs bus/taxi duration split
       // TODO: needs hydra filtering by minted label

@@ -32,11 +32,13 @@ export class RelayPlugin implements InteropPlugin {
           ? BigInt(tokenSent.args.amount)
           : undefined,
         srcTokenAddress: tokenSent.args.token,
+        srcWasBurned: false,
         dstEvent: tokenReceived,
         dstAmount: tokenReceived.args.amount
           ? BigInt(tokenReceived.args.amount)
           : undefined,
         dstTokenAddress: tokenReceived.args.token,
+        dstWasMinted: false,
       }),
     ]
   }
