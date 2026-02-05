@@ -29,7 +29,9 @@ describe(BlockTxsCountService.name, () => {
           uopsAnalyzer: analyzer,
           assessCount: (count) => count,
         },
-        mockObject<Logger>(),
+        mockObject<Logger>({
+          for: mockFn().returns(mockObject<Logger>()),
+        }),
       )
 
       const result = await txsCountProvider.getTxsCount(1, 3)
@@ -67,7 +69,13 @@ describe(BlockTxsCountService.name, () => {
           uopsAnalyzer: analyzer,
           assessCount,
         },
-        mockObject<Logger>(),
+        mockObject<Logger>({
+          for: mockFn().returns(
+            mockObject<Logger>({
+              warn: mockFn(),
+            }),
+          ),
+        }),
       )
       const result = await txsCountProvider.getTxsCount(1, 2)
       expect(result).toEqual({
@@ -89,8 +97,11 @@ describe(BlockTxsCountService.name, () => {
       ])
       const assessCount = mockFn((count) => count - 1)
 
+      const forLogger = mockObject<Logger>({
+        warn: mockFn().returns(undefined),
+      })
       const logger = mockObject<Logger>({
-        warn: mockFn(() => {}),
+        for: mockFn().returns(forLogger),
       })
 
       analyzer.calculateUops = mockFn()
@@ -113,17 +124,25 @@ describe(BlockTxsCountService.name, () => {
         ],
         latestTimestamp: START + 2 * UnixTime.HOUR,
       })
-      expect(logger.warn).toHaveBeenCalledTimes(4)
-      expect(logger.warn).toHaveBeenNthCalledWith(1, 'txsCount is negative', {
-        projectId: 'a',
-        blockNumber: 1,
-        txsCount: -1,
-      })
-      expect(logger.warn).toHaveBeenNthCalledWith(2, 'uopsCount is negative', {
-        projectId: 'a',
-        blockNumber: 1,
-        uopsCount: -1,
-      })
+      expect(forLogger.warn).toHaveBeenCalledTimes(4)
+      expect(forLogger.warn).toHaveBeenNthCalledWith(
+        1,
+        'txsCount is negative',
+        {
+          projectId: 'a',
+          blockNumber: 1,
+          txsCount: -1,
+        },
+      )
+      expect(forLogger.warn).toHaveBeenNthCalledWith(
+        2,
+        'uopsCount is negative',
+        {
+          projectId: 'a',
+          blockNumber: 1,
+          uopsCount: -1,
+        },
+      )
       expect(assessCount).toHaveBeenCalledTimes(6)
       expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(3)
     })
