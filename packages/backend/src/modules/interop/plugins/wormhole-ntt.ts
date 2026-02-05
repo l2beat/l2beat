@@ -243,10 +243,12 @@ export class WormholeNTTPlugin implements InteropPlugin {
             ? Address32.from(srcTokenAddress)
             : undefined,
           srcAmount: amount,
+          srcWasBurned: true,
           dstTokenAddress: dstTokenAddress
             ? Address32.from(dstTokenAddress)
             : undefined, // TODO: Should extract token from dst NTT manager
           dstAmount: amount,
+          dstWasMinted: true,
         }),
       ]
     }
@@ -313,10 +315,12 @@ export class WormholeNTTPlugin implements InteropPlugin {
             ? Address32.from(srcTokenAddress)
             : undefined,
           srcAmount: amount,
+          srcWasBurned: true,
           dstTokenAddress: dstTokenAddress
             ? Address32.from(dstTokenAddress)
             : undefined,
           dstAmount: amount,
+          dstWasMinted: true,
         }),
       ]
     }
