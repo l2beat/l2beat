@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x9dc37b6c07b7d4b61f985c2d68acbcc7658cf044
+
+# Diff at Tue, 27 Jan 2026 17:04:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1769003954
+- current timestamp: 1769533383
+
+## Description
+
+OPSuccinctL2OutputOracle updated rangeVkeyCommitment verification key (0x5d15e8...→0x05044f...). This is a hotfix addressing an issue where Mantle logic in revm was inconsistent with geth, which prevented the generation of the corresponding ZKP.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.rangeVkeyCommitment:
+-        "0x5d15e85151cc8f4b68d2721f675b0b8665a7a2752fa34ff935d5adbc3c8acab8"
++        "0x05044f60230e1ea664a43fa92e27735e3bbc97736c2e7ab961a5115a732a6da5"
+    }
+```
+
+Generated with discovered.json: 0xa23e05c2eddefae498d0ca9719e9727aeb8bcc0a
+
+# Diff at Wed, 21 Jan 2026 14:00:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1767784170
+- current timestamp: 1769003954
+
+## Description
+
+Mantle enables Ethereum blobs for data availability alongside EigenDA. The SystemConfig now shows `isUsingEigenDA: false` and `isSequencerSendingBlobTx: true`, but the system can still post to EigenDA offchain via Hydro. Trust assumptions remain unchanged as there is no onchain EigenDA verifier. MantleSecurityMultisig membership updated (added 1 member, threshold now 6 of 14).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.opStackDA.isUsingEigenDA:
+-        "v1"
++        false
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xc77E153e3c7ab09e9216a21Bd3fa2e1f4C24118D"
+      values.$members.1:
+-        "eth:0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3"
++        "eth:0xA081e53597173e4e405Ef907C630585c22ef089b"
+      values.$members.7:
+-        "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
++        "eth:0xE6a04E34D329f912Aca478Df7FDbe378E30eb0E5"
+      values.$members.12:
+-        "eth:0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
++        "eth:0x63a7E8AbD9A3771aF5ac0bfdef04769C2f9e2916"
+      values.multisigThreshold:
+-        "6 of 13 (46%)"
++        "6 of 14 (43%)"
+    }
+```
+
 Generated with discovered.json: 0x9f2b13bc8b90e365efde11f69335814506700cfe
 
 # Diff at Wed, 07 Jan 2026 11:10:54 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "sxt",
-  "timestamp": 1765978050,
+  "timestamp": 1769768029,
   "configHash": "0x3eca59a74aa7ade3900a85788b27002c317b0d4701cfd389c359a6f298d6c4d0",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -77,6 +77,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232",
           "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
           "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
           "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
@@ -89,8 +90,8 @@
         "domainSeparator": "0xd91194ba8cca06b67a77df9ba8745b666c7af26af03b914ede155b940b307d6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 45,
+        "multisigThreshold": "4 of 8 (50%)",
+        "nonce": 49,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -345,8 +346,8 @@
         "getChainId": 1217,
         "getChainTypeManager": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "getDAValidatorPair": [
-          "eth:0x907b30407249949521Bf0c89A43558dae200146A",
-          "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
+          "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
+          "eth:0xE2d2AFe5956F3bdA5514B46D8655aD7c744da780"
         ],
         "getFirstUnprocessedPriorityTx": 8,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
@@ -364,12 +365,12 @@
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 267,
-        "getTotalBatchesExecuted": 267,
-        "getTotalBatchesVerified": 267,
-        "getTotalBlocksCommitted": 267,
-        "getTotalBlocksExecuted": 267,
-        "getTotalBlocksVerified": 267,
+        "getTotalBatchesCommitted": 385,
+        "getTotalBatchesExecuted": 384,
+        "getTotalBatchesVerified": 385,
+        "getTotalBlocksCommitted": 385,
+        "getTotalBlocksExecuted": 384,
+        "getTotalBlocksVerified": 385,
         "getTotalPriorityTxs": 8,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
@@ -519,25 +520,34 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "ValidiumL1DAValidator",
-      "address": "eth:0x907b30407249949521Bf0c89A43558dae200146A",
+      "name": "AvailL1DAValidator",
+      "address": "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
       "type": "Contract",
-      "template": "shared-zk-stack/ValidiumL1DAValidator",
+      "template": "shared-zk-stack/AvailL1DAValidator",
       "sourceHashes": [
-        "0x9268ac939681805a58626cebbcf26606bf71106922be33c48712e455381762c8"
+        "0x847b975672b29f42aba32df162121ea5330f0bb48ac2ec11c61a07ad004c10c1"
       ],
       "proxyType": "immutable",
-      "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
-      "sinceTimestamp": 1739108927,
-      "sinceBlock": 21809358,
-      "values": { "$immutable": true },
+      "description": "Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.",
+      "sinceTimestamp": 1743696419,
+      "sinceBlock": 22189472,
+      "values": {
+        "$immutable": true,
+        "bridge": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+        "vectorx": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      },
       "implementationNames": {
-        "eth:0x907b30407249949521Bf0c89A43558dae200146A": "ValidiumL1DAValidator"
+        "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120": "AvailL1DAValidator"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -593,6 +603,11 @@
       ]
     },
     {
+      "address": "eth:0xE2d2AFe5956F3bdA5514B46D8655aD7c744da780",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProtocolUpgradeHandler",
       "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
       "type": "Reference",
@@ -611,11 +626,6 @@
     },
     {
       "address": "eth:0xEC114946E7213d113c9B9481028271B5E9e09371",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -892,9 +902,14 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "eth:0x907b30407249949521Bf0c89A43558dae200146A": [
-      "error ValL1DAWrongInputLength(uint256 inputLength, uint256 expectedLength)",
-      "function checkDA(uint256, uint256, bytes32, bytes _operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
+    "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120": [
+      "constructor(address _availBridge)",
+      "error InvalidAttestationProof()",
+      "error InvalidValidatorOutputHash()",
+      "function attestations(bytes32) view returns (address attester, uint32 blockNumber, uint128 leafIndex)",
+      "function bridge() view returns (address)",
+      "function checkDA(uint256, uint256, bytes32 l2DAValidatorOutputHash, bytes operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
+      "function vectorx() view returns (address)"
     ],
     "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
@@ -1009,14 +1024,14 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "shared-zk-stack/AvailL1DAValidator": "0xb0d552fff2582ff6cb7f9fad04a31ee03fa589ac2c852310fc3771f9367afc08",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
-    "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 24032630 },
-  "permissionsConfigHash": "0xe323594742bb4c47daccafed463f8070ab315b3b109585f359ef75e796b3b803"
+  "usedBlockNumbers": { "ethereum": 24347012 },
+  "permissionsConfigHash": "0x498ad470d05c9b7c139d2e9521dbe846cb2c847f7c54aecebdf62c3f7d35bc4e"
 }

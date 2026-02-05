@@ -1,443 +1,295 @@
-import { getEnv, Logger } from '@l2beat/backend-tools'
-import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
+import { type Env, getEnv, Logger } from '@l2beat/backend-tools'
 import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
-  MulticallV3Client,
-  RpcClientCompat,
 } from '@l2beat/shared'
 import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
-import { getTokenDbClient } from '@l2beat/token-backend'
-import { v } from '@l2beat/validate'
-import { boolean, command, flag, positional, run, string } from 'cmd-ts'
-import { readFileSync } from 'fs'
-import { type ParseError, parse } from 'jsonc-parser'
+import { getTokenDbClient, type TokenDbClient } from '@l2beat/token-backend'
+import {
+  boolean,
+  command,
+  flag,
+  option,
+  optional,
+  positional,
+  run,
+  string,
+} from 'cmd-ts'
 import { join } from 'path'
-import { logToViemLog } from '../engine/capture/getItemsToCapture'
-import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
-import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import type { DeployedTokenId } from '../engine/financials/DeployedTokenId'
 import {
   getTokenInfos,
   type TokenInfos,
-  toDeployedId,
 } from '../engine/financials/InteropFinancialsLoop'
-import { match } from '../engine/match/InteropMatchingLoop'
-import { createInteropPlugins } from '../plugins'
-import type {
-  InteropEvent,
-  InteropMessage,
-  InteropTransfer,
-} from '../plugins/types'
-
-export function readJsonc(path: string): JSON {
-  const contents = readFileSync(path, 'utf-8')
-  const errors: ParseError[] = []
-  const parsed = parse(contents, errors, {
-    allowTrailingComma: true,
-  }) as JSON
-  if (errors.length !== 0) {
-    throw new Error(`Cannot parse file ${path}`)
-  }
-  return parsed
-}
-
-// app matching only works for messages (InteropEvent and InteropTransfer don't have app field)
-const ExpectedMessage = v.union([
-  v.string(),
-  v.object({
-    type: v.string(),
-    app: v.string().optional(),
-  }),
-])
-
-type Example = v.infer<typeof Example>
-const Example = v.object({
-  loadConfigs: v.array(v.string()).optional(),
-  txs: v.array(
-    v.object({
-      chain: v.string(),
-      tx: v.string(),
-    }),
-  ),
-  events: v.array(v.string()).optional(),
-  messages: v.array(ExpectedMessage).optional(),
-  transfers: v.array(v.string()).optional(),
-})
+import {
+  type CoreResult,
+  type Example,
+  type RunResult,
+  readExamples,
+  Separated,
+} from './core'
+import { checkExpects, printExpectsResult } from './expects'
+import { ExampleRunner } from './runner'
+import { SnapshotService } from './snapshot/service'
 
 const cmd = command({
   name: 'interop:example',
   args: {
-    name: positional({ type: string, displayName: 'name' }),
-    simple: flag({ type: boolean, long: 'simple' }),
+    name: positional({ type: optional(string), displayName: 'name' }),
+    simple: flag({ type: boolean, long: 'simple', defaultValue: () => false }),
+    seal: flag({
+      type: boolean,
+      long: 'seal',
+      short: 's',
+      defaultValue: () => false,
+    }),
+    uncompressed: flag({
+      type: boolean,
+      long: 'uncompressed',
+      short: 'u',
+      defaultValue: () => false,
+      description: 'Do not compress the snapshot files',
+    }),
+    tags: option({
+      type: optional(Separated(string)),
+      long: 'tags',
+      short: 't',
+      description: 'tags to filter examples, comma separated.',
+    }),
   },
   handler: async (args) => {
-    const examples = v
-      .record(v.string(), Example)
-      .validate(readJsonc(join(__dirname, 'examples.jsonc')))
+    const examples = readExamples()
 
-    if (args.name === 'all') {
-      const bigResult: RunResult = {
-        events: [],
-        messages: [],
-        transfers: [],
+    function getExamplesToRun() {
+      if (args.name === 'all') {
+        return Object.keys(examples)
       }
 
-      let success = true
-      for (const [key, example] of Object.entries(examples)) {
-        console.log('\nExample:', key, '\n')
-        const result = await runExample(example)
-        bigResult.events.push(...result.events)
-        bigResult.messages.push(...result.messages)
-        bigResult.transfers.push(...result.transfers)
-        const partial = checkExample(example, result, false)
-        success &&= partial
+      if (args.tags) {
+        return Object.entries(examples)
+          .filter(([, { tags }]) =>
+            tags?.some((tag) => args.tags?.includes(tag)),
+          )
+          .map(([key]) => key)
       }
-      summarize(bigResult)
-      if (!success) {
-        console.error('Tests failed')
-        process.exit(1)
+      assert(args.name, 'name is required if tags are not provided')
+
+      return [args.name]
+    }
+
+    const examplesToRun = getExamplesToRun()
+
+    const env = getEnv()
+    const http = new HttpClient()
+    const tokenDbClient = getTokenDbClient({
+      apiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
+      authToken: env.string('TOKEN_BACKEND_CF_TOKEN'),
+      callSource: 'interop',
+    })
+    const snapshotService = new SnapshotService({
+      rootDir: join(__dirname, 'snapshots'),
+      noCompression: args.uncompressed,
+    })
+    const coingecko = new CoingeckoQueryService(
+      new CoingeckoClient({
+        callsPerMinute: 60,
+        sourceName: 'coingecko',
+        retryStrategy: 'SCRIPT',
+        http,
+        logger: Logger.SILENT,
+        apiKey: undefined,
+      }),
+    )
+
+    console.log('Running examples:', examplesToRun.join(', '))
+
+    const coreResults: {
+      exampleId: string
+      example: Example
+      result: RunResult
+    }[] = []
+    for (const exampleId of examplesToRun) {
+      const example = examples[exampleId]
+      console.log(
+        'Running example -',
+        exampleId,
+        example.description ? `(${example.description})` : '',
+      )
+      const result = await runExampleCore(exampleId, example, {
+        seal: args.seal,
+        uncompressed: args.uncompressed,
+        env,
+        http,
+        tokenDbClient,
+        snapshotService,
+      })
+      coreResults.push({ exampleId, example, result })
+    }
+
+    const allTokenIds = unique(
+      coreResults
+        .flatMap((r) => r.result.transfers)
+        .flatMap((t) => [t.srcId, t.dstId])
+        .filter((x) => x !== undefined),
+    )
+
+    const tokenInfos =
+      allTokenIds.length > 0
+        ? await getTokenInfos(allTokenIds, tokenDbClient, Logger.SILENT)
+        : new Map()
+    const prices =
+      allTokenIds.length > 0
+        ? await coingecko.getLatestMarketData(
+            unique(
+              Array.from(tokenInfos.values())
+                .map((t) => CoingeckoId(t.coingeckoId))
+                .filter((u) => u !== undefined),
+            ),
+          )
+        : new Map()
+
+    let success = true
+    const bigResult: CoreResult = {
+      events: [],
+      matchedEventIds: new Set(),
+      messages: [],
+      transfers: [],
+    }
+    for (const { exampleId, example, result } of coreResults) {
+      const withFinancials = applyFinancials(result, tokenInfos, prices)
+      bigResult.events.push(...withFinancials.events)
+      for (const id of withFinancials.matchedEventIds) {
+        bigResult.matchedEventIds.add(id)
       }
-    } else {
-      const example = examples[args.name as keyof typeof examples]
-      if (!example) {
-        console.error(`${args.name}: example not found, see examples.jsonc`)
-        return
-      }
-      const result = await runExample(example)
-      const success = checkExample(example, result, !args.simple)
-      summarize(result)
-      if (!success) {
-        console.error('Tests failed')
-        process.exit(1)
-      }
+      bigResult.messages.push(...withFinancials.messages)
+      bigResult.transfers.push(...withFinancials.transfers)
+      const partial = checkExample(
+        exampleId,
+        example,
+        withFinancials,
+        !args.simple,
+      )
+      success &&= partial
+    }
+
+    summarize(bigResult)
+    if (!success) {
+      console.log('Tests failed')
+      process.exit(1)
     }
   },
 })
 
-interface RunResult {
-  events: InteropEvent[]
-  messages: InteropMessage[]
-  transfers: InteropTransfer[]
+async function runExampleCore(
+  exampleId: string,
+  example: Example,
+  opts: {
+    seal: boolean
+    uncompressed: boolean
+    env: Env
+    http: HttpClient
+    tokenDbClient: TokenDbClient
+    snapshotService: SnapshotService
+  },
+) {
+  const exampleInputs = opts.snapshotService.createEmptyExampleInputs()
+
+  const runner = new ExampleRunner({
+    exampleId,
+    example,
+    logger: Logger.ERROR,
+    http: opts.http,
+    tokenDbClient: opts.tokenDbClient,
+    snapshotService: opts.snapshotService,
+    env: opts.env,
+    mode: opts.seal ? 'capture' : 'live',
+    inputs: exampleInputs,
+  })
+
+  const coreResult = await runner.run()
+
+  if (opts.seal) {
+    await runner.flush(coreResult)
+    if (!opts.uncompressed) {
+      await runner.updateManifest()
+    }
+  }
+
+  return coreResult
 }
 
-async function runExample(example: Example): Promise<RunResult> {
-  const logger = Logger.ERROR
-  const http = new HttpClient()
-  const env = getEnv()
-  const tokenDbClient = getTokenDbClient({
-    apiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
-    authToken: env.string('TOKEN_BACKEND_CF_TOKEN'),
-    callSource: 'interop',
-  })
-
-  const coingecko = new CoingeckoQueryService(
-    new CoingeckoClient({
-      callsPerMinute: 60,
-      sourceName: 'coingecko',
-      retryStrategy: 'SCRIPT',
-      http: new HttpClient(),
-      logger: Logger.SILENT,
-      apiKey: undefined,
-    }),
-  )
-
-  const ps = new ProjectService()
-  const psChains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-    (p) => p.chainConfig,
-  )
-  const pluginChains = psChains
-    .filter((c) => c.chainId !== undefined)
-    .map((c) => ({ name: c.name, id: c.chainId as number }))
-
-  const makeRpcClient = (chain: string) => {
-    let multicallClient: MulticallV3Client | undefined
-    const multicallConfig = psChains
-      .find((c) => c.name === chain)
-      ?.multicallContracts?.find((c) => c.version === '3')
-    if (multicallConfig) {
-      multicallClient = new MulticallV3Client(
-        multicallConfig.address,
-        multicallConfig.sinceBlock,
-        multicallConfig.batchSize,
-      )
-    }
-    return RpcClientCompat.create({
-      url: env.string(`${chain.toUpperCase()}_RPC_URL`),
-      chain: chain,
-      http,
-      logger,
-      callsPerMinute: 600,
-      retryStrategy: 'SCRIPT',
-      multicallClient,
-    })
-  }
-
-  const chains = example.txs.map(({ chain, tx }) => {
-    return {
-      txHash: tx,
-      name: chain,
-      rpc: makeRpcClient(chain),
-    }
-  })
-
-  const rpcClients = chains.map((x) => x.rpc)
-  if (!rpcClients.some((x) => x.chain === 'ethereum')) {
-    rpcClients.push(makeRpcClient('ethereum'))
-  }
-
-  const configs = new InteropConfigStore(undefined)
-
-  const plugins = createInteropPlugins({
-    chains: pluginChains,
-    configs,
-    httpClient: new HttpClient(),
-    logger,
-    rpcClients,
-  })
-
-  if (example.loadConfigs && example.loadConfigs.length > 0) {
-    for (const key of example.loadConfigs) {
-      const config = plugins.configPlugins.find((x) =>
-        x.provides.map((k) => k.key).includes(key),
-      )
-      if (!config) {
-        throw new Error(`Cannot load configs: ${key}`)
-      }
-      console.log('LOADING CONFIG:', key)
-      await config.run()
-    }
-  }
-
-  const events: InteropEvent[] = []
-  for (const chain of chains) {
-    const tx = await chain.rpc.getTransaction(chain.txHash)
-    assert(tx.blockNumber)
-
-    const block = await chain.rpc.getBlockWithTransactions(tx.blockNumber)
-    const logs = await chain.rpc.getLogs(block.number, block.number)
-    const txLogs = logs
-      .filter((l) => l.transactionHash === tx.hash)
-      .map(logToViemLog)
-
-    for (const plugin of plugins.eventPlugins) {
-      if (!plugin.captureTx) {
-        continue
-      }
-      const captured = plugin.captureTx({
-        chain: chain.name,
-        tx,
-        block,
-        txLogs,
-      })
-      if (captured) {
-        events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
-        break
-      }
-    }
-
-    for (const log of txLogs) {
-      for (const plugin of plugins.eventPlugins) {
-        if (!plugin.capture) {
-          continue
-        }
-        const captured = plugin.capture({
-          chain: chain.name,
-          log: log,
-          tx,
-          block,
-          txLogs,
-        })
-        if (captured) {
-          events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
-          break
-        }
-      }
-    }
-  }
-
-  const eventDb = new InMemoryEventDb()
-  for (const event of events) {
-    eventDb.addEvent(event)
-  }
-
-  const result = await match(
-    eventDb,
-    (type) => events.filter((x) => x.type === type),
-    [...new Set(events.map((x) => x.type))],
-    events.length,
-    plugins.eventPlugins,
-    chains.map((x) => x.name),
-    logger,
-  )
-
-  const transfers = result.transfers.map((u) => ({
-    transfer: u,
-    srcId: toDeployedId(
-      INTEROP_CHAINS,
-      u.src.event.ctx.chain,
-      u.src.tokenAddress,
-    ),
-    dstId: toDeployedId(
-      INTEROP_CHAINS,
-      u.dst.event.ctx.chain,
-      u.dst.tokenAddress,
-    ),
+function applyFinancials(
+  coreResult: RunResult,
+  tokenInfos: TokenInfos,
+  prices: Map<CoingeckoId, { price: number; circulating: number }>,
+): CoreResult {
+  const transfersWithFinancials = coreResult.transfers.map((transfer) => ({
+    ...transfer.transfer,
+    src: {
+      ...transfer.transfer.src,
+      financials: calculateFinancials(
+        transfer.srcId,
+        transfer.transfer.src.tokenAmount,
+        tokenInfos,
+        prices,
+      ),
+    },
+    dst: {
+      ...transfer.transfer.dst,
+      financials: calculateFinancials(
+        transfer.dstId,
+        transfer.transfer.dst.tokenAmount,
+        tokenInfos,
+        prices,
+      ),
+    },
   }))
 
-  const tokenInfos = await getTokenInfos(
-    unique(
-      transfers
-        .flatMap((t) => [t.srcId, t.dstId])
-        .filter((x) => x !== undefined),
-    ),
-    tokenDbClient,
-    Logger.SILENT,
-  )
-
-  const prices = await coingecko.getLatestMarketData(
-    unique(
-      Array.from(tokenInfos.values())
-        .map((t) => CoingeckoId(t.coingeckoId))
-        .filter((u) => u !== undefined),
-    ),
-  )
-
-  const transfersWithFinancials = []
-
-  for (const transfer of transfers) {
-    transfersWithFinancials.push({
-      ...transfer.transfer,
-      src: {
-        ...transfer.transfer.src,
-        financials: calculateFinancials(
-          transfer.srcId,
-          transfer.transfer.src.tokenAmount,
-          tokenInfos,
-          prices,
-        ),
-      },
-      dst: {
-        ...transfer.transfer.dst,
-        financials: calculateFinancials(
-          transfer.dstId,
-          transfer.transfer.dst.tokenAmount,
-          tokenInfos,
-          prices,
-        ),
-      },
-    })
-  }
-
   return {
-    events: events.map((e) => ({ ...e, chain: e.ctx.chain })),
-    messages: result.messages.map((m) => ({
-      ...m,
-      src: { ...m.src, chain: m.src.ctx.chain },
-      dst: { ...m.dst, chain: m.dst.ctx.chain },
-    })),
-    transfers: transfersWithFinancials.map((t) => ({
-      ...t,
-      events: t.events.map((e) => ({ ...e, chain: e.ctx.chain })),
-      src: { ...t.src, chain: t.src.event.ctx.chain },
-      dst: { ...t.dst, chain: t.dst.event.ctx.chain },
-    })),
+    events: coreResult.events,
+    matchedEventIds: coreResult.matchedEventIds,
+    messages: coreResult.messages,
+    transfers: transfersWithFinancials,
   }
-}
-
-type ExpectedMessageType = v.infer<typeof ExpectedMessage>
-
-function normalizeExpectedMessage(item: ExpectedMessageType): {
-  type: string
-  app?: string
-} {
-  if (typeof item === 'string') {
-    return { type: item }
-  }
-  return item
 }
 
 function checkExample(
+  exampleId: string,
   example: Example,
-  result: RunResult,
+  result: CoreResult,
   verbose: boolean,
 ): boolean {
-  const eventsOk = checkTypedSimple(
-    'Event   ',
-    [...(example.events ?? [])],
-    result.events,
+  const results = checkExpects(
+    example.expects ?? {},
+    {
+      events: example.events,
+      messages: example.messages,
+      transfers: example.transfers,
+    },
+    result,
     verbose,
   )
-  const messagesOk = checkTypedWithApp(
-    'Message ',
-    [...(example.messages ?? [])].map(normalizeExpectedMessage),
-    result.messages,
-    verbose,
+
+  const header = example.description
+    ? `${example.description} (${exampleId})`
+    : exampleId
+
+  console.log(`\n--- ${header} ---`)
+  console.log(
+    `    Txs: ${example.txs.map((t) => `${t.chain}:${t.tx.slice(0, 10)}...`).join(', ')}`,
   )
-  const transfersOk = checkTypedSimple(
-    'Transfer',
-    [...(example.transfers ?? [])],
-    result.transfers,
-    verbose,
+
+  printExpectsResult(example.expects, results)
+
+  return (
+    results.eventsResult.success &&
+    results.messagesResult.success &&
+    results.transfersResult.success
   )
-  return eventsOk && messagesOk && transfersOk
 }
 
-const PASS = '[\x1B[1;32mPASS\x1B[0m]'
-const XTRA = '[\x1B[1;34mXTRA\x1B[0m]'
-const FAIL = '[\x1B[1;31mFAIL\x1B[0m]'
-
-function checkTypedSimple(
-  name: string,
-  expected: string[],
-  values: { type: string }[],
-  verbose: boolean,
-): boolean {
-  for (const value of values) {
-    const idx = expected.indexOf(value.type)
-    if (idx !== -1) {
-      expected.splice(idx, 1)
-    }
-    const tag = idx !== -1 ? PASS : XTRA
-    console.log(tag, name, verbose ? value : value.type)
-  }
-  for (const type of expected) {
-    console.log(FAIL, name, type)
-  }
-  return expected.length === 0
-}
-
-function checkTypedWithApp(
-  name: string,
-  expected: { type: string; app?: string }[],
-  values: { type: string; app?: string }[],
-  verbose: boolean,
-): boolean {
-  for (const value of values) {
-    const idx = expected.findIndex(
-      (e) =>
-        e.type === value.type && (e.app === undefined || e.app === value.app),
-    )
-    if (idx !== -1) {
-      expected.splice(idx, 1)
-    }
-    const tag = idx !== -1 ? PASS : XTRA
-    const display = verbose
-      ? value
-      : value.app
-        ? `${value.type} (app: ${value.app})`
-        : value.type
-    console.log(tag, name, display)
-  }
-  for (const exp of expected) {
-    const display = exp.app ? `${exp.type} (app: ${exp.app})` : exp.type
-    console.log(FAIL, name, display)
-  }
-  return expected.length === 0
-}
-
-function summarize(result: RunResult) {
+function summarize(result: CoreResult) {
   console.log('\nSUMMARY\n')
   summarizeType('Events', result.events)
   summarizeType('Messages', result.messages)

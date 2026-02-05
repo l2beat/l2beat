@@ -10,10 +10,13 @@ import type {
   SerializableInteropTransfer,
 } from '../stream/InteropTransferStream'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
+import { renderAnomaliesPage } from './AnomaliesPage'
+import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
+import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
 
 export function createInteropRouter(
@@ -69,6 +72,24 @@ export function createInteropRouter(
     const showResyncControls = ctx.query.showResync !== undefined
 
     ctx.body = renderStatusPage({ pluginSyncStatuses, showResyncControls })
+  })
+
+  router.get('/interop/anomalies', async (ctx) => {
+    const rows = await db.aggregatedInteropTransfer.getDailySeries()
+    const explored = explore(rows)
+    if (ctx.query.raw === 'true') {
+      ctx.body = explored
+    } else {
+      ctx.body = renderAnomaliesPage({ stats: explored })
+    }
+  })
+
+  router.get('/interop/anomalies/:id', async (ctx) => {
+    const params = v.object({ id: v.string() }).validate(ctx.params)
+    const series = await db.aggregatedInteropTransfer.getDailySeriesById(
+      params.id,
+    )
+    ctx.body = renderAnomalyIdPage({ id: params.id, series })
   })
 
   router.get('/interop/memory', (ctx) => {
@@ -295,15 +316,20 @@ async function getMessagesStats(db: Database) {
   const detailedStats = await db.interopMessage.getDetailedStats()
 
   return stats.map((overall) => ({
+    plugin: overall.plugin,
     type: overall.type,
     count: Number(overall.count),
     avgDuration: Number(overall.avgDuration),
     knownAppCount: Number(overall.knownAppCount),
     chains: detailedStats
-      .filter((chain) => chain.type === overall.type)
+      .filter(
+        (chain) =>
+          chain.plugin === overall.plugin && chain.type === overall.type,
+      )
       .map((chain) => {
         assert(chain.srcChain && chain.dstChain)
         return {
+          plugin: chain.plugin,
           type: chain.type,
           srcChain: chain.srcChain,
           dstChain: chain.dstChain,
@@ -319,11 +345,14 @@ async function getTransfersStats(db: Database) {
   const detailedStats = await db.interopTransfer.getDetailedStats()
 
   return stats.map((overall) => ({
+    plugin: overall.plugin,
     type: overall.type,
     count: overall.count,
     avgDuration: overall.avgDuration,
     srcValueSum: overall.srcValueSum,
     dstValueSum: overall.dstValueSum,
-    chains: detailedStats.filter((chain) => chain.type === overall.type),
+    chains: detailedStats.filter(
+      (chain) => chain.plugin === overall.plugin && chain.type === overall.type,
+    ),
   }))
 }

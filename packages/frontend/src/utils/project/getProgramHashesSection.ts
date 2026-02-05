@@ -4,7 +4,7 @@ import type {
   StateValidationProgramHashData,
 } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import { tvsComparator } from './getVerifiersSection'
 
@@ -30,7 +30,7 @@ export function getProgramHashesSection(
           usedIn: [
             {
               ...scalingProject,
-              icon: getProjectIcon(scalingProject.slug),
+              icon: manifest.getUrl(`/icons/${scalingProject.slug}.png`),
               url: `/scaling/projects/${scalingProject.slug}`,
             },
           ],
@@ -38,7 +38,7 @@ export function getProgramHashesSection(
       } else {
         current.usedIn.push({
           ...scalingProject,
-          icon: getProjectIcon(scalingProject.slug),
+          icon: manifest.getUrl(`/icons/${scalingProject.slug}.png`),
           url: `/scaling/projects/${scalingProject.slug}`,
         })
       }

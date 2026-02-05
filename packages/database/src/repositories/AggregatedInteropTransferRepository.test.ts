@@ -473,10 +473,10 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   )
 
   describe(
-    AggregatedInteropTransferRepository.prototype.getByChainsAndLatestTimestamp
+    AggregatedInteropTransferRepository.prototype.getByChainsTimestampAndId
       .name,
     () => {
-      it('returns only latest records matching srcChains and dstChains', async () => {
+      it('returns records matching timestamp, srcChains and dstChains', async () => {
         const record1 = record(
           'id1',
           UnixTime(100),
@@ -500,6 +500,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           'arbitrum',
           7,
           3000,
+          150,
         )
         const record4 = record(
           'id4',
@@ -513,16 +514,17 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndLatestTimestamp(
+        const result = await repository.getByChainsTimestampAndId(
+          UnixTime(300),
           ['ethereum'],
           ['arbitrum'],
         )
 
-        // Should only return record3 which has the latest timestamp (300)
+        // Should only return record3 which matches timestamp 300
         expect(result).toEqual([record3])
       })
 
-      it('returns records matching multiple srcChains and dstChains', async () => {
+      it('returns records matching multiple srcChains and dstChains at same timestamp', async () => {
         const record1 = record(
           'id1',
           UnixTime(100),
@@ -554,22 +556,25 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           'optimism',
           2,
           4000,
+          250,
         )
         const records = [record1, record2, record3, record4]
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndLatestTimestamp(
+        const result = await repository.getByChainsTimestampAndId(
+          UnixTime(300),
           ['ethereum', 'polygon'],
           ['arbitrum', 'optimism'],
         )
 
-        // Should return record3 and record4 which have the latest timestamp (300)
+        // Should return record3 and record4 which match timestamp 300
         expect(result).toEqualUnsorted([record3, record4])
       })
 
       it('returns empty array when no records exist', async () => {
-        const result = await repository.getByChainsAndLatestTimestamp(
+        const result = await repository.getByChainsTimestampAndId(
+          UnixTime(100),
           ['ethereum'],
           ['arbitrum'],
         )
@@ -577,34 +582,59 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         expect(result).toEqual([])
       })
 
-      it('returns empty array when no records match chains', async () => {
-        await repository.insertMany([
-          record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
-          record('id2', UnixTime(200), 'arbitrum', 'ethereum', 3, 2000),
-        ])
-
-        const result = await repository.getByChainsAndLatestTimestamp(
-          ['polygon'],
-          ['optimism'],
-        )
-
-        expect(result).toEqual([])
-      })
-
-      it('returns latest records from entire table, not just filtered records', async () => {
+      it('filters by protocolIds when provided', async () => {
         const record1 = record(
-          'id1',
-          UnixTime(100),
+          'protocol1',
+          UnixTime(300),
           'ethereum',
           'arbitrum',
           5,
           1000,
         )
         const record2 = record(
-          'id2',
-          UnixTime(500),
-          'polygon',
-          'optimism',
+          'protocol2',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          3,
+          2000,
+        )
+        const record3 = record(
+          'protocol3',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          7,
+          3000,
+        )
+        const records = [record1, record2, record3]
+
+        await repository.insertMany(records)
+
+        const result = await repository.getByChainsTimestampAndId(
+          UnixTime(300),
+          ['ethereum'],
+          ['arbitrum'],
+          ['protocol1', 'protocol3'],
+        )
+
+        expect(result).toEqualUnsorted([record1, record3])
+      })
+
+      it('returns all matching records when protocolIds is undefined', async () => {
+        const record1 = record(
+          'protocol1',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          5,
+          1000,
+        )
+        const record2 = record(
+          'protocol2',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
           3,
           2000,
         )
@@ -612,50 +642,43 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndLatestTimestamp(
+        const result = await repository.getByChainsTimestampAndId(
+          UnixTime(300),
           ['ethereum'],
           ['arbitrum'],
+          undefined,
         )
 
-        // Latest timestamp is 500, but no ethereum->arbitrum records have that timestamp
-        expect(result).toEqual([])
+        expect(result).toEqualUnsorted([record1, record2])
       })
 
-      it('returns empty array when srcChains is empty', async () => {
-        await repository.insertMany([
-          record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
-          record('id2', UnixTime(200), 'polygon', 'optimism', 3, 2000),
-        ])
-
-        const result = await repository.getByChainsAndLatestTimestamp(
-          [],
-          ['arbitrum'],
+      it('returns empty array when protocolIds is empty array', async () => {
+        const record1 = record(
+          'protocol1',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          5,
+          1000,
         )
+        const record2 = record(
+          'protocol2',
+          UnixTime(300),
+          'ethereum',
+          'arbitrum',
+          3,
+          2000,
+        )
+        const records = [record1, record2]
 
-        expect(result).toEqual([])
-      })
+        await repository.insertMany(records)
 
-      it('returns empty array when dstChains is empty', async () => {
-        await repository.insertMany([
-          record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
-          record('id2', UnixTime(200), 'polygon', 'optimism', 3, 2000),
-        ])
-
-        const result = await repository.getByChainsAndLatestTimestamp(
+        const result = await repository.getByChainsTimestampAndId(
+          UnixTime(300),
           ['ethereum'],
+          ['arbitrum'],
           [],
         )
-
-        expect(result).toEqual([])
-      })
-
-      it('returns empty array when both srcChains and dstChains are empty', async () => {
-        await repository.insertMany([
-          record('id1', UnixTime(100), 'ethereum', 'arbitrum', 5, 1000),
-          record('id2', UnixTime(200), 'polygon', 'optimism', 3, 2000),
-        ])
-
-        const result = await repository.getByChainsAndLatestTimestamp([], [])
 
         expect(result).toEqual([])
       })
@@ -669,10 +692,18 @@ function record(
   srcChain: string,
   dstChain: string,
   transferCount = 1,
+  identifiedCount = 1,
   totalDurationSum = 0,
   srcValueUsd?: number,
   dstValueUsd?: number,
-  tokensByVolume: Record<string, number> = {},
+  avgValueInFlight?: number,
+  mintedValueUsd?: number,
+  burnedValueUsd?: number,
+  countUnder100 = 0,
+  count100To1K = 0,
+  count1KTo10K = 0,
+  count10KTo100K = 0,
+  countOver100K = 0,
 ): AggregatedInteropTransferRecord {
   return {
     timestamp,
@@ -680,9 +711,17 @@ function record(
     srcChain,
     dstChain,
     transferCount,
+    identifiedCount,
     totalDurationSum,
     srcValueUsd,
     dstValueUsd,
-    tokensByVolume: tokensByVolume ?? { eth: 1000 },
+    avgValueInFlight,
+    mintedValueUsd,
+    burnedValueUsd,
+    countUnder100,
+    count100To1K,
+    count1KTo10K,
+    count10KTo100K,
+    countOver100K,
   }
 }

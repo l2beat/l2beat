@@ -1,3 +1,118 @@
+Generated with discovered.json: 0x40959d6f33b253974660d667936a1ba4673c45a5
+
+# Diff at Mon, 02 Feb 2026 13:18:54 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1769425693
+- current timestamp: 1770038258
+
+## Description
+
+Rotated a multisig.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2"
++        "eth:0xAf0B2B58289857e9A6Cf91Fd30410dDcad9D9B28"
+    }
+```
+
+Generated with discovered.json: 0x13ff4196acb704ee05709ec17c1efaa106d6e174
+
+# Diff at Mon, 26 Jan 2026 11:09:20 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8d5c5874ec83baaee41660f05b90f99eba936384 block: 1768908272
+- current timestamp: 1769425693
+
+## Description
+
+Updated chain creation params on ChainTypeManager both on L1 and on gateway. As far as I can see, only the verifier address and version info were chainged. Upgrade tx is here: https://tools.l2beat.com/decoder-new/?hash=0x46622c87e23e365f9c30522c553db9f4d801a6455711affe378d145fa980859f&data=AwA.
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.7:
++        {"_protocolVersion":124554051587,"_upgradeTimestamp":0}
+    }
+```
+
+```diff
+    contract ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,3.
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,2."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,3."
+      values.getSemverProtocolVersion.2:
+-        2
++        3
+      values.initialCutHash:
+-        "0xfe2b1933fcc0d0a6fd9758ee5c6d121081bd4580ec7d87bdf299470ed70208c5"
++        "0xac068e7526ce66f4c74dabe4e8e5ad6c4fd6ed9b5a94bb0d5992fb91be628b08"
+      values.protocolVersion:
+-        124554051586
++        124554051587
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.5:
++        "0x3320daee09efe92dc2c2f56107b3c4b9c36a6328205541cf2dd52ccba6a4a72f"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.6:
++        "0x92bc8dca06e8c709dbcae55551cdb8516705217e39c1b1685573235b30aeac02"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.7:
++        "0x17aa13607bb1d07380691d4ae3dcf15bcd0039a8d0c686b276a0993199c9d20d"
+    }
+```
+
+Generated with discovered.json: 0x35e4dd6ad3a04189f48c66d125a920f3392695ea
+
+# Diff at Tue, 20 Jan 2026 11:25:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a5d37b36a43301b2def017b94f066897f111cc32 block: 1768825040
+- current timestamp: 1768908272
+
+## Description
+
+Added a new chain with ID 2787. It uses L1 governance, Airbender prover, v30.1 of zk stack, rollup DA manager, ETH gas token. Its diamond proxy was deployed ~1 day ago.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.18:
++        {"chainId":2787,"chainTypeManager":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","chainGovernance":"eth:0x13454c399B9a4Fb6AEeaDD1D8b7A817eB89d9c3f"}
+      values.getAllZKChainChainIDs.18:
++        2787
+      values.getAllZKChains.18:
++        "eth:0xD366689A90253757f5a7432Df805E50Ff206d692"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        19
++        20
+    }
+```
+
 Generated with discovered.json: 0x9d307655ca4557ebb80d33b38a882391537921ef
 
 # Diff at Mon, 19 Jan 2026 12:20:14 GMT:

@@ -1,3 +1,135 @@
+Generated with discovered.json: 0xda0c26d6822a0801b8305ef42c04efd6870d4702
+
+# Diff at Tue, 03 Feb 2026 11:18:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a94928de2efc98d55da2625bd62f96eb1c25b904 block: 1769431719
+- current timestamp: 1770116349
+
+## Description
+
+Upgrades SpokePool to support OFT transfers (spokepool wraps the OApp). This is strictly used for refunds, meaning a given SpokePool that is not on Ethereum would be able to send the OFT that was used to fill an intent back to Ethereum to refund the filler (`executeRelayerRefundLeaf`). Each OFT needs to be added to a mapping before it is supported. E.g. on Arbitrum, USDT0 is the only such token atm.
+
+https://disco.l2beat.com/diff/eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80/eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B
+
+## Watched changes
+
+```diff
+    contract Ethereum_SpokePool (eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.
+      sourceHashes.1:
+-        "0x40060e8b2904995f3cb0149fcbf73924c9b1e2e164a823a7957d703a9f7c6fe5"
++        "0x51fe389d737f63ba780131cbcd7de767178890a9783c26f10a7914e04b8cccf8"
+      values.$implementation:
+-        "eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80"
++        "eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B"
+      values.$pastUpgrades.10:
++        ["2026-02-02T18:01:11.000Z","0xce91ef569315a356ecbf8133df44de6a7f0cbbcc8f50433eb3ab5116d71a111f",["eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.EMPTY_MSG_BYTES:
++        "0x"
+      values.OFT_DST_EID:
++        0
+      values.OFT_FEE_CAP:
++        0
+      implementationNames.eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80:
+-        "Ethereum_SpokePool"
+      implementationNames.eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B:
++        "Ethereum_SpokePool"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Ethereum_SpokePool/Ethereum_SpokePool.sol      | 1089 +++++++++++++++-----
+ 1 file changed, 815 insertions(+), 274 deletions(-)
+```
+
+Generated with discovered.json: 0x758791ddb7ad54da9864519ecbc5ea873154a269
+
+# Diff at Mon, 26 Jan 2026 12:50:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daff52088f9d57f8a71e0b6d63dada6f9cf51d36 block: 1768999073
+- current timestamp: 1769431719
+
+## Description
+
+Upgrade Ink adapter (cctp v2 support):
+https://disco.l2beat.com/diff/eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2/eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OP_Adapter (eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.57073:
+-        "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2"
++        "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Ink_Adapter (eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../Ink_Adapter.sol}                               |   0
+ .../OP_Adapter.sol}                                | 124 +++++++++++++++------
+ 2 files changed, 93 insertions(+), 31 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768999073 (main branch discovery), not current.
+
+```diff
+    contract OP_Adapter (eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      name:
+-        "Ink_Adapter"
++        "OP_Adapter"
+    }
+```
+
+Generated with discovered.json: 0x17dd3740d04ee41c971654c4b477ba031e228eab
+
+# Diff at Wed, 21 Jan 2026 12:39:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768816709
+- current timestamp: 1768999073
+
+## Description
+
+UMA Multisig change.
+
+## Watched changes
+
+```diff
+    contract UMA Multisig (eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
++        "eth:0x72b32C1a6A75CBAfAe36c0CA8e763946d370E766"
+    }
+```
+
 Generated with discovered.json: 0x5f5ffe9d52db6f5941dd2818d9f8b7d9b6acbc73
 
 # Diff at Mon, 19 Jan 2026 10:09:18 GMT:

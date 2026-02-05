@@ -56,6 +56,35 @@ export const abstract: ScalingProject = zkStackL2({
       { type: 'etherscan', chainId },
       { type: 'rpc', url: 'https://api.mainnet.abs.xyz', callsPerMinute: 300 },
     ],
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xAa4De41dba0Ca5dCBb288b7cC6b708F3aaC759E7'),
+        batchSize: 150,
+        sinceBlock: 5288,
+        version: '3',
+      },
+    ],
+  },
+  interopConfig: {
+    bridgeType: 'lockAndMint',
+    plugins: [
+      {
+        plugin: 'zkstack',
+        chain: 'abstract',
+      },
+    ],
+    durationSplit: {
+      in: {
+        label: 'L1 -> L2',
+        from: 'ethereum',
+        to: 'abstract',
+      },
+      out: {
+        label: 'L2 -> L1',
+        from: 'abstract',
+        to: 'ethereum',
+      },
+    },
   },
   discovery,
   nonTemplateEscrows: [

@@ -86,6 +86,7 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
     <table id={props.id} className="display">
       <thead>
         <tr>
+          <th rowSpan={2}>Plugin</th>
           <th rowSpan={2}>Type</th>
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
@@ -115,12 +116,15 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
       <tbody>
         {props.items.map((t) => {
           return (
-            <tr key={t.type}>
+            <tr key={`${t.plugin}-${t.type}`}>
+              <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
                 <a href={`/interop/messages/${t.type}`}>{t.count}</a>
               </td>
-              <td data-order={t.avgDuration}>{formatSeconds(t.avgDuration)}</td>
+              <td data-order={t.avgDuration} data-sort={t.avgDuration}>
+                {formatSeconds(t.avgDuration)}
+              </td>
               {
                 <td>
                   {t.count > 0
@@ -152,7 +156,10 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                         </a>
                       )}
                     </td>
-                    <td data-order={srcDstDuration ?? ''}>
+                    <td
+                      data-order={srcDstDuration ?? ''}
+                      data-sort={srcDstDuration ?? ''}
+                    >
                       {srcDstDuration && formatSeconds(srcDstDuration)}
                     </td>
                     <td>
@@ -164,7 +171,10 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                         </a>
                       )}
                     </td>
-                    <td data-order={dstSrcDuration ?? ''}>
+                    <td
+                      data-order={dstSrcDuration ?? ''}
+                      data-sort={dstSrcDuration ?? ''}
+                    >
                       {dstSrcDuration && formatSeconds(dstSrcDuration)}
                     </td>
                   </React.Fragment>
@@ -183,6 +193,7 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
     <table id={props.id} className="display">
       <thead>
         <tr>
+          <th rowSpan={2}>Plugin</th>
           <th rowSpan={2}>Type</th>
           <th rowSpan={2}>Count</th>
           <th rowSpan={2}>Median Duration</th>
@@ -220,14 +231,21 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
       <tbody>
         {props.items.map((t) => {
           return (
-            <tr key={t.type}>
+            <tr key={`${t.plugin}-${t.type}`}>
+              <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
                 <a href={`/interop/transfers/${t.type}`}>{t.count}</a>
               </td>
-              <td data-order={t.avgDuration}>{formatSeconds(t.avgDuration)}</td>
-              <td data-order={t.srcValueSum}>{formatDollars(t.srcValueSum)}</td>
-              <td data-order={t.dstValueSum}>{formatDollars(t.dstValueSum)}</td>
+              <td data-order={t.avgDuration} data-sort={t.avgDuration}>
+                {formatSeconds(t.avgDuration)}
+              </td>
+              <td data-order={t.srcValueSum} data-sort={t.srcValueSum}>
+                {formatDollars(t.srcValueSum)}
+              </td>
+              <td data-order={t.dstValueSum} data-sort={t.dstValueSum}>
+                {formatDollars(t.dstValueSum)}
+              </td>
               {NETWORKS.map((n, idx) => {
                 const forwardStats = t.chains.find(
                   (tt) => tt.srcChain === n[0].id && tt.dstChain === n[1].id,
@@ -255,13 +273,22 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                         </a>
                       }
                     </td>
-                    <td data-order={forwardDuration}>
+                    <td
+                      data-order={forwardDuration}
+                      data-sort={forwardDuration}
+                    >
                       {forwardDuration && formatSeconds(forwardDuration)}
                     </td>
-                    <td data-order={forwardSrcValue}>
+                    <td
+                      data-order={forwardSrcValue}
+                      data-sort={forwardSrcValue}
+                    >
                       {formatDollars(forwardSrcValue)}
                     </td>
-                    <td data-order={forwardDstValue}>
+                    <td
+                      data-order={forwardDstValue}
+                      data-sort={forwardDstValue}
+                    >
                       {formatDollars(forwardDstValue)}
                     </td>
                     <td>
@@ -273,13 +300,22 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                         </a>
                       }
                     </td>
-                    <td data-order={backwardDuration}>
+                    <td
+                      data-order={backwardDuration}
+                      data-sort={backwardDuration}
+                    >
                       {backwardDuration && formatSeconds(backwardDuration)}
                     </td>
-                    <td data-order={backwardSrcValue}>
+                    <td
+                      data-order={backwardSrcValue}
+                      data-sort={backwardSrcValue}
+                    >
                       {formatDollars(backwardSrcValue)}
                     </td>
-                    <td data-order={backwardDstValue}>
+                    <td
+                      data-order={backwardDstValue}
+                      data-sort={backwardDstValue}
+                    >
                       {formatDollars(backwardDstValue)}
                     </td>
                   </React.Fragment>

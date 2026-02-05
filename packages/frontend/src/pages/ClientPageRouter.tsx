@@ -15,6 +15,9 @@ import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
 import { EthereumConnectPage } from './governance/ethereum-connect/EthereumConnectPage'
 import { GovernancePage } from './governance/GovernancePage'
+import { InteropLockAndMintPage } from './interop/lock-and-mint/InteropLockAndMintPage'
+import { InteropNonMintingPage } from './interop/non-minting/InteropNonMintingPage'
+import { InteropOmnichainPage } from './interop/omnichain/InteropOmnichainPage'
 import { InteropSummaryPage } from './interop/summary/InteropSummaryPage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
@@ -66,6 +69,9 @@ const pages = {
   ScalingRiskStateValidationPage,
   // Interop
   InteropSummaryPage,
+  InteropNonMintingPage,
+  InteropLockAndMintPage,
+  InteropOmnichainPage,
   // Bridges
   BridgesSummaryPage,
   BridgesArchivedPage,

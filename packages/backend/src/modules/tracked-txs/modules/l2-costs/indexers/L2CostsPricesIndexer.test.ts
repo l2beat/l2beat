@@ -153,19 +153,21 @@ describe(L2CostsPricesIndexer.name, () => {
 })
 
 function createIndexer(deps?: Partial<L2CostsPricesIndexerDeps>) {
-  return new L2CostsPricesIndexer({
-    indexerService: mockObject<IndexerService>(),
-    logger: Logger.SILENT,
-    minHeight: 0,
-    parents: [],
-    db: mockObject<Database>({
-      l2CostPrice: mockObject<Database['l2CostPrice']>({
-        insertMany: mockFn().resolvesTo(1),
+  return new L2CostsPricesIndexer(
+    {
+      indexerService: mockObject<IndexerService>(),
+      minHeight: 0,
+      parents: [],
+      db: mockObject<Database>({
+        l2CostPrice: mockObject<Database['l2CostPrice']>({
+          insertMany: mockFn().resolvesTo(1),
+        }),
       }),
-    }),
-    coingeckoQueryService: mockObject<CoingeckoQueryService>({
-      getUsdPriceHistoryHourly: mockFn().resolvesTo([]),
-    }),
-    ...deps,
-  })
+      coingeckoQueryService: mockObject<CoingeckoQueryService>({
+        getUsdPriceHistoryHourly: mockFn().resolvesTo([]),
+      }),
+      ...deps,
+    },
+    Logger.SILENT,
+  )
 }

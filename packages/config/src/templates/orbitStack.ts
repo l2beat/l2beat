@@ -30,6 +30,7 @@ import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -42,6 +43,7 @@ import type {
 import type {
   Badge,
   ChainConfig,
+  InteropConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectCustomDa,
@@ -183,6 +185,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   upgradesAndGovernance?: string
+  interopConfig?: InteropConfig
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
@@ -528,6 +531,7 @@ function orbitStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
+      programHashes: [PROGRAM_HASHES(wasmModuleRoot)],
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
@@ -821,6 +825,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
     },
+    interopConfig: templateVars.interopConfig,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }

@@ -4,12 +4,10 @@ import { EthRpcClient, Http, UpsertMap } from '@l2beat/shared'
 import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
-import {
-  type InteropPlugin,
-  type InteropPluginResyncable,
-  isPluginResyncable,
-} from '../../plugins/types'
+import type { PluginCluster } from '../../plugins'
+import { isPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import { InteropDataCleaner } from './InteropDataCleaner'
 import { InteropEventSyncer } from './InteropEventSyncer'
 
 export type PluginSyncStatus = {
@@ -26,52 +24,62 @@ export class InteropSyncersManager {
   private rpcClients: { [chain: string]: EthRpcClient } = {}
 
   private syncers = new UpsertMap<
-    string, // pluginName
+    string, // plugin cluster name
     UpsertMap<LongChainName, InteropEventSyncer>
   >()
+  private dataCleaners: InteropDataCleaner[] = []
 
   constructor(
-    private readonly eventPlugins: InteropPlugin[],
+    readonly pluginClusters: PluginCluster[],
     enabledChains: LongChainName[],
     chainConfigs: ChainApi[],
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
   ) {
-    for (const plugin of eventPlugins) {
-      if (!isPluginResyncable(plugin)) {
-        continue
+    for (const cluster of pluginClusters) {
+      const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
+      if (resyncablePlugins.length === 0) {
+        continue // skip clusters of non-resyncable plugins
       }
+      if (resyncablePlugins.length !== cluster.plugins.length) {
+        throw new Error(
+          `Cluster of plugins '${cluster.name} contains mix of non- and resyncable plugins. They must all be the same kind.`,
+        )
+      }
+
+      const clusterSyncers: InteropEventSyncer[] = []
+
       for (const chain of enabledChains) {
         const chainConfig = chainConfigs.find((c) => c.name === chain)
         if (!chainConfig) {
           throw new Error(`Missing configuration for chain ${chain}`)
         }
 
-        const clusterPlugins: InteropPluginResyncable[] = []
-        if (plugin.cluster) {
-          for (const p of eventPlugins) {
-            if (!isPluginResyncable(p)) {
-              throw new Error(
-                `Resyncable plugin ${plugin.name} is in cluster with non-resyncable plugin ${p.name}`,
-              )
-            }
-            clusterPlugins.push(p)
-          }
-        }
-
         const eventSyncer = new InteropEventSyncer(
           chain,
-          plugin,
-          clusterPlugins,
+          { name: cluster.name, plugins: resyncablePlugins },
           this.getRpcClient(chainConfig),
           eventStore,
           db,
           logger,
         )
+        clusterSyncers.push(eventSyncer)
         this.syncers
-          .getOrInsertComputed(plugin.name, () => new UpsertMap())
+          .getOrInsertComputed(cluster.name, () => new UpsertMap())
           .set(chain, eventSyncer)
+      }
+
+      if (clusterSyncers.length > 0) {
+        this.dataCleaners.push(
+          new InteropDataCleaner(
+            { name: cluster.name, plugins: resyncablePlugins },
+            clusterSyncers,
+            eventStore,
+            db,
+            logger,
+          ),
+        )
       }
     }
   }
@@ -81,6 +89,9 @@ export class InteropSyncersManager {
       for (const syncer of chain.values()) {
         syncer.start()
       }
+    }
+    for (const cleaner of this.dataCleaners) {
+      cleaner.start()
     }
   }
 
@@ -122,7 +133,7 @@ export class InteropSyncersManager {
 
       const http = new Http({
         logger: rpcLogger,
-        maxCallsPerMinute: 120, // rpcConfig.callsPerMinute
+        maxCallsPerMinute: 500, // rpcConfig.callsPerMinute
       })
 
       client = new EthRpcClient(
@@ -152,10 +163,14 @@ export class InteropSyncersManager {
       )
       const state = stateByKey.get(key)
       seen.add(key)
+      let syncMode = `${syncer?.state.name}-${syncer?.state.status}`
+      if (syncer?.logRangeDivider !== undefined) {
+        syncMode += ` (log div: ${syncer.logRangeDivider})`
+      }
       rows.push({
         pluginName: range.pluginName,
         chain: range.chain,
-        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
+        syncMode,
         toBlock: range.toBlock,
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
@@ -183,13 +198,14 @@ export class InteropSyncersManager {
 
     for (const chain of this.syncers.values()) {
       for (const syncer of chain.values()) {
-        const key = `${syncer.plugin.name}:${syncer.chain}`
+        const clusterName = syncer.cluster.name
+        const key = `${clusterName}:${syncer.chain}`
         if (seen.has(key)) {
           continue
         }
         seen.add(key)
         rows.push({
-          pluginName: syncer.plugin.name,
+          pluginName: clusterName,
           chain: syncer.chain,
           syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
         })

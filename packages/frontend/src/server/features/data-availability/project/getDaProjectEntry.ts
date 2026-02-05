@@ -13,11 +13,11 @@ import {
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
+import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
-import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaProjectEconomicSecurity } from './utils/getDaProjectEconomicSecurity'
@@ -176,7 +176,7 @@ export async function getDaProjectEntry(
     entryType: 'common',
     name: layer.name,
     slug: layer.slug,
-    icon: getProjectIcon(layer.slug),
+    icon: manifest.getUrl(`/icons/${layer.slug}.png`),
     kind: layer.daLayer.type,
     type: layer.daLayer.type,
     description: `${layer.display.description} ${selected?.display.description ?? ''}`,
@@ -206,7 +206,7 @@ export async function getDaProjectEntry(
         .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
         .map((x) => ({
           ...x,
-          icon: getProjectIcon(x.slug),
+          icon: manifest.getUrl(`/icons/${x.slug}.png`),
           url: `/scaling/projects/${x.slug}`,
         })),
     })),
@@ -229,7 +229,7 @@ export async function getDaProjectEntry(
         .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
         .map((x) => ({
           ...x,
-          icon: getProjectIcon(x.slug),
+          icon: manifest.getUrl(`/icons/${x.slug}.png`),
           url: `/scaling/projects/${x.slug}`,
         })),
       ongoingAnomaly: ongoingAnomalies
@@ -261,7 +261,7 @@ export async function getDaProjectEntry(
       tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)).latest,
       usedIn: layer.daLayer.usedWithoutBridgeIn.map((x) => ({
         ...x,
-        icon: getProjectIcon(x.slug),
+        icon: manifest.getUrl(`/icons/${x.slug}.png`),
         url: `/scaling/projects/${x.slug}`,
       })),
     })
@@ -312,7 +312,7 @@ export async function getEthereumDaProjectEntry(
     .sort((a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest)
     .map((x) => ({
       ...x,
-      icon: getProjectIcon(x.slug),
+      icon: manifest.getUrl(`/icons/${x.slug}.png`),
       url: `/scaling/projects/${x.slug}`,
     }))
 
@@ -324,7 +324,7 @@ export async function getEthereumDaProjectEntry(
     entryType: 'ethereum',
     name: layer.name,
     slug: layer.slug,
-    icon: getProjectIcon(layer.slug),
+    icon: manifest.getUrl(`/icons/${layer.slug}.png`),
     kind: layer.daLayer.type,
     type: layer.daLayer.type,
     description: `${layer.display.description} ${bridge.display.description}`,

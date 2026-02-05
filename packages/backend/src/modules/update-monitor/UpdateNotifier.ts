@@ -33,6 +33,8 @@ const OCCURRENCE_LIMIT = 3
 const HOUR_RANGE = 12
 
 export class UpdateNotifier {
+  private loggedDiscordClientMissing = false
+
   constructor(
     private readonly db: Database,
     private readonly discordClient: DiscordClient | undefined,
@@ -137,10 +139,12 @@ export class UpdateNotifier {
     channel: DiscordChannelType,
   ) {
     if (!this.discordClient) {
-      // TODO: maybe only once? rethink
-      this.logger.info(
-        'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
-      )
+      if (!this.loggedDiscordClientMissing) {
+        this.logger.info(
+          'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
+        )
+        this.loggedDiscordClientMissing = true
+      }
       return
     }
 

@@ -2,7 +2,9 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import {
   getBlockNumberAtOrBefore,
+  isLimitExceededError,
   type RpcLog,
+  type RpcTransaction,
   toEVMLog,
   UpsertMap,
 } from '@l2beat/shared'
@@ -22,8 +24,8 @@ import type {
 const LOG_QUERY_RANGE: Record<string, bigint> = {
   DEFAULT: 10_000n,
   arbitrum: 100_000n,
-  optimism: 100_000n,
 }
+const MAX_LOG_RANGE_DIVIDER = 3
 
 interface RangeData {
   nextRange: { from: bigint; to: bigint }
@@ -39,7 +41,10 @@ export class CatchingUpState implements TimeloopState {
   constructor(
     private readonly syncer: InteropEventSyncer,
     private readonly logger: Logger,
-  ) {}
+  ) {
+    // Reset when new resync begins
+    this.syncer.logRangeDivider = undefined
+  }
 
   async run(): Promise<SyncerState> {
     return await this.catchUp()
@@ -52,10 +57,14 @@ export class CatchingUpState implements TimeloopState {
         return this
       }
 
-      const resyncFrom = await this.syncer.isResyncRequestedFrom()
-      if (resyncFrom !== undefined) {
-        this.status = 'deleting all data for resync'
-        await this.syncer.deleteAllClusterData()
+      const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
+      if (resyncFrom !== undefined && wipeRequired) {
+        this.syncer.waitingForWipe = true
+        this.status = 'waiting for wipe'
+        return this
+      }
+      if (this.syncer.waitingForWipe && !wipeRequired) {
+        this.syncer.waitingForWipe = false
       }
 
       this.status = 'syncing'
@@ -65,10 +74,14 @@ export class CatchingUpState implements TimeloopState {
       )
       if (rangeData) {
         const logQuery = this.syncer.buildLogQuery()
-        await this.syncRange(logQuery, rangeData)
+        const syncResult = await this.syncRange(logQuery, rangeData)
+        if (syncResult === 'retrySmallerRange') {
+          this.status = 'waiting for smaller range'
+          return this
+        }
 
         if (resyncFrom) {
-          await this.clearResyncRequestFlag()
+          await this.clearResyncRequestFlagUnlessWipePending()
         }
       } else {
         this.status = 'idle'
@@ -86,10 +99,22 @@ export class CatchingUpState implements TimeloopState {
     }
   }
 
-  private async syncRange(logQuery: LogQuery, rangeData: RangeData) {
-    const interopEvents = logQuery.isEmpty()
-      ? []
-      : await this.captureRange(rangeData.nextRange, logQuery)
+  private async syncRange(
+    logQuery: LogQuery,
+    rangeData: RangeData,
+  ): Promise<'synced' | 'retrySmallerRange'> {
+    let interopEvents: InteropEvent[] = []
+    if (!logQuery.isEmpty()) {
+      try {
+        interopEvents = await this.captureRange(rangeData.nextRange, logQuery)
+      } catch (error) {
+        if (error instanceof Error && isLimitExceededError(error)) {
+          this.increaseLogRangeDivider()
+          return 'retrySmallerRange'
+        }
+        throw error
+      }
+    }
 
     await this.syncer.saveProducedInteropEvents(
       interopEvents,
@@ -98,9 +123,11 @@ export class CatchingUpState implements TimeloopState {
 
     this.logger.info('New range synced', {
       chain: this.syncer.chain,
-      pluginName: this.syncer.plugin.name,
+      pluginName: this.syncer.cluster.name,
       range: rangeData.nextRange,
     })
+
+    return 'synced'
   }
 
   private async fetchLogsForRange(
@@ -138,6 +165,7 @@ export class CatchingUpState implements TimeloopState {
 
     const logsPerTx = new UpsertMap<string, ViemLog[]>()
     const txsWithIncludedEvents = new Set<string>()
+    const txsWithFullData = new Set<string>()
     for (const log of logs) {
       assert(log.transactionHash)
       const v = logsPerTx.getOrInsert(log.transactionHash, [])
@@ -146,6 +174,9 @@ export class CatchingUpState implements TimeloopState {
       const topic0 = log.topics[0]
       if (topic0 && logQueryForChain.topicToTxEvents.has(topic0)) {
         txsWithIncludedEvents.add(log.transactionHash)
+      }
+      if (topic0 && logQueryForChain.topic0sWithTx.has(topic0)) {
+        txsWithFullData.add(log.transactionHash)
       }
     }
 
@@ -162,6 +193,15 @@ export class CatchingUpState implements TimeloopState {
       )
     }
 
+    const txsByHash = new Map<string, LogToCapture['tx']>()
+    for (const txHash of txsWithFullData) {
+      const transaction = await this.syncer.getTransactionByHash(txHash)
+      if (!transaction) {
+        continue
+      }
+      txsByHash.set(txHash, toTransaction(transaction))
+    }
+
     const interopEvents = []
     for (const log of logs) {
       assert(log.transactionHash)
@@ -174,7 +214,7 @@ export class CatchingUpState implements TimeloopState {
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
         txLogs: logsPerTx.get(log.transactionHash) ?? [],
-        tx: { hash: log.transactionHash },
+        tx: txsByHash.get(log.transactionHash) ?? { hash: log.transactionHash },
         chain: this.syncer.chain,
         block: {
           number: Number(log.blockNumber),
@@ -195,11 +235,10 @@ export class CatchingUpState implements TimeloopState {
     return interopEvents.flat()
   }
 
-  async clearResyncRequestFlag() {
-    await this.syncer.db.interopPluginSyncState.setResyncRequestedFrom(
-      this.syncer.plugin.name,
+  async clearResyncRequestFlagUnlessWipePending() {
+    await this.syncer.db.interopPluginSyncState.clearResyncRequestUnlessWipePending(
+      this.syncer.cluster.name,
       this.syncer.chain,
-      null,
     )
   }
 
@@ -237,7 +276,7 @@ export class CatchingUpState implements TimeloopState {
       nextFrom = syncedRange.toBlock + 1n
     } else {
       throw new Error(
-        `Can't resync ${this.syncer.plugin.name} plugin without "from" timestamp`,
+        `Can't resync ${this.syncer.cluster.name} cluster without "from" timestamp`,
       )
     }
 
@@ -247,8 +286,14 @@ export class CatchingUpState implements TimeloopState {
 
     const queryRange =
       LOG_QUERY_RANGE[this.syncer.chain] ?? LOG_QUERY_RANGE.DEFAULT
-    nextTo = nextFrom + queryRange - 1n
-    assert(nextTo > nextFrom)
+    const divider = this.syncer.logRangeDivider ?? 0
+    const divisor = 2n ** BigInt(divider)
+    let effectiveRange = queryRange / divisor
+    if (effectiveRange < 1n) {
+      effectiveRange = 1n
+    }
+    nextTo = nextFrom + effectiveRange - 1n
+    assert(nextTo >= nextFrom)
     if (nextTo >= latestBlock.number) {
       nextTo = latestBlock.number
       fullTo = nextTo
@@ -272,6 +317,16 @@ export class CatchingUpState implements TimeloopState {
     }
   }
 
+  private increaseLogRangeDivider() {
+    const current = this.syncer.logRangeDivider ?? 0
+    if (current >= MAX_LOG_RANGE_DIVIDER) {
+      throw new Error(
+        `Log range divider exceeded max of ${MAX_LOG_RANGE_DIVIDER}`,
+      )
+    }
+    this.syncer.logRangeDivider = current + 1
+  }
+
   private async getBlockNumberAtOrBefore(
     timestamp: UnixTime,
     latestBlockNumber: bigint,
@@ -288,5 +343,16 @@ export class CatchingUpState implements TimeloopState {
         },
       ),
     )
+  }
+}
+
+function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
+  return {
+    hash: tx.hash,
+    from: tx.from,
+    to: tx.to ?? undefined,
+    data: tx.input,
+    type: tx.type?.toString(),
+    value: tx.value,
   }
 }

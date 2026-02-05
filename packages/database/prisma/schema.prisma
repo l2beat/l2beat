@@ -522,6 +522,7 @@ model InteropPluginSyncState {
   chain               String    @db.VarChar(255)
   lastError           String?   @db.Text
   resyncRequestedFrom DateTime? @db.Timestamp(6)
+  wipeRequired        Boolean   @default(false)
 
   @@id([pluginName, chain])
 }
@@ -542,11 +543,34 @@ model AggregatedInteropTransfer {
   id               String   @db.VarChar(255)
   srcChain         String   @db.VarChar(255)
   dstChain         String   @db.VarChar(255)
-  tokensByVolume   Json
   transferCount    Int
+  identifiedCount  Int      @default(0)
   totalDurationSum Int
   srcValueUsd      Float?   @db.Real
   dstValueUsd      Float?   @db.Real
+  avgValueInFlight Float?   @db.Real
+  mintedValueUsd   Float?   @db.Real
+  burnedValueUsd   Float?   @db.Real
+  countUnder100    Int      @default(0)
+  count100To1K     Int      @default(0)
+  count1KTo10K     Int      @default(0)
+  count10KTo100K   Int      @default(0)
+  countOver100K    Int      @default(0)
 
   @@id([timestamp, srcChain, dstChain, id])
+}
+
+model AggregatedInteropToken {
+  timestamp        DateTime @db.Timestamp(6)
+  id               String   @db.VarChar(255)
+  srcChain         String   @db.VarChar(255)
+  dstChain         String   @db.VarChar(255)
+  abstractTokenId  String   @db.VarChar(6)
+  mintedValueUsd   Float?   @db.Real
+  burnedValueUsd   Float?   @db.Real
+  transferCount    Int
+  totalDurationSum Int
+  volume           Float    @db.Real
+
+  @@id([timestamp, srcChain, dstChain, id, abstractTokenId])
 }

@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x504c824e99e1768580d29a192436d8c7b0168188
+
+# Diff at Tue, 20 Jan 2026 14:32:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a5d37b36a43301b2def017b94f066897f111cc32 block: 1766407578
+- current timestamp: 1768919498
+
+## Description
+
+Raised max total USDC balance on the bridge.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
++++ description: The maximum total balance that can be locked in the bridge.
+      values.maxTotalBalance:
+-        250000000000000
++        500000000000000
+    }
+```
+
 Generated with discovered.json: 0xe92e134bbe367a4945696188717d41e5b28ed67a
 
 # Diff at Mon, 22 Dec 2025 12:47:20 GMT:

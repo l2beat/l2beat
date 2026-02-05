@@ -175,10 +175,16 @@ export type MatchResult = (
   | InteropIgnore
 )[]
 
+export interface SameTxAtOffsetQuery {
+  event: InteropEvent
+  offset: number
+}
+
 export type InteropEventQuery<T> = Partial<T> & {
   ctx?: Partial<InteropEventContext>
   sameTxBefore?: InteropEvent
   sameTxAfter?: InteropEvent
+  sameTxAtOffset?: SameTxAtOffsetQuery
 }
 
 export interface InteropApproximateQuery<T> {
@@ -201,7 +207,7 @@ export interface InteropEventDb {
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
     approximate: InteropApproximateQuery<T>,
-  ): InteropEvent<T> | undefined
+  ): InteropEvent<T>[]
 }
 
 export type DataRequest = EventDataRequest
@@ -210,12 +216,12 @@ interface EventDataRequest {
   type: 'event'
   signature: string
   includeTxEvents?: string[]
+  includeTx?: boolean
   addresses: ChainSpecificAddress[]
 }
 
 export interface InteropPlugin {
   readonly name: InteropPluginName
-  cluster?: string
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]

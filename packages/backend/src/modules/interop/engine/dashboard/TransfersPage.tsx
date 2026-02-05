@@ -10,6 +10,25 @@ import {
 } from './ProcessorsStatusTable'
 import { ShortenedHash } from './ShortenedHash'
 
+function BooleanCell({
+  value,
+  trueLabel,
+  falseLabel,
+}: {
+  value: boolean | undefined
+  trueLabel: string
+  falseLabel: string
+}) {
+  if (value === undefined) {
+    return <span style={{ color: '#888' }}>-</span>
+  }
+  return (
+    <span style={{ color: value ? '#e67e22' : '#3498db' }}>
+      {value ? trueLabel : falseLabel}
+    </span>
+  )
+}
+
 function TransfersTable(props: {
   transfers: InteropTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
@@ -18,12 +37,15 @@ function TransfersTable(props: {
     <table id="myTable" className="display">
       <thead>
         <tr>
+          <th>Plugin</th>
           <th>Timestamp UTC</th>
           <th>Duration</th>
           <th>srcToken</th>
           <th>srcValue</th>
+          <th>srcBurned</th>
           <th>dstToken</th>
           <th>dstValue</th>
+          <th>dstMinted</th>
           <th>srcChain</th>
           <th>srcTx</th>
           <th>srcToken</th>
@@ -41,18 +63,39 @@ function TransfersTable(props: {
             <tr
               key={`${e.srcChain}-${e.srcTxHash}-${e.dstChain}-${e.dstTxHash}`}
             >
+              <td>{e.plugin}</td>
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
-              <td>{e.duration && formatSeconds(e.duration)}</td>
+              <td data-order={e.duration} data-sort={e.duration}>
+                {e.duration && formatSeconds(e.duration)}
+              </td>
               <td>
                 {e.srcAmount} {e.srcSymbol}
               </td>
-              <td data-order={e.srcValueUsd}>{formatDollars(e.srcValueUsd)}</td>
+              <td data-order={e.srcValueUsd} data-sort={e.srcValueUsd}>
+                {formatDollars(e.srcValueUsd)}
+              </td>
+              <td>
+                <BooleanCell
+                  value={e.srcWasBurned}
+                  trueLabel="burned"
+                  falseLabel="locked"
+                />
+              </td>
               <td>
                 {e.dstAmount} {e.dstSymbol}
               </td>
-              <td data-order={e.dstValueUsd}>{formatDollars(e.dstValueUsd)}</td>
+              <td data-order={e.dstValueUsd} data-sort={e.dstValueUsd}>
+                {formatDollars(e.dstValueUsd)}
+              </td>
+              <td>
+                <BooleanCell
+                  value={e.dstWasMinted}
+                  trueLabel="minted"
+                  falseLabel="released"
+                />
+              </td>
               <td>{e.srcChain}</td>
               <td>
                 {srcExplorerUrl ? (

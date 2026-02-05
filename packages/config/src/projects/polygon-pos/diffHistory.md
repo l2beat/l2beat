@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xb27d505ee1d040eb4582fa67fd58452639d7a50d
+
+# Diff at Wed, 28 Jan 2026 13:28:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c9622efccc03e90f3e3da4283b4873ee6b8197d6 block: 1769000103
+- current timestamp: 1769606705
+
+## Description
+
+add mappings for tokens via pos- / and plasma bridge (used in polygon interop plugin).
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769000103 (main branch discovery), not current.
+
+```diff
+    contract Registry (eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      template:
++        "polygonposbridge/Registry"
+      description:
++        "Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShare (eth:0xFB3a3A64E12FA787a6b709BF57834bdAD958d797)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xd3d772defe767848597eb21aa0aa5387f5a4b55e
+
+# Diff at Wed, 21 Jan 2026 12:56:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768817836
+- current timestamp: 1769000103
+
+## Description
+
+ms change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xfd5E854b73a239c9052d89C53D1313f5AfB860ac"
++        "eth:0x6624307a4f672ec5C289fBA196952902BB518dc0"
+    }
+```
+
 Generated with discovered.json: 0xf36b99662b83385ed3ff578fc7a3e05a25a74a78
 
 # Diff at Mon, 19 Jan 2026 10:41:47 GMT:

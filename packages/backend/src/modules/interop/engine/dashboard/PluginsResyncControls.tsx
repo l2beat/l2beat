@@ -37,11 +37,20 @@ export function PluginsResyncControls(props: {
                       data-plugin-name={pluginName}
                       data-resync-days={days}
                     >
-                      Wipe and resync {days}d
+                      Resync {days}d
                     </button>
                     {index < resyncDaysOptions.length - 1 ? ' ' : null}
                   </React.Fragment>
-                ))}
+                ))}{' '}
+                <button
+                  type="button"
+                  className="interop-resync-button"
+                  data-plugin-name={pluginName}
+                  data-resync-days={14}
+                  data-resync-ethereum-days={1}
+                >
+                  Resync Ethereum 1d, others 14d
+                </button>
               </td>
             </tr>
           ))}
@@ -51,12 +60,17 @@ export function PluginsResyncControls(props: {
         dangerouslySetInnerHTML={{
           __html: `
             (function() {
-              function buildPayload(pluginName, days) {
+              function buildPayload(pluginName, days, ethereumDays) {
                 var nowSeconds = Math.floor(Date.now() / 1000);
-                return {
+                var payload = {
                   pluginName: pluginName,
                   resyncRequestedFrom: { '*': nowSeconds - 3600 * 24 * days }
                 };
+                if (ethereumDays) {
+                  payload.resyncRequestedFrom.ethereum =
+                    nowSeconds - 3600 * 24 * ethereumDays;
+                }
+                return payload;
               }
 
               document.addEventListener('click', function(event) {
@@ -68,6 +82,12 @@ export function PluginsResyncControls(props: {
                 if (!pluginName) return;
                 var resyncDays = Number(target.getAttribute('data-resync-days'));
                 if (!resyncDays) return;
+                var ethereumDaysAttr = target.getAttribute('data-resync-ethereum-days');
+                var ethereumDays = null;
+                if (ethereumDaysAttr !== null) {
+                  ethereumDays = Number(ethereumDaysAttr);
+                  if (!ethereumDays) return;
+                }
 
                 var originalText = target.textContent;
                 target.disabled = true;
@@ -75,7 +95,7 @@ export function PluginsResyncControls(props: {
                 fetch('/interop/resync', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(buildPayload(pluginName, resyncDays))
+                  body: JSON.stringify(buildPayload(pluginName, resyncDays, ethereumDays))
                 })
                   .then(function(response) {
                     if (!response.ok) {

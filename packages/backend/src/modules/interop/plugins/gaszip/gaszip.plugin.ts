@@ -1,3 +1,8 @@
+/**
+ * gaszip (standalone) plugin based on tx calldata in addition to logs
+ * good API available at https://backend.gas.zip/v2/search/TXHASH for checking
+ */
+
 import type { Logger } from '@l2beat/backend-tools'
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import {
@@ -31,13 +36,13 @@ export const GasZipDeposit = createInteropEventType<{
   depositType: string
   destinationChains: string
   destinationAddress?: Address32
-}>('gaszip.Deposit')
+}>('gaszip.Deposit', { direction: 'outgoing' })
 
 export const GasZipFill = createInteropEventType<{
   receiver: Address32
   amount: bigint
   tokenAddress: Address32
-}>('gaszip.Fill')
+}>('gaszip.Fill', { direction: 'incoming' })
 
 export class GasZipPlugin implements InteropPlugin {
   readonly name = 'gaszip'
@@ -65,7 +70,7 @@ export class GasZipPlugin implements InteropPlugin {
       }))
 
       const destinationAddress =
-        decoded.destinationAddress ?? Address32(input.tx.from)
+        decoded.destinationAddress ?? Address32.from(input.tx.from)
       const events = []
 
       for (const dc of destinationChains) {
@@ -144,7 +149,7 @@ export class GasZipPlugin implements InteropPlugin {
   match(gasZipFill: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!GasZipFill.checkType(gasZipFill)) return
 
-    const gasZipDeposit = db.findApproximate(
+    const gasZipDeposits = db.findApproximate(
       GasZipDeposit,
       {
         $dstChain: gasZipFill.ctx.chain,
@@ -153,9 +158,11 @@ export class GasZipPlugin implements InteropPlugin {
       {
         key: 'amount',
         valueBigInt: gasZipFill.args.amount,
-        toleranceUp: 0.05,
+        toleranceUp: 0.1, // see examples, 5% was too low
+        toleranceDown: 0.03, // for some reason some fills are more
       },
     )
+    const gasZipDeposit = gasZipDeposits[0]
     if (!gasZipDeposit) return
 
     return [
@@ -168,9 +175,11 @@ export class GasZipPlugin implements InteropPlugin {
         srcEvent: gasZipDeposit,
         srcTokenAddress: gasZipDeposit.args.tokenAddress,
         srcAmount: BigInt(gasZipDeposit.args.amount),
+        srcWasBurned: false,
         dstEvent: gasZipFill,
         dstTokenAddress: gasZipFill.args.tokenAddress,
         dstAmount: BigInt(gasZipFill.args.amount),
+        dstWasMinted: false,
       }),
     ]
   }

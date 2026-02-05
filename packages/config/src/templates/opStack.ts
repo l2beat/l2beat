@@ -624,9 +624,15 @@ function getProgramHashes(
 
   switch (fraudProofType) {
     case 'None':
-    case 'Permissioned':
-    case 'Permissionless':
       return []
+    case 'Permissioned':
+    case 'Permissionless': {
+      const absolutePrestate = templateVars.discovery.getContractValue<string>(
+        'PermissionedDisputeGame',
+        'absolutePrestate',
+      )
+      return [PROGRAM_HASHES(absolutePrestate)]
+    }
     case 'Kailua': {
       const kailuaProgramHash = templateVars.discovery.getContractValue<string>(
         'KailuaTreasury',
@@ -2251,16 +2257,17 @@ type FraudProofType =
   | 'OpSuccinctFDP'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
-  // Check if it's OpSuccinct by looking for OPSuccinctL2OutputOracle contract
-  if (templateVars.discovery.hasContract('OPSuccinctL2OutputOracle')) {
-    return 'OpSuccinct'
-  }
-
   const portal = getOptimismPortal(templateVars)
+
+  // Legacy OptimismPortal doesn't have dispute games
   if (portal.name === 'OptimismPortal') {
+    if (templateVars.discovery.hasContract('OPSuccinctL2OutputOracle')) {
+      return 'OpSuccinct'
+    }
     return 'None'
   }
 
+  // OptimismPortal2 uses dispute games - check respectedGameType
   const respectedGameType = templateVars.discovery.getContractValue<number>(
     portal.name ?? portal.address,
     'respectedGameType',
@@ -2271,6 +2278,9 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
   if (respectedGameType === 1) {
     return 'Permissioned'
+  }
+  if (respectedGameType === 6) {
+    return 'OpSuccinct'
   }
   if (respectedGameType === 1337) {
     return 'Kailua'

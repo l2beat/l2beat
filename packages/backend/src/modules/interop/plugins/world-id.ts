@@ -1,139 +1,122 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
-  hashCrossDomainMessageV1,
-  OPSTACK_NETWORKS,
-  parseSentMessage,
-  parseSentMessageExtension1,
+  FailedRelayedMessage,
   RelayedMessage,
   SentMessage,
 } from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-// World ID OpWorldID contract on Ethereum
-const WORLD_ID_BRIDGE = EthereumAddress(
-  '0xa6d85f3b3be6ff6dc52c3aabe9a35d0ce252b79f',
+// == Event signatures ==
+
+const rootPropagatedLog = 'event RootPropagated(uint256 root)'
+
+const WORLD_ID_BRIDGE = ChainSpecificAddress(
+  'eth:0xa6d85f3b3be6ff6dc52c3aabe9a35d0ce252b79f',
 )
 
-// Build lookup map from L1CrossDomainMessenger address to network
-const L1_CDM_TO_NETWORK = new Map(
-  OPSTACK_NETWORKS.map((n) => [n.l1CrossDomainMessenger.toString(), n]),
-)
+const RootPropagated = createInteropEventType<object>('world-id.RootPropagated')
 
-// L1 event: RootPropagated from World ID + SentMessage combined
-const WorldIdSentMessage = createInteropEventType<{
-  chain: string
-  msgHash: string
-}>('world-id.SentMessage')
+const parseRootPropagated = createEventParser(rootPropagatedLog)
 
-// Event parser for RootPropagated from World ID
-// event RootPropagated(uint256 root)
-const parseRootPropagated = createEventParser(
-  'event RootPropagated(uint256 root)',
-)
-
-export class WorldIdPlugin implements InteropPlugin {
+export class WorldIdPlugin implements InteropPluginResyncable {
   readonly name = 'world-id'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: rootPropagatedLog,
+        addresses: [WORLD_ID_BRIDGE],
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
-      // L1: Capture RootPropagated from World ID contract
-      const rootPropagated = parseRootPropagated(input.log, [WORLD_ID_BRIDGE])
+      const rootPropagated = parseRootPropagated(input.log, [
+        ChainSpecificAddress.address(WORLD_ID_BRIDGE),
+      ])
       if (rootPropagated) {
-        // Find SentMessage from any known L1CrossDomainMessenger in the same tx
-        for (const log of input.txLogs) {
-          const network = L1_CDM_TO_NETWORK.get(log.address)
-          if (!network) continue
-
-          const sentMessage = parseSentMessage(log, [
-            network.l1CrossDomainMessenger,
-          ])
-          if (!sentMessage) continue
-
-          // Find SentMessageExtension1
-          const nextLog = input.txLogs.find(
-            // biome-ignore lint/style/noNonNullAssertion: It's there
-            (x) => x.logIndex === log.logIndex! + 1,
-          )
-          const extension =
-            nextLog &&
-            parseSentMessageExtension1(nextLog, [
-              network.l1CrossDomainMessenger,
-            ])
-
-          const msgHash = hashCrossDomainMessageV1(
-            sentMessage.messageNonce,
-            sentMessage.sender,
-            sentMessage.target,
-            extension?.value ?? 0n,
-            sentMessage.gasLimit,
-            sentMessage.message,
-          )
-
-          return [
-            WorldIdSentMessage.create(input, {
-              chain: network.chain,
-              msgHash,
-            }),
-          ]
-        }
+        return [RootPropagated.create(input, {})]
       }
     }
-    // No L2 event capture - we match on opstack's RelayedMessage
   }
 
-  // Match on opstack's RelayedMessage
-  matchTypes = [RelayedMessage]
+  matchTypes = [RelayedMessage, FailedRelayedMessage]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (RelayedMessage.checkType(event)) {
-      // Check if there's a corresponding WorldIdSentMessage
-      const worldIdEvent = db.find(WorldIdSentMessage, {
-        msgHash: event.args.msgHash,
-        chain: event.args.chain,
-      })
-      if (!worldIdEvent) return
-
-      // Also find underlying OpStack SentMessage
       const sentMessage = db.find(SentMessage, {
         msgHash: event.args.msgHash,
         chain: event.args.chain,
       })
       if (!sentMessage) return
 
+      // Find RootPropagated at exact offset from SentMessage
+      // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → RootPropagated (N+2)
+      const rootPropagated = db.find(RootPropagated, {
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
+      })
+      if (!rootPropagated) return
+
       const results: MatchResult = [
         Result.Message('opstack.L1ToL2Message', {
           app: 'world-id',
           srcEvent: sentMessage,
           dstEvent: event,
-          extraEvents: [worldIdEvent],
+          extraEvents: [rootPropagated],
         }),
       ]
 
-      // If ETH was sent via CrossDomainMessenger, also create a Transfer
       if (sentMessage.args.value > 0n) {
         results.push(
           Result.Transfer('world-id.L1ToL2Transfer', {
             srcEvent: sentMessage,
             srcAmount: sentMessage.args.value,
             srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: false,
             dstEvent: event,
             dstAmount: sentMessage.args.value,
             dstTokenAddress: Address32.NATIVE,
-            extraEvents: [worldIdEvent],
+            dstWasMinted: false,
+            extraEvents: [rootPropagated],
           }),
         )
       }
 
       return results
+    }
+
+    if (FailedRelayedMessage.checkType(event)) {
+      const sentMessage = db.find(SentMessage, {
+        msgHash: event.args.msgHash,
+        chain: event.args.chain,
+      })
+      if (!sentMessage) return
+
+      const rootPropagated = db.find(RootPropagated, {
+        sameTxAtOffset: { event: sentMessage, offset: 2 },
+      })
+      if (!rootPropagated) return
+
+      return [
+        Result.Message('opstack.L1ToL2MessageFailed', {
+          app: 'world-id',
+          srcEvent: sentMessage,
+          dstEvent: event,
+          extraEvents: [rootPropagated],
+        }),
+      ]
     }
   }
 }

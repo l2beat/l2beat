@@ -4,6 +4,7 @@ import {
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
+  type InteropBridgeType,
   type ProjectId,
   type StringWithAutocomplete,
   TokenId,
@@ -1187,6 +1188,8 @@ export interface ProjectDiscoveryInfo {
 export type InteropPluginName =
   | 'across'
   | 'across-settlement'
+  | 'across-settlement-op'
+  | 'across-settlement-orbit'
   | 'allbridge'
   | 'aori'
   | 'axelar'
@@ -1215,6 +1218,7 @@ export type InteropPluginName =
   | 'mayan-mctp'
   | 'mayan-mctp-fast'
   | 'mayan-swift'
+  | 'mayan-swift-settlement'
   | 'oneinch-fusion-plus'
   | 'opstack'
   | 'opstack-standardbridge'
@@ -1222,8 +1226,8 @@ export type InteropPluginName =
   | 'orbitstack-customgateway'
   | 'orbitstack-standardgateway'
   | 'orbitstack-wethgateway'
+  | 'polygon'
   | 'relay'
-  | 'relay-simple'
   | 'sky-bridge'
   | 'sorare-base'
   | 'squid-coral'
@@ -1234,35 +1238,48 @@ export type InteropPluginName =
   | 'wormhole-ntt'
   | 'wormhole-relayer'
   | 'wormhole-token-bridge'
+  | 'zkstack'
   | 'zklink-nova'
 
 export interface InteropConfig {
   name?: string
-  bridgeType: 'lockAndMint' | 'nonMinting' | 'omnichain'
+  bridgeType: InteropBridgeType
   plugins: InteropPlugin[]
+  /** If set to `unknown` we show `Unknown` for transfers time. */
+  transfersTimeMode?: 'unknown'
+  /** If true we show `Aggregated` as second line in table under project name. Should be configured
+   * for projects that include multiple projects (e.g. layerzero which aggregates all tokens + USDT0
+   * which is a separate project)
+   */
+  isAggregate?: boolean
+  /** Should be configured for projects that are part of other project (e.g. USDT0 is part of LayerZero,
+   * so layerzero id should be configured in usdt0 config) */
+  subgroupId?: ProjectId
+  /** If configured avg. duration it able will be split into two parts, depending on the config.
+   Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
+  durationSplit?: {
+    in: {
+      /** Custom label to be shown in the UI */
+      label: string
+      from: string
+      to: string
+    }
+    out: {
+      /** Custom label to be shown in the UI */
+      label: string
+      from: string
+      to: string
+    }
+  }
 }
 
-export type InteropPlugin =
-  | InteropByChainPlugin
-  | InteropByTokenIdPlugin
-  | InteropPlainPlugin
-
-export type InteropByChainPlugin = {
-  filterBy: 'chain'
-  chain: string
+export type InteropPlugin = {
   plugin: InteropPluginName
+  chain?: string
+  abstractTokenId?: string
+  transferType?: string
 }
 
-export type InteropByTokenIdPlugin = {
-  filterBy: 'abstractTokenId'
-  abstractTokenId: string
-  plugin: InteropPluginName
-}
-
-export type InteropPlainPlugin = {
-  plugin: InteropPluginName
-  filterBy?: undefined
-}
 // #endregion
 
 // #region TVS

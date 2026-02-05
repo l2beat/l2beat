@@ -104,12 +104,15 @@ export class InteropEventRepository extends BaseRepository {
   }
 
   async getOldestEventForPluginAndChain(
-    plugin: string,
+    plugins: string[],
     chain: string,
   ): Promise<InteropEventRecord | undefined> {
+    if (plugins.length === 0) {
+      return undefined
+    }
     const row = await this.db
       .selectFrom('InteropEvent')
-      .where('plugin', '=', plugin)
+      .where('plugin', 'in', plugins)
       .where('chain', '=', chain)
       .selectAll()
       .orderBy('timestamp', 'asc')

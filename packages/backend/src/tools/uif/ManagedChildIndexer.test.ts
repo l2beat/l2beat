@@ -18,12 +18,11 @@ describe(ManagedChildIndexer.name, () => {
       const common = {
         parents: [],
         indexerService: mockObject<IndexerService>(),
-        logger: Logger.SILENT,
         minHeight: 0,
       }
-      new TestIndexer({ ...common, name: 'a' })
+      new TestIndexer({ ...common, name: 'a' }, Logger.SILENT)
       expect(() => {
-        new TestIndexer({ ...common, name: 'a' })
+        new TestIndexer({ ...common, name: 'a' }, Logger.SILENT)
       }).toThrow('Indexer id a is duplicated!')
     })
   })
@@ -37,13 +36,15 @@ describe(ManagedChildIndexer.name, () => {
         }),
       })
 
-      const indexer = new TestIndexer({
-        parents: [],
-        name: 'indexer',
-        minHeight: 0,
-        indexerService,
-        logger: Logger.SILENT,
-      })
+      const indexer = new TestIndexer(
+        {
+          parents: [],
+          name: 'indexer',
+          minHeight: 0,
+          indexerService,
+        },
+        Logger.SILENT,
+      )
 
       const result = await indexer.initialize()
 
@@ -55,13 +56,15 @@ describe(ManagedChildIndexer.name, () => {
         getIndexerState: async () => undefined,
       })
 
-      const indexer = new TestIndexer({
-        parents: [],
-        name: 'indexer',
-        minHeight: 100,
-        indexerService,
-        logger: Logger.SILENT,
-      })
+      const indexer = new TestIndexer(
+        {
+          parents: [],
+          name: 'indexer',
+          minHeight: 100,
+          indexerService,
+        },
+        Logger.SILENT,
+      )
 
       const result = await indexer.initialize()
 
@@ -78,14 +81,16 @@ describe(ManagedChildIndexer.name, () => {
       })
 
       const minHeight = 100
-      const indexer = new TestIndexer({
-        parents: [],
-        name: 'indexer',
-        minHeight: minHeight,
-        configHash: 'new-hash',
-        indexerService,
-        logger: Logger.SILENT,
-      })
+      const indexer = new TestIndexer(
+        {
+          parents: [],
+          name: 'indexer',
+          minHeight: minHeight,
+          configHash: 'new-hash',
+          indexerService,
+        },
+        Logger.SILENT,
+      )
 
       const result = await indexer.initialize()
 
@@ -101,13 +106,15 @@ describe(ManagedChildIndexer.name, () => {
       setSafeHeight: async () => {},
     })
 
-    const indexer = new TestIndexer({
-      parents: [],
-      name: 'indexer',
-      minHeight: 0,
-      indexerService,
-      logger: Logger.SILENT,
-    })
+    const indexer = new TestIndexer(
+      {
+        parents: [],
+        name: 'indexer',
+        minHeight: 0,
+        indexerService,
+      },
+      Logger.SILENT,
+    )
 
     await indexer.setSafeHeight(1)
 
@@ -118,8 +125,8 @@ describe(ManagedChildIndexer.name, () => {
 class TestIndexer extends ManagedChildIndexer {
   override readonly options: ManagedChildIndexerOptions
 
-  constructor(options: ManagedChildIndexerOptions) {
-    super(options)
+  constructor(options: ManagedChildIndexerOptions, logger: Logger) {
+    super(options, logger)
     this.options = options
   }
 

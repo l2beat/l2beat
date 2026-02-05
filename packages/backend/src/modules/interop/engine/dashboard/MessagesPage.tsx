@@ -17,6 +17,7 @@ function MessagesTable(props: {
     <table id="myTable" className="display">
       <thead>
         <tr>
+          <th>Plugin</th>
           <th>Timestamp UTC</th>
           <th>Duration</th>
           <th>App</th>
@@ -35,10 +36,13 @@ function MessagesTable(props: {
             <tr
               key={`${e.srcChain}-${e.srcTxHash}-${e.dstChain}-${e.dstTxHash}`}
             >
+              <td>{e.plugin}</td>
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
-              <td>{e.duration && formatSeconds(e.duration)}</td>
+              <td data-order={e.duration} data-sort={e.duration}>
+                {e.duration && formatSeconds(e.duration)}
+              </td>
               <td>{e.app}</td>
               <td>{e.srcChain}</td>
               <td>

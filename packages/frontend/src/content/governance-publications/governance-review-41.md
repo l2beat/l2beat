@@ -244,7 +244,7 @@ You can find us to discuss everything related to Lisk’s governance, from curre
 
 ### **ZKsync Association Membership Overview**
 
-Rafe from the ZkSync Governance team has [shared a post](https://forum.zknation.io/t/zksync-association-membership-overview/560) that explains that delegates can now opt-in to join the ZKSync Association, an ownerless, non-profit association under Austrian law. By becoming members, delegates may gain additional liability protection when participating in ZKSync’s governance process. The membership model, accessible via a pop-up on [Tally](vote.zknation.io) or in a delegate’s ZKsync profile, aims to reduce risk and encourage more robust on-chain governance participation. While these legal interpretations are specific to Austrian law and subject to limited case precedents, the ZKsync team anticipates this novel membership structure will support a safer, more engaged delegate community. 
+Rafe from the ZkSync Governance team has [shared a post](https://forum.zknation.io/t/zksync-association-membership-overview/560) that explains that delegates can now opt-in to join the ZKSync Association, an ownerless, non-profit association under Austrian law. By becoming members, delegates may gain additional liability protection when participating in ZKSync’s governance process. The membership model, accessible via a pop-up on [Tally](https://vote.zknation.io/) or in a delegate’s ZKsync profile, aims to reduce risk and encourage more robust on-chain governance participation. While these legal interpretations are specific to Austrian law and subject to limited case precedents, the ZKsync team anticipates this novel membership structure will support a safer, more engaged delegate community. 
 
 
 ### **[Draft ZIP] Lens Chain Inclusion on Elastic Network**
@@ -270,5 +270,6 @@ A 7-person Review Committee (4 delegates + 3 external reviewers suggested) will 
 You can find us to discuss everything related to Optimism’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
 **Upcoming Events (Times in UTC):**
+
 
 [Scroll Delegate Day, Denver](https://lu.ma/e/evt-1qkD2Wa5m5QROyW) - on 28.2 at 18:00.

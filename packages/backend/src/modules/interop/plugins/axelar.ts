@@ -1,11 +1,11 @@
-/* axelar
-
-For general message passing:
-    - ContractCall on SRC chain
-    - ContractCallApproved on DST chain
-    - ContractCallExecuted on DST chain
-*/
-
+/**
+ * Axelar AMB and token bridge
+ * this token bridge is confusingly branded under 'Squid'
+ * together with the intent protocol
+ * the squid frontend supports the tokenbridge and intents/swaps
+ * MINTING (tokenbridge/squid)
+ * NON-MINTING (intents/squid)
+ */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { findParsedAround } from './hyperlane-hwr'
 import {
@@ -74,14 +74,14 @@ export const SquidExpressExecutedWithToken = createInteropEventType<{
   amount: bigint
   symbol: string
   $srcChain?: string
-}>('axelar.ExpressExecutedWithToken')
+}>('axelar.ExpressExecutedWithToken', { direction: 'incoming' })
 
 export const ContractCall = createInteropEventType<{
   sender: EthereumAddress
   destinationContractAddress: string
   payloadHash: `0x${string}`
   $dstChain?: string
-}>('axelar.ContractCall')
+}>('axelar.ContractCall', { direction: 'outgoing' })
 
 export const ContractCallWithToken = createInteropEventType<{
   sender: EthereumAddress
@@ -91,7 +91,8 @@ export const ContractCallWithToken = createInteropEventType<{
   symbol: string
   amount: bigint
   $dstChain?: string
-}>('axelar.ContractCallWithToken')
+  srcWasBurned?: boolean
+}>('axelar.ContractCallWithToken', { direction: 'outgoing' })
 
 export const ContractCallApproved = createInteropEventType<{
   commandId: `0x${string}`
@@ -100,7 +101,7 @@ export const ContractCallApproved = createInteropEventType<{
   srcTxHash: `0x${string}`
   payloadHash: `0x${string}`
   $srcChain?: string
-}>('axelar.ContractCallApproved')
+}>('axelar.ContractCallApproved', { direction: 'incoming' })
 
 export const ContractCallApprovedWithMint = createInteropEventType<{
   commandId: `0x${string}`
@@ -111,14 +112,15 @@ export const ContractCallApprovedWithMint = createInteropEventType<{
   srcTxHash: `0x${string}`
   payloadHash: `0x${string}`
   $srcChain?: string
-}>('axelar.ContractCallApprovedWithMint')
+}>('axelar.ContractCallApprovedWithMint', { direction: 'incoming' })
 
 export const ContractCallExecuted = createInteropEventType<{
   commandId: `0x${string}`
   tokenAddressUnsafe?: Address32
   amountUnsafe?: bigint
   isLayerZeroApp?: boolean
-}>('axelar.ContractCallExecuted')
+  dstWasMinted?: boolean
+}>('axelar.ContractCallExecuted', { direction: 'incoming' })
 
 export class AxelarPlugin implements InteropPlugin {
   readonly name = 'axelar'
@@ -155,6 +157,7 @@ export class AxelarPlugin implements InteropPlugin {
           amount: expressExecutedWithToken.amount,
           symbol: expressExecutedWithToken.symbol,
           $srcChain: srcChain === 'Unknown_axelar' ? undefined : srcChain,
+          // never minted
         }),
       ]
     }
@@ -178,7 +181,7 @@ export class AxelarPlugin implements InteropPlugin {
 
     const contractCallWithToken = parseContractCallWithToken(input.log, null)
     if (contractCallWithToken) {
-      const tokenAddress = findParsedAround(
+      const transferData = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
@@ -187,7 +190,10 @@ export class AxelarPlugin implements InteropPlugin {
           if (!transfer) return
           // compare amount to not match a rogue Transfer event
           if (transfer.value !== contractCallWithToken.amount) return
-          return Address32.from(log.address)
+          return {
+            address: Address32.from(log.address),
+            burned: Address32.from(transfer.to) === Address32.ZERO,
+          }
         },
       )
 
@@ -203,10 +209,11 @@ export class AxelarPlugin implements InteropPlugin {
           destinationContractAddress:
             contractCallWithToken.destinationContractAddress,
           payloadHash: contractCallWithToken.payloadHash,
-          tokenAddress,
+          tokenAddress: transferData?.address,
           symbol: contractCallWithToken.symbol,
           amount: contractCallWithToken.amount,
           $dstChain: dstChain === 'Unknown_axelar' ? undefined : dstChain,
+          srcWasBurned: transferData?.burned,
         }),
       ]
     }
@@ -262,7 +269,7 @@ export class AxelarPlugin implements InteropPlugin {
 
     const contractCallExecuted = parseContractCallExecuted(input.log, null)
     if (contractCallExecuted) {
-      const nearestTransfer = findParsedAround(
+      const nearestTransferInfo = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
@@ -276,6 +283,7 @@ export class AxelarPlugin implements InteropPlugin {
               return {
                 address: Address32.from(log.address),
                 amount: transfer.value,
+                minted: from === Address32.ZERO,
               }
           }
           const payloadVerified = parsePayloadVerified(log, null)
@@ -285,15 +293,16 @@ export class AxelarPlugin implements InteropPlugin {
         },
       )
 
-      const tokenAddressUnsafe = nearestTransfer?.address
-      const amountUnsafe = nearestTransfer?.amount
+      const tokenAddressUnsafe = nearestTransferInfo?.address
+      const amountUnsafe = nearestTransferInfo?.amount
 
       return [
         ContractCallExecuted.create(input, {
           commandId: contractCallExecuted.commandId,
           tokenAddressUnsafe,
           amountUnsafe,
-          isLayerZeroApp: nearestTransfer?.isLayerZeroApp,
+          isLayerZeroApp: nearestTransferInfo?.isLayerZeroApp,
+          dstWasMinted: nearestTransferInfo?.minted,
         }),
       ]
     }
@@ -363,30 +372,35 @@ export class AxelarPlugin implements InteropPlugin {
         return [
           // TODO: do we want to count intent fill AND settlement as message/transfer?
           // INTENT FILL
-          Result.Message('squid.Message', {
-            app: 'axelar-squid-express',
+          Result.Message('axelar-squid.Message', {
+            app: 'axelar-squid',
             srcEvent: contractCallWithToken,
             dstEvent: expressExecuted,
           }),
-          Result.Transfer('axelar-squid-express.Transfer', {
+          Result.Transfer('axelar-squid.Transfer', {
             srcEvent: contractCallWithToken,
             srcTokenAddress: contractCallWithToken.args.tokenAddress,
             srcAmount: contractCallWithToken.args.amount,
+            srcWasBurned: contractCallWithToken.args.srcWasBurned,
             dstEvent: expressExecuted,
             dstTokenAddress: expressExecuted.args.tokenAddress,
             dstAmount: expressExecuted.args.amount,
+            dstWasMinted: false,
           }),
           // SETTLEMENT
+          // we count the transfer because it is using the
+          // axelar tokenbridge to settle at the destination
           Result.Message('axelar.Message', {
-            app: 'axelar-squid-express-settlement',
+            app: 'axelar-tokenbridge-squid-settlement',
             srcEvent: contractCallWithToken,
             dstEvent: contractCallExecuted,
             extraEvents: [contractCallApprovedWithMint],
           }),
-          Result.Transfer('axelar-squid-express-settlement.Transfer', {
+          Result.Transfer('axelar.Transfer', {
             srcEvent: contractCallWithToken,
             srcTokenAddress: contractCallWithToken.args.tokenAddress,
             srcAmount: contractCallWithToken.args.amount,
+            srcWasBurned: contractCallWithToken.args.srcWasBurned,
             dstEvent: contractCallExecuted,
             dstTokenAddress: matchingUnsafeAmount
               ? contractCallExecuted.args.tokenAddressUnsafe
@@ -394,20 +408,22 @@ export class AxelarPlugin implements InteropPlugin {
             dstAmount: matchingUnsafeAmount
               ? contractCallApprovedWithMint.args.amount
               : undefined,
+            dstWasMinted: contractCallExecuted.args.dstWasMinted,
           }),
         ]
       }
       return [
         Result.Message('axelar.Message', {
-          app: 'axelar-contractCallWithToken',
+          app: 'axelar-tokenbridge',
           srcEvent: contractCallWithToken,
           dstEvent: contractCallExecuted,
           extraEvents: [contractCallApprovedWithMint],
         }),
-        Result.Transfer('axelar-contractCallWithToken.Transfer', {
+        Result.Transfer('axelar.Transfer', {
           srcEvent: contractCallWithToken,
           srcTokenAddress: contractCallWithToken.args.tokenAddress,
           srcAmount: contractCallWithToken.args.amount,
+          srcWasBurned: contractCallWithToken.args.srcWasBurned,
           dstEvent: contractCallExecuted,
           dstTokenAddress: matchingUnsafeAmount
             ? contractCallExecuted.args.tokenAddressUnsafe
@@ -415,6 +431,7 @@ export class AxelarPlugin implements InteropPlugin {
           dstAmount: matchingUnsafeAmount
             ? contractCallApprovedWithMint.args.amount
             : undefined,
+          dstWasMinted: contractCallExecuted.args.dstWasMinted,
         }),
       ]
     }

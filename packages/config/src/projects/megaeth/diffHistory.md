@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x3e3c2ac5fc6f4de059ee493adb99384715acc81c
+
+# Diff at Wed, 21 Jan 2026 10:06:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1767341266
+- current timestamp: 1768989919
+
+## Description
+
+New member added to MegaETH Safe multisig (now 4/8, previously 4/7).
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x92e0E0B15e3e99b32c9ED9AD284F939553C7b7d6) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x070Cf79fB8D0A0BcBe2d017c6A059148705c9800"
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x7c45d450fb2bdc3b24ca26628384d125cdc2ff16
 
 # Diff at Fri, 02 Jan 2026 08:09:15 GMT:

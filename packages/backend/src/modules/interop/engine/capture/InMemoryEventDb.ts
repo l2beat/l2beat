@@ -102,11 +102,11 @@ export class InMemoryEventDb implements InteropEventDb {
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
     approximate: InteropApproximateQuery<T>,
-  ): InteropEvent<T> | undefined {
+  ): InteropEvent<T>[] {
     const events = this.getStore<T>(type.type).findAll(query)
 
     if (events.length === 0) {
-      return
+      return []
     }
 
     assert(
@@ -128,6 +128,7 @@ export class InMemoryEventDb implements InteropEventDb {
           PRECISION
       : approximate.valueBigInt
 
+    const matches: InteropEvent<T>[] = []
     for (const e of events) {
       if (
         // @ts-ignore
@@ -135,9 +136,10 @@ export class InMemoryEventDb implements InteropEventDb {
         // @ts-ignore
         e.args[approximate.key] <= maxValue
       ) {
-        return e
+        matches.push(e)
       }
     }
+    return matches
   }
 
   findAll<T>(
@@ -283,7 +285,12 @@ class EventTypeStore<T> {
     if (!lookup) {
       const fields: (keyof T)[] = []
       const ctxFields: (keyof InteropEventContext)[] = []
-      if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
+      if (
+        query.ctx?.txHash ||
+        query.sameTxAfter ||
+        query.sameTxBefore ||
+        query.sameTxAtOffset
+      ) {
         ctxFields.push('txHash')
       } else {
         for (const key in query) {
@@ -306,7 +313,12 @@ class EventTypeStore<T> {
   }
 
   private hashLookup(query: InteropEventQuery<unknown>): number {
-    if (query.ctx?.txHash || query.sameTxAfter || query.sameTxBefore) {
+    if (
+      query.ctx?.txHash ||
+      query.sameTxAfter ||
+      query.sameTxBefore ||
+      query.sameTxAtOffset
+    ) {
       return 42 // The specific number doesn't matter. Any magic constant is fine
     }
     let hash = FNV_OFFSET_BASIS
@@ -400,7 +412,9 @@ class Lookup<T> {
         let value = ctx[key]
         if (key === 'txHash' && value === undefined) {
           value =
-            query.sameTxBefore?.ctx.txHash ?? query.sameTxAfter?.ctx.txHash
+            query.sameTxBefore?.ctx.txHash ??
+            query.sameTxAfter?.ctx.txHash ??
+            query.sameTxAtOffset?.event.ctx.txHash
         }
         hash = updateHash(hash, `${value}`)
         hash = updateHash(hash, '#')
@@ -422,7 +436,11 @@ function matchesQuery<T>(
           return false
         }
       }
-    } else if (key !== 'sameTxBefore' && key !== 'sameTxAfter') {
+    } else if (
+      key !== 'sameTxBefore' &&
+      key !== 'sameTxAfter' &&
+      key !== 'sameTxAtOffset'
+    ) {
       // @ts-ignore
       if (event.args[key] !== query[key]) {
         return false
@@ -443,6 +461,16 @@ function matchesQuery<T>(
       event.ctx.chain !== query.sameTxBefore.ctx.chain ||
       event.ctx.txHash !== query.sameTxBefore.ctx.txHash ||
       event.ctx.logIndex >= query.sameTxBefore.ctx.logIndex
+    ) {
+      return false
+    }
+  }
+  if (query.sameTxAtOffset) {
+    const { event: baseEvent, offset } = query.sameTxAtOffset
+    if (
+      event.ctx.chain !== baseEvent.ctx.chain ||
+      event.ctx.txHash !== baseEvent.ctx.txHash ||
+      event.ctx.logIndex !== baseEvent.ctx.logIndex + offset
     ) {
       return false
     }
