@@ -1426,6 +1426,10 @@ function computedStage(
           fraudProofType === 'KailuaSoon',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug:

@@ -23,11 +23,17 @@ type StageBlueprint = Record<
     name: Stage
     principle?: BlueprintItem
     items: Record<string, BlueprintItem>
-    upcomingItems?: {
-      expiresAt: number
-      items: Record<string, BlueprintItem>
-    }
   }
+>
+
+export type UpcomingStageRequirements = Partial<
+  Record<
+    string,
+    {
+      expiresAt: number
+      items: string[]
+    }
+  >
 >
 
 type ChecklistValue =
@@ -47,15 +53,12 @@ export type ChecklistTemplate<T extends StageBlueprint> = {
         principle: ChecklistValue
       }
     : // biome-ignore lint/complexity/noBannedTypes: it's needed
-      {}) &
-    (T[K] extends { upcomingItems: { items: infer U } }
-      ? Partial<{ [L in keyof U & string]: ChecklistValue }>
-      : // biome-ignore lint/complexity/noBannedTypes: it's needed
-        {})
+      {})
 }
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
+  upcoming?: UpcomingStageRequirements,
 ): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
     const summary: StageSummary[] = []
@@ -82,6 +85,13 @@ export function createGetStage<T extends StageBlueprint>(
           : undefined,
       }
 
+      const upcomingStage = upcoming?.[stage]
+      const upcomingCountdownExpired = upcomingStage
+        ? upcomingStage.expiresAt < UnixTime.now()
+        : true
+      const upcomingItems = new Set<string>(upcomingStage?.items ?? [])
+      const pendingReasons: string[] = []
+
       // Loop through stage requirements
       for (const [key, blueprintItem] of Object.entries(blueprintStage.items)) {
         const requirement = evaluate(blueprintItem, checklist[stage][key])
@@ -89,11 +99,39 @@ export function createGetStage<T extends StageBlueprint>(
           continue
         }
 
+        const isUpcoming = upcomingItems.has(key)
+
         // Add to output
         summaryStage.requirements.push({
           satisfied: requirement.satisfied,
           description: requirement.description,
+          ...(isUpcoming && !upcomingCountdownExpired
+            ? { upcoming: true }
+            : {}),
         })
+
+        if (isUpcoming) {
+          if (requirement.satisfied !== true) {
+            if (upcomingCountdownExpired) {
+              // Treat as regular requirement
+              if (blueprintStage.name !== 'Stage 0') {
+                if (missing === undefined) {
+                  missing = {
+                    nextStage: blueprintStage.name,
+                    requirements: [],
+                    principle: undefined,
+                  }
+                }
+                if (missing.nextStage === blueprintStage.name) {
+                  missing.requirements.push(requirement.description)
+                }
+              }
+            } else {
+              pendingReasons.push(requirement.description)
+            }
+          }
+          continue
+        }
 
         // Add to missing
         if (
@@ -141,58 +179,16 @@ export function createGetStage<T extends StageBlueprint>(
         }
       }
 
-      // Process upcoming items
-      if (blueprintStage.upcomingItems) {
-        const upcomingCountdownExpired =
-          blueprintStage.upcomingItems.expiresAt < UnixTime.now()
-        const pendingReasons: string[] = []
-
-        for (const [key, blueprintItem] of Object.entries(
-          blueprintStage.upcomingItems.items,
-        )) {
-          const requirement = evaluate(blueprintItem, checklist[stage][key])
-          if (!requirement || requirement.isOmitted) {
-            continue
-          }
-
-          // Always add to summary
-          summaryStage.requirements.push({
-            satisfied: requirement.satisfied,
-            description: requirement.description,
-            ...(!upcomingCountdownExpired ? { upcoming: true } : {}),
-          })
-
-          if (requirement.satisfied !== true) {
-            if (upcomingCountdownExpired) {
-              // Treat as regular requirement
-              if (blueprintStage.name !== 'Stage 0') {
-                if (missing === undefined) {
-                  missing = {
-                    nextStage: blueprintStage.name,
-                    requirements: [],
-                    principle: undefined,
-                  }
-                }
-                if (missing.nextStage === blueprintStage.name) {
-                  missing.requirements.push(requirement.description)
-                }
-              }
-            } else {
-              pendingReasons.push(requirement.description)
-            }
-          }
-        }
-
-        if (
-          !upcomingCountdownExpired &&
-          pendingReasons.length > 0 &&
-          !missing
-        ) {
-          downgradePending = {
-            expiresAt: blueprintStage.upcomingItems.expiresAt,
-            reasons: pendingReasons,
-            toStage: highestStageReached,
-          }
+      if (
+        upcomingStage &&
+        !upcomingCountdownExpired &&
+        pendingReasons.length > 0 &&
+        !missing
+      ) {
+        downgradePending = {
+          expiresAt: upcomingStage.expiresAt,
+          reasons: pendingReasons,
+          toStage: highestStageReached,
         }
       }
 

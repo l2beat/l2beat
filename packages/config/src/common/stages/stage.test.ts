@@ -520,36 +520,33 @@ describe(createGetStage.name, () => {
     })
   })
 
-  describe('upcomingItems', () => {
+  describe('upcomingRequirements', () => {
     const FUTURE_TIME = UnixTime.now() + 30 * UnixTime.DAY
     const PAST_TIME = UnixTime.now() - 30 * UnixTime.DAY
 
     const getUpcomingTestStage = (expiresAt: number) =>
-      createGetStage({
-        stage0: {
-          name: 'Stage 0',
-          items: {
-            callsItselfRollup: {
-              positive: 'ROLLUP_TRUE',
-              negative: 'ROLLUP_FALSE',
-            },
-          },
-        },
-        stage1: {
-          name: 'Stage 1',
-          principle: {
-            positive: 'PRINCIPLE_TRUE',
-            negative: 'PRINCIPLE_FALSE',
-          },
-          items: {
-            hasEscapeHatch: {
-              positive: 'ESCAPE_HATCH_TRUE',
-              negative: 'ESCAPE_HATCH_FALSE',
-            },
-          },
-          upcomingItems: {
-            expiresAt,
+      createGetStage(
+        {
+          stage0: {
+            name: 'Stage 0',
             items: {
+              callsItselfRollup: {
+                positive: 'ROLLUP_TRUE',
+                negative: 'ROLLUP_FALSE',
+              },
+            },
+          },
+          stage1: {
+            name: 'Stage 1',
+            principle: {
+              positive: 'PRINCIPLE_TRUE',
+              negative: 'PRINCIPLE_FALSE',
+            },
+            items: {
+              hasEscapeHatch: {
+                positive: 'ESCAPE_HATCH_TRUE',
+                negative: 'ESCAPE_HATCH_FALSE',
+              },
               upcomingA: {
                 positive: 'UPCOMING_A_TRUE',
                 negative: 'UPCOMING_A_FALSE',
@@ -561,7 +558,13 @@ describe(createGetStage.name, () => {
             },
           },
         },
-      })
+        {
+          stage1: {
+            expiresAt,
+            items: ['upcomingA', 'upcomingB'],
+          },
+        },
+      )
 
     it('not expired + all satisfied → no downgradePending, requirements shown with upcoming: true', () => {
       const getStage = getUpcomingTestStage(FUTURE_TIME)
