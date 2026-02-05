@@ -1,22 +1,28 @@
 node_modules
+.pnpm-store
 yarn-error.log
+.DS_Store
+.turbo
+.copilotignore
 
-# Everything starting with .
-.*
+# AI stuff
+.codex
 
+# IDEs
+.vscode
+.idea
+.*.sw[op]
+# Next.js
+.next
 # Not ignoring next-env.d.ts as it's needed for type checking on CI
 out
 build
-
 # TypeScript
 *.tsbuildinfo
-
 dist
-
 # .env files
 .env
 .env.local
-
 # l2b
 packages/l2b/**/cache/
 packages/config/cache/
