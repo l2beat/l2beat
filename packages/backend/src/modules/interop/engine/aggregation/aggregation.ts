@@ -184,10 +184,7 @@ export function getAggregatedTokens(
       }
     }
 
-    if (
-      transfer.dstAbstractTokenId &&
-      transfer.dstAbstractTokenId !== transfer.srcAbstractTokenId
-    ) {
+    if (transfer.dstAbstractTokenId && !isSameToken) {
       tokens[transfer.dstAbstractTokenId] = {
         transferCount:
           (tokens[transfer.dstAbstractTokenId]?.transferCount ?? 0) + 1,
