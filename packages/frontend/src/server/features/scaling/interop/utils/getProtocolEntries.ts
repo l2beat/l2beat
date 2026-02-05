@@ -150,8 +150,8 @@ export function getProtocolEntries(
         averageDuration: getAverageDuration(key, data, customDurationConfigMap),
         averageValueInFlight: data.averageValueInFlight,
         netMintedValue:
-          data.mintedValueUsd !== undefined || data.burnedValueUsd !== undefined
-            ? (data.mintedValueUsd ?? 0) - (data.burnedValueUsd ?? 0)
+          data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
+            ? data.mintedValueUsd - data.burnedValueUsd
             : undefined,
       }
     })
@@ -197,9 +197,9 @@ function getTokensData(
         avgDuration: avgDuration,
         avgValue: Math.floor(token.volume / token.transferCount),
         netMintedValue:
-          token.mintedValueUsd !== undefined ||
+          token.mintedValueUsd !== undefined &&
           token.burnedValueUsd !== undefined
-            ? (token.mintedValueUsd ?? 0) - (token.burnedValueUsd ?? 0)
+            ? token.mintedValueUsd - token.burnedValueUsd
             : undefined,
       }
     })
