@@ -67,6 +67,8 @@ describe(InteropAggregationService.name, () => {
         count10KTo100K: 0,
         countOver100K: 0,
         identifiedCount: 2,
+        mintedValueUsd: 5000,
+        burnedValueUsd: 0,
         bridgeType: 'lockAndMint',
       })
 
@@ -81,6 +83,8 @@ describe(InteropAggregationService.name, () => {
         totalDurationSum: 11000,
         volume: 5000,
         bridgeType: 'lockAndMint',
+        mintedValueUsd: 5000,
+        burnedValueUsd: 0,
       })
     })
 
