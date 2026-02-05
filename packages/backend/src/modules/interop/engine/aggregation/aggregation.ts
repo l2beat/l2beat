@@ -152,6 +152,10 @@ export function getAggregatedTokens(
   for (const transfer of group) {
     const isSameToken =
       transfer.srcAbstractTokenId === transfer.dstAbstractTokenId
+    const isBurn =
+      transfer.srcWasBurned === true && transfer.dstWasMinted === false
+    const isMint =
+      transfer.srcWasBurned === false && transfer.dstWasMinted === true
 
     if (transfer.srcAbstractTokenId) {
       tokens[transfer.srcAbstractTokenId] = {
@@ -167,22 +171,13 @@ export function getAggregatedTokens(
         burnedValueUsd: tokens[transfer.srcAbstractTokenId]?.burnedValueUsd,
       }
 
-      if (
-        options?.calculateNetMinted &&
-        transfer.srcWasBurned &&
-        transfer.dstWasMinted === false
-      ) {
+      if (options?.calculateNetMinted && isBurn) {
         tokens[transfer.srcAbstractTokenId].burnedValueUsd =
           (tokens[transfer.srcAbstractTokenId]?.burnedValueUsd ?? 0) +
           (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0)
       }
 
-      if (
-        isSameToken &&
-        options?.calculateNetMinted &&
-        transfer.srcWasBurned === false &&
-        transfer.dstWasMinted
-      ) {
+      if (options?.calculateNetMinted && isSameToken && isMint) {
         tokens[transfer.srcAbstractTokenId].mintedValueUsd =
           (tokens[transfer.srcAbstractTokenId]?.mintedValueUsd ?? 0) +
           (transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0)
@@ -206,11 +201,7 @@ export function getAggregatedTokens(
         burnedValueUsd: tokens[transfer.dstAbstractTokenId]?.burnedValueUsd,
       }
 
-      if (
-        options?.calculateNetMinted &&
-        transfer.srcWasBurned === false &&
-        transfer.dstWasMinted
-      ) {
+      if (options?.calculateNetMinted && isMint) {
         tokens[transfer.dstAbstractTokenId].mintedValueUsd =
           (tokens[transfer.dstAbstractTokenId]?.mintedValueUsd ?? 0) +
           (transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0)
