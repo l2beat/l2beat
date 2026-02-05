@@ -17,32 +17,26 @@ const typeToLabel = {
 } as const
 
 interface BridgeTypeBadgeProps {
-  bridgeTypes: KnownInteropBridgeType[]
+  bridgeType: KnownInteropBridgeType
   className?: string
 }
 
 export function BridgeTypeBadge({
-  bridgeTypes,
+  bridgeType,
   className,
 }: BridgeTypeBadgeProps) {
-  return (
-    <div className="flex items-center gap-1">
-      {bridgeTypes.map((bridgeType) => {
-        const config = typeToLabel[bridgeType]
+  const config = typeToLabel[bridgeType]
 
-        return (
-          <div
-            key={bridgeType}
-            className={cn(
-              config.bgColor,
-              'flex h-min w-max items-center justify-center rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
-              className,
-            )}
-          >
-            {config.label}
-          </div>
-        )
-      })}
+  return (
+    <div
+      key={bridgeType}
+      className={cn(
+        config.bgColor,
+        'flex h-min w-max items-center justify-center rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
+        className,
+      )}
+    >
+      {config.label}
     </div>
   )
 }

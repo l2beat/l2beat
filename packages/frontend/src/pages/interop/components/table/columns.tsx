@@ -159,15 +159,19 @@ export function getAllProtocolsColumns(
     !hideTypeColumn &&
       columnHelper.accessor((row) => Object.keys(row.byBridgeType ?? {}), {
         header: 'Type',
-        cell: (ctx) => (
-          <BridgeTypeBadge
-            bridgeTypes={
-              Object.keys(
-                ctx.row.original.byBridgeType ?? {},
-              ) as KnownInteropBridgeType[]
-            }
-          />
-        ),
+        cell: (ctx) => {
+          return (
+            <div className="flex items-center gap-1" key={ctx.row.original.id}>
+              {(
+                Object.keys(
+                  ctx.row.original.byBridgeType ?? {},
+                ) as KnownInteropBridgeType[]
+              ).map((bridgeType) => (
+                <BridgeTypeBadge key={bridgeType} bridgeType={bridgeType} />
+              ))}
+            </div>
+          )
+        },
         meta: {
           headClassName: 'text-2xs',
         },
