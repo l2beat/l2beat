@@ -14,10 +14,7 @@ export type InteropTransferCategory = (typeof InteropTransferCategories)[number]
 function isInteropTransferCategory(
   value: string,
 ): value is InteropTransferCategory {
-  return (
-    value !== null &&
-    (InteropTransferCategories as readonly string[]).includes(value)
-  )
+  return (InteropTransferCategories as readonly string[]).includes(value)
 }
 
 export interface InteropTransferRecord {
