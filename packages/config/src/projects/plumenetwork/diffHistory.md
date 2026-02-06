@@ -1,14 +1,38 @@
-Generated with discovered.json: 0x16876e9344a538ea98f6c1fdd0f07b51a8fda62f
+Generated with discovered.json: 0x469fa6536f4799ab3c060e585c67c5ff13e902be
 
-# Diff at Fri, 06 Feb 2026 13:15:35 GMT:
+# Diff at Fri, 06 Feb 2026 13:44:21 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@79ed122ff93f3ecacc6642a02e5352d633b2da3b block: 1769514598
-- current timestamp: 1770383671
+- current timestamp: 1770385397
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Migration from classic Arbitrum Nitro to BoLD dispute protocol. 
+
+RollupProxy is replaced with a new RollupProxyBoLD at a new address (same code as Arbitrum One BoLD). ChallengeManager is replaced with an EdgeChallengeManager implementing the BoLD edge-based challenge system, and all OneStepProver contracts are replaced with new deployments. ArbOS version is now v51. The validator whitelist remains enabled with a single validator, and validatorAfkBlocks is set to ~427 years (effectively disabling the AFK escape hatch). confirmPeriodBlocks is 40320 (~5.6 days). Challenge stakes are 0.1 WETH (vs 555/79 WETH on Arbitrum One). loserStakeEscrow points to the sole validator address.
+
+All infrastructure contracts (Bridge, Inbox, Outbox, SequencerInbox, RollupEventInbox) are upgraded with BoLD-era changes. Since Plume uses a custom gas token (PLUME), these are the ERC20 variants of the BoLD contracts - the first deployment of this combination. The ERC20 BoLD variants differ from Arbitrum One's ETH BoLD contracts in: token decimal normalization, safeTransferFrom for token escrow, fee token pricer integration, and ERC20-specific spending report logic.
+
+SequencerInbox: Celestia DA support is removed (CELESTIA_MESSAGE_HEADER_FLAG deleted). Delay buffer system is enabled (isDelayBufferable: true). delayBlocks increased from 5760 to 7200. New feeTokenPricer field added (currently set to zero address). New batch posting functions with delay proofs added.
+
+ERC20RollupEventInbox: _currentDataCostToReport now queries the SequencerInbox's feeTokenPricer for exchange rate-based data cost reporting (previously always returned 0).
+
+Bridge: Added zero-amount transfer guards in _transferFunds and _executeLowLevelCall. Added Messages.isValidDelayedAccPreimage helper for delay buffer proof validation.
+
+New ERC20Bridge_BoLD, ERC20Inbox_BoLD, and ERC20RollupEventInbox_BoLD shapes added to templates.
+
+Disco diffs (Arbitrum BoLD ETH vs Plume BoLD ERC20 - shows what the ERC20 gas token variants add):
+- Bridge: https://disco.l2beat.com/diff/eth:0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898/eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6
+- Inbox: https://disco.l2beat.com/diff/eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10/eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e
+- RollupEventInbox: https://disco.l2beat.com/diff/eth:0x6D576E220Cb44C3E8eF75D0EfBeb1Ff041e2E4A5/eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe
+
+Old vs new Plume implementation diffs:
+- Bridge: https://disco.l2beat.com/diff/eth:0xd7FD189F1652378f32dA3db7926e51a7b0344797/eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6
+- ERC20Inbox: https://disco.l2beat.com/diff/eth:0x81eEEbb902693A3a90948Fe0A661aedb35271054/eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e
+- ERC20RollupEventInbox: https://disco.l2beat.com/diff/eth:0xb0f031Cd10598c6b4C33FcE1675F26CF937091da/eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe
+- SequencerInbox: https://disco.l2beat.com/diff/eth:0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50/eth:0x6F2E7F9B5Db5e4e9B5B1181D2Eb0e4972500C324
+- Outbox: https://disco.l2beat.com/diff/eth:0x1f24EDD5161f82588007f33B72b0b28e46cCE878/eth:0x17E0C5fE0dFF2AE4cfC9E96d9Ccd112DaF5c0386
 
 ## Watched changes
 
@@ -32,14 +56,10 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract Bridge (eth:0x35381f63091926750F43b2A7401B083263aDEF83) {
-    +++ description: None
-      template:
--        "orbitstack/Bridge"
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
       sourceHashes.1:
 -        "0x73087d4667e81f676a10708feb2774bab3a9a558a1987b8ac4f112cc464bba96"
 +        "0x7f62b9bd4a0aac711ca355a523b1d934ab93ae14c5fae5a860c0ded42ee5a3c3"
-      description:
--        "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
       values.$implementation:
 -        "eth:0xd7FD189F1652378f32dA3db7926e51a7b0344797"
 +        "eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6"
@@ -48,36 +68,13 @@ Provide description of changes. This section will be preserved.
       values.$upgradeCount:
 -        1
 +        2
-      values.delayedMessageCount:
--        2117
-+        2159
-      values.inboxHistory:
--        ["eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D","eth:0xf576102530749344D2f4C04D15C2B8609c7897ea"]
-      values.outboxHistory:
--        ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"]
       values.rollup:
 -        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
 +        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8"
-      values.sequencerMessageCount:
--        35364
-+        36790
-      values.sequencerReportedSubMessageCount:
--        48356525
-+        49791060
-      values.delayedInboxAccs:
-+        ["0x78fb8903eaf4c5e339f5c1b269fdb8b6a6d94b643b97af18ea1119f43c224c9b","0x963c2696ee95de6ec7157c21cbc1e4b1e9347e6869cb7ace7d7ba69f54cd52ed","0xdf8a27ccc11e4cb1aa60fdaa9745ca0326c8dd71743c6bdbba4f0bfee9dd1e1a","0x8520c12e10778eb27e716c380571e468737fb32c95b104662636396619ef57af","0xde2128d47539585b4a9f9096d342cc754b4225cd6b86648506ce9096d5441894"]
-      values.sequencerInboxAccs:
-+        ["0x854e4664e1197563eeaf8802d6c05abeca5123c6f9831e8d3f20bc7c15917bd1","0xf9519d6006f0ccf9c1f9baece8277be167729bf959d514d4e8212b6e157c3c4c","0x0d3e5b1b19f53fb0dc331d762f73a6cc19c737b2ebe8af9eb2180ae2ce52dbbf","0x81f47e41ed37e3e9ab44976f6bc31717469972267a7006f3b175223ca071eb4b","0xfc7748e293a8409dc140187824d3b12cb57de06e7876a71717d9ffd76abb12f3"]
-      fieldMeta:
--        {"allowedOutboxList":{"severity":"HIGH","description":"Can make calls as the bridge, steal all funds."},"outboxHistory":{"severity":"HIGH","description":"All Outboxes that were ever set as allowed in the bridge."},"allowedDelayedInboxList":{"severity":"HIGH","description":"Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge."},"inboxHistory":{"severity":"HIGH","description":"All Inboxes that were ever set as allowed in the bridge."}}
       implementationNames.eth:0xd7FD189F1652378f32dA3db7926e51a7b0344797:
 -        "ERC20Bridge"
       implementationNames.eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6:
 +        "ERC20Bridge"
-      category:
--        {"name":"Local Infrastructure","priority":5}
-      errors:
-+        {"delayedInboxAccs":"Processing error occurred.","sequencerInboxAccs":"Processing error occurred."}
     }
 ```
 
@@ -195,18 +192,11 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
-    contract ERC20Inbox (eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D) {
-    +++ description: None
-      name:
--        "Inbox"
-+        "ERC20Inbox"
-      template:
--        "orbitstack/Inbox"
+    contract Inbox (eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
       sourceHashes.1:
 -        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
 +        "0x82dad78abdf27e168de1ae177b8055db4167106d71273d9a3264e9898a6055e4"
-      description:
--        "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds."
       values.$implementation:
 -        "eth:0x81eEEbb902693A3a90948Fe0A661aedb35271054"
 +        "eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e"
@@ -219,8 +209,6 @@ Provide description of changes. This section will be preserved.
 -        "ERC20Inbox"
       implementationNames.eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e:
 +        "ERC20Inbox"
-      category:
--        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
@@ -262,18 +250,11 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
-    contract ERC20RollupEventInbox (eth:0xf576102530749344D2f4C04D15C2B8609c7897ea) {
-    +++ description: None
-      name:
--        "RollupEventInbox"
-+        "ERC20RollupEventInbox"
-      template:
--        "orbitstack/RollupEventInbox"
+    contract RollupEventInbox (eth:0xf576102530749344D2f4C04D15C2B8609c7897ea) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
       sourceHashes.1:
 -        "0x35bd9f6436158f2147578ce95b85de68f435e81f1f3ed3858f7523a8c4825a1a"
 +        "0x089ac3cec821c0f014f284ec4ec1039ef6bc50b6ad3ee47c82e20af65cc30c33"
-      description:
--        "Helper contract sending configuration data over the bridge during the systems initialization."
       values.$implementation:
 -        "eth:0xb0f031Cd10598c6b4C33FcE1675F26CF937091da"
 +        "eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe"
@@ -302,12 +283,6 @@ Provide description of changes. This section will be preserved.
 +   Status: CREATED
     contract OneStepProverMemory (eth:0x29efff3EfE3E01A3F69011a054C33410edFc2283)
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
-+   Status: CREATED
-    contract Plume Token (eth:0x4C1746A800D224393fE2470C70A35717eD4eA5F1)
-    +++ description: None
 ```
 
 ```diff
@@ -347,24 +322,20 @@ Provide description of changes. This section will be preserved.
  .../ChallengeManager.sol => /dev/null              |  994 -----
  .../ChallengeManager/EdgeChallengeManager.sol      | 3193 +++++++++++++
  .../TransparentUpgradeableProxy.p.sol              |   18 +-
- .../Inbox => .flat/ERC20Inbox}/ERC20Inbox.sol      |  430 +-
- .../ERC20Inbox}/TransparentUpgradeableProxy.p.sol  |    0
- .../ERC20RollupEventInbox.sol                      |   73 +-
- .../TransparentUpgradeableProxy.p.sol              |    0
+ .../Inbox/ERC20Inbox.sol                           |  430 +-
  .../OneStepProofEntry.sol                          |  656 +--
  .../{.flat@1769514598 => .flat}/OneStepProver0.sol |  502 ++-
  .../OneStepProverHostIo.sol                        | 1840 ++------
  .../OneStepProverMath.sol                          |  101 +-
  .../OneStepProverMemory.sol                        |  421 +-
  .../Outbox/ERC20Outbox.sol                         |  104 +-
- .../plumenetwork/.flat/Plume Token/PProxy.p.sol    |  529 +++
- .../plumenetwork/.flat/Plume Token/Plume.sol       | 2966 ++++++++++++
+ .../RollupEventInbox/ERC20RollupEventInbox.sol     |   73 +-
  .../RollupProxy/RollupAdminLogic.1.sol             | 2809 ++++++------
  .../RollupProxy/RollupProxy.p.sol                  |   91 +-
  .../RollupProxy/RollupUserLogic.2.sol              | 4700 ++++++++++----------
  .../SequencerInbox/SequencerInbox.sol              |  957 ++--
  .../ValidatorUtils.sol => /dev/null                |  323 --
- 21 files changed, 12928 insertions(+), 8085 deletions(-)
+ 17 files changed, 9433 insertions(+), 8085 deletions(-)
 ```
 
 Generated with discovered.json: 0xe8cc4f5f4b5cbcac4f049b19755e0a5a03f966ff
