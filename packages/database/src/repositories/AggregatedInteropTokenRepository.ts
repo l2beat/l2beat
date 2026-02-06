@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropToken } from '../kysely/generated/types'
@@ -6,12 +6,15 @@ import type { AggregatedInteropToken } from '../kysely/generated/types'
 export interface AggregatedInteropTokenRecord {
   timestamp: UnixTime
   id: string
+  bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
   abstractTokenId: string
   transferCount: number
   totalDurationSum: number
   volume: number
+  mintedValueUsd: number | undefined
+  burnedValueUsd: number | undefined
 }
 
 export function toRecord(
@@ -20,12 +23,15 @@ export function toRecord(
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     id: row.id,
+    bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
     abstractTokenId: row.abstractTokenId,
     transferCount: row.transferCount,
     totalDurationSum: row.totalDurationSum,
     volume: row.volume,
+    mintedValueUsd: row.mintedValueUsd ?? undefined,
+    burnedValueUsd: row.burnedValueUsd ?? undefined,
   }
 }
 
@@ -35,12 +41,15 @@ export function toRow(
   return {
     timestamp: UnixTime.toDate(record.timestamp),
     id: record.id,
+    bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
     abstractTokenId: record.abstractTokenId,
     transferCount: record.transferCount,
     totalDurationSum: record.totalDurationSum,
     volume: record.volume,
+    mintedValueUsd: record.mintedValueUsd,
+    burnedValueUsd: record.burnedValueUsd,
   }
 }
 
@@ -68,13 +77,9 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
     timestamp: UnixTime,
     srcChains: string[],
     dstChains: string[],
-    protocolIds?: string[],
+    type?: InteropBridgeType,
   ): Promise<AggregatedInteropTokenRecord[]> {
     if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
-    if (protocolIds && protocolIds.length === 0) {
       return []
     }
 
@@ -85,8 +90,8 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       .where('srcChain', 'in', srcChains)
       .where('dstChain', 'in', dstChains)
 
-    if (protocolIds) {
-      query = query.where('id', 'in', protocolIds)
+    if (type) {
+      query = query.where('bridgeType', '=', type)
     }
 
     const rows = await query.execute()

@@ -18,6 +18,7 @@ import {
   type InteropPlugins,
 } from '../plugins'
 import type { InteropEvent } from '../plugins/types'
+import { getAdditionalChainsForConfigs } from './configAdditionalChains'
 import type { Example, RunResult } from './core'
 import { RpcReplay } from './snapshot/replay'
 import {
@@ -55,7 +56,13 @@ export class ExampleRunner {
       .filter((c) => c.chainId !== undefined)
       .map((c) => ({ name: c.name, id: c.chainId as number }))
 
-    const allChains = unique(this.$.example.txs?.flatMap((t) => t.chain) ?? [])
+    const additionalChains = getAdditionalChainsForConfigs(
+      this.$.example.loadConfigs ?? [],
+    )
+    const allChains = unique([
+      ...(this.$.example.txs?.flatMap((t) => t.chain) ?? []),
+      ...additionalChains,
+    ])
 
     const rpcClients = await Promise.all(
       allChains.map((chain) => this.getRpcClient(chain)),

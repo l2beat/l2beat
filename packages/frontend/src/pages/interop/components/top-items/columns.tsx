@@ -1,9 +1,10 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import compact from 'lodash/compact'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
 import { EM_DASH } from '~/consts/characters'
-import type { AverageDuration } from '~/server/features/scaling/interop/utils/getProtocolEntries'
+import type { AverageDuration } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from '../table/AvgDurationCell'
 
@@ -15,91 +16,112 @@ export type TopItem = {
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number | null
+  netMintedValue?: number
 }
 export type TopItemType = 'tokens' | 'chains'
 
 export type TopItemRow = TopItem & BasicTableRow
 const columnHelper = createColumnHelper<TopItemRow>()
 
-export const getTopItemsColumns = (itemType: TopItemType) => [
-  columnHelper.display({
-    id: 'icon',
-    cell: (ctx) => (
-      <img
-        className="min-h-[20px] min-w-[20px] rounded-full bg-white shadow"
-        src={ctx.row.original.iconUrl}
-        width={20}
-        height={20}
-        alt={`${ctx.row.original.displayName} icon`}
-      />
-    ),
-    meta: {
-      headClassName: 'w-0 pr-0!',
-      cellClassName: 'pr-0!',
-    },
-    size: 28,
-    enableHiding: false,
-  }),
-  columnHelper.accessor('displayName', {
-    header: itemTypeToHeader(itemType),
-    cell: (ctx) => (
-      <PrimaryValueCell className="font-bold leading-none!">
-        {ctx.row.original.displayName}
-      </PrimaryValueCell>
-    ),
-  }),
-  columnHelper.accessor('volume', {
-    header: 'Last 24h\nVolume',
-    cell: (ctx) => {
-      if (ctx.row.original.volume === null) return EM_DASH
-      return (
-        <span className="font-medium text-label-value-15">
-          {formatCurrency(ctx.row.original.volume, 'usd')}
-        </span>
-      )
-    },
-    meta: {
-      align: 'right',
-    },
-  }),
-  columnHelper.accessor('transferCount', {
-    header: 'Last 24h\ntransfer count',
-    cell: (ctx) => (
-      <div className="font-medium text-label-value-15">
-        {ctx.row.original.transferCount}
-      </div>
-    ),
-    meta: {
-      align: 'right',
-    },
-  }),
-  columnHelper.accessor('avgDuration', {
-    header: 'Last 24h avg.\ntransfer time',
-    cell: (ctx) => {
-      if (ctx.row.original.avgDuration === null) return EM_DASH
-      return (
-        <AvgDurationCell
-          averageDuration={ctx.row.original.avgDuration}
-          disableTooltip
+export const getTopItemsColumns = (
+  itemType: TopItemType,
+  showNetMintedValueColumn?: boolean,
+) =>
+  compact([
+    columnHelper.display({
+      id: 'icon',
+      cell: (ctx) => (
+        <img
+          className="min-h-[20px] min-w-[20px] rounded-full bg-white shadow"
+          src={ctx.row.original.iconUrl}
+          width={20}
+          height={20}
+          alt={`${ctx.row.original.displayName} icon`}
         />
-      )
-    },
-    meta: {
-      align: 'right',
-    },
-  }),
-  columnHelper.accessor('avgValue', {
-    header: 'Last 24h avg.\ntransfer value',
-    cell: (ctx) => {
-      if (ctx.row.original.avgValue === null) return EM_DASH
-      return (
-        <span className="font-medium text-label-value-15">
-          {formatCurrency(ctx.row.original.avgValue, 'usd')}
-        </span>
-      )
-    },
-  }),
-]
+      ),
+      meta: {
+        headClassName: 'w-0 pr-0!',
+        cellClassName: 'pr-0!',
+      },
+      size: 28,
+      enableHiding: false,
+    }),
+    columnHelper.accessor('displayName', {
+      header: itemTypeToHeader(itemType),
+      cell: (ctx) => (
+        <PrimaryValueCell className="font-bold leading-none!">
+          {ctx.row.original.displayName}
+        </PrimaryValueCell>
+      ),
+    }),
+    columnHelper.accessor('volume', {
+      header: 'Last 24h\nVolume',
+      cell: (ctx) => {
+        if (ctx.row.original.volume === null) return EM_DASH
+        return (
+          <span className="font-medium text-label-value-15">
+            {formatCurrency(ctx.row.original.volume, 'usd')}
+          </span>
+        )
+      },
+      meta: {
+        align: 'right',
+      },
+    }),
+    columnHelper.accessor('transferCount', {
+      header: 'Last 24h\ntransfer count',
+      cell: (ctx) => (
+        <div className="font-medium text-label-value-15">
+          {ctx.row.original.transferCount}
+        </div>
+      ),
+      meta: {
+        align: 'right',
+      },
+    }),
+    columnHelper.accessor('avgDuration', {
+      header: 'Last 24h avg.\ntransfer time',
+      cell: (ctx) => {
+        if (ctx.row.original.avgDuration === null) return EM_DASH
+        return (
+          <AvgDurationCell
+            averageDuration={ctx.row.original.avgDuration}
+            disableTooltip
+          />
+        )
+      },
+      meta: {
+        align: 'right',
+      },
+    }),
+    columnHelper.accessor('avgValue', {
+      header: 'Last 24h avg.\ntransfer value',
+      cell: (ctx) => {
+        if (ctx.row.original.avgValue === null) return EM_DASH
+        return (
+          <span className="font-medium text-label-value-15">
+            {formatCurrency(ctx.row.original.avgValue, 'usd')}
+          </span>
+        )
+      },
+    }),
+    showNetMintedValueColumn &&
+      columnHelper.accessor('netMintedValue', {
+        header: 'Last 24h net\nminted value',
+        meta: {
+          align: 'right',
+          headClassName: 'text-2xs',
+        },
+        cell: (ctx) => {
+          if (ctx.row.original.netMintedValue === undefined) return EM_DASH
+          return (
+            <span className="font-medium text-label-value-15">
+              {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
+            </span>
+          )
+        },
+      }),
+  ])
 
 const itemTypeToHeader = (itemType: TopItemType) => {
   switch (itemType) {
