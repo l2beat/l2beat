@@ -10,6 +10,7 @@ import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCaro
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
+import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
   InteropSelectedChainsProvider,
@@ -96,6 +97,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         interopChains={interopChains}
         top3Paths={data?.top3Paths}
         topProtocols={data?.topProtocols}
+        isLoading={isLoading}
+      />
+      <TopTokenWidget
+        topToken={data?.topToken}
         isLoading={isLoading}
       />
       <AllProtocolsCard

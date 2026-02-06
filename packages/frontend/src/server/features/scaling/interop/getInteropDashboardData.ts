@@ -13,6 +13,7 @@ import {
   getTopProtocols,
   type InteropProtocolData,
 } from './utils/getTopProtocols'
+import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
 import {
   getTransferSizeChartData,
   type TransferSizeChartData,
@@ -21,6 +22,7 @@ import {
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
+  topToken: InteropTopTokenData | undefined
   transferSizeChartData: TransferSizeChartData | undefined
   entries: ProtocolEntry[]
 }
@@ -48,6 +50,7 @@ export async function getInteropDashboardData(
     return {
       top3Paths: [],
       topProtocols: [],
+      topToken: undefined,
       transferSizeChartData: undefined,
       entries: [],
     }
@@ -91,6 +94,7 @@ export async function getInteropDashboardData(
     return {
       top3Paths: [],
       topProtocols: [],
+      topToken: undefined,
       transferSizeChartData: undefined,
       entries: [],
     }
@@ -109,11 +113,19 @@ export async function getInteropDashboardData(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
 
+  const entries = getProtocolEntries(records, tokensDetailsDataMap, interopProjects)
+
   return {
     top3Paths: getTopPaths(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
+    topToken: getTopToken({
+      records,
+      tokensDetailsMap: tokensDetailsDataMap,
+      interopProjects,
+      subgroupProjects,
+    }),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
-    entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
+    entries,
   }
 }
 
@@ -194,6 +206,22 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     averageDuration: { type: 'single', duration: 100_000 },
   }))
 
+  const topToken: InteropTopTokenData | undefined = mockTokens[0]
+    ? {
+        symbol: mockTokens[0].symbol,
+        iconUrl: mockTokens[0].iconUrl,
+        volume: mockTokens[0].volume,
+        transferCount: mockTokens[0].transferCount,
+        topProtocol: interopProjects[0]
+          ? {
+              name:
+                interopProjects[0].interopConfig.name ?? interopProjects[0].name,
+              iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
+            }
+          : undefined,
+      }
+    : undefined
+
   const transferSizeChartData: TransferSizeChartData = {
     arbitrum: {
       name: 'Arbitrum Canonical',
@@ -227,6 +255,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   return {
     top3Paths,
     topProtocols,
+    topToken,
     transferSizeChartData,
     entries: allProtocols,
   }
