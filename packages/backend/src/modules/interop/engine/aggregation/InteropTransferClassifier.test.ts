@@ -133,6 +133,30 @@ describe(InteropTransferClassifier.name, () => {
           srcWasBurned: true,
           dstWasMinted: false,
         }),
+        createTransfer('across', 'msg5', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: undefined,
+          dstWasMinted: undefined,
+        }),
+        createTransfer('across', 'msg6', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: true,
+          dstWasMinted: undefined,
+        }),
+        createTransfer('across', 'msg7', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: undefined,
+          dstWasMinted: true,
+        }),
       ]
 
       const config: InteropAggregationConfig = {
@@ -142,14 +166,17 @@ describe(InteropTransferClassifier.name, () => {
 
       const result = classifier.classifyTransfers(transfers, config)
 
-      expect(result.lockAndMint).toHaveLength(1)
+      expect(result.lockAndMint).toHaveLength(2)
       expect(result.lockAndMint[0].transferId).toEqual('msg1')
+      expect(result.lockAndMint[1].transferId).toEqual('msg4')
       expect(result.omnichain).toHaveLength(1)
       expect(result.omnichain[0].transferId).toEqual('msg2')
       expect(result.nonMinting).toHaveLength(1)
       expect(result.nonMinting[0].transferId).toEqual('msg3')
-      expect(result.unknown).toHaveLength(1)
-      expect(result.unknown[0].transferId).toEqual('msg4')
+      expect(result.unknown).toHaveLength(3)
+      expect(result.unknown[0].transferId).toEqual('msg5')
+      expect(result.unknown[1].transferId).toEqual('msg6')
+      expect(result.unknown[2].transferId).toEqual('msg7')
     })
 
     it('returns empty arrays when no transfers match', () => {
