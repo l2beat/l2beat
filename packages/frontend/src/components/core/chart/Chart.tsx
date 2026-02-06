@@ -236,7 +236,7 @@ function ChartLegendContent({
   className,
   payload,
   verticalAlign,
-  align,
+  align = 'center',
   nameKey,
   children,
 }: React.ComponentProps<'div'> &
