@@ -1,6 +1,6 @@
 {
   "name": "plumenetwork",
-  "timestamp": 1770385397,
+  "timestamp": 1770388230,
   "configHash": "0x57464414e26dcb236e56428df2a32e16a0684674a8c8fd9d91eea17b987ff2d5",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -193,8 +193,8 @@
         "outboxHistory": ["eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71"],
         "rollup": "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8",
         "sequencerInbox": "eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59",
-        "sequencerMessageCount": 36793,
-        "sequencerReportedSubMessageCount": 49793695
+        "sequencerMessageCount": 36798,
+        "sequencerReportedSubMessageCount": 49798390
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -675,7 +675,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "batchCount": 36793,
+        "batchCount": 36798,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -1928,6 +1928,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 24398156 },
+  "usedBlockNumbers": { "ethereum": 24398390 },
   "permissionsConfigHash": "0x3c625deee2391af541ba05c18bdbd0964fd23ea05cf526c79ef6bdd951a1d4ba"
 }
