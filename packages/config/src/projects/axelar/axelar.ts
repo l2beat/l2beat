@@ -8,7 +8,7 @@ export const axelar: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769520298),
   interopConfig: {
-    bridgeType: 'lockAndMint',
+    showAlways: ['lockAndMint'],
     plugins: [
       {
         plugin: 'axelar',

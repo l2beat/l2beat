@@ -50,17 +50,19 @@ export const base: ScalingProject = opStackL2({
   },
   interopConfig: {
     name: 'Base Canonical',
-    bridgeType: 'lockAndMint',
+    showAlways: ['lockAndMint'],
     durationSplit: {
-      in: {
-        label: 'L1 -> L2',
-        from: 'ethereum',
-        to: 'base',
-      },
-      out: {
-        label: 'L2 -> L1',
-        from: 'base',
-        to: 'ethereum',
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'base',
+        },
+        out: {
+          label: 'L2 -> L1',
+          from: 'base',
+          to: 'ethereum',
+        },
       },
     },
     plugins: [

@@ -80,24 +80,26 @@ export const polygonpos: ScalingProject = {
     stage: 'NotApplicable',
   },
   interopConfig: {
-    bridgeType: 'lockAndMint',
+    showAlways: ['lockAndMint'],
+    durationSplit: {
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'polygonpos',
+        },
+        out: {
+          label: 'L2 -> L1',
+          from: 'polygonpos',
+          to: 'ethereum',
+        },
+      },
+    },
     plugins: [
       {
         plugin: 'polygon',
       },
     ],
-    durationSplit: {
-      in: {
-        label: 'L1 -> L2',
-        from: 'ethereum',
-        to: 'polygonpos',
-      },
-      out: {
-        label: 'L2 -> L1',
-        from: 'polygonpos',
-        to: 'ethereum',
-      },
-    },
   },
   config: {
     associatedTokens: ['POL', 'MATIC'],

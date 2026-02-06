@@ -27,7 +27,7 @@ export function getAggregatedTransfer(
     calculateValueInFlight?: boolean
     calculateNetMinted?: boolean
   },
-): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp'> {
+): Omit<AggregatedInteropTransferRecord, 'id' | 'timestamp' | 'bridgeType'> {
   const first = group[0]
   assert(first, 'Group is empty')
 
@@ -135,7 +135,7 @@ export function getAggregatedTokens(
   options?: {
     calculateNetMinted?: boolean
   },
-): Omit<AggregatedInteropTokenRecord, 'id' | 'timestamp'>[] {
+): Omit<AggregatedInteropTokenRecord, 'id' | 'timestamp' | 'bridgeType'>[] {
   const first = group[0]
   assert(first, 'Group is empty')
   const tokens: Record<
@@ -167,8 +167,12 @@ export function getAggregatedTokens(
         volume:
           (tokens[transfer.srcAbstractTokenId]?.volume ?? 0) +
           (transfer.srcValueUsd ?? 0),
-        mintedValueUsd: tokens[transfer.srcAbstractTokenId]?.mintedValueUsd,
-        burnedValueUsd: tokens[transfer.srcAbstractTokenId]?.burnedValueUsd,
+        mintedValueUsd: options?.calculateNetMinted
+          ? (tokens[transfer.srcAbstractTokenId]?.mintedValueUsd ?? 0)
+          : undefined,
+        burnedValueUsd: options?.calculateNetMinted
+          ? (tokens[transfer.srcAbstractTokenId]?.burnedValueUsd ?? 0)
+          : undefined,
       }
 
       if (options?.calculateNetMinted && isBurn) {
@@ -194,8 +198,12 @@ export function getAggregatedTokens(
         volume:
           (tokens[transfer.dstAbstractTokenId]?.volume ?? 0) +
           (transfer.dstValueUsd ?? 0),
-        mintedValueUsd: tokens[transfer.dstAbstractTokenId]?.mintedValueUsd,
-        burnedValueUsd: tokens[transfer.dstAbstractTokenId]?.burnedValueUsd,
+        mintedValueUsd: options?.calculateNetMinted
+          ? (tokens[transfer.dstAbstractTokenId]?.mintedValueUsd ?? 0)
+          : undefined,
+        burnedValueUsd: options?.calculateNetMinted
+          ? (tokens[transfer.dstAbstractTokenId]?.burnedValueUsd ?? 0)
+          : undefined,
       }
 
       if (options?.calculateNetMinted && isMint) {

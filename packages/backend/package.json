@@ -35,7 +35,8 @@
     "tvs:calculate-ids": "ts-node ./scripts/tvs/calculate-ids.ts",
     "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
-    "interop:example": "ts-node ./src/modules/interop/examples/script.ts"
+    "interop:example": "ts-node ./src/modules/interop/examples/script.ts",
+    "restore-table": "cd ../database && ./scripts/db-restore/table-restore.sh"
   },
   "dependencies": {
     "@koa/router": "^12.0.0",
