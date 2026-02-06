@@ -114,7 +114,7 @@ export const plumenetwork: ScalingProject = orbitStackL2({
       url: 'https://etherscan.io/tx/0x91f946c6c2aaa8d2d87616f38d39514c8c08650703eb12010de9968db16bed4f',
       date: '2026-02-05T00:00:00Z',
       description:
-        'Plume Network migrates from classic Arbitrum Nitro to BoLD dispute protocol with ArbOS v51. All core contracts upgraded in a single transaction.',
+        'Plume Network upgrades to BoLD dispute protocol with ArbOS v51.',
       type: 'general',
     },
   ],

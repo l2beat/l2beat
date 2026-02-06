@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa8dd78e8e8f509a24d85a77c742ef906ec530b23
+Generated with discovered.json: 0xf9d017eb44dad3bca35a9f639ad925465650208f
 
-# Diff at Fri, 06 Feb 2026 14:31:34 GMT:
+# Diff at Fri, 06 Feb 2026 14:39:11 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@79ed122ff93f3ecacc6642a02e5352d633b2da3b block: 1769514598
-- current timestamp: 1770388230
+- current timestamp: 1770388687
 
 ## Description
 
@@ -275,7 +275,7 @@ Old vs new Plume implementation diffs:
 
 ```diff
 +   Status: CREATED
-    contract ChallengeManager (eth:0x0AFA44077796B9F14ecDAE817403ACb255B5983e)
+    contract EdgeChallengeManager (eth:0x0AFA44077796B9F14ecDAE817403ACb255B5983e)
     +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
 ```
 
@@ -320,7 +320,7 @@ Old vs new Plume implementation diffs:
 ```diff
 .../Bridge/ERC20Bridge.sol                         |  306 +-
  .../ChallengeManager.sol => /dev/null              |  994 -----
- .../ChallengeManager/EdgeChallengeManager.sol      | 3193 +++++++++++++
+ .../EdgeChallengeManager/EdgeChallengeManager.sol  | 3193 +++++++++++++
  .../TransparentUpgradeableProxy.p.sol              |   18 +-
  .../Inbox/ERC20Inbox.sol                           |  430 +-
  .../OneStepProofEntry.sol                          |  656 +--

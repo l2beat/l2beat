@@ -1,11 +1,11 @@
 {
   "name": "plumenetwork",
-  "timestamp": 1770388230,
+  "timestamp": 1770388687,
   "configHash": "0x57464414e26dcb236e56428df2a32e16a0684674a8c8fd9d91eea17b987ff2d5",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {
-      "name": "ChallengeManager",
+      "name": "EdgeChallengeManager",
       "address": "eth:0x0AFA44077796B9F14ecDAE817403ACb255B5983e",
       "type": "Contract",
       "template": "orbitstack/EdgeChallengeManager",
@@ -1928,6 +1928,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 24398390 },
-  "permissionsConfigHash": "0x3c625deee2391af541ba05c18bdbd0964fd23ea05cf526c79ef6bdd951a1d4ba"
+  "usedBlockNumbers": { "ethereum": 24398428 },
+  "permissionsConfigHash": "0x19079d20aabd037a51e5ec2ee19f12c3fe56a606d8fa2228f128dc066b8fb1ab"
 }
