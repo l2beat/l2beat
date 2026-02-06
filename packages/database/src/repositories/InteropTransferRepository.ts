@@ -15,6 +15,7 @@ const EXPECTED_DB_INTEROP_BRIDGE_TYPES = [
   'lockAndMint',
   'nonMinting',
   'omnichain',
+  'unknown',
 ] as const
 const _interopBridgeTypesMustMatchDbContract: typeof EXPECTED_DB_INTEROP_BRIDGE_TYPES =
   InteropBridgeTypeValues
