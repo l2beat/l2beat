@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import type {
@@ -29,7 +29,11 @@ export function getProtocolEntries(
   const durationSplitMap = buildDurationSplitMap(interopProjects)
   const transfersTimeModeMap = buildTransfersTimeModeMap(interopProjects)
 
-  const protocolsDataMap = getProtocolsDataMap(records, transfersTimeModeMap)
+  const protocolsDataMap = getProtocolsDataMap(
+    records,
+    transfersTimeModeMap,
+    durationSplitMap,
+  )
   const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(
     records,
     durationSplitMap,
@@ -49,6 +53,32 @@ export function getProtocolEntries(
         (p) => p.id === project.interopConfig.subgroupId,
       )
 
+      const byBridgeType = getByBridgeTypeData(
+        projectId,
+        protocolsDataByBridgeTypeMap,
+        tokensDetailsMap,
+        durationSplitMap,
+        logger,
+      )
+
+      const bridgeTypes = Object.entries(byBridgeType ?? {})
+        .filter(([_, value]) => value !== undefined)
+        .map(([key]) => key) as KnownInteropBridgeType[]
+
+      const averageDuration =
+        project.interopConfig.transfersTimeMode === 'unknown'
+          ? { type: 'unknown' as const }
+          : bridgeTypes.length === 1
+            ? // Show average duration in the All protocols table only if there is only one bridge type
+              getAverageDuration(
+                projectId,
+                // biome-ignore lint/style/noNonNullAssertion: it's there
+                bridgeTypes[0]!,
+                data,
+                durationSplitMap,
+              )
+            : getAverageDuration(projectId, undefined, data, undefined)
+
       const record: ProtocolEntry = {
         id: project.id,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
@@ -61,13 +91,7 @@ export function getProtocolEntries(
             }
           : undefined,
         volume: data.volume,
-        byBridgeType: getByBridgeTypeData(
-          projectId,
-          protocolsDataByBridgeTypeMap,
-          tokensDetailsMap,
-          durationSplitMap,
-          logger,
-        ),
+        byBridgeType,
         tokens: getTokensData({
           projectId,
           bridgeType: undefined, // No bridge type split for aggregated view
@@ -90,10 +114,7 @@ export function getProtocolEntries(
           data.identifiedTransferCount > 0
             ? data.volume / data.identifiedTransferCount
             : 0,
-        averageDuration:
-          project.interopConfig.transfersTimeMode === 'unknown'
-            ? { type: 'unknown' as const }
-            : getAverageDuration(projectId, undefined, data, undefined),
+        averageDuration,
         averageValueInFlight: data.averageValueInFlight,
         netMintedValue:
           data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
