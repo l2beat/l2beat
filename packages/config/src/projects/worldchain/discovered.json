@@ -1,6 +1,6 @@
 {
   "name": "worldchain",
-  "timestamp": 1769513822,
+  "timestamp": 1770329871,
   "configHash": "0x42bff111a3a859dd0eefe0f8ea62d3974e0033474d7f26f46e73afb61ec22445",
   "entries": [
     {
@@ -85,7 +85,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 9198,
+        "gameCount": 9424,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x305d0ceBB616623AD88Ee9A3ACA56aE5984e8033",
@@ -99,7 +99,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 9198,
+        "permissionedGamesTotal": 9424,
         "proxyAdmin": "eth:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "version": "1.2.0"
@@ -811,7 +811,7 @@
         "disputeGameFactory": "eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea",
         "eip1559Denominator": 250,
         "eip1559Elasticity": 2,
-        "gasLimit": 130000000,
+        "gasLimit": 150000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0xf931a81D18B1766d15695ffc7c1920a62b7e710a",
           "l1ERC721Bridge": "eth:0x1Df436AfDb2fBB40F1fE8bEd4Fc89A0D0990a8E9",
@@ -1548,7 +1548,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1326609,
-          "prevBlockNum": 24325893
+          "prevBlockNum": 24393502
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1762,7 +1762,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292685245",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292686676",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2878,6 +2878,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24325914 },
+  "usedBlockNumbers": { "ethereum": 24393556 },
   "permissionsConfigHash": "0xc318f3977974aa4d98fa34be890c05cd99518887088362bfff1c2614acf45861"
 }
