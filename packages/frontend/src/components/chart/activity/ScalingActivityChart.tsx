@@ -59,6 +59,7 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
         data={data}
         isLoading={isLoading}
         milestones={milestones}
+        scale={scale}
         chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
         interactiveLegend={{
           dataKeys,

@@ -40,6 +40,7 @@ import { countPerSecond } from '~/server/features/scaling/activity/utils/countPe
 import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import type { ChartScale } from '../types'
 
 export const RECATEGORISED_ACTIVITY_CHART_META = {
   rollups: {
@@ -81,12 +82,14 @@ interface Props {
     dataKeys: string[]
     onItemClick: (dataKey: string) => void
   }
+  scale?: ChartScale
 }
 
 export function ScalingRecategorizedActivityChart({
   data,
   isLoading,
   milestones,
+  scale,
   chartMeta,
   interactiveLegend: { dataKeys, onItemClick },
 }: Props) {
@@ -191,6 +194,7 @@ export function ScalingRecategorizedActivityChart({
           data={chartData}
           isLoading={isLoading}
           yAxis={{
+            scale: scale === 'linear' ? 'auto' : scale,
             domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: metric === 'uops' ? ' UOPS' : ' TPS',
           }}
