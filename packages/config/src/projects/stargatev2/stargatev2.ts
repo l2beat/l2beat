@@ -82,7 +82,7 @@ export const stargatev2: Bridge = {
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL, // TODO: find Hydra onchain
   },
   interopConfig: {
-    bridgeType: 'nonMinting',
+    showAlways: ['nonMinting'],
     plugins: [
       {
         plugin: 'stargate',
