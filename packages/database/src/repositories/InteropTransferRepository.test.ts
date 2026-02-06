@@ -51,7 +51,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         plugin: 'test-plugin',
         transferId: 'test-transfer',
         type: 'deposit',
-        category: undefined,
+        bridgeType: undefined,
         duration: 0,
         timestamp: UnixTime(100),
         srcTime: UnixTime(100),
@@ -132,7 +132,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(result[0]?.dstSymbol).toEqual('USDC.e')
     })
 
-    it('persists category field', async () => {
+    it('persists bridgeType field', async () => {
       const record = transfer(
         'plugin1',
         'msg1',
@@ -142,13 +142,13 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         'arbitrum',
         5000,
       )
-      record.category = 'lock-and-mint'
+      record.bridgeType = 'lockAndMint'
 
       const inserted = await repository.insertMany([record])
       expect(inserted).toEqual(1)
 
       const result = await repository.getAll()
-      expect(result[0]?.category).toEqual('lock-and-mint')
+      expect(result[0]?.bridgeType).toEqual('lockAndMint')
     })
 
     it('preserves symbol fields when they are undefined', async () => {
@@ -603,7 +603,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 })
 
 describe('InteropTransferRepository toRecord', () => {
-  it('throws on invalid category', () => {
+  it('throws on invalid bridgeType', () => {
     const record = transfer(
       'plugin1',
       'msg1',
@@ -615,11 +615,11 @@ describe('InteropTransferRepository toRecord', () => {
     )
     const row = {
       ...toRow(record),
-      category: 'invalid-category',
+      bridgeType: 'invalid-category',
     } as Selectable<InteropTransfer>
 
     expect(() => toRecord(row)).toThrow(
-      'Invalid interop transfer category: invalid-category',
+      'Invalid interop transfer bridge type: invalid-category',
     )
   })
 })
@@ -637,7 +637,7 @@ function transfer(
     plugin,
     transferId,
     type,
-    category: undefined,
+    bridgeType: undefined,
     duration: duration ?? 0,
     timestamp,
     srcTime: timestamp,

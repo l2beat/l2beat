@@ -378,7 +378,7 @@ model InteropTransfer {
   plugin     String   @db.VarChar(64)
   transferId String   @db.VarChar(40)
   type       String   @db.VarChar(64)
-  category   String?  @db.VarChar(32)
+  bridgeType String?  @db.VarChar(32)
   timestamp  DateTime @db.Timestamp(6)
 
   duration Int

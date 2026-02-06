@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE "InteropTransfer" ADD COLUMN     "category" VARCHAR(32);
+ALTER TABLE "InteropTransfer" ADD COLUMN     "bridgeType" VARCHAR(32);

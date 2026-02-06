@@ -1,13 +1,11 @@
 import type { InteropPluginName } from '@l2beat/config'
-import type {
-  InteropEventContext,
-  InteropTransferCategory,
-} from '@l2beat/database'
+import type { InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
   type Block,
   type ChainSpecificAddress,
   EthereumAddress,
+  type InteropBridgeType,
   type Transaction,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -54,7 +52,7 @@ export interface InteropTransfer {
   kind: 'InteropTransfer'
   plugin: string
   type: string
-  category?: InteropTransferCategory
+  bridgeType?: InteropBridgeType
   events: InteropEvent[]
   src: TransferSide
   dst: TransferSide
@@ -341,7 +339,7 @@ export interface InteropTransferOptions {
   dstAmount?: bigint
   dstWasMinted?: boolean
 
-  category?: InteropTransferCategory
+  bridgeType?: InteropBridgeType
   extraEvents?: InteropEvent[]
 }
 
@@ -357,7 +355,7 @@ function Transfer(
   return {
     kind: 'InteropTransfer',
     type,
-    category: options.category,
+    bridgeType: options.bridgeType,
     events: [
       options.srcEvent,
       options.dstEvent,
