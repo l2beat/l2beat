@@ -237,7 +237,6 @@
   },
   "meson": {
     "description": "Liquidity swap + tunnel samples from MESON_PLAN",
-    // tunnel events are not matching, TODO
     "txs": [
       {
         "chain": "arbitrum",
@@ -247,6 +246,7 @@
         "chain": "optimism",
         "tx": "0x7f5e8814b2c41208dbc00f060273f02bc670c37581e25c30d8fdfc1116cd38aa"
       },
+      // tunnel events are not matching, TODO
       {
         "chain": "arbitrum",
         "tx": "0xa4d497c7826ef5025901b086a735e89c95faf71f41e066ff1029271e12d76619"
@@ -254,6 +254,15 @@
       {
         "chain": "bob",
         "tx": "0xb56575f17495f677ad1a15e4b4511c3396bf09c1482ac281ca915184f070f60c"
+      },
+      // gas/native transfer
+      {
+        "chain": "base",
+        "tx": "0x6e3671be03faa0444bfe5135a84d9d2fe20c3658f6763cf53098b232c8a5f7a4"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe4fdc4e6856940605d11c5fea1ea4e501ab8d04e560a1dc65fe0a9652684be0b"
       }
     ]
   },
