@@ -1,0 +1,162 @@
+{
+  "title": "Monthly Updates - January 2026",
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-31",
+  "publishedOn": "2026-02-01",
+  "description": "Discover the most important January developments across major ecosystems — from governance updates to technical upgrades and ecosystem milestones.",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "ArbOS Dia Upgrade & Smoother Fees",
+          "content": "Arbitrum [announced](https://x.com/arbitrum/status/2009340477137670463) the execution of “ArbOS Dia Upgrade,” part of a broader initiative to improve fee smoothness and execution performance across the network. These changes aim to deliver more predictable economics for users and builders, a key infrastructure signal for ecosystem maturation."
+        },
+        {
+          "title": "Open House 2026 Goes Global",
+          "content": "One of the most visible [announcements](https://x.com/arbitrum/status/2010698393157574780) is the launch of Open House 2026, Arbitrum’s expanded global builder event series.\n\nOpen House events are designed as hands-on, in-person sessions where developers can:\n\n- Learn Arbitrum tooling directly from core contributors\n- Experiment with Stylus, Orbit, and Nitro-based stacks\n- Connect with ecosystem teams and potential collaborators\n\nFor 2026, the program expands beyond isolated hackathons into a coordinated global initiative, signaling Arbitrum’s intent to compete aggressively for developer mindshare across regions."
+        },
+        {
+          "title": "Rust SDK v0.10.0: Stylus Keeps Leveling Up",
+          "content": "Arbitrum has [released](https://github.com/OffchainLabs/stylus-sdk-rs/releases/tag/v0.10.0) Rust SDK v0.10.0, continuing Arbitrum’s push behind Stylus, its alternative execution environment that allows developers to write smart contracts in Rust.\n\nThe updated SDK improves:\n\n- Developer ergonomics\n- Tooling stability\n- Integration paths for performance-oriented applications"
+        },
+        {
+          "title": "x402 v2: From Concept to Production-Ready Payments",
+          "content": "Ben Greenberg, Devrel at Arbitrum, [published](https://x.com/hummusonrails/status/2008432789511708966) a detailed builder-focused article on x402 v2, explaining how the protocol evolved from a promising concept into a production-ready payment interface. Rather than summarizing the spec, the piece walks through real friction points builders encounter when shipping paid APIs and agent-to-agent services, supported by working code, a private inference demo, and a reference facilitator implementation.\n\nThe article highlights key improvements in x402 v2, including CAIP-2–based network identity, inspectable facilitators via the `/supported` endpoint, header-first payment negotiation aligned with HTTP standards, strict and idempotent verification, and lifecycle hooks that give developers explicit control over settlement timing. Together, these changes position x402 as a chain-agnostic, extensible payment layer capable of handling real-world workloads on Arbitrum and beyond."
+        },
+        {
+          "title": "ArbiFuel: Gas Sponsorship for Early-Stage Builders",
+          "content": "Arbitrum [introduced](https://x.com/ArbitrumDevs/status/2008249029885653317) the ArbiFuel Gas Sponsorship Program to help early-stage teams build without worrying about gas costs. The program sponsors transaction fees for teams testing, deploying, and onboarding users, removing a major source of friction during the earliest phases of development.\n\nBy covering gas expenses, ArbiFuel allows builders to focus on shipping and iterating rather than budgeting for infrastructure. The initiative reinforces Arbitrum’s broader strategy of lowering entry barriers and accelerating experimentation across the ecosystem."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "ZKsync 2026 Roadmap",
+          "content": "Alex Gluchowski [published](https://www.zksync.io/blog/zksync-roadmap-2026) ZKsync’s 2026 roadmap, framing the strategy as “no shortcuts” and prioritizing real-world constraints such as regulation, privacy, deterministic execution, and native interoperability as ZKsync pushes toward institutional-grade adoption. The roadmap positions the Elastic Chain/network model (multi-chain + native interop) as the foundation for scaling beyond a single chain into a broader network economy.\n\nThe roadmap also reinforces ZKsync’s product pillars (including the stack powering elastic chains) as core to expanding use cases where privacy and control matter, rather than optimizing only for crypto-native throughput narratives."
+        },
+        {
+          "title": "Enterprise-Ready Governance: Key Participant & Active Delegate Tagging Goes Live",
+          "content": "Shelby [announced](https://forum.zknation.io/t/key-participants-active-delegate-tagging-advancing-enterprise-ready-governance/881) a new tagging system on the governance UI that makes it easier to identify active delegates and categorize key ecosystem participants (chains, apps, technical partners, Security Council, Guardians). The goal is explicitly framed as making governance more enterprise-ready, improving navigation and decision-making for token holders and institutional participants.\n\nThis also ties into the upcoming staking pilot UX, where rewards are expected to depend on delegating to active delegates, making “active vs inactive” visibility a functional part of tokenholder workflows, not just a dashboard feature."
+        },
+        {
+          "title": "ZKsync Airbender Prover Tops Eth Proof Benchmarks",
+          "content": "ZKsync [announced](https://x.com/zksync/status/2013270694218412413) that its Airbender prover [reached](https://ethproofs.org/clusters) the #1 position on eth_proofs, leading both in proving time and cost per proof across single-GPU and multi-GPU benchmarks. The results position Airbender as the most efficient prover currently tracked on the public benchmark leaderboard, highlighting significant gains in zero-knowledge proving performance."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Optimism Introduces OP Enterprise",
+          "content": "Optimism introduced [OP Enterprise](https://www.optimism.io/blog/introducing-op-enterprise), a suite of managed blockchain infrastructure products designed for enterprises that want to deploy on the OP Stack without operating the full blockchain themselves. It includes three tiers: OP Mainnet (deploy on public network with enterprise support), Self Managed (operate your own chain with 40 hours/month engineering support), and Fully Managed (end-to-end operations with 99.99% uptime SLOs and 15-minute P1 response). The offering includes pre-negotiated vendor partnerships across wallets, indexers, oracles, and compliance providers, eliminating negotiations that typically take 6-12 months. The infrastructure is MIT licensed and open source, with direct access to the engineers who built the OP Stack."
+        },
+        {
+          "title": "Upgrade 18: Custom Gas Token v2 and Kona Proofs on the OP Stack",
+          "content": "Paul Dowman (OP Labs) [posted](https://gov.optimism.io/t/upgrade-18-custom-gas-token-v2-and-kona-proofs/10576) the Upgrade 18 proposal detailing three major OP Stack advancements: Custom Gas Token v2 (CGT v2), a creator-pattern dispute game refactor, and Cannon + Kona fault proofs. CGT v2 enables OP Stack chains to use any asset (not just ETH) as the native gas token, unlocking designs like stablecoin-fee rollups, while explicitly noting that there is no migration path from legacy CGT to v2.\n\nThe proposal also adds [Kona](https://github.com/ethereum-optimism/optimism/tree/develop/kona/crates/proof/proof), a second Rust-based fault-proof implementation alongside Cannon, increasing redundancy (via the new CANNON_KONA game type, not yet canonical). It outlines the operational plan (Security Council signing + pre-states) and targets mainnet execution after Feb 5, 2026, with bundled upgrades across multiple Superchain networks."
+        },
+        {
+          "title": "Proposal to Align OP Token with Superchain Success",
+          "content": "The Optimism Collective has [approved](https://vote.optimism.io/proposals/87361578787676343742924242917671200086664358805816521220096877302391945572241), via voting, a formal [governance proposal](https://gov.optimism.io/t/proposal-to-align-the-op-token-with-superchain-success/10527) to allocate 50% of Superchain revenue to monthly OP token buybacks over a 12-month pilot. This proposal is designed to align the OP token’s value more closely with Superchain's growth and sequencer revenue.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Guide to Season 9",
+          "content": "Optimism Collective [published](https://gov.optimism.io/t/guide-to-season-9/10529) the Guide to Season 9, detailing how governance will operate from January 29 through June 3, 2026. Season 9’s theme, “From Experiment to Organization,” signals a strategic pivot: governance will lean more toward oversight of core development (e.g., OP Stack upgrades and protocol performance) rather than decentralized funding for community experiments. Key governance bodies continue with refined roles, while some incentive programs (like Intents and Retro Funding) are paused.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Season 9 Governance Fund Missions",
+          "content": "The Optimism Collective’s Grants Council [laid out](https://gov.optimism.io/t/season-9-governance-fund-missions/10526) the Missions for Season 9’s Governance Fund, defining concrete success metrics for protocols, primarily around decentralized exchange liquidity and usage. Critically, any projects deployed on Superchain Index chains that funnel revenue back to the Collective become eligible, reinforcing Superchain-wide alignment. With a total budget of around 3.89M OP, this mission framework aims to balance growth incentives and sustainable revenue commitments across the broader ecosystem.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "A Post-Quantum Roadmap for the Superchain",
+          "content": "Optimism co-founder Karl Floersch [shared](https://x.com/Optimism/status/2015423032613855380) a post-quantum security roadmap for the Superchain, outlining a 10-year plan to deprecate ECDSA EOAs and migrate users and infrastructure to post-quantum smart accounts via account abstraction. The initiative positions the Superchain as one of the first large-scale blockchain ecosystems planning explicitly for a post-quantum future."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Polygon Labs Acquires Coinme and Sequence to Launch Regulated Stablecoin Payments in the U.S.",
+          "content": "Polygon Labs [announced](https://polygon.technology/blog/polygon-labs-to-acquire-coinme-and-sequence-to-offer-regulated-stablecoin-payments-in-the-u-s) the acquisition of Coinme and Sequence to build a fully integrated, regulated stablecoin payments platform in the United States. With this move, Polygon adds licensed fiat on- and off-ramps, enterprise-grade wallet infrastructure, and cross-chain payment orchestration, forming the foundation of what it calls the Open Money Stack, a vertically integrated solution for compliant, global stablecoin payments.\n\nCoinme brings licensed access to U.S. money movement across 48 states and over one million existing users, while Sequence adds smart wallets and one-click cross-chain payment routing that abstracts bridges, swaps, and gas from users. Together, these acquisitions position Polygon Labs as a revenue-generating blockchain payments company, aiming to enable instant, predictable, and compliant money movement for institutions, fintechs, and enterprises."
+        },
+        {
+          "title": "Toku Launches Global Stablecoin Payroll on Polygon",
+          "content": "Toku [launched](https://polygon.technology/blog/toku-launches-global-stablecoin-payroll-on-polygon-with-1b-in-annual-volume) a compliant global stablecoin payroll on Polygon, enabling companies to pay employees in over 100 countries using existing systems like ADP, Workday, UKG, and Gusto. The platform processes more than $1B in annual payroll volume, turning payroll into a drop-in on-chain upgrade without requiring workflow changes.\n\nToku handles compliance end-to-end while Polygon provides fast, low-cost settlement, making stablecoin payroll a production-ready primitive for global businesses and reinforcing Polygon’s role as infrastructure for real-world money movement."
+        },
+        {
+          "title": "Why Polygon Is Building the Open Money Stack",
+          "content": "Polygon Labs [published](https://polygon.technology/blog/vertical-integrated-open-why-polygon-is-building-the-open-money-stack) a manifesto explaining why it is building the Open Money Stack, a vertically integrated yet open payments stack designed to enable end-to-end stablecoin payments. The stack combines wallets, regulated on- and off-ramps, orchestration, and settlement into a single integration that institutions, fintechs, and enterprises can use without rebuilding their existing infrastructure.\n\nBy remaining open across chains, providers, and regions, the Open Money Stack avoids vendor lock-in while reducing operational complexity. Polygon positions this approach as the path to making money move reliably, predictably, and globally, turning stablecoins from a raw primitive into real-world payment infrastructure."
+        },
+        {
+          "title": "Ternoa Integrates Cifer for Post-Quantum Encrypted Smart Contracts",
+          "content": "Ternoa, an AggLayer-connected chain, [confirmed](https://x.com/Ternoa_/status/2013245463059927418) that Cifer is now fully compatible with its network, enabling developers to build smart contracts with encrypted on-chain data secured by post-quantum-resistant cryptography. This gives Ternoa a strong long-term security advantage for applications requiring future-proof data protection.\n\nTernoa also announced it will stop rewarding L1 validators starting April 1st, as it prepares to migrate $CAPS and CAPSULE to support L2 growth, while keeping L1 nodes running so users can unstake safely."
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "id": "eigenlayer",
+      "daLayerId": "eigenda",
+      "name": "EigenLayer",
+      "news": [
+        {
+          "title": "EigenDA Captures 98% of L2 Blobspace Usage",
+          "content": "Gajesh [posted](https://x.com/gajesh/status/2015945766741880885) that EigenDA currently accounts for roughly 98% of L2 blobspace usage, overtaking Ethereum-native blobs as the dominant source of data availability for rollups. This reflects how quickly EigenLayer’s EigenDA has become a core infrastructure layer for scaling ecosystems, optimizing blob costs, and throughput.\n\nThis trend is also observable through public analytics dashboards such as [L2BEAT](https://l2beat.com/data-availability/projects/eigenda/no-bridge#throughput), where blobspace usage across data availability providers can be monitored directly."
+        },
+        {
+          "title": "How EigenAI Makes AI Inference Deterministic and Verifiable",
+          "content": "EigenCloud [published](https://blog.eigencloud.xyz/deterministic-ai-inference-eigenai/) a technical explainer detailing how EigenAI achieves bit-exact deterministic inference for large language models on GPUs, addressing a core limitation of modern AI systems: nondeterministic outputs. Because GPU execution introduces variability through floating-point behavior and parallelism, the same prompt can produce different results across runs, making verification impossible in high-stakes applications.\n\nIt also explains how EigenAI enforces determinism across the full stack—hardware constraints, deterministic math libraries, and a controlled inference engine—while adding cryptoeconomic verification through EigenLayer primitives. This enables AI outputs to be replayed, audited, and economically enforced, laying the foundation for verifiable autonomous agents in areas such as trading, prediction markets, and on-chain decision-making."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Highlight: Ethereum L2s as Financial Infrastructure",
+          "content": "Nethermind, in collaboration with L2BEAT and Etherealize, [released](https://x.com/Nethermind/status/2012112602764083427) a joint report outlining how Ethereum and its Layer 2 ecosystem are becoming core infrastructure for institutional finance. The report argues that L2 networks now provide the scalability, security, and customizable execution environments required for regulated financial use cases, while still anchoring settlement and auditability to the Ethereum mainnet.\n\nKey findings highlight that institutions are already moving into production with stablecoins and tokenized assets, rollups remain the strongest security model, and compliance is increasingly strengthened through onchain identity frameworks and zero-knowledge proofs. The report includes adoption examples from JPMorgan, Société Générale, Visa, and other major financial players."
+        },
+        {
+          "title": "Proving AI Authorship Without Revealing the Watermark",
+          "content": "Antonio Larriba [published](https://www.nethermind.io/blog/proving-ai-authorship-without-revealing-the-watermark) a technical note introducing Zero-Knowledge Watermarking (zkWM), a cryptographic framework that enables public verification of AI-generated content without revealing watermarking secrets. The article addresses a core dilemma in AI provenance: existing watermarking techniques either allow public verification at the cost of exposing detection mechanisms, or preserve secrecy while requiring trusted private keys that do not scale.\n\nzkWM resolves this trade-off using SNARKs to prove the presence (or absence) of a watermark without disclosing the underlying token partitions or parameters. With sub-second proving and verification times on production-scale text, the approach enables new use cases such as on-chain content verification, public provenance registries, and open-model monetization, positioning zkWM as practical infrastructure for verifiable AI authorship at scale."
+        },
+        {
+          "title": "Nethermind Releases Client v1.36.0 with Major Execution and RPC Improvements",
+          "content": "Nethermind [announced](https://x.com/Nethermind/status/2011098770310664539) the release of Nethermind Client v1.36.0, bringing improvements in operator ergonomics, RPC reliability, and execution correctness. The update also aligns `eth_estimateGas` behavior more closely with Geth, reducing inconsistencies for developers and infrastructure providers running Ethereum nodes.\n\nThe release migrates the client to .NET 10 and includes breaking changes, removing obsolete configurations and analytics features as part of ongoing client modernization."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Machine Execution Environment with RISC-Zero Prover/Verifier Support",
+          "content": "Cartesi’s Machine Emulator received a merge to support RISC-Zero prover and verifier flows, enabling integration with zero-knowledge proof tooling. This foundation lays the groundwork for future verifiable execution workflows and enhances flexibility in how machine states can be demonstrated and provably verified off-chain. Check the merged PR [here](https://github.com/cartesi/machine-emulator/pull/343)."
+        },
+        {
+          "title": "Enhancements to the PRT Fraud Proof System: Refund Logic & Contracts Simplification",
+          "content": "Improving bond refunds: Work has been made to refine how bond refunds are handled in the fraud-proof context. The new logic aims to reduce failed refund paths and make the refund process more predictable for participants exiting tournaments or disputes. Check the merged PR [here](https://github.com/cartesi/dave/pull/233).\n\nPRT contract unification: The Permissionless Refereed Tournament (PRT) suite was simplified by consolidating separate contracts into a single Tournament.sol implementation that supports both root and leaf roles with consistent semantics. This cleanup improves maintainability and reduces surface area for future auditing and upgrades. Check the merged PR [here](https://github.com/cartesi/dave/pull/230)."
+        },
+        {
+          "title": "New Alpha Release for the Cartesi CLI",
+          "content": "A new alpha release of the Cartesi CLI (v2.0.0-alpha.26) was published, delivering a preview of upcoming tooling around Rollups Node and development workflow improvements. This version is targeted at core developers and testers. The release bumps the rollups-node dependency to v2.0.0-alpha.9 and rollups-contracts to v2.1.1, enables PRT deployment by default for new applications, and updates the explorer to support the new contract versions.\n\nThe CLI also reduces external dependencies, improves startup performance, and supports migration to Bun as the package manager, offering an alternative Bun-based binary distribution that removes the need for a global Node.js install.\n\nAccount abstraction support has been temporarily removed while core abstractions stabilize. Prebuilt binaries are available via the release page [here](https://github.com/cartesi/cli/releases/tag/%40cartesi/cli%402.0.0-alpha.26) (with macOS support still pending)."
+        }
+      ]
+    }
+  ]
+}

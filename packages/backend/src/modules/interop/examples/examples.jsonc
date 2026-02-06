@@ -15,14 +15,35 @@
         "tx": "0x158ead7fb516fb23fd2da016d4e704c9623af497b6a8303d68388020f07ef3bd"
       }
     ],
-    "events": [
-      "allbridge.MessageSent",
-      "allbridge.MessageReceived",
-      "allbridge.TokensSent",
-      "allbridge.TokensReceived"
-    ],
-    "messages": ["allbridge.Message"],
-    "transfers": ["allbridge.Transfer"]
+    "expects": {
+      "events": [
+        {
+          "type": "allbridge.MessageSent"
+        },
+        {
+          "type": "allbridge.TokensSent"
+        },
+        {
+          "type": "allbridge.MessageReceived"
+        },
+        {
+          "type": "allbridge.TokensReceived"
+        }
+      ],
+      "messages": [{ "type": "allbridge.Message", "app": "allbridge" }],
+      "transfers": [
+        {
+          "type": "allbridge.Transfer",
+          "events": [
+            { "type": "allbridge.TokensSent", "args": { "amount": "39870" } },
+            {
+              "type": "allbridge.TokensReceived",
+              "args": { "amount": "39898063" }
+            }
+          ]
+        }
+      ]
+    }
   },
   "ccip": {
     "loadConfigs": ["ccip"],
@@ -160,6 +181,24 @@
       "ccip.Transfer"
     ]
   },
+  "ccip-messaging": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // LaPoste (Abracadabra) - pure messaging, no token transfer through CCIP
+      // Arbitrum → Ethereum
+      {
+        "chain": "arbitrum",
+        "tx": "0xf393fcfb456ae71c6cd1e326ae1a1630d3ed7f80501b72586194ba66be05edd8"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x57fcb2aa31b96ed2c753e9d0853f3c4f6dd34260d506ebc274a8002d2d656ec5"
+      }
+    ],
+    "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+    "messages": [{ "type": "ccip.Message", "app": "unknown" }],
+    "transfers": []
+  },
   "celer": {
     "txs": [
       {
@@ -193,6 +232,37 @@
       {
         "chain": "ethereum",
         "tx": "0x47b1ddf11342a81aec106555a30da420ed831460a08bb347023515a761a10580"
+      }
+    ]
+  },
+  "meson": {
+    "description": "Liquidity swap + tunnel samples from MESON_PLAN",
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x454aa9a68e2e99789407d93d30d6e7d174f739977ca578aa6a9937247b64fdea"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x7f5e8814b2c41208dbc00f060273f02bc670c37581e25c30d8fdfc1116cd38aa"
+      },
+      // tunnel events are not matching, TODO
+      {
+        "chain": "arbitrum",
+        "tx": "0xa4d497c7826ef5025901b086a735e89c95faf71f41e066ff1029271e12d76619"
+      },
+      {
+        "chain": "bob",
+        "tx": "0xb56575f17495f677ad1a15e4b4511c3396bf09c1482ac281ca915184f070f60c"
+      },
+      // gas/native transfer
+      {
+        "chain": "base",
+        "tx": "0x6e3671be03faa0444bfe5135a84d9d2fe20c3658f6763cf53098b232c8a5f7a4"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe4fdc4e6856940605d11c5fea1ea4e501ab8d04e560a1dc65fe0a9652684be0b"
       }
     ]
   },

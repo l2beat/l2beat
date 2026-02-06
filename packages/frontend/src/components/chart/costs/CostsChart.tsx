@@ -2,9 +2,12 @@ import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import isNumber from 'lodash/isNumber'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -12,9 +15,9 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
@@ -188,19 +191,17 @@ export function CostsChart({
           isAnimationActive={false}
           hide={!dataKeys.includes('compute')}
         />
-        {chartMeta.blobs && (
-          <Area
-            yAxisId="left"
-            dataKey="blobs"
-            fill={chartMeta.blobs.color}
-            fillOpacity={1}
-            strokeWidth={0}
-            stackId="a"
-            activeDot={!dataKeys.includes('calldata')}
-            isAnimationActive={false}
-            hide={!dataKeys.includes('blobs')}
-          />
-        )}
+        <Area
+          yAxisId="left"
+          dataKey="blobs"
+          fill={chartMeta.blobs?.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId="a"
+          activeDot={!dataKeys.includes('calldata')}
+          isAnimationActive={false}
+          hide={!dataKeys.includes('blobs') || !chartMeta.blobs}
+        />
         <Area
           yAxisId="left"
           dataKey="calldata"
@@ -211,6 +212,7 @@ export function CostsChart({
           isAnimationActive={false}
           hide={!dataKeys.includes('calldata')}
         />
+
         {chartMeta.ethereum && (
           <Line
             yAxisId="right"
@@ -270,19 +272,19 @@ export function CostsChart({
           }}
         />
 
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             yAxisId: 'left',
             tickFormatter: (value: number) =>
               unit === 'gas'
                 ? formatNumber(value)
                 : formatCurrency(value, unit),
             tickCount,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           content={
             <CustomTooltip
@@ -298,18 +300,17 @@ export function CostsChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   unit,
   resolution,
   chartMeta,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   unit: CostsUnit
   resolution: ChartResolution
   chartMeta: ChartMeta
 }) {
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   const actualPayload = [...payload].reverse().filter((p) => !p.hide)
   const total = actualPayload.reduce<number | null>((acc, curr) => {

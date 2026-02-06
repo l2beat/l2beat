@@ -18,6 +18,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { BasicTable } from '~/components/table/BasicTable'
+import { EM_DASH } from '~/consts/characters'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -35,12 +36,14 @@ type InteropTopItemsCellProps = {
     name: string
     iconUrl: string
   }
+  showNetMintedValueColumn?: boolean
 }
 
 export function InteropTopItemsCell({
   items,
   itemType,
   protocol,
+  showNetMintedValueColumn,
 }: InteropTopItemsCellProps) {
   const [isOpen, setIsOpen] = useState(false)
   const breakpoint = useBreakpoint()
@@ -48,8 +51,8 @@ export function InteropTopItemsCell({
   const restItems = items.slice(3)
 
   const columns = useMemo(() => {
-    return getTopItemsColumns(itemType)
-  }, [itemType])
+    return getTopItemsColumns(itemType, showNetMintedValueColumn)
+  }, [itemType, showNetMintedValueColumn])
 
   const table = useTable<TopItemRow>({
     data: items,
@@ -150,7 +153,7 @@ function ItemIconWithTooltip({
       <TooltipContent>
         <p className="font-bold text-label-value-15">{item.displayName}</p>
         <p className="text-label-value-13 text-secondary">
-          {formatCurrency(item.volume, 'usd')}
+          {item.volume ? formatCurrency(item.volume, 'usd') : EM_DASH}
         </p>
       </TooltipContent>
     </Tooltip>

@@ -40,15 +40,17 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new CirculatingSupplyAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: configs,
-        circulatingSupplyProvider,
-        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: configs,
+          circulatingSupplyProvider,
+          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
@@ -110,15 +112,17 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new CirculatingSupplyAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum', 18)],
-        circulatingSupplyProvider,
-        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: [config('config-1', 'ethereum', 18)],
+          circulatingSupplyProvider,
+          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [
         config('config-1', 'ethereum', 18),
@@ -152,15 +156,17 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce([]),
       })
 
-      const indexer = new CirculatingSupplyAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum', 18)],
-        circulatingSupplyProvider,
-        db: mockDatabase({ tvsAmount: mockObject() }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: [config('config-1', 'ethereum', 18)],
+          circulatingSupplyProvider,
+          db: mockDatabase({ tvsAmount: mockObject() }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [
         config('config-1', 'ethereum', 18),
@@ -199,15 +205,17 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new CirculatingSupplyAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum', 18)],
-        circulatingSupplyProvider,
-        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: [config('config-1', 'ethereum', 18)],
+          circulatingSupplyProvider,
+          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [
         config('config-1', 'ethereum', 18),
@@ -239,15 +247,17 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
       })
 
-      const indexer = new CirculatingSupplyAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum', 18)],
-        circulatingSupplyProvider,
-        db: mockDatabase({ tvsAmount: mockObject() }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: [config('config-1', 'ethereum', 18)],
+          circulatingSupplyProvider,
+          db: mockDatabase({ tvsAmount: mockObject() }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       await expect(async () => {
         await indexer.multiUpdate(from, to, [
@@ -263,15 +273,17 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(2),
       })
 
-      const indexer = new CirculatingSupplyAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum', 18)],
-        circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({}),
-        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new CirculatingSupplyAmountIndexer(
+        {
+          configurations: [config('config-1', 'ethereum', 18)],
+          circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({}),
+          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+          syncOptimizer: mockObject<SyncOptimizer>({}),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const removalConfigs = [
         {

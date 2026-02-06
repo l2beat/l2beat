@@ -525,21 +525,23 @@ function createIndexer(options: {
   indexerService?: IndexerService
   minHeight?: number
 }) {
-  return new LivenessAggregatingIndexer({
-    tags: { tag: options.tag },
-    indexerService: options.indexerService ?? mockObject<IndexerService>(),
-    logger: Logger.SILENT,
-    minHeight: options.minHeight ?? 0,
-    parents: [],
-    db: mockObject<Database>({
-      liveness:
-        options.livenessRepository ?? mockObject<Database['liveness']>(),
-      aggregatedLiveness:
-        options.aggregatedLivenessRepository ??
-        mockObject<Database['aggregatedLiveness']>({
-          upsertMany: mockFn().resolvesTo(1),
-        }),
-    }),
-    projects: MOCK_PROJECTS,
-  })
+  return new LivenessAggregatingIndexer(
+    {
+      tags: { tag: options.tag },
+      indexerService: options.indexerService ?? mockObject<IndexerService>(),
+      minHeight: options.minHeight ?? 0,
+      parents: [],
+      db: mockObject<Database>({
+        liveness:
+          options.livenessRepository ?? mockObject<Database['liveness']>(),
+        aggregatedLiveness:
+          options.aggregatedLivenessRepository ??
+          mockObject<Database['aggregatedLiveness']>({
+            upsertMany: mockFn().resolvesTo(1),
+          }),
+      }),
+      projects: MOCK_PROJECTS,
+    },
+    Logger.SILENT,
+  )
 }
