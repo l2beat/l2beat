@@ -13,6 +13,7 @@ import { AcrossConfigPlugin } from './across/across.config'
 import { AcrossPlugin } from './across/across.plugin'
 import { AcrossSettlementOpPlugin } from './across-settlement-op'
 import { AcrossSettlementOrbitPlugin } from './across-settlement-orbit'
+import { AgglayerPlugin } from './agglayer'
 import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
@@ -137,6 +138,7 @@ export function createInteropPlugins(
       new SquidCoralPlugin(),
       new DeBridgePlugin(),
       new DeBridgeDlnPlugin(),
+      new AgglayerPlugin(),
       new MayanForwarderPlugin(deps.configs),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
