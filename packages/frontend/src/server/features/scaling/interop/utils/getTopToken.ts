@@ -1,7 +1,8 @@
 import type { Project } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
 import type { AggregatedInteropTransferWithTokens } from '../types'
+import type { TokensDetailsMap } from './buildTokensDetailsMap'
 
 export interface InteropTopTokenData {
   symbol: string
@@ -16,7 +17,7 @@ export interface InteropTopTokenData {
 
 export interface GetTopTokenParams {
   records: AggregatedInteropTransferWithTokens[]
-  tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>
+  tokensDetailsMap: TokensDetailsMap
   interopProjects: Project<'interopConfig'>[]
   subgroupProjects: Set<ProjectId>
 }
@@ -48,10 +49,7 @@ export function getTopToken({
 
     for (const token of record.tokens) {
       const tokenDetails = tokensDetailsMap.get(token.abstractTokenId)
-      if (!tokenDetails || !tokenDetails.iconUrl) continue
-
-      const tokenVolume = token.volume ?? 0
-      const tokenTransferCount = token.transferCount ?? 0
+      if (!tokenDetails) continue
 
       const current = tokenVolumes.get(token.abstractTokenId) ?? {
         symbol: tokenDetails.symbol,
@@ -61,28 +59,28 @@ export function getTopToken({
         protocols: new Map(),
       }
 
-      current.volume += tokenVolume
-      current.transferCount += tokenTransferCount
+      current.volume += token.volume
+      current.transferCount += token.transferCount
 
       const protocolVolume = current.protocols.get(record.id) ?? 0
-      current.protocols.set(record.id, protocolVolume + tokenVolume)
+      current.protocols.set(record.id, protocolVolume + token.volume)
 
       tokenVolumes.set(token.abstractTokenId, current)
     }
   }
 
   const topToken = Array.from(tokenVolumes.values()).toSorted(
-    (a, b) => b.volume - a.volume || b.transferCount - a.transferCount,
+    (a, b) => b.volume - a.volume,
   )[0]
 
   if (!topToken) return undefined
 
-  const topProtocolId = Array.from(topToken.protocols.entries()).toSorted(
-    (a, b) => b[1] - a[1],
-  )[0]
+  const topProtocolId = Array.from(topToken.protocols.entries())
+    .toSorted((a, b) => b[1] - a[1])
+    .map(([key]) => key)[0]
 
   const protocolProject = topProtocolId
-    ? projectsById.get(topProtocolId[0])
+    ? projectsById.get(ProjectId(topProtocolId))
     : undefined
   const topProtocol = protocolProject
     ? {

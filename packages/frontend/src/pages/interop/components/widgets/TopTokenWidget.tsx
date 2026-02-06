@@ -1,13 +1,7 @@
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EM_DASH } from '~/consts/characters'
-import { InfoIcon } from '~/icons/Info'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -23,7 +17,7 @@ export function TopTokenWidget({ topToken, isLoading, className }: Props) {
   return (
     <PrimaryCard
       className={cn(
-        'col-span-full max-md:rounded-lg',
+        'col-span-full max-md:rounded-t-lg max-md:border-b max-md:border-b-divider',
         className,
       )}
     >
@@ -51,7 +45,9 @@ export function TopTokenWidget({ topToken, isLoading, className }: Props) {
 function TopTokenHeading() {
   return (
     <div className="min-w-0">
-      <h2 className="font-bold text-heading-16 md:text-heading-20">Top token</h2>
+      <h2 className="font-bold text-heading-16 md:text-heading-20">
+        Top token
+      </h2>
       <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
         Across the selected paths based on 24h volume
       </div>
@@ -99,7 +95,6 @@ function TopTokenStatCards({
     <>
       <TokenStatCard
         label="Volume"
-        tooltip="Total 24h transfer volume for the top token in the current chain selection."
         isLoading={isLoading}
         value={
           topToken ? (
@@ -111,7 +106,6 @@ function TopTokenStatCards({
       />
       <TokenStatCard
         label="Transaction count"
-        tooltip="Total number of transfers for the top token in the current chain selection."
         isLoading={isLoading}
         value={
           topToken ? (
@@ -123,7 +117,6 @@ function TopTokenStatCards({
       />
       <TokenStatCard
         label="Top protocol used"
-        tooltip="Protocol with the highest 24h volume for the top token."
         isLoading={isLoading}
         value={
           topToken?.topProtocol ? (
@@ -155,7 +148,6 @@ function TopTokenStatRows({
     <div className="flex flex-col gap-2">
       <TokenStatRow
         label="Volume"
-        tooltip="Total 24h transfer volume for the top token in the current chain selection."
         isLoading={isLoading}
         value={
           topToken ? (
@@ -167,7 +159,6 @@ function TopTokenStatRows({
       />
       <TokenStatRow
         label="Transaction count"
-        tooltip="Total number of transfers for the top token in the current chain selection."
         isLoading={isLoading}
         value={
           topToken ? (
@@ -179,7 +170,6 @@ function TopTokenStatRows({
       />
       <TokenStatRow
         label="Top protocol used"
-        tooltip="Protocol with the highest 24h volume for the top token."
         isLoading={isLoading}
         value={
           topToken?.topProtocol ? (
@@ -202,30 +192,20 @@ function TopTokenStatRows({
 
 function TokenStatCard({
   label,
-  tooltip,
   value,
   isLoading,
 }: {
   label: string
-  tooltip: string
   value: ReactNode
   isLoading: boolean
 }) {
   return (
     <div className="flex h-14 flex-col justify-center rounded border border-divider px-4">
-      <div className="flex items-center justify-center gap-1 text-center font-medium text-2xs text-secondary leading-none">
-        <span>{label}</span>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button type="button" className="leading-none">
-              <InfoIcon className="size-3 fill-current" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>{tooltip}</TooltipContent>
-        </Tooltip>
-      </div>
+      <span className="text-center font-medium text-2xs text-secondary leading-none">
+        {label}
+      </span>
       <div className="mt-1.5 text-center font-bold text-label-value-15 leading-none">
-        {isLoading ? <Skeleton className="mx-auto h-4 w-20" /> : value}
+        {isLoading ? <Skeleton className="mx-auto h-[15px] w-20" /> : value}
       </div>
     </div>
   )
@@ -233,28 +213,18 @@ function TokenStatCard({
 
 function TokenStatRow({
   label,
-  tooltip,
   value,
   isLoading,
 }: {
   label: string
-  tooltip: string
   value: ReactNode
   isLoading: boolean
 }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <div className="flex items-center gap-1 font-medium text-label-value-14 text-secondary leading-none">
-        <span>{label}</span>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button type="button" className="leading-none">
-              <InfoIcon className="size-3 fill-current" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>{tooltip}</TooltipContent>
-        </Tooltip>
-      </div>
+      <span className="font-medium text-label-value-14 text-secondary leading-none">
+        {label}
+      </span>
       <div className="text-right font-bold text-label-value-15 leading-none">
         {isLoading ? <Skeleton className="h-4 w-20" /> : value}
       </div>

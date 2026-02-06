@@ -1,8 +1,9 @@
+import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
 import type { InteropDashboardParams, ProtocolEntry } from './types'
+import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getProtocolEntries } from './utils/getAllProtocolEntries'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
@@ -31,7 +32,6 @@ export async function getInteropDashboardData(
     return getMockInteropDashboardData()
   }
 
-  const tokenDb = getTokenDb()
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
@@ -42,13 +42,10 @@ export async function getInteropDashboardData(
     params.type,
   )
 
-  const tokensDetailsData = await tokenDb.abstractToken.getByIds(
+  const abstractTokenIds = unique(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
   )
-  const tokensDetailsMap = new Map<
-    string,
-    { symbol: string; iconUrl: string | null }
-  >(tokensDetailsData.map((t) => [t.id, t]))
+  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
 
   // Projects that are part of other projects
   const subgroupProjects = new Set(

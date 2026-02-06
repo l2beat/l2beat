@@ -118,7 +118,9 @@ describe(getTopToken.name, () => {
   })
 
   it('breaks top-token ties by transfer count', () => {
-    const interopProjects = [project({ id: 'p1', name: 'Relay', slug: 'relay' })]
+    const interopProjects = [
+      project({ id: 'p1', name: 'Relay', slug: 'relay' }),
+    ]
 
     const result = getTopToken({
       records: [
@@ -143,7 +145,9 @@ describe(getTopToken.name, () => {
   })
 
   it('skips tokens missing metadata', () => {
-    const interopProjects = [project({ id: 'p1', name: 'Relay', slug: 'relay' })]
+    const interopProjects = [
+      project({ id: 'p1', name: 'Relay', slug: 'relay' }),
+    ]
 
     const result = getTopToken({
       records: [
@@ -166,7 +170,9 @@ describe(getTopToken.name, () => {
   })
 
   it('skips unknown token ids and tokens without icon metadata', () => {
-    const interopProjects = [project({ id: 'p1', name: 'Relay', slug: 'relay' })]
+    const interopProjects = [
+      project({ id: 'p1', name: 'Relay', slug: 'relay' }),
+    ]
 
     const result = getTopToken({
       records: [
@@ -180,7 +186,7 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        ['eth', { symbol: 'ETH', iconUrl: null }],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png' }],
         ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png' }],
       ]),
       interopProjects,
@@ -200,7 +206,9 @@ describe(getTopToken.name, () => {
   })
 
   it('returns undefined for empty or fully invalid records', () => {
-    const interopProjects = [project({ id: 'p1', name: 'Relay', slug: 'relay' })]
+    const interopProjects = [
+      project({ id: 'p1', name: 'Relay', slug: 'relay' }),
+    ]
 
     const emptyResult = getTopToken({
       records: [],
