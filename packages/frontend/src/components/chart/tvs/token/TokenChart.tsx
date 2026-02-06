@@ -1,23 +1,26 @@
 import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Area, AreaChart, type TooltipProps } from 'recharts'
+import { Area, AreaChart } from 'recharts'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
-  type ChartMeta,
-  type ChartProject,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -82,28 +85,24 @@ export function TokenChart({
           strokeWidth={2}
           isAnimationActive={false}
         />
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             tickFormatter: (value: number) => formatCurrency(value, 'usd'),
             tickCount: 4,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip filterNull={false} content={<CustomTooltip />} />
       </AreaChart>
     </ChartContainer>
   )
 }
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-}: TooltipProps<number, string>) {
+function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

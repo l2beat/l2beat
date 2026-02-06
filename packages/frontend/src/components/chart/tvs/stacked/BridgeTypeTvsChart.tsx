@@ -1,7 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -9,8 +12,8 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
@@ -83,8 +86,18 @@ export function BridgeTypeTvsChart({
       className={className}
       project={project}
     >
-      <AreaChart data={data} margin={{ top: 20 }}>
+      <AreaChart data={data} responsive={true} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
+            tickFormatter: (value: number) => formatCurrency(value, unit),
+            tickCount,
+          }}
+          syncedUntil={syncedUntil}
+        />
         <Area
           dataKey="external"
           hide={!dataKeys.includes('external')}
@@ -116,16 +129,7 @@ export function BridgeTypeTvsChart({
           stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
         />
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            tickFormatter: (value: number) => formatCurrency(value, unit),
-            tickCount,
-          },
-          syncedUntil,
-        })}
+
         <ChartTooltip
           content={<CustomTooltip unit={unit} />}
           filterNull={false}
@@ -136,12 +140,11 @@ export function BridgeTypeTvsChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   unit,
-}: TooltipProps<number, string> & { unit: ChartUnit }) {
-  if (!active || !payload || typeof label !== 'number') return null
+}: CustomChartTooltipProps & { unit: ChartUnit }) {
+  if (!payload || typeof label !== 'number') return null
 
   const total = payload.reduce<number | null>((acc, curr) => {
     if (curr.value === null || curr.value === undefined || curr.hide) {

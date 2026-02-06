@@ -1,7 +1,7 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
+import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -15,7 +15,8 @@ export async function getInteropLockAndMintData(
 ): Promise<RenderData> {
   const helpers = getSsrHelpers()
   const appLayoutProps = await getAppLayoutProps()
-  const interopChainsIds = INTEROP_CHAINS.map((chain) => chain.id)
+  const interopChains = getInteropChains()
+  const interopChainsIds = interopChains.map((chain) => chain.id)
   const initialSelectedChains = {
     from: (
       req.query.from?.filter((id) => interopChainsIds.includes(id)) ??
@@ -48,7 +49,7 @@ export async function getInteropLockAndMintData(
     },
   )
 
-  const interopChainsWithIcons = INTEROP_CHAINS.map((chain) => ({
+  const interopChainsWithIcons = interopChains.map((chain) => ({
     ...chain,
     iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
   }))

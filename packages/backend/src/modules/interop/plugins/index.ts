@@ -13,6 +13,7 @@ import { AcrossConfigPlugin } from './across/across.config'
 import { AcrossPlugin } from './across/across.plugin'
 import { AcrossSettlementOpPlugin } from './across-settlement-op'
 import { AcrossSettlementOrbitPlugin } from './across-settlement-orbit'
+import { AgglayerPlugin } from './agglayer'
 import { AllbridgePlugIn } from './allbridge'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
@@ -44,6 +45,7 @@ import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
 import { MayanSwiftSettlementPlugin } from './mayan-swift-settlement'
+import { MesonPlugin } from './meson'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack/orbitstack'
@@ -136,9 +138,11 @@ export function createInteropPlugins(
       new SquidCoralPlugin(),
       new DeBridgePlugin(),
       new DeBridgeDlnPlugin(),
+      new AgglayerPlugin(),
       new MayanForwarderPlugin(deps.configs),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
+      new MesonPlugin(),
       new CCIPPlugin(deps.configs),
       new CentriFugePlugin(),
       {

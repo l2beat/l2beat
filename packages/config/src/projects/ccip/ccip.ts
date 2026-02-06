@@ -8,7 +8,7 @@ export const ccip: BaseProject = {
   shortName: 'CCIP',
   addedAt: UnixTime(1769526436),
   interopConfig: {
-    bridgeType: 'omnichain',
+    showAlways: ['lockAndMint', 'omnichain'],
     plugins: [
       {
         plugin: 'ccip',
