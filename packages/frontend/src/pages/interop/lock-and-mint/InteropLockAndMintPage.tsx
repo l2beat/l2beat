@@ -99,10 +99,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
-      <TopTokenWidget
-        topToken={data?.topToken}
-        isLoading={isLoading}
-      />
+      <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
       <AllProtocolsCard
         entries={data?.entries}
         isLoading={isLoading}

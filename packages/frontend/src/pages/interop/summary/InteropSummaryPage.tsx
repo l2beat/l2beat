@@ -104,10 +104,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
-      <TopTokenWidget
-        topToken={data?.topToken}
-        isLoading={isLoading}
-      />
+      <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
       <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
         <NonMintingCard entries={nonMinting} isLoading={isLoading} />
         <LockAndMintCard entries={lockAndMint} isLoading={isLoading} />

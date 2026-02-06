@@ -28,7 +28,9 @@ export function getTopToken({
   interopProjects,
   subgroupProjects,
 }: GetTopTokenParams): InteropTopTokenData | undefined {
-  const placeholderTokenIconUrl = manifest.getUrl('/images/token-placeholder.png')
+  const placeholderTokenIconUrl = manifest.getUrl(
+    '/images/token-placeholder.png',
+  )
   const projectsById = new Map(
     interopProjects.map((project) => [project.id, project]),
   )
