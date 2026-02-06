@@ -50,7 +50,6 @@ export const base: ScalingProject = opStackL2({
   },
   interopConfig: {
     name: 'Base Canonical',
-    showAlways: ['lockAndMint'],
     durationSplit: {
       lockAndMint: {
         in: {

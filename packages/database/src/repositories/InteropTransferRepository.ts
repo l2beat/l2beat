@@ -1,10 +1,15 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  type KnownInteropBridgeType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
 export interface InteropTransferRecord {
   plugin: string
+  bridgeType: KnownInteropBridgeType | undefined
   transferId: string
   type: string
   duration: number
@@ -63,6 +68,8 @@ export function toRecord(
 ): InteropTransferRecord {
   return {
     plugin: row.plugin,
+    // @ts-ignore
+    bridgeType: row.bridgeType ?? undefined,
     transferId: row.transferId,
     type: row.type,
     duration: row.duration,

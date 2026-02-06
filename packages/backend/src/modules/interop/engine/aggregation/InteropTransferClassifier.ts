@@ -1,4 +1,5 @@
 import type { InteropTransferRecord } from '@l2beat/database'
+import type { InteropBridgeType } from '@l2beat/shared-pure'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 
 export interface ClassifiedTransfers {
@@ -57,6 +58,16 @@ export class InteropTransferClassifier {
       const pluginConditions: ((transfer: InteropTransferRecord) => boolean)[] =
         []
       pluginConditions.push((transfer) => plugin.plugin === transfer.plugin)
+
+      if (plugin.bridgeType) {
+        pluginConditions.push((transfer) => {
+          if (!plugin.bridgeType) {
+            return this.getBridgeType(transfer) === plugin.bridgeType
+          }
+          return plugin.bridgeType === transfer.bridgeType
+        })
+      }
+
       if (plugin.chain) {
         pluginConditions.push(
           (transfer) =>
@@ -83,5 +94,21 @@ export class InteropTransferClassifier {
     }
 
     return conditions
+  }
+
+  private getBridgeType(transfer: InteropTransferRecord): InteropBridgeType {
+    if (
+      (transfer.srcWasBurned === false && transfer.dstWasMinted === true) ||
+      (transfer.srcWasBurned === true && transfer.dstWasMinted === false)
+    ) {
+      return 'lockAndMint'
+    }
+    if (transfer.srcWasBurned === true && transfer.dstWasMinted === true) {
+      return 'omnichain'
+    }
+    if (transfer.srcWasBurned === false && transfer.dstWasMinted === false) {
+      return 'nonMinting'
+    }
+    return 'unknown'
   }
 }

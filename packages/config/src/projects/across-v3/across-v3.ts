@@ -148,7 +148,6 @@ export const acrossV3: Bridge = {
     ],
   },
   interopConfig: {
-    showAlways: ['nonMinting'],
     plugins: [
       {
         plugin: 'across',

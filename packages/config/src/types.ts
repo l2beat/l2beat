@@ -1255,11 +1255,6 @@ export interface InteropConfig {
    * so layerzero id should be configured in usdt0 config)
    */
   subgroupId?: ProjectId
-  /** We auto discover bridge types based on the records. Then frontend uses them to show entries on the dashboard.
-   * However if there is no records for a given bridge type, we don't show it on the dashboard.
-   * You can configure which bridge types to show always.
-   */
-  showAlways?: KnownInteropBridgeType[]
   plugins: InteropPlugin[]
   /** If configured avg. duration it able will be split into two parts, depending on the config.
    Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
@@ -1271,6 +1266,7 @@ export type InteropPlugin = {
   chain?: string
   abstractTokenId?: string
   transferType?: string
+  bridgeType?: KnownInteropBridgeType
 }
 
 export type InteropDurationSplit = {
