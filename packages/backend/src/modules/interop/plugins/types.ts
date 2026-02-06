@@ -212,12 +212,6 @@ export interface InteropEventDb {
 
 export type DataRequest = EventDataRequest
 
-export type InteropMatchContext = {
-  getAbstractToken: (
-    deployedToken: ChainSpecificAddress,
-  ) => AbstractTokenRecord | undefined
-}
-
 interface EventDataRequest {
   type: 'event'
   signature: string
@@ -234,7 +228,7 @@ export interface InteropPlugin {
   match?: (
     event: InteropEvent,
     db: InteropEventDb,
-    ctx: InteropMatchContext,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
 }
 

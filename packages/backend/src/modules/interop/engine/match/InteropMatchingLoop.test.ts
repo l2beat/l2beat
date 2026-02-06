@@ -10,13 +10,65 @@ import {
   type InteropPlugin,
 } from '../../plugins/types'
 import { InMemoryEventDb } from '../capture/InMemoryEventDb'
-import {
-  createAbstractTokenLookup,
-  InteropMatchingLoop,
-  match,
-} from './InteropMatchingLoop'
+import { InteropMatchingLoop, match } from './InteropMatchingLoop'
+
+const TOKEN_A = {
+  symbol: 'ABC',
+  id: 'TK0001',
+  issuer: null,
+  category: 'other',
+  iconUrl: null,
+  coingeckoId: null,
+  coingeckoListingTimestamp: null,
+  comment: null,
+  reviewed: false,
+} satisfies AbstractTokenRecord
 
 describe(InteropMatchingLoop.name, () => {
+  describe(
+    InteropMatchingLoop.prototype.buildDeployedToAbstractMap.name,
+    () => {
+      it('builds deployed to abstract token map and skips invalid deployed tokens', async () => {
+        const validAddress = '0x1111111111111111111111111111111111111111'
+        const query = mockFn().resolvesTo({
+          abstractTokens: [
+            {
+              ...TOKEN_A,
+              deployedTokens: [
+                { chain: 'ethereum', address: validAddress },
+                { chain: 'ethereum', address: 'native' },
+                { chain: 'unknown-chain', address: validAddress },
+              ],
+            },
+          ],
+        })
+        const tokenDbClient = mockObject<TokenDbClient>({
+          abstractTokens: { getAllWithDeployedTokens: { query } },
+        } as any)
+        const loop = new InteropMatchingLoop(
+          mockObject({} as any),
+          mockObject<Database>({} as any),
+          tokenDbClient,
+          [],
+          [],
+          Logger.SILENT,
+          mockObject({} as any),
+        )
+
+        const deployedToAbstractMap = await loop.buildDeployedToAbstractMap()
+
+        const chainSpecificAddress = ChainSpecificAddress.fromLong(
+          'ethereum',
+          validAddress,
+        )
+
+        expect(query).toHaveBeenCalledTimes(1)
+        expect(deployedToAbstractMap.size).toEqual(1)
+        expect(deployedToAbstractMap.get(chainSpecificAddress)).toEqual(TOKEN_A)
+      })
+    },
+  )
+
   describe(InteropMatchingLoop.prototype.run.name, () => {
     it('throws if loading abstract tokens fails', async () => {
       const queryError = new Error('Token DB unavailable')
@@ -104,7 +156,7 @@ describe('match', () => {
     expect(result.unsupported.length).toEqual(0)
   })
 
-  it('passes match context to plugins', async () => {
+  it('passes deployed-to-abstract map to plugins', async () => {
     const Event = createInteropEventType<{ id: string }>('test.Event')
     const db = new InMemoryEventDb()
 
@@ -115,43 +167,24 @@ describe('match', () => {
       'ethereum',
       '0x1111111111111111111111111111111111111111',
     )
-    const abstractToken = {
-      symbol: 'ABC',
-      id: 'TK0001',
-      issuer: null,
-      category: 'other',
-      iconUrl: null,
-      coingeckoId: null,
-      coingeckoListingTimestamp: null,
-      comment: null,
-      reviewed: false,
-    } satisfies AbstractTokenRecord
-
     let seen: AbstractTokenRecord | undefined
 
     const plugin: InteropPlugin = {
       name: 'mock-plugin' as InteropPluginName,
       matchTypes: [Event],
-      match(event, _eventDb, ctx) {
+      match(event, _eventDb, deployedToAbstractMap) {
         if (!Event.checkType(event)) {
           return
         }
-        seen = ctx.getAbstractToken(tokenAddress)
+        seen = deployedToAbstractMap.get(tokenAddress)
         return [{ kind: 'InteropIgnore', events: [event] }]
       },
     }
 
-    const getAbstractToken = createAbstractTokenLookup([
-      {
-        ...abstractToken,
-        deployedTokens: [
-          {
-            chain: 'ethereum',
-            address: '0x1111111111111111111111111111111111111111',
-          },
-        ],
-      },
-    ])
+    const deployedToAbstractMap = new Map<
+      ChainSpecificAddress,
+      AbstractTokenRecord
+    >([[tokenAddress, TOKEN_A]])
 
     await match(
       db,
@@ -161,9 +194,9 @@ describe('match', () => {
       [plugin],
       [],
       Logger.SILENT,
-      { getAbstractToken },
+      deployedToAbstractMap,
     )
 
-    expect(seen).toEqual(abstractToken)
+    expect(seen).toEqual(TOKEN_A)
   })
 })
