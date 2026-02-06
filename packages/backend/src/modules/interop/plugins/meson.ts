@@ -261,6 +261,10 @@ type ParsedTransferLog = {
   value: bigint
 }
 
+/**
+ * Picks the transfer log closest to the target amount after stripping trailing
+ * decimal zeros from both values, then breaks ties by log-index distance.
+ */
 function findBestTransferLogByNormalizedAmount(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,
