@@ -1038,6 +1038,11 @@ function getRiskView(
           ? validatorAfkTimeSeconds
           : challengePeriodSeconds + validatorAfkTimeSeconds // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
 
+        const ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
+        if (totalDelay > ONE_YEAR_IN_SECONDS) {
+          return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+        }
+
         return {
           ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(totalDelay),
           secondLine: formatDelay(totalDelay),

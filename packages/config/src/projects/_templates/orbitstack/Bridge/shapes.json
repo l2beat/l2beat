@@ -69,5 +69,10 @@
     "address": "eth:0x888Ee1F493782E40dF65df6412f811F6bA2E705B",
     "chain": "ethereum",
     "blockNumber": 24046205
+  },
+  "ERC20Bridge_BoLD": {
+    "hash": "0x7f62b9bd4a0aac711ca355a523b1d934ab93ae14c5fae5a860c0ded42ee5a3c3",
+    "address": "eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6",
+    "blockNumber": 24398013
   }
 }
