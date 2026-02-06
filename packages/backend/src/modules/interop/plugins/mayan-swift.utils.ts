@@ -11,7 +11,7 @@ export const MAYAN_SWIFT_CHAINS = [
   'arbitrum',
   'base',
   'optimism',
-  'polygon',
+  'polygonpos',
   'bsc',
   'avalanche',
 ]

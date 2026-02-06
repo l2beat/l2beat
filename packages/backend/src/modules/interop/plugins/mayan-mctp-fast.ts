@@ -25,7 +25,13 @@ import { WormholeConfig } from './wormhole/wormhole.config'
 const FAST_MCTP = EthereumAddress('0xC1062b7C5Dc8E4b1Df9F200fe360cDc0eD6e7741')
 
 // Chains where FastMCTP is deployed
-const FAST_MCTP_CHAINS = ['ethereum', 'arbitrum', 'base']
+const FAST_MCTP_CHAINS = [
+  'ethereum',
+  'arbitrum',
+  'base',
+  'optimism',
+  'polygonpos',
+]
 
 // Event signatures
 const orderFulfilledLog =

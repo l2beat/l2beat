@@ -24,7 +24,7 @@ Note that (TODO: )
 
 */
 
-import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { Address32 } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
@@ -110,37 +110,23 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
 
   constructor(private configs: InteropConfigStore) {}
 
-  // TODO: NTT transceivers are per-token, this uses hardcoded addresses for now
-  // Needs config plugin for proper dynamic address support
+  // NTT transceivers are per-token with many deployments, use wildcard to capture all
   getDataRequests(): DataRequest[] {
-    const addresses: ChainSpecificAddress[] = []
-    for (const [chain, managers] of Object.entries(NTT_MANAGERS)) {
-      for (const manager of Object.keys(managers)) {
-        try {
-          addresses.push(ChainSpecificAddress.fromLong(chain, manager))
-        } catch {
-          // Chain not supported by ChainSpecificAddress, skip
-        }
-      }
-    }
-
-    if (addresses.length === 0) return []
-
     return [
       {
         type: 'event',
         signature: sendTransceiverMessageLog,
-        addresses,
+        addresses: '*',
       },
       {
         type: 'event',
         signature: receivedRelayedMessageLog,
-        addresses,
+        addresses: '*',
       },
       {
         type: 'event',
         signature: receivedMessageLog,
-        addresses,
+        addresses: '*',
       },
     ]
   }

@@ -44,7 +44,7 @@ const MAYAN_FORWARDER_CHAINS = [
   'arbitrum',
   'base',
   'optimism',
-  'polygon',
+  'polygonpos',
   'bsc',
   'avalanche',
 ]
