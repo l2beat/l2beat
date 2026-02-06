@@ -1,18 +1,20 @@
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { EcosystemProjectsCountData } from '~/server/features/ecosystems/getEcosystemProjectsChartData'
@@ -83,14 +85,14 @@ export function EcosystemsProjectsChart({
             type="stepAfter"
             isAnimationActive={false}
           />
-          {getCommonChartComponents({
-            data: data.chart,
-            isLoading: false,
-            yAxis: {
+          <ChartCommonComponents
+            data={data.chart}
+            isLoading={false}
+            yAxis={{
               tickCount: 2,
-            },
-            syncedUntil: undefined,
-          })}
+            }}
+            syncedUntil={undefined}
+          />
           <ChartTooltip content={<CustomTooltip />} />
         </AreaChart>
       </ChartContainer>
@@ -146,13 +148,9 @@ function Stats({ stats }: { stats: EcosystemProjectsCountData['stats'] }) {
   )
 }
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-}: TooltipProps<number, string>) {
+function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col gap-1">
