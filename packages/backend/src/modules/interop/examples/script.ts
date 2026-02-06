@@ -120,6 +120,7 @@ const cmd = command({
         seal: args.seal,
         uncompressed: args.uncompressed,
         env,
+        logger: Logger.WARN,
         http,
         tokenDbClient,
         snapshotService,
@@ -189,6 +190,7 @@ async function runExampleCore(
     uncompressed: boolean
     env: Env
     http: HttpClient
+    logger: Logger
     tokenDbClient: TokenDbClient
     snapshotService: SnapshotService
   },
@@ -198,7 +200,7 @@ async function runExampleCore(
   const runner = new ExampleRunner({
     exampleId,
     example,
-    logger: Logger.ERROR,
+    logger: opts.logger,
     http: opts.http,
     tokenDbClient: opts.tokenDbClient,
     snapshotService: opts.snapshotService,

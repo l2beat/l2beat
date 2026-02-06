@@ -213,6 +213,34 @@ describe(CatchingUpState.name, () => {
       )
     })
 
+    it('omits address filter when addresses are wildcard', async () => {
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const getLogs = mockFn().resolvesTo([])
+
+      const logQuery = new LogQuery()
+      logQuery.addresses = '*'
+      logQuery.topic0s.add('0xabc')
+
+      const syncer = createSyncer({
+        latestBlockNumber: 2n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 1n }),
+        ),
+        buildLogQuery: mockFn().returns(logQuery),
+        getLogs,
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      await state.catchUp()
+
+      expect(getLogs.calls[0]?.args[0]).toEqual({
+        fromBlock: 2n,
+        toBlock: 2n,
+        topics: [['0xabc']],
+      })
+    })
+
     it('fetches transaction receipt logs when includeTxEvents are configured', async () => {
       const baseTopic0 = '0xaaa'
       const extraTopic0 = '0xbbb'
@@ -223,7 +251,7 @@ describe(CatchingUpState.name, () => {
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
 
       const logQuery = new LogQuery()
-      logQuery.addresses.add(EthereumAddress.random())
+      addAddress(logQuery, EthereumAddress.random())
       logQuery.topic0s.add(baseTopic0)
       logQuery.topicToTxEvents.set(baseTopic0, new Set([extraTopic0]))
 
@@ -309,7 +337,7 @@ describe(CatchingUpState.name, () => {
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
 
       const logQuery = new LogQuery()
-      logQuery.addresses.add(EthereumAddress.random())
+      addAddress(logQuery, EthereumAddress.random())
       logQuery.topic0s.add(baseTopic0)
       logQuery.topic0sWithTx.add(baseTopic0)
 
@@ -464,9 +492,16 @@ function makeEmptyLogQuery() {
 
 function makeNonEmptyLogQuery() {
   const logQuery = new LogQuery()
-  logQuery.addresses.add(EthereumAddress.random())
+  addAddress(logQuery, EthereumAddress.random())
   logQuery.topic0s.add('0xabc')
   return logQuery
+}
+
+function addAddress(logQuery: LogQuery, address: EthereumAddress) {
+  if (logQuery.addresses === '*') {
+    throw new Error('Expected address filter to be a set')
+  }
+  logQuery.addresses.add(address)
 }
 
 function makeSyncedRange(

@@ -2,9 +2,11 @@ import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import pick from 'lodash/pick'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import type { ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -13,6 +15,7 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
@@ -20,8 +23,7 @@ import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDe
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
@@ -105,24 +107,24 @@ export function DataPostedChart({
     >
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        {getStrokeOverFillAreaComponents({
-          data: Object.keys(filteredChartMeta).flatMap((key) => ({
+        <ChartStrokeOverFillAreaComponents
+          data={Object.keys(filteredChartMeta).flatMap((key) => ({
             dataKey: key,
             stroke:
               filteredChartMeta[key as keyof typeof filteredChartMeta]?.color,
             fill: `url(#${key}-fill)`,
             hide: !dataKeys.includes(key as keyof typeof filteredChartMeta),
-          })),
-        })}
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+          }))}
+        />
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             tickCount,
             tickFormatter: (value: number) => formatBytes(value),
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           content={<DataPostedCustomTooltip resolution={resolution} />}
         />
@@ -139,15 +141,14 @@ export function DataPostedChart({
 }
 
 function DataPostedCustomTooltip({
-  active,
   payload,
   label: timestamp,
   resolution,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   resolution: DaThroughputResolution
 }) {
   const { meta } = useChart()
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!payload || typeof timestamp !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

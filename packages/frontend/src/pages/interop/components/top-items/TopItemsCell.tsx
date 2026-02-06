@@ -36,12 +36,14 @@ type InteropTopItemsCellProps = {
     name: string
     iconUrl: string
   }
+  showNetMintedValueColumn?: boolean
 }
 
 export function InteropTopItemsCell({
   items,
   itemType,
   protocol,
+  showNetMintedValueColumn,
 }: InteropTopItemsCellProps) {
   const [isOpen, setIsOpen] = useState(false)
   const breakpoint = useBreakpoint()
@@ -49,8 +51,8 @@ export function InteropTopItemsCell({
   const restItems = items.slice(3)
 
   const columns = useMemo(() => {
-    return getTopItemsColumns(itemType)
-  }, [itemType])
+    return getTopItemsColumns(itemType, showNetMintedValueColumn)
+  }, [itemType, showNetMintedValueColumn])
 
   const table = useTable<TopItemRow>({
     data: items,
