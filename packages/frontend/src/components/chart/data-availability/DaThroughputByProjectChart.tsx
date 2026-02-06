@@ -4,9 +4,12 @@ import { UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -15,9 +18,9 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import type { DaThroughputChartDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
@@ -202,15 +205,15 @@ export function DaThroughputByProjectChart({
           />
         ))}
 
-        {getCommonChartComponents({
-          data: chartData,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={chartData}
+          isLoading={isLoading}
+          yAxis={{
             unit: ` ${unit}`,
             tickCount: 4,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           filterNull={false}
           content={
@@ -223,24 +226,23 @@ export function DaThroughputByProjectChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   denominator: mainDenominator,
   resolution,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   denominator: number
   resolution: DaThroughputResolution
 }) {
   const { meta: config } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
-  payload.sort((a, b) => {
-    if (a.name === 'Unknown') return 1
-    if (b.name === 'Unknown') return -1
-    return (b.value ?? 0) - (a.value ?? 0)
-  })
-
-  const actualPayload = payload.filter((p) => !p.hide)
+  if (!payload || typeof label !== 'number') return null
+  const actualPayload = [...payload]
+    .sort((a, b) => {
+      if (a.name === 'Unknown') return 1
+      if (b.name === 'Unknown') return -1
+      return (b.value ?? 0) - (a.value ?? 0)
+    })
+    .filter((p) => !p.hide)
 
   return (
     <ChartTooltipWrapper>

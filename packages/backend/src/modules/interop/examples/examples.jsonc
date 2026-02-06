@@ -2635,5 +2635,73 @@
     ],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "sky-bridge" }],
     "transfers": ["sky-bridge.L1ToL2Transfer"]
+  },
+  "agglayer-ethereum-katana-eth": {
+    "tags": ["agglayer"],
+    "name": "ethereum -> katana (ETH)",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xc5dc78d49624f1f83392290c645c3404a004d6f6de74bf3d73522151201c283d"
+      },
+      {
+        "chain": "katana",
+        "tx": "0xb8324124abdc9e0ffdd2ad2ebde5d379263eac7add4d880af28cb1ce956eb7bf"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-ethereum-katana-vbusdt": {
+    "tags": ["agglayer"],
+    "name": "ethereum -> katana (vbUSDT)",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x21e1be31961fda8642a21188266036f602fa63d703b876eab35871a7469f7683"
+      },
+      {
+        "chain": "katana",
+        "tx": "0x2d923202c7638fdc23f85260aacf4e895ba4ce835ddd06e4dca8f8c1de9d59ae"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-forknet-vbeth": {
+    "tags": ["agglayer"],
+    "name": "katana -> forknet (vbETH)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0xb11827436b3ecb880c58e0bd665dd96bb31ae494d5c9aea86bd4eecd07bc7594"
+      },
+      {
+        "chain": "forknet",
+        "tx": "0xab2cfe2866df7643478fa837ecd15e871dca251cda63697c54a8bf5c1d7e3a2c"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-ethereum-vbwbtc": {
+    "tags": ["agglayer"],
+    "name": "katana -> ethereum (vbWBTC)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0x5824bd72bad7c39ce3f8fa52b9c6819f3f5af3849ba1e87ed48b7f53fd84dbca"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6aeda24b009471e08c644606cd4d2d5dcf9362664fc73c3cdc92b653df51f023"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
   }
 }

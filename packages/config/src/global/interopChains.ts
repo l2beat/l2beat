@@ -57,4 +57,18 @@ export const INTEROP_CHAINS: InteropChain[] = [
     type: 'evm',
     display: 'ABS',
   },
+  {
+    id: 'katana',
+    iconSlug: 'katana',
+    name: 'Katana',
+    type: 'evm',
+    display: 'KAT',
+  },
+  {
+    id: 'bsc',
+    iconSlug: 'bsc',
+    name: 'BNB Smart Chain',
+    type: 'evm',
+    display: 'BSC',
+  },
 ]

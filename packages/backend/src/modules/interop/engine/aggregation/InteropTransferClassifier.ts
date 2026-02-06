@@ -30,7 +30,10 @@ export class InteropTransferClassifier {
     const unknown: InteropTransferRecord[] = []
 
     for (const record of records) {
-      if (record.srcWasBurned === false && record.dstWasMinted === true) {
+      if (
+        (record.srcWasBurned === false && record.dstWasMinted === true) ||
+        (record.srcWasBurned === true && record.dstWasMinted === false)
+      ) {
         lockAndMint.push(record)
       } else if (record.srcWasBurned === true && record.dstWasMinted === true) {
         omnichain.push(record)
