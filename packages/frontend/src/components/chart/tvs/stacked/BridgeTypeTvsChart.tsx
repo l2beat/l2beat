@@ -86,8 +86,18 @@ export function BridgeTypeTvsChart({
       className={className}
       project={project}
     >
-      <AreaChart data={data} margin={{ top: 20 }}>
+      <AreaChart data={data} responsive={true} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
+            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
+            tickFormatter: (value: number) => formatCurrency(value, unit),
+            tickCount,
+          }}
+          syncedUntil={syncedUntil}
+        />
         <Area
           dataKey="external"
           hide={!dataKeys.includes('external')}
@@ -119,16 +129,7 @@ export function BridgeTypeTvsChart({
           stackId={dataKeys.length === 1 ? undefined : 'a'}
           isAnimationActive={false}
         />
-        <ChartCommonComponents
-          data={data}
-          isLoading={isLoading}
-          yAxis={{
-            domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
-            tickFormatter: (value: number) => formatCurrency(value, unit),
-            tickCount,
-          }}
-          syncedUntil={syncedUntil}
-        />
+
         <ChartTooltip
           content={<CustomTooltip unit={unit} />}
           filterNull={false}

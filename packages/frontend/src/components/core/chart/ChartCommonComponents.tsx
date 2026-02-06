@@ -1,5 +1,6 @@
 import {
   CartesianGrid,
+  DefaultZIndexes,
   ReferenceArea,
   XAxis,
   YAxis,
@@ -42,6 +43,7 @@ export function ChartCommonComponents<T extends { timestamp: number }>({
         vertical={false}
         syncWithTicks={!isLoading}
         yAxisId={yAxisId}
+        zIndex={DefaultZIndexes.line + 1}
       />
       <YAxis
         key="y-axis"

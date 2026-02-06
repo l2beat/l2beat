@@ -140,7 +140,7 @@ function ChartContainer<T extends { timestamp: number }>({
         {...props}
       >
         <RechartsPrimitive.ResponsiveContainer
-          className={cn(isLoading && 'pointer-events-none')}
+          className={cn((isLoading || !hasData) && 'pointer-events-none')}
         >
           {children}
         </RechartsPrimitive.ResponsiveContainer>
