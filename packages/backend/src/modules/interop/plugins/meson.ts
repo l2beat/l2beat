@@ -1,5 +1,4 @@
 import { Address32 } from '@l2beat/shared-pure'
-import { findBestTransferLog } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -22,6 +21,9 @@ const parseSwapExecuted = createEventParser(swapExecutedLog)
 const parseSwapReleased = createEventParser(swapReleasedLog)
 const parseTokenBurnExecuted = createEventParser(tokenBurnExecutedLog)
 const parseTokenMintExecuted = createEventParser(tokenMintExecutedLog)
+const parseTransfer = createEventParser(
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+)
 
 type MesonSwapArgs = {
   encodedSwap: bigint
@@ -71,7 +73,8 @@ export class MesonPlugin implements InteropPlugin {
     const swapExecuted = parseSwapExecuted(input.log, null)
     if (swapExecuted) {
       const decoded = decodeSwap(swapExecuted.encodedSwap)
-      const tokenData = resolveTokenData(input, decoded.amount)
+      // scale from 6 to 18 decimals for consistency
+      const tokenData = resolveTokenData(input, decoded.amount * 10n ** 12n)
       return [
         MesonSwapExecuted.create(input, {
           encodedSwap: swapExecuted.encodedSwap,
@@ -89,7 +92,8 @@ export class MesonPlugin implements InteropPlugin {
     const swapReleased = parseSwapReleased(input.log, null)
     if (swapReleased) {
       const decoded = decodeSwap(swapReleased.encodedSwap)
-      const tokenData = resolveTokenData(input, decoded.amount)
+      // scale from 6 to 18 decimals for consistency
+      const tokenData = resolveTokenData(input, decoded.amount * 10n ** 12n)
       return [
         MesonSwapReleased.create(input, {
           encodedSwap: swapReleased.encodedSwap,
@@ -107,7 +111,7 @@ export class MesonPlugin implements InteropPlugin {
     const tokenBurnExecuted = parseTokenBurnExecuted(input.log, null)
     if (tokenBurnExecuted) {
       const decoded = decodeReqId(tokenBurnExecuted.reqId)
-      const tokenData = resolveTokenData(input, decoded.amount)
+      const tokenData = resolveTokenData(input, decoded.amount * 10n ** 12n) // scale from 6 to 18 decimals for consistency
       return [
         MesonTunnelBurnExecuted.create(input, {
           reqId: tokenBurnExecuted.reqId,
@@ -125,7 +129,7 @@ export class MesonPlugin implements InteropPlugin {
     const tokenMintExecuted = parseTokenMintExecuted(input.log, null)
     if (tokenMintExecuted) {
       const decoded = decodeReqId(tokenMintExecuted.reqId)
-      const tokenData = resolveTokenData(input, decoded.amount)
+      const tokenData = resolveTokenData(input, decoded.amount * 10n ** 12n) // scale from 6 to 18 decimals for consistency
       return [
         MesonTunnelMintExecuted.create(input, {
           reqId: tokenMintExecuted.reqId,
@@ -217,7 +221,7 @@ function decodeReqId(reqId: `0x${string}`) {
 }
 
 function resolveTokenData(input: LogToCapture, targetAmount: bigint) {
-  const transferMatch = findBestTransferLog(
+  const transferMatch = findBestTransferLogByNormalizedAmount(
     input.txLogs,
     targetAmount,
     input.log.logIndex ?? -1,
@@ -236,10 +240,87 @@ function resolveTokenData(input: LogToCapture, targetAmount: bigint) {
     return {
       tokenAddress: Address32.NATIVE,
       amount: txValue,
+      wasBurned: false,
+      wasMinted: false,
     }
   }
 
   return {
+    // incoming native transfers have tx.value = 0
+    tokenAddress: Address32.NATIVE,
     amount: targetAmount,
+    wasBurned: false,
+    wasMinted: false,
   }
+}
+
+type ParsedTransferLog = {
+  logAddress: Address32
+  from: Address32
+  to: Address32
+  value: bigint
+}
+
+/**
+ * Picks the transfer log closest to the target amount after stripping trailing
+ * decimal zeros from both values, then breaks ties by log-index distance.
+ */
+function findBestTransferLogByNormalizedAmount(
+  logs: LogToCapture['txLogs'],
+  targetAmount: bigint,
+  startLogIndex: number,
+): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
+  let closestMatch: ParsedTransferLog | undefined
+  let closestDelta: bigint | undefined
+  let closestDistance: number | undefined
+  let hasTransfer = false
+  const normalizedTargetAmount = normalizeAmount(targetAmount)
+
+  for (const log of logs) {
+    const transfer = parseTransfer(log, null)
+    if (!transfer) continue
+
+    hasTransfer = true
+    const parsed: ParsedTransferLog = {
+      logAddress: Address32.from(log.address),
+      from: Address32.from(transfer.from),
+      to: Address32.from(transfer.to),
+      value: transfer.value,
+    }
+
+    const delta = absDiff(
+      normalizeAmount(transfer.value),
+      normalizedTargetAmount,
+    )
+    const distance =
+      log.logIndex === null
+        ? Number.POSITIVE_INFINITY
+        : Math.abs(log.logIndex - startLogIndex)
+
+    if (
+      closestDelta === undefined ||
+      delta < closestDelta ||
+      (delta === closestDelta &&
+        (closestDistance === undefined || distance < closestDistance))
+    ) {
+      closestDelta = delta
+      closestDistance = distance
+      closestMatch = parsed
+    }
+  }
+
+  return { transfer: closestMatch, hasTransfer }
+}
+
+function normalizeAmount(value: bigint): bigint {
+  if (value === 0n) return 0n
+  let normalized = value
+  while (normalized % 10n === 0n) {
+    normalized /= 10n
+  }
+  return normalized
+}
+
+function absDiff(value: bigint, target: bigint): bigint {
+  return value >= target ? value - target : target - value
 }
