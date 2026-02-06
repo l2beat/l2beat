@@ -28,6 +28,7 @@ export function getTopToken({
   interopProjects,
   subgroupProjects,
 }: GetTopTokenParams): InteropTopTokenData | undefined {
+  const placeholderTokenIconUrl = manifest.getUrl('/images/token-placeholder.png')
   const projectsById = new Map(
     interopProjects.map((project) => [project.id, project]),
   )
@@ -49,7 +50,11 @@ export function getTopToken({
 
     for (const token of record.tokens) {
       const tokenDetails = tokensDetailsMap.get(token.abstractTokenId)
-      if (!tokenDetails) continue
+      if (!tokenDetails || tokenDetails.iconUrl === placeholderTokenIconUrl)
+        continue
+
+      const tokenVolume = token.volume ?? 0
+      const tokenTransferCount = token.transferCount ?? 0
 
       const current = tokenVolumes.get(token.abstractTokenId) ?? {
         symbol: tokenDetails.symbol,
@@ -59,18 +64,18 @@ export function getTopToken({
         protocols: new Map(),
       }
 
-      current.volume += token.volume
-      current.transferCount += token.transferCount
+      current.volume += tokenVolume
+      current.transferCount += tokenTransferCount
 
       const protocolVolume = current.protocols.get(record.id) ?? 0
-      current.protocols.set(record.id, protocolVolume + token.volume)
+      current.protocols.set(record.id, protocolVolume + tokenVolume)
 
       tokenVolumes.set(token.abstractTokenId, current)
     }
   }
 
   const topToken = Array.from(tokenVolumes.values()).toSorted(
-    (a, b) => b.volume - a.volume,
+    (a, b) => b.volume - a.volume || b.transferCount - a.transferCount,
   )[0]
 
   if (!topToken) return undefined

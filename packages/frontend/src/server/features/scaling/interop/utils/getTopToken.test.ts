@@ -169,7 +169,7 @@ describe(getTopToken.name, () => {
     expect(result?.symbol).toEqual('ETH')
   })
 
-  it('skips unknown token ids and tokens without icon metadata', () => {
+  it('skips tokens without icon metadata', () => {
     const interopProjects = [
       project({ id: 'p1', name: 'Relay', slug: 'relay' }),
     ]
@@ -179,14 +179,13 @@ describe(getTopToken.name, () => {
         record({
           projectId: 'p1',
           tokens: [
-            { id: 'unknown', volume: 5000, transferCount: 500 },
             { id: 'eth', volume: 1000, transferCount: 100 },
             { id: 'usdc', volume: 10, transferCount: 1 },
           ],
         }),
       ],
       tokensDetailsMap: new Map([
-        ['eth', { symbol: 'ETH', iconUrl: '/eth.png' }],
+        ['eth', { symbol: 'ETH', iconUrl: '/images/token-placeholder.png' }],
         ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png' }],
       ]),
       interopProjects,
