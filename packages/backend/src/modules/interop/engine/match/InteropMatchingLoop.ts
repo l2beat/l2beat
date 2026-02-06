@@ -15,8 +15,8 @@ import {
   type InteropEventDb,
   type InteropEventQuery,
   type InteropEventType,
-  type InteropMessage,
   type InteropMatchContext,
+  type InteropMessage,
   type InteropPlugin,
   type InteropTransfer,
   type MatchResult,
@@ -89,8 +89,7 @@ export class InteropMatchingLoop extends TimeLoop {
         getAbstractToken: createAbstractTokenLookup(abstractTokens),
       }
     } catch (error) {
-      this.logger.error('Failed to load abstract tokens', error)
-      return EMPTY_MATCH_CONTEXT
+      throw new Error('Token DB unavailable for matching', { cause: error })
     }
   }
 }
@@ -250,8 +249,7 @@ export function createAbstractTokenLookup(
     }
   }
 
-  return (deployedToken) =>
-    byDeployed.get(toChainSpecificKey(deployedToken))
+  return (deployedToken) => byDeployed.get(toChainSpecificKey(deployedToken))
 }
 
 function createFilteredDb(

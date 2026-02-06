@@ -1,15 +1,47 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { InteropPluginName } from '@l2beat/config'
-import type { AbstractTokenRecord } from '@l2beat/database'
+import type { AbstractTokenRecord, Database } from '@l2beat/database'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import type { TokenDbClient } from '@l2beat/token-backend'
+import { expect, mockFn, mockObject } from 'earl'
 import {
   createInteropEventType,
   type InteropEvent,
   type InteropPlugin,
 } from '../../plugins/types'
 import { InMemoryEventDb } from '../capture/InMemoryEventDb'
-import { createAbstractTokenLookup, match } from './InteropMatchingLoop'
+import {
+  createAbstractTokenLookup,
+  InteropMatchingLoop,
+  match,
+} from './InteropMatchingLoop'
+
+describe(InteropMatchingLoop.name, () => {
+  describe(InteropMatchingLoop.prototype.run.name, () => {
+    it('throws if loading abstract tokens fails', async () => {
+      const queryError = new Error('Token DB unavailable')
+      const query = mockFn().rejectsWith(queryError)
+      const tokenDbClient = mockObject<TokenDbClient>({
+        abstractTokens: { getAllWithDeployedTokens: { query } },
+      } as any)
+
+      const loop = new InteropMatchingLoop(
+        mockObject({} as any),
+        mockObject<Database>({} as any),
+        tokenDbClient,
+        [],
+        [],
+        Logger.SILENT,
+        mockObject({} as any),
+      )
+
+      await expect(async () => await loop.run()).toBeRejectedWith(
+        'Token DB unavailable for matching',
+      )
+      expect(query).toHaveBeenCalledTimes(1)
+    })
+  })
+})
 
 describe('match', () => {
   it('does not expose already matched events to later matches', async () => {
