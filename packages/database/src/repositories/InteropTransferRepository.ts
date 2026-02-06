@@ -8,6 +8,17 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
+// Interop bridge types are stored in the database.
+// If they are modified (e.g. renamed/removed), you MUST update
+// the data already in the DB via a new migration.
+const EXPECTED_DB_INTEROP_BRIDGE_TYPES = [
+  'lockAndMint',
+  'nonMinting',
+  'omnichain',
+] as const
+const _interopBridgeTypesMustMatchDbContract: typeof EXPECTED_DB_INTEROP_BRIDGE_TYPES =
+  InteropBridgeTypeValues
+
 function isInteropBridgeType(value: string): value is InteropBridgeType {
   return (InteropBridgeTypeValues as readonly string[]).includes(value)
 }
