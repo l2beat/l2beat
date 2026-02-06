@@ -159,6 +159,7 @@ export function getProtocolsDataMapByBridgeType(
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
   transfersTimeModeMap: TransfersTimeModeMap,
+  durationSplitMap: DurationSplitMap | undefined,
 ): Map<string, ProtocolData> {
   const protocolsDataMap = new Map<string, ProtocolData>()
 
@@ -168,7 +169,11 @@ export function getProtocolsDataMap(
 
     // No duration split for aggregated view
     const transfersTimeMode = transfersTimeModeMap.get(record.id)
-    const direction = getDirection(record, undefined, transfersTimeMode)
+    const durationSplit =
+      record.bridgeType !== 'unknown'
+        ? durationSplitMap?.get(record.id)?.get(record.bridgeType)
+        : undefined
+    const direction = getDirection(record, durationSplit, transfersTimeMode)
 
     protocolsDataMap.set(record.id, {
       volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
