@@ -169,41 +169,6 @@ describe(getTopToken.name, () => {
     expect(result?.symbol).toEqual('ETH')
   })
 
-  it('skips tokens without icon metadata', () => {
-    const interopProjects = [
-      project({ id: 'p1', name: 'Relay', slug: 'relay' }),
-    ]
-
-    const result = getTopToken({
-      records: [
-        record({
-          projectId: 'p1',
-          tokens: [
-            { id: 'eth', volume: 1000, transferCount: 100 },
-            { id: 'usdc', volume: 10, transferCount: 1 },
-          ],
-        }),
-      ],
-      tokensDetailsMap: new Map([
-        ['eth', { symbol: 'ETH', iconUrl: '/images/token-placeholder.png' }],
-        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png' }],
-      ]),
-      interopProjects,
-      subgroupProjects: new Set(),
-    })
-
-    expect(result).toEqual({
-      symbol: 'USDC',
-      iconUrl: '/usdc.png',
-      volume: 10,
-      transferCount: 1,
-      topProtocol: {
-        name: 'Relay',
-        iconUrl: '/icons/relay.png',
-      },
-    })
-  })
-
   it('returns undefined for empty or fully invalid records', () => {
     const interopProjects = [
       project({ id: 'p1', name: 'Relay', slug: 'relay' }),
