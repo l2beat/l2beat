@@ -191,19 +191,17 @@ export function CostsChart({
           isAnimationActive={false}
           hide={!dataKeys.includes('compute')}
         />
-        {chartMeta.blobs && (
-          <Area
-            yAxisId="left"
-            dataKey="blobs"
-            fill={chartMeta.blobs.color}
-            fillOpacity={1}
-            strokeWidth={0}
-            stackId="a"
-            activeDot={!dataKeys.includes('calldata')}
-            isAnimationActive={false}
-            hide={!dataKeys.includes('blobs')}
-          />
-        )}
+        <Area
+          yAxisId="left"
+          dataKey="blobs"
+          fill={chartMeta.blobs?.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId="a"
+          activeDot={!dataKeys.includes('calldata')}
+          isAnimationActive={false}
+          hide={!dataKeys.includes('blobs') || !chartMeta.blobs}
+        />
         <Area
           yAxisId="left"
           dataKey="calldata"
@@ -214,6 +212,7 @@ export function CostsChart({
           isAnimationActive={false}
           hide={!dataKeys.includes('calldata')}
         />
+
         {chartMeta.ethereum && (
           <Line
             yAxisId="right"
