@@ -137,10 +137,10 @@ export function ActivityChart({
           data={data}
           isLoading={isLoading}
           yAxis={{
-            scale,
+            scale: scale === 'linear' ? 'auto' : scale,
             domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
-            tickCount: tickCount ?? 3,
+            tickCount: 4,
           }}
           syncedUntil={syncedUntil}
         />
