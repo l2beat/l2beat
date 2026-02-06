@@ -235,6 +235,28 @@
       }
     ]
   },
+  "meson": {
+    "description": "Liquidity swap + tunnel samples from MESON_PLAN",
+    // tunnel events are not matching, TODO
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x454aa9a68e2e99789407d93d30d6e7d174f739977ca578aa6a9937247b64fdea"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x7f5e8814b2c41208dbc00f060273f02bc670c37581e25c30d8fdfc1116cd38aa"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xa4d497c7826ef5025901b086a735e89c95faf71f41e066ff1029271e12d76619"
+      },
+      {
+        "chain": "bob",
+        "tx": "0xb56575f17495f677ad1a15e4b4511c3396bf09c1482ac281ca915184f070f60c"
+      }
+    ]
+  },
   "cctpv1": {
     "loadConfigs": ["cctp-v1"],
     "txs": [

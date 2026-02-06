@@ -1,9 +1,14 @@
 {
   "name": "molten",
-  "timestamp": 1765368962,
+  "timestamp": 1770329874,
   "configHash": "0xd34153da958bd57b3a9fb3757a8e1e5dab7d0d7a5019298aee8c36ddecc9286d",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
+    {
+      "address": "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "arb1:0x0cc6aB203689bd8004511cC60f5b25DfB3A91431",
       "type": "EOA",
@@ -63,13 +68,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2139,
+        "firstUnresolvedNode": 2300,
         "inbox": "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 2138,
-        "latestNodeCreated": 2164,
+        "latestConfirmed": 2299,
+        "latestNodeCreated": 2303,
         "loserStakeEscrow": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -201,7 +206,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 102854,
+        "batchCount": 104817,
         "batchPosterManager": "arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
         "batchPosters": ["arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"],
         "BLOBSTREAM": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -234,7 +239,7 @@
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 70906,
+        "totalDelayedMessagesRead": 71040,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -538,6 +543,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0x56f4046f9271Ec59787Ecd22b00630c028D93301",
       "type": "EOA",
       "proxyType": "EOA"
@@ -602,6 +612,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "arb1:0x5E768dd03BD821703ef825e057434De85913EEAC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0x5F96902EFD1338353B4469304DfF58958c9a220c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -613,6 +628,16 @@
     },
     {
       "address": "arb1:0x6329186d6e5a4A90c6c983871d1Fa49D9C673ce3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x6411801197522bE53A758AB46D764A3c47836135",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x68E18c9Beea05C87F857c7E4f0114c864Ba1c39B",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -642,6 +667,60 @@
       "address": "arb1:0x6d393C8190eC02F9fdA2dcEE622D517925a22110",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SafeL2",
+      "address": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3",
+          "description": "change the modular TEE verifier contracts.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1764785015,
+      "sinceBlock": 406817741,
+      "values": {
+        "$immutable": false,
+        "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "arb1:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6",
+          "arb1:0x5E768dd03BD821703ef825e057434De85913EEAC",
+          "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xe9d88a0c16a72a228eb14e40bc8da2e839d32257df5479740ffc147dcb6a414c",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5": "SafeProxy",
+        "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
     },
     {
       "name": "Caldera Multisig 1",
@@ -820,7 +899,7 @@
         "$immutable": true,
         "espressoNitroTEEVerifier": "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5",
         "espressoSGXTEEVerifier": "arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297",
-        "owner": "arb1:0x8Cde072E84932857262648C100d0A2227c495a55",
+        "owner": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
         "pendingOwner": "arb1:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -1006,31 +1085,6 @@
       "address": "arb1:0x8c461Ab56A1cf3abe420E67F98196bf058681dAc",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0x8Cde072E84932857262648C100d0A2227c495a55",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3",
-          "description": "change the modular TEE verifier contracts.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297",
-          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5",
-          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
-          "role": ".owner"
-        }
-      ]
     },
     {
       "address": "arb1:0x8d04b4957e36e613DB79BD219daB20E6E95201e7",
@@ -1293,6 +1347,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0xC334F802C5367f70235A3367d07CE4F0E2E8F5d7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1359,7 +1418,7 @@
         "allowedOutboxList": [
           "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
         ],
-        "delayedMessageCount": 70910,
+        "delayedMessageCount": 71040,
         "inboxHistory": [
           "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
           "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1369,8 +1428,8 @@
         "outboxHistory": ["arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 102854,
-        "sequencerReportedSubMessageCount": 99745356
+        "sequencerMessageCount": 104817,
+        "sequencerReportedSubMessageCount": 105289270
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1443,7 +1502,7 @@
       "sinceBlock": 348001309,
       "values": {
         "$immutable": true,
-        "owner": "arb1:0x8Cde072E84932857262648C100d0A2227c495a55",
+        "owner": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
         "pendingOwner": "arb1:0x0000000000000000000000000000000000000000",
         "quoteVerifier": "arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7",
         "registeredSigners": [
@@ -1479,7 +1538,10 @@
           "arb1:0x6d393C8190eC02F9fdA2dcEE622D517925a22110",
           "arb1:0xAb21E407C8C4C7f466Bb462cFa5F8708Bf790a43",
           "arb1:0x7378Da6E3b08c6Ca63B3E100F8612e6339f36F4A",
-          "arb1:0x47391f780DfD5a5fE7576D172D4C6fF8a0c49f46"
+          "arb1:0x47391f780DfD5a5fE7576D172D4C6fF8a0c49f46",
+          "arb1:0x6411801197522bE53A758AB46D764A3c47836135",
+          "arb1:0x68E18c9Beea05C87F857c7E4f0114c864Ba1c39B",
+          "arb1:0xC334F802C5367f70235A3367d07CE4F0E2E8F5d7"
         ],
         "validEnclaveHashes": [
           "0x1b8a2dea9244fbc6465f287be7a0888fdee26dc7ed87d76a461da1696f9004c9",
@@ -1535,7 +1597,7 @@
         "DIGEST_KEY": "0x682a7e258d80bd2421d3103cbe71e3e3b82138116756b97b8256f061dc2f11fb",
         "MODULE_ID_KEY": "0x8ce577cf664c36ba5130242bf5790c2675e9f4e6986a842b607821bee25372ee",
         "NONCE_KEY": "0x7ab1577440dd7bedf920cb6de2f9fc6bf7ba98c78c85a3fa1f8311aac95e1759",
-        "owner": "arb1:0x8Cde072E84932857262648C100d0A2227c495a55",
+        "owner": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
         "PCRS_KEY": "0x61585f8bc67a4b6d5891a4639a074964ac66fc2241dc0b36c157dc101325367a",
         "pendingOwner": "arb1:0x0000000000000000000000000000000000000000",
         "PUBLIC_KEY_KEY": "0xc7b28019ccfdbd30ffc65951d94bb85c9e2b8434111a000b5afd533ce65f57a4",
@@ -1660,6 +1722,55 @@
       "function proverHostIo() view returns (address)",
       "function proverMath() view returns (address)",
       "function proverMem() view returns (address)"
+    ],
+    "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
@@ -1923,6 +2034,9 @@
       "function quoteVersion() view returns (uint16)",
       "function verifyQuote(tuple(uint16 version, bytes2 attestationKeyType, bytes4 teeType, bytes2 qeSvn, bytes2 pceSvn, bytes16 qeVendorId, bytes20 userData) header, bytes rawQuote) view returns (bool success, bytes output)",
       "function verifyZkOutput(bytes outputBytes) view returns (bool success, bytes output)"
+    ],
+    "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5": [
+      "constructor(address _singleton)"
     ],
     "arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": [
       "constructor(address _singleton)"
@@ -2391,6 +2505,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 409159145 },
-  "permissionsConfigHash": "0xde3edc662883090a0d792e2ecc397efd44bd905b65e06fe5e05201e67d1462cb"
+  "usedBlockNumbers": { "arbitrum": 429026727 },
+  "permissionsConfigHash": "0xb0ebffeea5ae706adab09f428d61406a75467c19a48e223dd81d7977ed9c04f8"
 }
