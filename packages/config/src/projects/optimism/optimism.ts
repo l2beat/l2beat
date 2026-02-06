@@ -56,17 +56,19 @@ export const optimism: ScalingProject = opStackL2({
   },
   interopConfig: {
     name: 'OP Canonical',
-    bridgeType: 'lockAndMint',
+    showAlways: ['lockAndMint'],
     durationSplit: {
-      in: {
-        label: 'L1 -> L2',
-        from: 'ethereum',
-        to: 'optimism',
-      },
-      out: {
-        label: 'L2 -> L1',
-        from: 'optimism',
-        to: 'ethereum',
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'optimism',
+        },
+        out: {
+          label: 'L2 -> L1',
+          from: 'optimism',
+          to: 'ethereum',
+        },
       },
     },
     plugins: [

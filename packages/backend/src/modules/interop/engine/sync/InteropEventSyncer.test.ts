@@ -307,6 +307,9 @@ describe(InteropEventSyncer.name, () => {
         'ethereum',
       )
 
+      if (query.addresses === '*') {
+        throw new Error('Expected address filter to be a set')
+      }
       expect(
         query.addresses.has(ChainSpecificAddress.address(ethAddress)),
       ).toEqual(true)
@@ -319,6 +322,28 @@ describe(InteropEventSyncer.name, () => {
         toEventSelector(extraSignatureTwo),
       ])
       expect(query.topic0sWithTx.has(toEventSelector(signature))).toEqual(true)
+      expect(query.isEmpty()).toEqual(false)
+    })
+
+    it('includes topics without address filter when addresses are wildcard', () => {
+      const signature = 'event Transfer(address,address,uint256)'
+      const plugin = makePlugin({
+        dataRequests: [
+          {
+            type: 'event',
+            signature,
+            addresses: '*',
+          },
+        ],
+      })
+
+      const query = buildLogQueryForCluster(
+        makeCluster({ plugins: [plugin] }),
+        'ethereum',
+      )
+
+      expect(query.addresses).toEqual('*')
+      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
       expect(query.isEmpty()).toEqual(false)
     })
 
@@ -343,10 +368,30 @@ describe(InteropEventSyncer.name, () => {
         'ethereum',
       )
 
+      if (query.addresses === '*') {
+        throw new Error('Expected address filter to be a set')
+      }
       expect(query.isEmpty()).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(0)
       expect(Array.from(query.topic0s)).toHaveLength(0)
       expect(query.topicToTxEvents.size).toEqual(0)
+    })
+
+    it('throws when addresses list is empty', () => {
+      const signature = 'event Transfer(address,address,uint256)'
+      const plugin = makePlugin({
+        dataRequests: [
+          {
+            type: 'event',
+            signature,
+            addresses: [],
+          },
+        ],
+      })
+
+      expect(() =>
+        buildLogQueryForCluster(makeCluster({ plugins: [plugin] }), 'ethereum'),
+      ).toThrow(/Empty address list/)
     })
 
     it('merges event requests across cluster plugins', () => {
@@ -388,6 +433,9 @@ describe(InteropEventSyncer.name, () => {
         'ethereum',
       )
 
+      if (query.addresses === '*') {
+        throw new Error('Expected address filter to be a set')
+      }
       expect(Array.from(query.addresses)).toEqual([
         ChainSpecificAddress.address(ethAddressA),
         ChainSpecificAddress.address(ethAddressB),
