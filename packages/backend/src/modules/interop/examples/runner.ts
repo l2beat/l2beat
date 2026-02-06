@@ -147,7 +147,9 @@ export class ExampleRunner {
       this.$.logger,
     )
 
-    const unsupportedEventIds = new Set(result.unsupported.map((e) => e.eventId))
+    const unsupportedEventIds = new Set(
+      result.unsupported.map((e) => e.eventId),
+    )
     const eventsWithContext = events.map((e) => ({
       ...e,
       chain: e.ctx.chain,
