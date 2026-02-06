@@ -236,10 +236,16 @@ function resolveTokenData(input: LogToCapture, targetAmount: bigint) {
     return {
       tokenAddress: Address32.NATIVE,
       amount: txValue,
+      wasBurned: false,
+      wasMinted: false,
     }
   }
 
   return {
+    // incoming native transfers have tx.value = 0
+    tokenAddress: Address32.NATIVE,
     amount: targetAmount,
+    wasBurned: false,
+    wasMinted: false,
   }
 }
