@@ -7,7 +7,7 @@ import type {
 } from '@l2beat/config'
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
-import uniqBy from 'lodash/uniqBy'
+import { uniqBy } from 'es-toolkit/compat'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'

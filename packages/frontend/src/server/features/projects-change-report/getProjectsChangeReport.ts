@@ -4,7 +4,7 @@ import {
   EthereumAddress,
   ProjectId,
 } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'

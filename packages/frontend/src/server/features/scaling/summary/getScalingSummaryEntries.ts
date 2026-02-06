@@ -10,7 +10,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import type { RosetteValue } from '~/components/rosette/types'
 import { getL2Risks } from '~/pages/scaling/utils/getL2Risks'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'

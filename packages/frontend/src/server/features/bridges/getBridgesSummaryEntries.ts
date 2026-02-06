@@ -7,7 +7,7 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { groupByBridgeTabs } from '~/pages/bridges/utils/groupByBridgeTabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'

@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   Tooltip,

@@ -32,7 +32,6 @@
     "@l2beat/discovery": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "ethers": "^5.7.2",
-    "lodash": "^4.17.21",
     "sqlite3": "5.1.7"
   },
   "devDependencies": {
@@ -41,7 +40,6 @@
     "@l2beat/shared": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/diff": "^7.0.2",
-    "@types/lodash": "^4.17.12",
     "@types/node-fetch": "^2.6.11",
     "alpinejs": "^3.14.9",
     "chalk": "^4.1.2",

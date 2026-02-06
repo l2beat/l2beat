@@ -5,8 +5,7 @@ import type {
   ZkCatalogTag,
 } from '@l2beat/config'
 import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
-import uniqBy from 'lodash/uniqBy'
+import { groupBy, uniqBy } from 'es-toolkit/compat'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'

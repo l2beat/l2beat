@@ -1,6 +1,6 @@
 import { type LogsClient, LogsProvider } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 
 export class LogsProviders {
   logsProviders: Map<string, LogsProvider> = new Map()

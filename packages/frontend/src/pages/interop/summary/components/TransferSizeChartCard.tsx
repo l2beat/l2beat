@@ -1,4 +1,4 @@
-import round from 'lodash/round'
+import { round } from 'es-toolkit/compat'
 import { useMemo } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { TransferSizeChartData } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'

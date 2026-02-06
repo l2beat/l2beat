@@ -6,7 +6,7 @@ import type {
   ValueFormula,
 } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import uniqBy from 'lodash/uniqBy'
+import { uniqBy } from 'es-toolkit/compat'
 
 export type Address = {
   address: string

@@ -1,6 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import partition from 'lodash/partition'
-import round from 'lodash/round'
+import { partition, round } from 'es-toolkit/compat'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import {
   Tooltip,

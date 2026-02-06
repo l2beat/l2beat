@@ -1,6 +1,6 @@
 import type { DiscoveryOutput } from '@l2beat/discovery'
 import { notUndefined } from '@l2beat/shared-pure'
-import uniq from 'lodash/uniq'
+import { uniq } from 'es-toolkit/compat'
 
 export function getReferencedProjects(discovery: DiscoveryOutput): string[] {
   return uniq(

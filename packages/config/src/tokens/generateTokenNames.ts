@@ -1,7 +1,7 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { groupBy } from 'es-toolkit/compat'
 import { writeFileSync } from 'fs'
-import groupBy from 'lodash/groupBy'
 import path from 'path'
 
 type TokenToSave = {

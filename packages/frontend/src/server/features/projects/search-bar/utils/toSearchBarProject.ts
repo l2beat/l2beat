@@ -1,4 +1,4 @@
-import pick from 'lodash/pick'
+import { pick } from 'es-toolkit/compat'
 import type { SearchBarProject, SearchBarProjectEntry } from '../types'
 
 export const SEARCH_BAR_PROJECT_KEYS = [

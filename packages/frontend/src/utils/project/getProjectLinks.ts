@@ -1,5 +1,5 @@
 import type { ProjectLinks } from '@l2beat/config'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import type { ProjectLink } from '~/components/projects/links/types'
 
 export function getProjectLinks(...links: ProjectLinks[]): ProjectLink[] {

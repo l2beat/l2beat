@@ -1,6 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
 import { EM_DASH } from '~/consts/characters'

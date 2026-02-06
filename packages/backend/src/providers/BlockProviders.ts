@@ -1,6 +1,6 @@
 import { type BlockClient, BlockProvider } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 
 export class BlockProviders {
   blockProviders: Map<string, BlockProvider> = new Map()

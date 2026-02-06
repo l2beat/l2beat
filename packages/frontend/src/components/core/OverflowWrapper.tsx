@@ -1,4 +1,4 @@
-import clamp from 'lodash/clamp'
+import { clamp } from 'es-toolkit/compat'
 import type React from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useEventCallback } from '~/hooks/useEventCallback'

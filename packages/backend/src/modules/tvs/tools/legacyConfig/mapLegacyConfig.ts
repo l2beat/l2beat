@@ -11,7 +11,7 @@ import type {
 } from '@l2beat/config'
 import type { IRpcClient } from '@l2beat/shared'
 import { assert, type LegacyToken, TokenId } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 import { projectIdToChain } from '../../../../config/chainMap'
 import type { ProjectTvsConfig } from '../../types'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'

@@ -1,7 +1,6 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import unionBy from 'lodash/unionBy'
-import uniqWith from 'lodash/uniqWith'
+import { unionBy, uniqWith } from 'es-toolkit/compat'
 import { get$Implementations } from '../discovery/extractors'
 import type {
   Badge,

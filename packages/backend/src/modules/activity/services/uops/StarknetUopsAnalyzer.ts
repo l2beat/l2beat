@@ -1,5 +1,5 @@
 import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
-import isArray from 'lodash/isArray'
+import { isArray } from 'es-toolkit/compat'
 import type { UopsAnalyzer } from './types'
 
 export class StarknetUopsAnalyzer implements UopsAnalyzer {

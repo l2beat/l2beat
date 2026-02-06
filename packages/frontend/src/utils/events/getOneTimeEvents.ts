@@ -1,6 +1,5 @@
 import { notUndefined } from '@l2beat/shared-pure'
-import clamp from 'lodash/clamp'
-import range from 'lodash/range'
+import { clamp, range } from 'es-toolkit/compat'
 
 import type { CollectionEntry } from '~/content/getCollection'
 import { getNextDateForDayOfWeek } from '../dates'

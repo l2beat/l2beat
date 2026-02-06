@@ -1,5 +1,5 @@
 import type { Project, ProjectScalingStack } from '@l2beat/config'
-import partition from 'lodash/partition'
+import { partition } from 'es-toolkit/compat'
 import type { DashboardProject } from '../props/getDashboardProjects'
 
 export type GroupVariant = 'single'

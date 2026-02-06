@@ -1,7 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import groupBy from 'lodash/groupBy'
-import uniq from 'lodash/uniq'
+import { groupBy, uniq } from 'es-toolkit/compat'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ChartRange } from '~/utils/range/range'

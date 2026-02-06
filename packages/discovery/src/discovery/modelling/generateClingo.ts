@@ -1,5 +1,5 @@
+import { merge } from 'es-toolkit/compat'
 import { existsSync, readFileSync } from 'fs'
-import merge from 'lodash/merge'
 import { join } from 'path'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'

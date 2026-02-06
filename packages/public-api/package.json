@@ -20,8 +20,8 @@
     "@l2beat/database": "workspace:*",
     "@l2beat/dal": "workspace:*",
     "@l2beat/validate": "workspace:*",
+    "es-toolkit": "^1.44.0",
     "express": "^5.0.0",
-    "lodash": "^4.17.21",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
@@ -29,7 +29,6 @@
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
-    "@types/lodash": "^4.17.4",
     "@types/swagger-ui-express": "^4.1.8"
   }
 }

@@ -10,7 +10,7 @@ import type {
 } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'

@@ -1,7 +1,6 @@
 import type { AggregatedInteropTransferSeriesRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
-import sum from 'lodash/sum'
+import { groupBy, sum } from 'es-toolkit/compat'
 export const Z_CLASSIC_THRESHOLD = 7
 export const Z_ROBUST_THRESHOLD = {
   warn: 4,

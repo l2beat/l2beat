@@ -1,4 +1,4 @@
-import partition from 'lodash/partition'
+import { partition } from 'es-toolkit/compat'
 import { DiagramImage } from '~/components/DiagramImage'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { DiscoUiBanner } from '../../DiscoUiBanner'

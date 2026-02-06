@@ -1,7 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { Command as CommandPrimitive } from 'cmdk'
+import { groupBy } from 'es-toolkit/compat'
 import fuzzysort from 'fuzzysort'
-import groupBy from 'lodash/groupBy'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Command,

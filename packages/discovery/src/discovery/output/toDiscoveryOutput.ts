@@ -1,5 +1,5 @@
 import { type UnixTime, withoutUndefinedKeys } from '@l2beat/shared-pure'
-import merge from 'lodash/merge'
+import { merge } from 'es-toolkit/compat'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import { colorize } from '../colorize/colorize'

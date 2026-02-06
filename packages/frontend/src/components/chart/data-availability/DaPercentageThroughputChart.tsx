@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import round from 'lodash/round'
+import { round } from 'es-toolkit/compat'
 import { useMemo } from 'react'
 import { Area, AreaChart, Bar, BarChart } from 'recharts'
 import type { CustomChartTooltipProps } from '~/components/core/chart/Chart'

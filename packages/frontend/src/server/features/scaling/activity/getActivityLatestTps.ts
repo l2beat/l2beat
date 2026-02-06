@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { notUndefined, UnixTime } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'

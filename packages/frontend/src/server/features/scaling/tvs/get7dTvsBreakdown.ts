@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import pick from 'lodash/pick'
+import { pick } from 'es-toolkit/compat'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { queryExecutor } from '~/server/queryExecutor'

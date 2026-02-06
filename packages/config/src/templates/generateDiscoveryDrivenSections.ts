@@ -1,4 +1,4 @@
-import merge from 'lodash/merge'
+import { merge } from 'es-toolkit/compat'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ProjectContract, ProjectPermissions } from '../types'
 

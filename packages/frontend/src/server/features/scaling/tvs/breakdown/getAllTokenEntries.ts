@@ -11,7 +11,7 @@ import {
   TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import capitalize from 'lodash/capitalize'
+import { capitalize } from 'es-toolkit/compat'
 import { env } from '~/env'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'

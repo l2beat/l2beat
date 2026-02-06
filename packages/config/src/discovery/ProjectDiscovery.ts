@@ -17,10 +17,8 @@ import {
   UnixTime,
   unique,
 } from '@l2beat/shared-pure'
+import { groupBy, isString, uniq } from 'es-toolkit/compat'
 import { utils } from 'ethers'
-import groupBy from 'lodash/groupBy'
-import isString from 'lodash/isString'
-import uniq from 'lodash/uniq'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import type {
   ProjectContract,

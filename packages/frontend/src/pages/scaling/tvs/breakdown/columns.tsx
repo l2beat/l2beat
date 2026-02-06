@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import capitalize from 'lodash/capitalize'
+import { capitalize } from 'es-toolkit/compat'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'

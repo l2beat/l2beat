@@ -1,4 +1,4 @@
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { getCollection } from '~/content/getCollection'
 import { ps } from '~/server/projects'
 import { testPage } from './testPage'

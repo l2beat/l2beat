@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { ActivityRecord } from '@l2beat/database'
 import type { BlockProvider } from '@l2beat/shared'
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import range from 'lodash/range'
+import { range } from 'es-toolkit/compat'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
 import type { UopsAnalyzer } from '../uops/types'
 

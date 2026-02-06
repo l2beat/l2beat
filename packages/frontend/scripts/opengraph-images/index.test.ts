@@ -1,5 +1,5 @@
+import { partition } from 'es-toolkit/compat'
 import { existsSync } from 'fs'
-import partition from 'lodash/partition'
 import path from 'path'
 import { getCollection } from '~/content/getCollection'
 import { ps } from '~/server/projects'

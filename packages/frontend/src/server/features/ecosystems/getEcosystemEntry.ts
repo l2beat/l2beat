@@ -5,7 +5,7 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { getCollection } from '~/content/getCollection'

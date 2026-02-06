@@ -19,7 +19,7 @@ import {
   UnixTime,
   unique,
 } from '@l2beat/shared-pure'
-import uniqBy from 'lodash/uniqBy'
+import { uniqBy } from 'es-toolkit/compat'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ChainConfig } from '../types'
 import generated from './generated.json'

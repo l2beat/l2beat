@@ -14,7 +14,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import isEmpty from 'lodash/isEmpty'
+import { isEmpty } from 'es-toolkit/compat'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import type { UpdateMessagesService } from './UpdateMessagesService'
 import { diffToMessage } from './utils/diffToMessage'

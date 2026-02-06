@@ -1,7 +1,6 @@
 import type { TvsToken } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
-import capitalize from 'lodash/capitalize'
-import compact from 'lodash/compact'
+import { capitalize, compact } from 'es-toolkit/compat'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { Skeleton } from '~/components/core/Skeleton'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'

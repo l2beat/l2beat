@@ -1,5 +1,5 @@
 import { assert, ChainId } from '@l2beat/shared-pure'
-import isEqual from 'lodash/isEqual'
+import { isEqual } from 'es-toolkit/compat'
 import { join } from 'path'
 import { chains } from '../processing/chains'
 import type { GeneratedToken } from './types'

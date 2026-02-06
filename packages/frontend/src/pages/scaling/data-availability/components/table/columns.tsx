@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'

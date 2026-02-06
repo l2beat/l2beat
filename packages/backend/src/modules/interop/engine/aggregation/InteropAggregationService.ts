@@ -5,7 +5,7 @@ import type {
   InteropTransferRecord,
 } from '@l2beat/database'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import { getAggregatedTokens, getAggregatedTransfer } from './aggregation'
 import type { InteropTransferClassifier } from './InteropTransferClassifier'

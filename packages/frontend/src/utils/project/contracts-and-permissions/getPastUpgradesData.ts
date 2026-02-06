@@ -1,6 +1,6 @@
 import type { ProjectContract } from '@l2beat/config'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import mean from 'lodash/mean'
+import { mean } from 'es-toolkit/compat'
 import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
 
 export function getPastUpgradesData(

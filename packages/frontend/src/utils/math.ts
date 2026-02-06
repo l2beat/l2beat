@@ -1,6 +1,4 @@
-import indexOf from 'lodash/indexOf'
-import max from 'lodash/max'
-import sum from 'lodash/sum'
+import { indexOf, max, sum } from 'es-toolkit/compat'
 
 export function unifyPercentagesAsIntegers<T extends number[]>(
   percentages: T,

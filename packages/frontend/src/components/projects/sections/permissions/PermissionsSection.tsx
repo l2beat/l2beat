@@ -1,4 +1,4 @@
-import partition from 'lodash/partition'
+import { partition } from 'es-toolkit/compat'
 import { DiscoUiBanner } from '../../DiscoUiBanner'
 import type { TechnologyContract } from '../ContractEntry'
 import {

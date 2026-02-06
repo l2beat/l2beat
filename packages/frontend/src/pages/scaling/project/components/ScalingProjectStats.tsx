@@ -1,7 +1,5 @@
 import { pluralize } from '@l2beat/shared-pure'
-import chunk from 'lodash/chunk'
-import compact from 'lodash/compact'
-import isEmpty from 'lodash/isEmpty'
+import { chunk, compact, isEmpty } from 'es-toolkit/compat'
 import { Fragment } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'

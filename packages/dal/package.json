@@ -26,14 +26,13 @@
     "@l2beat/typescript-config": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "@types/redis": "^4.0.11",
-    "redis": "^4.7.0",
-    "lodash": "^4.17.21"
+    "es-toolkit": "^1.44.0",
+    "redis": "^4.7.0"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/mocha": "^10.0.6",
     "earl": "^1.1.0",
-    "mocha": "^10.2.0",
-    "@types/lodash": "^4.17.4"
+    "mocha": "^10.2.0"
   }
 }

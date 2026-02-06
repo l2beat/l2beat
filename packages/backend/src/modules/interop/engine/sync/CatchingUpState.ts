@@ -9,7 +9,7 @@ import {
   UpsertMap,
 } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import isNil from 'lodash/isNil'
+import { isNil } from 'es-toolkit/compat'
 import type { Log as ViemLog } from 'viem'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'

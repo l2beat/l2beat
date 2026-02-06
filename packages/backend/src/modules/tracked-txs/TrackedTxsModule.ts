@@ -1,7 +1,6 @@
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import partition from 'lodash/partition'
-import uniqBy from 'lodash/uniqBy'
+import { partition, uniqBy } from 'es-toolkit/compat'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'

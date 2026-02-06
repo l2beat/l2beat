@@ -7,8 +7,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { uniq } from 'es-toolkit/compat'
 import { utils } from 'ethers'
-import uniq from 'lodash/uniq'
 import { describe } from 'mocha'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ProjectScalingTechnology } from '../internalTypes'

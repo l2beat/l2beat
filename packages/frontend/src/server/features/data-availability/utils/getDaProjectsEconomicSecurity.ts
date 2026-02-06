@@ -1,4 +1,4 @@
-import round from 'lodash/round'
+import { round } from 'es-toolkit/compat'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'

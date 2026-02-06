@@ -6,8 +6,8 @@ import {
   unique,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
+import { mergeWith } from 'es-toolkit/compat'
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
-import mergeWith from 'lodash/mergeWith'
 import path from 'path'
 
 interface ConfigSkeleton {

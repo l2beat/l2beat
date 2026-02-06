@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 import { getDb } from '~/server/database'
 import type { ChartRange } from '~/utils/range/range'
 import { getTrackedTxsProjects } from '../../utils/getTrackedTxsProjects'

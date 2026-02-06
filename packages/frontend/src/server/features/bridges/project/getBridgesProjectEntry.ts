@@ -7,7 +7,7 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'

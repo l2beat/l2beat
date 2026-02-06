@@ -1,6 +1,6 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
-import uniq from 'lodash/uniq'
+import { uniq } from 'es-toolkit/compat'
 import type { DaBeatConfig } from '../Config'
 
 export async function getDaBeatConfig(

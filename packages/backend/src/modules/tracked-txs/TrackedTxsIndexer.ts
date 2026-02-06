@@ -3,7 +3,7 @@ import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { clampRangeToDay, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import uniq from 'lodash/uniq'
+import { uniq } from 'es-toolkit/compat'
 import type { TrackedTxProject } from '../../config/Config'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {

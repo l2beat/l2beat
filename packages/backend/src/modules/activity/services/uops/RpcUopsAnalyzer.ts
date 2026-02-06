@@ -15,8 +15,7 @@ import {
   SAFE_methods,
 } from '@l2beat/shared/uops'
 import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
-import isArray from 'lodash/isArray'
-import sum from 'lodash/sum'
+import { isArray, sum } from 'es-toolkit/compat'
 import type { UopsAnalyzer } from './types'
 
 export class RpcUopsAnalyzer implements UopsAnalyzer {

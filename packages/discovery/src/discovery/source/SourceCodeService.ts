@@ -1,5 +1,5 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import zip from 'lodash/zip'
+import { zip } from 'es-toolkit/compat'
 
 import { contractFlatteningHash, sha2_256bit } from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'

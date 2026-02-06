@@ -1,5 +1,5 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import uniq from 'lodash/uniq'
+import { uniq } from 'es-toolkit/compat'
 import type { EntryParameters } from '../output/types'
 import { toAddressArray } from './extractors'
 

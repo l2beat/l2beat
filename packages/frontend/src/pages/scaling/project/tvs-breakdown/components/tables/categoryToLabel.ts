@@ -1,5 +1,5 @@
 import type { TvsToken } from '@l2beat/config'
-import capitalize from 'lodash/capitalize'
+import { capitalize } from 'es-toolkit/compat'
 
 export function categoryToLabel(category: TvsToken['category']) {
   switch (category) {

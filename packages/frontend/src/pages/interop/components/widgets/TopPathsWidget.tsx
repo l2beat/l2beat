@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import times from 'lodash/times'
-import uniq from 'lodash/uniq'
+import { times, uniq } from 'es-toolkit/compat'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'

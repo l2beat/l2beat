@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import capitalize from 'lodash/capitalize'
+import { capitalize } from 'es-toolkit/compat'
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import {
   Tooltip,

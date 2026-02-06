@@ -1,6 +1,6 @@
 import type { Database } from '@l2beat/database'
 import { type TokenId, UnixTime } from '@l2beat/shared-pure'
-import keyBy from 'lodash/keyBy'
+import { keyBy } from 'es-toolkit/compat'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getTimestampedValuesRange } from '../../utils/getTimestampedValuesRange'
 import { rangeToResolution } from '../../utils/range'

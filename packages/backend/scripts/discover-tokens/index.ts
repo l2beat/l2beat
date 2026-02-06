@@ -4,10 +4,9 @@ import { RateLimitedProvider } from '@l2beat/discovery'
 import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, ChainConverter } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { chunk, groupBy } from 'es-toolkit/compat'
 import { providers, utils } from 'ethers'
 import { writeFileSync } from 'fs'
-import chunk from 'lodash/chunk'
-import groupBy from 'lodash/groupBy'
 import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
 import {
   formatNumberWithCommas,

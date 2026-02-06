@@ -1,5 +1,5 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import merge from 'lodash/merge'
+import { merge } from 'es-toolkit/compat'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { ConfigReader } from './ConfigReader'
 import { getDiscoveryPaths } from './getDiscoveryPaths'

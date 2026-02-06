@@ -1,6 +1,6 @@
 import { type SvmBlockClient, SvmBlockProvider } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 
 export class SvmBlockProviders {
   blockProviders: Map<string, SvmBlockProvider> = new Map()

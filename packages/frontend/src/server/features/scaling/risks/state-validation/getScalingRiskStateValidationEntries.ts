@@ -5,8 +5,7 @@ import type {
   ZkCatalogTag,
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
-import partition from 'lodash/partition'
+import { groupBy, partition } from 'es-toolkit/compat'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import {
   getProjectsChangeReport,

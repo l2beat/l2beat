@@ -1,6 +1,6 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'

@@ -1,5 +1,4 @@
-import times from 'lodash/times'
-import uniq from 'lodash/uniq'
+import { times, uniq } from 'es-toolkit/compat'
 import { useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'

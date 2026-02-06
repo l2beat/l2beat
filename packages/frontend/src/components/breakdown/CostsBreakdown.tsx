@@ -1,4 +1,4 @@
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 
 import { Breakdown } from './Breakdown'
 

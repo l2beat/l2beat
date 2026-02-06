@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { makeTechnologyChoice } from './makeTechnologySection'
 
 export function getBridgeTechnologySection(

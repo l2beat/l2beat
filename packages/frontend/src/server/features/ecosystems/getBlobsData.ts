@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import keyBy from 'lodash/keyBy'
+import { keyBy } from 'es-toolkit/compat'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { sumByResolutionAndProject } from '../data-availability/throughput/utils/sumByResolutionAndProject'

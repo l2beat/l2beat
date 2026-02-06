@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import isNil from 'lodash/isNil'
+import { isNil } from 'es-toolkit/compat'
 
 export function fromTimestamp(timestamp: UnixTime): Date
 export function fromTimestamp(timestamp: null): null

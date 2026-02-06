@@ -1,5 +1,5 @@
 import type { InteropChain } from '@l2beat/config'
-import xor from 'lodash/xor'
+import { xor } from 'es-toolkit/compat'
 import {
   createContext,
   type ReactNode,

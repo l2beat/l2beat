@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { isNil } from 'es-toolkit/compat'
 import type { Insertable, Selectable, Updateable } from 'kysely'
-import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { DeployedToken } from '../kysely/generated/types'
 import {

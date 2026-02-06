@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import floor from 'lodash/floor'
+import { floor } from 'es-toolkit/compat'
 import {
   CONTRACTS,
   DA_LAYERS,

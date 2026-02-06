@@ -1,4 +1,4 @@
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { useContext, useMemo } from 'react'
 import { HiringBadge } from '~/components/badge/HiringBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'

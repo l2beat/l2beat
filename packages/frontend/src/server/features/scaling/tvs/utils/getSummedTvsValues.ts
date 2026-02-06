@@ -3,7 +3,7 @@ import type {
   SummedByTimestampTvsValuesRecord,
 } from '@l2beat/dal'
 import type { ProjectId } from '@l2beat/shared-pure'
-import keyBy from 'lodash/keyBy'
+import { keyBy } from 'es-toolkit/compat'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { queryExecutor } from '~/server/queryExecutor'
 import type { ChartRange } from '~/utils/range/range'

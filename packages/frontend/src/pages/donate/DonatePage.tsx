@@ -1,4 +1,4 @@
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { CustomLink } from '~/components/link/CustomLink'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'

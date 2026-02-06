@@ -1,7 +1,6 @@
 import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
 import { type ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
-import sum from 'lodash/sum'
+import { groupBy, sum } from 'es-toolkit/compat'
 import { UltimatePermissionToPrefix } from './descriptions'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'

@@ -1,8 +1,7 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import sum from 'lodash/sum'
-import uniq from 'lodash/uniq'
+import { sum, uniq } from 'es-toolkit/compat'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type {

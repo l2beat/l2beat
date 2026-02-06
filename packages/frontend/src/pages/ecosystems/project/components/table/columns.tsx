@@ -1,6 +1,6 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'

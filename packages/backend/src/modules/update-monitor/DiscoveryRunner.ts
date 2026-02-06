@@ -23,7 +23,7 @@ import {
   unique,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
-import isError from 'lodash/isError'
+import { isError } from 'es-toolkit/compat'
 
 export interface DiscoveryRunnerOptions {
   logger: Logger

@@ -1,6 +1,6 @@
 import type { DaEconomicSecurity } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
-import round from 'lodash/round'
+import { round } from 'es-toolkit/compat'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 

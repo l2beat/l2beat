@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import omit from 'lodash/omit'
+import { omit } from 'es-toolkit/compat'
 import { describeDatabase } from '../test/database'
 import { type ActivityRecord, ActivityRepository } from './ActivityRepository'
 

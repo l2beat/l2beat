@@ -1,5 +1,5 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
-import merge from 'lodash/merge'
+import { merge } from 'es-toolkit/compat'
 import { BlipRuntime } from '../../blip/BlipRuntime'
 import type {
   DiscoveryCustomType,

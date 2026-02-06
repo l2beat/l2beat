@@ -1,7 +1,7 @@
 import { execSync } from 'child_process'
 import { createHash } from 'crypto'
+import { compact } from 'es-toolkit/compat'
 import { readFileSync } from 'fs'
-import compact from 'lodash/compact'
 import path from 'path'
 
 function sha256Hex(s: string) {

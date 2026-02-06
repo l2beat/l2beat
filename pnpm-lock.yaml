@@ -108,6 +108,9 @@ importers:
       elastic-apm-node:
         specifier: ^4.11.2
         version: 4.11.2
+      es-toolkit:
+        specifier: ^1.44.0
+        version: 1.44.0
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -126,9 +129,6 @@ importers:
       koa-etag:
         specifier: ^4.0.0
         version: 4.0.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
@@ -178,9 +178,6 @@ importers:
       '@types/koa__router':
         specifier: ^12.0.0
         version: 12.0.4
-      '@types/lodash':
-        specifier: ^4.14.191
-        version: 4.17.13
       '@types/node-fetch':
         specifier: ^2.6.2
         version: 2.6.11
@@ -248,9 +245,6 @@ importers:
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       sqlite3:
         specifier: 5.1.7
         version: 5.1.7
@@ -270,9 +264,6 @@ importers:
       '@types/diff':
         specifier: ^7.0.2
         version: 7.0.2
-      '@types/lodash':
-        specifier: ^4.17.12
-        version: 4.17.13
       '@types/node-fetch':
         specifier: ^2.6.11
         version: 2.6.11
@@ -324,16 +315,13 @@ importers:
       '@types/redis':
         specifier: ^4.0.11
         version: 4.0.11
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+      es-toolkit:
+        specifier: ^1.44.0
+        version: 1.44.0
       redis:
         specifier: ^4.7.0
         version: 4.7.0
     devDependencies:
-      '@types/lodash':
-        specifier: ^4.17.4
-        version: 4.17.13
       '@types/mocha':
         specifier: ^10.0.6
         version: 10.0.9
@@ -358,12 +346,12 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      es-toolkit:
+        specifier: ^1.44.0
+        version: 1.44.0
       kysely:
         specifier: ^0.27.3
         version: 0.27.4
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       nanoid:
         specifier: ^3.3.7
         version: 3.3.7
@@ -374,9 +362,6 @@ importers:
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@types/lodash':
-        specifier: ^4.17.13
-        version: 4.17.13
       '@types/pg':
         specifier: 8.6.5
         version: 8.6.5
@@ -419,15 +404,15 @@ importers:
       cmd-ts:
         specifier: ^0.13.0
         version: 0.13.0
+      es-toolkit:
+        specifier: ^1.44.0
+        version: 1.44.0
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
       jsonc-parser:
         specifier: ^3.2.0
         version: 3.3.1
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       lru_map:
         specifier: 0.4.1
         version: 0.4.1
@@ -450,9 +435,6 @@ importers:
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@types/lodash':
-        specifier: ^4.14.198
-        version: 4.17.13
       '@types/mock-fs':
         specifier: ^4.13.4
         version: 4.13.4
@@ -567,6 +549,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      es-toolkit:
+        specifier: ^1.44.0
+        version: 1.44.0
       express:
         specifier: ^5.0.0
         version: 5.0.1
@@ -582,9 +567,6 @@ importers:
       kysely:
         specifier: ^0.27.3
         version: 0.27.4
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
@@ -634,9 +616,6 @@ importers:
       '@types/d3-scale':
         specifier: ^4.0.9
         version: 4.0.9
-      '@types/lodash':
-        specifier: ^4.17.4
-        version: 4.17.13
       '@types/markdown-it':
         specifier: ^14.1.2
         version: 14.1.2
@@ -718,6 +697,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      es-toolkit:
+        specifier: ^1.44.0
+        version: 1.44.0
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -727,9 +709,6 @@ importers:
       graphviz-wasm:
         specifier: ^3.0.2
         version: 3.0.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
@@ -752,9 +731,6 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
-      '@types/lodash':
-        specifier: ^4.14.198
-        version: 4.17.13
       '@types/mock-fs':
         specifier: ^4.13.4
         version: 4.13.4
@@ -888,12 +864,12 @@ importers:
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
+      es-toolkit:
+        specifier: ^1.44.0
+        version: 1.44.0
       express:
         specifier: ^5.0.0
         version: 5.0.1
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       swagger-ui-express:
         specifier: ^5.0.1
         version: 5.0.1(express@5.0.1)
@@ -910,9 +886,6 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
-      '@types/lodash':
-        specifier: ^4.17.4
-        version: 4.17.13
       '@types/swagger-ui-express':
         specifier: ^4.1.8
         version: 4.1.8
@@ -931,12 +904,12 @@ importers:
       '@polkadot/api':
         specifier: ^12.4.2
         version: 12.4.2
+      es-toolkit:
+        specifier: ^1.44.0
+        version: 1.44.0
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
@@ -956,9 +929,6 @@ importers:
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@types/lodash':
-        specifier: ^4.17.12
-        version: 4.17.13
       '@types/node-fetch':
         specifier: ^2.6.2
         version: 2.6.11
@@ -4215,9 +4185,6 @@ packages:
 
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
-
-  '@types/lodash@4.17.13':
-    resolution: {integrity: sha512-lfx+dftrEZcdBPczf9d0Qv0x+j/rfNCMuC6OcfXmO8gkfeNAY88PgKUbvG56whcN23gc27yenwF6oJZXGFpYxg==}
 
   '@types/markdown-it@14.1.2':
     resolution: {integrity: sha512-promo4eFwuiW+TfGxhi+0x3czqTYJkG8qB17ZUJiVF10Xm7NLVRSLUsfRTU/6h1e24VvRnXCx+hG7li58lkzog==}
@@ -11319,8 +11286,6 @@ snapshots:
       '@types/koa': 2.15.0
 
   '@types/linkify-it@5.0.0': {}
-
-  '@types/lodash@4.17.13': {}
 
   '@types/markdown-it@14.1.2':
     dependencies:

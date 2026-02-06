@@ -1,8 +1,7 @@
 import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { uniqBy } from 'es-toolkit/compat'
 import { utils } from 'ethers'
-
-import uniqBy from 'lodash/uniqBy'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'

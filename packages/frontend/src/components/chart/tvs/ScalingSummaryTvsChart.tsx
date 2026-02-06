@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
 import type {

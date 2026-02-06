@@ -1,5 +1,5 @@
 import type { Database } from '@l2beat/database'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 
 type SummedByTimestampTvsPerProject = Record<
   string,

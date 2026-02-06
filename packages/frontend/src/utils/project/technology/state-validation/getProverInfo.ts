@@ -1,7 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
-import isEmpty from 'lodash/isEmpty'
-import pickBy from 'lodash/pickBy'
+import { isEmpty, pickBy } from 'es-toolkit/compat'
 import type { StateValidationSectionProps } from '~/components/projects/sections/state-validation/StateValidationSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { getTrustedSetupsWithVerifiersAndAttesters } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'

@@ -1,5 +1,5 @@
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import range from 'lodash/range'
+import { range } from 'es-toolkit/compat'
 import type { ChartResolution } from '~/utils/range/range'
 
 interface Options {

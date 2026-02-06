@@ -1,6 +1,5 @@
 import type { Project, ProjectRisk } from '@l2beat/config'
-import isArray from 'lodash/isArray'
-import uniqBy from 'lodash/uniqBy'
+import { isArray, uniqBy } from 'es-toolkit/compat'
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/RiskSummarySection'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { groupRisks } from './groupRisks'

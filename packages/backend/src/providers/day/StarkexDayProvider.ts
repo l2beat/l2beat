@@ -1,6 +1,6 @@
 import type { StarkexClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import range from 'lodash/range'
+import { range } from 'es-toolkit/compat'
 import type { DayProvider } from './DayProviders'
 
 export class StarkexDayProvider implements DayProvider {

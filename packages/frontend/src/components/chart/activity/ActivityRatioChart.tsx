@@ -1,5 +1,5 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import round from 'lodash/round'
+import { round } from 'es-toolkit/compat'
 import { Area, AreaChart } from 'recharts'
 import type {
   ChartMeta,

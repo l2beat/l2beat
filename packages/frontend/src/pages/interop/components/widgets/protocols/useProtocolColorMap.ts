@@ -1,4 +1,4 @@
-import uniq from 'lodash/uniq'
+import { uniq } from 'es-toolkit/compat'
 import { useMemo } from 'react'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
 import { generateAccessibleColors } from '~/utils/generateColors'

@@ -1,6 +1,6 @@
 import type { UnixTime } from '@l2beat/shared-pure'
+import { isNil } from 'es-toolkit/compat'
 import type { Insertable, Selectable, Updateable } from 'kysely'
-import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropPluginSyncedRange } from '../kysely/generated/types'
 import { fromTimestamp, toTimestamp } from '../utils/timestamp'

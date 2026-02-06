@@ -1,5 +1,5 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { Fragment } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'

@@ -1,7 +1,7 @@
 import { assert, type ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { type Parser, type Validator, v } from '@l2beat/validate'
+import { groupBy } from 'es-toolkit/compat'
 import { type providers, utils } from 'ethers'
-import groupBy from 'lodash/groupBy'
 import { isDeepStrictEqual } from 'util'
 import { executeBlip } from '../../../blip/executeBlip'
 import type { BlipSexp } from '../../../blip/type'

@@ -3,7 +3,7 @@ import type {
   ProjectAssociatedToken,
   WarningWithSentiment,
 } from '@l2beat/config'
-import compact from 'lodash/compact'
+import { compact } from 'es-toolkit/compat'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'

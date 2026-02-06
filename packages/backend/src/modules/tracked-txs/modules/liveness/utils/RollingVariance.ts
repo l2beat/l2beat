@@ -1,4 +1,4 @@
-import sum from 'lodash/sum'
+import { sum } from 'es-toolkit/compat'
 
 export class RunningStatistics {
   private count = 0

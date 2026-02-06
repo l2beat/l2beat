@@ -30,9 +30,9 @@
     "chalk": "^4.1.2",
     "clingo-wasm": "0.3.2",
     "cmd-ts": "^0.13.0",
+    "es-toolkit": "^1.44.0",
     "ethers": "^5.7.2",
     "jsonc-parser": "^3.2.0",
-    "lodash": "^4.17.21",
     "lru_map": "0.4.1",
     "mkdirp": "^3.0.0",
     "node-fetch": "^2.6.7",
@@ -42,7 +42,6 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "@types/lodash": "^4.14.198",
     "@types/mock-fs": "^4.13.4",
     "@types/node-fetch": "^2.6.4",
     "mock-fs": "^5.2.0"

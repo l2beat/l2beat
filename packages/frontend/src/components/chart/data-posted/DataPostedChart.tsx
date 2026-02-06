@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import pick from 'lodash/pick'
+import { pick } from 'es-toolkit/compat'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
 import type {

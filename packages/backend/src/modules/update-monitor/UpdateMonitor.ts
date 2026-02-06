@@ -10,7 +10,7 @@ import {
 } from '@l2beat/discovery'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import shuffle from 'lodash/shuffle'
+import { shuffle } from 'es-toolkit/compat'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { WorkerPool } from './createWorkers'

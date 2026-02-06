@@ -1,4 +1,4 @@
-import capitalize from 'lodash/capitalize'
+import { capitalize } from 'es-toolkit/compat'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'

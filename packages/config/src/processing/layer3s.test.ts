@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import uniq from 'lodash/uniq'
+import { uniq } from 'es-toolkit/compat'
 import { getTokenList } from '../tokens/tokens'
 import { chains } from './chains'
 import { ecosystems } from './ecosystems'

@@ -1,5 +1,5 @@
 import { type EthereumAddress, UnixTime, unique } from '@l2beat/shared-pure'
-import partition from 'lodash/partition'
+import { partition } from 'es-toolkit/compat'
 
 export function getTransferQuery(
   transfersConfig: { from?: EthereumAddress; to: EthereumAddress }[],

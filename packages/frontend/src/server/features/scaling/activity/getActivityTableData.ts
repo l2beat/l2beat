@@ -1,7 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
-import partition from 'lodash/partition'
+import { groupBy, partition } from 'es-toolkit/compat'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'

@@ -1,6 +1,6 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'es-toolkit/compat'
 import type { ChartResolution } from '~/utils/range/range'
 
 /** This function sums up totalSize for each day and project */

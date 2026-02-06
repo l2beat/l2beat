@@ -12,7 +12,7 @@ import {
   type ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import uniq from 'lodash/uniq'
+import { uniq } from 'es-toolkit/compat'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,

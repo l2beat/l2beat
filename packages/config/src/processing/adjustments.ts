@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import uniq from 'lodash/uniq'
+import { uniq } from 'es-toolkit/compat'
 import { CONTRACTS } from '../common'
 import { BADGES, badgesCompareFn } from '../common/badges'
 import type { Bridge, ScalingProject } from '../internalTypes'

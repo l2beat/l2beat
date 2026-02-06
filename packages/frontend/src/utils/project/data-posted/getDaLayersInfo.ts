@@ -1,6 +1,6 @@
 import type { Project, ProjectDaTrackingConfig } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
-import partition from 'lodash/partition'
+import { partition } from 'es-toolkit/compat'
 import { manifest } from '~/utils/Manifest'
 
 export function getDaLayersInfo(

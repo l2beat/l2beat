@@ -7,10 +7,9 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { isEmpty, unionBy } from 'es-toolkit/compat'
 import { utils } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
-import isEmpty from 'lodash/isEmpty'
-import unionBy from 'lodash/unionBy'
 import {
   CONTRACTS,
   compareRisk,

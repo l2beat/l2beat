@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import partition from 'lodash/partition'
+import { partition } from 'es-toolkit/compat'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { getShapeFromAnalyzedContract } from '../analysis/findShape'
 import type { TemplateService } from '../analysis/TemplateService'

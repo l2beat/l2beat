@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import zip from 'lodash/zip'
+import { zip } from 'es-toolkit/compat'
 import type {
   ContractValue,
   DiscoveryCustomType,
