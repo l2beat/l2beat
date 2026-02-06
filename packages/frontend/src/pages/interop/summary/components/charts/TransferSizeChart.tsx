@@ -5,6 +5,7 @@ import {
   CartesianGrid,
   DefaultZIndexes,
   XAxis,
+  type XAxisTickContentProps,
   YAxis,
 } from 'recharts'
 import {
@@ -26,7 +27,7 @@ import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
-  data: TransferSizeDataPoint[] | undefined
+  data: TransferSizeDataPoint[]
   isLoading: boolean
 }
 
@@ -151,10 +152,7 @@ function XAxisTick({
   y,
   payload,
   data,
-}: {
-  x: number
-  y: number
-  payload: { value: string }
+}: XAxisTickContentProps & {
   data: TransferSizeDataPoint[]
 }) {
   const item = data.find((item) => item.name === payload.value)

@@ -96,6 +96,7 @@ export function ProjectActivityChart({
         className="mt-4 mb-3"
         type={type}
         project={project}
+        tickCount={4}
       />
       <ActivityRatioChart
         data={ratioData}
