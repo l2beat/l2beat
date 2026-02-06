@@ -215,7 +215,7 @@ export const loopring: ScalingProject = {
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
-        noRedTrustedSetups: null,
+        noRedTrustedSetups: false,
         programHashesReproducible: null,
         proverSourcePublished: null,
         verifierContractsReproducible: null,

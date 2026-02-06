@@ -455,7 +455,7 @@ export const linea: ScalingProject = {
         noRedTrustedSetups: null,
         programHashesReproducible: null,
         proverSourcePublished: null,
-        verifierContractsReproducible: null,
+        verifierContractsReproducible: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

@@ -203,7 +203,7 @@ export const katana: ScalingProject = {
       usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: false,
       noRedTrustedSetups: null,
-      programHashesReproducible: null,
+      programHashesReproducible: false,
       proverSourcePublished: null,
       verifierContractsReproducible: null,
     },
