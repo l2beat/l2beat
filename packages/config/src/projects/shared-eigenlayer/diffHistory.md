@@ -1,14 +1,29 @@
-Generated with discovered.json: 0x76fa37f1b0c10c2068ebe1ee5aca0d6768603001
+Generated with discovered.json: 0x83dd49c543af54fc62130f7caf5d64bb769c7a7e
 
-# Diff at Fri, 06 Feb 2026 16:00:50 GMT:
+# Diff at Sun, 08 Feb 2026 21:22:26 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@89bdf60fd6997f83426dbd81ca3ddc0bec9405d0 block: 1760362205
-- current timestamp: 1770393545
+- current timestamp: 1770585215
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+EigenLayer v1.9.0 upgrade via [tx 0xa8752e...](https://etherscan.io/tx/0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e) on 2026-01-30. All core contracts upgraded in a single batch.
+
+Key changes:
+- **AllocationManager**: New per-operator-set slasher system replaces PermissionController-based slashing. Contract now uses split pattern with AllocationManagerView for read-only functions. New `migrateSlashers()` for backward compatibility. Instant allocation delay for newly registered operators. [Diff](https://disco.l2beat.com/diff/eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345/eth:0xdA2A68D318A571dD550F2EcbCb09bf50497e97C4)
+- **DelegationManager**: Fix for slashable shares calculation in queue - now properly handles compounding slashes and division-by-zero when operator fully slashed. `scaleForBurning` replaced by `calcSlashedAmount`. [Diff](https://disco.l2beat.com/diff/eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89/eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75)
+- **EigenPodManager/EigenPod**: Pectra/Electra upgrade - new `requestConsolidation()` and `requestWithdrawal()` functions for EIP-7251/7002 predeploys. Merkle library hardened with empty root checks and index validation. Event signatures changed from `validatorIndex` to `pubkeyHash`. [Diff](https://disco.l2beat.com/diff/eth:0xE48D7CaeC1790b293667e4bB2dE1E00536F2bABd/eth:0xd22dd829779ADBf3869fb224F703452f7F95E9dB)
+- **AVSDirectory**: Internal `_majorVersion()` now returns `"1"` instead of `"v1"`, changing the EIP-712 domain separator and invalidating pending signatures. Pausable modifiers refactored to internal functions. [Diff](https://disco.l2beat.com/diff/eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2/eth:0xcD35Cef328b496fA9d70a8d7C34EF3434614862b)
+- **StrategyFactory**: Cosmetic changes (NatDoc style, formatting). Pausable modifiers refactored to internal functions. [Diff](https://disco.l2beat.com/diff/eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66/eth:0x5194D2a6A0900796903503926E9CF775b926c8AF)
+- **PermissionController**: `canCall()` fixed from non-view to view. Otherwise cosmetic. [Diff](https://disco.l2beat.com/diff/eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1/eth:0x36dd260AbF606172875E6B5B7A96B435DC74EEd2)
+- **StrategyManager**: No logic changes, cosmetic only (NatDoc style, formatting). [Diff](https://disco.l2beat.com/diff/eth:0x46aefd30415be99e20169eE7046F65784B46d123/eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c)
+- **RewardsCoordinator**: Reward accounting/distribution flow unchanged. SemVerMixin fully removed. Merkle verification hardened with `EmptyRoot()` and `InvalidIndex()` checks. [Diff](https://disco.l2beat.com/diff/eth:0xa505c0116aD65071F0130061F94745b7853220aB/eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF)
+- **bEIGEN-Strategy + all Strategy contracts**: Cosmetic only (NatDoc style, formatting). [Diff](https://disco.l2beat.com/diff/eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be/eth:0x4a0aee93BE6C87B227cA0B450E15245631233532)
+
+Common across most contracts: NatDoc comments migrated from `/** */` to `///`, function signatures reformatted to multi-line style. SemVerMixin fully removed from RewardsCoordinator and StrategyFactory; still present via SignatureUtilsMixin in AVSDirectory, DelegationManager, StrategyManager.
+
+Newly tracked v1.9.0 infrastructure contracts (some deployed as early as Sep 2025, now discovered via new reference chains): AllocationManagerView, ProtocolRegistry, KeyRegistrar, CrossChainRegistry, TaskMailbox, ECDSACertificateVerifier, BN254CertificateVerifier, OperatorTableUpdater, ReleaseManager.
 
 ## Watched changes
 
@@ -24,8 +39,6 @@ Provide description of changes. This section will be preserved.
 ```diff
     contract AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
     +++ description: None
-      template:
--        "eigenlayer/AVSDirectory"
       sourceHashes.1:
 -        "0x9d891889c1fcc1bd08979780a1502190faf4e8230d94e47de322da41bf7e5143"
 +        "0x2e898060c596c2058f1140538534ecf4a6c7aeea4f1db17d15eddf3487f5a1fc"
@@ -37,8 +50,6 @@ Provide description of changes. This section will be preserved.
       values.$upgradeCount:
 -        2
 +        3
-      values.avs:
--        ["eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","eth:0xD25c2c5802198CB8541987b73A8db4c9BCaE5cC7","eth:0x9FC952BdCbB7Daca7d420fA55b942405B073A89d","eth:0x71a77037870169d47aad6c2C9360861A4C0df2bF","eth:0x6026b61bDD2252160691CB3F6005B6B72E0Ec044","eth:0x35F4f28A8d3Ff20EEd10e087e8F96Ea2641E6AA2","eth:0x23221c5bB90C7c57ecc1E75513e2E4257673F0ef","eth:0xed2f4d90b073128ae6769a9A8D51547B1Df766C8","eth:0xE5445838C475A2980e6a88054ff1514230b83aEb","eth:0xd50E0931703302B080880C45148F5D83ea66aE2a","eth:0xF7fcff55d5FDAf2C3Bbeb140Be5e62a2c7D26Db3","eth:0xB6827E919b55B45290cf54F006EE4a231e06F088","eth:0x1DE75EaAb2df55d467494A172652579E6FA4540E","eth:0x07E26BF8060e33fA3771d88128b75493750515c1","eth:0x1F2c296448f692af840843d993fFC0546619Dcdb","eth:0x22CAc0e6A1465F043428e8AeF737b3cb09D0eEDa","eth:0xe8E59c6C8B56F2c178f63BCFC4ce5e5e2359c8fc","eth:0xb3AcAF09a1B801E36655B786da4EAA6aE9F5DC37","eth:0x18343Aa10e3D2F3A861e5649627324aEAD987Adf","eth:0xCE06c5fe42d22fF827A519396583Fd9f5176E3D3","eth:0xE7D0894Ac9266f5cbe8f8E750aC6cbe128FbbeB7","eth:0x84AdF221Af49E67DB62C5B16d86aFcaD2eF0b262","eth:0xb19f05CDc5EF266766AC1287A1EeF29283058773","eth:0x2d86E90ED40a034C753931eE31b1bD5E1970113d","eth:0x75195699F659ed67083691c2C48F23d0B907b559","eth:0xA5bD40e5406CB2d2440Db1D1bcF9dfD022B6C124","eth:0x8EF368e31cd0b51941bf85bC11D8C71589489Fe4","eth:0xd75c834B09ec626992Ff3Ce388AE7115791Fb282","eth:0xaCB91045B8bBa06f9026e1A30855B6C4A1c5BaC6","eth:0x83742C346E9f305dcA94e20915aB49A483d33f3E","eth:0xd6B9B1B29A30127fb99e1201E91a3e021658E9fb","eth:0xe008064DF9f019d0BFF0735fe6887d70b23825Ca","eth:0xb73a87E8F7f9129816d40940Ca19DFa396944C71","eth:0xFC569B3b74e15cf48AA684144e072e839Fd89380","eth:0xF75Bc9850F4C44E682537C477c4Bb08f71f695Da","eth:0xd6967ed3910C18E3546ABC1A67c61E75e2633fD9","eth:0xB3e069FD6dDA251AcBDE09eDa547e0AB207016ee","eth:0xA95Efd0CeFd326ff8eb5cFa8F0370CF7ED471D18","eth:0xa3F64D3102a035db35c42A9001BBc83e08c7a366","eth:0x461591A7e68906eDBcD643E010A7e1AE3B023c6d","eth:0xBc77233855e3274E1903771675Eb71E602D9DC2e","eth:0xeF2A435e5EE44B2041100EF8cbC8ae035166606c","eth:0x3aDdEb54ddd43Eb40235eC32DfA7928F28A44bb5","eth:0x852dD23aE808A20C48D7b7b03D23C3F5360928e1","eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","eth:0x29B2E51d2bF840116797F8A27e40c05aE3e244D9","eth:0xcA5608C29f13B813Ee6999a6686bea850bcdf36F","eth:0x045fC77EdAf8F9252577b2805D7F26f113848520","eth:0x466745F7c06fBBab48af7b64E9E9bea249fD6Ee5","eth:0x7a49D7101a969eE8Ba68b5Ed4aF42E03Fa40B1eA","eth:0xB3e9F71637f0089F81dAeb3b6999d391F13736Dd","eth:0x44577f44D2A131c8033663996636d00Ce1F46808","eth:0xb6EC8E5c6dB00089737Bd9637cFF76bD8Bbe0474","eth:0x42F15F9E4dF4994317453477e80e24797CC1A929","eth:0x35DebC00531Ac8771be5dbEf015feFD084efA958","eth:0x6201bc0A699e3b10f324204e6F8EcdD0983De227","eth:0x6f943318b05AD7c6EE596A220510A6D64B518dd8","eth:0x0328635BA5FF28476118595234b5b7236b906c0B","eth:0x10Ea82DdCE695dc44789633D362179B63CD18E64","eth:0xC9E94BF890c9b4F11685d576bC65B08e0E87556F","eth:0x4ca852BD78D9B7295874A7D223023Bff011b7EB3","eth:0x328c822874991C31DdF400CD8388027Af66270A8","eth:0x500C4E641b5d61026f26148Ab9363EB3241C08f3","eth:0x05006D61cA5fE53DF316802f3aC91973d4B95F99","eth:0x96b6a29D7B98519Ae66E6398BD27A76B30a5dC3f","eth:0x203b9Acb40DfBB911f1e39C784EAB639418dae04","eth:0x5Bf17dFaA1B76Bb6C5C47F568636877F94C09b65","eth:0x506D3bDef8C9E671928F1ffF135E0e0642B59AA4","eth:0x5b4AD76a6a2F4a0A8C7CBf499e6533B57da2eF2d","eth:0x1d32272FfdA06e9EDE3CA854D8D9AaAe8328d795","eth:0x47806C11CA33BE2360bb2A5891C5D0D1BaFBE7Dc","eth:0x902038d2D5278dd6504C135FFA49bf635D475f7e","eth:0xcF20a2c0065a8b2888c1702fe7885952ae523Aa2","eth:0x15f4314d4c5da6e36eC40b3BC2A279685F0d84b2","eth:0x9110e4e9e561514dE3be844D6fF9eF7cAcE65415","eth:0xd314209cE0ae9aDfD7643BB9d8becD62290D826a","eth:0xeadDFE246Cc8b309FfC6dDb4AB677Be49E8512AB","eth:0xD24a5F9A0E578f38e2B76d422b0a355ffee88F2E","eth:0x875B5ff698B74B26f39C223c4996871F28AcDdea"]
       values.domainSeparator:
 -        "0xa376b8f73e544301999d5aabb44e4d306777f6f0f08bf031c1c4bbc027313aeb"
 +        "0xd766fda18c6a8f8aa87dc4cc493da4a48a9d064ebf1b506ec99dec992398439a"
@@ -54,14 +65,10 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract PermissionController (eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5) {
-    +++ description: None
-      template:
--        "eigenlayer/PermissionController"
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
       sourceHashes.1:
 -        "0x01bb93f0533bf79f9680aee1f8f98c14501de40b31d642ccaab5b297dc809f1e"
 +        "0xd6b47b90782b90fdfe85151507e668372b0c9cbb4435e30d1dad12ffa8299cde"
-      description:
--        "Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses."
       values.$implementation:
 -        "eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1"
 +        "eth:0x36dd260AbF606172875E6B5B7A96B435DC74EEd2"
@@ -81,14 +88,10 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
-    +++ description: None
-      template:
--        "eigenlayer/DelegationManager"
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
       sourceHashes.1:
 -        "0x070312684717f779729ea8c996718a93f984ef1cc6afd216b9b80007e7d49e7c"
 +        "0xc7434c1abe25723dac4061deb679b18972a97bda6317eb9b36833da48f9c59c1"
-      description:
--        "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator."
       values.$implementation:
 -        "eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89"
 +        "eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75"
@@ -164,14 +167,10 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract StrategyFactory (eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
-    +++ description: None
-      template:
--        "eigenlayer/StrategyFactory"
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
       sourceHashes.1:
 -        "0x00392f5dcb8592d0f6f83640dbd27a38aa84cfbafabae75f5e3219f0f0f73ae4"
 +        "0x4f8ae893ee26ea9e942cbdbf1773af14930e90a0a483c20a8d13472478d7450b"
-      description:
--        "Factory contract for permissionless strategy creation via beacon proxies."
       values.$implementation:
 -        "eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66"
 +        "eth:0x5194D2a6A0900796903503926E9CF775b926c8AF"
@@ -192,8 +191,6 @@ Provide description of changes. This section will be preserved.
 ```diff
     contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
     +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
-      template:
--        "eigenlayer/RewardsCoordinator"
       sourceHashes.1:
 -        "0x834e9e144a27f28147a1d93de8045120205831ebea6457dc3748a624877591df"
 +        "0x2135e8c40a0b65d08749af76920904312a37014b94d2b676ecabaa844b63cbd2"
@@ -222,14 +219,10 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
-    +++ description: None
-      template:
--        "eigenlayer/StrategyManager"
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
       sourceHashes.1:
 -        "0x60a5779b3a2f393b1ced806a8d45492e70d92e11a9943b66a8511672ae88c7d3"
 +        "0x5433d9e78da537eadb2ed5b713412f6ed57cafef2bbe66fc756d599175cb2fab"
-      description:
--        "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake."
       values.$implementation:
 -        "eth:0x46aefd30415be99e20169eE7046F65784B46d123"
 +        "eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c"
@@ -297,8 +290,6 @@ Provide description of changes. This section will be preserved.
 ```diff
     contract EigenPodManager (eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
     +++ description: None
-      template:
--        "eigenlayer/EigenPodManager"
       sourceHashes.1:
 -        "0x1d0e4cec5c013a815e3c94572dfa980117f415c1f63d79ba522cf437c672534f"
 +        "0x202a0be086b58267c42f08c1e1cade3232244aaf3fef2195bc77fc74db6b5459"
@@ -321,14 +312,10 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract AllocationManager (eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39) {
-    +++ description: None
-      template:
--        "eigenlayer/AllocationManager"
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
       sourceHashes.1:
 -        "0xa704abda563be08e6ca83769e716b07daf54f505f36b9a0278f751eb355c802e"
 +        "0x403e87c83844ebe1b8b808ea7ba2b87e2b40009fcd11ed4d5b6f84a0062504cb"
-      description:
--        "Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake."
       values.$implementation:
 -        "eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345"
 +        "eth:0xdA2A68D318A571dD550F2EcbCb09bf50497e97C4"
@@ -352,14 +339,10 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract bEIGEN-Strategy (eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
-    +++ description: None
-      template:
--        "eigenlayer/Strategy"
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
       sourceHashes.1:
 -        "0xb58160c9903763d4c6dd724e3ce4e687fa5eeff34a50885a3a3b614aee688553"
 +        "0x49be559baf3f68046b1c4d4312e12ffd2f9c062523d5233fd1fe2d87ac417c72"
-      description:
--        "A strategy implementation allowing to deposit a specific token as a restakable asset."
       values.$implementation:
 -        "eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be"
 +        "eth:0x4a0aee93BE6C87B227cA0B450E15245631233532"
@@ -368,29 +351,12 @@ Provide description of changes. This section will be preserved.
       values.$upgradeCount:
 -        3
 +        4
-      values.totalShares:
--        "461076954683359631866280796"
-+        "462165564699707139713800252"
       values.version:
 -        "1.5.0"
-      values.EIGEN:
-+        "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
-      values.sharesToUnderlying:
-+        [0,1,2,3,4]
-      values.sharesToUnderlyingView:
-+        [0,1,2,3,4]
-      values.underlyingToShares:
-+        [0,1,2,3,4]
-      values.underlyingToSharesView:
-+        [0,1,2,3,4]
-      fieldMeta:
--        {"getTVLLimits":{"severity":"LOW","description":"Maximum TVL of the strategy.","type":"RISK_PARAMETER"},"maxPerDeposit":{"severity":"LOW","description":"Maximum value of one deposit transaction","type":"RISK_PARAMETER"},"maxTotalDeposits":{"severity":"LOW","description":"Same as TVL limit","type":"RISK_PARAMETER"}}
       implementationNames.eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be:
 -        "EigenStrategy"
       implementationNames.eth:0x4a0aee93BE6C87B227cA0B450E15245631233532:
 +        "EigenStrategy"
-      errors:
-+        {"sharesToUnderlying":"Processing error occurred.","sharesToUnderlyingView":"Processing error occurred.","underlyingToShares":"Processing error occurred.","underlyingToSharesView":"Processing error occurred."}
     }
 ```
 
@@ -502,56 +468,50 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract DepositContract (eth:0x00000000219ab540356cBB839Cbe05303d7705Fa)
-    +++ description: Ethereum Beacon Chain deposit contract.
-```
-
-```diff
-+   Status: CREATED
     contract AllocationManagerView (eth:0x0D4e5723daAD06510CFd6864b8eB8a08CF0c4a34)
-    +++ description: None
+    +++ description: Read-only view contract that exposes query functions for the AllocationManager, allowing external callers to look up operator stake allocations, magnitudes, operator sets, and slashable/redistributable status.
 ```
 
 ```diff
 +   Status: CREATED
     contract swETH-Strategy (eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract TaskMailbox (eth:0x132b466d9d5723531F68797519DfED701aC2C749)
-    +++ description: None
+    +++ description: Task lifecycle manager where users create tasks with fee payments directed at specific executor operator sets, and executors submit results verified via BN254 or ECDSA certificate verification, with fee distribution on successful verification and refunds on task expiration.
 ```
 
 ```diff
 +   Status: CREATED
     contract ankrETH-Strategy (eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract rETH-Strategy (eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract ProtocolRegistry (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129)
-    +++ description: None
+    +++ description: Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.
 ```
 
 ```diff
 +   Status: CREATED
     contract METH-Strategy (eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract BN254CertificateVerifier (eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A)
-    +++ description: None
+    +++ description: Verifies BLS (BN254 curve) certificates for EigenLayer operator sets by computing the aggregate public key of signers, performing pairing-based signature verification, and returning signed-stake weights for quorum threshold validation.
 ```
 
 ```diff
@@ -563,157 +523,85 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract cbETH-Strategy (eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract KeyRegistrar (eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4)
-    +++ description: None
+    +++ description: Manages the registration and deregistration of operator cryptographic keys (ECDSA or BN254/BLS) for specific operator sets, enforcing signature-based proof of key ownership and global uniqueness of keys across the protocol.
 ```
 
 ```diff
 +   Status: CREATED
     contract OperatorTableUpdater (eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5)
-    +++ description: None
+    +++ description: Central coordinator for EigenLayer's operator table system: accepts BN254-certified global Merkle table roots from a designated generator operator set, then allows Merkle proof submissions to push per-operator-set tables into the certificate verifier contracts.
 ```
 
 ```diff
 +   Status: CREATED
     contract osETH-Strategy (eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract wBETH-Strategy (eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract OETH (eth:0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Liquid Staked ETH Token (eth:0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract sfrxETH-Strategy (eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract CrossChainRegistry (eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b)
-    +++ description: None
+    +++ description: Allows AVSs to create generation reservations that configure and schedule the transport of operator tables (stake weight data) from L1 to whitelisted L2 chains, managing per-operator-set configs such as staleness periods and operator table calculators.
 ```
 
 ```diff
 +   Status: CREATED
     contract stETH-Strategy (eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract ETHx-Strategy (eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract WrapTokenV3ETH (eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ETHx Token (eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract OETH-Strategy (eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Staked Frax Ether Token (eth:0xac3E018457B222d93114458476f3E3416Abbe38F)
-    +++ description: Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract RiverV1-Strategy (eth:0xAe60d8180437b5C34bB956822ac2710972584473)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Rocket Pool ETH Token (eth:0xae78736Cd615f374D3085123A210448E74Fc6393)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Coinbase Wrapped Staked ETH Token (eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract ECDSACertificateVerifier (eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25)
-    +++ description: None
+    +++ description: Verifies ECDSA-based certificates for EigenLayer operator sets by recovering signer addresses from concatenated signatures, confirming each signer is a registered operator, and tallying their stake weights against quorum thresholds.
 ```
 
 ```diff
 +   Status: CREATED
     contract StrategyBase (eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract mETH 1 Token (eth:0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Ankr Staked ETH Token (eth:0xE95A203B1a91a908F9B9CE46459d101078c2c3cb)
-    +++ description: None
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
 
 ```diff
 +   Status: CREATED
     contract ReleaseManager (eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract OsToken (eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract swETH (eth:0xf951E335afb289353dc249e82926178EaC7DEd78)
-    +++ description: None
+    +++ description: Manages software release lifecycle for EigenLayer operator sets, allowing AVS owners to publish versioned releases (containing artifact digests, registry URLs, and upgrade-by deadlines) and metadata URIs that operators can query for required software versions.
 ```
 
 ## Source code changes
@@ -722,39 +610,25 @@ Provide description of changes. This section will be preserved.
 .../AVSDirectory/AVSDirectory.sol                  |  264 +-
  .../AllocationManager/AllocationManager.sol        | 2684 ++++++-----
  .../.flat/AllocationManagerView.sol                | 4922 ++++++++++++++++++++
- .../.flat/Ankr Staked ETH Token/AETH_R21.sol       |  977 ++++
- .../AdminUpgradeabilityProxy.p.sol                 |  289 ++
  .../BN254CertificateVerifier.sol                   | 2070 ++++++++
  .../TransparentUpgradeableProxy.p.sol              |  729 +++
- .../FiatTokenProxy.p.sol                           |  417 ++
- .../StakedTokenV1.sol                              | 1701 +++++++
  .../CrossChainRegistry/CrossChainRegistry.sol      | 2290 +++++++++
  .../TransparentUpgradeableProxy.p.sol              |  729 +++
  .../DelegationManager/DelegationManager.sol        | 1049 ++---
- .../shared-eigenlayer/.flat/DepositContract.sol    |  160 +
  .../ECDSACertificateVerifier.sol                   | 3221 +++++++++++++
  .../TransparentUpgradeableProxy.p.sol              |  729 +++
- .../shared-eigenlayer/.flat/ETHx Token/ETHx.sol    | 1910 ++++++++
- .../ETHx Token/TransparentUpgradeableProxy.p.sol   |  695 +++
  .../.flat/ETHx-Strategy/StrategyBaseTVLLimits.sol  | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
  .../{.flat@1760362205 => .flat}/EigenPod.sol       |  918 ++--
  .../EigenPodManager/EigenPodManager.sol            |  614 +--
  .../.flat/KeyRegistrar/KeyRegistrar.sol            | 2143 +++++++++
  .../KeyRegistrar/TransparentUpgradeableProxy.p.sol |  729 +++
- .../.flat/Liquid Staked ETH Token/RiverV1.sol      | 3428 ++++++++++++++
- .../.flat/Liquid Staked ETH Token/TUPProxy.p.sol   |  689 +++
- .../AppProxyUpgradeable.p.sol                      |  241 +
- .../.flat/Liquid staked Ether 2.0 Token/Lido.sol   | 3239 +++++++++++++
  .../.flat/METH-Strategy/StrategyBaseTVLLimits.sol  | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
- .../projects/shared-eigenlayer/.flat/OETH/OETH.sol | 1113 +++++
- .../shared-eigenlayer/.flat/OETH/OETHProxy.p.sol   |  566 +++
  .../.flat/OETH-Strategy/StrategyBaseTVLLimits.sol  | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
  .../OperatorTableUpdater/OperatorTableUpdater.sol  | 2320 +++++++++
  .../TransparentUpgradeableProxy.p.sol              |  729 +++
- .../projects/shared-eigenlayer/.flat/OsToken.sol   | 1958 ++++++++
  .../PermissionController/PermissionController.sol  |  533 +--
  .../.flat/ProtocolRegistry/ProtocolRegistry.sol    | 2983 ++++++++++++
  .../TransparentUpgradeableProxy.p.sol              |  729 +++
@@ -763,22 +637,16 @@ Provide description of changes. This section will be preserved.
  .../RewardsCoordinator/RewardsCoordinator.sol      | 1417 +++---
  .../RiverV1-Strategy/StrategyBaseTVLLimits.sol     | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
- .../.flat/Rocket Pool ETH Token.sol                |  882 ++++
- .../.flat/Staked Frax Ether Token.sol              | 1046 +++++
  .../{.flat@1760362205 => .flat}/StrategyBase.sol   |  526 +--
  .../StrategyFactory/StrategyFactory.sol            |  355 +-
  .../StrategyManager/StrategyManager.sol            |  527 +--
  .../.flat/TaskMailbox/TaskMailbox.sol              | 2974 ++++++++++++
  .../TaskMailbox/TransparentUpgradeableProxy.p.sol  |  729 +++
- .../.flat/WrapTokenV3ETH/FiatTokenProxy.p.sol      |  417 ++
- .../.flat/WrapTokenV3ETH/WrapTokenV3ETH.sol        | 1958 ++++++++
  .../ankrETH-Strategy/StrategyBaseTVLLimits.sol     | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
  .../bEIGEN-Strategy/EigenStrategy.sol              |  603 +--
  .../.flat/cbETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
- .../shared-eigenlayer/.flat/mETH 1 Token/METH.sol  | 3477 ++++++++++++++
- .../mETH 1 Token/TransparentUpgradeableProxy.p.sol |  729 +++
  .../.flat/osETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
  .../.flat/rETH-Strategy/StrategyBaseTVLLimits.sol  | 1352 ++++++
@@ -787,13 +655,11 @@ Provide description of changes. This section will be preserved.
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
  .../.flat/stETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
- .../.flat/swETH/TransparentUpgradeableProxy.p.sol  |  597 +++
- .../shared-eigenlayer/.flat/swETH/swETH.sol        | 2519 ++++++++++
  .../.flat/swETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
  .../.flat/wBETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
  .../TransparentUpgradeableProxy.p.sol              |  631 +++
- 74 files changed, 86249 insertions(+), 5465 deletions(-)
+ 52 files changed, 57241 insertions(+), 5465 deletions(-)
 ```
 
 Generated with discovered.json: 0x03d9348a802c1e78932a6aaa82a96d1968880d9e
