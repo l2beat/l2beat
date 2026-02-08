@@ -8,7 +8,7 @@ Generated with discovered.json: 0x83dd49c543af54fc62130f7caf5d64bb769c7a7e
 
 ## Description
 
-EigenLayer v1.9.0 upgrade via [tx 0xa8752e...](https://etherscan.io/tx/0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e) on 2026-01-30. All core contracts upgraded in a single batch.
+EigenLayer v1.9.0 upgrade via [tx 0xa8752e...](https://etherscan.io/tx/0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e). All core contracts upgraded in a single batch.
 
 Key changes:
 - **AllocationManager**: New per-operator-set slasher system replaces PermissionController-based slashing. Contract now uses split pattern with AllocationManagerView for read-only functions. New `migrateSlashers()` for backward compatibility. Instant allocation delay for newly registered operators. [Diff](https://disco.l2beat.com/diff/eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345/eth:0xdA2A68D318A571dD550F2EcbCb09bf50497e97C4)
@@ -20,8 +20,6 @@ Key changes:
 - **StrategyManager**: No logic changes, cosmetic only (NatDoc style, formatting). [Diff](https://disco.l2beat.com/diff/eth:0x46aefd30415be99e20169eE7046F65784B46d123/eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c)
 - **RewardsCoordinator**: Reward accounting/distribution flow unchanged. SemVerMixin fully removed. Merkle verification hardened with `EmptyRoot()` and `InvalidIndex()` checks. [Diff](https://disco.l2beat.com/diff/eth:0xa505c0116aD65071F0130061F94745b7853220aB/eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF)
 - **bEIGEN-Strategy + all Strategy contracts**: Cosmetic only (NatDoc style, formatting). [Diff](https://disco.l2beat.com/diff/eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be/eth:0x4a0aee93BE6C87B227cA0B450E15245631233532)
-
-Common across most contracts: NatDoc comments migrated from `/** */` to `///`, function signatures reformatted to multi-line style. SemVerMixin fully removed from RewardsCoordinator and StrategyFactory; still present via SignatureUtilsMixin in AVSDirectory, DelegationManager, StrategyManager.
 
 Newly tracked v1.9.0 infrastructure contracts (some deployed as early as Sep 2025, now discovered via new reference chains): AllocationManagerView, ProtocolRegistry, KeyRegistrar, CrossChainRegistry, TaskMailbox, ECDSACertificateVerifier, BN254CertificateVerifier, OperatorTableUpdater, ReleaseManager.
 
