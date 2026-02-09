@@ -242,6 +242,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      es-toolkit:
+        specifier: ^1.44.0
+        version: 1.44.0
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
