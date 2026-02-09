@@ -3,6 +3,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -51,12 +52,16 @@ export async function getRegularDaProjectSections({
     contractUtils,
     throughputSection,
     liveness,
+    tvs,
     allProjectsWithContracts,
     zkCatalogProjects,
   ] = await Promise.all([
     getContractUtils(),
     getDaThroughputSection(helpers, layer),
     bridge ? getLiveness(bridge.id) : undefined,
+    bridge?.contracts?.programHashes?.length
+      ? get7dTvsBreakdown({ type: 'layer2' })
+      : undefined,
     ps.getProjects({
       select: ['contracts'],
     }),
@@ -93,6 +98,7 @@ export async function getRegularDaProjectSections({
       projectsChangeReport,
       zkCatalogProjects,
       allProjectsWithContracts,
+      tvs,
     )
 
   const riskSummarySection = getDaProjectRiskSummarySection(

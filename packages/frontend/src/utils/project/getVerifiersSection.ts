@@ -53,7 +53,7 @@ export async function getVerifiersSection(
     const projectsUsedIn = uniqBy(
       knownDeployments.flatMap((d) => d.projectsUsedIn),
       (u) => u.id,
-    )
+    ).sort(tvsComparator(allProjects, tvs))
 
     if (!proofSystemVerifiers) {
       byProofSystem[key] = {
