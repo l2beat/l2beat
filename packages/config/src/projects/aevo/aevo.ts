@@ -26,6 +26,8 @@ export const aevo: ScalingProject = opStackL2({
   display: {
     name: 'Aevo',
     slug: 'aevo',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the op-program superchain registry, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     description:
       'Aevo is a high-performance decentralized options exchange, powered by the OP Stack and EigenDA.',
     links: {

@@ -25,6 +25,8 @@ export const ancient: ScalingProject = opStackL2({
   display: {
     name: 'Ancient8',
     slug: 'ancient8',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the op-program superchain registry, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     description:
       'Ancient8 Chain is a gaming-focused community-driven Ethereum Layer 2 built using OP Stack.',
     links: {

@@ -19,6 +19,8 @@ export const nillion: ScalingProject = opStackL2({
   display: {
     name: 'Nillion',
     slug: 'nillion',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the op-program superchain registry, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     description:
       'Nillion is an OP Stack Optimium on Ethereum. It serves as the token bridge for the Nillion Network, a computation network focused on privacy-preserving data processing.',
     links: {
