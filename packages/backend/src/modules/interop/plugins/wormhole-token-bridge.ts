@@ -29,6 +29,10 @@ const parseLogTransferRedeemed = createEventParser(transferRedeemedLog)
 
 const parseTransfer = createEventParser(transferLog)
 
+const ZERO_ADDRESS = EthereumAddress(
+  '0x0000000000000000000000000000000000000000',
+)
+
 export const TransferRedeemed = createInteropEventType<{
   sequence: bigint
   $srcChain: string
@@ -36,6 +40,7 @@ export const TransferRedeemed = createInteropEventType<{
   sender: EthereumAddress
   dstTokenAddress?: Address32 | undefined
   dstAmount?: bigint | undefined
+  dstWasMinted?: boolean | undefined
 }>('wormhole.LogTransferRedeemed')
 
 export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
@@ -79,10 +84,13 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
     )
     const transfer = nextLog && parseTransfer(nextLog, null)
 
-    // emitterAddress is bytes32 (Wormhole format), extract last 20 bytes for EthereumAddress
     const senderAddress = EthereumAddress(
       `0x${parsed.emitterAddress.slice(-40)}`,
     )
+    const dstWasMinted = transfer
+      ? EthereumAddress(transfer.from) === ZERO_ADDRESS
+      : undefined
+
     return [
       TransferRedeemed.create(input, {
         sequence: parsed.sequence,
@@ -95,6 +103,7 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
         dstAmount: transfer?.value,
         srcWormholeChainId: parsed.emitterChainId,
         sender: senderAddress,
+        dstWasMinted,
       }),
     ]
   }
@@ -127,6 +136,8 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
           srcAmount: logMessagePublished.args.srcAmount,
           dstTokenAddress: transferRedeemed.args.dstTokenAddress,
           dstAmount: transferRedeemed.args.dstAmount,
+          srcWasBurned: transferRedeemed.args.dstWasMinted !== undefined ? !transferRedeemed.args.dstWasMinted : undefined,
+          dstWasMinted: transferRedeemed.args.dstWasMinted,
         }),
       ]
     }
