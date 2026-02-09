@@ -46,6 +46,7 @@ import { teeBridge } from '../projects/tee-bridge/tee-bridge'
 import { usdt0 } from '../projects/usdt0/usdt0'
 import { vector } from '../projects/vector/vector'
 import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
+import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
 import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
@@ -109,4 +110,5 @@ export const refactored: BaseProject[] = [
   squid,
   fusionplus,
   circlegateway,
+  wormholeWtt,
 ]
