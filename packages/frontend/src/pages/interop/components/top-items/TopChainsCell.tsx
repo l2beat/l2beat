@@ -1,16 +1,18 @@
-import type { ChainData } from '~/server/features/scaling/interop/utils/getProtocolEntries'
+import type { ChainData } from '~/server/features/scaling/interop/types'
 import type { TopItem } from './columns'
 import { InteropTopItemsCell } from './TopItemsCell'
 
 export function TopChainsCell({
   chains,
   protocol,
+  showNetMintedValueColumn,
 }: {
   chains: ChainData[]
   protocol: {
     name: string
     iconUrl: string
   }
+  showNetMintedValueColumn?: boolean
 }) {
   const items: TopItem[] = chains.map((chain) => ({
     id: chain.id,
@@ -20,9 +22,15 @@ export function TopChainsCell({
     transferCount: chain.transferCount,
     avgDuration: chain.avgDuration,
     avgValue: chain.avgValue,
+    netMintedValue: chain.netMintedValue,
   }))
 
   return (
-    <InteropTopItemsCell items={items} itemType="chains" protocol={protocol} />
+    <InteropTopItemsCell
+      items={items}
+      itemType="chains"
+      protocol={protocol}
+      showNetMintedValueColumn={showNetMintedValueColumn}
+    />
   )
 }

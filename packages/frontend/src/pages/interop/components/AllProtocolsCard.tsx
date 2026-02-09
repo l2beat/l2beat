@@ -1,6 +1,6 @@
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { NoResultsInfo } from '../summary/components/NoResultsInfo'
 import { AllProtocolsTable } from './table/AllProtocolsTable'
 
@@ -8,12 +8,14 @@ export function AllProtocolsCard({
   entries,
   isLoading,
   hideTypeColumn,
-  showAverageValueAtRiskColumn,
+  showAverageInFlightValueColumn,
+  showNetMintedValueColumn,
 }: {
-  entries: InteropDashboardData['entries'] | undefined
+  entries: ProtocolEntry[] | undefined
   isLoading: boolean
   hideTypeColumn?: boolean
-  showAverageValueAtRiskColumn?: boolean
+  showAverageInFlightValueColumn?: boolean
+  showNetMintedValueColumn?: boolean
 }) {
   return (
     <PrimaryCard className="col-span-full flex flex-col max-md:border-divider max-md:border-b">
@@ -28,7 +30,8 @@ export function AllProtocolsCard({
           <AllProtocolsTable
             entries={entries}
             hideTypeColumn={hideTypeColumn}
-            showAverageValueAtRiskColumn={showAverageValueAtRiskColumn}
+            showAverageInFlightValueColumn={showAverageInFlightValueColumn}
+            showNetMintedValueColumn={showNetMintedValueColumn}
           />
         )
       ) : null}

@@ -15,14 +15,35 @@
         "tx": "0x158ead7fb516fb23fd2da016d4e704c9623af497b6a8303d68388020f07ef3bd"
       }
     ],
-    "events": [
-      "allbridge.MessageSent",
-      "allbridge.MessageReceived",
-      "allbridge.TokensSent",
-      "allbridge.TokensReceived"
-    ],
-    "messages": ["allbridge.Message"],
-    "transfers": ["allbridge.Transfer"]
+    "expects": {
+      "events": [
+        {
+          "type": "allbridge.MessageSent"
+        },
+        {
+          "type": "allbridge.TokensSent"
+        },
+        {
+          "type": "allbridge.MessageReceived"
+        },
+        {
+          "type": "allbridge.TokensReceived"
+        }
+      ],
+      "messages": [{ "type": "allbridge.Message", "app": "allbridge" }],
+      "transfers": [
+        {
+          "type": "allbridge.Transfer",
+          "events": [
+            { "type": "allbridge.TokensSent", "args": { "amount": "39870" } },
+            {
+              "type": "allbridge.TokensReceived",
+              "args": { "amount": "39898063" }
+            }
+          ]
+        }
+      ]
+    }
   },
   "ccip": {
     "loadConfigs": ["ccip"],
@@ -160,6 +181,24 @@
       "ccip.Transfer"
     ]
   },
+  "ccip-messaging": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // LaPoste (Abracadabra) - pure messaging, no token transfer through CCIP
+      // Arbitrum → Ethereum
+      {
+        "chain": "arbitrum",
+        "tx": "0xf393fcfb456ae71c6cd1e326ae1a1630d3ed7f80501b72586194ba66be05edd8"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x57fcb2aa31b96ed2c753e9d0853f3c4f6dd34260d506ebc274a8002d2d656ec5"
+      }
+    ],
+    "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+    "messages": [{ "type": "ccip.Message", "app": "unknown" }],
+    "transfers": []
+  },
   "celer": {
     "txs": [
       {
@@ -193,6 +232,37 @@
       {
         "chain": "ethereum",
         "tx": "0x47b1ddf11342a81aec106555a30da420ed831460a08bb347023515a761a10580"
+      }
+    ]
+  },
+  "meson": {
+    "description": "Liquidity swap + tunnel samples from MESON_PLAN",
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x454aa9a68e2e99789407d93d30d6e7d174f739977ca578aa6a9937247b64fdea"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x7f5e8814b2c41208dbc00f060273f02bc670c37581e25c30d8fdfc1116cd38aa"
+      },
+      // tunnel events are not matching, TODO
+      {
+        "chain": "arbitrum",
+        "tx": "0xa4d497c7826ef5025901b086a735e89c95faf71f41e066ff1029271e12d76619"
+      },
+      {
+        "chain": "bob",
+        "tx": "0xb56575f17495f677ad1a15e4b4511c3396bf09c1482ac281ca915184f070f60c"
+      },
+      // gas/native transfer
+      {
+        "chain": "base",
+        "tx": "0x6e3671be03faa0444bfe5135a84d9d2fe20c3658f6763cf53098b232c8a5f7a4"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe4fdc4e6856940605d11c5fea1ea4e501ab8d04e560a1dc65fe0a9652684be0b"
       }
     ]
   },
@@ -817,6 +887,24 @@
         "tx": "0xcc4a19dfa0dd4ca8b1f010083a89e5bc23d72f9cbb1194b57f3c040d35a412ac"
       }
     ]
+  },
+  // Portal Token Bridge transfer to Solana (chain 1) - should be marked unsupported
+  "wormhole-tokenbridge-unsupported": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xe91a8896e83d8222dc9ec4a73bc482e98f073c0828c7c52b66b3f7ae7290779d"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "wormhole.LogMessagePublished",
+          "unsupported": true
+        }
+      ]
+    }
   },
   "stargatev2taxi": {
     "loadConfigs": ["layerzero-v2"],
@@ -2445,19 +2533,43 @@
       {
         "chain": "polygonpos",
         "tx": "0xbaad5b4d133b7b45a60673ba34a024201e8da0b300fba3a55aaebface16af506"
+      },
+      // message only
+      {
+        "chain": "ethereum",
+        "tx": "0xa3902f2de62c48541dbcf6bc923224842f699a97632a4d4cc25a52c02cefcc07"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xb999af0a60e66dc2e1b203357bc076759c4feb83cfa46719526257a4180a0bb9"
+      },
+      // ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x5bb751e109aa729e493493629e5d2285a83a320ffede1904c288842bdaeb4330"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x03de08cd274dc0f9eedb5ab659b8745d96d5126334869d5a7a9313a88ae88bb4"
       }
     ],
     "events": [
       "polygon.StateSynced",
       "polygon.StateCommitted",
       "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
       "polygon.StateCommitted"
     ],
     "messages": [
-      { "type": "polygon.Message", "app": "polygonpos" },
-      { "type": "polygon.Message", "app": "polygonpos" }
+      { "type": "polygon.Message", "app": "canonical-deposit" },
+      { "type": "polygon.Message", "app": "canonical-deposit" },
+      { "type": "polygon.Message", "app": "canonical-deposit" },
+      { "type": "polygon.Message", "app": "unknown" }
     ],
-    "transfers": ["polygon.Transfer", "polygon.Transfer"]
+    "transfers": ["polygon.Transfer", "polygon.Transfer", "polygon.Transfer"]
   },
   "polygon-withdrawal": {
     "loadConfigs": ["polygon"],
@@ -2479,19 +2591,31 @@
       {
         "chain": "ethereum",
         "tx": "0xe6e2b3d8093f37a86d9fb2c959daf04e634a0b7521df214012a59a4f399bc96c"
+      },
+      // eth withdrawal
+      {
+        "chain": "polygonpos",
+        "tx": "0x5a7d4b2851bc6d98e3ceae4a0fecba4d601c4a89bad57c2ca468952de00e7d90"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x29c2e92eab9465afb840e364f7df8fcf59034e12ff8e5bf29a96d7a4de58b79d"
       }
     ],
     "events": [
       "polygon.WithdrawalInitiated",
       "polygon.WithdrawalFinalized",
       "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized",
+      "polygon.WithdrawalInitiated",
       "polygon.WithdrawalFinalized"
     ],
     "messages": [
-      { "type": "polygon.Message", "app": "polygonpos" },
-      { "type": "polygon.Message", "app": "polygonpos" }
+      { "type": "polygon.Message", "app": "canonical-withdrawal" },
+      { "type": "polygon.Message", "app": "canonical-withdrawal" },
+      { "type": "polygon.Message", "app": "canonical-withdrawal" }
     ],
-    "transfers": ["polygon.Transfer", "polygon.Transfer"]
+    "transfers": ["polygon.Transfer", "polygon.Transfer", "polygon.Transfer"]
   },
   "sky-bridge": {
     "txs": [
@@ -2511,5 +2635,73 @@
     ],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "sky-bridge" }],
     "transfers": ["sky-bridge.L1ToL2Transfer"]
+  },
+  "agglayer-ethereum-katana-eth": {
+    "tags": ["agglayer"],
+    "name": "ethereum -> katana (ETH)",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xc5dc78d49624f1f83392290c645c3404a004d6f6de74bf3d73522151201c283d"
+      },
+      {
+        "chain": "katana",
+        "tx": "0xb8324124abdc9e0ffdd2ad2ebde5d379263eac7add4d880af28cb1ce956eb7bf"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-ethereum-katana-vbusdt": {
+    "tags": ["agglayer"],
+    "name": "ethereum -> katana (vbUSDT)",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x21e1be31961fda8642a21188266036f602fa63d703b876eab35871a7469f7683"
+      },
+      {
+        "chain": "katana",
+        "tx": "0x2d923202c7638fdc23f85260aacf4e895ba4ce835ddd06e4dca8f8c1de9d59ae"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-forknet-vbeth": {
+    "tags": ["agglayer"],
+    "name": "katana -> forknet (vbETH)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0xb11827436b3ecb880c58e0bd665dd96bb31ae494d5c9aea86bd4eecd07bc7594"
+      },
+      {
+        "chain": "forknet",
+        "tx": "0xab2cfe2866df7643478fa837ecd15e871dca251cda63697c54a8bf5c1d7e3a2c"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-ethereum-vbwbtc": {
+    "tags": ["agglayer"],
+    "name": "katana -> ethereum (vbWBTC)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0x5824bd72bad7c39ce3f8fa52b9c6819f3f5af3849ba1e87ed48b7f53fd84dbca"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6aeda24b009471e08c644606cd4d2d5dcf9362664fc73c3cdc92b653df51f023"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
   }
 }

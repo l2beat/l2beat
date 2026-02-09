@@ -31,6 +31,7 @@ jobs:
     uses: ./.github/workflows/build-docker-image.yml
     with:
       project: public-api
+      dockerfile: packages/public-api/Dockerfile
     secrets:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}

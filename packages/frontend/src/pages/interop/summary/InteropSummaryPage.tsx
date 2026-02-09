@@ -1,10 +1,8 @@
 import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
-import groupBy from 'lodash/groupBy'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/utils/getProtocolEntries'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
@@ -18,9 +16,11 @@ import {
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
 import { InteropEmptyState } from './components/InteropEmptyState'
+import { TransferSizeChartCard } from './components/TransferSizeChartCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { OmniChainCard } from './components/table-widgets/OmniChainCard'
+import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridgeTypeEntries'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
@@ -69,10 +69,9 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     return <InteropEmptyState isDirty={isDirty} />
   }
 
-  const groupedEntries = groupBy(data?.entries, (e) => e.bridgeType) as Record<
-    ProtocolEntry['bridgeType'],
-    ProtocolEntry[]
-  >
+  const { lockAndMint, nonMinting, omnichain } = getBridgeTypeEntries(
+    data?.entries ?? [],
+  )
 
   return (
     <div
@@ -104,15 +103,15 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
-      <NonMintingCard
-        entries={groupedEntries.nonMinting}
-        isLoading={isLoading}
-      />
-      <LockAndMintCard
-        entries={groupedEntries.lockAndMint}
-        isLoading={isLoading}
-      />
-      <OmniChainCard entries={groupedEntries.omnichain} isLoading={isLoading} />
+      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
+        <NonMintingCard entries={nonMinting} isLoading={isLoading} />
+        <LockAndMintCard entries={lockAndMint} isLoading={isLoading} />
+        <OmniChainCard entries={omnichain} isLoading={isLoading} />
+        <TransferSizeChartCard
+          transferSizeChartData={data?.transferSizeChartData}
+          isLoading={isLoading}
+        />
+      </div>
       <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
     </div>
   )

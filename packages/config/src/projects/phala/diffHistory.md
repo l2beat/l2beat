@@ -1,3 +1,80 @@
+Generated with discovered.json: 0xcaa598f7fd23d9ad8678fe217b322cd6577b161f
+
+# Diff at Tue, 03 Feb 2026 11:33:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a94928de2efc98d55da2625bd62f96eb1c25b904 block: 1769604483
+- current timestamp: 1770116126
+
+## Description
+
+Phala switched back to op-succinct dispute game type 6: https://etherscan.io/address/0xDeF9B23dAE7769004e80f579f9d3aF0D7a29E4aD#events (full validity proofs). Games of type 6 are being created now: https://etherscan.io/address/0x2157F4d5934c4b12193C4983E99b9D6418798a2E#events.
+
+Previous version of op-succinct upgraded to v4.0.0-rc.1: https://github.com/succinctlabs/op-succinct/releases/tag/v4.0.0-rc.1. Diff is here: https://disco.l2beat.com/diff/eth:0xb476cC5ECF2472A040DC381552B7a9bd7951A470/eth:0x2c2dA5EFfAbDA3a9ffe8e3D526C5b1F3B42FEa6D. (Contract itself still claims that it has verison v3.0.0, but it is lies: https://github.com/succinctlabs/op-succinct/blob/v4.0.0-rc.1/contracts/src/validity/OPSuccinctDisputeGame.sol#L37).
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x2157F4d5934c4b12193C4983E99b9D6418798a2E) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.6:
+-        "eth:0xb476cC5ECF2472A040DC381552B7a9bd7951A470"
++        "eth:0x2c2dA5EFfAbDA3a9ffe8e3D526C5b1F3B42FEa6D"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 6.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 6."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        6
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        6
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OPSuccinctDisputeGame (eth:0xb476cC5ECF2472A040DC381552B7a9bd7951A470)
+    +++ description: A dispute game wrapper around OPSuccinctL2OutputOracle. It is needed to comply with OptimismPortal2 requirement to have a DisputeGameFactory. Whenever a new game is created, an SP1 proof is immediately verified, so in fact there is no optimistic dispute game happening.
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xDeF9B23dAE7769004e80f579f9d3aF0D7a29E4aD) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 6.
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 6."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        6
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        6
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctDisputeGame (eth:0x2c2dA5EFfAbDA3a9ffe8e3D526C5b1F3B42FEa6D)
+    +++ description: A dispute game wrapper around OPSuccinctL2OutputOracle. It is needed to comply with OptimismPortal2 requirement to have a DisputeGameFactory. Whenever a new game is created, an SP1 proof is immediately verified, so in fact there is no optimistic dispute game happening.
+```
+
+## Source code changes
+
+```diff
+.../OPSuccinctDisputeGame.sol                      | 41 +++++++++++++++++-----
+ 1 file changed, 33 insertions(+), 8 deletions(-)
+```
+
 Generated with discovered.json: 0x09c8e4f08050e7e81b826460c34bc6320f87a782
 
 # Diff at Wed, 28 Jan 2026 12:49:10 GMT:

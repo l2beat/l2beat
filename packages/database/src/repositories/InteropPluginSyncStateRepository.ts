@@ -186,4 +186,15 @@ export class InteropPluginSyncStateRepository extends BaseRepository {
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
+
+  async deleteNotInPluginNames(validPluginNames: string[]): Promise<number> {
+    if (validPluginNames.length === 0) {
+      return 0
+    }
+    const result = await this.db
+      .deleteFrom('InteropPluginSyncState')
+      .where('pluginName', 'not in', validPluginNames)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
 }

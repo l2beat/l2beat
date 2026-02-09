@@ -1,9 +1,12 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -12,6 +15,7 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
@@ -30,13 +34,12 @@ import {
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { getStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
@@ -111,9 +114,11 @@ export function ActivityChart({
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent />} />
-        {getStrokeOverFillAreaComponents({
-          data: [
+        <ChartLegend
+          content={(props) => <ChartLegendContent payload={props.payload} />}
+        />
+        <ChartStrokeOverFillAreaComponents
+          data={[
             {
               dataKey: 'ethereum',
               stroke: 'url(#strokeEthereum)',
@@ -126,19 +131,19 @@ export function ActivityChart({
               fill: 'url(#fillProjects)',
               hide: !dataKeys.includes('projects'),
             },
-          ],
-        })}
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
-            scale,
+          ]}
+        />
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
+            scale: scale === 'linear' ? 'auto' : scale,
             domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
-            tickCount,
-          },
-          syncedUntil,
-        })}
+            tickCount: tickCount ?? 3,
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           filterNull={false}
           content={<ActivityCustomTooltip metric={metric} />}
@@ -171,15 +176,14 @@ export function ActivityChart({
 }
 
 export function ActivityCustomTooltip({
-  active,
   payload,
   label: timestamp,
   metric,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   metric: ActivityMetric
 }) {
   const { meta } = useChart()
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!payload || typeof timestamp !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

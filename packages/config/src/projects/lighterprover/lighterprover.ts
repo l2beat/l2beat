@@ -103,21 +103,6 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'unsuccessful',
-        verificationSteps:
-          'At the time of writing, the sources for this version of the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
-      },
-      {
-        hash: '0x5593b4a1aea71939da571a74d7276acc3588189c73287297f98cecd56962b2d8',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x023B02ad3b8f9045595Ac7139FdBA643b562cfe3',
-            ),
-            chain: 'ethereum',
-          },
-        ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         verificationSteps: `
@@ -135,20 +120,44 @@ sudo apt update
 sudo apt install build-essential golang-go
 go version
 \`\`\`
-        
+
 2. Run the correct version of the script to regenerate the keys.
 
 \`\`\`
 git clone https://github.com/elliottech/lighter-prover.git
 cd lighter-prover
-git checkout 7ad9436e03352423da7bfa1481127b1bb01372a5
+git checkout e456205d9f4e25c1bf6eec33dac25d1b030e73d8
 chmod +x build_circuits.sh
 ./build_circuits.sh
 \`\`\`
 
 The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
-        `,
+  `,
       },
+      //       {
+      //         hash: '0x5593b4a1aea71939da571a74d7276acc3588189c73287297f98cecd56962b2d8',
+      //         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //         knownDeployments: [
+      //           {
+      //             address: EthereumAddress(
+      //               '0x023B02ad3b8f9045595Ac7139FdBA643b562cfe3',
+      //             ),
+      //             chain: 'ethereum',
+      //           },
+      //         ],
+      //         verificationStatus: 'successful',
+      //         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //         verificationSteps: `
+
+      // \`\`\`
+      // git clone https://github.com/elliottech/lighter-prover.git
+      // cd lighter-prover
+      // git checkout 7ad9436e03352423da7bfa1481127b1bb01372a5
+      // chmod +x build_circuits.sh
+      // ./build_circuits.sh
+      // \`\`\`
+      //         `,
+      //       },
       //       {
       //         // ZKLighterVerifier
       //         hash: '0x3851046274646dacb2a19e53e45ef7f69f78f052f2033db62cb9c6024d6cd42f',

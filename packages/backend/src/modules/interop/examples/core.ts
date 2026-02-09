@@ -10,15 +10,30 @@ import type {
 } from '../plugins/types'
 import type { ExampleRunner } from './runner'
 
-// app matching only works for messages (InteropEvent and InteropTransfer don't have app field)
+export const ExpectedEvent = v.union([
+  v.string(),
+  v.record(v.string(), v.unknown()), // Any object shape - validated at runtime
+])
+export type ExpectedEventType = v.infer<typeof ExpectedEvent>
+
 export const ExpectedMessage = v.union([
   v.string(),
-  v.object({
-    type: v.string(),
-    app: v.string().optional(),
-  }),
+  v.record(v.string(), v.unknown()), // Any object shape - validated at runtime
 ])
 export type ExpectedMessageType = v.infer<typeof ExpectedMessage>
+
+export const ExpectedTransfer = v.union([
+  v.string(),
+  v.record(v.string(), v.unknown()), // Any object shape - validated at runtime
+])
+export type ExpectedTransferType = v.infer<typeof ExpectedTransfer>
+
+export const Expects = v.object({
+  events: v.array(ExpectedEvent).optional(),
+  messages: v.array(ExpectedMessage).optional(),
+  transfers: v.array(ExpectedTransfer).optional(),
+})
+export type ExpectsType = v.infer<typeof Expects>
 
 export interface CoreResult {
   events: InteropEvent[]
@@ -40,15 +55,40 @@ const TxEntry = v.object({
 })
 
 export type Example = v.infer<typeof Example>
-export const Example = v.object({
-  description: v.string().optional(),
-  tags: v.array(v.string()).optional(),
-  loadConfigs: v.array(v.string()).optional(),
-  txs: v.array(TxEntry),
-  events: v.array(v.string()).optional(),
-  messages: v.array(ExpectedMessage).optional(),
-  transfers: v.array(v.string()).optional(),
-})
+export const Example = v
+  .object({
+    description: v.string().optional(),
+    tags: v.array(v.string()).optional(),
+    loadConfigs: v.array(v.string()).optional(),
+    txs: v.array(TxEntry),
+    // New structured expectations field
+    expects: Expects.optional(),
+    // Legacy fields - kept for backward compatibility
+    events: v.array(v.string()).optional(),
+    messages: v
+      .array(
+        v.union([
+          v.string(),
+          v.object({
+            type: v.string(),
+            app: v.string().optional(),
+          }),
+        ]),
+      )
+      .optional(),
+    transfers: v.array(v.string()).optional(),
+  })
+  .check((example) => {
+    const hasExpects = example.expects !== undefined
+    const hasLegacy =
+      example.events !== undefined ||
+      example.messages !== undefined ||
+      example.transfers !== undefined
+    if (hasExpects && hasLegacy) {
+      return 'Use either expects or legacy expectations, not both.'
+    }
+    return true
+  })
 
 function readJsonc(path: string): JSON {
   const contents = readFileSync(path, 'utf-8')

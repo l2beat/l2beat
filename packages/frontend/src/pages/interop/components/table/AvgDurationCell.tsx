@@ -1,4 +1,4 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import { assertUnreachable, formatSeconds } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/Badge'
 import {
   Tooltip,
@@ -6,50 +6,63 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type {
-  DurationSplit,
-  ProtocolEntry,
-} from '~/server/features/scaling/interop/utils/getProtocolEntries'
+  AverageDuration,
+  SplitAverageDuration,
+} from '~/server/features/scaling/interop/types'
 
 export function AvgDurationCell({
   averageDuration,
   disableTooltip = false,
 }: {
-  averageDuration: ProtocolEntry['averageDuration']
+  averageDuration: AverageDuration
   disableTooltip?: boolean
 }) {
-  if (averageDuration.type === 'single') {
-    return (
-      <div className="font-medium text-label-value-15">
-        {formatSeconds(averageDuration.duration)}
-      </div>
-    )
-  }
-
-  const content = (
-    <div className="flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5">
-      <DurationCellItem averageDuration={averageDuration} type="in" />
-      <DurationCellItem averageDuration={averageDuration} type="out" />
-    </div>
-  )
-
-  return (
-    <Tooltip>
-      <TooltipTrigger disabled={disableTooltip}>{content}</TooltipTrigger>
-      <TooltipContent>
-        <div className="flex flex-col gap-1.5 font-medium text-label-value-15">
-          <DurationTooltipItem averageDuration={averageDuration} type="in" />
-          <DurationTooltipItem averageDuration={averageDuration} type="out" />
+  switch (averageDuration.type) {
+    case 'unknown':
+      return (
+        <Badge type="gray" size="small">
+          Unknown
+        </Badge>
+      )
+    case 'single':
+      return (
+        <div className="font-medium text-label-value-15">
+          {formatSeconds(averageDuration.duration)}
         </div>
-      </TooltipContent>
-    </Tooltip>
-  )
+      )
+    case 'split':
+      return (
+        <Tooltip>
+          <TooltipTrigger disabled={disableTooltip}>
+            <div className="flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5">
+              <DurationCellItem averageDuration={averageDuration} type="in" />
+              <DurationCellItem averageDuration={averageDuration} type="out" />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <div className="flex flex-col gap-1.5 font-medium text-label-value-15">
+              <DurationTooltipItem
+                averageDuration={averageDuration}
+                type="in"
+              />
+              <DurationTooltipItem
+                averageDuration={averageDuration}
+                type="out"
+              />
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      )
+    default:
+      assertUnreachable(averageDuration)
+  }
 }
 
 function DurationCellItem({
   averageDuration,
   type,
 }: {
-  averageDuration: DurationSplit
+  averageDuration: SplitAverageDuration
   type: 'in' | 'out'
 }) {
   return (
@@ -72,11 +85,10 @@ function DurationTooltipItem({
   averageDuration,
   type,
 }: {
-  averageDuration: DurationSplit
+  averageDuration: SplitAverageDuration
   type: 'in' | 'out'
 }) {
-  const message =
-    'No transfers detected. Reset selection to include all transfers.'
+  const message = 'No transfers detected.'
   return (
     <div>
       <span className="text-[13px] text-secondary leading-none">

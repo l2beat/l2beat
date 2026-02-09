@@ -1,3 +1,343 @@
+Generated with discovered.json: 0x56114fe84662c55c641ff6c95caa5571ec04fa5c
+
+# Diff at Fri, 06 Feb 2026 15:30:44 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@79ed122ff93f3ecacc6642a02e5352d633b2da3b block: 1769514598
+- current timestamp: 1770391779
+
+## Description
+
+Migration from classic Arbitrum Nitro to BoLD dispute protocol. 
+
+RollupProxy is replaced with a new RollupProxyBoLD at a new address (same code as Arbitrum One BoLD). ChallengeManager is replaced with an EdgeChallengeManager implementing the BoLD edge-based challenge system, and all OneStepProver contracts are replaced with new deployments. ArbOS version is now v51. The validator whitelist remains enabled with a single validator, and validatorAfkBlocks is set to ~427M years (effectively disabling the AFK escape hatch). confirmPeriodBlocks is 40320 (~5.6 days). Challenge stakes are 0.1 WETH (vs 555/79 WETH on Arbitrum One). loserStakeEscrow points to the sole validator address.
+
+All infrastructure contracts (Bridge, Inbox, Outbox, SequencerInbox, RollupEventInbox) are upgraded with BoLD-era changes. Since Plume uses a custom gas token (PLUME), these are the ERC20 variants of the BoLD contracts - the first deployment of this combination. The ERC20 BoLD variants differ from Arbitrum One's ETH BoLD contracts in: token decimal normalization, safeTransferFrom for token escrow, fee token pricer integration, and ERC20-specific spending report logic.
+
+SequencerInbox: Celestia DA support is removed (CELESTIA_MESSAGE_HEADER_FLAG deleted). Delay buffer system is enabled (isDelayBufferable: true). delayBlocks increased from 5760 to 7200. New feeTokenPricer field added (currently set to zero address). New batch posting functions with delay proofs added.
+
+ERC20RollupEventInbox: _currentDataCostToReport now queries the SequencerInbox's feeTokenPricer for exchange rate-based data cost reporting (previously always returned 0).
+
+Bridge: Added zero-amount transfer guards in _transferFunds and _executeLowLevelCall. Added Messages.isValidDelayedAccPreimage helper for delay buffer proof validation.
+
+New ERC20Bridge_BoLD, ERC20Inbox_BoLD, and ERC20RollupEventInbox_BoLD shapes added to templates.
+
+Disco diffs (Arbitrum BoLD ETH vs Plume BoLD ERC20 - shows what the ERC20 gas token variants add):
+- Bridge: https://disco.l2beat.com/diff/eth:0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898/eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6
+- Inbox: https://disco.l2beat.com/diff/eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10/eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e
+- RollupEventInbox: https://disco.l2beat.com/diff/eth:0x6D576E220Cb44C3E8eF75D0EfBeb1Ff041e2E4A5/eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe
+
+Old vs new Plume implementation diffs:
+- Bridge: https://disco.l2beat.com/diff/eth:0xd7FD189F1652378f32dA3db7926e51a7b0344797/eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6
+- ERC20Inbox: https://disco.l2beat.com/diff/eth:0x81eEEbb902693A3a90948Fe0A661aedb35271054/eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e
+- ERC20RollupEventInbox: https://disco.l2beat.com/diff/eth:0xb0f031Cd10598c6b4C33FcE1675F26CF937091da/eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe
+- SequencerInbox: https://disco.l2beat.com/diff/eth:0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50/eth:0x6F2E7F9B5Db5e4e9B5B1181D2Eb0e4972500C324
+- Outbox: https://disco.l2beat.com/diff/eth:0x1f24EDD5161f82588007f33B72b0b28e46cCE878/eth:0x17E0C5fE0dFF2AE4cfC9E96d9Ccd112DaF5c0386
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (eth:0x0537c93dA3b1f8A525204165d1d93De0534c262f)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    EOA  (eth:0x11f563dDbF266484Dd910A401A7e44299d80b1d5) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".validators"
++        ".getValidators"
+      receivedPermissions.0.from:
+-        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
++        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x35381f63091926750F43b2A7401B083263aDEF83) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x73087d4667e81f676a10708feb2774bab3a9a558a1987b8ac4f112cc464bba96"
++        "0x7f62b9bd4a0aac711ca355a523b1d934ab93ae14c5fae5a860c0ded42ee5a3c3"
+      values.$implementation:
+-        "eth:0xd7FD189F1652378f32dA3db7926e51a7b0344797"
++        "eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6"
+      values.$pastUpgrades.1:
++        ["2026-02-05T09:16:35.000Z","0x91f946c6c2aaa8d2d87616f38d39514c8c08650703eb12010de9968db16bed4f",["eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.rollup:
+-        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
++        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8"
+      implementationNames.eth:0xd7FD189F1652378f32dA3db7926e51a7b0344797:
+-        "ERC20Bridge"
+      implementationNames.eth:0x81be1Bf06cB9B23e8EEDa3145c3366A912DAD9D6:
++        "ERC20Bridge"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProxy (eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"eth:0xd688dabDBb14D673898689135a23a174560c8C04"}]}
+      receivedPermissions.0.via.0:
++        {"address":"eth:0xb90fe445014e74eA5aA7681291212bfEa37031CC"}
+      receivedPermissions.0.role:
+-        ".owner"
++        "admin"
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.from:
+-        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
++        "eth:0x0AFA44077796B9F14ecDAE817403ACb255B5983e"
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
++        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8"
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x8c66A25752e70D6BD6b4090D2E31ca37cf77caE6","role":"admin","via":[{"address":"eth:0xb90fe445014e74eA5aA7681291212bfEa37031CC"},{"address":"eth:0xd688dabDBb14D673898689135a23a174560c8C04"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (eth:0x6982e35C878cD2b5aF8Dcf06f33c4EfB01D6f482)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract Outbox (eth:0x7e4627bC114Fcd12ba912103279FD2858E644E71) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      values.$implementation:
+-        "eth:0x1f24EDD5161f82588007f33B72b0b28e46cCE878"
++        "eth:0x17E0C5fE0dFF2AE4cfC9E96d9Ccd112DaF5c0386"
+      values.$pastUpgrades.1:
++        ["2026-02-05T09:16:35.000Z","0x91f946c6c2aaa8d2d87616f38d39514c8c08650703eb12010de9968db16bed4f",["eth:0x17E0C5fE0dFF2AE4cfC9E96d9Ccd112DaF5c0386"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.rollup:
+-        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
++        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8"
+      implementationNames.eth:0x1f24EDD5161f82588007f33B72b0b28e46cCE878:
+-        "ERC20Outbox"
+      implementationNames.eth:0x17E0C5fE0dFF2AE4cfC9E96d9Ccd112DaF5c0386:
++        "ERC20Outbox"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorUtils (eth:0x84eA2523b271029FFAeB58fc6E6F1435a280db44)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (eth:0x856EA788977Bc771E8Ca87471baeC507A0f54771)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) as source of truth for the DA referenced by the fault proof.
+```
+
+```diff
+    contract SequencerInbox (eth:0x85eC1b9138a8b9659A51e2b51bb0861901040b59) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x4030f12794a5a07697b98400d423a426b39fd6f2320b39ee377d700d4fafdc58"
++        "0xb57f3e67e08492b235337cda4f3ea0117e3e043cceaf8e9a7a51b57611ba99de"
+      values.$implementation:
+-        "eth:0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50"
++        "eth:0x6F2E7F9B5Db5e4e9B5B1181D2Eb0e4972500C324"
+      values.$pastUpgrades.3:
++        ["2026-02-05T09:16:35.000Z","0x91f946c6c2aaa8d2d87616f38d39514c8c08650703eb12010de9968db16bed4f",["eth:0x6F2E7F9B5Db5e4e9B5B1181D2Eb0e4972500C324"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.CELESTIA_MESSAGE_HEADER_FLAG:
+-        "0x63"
+      values.maxTimeVariation.delayBlocks:
+-        5760
++        7200
+      values.reader4844:
+-        "eth:0x58f9a83EF35a241bcAc7EC4fB6e7DBcE2A1D1125"
++        "eth:0xB1F1A77AB63671a6355Fa5c8423f436118943411"
+      values.rollup:
+-        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
++        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8"
+      values.feeTokenPricer:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.isDelayBufferable:
++        true
+      implementationNames.eth:0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50:
+-        "SequencerInbox"
+      implementationNames.eth:0x6F2E7F9B5Db5e4e9B5B1181D2Eb0e4972500C324:
++        "SequencerInbox"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ChallengeManager (eth:0x8c66A25752e70D6BD6b4090D2E31ca37cf77caE6)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
+    contract Inbox (eth:0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
++        "0x82dad78abdf27e168de1ae177b8055db4167106d71273d9a3264e9898a6055e4"
+      values.$implementation:
+-        "eth:0x81eEEbb902693A3a90948Fe0A661aedb35271054"
++        "eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e"
+      values.$pastUpgrades.3:
++        ["2026-02-05T09:16:35.000Z","0x91f946c6c2aaa8d2d87616f38d39514c8c08650703eb12010de9968db16bed4f",["eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e"]]
+      values.$upgradeCount:
+-        3
++        4
+      implementationNames.eth:0x81eEEbb902693A3a90948Fe0A661aedb35271054:
+-        "ERC20Inbox"
+      implementationNames.eth:0xD210b64eD9D47Ef8Acf1A3284722FcC7Fc6A1f4e:
++        "ERC20Inbox"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (eth:0x9c40D14A2FC3f0A2f5fe804436f8e312224472C5)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb90fe445014e74eA5aA7681291212bfEa37031CC) {
+    +++ description: None
+      directlyReceivedPermissions.0:
++        {"permission":"upgrade","from":"eth:0x0AFA44077796B9F14ecDAE817403ACb255B5983e","role":"admin"}
+      directlyReceivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0x8c66A25752e70D6BD6b4090D2E31ca37cf77caE6","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (eth:0xcaBf38d8eADdE0BC6C91655242AFB4Da92a63FCe)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract UpgradeExecutor (eth:0xd688dabDBb14D673898689135a23a174560c8C04) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      directlyReceivedPermissions.1.from:
+-        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
++        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8"
+      directlyReceivedPermissions.2.from:
+-        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
++        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0xf576102530749344D2f4C04D15C2B8609c7897ea) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      sourceHashes.1:
+-        "0x35bd9f6436158f2147578ce95b85de68f435e81f1f3ed3858f7523a8c4825a1a"
++        "0x089ac3cec821c0f014f284ec4ec1039ef6bc50b6ad3ee47c82e20af65cc30c33"
+      values.$implementation:
+-        "eth:0xb0f031Cd10598c6b4C33FcE1675F26CF937091da"
++        "eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe"
+      values.$pastUpgrades.1:
++        ["2026-02-05T09:16:35.000Z","0x91f946c6c2aaa8d2d87616f38d39514c8c08650703eb12010de9968db16bed4f",["eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.rollup:
+-        "eth:0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC"
++        "eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8"
+      implementationNames.eth:0xb0f031Cd10598c6b4C33FcE1675F26CF937091da:
+-        "ERC20RollupEventInbox"
+      implementationNames.eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe:
++        "ERC20RollupEventInbox"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EdgeChallengeManager (eth:0x0AFA44077796B9F14ecDAE817403ACb255B5983e)
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (eth:0x29efff3EfE3E01A3F69011a054C33410edFc2283)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (eth:0x4eD3F488a5a4417839BbC39712EB76D8Aaee6eE8)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (eth:0x7368F782E109518fD3914e8b315eE45E51C15835)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (eth:0x91cB57F200Bd5F897E41C164425Ab4DB0991A64f)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (eth:0xD1D75248ed95450B793d80F9fb418C2eD4c5F5e4)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (eth:0xDdaD5E59D056078A4E67a9d42e21Ce8057F22D60)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../Bridge/ERC20Bridge.sol                         |  306 +-
+ .../ChallengeManager.sol => /dev/null              |  994 -----
+ .../EdgeChallengeManager/EdgeChallengeManager.sol  | 3193 +++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |   18 +-
+ .../Inbox/ERC20Inbox.sol                           |  430 +-
+ .../OneStepProofEntry.sol                          |  656 +--
+ .../{.flat@1769514598 => .flat}/OneStepProver0.sol |  502 ++-
+ .../OneStepProverHostIo.sol                        | 1840 ++------
+ .../OneStepProverMath.sol                          |  101 +-
+ .../OneStepProverMemory.sol                        |  421 +-
+ .../Outbox/ERC20Outbox.sol                         |  104 +-
+ .../RollupEventInbox/ERC20RollupEventInbox.sol     |   73 +-
+ .../RollupProxy/RollupAdminLogic.1.sol             | 2809 ++++++------
+ .../RollupProxy/RollupProxy.p.sol                  |   91 +-
+ .../RollupProxy/RollupUserLogic.2.sol              | 4700 ++++++++++----------
+ .../SequencerInbox/SequencerInbox.sol              |  957 ++--
+ .../ValidatorUtils.sol => /dev/null                |  323 --
+ 17 files changed, 9433 insertions(+), 8085 deletions(-)
+```
+
 Generated with discovered.json: 0xe8cc4f5f4b5cbcac4f049b19755e0a5a03f966ff
 
 # Diff at Tue, 27 Jan 2026 11:51:40 GMT:

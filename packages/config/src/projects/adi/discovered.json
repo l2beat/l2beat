@@ -1,6 +1,6 @@
 {
   "name": "adi",
-  "timestamp": 1768909466,
+  "timestamp": 1770376622,
   "configHash": "0x2ca17ca2e46fa2a6d8c6a1f96a830688ef32554ea3200a672b3ac95f6318a201",
   "entries": [
     {
@@ -98,9 +98,19 @@
               "eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708",
               "eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"
             ]
+          ],
+          [
+            "2026-02-05T09:58:23.000Z",
+            "0x3837cd476c7e8b1131d519f1dd8aed9cb1fbd779716260b0ff79196520f81b21",
+            [
+              "eth:0xf9DD56364E3878056654C756cEBA692e577f8466",
+              "eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07",
+              "eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708",
+              "eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"
+            ]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "baseTokenGasPriceMultiplierDenominator": 1,
         "baseTokenGasPriceMultiplierNominator": 1,
         "facetAddresses": [
@@ -218,7 +228,7 @@
           "eth:0xFB630a206E6D7485cB9DFa929859E1a977F0a211",
           4
         ],
-        "getFirstUnprocessedPriorityTx": 43,
+        "getFirstUnprocessedPriorityTx": 49,
         "getL2BootloaderBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2DefaultAccountBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2EvmEmulatorBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -227,23 +237,23 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x7a2c57db359509dcb47cedd7bdaf78f1b61b1d5f3c53a657037b71d71f850f80",
+        "getPriorityTreeRoot": "0x0b82662c67b0e559202b6392aa198b0decbdaf961ebaaae6ad846abe4d6529a4",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
-        "getProtocolVersion": 128849018880,
+        "getProtocolVersion": 128849018881,
         "getPubdataPricingMode": 0,
         "getRollupDAManager": "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA",
-        "getSemverProtocolVersion": [0, 30, 0],
+        "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 101,
-        "getTotalBatchesExecuted": 100,
-        "getTotalBatchesVerified": 100,
-        "getTotalBlocksCommitted": 101,
-        "getTotalBlocksExecuted": 100,
-        "getTotalBlocksVerified": 100,
-        "getTotalPriorityTxs": 43,
+        "getTotalBatchesCommitted": 131,
+        "getTotalBatchesExecuted": 131,
+        "getTotalBatchesVerified": 131,
+        "getTotalBlocksCommitted": 131,
+        "getTotalBlocksExecuted": 131,
+        "getTotalBlocksVerified": 131,
+        "getTotalPriorityTxs": 49,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
-        "getVerifier": "eth:0x6Fd373b9470976Ec561F54664f931733C6149852",
+        "getVerifier": "eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "recursionLeafLevelVkHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -315,7 +325,7 @@
         "0xce7505b0d1b5400403ca2c4d2c36a9e7cc633e215f5da2ab4d2256a0389e7dad"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,0.",
+      "description": "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1.",
       "sinceTimestamp": 1764062063,
       "sinceBlock": 23874860,
       "values": {
@@ -336,15 +346,15 @@
         "$upgradeCount": 2,
         "admin": "eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7",
         "BRIDGE_HUB": "eth:0x7a38c18a229Ef8a0AE7104Ba272A46280f2d59Cb",
-        "getSemverProtocolVersion": [0, 30, 0],
-        "initialCutHash": "0x28f0af46a96ece2c72a1a7c9c9bfe937162082c4b8925da3b8621599b2869cf5",
+        "getSemverProtocolVersion": [0, 30, 1],
+        "initialCutHash": "0xedf457bf18d9feac26a2fb4a43686971a5eb0f0e21d80393cc8118ecaff31e29",
         "initialForceDeploymentHash": "0xb17899fd9e58ac2342eee6c162a433bd929224f181a7ad5e30d8e33e27d8fab2",
         "l1GenesisUpgrade": "eth:0x03174e2BE35A2Dd4380c93385181B1299949eE28",
         "owner": "eth:0x8253F33026c49A430963FE3991441c02175bda95",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "protocolVersion": 128849018880,
+        "protocolVersion": 128849018881,
         "serverNotifierAddress": "eth:0xd477bd7f14F9A26ebd51827EFB1d40a41f71b70C",
-        "storedBatchZero": "0x492e189b00c1e79ab2da8e9475e345cbc4ad91b89650d086d956f2dd58ce2d89",
+        "storedBatchZero": "0x18bd4bd6909643336ab04fcab99eff346bc4e74799aeeb2ed809341e3a1df6f9",
         "validatorTimelock": "eth:0x0000000000000000000000000000000000000000",
         "validatorTimelockPostV29": "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186"
       },
@@ -420,7 +430,9 @@
         "tokenMultiplierSetter": "eth:0x5CcF89Ba204457129E6250B2570d77DbA790366a",
         "upgradeTimestamps": [
           { "_protocolVersion": 128849018880, "_upgradeTimestamp": 0 },
-          { "_protocolVersion": 128849018880, "_upgradeTimestamp": 1 }
+          { "_protocolVersion": 128849018880, "_upgradeTimestamp": 1 },
+          { "_protocolVersion": 128849018881, "_upgradeTimestamp": 0 },
+          { "_protocolVersion": 128849018881, "_upgradeTimestamp": 1 }
         ]
       },
       "fieldMeta": {
@@ -651,6 +663,19 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "name": "ADI DialVerifier",
+      "address": "eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1770282251,
+      "sinceBlock": 24389615,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE": ""
+      }
+    },
+    {
       "address": "eth:0x6090e365149d005517e2013926cD18d767f04Aa1",
       "type": "EOA",
       "proxyType": "EOA",
@@ -662,57 +687,6 @@
           "role": ".validatorVTL"
         }
       ]
-    },
-    {
-      "name": "ZKsyncOSDualVerifier",
-      "address": "eth:0x6Fd373b9470976Ec561F54664f931733C6149852",
-      "type": "Contract",
-      "template": "adi/ZKsyncOSDualVerifier_post_v30",
-      "sourceHashes": [
-        "0x611d6c62506d4eb15d6b10346b737f49651ba4c3ee1231744069ece1b5ce7443"
-      ],
-      "proxyType": "immutable",
-      "description": "A router contract for verifiers. Routes verification requests to THE PLONK VERIFIER ONLY depending on the supplied proof version.",
-      "sinceTimestamp": 1768895051,
-      "sinceBlock": 24274576,
-      "values": {
-        "$immutable": true,
-        "fflonkVerifier0": "eth:0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A",
-        "fflonkVerifier1": "eth:0x0000000000000000000000000000000000000000",
-        "owner": "eth:0x8253F33026c49A430963FE3991441c02175bda95",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "plonkVerifier0": "eth:0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D",
-        "plonkVerifier1": "eth:0x0000000000000000000000000000000000000000",
-        "verificationKeyHash": "0x996b02b1d0420e997b4dc0d629a3a1bba93ed3185ac463f17b02ff83be139581"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
-        },
-        "ctmOwner": {
-          "severity": "HIGH",
-          "description": "Contract owner that can add and remove verifiers."
-        },
-        "fflonkVerifier0": {
-          "severity": "HIGH",
-          "description": "Fflonk verifier with version 0. Verifiers are read from mapping so they are not displayed in an array."
-        },
-        "fflonkVerifier1": {
-          "severity": "HIGH",
-          "description": "Fflonk verifier with version 1. !MUST BE ZERO, IF NON-ZERO THEN ADD fflonkVerifier2 IN CONFIG! Verifiers are read from mapping so they are not displayed in an array. This value serves as an indicator of a new verifier."
-        },
-        "plonkVerifier0": {
-          "severity": "HIGH",
-          "description": "Plonk verifier with version 0. Verifiers are read from mapping so they are not displayed in an array."
-        },
-        "plonkVerifier1": {
-          "severity": "HIGH",
-          "description": "Plonk verifier with version 1. This value serves as an indicator of a new verifier. !MUST BE ZERO, IF NON-ZERO THEN ADD plonkVerifier2 IN CONFIG! Verifiers are read from mapping so they are not displayed in an array."
-        }
-      },
-      "implementationNames": {
-        "eth:0x6Fd373b9470976Ec561F54664f931733C6149852": "ZKsyncOSDualVerifier"
-      }
     },
     {
       "name": "L1MessageRoot",
@@ -995,12 +969,12 @@
       "sinceBlock": 23874720,
       "values": {
         "$immutable": true,
-        "executedCount": 7,
+        "executedCount": 8,
         "minDelay": 0,
         "owner": "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 7,
+        "scheduledTransparentCount": 8,
         "securityCouncil": "eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f"
       },
       "fieldMeta": {
@@ -1018,32 +992,6 @@
       },
       "implementationNames": {
         "eth:0x8253F33026c49A430963FE3991441c02175bda95": "Governance"
-      }
-    },
-    {
-      "name": "ZKsyncOSVerifierPlonk",
-      "address": "eth:0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierPlonk",
-      "sourceHashes": [
-        "0x369b284860edc23e3dc04a83d43fa393d45f1c0ebe6122e70b08550e27d1ecec"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
-      "sinceTimestamp": 1768895039,
-      "sinceBlock": 24274575,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0x996b02b1d0420e997b4dc0d629a3a1bba93ed3185ac463f17b02ff83be139581"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "eth:0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D": "ZKsyncOSVerifierPlonk"
       }
     },
     {
@@ -1190,7 +1138,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "fieldMeta": {
@@ -1443,38 +1391,12 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "name": "ZKsyncOSVerifierFflonk",
-      "address": "eth:0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierFflonk",
-      "sourceHashes": [
-        "0x5506261e3d9c09192a2e43ec9f3e3d99568ed3dd724c2862fd3eefdff5985cd8"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
-      "sinceTimestamp": 1768895027,
-      "sinceBlock": 24274574,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "eth:0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A": "ZKsyncOSVerifierFflonk"
       }
     },
     {
@@ -2129,29 +2051,6 @@
       "function setRoleAdmin(address _chainAddress, bytes32 _role, bytes32 _adminRole)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x6Fd373b9470976Ec561F54664f931733C6149852": [
-      "constructor(address _fflonkVerifier, address _plonkVerifier, address _initialOwner)",
-      "error EmptyProofLength()",
-      "error MockVerifierNotSupported()",
-      "error UnknownVerifierType()",
-      "error UnknownVerifierVersion()",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function acceptOwnership()",
-      "function addVerifier(uint32 version, address _fflonkVerifier, address _plonkVerifier)",
-      "function computeZKsyncOSHash(uint256 initialHash, uint256[] _publicInputs) pure returns (uint256 result)",
-      "function fflonkVerifiers(uint32) view returns (address)",
-      "function mockVerify(uint256[], uint256[]) view returns (bool)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function plonkVerifiers(uint32) view returns (address)",
-      "function removeVerifier(uint32 version)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function verificationKeyHash() view returns (bytes32)",
-      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
-      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
-    ],
     "eth:0x721e27269ce348F71bdAAd7B7b033Afa60e404e0": [
       "constructor(address _bridgehub)",
       "error AdminZero()",
@@ -2290,10 +2189,6 @@
       "function transferOwnership(address newOwner)",
       "function updateDelay(uint256 _newDelay)",
       "function updateSecurityCouncil(address _newSecurityCouncil)"
-    ],
-    "eth:0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
     ],
     "eth:0x924E0145347243a94C5C69e372Ca52c77f8e6CF1": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2543,10 +2438,6 @@
     "eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9": [
       "constructor(address _singleton)"
     ],
-    "eth:0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A": [
-      "function verificationKeyHash() pure returns (bytes32)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
-    ],
     "eth:0xf9DD56364E3878056654C756cEBA692e577f8466": [
       "constructor(uint256 _l1ChainId, address _rollupDAManager)",
       "error AddressHasNoCode(address)",
@@ -2730,7 +2621,6 @@
     "adi/Governance": "0x46af5a5c4f79ce9ea6efb5ec445c6bb975a26e603abb09e50fe8a0e16f4e2e32",
     "adi/RollupDAManager": "0xf2275524272d21fe66f4b8c5eb42b74741a62235cc5e1db16e4ebaae56a9bcbb",
     "adi/ServerNotifier": "0x2d0a5ede7827c3fa5e2cb0e4568c676a952552562731371e4f9e101aebd288f2",
-    "adi/ZKsyncOSDualVerifier_post_v30": "0xc77d6991c4e25294f78b0fcaba0665e29792b16cb287db3eb22449a356e35033",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/BlobsL1DAValidatorZKsyncOS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -2743,11 +2633,9 @@
     "shared-zk-stack/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/L1NativeTokenVault": "0x9bb3e98b90b9d1e113cc71a85d4137492755be55071e020952622ae30a2ed397",
     "shared-zk-stack/L1Nullifier": "0xffad2aec15a6d3fed0ca55cc600f9ee54a1148708bbb360b9b82a1a4c7c05416",
-    "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 24275768 },
-  "permissionsConfigHash": "0x889cc266bea71e89acdd4137fcf3171bca42f19a4c905a8e8a95cae2ecf09678"
+  "usedBlockNumbers": { "ethereum": 24397429 },
+  "permissionsConfigHash": "0x9a37914f9aca7c9ae5b43c003bc2135dbf9592fb6658bb5d5890b91d49a8003f"
 }

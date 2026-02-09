@@ -128,36 +128,40 @@ function createIndexers(
 
     if (daLayer.type === 'ethereum') {
       blobService = new BlobService(database)
-      blobIndexer = new BlobIndexer({
-        daLayer: daLayer.name,
-        batchSize: daLayer.batchSize,
-        daProvider: providers.da,
-        blobService,
+      blobIndexer = new BlobIndexer(
+        {
+          daLayer: daLayer.name,
+          batchSize: daLayer.batchSize,
+          daProvider: providers.da,
+          blobService,
+          indexerService,
+          minHeight: daLayer.startingBlock,
+          parents: [targetIndexer],
+        },
         logger,
-        indexerService,
-        minHeight: daLayer.startingBlock,
-        parents: [targetIndexer],
-      })
+      )
       daIndexers.push(blobIndexer)
     }
 
-    const indexer = new DaIndexer({
-      configurations: configurations.map((c) => ({
-        id: c.configurationId,
-        minHeight: c.sinceBlock,
-        maxHeight: c.untilBlock ?? null,
-        properties: c,
-      })),
-      daProvider: providers.da,
-      daService: daService,
+    const indexer = new DaIndexer(
+      {
+        configurations: configurations.map((c) => ({
+          id: c.configurationId,
+          minHeight: c.sinceBlock,
+          maxHeight: c.untilBlock ?? null,
+          properties: c,
+        })),
+        daProvider: providers.da,
+        daService: daService,
+        daLayer: daLayer.name,
+        batchSize: daLayer.batchSize,
+        parents: [blobIndexer ?? targetIndexer],
+        indexerService,
+        db: database,
+        blobService,
+      },
       logger,
-      daLayer: daLayer.name,
-      batchSize: daLayer.batchSize,
-      parents: [blobIndexer ?? targetIndexer],
-      indexerService,
-      db: database,
-      blobService,
-    })
+    )
 
     daIndexers.push(indexer)
   }
@@ -200,36 +204,40 @@ function createIndexers(
     const eigenClient = providers.clients.eigen
     assert(eigenClient, 'Eigen client is required')
 
-    const layerIndexer = new EigenDaLayerIndexer({
-      configurations: daLayerConfigurations.map((c) => ({
-        id: c.configurationId,
-        minHeight: c.sinceTimestamp,
-        maxHeight: c.untilTimestamp ?? null,
-        properties: c,
-      })),
-      eigenClient,
+    const layerIndexer = new EigenDaLayerIndexer(
+      {
+        configurations: daLayerConfigurations.map((c) => ({
+          id: c.configurationId,
+          minHeight: c.sinceTimestamp,
+          maxHeight: c.untilTimestamp ?? null,
+          properties: c,
+        })),
+        eigenClient,
+        daLayer: daLayer.name,
+        parents: [hourlyIndexer],
+        indexerService,
+        db: database,
+      },
       logger,
-      daLayer: daLayer.name,
-      parents: [hourlyIndexer],
-      indexerService,
-      db: database,
-    })
+    )
     eigenIndexers.push(layerIndexer)
 
-    const projectsIndexer = new EigenDaProjectsIndexer({
-      configurations: projectConfigurations.map((c) => ({
-        id: c.configurationId,
-        minHeight: c.sinceTimestamp,
-        maxHeight: c.untilTimestamp ?? null,
-        properties: c,
-      })),
-      eigenClient,
+    const projectsIndexer = new EigenDaProjectsIndexer(
+      {
+        configurations: projectConfigurations.map((c) => ({
+          id: c.configurationId,
+          minHeight: c.sinceTimestamp,
+          maxHeight: c.untilTimestamp ?? null,
+          properties: c,
+        })),
+        eigenClient,
+        daLayer: daLayer.name,
+        parents: [hourlyIndexer],
+        indexerService,
+        db: database,
+      },
       logger,
-      daLayer: daLayer.name,
-      parents: [hourlyIndexer],
-      indexerService,
-      db: database,
-    })
+    )
     eigenIndexers.push(projectsIndexer)
   }
 
