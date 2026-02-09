@@ -1,4 +1,8 @@
-import { Address32 } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPv2MessageReceived, CCTPv2MessageSent } from './cctp/cctp-v2.plugin'
@@ -6,29 +10,63 @@ import { MayanForwarded } from './mayan-forwarder'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 import { WormholeConfig } from './wormhole/wormhole.config'
 
-const parseOrderFulfilled = createEventParser(
-  'event OrderFulfilled(uint32 sourceDomain, bytes32 sourceNonce, uint256 amount)',
-)
+// FastMCTP contract address (same on all chains)
+const FAST_MCTP = EthereumAddress('0xC1062b7C5Dc8E4b1Df9F200fe360cDc0eD6e7741')
+
+// Chains where FastMCTP is deployed
+const FAST_MCTP_CHAINS = [
+  'ethereum',
+  'arbitrum',
+  'base',
+  'optimism',
+  'polygonpos',
+]
+
+// Event signatures
+const orderFulfilledLog =
+  'event OrderFulfilled(uint32 sourceDomain, bytes32 sourceNonce, uint256 amount)'
+
+const parseOrderFulfilled = createEventParser(orderFulfilledLog)
 
 export const OrderFulfilled = createInteropEventType<{
   amount: bigint
   $srcChain: string
 }>('mayan-mctp-fast.OrderFulfilled')
 
-export class MayanMctpFastPlugin implements InteropPlugin {
+export class MayanMctpFastPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-mctp-fast'
 
   constructor(private configs: InteropConfigStore) {}
+
+  getDataRequests(): DataRequest[] {
+    const fastMctpAddresses: ChainSpecificAddress[] = []
+    for (const chain of FAST_MCTP_CHAINS) {
+      try {
+        fastMctpAddresses.push(ChainSpecificAddress.fromLong(chain, FAST_MCTP))
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
+
+    return [
+      {
+        type: 'event',
+        signature: orderFulfilledLog,
+        addresses: fastMctpAddresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const wormholeNetworks = this.configs.get(WormholeConfig)

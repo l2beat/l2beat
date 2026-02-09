@@ -888,6 +888,24 @@
       }
     ]
   },
+  // Portal Token Bridge transfer to Solana (chain 1) - should be marked unsupported
+  "wormhole-tokenbridge-unsupported": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xe91a8896e83d8222dc9ec4a73bc482e98f073c0828c7c52b66b3f7ae7290779d"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "wormhole.LogMessagePublished",
+          "unsupported": true
+        }
+      ]
+    }
+  },
   "stargatev2taxi": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [
