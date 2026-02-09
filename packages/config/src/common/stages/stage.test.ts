@@ -683,6 +683,8 @@ describe(createGetStage.name, () => {
         stage1: {
           principle: true,
           hasEscapeHatch: true,
+          upcomingA: true,
+          upcomingB: true,
         },
       })
 
@@ -692,6 +694,16 @@ describe(createGetStage.name, () => {
       const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
       expect(stage1Summary?.requirements).toEqual([
         { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+        {
+          description: 'UPCOMING_A_TRUE',
+          satisfied: true,
+          upcoming: true,
+        },
+        {
+          description: 'UPCOMING_B_TRUE',
+          satisfied: true,
+          upcoming: true,
+        },
       ])
     })
   })
