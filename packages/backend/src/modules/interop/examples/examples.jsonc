@@ -2735,17 +2735,17 @@
     "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
   },
-  "agglayer-katana-ethereum-vbwbtc": {
+  "agglayer-katana-ethereum-morpho": {
     "tags": ["agglayer"],
-    "name": "katana -> ethereum (vbWBTC)",
+    "name": "katana -> ethereum (MORPHO)",
     "txs": [
       {
         "chain": "katana",
-        "tx": "0x5824bd72bad7c39ce3f8fa52b9c6819f3f5af3849ba1e87ed48b7f53fd84dbca"
+        "tx": "0xf08b8b98f2666a661c218971435797ba464642c0f98553e21b20e64e8b52324d"
       },
       {
         "chain": "ethereum",
-        "tx": "0x6aeda24b009471e08c644606cd4d2d5dcf9362664fc73c3cdc92b653df51f023"
+        "tx": "0x5c621c551c8760b8f3814cf129dae9a954b5bfa1efdce84d3881c60fbe850bd7"
       }
     ],
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
