@@ -141,31 +141,46 @@ export class AgglayerPlugin implements InteropPluginResyncable {
       if (!assetOriginNetwork || !destinationNetwork) return
 
       const depositCount = BigInt(bridge.depositCount)
-      const globalIndex = computeGlobalIndex(localNetwork.networkId, depositCount)
+      const globalIndex = computeGlobalIndex(
+        localNetwork.networkId,
+        depositCount,
+      )
 
       const leafType = toNumber(bridge.leafType)
       const originAddress = EthereumAddress(bridge.originAddress)
       const destinationAddress = EthereumAddress(bridge.destinationAddress)
-      const srcTokenAddress =
-        leafType === 0
-          ? originAddress === EthereumAddress.ZERO
-            ? Address32.NATIVE
-            : Address32.from(originAddress)
-          : undefined
+
+      const isBridgeOnAssetOriginNetwork =
+        localNetwork.networkId === assetOriginNetworkId
+
+      let srcTokenAddress: Address32 | undefined
       let srcWasBurned: boolean | undefined
-      if (leafType === 0 && bridge.amount > 0n) {
-        const transferInfo = findParsedAround(
-          input.txLogs,
-          input.log.logIndex ?? -1,
-          (log) => {
-            const transfer = parseTransfer(log, null)
-            if (!transfer || transfer.value !== bridge.amount) return
-            return {
-              burned: Address32.from(transfer.to) === Address32.ZERO,
-            }
-          },
-        )
-        srcWasBurned = transferInfo?.burned
+      if (leafType === 0) {
+        if (isBridgeOnAssetOriginNetwork) {
+          srcTokenAddress =
+            originAddress === EthereumAddress.ZERO
+              ? Address32.NATIVE
+              : Address32.from(originAddress)
+        }
+
+        if (bridge.amount > 0n) {
+          const transferInfo = findParsedAround(
+            input.txLogs,
+            input.log.logIndex ?? -1,
+            (log) => {
+              const transfer = parseTransfer(log, null)
+              if (!transfer || transfer.value !== bridge.amount) return
+              return {
+                address: Address32.from(log.address),
+                burned: Address32.from(transfer.to) === Address32.ZERO,
+              }
+            },
+          )
+          if (!srcTokenAddress) {
+            srcTokenAddress = transferInfo?.address
+          }
+          srcWasBurned = transferInfo?.burned
+        }
       }
 
       return [
