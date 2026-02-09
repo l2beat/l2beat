@@ -2703,5 +2703,22 @@
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
     "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-ethereum-MORPHO": {
+    "tags": ["agglayer"],
+    "name": "katana -> ethereum (MORPHO)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0xf08b8b98f2666a661c218971435797ba464642c0f98553e21b20e64e8b52324d"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x5c621c551c8760b8f3814cf129dae9a954b5bfa1efdce84d3881c60fbe850bd7"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
   }
 }
