@@ -1,3 +1,388 @@
+Generated with discovered.json: 0xae9db184bde091475c2d024f968ed80e62a387b4
+
+# Diff at Mon, 09 Feb 2026 16:03:11 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@3ed515d72a3ee13169bc3e44f3cacfb40ed698a3 block: 1769535661
+- current timestamp: 1770652920
+
+## Description
+
+Major update: MegaETH transitions to onchain EigenDA certificate verification via a new BunnyInbox contract.
+
+**SystemConfig upgrade (v2.5.0 → v2.7.0):**
+Upgraded implementation from 0x2425EB to 0x7f84fE. The only code change is the addition of a new `setBatchInbox(address)` function allowing the owner to change the batch inbox address on-chain ([diff](https://disco.l2beat.com/diff/eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639/eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9)). The batchInbox was changed from the old EOA (0x00656C) to the new BunnyInbox contract (0x02B8d1). blobbasefeeScalar set to 0.
+
+**BunnyInbox (new, 0x02B8d1):**
+New upgradeable contract serving as the batch inbox. Its `fallback()` function strips a 4-byte prefix from calldata, RLP-decodes an EigenDACertV3 struct, and calls `EigenDACertVerifier.checkDACertReverts()` to validate the EigenDA certificate on-chain. This means every batch submission now verifies the EigenDA data availability certificate on L1.
+
+**EigenDACertVerifier (new, 0xa4F386) + EigenDA/EigenLayer infrastructure:**
+An immutable EigenDA V3 certificate verifier referenced by BunnyInbox. It verifies batch data attestations against operator signatures and stake thresholds via the EigenDAServiceManager. Discovery now follows the full EigenDA reference chain, pulling in ~35 shared EigenLayer infrastructure contracts (StakeRegistry, DelegationManager, RegistryCoordinator, etc.) - these are existing shared contracts, not new MegaETH deployments.
+
+**Stale proof system config:**
+The KailuaGame and KailuaTreasury have an immutable `ROLLUP_CONFIG_HASH` (0x16ebac7d...) that commits to the rollup config including the batch inbox address. Since the batch inbox changed from the old EOA (0x00656C) to BunnyInbox (0x02B8d1), but the games were NOT redeployed, the on-chain `ROLLUP_CONFIG_HASH` no longer matches the current chain config. Any ZK proof generated against the current derivation pipeline would produce a different config hash and fail on-chain verification. The games should be redeployed with an updated `ROLLUP_CONFIG_HASH` to restore proof system integrity.
+
+**Governance changes:**
+- MegaETH Safe multisig changed from 4/8 (50%) to 6/10 (60%) threshold
+- Two new members added: a 1-of-3 nested Safe (0x63eC, nonce 0) and an EOA (0x0D17)
+- ProxyAdmin owners (0x15fC, 0xab48) transferred from EOA (0x0A38) to the MegaETH Safe (0x92e0) - this is a positive decentralization step
+- DisputeGameFactory and DelayedWETH ownership also transferred to the Safe
+- Guardian role on SuperchainConfig and OptimismPortal2 transferred from EOA (0x0A38) to Safe (0xB2A9, a 1-of-1 Safe owned by the same EOA 0x0A38)
+- MegaUSDmPreDeposit deposits deactivated (isDepositActive: false)
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x5f25d989fb6ccdc8dcf6fec90727faecf13ba2e3a9cc2d4ca902a5be71e10b9a"
++        "0x18ecfc662e320a3cf78978511db8f7d6f3819d32a52e70d74cc636c9a43335e8"
+      values.$implementation:
+-        "eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639"
++        "eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9"
+      values.$pastUpgrades.1:
++        ["2026-02-09T04:47:59.000Z","0x9c539698c6852b92c7289498f8b808d3ede8c412362dbb31c485c94e09e0cd10",["eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.batchInbox:
+-        "eth:0x00656C604FC470e6a566A695B74455e18a6D75D3"
++        "eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2"
+      values.sequencerInbox:
+-        "eth:0x00656C604FC470e6a566A695B74455e18a6D75D3"
++        "eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2"
+      values.version:
+-        "2.5.0"
++        "2.7.0"
+      implementationNames.eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639:
+-        "SystemConfig"
+      implementationNames.eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract Safe (eth:0x92e0E0B15e3e99b32c9ED9AD284F939553C7b7d6) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x63eCafD27E0B86B37903c8aA64beD47244Ad909A"
+      values.$members.1:
++        "eth:0x0D173c5d6d6018075f63F4977ae7561f7F9A40eF"
+      values.$threshold:
+-        4
++        6
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "6 of 10 (60%)"
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D)
+    +++ description: Keeps track of the total stake of each operator.
+```
+
+```diff
++   Status: CREATED
+    contract BLSApkRegistry (eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505)
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+```
+
+```diff
++   Status: CREATED
+    contract BunnyInbox (eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2)
+    +++ description: On-chain EigenDA certificate verification inbox. Receives batch data, strips 4-byte prefix, RLP-decodes EigenDACertV3 and calls the EigenDACertVerifier to validate the certificate. Used as the batch inbox for EigenDA-based data availability.
+```
+
+```diff
++   Status: CREATED
+    contract RegistryCoordinator (eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656)
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+```
+
+```diff
++   Status: CREATED
+    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060)
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+```
+
+```diff
++   Status: CREATED
+    contract AllocationManagerView (eth:0x0D4e5723daAD06510CFd6864b8eB8a08CF0c4a34)
+    +++ description: Read-only view contract that exposes query functions for the AllocationManager, allowing external callers to look up operator stake allocations, magnitudes, operator sets, and slashable/redistributable status.
+```
+
+```diff
++   Status: CREATED
+    contract EjectionManager (eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E)
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+```
+
+```diff
++   Status: CREATED
+    contract AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionController (eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5)
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolRegistry (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129)
+    +++ description: Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDA Multisig (eth:0x338477FfaF63c04AC06048787f910671eC914B34)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073)
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+```
+
+```diff
++   Status: CREATED
+    contract SocketRegistry (eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StrategyFactory (eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647)
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x63eCafD27E0B86B37903c8aA64beD47244Ad909A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad)
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A)
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0)
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenPodManager (eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllocationManager (eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39)
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifier (eth:0xa4F38615e6a1846ccD7ff08E8179CBdAC8F5ff3B)
+    +++ description: A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.
+```
+
+```diff
++   Status: CREATED
+    contract EigenStrategy (eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05)
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+```
+
+```diff
++   Status: CREATED
+    contract PauserRegistry (eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806)
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+```
+
+```diff
++   Status: CREATED
+    contract IndexRegistry (eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030)
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d)
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B)
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15)
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerCommunityMultisig (eth:0xFEA47018D632A77bA579846c840d5706705Dc598)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../megaeth/.flat/AVSDirectory/AVSDirectory.sol    | 2011 ++++++
+ .../AVSDirectory/TransparentUpgradeableProxy.p.sol |  631 ++
+ .../.flat/AllocationManager/AllocationManager.sol  | 6436 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../megaeth/.flat/AllocationManagerView.sol        | 4922 +++++++++++++++
+ .../.flat/BLSApkRegistry/BLSApkRegistry.sol        | 1038 ++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../megaeth/.flat/BunnyInbox/BunnyInbox.sol        | 1402 +++++
+ .../BunnyInbox/TransparentUpgradeableProxy.p.sol   |  631 ++
+ .../.flat/DelegationManager/DelegationManager.sol  | 5483 +++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../megaeth/.flat/EigenDA Multisig/Safe.sol        | 1088 ++++
+ .../megaeth/.flat/EigenDA Multisig/SafeProxy.p.sol |   37 +
+ .../projects/megaeth/.flat/EigenDACertVerifier.sol | 1329 ++++
+ .../EigenDADisperserRegistry.sol                   |  410 ++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../.flat/EigenDAOperationsMultisig/Safe.sol       | 1088 ++++
+ .../EigenDAOperationsMultisig/SafeProxy.p.sol      |   37 +
+ .../EigenDARelayRegistry/EigenDARelayRegistry.sol  |  420 ++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../EigenDAServiceManager.sol                      | 2699 ++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../EigenDAThresholdRegistry.sol                   |  715 +++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../EigenLayerCommunityMultisig/GnosisSafe.sol     |  953 +++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../EigenLayerOperationsMultisig/GnosisSafe.sol    |  953 +++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../.flat/EigenLayerOwningMultisig/GnosisSafe.sol  |  953 +++
+ .../EigenLayerOwningMultisig/GnosisSafeProxy.p.sol |   35 +
+ .../.flat/EigenLayerPauserMultisig/GnosisSafe.sol  |  953 +++
+ .../EigenLayerPauserMultisig/GnosisSafeProxy.p.sol |   35 +
+ .../GnosisSafe.sol                                 |  953 +++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../.flat/EigenPodManager/EigenPodManager.sol      | 4180 +++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../megaeth/.flat/EigenStrategy/EigenStrategy.sol  | 1352 ++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../.flat/EjectionManager/EjectionManager.sol      |  593 ++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../megaeth/.flat/IndexRegistry/IndexRegistry.sol  |  724 +++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ ...:0x0c431C66F4dE941d089625E5B423D00707977060.sol |   58 +
+ ...:0xB8765ed72235d279c3Fb53936E4606db0Ef12806.sol |   67 +
+ .../megaeth/.flat/PaymentVault/PaymentVault.sol    |  594 ++
+ .../PaymentVault/TransparentUpgradeableProxy.p.sol |  631 ++
+ .../PermissionController/PermissionController.sol  | 1127 ++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../.flat/ProtocolRegistry/ProtocolRegistry.sol    | 2983 +++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ ...:0x8247EF5705d3345516286B72bFE6D690197C2E99.sol |  147 +
+ ...:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444.sol |  147 +
+ .../RegistryCoordinator/RegistryCoordinator.sol    | 2847 +++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../Safe.sol                                       | 1088 ++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../.flat/SocketRegistry/SocketRegistry.sol        |   53 +
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../megaeth/.flat/StakeRegistry/StakeRegistry.sol  | 1176 ++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../.flat/StrategyFactory/StrategyFactory.sol      |  804 +++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../.flat/StrategyManager/StrategyManager.sol      | 5547 +++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 ++
+ .../SystemConfig/SystemConfig.sol                  |   16 +-
+ .../projects/megaeth/.flat/TimelockController.sol  |  842 +++
+ .../projects/megaeth/.flat/UpgradeableBeacon.sol   |  352 ++
+ 69 files changed, 73555 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x3e3c2ac5fc6f4de059ee493adb99384715acc81c
 
 # Diff at Wed, 21 Jan 2026 10:06:24 GMT:
