@@ -38,7 +38,7 @@ export function StageOneRequirementsChangeNotice({
         {downgradePending.reasons.map((reason, i) => (
           <div
             key={i}
-            className="flex gap-2 bg-red-600/20 p-4 text-paragraph-15 md:text-paragraph-16"
+            className="flex gap-2 rounded-lg bg-red-600/20 p-4 text-paragraph-15 md:text-paragraph-16"
           >
             <CloseIcon className="mt-[3px] size-[15px] shrink-0 fill-negative md:mt-1 md:size-3.5" />{' '}
             <span>{reason}</span>
