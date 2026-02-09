@@ -5,6 +5,7 @@ import {
   type Block,
   type ChainSpecificAddress,
   EthereumAddress,
+  type InteropBridgeType,
   type Transaction,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -51,6 +52,7 @@ export interface InteropTransfer {
   kind: 'InteropTransfer'
   plugin: string
   type: string
+  bridgeType?: InteropBridgeType
   events: InteropEvent[]
   src: TransferSide
   dst: TransferSide
@@ -337,6 +339,7 @@ export interface InteropTransferOptions {
   dstAmount?: bigint
   dstWasMinted?: boolean
 
+  bridgeType?: InteropBridgeType
   extraEvents?: InteropEvent[]
 }
 
@@ -352,6 +355,7 @@ function Transfer(
   return {
     kind: 'InteropTransfer',
     type,
+    bridgeType: options.bridgeType,
     events: [
       options.srcEvent,
       options.dstEvent,
