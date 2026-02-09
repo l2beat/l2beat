@@ -316,9 +316,7 @@
       }
     ],
     "expects": {
-      "events": [
-        "cctp-v1.MessageReceived"
-      ]
+      "events": ["cctp-v1.MessageReceived"]
     }
   },
   "mayan-mctp-bridge": {
