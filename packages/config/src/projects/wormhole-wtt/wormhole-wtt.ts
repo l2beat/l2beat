@@ -6,7 +6,7 @@ export const wormholeWtt: BaseProject = {
   slug: 'wormhole-wtt',
   name: 'Wormhole WTT',
   shortName: 'Wormhole WTT',
-  addedAt: UnixTime.now(),
+  addedAt: UnixTime(1770637610),
   interopConfig: {
     showAlways: ['lockAndMint'],
     plugins: [
