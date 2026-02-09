@@ -20,7 +20,7 @@ export const aevo: ScalingProject = opStackL2({
   discovery,
   additionalPurposes: ['Exchange'],
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {

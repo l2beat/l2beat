@@ -19,7 +19,7 @@ export const ancient: ScalingProject = opStackL2({
   discovery,
   associatedTokens: ['A8'],
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
