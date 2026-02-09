@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd7bf681331e56b32769d88b1b0826d0c5815ab24
+
+# Diff at Fri, 06 Feb 2026 11:37:00 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@36cf41246c06744c0f4e408f68eca2253bec6f39 block: 1770038507
+- current timestamp: 1770377757
+
+## Description
+
+Set upgrade timestamp 0 for the latest protocol version defined in shared-zk-stack. 
+
+## Watched changes
+
+```diff
+    contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.3:
++        {"_protocolVersion":124554051588,"_upgradeTimestamp":0}
+    }
+```
+
 Generated with discovered.json: 0x09e229c531453835c63f66101805cb7863d954a1
 
 # Diff at Mon, 02 Feb 2026 16:05:53 GMT:

@@ -139,23 +139,11 @@ export function createInteropPlugins(
       new DeBridgePlugin(),
       new DeBridgeDlnPlugin(),
       new AgglayerPlugin(),
-      new MayanForwarderPlugin(deps.configs),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
       new MesonPlugin(),
       new CCIPPlugin(deps.configs),
       new CentriFugePlugin(),
-      {
-        name: 'cctp',
-        plugins: [
-          new MayanSwiftPlugin(deps.configs), // should be run before CCTP
-          new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
-          new MayanMctpPlugin(), // should be run before CCTP
-          new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
-          new CCTPV1Plugin(deps.configs),
-          new CCTPV2Plugin(deps.configs),
-        ],
-      },
       {
         name: 'layerzero',
         plugins: [
@@ -168,9 +156,20 @@ export function createInteropPlugins(
       {
         name: 'wormhole',
         plugins: [
+          // Mayan plugins (use both Wormhole messaging and CCTP for transfers)
+          new MayanForwarderPlugin(deps.configs), // should be run before MayanSwift
+          new MayanSwiftPlugin(deps.configs), // should be run before CCTP
+          new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
+          new MayanMctpPlugin(), // should be run before CCTP
+          new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
+          // Wormhole-specific plugins
           new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
           new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
           new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
+          // CCTP plugins (Circle's cross-chain USDC)
+          new CCTPV1Plugin(deps.configs),
+          new CCTPV2Plugin(deps.configs),
+          // Core Wormhole messaging (most generic, runs last)
           new WormholePlugin(deps.configs),
         ],
       },
