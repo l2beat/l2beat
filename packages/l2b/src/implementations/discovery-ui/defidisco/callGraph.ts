@@ -22,8 +22,11 @@ import type {
 // Constants
 // =============================================================================
 
-const SLITHER_VENV_PATH = path.join(process.env.HOME || '', '.slither-venv')
-const SLITHER_PATH = path.join(SLITHER_VENV_PATH, 'bin', 'slither')
+const SLITHER_VENV_PATH =
+  process.env.SLITHER_VENV_PATH ||
+  path.join(process.env.HOME || '', '.slither-venv')
+const SLITHER_PATH =
+  process.env.SLITHER_PATH || path.join(SLITHER_VENV_PATH, 'bin', 'slither')
 const SLITHIR_CACHE_FOLDER = 'slithir-cache'
 
 // =============================================================================

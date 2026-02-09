@@ -279,7 +279,10 @@ PORT=3001
 
 - **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/callGraph.ts`
 - **Storage**: `call-graph-data.json` per project
-- **Tool**: Slither's `--print slithir` command (requires `~/.slither-venv/`)
+- **Tool**: Slither's `--print slithir` command
+- **Configuration**:
+  - `SLITHER_VENV_PATH` env var (default: `~/.slither-venv/`)
+  - `SLITHER_PATH` env var (default: `$SLITHER_VENV_PATH/bin/slither`)
 
 **How It Works**:
 

@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "euler-v2",
-  "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x29a56a1b8214D9Cf7c5561811750D5cBDb45CC8e"]
-}
