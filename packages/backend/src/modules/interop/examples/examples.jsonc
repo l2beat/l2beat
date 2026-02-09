@@ -892,6 +892,15 @@
       {
         "chain": "base",
         "tx": "0x5056d23e00423379b4466a25a233527499060f3904718ceaebe14c4a87d5c27f"
+      },
+      // NTT transfer from Arbitrum → Polygon (Relayer path)
+      {
+        "chain": "arbitrum",
+        "tx": "0x695f22bb48d3f3382d12e03737acc5ebbb4bd87590d5566e394f84760a14e1ad"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x08b6056ca4dc1cd84b9fbeb9d3c849bb89d27b7f50555aa862126c09ca490463"
       }
     ],
     "events": ["wormhole-ntt.ReceivedMessage"],
@@ -899,9 +908,11 @@
       { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
       { "type": "wormhole.Message", "app": "m0-index" },
       { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
-      { "type": "wormhole.Message", "app": "wormhole-ntt-core" }
+      { "type": "wormhole.Message", "app": "wormhole-ntt-core" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" }
     ],
     "transfers": [
+      "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer"
