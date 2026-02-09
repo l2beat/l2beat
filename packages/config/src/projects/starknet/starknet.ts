@@ -175,19 +175,42 @@ const finalizationPeriod = 0
 const scThreshold = discovery.getMultisigStats('Starkware Security Council')
 const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
 
-const starknetProgramHashes = []
+// Verifiers chain reference older verifiers where a proof could be registered.
+// Unless a verifier referral expired, a proof could be looked up on a referenced
+// old verifier. This funciton collects bootloader prog hashes from all usable old verifiers.
+export function getSHARPBootloaderHashes(): string[] {
+  const sharpBootloaderHashes: string[] = []
+  let sharpVerifierAddress = discovery.getContract('SHARPVerifier').address
+  let expirationTimestamp = Number.MAX_SAFE_INTEGER
+  const timestampNow = Date.now() / 1000
+  while (timestampNow < expirationTimestamp) {
+    const bootloaderConfig = discovery.getContractValue<string[]>(
+      sharpVerifierAddress,
+      'getBootloaderConfig',
+    )
+    sharpBootloaderHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+    sharpBootloaderHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+
+    expirationTimestamp = discovery.getContractValue<number>(
+      sharpVerifierAddress,
+      'referralExpirationTime',
+    )
+    sharpVerifierAddress = discovery.getContractValue<ChainSpecificAddress>(
+      sharpVerifierAddress,
+      'referenceFactRegistry',
+    )
+  }
+  return [...new Set(sharpBootloaderHashes)]
+}
+
+const starknetProgramHashes: string[] = []
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'programHash'),
 )
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-starknetProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-starknetProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+starknetProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const starknet: ScalingProject = {
   type: 'layer2',
