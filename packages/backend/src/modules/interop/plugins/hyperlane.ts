@@ -42,6 +42,7 @@ export const Process = createInteropEventType<{
   $srcChain: string
 }>('hyperlane.Process')
 
+// https://github.com/hyperlane-xyz/hyperlane-registry
 export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'ethereum', chainId: 1 },
   { chain: 'arbitrum', chainId: 42161 },
@@ -51,6 +52,8 @@ export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'polygonpos', chainId: 137 },
   { chain: 'zksync2', chainId: 324 },
   { chain: 'abstract', chainId: 2741 },
+  { chain: 'katana', chainId: 747474 },
+  { chain: 'bsc', chainId: 56 },
 ])
 
 export class HyperlanePlugIn implements InteropPlugin {

@@ -19,6 +19,7 @@ import {
   Result,
 } from './types'
 
+// https://minter.merkly.com/hyperlane/docs
 const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
   'hyperlane-merkly-tokenbridge',
   [
@@ -55,6 +56,8 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
       chainId: 2741,
       address: EthereumAddress('0xa0be52cEA8BDC5CF39ca6EdB4FeBb9610ef68750'),
     },
+    // no katana
+    // no bsc
   ],
 )
 
