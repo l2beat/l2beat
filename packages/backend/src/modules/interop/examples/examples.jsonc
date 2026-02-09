@@ -292,6 +292,27 @@
       }
     ]
   },
+  "wormhole-tokenbridge-to-bsc": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x2e528c91e0c482d41d340dedcc777e3c7701ab931828d2ff8713909e7c07d545"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x3d1ea24667818c88ee4fc0f8234fe20793d0293734265627a3eec6887f505746"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message"],
+      "transfers": ["wormhole-tokenbridge.Transfer"]
+    }
+  },
   "mayan-mctp-circle-src-unsupported": {
     "loadConfigs": ["wormhole"],
     "txs": [
