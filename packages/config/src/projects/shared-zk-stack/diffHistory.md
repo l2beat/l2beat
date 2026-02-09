@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x85756fb88e0e77d5b2f088e1ff8c5948204c41a8
+
+# Diff at Mon, 09 Feb 2026 12:09:02 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e6183eba0e821f854598054a2814402a2eb77829 block: 1770376278
+- current timestamp: 1770638873
+
+## Description
+
+Added new protocol version (not enforced).
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.8:
++        {"_protocolVersion":124554051588,"_upgradeTimestamp":0}
+    }
+```
+
 Generated with discovered.json: 0x3cdd0ff424736e6185a9a3652a37785a238a6a22
 
 # Diff at Fri, 06 Feb 2026 11:12:25 GMT:

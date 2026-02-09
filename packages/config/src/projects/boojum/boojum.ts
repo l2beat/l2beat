@@ -868,6 +868,32 @@ cargo run --features gpu --release --bin key_generator generate-compressor-data
 The output of the last command will contain the required \`snark_wrapper\` value.
         `,
       },
+      {
+        hash: '0xb2f50340e0edbe49dc657d4eb298e07f13860c1be0fe2e438e44ef8fad133d84',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x7f33D100f482093182111d69a4a457289e99f4ec',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        hash: '0xc8cd705a0db89577146137de78eba6bd1f1c9c3f66dc52f7627e7c2df30895b2',
+        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
     ],
   },
 }
