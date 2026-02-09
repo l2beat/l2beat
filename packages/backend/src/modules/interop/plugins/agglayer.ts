@@ -60,10 +60,7 @@ function toNumber(value: number | bigint): number {
 const GLOBAL_INDEX_MAINNET_FLAG = 1n << 64n
 const GLOBAL_INDEX_DEPOSIT_COUNT_MASK = (1n << 32n) - 1n
 
-function encodeGlobalIndex(
-  localNetwork: number,
-  depositCount: bigint,
-): bigint {
+function encodeGlobalIndex(localNetwork: number, depositCount: bigint): bigint {
   if (localNetwork === 0) return GLOBAL_INDEX_MAINNET_FLAG + depositCount
   return (BigInt(localNetwork - 1) << 32n) + depositCount
 }
@@ -95,6 +92,7 @@ const transferLog =
 const parseBridgeEvent = createEventParser(bridgeEventLog)
 const parseClaimEvent = createEventParser(claimEventLog)
 const parseTransfer = createEventParser(transferLog)
+const ASSET_LEAF_TYPE = 0
 
 const AgglayerBridgeEvent = createInteropEventType<{
   matchId: string
@@ -166,54 +164,55 @@ export class AgglayerPlugin implements InteropPluginResyncable {
       const leafType = toNumber(bridge.leafType)
       const originAddress = EthereumAddress(bridge.originAddress)
       const destinationAddress = EthereumAddress(bridge.destinationAddress)
+      const baseArgs = {
+        matchId: globalIndex.toString(),
+        globalIndex,
+        leafType,
+        originNetwork: assetOriginNetworkId,
+        destinationNetwork: destinationNetworkId,
+        originAddress,
+        destinationAddress,
+        amount: bridge.amount,
+        metadata: bridge.metadata,
+        $dstChain: destinationNetwork.chain,
+      } as const
+
+      if (leafType !== ASSET_LEAF_TYPE) {
+        return [AgglayerBridgeEvent.create(input, baseArgs)]
+      }
 
       const isBridgeOnAssetOriginNetwork =
         localNetwork.networkId === assetOriginNetworkId
-
-      let srcTokenAddress: Address32 | undefined
+      let srcTokenAddress: Address32 | undefined = isBridgeOnAssetOriginNetwork
+        ? originAddress === EthereumAddress.ZERO
+          ? Address32.NATIVE
+          : Address32.from(originAddress)
+        : undefined
       let srcWasBurned: boolean | undefined
-      if (leafType === 0) {
-        if (isBridgeOnAssetOriginNetwork) {
-          srcTokenAddress =
-            originAddress === EthereumAddress.ZERO
-              ? Address32.NATIVE
-              : Address32.from(originAddress)
+      if (bridge.amount > 0n) {
+        const transferInfo = findParsedAround(
+          input.txLogs,
+          input.log.logIndex ?? -1,
+          (log) => {
+            const transfer = parseTransfer(log, null)
+            if (!transfer || transfer.value !== bridge.amount) return
+            return {
+              address: Address32.from(log.address),
+              burned: Address32.from(transfer.to) === Address32.ZERO,
+            }
+          },
+        )
+        if (!srcTokenAddress) {
+          srcTokenAddress = transferInfo?.address
         }
-
-        if (bridge.amount > 0n) {
-          const transferInfo = findParsedAround(
-            input.txLogs,
-            input.log.logIndex ?? -1,
-            (log) => {
-              const transfer = parseTransfer(log, null)
-              if (!transfer || transfer.value !== bridge.amount) return
-              return {
-                address: Address32.from(log.address),
-                burned: Address32.from(transfer.to) === Address32.ZERO,
-              }
-            },
-          )
-          if (!srcTokenAddress) {
-            srcTokenAddress = transferInfo?.address
-          }
-          srcWasBurned = transferInfo?.burned
-        }
+        srcWasBurned = transferInfo?.burned
       }
 
       return [
         AgglayerBridgeEvent.create(input, {
-          matchId: globalIndex.toString(),
-          globalIndex,
-          leafType,
-          originNetwork: assetOriginNetworkId,
-          destinationNetwork: destinationNetworkId,
-          originAddress,
-          destinationAddress,
-          amount: bridge.amount,
+          ...baseArgs,
           srcTokenAddress,
           srcWasBurned,
-          metadata: bridge.metadata,
-          $dstChain: destinationNetwork.chain,
         }),
       ]
     }
@@ -234,26 +233,37 @@ export class AgglayerPlugin implements InteropPluginResyncable {
 
       const originAddress = EthereumAddress(claim.originAddress)
       const destinationAddress = EthereumAddress(claim.destinationAddress)
+      const baseArgs = {
+        matchId: globalIndex.toString(),
+        globalIndex,
+        originNetwork: originNetworkId,
+        $srcChain: messageOriginNetwork.chain,
+        originAddress,
+        destinationAddress,
+        amount: claim.amount,
+      } as const
+
+      // ClaimEvent does not expose leafType; amount==0 is the message-only fast path.
+      if (claim.amount === 0n) {
+        return [AgglayerClaimEvent.create(input, baseArgs)]
+      }
 
       let dstTokenAddress: Address32 | undefined
-      let dstWasMinted: boolean | undefined
-      if (claim.amount > 0n) {
-        const transferInfo = findParsedAround(
-          input.txLogs,
-          input.log.logIndex ?? -1,
-          (log) => {
-            const transfer = parseTransfer(log, null)
-            if (!transfer || transfer.value !== claim.amount) return
-            if (EthereumAddress(transfer.to) !== destinationAddress) return
-            return {
-              address: Address32.from(log.address),
-              minted: Address32.from(transfer.from) === Address32.ZERO,
-            }
-          },
-        )
-        dstTokenAddress = transferInfo?.address
-        dstWasMinted = transferInfo?.minted
-      }
+      const transferInfo = findParsedAround(
+        input.txLogs,
+        input.log.logIndex ?? -1,
+        (log) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer || transfer.value !== claim.amount) return
+          if (EthereumAddress(transfer.to) !== destinationAddress) return
+          return {
+            address: Address32.from(log.address),
+            minted: Address32.from(transfer.from) === Address32.ZERO,
+          }
+        },
+      )
+      dstTokenAddress = transferInfo?.address
+      const dstWasMinted = transferInfo?.minted
 
       if (!dstTokenAddress && originAddress === EthereumAddress.ZERO) {
         dstTokenAddress = Address32.NATIVE
@@ -261,13 +271,7 @@ export class AgglayerPlugin implements InteropPluginResyncable {
 
       return [
         AgglayerClaimEvent.create(input, {
-          matchId: globalIndex.toString(),
-          globalIndex,
-          originNetwork: originNetworkId,
-          $srcChain: messageOriginNetwork.chain,
-          originAddress,
-          destinationAddress,
-          amount: claim.amount,
+          ...baseArgs,
           dstTokenAddress,
           dstWasMinted,
         }),
