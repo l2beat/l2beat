@@ -48,7 +48,7 @@ jobs:
 
   deploy-frontend-prod:
     needs: build
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.frontend-prod-enabled != false || github.event_name != 'workflow_dispatch' && vars.DEPLOY_FRONTEND_PROD_ENABLED != 'false'
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.frontend-prod-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_FRONTEND_PROD_ENABLED != 'false')
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
@@ -57,7 +57,7 @@ jobs:
 
   deploy-frontend-staging:
     needs: build
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.frontend-staging-enabled != false || github.event_name != 'workflow_dispatch' && vars.DEPLOY_FRONTEND_STAGING_ENABLED != 'false'
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.frontend-staging-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_FRONTEND_STAGING_ENABLED != 'false')
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
