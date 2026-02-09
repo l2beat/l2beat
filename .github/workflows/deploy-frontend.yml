@@ -14,6 +14,16 @@ on:
         required: false
         default: false
         type: boolean
+      frontend-prod-enabled:
+        description: "Enable frontend prod deployment"
+        required: false
+        default: false
+        type: boolean
+      frontend-staging-enabled:
+        description: "Enable frontend staging deployment"
+        required: false
+        default: false
+        type: boolean
   push:
     branches:
       - main
@@ -38,7 +48,7 @@ jobs:
 
   deploy-frontend-prod:
     needs: build
-    if: vars.DEPLOY_FRONTEND_PROD_ENABLED != 'false'
+    if: github.event.inputs.frontend-prod-enabled == 'true' || vars.DEPLOY_FRONTEND_PROD_ENABLED != 'false'
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
@@ -47,7 +57,7 @@ jobs:
 
   deploy-frontend-staging:
     needs: build
-    if: vars.DEPLOY_FRONTEND_STAGING_ENABLED != 'false'
+    if: github.event.inputs.frontend-staging-enabled == 'true' || vars.DEPLOY_FRONTEND_STAGING_ENABLED != 'false'
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}

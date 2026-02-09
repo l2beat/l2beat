@@ -7,7 +7,33 @@ permissions:
   packages: write
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch: 
+    inputs:
+      force:
+        description: "Force deployment"
+        required: false
+        default: true
+        type: boolean
+      backend-prod-enabled:
+        description: "Enable backend prod deployment"
+        required: false
+        default: false
+        type: boolean
+      backend-staging-enabled:
+        description: "Enable backend staging deployment"
+        required: false
+        default: false
+        type: boolean
+      tvs-prod-enabled:
+        description: "Enable tvs prod deployment"
+        required: false
+        default: false
+        type: boolean
+      tvs-staging-enabled:
+        description: "Enable tvs staging deployment"
+        required: false
+        default: false
+        type: boolean
   push:
     branches:
       - main
@@ -17,6 +43,7 @@ jobs:
     uses: ./.github/workflows/check-changes.yml
     with:
       package: '@l2beat/backend'
+      force: ${{ github.event.inputs.force == 'true' }}
 
   build:
     needs: check-changes
@@ -24,13 +51,14 @@ jobs:
     uses: ./.github/workflows/build-docker-image.yml
     with:
       project: backend
+      dockerfile: packages/backend/Dockerfile
     secrets:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
   deploy-backend-prod:
     needs: build
-    if: vars.DEPLOY_BACKEND_PROD_ENABLED != 'false'
+    if: github.event.inputs.backend-prod-enabled == 'true' || vars.DEPLOY_BACKEND_PROD_ENABLED != 'false' 
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
@@ -39,7 +67,7 @@ jobs:
 
   deploy-backend-staging:
     needs: build
-    if: vars.DEPLOY_BACKEND_STAGING_ENABLED != 'false'
+    if: github.event.inputs.backend-staging-enabled == 'true' || vars.DEPLOY_BACKEND_STAGING_ENABLED != 'false'
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
@@ -48,7 +76,7 @@ jobs:
 
   deploy-tvs-prod:
     needs: build
-    if: vars.DEPLOY_TVS_PROD_ENABLED != 'false'
+    if: github.event.inputs.tvs-prod-enabled == 'true' || vars.DEPLOY_TVS_PROD_ENABLED != 'false'
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
@@ -57,7 +85,7 @@ jobs:
 
   deploy-tvs-staging:
     needs: build
-    if: vars.DEPLOY_TVS_STAGING_ENABLED != 'false'
+    if: github.event.inputs.tvs-staging-enabled == 'true' || vars.DEPLOY_TVS_STAGING_ENABLED != 'false'
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
