@@ -117,6 +117,10 @@ export const risc0: BaseProject = {
         projectId: ProjectId('megaeth'),
         sinceTimestamp: UnixTime(1763954183),
       },
+      {
+        projectId: ProjectId('soon'),
+        sinceTimestamp: UnixTime(1765180787),
+      },
     ],
     verifierHashes: [
       {
