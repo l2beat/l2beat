@@ -60,11 +60,11 @@ function toNumber(value: number | bigint): number {
 const GLOBAL_INDEX_MAINNET_FLAG = 1n << 64n
 
 function computeGlobalIndex(
-  originNetwork: number,
+  localNetwork: number,
   depositCount: bigint,
 ): bigint {
-  if (originNetwork === 0) return GLOBAL_INDEX_MAINNET_FLAG + depositCount
-  return (BigInt(originNetwork - 1) << 32n) + depositCount
+  if (localNetwork === 0) return GLOBAL_INDEX_MAINNET_FLAG + depositCount
+  return (BigInt(localNetwork - 1) << 32n) + depositCount
 }
 
 const bridgeEventLog =
@@ -132,15 +132,16 @@ export class AgglayerPlugin implements InteropPluginResyncable {
   capture(input: LogToCapture) {
     const bridge = parseBridgeEvent(input.log, null)
     if (bridge) {
-      const originNetworkId = toNumber(bridge.originNetwork)
+      const localNetwork = getNetworkByChain(input.chain)
+      if (!localNetwork) return
+      const assetOriginNetworkId = toNumber(bridge.originNetwork)
       const destinationNetworkId = toNumber(bridge.destinationNetwork)
-      const originNetwork = getNetworkById(originNetworkId)
+      const assetOriginNetwork = getNetworkById(assetOriginNetworkId)
       const destinationNetwork = getNetworkById(destinationNetworkId)
-      if (!originNetwork || !destinationNetwork) return
-      if (input.chain !== originNetwork.chain) return
+      if (!assetOriginNetwork || !destinationNetwork) return
 
       const depositCount = BigInt(bridge.depositCount)
-      const globalIndex = computeGlobalIndex(originNetworkId, depositCount)
+      const globalIndex = computeGlobalIndex(localNetwork.networkId, depositCount)
 
       const leafType = toNumber(bridge.leafType)
       const originAddress = EthereumAddress(bridge.originAddress)
@@ -172,7 +173,7 @@ export class AgglayerPlugin implements InteropPluginResyncable {
           matchId: globalIndex.toString(),
           globalIndex,
           leafType,
-          originNetwork: originNetworkId,
+          originNetwork: assetOriginNetworkId,
           destinationNetwork: destinationNetworkId,
           originAddress,
           destinationAddress,
