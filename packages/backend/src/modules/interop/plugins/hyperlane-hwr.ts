@@ -295,13 +295,14 @@ export function findParsedAround<T>(
   }
 }
 
-type ParsedTransferLog = {
+export type ParsedTransferLog = {
   logAddress: Address32
   from: Address32
   to: Address32
   value: bigint
 }
 
+// meson has a different version of this that normalizes amounts (for unknown decimal situations)
 function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,

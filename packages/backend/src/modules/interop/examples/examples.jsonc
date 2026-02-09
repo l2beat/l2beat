@@ -235,6 +235,37 @@
       }
     ]
   },
+  "meson": {
+    "description": "Liquidity swap + tunnel samples from MESON_PLAN",
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x454aa9a68e2e99789407d93d30d6e7d174f739977ca578aa6a9937247b64fdea"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x7f5e8814b2c41208dbc00f060273f02bc670c37581e25c30d8fdfc1116cd38aa"
+      },
+      // tunnel events are not matching, TODO
+      {
+        "chain": "arbitrum",
+        "tx": "0xa4d497c7826ef5025901b086a735e89c95faf71f41e066ff1029271e12d76619"
+      },
+      {
+        "chain": "bob",
+        "tx": "0xb56575f17495f677ad1a15e4b4511c3396bf09c1482ac281ca915184f070f60c"
+      },
+      // gas/native transfer
+      {
+        "chain": "base",
+        "tx": "0x6e3671be03faa0444bfe5135a84d9d2fe20c3658f6763cf53098b232c8a5f7a4"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe4fdc4e6856940605d11c5fea1ea4e501ab8d04e560a1dc65fe0a9652684be0b"
+      }
+    ]
+  },
   "cctpv1": {
     "loadConfigs": ["cctp-v1"],
     "txs": [
@@ -260,6 +291,54 @@
         "tx": "0x607ef6ded5162ece9b8c8d9df7ef0be69aa6005863403a963295bb362222d5a0"
       }
     ]
+  },
+  "wormhole-tokenbridge-to-bsc": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x2e528c91e0c482d41d340dedcc777e3c7701ab931828d2ff8713909e7c07d545"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x3d1ea24667818c88ee4fc0f8234fe20793d0293734265627a3eec6887f505746"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message"],
+      "transfers": ["wormhole-tokenbridge.Transfer"]
+    }
+  },
+  "mayan-mctp-circle-src-unsupported": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x941d2a4147c9e0775459e9fcef015e608502232e6684ad67d8d1261b55f59846"
+      }
+    ],
+    "expects": {
+      "events": [
+        "mayan-forwarder.MayanForwarded",
+        "wormhole.LogMessagePublished"
+      ]
+    }
+  },
+  "mayan-mctp-circle-dst-skipped": {
+    "loadConfigs": ["wormhole", "cctp-v1"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x1f2039651ebe7826f366b6f83a845a3224810450e234c2ba036a9ac676f7039a"
+      }
+    ],
+    "expects": {
+      "events": ["cctp-v1.MessageReceived"]
+    }
   },
   "mayan-mctp-bridge": {
     "txs": [
@@ -856,6 +935,24 @@
         "tx": "0xcc4a19dfa0dd4ca8b1f010083a89e5bc23d72f9cbb1194b57f3c040d35a412ac"
       }
     ]
+  },
+  // Portal Token Bridge transfer to Solana (chain 1) - should be marked unsupported
+  "wormhole-tokenbridge-unsupported": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xe91a8896e83d8222dc9ec4a73bc482e98f073c0828c7c52b66b3f7ae7290779d"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "wormhole.LogMessagePublished",
+          "unsupported": true
+        }
+      ]
+    }
   },
   "stargatev2taxi": {
     "loadConfigs": ["layerzero-v2"],
@@ -2586,5 +2683,73 @@
     ],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "sky-bridge" }],
     "transfers": ["sky-bridge.L1ToL2Transfer"]
+  },
+  "agglayer-ethereum-katana-eth": {
+    "tags": ["agglayer"],
+    "name": "ethereum -> katana (ETH)",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xc5dc78d49624f1f83392290c645c3404a004d6f6de74bf3d73522151201c283d"
+      },
+      {
+        "chain": "katana",
+        "tx": "0xb8324124abdc9e0ffdd2ad2ebde5d379263eac7add4d880af28cb1ce956eb7bf"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-ethereum-katana-vbusdt": {
+    "tags": ["agglayer"],
+    "name": "ethereum -> katana (vbUSDT)",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x21e1be31961fda8642a21188266036f602fa63d703b876eab35871a7469f7683"
+      },
+      {
+        "chain": "katana",
+        "tx": "0x2d923202c7638fdc23f85260aacf4e895ba4ce835ddd06e4dca8f8c1de9d59ae"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-forknet-vbeth": {
+    "tags": ["agglayer"],
+    "name": "katana -> forknet (vbETH)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0xb11827436b3ecb880c58e0bd665dd96bb31ae494d5c9aea86bd4eecd07bc7594"
+      },
+      {
+        "chain": "forknet",
+        "tx": "0xab2cfe2866df7643478fa837ecd15e871dca251cda63697c54a8bf5c1d7e3a2c"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-ethereum-vbwbtc": {
+    "tags": ["agglayer"],
+    "name": "katana -> ethereum (vbWBTC)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0x5824bd72bad7c39ce3f8fa52b9c6819f3f5af3849ba1e87ed48b7f53fd84dbca"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6aeda24b009471e08c644606cd4d2d5dcf9362664fc73c3cdc92b653df51f023"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
   }
 }

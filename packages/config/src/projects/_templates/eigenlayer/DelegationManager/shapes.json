@@ -13,5 +13,10 @@
     "hash": "0x070312684717f779729ea8c996718a93f984ef1cc6afd216b9b80007e7d49e7c",
     "address": "eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89",
     "blockNumber": 23083543
+  },
+  "DelegationManager_v1.9.0": {
+    "hash": "0xc7434c1abe25723dac4061deb679b18972a97bda6317eb9b36833da48f9c59c1",
+    "address": "eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75",
+    "blockNumber": 24350294
   }
 }

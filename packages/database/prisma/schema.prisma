@@ -378,6 +378,7 @@ model InteropTransfer {
   plugin     String   @db.VarChar(64)
   transferId String   @db.VarChar(40)
   type       String   @db.VarChar(64)
+  bridgeType String?  @db.VarChar(32)
   timestamp  DateTime @db.Timestamp(6)
 
   duration Int
@@ -541,6 +542,7 @@ model InteropPluginSyncedRange {
 model AggregatedInteropTransfer {
   timestamp        DateTime @db.Timestamp(6)
   id               String   @db.VarChar(255)
+  bridgeType       String   @default("unknown") @db.VarChar(255)
   srcChain         String   @db.VarChar(255)
   dstChain         String   @db.VarChar(255)
   transferCount    Int
@@ -557,7 +559,7 @@ model AggregatedInteropTransfer {
   count10KTo100K   Int      @default(0)
   countOver100K    Int      @default(0)
 
-  @@id([timestamp, srcChain, dstChain, id])
+  @@id([timestamp, srcChain, dstChain, bridgeType, id])
 }
 
 model AggregatedInteropToken {
@@ -565,6 +567,7 @@ model AggregatedInteropToken {
   id               String   @db.VarChar(255)
   srcChain         String   @db.VarChar(255)
   dstChain         String   @db.VarChar(255)
+  bridgeType       String   @default("unknown") @db.VarChar(255)
   abstractTokenId  String   @db.VarChar(6)
   mintedValueUsd   Float?   @db.Real
   burnedValueUsd   Float?   @db.Real
@@ -572,5 +575,5 @@ model AggregatedInteropToken {
   totalDurationSum Int
   volume           Float    @db.Real
 
-  @@id([timestamp, srcChain, dstChain, id, abstractTokenId])
+  @@id([timestamp, srcChain, dstChain, bridgeType, id, abstractTokenId])
 }

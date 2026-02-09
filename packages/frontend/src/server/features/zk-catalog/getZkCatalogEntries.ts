@@ -21,7 +21,7 @@ import { getZkCatalogProjectTvs } from './utils/getZkCatalogProjectTvs'
 
 export type TrustedSetupVerifierData = {
   count: number
-  attesters: (ZkCatalogAttester & { icon: string })[]
+  attesters: (ZkCatalogAttester & { icon: string; iconDark?: string })[]
 }
 
 export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {

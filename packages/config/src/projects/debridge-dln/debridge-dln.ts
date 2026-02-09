@@ -8,7 +8,7 @@ export const debridgeDln: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1768915493),
   interopConfig: {
-    bridgeType: 'nonMinting',
+    showAlways: ['nonMinting'],
     plugins: [
       {
         plugin: 'debridge-dln',

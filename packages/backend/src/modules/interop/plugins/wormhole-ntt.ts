@@ -30,10 +30,11 @@ import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -71,17 +72,17 @@ const NTT_MANAGERS: { [chain: string]: { [manager: string]: string } } = {
   },
 }
 
-const parseSendTransceiverMessage = createEventParser(
-  'event SendTransceiverMessage(uint16 recipientChain, (bytes32 sourceNttManagerAddress, bytes32 recipientNttManagerAddress, bytes nttManagerPayload, bytes transceiverPayload) message)',
-)
+const sendTransceiverMessageLog =
+  'event SendTransceiverMessage(uint16 recipientChain, (bytes32 sourceNttManagerAddress, bytes32 recipientNttManagerAddress, bytes nttManagerPayload, bytes transceiverPayload) message)'
+const parseSendTransceiverMessage = createEventParser(sendTransceiverMessageLog)
 
-const parseReceivedRelayedMessage = createEventParser(
-  'event ReceivedRelayedMessage(bytes32 digest, uint16 emitterChainId, bytes32 emitterAddress)',
-)
+const receivedRelayedMessageLog =
+  'event ReceivedRelayedMessage(bytes32 digest, uint16 emitterChainId, bytes32 emitterAddress)'
+const parseReceivedRelayedMessage = createEventParser(receivedRelayedMessageLog)
 
-const parseReceivedMessage = createEventParser(
-  'event ReceivedMessage(bytes32 digest, uint16 sourceChainId, bytes32 sourceNttManagerAddress, uint64 sequence)',
-)
+const receivedMessageLog =
+  'event ReceivedMessage(bytes32 digest, uint16 sourceChainId, bytes32 sourceNttManagerAddress, uint64 sequence)'
+const parseReceivedMessage = createEventParser(receivedMessageLog)
 
 export const TransceiverMessage = createInteropEventType<{
   sourceNttManagerAddress: string
@@ -104,10 +105,31 @@ export const ReceivedMessage = createInteropEventType<{
   $srcChain: string
 }>('wormhole-ntt.ReceivedMessage')
 
-export class WormholeNTTPlugin implements InteropPlugin {
+export class WormholeNTTPlugin implements InteropPluginResyncable {
   readonly name = 'wormhole-ntt'
 
   constructor(private configs: InteropConfigStore) {}
+
+  // NTT transceivers are per-token with many deployments, use wildcard to capture all
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: sendTransceiverMessageLog,
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: receivedRelayedMessageLog,
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: receivedMessageLog,
+        addresses: '*',
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const wormholeNetworks = this.configs.get(WormholeConfig)
@@ -212,6 +234,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
             app: 'm0-index',
             srcEvent: logMessagePublished,
             dstEvent: delivery,
+            extraEvents: [sentTransceiverMessage],
           }),
         ]
       }
@@ -283,6 +306,7 @@ export class WormholeNTTPlugin implements InteropPlugin {
             app: 'm0-index',
             srcEvent: logMessagePublished,
             dstEvent: received,
+            extraEvents: [sentTransceiverMessage],
           }),
         ]
       }

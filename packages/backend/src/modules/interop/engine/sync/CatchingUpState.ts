@@ -135,20 +135,26 @@ export class CatchingUpState implements TimeloopState {
     logQuery: LogQuery,
     range: { from: bigint; to: bigint },
   ): Promise<RpcLog[]> {
+    const addresses =
+      logQuery.addresses === '*' ? undefined : Array.from(logQuery.addresses)
     this.logger.info('Getting logs', {
       chain,
       from: range.from,
       to: range.to,
-      addresses: logQuery.addresses,
+      addresses: logQuery.addresses === '*' ? 'all' : addresses,
       topics: [logQuery.topic0s],
     })
 
-    const logs = await this.syncer.getLogs({
+    const filter: Parameters<InteropEventSyncer['getLogs']>[0] = {
       fromBlock: range.from,
       toBlock: range.to,
-      address: Array.from(logQuery.addresses),
       topics: [Array.from(logQuery.topic0s)],
-    })
+    }
+    if (addresses !== undefined) {
+      filter.address = addresses
+    }
+
+    const logs = await this.syncer.getLogs(filter)
 
     return logs
   }

@@ -746,11 +746,11 @@ describe('aggregation', () => {
 
         // USDC: minted 4000 (from different token transfer)
         expect(usdcToken?.mintedValueUsd).toEqual(4000)
-        expect(usdcToken?.burnedValueUsd).toEqual(undefined)
+        expect(usdcToken?.burnedValueUsd).toEqual(0)
 
         // BTC: minted 3000 (from same token transfer)
         expect(btcToken?.mintedValueUsd).toEqual(3000)
-        expect(btcToken?.burnedValueUsd).toEqual(undefined)
+        expect(btcToken?.burnedValueUsd).toEqual(0)
       })
 
       it('handles undefined USD values by using fallback values', () => {

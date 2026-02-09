@@ -15,22 +15,39 @@ Look for aggregator-specific swap events with toAssetAddress=0x0 (native):
 These are more direct but require handling multiple aggregator event formats.
 */
 
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
 } from './types'
 import { WormholeConfig } from './wormhole/wormhole.config'
 
-// WETH Withdrawal event - used to find ETH amount when tx.value is 0
-const parseWethWithdrawal = createEventParser(
-  'event Withdrawal(address indexed src, uint256 wad)',
+// MayanForwarder contract address - same across all EVM chains
+// https://docs.mayan.finance/integration/forwarder-contract
+const MAYAN_FORWARDER = EthereumAddress(
+  '0x337685fdab40d39bd02028545a4ffa7d287cc3e2',
 )
+
+// Chains where MayanForwarder is deployed
+const MAYAN_FORWARDER_CHAINS = [
+  'ethereum',
+  'arbitrum',
+  'base',
+  'optimism',
+  'polygonpos',
+  'bsc',
+  'avalanche',
+]
 
 // WETH/WMATIC addresses by chain
 const WRAPPED_NATIVE_ADDRESSES: Record<string, EthereumAddress> = {
@@ -78,20 +95,29 @@ const MAYAN_PROTOCOLS = [
   },
 ]
 
-export const parseForwardedEth = createEventParser(
-  'event ForwardedEth(address mayanProtocol, bytes protocolData)',
-)
+// Event signatures
+export const forwardedEthLog =
+  'event ForwardedEth(address mayanProtocol, bytes protocolData)'
+export const forwardedERC20Log =
+  'event ForwardedERC20(address token, uint256 amount, address mayanProtocol, bytes protocolData)'
+export const swapAndForwardedEthLog =
+  'event SwapAndForwardedEth(uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)'
+export const swapAndForwardedERC20Log =
+  'event SwapAndForwardedERC20(address tokenIn, uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)'
+const wethWithdrawalLog = 'event Withdrawal(address indexed src, uint256 wad)'
 
-export const parseForwardedERC20 = createEventParser(
-  'event ForwardedERC20(address token, uint256 amount, address mayanProtocol, bytes protocolData)',
-)
+const parseWethWithdrawal = createEventParser(wethWithdrawalLog)
+
+export const parseForwardedEth = createEventParser(forwardedEthLog)
+
+export const parseForwardedERC20 = createEventParser(forwardedERC20Log)
 
 export const parseSwapAndForwardedEth = createEventParser(
-  'event SwapAndForwardedEth(uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)',
+  swapAndForwardedEthLog,
 )
 
 export const parseSwapAndForwardedERC20 = createEventParser(
-  'event SwapAndForwardedERC20(address tokenIn, uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)',
+  swapAndForwardedERC20Log,
 )
 
 export const MayanForwarded = createInteropEventType<{
@@ -104,10 +130,47 @@ export const MayanForwarded = createInteropEventType<{
   $dstChain: string
 }>('mayan-forwarder.MayanForwarded')
 
-export class MayanForwarderPlugin implements InteropPlugin {
+export class MayanForwarderPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-forwarder'
 
   constructor(private configs: InteropConfigStore) {}
+
+  getDataRequests(): DataRequest[] {
+    const forwarderAddresses: ChainSpecificAddress[] = []
+    for (const chain of MAYAN_FORWARDER_CHAINS) {
+      try {
+        forwarderAddresses.push(
+          ChainSpecificAddress.fromLong(chain, MAYAN_FORWARDER),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
+
+    return [
+      {
+        type: 'event',
+        signature: forwardedEthLog,
+        includeTxEvents: [wethWithdrawalLog],
+        addresses: forwarderAddresses,
+      },
+      {
+        type: 'event',
+        signature: forwardedERC20Log,
+        addresses: forwarderAddresses,
+      },
+      {
+        type: 'event',
+        signature: swapAndForwardedEthLog,
+        addresses: forwarderAddresses,
+      },
+      {
+        type: 'event',
+        signature: swapAndForwardedERC20Log,
+        addresses: forwarderAddresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const wormholeNetworks = this.configs.get(WormholeConfig)
