@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -118,6 +119,27 @@ export const risc0: BaseProject = {
       },
     ],
     verifierHashes: [
+      {
+        // Is a dummy to show soon as using risc0 proof system. Verifier
+        // contract sources are unknown, so the actual hash cannot be computed.
+        // Fix once the sources are on etherscan.
+        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            // Based on standard Risc0 verifier architecture, this contract should be
+            // a verifier router that points to an actual verifier. But it's unverified, so idk
+            address: EthereumAddress(
+              '0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'unsuccessful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        description:
+          'Verifier smart contract sources are not available on Etherscan, hash value is set to 0x0 to indicate that it is not known.',
+      },
       {
         hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
