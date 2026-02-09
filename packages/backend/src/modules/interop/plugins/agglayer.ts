@@ -58,13 +58,29 @@ function toNumber(value: number | bigint): number {
 }
 
 const GLOBAL_INDEX_MAINNET_FLAG = 1n << 64n
+const GLOBAL_INDEX_DEPOSIT_COUNT_MASK = (1n << 32n) - 1n
 
-function computeGlobalIndex(
+function encodeGlobalIndex(
   localNetwork: number,
   depositCount: bigint,
 ): bigint {
   if (localNetwork === 0) return GLOBAL_INDEX_MAINNET_FLAG + depositCount
   return (BigInt(localNetwork - 1) << 32n) + depositCount
+}
+
+function decodeGlobalIndex(globalIndex: bigint): {
+  originNetwork: number
+  depositCount: bigint
+} {
+  const depositCount = globalIndex & GLOBAL_INDEX_DEPOSIT_COUNT_MASK
+  if ((globalIndex & GLOBAL_INDEX_MAINNET_FLAG) !== 0n) {
+    return { originNetwork: 0, depositCount }
+  }
+  return {
+    originNetwork:
+      Number((globalIndex >> 32n) & GLOBAL_INDEX_DEPOSIT_COUNT_MASK) + 1,
+    depositCount,
+  }
 }
 
 const bridgeEventLog =
@@ -101,6 +117,7 @@ const AgglayerClaimEvent = createInteropEventType<{
   matchId: string
   globalIndex: bigint
   originNetwork: number
+  $srcChain: string
   // origin chain address: token (leafType=0) or sender (leafType=1)
   originAddress: EthereumAddress
   destinationAddress: EthereumAddress
@@ -141,7 +158,7 @@ export class AgglayerPlugin implements InteropPluginResyncable {
       if (!assetOriginNetwork || !destinationNetwork) return
 
       const depositCount = BigInt(bridge.depositCount)
-      const globalIndex = computeGlobalIndex(
+      const globalIndex = encodeGlobalIndex(
         localNetwork.networkId,
         depositCount,
       )
@@ -204,11 +221,17 @@ export class AgglayerPlugin implements InteropPluginResyncable {
     const claim = parseClaimEvent(input.log, null)
     if (claim) {
       const originNetworkId = toNumber(claim.originNetwork)
-      const originNetwork = getNetworkById(originNetworkId)
+      const assetOriginNetwork = getNetworkById(originNetworkId)
       const destinationNetwork = getNetworkByChain(input.chain)
-      if (!originNetwork || !destinationNetwork) return
+      if (!assetOriginNetwork || !destinationNetwork) return
 
       const globalIndex = BigInt(claim.globalIndex)
+      const decodedGlobalIndex = decodeGlobalIndex(globalIndex)
+      const messageOriginNetwork = getNetworkById(
+        decodedGlobalIndex.originNetwork,
+      )
+      if (!messageOriginNetwork) return
+
       const originAddress = EthereumAddress(claim.originAddress)
       const destinationAddress = EthereumAddress(claim.destinationAddress)
 
@@ -241,6 +264,7 @@ export class AgglayerPlugin implements InteropPluginResyncable {
           matchId: globalIndex.toString(),
           globalIndex,
           originNetwork: originNetworkId,
+          $srcChain: messageOriginNetwork.chain,
           originAddress,
           destinationAddress,
           amount: claim.amount,
