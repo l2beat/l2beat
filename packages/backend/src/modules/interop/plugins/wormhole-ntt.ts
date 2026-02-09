@@ -142,12 +142,23 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
 
     const send = parseSendTransceiverMessage(input.log, null)
     if (send) {
-      // Find the ERC-20 Transfer closest before this event (token burn/lock)
+      const decoded = decodeNTTManagerPayload(send.message.nttManagerPayload)
+      const sourceToken = decoded?.sourceToken
+        ? Address32.cropToEthereumAddress(
+            Address32.from(decoded.sourceToken),
+          ).toLowerCase()
+        : undefined
+      // Find the ERC-20 Transfer closest before this event (token burn/lock),
+      // filtered by sourceToken from payload to avoid picking unrelated transfers
       const transfers = input.txLogs
         // biome-ignore lint/style/noNonNullAssertion: It's there
         .filter((x) => x.logIndex! < input.log.logIndex!)
         .map((x) => ({ log: x, parsed: parseTransfer(x, null) }))
-        .filter((x) => x.parsed)
+        .filter(
+          (x) =>
+            x.parsed &&
+            (!sourceToken || x.log.address.toLowerCase() === sourceToken),
+        )
         // biome-ignore lint/style/noNonNullAssertion: It's there
         .sort((a, b) => b.log.logIndex! - a.log.logIndex!)
       const closest = transfers[0]
