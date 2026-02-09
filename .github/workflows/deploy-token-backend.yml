@@ -11,8 +11,8 @@ on:
     inputs:
       force:
         description: "Force deployment"
-        required: false
-        default: false
+        required: true
+        default: true
         type: boolean
   push:
     branches:

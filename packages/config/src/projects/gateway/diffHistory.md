@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x05df99532ce14893ff7a2b959e0fb1f02e584cb9
+
+# Diff at Mon, 09 Feb 2026 12:20:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e6183eba0e821f854598054a2814402a2eb77829 block: 1770377757
+- current timestamp: 1770639543
+
+## Description
+
+Upgraded to the next version of verifier of L1.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type.
+```
+
+```diff
+    contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      values.$pastUpgrades.7:
++        ["2026-02-06T13:16:11.000Z","0x88f1e82aec13235c52029c419cdb07181011cb36f245e8cbe50acc1d256fc72b",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        7
++        8
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051587
++        124554051588
+      values.getSemverProtocolVersion.2:
+-        3
++        4
+      values.getVerifier:
+-        "eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B"
++        "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../gateway/{.flat@1770377757 => .flat}/L1VerifierFflonk.sol      | 4 ++--
+ .../gateway/{.flat@1770377757 => .flat}/L1VerifierPlonk.sol       | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+```
+
 Generated with discovered.json: 0xd7bf681331e56b32769d88b1b0826d0c5815ab24
 
 # Diff at Fri, 06 Feb 2026 11:37:00 GMT:
