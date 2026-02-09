@@ -292,6 +292,35 @@
       }
     ]
   },
+  "mayan-mctp-circle-src-unsupported": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x941d2a4147c9e0775459e9fcef015e608502232e6684ad67d8d1261b55f59846"
+      }
+    ],
+    "expects": {
+      "events": [
+        "mayan-forwarder.MayanForwarded",
+        "wormhole.LogMessagePublished"
+      ]
+    }
+  },
+  "mayan-mctp-circle-dst-skipped": {
+    "loadConfigs": ["wormhole", "cctp-v1"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x1f2039651ebe7826f366b6f83a845a3224810450e234c2ba036a9ac676f7039a"
+      }
+    ],
+    "expects": {
+      "events": [
+        "cctp-v1.MessageReceived"
+      ]
+    }
+  },
   "mayan-mctp-bridge": {
     "txs": [
       {

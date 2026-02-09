@@ -5,6 +5,13 @@ import {
   EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import {
+  forwardedERC20Log,
+  forwardedEthLog,
+  logToProtocolData,
+  swapAndForwardedERC20Log,
+  swapAndForwardedEthLog,
+} from '../mayan-forwarder'
 import { MAYAN_SWIFT } from '../mayan-swift.utils'
 import {
   createEventParser,
@@ -15,6 +22,11 @@ import {
 } from '../types'
 import { FOLKS_CHAIN_ID_TO_CHAIN } from './folks-finance'
 import { WormholeConfig } from './wormhole.config'
+
+// Mayan Circle contract address (same on all chains)
+const MAYAN_CIRCLE = EthereumAddress(
+  '0x875d6d37EC55c8cF220B9E5080717549d8Aa8EcA',
+)
 
 const logMessagePublishedLog =
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
@@ -65,7 +77,14 @@ export class WormholePlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: logMessagePublishedLog,
-        includeTxEvents: [transferLog, folksSendMessageLog],
+        includeTxEvents: [
+          transferLog,
+          folksSendMessageLog,
+          forwardedEthLog,
+          forwardedERC20Log,
+          swapAndForwardedEthLog,
+          swapAndForwardedERC20Log,
+        ],
         addresses: coreContractAddresses,
       },
     ]
@@ -97,6 +116,30 @@ export class WormholePlugin implements InteropPluginResyncable {
     // for matching with OrderUnlocked. If we captured them here as LogMessagePublished,
     // they would remain unmatched since the settlement matching uses SettlementSent.
     if (senderAddress === MAYAN_SWIFT) {
+      return
+    }
+
+    // Mayan Circle (MCTP) messages: extract $dstChain from the companion Mayan Forwarder
+    // event in the same tx. Source-side messages always have a ForwardedERC20/ForwardedEth.
+    // Destination-side confirmations (bridgeWithLockedFee) have no forwarder event and are
+    // never matchable, so we skip them.
+    if (senderAddress === MAYAN_CIRCLE) {
+      const wormholeNetworks = this.configs.get(WormholeConfig) ?? []
+      for (const candidateLog of input.txLogs) {
+        const decoded = logToProtocolData(candidateLog, wormholeNetworks)
+        if (decoded) {
+          return [
+            LogMessagePublished.create(input, {
+              payload: parsed.payload,
+              sequence: parsed.sequence,
+              wormholeChainId: network.wormholeChainId,
+              sender: senderAddress,
+              $dstChain: decoded.dstChain,
+            }),
+          ]
+        }
+      }
+      // No forwarder event found — destination-side confirmation, skip capture
       return
     }
 
