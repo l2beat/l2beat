@@ -1,5 +1,5 @@
 import type { InteropPluginName } from '@l2beat/config'
-import type { InteropEventContext } from '@l2beat/database'
+import type { AbstractTokenRecord, InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
   type Block,
@@ -230,6 +230,7 @@ export interface InteropPlugin {
   match?: (
     event: InteropEvent,
     db: InteropEventDb,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
 }
 

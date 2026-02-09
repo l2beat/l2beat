@@ -87,6 +87,7 @@ export function createInteropModule({
   const matcher = new InteropMatchingLoop(
     eventStore,
     db,
+    tokenDbClient,
     flattenClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id),
     logger,
