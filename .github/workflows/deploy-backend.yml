@@ -11,7 +11,7 @@ on:
     inputs:
       force:
         description: "Force deployment"
-        required: false
+        required: true
         default: true
         type: boolean
       backend-prod-enabled:
