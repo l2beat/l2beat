@@ -42,7 +42,7 @@ export const Process = createInteropEventType<{
   $srcChain: string
 }>('hyperlane.Process')
 
-//
+// https://github.com/hyperlane-xyz/hyperlane-registry
 export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'ethereum', chainId: 1 },
   { chain: 'arbitrum', chainId: 42161 },
