@@ -1,8 +1,9 @@
+import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
 import type { InteropDashboardParams, ProtocolEntry } from './types'
+import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getProtocolEntries } from './utils/getAllProtocolEntries'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
@@ -10,6 +11,7 @@ import {
   getTopProtocols,
   type InteropProtocolData,
 } from './utils/getTopProtocols'
+import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
 import {
   getTransferSizeChartData,
   type TransferSizeChartData,
@@ -18,6 +20,7 @@ import {
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
+  topToken: InteropTopTokenData | undefined
   transferSizeChartData: TransferSizeChartData | undefined
   entries: ProtocolEntry[]
 }
@@ -29,7 +32,6 @@ export async function getInteropDashboardData(
     return getMockInteropDashboardData()
   }
 
-  const tokenDb = getTokenDb()
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
@@ -40,13 +42,10 @@ export async function getInteropDashboardData(
     params.type,
   )
 
-  const tokensDetailsData = await tokenDb.abstractToken.getByIds(
+  const abstractTokenIds = unique(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
   )
-  const tokensDetailsMap = new Map<
-    string,
-    { symbol: string; iconUrl: string | null }
-  >(tokensDetailsData.map((t) => [t.id, t]))
+  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
 
   // Projects that are part of other projects
   const subgroupProjects = new Set(
@@ -56,6 +55,12 @@ export async function getInteropDashboardData(
   return {
     top3Paths: getTopPaths(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
+    topToken: getTopToken({
+      records,
+      tokensDetailsMap,
+      interopProjects,
+      subgroupProjects,
+    }),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
     entries: getProtocolEntries(records, tokensDetailsMap, interopProjects),
   }
@@ -147,6 +152,23 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     netMintedValue: undefined,
   }))
 
+  const topToken: InteropTopTokenData | undefined = mockTokens[0]
+    ? {
+        symbol: mockTokens[0].symbol,
+        iconUrl: mockTokens[0].iconUrl,
+        volume: mockTokens[0].volume,
+        transferCount: mockTokens[0].transferCount,
+        topProtocol: interopProjects[0]
+          ? {
+              name:
+                interopProjects[0].interopConfig.name ??
+                interopProjects[0].name,
+              iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
+            }
+          : undefined,
+      }
+    : undefined
+
   const transferSizeChartData: TransferSizeChartData = {
     arbitrum: {
       name: 'Arbitrum Canonical',
@@ -180,6 +202,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   return {
     top3Paths,
     topProtocols,
+    topToken,
     transferSizeChartData,
     entries,
   }

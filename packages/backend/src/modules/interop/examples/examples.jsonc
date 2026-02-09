@@ -292,6 +292,54 @@
       }
     ]
   },
+  "wormhole-tokenbridge-to-bsc": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x2e528c91e0c482d41d340dedcc777e3c7701ab931828d2ff8713909e7c07d545"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x3d1ea24667818c88ee4fc0f8234fe20793d0293734265627a3eec6887f505746"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message"],
+      "transfers": ["wormhole-tokenbridge.Transfer"]
+    }
+  },
+  "mayan-mctp-circle-src-unsupported": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x941d2a4147c9e0775459e9fcef015e608502232e6684ad67d8d1261b55f59846"
+      }
+    ],
+    "expects": {
+      "events": [
+        "mayan-forwarder.MayanForwarded",
+        "wormhole.LogMessagePublished"
+      ]
+    }
+  },
+  "mayan-mctp-circle-dst-skipped": {
+    "loadConfigs": ["wormhole", "cctp-v1"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x1f2039651ebe7826f366b6f83a845a3224810450e234c2ba036a9ac676f7039a"
+      }
+    ],
+    "expects": {
+      "events": ["cctp-v1.MessageReceived"]
+    }
+  },
   "mayan-mctp-bridge": {
     "txs": [
       {
