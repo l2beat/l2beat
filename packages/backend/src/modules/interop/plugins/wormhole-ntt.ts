@@ -144,9 +144,11 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
     if (send) {
       // Find the ERC-20 Transfer closest before this event (token burn/lock)
       const transfers = input.txLogs
+        // biome-ignore lint/style/noNonNullAssertion: It's there
         .filter((x) => x.logIndex! < input.log.logIndex!)
         .map((x) => ({ log: x, parsed: parseTransfer(x, null) }))
         .filter((x) => x.parsed)
+        // biome-ignore lint/style/noNonNullAssertion: It's there
         .sort((a, b) => b.log.logIndex! - a.log.logIndex!)
       const closest = transfers[0]
 
@@ -172,9 +174,11 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
     if (received) {
       // Find the ERC-20 Transfer closest after this event (token mint)
       const dstTransfers = input.txLogs
+        // biome-ignore lint/style/noNonNullAssertion: It's there
         .filter((x) => x.logIndex! > input.log.logIndex!)
         .map((x) => ({ log: x, parsed: parseTransfer(x, null) }))
         .filter((x) => x.parsed)
+        // biome-ignore lint/style/noNonNullAssertion: It's there
         .sort((a, b) => a.log.logIndex! - b.log.logIndex!)
       const dstClosest = dstTransfers[0]
 
@@ -199,9 +203,11 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
     if (receivedCore) {
       // Find the ERC-20 Transfer closest after this event (token mint)
       const dstTransfers = input.txLogs
+        // biome-ignore lint/style/noNonNullAssertion: It's there
         .filter((x) => x.logIndex! > input.log.logIndex!)
         .map((x) => ({ log: x, parsed: parseTransfer(x, null) }))
         .filter((x) => x.parsed)
+        // biome-ignore lint/style/noNonNullAssertion: It's there
         .sort((a, b) => a.log.logIndex! - b.log.logIndex!)
       const dstClosest = dstTransfers[0]
 
@@ -289,9 +295,7 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         sentTransceiverMessage.args.transferAmount ?? decoded?.amount
       const srcTokenAddress =
         sentTransceiverMessage.args.transferTokenAddress ??
-        (decoded?.sourceToken
-          ? Address32.from(decoded.sourceToken)
-          : undefined)
+        (decoded?.sourceToken ? Address32.from(decoded.sourceToken) : undefined)
 
       return [
         Result.Message('wormhole.Message', {
@@ -355,9 +359,7 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         sentTransceiverMessage.args.transferAmount ?? decoded?.amount
       const srcTokenAddress =
         sentTransceiverMessage.args.transferTokenAddress ??
-        (decoded?.sourceToken
-          ? Address32.from(decoded.sourceToken)
-          : undefined)
+        (decoded?.sourceToken ? Address32.from(decoded.sourceToken) : undefined)
 
       return [
         Result.Message('wormhole.Message', {
