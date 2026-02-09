@@ -49,7 +49,7 @@ jobs:
             exit 0
           fi
 
-          if check_minutes 55 60 || check_minutes 0 30; then
+          if check_minutes 55 60 || check_minutes 0 29; then
             echo "It's too late, failing!"
             exit 1
           fi
@@ -61,6 +61,7 @@ jobs:
   deploy-update-monitor-staging:
     needs: check-time
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.um-staging-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_UM_STAGING_ENABLED != 'false')
+    timeout-minutes: 5
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
@@ -70,6 +71,7 @@ jobs:
   deploy-update-monitor-production:
     needs: check-time
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.um-prod-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_UM_STAGING_ENABLED != 'false')
+    timeout-minutes: 5
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
