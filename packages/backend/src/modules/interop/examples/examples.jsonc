@@ -1123,12 +1123,12 @@
     "loadConfigs": ["across"],
     "txs": [
       {
-        "chain": "ethereum",
-        "tx": "0xe0ef176608450355ce700cc2f697b9b9bf9a1b1c849ae245569691aeb894f506"
+        "chain": "bsc",
+        "tx": "0xbc7f08235557cef472ca4beef1d97a1b8279f8c7cdb424bef8394bbbae0cfa24"
       },
       {
         "chain": "arbitrum",
-        "tx": "0xf9ae34c090a6073f3503144cf9aafe7ccdabc4f25f7a362037646741b6e3f332"
+        "tx": "0xd4255d8ecf5fffc7702467b7f7e354c93a5c9a8be43f585eaceeeb999d141c28"
       }
     ]
   },
