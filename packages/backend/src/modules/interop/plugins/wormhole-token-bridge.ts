@@ -136,7 +136,10 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
           srcAmount: logMessagePublished.args.srcAmount,
           dstTokenAddress: transferRedeemed.args.dstTokenAddress,
           dstAmount: transferRedeemed.args.dstAmount,
-          srcWasBurned: transferRedeemed.args.dstWasMinted !== undefined ? !transferRedeemed.args.dstWasMinted : undefined,
+          srcWasBurned:
+            transferRedeemed.args.dstWasMinted !== undefined
+              ? !transferRedeemed.args.dstWasMinted
+              : undefined,
           dstWasMinted: transferRedeemed.args.dstWasMinted,
         }),
       ]
