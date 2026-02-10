@@ -178,6 +178,183 @@
       "ccip.Transfer"
     ]
   },
+  "ccip-batched": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Batch 1: Arbitrum → Ethereum (fluid + vsn)
+      {
+        "chain": "arbitrum",
+        "tx": "0xc84e9e5d1d5942337d7425e24b0e9b8d33e02e2b3a9bd3d523af56f4e1a6d493"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xdaced5bdf57edc8a1ac28496e1d48a75a83bb0ea41b3d2caabf94aefee15beca"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x07270dcb47c17e37197ce8ee44c174f92f3b5591153f4dd608ef78b6910e2b24"
+      },
+      // Batch 2: Ethereum → Base (wmtx + chex)
+      {
+        "chain": "ethereum",
+        "tx": "0x1da399f8ee02f1cf305f4d8886091877e0707106cf489becab9b3039625c4a6c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x0ce550b243cbe0faf788179e587dcd0037e5ffdc0d9858e2643e0aae798f06ee"
+      },
+      {
+        "chain": "base",
+        "tx": "0x14b2cd0c59b277be8f8a082d00e3ce1f116e070c7750b61acc02cae10d1a71d1"
+      },
+      // Batch 3: Ethereum → Base (wmtx + zchf)
+      {
+        "chain": "ethereum",
+        "tx": "0x62006d8df196bb0d99ec153cf6e1fbe69504d1db8a9ab209778091d14a350bed"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6ad6b072d4a85593d4b01e661f742f35e04624ebc272832285d2af96a8c7b859"
+      },
+      {
+        "chain": "base",
+        "tx": "0x1a405804d2cbeebbc10ca72711f238c57c8964029f4cc654061932e2573fbdae"
+      },
+      // Batch 4: Base → Ethereum (syrupusdc + zchf)
+      {
+        "chain": "base",
+        "tx": "0x2c922cf88ddc1d4a0adfeb44e7452fb9348865034ff640ca468305ded84394d2"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4a10bc384fc6b61082a714a10dba26c29312db52ac8ca4a90317ef45d1f9e490"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x71b41756f26387ca0cb65f16700f20c2b6b21b605debabd69f9928db3f1aa740"
+      },
+      // Batch 5: Ethereum → Base (syrupusdc - single transfer, shares dst tx with cctp)
+      {
+        "chain": "ethereum",
+        "tx": "0xab559db1d1fadf1769eb9ed54c9cd947b849b2e82f563da44d9faf4ed2bdaf5f"
+      },
+      {
+        "chain": "base",
+        "tx": "0x84ead484b442ca5af710de79af5b8b88a3f10f2b0ca12681cc1213174cfd2665"
+      },
+      // Batch 6: Base → Ethereum (LBTC + dextf)
+      {
+        "chain": "base",
+        "tx": "0xcc54bf7f78c1d85bf06ab5625d4d5812c99f202d3bb972d25133894371e57f00"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe23f10c03cf9df10ba90ee2fbd899f603a12b3ad8c20bf35ea5fa86607188101"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9c169d8efdb52db2871f8a524fe0b840b7e52bfdae308dcd1fb38e3ae2437ca5"
+      },
+      // Batch 7: Ethereum → Base (DEXTF + paal + DEXTF — 3-message batch)
+      {
+        "chain": "ethereum",
+        "tx": "0x199d1b8fc8788a905fc6dae9a0938ce5a79b89f90f145acdd49952239484c094"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf720db18b692656645ffae547335a346d8f21e5302e1741cef0e6b42b3d4019c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf7f2f67eceab1a986da25a1ba8a7a6b3c61301eddf290123e2b859a163560038"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb4392fa5e89239d24695e041f02d92ce875ab82bec5b41fc813cd03d2c873ffb"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        // Batch 1: vsn + fluid (arbitrum → ethereum)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "vsn" } },
+          "dst": { "financials": { "symbol": "vsn" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "fluid" } },
+          "dst": { "financials": { "symbol": "fluid" } }
+        },
+        // Batch 2: wmtx + chex (ethereum → base)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "wmtx" } },
+          "dst": { "financials": { "symbol": "WMTX" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "chex" } },
+          "dst": { "financials": { "symbol": "chex" } }
+        },
+        // Batch 3: wmtx + zchf (ethereum → base)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "wmtx" } },
+          "dst": { "financials": { "symbol": "WMTX" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "zchf" } },
+          "dst": { "financials": { "symbol": "zchf" } }
+        },
+        // Batch 4: syrupusdc + zchf (base → ethereum)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "syrupusdc" } },
+          "dst": { "financials": { "symbol": "syrupusdc" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "zchf" } },
+          "dst": { "financials": { "symbol": "zchf" } }
+        },
+        // Batch 5: syrupusdc (ethereum → base, single transfer)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "syrupusdc" } },
+          "dst": { "financials": { "symbol": "syrupusdc" } }
+        },
+        // Batch 6: LBTC + dextf (base → ethereum)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "LBTC" } },
+          "dst": { "financials": { "symbol": "LBTC" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "dextf" } },
+          "dst": { "financials": { "symbol": "DEXTF" } }
+        },
+        // Batch 7: paal + DEXTF + DEXTF (ethereum → base, 3-message batch)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "paal" } },
+          "dst": { "financials": { "symbol": "paal" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "DEXTF" } },
+          "dst": { "financials": { "symbol": "dextf" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "DEXTF" } },
+          "dst": { "financials": { "symbol": "dextf" } }
+        }
+      ]
+    }
+  },
   "ccip-cctp-usdc": {
     "loadConfigs": ["ccip", "cctp-v1"],
     "txs": [
