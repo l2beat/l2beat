@@ -125,6 +125,11 @@ const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
 const parseTransfer = createEventParser(transferLog)
 
+// CCTP DepositForBurn - used to detect when CCIP delegates to CCTP for USDC transfers
+const depositForBurnLog =
+  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)'
+const parseDepositForBurn = createEventParser(depositForBurnLog)
+
 export const CCIPSendRequested = createInteropEventType<{
   messageId: `0x${string}`
   $dstChain: string
@@ -132,6 +137,7 @@ export const CCIPSendRequested = createInteropEventType<{
   amount?: bigint
   index?: number
   wasBurned?: boolean
+  isCctpBacked?: boolean
 }>('ccip.CCIPSendRequested')
 
 export const ExecutionStateChanged = createInteropEventType<{
@@ -221,7 +227,13 @@ export class CCIPPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: CCIPSendRequestedLog,
-        includeTxEvents: [lockedLog, burnedLog, lockedOrBurnedLog, transferLog],
+        includeTxEvents: [
+          lockedLog,
+          burnedLog,
+          lockedOrBurnedLog,
+          transferLog,
+          depositForBurnLog,
+        ],
         addresses: outboundAddresses,
       },
       {
@@ -275,6 +287,8 @@ export class CCIPPlugin implements InteropPluginResyncable {
           index,
           $dstChain: dstChainEntry[0],
           wasBurned: srcTokenInfo[index]?.wasBurned,
+          isCctpBacked:
+            this.isCctpBackedToken(input, ta.token, ta.amount) || undefined,
         }),
       )
     }
@@ -300,6 +314,35 @@ export class CCIPPlugin implements InteropPluginResyncable {
         }),
       ]
     }
+  }
+
+  /**
+   * Detect tokens that are transferred via CCTP (e.g., USDC).
+   * When CCIP delegates to CCTP, a DepositForBurn event is emitted in the same tx
+   * between the CCIP token pool events and CCIPSendRequested.
+   * Only matches DepositForBurn events that appear before our main event
+   * and match both token address and amount from tokenAmounts.
+   */
+  private isCctpBackedToken(
+    input: LogToCapture,
+    tokenAddress: string,
+    amount: bigint,
+  ): boolean {
+    const logsBeforeSend = input.txLogs.filter(
+      (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
+    )
+    for (const log of logsBeforeSend) {
+      const depositForBurn = parseDepositForBurn(log, null)
+      if (
+        depositForBurn &&
+        depositForBurn.burnToken.toLowerCase() ===
+          tokenAddress.toLowerCase() &&
+        depositForBurn.amount === amount
+      ) {
+        return true
+      }
+    }
+    return false
   }
 
   /**
@@ -481,6 +524,8 @@ export class CCIPPlugin implements InteropPluginResyncable {
         const dstToken = dstTokens[i]
         const matched = ccipSendRequests.find((req) => req.args.index === i)
         if (matched) {
+          // Skip transfer if token is CCTP-backed (handled by CCTP plugin)
+          if (matched.args.isCctpBacked) continue
           result.push(
             Result.Transfer('ccip.Transfer', {
               srcEvent: matched,
