@@ -188,6 +188,7 @@ export class DeBridgePlugin implements InteropPlugin {
           dstTokenAddress: claimed.args.dstTokenAddress ?? Address32.NATIVE,
           dstAmount: claimed.args.amount,
           dstWasMinted: claimed.args.dstWasMinted,
+          bridgeType: 'lockAndMint',
         }),
       )
     }
