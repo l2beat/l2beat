@@ -5,7 +5,7 @@ import type {
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { TopItems } from './utils/getTop3Items'
+import type { TopItems } from './utils/getTopItems'
 
 export type ProtocolEntry = {
   id: string

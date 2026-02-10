@@ -5,7 +5,7 @@ import { AvgDurationCell } from '~/pages/interop/components/table/AvgDurationCel
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
 import type { TokenData } from '~/server/features/scaling/interop/types'
-import type { TopItems } from '~/server/features/scaling/interop/utils/getTop3Items'
+import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type {
   LockAndMintProtocolEntry,

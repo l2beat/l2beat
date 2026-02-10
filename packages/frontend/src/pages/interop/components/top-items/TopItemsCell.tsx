@@ -21,7 +21,7 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
-import type { TopItems } from '~/server/features/scaling/interop/utils/getTop3Items'
+import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import {
   getTopItemsColumns,
@@ -48,7 +48,6 @@ export function InteropTopItemsCell({
 }: InteropTopItemsCellProps) {
   const [isOpen, setIsOpen] = useState(false)
   const breakpoint = useBreakpoint()
-  const remainingItems = topItems.totalCount - topItems.items.length
 
   const columns = useMemo(() => {
     return getTopItemsColumns(itemType, showNetMintedValueColumn)
@@ -81,9 +80,9 @@ export function InteropTopItemsCell({
             <ItemIconWithTooltip key={item.id} item={item} index={i} />
           ))}
         </div>
-        {remainingItems > 0 && (
+        {topItems.remainingCount > 0 && (
           <span className="font-bold text-label-value-13 group-hover/dialog-trigger:underline">
-            +{remainingItems}
+            +{topItems.remainingCount}
           </span>
         )}
       </button>

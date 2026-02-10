@@ -1,5 +1,5 @@
 import type { ChainData } from '~/server/features/scaling/interop/types'
-import type { TopItems } from '~/server/features/scaling/interop/utils/getTop3Items'
+import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { InteropTopItemsCell } from './TopItemsCell'
 
 export function TopChainsCell({
@@ -27,7 +27,7 @@ export function TopChainsCell({
           avgValue: chain.avgValue,
           netMintedValue: chain.netMintedValue,
         })),
-        totalCount: topItems.totalCount,
+        remainingCount: topItems.remainingCount,
       }}
       itemType="chains"
       protocol={protocol}

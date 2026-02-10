@@ -1,5 +1,5 @@
 import type { TokenData } from '~/server/features/scaling/interop/types'
-import type { TopItems } from '~/server/features/scaling/interop/utils/getTop3Items'
+import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { InteropTopItemsCell } from './TopItemsCell'
 
 export function TopTokensCell({
@@ -27,7 +27,7 @@ export function TopTokensCell({
           avgValue: token.avgValue,
           netMintedValue: token.netMintedValue,
         })),
-        totalCount: topItems.totalCount,
+        remainingCount: topItems.remainingCount,
       }}
       itemType="tokens"
       protocol={protocol}

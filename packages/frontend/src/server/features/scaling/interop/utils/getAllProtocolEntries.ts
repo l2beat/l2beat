@@ -18,7 +18,7 @@ import {
   type ProtocolDataByBridgeType,
 } from './getProtocolsDataMap'
 import { getTokensData } from './getTokensData'
-import { getTopItems } from './getTop3Items'
+import { getTopItems } from './getTopItems'
 
 const TOP_ITEMS_LIMIT = 3
 const logger = getLogger().for('getAllProtocolEntries')
