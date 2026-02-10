@@ -8,5 +8,11 @@
     "hash": "0xe050f1745884847699cff3db5506410a82629972bb6fd8a52199442b01351485",
     "address": "eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA",
     "blockNumber": 23275143
+  },
+  "Liquidity_v3": {
+    "hash": "0xf23a0f0c4af93cdcb226ce3de63c8ed56ce4267448a659414e5a459b4e5b94db",
+    "address": "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9",
+    "chain": "ethereum",
+    "blockNumber": 24426172
   }
 }
