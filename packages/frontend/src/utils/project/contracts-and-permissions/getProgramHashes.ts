@@ -10,7 +10,7 @@ export function getProgramHashes(
   programHashes: ProjectScalingContractsProgramHash[] | undefined,
   zkCatalogProjects: Project[],
   allProjects: Project<'contracts'>[],
-  tvs?: SevenDayTvsBreakdown,
+  tvs: SevenDayTvsBreakdown,
 ): StateValidationProgramHashData[] {
   if (!programHashes) return []
 
@@ -40,8 +40,8 @@ export function getProgramHashes(
           : undefined,
         usedIn: usedInWithIcons.sort(
           (a, b) =>
-            (tvs?.projects[b.id]?.breakdown.total ?? 0) -
-            (tvs?.projects[a.id]?.breakdown.total ?? 0),
+            (tvs.projects[b.id]?.breakdown.total ?? 0) -
+            (tvs.projects[a.id]?.breakdown.total ?? 0),
         ),
       }
     })

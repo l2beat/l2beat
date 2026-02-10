@@ -40,7 +40,7 @@ export function getContractsSection(
   projectsChangeReport: ProjectsChangeReport,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   allProjects: Project<'contracts'>[],
-  tvs?: SevenDayTvsBreakdown,
+  tvs: SevenDayTvsBreakdown,
 ): ContractsSection | undefined {
   if (!projectParams.contracts) {
     return undefined

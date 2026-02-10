@@ -105,9 +105,7 @@ export async function getBridgesProjectEntry(
   ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-    project.contracts?.programHashes?.length
-      ? get7dTvsBreakdown({ type: 'layer2' })
-      : undefined,
+    get7dTvsBreakdown({ type: 'layer2' }),
     checkIfTvsExist(project.id, UnixTime.now() - 365 * UnixTime.DAY),
     getTokensForProject(project),
     getContractUtils(),

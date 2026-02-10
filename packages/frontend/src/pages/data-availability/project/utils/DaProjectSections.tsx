@@ -59,9 +59,7 @@ export async function getRegularDaProjectSections({
     getContractUtils(),
     getDaThroughputSection(helpers, layer),
     bridge ? getLiveness(bridge.id) : undefined,
-    bridge?.contracts?.programHashes?.length
-      ? get7dTvsBreakdown({ type: 'layer2' })
-      : undefined,
+    get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['contracts'],
     }),
