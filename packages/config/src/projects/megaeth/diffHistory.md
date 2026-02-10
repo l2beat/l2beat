@@ -1,17 +1,17 @@
-Generated with discovered.json: 0x3f9928ccc9fed0fd44fe5e34cffe0d300da2d9bf
+Generated with discovered.json: 0xf262bc6cb900bb8f5fb3d5093ea3a4d794db340f
 
-# Diff at Tue, 10 Feb 2026 14:12:07 GMT:
+# Diff at Tue, 10 Feb 2026 14:37:44 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@3ed515d72a3ee13169bc3e44f3cacfb40ed698a3 block: 1769535661
-- current timestamp: 1770732659
+- current timestamp: 1770734196
 
 ## Description
 
 Major update: MegaETH transitions to onchain EigenDA certificate verification via a new BunnyInbox contract.
 
 **SystemConfig upgrade (v2.5.0 → v2.7.0):**
-Upgraded implementation from 0x2425EB to 0x7f84fE. The only code change is the addition of a new `setBatchInbox(address)` function allowing the owner to change the batch inbox address on-chain ([diff](https://disco.l2beat.com/diff/eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639/eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9)). The batchInbox was changed from the old EOA (0x00656C) to the new BunnyInbox contract (0x02B8d1). blobbasefeeScalar set to 0.
+Upgraded implementation from 0x2425EB to 0x7f84fE. The only code change is the addition of a new `setBatchInbox(address)` function allowing the owner to change the batch inbox address on-chain ([diff](https://disco.l2beat.com/diff/eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639/eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9)). The batchInbox was changed from the old EOA (0x00656C) to the new BunnyInbox contract (0x02B8d1).
 
 **BunnyInbox (new, 0x02B8d1):**
 New upgradeable contract serving as the batch inbox. Its `fallback()` function strips a 4-byte prefix from calldata, RLP-decodes an EigenDACertV3 struct, and calls `EigenDACertVerifier.checkDACertReverts()` to validate the EigenDA certificate on-chain. This means every batch submission now verifies the EigenDA data availability certificate on L1.
@@ -25,10 +25,6 @@ The KailuaGame and KailuaTreasury have an immutable `ROLLUP_CONFIG_HASH` (0x16eb
 **Governance changes:**
 - MegaETH Safe multisig changed from 4/8 (50%) to 6/10 (60%) threshold
 - Two new members added: a 1-of-3 nested Safe (0x63eC, nonce 0) and an EOA (0x0D17)
-- ProxyAdmin owners (0x15fC, 0xab48) transferred from EOA (0x0A38) to the MegaETH Safe (0x92e0) - this is a positive decentralization step
-- DisputeGameFactory and DelayedWETH ownership also transferred to the Safe
-- Guardian role on SuperchainConfig and OptimismPortal2 transferred from EOA (0x0A38) to Safe (0xB2A9, a 1-of-1 Safe owned by the same EOA 0x0A38)
-- MegaUSDmPreDeposit deposits deactivated (isDepositActive: false)
 
 ## Watched changes
 
