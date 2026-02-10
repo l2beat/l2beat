@@ -892,6 +892,15 @@
       {
         "chain": "base",
         "tx": "0x5056d23e00423379b4466a25a233527499060f3904718ceaebe14c4a87d5c27f"
+      },
+      // NTT transfer from Arbitrum → Polygon (Relayer path)
+      {
+        "chain": "arbitrum",
+        "tx": "0x695f22bb48d3f3382d12e03737acc5ebbb4bd87590d5566e394f84760a14e1ad"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x08b6056ca4dc1cd84b9fbeb9d3c849bb89d27b7f50555aa862126c09ca490463"
       }
     ],
     "events": ["wormhole-ntt.ReceivedMessage"],
@@ -899,9 +908,11 @@
       { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
       { "type": "wormhole.Message", "app": "m0-index" },
       { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
-      { "type": "wormhole.Message", "app": "wormhole-ntt-core" }
+      { "type": "wormhole.Message", "app": "wormhole-ntt-core" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" }
     ],
     "transfers": [
+      "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer"
@@ -1123,12 +1134,12 @@
     "loadConfigs": ["across"],
     "txs": [
       {
-        "chain": "ethereum",
-        "tx": "0xe0ef176608450355ce700cc2f697b9b9bf9a1b1c849ae245569691aeb894f506"
+        "chain": "bsc",
+        "tx": "0xbc7f08235557cef472ca4beef1d97a1b8279f8c7cdb424bef8394bbbae0cfa24"
       },
       {
         "chain": "arbitrum",
-        "tx": "0xf9ae34c090a6073f3503144cf9aafe7ccdabc4f25f7a362037646741b6e3f332"
+        "tx": "0xd4255d8ecf5fffc7702467b7f7e354c93a5c9a8be43f585eaceeeb999d141c28"
       }
     ]
   },
@@ -2746,6 +2757,23 @@
       {
         "chain": "ethereum",
         "tx": "0x5c621c551c8760b8f3814cf129dae9a954b5bfa1efdce84d3881c60fbe850bd7"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-ethereum-eth": {
+    "tags": ["agglayer"],
+    "name": "katana -> ethereum (ETH)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0xcf59eacd76a37632762e3825a91fe8bdd93758f0d1ff4633b2ba726ba8d6ee5b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x005c68d2cd9a23e087487da5992c233efe0fb8c1dd9cb1d7b2ee955568b9ffed"
       }
     ],
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],

@@ -47,6 +47,7 @@ import { usdt0 } from '../projects/usdt0/usdt0'
 import { vector } from '../projects/vector/vector'
 import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
 import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
+import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
@@ -111,4 +112,5 @@ export const refactored: BaseProject[] = [
   fusionplus,
   circlegateway,
   wormholeWtt,
+  wormholeNtt,
 ]

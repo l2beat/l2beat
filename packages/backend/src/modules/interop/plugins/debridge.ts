@@ -44,6 +44,7 @@ function isWithinTolerance(value: bigint, target: bigint): boolean {
   return value >= target - delta && value <= target + delta
 }
 
+// https://docs.debridge.com/dmp-details/dmp/deployed-contracts
 export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '1', chain: 'ethereum' },
   { chainId: '42161', chain: 'arbitrum' },
@@ -53,6 +54,8 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '137', chain: 'polygonpos' },
   // { chainId: '324', chain: 'zksync2' }, // not supported
   { chainId: '2741', chain: 'abstract' },
+  // { chainId: '747474', chain: 'katana' }, // not supported
+  { chainId: '56', chain: 'bsc' },
 ])
 
 export const Sent = createInteropEventType<{
