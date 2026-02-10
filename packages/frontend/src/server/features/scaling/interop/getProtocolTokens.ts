@@ -40,13 +40,32 @@ export async function getProtocolTokens({
     return []
   }
 
-  const tokens = await db.aggregatedInteropToken.getByChainsIdAndTimestamp(
-    latestTimestamp,
-    id,
-    from,
-    to,
-    type,
+  const [transfers, tokens] = await Promise.all([
+    db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
+      latestTimestamp,
+      id,
+      from,
+      to,
+      type,
+    ),
+    db.aggregatedInteropToken.getByChainsIdAndTimestamp(
+      latestTimestamp,
+      id,
+      from,
+      to,
+      type,
+    ),
+  ])
+
+  const transferCount = transfers.reduce(
+    (acc, transfer) => acc + transfer.transferCount,
+    0,
   )
+  const identifiedTransferCount = transfers.reduce(
+    (acc, transfer) => acc + transfer.identifiedCount,
+    0,
+  )
+
   const abstractTokenIds = unique(tokens.map((token) => token.abstractTokenId))
   const transfersTimeModeMap = buildTransfersTimeModeMap([interopProject])
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
@@ -76,7 +95,7 @@ export async function getProtocolTokens({
     tokens: result,
     tokensDetailsMap,
     durationSplitMap,
-    unknownTransfersCount: 0,
+    unknownTransfersCount: transferCount - identifiedTransferCount,
     logger,
   })
 }
