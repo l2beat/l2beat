@@ -75,28 +75,6 @@ const last24hVolumeColumn = columnHelper.accessor('volume', {
   },
 })
 
-function getTokensByVolumeColumn(showNetMintedValueColumn?: boolean) {
-  return columnHelper.accessor('tokens', {
-    header: 'Tokens\nby volume',
-    meta: {
-      cellClassName: '!pr-0',
-      headClassName: 'text-2xs',
-      tooltip:
-        'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
-    },
-    cell: (ctx) => (
-      <TopTokensCell
-        topItems={ctx.row.original.tokens}
-        protocol={{
-          name: ctx.row.original.protocolName,
-          iconUrl: ctx.row.original.iconUrl,
-        }}
-        showNetMintedValueColumn={showNetMintedValueColumn}
-      />
-    ),
-  })
-}
-
 const averageDurationColumn = columnHelper.accessor(
   (row) =>
     row.averageDuration.type === 'unknown'
@@ -145,6 +123,7 @@ const averageInFlightValueColumn = columnHelper.accessor(
 )
 
 export function getAllProtocolsColumns(
+  type: KnownInteropBridgeType | undefined,
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
   showNetMintedValueColumn?: boolean,
@@ -228,7 +207,27 @@ export function getAllProtocolsColumns(
           </span>
         ),
       }),
-    getTokensByVolumeColumn(showNetMintedValueColumn),
+    columnHelper.accessor('tokens', {
+      header: 'Tokens\nby volume',
+      meta: {
+        cellClassName: '!pr-0',
+        headClassName: 'text-2xs',
+        tooltip:
+          'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
+      },
+      cell: (ctx) => (
+        <TopTokensCell
+          topItems={ctx.row.original.tokens}
+          type={type}
+          protocol={{
+            id: ctx.row.original.id,
+            name: ctx.row.original.protocolName,
+            iconUrl: ctx.row.original.iconUrl,
+          }}
+          showNetMintedValueColumn={showNetMintedValueColumn}
+        />
+      ),
+    }),
     columnHelper.accessor('chains', {
       header: 'Chains\nby volume',
       meta: {
@@ -241,6 +240,7 @@ export function getAllProtocolsColumns(
         <TopChainsCell
           topItems={ctx.row.original.chains}
           protocol={{
+            id: ctx.row.original.id,
             name: ctx.row.original.protocolName,
             iconUrl: ctx.row.original.iconUrl,
           }}

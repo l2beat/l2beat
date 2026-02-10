@@ -101,6 +101,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       />
       <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
       <AllProtocolsCard
+        type="lockAndMint"
         entries={data?.entries}
         isLoading={isLoading}
         hideTypeColumn

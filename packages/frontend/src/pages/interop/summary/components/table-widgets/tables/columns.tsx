@@ -1,3 +1,4 @@
+import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
@@ -95,10 +96,11 @@ function getLast24hVolumeColumn<T extends { volume: number }>(
 function getTokensByVolumeColumn<
   T extends {
     tokens: TopItems<TokenData>
+    id: ProjectId
     protocolName: string
     iconUrl: string
   },
->(columnHelper: ColumnHelper<T>) {
+>(columnHelper: ColumnHelper<T>, type: KnownInteropBridgeType) {
   return columnHelper.accessor((row) => row.tokens, {
     header: 'Tokens\nby volume',
     meta: {
@@ -110,7 +112,9 @@ function getTokensByVolumeColumn<
     cell: (ctx) => (
       <TopTokensCell
         topItems={ctx.row.original.tokens}
+        type={type}
         protocol={{
+          id: ctx.row.original.id,
           name: ctx.row.original.protocolName,
           iconUrl: ctx.row.original.iconUrl,
         }}
@@ -140,7 +144,7 @@ export const nonMintingColumns = [
       )
     },
   }),
-  getTokensByVolumeColumn(nonMintingColumnHelper),
+  getTokensByVolumeColumn(nonMintingColumnHelper, 'nonMinting'),
 ]
 
 export const lockAndMintColumns = [
@@ -170,11 +174,11 @@ export const lockAndMintColumns = [
       ),
     },
   ),
-  getTokensByVolumeColumn(lockAndMintColumnHelper),
+  getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
 ]
 
 export const omniChainColumns = [
   ...getCommonColumns(omniChainColumnHelper),
   getLast24hVolumeColumn(omniChainColumnHelper),
-  getTokensByVolumeColumn(omniChainColumnHelper),
+  getTokensByVolumeColumn(omniChainColumnHelper, 'omnichain'),
 ]

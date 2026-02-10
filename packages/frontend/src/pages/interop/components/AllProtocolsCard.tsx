@@ -1,3 +1,4 @@
+import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
@@ -5,12 +6,14 @@ import { NoResultsInfo } from '../summary/components/NoResultsInfo'
 import { AllProtocolsTable } from './table/AllProtocolsTable'
 
 export function AllProtocolsCard({
+  type,
   entries,
   isLoading,
   hideTypeColumn,
   showAverageInFlightValueColumn,
   showNetMintedValueColumn,
 }: {
+  type: KnownInteropBridgeType | undefined
   entries: ProtocolEntry[] | undefined
   isLoading: boolean
   hideTypeColumn?: boolean
@@ -28,6 +31,7 @@ export function AllProtocolsCard({
           <NoResultsInfo />
         ) : (
           <AllProtocolsTable
+            type={type}
             entries={entries}
             hideTypeColumn={hideTypeColumn}
             showAverageInFlightValueColumn={showAverageInFlightValueColumn}

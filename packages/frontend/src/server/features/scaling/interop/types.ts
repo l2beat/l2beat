@@ -8,7 +8,7 @@ import { v } from '@l2beat/validate'
 import type { TopItems } from './utils/getTopItems'
 
 export type ProtocolEntry = {
-  id: string
+  id: ProjectId
   iconUrl: string
   protocolName: string
   isAggregate: boolean | undefined
