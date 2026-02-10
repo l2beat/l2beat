@@ -19,7 +19,7 @@ export const billions: ScalingProject = upcomingL2({
       socialMedia: [
         'https://x.com/billions_ntwk',
         'https://discord.com/invite/billions-ntwk',
-        'https://www.linkedin.com/company/billions-ntwk',
+        'https://linkedin.com/company/billions-ntwk',
       ],
       repositories: ['https://github.com/0xPolygonID'],
     },
