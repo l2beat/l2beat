@@ -214,22 +214,41 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const packetDelivered = db.find(PacketDelivered, { guid })
     if (!packetDelivered) return
 
-    const srcAbstractToken = deployedToAbstractMap.get(
-      ChainSpecificAddress.fromLong(
-        Address32.cropToEthereumAddress(
-          oftSentPacketSent.args.srcTokenAddress ?? Address32.ZERO,
+    // bridgeType block
+    const srcTokenAddress = oftSentPacketSent.args.srcTokenAddress
+    const dstTokenAddress = oftReceivedPacketDelivered.args.dstTokenAddress
+    const srcWasBurned = oftSentPacketSent.args.burned
+    const dstWasMinted = oftReceivedPacketDelivered.args.minted
+    let bridgeType: 'lockAndMint' | 'omnichain' | undefined = undefined
+    if (
+      srcTokenAddress &&
+      dstTokenAddress &&
+      srcWasBurned !== undefined &&
+      dstWasMinted !== undefined
+    ) {
+      const srcAbstractToken = deployedToAbstractMap.get(
+        ChainSpecificAddress.fromLong(
+          Address32.cropToEthereumAddress(srcTokenAddress),
+          oftSentPacketSent.ctx.chain,
         ),
-        oftSentPacketSent.ctx.chain,
-      ),
-    )
-    const dstAbstractToken = deployedToAbstractMap.get(
-      ChainSpecificAddress.fromLong(
-        Address32.cropToEthereumAddress(
-          oftReceivedPacketDelivered.args.dstTokenAddress ?? Address32.ZERO,
+      )
+      const dstAbstractToken = deployedToAbstractMap.get(
+        ChainSpecificAddress.fromLong(
+          Address32.cropToEthereumAddress(dstTokenAddress),
+          packetDelivered.ctx.chain,
         ),
-        packetDelivered.ctx.chain,
-      ),
-    )
+      )
+      if (srcAbstractToken && dstAbstractToken) {
+        if (
+          !(srcWasBurned && dstWasMinted) &&
+          srcAbstractToken.issuer !== dstAbstractToken.issuer
+        ) {
+          bridgeType = 'lockAndMint'
+        } else {
+          bridgeType = 'omnichain'
+        }
+      }
+    }
 
     return [
       Result.Message('layerzero-v2.Message', {
@@ -240,16 +259,13 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
         srcAmount: oftSentPacketSent.args.amountSentLD, // same as oftSentPacketSent.args.srcAmount
-        srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
+        srcTokenAddress,
         dstEvent: oftReceivedPacketDelivered,
         dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD, // same as oftReceivedPacketDelivered.args.dstAmount
-        dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
-        srcWasBurned: oftSentPacketSent.args.burned,
-        dstWasMinted: oftReceivedPacketDelivered.args.minted,
-        bridgeType:
-          srcAbstractToken?.issuer !== dstAbstractToken?.issuer
-            ? 'lockAndMint'
-            : 'omnichain',
+        dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
+        bridgeType,
       }),
     ]
   }
