@@ -5,6 +5,17 @@ export const MAYAN_SWIFT = EthereumAddress(
   '0xC38e4e6A15593f908255214653d3D947CA1c2338',
 )
 
+// Chains where Mayan Swift is deployed
+export const MAYAN_SWIFT_CHAINS = [
+  'ethereum',
+  'arbitrum',
+  'base',
+  'optimism',
+  'polygonpos',
+  'bsc',
+  'avalanche',
+]
+
 // Extract the destination chain ID from Mayan Swift settlement payload
 // Payload format: 0x02 + orderKey(32 bytes) + destChainId(2 bytes) + ...
 export function extractMayanSwiftSettlementDestChain(

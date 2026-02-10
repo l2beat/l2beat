@@ -12,6 +12,8 @@ import {
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
+import { InteropAggregationService } from './aggregation/InteropAggregationService'
+import { InteropTransferClassifier } from './aggregation/InteropTransferClassifier'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
 import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
@@ -85,6 +87,7 @@ export function createInteropModule({
   const matcher = new InteropMatchingLoop(
     eventStore,
     db,
+    tokenDbClient,
     flattenClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id),
     logger,
@@ -141,10 +144,13 @@ export function createInteropModule({
 
   let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
   if (config.interop.aggregation) {
+    const classifier = new InteropTransferClassifier()
+    const aggregationService = new InteropAggregationService(classifier, logger)
     interopAggregatingIndexer = new InteropAggregatingIndexer(
       {
         db,
         configs: config.interop.aggregation.configs,
+        aggregationService,
         indexerService,
         parents: [hourlyIndexer],
         minHeight: 1,

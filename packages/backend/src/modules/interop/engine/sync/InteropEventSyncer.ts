@@ -34,11 +34,14 @@ import { FollowingState } from './FollowingState'
 
 export class LogQuery {
   topic0s = new Set<string>()
-  addresses = new Set<EthereumAddress>()
+  addresses: Set<EthereumAddress> | '*' = new Set()
   topicToTxEvents = new UpsertMap<string, Set<string>>()
   topic0sWithTx = new Set<string>()
   isEmpty() {
-    return this.topic0s.size === 0 || this.addresses.size === 0
+    if (this.topic0s.size === 0) {
+      return true
+    }
+    return this.addresses === '*' ? false : this.addresses.size === 0
   }
 }
 
@@ -68,32 +71,46 @@ function addPluginDataRequests(
     .filter((r) => r.type === 'event')
 
   for (const eventRequest of eventRequests) {
-    let addressesOnThisChain = 0
-    for (const address of eventRequest.addresses) {
-      if (ChainSpecificAddress.longChain(address) !== chain) {
+    if (eventRequest.addresses === '*') {
+      result.addresses = '*'
+    } else {
+      if (eventRequest.addresses.length === 0) {
+        throw new Error(
+          `Empty address list in data request for ${plugin.name} (${eventRequest.signature})`,
+        )
+      }
+
+      let addressesOnThisChain = 0
+      for (const address of eventRequest.addresses) {
+        if (ChainSpecificAddress.longChain(address) !== chain) {
+          continue
+        }
+        const ethAddress = ChainSpecificAddress.address(address)
+        if (result.addresses !== '*') {
+          result.addresses.add(ethAddress)
+        }
+        addressesOnThisChain++
+      }
+      if (addressesOnThisChain === 0) {
         continue
       }
-      const ethAddress = ChainSpecificAddress.address(address)
-      result.addresses.add(ethAddress)
-      addressesOnThisChain++
     }
-    if (addressesOnThisChain > 0) {
-      // TODO try also with `toEventSelector` straight from viem
-      const topic0 = toEventSelector(eventRequest.signature)
-      result.topic0s.add(topic0)
 
-      if (eventRequest.includeTxEvents?.length) {
-        const txEvents = result.topicToTxEvents.getOrInsertComputed(
-          topic0,
-          () => new Set(),
-        )
-        for (const signature of eventRequest.includeTxEvents) {
-          txEvents.add(toEventSelector(signature))
-        }
+    // TODO try also with `toEventSelector` straight from viem
+    const topic0 = toEventSelector(eventRequest.signature)
+    result.topic0s.add(topic0)
+
+    if (eventRequest.includeTxEvents?.length) {
+      const txEvents = result.topicToTxEvents.getOrInsertComputed(
+        topic0,
+        () => new Set(),
+      )
+      for (const signature of eventRequest.includeTxEvents) {
+        txEvents.add(toEventSelector(signature))
       }
-      if (eventRequest.includeTx) {
-        result.topic0sWithTx.add(topic0)
-      }
+    }
+    if (eventRequest.includeTx) {
+      result.topic0sWithTx.add(topic0)
     }
   }
 }
@@ -255,7 +272,7 @@ export class InteropEventSyncer extends TimeLoop {
   getLogs(filter: {
     fromBlock: bigint
     toBlock: bigint
-    address: EthereumAddress[]
+    address?: EthereumAddress[]
     topics: string[][]
   }): Promise<RpcLog[]> {
     return this.rpcClient.getLogs(filter)

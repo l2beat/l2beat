@@ -1,0 +1,48 @@
+name: Deploy to Coolify
+
+on:
+  workflow_call:
+    secrets:
+      COOLIFY_SERVER:
+        required: true
+      COOLIFY_DEPLOY_API_KEY:
+        required: true
+      COOLIFY_UUID:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy to Coolify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Cache Coolify CLI
+        id: cache-coolify
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/bin/coolify
+          key: coolify-cli-v1
+
+      - name: Install Coolify CLI
+        if: steps.cache-coolify.outputs.cache-hit != 'true'
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
+
+      - name: Setup Coolify context
+        run: |
+          coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
+          coolify context use l2beat
+
+      - name: Deploy to Coolify
+        run: |
+          echo "Deploying to Coolify..."
+          coolify deploy uuid ${{ secrets.COOLIFY_UUID }}

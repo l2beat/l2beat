@@ -1,10 +1,28 @@
-import type { InteropConfig } from '@l2beat/config'
+import type { InteropDurationSplit } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
+  DurationSplitMap,
 } from '../types'
+import type { TransfersTimeModeMap } from './buildTransfersTimeModeMap'
 
-interface ProtocolData extends CommonInteropData {
+export interface ProtocolDataByBridgeType {
+  lockAndMint?: ProtocolDataByBridgeTypeCommon & CommonInteropData
+  nonMinting?: {
+    averageValueInFlight: number
+  } & ProtocolDataByBridgeTypeCommon
+  omnichain?: ProtocolDataByBridgeTypeCommon
+}
+
+type ProtocolDataByBridgeTypeCommon = {
+  volume: number
+  tokens: Map<string, CommonInteropData>
+  transferCount: number
+  identifiedTransferCount: number
+}
+
+export interface ProtocolData extends CommonInteropData {
   volume: number
   tokens: Map<string, CommonInteropData>
   chains: Map<string, CommonInteropData>
@@ -26,73 +44,145 @@ const INITIAL_DATA: CommonInteropData = {
   burnedValueUsd: undefined,
 }
 
+/**
+ * Returns a two-level map: projectId -> bridgeType -> ProtocolData
+ * Used by getProtocolEntries where we need separate entries per bridge type.
+ */
+export function getProtocolsDataMapByBridgeType(
+  records: AggregatedInteropTransferWithTokens[],
+  durationSplitMap: DurationSplitMap | undefined,
+  transfersTimeModeMap: TransfersTimeModeMap,
+): Map<string, ProtocolDataByBridgeType> {
+  const protocolsDataMap = new Map<string, ProtocolDataByBridgeType>()
+
+  for (const record of records) {
+    if (record.bridgeType === 'unknown') continue
+
+    const bridgeTypeMap = protocolsDataMap.get(record.id) ?? {
+      lockAndMint: undefined,
+      nonMinting: undefined,
+      omnichain: undefined,
+    }
+
+    const durationSplit = durationSplitMap
+      ?.get(record.id)
+      ?.get(record.bridgeType)
+    const transfersTimeMode = transfersTimeModeMap.get(record.id)
+    const direction = getDirection(record, durationSplit, transfersTimeMode)
+
+    switch (record.bridgeType) {
+      case 'lockAndMint':
+        bridgeTypeMap.lockAndMint = {
+          volume:
+            (bridgeTypeMap.lockAndMint?.volume ?? 0) +
+            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+          tokens: mergeTokensData(
+            bridgeTypeMap.lockAndMint?.tokens,
+            record.tokens,
+            direction,
+          ),
+          transferCount:
+            (bridgeTypeMap.lockAndMint?.transferCount ?? 0) +
+            record.transferCount,
+          identifiedTransferCount:
+            (bridgeTypeMap.lockAndMint?.identifiedTransferCount ?? 0) +
+            record.identifiedCount,
+          totalDurationSum:
+            (bridgeTypeMap.lockAndMint?.totalDurationSum ?? 0) +
+            (record.totalDurationSum ?? 0),
+
+          mintedValueUsd:
+            (bridgeTypeMap.lockAndMint?.mintedValueUsd ?? 0) +
+            (record.mintedValueUsd ?? 0),
+          burnedValueUsd:
+            (bridgeTypeMap.lockAndMint?.burnedValueUsd ?? 0) +
+            (record.burnedValueUsd ?? 0),
+          ...computeDurationSplits(
+            bridgeTypeMap.lockAndMint,
+            direction,
+            record,
+          ),
+        }
+        break
+      case 'nonMinting':
+        bridgeTypeMap.nonMinting = {
+          volume:
+            (bridgeTypeMap.nonMinting?.volume ?? 0) +
+            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+          tokens: mergeTokensData(
+            bridgeTypeMap.nonMinting?.tokens,
+            record.tokens,
+            direction,
+          ),
+          transferCount:
+            (bridgeTypeMap.nonMinting?.transferCount ?? 0) +
+            record.transferCount,
+          identifiedTransferCount:
+            (bridgeTypeMap.nonMinting?.identifiedTransferCount ?? 0) +
+            record.identifiedCount,
+          averageValueInFlight:
+            (bridgeTypeMap.nonMinting?.averageValueInFlight ?? 0) +
+            (record.avgValueInFlight ?? 0),
+        }
+        break
+      case 'omnichain':
+        bridgeTypeMap.omnichain = {
+          volume:
+            (bridgeTypeMap.omnichain?.volume ?? 0) +
+            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+          tokens: mergeTokensData(
+            bridgeTypeMap.omnichain?.tokens,
+            record.tokens,
+            direction,
+          ),
+          transferCount:
+            (bridgeTypeMap.omnichain?.transferCount ?? 0) +
+            record.transferCount,
+          identifiedTransferCount:
+            (bridgeTypeMap.omnichain?.identifiedTransferCount ?? 0) +
+            record.identifiedCount,
+        }
+        break
+      default:
+        assertUnreachable(record.bridgeType)
+    }
+    protocolsDataMap.set(record.id, bridgeTypeMap)
+  }
+
+  return protocolsDataMap
+}
+
+/**
+ * Returns a flat map: projectId -> ProtocolData (aggregated across all bridge types)
+ * Used by getAllProtocolEntries where we aggregate all bridge types together.
+ */
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
-  durationSplitMap: Map<
-    string,
-    NonNullable<
-      InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
-    >
-  >,
-) {
+  transfersTimeModeMap: TransfersTimeModeMap,
+  durationSplitMap: DurationSplitMap | undefined,
+): Map<string, ProtocolData> {
   const protocolsDataMap = new Map<string, ProtocolData>()
 
   for (const record of records) {
-    const current = protocolsDataMap.get(record.id) ?? {
-      tokens: new Map<string, CommonInteropData & { volume: number }>(),
-      chains: new Map(),
-      ...INITIAL_DATA,
-      averageValueInFlight: undefined,
-      identifiedTransferCount: 0,
-    }
+    const current =
+      protocolsDataMap.get(record.id) ?? createInitialProtocolData()
 
-    const durationSplit = durationSplitMap.get(record.id)
-    const direction = getDirection(record, durationSplit)
-
-    for (const token of record.tokens) {
-      const currentToken = current.tokens.get(token.abstractTokenId)
-      const tokenDurationSplits = updateDurationSplits(
-        currentToken ?? INITIAL_DATA,
-        direction,
-        token.transferCount ?? 0,
-        token.totalDurationSum ?? 0,
-      )
-
-      current.tokens.set(token.abstractTokenId, {
-        transferCount:
-          (currentToken?.transferCount ?? 0) + (token.transferCount ?? 0),
-        totalDurationSum:
-          (currentToken?.totalDurationSum ?? 0) + (token.totalDurationSum ?? 0),
-        volume: (currentToken?.volume ?? 0) + (token.volume ?? 0),
-        ...tokenDurationSplits,
-        mintedValueUsd:
-          currentToken?.mintedValueUsd !== undefined
-            ? (currentToken?.mintedValueUsd ?? 0) + (token.mintedValueUsd ?? 0)
-            : token.mintedValueUsd,
-        burnedValueUsd:
-          currentToken?.burnedValueUsd !== undefined
-            ? (currentToken?.burnedValueUsd ?? 0) + (token.burnedValueUsd ?? 0)
-            : token.burnedValueUsd,
-      })
-    }
-
-    updateChainData(current.chains, record)
-
-    const protocolDurationSplits = updateDurationSplits(
-      current,
-      direction,
-      record.transferCount ?? 0,
-      record.totalDurationSum ?? 0,
-    )
+    // No duration split for aggregated view
+    const transfersTimeMode = transfersTimeModeMap.get(record.id)
+    const durationSplit =
+      record.bridgeType !== 'unknown'
+        ? durationSplitMap?.get(record.id)?.get(record.bridgeType)
+        : undefined
+    const direction = getDirection(record, durationSplit, transfersTimeMode)
 
     protocolsDataMap.set(record.id, {
       volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
-      tokens: current.tokens,
-      chains: current.chains,
+      tokens: mergeTokensData(current.tokens, record.tokens, direction),
+      chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),
-      ...protocolDurationSplits,
+      ...computeDurationSplits(current, direction, record),
       averageValueInFlight:
         record.avgValueInFlight !== undefined
           ? (current.averageValueInFlight ?? 0) + record.avgValueInFlight
@@ -113,15 +203,30 @@ export function getProtocolsDataMap(
   return protocolsDataMap
 }
 
+function createInitialProtocolData(): ProtocolData {
+  return {
+    volume: 0,
+    tokens: new Map<string, CommonInteropData>(),
+    chains: new Map<string, CommonInteropData>(),
+    transferCount: 0,
+    totalDurationSum: 0,
+    inTransferCount: 0,
+    inDurationSum: 0,
+    outTransferCount: 0,
+    outDurationSum: 0,
+    averageValueInFlight: undefined,
+    identifiedTransferCount: 0,
+    mintedValueUsd: undefined,
+    burnedValueUsd: undefined,
+  }
+}
+
 function getDirection(
   record: { srcChain: string; dstChain: string },
-  durationSplit:
-    | NonNullable<
-        InteropConfig['durationSplit'] | InteropConfig['transfersTimeMode']
-      >
-    | undefined,
+  durationSplit: InteropDurationSplit | undefined,
+  transfersTimeMode: 'unknown' | undefined,
 ): 'in' | 'out' | null {
-  if (!durationSplit || durationSplit === 'unknown') return null
+  if (!durationSplit || transfersTimeMode === 'unknown') return null
 
   if (
     record.srcChain === durationSplit.in.from &&
@@ -138,50 +243,87 @@ function getDirection(
   return null
 }
 
-function updateDurationSplits(
-  current: CommonInteropData,
+function computeDurationSplits(
+  current: CommonInteropData | undefined,
   direction: 'in' | 'out' | null,
-  transferCount: number,
-  durationSum: number,
+  record: AggregatedInteropTransferWithTokens,
 ): Pick<
   CommonInteropData,
   'inTransferCount' | 'inDurationSum' | 'outTransferCount' | 'outDurationSum'
 > {
-  let inTransferCount = current.inTransferCount
-  let inDurationSum = current.inDurationSum
-  let outTransferCount = current.outTransferCount
-  let outDurationSum = current.outDurationSum
-
-  if (direction === 'in') {
-    inTransferCount += transferCount
-    inDurationSum += durationSum
-  } else if (direction === 'out') {
-    outTransferCount += transferCount
-    outDurationSum += durationSum
-  }
+  const transferCount = record.transferCount ?? 0
+  const durationSum = record.totalDurationSum ?? 0
 
   return {
-    inTransferCount,
-    inDurationSum,
-    outTransferCount,
-    outDurationSum,
+    inTransferCount:
+      (current?.inTransferCount ?? 0) +
+      (direction === 'in' ? transferCount : 0),
+    inDurationSum:
+      (current?.inDurationSum ?? 0) + (direction === 'in' ? durationSum : 0),
+    outTransferCount:
+      (current?.outTransferCount ?? 0) +
+      (direction === 'out' ? transferCount : 0),
+    outDurationSum:
+      (current?.outDurationSum ?? 0) + (direction === 'out' ? durationSum : 0),
   }
 }
 
-function updateChainData(
-  chains: ProtocolData['chains'],
+function mergeTokensData(
+  currentTokens: Map<string, CommonInteropData> | undefined,
+  recordTokens: AggregatedInteropTransferWithTokens['tokens'],
+  direction: 'in' | 'out' | null,
+): Map<string, CommonInteropData> {
+  const result = new Map(currentTokens)
+
+  for (const token of recordTokens) {
+    const current = result.get(token.abstractTokenId) ?? INITIAL_DATA
+    const transferCount = token.transferCount ?? 0
+    const durationSum = token.totalDurationSum ?? 0
+
+    result.set(token.abstractTokenId, {
+      volume: current.volume + (token.volume ?? 0),
+      transferCount: current.transferCount + transferCount,
+      totalDurationSum: current.totalDurationSum + durationSum,
+      inTransferCount:
+        current.inTransferCount + (direction === 'in' ? transferCount : 0),
+      inDurationSum:
+        current.inDurationSum + (direction === 'in' ? durationSum : 0),
+      outTransferCount:
+        current.outTransferCount + (direction === 'out' ? transferCount : 0),
+      outDurationSum:
+        current.outDurationSum + (direction === 'out' ? durationSum : 0),
+      mintedValueUsd:
+        current?.mintedValueUsd !== undefined
+          ? (current?.mintedValueUsd ?? 0) + (token.mintedValueUsd ?? 0)
+          : token.mintedValueUsd,
+      burnedValueUsd:
+        current?.burnedValueUsd !== undefined
+          ? (current?.burnedValueUsd ?? 0) + (token.burnedValueUsd ?? 0)
+          : token.burnedValueUsd,
+    })
+  }
+
+  return result
+}
+
+function mergeChainsData(
+  currentChains: Map<string, CommonInteropData>,
   record: AggregatedInteropTransferWithTokens,
-): void {
-  const srcChain = chains.get(record.srcChain) ?? INITIAL_DATA
-  chains.set(record.srcChain, {
+): Map<string, CommonInteropData> {
+  const result = new Map(currentChains)
+  const transferCount = record.transferCount ?? 0
+  const durationSum = record.totalDurationSum ?? 0
+
+  // Source chain: transfers go OUT
+  const srcChain = result.get(record.srcChain) ?? INITIAL_DATA
+  result.set(record.srcChain, {
     volume: srcChain.volume + (record.srcValueUsd ?? 0),
-    inDurationSum: srcChain.inDurationSum,
-    outDurationSum: srcChain.outDurationSum + (record.totalDurationSum ?? 0),
+    transferCount: srcChain.transferCount + transferCount,
+    totalDurationSum: srcChain.totalDurationSum + durationSum,
     inTransferCount: srcChain.inTransferCount,
-    outTransferCount: srcChain.outTransferCount + (record.transferCount ?? 0),
-    transferCount: srcChain.transferCount + (record.transferCount ?? 0),
-    totalDurationSum:
-      srcChain.totalDurationSum + (record.totalDurationSum ?? 0),
+    inDurationSum: srcChain.inDurationSum,
+    outTransferCount: srcChain.outTransferCount + transferCount,
+    outDurationSum: srcChain.outDurationSum + durationSum,
     mintedValueUsd: srcChain.mintedValueUsd,
     burnedValueUsd:
       srcChain.burnedValueUsd !== undefined
@@ -189,17 +331,17 @@ function updateChainData(
         : record.burnedValueUsd,
   })
 
+  // Destination chain: transfers come IN (only if different from source)
   if (record.dstChain !== record.srcChain) {
-    const dstChain = chains.get(record.dstChain) ?? INITIAL_DATA
-    chains.set(record.dstChain, {
+    const dstChain = result.get(record.dstChain) ?? INITIAL_DATA
+    result.set(record.dstChain, {
       volume: dstChain.volume + (record.dstValueUsd ?? 0),
-      inDurationSum: dstChain.inDurationSum + (record.totalDurationSum ?? 0),
-      outDurationSum: dstChain.outDurationSum,
-      inTransferCount: dstChain.inTransferCount + (record.transferCount ?? 0),
+      transferCount: dstChain.transferCount + transferCount,
+      totalDurationSum: dstChain.totalDurationSum + durationSum,
+      inTransferCount: dstChain.inTransferCount + transferCount,
+      inDurationSum: dstChain.inDurationSum + durationSum,
       outTransferCount: dstChain.outTransferCount,
-      transferCount: dstChain.transferCount + (record.transferCount ?? 0),
-      totalDurationSum:
-        dstChain.totalDurationSum + (record.totalDurationSum ?? 0),
+      outDurationSum: dstChain.outDurationSum,
       burnedValueUsd: dstChain.burnedValueUsd,
       mintedValueUsd:
         dstChain.mintedValueUsd !== undefined
@@ -207,4 +349,6 @@ function updateChainData(
           : record.mintedValueUsd,
     })
   }
+
+  return result
 }

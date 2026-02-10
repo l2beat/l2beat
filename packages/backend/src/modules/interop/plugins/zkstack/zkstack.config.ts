@@ -120,13 +120,11 @@ export class ZkStackConfigPlugin
     )
     if (missingL2Networks.length > 0) {
       const missingChains = missingL2Networks.map((n) => n.chain)
-      this.logger
-        .for('InteropExamples')
-        .warn('Missing zkstack RPC clients for example configs', {
-          missingChains,
-          expectedChains: SUPPORTED_CHAINS.map((n) => n.chain),
-          hint: 'Include a tx for each zkstack-supported chain in your example. The config plugin only receives RPCs for chains in your example.',
-        })
+      this.logger.warn('Missing RPC clients for zkstack config plugin', {
+        missingChains,
+        expectedChains: SUPPORTED_CHAINS.map((n) => n.chain),
+        hint: 'Make sure required RPC clients are available either through backend dependencies or example runner configuration',
+      })
     }
 
     const supportedChainsToScan = supportedChains.flatMap((descriptor) => {

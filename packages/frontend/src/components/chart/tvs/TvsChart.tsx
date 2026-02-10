@@ -1,20 +1,23 @@
 import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../types'
@@ -72,15 +75,15 @@ export function TvsChart({
           strokeWidth={2}
           isAnimationActive={false}
         />
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             tickFormatter: (value: number) => formatCurrency(value, unit),
             tickCount,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           filterNull={false}
           content={<TvsCustomTooltip unit={unit} />}
@@ -91,13 +94,12 @@ export function TvsChart({
 }
 
 export function TvsCustomTooltip({
-  active,
   payload,
   label,
   unit,
-}: TooltipProps<number, string> & { unit: ChartUnit }) {
+}: CustomChartTooltipProps & { unit: ChartUnit }) {
   const { meta } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

@@ -12,6 +12,7 @@ import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
+import { getZkCatalogLogo } from '../getZkCatalogLogo'
 import { tvsComparatorWithDaBridges } from './tvsComparatorWithDaBridges'
 
 export type TrustedSetupsByProofSystem = Record<
@@ -127,10 +128,14 @@ export function getVerifiersWithAttesters(
     attesters: uniqBy(
       verifiersForStatus.flatMap((v) => v.attesters).filter(notUndefined),
       (a) => a.id,
-    ).map((a) => ({
-      ...a,
-      icon: manifest.getUrl(`/icons/${a.id}.png`),
-    })),
+    ).map((a) => {
+      const icon = getZkCatalogLogo(a.id)
+      return {
+        ...a,
+        icon: icon.light,
+        iconDark: icon.dark,
+      }
+    }),
   }
 }
 

@@ -3,7 +3,7 @@
   "displayName": "SHARPVerifier",
   "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
   "category": "shared",
-  "ignoreRelatives": ["referenceFactRegistry"], // referral expired: see isValidOnReference() in the contract
+  // "ignoreRelatives": ["referenceFactRegistry"], // referral expired: see isValidOnReference() in the contract
   "fields": {
     "bootloaderProgramContractAddress": {
       "handler": {

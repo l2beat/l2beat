@@ -26,6 +26,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('paradex')
 
@@ -63,19 +64,14 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   6,
 )
 
-const paradexProgramHashes = []
+const paradexProgramHashes: string[] = []
 paradexProgramHashes.push(
   discovery.getContractValue<string>('Paradex', 'programHash'),
 )
 paradexProgramHashes.push(
   discovery.getContractValue<string>('Paradex', 'aggregatorProgramHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-paradexProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-paradexProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+paradexProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const paradex: ScalingProject = {
   type: 'layer2',
@@ -110,6 +106,9 @@ export const paradex: ScalingProject = {
     liveness: {
       explanation:
         'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+      overwrites: {
+        proofSubmissions: 'no-data',
+      },
     },
   },
   proofSystem: {

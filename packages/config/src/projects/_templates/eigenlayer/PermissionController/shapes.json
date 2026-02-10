@@ -3,5 +3,10 @@
     "hash": "0x01bb93f0533bf79f9680aee1f8f98c14501de40b31d642ccaab5b297dc809f1e",
     "address": "eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1",
     "blockNumber": 22425050
+  },
+  "PermissionController_v1.9.0": {
+    "hash": "0xd6b47b90782b90fdfe85151507e668372b0c9cbb4435e30d1dad12ffa8299cde",
+    "address": "eth:0x36dd260AbF606172875E6B5B7A96B435DC74EEd2",
+    "blockNumber": 24350294
   }
 }

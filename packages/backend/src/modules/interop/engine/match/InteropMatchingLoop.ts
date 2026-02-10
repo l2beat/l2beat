@@ -1,9 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
+  AbstractTokenRecord,
   Database,
   InteropMessageRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   generateId,
@@ -24,6 +27,7 @@ export class InteropMatchingLoop extends TimeLoop {
   constructor(
     private store: InteropEventStore,
     private db: Database,
+    private tokenDbClient: TokenDbClient,
     private plugins: InteropPlugin[],
     private supportedChains: string[],
     protected logger: Logger,
@@ -35,6 +39,8 @@ export class InteropMatchingLoop extends TimeLoop {
   }
 
   async run() {
+    const deployedToAbstractMap = await this.buildDeployedToAbstractMap()
+
     const result = await match(
       this.store,
       (type) => this.store.getEvents(type),
@@ -43,6 +49,7 @@ export class InteropMatchingLoop extends TimeLoop {
       this.plugins,
       this.supportedChains,
       this.logger,
+      deployedToAbstractMap,
     )
 
     const messageRecords = result.messages.map(toMessageRecord)
@@ -69,6 +76,39 @@ export class InteropMatchingLoop extends TimeLoop {
       this.transferStream?.publishBulk(transferRecords, this.intervalMs)
     }
   }
+
+  async buildDeployedToAbstractMap(): Promise<
+    Map<ChainSpecificAddress, AbstractTokenRecord>
+  > {
+    let resp
+    try {
+      resp =
+        await this.tokenDbClient.abstractTokens.getAllWithDeployedTokens.query()
+    } catch (error) {
+      throw new Error('Token DB unavailable for matching', { cause: error })
+    }
+
+    const result = new Map<ChainSpecificAddress, AbstractTokenRecord>()
+    const unsupportedChains = new Set<string>()
+    for (const { deployedTokens, ...abstractToken } of resp.abstractTokens) {
+      for (const deployedToken of deployedTokens) {
+        let chainSpecificAddr: ChainSpecificAddress
+        try {
+          chainSpecificAddr = ChainSpecificAddress.fromLong(
+            deployedToken.chain,
+            deployedToken.address,
+          )
+        } catch {
+          // ignore deployed address that we can't construct as ChainSpecificAddress
+          // (this can happen because of unsupported chain name or address being e.g. 'native')
+          continue
+        }
+        result.set(chainSpecificAddr, abstractToken)
+      }
+    }
+    console.log(unsupportedChains)
+    return result
+  }
 }
 
 export async function match(
@@ -79,6 +119,10 @@ export async function match(
   plugins: InteropPlugin[],
   supportedChains: string[],
   logger: Logger,
+  deployedToAbstractMap: Map<
+    ChainSpecificAddress,
+    AbstractTokenRecord
+  > = new Map(),
 ) {
   const start = Date.now()
   logger.info('Matching started', {
@@ -118,7 +162,11 @@ export async function match(
         }
         let result: MatchResult | undefined
         try {
-          result = await plugin.match?.(event, filteredDb)
+          result = await plugin.match?.(
+            event,
+            filteredDb,
+            deployedToAbstractMap,
+          )
         } catch (e) {
           logger.error('Matching failed', e, {
             plugin: plugin.name,
@@ -262,6 +310,7 @@ function toTransferRecord(transfer: InteropTransfer): InteropTransferRecord {
     plugin: transfer.plugin,
     transferId: generateId('T'),
     type: transfer.type,
+    bridgeType: transfer.bridgeType,
     duration: Math.max(
       transfer.dst.event.ctx.timestamp - transfer.src.event.ctx.timestamp,
       0,

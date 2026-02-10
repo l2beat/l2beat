@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropTransfer } from '../kysely/generated/types'
@@ -6,6 +6,7 @@ import type { AggregatedInteropTransfer } from '../kysely/generated/types'
 export interface AggregatedInteropTransferRecord {
   timestamp: UnixTime
   id: string
+  bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
   transferCount: number
@@ -44,6 +45,7 @@ export function toRecord(
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     id: row.id,
+    bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
     transferCount: row.transferCount,
@@ -68,6 +70,7 @@ export function toRow(
   return {
     timestamp: UnixTime.toDate(record.timestamp),
     id: record.id,
+    bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
     transferCount: record.transferCount,
@@ -246,20 +249,18 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .selectFrom('AggregatedInteropTransfer')
       .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
       .executeTakeFirst()
-    return result ? UnixTime.fromDate(result.max_timestamp) : undefined
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
   }
 
   async getByChainsTimestampAndId(
     timestamp: UnixTime,
     srcChains: string[],
     dstChains: string[],
-    protocolIds?: string[],
+    type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
     if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
-    if (protocolIds && protocolIds.length === 0) {
       return []
     }
 
@@ -270,8 +271,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', srcChains)
       .where('dstChain', 'in', dstChains)
 
-    if (protocolIds) {
-      query = query.where('id', 'in', protocolIds)
+    if (type) {
+      query = query.where('bridgeType', '=', type)
     }
 
     const rows = await query.execute()

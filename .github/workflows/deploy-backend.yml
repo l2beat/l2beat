@@ -1,0 +1,93 @@
+name: Deploy backend
+
+concurrency:
+  group: backend-deployment
+permissions:
+  contents: read
+  packages: write
+
+on:
+  workflow_dispatch: 
+    inputs:
+      force:
+        description: "Force deployment"
+        required: true
+        default: true
+        type: boolean
+      backend-prod-enabled:
+        description: "Deploy backend prod"
+        required: true
+        default: true
+        type: boolean
+      backend-staging-enabled:
+        description: "Deploy backend staging"
+        required: true
+        default: true
+        type: boolean
+      tvs-prod-enabled:
+        description: "Deploy tvs prod"
+        required: true
+        default: true
+        type: boolean
+      tvs-staging-enabled:
+        description: "Deploy tvs staging"
+        required: true
+        default: true
+        type: boolean
+  push:
+    branches:
+      - main
+
+jobs:
+  check-changes:
+    uses: ./.github/workflows/check-changes.yml
+    with:
+      package: '@l2beat/backend'
+      force: ${{ github.event.inputs.force == 'true' }}
+
+  build:
+    needs: check-changes
+    if: needs.check-changes.outputs.should_deploy == 'true'
+    uses: ./.github/workflows/build-docker-image.yml
+    with:
+      project: backend
+      dockerfile: packages/backend/Dockerfile
+    secrets:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+  deploy-backend-prod:
+    needs: build
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.backend-prod-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_BACKEND_PROD_ENABLED != 'false')
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_BACKEND_PROD_ID }}
+
+  deploy-backend-staging:
+    needs: build
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.backend-staging-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_BACKEND_STAGING_ENABLED != 'false')
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_BACKEND_STAGING_ID }}
+
+  deploy-tvs-prod:
+    needs: build
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.tvs-prod-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_TVS_PROD_ENABLED != 'false')
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_TVS_PRODUCTION_ID }}
+
+  deploy-tvs-staging:
+    needs: build
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.tvs-staging-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_TVS_STAGING_ENABLED != 'false')
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_TVS_STAGING_ID }}

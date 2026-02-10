@@ -1276,7 +1276,7 @@
   "static/pepe-unchained.png": "42d225c0a04b045c658aa21e776dc172",
   "static/meta-images/scaling/projects/pepe-unchained/opengraph-image.png": "961d2e422f80ab0f29b2935c673e2a78",
   "static/icons/pepe-unchained.png": "b643992aa970e33e4a7c87d5f04c8627",
-  "static/icons/l2beat.png": "a0936a3ea608a655ca0ffddf6b1a0153",
+  "static/icons/l2beat.png": "e972481e6b1d1a56555fa01a6392ca67",
   "static/meta-images/scaling/projects/palm/opengraph-image.png": "2ef6d310f4c550993dc064fd8eea9288",
   "static/icons/pepeunchained2.png": "622b3bd36ee83475dc2fe02b7f2b0a23",
   "static/icons/boojum.png": "90d1646e3d1b4ff3fb0cb5591fa5ee99",
@@ -1557,5 +1557,8 @@
   "static/meta-images/publications/monthly-update-2026-01.png": "e6a1b3ed5f952dc2889aebe80887ce4a",
   "static/icons/fusionplus.png": "03b2c1aaff2b36934bfd247ffdf4aab0",
   "static/icons/circlegateway.png": "0eb42253e99f94191aeed3d6c67da597",
-  "static/meta-images/publications/governance-review-84.png": "b64344a4643f68365229d12e57a995aa"
+  "static/meta-images/publications/governance-review-84.png": "b64344a4643f68365229d12e57a995aa",
+  "static/icons/l2beat.dark.png": "9e581cc6f79c142c958255a17a07305f",
+  "static/icons/wormhole-wtt.png": "10b8ef324d0ce4d362d096201f6dffca",
+  "static/icons/wormhole-ntt.png": "a91cfd1166ca246a3e950df49754bfc3"
 }

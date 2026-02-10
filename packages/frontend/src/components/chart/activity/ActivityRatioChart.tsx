@@ -1,8 +1,10 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -11,9 +13,9 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
@@ -64,15 +66,15 @@ export function ActivityRatioChart({
           isAnimationActive={false}
         />
 
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             tickFormatter: (value) => `${round(value, 2)}x`,
             domain: ([_, dataMax]) => [1, dataMax + (dataMax - 1) * 0.1],
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
 
         <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
@@ -85,12 +87,11 @@ export function ActivityRatioChart({
 }
 
 function ActivityCustomTooltip({
-  active,
   payload,
   label: timestamp,
-}: TooltipProps<number, string>) {
+}: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!payload || typeof timestamp !== 'number') return null
 
   return (
     <ChartTooltipWrapper>

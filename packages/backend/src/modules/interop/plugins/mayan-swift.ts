@@ -18,38 +18,54 @@ Because of this, we only capture the settlement LogMessagePublished in extraEven
 2. The order key in the payload matches the OrderFulfilled key (to avoid capturing unrelated messages)
 */
 
-import { type Address32, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  type Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import { logToProtocolData, MayanForwarded } from './mayan-forwarder'
+import {
+  forwardedERC20Log,
+  forwardedEthLog,
+  logToProtocolData,
+  MayanForwarded,
+  swapAndForwardedERC20Log,
+  swapAndForwardedEthLog,
+} from './mayan-forwarder'
 import {
   extractMayanSwiftSettlementDestChain,
   extractMayanSwiftSettlementOrderKey,
   getMayanSwiftSettlementMsgType,
   MAYAN_SWIFT,
+  MAYAN_SWIFT_CHAINS,
   MAYAN_SWIFT_MSG_TYPE_UNLOCK,
 } from './mayan-swift.utils'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 import { WormholeConfig } from './wormhole/wormhole.config'
 
-const parseOrderCreated = createEventParser('event OrderCreated(bytes32 key)')
+// Event signatures
+const orderCreatedLog = 'event OrderCreated(bytes32 key)'
+const orderFulfilledLog =
+  'event OrderFulfilled(bytes32 key, uint64 sequence, uint256 netAmount)'
+const logMessagePublishedLog =
+  'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
 
-const parseOrderFulfilled = createEventParser(
-  'event OrderFulfilled(bytes32 key, uint64 sequence, uint256 netAmount)',
-)
+const parseOrderCreated = createEventParser(orderCreatedLog)
 
-const parseLogMessagePublished = createEventParser(
-  'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)',
-)
+const parseOrderFulfilled = createEventParser(orderFulfilledLog)
+
+const parseLogMessagePublished = createEventParser(logMessagePublishedLog)
 
 export const OrderCreated = createInteropEventType<{
   key: string
@@ -71,10 +87,43 @@ export const SettlementSent = createInteropEventType<{
   $dstChain?: string
 }>('mayan-swift.SettlementSent')
 
-export class MayanSwiftPlugin implements InteropPlugin {
+export class MayanSwiftPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-swift'
 
   constructor(private configs: InteropConfigStore) {}
+
+  getDataRequests(): DataRequest[] {
+    const mayanSwiftAddresses: ChainSpecificAddress[] = []
+    for (const chain of MAYAN_SWIFT_CHAINS) {
+      try {
+        mayanSwiftAddresses.push(
+          ChainSpecificAddress.fromLong(chain, MAYAN_SWIFT),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
+
+    return [
+      {
+        type: 'event',
+        signature: orderCreatedLog,
+        includeTxEvents: [
+          forwardedEthLog,
+          forwardedERC20Log,
+          swapAndForwardedEthLog,
+          swapAndForwardedERC20Log,
+        ],
+        addresses: mayanSwiftAddresses,
+      },
+      {
+        type: 'event',
+        signature: orderFulfilledLog,
+        includeTxEvents: [logMessagePublishedLog],
+        addresses: mayanSwiftAddresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const wormholeNetworks = this.configs.get(WormholeConfig)

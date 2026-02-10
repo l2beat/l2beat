@@ -32,11 +32,6 @@ const DOCS_URL =
 
 const OVERRIDES: WormholeNetwork[] = [
   {
-    chain: 'bsc',
-    chainId: 56,
-    wormholeChainId: 4,
-  },
-  {
     chain: 'solana',
     wormholeChainId: 1,
   },
@@ -44,6 +39,7 @@ const OVERRIDES: WormholeNetwork[] = [
 
 // Map our chain names to Wormhole docs chain names
 const CHAIN_NAME_TO_DOCS: Record<string, string> = {
+  bsc: 'bnb smart chain',
   polygonpos: 'polygon',
 }
 

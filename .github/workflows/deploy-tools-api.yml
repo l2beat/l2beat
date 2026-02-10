@@ -11,8 +11,8 @@ on:
     inputs:
       force:
         description: "Force deployment"
-        required: false
-        default: false
+        required: true
+        default: true
         type: boolean
   push:
     branches:
@@ -25,16 +25,21 @@ jobs:
       package: '@l2beat/tools-api'
       force: ${{ github.event.inputs.force == 'true' }}
 
-  deploy:
+  build:
     needs: check-changes
     if: needs.check-changes.outputs.should_deploy == 'true'
-    uses: ./.github/workflows/build-deploy-coolify.yml
+    uses: ./.github/workflows/build-docker-image.yml
     with:
       project: tools-api
       dockerfile: packages/tools-api/Dockerfile
     secrets:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
+  deploy:
+    needs: build
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
       COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
       COOLIFY_UUID: ${{ secrets.COOLIFY_TOOLS_API_ID }}
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
