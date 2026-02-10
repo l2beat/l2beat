@@ -1926,7 +1926,7 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -2380,15 +2380,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
