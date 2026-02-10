@@ -12,6 +12,7 @@ import {
   ContractCallExecuted,
 } from './axelar'
 import { findParsedAround } from './hyperlane-hwr'
+import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import {
   createEventParser,
   createInteropEventType,
@@ -178,36 +179,15 @@ export class AxelarITSPlugin implements InteropPlugin {
       const dstTokenAddress = interchainTransferReceived.args.tokenAddress
       const srcWasBurned = interchainTransfer.args.srcWasBurned
       const dstWasMinted = interchainTransferReceived.args.dstWasMinted
-      let bridgeType: 'lockAndMint' | 'omnichain' | undefined = undefined
-      if (
-        srcTokenAddress &&
-        dstTokenAddress &&
-        srcWasBurned !== undefined &&
-        dstWasMinted !== undefined
-      ) {
-        const srcAbstractToken = deployedToAbstractMap.get(
-          ChainSpecificAddress.fromLong(
-            Address32.cropToEthereumAddress(srcTokenAddress),
-            interchainTransfer.ctx.chain,
-          ),
-        )
-        const dstAbstractToken = deployedToAbstractMap.get(
-          ChainSpecificAddress.fromLong(
-            Address32.cropToEthereumAddress(dstTokenAddress),
-            interchainTransferReceived.ctx.chain,
-          ),
-        )
-        if (srcAbstractToken && dstAbstractToken) {
-          if (
-            !(srcWasBurned && dstWasMinted) &&
-            srcAbstractToken.issuer !== dstAbstractToken.issuer
-          ) {
-            bridgeType = 'lockAndMint'
-          } else {
-            bridgeType = 'omnichain'
-          }
-        }
-      }
+      const bridgeType = getBridgeType({
+        srcTokenAddress,
+        dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
+        srcChain: interchainTransfer.ctx.chain,
+        dstChain: interchainTransferReceived.ctx.chain,
+        deployedToAbstractMap,
+      })
 
       return [
         Result.Message('axelar.Message', {
