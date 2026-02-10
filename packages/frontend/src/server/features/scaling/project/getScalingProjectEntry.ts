@@ -696,6 +696,7 @@ export async function getScalingProjectEntry(
     projectsChangeReport,
     zkCatalogProjects,
     allProjectsWithContracts,
+    tvsStats,
   )
   if (contractsSection) {
     sections.push({
