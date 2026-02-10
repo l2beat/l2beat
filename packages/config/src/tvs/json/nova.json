@@ -235,7 +235,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-DAI-1",
+      "id": "nova-DAI",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -244,6 +244,14 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
+            "decimals": 18,
+            "sinceTimestamp": 1659620187
+          },
           {
             "type": "balanceOfEscrow",
             "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -265,32 +273,6 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "nova-DAI-2",
-      "priceId": "dai",
-      "symbol": "DAI",
-      "name": "Dai Stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
-        "decimals": 18,
-        "sinceTimestamp": 1659620187
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
     },
     {
       "mode": "auto",

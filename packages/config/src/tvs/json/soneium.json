@@ -484,29 +484,36 @@
     },
     {
       "mode": "auto",
-      "id": "soneium-USDC-2",
+      "id": "soneium-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb",
-        "decimals": 6,
-        "sinceTimestamp": 1735038311
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+            "decimals": 6,
+            "sinceTimestamp": 1733134751
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb",
+            "decimals": 6,
+            "sinceTimestamp": 1735038311
           }
         ]
-      }
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -678,29 +685,36 @@
     },
     {
       "mode": "auto",
-      "id": "soneium-wstETH-2",
+      "id": "soneium-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x2F543A7C9cc80Cc2427c892B96263098d23ee55a",
-        "decimals": 18,
-        "sinceTimestamp": 1737366215
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+            "decimals": 18,
+            "sinceTimestamp": 1733134751
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x2F543A7C9cc80Cc2427c892B96263098d23ee55a",
+            "decimals": 18,
+            "sinceTimestamp": 1737366215
           }
         ]
-      }
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
