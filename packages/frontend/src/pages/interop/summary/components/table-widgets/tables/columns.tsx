@@ -5,6 +5,7 @@ import { AvgDurationCell } from '~/pages/interop/components/table/AvgDurationCel
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
 import type { TokenData } from '~/server/features/scaling/interop/types'
+import type { TopItems } from '~/server/features/scaling/interop/utils/getTop3Items'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type {
   LockAndMintProtocolEntry,
@@ -92,7 +93,11 @@ function getLast24hVolumeColumn<T extends { volume: number }>(
 }
 
 function getTokensByVolumeColumn<
-  T extends { tokens: TokenData[]; protocolName: string; iconUrl: string },
+  T extends {
+    tokens: TopItems<TokenData>
+    protocolName: string
+    iconUrl: string
+  },
 >(columnHelper: ColumnHelper<T>) {
   return columnHelper.accessor((row) => row.tokens, {
     header: 'Tokens\nby volume',
@@ -104,7 +109,7 @@ function getTokensByVolumeColumn<
     },
     cell: (ctx) => (
       <TopTokensCell
-        tokens={ctx.row.original.tokens}
+        topItems={ctx.row.original.tokens}
         protocol={{
           name: ctx.row.original.protocolName,
           iconUrl: ctx.row.original.iconUrl,

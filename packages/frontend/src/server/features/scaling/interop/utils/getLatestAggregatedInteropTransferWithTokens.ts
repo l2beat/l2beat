@@ -15,13 +15,13 @@ export async function getLatestAggregatedInteropTransferWithTokens(
   }
 
   const [transfers, tokens] = await Promise.all([
-    db.aggregatedInteropTransfer.getByChainsTimestampAndId(
+    db.aggregatedInteropTransfer.getByChainsAndTimestamp(
       latestTimestamp,
       from,
       to,
       type,
     ),
-    db.aggregatedInteropToken.getByChainsTimestampAndId(
+    db.aggregatedInteropToken.getByChainsAndTimestamp(
       latestTimestamp,
       from,
       to,

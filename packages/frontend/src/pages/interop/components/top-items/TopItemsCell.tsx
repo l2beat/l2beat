@@ -21,6 +21,7 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
+import type { TopItems } from '~/server/features/scaling/interop/utils/getTop3Items'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import {
   getTopItemsColumns,
@@ -30,7 +31,7 @@ import {
 } from './columns'
 
 type InteropTopItemsCellProps = {
-  items: TopItem[]
+  topItems: TopItems<TopItem>
   itemType: TopItemType
   protocol: {
     name: string
@@ -40,22 +41,21 @@ type InteropTopItemsCellProps = {
 }
 
 export function InteropTopItemsCell({
-  items,
+  topItems,
   itemType,
   protocol,
   showNetMintedValueColumn,
 }: InteropTopItemsCellProps) {
   const [isOpen, setIsOpen] = useState(false)
   const breakpoint = useBreakpoint()
-  const topItems = items.slice(0, 3)
-  const restItems = items.slice(3)
+  const remainingItems = topItems.totalCount - topItems.items.length
 
   const columns = useMemo(() => {
     return getTopItemsColumns(itemType, showNetMintedValueColumn)
   }, [itemType, showNetMintedValueColumn])
 
   const table = useTable<TopItemRow>({
-    data: items,
+    data: topItems.items,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -77,13 +77,13 @@ export function InteropTopItemsCell({
         onClick={() => setIsOpen(true)}
       >
         <div className="-space-x-1.5 flex items-center">
-          {topItems.map((item, i) => (
+          {topItems.items.map((item, i) => (
             <ItemIconWithTooltip key={item.id} item={item} index={i} />
           ))}
         </div>
-        {restItems.length > 0 && (
+        {remainingItems > 0 && (
           <span className="font-bold text-label-value-13 group-hover/dialog-trigger:underline">
-            +{restItems.length}
+            +{remainingItems}
           </span>
         )}
       </button>

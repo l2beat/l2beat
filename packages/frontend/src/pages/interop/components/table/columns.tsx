@@ -86,7 +86,7 @@ function getTokensByVolumeColumn(showNetMintedValueColumn?: boolean) {
     },
     cell: (ctx) => (
       <TopTokensCell
-        tokens={ctx.row.original.tokens}
+        topItems={ctx.row.original.tokens}
         protocol={{
           name: ctx.row.original.protocolName,
           iconUrl: ctx.row.original.iconUrl,
@@ -239,7 +239,7 @@ export function getAllProtocolsColumns(
       },
       cell: (ctx) => (
         <TopChainsCell
-          chains={ctx.row.original.chains}
+          topItems={ctx.row.original.chains}
           protocol={{
             name: ctx.row.original.protocolName,
             iconUrl: ctx.row.original.iconUrl,

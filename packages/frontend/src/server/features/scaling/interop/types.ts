@@ -3,8 +3,9 @@ import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
 } from '@l2beat/database'
-import { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { TopItems } from './utils/getTop3Items'
 
 export type ProtocolEntry = {
   id: string
@@ -18,8 +19,8 @@ export type ProtocolEntry = {
       }
     | undefined
   volume: number
-  tokens: TokenData[]
-  chains: ChainData[]
+  tokens: TopItems<TokenData>
+  chains: TopItems<ChainData>
   transferCount: number
   averageValue: number
   averageDuration: AverageDuration
@@ -36,19 +37,19 @@ export type ByBridgeTypeData = {
 
 export type LockAndMintProtocolData = {
   volume: number
-  tokens: TokenData[]
+  tokens: TopItems<TokenData>
   averageDuration: AverageDuration
 }
 
 export type NonMintingProtocolData = {
   volume: number
-  tokens: TokenData[]
+  tokens: TopItems<TokenData>
   averageValueInFlight: number
 }
 
 export type OmniChainProtocolData = {
   volume: number
-  tokens: TokenData[]
+  tokens: TopItems<TokenData>
 }
 
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
@@ -58,11 +59,14 @@ export const InteropDashboardParams = v.object({
   type: KnownInteropBridgeType.optional(),
 })
 
-export type InteropSubpageParams = v.infer<typeof InteropSubpageParams>
-export const InteropSubpageParams = v.object({
-  type: KnownInteropBridgeType,
+export type InteropProtocolTokensParams = v.infer<
+  typeof InteropProtocolTokensParams
+>
+export const InteropProtocolTokensParams = v.object({
+  id: v.string().transform((value) => ProjectId(value)),
   from: v.array(v.string()),
   to: v.array(v.string()),
+  type: KnownInteropBridgeType.optional(),
 })
 
 export type AggregatedInteropTransferWithTokens =
