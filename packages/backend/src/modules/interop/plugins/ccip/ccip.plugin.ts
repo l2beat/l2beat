@@ -434,8 +434,23 @@ export class CCIPPlugin implements InteropPluginResyncable {
   ): { address: Address32; amount: bigint; wasMinted: boolean }[] {
     const result: { address: Address32; amount: bigint; wasMinted: boolean }[] =
       []
+    const currentLogIndex = input.log.logIndex ?? 0
+
+    // In batched deliveries, multiple ExecutionStateChanged events share one tx.
+    // Only scan logs between the previous ExecutionStateChanged and this one
+    // to avoid picking up token events from other messages in the batch.
+    const prevExecutionLogIndex = input.txLogs
+      .filter(
+        (log) =>
+          (log.logIndex ?? 0) < currentLogIndex &&
+          parseExecutionStateChanged(log, null) !== undefined,
+      )
+      .reduce((max, log) => Math.max(max, log.logIndex ?? 0), -1)
+
     const logsBeforeExecution = input.txLogs.filter(
-      (log) => (log.logIndex ?? 0) < (input.log.logIndex ?? 0),
+      (log) =>
+        (log.logIndex ?? 0) > prevExecutionLogIndex &&
+        (log.logIndex ?? 0) < currentLogIndex,
     )
 
     for (let i = 0; i < logsBeforeExecution.length; i++) {
