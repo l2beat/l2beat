@@ -111,6 +111,7 @@ export async function getDaProjectEntry(
         'trackedTxsConfig',
         'livenessConfig',
         'archivedAt',
+        'livenessInfo',
       ],
     })
   ).filter((x) => x.daBridge.daLayer === layer.id)

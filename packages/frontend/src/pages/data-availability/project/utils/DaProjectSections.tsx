@@ -30,6 +30,7 @@ type RegularDetailsParams = {
         | 'trackedTxsConfig'
         | 'livenessConfig'
         | 'archivedAt'
+        | 'livenessInfo'
       >
     | undefined
   isVerified: boolean
