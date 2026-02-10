@@ -1,8 +1,18 @@
 {
   "name": "apechain",
-  "timestamp": 1764750880,
+  "timestamp": 1770736061,
   "configHash": "0x2e012665f91cb90c6b62b837bbf1a3d03f6818319570417fbff15be0b55c40b9",
   "entries": [
+    {
+      "address": "arb1:0x00B0bC28380B470f5916b10AA2d453a233DE5d85",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "EspressoSGXTEEVerifier",
       "address": "arb1:0x05A16513BF74629b834878731f07b075Cca33f55",
@@ -18,21 +28,39 @@
       "sinceBlock": 379787394,
       "values": {
         "$immutable": true,
-        "owner": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
+        "owner": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
         "pendingOwner": "arb1:0x0000000000000000000000000000000000000000",
         "quoteVerifier": "arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7",
         "registeredSigners": [
           "arb1:0xB8070bdB066Bc8D0707fCa9e5465dA19e96325bF",
-          "arb1:0x48780339C4dcFF3578321e7CB228B10F80DEb1Ab"
+          "arb1:0x48780339C4dcFF3578321e7CB228B10F80DEb1Ab",
+          "arb1:0xDf5ce16E5679dB7217920dB6104C855D372Bb572",
+          "arb1:0xB5D61FF9a82703cf8edC4CEA8CEbd48a30FC1491",
+          "arb1:0xD8bCc052fD0C70b31D5b8Cd112000328C85019a6",
+          "arb1:0xd50404460C905C4af332C03574f59Ab132e71754",
+          "arb1:0xCA4b5B2bd05853bd81d8dE4b1F0877955205510e",
+          "arb1:0x3724bB8F6b32610478e6E927458F47798690196E",
+          "arb1:0x00B0bC28380B470f5916b10AA2d453a233DE5d85",
+          "arb1:0x723a034bE94323747Fc3321992C679a1EB00de1F",
+          "arb1:0x99bB093821cbD1Ae99DA0AF1ef6787e116a22e41",
+          "arb1:0xf74dE607db52BBeDc6CDB2E420082c15fCBB9b3E",
+          "arb1:0x0619eA103A0EE6BAdb95E101c57ea52aAAac0b99"
         ],
         "validEnclaveHashes": [
-          "0x38ac1d01767230812dbfb944356ebc69bc5642f938f9f86392cd761549e58dc0"
+          "0x38ac1d01767230812dbfb944356ebc69bc5642f938f9f86392cd761549e58dc0",
+          "0x0f4604a024c66fe26fbbc6781a127cc8c2041feed8845e8b54ad182e7cd4669e",
+          "0x416422a7f57fa1bdc9748c88c38602aef08c87eb474a32827f90fe46ff734d0d"
         ]
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "arb1:0x05A16513BF74629b834878731f07b075Cca33f55": "EspressoSGXTEEVerifier"
       }
+    },
+    {
+      "address": "arb1:0x0619eA103A0EE6BAdb95E101c57ea52aAAac0b99",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Inbox",
@@ -288,6 +316,11 @@
       }
     },
     {
+      "address": "arb1:0x3724bB8F6b32610478e6E927458F47798690196E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RollupProxy",
       "address": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
       "type": "Contract",
@@ -333,13 +366,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 10706,
+        "firstUnresolvedNode": 12343,
         "inbox": "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 10705,
-        "latestNodeCreated": 10854,
+        "latestConfirmed": 12342,
+        "latestNodeCreated": 12494,
         "loserStakeEscrow": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -530,7 +563,7 @@
         "$immutable": true,
         "espressoNitroTEEVerifier": "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C",
         "espressoSGXTEEVerifier": "arb1:0x05A16513BF74629b834878731f07b075Cca33f55",
-        "owner": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
+        "owner": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
         "pendingOwner": "arb1:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -565,7 +598,17 @@
       }
     },
     {
+      "address": "arb1:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x5E768dd03BD821703ef825e057434De85913EEAC",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -643,7 +686,7 @@
         "allowedOutboxList": [
           "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"
         ],
-        "delayedMessageCount": 1148,
+        "delayedMessageCount": 1232,
         "inboxHistory": [
           "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
           "arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F",
@@ -654,8 +697,8 @@
         "outboxHistory": ["arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 72005,
-        "sequencerReportedSubMessageCount": 29816738
+        "sequencerMessageCount": 73904,
+        "sequencerReportedSubMessageCount": 33546813
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -680,6 +723,66 @@
         "arb1:0x20B3C55fe4ecd989beB56E13b2A726110f0c3619": "ERC20Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "SafeL2",
+      "address": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x05A16513BF74629b834878731f07b075Cca33f55",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5",
+          "description": "change the modular TEE verifier contracts.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1764785015,
+      "sinceBlock": 406817741,
+      "values": {
+        "$immutable": false,
+        "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "arb1:0xb9e40b6E60CcD5361774cf4D36d1fCe66B649b63",
+          "arb1:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6",
+          "arb1:0x5E768dd03BD821703ef825e057434De85913EEAC",
+          "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xe9d88a0c16a72a228eb14e40bc8da2e839d32257df5479740ffc147dcb6a414c",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 7,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5": "SafeProxy",
+        "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "arb1:0x723a034bE94323747Fc3321992C679a1EB00de1F",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x83F58bBB1a940E364ED2dE775D1FD5218135cCE3",
@@ -710,6 +813,11 @@
     },
     {
       "address": "arb1:0x9173d4E736A1625400a8711E08A5d9C20A7c9131",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x99bB093821cbD1Ae99DA0AF1ef6787e116a22e41",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -820,7 +928,17 @@
       ]
     },
     {
+      "address": "arb1:0xB5D61FF9a82703cf8edC4CEA8CEbd48a30FC1491",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xB8070bdB066Bc8D0707fCa9e5465dA19e96325bF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xb9e40b6E60CcD5361774cf4D36d1fCe66B649b63",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -846,7 +964,7 @@
         "DIGEST_KEY": "0x682a7e258d80bd2421d3103cbe71e3e3b82138116756b97b8256f061dc2f11fb",
         "MODULE_ID_KEY": "0x8ce577cf664c36ba5130242bf5790c2675e9f4e6986a842b607821bee25372ee",
         "NONCE_KEY": "0x7ab1577440dd7bedf920cb6de2f9fc6bf7ba98c78c85a3fa1f8311aac95e1759",
-        "owner": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
+        "owner": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
         "PCRS_KEY": "0x61585f8bc67a4b6d5891a4639a074964ac66fc2241dc0b36c157dc101325367a",
         "pendingOwner": "arb1:0x0000000000000000000000000000000000000000",
         "PUBLIC_KEY_KEY": "0xc7b28019ccfdbd30ffc65951d94bb85c9e2b8434111a000b5afd533ce65f57a4",
@@ -882,7 +1000,27 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0xCA4b5B2bd05853bd81d8dE4b1F0877955205510e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xd125c9222160C308EdC5Cf642573Ca8a14D9d33c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xd50404460C905C4af332C03574f59Ab132e71754",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xD8bCc052fD0C70b31D5b8Cd112000328C85019a6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xDf5ce16E5679dB7217920dB6104C855D372Bb572",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -992,7 +1130,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 72005,
+        "batchCount": 73904,
         "batchPosterManager": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
         "batchPosters": ["arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"],
         "bridge": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -1029,7 +1167,7 @@
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1148,
+        "totalDelayedMessagesRead": 1232,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1077,34 +1215,14 @@
       }
     },
     {
-      "address": "arb1:0xf7BE303e415DD245F685eA0CF6d1dE4B002703B0",
+      "address": "arb1:0xf74dE607db52BBeDc6CDB2E420082c15fCBB9b3E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
+      "address": "arb1:0xf7BE303e415DD245F685eA0CF6d1dE4B002703B0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x05A16513BF74629b834878731f07b075Cca33f55",
-          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5",
-          "description": "change the modular TEE verifier contracts.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C",
-          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xfbf3197115695CaB806CDAe742470374a5c18d24",
@@ -1556,6 +1674,9 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5": [
+      "constructor(address _singleton)"
+    ],
     "arb1:0x6Feb471ce7D32ee16047F1A983ac4f592df96526": [
       "error NotOwner(address sender, address owner)",
       "event Bisected(uint64 indexed challengeIndex, bytes32 indexed challengeRoot, uint256 challengedSegmentStart, uint256 challengedSegmentLength, bytes32[] chainHashes)",
@@ -1869,6 +1990,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 406680815 },
-  "permissionsConfigHash": "0xae65e3263501e3a1acab1ca47990f4982ab2aefbb715c6e746def2d830f50e01"
+  "usedBlockNumbers": { "arbitrum": 430657677 },
+  "permissionsConfigHash": "0xc17fc95fa51d5b9431efe59d66a703c3785a9e1ef29ef3b56ca60c9e2844f633"
 }

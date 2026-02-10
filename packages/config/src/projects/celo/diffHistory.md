@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xcdc5ba2261c45831df3808f167a1360abbc201cc
+
+# Diff at Tue, 10 Feb 2026 15:08:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1769272310
+- current timestamp: 1770736055
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OPSuccinctFaultDisputeGame (eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
+-        "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e"
++        "eth:0xc5bd131ceAEb72F15C66418bc2668332AB99DE37"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctFaultDisputeGame (eth:0xc5bd131ceAEb72F15C66418bc2668332AB99DE37)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
 Generated with discovered.json: 0x6d020f48887f8ad9038fc0c7b36ae29bcbba5e16
 
 # Diff at Mon, 26 Jan 2026 09:08:14 GMT:

@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xba25ed6867ac2bb6a1697a103fffd00dc2271be5
+
+# Diff at Tue, 10 Feb 2026 15:08:50 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1764750880
+- current timestamp: 1770736061
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract EspressoSGXTEEVerifier (arb1:0x05A16513BF74629b834878731f07b075Cca33f55) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
++++ severity: HIGH
+      values.owner:
+-        "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E"
++        "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.owner:
+-        "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E"
++        "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
++++ severity: HIGH
+      values.owner:
+-        "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E"
++        "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/apechain/.flat/SafeL2/SafeL2.sol  | 1152 ++++++++++++++++++++
+ .../projects/apechain/.flat/SafeL2/SafeProxy.p.sol |   37 +
+ 2 files changed, 1189 insertions(+)
+```
+
 Generated with discovered.json: 0x58049932f75ddd9130a3f3357f663510be310a71
 
 # Diff at Mon, 05 Jan 2026 17:44:00 GMT:

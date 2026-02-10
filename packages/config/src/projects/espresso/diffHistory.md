@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x6202db0da8eb637b2b2664590eeb7903347d70a3
+
+# Diff at Tue, 10 Feb 2026 15:08:45 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1746205715
+- current timestamp: 1770736062
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract EspressoMultisig (eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x745948f86C228f11F970d11E8e281c68837dCC55"
+      values.$members.1:
++        "eth:0x1584F9D22Ba5C56AC0bB6496c447a95a721Eb709"
+      values.$members.0:
+-        "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc"
++        "eth:0x3F3662e0B1D652cB6dDCd2dc31DFE5D762bBd3F2"
+      values.$members.2:
+-        "eth:0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E"
++        "eth:0x811caa1c5C96BFE0AB12b2EEB542994B0C368627"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x2a7249cc8f2f30903729a977c0b879141cd05eab
 
 # Diff at Wed, 05 Nov 2025 12:46:40 GMT:
