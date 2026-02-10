@@ -4,7 +4,9 @@
  * examples: HypERC20, HypXERC20, HypERC20Collateral, HypNative
  * OMNICHAIN
  */
-import { Address32 } from '@l2beat/shared-pure'
+
+import type { AbstractTokenRecord } from '@l2beat/database'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
@@ -215,7 +217,11 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   }
 
   matchTypes = [HwrTransferReceived]
-  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+  match(
+    event: InteropEvent,
+    db: InteropEventDb,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
+  ): MatchResult | undefined {
     if (!HwrTransferReceived.checkType(event)) return
 
     const hwrSent = db.find(HwrTransferSent, {
@@ -248,6 +254,42 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       ]
     }
 
+    // bridgeType block
+    const srcTokenAddress = hwrSent.args.tokenAddress
+    const dstTokenAddress = event.args.tokenAddress
+    const srcWasBurned = hwrSent.args.burned
+    const dstWasMinted = event.args.minted
+    let bridgeType: 'lockAndMint' | 'omnichain' | undefined = undefined
+    if (
+      srcTokenAddress &&
+      dstTokenAddress &&
+      srcWasBurned !== undefined &&
+      dstWasMinted !== undefined
+    ) {
+      const srcAbstractToken = deployedToAbstractMap.get(
+        ChainSpecificAddress.fromLong(
+          Address32.cropToEthereumAddress(srcTokenAddress),
+          hwrSent.ctx.chain,
+        ),
+      )
+      const dstAbstractToken = deployedToAbstractMap.get(
+        ChainSpecificAddress.fromLong(
+          Address32.cropToEthereumAddress(dstTokenAddress),
+          event.ctx.chain,
+        ),
+      )
+      if (srcAbstractToken && dstAbstractToken) {
+        if (
+          !(srcWasBurned && dstWasMinted) &&
+          srcAbstractToken.issuer !== dstAbstractToken.issuer
+        ) {
+          bridgeType = 'lockAndMint'
+        } else {
+          bridgeType = 'omnichain'
+        }
+      }
+    }
+
     return [
       Result.Message('hyperlane.Message', {
         app: 'hwr',
@@ -256,13 +298,14 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       }),
       Result.Transfer('hyperlaneHwr.Transfer', {
         srcEvent: hwrSent,
-        srcTokenAddress: hwrSent.args.tokenAddress,
+        srcTokenAddress,
         srcAmount: hwrSent.args.amount,
         dstEvent: event,
-        dstTokenAddress: event.args.tokenAddress,
+        dstTokenAddress,
         dstAmount: event.args.amount,
-        srcWasBurned: hwrSent.args.burned,
-        dstWasMinted: event.args.minted,
+        srcWasBurned,
+        dstWasMinted,
+        bridgeType,
       }),
     ]
   }
