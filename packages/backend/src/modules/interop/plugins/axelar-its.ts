@@ -4,7 +4,7 @@
  */
 
 import type { AbstractTokenRecord } from '@l2beat/database'
-import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { Address32, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   AXELAR_NETWORKS,
   ContractCall,
