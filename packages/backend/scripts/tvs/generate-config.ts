@@ -173,6 +173,7 @@ const cmd = command({
           tvsForProject,
           lastNonZeroValues,
           args.includeZeroAmounts,
+          timestamp,
           logger,
         ).sort((a, b) => a.id.localeCompare(b.id))
       } else {
@@ -237,6 +238,7 @@ function updateConfigWithTvs(
   tvs: TokenValue[],
   lastNonZeroValues: TokenValue[],
   includeZeroAmounts: boolean,
+  timestamp: number,
   logger: Logger,
 ) {
   const updatedTokens: TvsToken[] = []
@@ -287,6 +289,14 @@ function updateConfigWithTvs(
 
     updatedTokens.push(tokenConfig)
   }
+
+  // Keep tokens that are not active at the current timestamp (historical)
+  const updatedTokenIds = new Set(updatedTokens.map((token) => token.id))
+  const outOfRangeTokens = regenerated.filter(
+    (token) =>
+      !updatedTokenIds.has(token.id) && !isInTokenSyncRange(token, timestamp),
+  )
+  updatedTokens.push(...outOfRangeTokens)
 
   return updatedTokens
 }
