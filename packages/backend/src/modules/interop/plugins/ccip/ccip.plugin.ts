@@ -335,8 +335,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
       const depositForBurn = parseDepositForBurn(log, null)
       if (
         depositForBurn &&
-        depositForBurn.burnToken.toLowerCase() ===
-          tokenAddress.toLowerCase() &&
+        depositForBurn.burnToken.toLowerCase() === tokenAddress.toLowerCase() &&
         depositForBurn.amount === amount
       ) {
         return true

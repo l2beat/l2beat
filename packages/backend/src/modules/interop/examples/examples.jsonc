@@ -191,16 +191,9 @@
         "tx": "0x36c6e8404b0f619c24e85c16ad007a82d24c6dccd9f026c73d8aea0ebf9b7bba"
       }
     ],
-    "events": [
-      "ccip.CCIPSendRequested",
-      "ccip.ExecutionStateChanged"
-    ],
-    "messages": [
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" }
-    ],
-    "transfers": [
-      "cctp-v1.Transfer"
-    ]
+    "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+    "messages": [{ "type": "ccip.Message", "app": "CCIP Token Transfer" }],
+    "transfers": ["cctp-v1.Transfer"]
   },
   "ccip-messaging": {
     "loadConfigs": ["ccip"],
