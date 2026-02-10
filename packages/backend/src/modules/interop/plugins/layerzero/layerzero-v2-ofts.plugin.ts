@@ -1,4 +1,5 @@
-import { Address32, assert } from '@l2beat/shared-pure'
+import type { AbstractTokenRecord } from '@l2beat/database'
+import { Address32, assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findParsedAround } from '../hyperlane-hwr'
 import {
@@ -197,6 +198,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   match(
     oftReceivedPacketDelivered: InteropEvent,
     db: InteropEventDb,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
   ): MatchResult | undefined {
     if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
       return
@@ -211,6 +213,23 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
 
     const packetDelivered = db.find(PacketDelivered, { guid })
     if (!packetDelivered) return
+
+    const srcAbstractToken = deployedToAbstractMap.get(
+      ChainSpecificAddress.fromLong(
+        Address32.cropToEthereumAddress(
+          oftSentPacketSent.args.srcTokenAddress ?? Address32.ZERO,
+        ),
+        oftSentPacketSent.ctx.chain,
+      ),
+    )
+    const dstAbstractToken = deployedToAbstractMap.get(
+      ChainSpecificAddress.fromLong(
+        Address32.cropToEthereumAddress(
+          oftReceivedPacketDelivered.args.dstTokenAddress ?? Address32.ZERO,
+        ),
+        packetDelivered.ctx.chain,
+      ),
+    )
 
     return [
       Result.Message('layerzero-v2.Message', {
@@ -227,6 +246,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
         srcWasBurned: oftSentPacketSent.args.burned,
         dstWasMinted: oftReceivedPacketDelivered.args.minted,
+        bridgeType:
+          srcAbstractToken?.issuer !== dstAbstractToken?.issuer
+            ? 'lockAndMint'
+            : 'omnichain',
       }),
     ]
   }
