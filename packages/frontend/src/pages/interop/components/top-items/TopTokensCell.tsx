@@ -1,6 +1,6 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,7 @@ import type { TopItems } from '~/server/features/scaling/interop/utils/getTopIte
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { getTopItemsColumns, type TopItemRow } from './columns'
-import { InteropTopItems } from './TopItemsCell'
+import { InteropTopItems } from './TopItems'
 
 export function TopTokensCell({
   topItems,
@@ -39,27 +39,8 @@ export function TopTokensCell({
   showNetMintedValueColumn?: boolean
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
   const utils = api.useUtils()
   const { selectedChains } = useInteropSelectedChains()
-
-  useEffect(() => {
-    if (isHovered) {
-      utils.interop.tokens.prefetch({
-        from: selectedChains.from,
-        to: selectedChains.to,
-        id: protocol.id,
-        type,
-      })
-    }
-  }, [
-    isHovered,
-    selectedChains.from,
-    selectedChains.to,
-    protocol.id,
-    type,
-    utils.interop.tokens,
-  ])
 
   return (
     <>
@@ -77,8 +58,14 @@ export function TopTokensCell({
           })),
           remainingCount: topItems.remainingCount,
         }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseEnter={() =>
+          utils.interop.tokens.prefetch({
+            from: selectedChains.from,
+            to: selectedChains.to,
+            id: protocol.id,
+            type,
+          })
+        }
         setIsOpen={setIsOpen}
       />
       <TopTokensContent
