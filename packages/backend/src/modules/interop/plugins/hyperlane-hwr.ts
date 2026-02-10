@@ -16,7 +16,7 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
-import { getBridgeTypeOmnichain } from './layerzero/layerzero-v2-ofts.plugin'
+import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import {
   createEventParser,
   createInteropEventType,
@@ -260,7 +260,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
     const dstTokenAddress = event.args.tokenAddress
     const srcWasBurned = hwrSent.args.burned
     const dstWasMinted = event.args.minted
-    const bridgeType = getBridgeTypeOmnichain({
+    const bridgeType = getBridgeType({
       srcTokenAddress,
       dstTokenAddress,
       srcWasBurned,
@@ -268,6 +268,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       srcChain: hwrSent.ctx.chain,
       dstChain: event.ctx.chain,
       deployedToAbstractMap,
+      isNonMintingDefault: false,
     })
 
     return [

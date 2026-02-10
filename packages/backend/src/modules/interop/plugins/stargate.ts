@@ -8,7 +8,7 @@ import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
-  getBridgeTypeOmnichain,
+  getBridgeType,
   parseOFTReceived,
   parseOFTSent,
 } from './layerzero/layerzero-v2-ofts.plugin'
@@ -512,7 +512,7 @@ export class StargatePlugin implements InteropPlugin {
             dstAmount: matchedOftReceived.args.amountReceivedLD,
             srcWasBurned: oftSentBusRode.args.hydra,
             dstWasMinted: matchedOftReceived.args.hydra,
-            bridgeType: getBridgeTypeOmnichain({
+            bridgeType: getBridgeType({
               srcTokenAddress: oftSentBusRode.args.tokenAddress,
               dstTokenAddress: matchedOftReceived.args.tokenAddress,
               srcWasBurned: oftSentBusRode.args.hydra,
@@ -520,6 +520,7 @@ export class StargatePlugin implements InteropPlugin {
               srcChain: oftSentBusRode.ctx.chain,
               dstChain: matchedOftReceived.ctx.chain,
               deployedToAbstractMap,
+              isNonMintingDefault: true,
             }),
           }),
         )
@@ -548,7 +549,7 @@ export class StargatePlugin implements InteropPlugin {
           dstAmount: oftReceived.args.amountReceivedLD,
           srcWasBurned: oftSentTaxi.args.hydra,
           dstWasMinted: oftReceived.args.hydra,
-          bridgeType: getBridgeTypeOmnichain({
+          bridgeType: getBridgeType({
             srcTokenAddress: oftSentTaxi.args.tokenAddress,
             dstTokenAddress: oftReceived.args.tokenAddress,
             srcWasBurned: oftSentTaxi.args.hydra,
@@ -556,6 +557,7 @@ export class StargatePlugin implements InteropPlugin {
             srcChain: oftSentTaxi.ctx.chain,
             dstChain: oftReceived.ctx.chain,
             deployedToAbstractMap,
+            isNonMintingDefault: true,
           }),
         }),
       ]

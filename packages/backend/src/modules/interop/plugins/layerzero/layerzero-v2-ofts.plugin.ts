@@ -57,7 +57,7 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
   minted?: boolean
 }>('layerzero-v2.PacketOFTDelivered', { direction: 'incoming' })
 
-export function getBridgeTypeOmnichain({
+export function getBridgeType({
   srcTokenAddress,
   dstTokenAddress,
   srcWasBurned,
@@ -65,6 +65,7 @@ export function getBridgeTypeOmnichain({
   srcChain,
   dstChain,
   deployedToAbstractMap,
+  isNonMintingDefault,
 }: {
   srcTokenAddress: Address32 | undefined
   dstTokenAddress: Address32 | undefined
@@ -73,7 +74,8 @@ export function getBridgeTypeOmnichain({
   srcChain: string
   dstChain: string
   deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>
-}): 'lockAndMint' | 'omnichain' | undefined {
+  isNonMintingDefault: boolean
+}): 'lockAndMint' | 'omnichain' | 'nonMinting' | undefined {
   if (
     !srcTokenAddress ||
     !dstTokenAddress ||
@@ -98,13 +100,22 @@ export function getBridgeTypeOmnichain({
   if (!srcAbstractToken || !dstAbstractToken) return
 
   if (
+    isNonMintingDefault &&
+    !(!srcWasBurned && !dstWasMinted) &&
+    srcAbstractToken.issuer !== dstAbstractToken.issuer
+  ) {
+    return 'lockAndMint'
+  }
+
+  if (
+    !isNonMintingDefault &&
     !(srcWasBurned && dstWasMinted) &&
     srcAbstractToken.issuer !== dstAbstractToken.issuer
   ) {
     return 'lockAndMint'
   }
 
-  return 'omnichain'
+  return isNonMintingDefault ? 'nonMinting' : 'omnichain'
 }
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
@@ -269,7 +280,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const dstTokenAddress = oftReceivedPacketDelivered.args.dstTokenAddress
     const srcWasBurned = oftSentPacketSent.args.burned
     const dstWasMinted = oftReceivedPacketDelivered.args.minted
-    const bridgeType = getBridgeTypeOmnichain({
+    const bridgeType = getBridgeType({
       srcTokenAddress,
       dstTokenAddress,
       srcWasBurned,
@@ -277,6 +288,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       srcChain: oftSentPacketSent.ctx.chain,
       dstChain: packetDelivered.ctx.chain,
       deployedToAbstractMap,
+      isNonMintingDefault: false,
     })
 
     return [
