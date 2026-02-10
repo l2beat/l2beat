@@ -6,6 +6,7 @@ export const forta: ScalingProject = underReviewL3({
   id: 'forta',
   capability: 'universal',
   addedAt: UnixTime(1738766610), // 2025-02-05T15:43:09Z
+  archivedAt: UnixTime(1770710913),
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Forta',
