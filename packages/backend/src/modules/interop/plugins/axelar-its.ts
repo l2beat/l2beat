@@ -2,7 +2,9 @@
  * Axelar Interchain Token Service
  * OMNICHAIN token standard
  */
-import { Address32 } from '@l2beat/shared-pure'
+
+import type { AbstractTokenRecord } from '@l2beat/database'
+import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   AXELAR_NETWORKS,
   ContractCall,
@@ -149,6 +151,7 @@ export class AxelarITSPlugin implements InteropPlugin {
   match(
     contractCallExecuted: InteropEvent,
     db: InteropEventDb,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
   ): MatchResult | undefined {
     if (ContractCallExecuted.checkType(contractCallExecuted)) {
       const interchainTransferReceived = db.find(InterchainTransferReceived, {
@@ -169,6 +172,43 @@ export class AxelarITSPlugin implements InteropPlugin {
         sameTxAfter: interchainTransfer,
       })
       if (!contractCall) return
+
+      // bridgeType block
+      const srcTokenAddress = interchainTransfer.args.tokenAddress
+      const dstTokenAddress = interchainTransferReceived.args.tokenAddress
+      const srcWasBurned = interchainTransfer.args.srcWasBurned
+      const dstWasMinted = interchainTransferReceived.args.dstWasMinted
+      let bridgeType: 'lockAndMint' | 'omnichain' | undefined = undefined
+      if (
+        srcTokenAddress &&
+        dstTokenAddress &&
+        srcWasBurned !== undefined &&
+        dstWasMinted !== undefined
+      ) {
+        const srcAbstractToken = deployedToAbstractMap.get(
+          ChainSpecificAddress.fromLong(
+            Address32.cropToEthereumAddress(srcTokenAddress),
+            interchainTransfer.ctx.chain,
+          ),
+        )
+        const dstAbstractToken = deployedToAbstractMap.get(
+          ChainSpecificAddress.fromLong(
+            Address32.cropToEthereumAddress(dstTokenAddress),
+            interchainTransferReceived.ctx.chain,
+          ),
+        )
+        if (srcAbstractToken && dstAbstractToken) {
+          if (
+            !(srcWasBurned && dstWasMinted) &&
+            srcAbstractToken.issuer !== dstAbstractToken.issuer
+          ) {
+            bridgeType = 'lockAndMint'
+          } else {
+            bridgeType = 'omnichain'
+          }
+        }
+      }
+
       return [
         Result.Message('axelar.Message', {
           app: 'axelar-its',
@@ -179,12 +219,13 @@ export class AxelarITSPlugin implements InteropPlugin {
         Result.Transfer('axelar-its.Transfer', {
           srcEvent: interchainTransfer,
           srcAmount: interchainTransfer.args.amount,
-          srcTokenAddress: interchainTransfer.args.tokenAddress,
-          srcWasBurned: interchainTransfer.args.srcWasBurned,
+          srcTokenAddress,
+          srcWasBurned,
           dstEvent: interchainTransferReceived,
           dstAmount: interchainTransferReceived.args.amount,
-          dstTokenAddress: interchainTransferReceived.args.tokenAddress,
-          dstWasMinted: interchainTransferReceived.args.dstWasMinted,
+          dstTokenAddress,
+          dstWasMinted,
+          bridgeType,
         }),
       ]
     }
