@@ -175,11 +175,25 @@
       "ccip.Transfer",
       "ccip.Transfer",
       "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
       "ccip.Transfer"
     ]
+  },
+  "ccip-cctp-usdc": {
+    "loadConfigs": ["ccip", "cctp-v1"],
+    "txs": [
+      // Base → Optimism USDC via CCIP (uses CCTP v1 under the hood)
+      {
+        "chain": "base",
+        "tx": "0xc46f7c65ecaf67ba82518d20c77a9ca153bb8d92572773f62afb512f736ddfc0"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x36c6e8404b0f619c24e85c16ad007a82d24c6dccd9f026c73d8aea0ebf9b7bba"
+      }
+    ],
+    "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+    "messages": [{ "type": "ccip.Message", "app": "CCIP Token Transfer" }],
+    "transfers": ["cctp-v1.Transfer"]
   },
   "ccip-messaging": {
     "loadConfigs": ["ccip"],
