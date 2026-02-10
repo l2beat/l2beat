@@ -11,7 +11,7 @@ Generated with discovered.json: 0x9cb15096d408e317666645a07de63de38e3bb9a4
 Paused the operation of Intmax L3. In particular:
 
 - Added functionality to pause withdrawals for the main contract on Ethereum: https://disco.l2beat.com/diff/eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA/eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9. 
-- Also added functionality to puase block posting on the rollup contract on scroll: https://disco.l2beat.com/diff/scr:0xF34299210fB8505232649e9BEa14a84DD75e746b/scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820. 
+- Also added functionality to pause block posting on the rollup contract on scroll: https://disco.l2beat.com/diff/scr:0xF34299210fB8505232649e9BEa14a84DD75e746b/scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820. 
 - Updated circuitDigest on withdrawal contract, which prevents submission of withdrawal validity proofs.
 
 - Paused Liquidity contract (no deposits/withdrawals possible now)
