@@ -1,3 +1,4 @@
+import type { LivenessOverwriteMode } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
 import type {
@@ -11,7 +12,7 @@ export type ScalingLivenessTableEntry = Omit<ScalingLivenessEntry, 'data'> & {
 
 type TableEntryData = Record<
   TrackedTxsConfigSubtype,
-  TableEntryDataPoint | undefined | null
+  TableEntryDataPoint | undefined | null | LivenessOverwriteMode
 > & {
   isSynced: boolean
 }
@@ -36,24 +37,27 @@ export function toLivenessTableEntry(
   return {
     ...entry,
     data: {
-      stateUpdates: stateUpdates
-        ? {
-            ...stateUpdates,
-            warning: entry.data.stateUpdates?.warning,
-          }
-        : stateUpdates,
-      batchSubmissions: batchSubmissions
-        ? {
-            ...batchSubmissions,
-            warning: entry.data.batchSubmissions?.warning,
-          }
-        : batchSubmissions,
-      proofSubmissions: proofSubmissions
-        ? {
-            ...proofSubmissions,
-            warning: entry.data.proofSubmissions?.warning,
-          }
-        : proofSubmissions,
+      stateUpdates:
+        stateUpdates && stateUpdates !== 'no-data'
+          ? {
+              ...stateUpdates,
+              warning: entry.data.stateUpdates?.warning,
+            }
+          : stateUpdates,
+      batchSubmissions:
+        batchSubmissions && batchSubmissions !== 'no-data'
+          ? {
+              ...batchSubmissions,
+              warning: entry.data.batchSubmissions?.warning,
+            }
+          : batchSubmissions,
+      proofSubmissions:
+        proofSubmissions && proofSubmissions !== 'no-data'
+          ? {
+              ...proofSubmissions,
+              warning: entry.data.proofSubmissions?.warning,
+            }
+          : proofSubmissions,
       isSynced: entry.data.isSynced,
     },
   }

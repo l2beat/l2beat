@@ -28,12 +28,13 @@ export function LivenessIntervalCell(props: {
   }
 
   const data = props.entry.data?.[props.dataType]
-  const durationInSeconds = data?.averageInSeconds
-  const isSynced = props.entry.data?.isSynced
 
-  if (data === null) {
+  if (data === null || data === 'no-data') {
     return <NoDataBadge />
   }
+
+  const durationInSeconds = data?.averageInSeconds
+  const isSynced = props.entry.data?.isSynced
 
   if (!durationInSeconds) {
     const tooltipText = getNonApplicableTooltipText(props.dataType, props.entry)
