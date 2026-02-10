@@ -574,6 +574,25 @@
     },
     {
       "mode": "auto",
+      "id": "nearomni-SPX",
+      "priceId": "spx6900",
+      "symbol": "SPX",
+      "name": "SPX6900",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31401/large/sticker_%281%29.jpg?1702371083",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
+        "chain": "ethereum",
+        "escrowAddress": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+        "decimals": 8,
+        "sinceTimestamp": 1743682043
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "nearomni-SUSHI",
       "priceId": "sushi",
       "symbol": "SUSHI",

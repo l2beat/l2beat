@@ -697,6 +697,25 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantle-XAUt",
+      "priceId": "tether-gold",
+      "symbol": "XAUt",
+      "name": "Tether Gold",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1696510471",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+        "chain": "ethereum",
+        "escrowAddress": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+        "decimals": 6,
+        "sinceTimestamp": 1687954103
+      },
+      "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false
     }
   ]
 }

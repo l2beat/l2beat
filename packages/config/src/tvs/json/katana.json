@@ -58,6 +58,24 @@
     },
     {
       "mode": "auto",
+      "id": "katana-CAPS",
+      "priceId": "coin-capsule",
+      "symbol": "CAPS",
+      "name": "Capsule Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCbd303263f78e5d93C056E1f778416BCb8d581Ac",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
       "id": "katana-cbBTC",
       "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",
@@ -94,6 +112,24 @@
     },
     {
       "mode": "auto",
+      "id": "katana-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2ff27Ca276fF52A4e7C40FF87983c45A4A049e5E",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
       "id": "katana-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -122,6 +158,24 @@
         ]
       },
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "katana-GRT",
+      "priceId": "the-graph",
+      "symbol": "GRT",
+      "name": "Graph Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x989EC77888A6E5F4D06bBCD4E7EdEFb2f4d8889B",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
     },
     {
       "mode": "auto",
@@ -195,6 +249,24 @@
     },
     {
       "mode": "auto",
+      "id": "katana-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4570545894bE2140708048781276bBD0fae15514",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
       "id": "katana-MATIC",
       "priceId": "matic-network",
       "symbol": "MATIC",
@@ -231,6 +303,24 @@
     },
     {
       "mode": "auto",
+      "id": "katana-OKB",
+      "priceId": "okb",
+      "symbol": "OKB",
+      "name": "OKB",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4463/large/WeChat_Image_20220118095654.png?1696505053",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa703f846105bE911c4F9c45E272e15e7A94814BD",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
       "id": "katana-PAXG",
       "priceId": "pax-gold",
       "symbol": "PAXG",
@@ -249,6 +339,24 @@
     },
     {
       "mode": "auto",
+      "id": "katana-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7Fa65cB97eFb27Ad709b29856AAfcBd51a294237",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
       "id": "katana-POL",
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
@@ -260,6 +368,24 @@
       "amount": {
         "type": "totalSupply",
         "address": "0xb24e3035d1FCBC0E43CF3143C3Fd92E53df2009b",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-RPL",
+      "priceId": "rocket-pool",
+      "symbol": "RPL",
+      "name": "Rocket Pool Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2090/large/rocket_pool_%28RPL%29.png?1696503058",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5b7Bd97Cb29286F7f2339c27B74Bc31ae69e6782",
         "chain": "katana",
         "decimals": 18,
         "sinceTimestamp": 1746742811

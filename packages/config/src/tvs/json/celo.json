@@ -178,6 +178,25 @@
     },
     {
       "mode": "auto",
+      "id": "celo-OLAS",
+      "priceId": "autonolas",
+      "symbol": "OLAS",
+      "name": "Autonolas",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31099/large/OLAS-token.png?1696529930",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0001A500A6B18995B03f44bb040A5fFc28E45CB0",
+        "chain": "ethereum",
+        "escrowAddress": "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+        "decimals": 18,
+        "sinceTimestamp": 1741879559
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "celo-PLASTIK",
       "priceId": "plastiks",
       "symbol": "PLASTIK",
@@ -189,6 +208,25 @@
         "decimals": 9,
         "sinceTimestamp": 1742960663,
         "address": "0x27cd006548dF7C8c8e9fdc4A67fa05C2E3CA5CF9",
+        "chain": "celo"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-UBE",
+      "priceId": "ubeswap-2",
+      "symbol": "UBE",
+      "name": "Ubeswap",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36950/large/ubeswap.png?1712898123",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "ubeswap-2",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663,
+        "address": "0x71e26d0E519D14591b9dE9a0fE9513A398101490",
         "chain": "celo"
       },
       "category": "other",

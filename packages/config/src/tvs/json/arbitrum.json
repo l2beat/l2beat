@@ -1858,29 +1858,44 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DAI-2",
+      "id": "arbitrum-DAI",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
-        "decimals": 18,
-        "sinceTimestamp": 1632133470
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1623867835
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1623784100
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+            "decimals": 18,
+            "sinceTimestamp": 1632133470
           }
         ]
-      }
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -2460,6 +2475,39 @@
             "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
             "decimals": 18,
             "sinceTimestamp": 1727740800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-EKUBO",
+      "priceId": "ekubo-protocol",
+      "symbol": "EKUBO",
+      "name": "Ekubo Protocol",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37715/large/135474885.png?1715330450",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1715731200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1715731200
           }
         ]
       },
@@ -4846,7 +4894,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LPT-1",
+      "id": "arbitrum-LPT",
       "priceId": "livepeer",
       "symbol": "LPT",
       "name": "Livepeer Token",
@@ -4870,38 +4918,20 @@
             "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
             "decimals": 18,
             "sinceTimestamp": 1623784100
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239",
+            "chain": "ethereum",
+            "escrowAddress": "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
+            "decimals": 18,
+            "sinceTimestamp": 1644777090
           }
         ]
       },
       "category": "other",
       "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-LPT-2",
-      "priceId": "livepeer",
-      "symbol": "LPT",
-      "name": "Livepeer Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/7137/large/logo-circle-green.png?1696507437",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239",
-        "chain": "ethereum",
-        "escrowAddress": "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
-        "decimals": 18,
-        "sinceTimestamp": 1644777090
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
     },
     {
       "mode": "auto",
@@ -8117,6 +8147,47 @@
       }
     },
     {
+      "mode": "auto",
+      "id": "arbitrum-sUSDS",
+      "priceId": "susds",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1734048000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1734048000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+            "chain": "ethereum",
+            "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+            "decimals": 18,
+            "sinceTimestamp": 1734048000
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
       "mode": "custom",
       "id": "arbitrum-sUSDS-1",
       "priceId": "susds",
@@ -9133,6 +9204,47 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "arbitrum-USDS",
+      "priceId": "usds",
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1727136000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1727136000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+            "chain": "ethereum",
+            "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+            "decimals": 18,
+            "sinceTimestamp": 1727136000
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
       "mode": "custom",
       "id": "arbitrum-USDS-2",
       "priceId": "usds",
@@ -9853,29 +9965,44 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-wstETH-2",
+      "id": "arbitrum-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
-        "decimals": 18,
-        "sinceTimestamp": 1659608791
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1633564800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1633564800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
+            "decimals": 18,
+            "sinceTimestamp": 1659608791
           }
         ]
-      }
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
