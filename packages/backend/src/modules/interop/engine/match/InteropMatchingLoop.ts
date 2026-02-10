@@ -9,6 +9,7 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
+  type DeployedToAbstractMap,
   generateId,
   type InteropApproximateQuery,
   type InteropEvent,
@@ -39,7 +40,9 @@ export class InteropMatchingLoop extends TimeLoop {
   }
 
   async run() {
-    const deployedToAbstractMap = await this.buildDeployedToAbstractMap()
+    const deployedToAbstractMap = await buildDeployedToAbstractMap(
+      this.tokenDbClient,
+    )
 
     const result = await match(
       this.store,
@@ -76,39 +79,36 @@ export class InteropMatchingLoop extends TimeLoop {
       this.transferStream?.publishBulk(transferRecords, this.intervalMs)
     }
   }
+}
 
-  async buildDeployedToAbstractMap(): Promise<
-    Map<ChainSpecificAddress, AbstractTokenRecord>
-  > {
-    let resp
-    try {
-      resp =
-        await this.tokenDbClient.abstractTokens.getAllWithDeployedTokens.query()
-    } catch (error) {
-      throw new Error('Token DB unavailable for matching', { cause: error })
-    }
-
-    const result = new Map<ChainSpecificAddress, AbstractTokenRecord>()
-    const unsupportedChains = new Set<string>()
-    for (const { deployedTokens, ...abstractToken } of resp.abstractTokens) {
-      for (const deployedToken of deployedTokens) {
-        let chainSpecificAddr: ChainSpecificAddress
-        try {
-          chainSpecificAddr = ChainSpecificAddress.fromLong(
-            deployedToken.chain,
-            deployedToken.address,
-          )
-        } catch {
-          // ignore deployed address that we can't construct as ChainSpecificAddress
-          // (this can happen because of unsupported chain name or address being e.g. 'native')
-          continue
-        }
-        result.set(chainSpecificAddr, abstractToken)
-      }
-    }
-    console.log(unsupportedChains)
-    return result
+export async function buildDeployedToAbstractMap(
+  tokenDbClient: TokenDbClient,
+): Promise<DeployedToAbstractMap> {
+  let resp
+  try {
+    resp = await tokenDbClient.abstractTokens.getAllWithDeployedTokens.query()
+  } catch (error) {
+    throw new Error('Token DB unavailable for matching', { cause: error })
   }
+
+  const result = new Map<ChainSpecificAddress, AbstractTokenRecord>()
+  for (const { deployedTokens, ...abstractToken } of resp.abstractTokens) {
+    for (const deployedToken of deployedTokens) {
+      let chainSpecificAddr: ChainSpecificAddress
+      try {
+        chainSpecificAddr = ChainSpecificAddress.fromLong(
+          deployedToken.chain,
+          deployedToken.address,
+        )
+      } catch {
+        // ignore deployed address that we can't construct as ChainSpecificAddress
+        // (this can happen because of unsupported chain name or address being e.g. 'native')
+        continue
+      }
+      result.set(chainSpecificAddr, abstractToken)
+    }
+  }
+  return result
 }
 
 export async function match(

@@ -11,7 +11,10 @@ import { logToViemLog } from '../engine/capture/getItemsToCapture'
 import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { toDeployedId } from '../engine/financials/InteropFinancialsLoop'
-import { match } from '../engine/match/InteropMatchingLoop'
+import {
+  buildDeployedToAbstractMap,
+  match,
+} from '../engine/match/InteropMatchingLoop'
 import {
   createInteropPlugins,
   flattenClusters,
@@ -137,6 +140,10 @@ export class ExampleRunner {
       eventDb.addEvent(event)
     }
 
+    const deployedToAbstractMap = await buildDeployedToAbstractMap(
+      this.$.tokenDbClient,
+    )
+
     const result = await match(
       eventDb,
       (type) => events.filter((x) => x.type === type),
@@ -145,6 +152,7 @@ export class ExampleRunner {
       flattenClusters(plugins.eventPlugins),
       this.$.example.txs.map((x) => x.chain),
       this.$.logger,
+      deployedToAbstractMap,
     )
 
     const unsupportedEventIds = new Set(
