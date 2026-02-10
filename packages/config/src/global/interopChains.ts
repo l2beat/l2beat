@@ -15,7 +15,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
   },
   {
     id: 'arbitrum',
-    name: 'Arbitrum',
+    name: 'Arbitrum One',
     type: 'evm',
     display: 'ARB',
   },
@@ -27,20 +27,20 @@ export const INTEROP_CHAINS: InteropChain[] = [
   },
   {
     id: 'optimism',
-    name: 'Optimism',
+    name: 'OP Mainnet',
     type: 'evm',
     display: 'OP',
   },
   {
     id: 'apechain',
-    name: 'Apechain',
+    name: 'ApeChain',
     type: 'evm',
     display: 'APE',
   },
   {
     id: 'polygonpos',
     iconSlug: 'polygon-pos',
-    name: 'Polygon POS',
+    name: 'Polygon PoS',
     type: 'evm',
     display: 'POL',
   },
