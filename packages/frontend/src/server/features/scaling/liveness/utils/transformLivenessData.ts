@@ -6,9 +6,9 @@ import type {
 } from '../types'
 
 interface LivenessTypeData {
-  '30d': LivenessDataPoint | undefined | null | LivenessOverwriteMode
-  '90d': LivenessDataPoint | undefined | null | LivenessOverwriteMode
-  max: LivenessDataPoint | undefined | null | LivenessOverwriteMode
+  '30d': LivenessDataPoint | undefined | null
+  '90d': LivenessDataPoint | undefined | null
+  max: LivenessDataPoint | undefined | null
   warning: string | undefined
 }
 
@@ -51,9 +51,9 @@ function getSubTypeData(
 ): LivenessTypeData | undefined {
   if (overwrite === 'no-data')
     return {
-      '30d': 'no-data',
-      '90d': 'no-data',
-      max: 'no-data',
+      '30d': null,
+      '90d': null,
+      max: null,
       warning,
     }
 

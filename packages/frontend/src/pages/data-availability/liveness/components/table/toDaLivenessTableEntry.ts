@@ -27,14 +27,13 @@ export function toDaLivenessTableEntry(
       const data = bridge.data?.[timeRange]
       return {
         ...bridge,
-        data:
-          data && data !== 'no-data'
-            ? {
-                ...data,
-                warning: bridge.data.warning,
-                isSynced: bridge.data.isSynced,
-              }
-            : undefined,
+        data: data
+          ? {
+              ...data,
+              warning: bridge.data.warning,
+              isSynced: bridge.data.isSynced,
+            }
+          : undefined,
       }
     }),
   }

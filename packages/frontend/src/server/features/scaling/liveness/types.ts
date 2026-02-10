@@ -1,4 +1,3 @@
-import type { LivenessOverwriteMode } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 
 export type LivenessTimeRange = '30d' | '90d' | 'max'
@@ -19,9 +18,9 @@ export interface LivenessAnomaly {
 }
 
 export interface LivenessDetails {
-  '30d'?: LivenessDataPoint | null | LivenessOverwriteMode
-  '90d'?: LivenessDataPoint | null | LivenessOverwriteMode
-  max?: LivenessDataPoint | null | LivenessOverwriteMode
+  '30d'?: LivenessDataPoint | null
+  '90d'?: LivenessDataPoint | null
+  max?: LivenessDataPoint | null
   syncedUntil: number
 }
 
