@@ -1,9 +1,14 @@
 - [Home](/)
-- **Developers**
-  - [Architecture](developers/architecture.md)
-  - [Contributing](developers/contributing.md)
 - **Researchers**
   - [Getting Started](researchers/getting-started.md)
   - [Methodology](researchers/methodology.md)
-- **L2BEAT Docs**
-  - [L2BEAT Config Docs](https://github.com/l2beat/l2beat/blob/main/packages/config/README.md)
+- **Developers**
+  - [Architecture](developers/architecture.md)
+  - [Contributing](developers/contributing.md)
+- **External Links**
+  - [DeFiScan](https://defiscan.info)
+  - [The DeFi Collective](https://deficollective.org)
+  - [L2BEAT](https://github.com/l2beat/l2beat)
+  - [GitHub](https://github.com/deficollective/defi-disco)
+  - [Discord](https://discord.gg/Z467Ehv6VU)
+  - [Twitter/X](https://x.com/defiscan_info)

@@ -21,39 +21,6 @@
         --theme-color: #8b5cf6;
       }
 
-      /* Cover page gradient */
-      section.cover {
-        background: linear-gradient(
-          135deg,
-          #8b5cf6 0%,
-          #c4b5fd 50%,
-          #ffffff 100%
-        ) !important;
-      }
-
-      section.cover .cover-main {
-        background: transparent;
-      }
-
-      section.cover h1,
-      section.cover .cover-main h1,
-      section.cover h1 a,
-      section.cover h1 a span {
-        color: #5b1ebd !important;
-        font-weight: 700;
-        text-shadow: none;
-      }
-
-      section.cover blockquote {
-        color: white;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-      }
-
-      section.cover p {
-        color: white;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-      }
-
       /* Sidebar styling */
       .sidebar {
         border-right: 1px solid #e8e8e8;
@@ -83,29 +50,6 @@
         color: #5b21b6;
       }
 
-      /* Cover page buttons */
-      section.cover .cover-main > p:last-child a {
-        border-radius: 8px;
-        padding: 12px 24px;
-        text-decoration: none;
-        color: #8b5cf6 !important;
-        background-color: white;
-        border: 2px solid white;
-        margin: 5px;
-        text-shadow: none;
-      }
-
-      section.cover .cover-main > p:last-child a:last-child {
-        background-color: transparent;
-        color: white !important;
-        border-color: white;
-      }
-
-      section.cover .cover-main > p:last-child a:hover {
-        background-color: rgba(255, 255, 255, 0.9);
-        border-color: white;
-        color: #7c3aed !important;
-      }
     </style>
   </head>
   <body>
@@ -116,7 +60,7 @@
         repo: "",
         loadSidebar: true,
         subMaxLevel: 2,
-        coverpage: true,
+        coverpage: false,
         search: {
           placeholder: "Search",
           noData: "No results",
