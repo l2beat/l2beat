@@ -57,6 +57,56 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
   minted?: boolean
 }>('layerzero-v2.PacketOFTDelivered', { direction: 'incoming' })
 
+export function getBridgeTypeOmnichain({
+  srcTokenAddress,
+  dstTokenAddress,
+  srcWasBurned,
+  dstWasMinted,
+  srcChain,
+  dstChain,
+  deployedToAbstractMap,
+}: {
+  srcTokenAddress: Address32 | undefined
+  dstTokenAddress: Address32 | undefined
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+  srcChain: string
+  dstChain: string
+  deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>
+}): 'lockAndMint' | 'omnichain' | undefined {
+  if (
+    !srcTokenAddress ||
+    !dstTokenAddress ||
+    srcWasBurned === undefined ||
+    dstWasMinted === undefined
+  ) {
+    return
+  }
+
+  const srcAbstractToken = deployedToAbstractMap.get(
+    ChainSpecificAddress.fromLong(
+      Address32.cropToEthereumAddress(srcTokenAddress),
+      srcChain,
+    ),
+  )
+  const dstAbstractToken = deployedToAbstractMap.get(
+    ChainSpecificAddress.fromLong(
+      Address32.cropToEthereumAddress(dstTokenAddress),
+      dstChain,
+    ),
+  )
+  if (!srcAbstractToken || !dstAbstractToken) return
+
+  if (
+    !(srcWasBurned && dstWasMinted) &&
+    srcAbstractToken.issuer !== dstAbstractToken.issuer
+  ) {
+    return 'lockAndMint'
+  }
+
+  return 'omnichain'
+}
+
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   readonly name = 'layerzero-v2-ofts'
 
@@ -219,36 +269,15 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const dstTokenAddress = oftReceivedPacketDelivered.args.dstTokenAddress
     const srcWasBurned = oftSentPacketSent.args.burned
     const dstWasMinted = oftReceivedPacketDelivered.args.minted
-    let bridgeType: 'lockAndMint' | 'omnichain' | undefined = undefined
-    if (
-      srcTokenAddress &&
-      dstTokenAddress &&
-      srcWasBurned !== undefined &&
-      dstWasMinted !== undefined
-    ) {
-      const srcAbstractToken = deployedToAbstractMap.get(
-        ChainSpecificAddress.fromLong(
-          Address32.cropToEthereumAddress(srcTokenAddress),
-          oftSentPacketSent.ctx.chain,
-        ),
-      )
-      const dstAbstractToken = deployedToAbstractMap.get(
-        ChainSpecificAddress.fromLong(
-          Address32.cropToEthereumAddress(dstTokenAddress),
-          packetDelivered.ctx.chain,
-        ),
-      )
-      if (srcAbstractToken && dstAbstractToken) {
-        if (
-          !(srcWasBurned && dstWasMinted) &&
-          srcAbstractToken.issuer !== dstAbstractToken.issuer
-        ) {
-          bridgeType = 'lockAndMint'
-        } else {
-          bridgeType = 'omnichain'
-        }
-      }
-    }
+    const bridgeType = getBridgeTypeOmnichain({
+      srcTokenAddress,
+      dstTokenAddress,
+      srcWasBurned,
+      dstWasMinted,
+      srcChain: oftSentPacketSent.ctx.chain,
+      dstChain: packetDelivered.ctx.chain,
+      deployedToAbstractMap,
+    })
 
     return [
       Result.Message('layerzero-v2.Message', {

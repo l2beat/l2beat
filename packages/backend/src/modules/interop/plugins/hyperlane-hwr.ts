@@ -6,7 +6,7 @@
  */
 
 import type { AbstractTokenRecord } from '@l2beat/database'
-import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { Address32, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
@@ -16,6 +16,7 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
+import { getBridgeTypeOmnichain } from './layerzero/layerzero-v2-ofts.plugin'
 import {
   createEventParser,
   createInteropEventType,
@@ -259,36 +260,15 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
     const dstTokenAddress = event.args.tokenAddress
     const srcWasBurned = hwrSent.args.burned
     const dstWasMinted = event.args.minted
-    let bridgeType: 'lockAndMint' | 'omnichain' | undefined = undefined
-    if (
-      srcTokenAddress &&
-      dstTokenAddress &&
-      srcWasBurned !== undefined &&
-      dstWasMinted !== undefined
-    ) {
-      const srcAbstractToken = deployedToAbstractMap.get(
-        ChainSpecificAddress.fromLong(
-          Address32.cropToEthereumAddress(srcTokenAddress),
-          hwrSent.ctx.chain,
-        ),
-      )
-      const dstAbstractToken = deployedToAbstractMap.get(
-        ChainSpecificAddress.fromLong(
-          Address32.cropToEthereumAddress(dstTokenAddress),
-          event.ctx.chain,
-        ),
-      )
-      if (srcAbstractToken && dstAbstractToken) {
-        if (
-          !(srcWasBurned && dstWasMinted) &&
-          srcAbstractToken.issuer !== dstAbstractToken.issuer
-        ) {
-          bridgeType = 'lockAndMint'
-        } else {
-          bridgeType = 'omnichain'
-        }
-      }
-    }
+    const bridgeType = getBridgeTypeOmnichain({
+      srcTokenAddress,
+      dstTokenAddress,
+      srcWasBurned,
+      dstWasMinted,
+      srcChain: hwrSent.ctx.chain,
+      dstChain: event.ctx.chain,
+      deployedToAbstractMap,
+    })
 
     return [
       Result.Message('hyperlane.Message', {
