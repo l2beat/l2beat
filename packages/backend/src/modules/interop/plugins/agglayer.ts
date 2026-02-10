@@ -206,6 +206,11 @@ export class AgglayerPlugin implements InteropPluginResyncable {
           srcTokenAddress = transferInfo?.address
         }
         srcWasBurned = transferInfo?.burned
+        // no transfer event and asset leaftype
+        if (!srcTokenAddress) {
+          srcTokenAddress = Address32.NATIVE
+          srcWasBurned = localNetwork.chain !== 'ethereum'
+        }
       }
 
       return [
@@ -263,10 +268,12 @@ export class AgglayerPlugin implements InteropPluginResyncable {
         },
       )
       dstTokenAddress = transferInfo?.address
-      const dstWasMinted = transferInfo?.minted
+      let dstWasMinted = transferInfo?.minted
 
-      if (!dstTokenAddress && originAddress === EthereumAddress.ZERO) {
+      // no transfer event and asset leaftype
+      if (!dstTokenAddress) {
         dstTokenAddress = Address32.NATIVE
+        dstWasMinted = destinationNetwork.chain !== 'ethereum'
       }
 
       return [
