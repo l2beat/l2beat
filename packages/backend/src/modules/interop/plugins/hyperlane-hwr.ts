@@ -268,7 +268,6 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       srcChain: hwrSent.ctx.chain,
       dstChain: event.ctx.chain,
       deployedToAbstractMap,
-      isNonMintingDefault: false,
     })
 
     return [

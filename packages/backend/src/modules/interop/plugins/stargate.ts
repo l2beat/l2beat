@@ -520,7 +520,7 @@ export class StargatePlugin implements InteropPlugin {
               srcChain: oftSentBusRode.ctx.chain,
               dstChain: matchedOftReceived.ctx.chain,
               deployedToAbstractMap,
-              isNonMintingDefault: true,
+              defaultBridgeType: 'nonMinting',
             }),
           }),
         )
@@ -557,7 +557,7 @@ export class StargatePlugin implements InteropPlugin {
             srcChain: oftSentTaxi.ctx.chain,
             dstChain: oftReceived.ctx.chain,
             deployedToAbstractMap,
-            isNonMintingDefault: true,
+            defaultBridgeType: 'nonMinting',
           }),
         }),
       ]

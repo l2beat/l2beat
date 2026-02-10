@@ -1,5 +1,10 @@
 import type { AbstractTokenRecord } from '@l2beat/database'
-import { Address32, assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  assert,
+  ChainSpecificAddress,
+  type InteropBridgeType,
+} from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findParsedAround } from '../hyperlane-hwr'
 import {
@@ -65,7 +70,7 @@ export function getBridgeType({
   srcChain,
   dstChain,
   deployedToAbstractMap,
-  isNonMintingDefault,
+  defaultBridgeType = 'omnichain',
 }: {
   srcTokenAddress: Address32 | undefined
   dstTokenAddress: Address32 | undefined
@@ -74,8 +79,8 @@ export function getBridgeType({
   srcChain: string
   dstChain: string
   deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>
-  isNonMintingDefault: boolean
-}): 'lockAndMint' | 'omnichain' | 'nonMinting' | undefined {
+  defaultBridgeType?: 'omnichain' | 'nonMinting'
+}): InteropBridgeType | undefined {
   if (
     !srcTokenAddress ||
     !dstTokenAddress ||
@@ -99,23 +104,19 @@ export function getBridgeType({
   )
   if (!srcAbstractToken || !dstAbstractToken) return
 
+  const followsDefaultFlow =
+    defaultBridgeType === 'nonMinting'
+      ? !srcWasBurned && !dstWasMinted
+      : srcWasBurned && dstWasMinted
+
   if (
-    isNonMintingDefault &&
-    !(!srcWasBurned && !dstWasMinted) &&
+    !followsDefaultFlow &&
     srcAbstractToken.issuer !== dstAbstractToken.issuer
   ) {
     return 'lockAndMint'
   }
 
-  if (
-    !isNonMintingDefault &&
-    !(srcWasBurned && dstWasMinted) &&
-    srcAbstractToken.issuer !== dstAbstractToken.issuer
-  ) {
-    return 'lockAndMint'
-  }
-
-  return isNonMintingDefault ? 'nonMinting' : 'omnichain'
+  return defaultBridgeType
 }
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
@@ -288,7 +289,6 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       srcChain: oftSentPacketSent.ctx.chain,
       dstChain: packetDelivered.ctx.chain,
       deployedToAbstractMap,
-      isNonMintingDefault: false,
     })
 
     return [
