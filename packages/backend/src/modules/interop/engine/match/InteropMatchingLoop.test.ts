@@ -10,7 +10,11 @@ import {
   type InteropPlugin,
 } from '../../plugins/types'
 import { InMemoryEventDb } from '../capture/InMemoryEventDb'
-import { InteropMatchingLoop, match } from './InteropMatchingLoop'
+import {
+  buildDeployedToAbstractMap,
+  InteropMatchingLoop,
+  match,
+} from './InteropMatchingLoop'
 
 const TOKEN_A = {
   symbol: 'ABC',
@@ -25,49 +29,38 @@ const TOKEN_A = {
 } satisfies AbstractTokenRecord
 
 describe(InteropMatchingLoop.name, () => {
-  describe(
-    InteropMatchingLoop.prototype.buildDeployedToAbstractMap.name,
-    () => {
-      it('builds deployed to abstract token map and skips invalid deployed tokens', async () => {
-        const validAddress = '0x1111111111111111111111111111111111111111'
-        const query = mockFn().resolvesTo({
-          abstractTokens: [
-            {
-              ...TOKEN_A,
-              deployedTokens: [
-                { chain: 'ethereum', address: validAddress },
-                { chain: 'ethereum', address: 'native' },
-                { chain: 'unknown-chain', address: validAddress },
-              ],
-            },
-          ],
-        })
-        const tokenDbClient = mockObject<TokenDbClient>({
-          abstractTokens: { getAllWithDeployedTokens: { query } },
-        } as any)
-        const loop = new InteropMatchingLoop(
-          mockObject({} as any),
-          mockObject<Database>({} as any),
-          tokenDbClient,
-          [],
-          [],
-          Logger.SILENT,
-          mockObject({} as any),
-        )
-
-        const deployedToAbstractMap = await loop.buildDeployedToAbstractMap()
-
-        const chainSpecificAddress = ChainSpecificAddress.fromLong(
-          'ethereum',
-          validAddress,
-        )
-
-        expect(query).toHaveBeenCalledTimes(1)
-        expect(deployedToAbstractMap.size).toEqual(1)
-        expect(deployedToAbstractMap.get(chainSpecificAddress)).toEqual(TOKEN_A)
+  describe(buildDeployedToAbstractMap.name, () => {
+    it('builds deployed to abstract token map and skips invalid deployed tokens', async () => {
+      const validAddress = '0x1111111111111111111111111111111111111111'
+      const query = mockFn().resolvesTo({
+        abstractTokens: [
+          {
+            ...TOKEN_A,
+            deployedTokens: [
+              { chain: 'ethereum', address: validAddress },
+              { chain: 'ethereum', address: 'native' },
+              { chain: 'unknown-chain', address: validAddress },
+            ],
+          },
+        ],
       })
-    },
-  )
+      const tokenDbClient = mockObject<TokenDbClient>({
+        abstractTokens: { getAllWithDeployedTokens: { query } },
+      } as any)
+
+      const deployedToAbstractMap =
+        await buildDeployedToAbstractMap(tokenDbClient)
+
+      const chainSpecificAddress = ChainSpecificAddress.fromLong(
+        'ethereum',
+        validAddress,
+      )
+
+      expect(query).toHaveBeenCalledTimes(1)
+      expect(deployedToAbstractMap.size).toEqual(1)
+      expect(deployedToAbstractMap.get(chainSpecificAddress)).toEqual(TOKEN_A)
+    })
+  })
 
   describe(InteropMatchingLoop.prototype.run.name, () => {
     it('throws if loading abstract tokens fails', async () => {
