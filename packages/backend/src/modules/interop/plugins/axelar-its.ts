@@ -174,7 +174,6 @@ export class AxelarITSPlugin implements InteropPlugin {
       })
       if (!contractCall) return
 
-      // bridgeType block
       const srcTokenAddress = interchainTransfer.args.tokenAddress
       const dstTokenAddress = interchainTransferReceived.args.tokenAddress
       const srcWasBurned = interchainTransfer.args.srcWasBurned

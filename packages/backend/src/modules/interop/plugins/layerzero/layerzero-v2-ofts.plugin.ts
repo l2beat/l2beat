@@ -276,7 +276,6 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const packetDelivered = db.find(PacketDelivered, { guid })
     if (!packetDelivered) return
 
-    // bridgeType block
     const srcTokenAddress = oftSentPacketSent.args.srcTokenAddress
     const dstTokenAddress = oftReceivedPacketDelivered.args.dstTokenAddress
     const srcWasBurned = oftSentPacketSent.args.burned

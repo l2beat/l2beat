@@ -255,7 +255,6 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       ]
     }
 
-    // bridgeType block
     const srcTokenAddress = hwrSent.args.tokenAddress
     const dstTokenAddress = event.args.tokenAddress
     const srcWasBurned = hwrSent.args.burned
