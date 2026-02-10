@@ -272,6 +272,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
           dstAmount: messageReceived.args.dstAmount,
           srcWasBurned: true,
           dstWasMinted: true,
+          bridgeType: 'omnichain',
         }),
       ]
     }
