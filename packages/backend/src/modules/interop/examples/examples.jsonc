@@ -2762,5 +2762,22 @@
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
     "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-ethereum-eth": {
+    "tags": ["agglayer"],
+    "name": "katana -> ethereum (ETH)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0xcf59eacd76a37632762e3825a91fe8bdd93758f0d1ff4633b2ba726ba8d6ee5b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x005c68d2cd9a23e087487da5992c233efe0fb8c1dd9cb1d7b2ee955568b9ffed"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
   }
 }
