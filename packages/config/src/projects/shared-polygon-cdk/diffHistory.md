@@ -7250,7 +7250,7 @@ Generated with discovered.json: 0xdf95e681dfbbcae8430943754a096c0d9fb31300
 
 ternoa and haust.network are active, added notes to review them.
 
-Two scheduled transactions (likely related to [Pessimistic Proofs](https://docs.polygon.technology/cdk/concepts/pessimistic-proofs/)):
+Two scheduled transactions (likely related to [Pessimistic Proofs](https://docs.polygon.technology/interoperability/agglayer/core-concepts/pessimistic-proof/)):
 21) upgrades the PolygonRollupManager
 22) adds a new RollupType in the PRM, which has a contract called PolygonPessimisticConsensus (`0x18C45DD422f6587357a6d3b23307E75D42b2bc5B`) as consensus implementation and uses a Verifier called SP1Verifier (`0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63`).
 
