@@ -6,26 +6,19 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import type { FromToQuery } from '../InteropRouter'
+import type { FirstSecondQuery } from '../InteropRouter'
 
 export async function getInteropNonMintingData(
-  req: Request<unknown, unknown, unknown, FromToQuery>,
+  req: Request<unknown, unknown, unknown, FirstSecondQuery>,
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
   const helpers = getSsrHelpers()
   const appLayoutProps = await getAppLayoutProps()
   const interopChains = getInteropChains()
-  const interopChainsIds = interopChains.map((chain) => chain.id)
   const initialSelectedChains = {
-    from: (
-      req.query.from?.filter((id) => interopChainsIds.includes(id)) ??
-      interopChainsIds
-    ).sort(),
-    to: (
-      req.query.to?.filter((id) => interopChainsIds.includes(id)) ??
-      interopChainsIds
-    ).sort(),
+    first: req.query.first,
+    second: req.query.second,
   }
   const queryState = await cache.get(
     {
@@ -33,16 +26,16 @@ export async function getInteropNonMintingData(
         'interop',
         'non-minting',
         'prefetch',
-        initialSelectedChains.from.join(','),
-        initialSelectedChains.to.join(','),
+        initialSelectedChains.first,
+        initialSelectedChains.second,
       ],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
     async () => {
       await helpers.interop.dashboard.prefetch({
-        from: initialSelectedChains.from,
-        to: initialSelectedChains.to,
+        first: initialSelectedChains.first,
+        second: initialSelectedChains.second,
         type: 'nonMinting',
       })
       return helpers.dehydrate()

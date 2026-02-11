@@ -19,8 +19,8 @@ import { getTokensData } from './utils/getTokensData'
 
 export async function getInteropProtocolTokens({
   id,
-  from,
-  to,
+  first,
+  second,
   type,
 }: InteropProtocolTokensParams): Promise<TokenData[]> {
   const logger = getLogger().for('getProtocolTokens')
@@ -44,15 +44,15 @@ export async function getInteropProtocolTokens({
     await db.aggregatedInteropTransfer.getSummedTransferCountsByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      from,
-      to,
+      first,
+      second,
       type,
     ),
     db.aggregatedInteropToken.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      from,
-      to,
+      first,
+      second,
       type,
     ),
   ])

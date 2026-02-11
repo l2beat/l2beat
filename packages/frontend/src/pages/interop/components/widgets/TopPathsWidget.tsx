@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
 import times from 'lodash/times'
-import uniq from 'lodash/uniq'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
@@ -8,7 +7,6 @@ import type { InteropChainWithIcon } from '~/pages/interop/components/chain-sele
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TopPathsWidget({
   interopChains,
@@ -21,9 +19,6 @@ export function TopPathsWidget({
   top3Paths: InteropDashboardData['top3Paths'] | undefined
   className?: string
 }) {
-  const { selectedChains, setPath, reset } = useInteropSelectedChains()
-  const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
-
   const getChainDetails = (id: string) => {
     const chain = interopChains.find((c) => c.id === id)
     assert(chain, `Chain not found: ${id}`)
@@ -42,7 +37,7 @@ export function TopPathsWidget({
         Top 3 paths by volume
       </h2>
       <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-        Between {uniqChains.length} selected chains
+        Between selected chains
       </div>
       <table className="-mb-1.5 mt-0.5 w-full border-separate border-spacing-y-1.5">
         <tbody>
@@ -60,20 +55,12 @@ export function TopPathsWidget({
               from={getChainDetails(path.srcChain)}
               to={getChainDetails(path.dstChain)}
               volume={path.volume}
-              setPath={setPath}
+              setPath={() => {}}
               isOnlyPath={top3Paths.length === 1}
             />
           ))}
         </tbody>
       </table>
-      {top3Paths && top3Paths.length < 3 && (
-        <button
-          onClick={reset}
-          className="text-label-value-14 text-link underline"
-        >
-          Reset chain selection to see more.
-        </button>
-      )}
     </PrimaryCard>
   )
 }

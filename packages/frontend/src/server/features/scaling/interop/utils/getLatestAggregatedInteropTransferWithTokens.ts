@@ -3,8 +3,8 @@ import { getDb } from '~/server/database'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
-  from: string[],
-  to: string[],
+  first: string | undefined,
+  second: string | undefined,
   type?: KnownInteropBridgeType,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
   const db = getDb()
@@ -17,14 +17,14 @@ export async function getLatestAggregatedInteropTransferWithTokens(
   const [transfers, tokens] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsAndTimestamp(
       latestTimestamp,
-      from,
-      to,
+      first,
+      second,
       type,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
       latestTimestamp,
-      from,
-      to,
+      first,
+      second,
       type,
     ),
   ])

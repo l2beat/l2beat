@@ -15,12 +15,8 @@ export function BurnAndMintCard({
   entries: BurnAndMintProtocolEntry[] | undefined
   isLoading: boolean
 }) {
-  const { selectedChains, allChainIds } = useInteropSelectedChains()
-  const viewAllUrl = buildInteropUrl(
-    '/interop/burn-and-mint',
-    selectedChains,
-    allChainIds,
-  )
+  const { selectedChains } = useInteropSelectedChains()
+  const viewAllUrl = buildInteropUrl('/interop/burn-and-mint', selectedChains)
 
   return (
     <PrimaryCard className="flex flex-col border-t-teal-500 max-md:border-b max-md:border-b-divider md:border-t-4">

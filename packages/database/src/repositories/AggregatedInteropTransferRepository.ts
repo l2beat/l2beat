@@ -256,11 +256,11 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
 
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    srcChains: string[],
-    dstChains: string[],
+    first: string | undefined,
+    second: string | undefined,
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
-    if (srcChains.length === 0 || dstChains.length === 0) {
+    if (!first || !second) {
       return []
     }
 
@@ -268,8 +268,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
+      .where('srcChain', 'in', [first, second])
+      .where('dstChain', 'in', [first, second])
 
     if (type) {
       query = query.where('bridgeType', '=', type)
@@ -283,11 +283,11 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getSummedTransferCountsByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    srcChains: string[],
-    dstChains: string[],
+    first: string | undefined,
+    second: string | undefined,
     type?: InteropBridgeType,
   ) {
-    if (srcChains.length === 0 || dstChains.length === 0) {
+    if (!first || !second) {
       return {
         transferCount: 0,
         identifiedCount: 0,
@@ -299,8 +299,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .select((eb) => eb.fn.sum('transferCount').as('transferCountSum'))
       .select((eb) => eb.fn.sum('identifiedCount').as('identifiedCountSum'))
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
+      .where('srcChain', 'in', [first, second])
+      .where('dstChain', 'in', [first, second])
       .where('id', '=', id)
 
     if (type) {
@@ -323,11 +323,11 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    srcChains: string[],
-    dstChains: string[],
+    first: string | undefined,
+    second: string | undefined,
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
-    if (srcChains.length === 0 || dstChains.length === 0) {
+    if (!first || !second) {
       return []
     }
 
@@ -335,8 +335,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
+      .where('srcChain', 'in', [first, second])
+      .where('dstChain', 'in', [first, second])
       .where('id', '=', id)
 
     if (type) {

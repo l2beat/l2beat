@@ -37,8 +37,8 @@ export async function getInteropDashboardData(
   })
 
   const records = await getLatestAggregatedInteropTransferWithTokens(
-    params.from,
-    params.to,
+    params.first,
+    params.second,
     params.type,
   )
 

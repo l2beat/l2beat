@@ -21,7 +21,10 @@ import { HeaderWithDescription } from './components/HeaderWithDescription'
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
-  initialSelectedChains: { from: string[]; to: string[] }
+  initialSelectedChains: {
+    first: string | undefined
+    second: string | undefined
+  }
 }
 
 export function InteropLockAndMintPage({
@@ -54,10 +57,10 @@ export function InteropLockAndMintPage({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains, isDirty } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
+    first: selectedChains.first,
+    second: selectedChains.second,
     type: 'lockAndMint',
   })
 
@@ -66,7 +69,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     data.top3Paths.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState isDirty={isDirty} />
+    return <InteropEmptyState />
   }
 
   return (

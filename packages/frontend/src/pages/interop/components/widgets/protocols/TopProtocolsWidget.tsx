@@ -1,12 +1,10 @@
 import times from 'lodash/times'
-import uniq from 'lodash/uniq'
 import { useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
-import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
 import { useProtocolColorMap } from './useProtocolColorMap'
@@ -32,12 +30,8 @@ export function TopProtocolsWidget({
   topProtocols,
   isLoading,
 }: TopProtocolsWidgetProps) {
-  const { selectedChains } = useInteropSelectedChains()
-
   const containerRef = useRef<HTMLDivElement>(null)
   const { width } = useResizeObserver({ ref: containerRef })
-
-  const uniqChains = uniq([...selectedChains.from, ...selectedChains.to])
 
   const protocolColorMap = useProtocolColorMap(topProtocols)
   const protocolsWithOthers = useMemo(
@@ -56,7 +50,7 @@ export function TopProtocolsWidget({
           {heading}
         </h2>
         <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-          Between {uniqChains.length} selected chains
+          Between selected chains
         </div>
         <table className="mt-2 w-fit border-separate border-spacing-y-1 pr-1">
           <tbody>

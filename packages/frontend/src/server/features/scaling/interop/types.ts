@@ -54,8 +54,8 @@ export type BurnAndMintProtocolData = {
 
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  first: v.string().optional(),
+  second: v.string().optional(),
   type: KnownInteropBridgeType.optional(),
 })
 
@@ -64,8 +64,8 @@ export type InteropProtocolTokensParams = v.infer<
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  first: v.string().optional(),
+  second: v.string().optional(),
   type: KnownInteropBridgeType.optional(),
 })
 

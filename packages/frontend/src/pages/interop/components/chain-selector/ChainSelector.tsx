@@ -1,5 +1,3 @@
-import { SwapIcon } from '~/icons/Swap'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorButton } from './ChainSelectorButton'
 import type { InteropChainWithIcon } from './types'
 
@@ -8,8 +6,6 @@ interface Props {
 }
 
 export function ChainSelector({ chains }: Props) {
-  const { reset, isDirty, swapPaths } = useInteropSelectedChains()
-
   return (
     <div className="sticky top-0 z-30 md:pt-4">
       <div className="-z-10 absolute top-0 h-22 w-full bg-gradient-to-b from-surface-secondary via-60% via-surface-secondary to-transparent max-md:hidden dark:from-background dark:via-background" />
@@ -20,24 +16,11 @@ export function ChainSelector({ chains }: Props) {
           </div>
           <div className="h-10 w-px bg-black/16 max-[1024px]:hidden" />
           <div className="flex items-center gap-3">
-            <ChainSelectorButton allChains={chains} type="from" />
-            <ChainSelectorButton allChains={chains} type="to" />
-            <button
-              className="cursor-pointer rounded-lg border border-brand p-[11px] max-md:hidden"
-              onClick={swapPaths}
-            >
-              <SwapIcon className="size-4 fill-brand" />
-            </button>
+            <ChainSelectorButton allChains={chains} type="first" />
+            <span className="font-semibold leading-[115%]">&</span>
+            <ChainSelectorButton allChains={chains} type="second" />
           </div>
         </div>
-        {isDirty && (
-          <button
-            className="font-semibold text-base leading-[115%] underline max-md:hidden"
-            onClick={reset}
-          >
-            Reset to default
-          </button>
-        )}
       </div>
     </div>
   )

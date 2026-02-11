@@ -26,7 +26,10 @@ import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridg
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
-  initialSelectedChains: { from: string[]; to: string[] }
+  initialSelectedChains: {
+    first: string | undefined
+    second: string | undefined
+  }
 }
 
 export function InteropSummaryPage({
@@ -56,10 +59,10 @@ export function InteropSummaryPage({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains, isDirty } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
+    first: selectedChains.first,
+    second: selectedChains.second,
   })
 
   if (
@@ -67,7 +70,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     data.top3Paths.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState isDirty={isDirty} />
+    return <InteropEmptyState />
   }
 
   const { lockAndMint, nonMinting, burnAndMint } = getBridgeTypeEntries(
