@@ -254,7 +254,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       : undefined
   }
 
-  async getByChainsTimestampAndId(
+  async getByChainsAndTimestamp(
     timestamp: UnixTime,
     srcChains: string[],
     dstChains: string[],
@@ -270,6 +270,34 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .where('srcChain', 'in', srcChains)
       .where('dstChain', 'in', dstChains)
+
+    if (type) {
+      query = query.where('bridgeType', '=', type)
+    }
+
+    const rows = await query.execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getByChainsIdAndTimestamp(
+    timestamp: UnixTime,
+    id: string,
+    srcChains: string[],
+    dstChains: string[],
+    type?: InteropBridgeType,
+  ): Promise<AggregatedInteropTransferRecord[]> {
+    if (srcChains.length === 0 || dstChains.length === 0) {
+      return []
+    }
+
+    let query = this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .where('srcChain', 'in', srcChains)
+      .where('dstChain', 'in', dstChains)
+      .where('id', '=', id)
 
     if (type) {
       query = query.where('bridgeType', '=', type)
