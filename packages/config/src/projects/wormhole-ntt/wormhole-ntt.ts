@@ -8,10 +8,14 @@ export const wormholeNtt: BaseProject = {
   shortName: 'Wormhole NTT',
   addedAt: UnixTime(1770637610),
   interopConfig: {
-    showAlways: ['burnAndMint', 'lockAndMint'],
     plugins: [
       {
         plugin: 'wormhole-ntt',
+        bridgeType: 'burnAndMint',
+      },
+      {
+        plugin: 'wormhole-ntt',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

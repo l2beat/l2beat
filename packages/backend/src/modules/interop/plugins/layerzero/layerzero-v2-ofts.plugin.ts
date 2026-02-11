@@ -3,7 +3,7 @@ import {
   Address32,
   assert,
   ChainSpecificAddress,
-  type InteropBridgeType,
+  type KnownInteropBridgeType,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findParsedAround } from '../hyperlane-hwr'
@@ -80,7 +80,7 @@ export function getBridgeType({
   dstChain: string
   deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>
   defaultBridgeType?: 'burnAndMint' | 'nonMinting'
-}): InteropBridgeType | undefined {
+}): KnownInteropBridgeType | undefined {
   if (
     !srcTokenAddress ||
     !dstTokenAddress ||

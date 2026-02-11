@@ -12,15 +12,16 @@ export const usdt0: BaseProject = {
   addedAt: UnixTime(1767959267),
   interopConfig: {
     subgroupId: ProjectId('layerzero'),
-    showAlways: ['burnAndMint', 'lockAndMint'],
     plugins: [
       {
         abstractTokenId: ID_USDT,
         plugin: 'layerzero-v2-ofts',
+        bridgeType: 'lockAndMint',
       },
       {
         abstractTokenId: ID_USDT0,
         plugin: 'layerzero-v2-ofts',
+        bridgeType: 'burnAndMint',
       },
     ],
   },

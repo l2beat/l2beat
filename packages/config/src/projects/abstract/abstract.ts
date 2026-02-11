@@ -66,7 +66,6 @@ export const abstract: ScalingProject = zkStackL2({
     ],
   },
   interopConfig: {
-    showAlways: ['lockAndMint'],
     durationSplit: {
       lockAndMint: {
         in: {

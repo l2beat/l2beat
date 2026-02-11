@@ -809,6 +809,7 @@ function createTransfer(overrides: {
 }): InteropTransferRecord {
   return {
     plugin: 'test-plugin',
+    bridgeType: undefined,
     transferId: 'test-transfer-id',
     type: 'deposit',
     timestamp: overrides.timestamp,

@@ -2,6 +2,7 @@ import {
   assert,
   type InteropBridgeType,
   InteropBridgeTypeValues,
+  type KnownInteropBridgeType,
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
@@ -26,9 +27,9 @@ function isInteropBridgeType(value: string): value is InteropBridgeType {
 
 export interface InteropTransferRecord {
   plugin: string
+  bridgeType: KnownInteropBridgeType | undefined
   transferId: string
   type: string
-  bridgeType?: InteropBridgeType
   duration: number
   timestamp: UnixTime
   srcTime: UnixTime
@@ -93,7 +94,10 @@ export function toRecord(
     plugin: row.plugin,
     transferId: row.transferId,
     type: row.type,
-    bridgeType: row.bridgeType === null ? undefined : row.bridgeType,
+    bridgeType:
+      row.bridgeType === null
+        ? undefined
+        : (row.bridgeType as KnownInteropBridgeType),
     duration: row.duration,
     timestamp: UnixTime.fromDate(row.timestamp),
     srcTime: UnixTime.fromDate(row.srcTime),

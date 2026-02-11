@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -37,16 +36,12 @@ describe(InteropAggregationService.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          showAlways: ['lockAndMint'],
           plugins: [{ plugin: 'across' }],
         },
       ]
 
       const classifier = new InteropTransferClassifier()
-      const service = new InteropAggregationService(
-        classifier,
-        new Logger({ level: 'NONE' }),
-      )
+      const service = new InteropAggregationService(classifier)
 
       const result = service.aggregate(transfers, configs, to)
 
@@ -122,7 +117,7 @@ describe(InteropAggregationService.name, () => {
       ]
 
       const classifier = new InteropTransferClassifier()
-      const service = new InteropAggregationService(classifier, Logger.SILENT)
+      const service = new InteropAggregationService(classifier)
 
       const result = service.aggregate(transfers, configs, to)
 
@@ -156,7 +151,7 @@ describe(InteropAggregationService.name, () => {
       ]
 
       const classifier = new InteropTransferClassifier()
-      const service = new InteropAggregationService(classifier, Logger.SILENT)
+      const service = new InteropAggregationService(classifier)
 
       const result = service.aggregate(transfers, configs, to)
 
@@ -201,7 +196,7 @@ describe(InteropAggregationService.name, () => {
       ]
 
       const classifier = new InteropTransferClassifier()
-      const service = new InteropAggregationService(classifier, Logger.SILENT)
+      const service = new InteropAggregationService(classifier)
 
       const result = service.aggregate(transfers, configs, to)
 
@@ -221,7 +216,7 @@ describe(InteropAggregationService.name, () => {
       ]
 
       const classifier = new InteropTransferClassifier()
-      const service = new InteropAggregationService(classifier, Logger.SILENT)
+      const service = new InteropAggregationService(classifier)
 
       const result = service.aggregate(transfers, configs, to)
 
@@ -254,6 +249,7 @@ function createTransfer(
     plugin,
     transferId,
     type,
+    bridgeType: undefined,
     timestamp,
     srcTime: timestamp,
     srcTxHash: 'random-hash',
