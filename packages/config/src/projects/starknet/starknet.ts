@@ -313,7 +313,7 @@ export const starknet: ScalingProject = {
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
         noRedTrustedSetups: true,
-        programHashesReproducible: true,
+        programHashesReproducible: false,
         proverSourcePublished: null,
         verifierContractsReproducible: null,
       },
