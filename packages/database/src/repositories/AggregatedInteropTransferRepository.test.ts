@@ -766,6 +766,212 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   )
 
   describe(
+    AggregatedInteropTransferRepository.prototype
+      .getSummedTransferCountsByChainsIdAndTimestamp.name,
+    () => {
+      it('returns summed transferCount and identifiedCount for matching records', async () => {
+        const record1 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 100,
+          bridgeType: 'lockAndMint',
+        })
+        const record2 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'polygon',
+          transferCount: 3,
+          identifiedCount: 200,
+          bridgeType: 'lockAndMint',
+        })
+        const record3 = record({
+          id: 'protocol2',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 7,
+          identifiedCount: 300,
+          bridgeType: 'lockAndMint',
+        })
+        await repository.insertMany([record1, record2, record3])
+
+        const result =
+          await repository.getSummedTransferCountsByChainsIdAndTimestamp(
+            UnixTime(300),
+            'protocol1',
+            ['ethereum'],
+            ['arbitrum', 'polygon'],
+            'lockAndMint',
+          )
+
+        expect(result).toEqual({
+          transferCount: 8,
+          identifiedCount: 300,
+        })
+      })
+
+      it('returns zeros when no records match', async () => {
+        const result =
+          await repository.getSummedTransferCountsByChainsIdAndTimestamp(
+            UnixTime(300),
+            'protocol1',
+            ['ethereum'],
+            ['arbitrum'],
+          )
+
+        expect(result).toEqual({
+          transferCount: 0,
+          identifiedCount: 0,
+        })
+      })
+
+      it('returns zeros when srcChains or dstChains is empty', async () => {
+        await repository.insertMany([
+          record({
+            id: 'protocol1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 5,
+            identifiedCount: 1000,
+          }),
+        ])
+
+        expect(
+          await repository.getSummedTransferCountsByChainsIdAndTimestamp(
+            UnixTime(100),
+            'protocol1',
+            [],
+            ['arbitrum'],
+          ),
+        ).toEqual({
+          transferCount: 0,
+          identifiedCount: 0,
+        })
+        expect(
+          await repository.getSummedTransferCountsByChainsIdAndTimestamp(
+            UnixTime(100),
+            'protocol1',
+            ['ethereum'],
+            [],
+          ),
+        ).toEqual({
+          transferCount: 0,
+          identifiedCount: 0,
+        })
+      })
+
+      it('filters by bridgeType when provided', async () => {
+        const record1 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 1000,
+          bridgeType: 'lockAndMint',
+        })
+        const record2 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 10,
+          identifiedCount: 2000,
+          bridgeType: 'omnichain',
+        })
+        await repository.insertMany([record1, record2])
+
+        const result =
+          await repository.getSummedTransferCountsByChainsIdAndTimestamp(
+            UnixTime(300),
+            'protocol1',
+            ['ethereum'],
+            ['arbitrum'],
+            'lockAndMint',
+          )
+
+        expect(result).toEqual({
+          transferCount: 5,
+          identifiedCount: 1000,
+        })
+      })
+
+      it('sums all matching records when bridgeType is undefined', async () => {
+        const record1 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 1000,
+          bridgeType: 'lockAndMint',
+        })
+        const record2 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 10,
+          identifiedCount: 2000,
+          bridgeType: 'omnichain',
+        })
+        await repository.insertMany([record1, record2])
+
+        const result =
+          await repository.getSummedTransferCountsByChainsIdAndTimestamp(
+            UnixTime(300),
+            'protocol1',
+            ['ethereum'],
+            ['arbitrum'],
+          )
+
+        expect(result).toEqual({
+          transferCount: 15,
+          identifiedCount: 3000,
+        })
+      })
+
+      it('filters by id and excludes records with different id', async () => {
+        const record1 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 1000,
+        })
+        const record2 = record({
+          id: 'protocol2',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 100,
+          identifiedCount: 10000,
+        })
+        await repository.insertMany([record1, record2])
+
+        const result =
+          await repository.getSummedTransferCountsByChainsIdAndTimestamp(
+            UnixTime(300),
+            'protocol1',
+            ['ethereum'],
+            ['arbitrum'],
+          )
+
+        expect(result).toEqual({
+          transferCount: 5,
+          identifiedCount: 1000,
+        })
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTransferRepository.prototype.getByChainsIdAndTimestamp
       .name,
     () => {
