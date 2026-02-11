@@ -41,7 +41,7 @@ export function ChainSelectorButton({
   )
 
   const trigger = (
-    <div className="flex h-10 items-center gap-2 rounded-lg bg-surface-primary px-4 py-[7px] text-xs leading-none md:text-sm">
+    <div className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-divider bg-surface-primary px-4 py-[7px] text-xs leading-none md:text-sm">
       <img
         key={selectedChain?.id}
         src={selectedChain?.iconUrl}
@@ -53,10 +53,10 @@ export function ChainSelectorButton({
   )
 
   return (
-    <div className="flex items-start gap-1 max-md:flex-col md:items-center md:gap-3">
+    <div className="flex items-start gap-1 max-md:w-full max-md:flex-col md:items-center md:gap-3">
       {/* Mobile */}
       <Drawer>
-        <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
+        <DrawerTrigger className="w-full md:hidden">{trigger}</DrawerTrigger>
         <DrawerContent className="pb-4">
           <DrawerHeader className="mb-4 gap-2">
             <DrawerTitle className="mb-0 font-semibold text-lg text-primary leading-none">
