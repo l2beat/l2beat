@@ -56,6 +56,8 @@ import {
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { MayanForwarded } from '../mayan-forwarder'
+import { OrderFulfilled } from '../mayan-mctp-fast'
 import {
   createEventParser,
   createInteropEventType,
@@ -254,7 +256,26 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       const messageSent = messageSentMatches.sort(
         (a, b) => a.ctx.timestamp - b.ctx.timestamp,
       )[0]
+
+      const wrappers: MatchResult = []
+      const mayanForwarded = db.find(MayanForwarded, {
+        sameTxAfter: messageSent,
+      })
+      const orderFulfilled = db.find(OrderFulfilled, {
+        sameTxAfter: messageReceived,
+      })
+      if (mayanForwarded && orderFulfilled) {
+        wrappers.push(
+          Result.Message('mayan.Message', {
+            app: 'mctp',
+            srcEvent: mayanForwarded,
+            dstEvent: orderFulfilled,
+          }),
+        )
+      }
+
       return [
+        ...wrappers,
         Result.Message(
           messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
           {
