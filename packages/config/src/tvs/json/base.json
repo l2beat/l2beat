@@ -2076,6 +2076,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-PNK",
+      "priceId": "kleros",
+      "symbol": "PNK",
+      "name": "Pinakion",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3833/large/kleros.png?1696504500",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1686793895
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-POKT",
       "priceId": "pocket-network",
       "symbol": "POKT",
@@ -2562,6 +2581,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-SKL",
+      "priceId": "skale",
+      "symbol": "SKL",
+      "name": "SKALE",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13245/large/SKALE_token_300x300.png?1696513021",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1686793895
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-SNT",
       "priceId": "status",
       "symbol": "SNT",
@@ -2746,6 +2784,39 @@
       "isAssociated": false
     },
     {
+      "mode": "auto",
+      "id": "base-sUSDS",
+      "priceId": "susds",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+            "chain": "ethereum",
+            "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+            "decimals": 18,
+            "sinceTimestamp": 1734048000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+            "chain": "ethereum",
+            "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+            "decimals": 18,
+            "sinceTimestamp": 1734048000
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
       "mode": "custom",
       "id": "base-sUSDS-2",
       "priceId": "susds",
@@ -2803,15 +2874,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -3198,6 +3262,39 @@
       }
     },
     {
+      "mode": "auto",
+      "id": "base-USDS",
+      "priceId": "usds",
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+            "chain": "ethereum",
+            "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+            "decimals": 18,
+            "sinceTimestamp": 1727136000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+            "chain": "ethereum",
+            "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+            "decimals": 18,
+            "sinceTimestamp": 1728571115
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
       "mode": "custom",
       "id": "base-USDS-2",
       "priceId": "usds",
@@ -3255,15 +3352,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -3612,48 +3702,36 @@
     },
     {
       "mode": "auto",
-      "id": "base-wstETH-1",
+      "id": "base-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-        "decimals": 18,
-        "sinceTimestamp": 1686793895
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+            "decimals": 18,
+            "sinceTimestamp": 1686793895
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72",
+            "decimals": 18,
+            "sinceTimestamp": 1695935315
+          }
+        ]
       },
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "base-wstETH-2",
-      "priceId": "wrapped-steth",
-      "symbol": "wstETH",
-      "name": "Wrapped liquid staked Ether 2.0",
-      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72",
-        "decimals": 18,
-        "sinceTimestamp": 1695935315
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
     },
     {
       "mode": "auto",

@@ -11,7 +11,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -254,6 +253,9 @@ export const starknet: ScalingProject = {
     liveness: {
       explanation:
         'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+      overwrites: {
+        proofSubmissions: 'no-data',
+      },
     },
     costsWarning: {
       sentiment: 'warning',
@@ -531,7 +533,6 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         ),
         sinceTimestamp: UnixTime(1652101033),
         tokens: ['DAI'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'DAI Vault for custom DAI Gateway managed by MakerDAO.' +
           ' ' +
@@ -567,7 +568,6 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           'StarkGate bridge for wstETH.' +
           ' ' +
           escrowWSTETHMaxTotalBalanceString,
-        ...ESCROW.CANONICAL_EXTERNAL,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_RETH_ADDRESS),
