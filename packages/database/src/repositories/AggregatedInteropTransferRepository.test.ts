@@ -882,7 +882,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 10,
           identifiedCount: 2000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         await repository.insertMany([record1, record2])
 
@@ -918,7 +918,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 10,
           identifiedCount: 2000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         await repository.insertMany([record1, record2])
 
