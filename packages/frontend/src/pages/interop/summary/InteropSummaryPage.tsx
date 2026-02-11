@@ -114,7 +114,11 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
           isLoading={isLoading}
         />
       </div>
-      <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
+      <AllProtocolsCard
+        type={undefined}
+        entries={data?.entries}
+        isLoading={isLoading}
+      />
     </div>
   )
 }

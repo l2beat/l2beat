@@ -5,7 +5,9 @@ import type {
   CommonInteropData,
   DurationSplitMap,
 } from '../types'
+import { accumulateChains, accumulateTokens } from './accumulate'
 import type { TransfersTimeModeMap } from './buildTransfersTimeModeMap'
+import { computeDurationSplits } from './computeDurationSplits'
 
 export interface ProtocolDataByBridgeType {
   lockAndMint?: ProtocolDataByBridgeTypeCommon & CommonInteropData
@@ -32,7 +34,7 @@ export interface ProtocolData extends CommonInteropData {
   burnedValueUsd: number | undefined
 }
 
-const INITIAL_DATA: CommonInteropData = {
+export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
   volume: 0,
   transferCount: 0,
   totalDurationSum: 0,
@@ -98,7 +100,7 @@ export function getProtocolsDataMapByBridgeType(
             (bridgeTypeMap.lockAndMint?.burnedValueUsd ?? 0) +
             (record.burnedValueUsd ?? 0),
           ...computeDurationSplits(
-            bridgeTypeMap.lockAndMint,
+            bridgeTypeMap.lockAndMint ?? INITIAL_COMMON_INTEROP_DATA,
             direction,
             record,
           ),
@@ -167,7 +169,6 @@ export function getProtocolsDataMap(
     const current =
       protocolsDataMap.get(record.id) ?? createInitialProtocolData()
 
-    // No duration split for aggregated view
     const transfersTimeMode = transfersTimeModeMap.get(record.id)
     const durationSplit =
       record.bridgeType !== 'unknown'
@@ -221,7 +222,7 @@ function createInitialProtocolData(): ProtocolData {
   }
 }
 
-function getDirection(
+export function getDirection(
   record: { srcChain: string; dstChain: string },
   durationSplit: InteropDurationSplit | undefined,
   transfersTimeMode: 'unknown' | undefined,
@@ -243,31 +244,6 @@ function getDirection(
   return null
 }
 
-function computeDurationSplits(
-  current: CommonInteropData | undefined,
-  direction: 'in' | 'out' | null,
-  record: AggregatedInteropTransferWithTokens,
-): Pick<
-  CommonInteropData,
-  'inTransferCount' | 'inDurationSum' | 'outTransferCount' | 'outDurationSum'
-> {
-  const transferCount = record.transferCount ?? 0
-  const durationSum = record.totalDurationSum ?? 0
-
-  return {
-    inTransferCount:
-      (current?.inTransferCount ?? 0) +
-      (direction === 'in' ? transferCount : 0),
-    inDurationSum:
-      (current?.inDurationSum ?? 0) + (direction === 'in' ? durationSum : 0),
-    outTransferCount:
-      (current?.outTransferCount ?? 0) +
-      (direction === 'out' ? transferCount : 0),
-    outDurationSum:
-      (current?.outDurationSum ?? 0) + (direction === 'out' ? durationSum : 0),
-  }
-}
-
 function mergeTokensData(
   currentTokens: Map<string, CommonInteropData> | undefined,
   recordTokens: AggregatedInteropTransferWithTokens['tokens'],
@@ -276,31 +252,12 @@ function mergeTokensData(
   const result = new Map(currentTokens)
 
   for (const token of recordTokens) {
-    const current = result.get(token.abstractTokenId) ?? INITIAL_DATA
-    const transferCount = token.transferCount ?? 0
-    const durationSum = token.totalDurationSum ?? 0
-
-    result.set(token.abstractTokenId, {
-      volume: current.volume + (token.volume ?? 0),
-      transferCount: current.transferCount + transferCount,
-      totalDurationSum: current.totalDurationSum + durationSum,
-      inTransferCount:
-        current.inTransferCount + (direction === 'in' ? transferCount : 0),
-      inDurationSum:
-        current.inDurationSum + (direction === 'in' ? durationSum : 0),
-      outTransferCount:
-        current.outTransferCount + (direction === 'out' ? transferCount : 0),
-      outDurationSum:
-        current.outDurationSum + (direction === 'out' ? durationSum : 0),
-      mintedValueUsd:
-        current?.mintedValueUsd !== undefined
-          ? (current?.mintedValueUsd ?? 0) + (token.mintedValueUsd ?? 0)
-          : token.mintedValueUsd,
-      burnedValueUsd:
-        current?.burnedValueUsd !== undefined
-          ? (current?.burnedValueUsd ?? 0) + (token.burnedValueUsd ?? 0)
-          : token.burnedValueUsd,
-    })
+    const current =
+      result.get(token.abstractTokenId) ?? INITIAL_COMMON_INTEROP_DATA
+    result.set(
+      token.abstractTokenId,
+      accumulateTokens(current, token, direction),
+    )
   }
 
   return result
@@ -311,43 +268,15 @@ function mergeChainsData(
   record: AggregatedInteropTransferWithTokens,
 ): Map<string, CommonInteropData> {
   const result = new Map(currentChains)
-  const transferCount = record.transferCount ?? 0
-  const durationSum = record.totalDurationSum ?? 0
 
   // Source chain: transfers go OUT
-  const srcChain = result.get(record.srcChain) ?? INITIAL_DATA
-  result.set(record.srcChain, {
-    volume: srcChain.volume + (record.srcValueUsd ?? 0),
-    transferCount: srcChain.transferCount + transferCount,
-    totalDurationSum: srcChain.totalDurationSum + durationSum,
-    inTransferCount: srcChain.inTransferCount,
-    inDurationSum: srcChain.inDurationSum,
-    outTransferCount: srcChain.outTransferCount + transferCount,
-    outDurationSum: srcChain.outDurationSum + durationSum,
-    mintedValueUsd: srcChain.mintedValueUsd,
-    burnedValueUsd:
-      srcChain.burnedValueUsd !== undefined
-        ? srcChain.burnedValueUsd + (record.burnedValueUsd ?? 0)
-        : record.burnedValueUsd,
-  })
+  const srcChain = result.get(record.srcChain) ?? INITIAL_COMMON_INTEROP_DATA
+  result.set(record.srcChain, accumulateChains(srcChain, record, 'src'))
 
   // Destination chain: transfers come IN (only if different from source)
   if (record.dstChain !== record.srcChain) {
-    const dstChain = result.get(record.dstChain) ?? INITIAL_DATA
-    result.set(record.dstChain, {
-      volume: dstChain.volume + (record.dstValueUsd ?? 0),
-      transferCount: dstChain.transferCount + transferCount,
-      totalDurationSum: dstChain.totalDurationSum + durationSum,
-      inTransferCount: dstChain.inTransferCount + transferCount,
-      inDurationSum: dstChain.inDurationSum + durationSum,
-      outTransferCount: dstChain.outTransferCount,
-      outDurationSum: dstChain.outDurationSum,
-      burnedValueUsd: dstChain.burnedValueUsd,
-      mintedValueUsd:
-        dstChain.mintedValueUsd !== undefined
-          ? dstChain.mintedValueUsd + (record.mintedValueUsd ?? 0)
-          : record.mintedValueUsd,
-    })
+    const dstChain = result.get(record.dstChain) ?? INITIAL_COMMON_INTEROP_DATA
+    result.set(record.dstChain, accumulateChains(dstChain, record, 'dst'))
   }
 
   return result
