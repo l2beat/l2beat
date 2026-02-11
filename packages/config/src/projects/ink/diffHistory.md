@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb0ac34e74df698a29c33e272136a21f682c1923c
 
 ## Description
 
-OP Contracts Upgrade 16 (op-contracts/v1.9.0).
+OP Contracts Upgrade 18 (op-contracts/v6.0.0).
 
 OptimismPortal2 v5.1.1→v5.2.0: adds Custom Gas Token safety guards preventing ETH value operations in CGT mode. ([diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B))
 
