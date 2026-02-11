@@ -531,15 +531,16 @@
       "events": ["cctp-v1.MessageReceived"]
     }
   },
-  "mayan-mctp-bridge": {
+  "mayan-mctp-fast": {
+    "loadConfigs": ["wormhole", "cctp-v2"],
     "txs": [
       {
         "chain": "base",
-        "tx": "0xf31d79e452692369a486f9ea470a17e123651e02dd50060a710f28e5a268bf5a"
+        "tx": "0x4bedb6bca328cc57f6c5612deeb1b0d16871e63b25fe15d68f9923bc54916c5d"
       },
       {
         "chain": "optimism",
-        "tx": "0x8fee2c8243140764b8ba74ae2c11f22495e7c5eae15f384f37fa3c826eebe465"
+        "tx": "0xbe39bcd13c8d7f37570b4536f40432ec12f167e2aa6b42710e815059c32bda04"
       }
     ]
   },
