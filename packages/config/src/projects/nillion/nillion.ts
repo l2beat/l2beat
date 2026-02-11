@@ -13,12 +13,14 @@ export const nillion: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Other.MigratedFromL1],
   discovery,
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
     name: 'Nillion',
     slug: 'nillion',
+    warning:
+      'The fault proof system is deployed but is not functional. The chain ID is not included in the op-program superchain registry, causing the dispute game to panic during execution. Security relies entirely on the permissioned proposer and challengers.',
     description:
       'Nillion is an OP Stack Optimium on Ethereum. It serves as the token bridge for the Nillion Network, a computation network focused on privacy-preserving data processing.',
     links: {

@@ -10,6 +10,7 @@ import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCaro
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
+import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
   InteropSelectedChainsProvider,
@@ -98,7 +99,9 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
+      <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
       <AllProtocolsCard
+        type="lockAndMint"
         entries={data?.entries}
         isLoading={isLoading}
         hideTypeColumn

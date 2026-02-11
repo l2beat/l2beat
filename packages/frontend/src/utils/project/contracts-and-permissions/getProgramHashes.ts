@@ -3,12 +3,14 @@ import type {
   ProjectScalingContractsProgramHash,
 } from '@l2beat/config'
 import type { StateValidationProgramHashData } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
+import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { manifest } from '~/utils/Manifest'
 
 export function getProgramHashes(
   programHashes: ProjectScalingContractsProgramHash[] | undefined,
   zkCatalogProjects: Project[],
   allProjects: Project<'contracts'>[],
+  tvs: SevenDayTvsBreakdown,
 ): StateValidationProgramHashData[] {
   if (!programHashes) return []
 
@@ -21,6 +23,11 @@ export function getProgramHashes(
       const usedIn = allProjects?.filter((project) =>
         project.contracts.programHashes?.some((ph) => ph.hash === hash.hash),
       )
+      const usedInWithIcons = usedIn.map((project) => ({
+        ...project,
+        icon: manifest.getUrl(`/icons/${project.slug}.png`),
+        url: `/scaling/projects/${project.slug}`,
+      }))
 
       return {
         ...hash,
@@ -31,11 +38,11 @@ export function getProgramHashes(
               icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
             }
           : undefined,
-        usedIn: usedIn.map((project) => ({
-          ...project,
-          icon: manifest.getUrl(`/icons/${project.slug}.png`),
-          url: `/scaling/projects/${project.slug}`,
-        })),
+        usedIn: usedInWithIcons.sort(
+          (a, b) =>
+            (tvs.projects[b.id]?.breakdown.total ?? 0) -
+            (tvs.projects[a.id]?.breakdown.total ?? 0),
+        ),
       }
     })
     .filter((x) => x !== undefined)

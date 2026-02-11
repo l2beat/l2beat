@@ -1,8 +1,14 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import type { AbstractTokenRecord } from '@l2beat/database'
+import {
+  Address32,
+  type ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
+  getBridgeType,
   parseOFTReceived,
   parseOFTSent,
 } from './layerzero/layerzero-v2-ofts.plugin'
@@ -83,6 +89,7 @@ const parseCreditsReceived = createEventParser(
   'event CreditsReceived(uint32 srcEid, (uint32 srcEid, uint64 amount)[] credits)',
 )
 
+// https://stargateprotocol.gitbook.io/stargate/v2-developer-docs/technical-reference/mainnet-contracts
 export const STARGATE_NETWORKS = defineNetworks('stargate', [
   {
     chain: 'ethereum',
@@ -263,6 +270,28 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       '0x183D6b82680189bB4dB826F739CdC9527D467B25',
     ),
   },
+  {
+    chain: 'bsc',
+    eid: 30102,
+    usdcPool: {
+      address: EthereumAddress('0x962Bd449E630b0d928f308Ce63f1A21F02576057'),
+      tokenAddress: Address32.from(
+        '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
+      ),
+      token: 'USDC',
+    },
+    usdtPool: {
+      address: EthereumAddress('0x138EB30f73BC423c6455C53df6D89CB01d9eBc63'),
+      tokenAddress: Address32.from(
+        '0x55d398326f99059ff775485246999027b3197955',
+      ),
+      token: 'USDT',
+      hydra: true,
+    },
+    tokenMessaging: EthereumAddress(
+      '0x6E3d884C96d640526F273C61dfcF08915eBd7e2B',
+    ),
+  },
 ])
 
 const StargateV2CreditsSent = createInteropEventType<{
@@ -421,6 +450,7 @@ export class StargatePlugin implements InteropPlugin {
   match(
     packetDelivered: InteropEvent,
     db: InteropEventDb,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
   ): MatchResult | undefined {
     if (!PacketDelivered.checkType(packetDelivered)) return
 
@@ -482,6 +512,16 @@ export class StargatePlugin implements InteropPlugin {
             dstAmount: matchedOftReceived.args.amountReceivedLD,
             srcWasBurned: oftSentBusRode.args.hydra,
             dstWasMinted: matchedOftReceived.args.hydra,
+            bridgeType: getBridgeType({
+              srcTokenAddress: oftSentBusRode.args.tokenAddress,
+              dstTokenAddress: matchedOftReceived.args.tokenAddress,
+              srcWasBurned: oftSentBusRode.args.hydra,
+              dstWasMinted: matchedOftReceived.args.hydra,
+              srcChain: oftSentBusRode.ctx.chain,
+              dstChain: matchedOftReceived.ctx.chain,
+              deployedToAbstractMap,
+              defaultBridgeType: 'nonMinting',
+            }),
           }),
         )
       }
@@ -509,6 +549,16 @@ export class StargatePlugin implements InteropPlugin {
           dstAmount: oftReceived.args.amountReceivedLD,
           srcWasBurned: oftSentTaxi.args.hydra,
           dstWasMinted: oftReceived.args.hydra,
+          bridgeType: getBridgeType({
+            srcTokenAddress: oftSentTaxi.args.tokenAddress,
+            dstTokenAddress: oftReceived.args.tokenAddress,
+            srcWasBurned: oftSentTaxi.args.hydra,
+            dstWasMinted: oftReceived.args.hydra,
+            srcChain: oftSentTaxi.ctx.chain,
+            dstChain: oftReceived.ctx.chain,
+            deployedToAbstractMap,
+            defaultBridgeType: 'nonMinting',
+          }),
         }),
       ]
     }

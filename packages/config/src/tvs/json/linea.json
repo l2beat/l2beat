@@ -804,6 +804,25 @@
     },
     {
       "mode": "auto",
+      "id": "linea-SNT",
+      "priceId": "status",
+      "symbol": "SNT",
+      "name": "Status Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/779/large/status.png?1696501931",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E",
+        "chain": "ethereum",
+        "escrowAddress": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+        "decimals": 18,
+        "sinceTimestamp": 1691060675
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "linea-SOL",
       "priceId": "sol-wormhole",
       "symbol": "SOL",

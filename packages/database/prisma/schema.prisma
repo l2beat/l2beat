@@ -378,6 +378,7 @@ model InteropTransfer {
   plugin     String   @db.VarChar(64)
   transferId String   @db.VarChar(40)
   type       String   @db.VarChar(64)
+  bridgeType String?  @db.VarChar(32)
   timestamp  DateTime @db.Timestamp(6)
 
   duration Int
@@ -559,6 +560,7 @@ model AggregatedInteropTransfer {
   countOver100K    Int      @default(0)
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id])
+  @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
 model AggregatedInteropToken {
@@ -575,4 +577,5 @@ model AggregatedInteropToken {
   volume           Float    @db.Real
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id, abstractTokenId])
+  @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }

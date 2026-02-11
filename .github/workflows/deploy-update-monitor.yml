@@ -9,51 +9,30 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      force:
+      skip-time-check:
         description: "Skip time check and always deploy"
-        required: false
+        required: true
         type: boolean
-        default: false
+        default: true
+      um-prod-enabled:
+        description: "Deploy update-monitor prod"
+        required: true
+        default: true
+        type: boolean
+      um-staging-enabled:
+        description: "Deploy update-monitor staging"
+        required: true
+        default: true
+        type: boolean
   schedule:
     - cron: "30 * * * *"
 
 jobs:
-  deploy-update-monitor:
-    name: Deploy update monitor
+  check-time:
+    name: Wait for proper time to deploy changes to update monitor
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
-      COOLIFY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Set up Docker.io mirror
-        uses: docker/setup-buildx-action@v3
-        with:
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
-      - name: Cache Coolify CLI
-        id: cache-coolify
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/bin/coolify
-          key: coolify-cli-v1
-      - name: Install Coolify CLI
-        if: steps.cache-coolify.outputs.cache-hit != 'true'
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
-      - name: Setup Coolify context
-        run: |
-          coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
-          coolify context use l2beat
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Wait until we're in last quarter of hour
         run: |
           check_minutes() {
@@ -65,12 +44,12 @@ jobs:
             fi
           }
 
-          if ${{ github.event.inputs.force || 'false' }}; then
+          if ${{ github.event.inputs.skip-time-check || 'false' }}; then
             echo "Forced run, skipping checks"
             exit 0
           fi
 
-          if check_minutes 55 60 || check_minutes 0 30; then
+          if check_minutes 55 60 || check_minutes 0 29; then
             echo "It's too late, failing!"
             exit 1
           fi
@@ -79,43 +58,22 @@ jobs:
             sleep 30
           done
 
-      - name: Build and publish containers
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: packages/backend/Dockerfile
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository }}/update-monitor:latest
-            ghcr.io/${{ github.repository }}/update-monitor:${{ github.sha }}
-          build-args: |
-            TURBO_TEAM=${{ vars.TURBO_TEAM }}
-            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Don't release just before full hour
-        run: |
-          check_minutes() {
-            local minutes=$(date +%M)
-            if [ $minutes -ge $1 ]; then
-              return 0
-            else
-              return 1
-            fi
-          }
+  deploy-update-monitor-staging:
+    needs: check-time
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.um-staging-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_UM_STAGING_ENABLED != 'false')
+    timeout-minutes: 5
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_UM_STAGING_ID }}
 
-          if ${{ github.event.inputs.force || 'false' }}; then
-            echo "Forced run, skipping checks"
-            exit 0
-          fi
-
-          if check_minutes 57; then
-            echo "It's too late, failing!"
-            exit 1
-          fi
-
-      - name: Release published containers (coolify)
-        run: |
-          set -ex
-          coolify deploy uuid ${{ secrets.COOLIFY_UM_STAGING_ID }}
-          coolify deploy uuid ${{ secrets.COOLIFY_UM_PRODUCTION_ID }}
+  deploy-update-monitor-production:
+    needs: check-time
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.um-prod-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_UM_STAGING_ENABLED != 'false')
+    timeout-minutes: 5
+    uses: ./.github/workflows/deploy-to-coolify.yml
+    secrets:
+      COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
+      COOLIFY_DEPLOY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
+      COOLIFY_UUID: ${{ secrets.COOLIFY_UM_PRODUCTION_ID }}

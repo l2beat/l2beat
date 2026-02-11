@@ -28,6 +28,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
+import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('sorare')
 const freezeGracePeriod = discovery.getContractValue<number>(
@@ -50,12 +51,7 @@ const sorareProgramHashes = []
 sorareProgramHashes.push(
   discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-sorareProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-sorareProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+sorareProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const sorare: ScalingProject = {
   type: 'layer2',

@@ -934,6 +934,8 @@ export interface DayActivityConfig {
   batchSize?: number
 }
 
+export type LivenessOverwriteMode = 'no-data'
+
 export interface ProjectLivenessInfo {
   explanation?: string
   warnings?: {
@@ -941,6 +943,10 @@ export interface ProjectLivenessInfo {
     batchSubmissions?: string
     proofSubmissions?: string
   }
+  /**
+   * Overwrites the displayed value given liveness subtype.
+   */
+  overwrites?: Partial<Record<TrackedTxsConfigSubtype, LivenessOverwriteMode>>
 }
 
 export interface ProjectLivenessConfig {
@@ -1190,6 +1196,7 @@ export type InteropPluginName =
   | 'across-settlement'
   | 'across-settlement-op'
   | 'across-settlement-orbit'
+  | 'agglayer'
   | 'allbridge'
   | 'aori'
   | 'axelar'

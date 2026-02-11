@@ -11,7 +11,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -214,18 +213,16 @@ export const scroll: ScalingProject = {
           'eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504',
         ),
         tokens: ['wstETH'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         description:
-          'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
+          'Custom token escrow governed by Lido, using the canonical bridge for messaging.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a',
         ),
         tokens: ['pufETH'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         description:
-          'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
+          'Custom token escrow governed by puffer.fi, using the canonical bridge for messaging.',
       }),
     ],
     activityConfig: {

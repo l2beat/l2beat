@@ -5,14 +5,16 @@ On DST it emits Delivery event which is used to match with LogMessagePublished o
 
 */
 
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -20,9 +22,10 @@ import {
 import { WormholeConfig } from './wormhole/wormhole.config'
 import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
-const parseDelivery = createEventParser(
-  'event Delivery(address indexed recipientContract, uint16 indexed sourceChain, uint64 indexed sequence, bytes32 deliveryVaaHash,uint8 status,uint256 gasUsed,uint8 refundStatus,bytes additionalStatusInfo,bytes overridesInfo)',
-)
+const deliveryLog =
+  'event Delivery(address indexed recipientContract, uint16 indexed sourceChain, uint64 indexed sequence, bytes32 deliveryVaaHash,uint8 status,uint256 gasUsed,uint8 refundStatus,bytes additionalStatusInfo,bytes overridesInfo)'
+
+const parseDelivery = createEventParser(deliveryLog)
 
 /*
 const parseSendEvent = createEventParser(
@@ -46,10 +49,33 @@ export const SendEvent = createInteropEventType<{
 }>('wormhole-relayer.SendEvent')
 */
 
-export class WormholeRelayerPlugin implements InteropPlugin {
+export class WormholeRelayerPlugin implements InteropPluginResyncable {
   readonly name = 'wormhole-relayer'
 
   constructor(private configs: InteropConfigStore) {}
+
+  getDataRequests(): DataRequest[] {
+    const networks = this.configs.get(WormholeConfig) ?? []
+    const relayerAddresses: ChainSpecificAddress[] = []
+    for (const network of networks) {
+      if (!network.relayer) continue
+      try {
+        relayerAddresses.push(
+          ChainSpecificAddress.fromLong(network.chain, network.relayer),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
+
+    return [
+      {
+        type: 'event',
+        signature: deliveryLog,
+        addresses: relayerAddresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const wormholeNetworks = this.configs.get(WormholeConfig)

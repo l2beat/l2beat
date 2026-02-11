@@ -6674,7 +6674,7 @@ Reduce timelock delay from 10d to 3d.
 
 This upgrade introduces an enum `VerifierType` that replaces the old `rollupCompatibilityID`. It can be either `StateTransition` or `Pessimistic`, and currently cannot be changed for a project.
 - `StateTransition` Layer 2s (Rollups or Validiums) are using their normal verifier contracts for state validation as before: (`verifyBatchesTrustedAggregator()`)
-- `Pessimistic` projects must post accounting proofs to the Rollupmanager with `verifyPessimisticTrustedAggregator()` in order to be able to use the shared bridge. These projects can be ['CDK Sovereign'](https://docs.polygon.technology/agglayer/modes-of-integration/polygon-cdk/#cdk-sovereign), without full state validation or DA on Ethereum.
+- `Pessimistic` projects must post accounting proofs to the Rollupmanager with `verifyPessimisticTrustedAggregator()` in order to be able to use the shared bridge. These projects can be ['CDK Sovereign'](https://docs.polygon.technology/chain-development/cdk/get-started/overview/), without full state validation or DA on Ethereum.
 
 ### PolygonRollupManager
 
@@ -7250,7 +7250,7 @@ Generated with discovered.json: 0xdf95e681dfbbcae8430943754a096c0d9fb31300
 
 ternoa and haust.network are active, added notes to review them.
 
-Two scheduled transactions (likely related to [Pessimistic Proofs](https://docs.polygon.technology/cdk/concepts/pessimistic-proofs/)):
+Two scheduled transactions (likely related to [Pessimistic Proofs](https://docs.polygon.technology/interoperability/agglayer/core-concepts/pessimistic-proof/)):
 21) upgrades the PolygonRollupManager
 22) adds a new RollupType in the PRM, which has a contract called PolygonPessimisticConsensus (`0x18C45DD422f6587357a6d3b23307E75D42b2bc5B`) as consensus implementation and uses a Verifier called SP1Verifier (`0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63`).
 

@@ -29,7 +29,7 @@ export function NonMintingCard({
           <h2 className="font-bold text-heading-20 decoration-blue-600 underline-offset-6 max-md:underline md:text-heading-24">
             Non-minting
           </h2>
-          <TopNBadge n={entries?.length ?? 0} />
+          <TopNBadge n={5} />
         </div>
         <a href={viewAllUrl}>
           <Button

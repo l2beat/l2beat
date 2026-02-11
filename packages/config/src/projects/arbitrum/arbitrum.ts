@@ -7,7 +7,6 @@ import {
 import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
-  ESCROW,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   SOA,
@@ -273,7 +272,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0xA10c7CE4b876998858b1a9E12b10092229539400',
       ),
       tokens: ['DAI', 'USDS', 'sUSDS'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
     }),
@@ -282,7 +280,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
@@ -292,7 +289,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A',
       ),
       tokens: ['LPT'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description: 'LPT Vault for custom Livepeer Token Gateway.',
     }),
     {

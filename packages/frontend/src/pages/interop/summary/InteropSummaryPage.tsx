@@ -11,6 +11,7 @@ import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCaro
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
+import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
@@ -103,6 +104,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
+      <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
       <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
         <NonMintingCard entries={nonMinting} isLoading={isLoading} />
         <LockAndMintCard entries={lockAndMint} isLoading={isLoading} />
@@ -112,7 +114,11 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
           isLoading={isLoading}
         />
       </div>
-      <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
+      <AllProtocolsCard
+        type={undefined}
+        entries={data?.entries}
+        isLoading={isLoading}
+      />
     </div>
   )
 }

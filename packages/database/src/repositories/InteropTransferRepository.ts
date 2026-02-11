@@ -7,11 +7,28 @@ import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
+// Interop bridge types are stored in the database.
+// If they are modified (e.g. renamed/removed), you MUST update
+// the data already in the DB via a new migration.
+const EXPECTED_DB_INTEROP_BRIDGE_TYPES = [
+  'lockAndMint',
+  'nonMinting',
+  'omnichain',
+  'unknown',
+] as const
+const _interopBridgeTypesMustMatchDbContract: typeof EXPECTED_DB_INTEROP_BRIDGE_TYPES =
+  InteropBridgeTypeValues
+
+function isInteropBridgeType(value: string): value is InteropBridgeType {
+  return (InteropBridgeTypeValues as readonly string[]).includes(value)
+}
+
 export interface InteropTransferRecord {
   plugin: string
   bridgeType: KnownInteropBridgeType | undefined
   transferId: string
   type: string
+  bridgeType?: InteropBridgeType
   duration: number
   timestamp: UnixTime
   srcTime: UnixTime
@@ -66,12 +83,19 @@ export interface InteropMissingTokenInfo {
 export function toRecord(
   row: Selectable<InteropTransfer>,
 ): InteropTransferRecord {
+  if (row.bridgeType !== null && !isInteropBridgeType(row.bridgeType)) {
+    throw new Error(
+      `Invalid interop transfer bridge type: ${row.bridgeType} for transfer ${row.transferId}`,
+    )
+  }
+
   return {
     plugin: row.plugin,
     // @ts-ignore
     bridgeType: row.bridgeType ?? undefined,
     transferId: row.transferId,
     type: row.type,
+    bridgeType: row.bridgeType === null ? undefined : row.bridgeType,
     duration: row.duration,
     timestamp: UnixTime.fromDate(row.timestamp),
     srcTime: UnixTime.fromDate(row.srcTime),
@@ -111,6 +135,7 @@ export function toRow(
     plugin: record.plugin,
     transferId: record.transferId,
     type: record.type,
+    bridgeType: record.bridgeType,
     duration: record.duration,
     timestamp: UnixTime.toDate(record.timestamp),
     srcTime: UnixTime.toDate(record.srcTime),

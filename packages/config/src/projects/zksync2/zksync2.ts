@@ -5,7 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -165,7 +164,6 @@ export const zksync2: ScalingProject = zkStackL2({
       ),
       sinceTimestamp: UnixTime(1698058151),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
       upgradableBy: [{ name: 'Lido (Lido Agent)', delay: 'no' }],

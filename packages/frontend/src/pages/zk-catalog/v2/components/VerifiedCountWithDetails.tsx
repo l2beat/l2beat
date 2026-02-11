@@ -74,6 +74,7 @@ export function CountWithAttesters({
   attesters:
     | (ZkCatalogAttester & {
         icon: string
+        iconDark?: string
       })[]
     | undefined
   type: 'successful' | 'notVerified' | 'unsuccessful'
@@ -108,10 +109,22 @@ export function CountWithAttesters({
               <img
                 src={attester.icon}
                 alt={attester.name}
-                className="size-4 min-w-4"
+                className={cn(
+                  'size-4 min-w-4',
+                  attester.iconDark && 'dark:hidden',
+                )}
                 width={16}
                 height={16}
               />
+              {attester.iconDark && (
+                <img
+                  src={attester.iconDark}
+                  alt={attester.name}
+                  className="hidden size-4 min-w-4 dark:block"
+                  width={16}
+                  height={16}
+                />
+              )}
             </a>
           </TooltipTrigger>
           <TooltipContent>{attester.name}</TooltipContent>

@@ -1,6 +1,6 @@
 {
   "name": "intmax",
-  "timestamp": 1768216753,
+  "timestamp": 1770724065,
   "configHash": "0x5f968f2838793a96ae19b6ee0af31bf4fa3637236814e79ce8144481e8142ef4",
   "entries": [
     {
@@ -73,11 +73,6 @@
       ]
     },
     {
-      "address": "eth:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A",
       "type": "EOA",
       "proxyType": "EOA",
@@ -125,7 +120,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 29,
+        "getCurrentPeriod": 33,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -172,11 +167,6 @@
       }
     },
     {
-      "address": "eth:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "GnosisSafe",
       "address": "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE",
       "type": "Contract",
@@ -211,7 +201,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -256,7 +246,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 12,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -342,7 +332,7 @@
       "template": "intmax/Liquidity",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xe050f1745884847699cff3db5506410a82629972bb6fd8a52199442b01351485"
+        "0xf23a0f0c4af93cdcb226ce3de63c8ed56ce4267448a659414e5a459b4e5b94db"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check.",
@@ -351,7 +341,7 @@
       "sinceBlock": 22752152,
       "values": {
         "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA",
+        "$implementation": "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9",
         "$pastUpgrades": [
           [
             "2025-06-21T10:09:59.000Z",
@@ -367,9 +357,14 @@
             "2025-08-30T13:25:23.000Z",
             "0x93f7c96b159e82cd555266aa0451fb2d3a7eb8475edf83f66a15fa617de1eca0",
             ["eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA"]
+          ],
+          [
+            "2026-02-07T14:29:35.000Z",
+            "0x95073b3d48f892101baf0c2e857a0b0b8f72dd6ae5fdfecd49c0814dfec4cd69",
+            ["eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -379,23 +374,17 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0xA8E0Db294aD54E9187CeE41c4d471186bf5Aa7A6"]
           },
-          "WITHDRAWAL": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449",
-              "eth:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5"
-            ]
-          }
+          "WITHDRAWAL": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] }
         },
         "amlPermitter": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
         "contribution": "eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 59679,
-        "getLastRelayedDepositId": 59673,
+        "getLastDepositId": 67964,
+        "getLastRelayedDepositId": 67964,
         "getNativeTokenIndex": 0,
-        "paused": false,
+        "paused": true,
         "RELAY_LIMIT": 450,
         "relayer": ["eth:0xA8E0Db294aD54E9187CeE41c4d471186bf5Aa7A6"],
         "RELAYER": "0xab4f864e5201b0fde9b5ee3e4cf96384802b0ffdfcf7f9de4699ce21a30afc4f",
@@ -406,7 +395,7 @@
       },
       "implementationNames": {
         "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3": "ERC1967Proxy",
-        "eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA": "Liquidity"
+        "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9": "Liquidity"
       }
     },
     {
@@ -571,7 +560,7 @@
       "template": "intmax/Rollup",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xfbb7d02542bc666f4b049d5138aced4257fcc21b784009966f830eae7b197643"
+        "0x210e1b4c7ca45694431b4a558e68cf0fc6e9c0f1444fe91538af462e050f3604"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.",
@@ -585,32 +574,38 @@
       "sinceBlock": 17261666,
       "values": {
         "$admin": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
-        "$implementation": "scr:0xF34299210fB8505232649e9BEa14a84DD75e746b",
+        "$implementation": "scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820",
         "$pastUpgrades": [
           [
             "2025-07-16T11:37:50.000Z",
             "0x00ed05b1421c07fc3016adada820d7e853df1a1898e4b8636b1139c6712b1ffd",
             ["scr:0xF34299210fB8505232649e9BEa14a84DD75e746b"]
+          ],
+          [
+            "2026-02-10T09:51:40.000Z",
+            "0xbd41e060791e0e158dc07aafdfb52c0e26c76ea9193852ab9d4d5c8eb9e9fe70",
+            ["scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "contribution": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
-        "depositIndex": 59673,
-        "depositTreeRoot": "0xd0d829c2492fcc47f46510ea087b3a322d55d1c498d253aa2436be1b4eeabc38",
+        "depositIndex": 67964,
+        "depositTreeRoot": "0xbdf8615ac850a8d5fb61f1909c520d72b3496c06526124c67124101b15115ac1",
         "FULL_ACCOUNT_IDS_BYTES": 640,
-        "getLatestBlockNumber": 74264,
+        "getLatestBlockNumber": 89446,
         "getPenalty": 0,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "lastProcessedDepositId": 59673,
+        "lastProcessedDepositId": 67964,
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "NUM_SENDERS_IN_BLOCK": 128,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
+        "paused": true,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
         "scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e": "ERC1967Proxy",
-        "scr:0xF34299210fB8505232649e9BEa14a84DD75e746b": "Rollup"
+        "scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820": "Rollup"
       },
       "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
@@ -676,11 +671,11 @@
           "numPhases": 7,
           "phase0Period": 16
         },
-        "getCurrentPeriod": 205,
+        "getCurrentPeriod": 234,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-        "nullifierNonce": 15580,
+        "nullifierNonce": 18335,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
         "RELAY_LIMIT": 100,
         "REWARD_TOKEN_INDEX": 1,
@@ -725,7 +720,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 29,
+        "getCurrentPeriod": 33,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -769,7 +764,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "circuitDigest": "10639849666975086414110868463771120369189468607622759510754735453420311446140",
+        "circuitDigest": 0,
         "contribution": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
         "getDirectWithdrawalTokenIndices": [0, 1, 2, 3],
         "isMigrationCompleted": true,
@@ -843,7 +838,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 11,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1094,7 +1089,7 @@
     "eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD": [
       "constructor(address _singleton)"
     ],
-    "eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA": [
+    "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9": [
       "constructor()",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -1548,7 +1543,7 @@
     "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD": [
       "constructor(address _singleton)"
     ],
-    "scr:0xF34299210fB8505232649e9BEa14a84DD75e746b": [
+    "scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AddressZero()",
@@ -1556,6 +1551,8 @@
       "error BlockNumberOutOfRange()",
       "error ERC1967InvalidImplementation(address implementation)",
       "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
       "error Expired()",
       "error FailedCall()",
       "error InsufficientPenaltyFee()",
@@ -1584,7 +1581,9 @@
       "event Initialized(uint64 version)",
       "event MigrationCompleted()",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
       "event RateLimitConstantsSet(uint256 thresholdInterval, uint256 alpha, uint256 k)",
+      "event Unpaused(address account)",
       "event Upgraded(address indexed implementation)",
       "function FULL_ACCOUNT_IDS_BYTES() view returns (uint256)",
       "function NUM_SENDERS_IN_BLOCK() view returns (uint256)",
@@ -1609,6 +1608,8 @@
       "function migrateDeposits(bytes32[] _depositHashes)",
       "function migrateLastProcessedDepositId(uint256 _lastProcessedDepositId)",
       "function owner() view returns (address)",
+      "function pauseBlockPosting()",
+      "function paused() view returns (bool)",
       "function postNonRegistrationBlock(bytes32 txTreeRoot, uint64 expiry, uint32 builderNonce, bytes16 senderFlags, bytes32[2] aggregatedPublicKey, bytes32[4] aggregatedSignature, bytes32[4] messagePoint, bytes32 publicKeysHash, bytes senderAccountIds) payable",
       "function postRegistrationBlock(bytes32 txTreeRoot, uint64 expiry, uint32 builderNonce, bytes16 senderFlags, bytes32[2] aggregatedPublicKey, bytes32[4] aggregatedSignature, bytes32[4] messagePoint, uint256[] senderPublicKeys) payable",
       "function processDeposits(uint256 _lastProcessedDepositId, bytes32[] depositHashes)",
@@ -1616,6 +1617,7 @@
       "function renounceOwnership()",
       "function setRateLimitConstants(uint256 targetInterval, uint256 alpha, uint256 k)",
       "function transferOwnership(address newOwner)",
+      "function unpauseBlockPosting()",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function withdrawPenaltyFee(address to)"
     ]
@@ -1631,6 +1633,6 @@
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "ethereum": 24218288, "scroll": 27958415 },
-  "permissionsConfigHash": "0x1b7d05b0567dc33db4c67007d4e85f1e845d84535fd64b002bdf93d672e0d69e"
+  "usedBlockNumbers": { "ethereum": 24426172, "scroll": 29879991 },
+  "permissionsConfigHash": "0x25d882192eb3083a2f8e180f12138432457c0d386f8f4352076002af13bf51a2"
 }

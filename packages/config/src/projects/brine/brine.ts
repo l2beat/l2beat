@@ -27,6 +27,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
+import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('brine')
 
@@ -50,12 +51,7 @@ const tanxProgramHashes = []
 tanxProgramHashes.push(
   discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-tanxProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-tanxProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+tanxProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const brine: ScalingProject = {
   type: 'layer2',
