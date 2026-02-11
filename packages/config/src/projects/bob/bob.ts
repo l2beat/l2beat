@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION, ESCROW } from '../../common'
+import { DERIVATION } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -42,7 +42,6 @@ export const bob: ScalingProject = opStackL2({
         'eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
     }),
   ],
   genesisTimestamp: UnixTime(1712861989),

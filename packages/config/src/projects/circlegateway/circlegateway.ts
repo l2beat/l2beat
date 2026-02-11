@@ -8,7 +8,7 @@ export const circlegateway: BaseProject = {
   shortName: 'Gateway',
   addedAt: UnixTime(1770115878),
   interopConfig: {
-    showAlways: ['omnichain'],
+    showAlways: ['burnAndMint'],
     transfersTimeMode: 'unknown',
     plugins: [
       {

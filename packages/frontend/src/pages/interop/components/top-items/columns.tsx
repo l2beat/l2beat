@@ -9,7 +9,7 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from '../table/AvgDurationCell'
 
 export type TopItem = {
-  id: string
+  id?: string
   displayName: string
   iconUrl: string
   volume: number | null
@@ -40,7 +40,7 @@ export const getTopItemsColumns = (
         />
       ),
       meta: {
-        headClassName: 'w-0 pr-0!',
+        headClassName: 'w-[32px] pr-0!',
         cellClassName: 'pr-0!',
       },
       size: 28,

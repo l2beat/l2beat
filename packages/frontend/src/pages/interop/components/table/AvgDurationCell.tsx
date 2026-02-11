@@ -20,9 +20,17 @@ export function AvgDurationCell({
   switch (averageDuration.type) {
     case 'unknown':
       return (
-        <Badge type="gray" size="small">
-          Unknown
-        </Badge>
+        <Tooltip>
+          <TooltipTrigger>
+            <Badge type="gray" size="small">
+              Unknown
+            </Badge>
+          </TooltipTrigger>
+          <TooltipContent>
+            The transfer times for this protocol could not be derived based on
+            onchain data only.
+          </TooltipContent>
+        </Tooltip>
       )
     case 'single':
       return (

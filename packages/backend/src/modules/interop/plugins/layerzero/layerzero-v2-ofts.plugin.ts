@@ -1,4 +1,10 @@
-import { Address32, assert } from '@l2beat/shared-pure'
+import type { AbstractTokenRecord } from '@l2beat/database'
+import {
+  Address32,
+  assert,
+  ChainSpecificAddress,
+  type InteropBridgeType,
+} from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findParsedAround } from '../hyperlane-hwr'
 import {
@@ -55,6 +61,63 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
   dstAmount?: bigint
   minted?: boolean
 }>('layerzero-v2.PacketOFTDelivered', { direction: 'incoming' })
+
+export function getBridgeType({
+  srcTokenAddress,
+  dstTokenAddress,
+  srcWasBurned,
+  dstWasMinted,
+  srcChain,
+  dstChain,
+  deployedToAbstractMap,
+  defaultBridgeType = 'burnAndMint',
+}: {
+  srcTokenAddress: Address32 | undefined
+  dstTokenAddress: Address32 | undefined
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+  srcChain: string
+  dstChain: string
+  deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>
+  defaultBridgeType?: 'burnAndMint' | 'nonMinting'
+}): InteropBridgeType | undefined {
+  if (
+    !srcTokenAddress ||
+    !dstTokenAddress ||
+    srcWasBurned === undefined ||
+    dstWasMinted === undefined
+  ) {
+    return
+  }
+
+  const srcAbstractToken = deployedToAbstractMap.get(
+    ChainSpecificAddress.fromLong(
+      Address32.cropToEthereumAddress(srcTokenAddress),
+      srcChain,
+    ),
+  )
+  const dstAbstractToken = deployedToAbstractMap.get(
+    ChainSpecificAddress.fromLong(
+      Address32.cropToEthereumAddress(dstTokenAddress),
+      dstChain,
+    ),
+  )
+  if (!srcAbstractToken || !dstAbstractToken) return
+
+  const followsDefaultFlow =
+    defaultBridgeType === 'nonMinting'
+      ? !srcWasBurned && !dstWasMinted
+      : srcWasBurned && dstWasMinted
+
+  if (
+    !followsDefaultFlow &&
+    srcAbstractToken.issuer !== dstAbstractToken.issuer
+  ) {
+    return 'lockAndMint'
+  }
+
+  return defaultBridgeType
+}
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   readonly name = 'layerzero-v2-ofts'
@@ -197,6 +260,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   match(
     oftReceivedPacketDelivered: InteropEvent,
     db: InteropEventDb,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
   ): MatchResult | undefined {
     if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
       return
@@ -212,6 +276,20 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const packetDelivered = db.find(PacketDelivered, { guid })
     if (!packetDelivered) return
 
+    const srcTokenAddress = oftSentPacketSent.args.srcTokenAddress
+    const dstTokenAddress = oftReceivedPacketDelivered.args.dstTokenAddress
+    const srcWasBurned = oftSentPacketSent.args.burned
+    const dstWasMinted = oftReceivedPacketDelivered.args.minted
+    const bridgeType = getBridgeType({
+      srcTokenAddress,
+      dstTokenAddress,
+      srcWasBurned,
+      dstWasMinted,
+      srcChain: oftSentPacketSent.ctx.chain,
+      dstChain: packetDelivered.ctx.chain,
+      deployedToAbstractMap,
+    })
+
     return [
       Result.Message('layerzero-v2.Message', {
         app: 'oftv2',
@@ -221,12 +299,13 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
         srcAmount: oftSentPacketSent.args.amountSentLD, // same as oftSentPacketSent.args.srcAmount
-        srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
+        srcTokenAddress,
         dstEvent: oftReceivedPacketDelivered,
         dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD, // same as oftReceivedPacketDelivered.args.dstAmount
-        dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
-        srcWasBurned: oftSentPacketSent.args.burned,
-        dstWasMinted: oftReceivedPacketDelivered.args.minted,
+        dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
+        bridgeType,
       }),
     ]
   }

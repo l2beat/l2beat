@@ -2,7 +2,9 @@
  * Axelar Interchain Token Service
  * OMNICHAIN token standard
  */
-import { Address32 } from '@l2beat/shared-pure'
+
+import type { AbstractTokenRecord } from '@l2beat/database'
+import { Address32, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   AXELAR_NETWORKS,
   ContractCall,
@@ -10,6 +12,7 @@ import {
   ContractCallExecuted,
 } from './axelar'
 import { findParsedAround } from './hyperlane-hwr'
+import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import {
   createEventParser,
   createInteropEventType,
@@ -149,6 +152,7 @@ export class AxelarITSPlugin implements InteropPlugin {
   match(
     contractCallExecuted: InteropEvent,
     db: InteropEventDb,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
   ): MatchResult | undefined {
     if (ContractCallExecuted.checkType(contractCallExecuted)) {
       const interchainTransferReceived = db.find(InterchainTransferReceived, {
@@ -169,6 +173,21 @@ export class AxelarITSPlugin implements InteropPlugin {
         sameTxAfter: interchainTransfer,
       })
       if (!contractCall) return
+
+      const srcTokenAddress = interchainTransfer.args.tokenAddress
+      const dstTokenAddress = interchainTransferReceived.args.tokenAddress
+      const srcWasBurned = interchainTransfer.args.srcWasBurned
+      const dstWasMinted = interchainTransferReceived.args.dstWasMinted
+      const bridgeType = getBridgeType({
+        srcTokenAddress,
+        dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
+        srcChain: interchainTransfer.ctx.chain,
+        dstChain: interchainTransferReceived.ctx.chain,
+        deployedToAbstractMap,
+      })
+
       return [
         Result.Message('axelar.Message', {
           app: 'axelar-its',
@@ -179,12 +198,13 @@ export class AxelarITSPlugin implements InteropPlugin {
         Result.Transfer('axelar-its.Transfer', {
           srcEvent: interchainTransfer,
           srcAmount: interchainTransfer.args.amount,
-          srcTokenAddress: interchainTransfer.args.tokenAddress,
-          srcWasBurned: interchainTransfer.args.srcWasBurned,
+          srcTokenAddress,
+          srcWasBurned,
           dstEvent: interchainTransferReceived,
           dstAmount: interchainTransferReceived.args.amount,
-          dstTokenAddress: interchainTransferReceived.args.tokenAddress,
-          dstWasMinted: interchainTransferReceived.args.dstWasMinted,
+          dstTokenAddress,
+          dstWasMinted,
+          bridgeType,
         }),
       ]
     }

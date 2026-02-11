@@ -18,7 +18,9 @@ import {
   type ProtocolDataByBridgeType,
 } from './getProtocolsDataMap'
 import { getTokensData } from './getTokensData'
+import { getTopItems } from './getTopItems'
 
+const TOP_ITEMS_LIMIT = 3
 const logger = getLogger().for('getAllProtocolEntries')
 
 export function getProtocolEntries(
@@ -79,6 +81,24 @@ export function getProtocolEntries(
               )
             : getAverageDuration(projectId, undefined, data, undefined)
 
+      const tokens = getTokensData({
+        projectId,
+        bridgeType: undefined, // No bridge type split for aggregated view
+        tokens: data.tokens,
+        tokensDetailsMap,
+        durationSplitMap: undefined, // No duration split map for aggregated view
+        unknownTransfersCount:
+          data.transferCount - data.identifiedTransferCount,
+        logger,
+      })
+      const chains = getChainsData({
+        projectId,
+        bridgeType: undefined, // No bridge type split for aggregated view
+        chains: data.chains,
+        durationSplitMap: undefined, // No duration split map for aggregated view
+        logger,
+      })
+
       const record: ProtocolEntry = {
         id: project.id,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
@@ -92,23 +112,8 @@ export function getProtocolEntries(
           : undefined,
         volume: data.volume,
         byBridgeType,
-        tokens: getTokensData({
-          projectId,
-          bridgeType: undefined, // No bridge type split for aggregated view
-          tokens: data.tokens,
-          tokensDetailsMap,
-          durationSplitMap: undefined, // No duration split map for aggregated view
-          unknownTransfersCount:
-            data.transferCount - data.identifiedTransferCount,
-          logger,
-        }),
-        chains: getChainsData({
-          projectId,
-          bridgeType: undefined, // No bridge type split for aggregated view
-          chains: data.chains,
-          durationSplitMap: undefined, // No duration split map for aggregated view
-          logger,
-        }),
+        tokens: getTopItems(tokens, TOP_ITEMS_LIMIT),
+        chains: getTopItems(chains, TOP_ITEMS_LIMIT),
         transferCount: data.transferCount,
         averageValue:
           data.identifiedTransferCount > 0
@@ -141,17 +146,20 @@ function getByBridgeTypeData(
     lockAndMint: data.lockAndMint
       ? {
           volume: data.lockAndMint.volume,
-          tokens: getTokensData({
-            projectId,
-            bridgeType: 'lockAndMint',
-            tokens: data.lockAndMint.tokens,
-            tokensDetailsMap,
-            durationSplitMap,
-            unknownTransfersCount:
-              data.lockAndMint.transferCount -
-              data.lockAndMint.identifiedTransferCount,
-            logger,
-          }),
+          tokens: getTopItems(
+            getTokensData({
+              projectId,
+              bridgeType: 'lockAndMint',
+              tokens: data.lockAndMint.tokens,
+              tokensDetailsMap,
+              durationSplitMap,
+              unknownTransfersCount:
+                data.lockAndMint.transferCount -
+                data.lockAndMint.identifiedTransferCount,
+              logger,
+            }),
+            TOP_ITEMS_LIMIT,
+          ),
           averageDuration: getAverageDuration(
             projectId,
             'lockAndMint',
@@ -163,34 +171,40 @@ function getByBridgeTypeData(
     nonMinting: data.nonMinting
       ? {
           volume: data.nonMinting.volume,
-          tokens: getTokensData({
-            projectId,
-            bridgeType: 'nonMinting',
-            tokens: data.nonMinting.tokens,
-            tokensDetailsMap,
-            durationSplitMap,
-            unknownTransfersCount:
-              data.nonMinting.transferCount -
-              data.nonMinting.identifiedTransferCount,
-            logger,
-          }),
+          tokens: getTopItems(
+            getTokensData({
+              projectId,
+              bridgeType: 'nonMinting',
+              tokens: data.nonMinting.tokens,
+              tokensDetailsMap,
+              durationSplitMap,
+              unknownTransfersCount:
+                data.nonMinting.transferCount -
+                data.nonMinting.identifiedTransferCount,
+              logger,
+            }),
+            TOP_ITEMS_LIMIT,
+          ),
           averageValueInFlight: data.nonMinting.averageValueInFlight,
         }
       : undefined,
-    omnichain: data.omnichain
+    burnAndMint: data.burnAndMint
       ? {
-          volume: data.omnichain.volume,
-          tokens: getTokensData({
-            projectId,
-            bridgeType: 'omnichain',
-            tokens: data.omnichain.tokens,
-            tokensDetailsMap,
-            durationSplitMap,
-            unknownTransfersCount:
-              data.omnichain.transferCount -
-              data.omnichain.identifiedTransferCount,
-            logger,
-          }),
+          volume: data.burnAndMint.volume,
+          tokens: getTopItems(
+            getTokensData({
+              projectId,
+              bridgeType: 'burnAndMint',
+              tokens: data.burnAndMint.tokens,
+              tokensDetailsMap,
+              durationSplitMap,
+              unknownTransfersCount:
+                data.burnAndMint.transferCount -
+                data.burnAndMint.identifiedTransferCount,
+              logger,
+            }),
+            TOP_ITEMS_LIMIT,
+          ),
         }
       : undefined,
   }

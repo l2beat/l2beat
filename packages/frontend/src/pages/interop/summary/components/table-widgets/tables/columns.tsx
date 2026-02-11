@@ -1,3 +1,4 @@
+import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
@@ -5,20 +6,21 @@ import { AvgDurationCell } from '~/pages/interop/components/table/AvgDurationCel
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
 import type { TokenData } from '~/server/features/scaling/interop/types'
+import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type {
+  BurnAndMintProtocolEntry,
   LockAndMintProtocolEntry,
   NonMintingProtocolEntry,
-  OmniChainProtocolEntry,
 } from './getBridgeTypeEntries'
 
 export type NonMintingProtocolRow = NonMintingProtocolEntry & BasicTableRow
 export type LockAndMintProtocolRow = LockAndMintProtocolEntry & BasicTableRow
-export type OmniChainProtocolRow = OmniChainProtocolEntry & BasicTableRow
+export type BurnAndMintProtocolRow = BurnAndMintProtocolEntry & BasicTableRow
 
 const nonMintingColumnHelper = createColumnHelper<NonMintingProtocolRow>()
 const lockAndMintColumnHelper = createColumnHelper<LockAndMintProtocolRow>()
-const omniChainColumnHelper = createColumnHelper<OmniChainProtocolRow>()
+const burnAndMintColumnHelper = createColumnHelper<BurnAndMintProtocolRow>()
 
 function getCommonColumns<
   T extends {
@@ -92,8 +94,13 @@ function getLast24hVolumeColumn<T extends { volume: number }>(
 }
 
 function getTokensByVolumeColumn<
-  T extends { tokens: TokenData[]; protocolName: string; iconUrl: string },
->(columnHelper: ColumnHelper<T>) {
+  T extends {
+    tokens: TopItems<TokenData>
+    id: ProjectId
+    protocolName: string
+    iconUrl: string
+  },
+>(columnHelper: ColumnHelper<T>, type: KnownInteropBridgeType) {
   return columnHelper.accessor((row) => row.tokens, {
     header: 'Tokens\nby volume',
     meta: {
@@ -104,8 +111,10 @@ function getTokensByVolumeColumn<
     },
     cell: (ctx) => (
       <TopTokensCell
-        tokens={ctx.row.original.tokens}
+        topItems={ctx.row.original.tokens}
+        type={type}
         protocol={{
+          id: ctx.row.original.id,
           name: ctx.row.original.protocolName,
           iconUrl: ctx.row.original.iconUrl,
         }}
@@ -135,7 +144,7 @@ export const nonMintingColumns = [
       )
     },
   }),
-  getTokensByVolumeColumn(nonMintingColumnHelper),
+  getTokensByVolumeColumn(nonMintingColumnHelper, 'nonMinting'),
 ]
 
 export const lockAndMintColumns = [
@@ -165,11 +174,11 @@ export const lockAndMintColumns = [
       ),
     },
   ),
-  getTokensByVolumeColumn(lockAndMintColumnHelper),
+  getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
 ]
 
-export const omniChainColumns = [
-  ...getCommonColumns(omniChainColumnHelper),
-  getLast24hVolumeColumn(omniChainColumnHelper),
-  getTokensByVolumeColumn(omniChainColumnHelper),
+export const burnAndMintColumns = [
+  ...getCommonColumns(burnAndMintColumnHelper),
+  getLast24hVolumeColumn(burnAndMintColumnHelper),
+  getTokensByVolumeColumn(burnAndMintColumnHelper, 'burnAndMint'),
 ]

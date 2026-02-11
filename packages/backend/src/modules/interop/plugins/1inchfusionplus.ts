@@ -47,6 +47,12 @@ const ONEINCH_FUSIONPLUS_NETWORKS = defineNetworks('oneinch-fusion-plus', [
   },
   // no zksync
   // no abstract
+  // no katana
+  {
+    chain: 'bsc',
+    chainId: 56,
+    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
+  },
 ])
 
 const parseSrcEscrowCreated = createEventParser(

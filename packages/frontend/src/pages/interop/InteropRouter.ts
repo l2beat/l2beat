@@ -4,9 +4,9 @@ import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
-import { getInteropOmnichainData } from './omnichain/getInteropOmnichainData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 
 export type FromToQuery = v.infer<typeof FromToQuery>
@@ -69,12 +69,12 @@ export function createInteropRouter(
   )
 
   router.get(
-    '/interop/omnichain',
+    '/interop/burn-and-mint',
     validateRoute({
       query: FromToQuery,
     }),
     async (req, res) => {
-      const data = await getInteropOmnichainData(req, manifest, cache)
+      const data = await getInteropBurnAndMintData(req, manifest, cache)
       const html = render(data, req.originalUrl)
       res.status(200).send(html)
     },

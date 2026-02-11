@@ -106,6 +106,9 @@ export const paradex: ScalingProject = {
     liveness: {
       explanation:
         'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+      overwrites: {
+        proofSubmissions: 'no-data',
+      },
     },
   },
   proofSystem: {
@@ -144,6 +147,7 @@ export const paradex: ScalingProject = {
           'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
     ],
+    // paradex is prividium-like but posts encrypted data to ethereum
     daTracking: [
       {
         type: 'ethereum',
@@ -156,148 +160,6 @@ export const paradex: ScalingProject = {
       },
     ],
     trackedTxs: [
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1636978914),
-          untilTimestamp: UnixTime(1704729971),
-          programHashes: [
-            '3258367057337572248818716706664617507069572185152472699066582725377748079373',
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1704729971),
-          untilTimestamp: UnixTime(1706626427),
-          programHashes: [
-            '54878256403880350656938046611252303365750679698042371543935159963667935317',
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1706626427),
-          untilTimestamp: UnixTime(1710346919),
-          programHashes: [
-            '2479841346739966073527450029179698923866252973805981504232089731754042431018',
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1710346919),
-          untilTimestamp: UnixTime(1710764843),
-          programHashes: [
-            '109586309220455887239200613090920758778188956576212125550190099009305121410',
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1710764843),
-          untilTimestamp: UnixTime(1725811535),
-          programHashes: [
-            '3383082961563516565935611087683915026448707331436034043529592588079494402084',
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1725811535),
-          untilTimestamp: UnixTime(1744056299), // april 9 2025
-          programHashes: [
-            '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1725811535),
-          untilTimestamp: UnixTime(1744056299), // april 9 2025
-          programHashes: [
-            '1161178844461337253856226043908368523817098764221830529880464854589141231910', // Aggregator
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1744056299),
-          untilTimestamp: UnixTime(1763997779),
-          programHashes: [
-            '2534935718742676028234156221136000178296467523045214874259117268197132196876', // Starknet OS
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1744056299),
-          untilTimestamp: UnixTime(1763997779),
-          programHashes: [
-            '273279642033703284306509103355536170486431195329675679055627933497997642494', // Aggregator
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1763997779),
-          untilTimestamp: UnixTime(1765809011),
-          programHashes: [
-            '793595346346724189681221050719974054861327641387231526786912662354259445535', // Starknet OS, overlaps with starknet
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1763997779),
-          untilTimestamp: UnixTime(1765809011),
-          programHashes: [
-            '760308386675154762009993173725077399730170358078020153308029499928875469870', // Aggregator, overlaps with starknet
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1765809011),
-          programHashes: [
-            '918745833886511857768061986591752808672496300091957204265383861063635175685', // Starknet OS, overlaps with starknet
-          ],
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
-        query: {
-          formula: 'sharpSubmission',
-          sinceTimestamp: UnixTime(1765809011),
-          programHashes: [
-            '1701025211190912681772481128523426351562426117847395998223683709327746845867', // Aggregator, overlaps with starknet
-          ],
-        },
-      },
       {
         uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
         query: {

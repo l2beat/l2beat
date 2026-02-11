@@ -8,7 +8,7 @@ import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import type { FromToQuery } from '../InteropRouter'
 
-export async function getInteropOmnichainData(
+export async function getInteropBurnAndMintData(
   req: Request<unknown, unknown, unknown, FromToQuery>,
   manifest: Manifest,
   cache: ICache,
@@ -31,7 +31,7 @@ export async function getInteropOmnichainData(
     {
       key: [
         'interop',
-        'omnichain',
+        'burnAndMint',
         'prefetch',
         initialSelectedChains.from.join(','),
         initialSelectedChains.to.join(','),
@@ -43,7 +43,7 @@ export async function getInteropOmnichainData(
       await helpers.interop.dashboard.prefetch({
         from: initialSelectedChains.from,
         to: initialSelectedChains.to,
-        type: 'omnichain',
+        type: 'burnAndMint',
       })
       return helpers.dehydrate()
     },
@@ -60,12 +60,12 @@ export async function getInteropOmnichainData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url: req.originalUrl,
-          image: '/meta-images/interop/omnichain/opengraph-image.png',
+          image: '/meta-images/interop/burn-&-mint/opengraph-image.png',
         },
       }),
     },
     ssr: {
-      page: 'InteropOmnichainPage',
+      page: 'InteropBurnAndMintPage',
       props: {
         ...appLayoutProps,
         queryState,

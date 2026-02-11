@@ -45,6 +45,7 @@ export function getStateValidationSection(
       project.contracts?.programHashes,
       zkCatalogProjects,
       allProjectsWithContracts,
+      tvs,
     ),
   }
 }

@@ -15,13 +15,13 @@ export async function getLatestAggregatedInteropTransferWithTokens(
   }
 
   const [transfers, tokens] = await Promise.all([
-    db.aggregatedInteropTransfer.getByChainsTimestampAndId(
+    db.aggregatedInteropTransfer.getByChainsAndTimestamp(
       latestTimestamp,
       from,
       to,
       type,
     ),
-    db.aggregatedInteropToken.getByChainsTimestampAndId(
+    db.aggregatedInteropToken.getByChainsAndTimestamp(
       latestTimestamp,
       from,
       to,
@@ -36,7 +36,8 @@ export async function getLatestAggregatedInteropTransferWithTokens(
         (token) =>
           token.id === transfer.id &&
           token.srcChain === transfer.srcChain &&
-          token.dstChain === transfer.dstChain,
+          token.dstChain === transfer.dstChain &&
+          token.bridgeType === transfer.bridgeType,
       )
       .map((token) => ({
         abstractTokenId: token.abstractTokenId,

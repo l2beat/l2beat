@@ -9,7 +9,6 @@ import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-  ESCROW,
   RISK_VIEW,
   UPGRADE_MECHANISM,
 } from '../../common'
@@ -219,7 +218,6 @@ export const nova: ScalingProject = orbitStackL2({
       ),
       sinceTimestamp: UnixTime(1659620187),
       tokens: ['DAI'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
       ...upgradeExecutorUpgradeability,

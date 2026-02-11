@@ -208,6 +208,7 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
           dstTokenAddress: fulfilledOrder_claimedUnlock.args.toToken,
           dstAmount: fulfilledOrder_claimedUnlock.args.fillAmount,
           dstWasMinted: false,
+          bridgeType: 'nonMinting',
         }),
       ]
     }
