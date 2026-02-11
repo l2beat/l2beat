@@ -313,19 +313,30 @@ describe(InteropTransferClassifier.name, () => {
           srcWasBurned: true,
           dstWasMinted: true,
         }),
+        createTransfer('across', 'msg4', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: false,
+        }),
       ]
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+        plugins: [{ plugin: 'across' }],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
 
-      expect(result.lockAndMint).toHaveLength(1)
-      expect(result.lockAndMint[0].transferId).toEqual('msg2')
+      expect(result.lockAndMint).toHaveLength(2)
+      expect(result.lockAndMint[0].transferId).toEqual('msg1')
+      expect(result.lockAndMint[1].transferId).toEqual('msg2')
       expect(result.burnAndMint).toHaveLength(1)
-      expect(result.burnAndMint[0].transferId).toEqual('msg1')
+      expect(result.burnAndMint[0].transferId).toEqual('msg3')
+      expect(result.nonMinting).toHaveLength(1)
+      expect(result.nonMinting[0].transferId).toEqual('msg4')
     })
   })
 })
