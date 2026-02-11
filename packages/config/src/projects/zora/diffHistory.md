@@ -8,7 +8,17 @@ Generated with discovered.json: 0x788a5780460cf8e71d0d6ff6d4f23ac3c308ac8d
 
 ## Description
 
-OP Contracts Upgrade 16 (op-contracts/v1.9.0). OptimismPortal2 v5.1.1→v5.2.0 adds Custom Gas Token safety guards preventing ETH value operations in CGT mode ([diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B)). AnchorStateRegistry v3.5.0→v3.7.0 adds safe re-initialization guard for retirementTimestamp and a new getStartingAnchorRoot() getter ([diff](https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5)). SystemConfig v3.11.0→v3.13.1 adds DelayedWETH storage slot, setBatcherHash(address) convenience setter, and isCustomGasToken() legacy getter ([diff](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2)). DisputeGameFactory v1.3.0→v1.4.0 adds conditional CWIA cloning that embeds gameType in immutable args when gameArgs are present ([diff](https://disco.l2beat.com/diff/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c)). New PermissionedDisputeGameV2 replaces constructor immutables with CWIA (clones-with-immutable-args) pattern, allowing the factory to configure game parameters per-clone without separate implementations.
+OP Contracts Upgrade 16 (op-contracts/v1.9.0).
+
+OptimismPortal2 v5.1.1→v5.2.0: adds Custom Gas Token safety guards preventing ETH value operations in CGT mode. ([diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B))
+
+AnchorStateRegistry v3.5.0→v3.7.0: adds safe re-initialization guard for retirementTimestamp and a new getStartingAnchorRoot() getter. ([diff](https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5))
+
+SystemConfig v3.11.0→v3.13.1: adds DelayedWETH storage slot, setBatcherHash(address) convenience setter, and isCustomGasToken() legacy getter. ([diff](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2))
+
+DisputeGameFactory v1.3.0→v1.4.0: cloning logic now embeds gameType in clone bytecode when gameArgs are present. ([diff](https://disco.l2beat.com/diff/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c))
+
+New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, etc.) from constructor immutables into clone bytecode, allowing the factory to configure per-clone without separate implementations.
 
 ## Watched changes
 
