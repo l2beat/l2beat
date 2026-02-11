@@ -11,7 +11,7 @@ import { buildDurationSplitMap } from './utils/getAverageDuration'
 import { getChainsData } from './utils/getChainsData'
 import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
 
-export async function getProtocolChains({
+export async function getInteropProtocolChains({
   id,
   from,
   to,
