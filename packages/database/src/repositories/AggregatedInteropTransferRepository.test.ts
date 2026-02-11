@@ -795,7 +795,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 7,
           identifiedCount: 3000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const records = [record1, record2, record3]
 

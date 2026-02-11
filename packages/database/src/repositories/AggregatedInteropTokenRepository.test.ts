@@ -693,7 +693,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           transferCount: 7,
           totalDurationSum: 3000,
           volume: 7000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const records = [record1, record2, record3]
 
