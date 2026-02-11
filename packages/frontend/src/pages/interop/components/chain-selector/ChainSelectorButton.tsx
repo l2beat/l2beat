@@ -54,9 +54,6 @@ export function ChainSelectorButton({
 
   return (
     <div className="flex items-start gap-1 max-md:flex-col md:items-center md:gap-3">
-      <div className="font-medium text-xs leading-none md:hidden">
-        <span className="capitalize">{type}</span> selected chains
-      </div>
       {/* Mobile */}
       <Drawer>
         <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
