@@ -16,9 +16,11 @@ export async function getInteropLockAndMintData(
   const helpers = getSsrHelpers()
   const appLayoutProps = await getAppLayoutProps()
   const interopChains = getInteropChains()
+  const interopChainsIds = interopChains.map((chain) => chain.id)
+
   const initialSelectedChains = {
-    first: req.query.first,
-    second: req.query.second,
+    first: interopChainsIds.find((id) => id === req.query.first),
+    second: interopChainsIds.find((id) => id === req.query.second),
   }
   const queryState = await cache.get(
     {
