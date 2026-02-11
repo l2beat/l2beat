@@ -1,18 +1,18 @@
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
+import type { LockAndMintProtocolEntry } from './tables/getBridgeTypeEntries'
 import { LockAndMintTable } from './tables/LockAndMintTable'
 
 export function LockAndMintCard({
   entries,
   isLoading,
 }: {
-  entries: InteropDashboardData['entries'] | undefined
+  entries: LockAndMintProtocolEntry[] | undefined
   isLoading: boolean
 }) {
   const { selectedChains, allChainIds } = useInteropSelectedChains()

@@ -1,3 +1,120 @@
+Generated with discovered.json: 0x962292c57ef2125a0b9e511b8eb8d3f0d5143f10
+
+# Diff at Fri, 06 Feb 2026 11:34:34 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@36cf41246c06744c0f4e408f68eca2253bec6f39 block: 1768909466
+- current timestamp: 1770376622
+
+## Description
+
+Updated verifier to an unverified smart contract, also updated chain creation params on ADI's chain type manager:
+https://tools.l2beat.com/decoder-new/?hash=0x83c8f3f7619c6bb27a46696734863f97b0824bfd8dc68d0db491c25050f4073a&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.4:
++        ["2026-02-05T09:58:23.000Z","0x3837cd476c7e8b1131d519f1dd8aed9cb1fbd779716260b0ff79196520f81b21",["eth:0xf9DD56364E3878056654C756cEBA692e577f8466","eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07","eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708","eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"]]
+      values.$upgradeCount:
+-        4
++        5
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        128849018880
++        128849018881
+      values.getSemverProtocolVersion.2:
+-        0
++        1
+      values.getVerifier:
+-        "eth:0x6Fd373b9470976Ec561F54664f931733C6149852"
++        "eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE"
+    }
+```
+
+```diff
+    contract ZKsyncOSChainTypeManager (eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA) {
+    +++ description: [FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1.
+      description:
+-        "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,0."
++        "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1."
+      values.getSemverProtocolVersion.2:
+-        0
++        1
+      values.initialCutHash:
+-        "0x28f0af46a96ece2c72a1a7c9c9bfe937162082c4b8925da3b8621599b2869cf5"
++        "0xedf457bf18d9feac26a2fb4a43686971a5eb0f0e21d80393cc8118ecaff31e29"
+      values.protocolVersion:
+-        128849018880
++        128849018881
+      values.storedBatchZero:
+-        "0x492e189b00c1e79ab2da8e9475e345cbc4ad91b89650d086d956f2dd58ce2d89"
++        "0x18bd4bd6909643336ab04fcab99eff346bc4e74799aeeb2ed809341e3a1df6f9"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8) {
+    +++ description: A governance proxy that lets eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.2:
++        {"_protocolVersion":128849018881,"_upgradeTimestamp":0}
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.3:
++        {"_protocolVersion":128849018881,"_upgradeTimestamp":1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZKsyncOSDualVerifier (eth:0x6Fd373b9470976Ec561F54664f931733C6149852)
+    +++ description: A router contract for verifiers. Routes verification requests to THE PLONK VERIFIER ONLY depending on the supplied proof version.
+```
+
+```diff
+    contract Governance (eth:0x8253F33026c49A430963FE3991441c02175bda95) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        7
++        8
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        7
++        8
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZKsyncOSVerifierPlonk (eth:0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract ZKsyncOSVerifierFflonk (eth:0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ADI DialVerifier (eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ZKsyncOSDualVerifier.sol => /dev/null          |  268 ---
+ .../ZKsyncOSVerifierFflonk.sol => /dev/null        | 1622 -------------------
+ .../ZKsyncOSVerifierPlonk.sol => /dev/null         | 1703 --------------------
+ 3 files changed, 3593 deletions(-)
+```
+
 Generated with discovered.json: 0x308c486a8e152da9ab3dbdbb55fd440a7bf5e292
 
 # Diff at Tue, 20 Jan 2026 16:30:05 GMT:

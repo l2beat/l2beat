@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { DERIVATION, ESCROW, SOA } from '../../common'
+import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -56,17 +56,19 @@ export const optimism: ScalingProject = opStackL2({
   },
   interopConfig: {
     name: 'OP Canonical',
-    bridgeType: 'lockAndMint',
+    showAlways: ['lockAndMint'],
     durationSplit: {
-      in: {
-        label: 'L1 -> L2',
-        from: 'ethereum',
-        to: 'optimism',
-      },
-      out: {
-        label: 'L2 -> L1',
-        from: 'optimism',
-        to: 'ethereum',
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'optimism',
+        },
+        out: {
+          label: 'L2 -> L1',
+          from: 'optimism',
+          to: 'ethereum',
+        },
       },
     },
     plugins: [
@@ -101,7 +103,6 @@ export const optimism: ScalingProject = opStackL2({
         'eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
       ),
       sinceTimestamp: UnixTime(1625675779),
-      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: ['DAI', 'USDS', 'sUSDS'],
       description:
         'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
@@ -113,7 +114,6 @@ export const optimism: ScalingProject = opStackL2({
       ),
       sinceTimestamp: UnixTime(1620680982),
       tokens: ['SNX'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
     }),
     {
@@ -121,7 +121,6 @@ export const optimism: ScalingProject = opStackL2({
       address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
       sinceTimestamp: UnixTime(1610668212),
       tokens: ['SNX'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       isHistorical: true,
       chain: 'ethereum',
     },
@@ -130,7 +129,6 @@ export const optimism: ScalingProject = opStackL2({
       address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
       sinceTimestamp: UnixTime(1620680934),
       tokens: ['SNX'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       isHistorical: true,
       chain: 'ethereum',
     },
@@ -139,7 +137,6 @@ export const optimism: ScalingProject = opStackL2({
         'eth:0x76943C0D61395d8F2edF9060e1533529cAe05dE6',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),

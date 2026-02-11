@@ -1,8 +1,10 @@
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartTooltip,
   ChartTooltipWrapper,
@@ -170,9 +172,9 @@ export function EcosystemTvsByTokenType({
   )
 }
 
-function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
+function CustomTooltip({ payload }: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload) return null
+  if (!payload) return null
   return (
     <ChartTooltipWrapper>
       <div className="flex w-36 flex-col gap-1">

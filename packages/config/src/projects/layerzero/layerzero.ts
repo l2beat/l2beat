@@ -8,12 +8,9 @@ export const layerzero: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769421770),
   interopConfig: {
-    bridgeType: 'omnichain',
     isAggregate: true,
+    showAlways: ['omnichain'],
     plugins: [
-      {
-        plugin: 'layerzero-v2',
-      },
       {
         plugin: 'layerzero-v2-ofts',
       },

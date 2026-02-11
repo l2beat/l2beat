@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x143adb58eef24c3c4934937d23aa0023585d310a
+
+# Diff at Thu, 05 Feb 2026 22:18:56 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@79ed122ff93f3ecacc6642a02e5352d633b2da3b block: 1769272127
+- current timestamp: 1770329869
+
+## Description
+
+SystemConfig EIP-1559 parameter update: `eip1559Denominator` increased from 50 to 125 (2.5x) and `minBaseFee` doubled from 1000000 to 2000000. The higher denominator means slower/smoother fee adjustments on L2, while the higher minimum base fee sets a new floor for transaction costs.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        50
++        125
+      values.minBaseFee:
+-        1000000
++        2000000
+    }
+```
+
 Generated with discovered.json: 0xce1bcf83d4a15941a21ea5cdadff361cd8dc2c5d
 
 # Diff at Mon, 26 Jan 2026 09:08:14 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "paradex",
-  "timestamp": 1768919498,
+  "timestamp": 1770723933,
   "configHash": "0xe147a2dfbb62ca52636bca43d754a5bae4e40213e358dabc4b775b0f9edfeb52",
   "entries": [
     {
@@ -43,7 +43,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -291,7 +291,10 @@
       "sinceTimestamp": 1689850631,
       "sinceBlock": 17733931,
       "values": {
-        "$admin": "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+        "$admin": [
+          "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+          "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+        ],
         "$immutable": false,
         "$implementation": "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
         "$pastUpgrades": [
@@ -329,7 +332,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 28870,
+        "l1ToL2MessageNonce": 30921,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -348,9 +351,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "933614583470964536250371065727109381997794463485189299857267203258439128376",
-        "stateBlockNumber": 1611910,
-        "stateRoot": "1789077383239091549406305230943110205515734145467201179443101405646291077633",
+        "stateBlockHash": "3590815472669217136570374550599571044159497218529288307536572421076332274761",
+        "stateBlockNumber": 1737110,
+        "stateRoot": "3320890193019651272852233868309791223856632659013429837643422259991603345309",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -423,6 +426,11 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "governStarknet",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".$admin"
+        },
+        {
           "permission": "interact",
           "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
@@ -443,6 +451,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
           "role": ".$admin"
         }
       ],
@@ -465,7 +478,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 33,
+        "nonce": 37,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -778,6 +791,6 @@
     "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
-  "usedBlockNumbers": { "ethereum": 24276602 },
-  "permissionsConfigHash": "0xe48bc150113b314e4e3aa01199ed7afb61cfcb6600d4efe05130f061e5d78db2"
+  "usedBlockNumbers": { "ethereum": 24426161 },
+  "permissionsConfigHash": "0x253c09c73e7cb488636c03f7ecca8f5499713e6f44d56eb7c902b5e19d8bb4f8"
 }

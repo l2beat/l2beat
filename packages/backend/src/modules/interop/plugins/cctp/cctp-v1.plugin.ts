@@ -62,7 +62,7 @@ import {
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -96,22 +96,29 @@ export const CCTPv1MessageReceived = createInteropEventType<{
   dstAmount?: bigint
 }>('cctp-v1.MessageReceived', { direction: 'incoming' })
 
-export class CCTPV1Plugin implements InteropPlugin {
+export class CCTPV1Plugin implements InteropPluginResyncable {
   readonly name = 'cctp-v1'
 
   constructor(private configs: InteropConfigStore) {}
 
-  pendingGetDataRequests(): DataRequest[] {
+  getDataRequests(): DataRequest[] {
     const networks = this.configs.get(CCTPV1Config)
     if (!networks) return []
 
-    const networksWithTransmitter = networks.filter(
-      (network): network is typeof network & { messageTransmitter: string } =>
-        network.messageTransmitter !== undefined,
-    )
-    const addresses = networksWithTransmitter.map((network) =>
-      ChainSpecificAddress.fromLong(network.chain, network.messageTransmitter),
-    )
+    const addresses: ChainSpecificAddress[] = []
+    for (const network of networks) {
+      if (!network.messageTransmitter) continue
+      try {
+        addresses.push(
+          ChainSpecificAddress.fromLong(
+            network.chain,
+            network.messageTransmitter,
+          ),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
 
     return [
       {
@@ -232,6 +239,7 @@ export class CCTPV1Plugin implements InteropPlugin {
           dstAmount: messageReceived.args.dstAmount,
           srcWasBurned: true,
           dstWasMinted: true,
+          bridgeType: 'omnichain',
         }),
       ]
     }

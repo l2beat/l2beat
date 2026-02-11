@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { clampRangeToDay, UnixTime } from '@l2beat/shared-pure'
@@ -14,7 +15,10 @@ import type { TrackedTxsClient } from './TrackedTxsClient'
 import type { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
 interface Dependencies
-  extends Omit<ManagedMultiIndexerOptions<TrackedTxConfigEntry>, 'name'> {
+  extends Omit<
+    ManagedMultiIndexerOptions<TrackedTxConfigEntry>,
+    'name' | 'logger'
+  > {
   updaters: TxUpdaterInterface<'liveness' | 'l2costs'>[]
   trackedTxsClient: TrackedTxsClient
   db: Database
@@ -22,12 +26,18 @@ interface Dependencies
 }
 
 export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry> {
-  constructor(private readonly $: Dependencies) {
-    super({
-      ...$,
-      name: 'tracked_txs_indexer',
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+  constructor(
+    private readonly $: Dependencies,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: 'tracked_txs_indexer',
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+      },
+      logger,
+    )
   }
 
   override async multiUpdate(

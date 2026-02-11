@@ -584,7 +584,75 @@ Verify:
 4. From the repo root dir:  \`cargo risczero build --manifest-path crates/aggregation/guest/set-builder/Cargo.toml\` to build elf binaries from sources. This command should output correct ImageID.
     `,
   },
+  '989994135429182905628199499137734285064642484443466268071170571058909750176':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2026_13)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/applicative_bootloader',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
+
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
+    },
   '37889379279861089970868356983774360253508326951064758033885675883862334778':
+    {
+      title:
+        'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_12)',
+      description:
+        'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/simple_bootloader',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
+
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
+    },
+  '3035974089339935040143966034750116008615662951603253398063766337728525196711':
     {
       title:
         'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
@@ -593,10 +661,38 @@ Verify:
       proverSystemProject: ProjectId('stwo'),
       verificationStatus: 'notVerified',
     },
-  '3480185788024326007166778030599498673382667448173974782477620863541158415714':
+  '160268921359133235574810995023520895391777547407923205700393332203861498631':
+    {
+      title:
+        'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2024_10)',
+      description:
+        'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
+
+  '3585039955034622347908243360088523999417661979601115750324841620224559981237':
     {
       title:
         'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
+  '1104316318711847786071125527957082259001554753246760931396914052122269757907':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2024_10)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
+  '3480185788024326007166778030599498673382667448173974782477620863541158415714':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_12)',
       description:
         'Cairo program that verifies the correct aggregation of several proofs of a base program.',
       proverSystemProject: ProjectId('stwo'),

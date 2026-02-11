@@ -1,18 +1,18 @@
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
+import type { NonMintingProtocolEntry } from './tables/getBridgeTypeEntries'
 import { NonMintingTable } from './tables/NonMintingTable'
 
 export function NonMintingCard({
   entries,
   isLoading,
 }: {
-  entries: InteropDashboardData['entries'] | undefined
+  entries: NonMintingProtocolEntry[] | undefined
   isLoading: boolean
 }) {
   const { selectedChains, allChainIds } = useInteropSelectedChains()

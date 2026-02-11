@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x6c87aa27bd99a68775df188ec0941e83b3254e63
+
+# Diff at Mon, 02 Feb 2026 13:53:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1769431545
+- current timestamp: 1770040275
+
+## Description
+
+ms change.
+
+## Watched changes
+
+```diff
+    contract PolygonCreateRollupMultisig (eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x79328f020fe41a4b01047e81e232ec182aaa90da
 
 # Diff at Mon, 26 Jan 2026 12:47:23 GMT:
@@ -6649,7 +6674,7 @@ Reduce timelock delay from 10d to 3d.
 
 This upgrade introduces an enum `VerifierType` that replaces the old `rollupCompatibilityID`. It can be either `StateTransition` or `Pessimistic`, and currently cannot be changed for a project.
 - `StateTransition` Layer 2s (Rollups or Validiums) are using their normal verifier contracts for state validation as before: (`verifyBatchesTrustedAggregator()`)
-- `Pessimistic` projects must post accounting proofs to the Rollupmanager with `verifyPessimisticTrustedAggregator()` in order to be able to use the shared bridge. These projects can be ['CDK Sovereign'](https://docs.polygon.technology/agglayer/modes-of-integration/polygon-cdk/#cdk-sovereign), without full state validation or DA on Ethereum.
+- `Pessimistic` projects must post accounting proofs to the Rollupmanager with `verifyPessimisticTrustedAggregator()` in order to be able to use the shared bridge. These projects can be ['CDK Sovereign'](https://docs.polygon.technology/chain-development/cdk/get-started/overview/), without full state validation or DA on Ethereum.
 
 ### PolygonRollupManager
 
@@ -7225,7 +7250,7 @@ Generated with discovered.json: 0xdf95e681dfbbcae8430943754a096c0d9fb31300
 
 ternoa and haust.network are active, added notes to review them.
 
-Two scheduled transactions (likely related to [Pessimistic Proofs](https://docs.polygon.technology/cdk/concepts/pessimistic-proofs/)):
+Two scheduled transactions (likely related to [Pessimistic Proofs](https://docs.polygon.technology/interoperability/agglayer/core-concepts/pessimistic-proof/)):
 21) upgrades the PolygonRollupManager
 22) adds a new RollupType in the PRM, which has a contract called PolygonPessimisticConsensus (`0x18C45DD422f6587357a6d3b23307E75D42b2bc5B`) as consensus implementation and uses a Verifier called SP1Verifier (`0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63`).
 

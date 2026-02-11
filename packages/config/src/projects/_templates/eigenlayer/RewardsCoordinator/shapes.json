@@ -8,5 +8,10 @@
     "hash": "0x834e9e144a27f28147a1d93de8045120205831ebea6457dc3748a624877591df",
     "address": "eth:0xa505c0116aD65071F0130061F94745b7853220aB",
     "blockNumber": 22424645
+  },
+  "RewardsCoordinator_v1.9.0": {
+    "hash": "0x2135e8c40a0b65d08749af76920904312a37014b94d2b676ecabaa844b63cbd2",
+    "address": "eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF",
+    "blockNumber": 24350294
   }
 }

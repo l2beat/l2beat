@@ -1,3 +1,4 @@
+import { SwapIcon } from '~/icons/Swap'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorButton } from './ChainSelectorButton'
 import type { InteropChainWithIcon } from './types'
@@ -7,7 +8,7 @@ interface Props {
 }
 
 export function ChainSelector({ chains }: Props) {
-  const { reset, isDirty } = useInteropSelectedChains()
+  const { reset, isDirty, swapPaths } = useInteropSelectedChains()
 
   return (
     <div className="sticky top-0 z-30 md:pt-4">
@@ -21,6 +22,12 @@ export function ChainSelector({ chains }: Props) {
           <div className="flex items-center gap-3">
             <ChainSelectorButton allChains={chains} type="from" />
             <ChainSelectorButton allChains={chains} type="to" />
+            <button
+              className="cursor-pointer rounded-lg border border-brand p-[11px] max-md:hidden"
+              onClick={swapPaths}
+            >
+              <SwapIcon className="size-4 fill-brand" />
+            </button>
           </div>
         </div>
         {isDirty && (

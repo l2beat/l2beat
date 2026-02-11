@@ -1,18 +1,17 @@
+import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
-import type { InteropDashboardParams } from './types'
-import {
-  getProtocolEntries,
-  type ProtocolEntry,
-} from './utils/getProtocolEntries'
+import type { InteropDashboardParams, ProtocolEntry } from './types'
+import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import { getProtocolEntries } from './utils/getAllProtocolEntries'
+import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
 import {
   getTopProtocols,
   type InteropProtocolData,
 } from './utils/getTopProtocols'
+import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
 import {
   getTransferSizeChartData,
   type TransferSizeChartData,
@@ -21,6 +20,7 @@ import {
 export type InteropDashboardData = {
   top3Paths: InteropPathData[]
   topProtocols: InteropProtocolData[]
+  topToken: InteropTopTokenData | undefined
   transferSizeChartData: TransferSizeChartData | undefined
   entries: ProtocolEntry[]
 }
@@ -31,76 +31,21 @@ export async function getInteropDashboardData(
   if (env.MOCK) {
     return getMockInteropDashboardData()
   }
-  const tokenDb = getTokenDb()
 
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
 
-  const filteredProjects = params.type
-    ? interopProjects.filter((p) => p.interopConfig?.bridgeType === params.type)
-    : undefined
+  const records = await getLatestAggregatedInteropTransferWithTokens(
+    params.from,
+    params.to,
+    params.type,
+  )
 
-  const db = getDb()
-  const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
-  if (!latestTimestamp) {
-    return {
-      top3Paths: [],
-      topProtocols: [],
-      transferSizeChartData: undefined,
-      entries: [],
-    }
-  }
-
-  const [transfers, tokens] = await Promise.all([
-    db.aggregatedInteropTransfer.getByChainsTimestampAndId(
-      latestTimestamp,
-      params.from,
-      params.to,
-      filteredProjects?.map((p) => p.id),
-    ),
-    db.aggregatedInteropToken.getByChainsTimestampAndId(
-      latestTimestamp,
-      params.from,
-      params.to,
-      filteredProjects?.map((p) => p.id),
-    ),
-  ])
-
-  const records = transfers.map((transfer) => ({
-    ...transfer,
-    tokens: tokens
-      .filter(
-        (token) =>
-          token.id === transfer.id &&
-          token.srcChain === transfer.srcChain &&
-          token.dstChain === transfer.dstChain,
-      )
-      .map((token) => ({
-        abstractTokenId: token.abstractTokenId,
-        transferCount: token.transferCount,
-        totalDurationSum: token.totalDurationSum,
-        volume: token.volume,
-      })),
-  }))
-
-  if (records.length === 0) {
-    return {
-      top3Paths: [],
-      topProtocols: [],
-      transferSizeChartData: undefined,
-      entries: [],
-    }
-  }
-
-  const tokensDetailsData = await tokenDb.abstractToken.getByIds(
+  const abstractTokenIds = unique(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
   )
-  const tokensDetailsDataMap = new Map<
-    string,
-    { symbol: string; iconUrl: string | null }
-  >(tokensDetailsData.map((t) => [t.id, t]))
+  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
 
   // Projects that are part of other projects
   const subgroupProjects = new Set(
@@ -110,8 +55,14 @@ export async function getInteropDashboardData(
   return {
     top3Paths: getTopPaths(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
+    topToken: getTopToken({
+      records,
+      tokensDetailsMap,
+      interopProjects,
+      subgroupProjects,
+    }),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
-    entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
+    entries: getProtocolEntries(records, tokensDetailsMap, interopProjects),
   }
 }
 
@@ -144,6 +95,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 1000,
       avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 10_000,
+      netMintedValue: undefined,
     },
     {
       id: 'usdc01',
@@ -154,6 +106,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 500,
       avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
+      netMintedValue: undefined,
     },
   ]
 
@@ -166,6 +119,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 1000,
       avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 8_000,
+      netMintedValue: undefined,
     },
     {
       id: 'arbitrum',
@@ -175,22 +129,45 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 500,
       avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
+      netMintedValue: undefined,
     },
   ]
 
-  const allProtocols: ProtocolEntry[] = interopProjects.map((project) => ({
+  const entries: ProtocolEntry[] = interopProjects.map((project) => ({
+    id: project.id,
     protocolName: project.interopConfig.name ?? project.name,
     isAggregate: project.interopConfig.isAggregate,
+    subgroup: undefined,
     iconSlug: project.slug,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    bridgeType: project.interopConfig.bridgeType,
+    bridgeTypes: ['lockAndMint', 'nonMinting', 'omnichain'],
     volume: 15_000_000,
-    tokens: mockTokens,
-    chains: mockChains,
+    tokens: { items: mockTokens, remainingCount: 2 },
+    chains: { items: mockChains, remainingCount: 4 },
     transferCount: 5000,
     averageValue: 3000,
     averageDuration: { type: 'single', duration: 100_000 },
+    byBridgeType: undefined,
+    averageValueInFlight: undefined,
+    netMintedValue: undefined,
   }))
+
+  const topToken: InteropTopTokenData | undefined = mockTokens[0]
+    ? {
+        symbol: mockTokens[0].symbol,
+        iconUrl: mockTokens[0].iconUrl,
+        volume: mockTokens[0].volume,
+        transferCount: mockTokens[0].transferCount,
+        topProtocol: interopProjects[0]
+          ? {
+              name:
+                interopProjects[0].interopConfig.name ??
+                interopProjects[0].name,
+              iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
+            }
+          : undefined,
+      }
+    : undefined
 
   const transferSizeChartData: TransferSizeChartData = {
     arbitrum: {
@@ -225,7 +202,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   return {
     top3Paths,
     topProtocols,
+    topToken,
     transferSizeChartData,
-    entries: allProtocols,
+    entries,
   }
 }
