@@ -542,7 +542,20 @@
         "chain": "optimism",
         "tx": "0xbe39bcd13c8d7f37570b4536f40432ec12f167e2aa6b42710e815059c32bda04"
       }
-    ]
+    ],
+    "expects": {
+      "events": [
+        "cctp-v2.MessageReceived",
+        "mayan-mctp-fast.OrderFulfilled",
+        "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded"
+      ],
+      "messages": [
+        { "type": "mayan.Message", "app": "mctp" },
+        { "type": "cctp-v2.FastMessage", "app": "cctp-v2" }
+      ],
+      "transfers": ["cctp-v2.Transfer"]
+    }
   },
   "mayan-mctp-bridge-fee-on-dst": {
     "txs": [
@@ -553,30 +566,6 @@
       {
         "chain": "ethereum",
         "tx": "0x62f7808a27b877880526c6ae606598e368e9af36f4137ad3236de49af1a5b6b1"
-      }
-    ]
-  },
-  "mayan-mctp-swap": {
-    "txs": [
-      {
-        "chain": "arbitrum",
-        "tx": "0x87d69e29fa08dcccaa82f312f1fab55b3b0deaa637b5165ecebd1d3a15bbf51c"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0xf5e01a33e94a921708f6d64dc4a0dfb6a2f388f87d57765e05c40d6199779292"
-      }
-    ]
-  },
-  "mayan-mctp-fast-swap": {
-    "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0x6a3439c2875764b29b8be902265985397c5fd2782e7f2be0821a5bda713a48ff"
-      },
-      {
-        "chain": "base",
-        "tx": "0x9f2d722cfc23e8a248d8380860f6f2212cf9d0cb93cf4f76804da31dae26b090"
       }
     ]
   },

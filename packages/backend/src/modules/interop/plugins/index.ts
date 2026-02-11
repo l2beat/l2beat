@@ -41,7 +41,6 @@ import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
 import { LidoWstethPlugin } from './lido-wsteth'
 import { MakerBridgePlugin } from './maker-bridge'
 import { MayanForwarderPlugin } from './mayan-forwarder'
-import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
 import { MayanSwiftSettlementPlugin } from './mayan-swift-settlement'
@@ -160,7 +159,6 @@ export function createInteropPlugins(
           new MayanForwarderPlugin(deps.configs), // should be run before MayanSwift
           new MayanSwiftPlugin(deps.configs), // should be run before CCTP
           new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
-          new MayanMctpPlugin(), // should be run before CCTP
           new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
           // Wormhole-specific plugins
           new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
