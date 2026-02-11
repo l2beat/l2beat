@@ -517,8 +517,6 @@ Verify:
     title: 'Kailua fault proof program (SOON)',
     description:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs for SOON SVM chain, is a part of ZK non-interactive fault proof system.',
-    programUrl:
-      'https://github.com/soonlabs/kailua-soon/tree/49f05e779084dad1964af37d4e4947fc70e8bc3a/crates',
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'unsuccessful',
     verificationSteps:
