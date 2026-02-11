@@ -1,30 +1,4 @@
-Generated with discovered.json: 0xc5930b3e52d3415a2a2057910b55fb0f5c73fe2a
-
-# Diff at Tue, 10 Feb 2026 15:13:17 GMT:
-
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1770585215
-- current timestamp: 1770736063
-
-## Description
-
-Routine OperatorTableUpdater reference block number update.
-
-## Watched changes
-
-```diff
-    contract OperatorTableUpdater (eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5) {
-    +++ description: Central coordinator for EigenLayer's operator table system: accepts BN254-certified global Merkle table roots from a designated generator operator set, then allows Merkle proof submissions to push per-operator-set tables into the certificate verifier contracts.
-      values.getLatestReferenceBlockNumber:
--        24369630
-+        24419664
-      values.getLatestReferenceTimestamp:
--        1770040811
-+        1770645611
-    }
-```
-
-Generated with discovered.json: 0x83dd49c543af54fc62130f7caf5d64bb769c7a7e
+Generated with discovered.json: 0x1b5364313f35bcfad13b850da6e8ebfb719aee3a
 
 # Diff at Sun, 08 Feb 2026 21:22:26 GMT:
 

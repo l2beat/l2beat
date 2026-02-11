@@ -8,7 +8,7 @@ Generated with discovered.json: 0xcdc5ba2261c45831df3808f167a1360abbc201cc
 
 ## Description
 
-OPSuccinctFaultDisputeGame implementation replaced in DisputeGameFactory (game42).
+OPSuccinctFaultDisputeGame instance replaced in DisputeGameFactory (game42). Same contract version (1.0.0) but with updated SP1 proving keys: new aggregationVkey and rangeVkeyCommitment. The rollupConfigHash remains unchanged.
 
 ## Watched changes
 
