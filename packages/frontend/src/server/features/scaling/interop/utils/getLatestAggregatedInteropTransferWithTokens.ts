@@ -36,7 +36,8 @@ export async function getLatestAggregatedInteropTransferWithTokens(
         (token) =>
           token.id === transfer.id &&
           token.srcChain === transfer.srcChain &&
-          token.dstChain === transfer.dstChain,
+          token.dstChain === transfer.dstChain &&
+          token.bridgeType === transfer.bridgeType,
       )
       .map((token) => ({
         abstractTokenId: token.abstractTokenId,
