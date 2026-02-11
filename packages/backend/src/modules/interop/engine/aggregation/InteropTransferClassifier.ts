@@ -31,20 +31,20 @@ export class InteropTransferClassifier {
     const unknown: InteropTransferRecord[] = []
 
     for (const record of records) {
-      if (
-        (record.srcWasBurned === false && record.dstWasMinted === true) ||
-        (record.srcWasBurned === true && record.dstWasMinted === false)
-      ) {
-        lockAndMint.push(record)
-      } else if (record.srcWasBurned === true && record.dstWasMinted === true) {
-        burnAndMint.push(record)
-      } else if (
-        record.srcWasBurned === false &&
-        record.dstWasMinted === false
-      ) {
-        nonMinting.push(record)
-      } else {
-        unknown.push(record)
+      const bridgeType = record.bridgeType ?? this.inferBridgeType(record)
+      switch (bridgeType) {
+        case 'lockAndMint':
+          lockAndMint.push(record)
+          break
+        case 'burnAndMint':
+          burnAndMint.push(record)
+          break
+        case 'nonMinting':
+          nonMinting.push(record)
+          break
+        case 'unknown':
+          unknown.push(record)
+          break
       }
     }
 
