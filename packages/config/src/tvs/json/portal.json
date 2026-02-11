@@ -746,6 +746,25 @@
     },
     {
       "mode": "auto",
+      "id": "portal-EKUBO",
+      "priceId": "ekubo-protocol",
+      "symbol": "EKUBO",
+      "name": "Ekubo Protocol",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37715/large/135474885.png?1715330450",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f",
+        "chain": "ethereum",
+        "escrowAddress": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+        "decimals": 18,
+        "sinceTimestamp": 1715731200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "portal-ELON",
       "priceId": "dogelon-mars",
       "symbol": "ELON",
@@ -2540,6 +2559,25 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xaA7a9CA87d3694B5755f213B5D04094b8d0F0A6F",
+        "chain": "ethereum",
+        "escrowAddress": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+        "decimals": 18,
+        "sinceTimestamp": 1631535967
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "portal-TRIBE",
+      "priceId": "tribe-2",
+      "symbol": "TRIBE",
+      "name": "Tribe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14575/large/tribe.PNG?1696514256",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B",
         "chain": "ethereum",
         "escrowAddress": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
         "decimals": 18,

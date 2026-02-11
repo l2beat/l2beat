@@ -159,6 +159,26 @@ export const phala: ScalingProject = opStackL2({
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
         sinceTimestamp: UnixTime(1768923887), // switched to PermissionedDisputeGame
+        untilTimestamp: UnixTime(1770000023), // last create submission timestamp
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(
+          discovery.getContract('OPSuccinctL2OutputOracle').address,
+        ),
+        selector: '0x7a41a035', // non-optimistic mode
+        functionSignature:
+          'function dgfProposeL2Output(bytes32 _configName, bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
+        topics: [
+          '0xa7aaf2512769da4e444e3de247be2564225c2e7a8f74cfe528e46e17d24868e2', // OutputProposed (for anomaly detection support)
+        ],
+        sinceTimestamp: UnixTime(1770000023),
       },
     },
   ],

@@ -1,3 +1,665 @@
+Generated with discovered.json: 0x1b5364313f35bcfad13b850da6e8ebfb719aee3a
+
+# Diff at Sun, 08 Feb 2026 21:22:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@89bdf60fd6997f83426dbd81ca3ddc0bec9405d0 block: 1760362205
+- current timestamp: 1770585215
+
+## Description
+
+EigenLayer v1.9.0 upgrade via [tx 0xa8752e...](https://etherscan.io/tx/0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e). All core contracts upgraded in a single batch.
+
+Key changes:
+- **AllocationManager**: New per-operator-set slasher system replaces PermissionController-based slashing. Contract now uses split pattern with AllocationManagerView for read-only functions. New `migrateSlashers()` for backward compatibility. Instant allocation delay for newly registered operators. [Diff](https://disco.l2beat.com/diff/eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345/eth:0xdA2A68D318A571dD550F2EcbCb09bf50497e97C4)
+- **DelegationManager**: Fix for slashable shares calculation in queue - now properly handles compounding slashes and division-by-zero when operator fully slashed. `scaleForBurning` replaced by `calcSlashedAmount`. [Diff](https://disco.l2beat.com/diff/eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89/eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75)
+- **EigenPodManager/EigenPod**: Pectra/Electra upgrade - new `requestConsolidation()` and `requestWithdrawal()` functions for EIP-7251/7002 predeploys. Merkle library hardened with empty root checks and index validation. Event signatures changed from `validatorIndex` to `pubkeyHash`. [Diff](https://disco.l2beat.com/diff/eth:0xE48D7CaeC1790b293667e4bB2dE1E00536F2bABd/eth:0xd22dd829779ADBf3869fb224F703452f7F95E9dB)
+- **AVSDirectory**: Internal `_majorVersion()` now returns `"1"` instead of `"v1"`, changing the EIP-712 domain separator and invalidating pending signatures. Pausable modifiers refactored to internal functions. [Diff](https://disco.l2beat.com/diff/eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2/eth:0xcD35Cef328b496fA9d70a8d7C34EF3434614862b)
+- **StrategyFactory**: Cosmetic changes (NatDoc style, formatting). Pausable modifiers refactored to internal functions. [Diff](https://disco.l2beat.com/diff/eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66/eth:0x5194D2a6A0900796903503926E9CF775b926c8AF)
+- **PermissionController**: `canCall()` fixed from non-view to view. Otherwise cosmetic. [Diff](https://disco.l2beat.com/diff/eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1/eth:0x36dd260AbF606172875E6B5B7A96B435DC74EEd2)
+- **StrategyManager**: No logic changes, cosmetic only (NatDoc style, formatting). [Diff](https://disco.l2beat.com/diff/eth:0x46aefd30415be99e20169eE7046F65784B46d123/eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c)
+- **RewardsCoordinator**: Reward accounting/distribution flow unchanged. SemVerMixin fully removed. Merkle verification hardened with `EmptyRoot()` and `InvalidIndex()` checks. [Diff](https://disco.l2beat.com/diff/eth:0xa505c0116aD65071F0130061F94745b7853220aB/eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF)
+- **bEIGEN-Strategy + all Strategy contracts**: Cosmetic only (NatDoc style, formatting). [Diff](https://disco.l2beat.com/diff/eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be/eth:0x4a0aee93BE6C87B227cA0B450E15245631233532)
+
+Newly tracked v1.9.0 infrastructure contracts (some deployed as early as Sep 2025, now discovered via new reference chains): AllocationManagerView, ProtocolRegistry, KeyRegistrar, CrossChainRegistry, TaskMailbox, ECDSACertificateVerifier, BN254CertificateVerifier, OperatorTableUpdater, ReleaseManager.
+
+## Watched changes
+
+```diff
+    contract StrategiesBeacon (eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      values.implementation:
+-        "eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B"
++        "eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780"
+    }
+```
+
+```diff
+    contract AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x9d891889c1fcc1bd08979780a1502190faf4e8230d94e47de322da41bf7e5143"
++        "0x2e898060c596c2058f1140538534ecf4a6c7aeea4f1db17d15eddf3487f5a1fc"
+      values.$implementation:
+-        "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2"
++        "eth:0xcD35Cef328b496fA9d70a8d7C34EF3434614862b"
+      values.$pastUpgrades.2:
++        ["2026-01-30T21:12:47.000Z","0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e",["eth:0xcD35Cef328b496fA9d70a8d7C34EF3434614862b"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.domainSeparator:
+-        "0xa376b8f73e544301999d5aabb44e4d306777f6f0f08bf031c1c4bbc027313aeb"
++        "0xd766fda18c6a8f8aa87dc4cc493da4a48a9d064ebf1b506ec99dec992398439a"
+      values.version:
+-        "1.3.0"
++        "1.9.0"
+      implementationNames.eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2:
+-        "AVSDirectory"
+      implementationNames.eth:0xcD35Cef328b496fA9d70a8d7C34EF3434614862b:
++        "AVSDirectory"
+    }
+```
+
+```diff
+    contract PermissionController (eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5) {
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+      sourceHashes.1:
+-        "0x01bb93f0533bf79f9680aee1f8f98c14501de40b31d642ccaab5b297dc809f1e"
++        "0xd6b47b90782b90fdfe85151507e668372b0c9cbb4435e30d1dad12ffa8299cde"
+      values.$implementation:
+-        "eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1"
++        "eth:0x36dd260AbF606172875E6B5B7A96B435DC74EEd2"
+      values.$pastUpgrades.1:
++        ["2026-01-30T21:12:47.000Z","0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e",["eth:0x36dd260AbF606172875E6B5B7A96B435DC74EEd2"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.3.0"
+      implementationNames.eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1:
+-        "PermissionController"
+      implementationNames.eth:0x36dd260AbF606172875E6B5B7A96B435DC74EEd2:
++        "PermissionController"
+    }
+```
+
+```diff
+    contract DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      sourceHashes.1:
+-        "0x070312684717f779729ea8c996718a93f984ef1cc6afd216b9b80007e7d49e7c"
++        "0xc7434c1abe25723dac4061deb679b18972a97bda6317eb9b36833da48f9c59c1"
+      values.$implementation:
+-        "eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89"
++        "eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75"
+      values.$pastUpgrades.5:
++        ["2026-01-30T21:12:47.000Z","0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e",["eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "1.5.0"
++        "1.9.0"
+      implementationNames.eth:0x6EEd6c2802dF347e05884857CdDB2D3E96D12F89:
+-        "DelegationManager"
+      implementationNames.eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75:
++        "DelegationManager"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig2 (eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x132b466d9d5723531F68797519DfED701aC2C749","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.29:
++        {"permission":"upgrade","from":"eth:0xAe60d8180437b5C34bB956822ac2710972584473","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.30:
++        {"permission":"upgrade","from":"eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.32:
++        {"permission":"upgrade","from":"eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      values.implementation:
+-        "eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D"
++        "eth:0x53cC2D82E08370Fe1e44a96f69CEc7d5b54ae868"
+    }
+```
+
+```diff
+    contract StrategyFactory (eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      sourceHashes.1:
+-        "0x00392f5dcb8592d0f6f83640dbd27a38aa84cfbafabae75f5e3219f0f0f73ae4"
++        "0x4f8ae893ee26ea9e942cbdbf1773af14930e90a0a483c20a8d13472478d7450b"
+      values.$implementation:
+-        "eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66"
++        "eth:0x5194D2a6A0900796903503926E9CF775b926c8AF"
+      values.$pastUpgrades.2:
++        ["2026-01-30T21:12:47.000Z","0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e",["eth:0x5194D2a6A0900796903503926E9CF775b926c8AF"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.3.0"
+      implementationNames.eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66:
+-        "StrategyFactory"
+      implementationNames.eth:0x5194D2a6A0900796903503926E9CF775b926c8AF:
++        "StrategyFactory"
+    }
+```
+
+```diff
+    contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      sourceHashes.1:
+-        "0x834e9e144a27f28147a1d93de8045120205831ebea6457dc3748a624877591df"
++        "0x2135e8c40a0b65d08749af76920904312a37014b94d2b676ecabaa844b63cbd2"
+      values.$implementation:
+-        "eth:0xa505c0116aD65071F0130061F94745b7853220aB"
++        "eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF"
+      values.$pastUpgrades.4:
++        ["2026-01-30T21:12:47.000Z","0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e",["eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.version:
+-        "1.3.0"
+      implementationNames.eth:0xa505c0116aD65071F0130061F94745b7853220aB:
+-        "RewardsCoordinator"
+      implementationNames.eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF:
++        "RewardsCoordinator"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (eth:0x792FfeA0D8734695670697f8b9f03DE3F666419D)
+    +++ description: None
+```
+
+```diff
+    contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      sourceHashes.1:
+-        "0x60a5779b3a2f393b1ced806a8d45492e70d92e11a9943b66a8511672ae88c7d3"
++        "0x5433d9e78da537eadb2ed5b713412f6ed57cafef2bbe66fc756d599175cb2fab"
+      values.$implementation:
+-        "eth:0x46aefd30415be99e20169eE7046F65784B46d123"
++        "eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c"
+      values.$pastUpgrades.5:
++        ["2026-01-30T21:12:47.000Z","0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e",["eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "1.5.0"
++        "1.9.0"
+      implementationNames.eth:0x46aefd30415be99e20169eE7046F65784B46d123:
+-        "StrategyManager"
+      implementationNames.eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c:
++        "StrategyManager"
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      directlyReceivedPermissions.0:
++        {"permission":"upgrade","from":"eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","role":"admin"}
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x132b466d9d5723531F68797519DfED701aC2C749","role":"admin"}
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","role":"admin"}
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","role":"admin"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129","role":"admin"}
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","role":"admin"}
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A","role":"admin"}
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","role":"admin"}
+      directlyReceivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4","role":"admin"}
+      directlyReceivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5","role":"admin"}
+      directlyReceivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","role":"admin"}
+      directlyReceivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184","role":"admin"}
+      directlyReceivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","role":"admin"}
+      directlyReceivedPermissions.20:
++        {"permission":"upgrade","from":"eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b","role":"admin"}
+      directlyReceivedPermissions.21:
++        {"permission":"upgrade","from":"eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D","role":"admin"}
+      directlyReceivedPermissions.23:
++        {"permission":"upgrade","from":"eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","role":"admin"}
+      directlyReceivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059","role":"admin"}
+      directlyReceivedPermissions.26:
++        {"permission":"upgrade","from":"eth:0xAe60d8180437b5C34bB956822ac2710972584473","role":"admin"}
+      directlyReceivedPermissions.27:
++        {"permission":"upgrade","from":"eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25","role":"admin"}
+      directlyReceivedPermissions.29:
++        {"permission":"upgrade","from":"eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F","role":"admin"}
+    }
+```
+
+```diff
+    contract EigenPodManager (eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x1d0e4cec5c013a815e3c94572dfa980117f415c1f63d79ba522cf437c672534f"
++        "0x202a0be086b58267c42f08c1e1cade3232244aaf3fef2195bc77fc74db6b5459"
+      values.$implementation:
+-        "eth:0xE48D7CaeC1790b293667e4bB2dE1E00536F2bABd"
++        "eth:0xd22dd829779ADBf3869fb224F703452f7F95E9dB"
+      values.$pastUpgrades.7:
++        ["2026-01-30T21:12:47.000Z","0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e",["eth:0xd22dd829779ADBf3869fb224F703452f7F95E9dB"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.version:
+-        "1.5.0"
+      implementationNames.eth:0xE48D7CaeC1790b293667e4bB2dE1E00536F2bABd:
+-        "EigenPodManager"
+      implementationNames.eth:0xd22dd829779ADBf3869fb224F703452f7F95E9dB:
++        "EigenPodManager"
+    }
+```
+
+```diff
+    contract AllocationManager (eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39) {
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+      sourceHashes.1:
+-        "0xa704abda563be08e6ca83769e716b07daf54f505f36b9a0278f751eb355c802e"
++        "0x403e87c83844ebe1b8b808ea7ba2b87e2b40009fcd11ed4d5b6f84a0062504cb"
+      values.$implementation:
+-        "eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345"
++        "eth:0xdA2A68D318A571dD550F2EcbCb09bf50497e97C4"
+      values.$pastUpgrades.2:
++        ["2026-01-30T21:12:47.000Z","0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e",["eth:0xdA2A68D318A571dD550F2EcbCb09bf50497e97C4"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.5.0"
+      values.SLASHER_CONFIGURATION_DELAY:
++        126000
+      values.viewImplementation:
++        "eth:0x0D4e5723daAD06510CFd6864b8eB8a08CF0c4a34"
+      implementationNames.eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345:
+-        "AllocationManager"
+      implementationNames.eth:0xdA2A68D318A571dD550F2EcbCb09bf50497e97C4:
++        "AllocationManager"
+    }
+```
+
+```diff
+    contract bEIGEN-Strategy (eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0xb58160c9903763d4c6dd724e3ce4e687fa5eeff34a50885a3a3b614aee688553"
++        "0x49be559baf3f68046b1c4d4312e12ffd2f9c062523d5233fd1fe2d87ac417c72"
+      values.$implementation:
+-        "eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be"
++        "eth:0x4a0aee93BE6C87B227cA0B450E15245631233532"
+      values.$pastUpgrades.3:
++        ["2026-01-30T21:12:47.000Z","0xa8752e124e6663065b31992010c93d687474a715a1cc8961cb98133f44729f9e",["eth:0x4a0aee93BE6C87B227cA0B450E15245631233532"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.5.0"
+      implementationNames.eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be:
+-        "EigenStrategy"
+      implementationNames.eth:0x4a0aee93BE6C87B227cA0B450E15245631233532:
++        "EigenStrategy"
+    }
+```
+
+```diff
+    contract PauserRegistry (eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+      values.pausers.3:
++        "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x132b466d9d5723531F68797519DfED701aC2C749","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.29:
++        {"permission":"upgrade","from":"eth:0xAe60d8180437b5C34bB956822ac2710972584473","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.30:
++        {"permission":"upgrade","from":"eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.32:
++        {"permission":"upgrade","from":"eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyBase (eth:0xD4d1746142642Db4c1ab17b03B9c58baac913E5B)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (eth:0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"upgrade","from":"eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x132b466d9d5723531F68797519DfED701aC2C749","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"eth:0xAe60d8180437b5C34bB956822ac2710972584473","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.28:
++        {"permission":"upgrade","from":"eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.30:
++        {"permission":"upgrade","from":"eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AllocationManagerView (eth:0x0D4e5723daAD06510CFd6864b8eB8a08CF0c4a34)
+    +++ description: Read-only view contract that exposes query functions for the AllocationManager, allowing external callers to look up operator stake allocations, magnitudes, operator sets, and slashable/redistributable status.
+```
+
+```diff
++   Status: CREATED
+    contract swETH-Strategy (eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract TaskMailbox (eth:0x132b466d9d5723531F68797519DfED701aC2C749)
+    +++ description: Task lifecycle manager where users create tasks with fee payments directed at specific executor operator sets, and executors submit results verified via BN254 or ECDSA certificate verification, with fee distribution on successful verification and refunds on task expiration.
+```
+
+```diff
++   Status: CREATED
+    contract ankrETH-Strategy (eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract rETH-Strategy (eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolRegistry (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129)
+    +++ description: Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.
+```
+
+```diff
++   Status: CREATED
+    contract METH-Strategy (eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract BN254CertificateVerifier (eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A)
+    +++ description: Verifies BLS (BN254 curve) certificates for EigenLayer operator sets by computing the aggregate public key of signers, performing pairing-based signature verification, and returning signed-stake weights for quorum threshold validation.
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (eth:0x53cC2D82E08370Fe1e44a96f69CEc7d5b54ae868)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract cbETH-Strategy (eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract KeyRegistrar (eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4)
+    +++ description: Manages the registration and deregistration of operator cryptographic keys (ECDSA or BN254/BLS) for specific operator sets, enforcing signature-based proof of key ownership and global uniqueness of keys across the protocol.
+```
+
+```diff
++   Status: CREATED
+    contract OperatorTableUpdater (eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5)
+    +++ description: Central coordinator for EigenLayer's operator table system: accepts BN254-certified global Merkle table roots from a designated generator operator set, then allows Merkle proof submissions to push per-operator-set tables into the certificate verifier contracts.
+```
+
+```diff
++   Status: CREATED
+    contract osETH-Strategy (eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract wBETH-Strategy (eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract sfrxETH-Strategy (eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract CrossChainRegistry (eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b)
+    +++ description: Allows AVSs to create generation reservations that configure and schedule the transport of operator tables (stake weight data) from L1 to whitelisted L2 chains, managing per-operator-set configs such as staleness periods and operator table calculators.
+```
+
+```diff
++   Status: CREATED
+    contract stETH-Strategy (eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract ETHx-Strategy (eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract OETH-Strategy (eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract RiverV1-Strategy (eth:0xAe60d8180437b5C34bB956822ac2710972584473)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract ECDSACertificateVerifier (eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25)
+    +++ description: Verifies ECDSA-based certificates for EigenLayer operator sets by recovering signer addresses from concatenated signatures, confirming each signer is a registered operator, and tallying their stake weights against quorum thresholds.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBase (eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract ReleaseManager (eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F)
+    +++ description: Manages software release lifecycle for EigenLayer operator sets, allowing AVS owners to publish versioned releases (containing artifact digests, registry URLs, and upgrade-by deadlines) and metadata URIs that operators can query for required software versions.
+```
+
+## Source code changes
+
+```diff
+.../AVSDirectory/AVSDirectory.sol                  |  264 +-
+ .../AllocationManager/AllocationManager.sol        | 2684 ++++++-----
+ .../.flat/AllocationManagerView.sol                | 4922 ++++++++++++++++++++
+ .../BN254CertificateVerifier.sol                   | 2070 ++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../CrossChainRegistry/CrossChainRegistry.sol      | 2290 +++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../DelegationManager/DelegationManager.sol        | 1049 ++---
+ .../ECDSACertificateVerifier.sol                   | 3221 +++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../.flat/ETHx-Strategy/StrategyBaseTVLLimits.sol  | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../{.flat@1760362205 => .flat}/EigenPod.sol       |  918 ++--
+ .../EigenPodManager/EigenPodManager.sol            |  614 +--
+ .../.flat/KeyRegistrar/KeyRegistrar.sol            | 2143 +++++++++
+ .../KeyRegistrar/TransparentUpgradeableProxy.p.sol |  729 +++
+ .../.flat/METH-Strategy/StrategyBaseTVLLimits.sol  | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../.flat/OETH-Strategy/StrategyBaseTVLLimits.sol  | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../OperatorTableUpdater/OperatorTableUpdater.sol  | 2320 +++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../PermissionController/PermissionController.sol  |  533 +--
+ .../.flat/ProtocolRegistry/ProtocolRegistry.sol    | 2983 ++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../.flat/ReleaseManager/ReleaseManager.sol        |  665 +++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++
+ .../RewardsCoordinator/RewardsCoordinator.sol      | 1417 +++---
+ .../RiverV1-Strategy/StrategyBaseTVLLimits.sol     | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../{.flat@1760362205 => .flat}/StrategyBase.sol   |  526 +--
+ .../StrategyFactory/StrategyFactory.sol            |  355 +-
+ .../StrategyManager/StrategyManager.sol            |  527 +--
+ .../.flat/TaskMailbox/TaskMailbox.sol              | 2974 ++++++++++++
+ .../TaskMailbox/TransparentUpgradeableProxy.p.sol  |  729 +++
+ .../ankrETH-Strategy/StrategyBaseTVLLimits.sol     | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../bEIGEN-Strategy/EigenStrategy.sol              |  603 +--
+ .../.flat/cbETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../.flat/osETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../.flat/rETH-Strategy/StrategyBaseTVLLimits.sol  | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../sfrxETH-Strategy/StrategyBaseTVLLimits.sol     | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../.flat/stETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../.flat/swETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ .../.flat/wBETH-Strategy/StrategyBaseTVLLimits.sol | 1352 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++
+ 52 files changed, 57241 insertions(+), 5465 deletions(-)
+```
+
 Generated with discovered.json: 0x03d9348a802c1e78932a6aaa82a96d1968880d9e
 
 # Diff at Mon, 13 Oct 2025 13:31:11 GMT:

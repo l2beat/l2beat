@@ -4,7 +4,7 @@ import {
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
-  type InteropBridgeType,
+  type KnownInteropBridgeType,
   type ProjectId,
   type StringWithAutocomplete,
   TokenId,
@@ -935,6 +935,8 @@ export interface DayActivityConfig {
   batchSize?: number
 }
 
+export type LivenessOverwriteMode = 'no-data'
+
 export interface ProjectLivenessInfo {
   explanation?: string
   warnings?: {
@@ -942,6 +944,10 @@ export interface ProjectLivenessInfo {
     batchSubmissions?: string
     proofSubmissions?: string
   }
+  /**
+   * Overwrites the displayed value given liveness subtype.
+   */
+  overwrites?: Partial<Record<TrackedTxsConfigSubtype, LivenessOverwriteMode>>
 }
 
 export interface ProjectLivenessConfig {
@@ -1191,6 +1197,7 @@ export type InteropPluginName =
   | 'across-settlement'
   | 'across-settlement-op'
   | 'across-settlement-orbit'
+  | 'agglayer'
   | 'allbridge'
   | 'aori'
   | 'axelar'
@@ -1220,6 +1227,7 @@ export type InteropPluginName =
   | 'mayan-mctp-fast'
   | 'mayan-swift'
   | 'mayan-swift-settlement'
+  | 'meson'
   | 'oneinch-fusion-plus'
   | 'opstack'
   | 'opstack-standardbridge'
@@ -1244,8 +1252,6 @@ export type InteropPluginName =
 
 export interface InteropConfig {
   name?: string
-  bridgeType: InteropBridgeType
-  plugins: InteropPlugin[]
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured
@@ -1254,24 +1260,18 @@ export interface InteropConfig {
    */
   isAggregate?: boolean
   /** Should be configured for projects that are part of other project (e.g. USDT0 is part of LayerZero,
-   * so layerzero id should be configured in usdt0 config) */
+   * so layerzero id should be configured in usdt0 config)
+   */
   subgroupId?: ProjectId
+  /** We auto discover bridge types based on the records. Then frontend uses them to show entries on the dashboard.
+   * However if there is no records for a given bridge type, we don't show it on the dashboard.
+   * You can configure which bridge types to show always.
+   */
+  showAlways?: KnownInteropBridgeType[]
+  plugins: InteropPlugin[]
   /** If configured avg. duration it able will be split into two parts, depending on the config.
    Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
-  durationSplit?: {
-    in: {
-      /** Custom label to be shown in the UI */
-      label: string
-      from: string
-      to: string
-    }
-    out: {
-      /** Custom label to be shown in the UI */
-      label: string
-      from: string
-      to: string
-    }
-  }
+  durationSplit?: Partial<Record<KnownInteropBridgeType, InteropDurationSplit>>
 }
 
 export type InteropPlugin = {
@@ -1279,6 +1279,21 @@ export type InteropPlugin = {
   chain?: string
   abstractTokenId?: string
   transferType?: string
+}
+
+export type InteropDurationSplit = {
+  in: {
+    /** Custom label to be shown in the UI */
+    label: string
+    from: string
+    to: string
+  }
+  out: {
+    /** Custom label to be shown in the UI */
+    label: string
+    from: string
+    to: string
+  }
 }
 
 // #endregion

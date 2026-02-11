@@ -3,5 +3,10 @@
     "hash": "0x00392f5dcb8592d0f6f83640dbd27a38aa84cfbafabae75f5e3219f0f0f73ae4",
     "address": "eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66",
     "blockNumber": 22424732
+  },
+  "StrategyFactory_v1.9.0": {
+    "hash": "0x4f8ae893ee26ea9e942cbdbf1773af14930e90a0a483c20a8d13472478d7450b",
+    "address": "eth:0x5194D2a6A0900796903503926E9CF775b926c8AF",
+    "blockNumber": 24350294
   }
 }

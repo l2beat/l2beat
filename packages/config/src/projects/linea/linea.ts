@@ -530,7 +530,7 @@ export const linea: ScalingProject = {
   },
   stateDerivation: {
     nodeSoftware:
-      'The node software ([Linea Besu](https://github.com/Consensys/linea-besu-package)) and a guide to reconstruct the state from L1 is available [here](https://docs.linea.build/get-started/how-to/state-recovery). Other node implementations like Nethermind, Geth or Erigon can sync too, but state derivation from L1 and Linea-specific features [are unsupported](https://docs.linea.build/get-started/how-to/run-a-node).',
+      'The node software ([Linea Besu](https://github.com/Consensys/linea-besu-package)) and a guide to reconstruct the state from L1 is available [here](https://docs.linea.build/network/overview/recoverable-state). Other node implementations like Nethermind, Geth or Erigon can sync too, but state derivation from L1 and Linea-specific features [are unsupported](https://docs.linea.build/get-started/how-to/run-a-node).',
     compressionScheme:
       'Linea uses a [bespoke lossless compression scheme](https://github.com/Consensys/linea-monorepo/blob/main/docs/architecture-description.md#blob-compressor) based on LZSS (deflate-like). It is available as a [dedicated library](https://github.com/Consensys/compress) and a [zk-decompression circuit](https://github.com/Consensys/gnark/tree/master/std/compress) in Gnark.',
     genesisState:

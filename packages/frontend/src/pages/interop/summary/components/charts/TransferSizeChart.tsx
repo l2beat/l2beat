@@ -3,8 +3,9 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  type TooltipProps,
+  DefaultZIndexes,
   XAxis,
+  type XAxisTickContentProps,
   YAxis,
 } from 'recharts'
 import {
@@ -13,6 +14,7 @@ import {
   type ChartMeta,
   ChartTooltip,
   ChartTooltipWrapper,
+  type CustomChartTooltipProps,
   SimpleChartContainer,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -25,7 +27,7 @@ import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
-  data: TransferSizeDataPoint[] | undefined
+  data: TransferSizeDataPoint[]
   isLoading: boolean
 }
 
@@ -83,7 +85,7 @@ export function TransferSizeChart({ data, isLoading }: Props) {
     <div className="relative size-full">
       <SimpleChartContainer
         meta={chartMeta}
-        className="aspect-auto size-full [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.yAxis_.recharts-cartesian-axis-tick_text]:font-bold [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-subtitle-11"
+        className="size-full max-md:min-h-[200px] md:aspect-auto [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-bold [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-subtitle-11"
       >
         <BarChart
           accessibilityLayer
@@ -110,7 +112,11 @@ export function TransferSizeChart({ data, isLoading }: Props) {
               />,
             ]
           })}
-          <CartesianGrid vertical={false} strokeDasharray="5 5" />
+          <CartesianGrid
+            vertical={false}
+            strokeDasharray="5 5"
+            zIndex={DefaultZIndexes.line + 1}
+          />
           <YAxis
             tickCount={5}
             axisLine={false}
@@ -146,10 +152,7 @@ function XAxisTick({
   y,
   payload,
   data,
-}: {
-  x: number
-  y: number
-  payload: { value: string }
+}: XAxisTickContentProps & {
   data: TransferSizeDataPoint[]
 }) {
   const item = data.find((item) => item.name === payload.value)
@@ -177,14 +180,9 @@ const percentageToCountKey: Record<
   percentageOver100K: 'countOver100K',
 }
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-}: TooltipProps<number, string>) {
+function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload || typeof label !== 'string' || !payload[0])
-    return null
+  if (!payload || typeof label !== 'string' || !payload[0]) return null
 
   const data = payload[0].payload as TransferSizeDataPoint
 

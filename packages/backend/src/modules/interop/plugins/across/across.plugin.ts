@@ -170,6 +170,7 @@ export class AcrossPlugin implements InteropPluginResyncable {
         dstTokenAddress: filledRelay.args.tokenAddress,
         dstAmount: filledRelay.args.amount,
         dstWasMinted: false,
+        bridgeType: 'nonMinting',
       }),
     ]
   }

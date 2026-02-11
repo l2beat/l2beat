@@ -43,10 +43,11 @@ import { squid } from '../projects/squid/squid'
 import { stone } from '../projects/stone/stone'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
-import { usdt0 } from '../projects/usdt0/usdt0'
 import { vector } from '../projects/vector/vector'
 import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
 import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
+import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
+import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
 import { zkprover } from '../projects/zkprover/zkprover'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
@@ -95,7 +96,6 @@ export const refactored: BaseProject[] = [
   gnosis,
   gateway,
   // interop protocols
-  usdt0,
   debridgeDln,
   hyperlaneHwr,
   ccip,
@@ -109,4 +109,6 @@ export const refactored: BaseProject[] = [
   squid,
   fusionplus,
   circlegateway,
+  wormholeWtt,
+  wormholeNtt,
 ]

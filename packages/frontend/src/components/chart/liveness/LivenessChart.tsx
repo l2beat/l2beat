@@ -5,7 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import {
   Area,
   ComposedChart,
@@ -13,7 +12,11 @@ import {
   ReferenceArea,
   ReferenceDot,
 } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -21,12 +24,12 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -168,17 +171,16 @@ export function LivenessChart({
           strokeDasharray="5 5"
         />
 
-        {getCommonChartComponents({
-          data,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={data}
+          isLoading={isLoading}
+          yAxis={{
             tickFormatter: (value: number) => formatDuration(value),
             domain: ['auto', 'auto'],
             tickCount,
-          },
-          // We want to show custom ReferenceArea for this chart
-          syncedUntil: undefined,
-        })}
+          }}
+          syncedUntil={undefined}
+        />
         {lastValidTimestamp && (
           <ReferenceArea
             x1={lastValidTimestamp}
@@ -223,20 +225,19 @@ export function LivenessChart({
 }
 
 function LivenessCustomTooltip({
-  active,
   payload,
   label: timestamp,
   subtype,
   anyAnomalyLive,
   resolution,
   lastValidTimestamp,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   subtype: TrackedTxsConfigSubtype
   anyAnomalyLive: boolean
   resolution: ChartResolution
   lastValidTimestamp: number | undefined
 }) {
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!payload || typeof timestamp !== 'number') return null
 
   const filteredPayload = payload.filter(
     (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',

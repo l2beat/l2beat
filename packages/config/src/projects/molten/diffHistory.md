@@ -1,3 +1,86 @@
+Generated with discovered.json: 0xc0b2d949e00057f71ce52d4d51e5b1d804c6be1e
+
+# Diff at Tue, 10 Feb 2026 15:13:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1770329874
+- current timestamp: 1770736057
+
+## Description
+
+New member added to the SafeL2 multisig, threshold changed from 2 of 3 to 2 of 4.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xb9e40b6E60CcD5361774cf4D36d1fCe66B649b63"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x697e7dbdd937128a40cb6dc0493e597947ce1992
+
+# Diff at Thu, 05 Feb 2026 22:19:51 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@79ed122ff93f3ecacc6642a02e5352d633b2da3b block: 1765368962
+- current timestamp: 1770329874
+
+## Description
+
+Espresso TEE verifier ownership transfer: all three Espresso TEE verifier contracts (EspressoTEEVerifier, EspressoSGXTEEVerifier, EspressoNitroTEEVerifier) transferred ownership from an EOA (`0x8Cde...4e55`) to a new 2-of-3 Gnosis Safe multisig (`0x6Dc6...2f11`). This improves the security of TEE attestation management.
+
+## Watched changes
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.owner:
+-        "arb1:0x8Cde072E84932857262648C100d0A2227c495a55"
++        "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
+    contract EspressoSGXTEEVerifier (arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
++++ severity: HIGH
+      values.owner:
+-        "arb1:0x8Cde072E84932857262648C100d0A2227c495a55"
++        "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5) {
+    +++ description: Verifies attestations of an AWS Nitro TEE.
++++ severity: HIGH
+      values.owner:
+-        "arb1:0x8Cde072E84932857262648C100d0A2227c495a55"
++        "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/molten/.flat/SafeL2/SafeL2.sol    | 1152 ++++++++++++++++++++
+ .../projects/molten/.flat/SafeL2/SafeProxy.p.sol   |   37 +
+ 2 files changed, 1189 insertions(+)
+```
+
 Generated with discovered.json: 0x417d6417b4c745649bad67a94722a087747b62ee
 
 # Diff at Mon, 05 Jan 2026 17:44:42 GMT:

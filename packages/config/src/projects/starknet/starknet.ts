@@ -11,7 +11,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -175,19 +174,42 @@ const finalizationPeriod = 0
 const scThreshold = discovery.getMultisigStats('Starkware Security Council')
 const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
 
-const starknetProgramHashes = []
+// Verifiers chain reference older verifiers where a proof could be registered.
+// Unless a verifier referral expired, a proof could be looked up on a referenced
+// old verifier. This funciton collects bootloader prog hashes from all usable old verifiers.
+export function getSHARPBootloaderHashes(): string[] {
+  const sharpBootloaderHashes: string[] = []
+  let sharpVerifierAddress = discovery.getContract('SHARPVerifier').address
+  let expirationTimestamp = Number.MAX_SAFE_INTEGER
+  const timestampNow = Date.now() / 1000
+  while (timestampNow < expirationTimestamp) {
+    const bootloaderConfig = discovery.getContractValue<string[]>(
+      sharpVerifierAddress,
+      'getBootloaderConfig',
+    )
+    sharpBootloaderHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
+    sharpBootloaderHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+
+    expirationTimestamp = discovery.getContractValue<number>(
+      sharpVerifierAddress,
+      'referralExpirationTime',
+    )
+    sharpVerifierAddress = discovery.getContractValue<ChainSpecificAddress>(
+      sharpVerifierAddress,
+      'referenceFactRegistry',
+    )
+  }
+  return [...new Set(sharpBootloaderHashes)]
+}
+
+const starknetProgramHashes: string[] = []
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'programHash'),
 )
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-starknetProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-starknetProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+starknetProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const starknet: ScalingProject = {
   type: 'layer2',
@@ -231,6 +253,9 @@ export const starknet: ScalingProject = {
     liveness: {
       explanation:
         'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and a validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+      overwrites: {
+        proofSubmissions: 'no-data',
+      },
     },
     costsWarning: {
       sentiment: 'warning',
@@ -512,7 +537,6 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         ),
         sinceTimestamp: UnixTime(1652101033),
         tokens: ['DAI'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'DAI Vault for custom DAI Gateway managed by MakerDAO.' +
           ' ' +
@@ -548,7 +572,6 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           'StarkGate bridge for wstETH.' +
           ' ' +
           escrowWSTETHMaxTotalBalanceString,
-        ...ESCROW.CANONICAL_EXTERNAL,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_RETH_ADDRESS),
@@ -640,10 +663,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
     ],
     trackedTxs: [
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1636978914),
@@ -655,10 +675,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.7,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1702921247),
@@ -670,10 +687,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.7,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1704855731),
@@ -685,10 +699,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.7,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1710252995),
@@ -700,10 +711,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.65,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1710625271),
@@ -715,10 +723,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.65,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1715783986),
@@ -730,10 +735,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.2,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1724856227),
@@ -745,10 +747,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.2,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1724856227),
@@ -760,10 +759,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.2,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1732747391),
@@ -775,10 +771,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.05,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742836319),
@@ -790,10 +783,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742967335),
@@ -805,10 +795,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
@@ -820,10 +807,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC
@@ -834,10 +818,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1732747391),
@@ -849,10 +830,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.05,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742836319),
@@ -864,10 +842,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
@@ -879,10 +854,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC

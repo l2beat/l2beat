@@ -56,7 +56,7 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'interop',
-    title: 'Omnichain',
+    title: 'Burn & Mint',
   },
   {
     type: 'bridges',

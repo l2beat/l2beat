@@ -35,6 +35,7 @@ export interface VerifiersSectionProps extends ProjectSectionProps {
       attesters:
         | (ZkCatalogAttester & {
             icon: string
+            iconDark?: string
           })[]
         | undefined
     }[]

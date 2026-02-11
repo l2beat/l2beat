@@ -10,6 +10,7 @@ import range from 'lodash/range'
 import React from 'react'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
+import { Skeleton } from '../core/Skeleton'
 import { SortingArrows } from './sorting/SortingArrows'
 import {
   Table,
@@ -35,6 +36,8 @@ export type BasicTableRow = {
 
 export interface BasicTableProps<T extends BasicTableRow> {
   table: TanstackTable<T>
+  isLoading?: boolean
+  skeletonCount?: number
   /**
    * Custom row sorting function
    * It is used after tanstack sorting is applied
@@ -54,7 +57,7 @@ export interface BasicTableProps<T extends BasicTableRow> {
 }
 
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
-  if (props.table.getRowCount() === 0) {
+  if (props.table.getRowCount() === 0 && !props.isLoading) {
     return <TableEmptyState />
   }
   const headerGroups = props.table.getHeaderGroups()
@@ -172,6 +175,17 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         {rows.map((row) => (
           <BasicTableRow row={row} key={row.id} {...props} />
         ))}
+        {rows.length === 0 &&
+          props.isLoading &&
+          range(props.skeletonCount ?? 10).map((i) => {
+            return (
+              <TableRow highlightId={undefined} key={i}>
+                <TableCell colSpan={100}>
+                  <Skeleton className="h-6 w-full md:h-8" />
+                </TableCell>
+              </TableRow>
+            )
+          })}
         {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
       </TableBody>
     </Table>

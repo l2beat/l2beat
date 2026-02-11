@@ -4,7 +4,9 @@
  * examples: HypERC20, HypXERC20, HypERC20Collateral, HypNative
  * OMNICHAIN
  */
-import { Address32 } from '@l2beat/shared-pure'
+
+import type { AbstractTokenRecord } from '@l2beat/database'
+import { Address32, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
@@ -14,6 +16,7 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
+import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import {
   createEventParser,
   createInteropEventType,
@@ -215,7 +218,11 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   }
 
   matchTypes = [HwrTransferReceived]
-  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+  match(
+    event: InteropEvent,
+    db: InteropEventDb,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
+  ): MatchResult | undefined {
     if (!HwrTransferReceived.checkType(event)) return
 
     const hwrSent = db.find(HwrTransferSent, {
@@ -248,6 +255,20 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       ]
     }
 
+    const srcTokenAddress = hwrSent.args.tokenAddress
+    const dstTokenAddress = event.args.tokenAddress
+    const srcWasBurned = hwrSent.args.burned
+    const dstWasMinted = event.args.minted
+    const bridgeType = getBridgeType({
+      srcTokenAddress,
+      dstTokenAddress,
+      srcWasBurned,
+      dstWasMinted,
+      srcChain: hwrSent.ctx.chain,
+      dstChain: event.ctx.chain,
+      deployedToAbstractMap,
+    })
+
     return [
       Result.Message('hyperlane.Message', {
         app: 'hwr',
@@ -256,13 +277,14 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       }),
       Result.Transfer('hyperlaneHwr.Transfer', {
         srcEvent: hwrSent,
-        srcTokenAddress: hwrSent.args.tokenAddress,
+        srcTokenAddress,
         srcAmount: hwrSent.args.amount,
         dstEvent: event,
-        dstTokenAddress: event.args.tokenAddress,
+        dstTokenAddress,
         dstAmount: event.args.amount,
-        srcWasBurned: hwrSent.args.burned,
-        dstWasMinted: event.args.minted,
+        srcWasBurned,
+        dstWasMinted,
+        bridgeType,
       }),
     ]
   }
@@ -295,13 +317,14 @@ export function findParsedAround<T>(
   }
 }
 
-type ParsedTransferLog = {
+export type ParsedTransferLog = {
   logAddress: Address32
   from: Address32
   to: Address32
   value: bigint
 }
 
+// meson has a different version of this that normalizes amounts (for unknown decimal situations)
 function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,

@@ -5,7 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -52,25 +51,27 @@ export const zksync2: ScalingProject = zkStackL2({
     },
   },
   interopConfig: {
-    bridgeType: 'lockAndMint',
+    showAlways: ['lockAndMint'],
+    durationSplit: {
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'zksync2',
+        },
+        out: {
+          label: 'L2 -> L1',
+          from: 'zksync2',
+          to: 'ethereum',
+        },
+      },
+    },
     plugins: [
       {
         plugin: 'zkstack',
         chain: 'zksync2',
       },
     ],
-    durationSplit: {
-      in: {
-        label: 'L1 -> L2',
-        from: 'ethereum',
-        to: 'zksync2',
-      },
-      out: {
-        label: 'L2 -> L1',
-        from: 'zksync2',
-        to: 'ethereum',
-      },
-    },
   },
   chainConfig: {
     name: 'zksync2',
@@ -164,7 +165,6 @@ export const zksync2: ScalingProject = zkStackL2({
       ),
       sinceTimestamp: UnixTime(1698058151),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
       upgradableBy: [{ name: 'Lido (Lido Agent)', delay: 'no' }],

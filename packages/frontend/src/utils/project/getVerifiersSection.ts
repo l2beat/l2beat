@@ -3,9 +3,9 @@ import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { VerifiersSectionProps } from '~/components/projects/sections/VerifiersSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import { getZkCatalogLogo } from '~/server/features/zk-catalog/getZkCatalogLogo'
 import { getProjectsUsedIn } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
-import { manifest } from '~/utils/Manifest'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
 
@@ -30,10 +30,14 @@ export async function getVerifiersSection(
     const key = `${verifier.proofSystem.type}-${verifier.proofSystem.id}`
     const proofSystemVerifiers = byProofSystem[key]
 
-    const attesters = verifier.attesters?.map((attester) => ({
-      ...attester,
-      icon: manifest.getUrl(`/icons/${attester.id}.png`),
-    }))
+    const attesters = verifier.attesters?.map((attester) => {
+      const icon = getZkCatalogLogo(attester.id)
+      return {
+        ...attester,
+        icon: icon.light,
+        iconDark: icon.dark,
+      }
+    })
 
     const knownDeployments = verifier.knownDeployments.map((d) => {
       const explorerUrl = projects.find((p) => p.id === d.chain)?.chainConfig
@@ -53,7 +57,7 @@ export async function getVerifiersSection(
     const projectsUsedIn = uniqBy(
       knownDeployments.flatMap((d) => d.projectsUsedIn),
       (u) => u.id,
-    )
+    ).sort(tvsComparator(allProjects, tvs))
 
     if (!proofSystemVerifiers) {
       byProofSystem[key] = {

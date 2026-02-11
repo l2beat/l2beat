@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x0ffe508bb9d4d39ef829d59a2d84419dab3e5f2d
+
+# Diff at Tue, 10 Feb 2026 15:08:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1770329871
+- current timestamp: 1770736053
+
+## Description
+
+SystemConfig gas limit increased from 150M to 175M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        150000000
++        175000000
+    }
+```
+
+Generated with discovered.json: 0x62d0bf51dd2da5da51dd992ffa7460cbba9c4427
+
+# Diff at Thu, 05 Feb 2026 22:18:57 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@79ed122ff93f3ecacc6642a02e5352d633b2da3b block: 1769513822
+- current timestamp: 1770329871
+
+## Description
+
+SystemConfig gas limit increase from 130M to 150M (+15%), raising the maximum gas available per L2 block.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        130000000
++        150000000
+    }
+```
+
 Generated with discovered.json: 0xb1d7780019c7ad102561ede8aa41a920c8bda071
 
 # Diff at Tue, 27 Jan 2026 11:38:10 GMT:

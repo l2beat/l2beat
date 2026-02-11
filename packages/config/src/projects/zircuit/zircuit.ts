@@ -10,7 +10,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -308,7 +307,6 @@ export const zircuit: ScalingProject = {
           'eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79',
         ),
         tokens: ['wstETH'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
       }),

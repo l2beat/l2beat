@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropTransfer } from '../kysely/generated/types'
@@ -6,6 +6,7 @@ import type { AggregatedInteropTransfer } from '../kysely/generated/types'
 export interface AggregatedInteropTransferRecord {
   timestamp: UnixTime
   id: string
+  bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
   transferCount: number
@@ -14,6 +15,8 @@ export interface AggregatedInteropTransferRecord {
   srcValueUsd: number | undefined
   dstValueUsd: number | undefined
   avgValueInFlight: number | undefined
+  mintedValueUsd: number | undefined
+  burnedValueUsd: number | undefined
   countUnder100: number
   count100To1K: number
   count1KTo10K: number
@@ -42,6 +45,7 @@ export function toRecord(
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     id: row.id,
+    bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
     transferCount: row.transferCount,
@@ -50,6 +54,8 @@ export function toRecord(
     srcValueUsd: row.srcValueUsd ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
     avgValueInFlight: row.avgValueInFlight ?? undefined,
+    mintedValueUsd: row.mintedValueUsd ?? undefined,
+    burnedValueUsd: row.burnedValueUsd ?? undefined,
     countUnder100: row.countUnder100 ?? 0,
     count100To1K: row.count100To1K ?? 0,
     count1KTo10K: row.count1KTo10K ?? 0,
@@ -64,6 +70,7 @@ export function toRow(
   return {
     timestamp: UnixTime.toDate(record.timestamp),
     id: record.id,
+    bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
     transferCount: record.transferCount,
@@ -72,6 +79,8 @@ export function toRow(
     srcValueUsd: record.srcValueUsd,
     dstValueUsd: record.dstValueUsd,
     avgValueInFlight: record.avgValueInFlight,
+    mintedValueUsd: record.mintedValueUsd,
+    burnedValueUsd: record.burnedValueUsd,
     countUnder100: record.countUnder100,
     count100To1K: record.count100To1K,
     count1KTo10K: record.count1KTo10K,
@@ -240,20 +249,18 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .selectFrom('AggregatedInteropTransfer')
       .select((eb) => eb.fn.max('timestamp').as('max_timestamp'))
       .executeTakeFirst()
-    return result ? UnixTime.fromDate(result.max_timestamp) : undefined
+    return result?.max_timestamp
+      ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
   }
 
-  async getByChainsTimestampAndId(
+  async getByChainsAndTimestamp(
     timestamp: UnixTime,
     srcChains: string[],
     dstChains: string[],
-    protocolIds?: string[],
+    type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
     if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
-    if (protocolIds && protocolIds.length === 0) {
       return []
     }
 
@@ -264,8 +271,76 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', srcChains)
       .where('dstChain', 'in', dstChains)
 
-    if (protocolIds) {
-      query = query.where('id', 'in', protocolIds)
+    if (type) {
+      query = query.where('bridgeType', '=', type)
+    }
+
+    const rows = await query.execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getSummedTransferCountsByChainsIdAndTimestamp(
+    timestamp: UnixTime,
+    id: string,
+    srcChains: string[],
+    dstChains: string[],
+    type?: InteropBridgeType,
+  ) {
+    if (srcChains.length === 0 || dstChains.length === 0) {
+      return {
+        transferCount: 0,
+        identifiedCount: 0,
+      }
+    }
+
+    let query = this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => eb.fn.sum('transferCount').as('transferCountSum'))
+      .select((eb) => eb.fn.sum('identifiedCount').as('identifiedCountSum'))
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .where('srcChain', 'in', srcChains)
+      .where('dstChain', 'in', dstChains)
+      .where('id', '=', id)
+
+    if (type) {
+      query = query.where('bridgeType', '=', type)
+    }
+
+    const result = await query.executeTakeFirst()
+    if (!result) {
+      return {
+        transferCount: 0,
+        identifiedCount: 0,
+      }
+    }
+    return {
+      transferCount: Number(result.transferCountSum),
+      identifiedCount: Number(result.identifiedCountSum),
+    }
+  }
+
+  async getByChainsIdAndTimestamp(
+    timestamp: UnixTime,
+    id: string,
+    srcChains: string[],
+    dstChains: string[],
+    type?: InteropBridgeType,
+  ): Promise<AggregatedInteropTransferRecord[]> {
+    if (srcChains.length === 0 || dstChains.length === 0) {
+      return []
+    }
+
+    let query = this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .where('srcChain', 'in', srcChains)
+      .where('dstChain', 'in', dstChains)
+      .where('id', '=', id)
+
+    if (type) {
+      query = query.where('bridgeType', '=', type)
     }
 
     const rows = await query.execute()

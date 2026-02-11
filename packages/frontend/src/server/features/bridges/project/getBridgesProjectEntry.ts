@@ -96,6 +96,7 @@ export async function getBridgesProjectEntry(
   const [
     projectsChangeReport,
     tvsStats,
+    programHashesTvs,
     hasTvsData,
     tokens,
     contractUtils,
@@ -104,6 +105,7 @@ export async function getBridgesProjectEntry(
   ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
+    get7dTvsBreakdown({ type: 'layer2' }),
     checkIfTvsExist(project.id, UnixTime.now() - 365 * UnixTime.DAY),
     getTokensForProject(project),
     getContractUtils(),
@@ -311,6 +313,7 @@ export async function getBridgesProjectEntry(
     projectsChangeReport,
     zkCatalogProjects,
     allProjectsWithContracts,
+    programHashesTvs,
   )
   if (contractsSection)
     sections.push({

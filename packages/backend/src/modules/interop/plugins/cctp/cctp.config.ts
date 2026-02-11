@@ -68,13 +68,13 @@ const OVERRIDES_V1 = [
       '0xAD09780d193884d503182aD4588450C416D6F9D4',
     ),
   },
-  // {
-  //   chain: 'polygonpos',
-  //   domain: 7,
-  //   messageTransmitter: EthereumAddress(
-  //     '0xAD09780d193884d503182aD4588450C416D6F9D4',
-  //   ),
-  // },
+  {
+    chain: 'polygonpos',
+    domain: 7,
+    messageTransmitter: EthereumAddress(
+      '0xAD09780d193884d503182aD4588450C416D6F9D4',
+    ),
+  },
   // {
   //   chain: 'unichain',
   //   domain: 10,

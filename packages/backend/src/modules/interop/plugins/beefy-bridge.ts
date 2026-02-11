@@ -149,7 +149,7 @@ export class BeefyBridgePlugin implements InteropPluginResyncable {
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: L2_BIFI_TOKEN,
-          dstWasMinted: false,
+          dstWasMinted: true,
         }),
       ]
     }
