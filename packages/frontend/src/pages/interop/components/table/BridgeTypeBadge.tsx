@@ -11,7 +11,7 @@ const typeToLabel = {
     bgColor: 'bg-yellow-700',
   },
   burnAndMint: {
-    label: 'Burn and Mint',
+    label: 'Burn & Mint',
     bgColor: 'bg-teal-500',
   },
 } as const

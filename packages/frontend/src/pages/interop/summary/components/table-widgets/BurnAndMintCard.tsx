@@ -27,7 +27,7 @@ export function BurnAndMintCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <h2 className="font-bold text-heading-20 decoration-teal-500 underline-offset-6 max-md:underline md:text-heading-24">
-            Burn and Mint
+            Burn & Mint
           </h2>
           <TopNBadge n={5} />
         </div>

@@ -130,7 +130,7 @@ export function SideNavLayout({
               ),
             },
             {
-              title: 'Burn and Mint protocols',
+              title: 'Burn & Mint protocols',
               href: buildInteropUrl(
                 '/interop/burn-and-mint',
                 selectedChainsContext?.selectedChains,
