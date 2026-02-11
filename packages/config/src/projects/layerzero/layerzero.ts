@@ -9,7 +9,6 @@ export const layerzero: BaseProject = {
   addedAt: UnixTime(1769421770),
   interopConfig: {
     isAggregate: true,
-    showAlways: ['burnAndMint'],
     plugins: [
       {
         plugin: 'layerzero-v2-ofts',

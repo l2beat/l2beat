@@ -2,6 +2,7 @@ import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { EM_DASH } from '~/consts/characters'
 import { AvgDurationCell } from '~/pages/interop/components/table/AvgDurationCell'
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
@@ -152,7 +153,7 @@ export const lockAndMintColumns = [
   getLast24hVolumeColumn(lockAndMintColumnHelper),
   lockAndMintColumnHelper.accessor(
     (row) =>
-      row.averageDuration.type === 'unknown'
+      row.averageDuration?.type === 'unknown' || row.averageDuration === null
         ? undefined
         : row.averageDuration.type === 'single'
           ? row.averageDuration.duration
@@ -169,9 +170,12 @@ export const lockAndMintColumns = [
         tooltip:
           'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
       },
-      cell: (ctx) => (
-        <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
-      ),
+      cell: (ctx) => {
+        if (ctx.row.original.averageDuration === null) return EM_DASH
+        return (
+          <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
+        )
+      },
     },
   ),
   getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),

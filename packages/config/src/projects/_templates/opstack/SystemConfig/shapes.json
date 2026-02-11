@@ -163,5 +163,11 @@
     "address": "eth:0xfE18aB09Ef77826C24dF15bF44e588Da840aB3d3",
     "chain": "ethereum",
     "blockNumber": 24305724
+  },
+  "SystemConfig_v2_7_0_setBatchInbox": {
+    "hash": "0x18ecfc662e320a3cf78978511db8f7d6f3819d32a52e70d74cc636c9a43335e8",
+    "address": "eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9",
+    "chain": "ethereum",
+    "blockNumber": 24404755
   }
 }

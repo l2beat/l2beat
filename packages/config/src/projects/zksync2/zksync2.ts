@@ -51,7 +51,6 @@ export const zksync2: ScalingProject = zkStackL2({
     },
   },
   interopConfig: {
-    showAlways: ['lockAndMint'],
     durationSplit: {
       lockAndMint: {
         in: {

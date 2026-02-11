@@ -8,7 +8,6 @@ export const axelarits: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769520298),
   interopConfig: {
-    showAlways: ['burnAndMint'],
     plugins: [
       {
         plugin: 'axelar-its',

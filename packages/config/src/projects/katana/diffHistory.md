@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x2932591d2ba8f1adcffa09bccb7deaaf8a723dd6
+
+# Diff at Wed, 11 Feb 2026 12:54:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@141974a80471f8dbed910bc3deae728f2ae1bec7 block: 1770035635
+- current timestamp: 1770814418
+
+## Description
+
+Owner changes (Polygon Multisig 2 claiming more permissions).
+
+## Watched changes
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32","description":"can pull funds from the contract in case of emergency.","role":".owner"}
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.owner:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.owner:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32","description":"can pull funds from the contract in case of emergency.","role":".owner"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.owner:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+    }
+```
+
 Generated with discovered.json: 0xcc5abe7a160f6cc4630420978f3c205c212ae816
 
 # Diff at Mon, 02 Feb 2026 14:49:25 GMT:

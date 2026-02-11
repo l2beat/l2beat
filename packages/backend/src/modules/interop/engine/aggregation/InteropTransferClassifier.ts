@@ -1,4 +1,5 @@
 import type { InteropTransferRecord } from '@l2beat/database'
+import type { InteropBridgeType } from '@l2beat/shared-pure'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 
 export interface ClassifiedTransfers {
@@ -30,20 +31,20 @@ export class InteropTransferClassifier {
     const unknown: InteropTransferRecord[] = []
 
     for (const record of records) {
-      if (
-        (record.srcWasBurned === false && record.dstWasMinted === true) ||
-        (record.srcWasBurned === true && record.dstWasMinted === false)
-      ) {
-        lockAndMint.push(record)
-      } else if (record.srcWasBurned === true && record.dstWasMinted === true) {
-        burnAndMint.push(record)
-      } else if (
-        record.srcWasBurned === false &&
-        record.dstWasMinted === false
-      ) {
-        nonMinting.push(record)
-      } else {
-        unknown.push(record)
+      const bridgeType = record.bridgeType ?? this.inferBridgeType(record)
+      switch (bridgeType) {
+        case 'lockAndMint':
+          lockAndMint.push(record)
+          break
+        case 'burnAndMint':
+          burnAndMint.push(record)
+          break
+        case 'nonMinting':
+          nonMinting.push(record)
+          break
+        case 'unknown':
+          unknown.push(record)
+          break
       }
     }
 
@@ -57,6 +58,15 @@ export class InteropTransferClassifier {
       const pluginConditions: ((transfer: InteropTransferRecord) => boolean)[] =
         []
       pluginConditions.push((transfer) => plugin.plugin === transfer.plugin)
+
+      if (plugin.bridgeType) {
+        pluginConditions.push((transfer) => {
+          const transferBridgeType =
+            transfer.bridgeType ?? this.inferBridgeType(transfer)
+          return plugin.bridgeType === transferBridgeType
+        })
+      }
+
       if (plugin.chain) {
         pluginConditions.push(
           (transfer) =>
@@ -83,5 +93,21 @@ export class InteropTransferClassifier {
     }
 
     return conditions
+  }
+
+  private inferBridgeType(transfer: InteropTransferRecord): InteropBridgeType {
+    if (
+      (transfer.srcWasBurned === false && transfer.dstWasMinted === true) ||
+      (transfer.srcWasBurned === true && transfer.dstWasMinted === false)
+    ) {
+      return 'lockAndMint'
+    }
+    if (transfer.srcWasBurned === true && transfer.dstWasMinted === true) {
+      return 'burnAndMint'
+    }
+    if (transfer.srcWasBurned === false && transfer.dstWasMinted === false) {
+      return 'nonMinting'
+    }
+    return 'unknown'
   }
 }

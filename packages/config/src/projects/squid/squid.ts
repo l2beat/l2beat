@@ -8,7 +8,6 @@ export const squid: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769520298),
   interopConfig: {
-    showAlways: ['nonMinting'],
     plugins: [
       {
         plugin: 'axelar',

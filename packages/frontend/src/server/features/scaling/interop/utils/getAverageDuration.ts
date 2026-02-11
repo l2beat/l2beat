@@ -12,7 +12,7 @@ export function getAverageDuration(
   bridgeType: KnownInteropBridgeType | undefined,
   data: CommonInteropData,
   durationSplitMap: DurationSplitMap | undefined,
-): Exclude<AverageDuration, UnknownAverageDuration> {
+): Exclude<AverageDuration, UnknownAverageDuration> | null {
   const durationSplit =
     bridgeType !== undefined
       ? durationSplitMap?.get(projectId)?.get(bridgeType)
@@ -38,12 +38,10 @@ export function getAverageDuration(
     }
   }
 
+  if (data.transferCount <= 0) return null
   return {
     type: 'single',
-    duration:
-      data.transferCount > 0
-        ? Math.floor(data.totalDurationSum / data.transferCount)
-        : 0,
+    duration: Math.floor(data.totalDurationSum / data.transferCount),
   }
 }
 

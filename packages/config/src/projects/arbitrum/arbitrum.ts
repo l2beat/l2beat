@@ -163,7 +163,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
   },
   interopConfig: {
     name: 'Arbitrum Canonical',
-    showAlways: ['lockAndMint'],
     durationSplit: {
       lockAndMint: {
         in: {

@@ -181,36 +181,32 @@ export class AgglayerPlugin implements InteropPluginResyncable {
         return [AgglayerBridgeEvent.create(input, baseArgs)]
       }
 
-      const isBridgeOnAssetOriginNetwork =
-        localNetwork.networkId === assetOriginNetworkId
-      let srcTokenAddress: Address32 | undefined = isBridgeOnAssetOriginNetwork
-        ? originAddress === EthereumAddress.ZERO
-          ? Address32.NATIVE
-          : Address32.from(originAddress)
-        : undefined
-      let srcWasBurned: boolean | undefined
-      if (bridge.amount > 0n) {
-        const transferInfo = findParsedAround(
-          input.txLogs,
-          input.log.logIndex ?? -1,
-          (log) => {
-            const transfer = parseTransfer(log, null)
-            if (!transfer || transfer.value !== bridge.amount) return
-            return {
-              address: Address32.from(log.address),
-              burned: Address32.from(transfer.to) === Address32.ZERO,
-            }
-          },
-        )
-        if (!srcTokenAddress) {
-          srcTokenAddress = transferInfo?.address
-        }
-        srcWasBurned = transferInfo?.burned
-        // no transfer event and asset leaftype
-        if (!srcTokenAddress) {
-          srcTokenAddress = Address32.NATIVE
-          srcWasBurned = localNetwork.chain !== 'ethereum'
-        }
+      const transferInfo = findParsedAround(
+        input.txLogs,
+        input.log.logIndex ?? -1,
+        (log) => {
+          const transfer = parseTransfer(log, null)
+          if (!transfer || transfer.value !== bridge.amount) return
+          return {
+            address: Address32.from(log.address),
+            burned: Address32.from(transfer.to) === Address32.ZERO,
+          }
+        },
+      )
+
+      let srcTokenAddress = transferInfo?.address
+      let srcWasBurned = transferInfo?.burned
+      if (!srcTokenAddress) {
+        const isBridgeOnAssetOriginNetwork =
+          localNetwork.networkId === assetOriginNetworkId
+        srcTokenAddress = isBridgeOnAssetOriginNetwork
+          ? Address32.from(originAddress)
+          : undefined
+      }
+      // no transfer event and asset leaftype
+      if (!srcTokenAddress || srcTokenAddress === Address32.ZERO) {
+        srcTokenAddress = Address32.NATIVE
+        srcWasBurned = localNetwork.chain !== 'ethereum'
       }
 
       return [

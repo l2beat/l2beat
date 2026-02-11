@@ -38,7 +38,6 @@ describe(InteropAggregatingIndexer.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          showAlways: ['lockAndMint'],
           plugins: [{ plugin: 'across' }],
         },
       ]
@@ -251,6 +250,7 @@ function createTransfer(
     plugin,
     transferId,
     type,
+    bridgeType: undefined,
     timestamp,
     srcTime: timestamp,
     srcTxHash: 'random-hash',

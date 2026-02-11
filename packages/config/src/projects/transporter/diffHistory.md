@@ -1,3 +1,510 @@
+Generated with discovered.json: 0xe073a55ddd096b915647b40c7d936639b9e3b806
+
+# Diff at Wed, 11 Feb 2026 13:10:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@141974a80471f8dbed910bc3deae728f2ae1bec7 block: 1769432271
+- current timestamp: 1770815107
+
+## Description
+
+pools added.
+
+## Watched changes
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.330:
++        "eth:0xa9342fFf2CbcD3f39fB66140Cd191211251AB44F"
+      values.pools.331:
++        "eth:0xb41Aa410367C8da8c5887B0bD4D805DF64cf0415"
+      values.pools.332:
++        "eth:0xE2d85D05f2502677A5c5B5C09a08df7cC2190A76"
+      values.pools.333:
++        "eth:0x8E9DE3499BAc5530226993bef08119fCba3F376C"
+      values.pools.334:
++        "eth:0x8E9ae2b373009e7c7508bF21Da94CA43487810b3"
+      values.pools.335:
++        "eth:0x9A34195Bf5dfFA8053463d06Ef1b323269BC524B"
+      values.pools.336:
++        "eth:0xa9FFa75ff11096768A50Dab4DA3289602b702044"
+      values.pools.337:
++        "eth:0x79ea185902eEb517B47Fa3Bde44b0e9451b586dA"
+      values.pools.338:
++        "eth:0x75FD627e273eA33E3ca9A2E76Fac0c4bCD214BDB"
+      values.pools.339:
++        "eth:0x0959c7B8b6D4867514A90F4A3d3e60Ae563eD1D2"
+      values.pools.340:
++        "eth:0xdfFf8B89DEFbAeB4505f415e9C915C95Eb543042"
+      values.pools.341:
++        "eth:0xAE8E404ef7a58c9FC05cD6cf285BeE19f54a634a"
+      values.pools.342:
++        "eth:0x9Fa0f8d7dF1f65B119CF3Ce9C79d939F47EFA159"
+      values.pools.343:
++        "eth:0x2e19c229C7E612AE26da00f15035Aa9260c606d3"
+      values.pools.344:
++        "eth:0x1372D265809Ee2cF47Aab5b4D70254b27688c4E0"
+      values.pools.345:
++        "eth:0xa50eAFD41Dd05fC32FaE33e1799924C22b4d0423"
+      values.pools.346:
++        "eth:0x938221FB621bF75FBE5FcaAC3ff4DFEf01D247d1"
+      values.poolsMap.eth:0x32E3F04D2b10A3df75eE26c703dcA5e1272383dC:
++        "eth:0xa9342fFf2CbcD3f39fB66140Cd191211251AB44F"
+      values.poolsMap.eth:0x74F72450cC03c6F4995586E8bfF0E60B85cEf709:
++        "eth:0xb41Aa410367C8da8c5887B0bD4D805DF64cf0415"
+      values.poolsMap.eth:0x423ba4fC2FEBEbC99273D2F05497b4859863aF6C:
++        "eth:0xE2d85D05f2502677A5c5B5C09a08df7cC2190A76"
+      values.poolsMap.eth:0xc3b913fE26Af3182917FF59b19B9E9C914737baB:
++        "eth:0x8E9DE3499BAc5530226993bef08119fCba3F376C"
+      values.poolsMap.eth:0xfFde9c337094139a61d12F134809e63D7da7Cd85:
++        "eth:0x8E9ae2b373009e7c7508bF21Da94CA43487810b3"
+      values.poolsMap.eth:0x8fBaBFC313A48867B231F984C5dB92aF9aF3Ff6d:
++        "eth:0x9A34195Bf5dfFA8053463d06Ef1b323269BC524B"
+      values.poolsMap.eth:0x5c005d074E25b89db97A32087C06D154D8CB2D5b:
++        "eth:0xa9FFa75ff11096768A50Dab4DA3289602b702044"
+      values.poolsMap.eth:0x6B5226877B92B063D34Fd3bC573B658cd4cf6756:
++        "eth:0x79ea185902eEb517B47Fa3Bde44b0e9451b586dA"
+      values.poolsMap.eth:0xf374DB77b2c8314065a1EC916249bc00A95272ff:
++        "eth:0x75FD627e273eA33E3ca9A2E76Fac0c4bCD214BDB"
+      values.poolsMap.eth:0xbe026E7eA36d1c4EDa671217494b2C616Ad44B68:
++        "eth:0x0959c7B8b6D4867514A90F4A3d3e60Ae563eD1D2"
+      values.poolsMap.eth:0xbd3634a9b60c877FDC4BEb8051595efDCbB3F4d8:
++        "eth:0xdfFf8B89DEFbAeB4505f415e9C915C95Eb543042"
+      values.poolsMap.eth:0x709C4687461CF23889890B9636B7aDEd139b9f9A:
++        "eth:0xAE8E404ef7a58c9FC05cD6cf285BeE19f54a634a"
+      values.poolsMap.eth:0x7A1105e27d0526De03dD45e9bAdb5F98d8472338:
++        "eth:0x9Fa0f8d7dF1f65B119CF3Ce9C79d939F47EFA159"
+      values.poolsMap.eth:0x1fB858f5b2c6771f87d88c0806437d0F30996551:
++        "eth:0x2e19c229C7E612AE26da00f15035Aa9260c606d3"
+      values.poolsMap.eth:0x47bbE374b36218Cc5870028caE07f19b9fcD8973:
++        "eth:0x1372D265809Ee2cF47Aab5b4D70254b27688c4E0"
+      values.poolsMap.eth:0xb1212bA26a591B0b95574E277e7AB1abDCF4A38c:
++        "eth:0xa50eAFD41Dd05fC32FaE33e1799924C22b4d0423"
+      values.poolsMap.eth:0x393a0Ff130702C2dC6BFC500368394953450765f:
++        "eth:0x938221FB621bF75FBE5FcaAC3ff4DFEf01D247d1"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x0959c7B8b6D4867514A90F4A3d3e60Ae563eD1D2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x1372D265809Ee2cF47Aab5b4D70254b27688c4E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x2e19c229C7E612AE26da00f15035Aa9260c606d3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x75FD627e273eA33E3ca9A2E76Fac0c4bCD214BDB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x79ea185902eEb517B47Fa3Bde44b0e9451b586dA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x8E9ae2b373009e7c7508bF21Da94CA43487810b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x8E9DE3499BAc5530226993bef08119fCba3F376C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x938221FB621bF75FBE5FcaAC3ff4DFEf01D247d1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x9A34195Bf5dfFA8053463d06Ef1b323269BC524B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x9Fa0f8d7dF1f65B119CF3Ce9C79d939F47EFA159)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0xa50eAFD41Dd05fC32FaE33e1799924C22b4d0423)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xa9342fFf2CbcD3f39fB66140Cd191211251AB44F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0xa9FFa75ff11096768A50Dab4DA3289602b702044)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0xAE8E404ef7a58c9FC05cD6cf285BeE19f54a634a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xb41Aa410367C8da8c5887B0bD4D805DF64cf0415)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0xdfFf8B89DEFbAeB4505f415e9C915C95Eb543042)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0xE2d85D05f2502677A5c5B5C09a08df7cC2190A76)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xE2d85D05f2502677A5c5B5C09a08df7cC2190A76.sol | 1374 +++++++++++++++
+ ...:0xa9342fFf2CbcD3f39fB66140Cd191211251AB44F.sol | 1374 +++++++++++++++
+ ...:0xb41Aa410367C8da8c5887B0bD4D805DF64cf0415.sol | 1374 +++++++++++++++
+ ...:0x0959c7B8b6D4867514A90F4A3d3e60Ae563eD1D2.sol | 1835 ++++++++++++++++++++
+ ...:0x1372D265809Ee2cF47Aab5b4D70254b27688c4E0.sol | 1835 ++++++++++++++++++++
+ ...:0x2e19c229C7E612AE26da00f15035Aa9260c606d3.sol | 1835 ++++++++++++++++++++
+ ...:0x75FD627e273eA33E3ca9A2E76Fac0c4bCD214BDB.sol | 1835 ++++++++++++++++++++
+ ...:0x79ea185902eEb517B47Fa3Bde44b0e9451b586dA.sol | 1835 ++++++++++++++++++++
+ ...:0x8E9DE3499BAc5530226993bef08119fCba3F376C.sol | 1835 ++++++++++++++++++++
+ ...:0x8E9ae2b373009e7c7508bF21Da94CA43487810b3.sol | 1835 ++++++++++++++++++++
+ ...:0x938221FB621bF75FBE5FcaAC3ff4DFEf01D247d1.sol | 1766 +++++++++++++++++++
+ ...:0x9A34195Bf5dfFA8053463d06Ef1b323269BC524B.sol | 1835 ++++++++++++++++++++
+ ...:0x9Fa0f8d7dF1f65B119CF3Ce9C79d939F47EFA159.sol | 1835 ++++++++++++++++++++
+ ...:0xAE8E404ef7a58c9FC05cD6cf285BeE19f54a634a.sol | 1835 ++++++++++++++++++++
+ ...:0xa50eAFD41Dd05fC32FaE33e1799924C22b4d0423.sol | 1835 ++++++++++++++++++++
+ ...:0xa9FFa75ff11096768A50Dab4DA3289602b702044.sol | 1766 +++++++++++++++++++
+ ...:0xdfFf8B89DEFbAeB4505f415e9C915C95Eb543042.sol | 1835 ++++++++++++++++++++
+ 17 files changed, 29674 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769432271 (main branch discovery), not current.
+
+```diff
+    contract FUSDBurnMintTokenPool (eth:0x035E4d17Be1A0D2727b2035e030c4525Ce3EDCf4) {
+    +++ description: None
+      name:
+-        ""
++        "FUSDBurnMintTokenPool"
+      unverified:
+-        true
+      values.getAllowList:
++        []
+      values.getAllowListEnabled:
++        false
+      values.getRateLimitAdmin:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getRmnProxy:
++        "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+      values.getRouter:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.getToken:
++        "eth:0x228F6BeC1b04B5A3Da52B6Da2DBDdCa046444C88"
+      values.getTokenDecimals:
++        18
+      values.owner:
++        "eth:0xC61F22aa3A6469f4F90994421F4570459217c215"
+      values.typeAndVersion:
++        "FUSD BurnMintTokenPool 1.6.3-dev"
+      implementationNames.eth:0x035E4d17Be1A0D2727b2035e030c4525Ce3EDCf4:
+-        ""
++        "FUSDBurnMintTokenPool"
+      template:
++        "transporter/TokenPool"
+      sourceHashes:
++        ["0x61546bbdeae7c6d79dfd90b79ad661d74684e467a88d2f0bd5e69caa3b99c6ed"]
+    }
+```
+
+```diff
+    contract FUSDLPBurnMintTokenPool (eth:0x42a07B1BcA0fbD02c684D3Aae29CA4d7A17C0773) {
+    +++ description: None
+      name:
+-        ""
++        "FUSDLPBurnMintTokenPool"
+      unverified:
+-        true
+      values.getAllowList:
++        []
+      values.getAllowListEnabled:
++        false
+      values.getRateLimitAdmin:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getRmnProxy:
++        "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+      values.getRouter:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.getToken:
++        "eth:0xBa9c7933c8b4442AcDee24c73E76D403aFB87bd1"
+      values.getTokenDecimals:
++        18
+      values.owner:
++        "eth:0xC61F22aa3A6469f4F90994421F4570459217c215"
+      values.typeAndVersion:
++        "FUSDLP BurnMintTokenPool 1.6.3-dev"
+      implementationNames.eth:0x42a07B1BcA0fbD02c684D3Aae29CA4d7A17C0773:
+-        ""
++        "FUSDLPBurnMintTokenPool"
+      template:
++        "transporter/TokenPool"
+      sourceHashes:
++        ["0xe598f6571ea31f03a429581af0857af627fea619a898b80f465a8f9cd23167f9"]
+    }
+```
+
+```diff
+    contract FUSDLPBurnMintTokenPool (eth:0x578b5aB9a75Cb37cC0F25108417cfd489b5B16e1) {
+    +++ description: None
+      name:
+-        ""
++        "FUSDLPBurnMintTokenPool"
+      unverified:
+-        true
+      values.getAllowList:
++        []
+      values.getAllowListEnabled:
++        false
+      values.getRateLimitAdmin:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getRmnProxy:
++        "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+      values.getRouter:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.getToken:
++        "eth:0x3fea1cb36D2C5523c062d0E060EAC253608b4DAf"
+      values.getTokenDecimals:
++        18
+      values.owner:
++        "eth:0xC61F22aa3A6469f4F90994421F4570459217c215"
+      values.typeAndVersion:
++        "FUSDLP BurnMintTokenPool 1.6.3-dev"
+      implementationNames.eth:0x578b5aB9a75Cb37cC0F25108417cfd489b5B16e1:
+-        ""
++        "FUSDLPBurnMintTokenPool"
+      template:
++        "transporter/TokenPool"
+      sourceHashes:
++        ["0xe598f6571ea31f03a429581af0857af627fea619a898b80f465a8f9cd23167f9"]
+    }
+```
+
+```diff
+    contract FUSDLPBurnMintTokenPool (eth:0x713e82fFa4485a1D324ef5b9Ff4B04C28e100aa9) {
+    +++ description: None
+      name:
+-        ""
++        "FUSDLPBurnMintTokenPool"
+      unverified:
+-        true
+      values.getAllowList:
++        []
+      values.getAllowListEnabled:
++        false
+      values.getRateLimitAdmin:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getRmnProxy:
++        "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+      values.getRouter:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.getToken:
++        "eth:0x987bE894C30da0D5617470dfc7392f5695961fC2"
+      values.getTokenDecimals:
++        18
+      values.owner:
++        "eth:0xC61F22aa3A6469f4F90994421F4570459217c215"
+      values.typeAndVersion:
++        "FUSDLP BurnMintTokenPool 1.6.3-dev"
+      implementationNames.eth:0x713e82fFa4485a1D324ef5b9Ff4B04C28e100aa9:
+-        ""
++        "FUSDLPBurnMintTokenPool"
+      template:
++        "transporter/TokenPool"
+      sourceHashes:
++        ["0xe598f6571ea31f03a429581af0857af627fea619a898b80f465a8f9cd23167f9"]
+    }
+```
+
+```diff
+    contract FUSDBurnMintTokenPool (eth:0x91FEbCFB698CC2e653f7e053205a347957F325D1) {
+    +++ description: None
+      name:
+-        ""
++        "FUSDBurnMintTokenPool"
+      unverified:
+-        true
+      values.getAllowList:
++        []
+      values.getAllowListEnabled:
++        false
+      values.getRateLimitAdmin:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getRmnProxy:
++        "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+      values.getRouter:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.getToken:
++        "eth:0x9f6714C302ffe3c3bAFaf2Ccb44201fF64f6371C"
+      values.getTokenDecimals:
++        18
+      values.owner:
++        "eth:0xC61F22aa3A6469f4F90994421F4570459217c215"
+      values.typeAndVersion:
++        "FUSD BurnMintTokenPool 1.6.3-dev"
+      implementationNames.eth:0x91FEbCFB698CC2e653f7e053205a347957F325D1:
+-        ""
++        "FUSDBurnMintTokenPool"
+      template:
++        "transporter/TokenPool"
+      sourceHashes:
++        ["0x61546bbdeae7c6d79dfd90b79ad661d74684e467a88d2f0bd5e69caa3b99c6ed"]
+    }
+```
+
+```diff
+    contract FUSDBurnMintTokenPool (eth:0x9e10292dc8e6848256881589E71Eb5382e8173ae) {
+    +++ description: None
+      name:
+-        ""
++        "FUSDBurnMintTokenPool"
+      unverified:
+-        true
+      values.getAllowList:
++        []
+      values.getAllowListEnabled:
++        false
+      values.getRateLimitAdmin:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getRmnProxy:
++        "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+      values.getRouter:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.getToken:
++        "eth:0x9292884280391bbD3418A1d0A96a22a579f5874F"
+      values.getTokenDecimals:
++        18
+      values.owner:
++        "eth:0xC61F22aa3A6469f4F90994421F4570459217c215"
+      values.typeAndVersion:
++        "FUSD BurnMintTokenPool 1.6.3-dev"
+      implementationNames.eth:0x9e10292dc8e6848256881589E71Eb5382e8173ae:
+-        ""
++        "FUSDBurnMintTokenPool"
+      template:
++        "transporter/TokenPool"
+      sourceHashes:
++        ["0x61546bbdeae7c6d79dfd90b79ad661d74684e467a88d2f0bd5e69caa3b99c6ed"]
+    }
+```
+
+```diff
+    contract FUSDBurnMintTokenPool (eth:0xADD9d7eAbD2b1504CF671C9A2F1EDC25DA81ade7) {
+    +++ description: None
+      name:
+-        ""
++        "FUSDBurnMintTokenPool"
+      unverified:
+-        true
+      values.getAllowList:
++        []
+      values.getAllowListEnabled:
++        false
+      values.getRateLimitAdmin:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getRmnProxy:
++        "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+      values.getRouter:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.getToken:
++        "eth:0x682701193e669092C1987D444186fC2a5CFc6A72"
+      values.getTokenDecimals:
++        18
+      values.owner:
++        "eth:0xC61F22aa3A6469f4F90994421F4570459217c215"
+      values.typeAndVersion:
++        "FUSD BurnMintTokenPool 1.6.3-dev"
+      implementationNames.eth:0xADD9d7eAbD2b1504CF671C9A2F1EDC25DA81ade7:
+-        ""
++        "FUSDBurnMintTokenPool"
+      template:
++        "transporter/TokenPool"
+      sourceHashes:
++        ["0x61546bbdeae7c6d79dfd90b79ad661d74684e467a88d2f0bd5e69caa3b99c6ed"]
+    }
+```
+
+```diff
+    contract FUSDLPBurnMintTokenPool (eth:0xF1ea4D1E49B43D2f0d5DDE8e065247F2B75e794c) {
+    +++ description: None
+      name:
+-        ""
++        "FUSDLPBurnMintTokenPool"
+      unverified:
+-        true
+      values.getAllowList:
++        []
+      values.getAllowListEnabled:
++        false
+      values.getRateLimitAdmin:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getRmnProxy:
++        "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+      values.getRouter:
++        "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      values.getToken:
++        "eth:0x8d2Cc7A489666ECFC6120A817b5EeE720aE2cccf"
+      values.getTokenDecimals:
++        18
+      values.owner:
++        "eth:0xC61F22aa3A6469f4F90994421F4570459217c215"
+      values.typeAndVersion:
++        "FUSDLP BurnMintTokenPool 1.6.3-dev"
+      implementationNames.eth:0xF1ea4D1E49B43D2f0d5DDE8e065247F2B75e794c:
+-        ""
++        "FUSDLPBurnMintTokenPool"
+      template:
++        "transporter/TokenPool"
+      sourceHashes:
++        ["0xe598f6571ea31f03a429581af0857af627fea619a898b80f465a8f9cd23167f9"]
+    }
+```
+
 Generated with discovered.json: 0x0ea7166f514c086419d054c81a816ceff923b828
 
 # Diff at Mon, 26 Jan 2026 12:59:56 GMT:

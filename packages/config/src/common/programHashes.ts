@@ -64,6 +64,50 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
     `,
   },
+  '0x00b37da93c30bef199e4f70190c46367ade11ab988c3cff4c661960919718afd': {
+    title: 'Aggregation program of OP Succinct FDP',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client in fault dispute proof mode.',
+    proverSystemProject: ProjectId('sp1'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v1.0.2/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.2\` . Commit hash should be  \`a8d870c320c158a2a2e4eee0303c688b15bea2c0\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+  `,
+  },
+  '0x05ca7dfb1b7ca7a103fa36750d622f81182eb7c9679b9487418968400e2b1a29': {
+    title: 'Range program of OP Succinct FDP',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks in fault dispute proof mode.',
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v1.0.2/programs/range/eigenda',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.2\` . Commit hash should be  \`a8d870c320c158a2a2e4eee0303c688b15bea2c0\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+    `,
+  },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     title: 'Aggregation program of OP Succinct',
     description:

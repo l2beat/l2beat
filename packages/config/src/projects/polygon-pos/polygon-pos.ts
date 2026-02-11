@@ -80,7 +80,6 @@ export const polygonpos: ScalingProject = {
     stage: 'NotApplicable',
   },
   interopConfig: {
-    showAlways: ['lockAndMint'],
     durationSplit: {
       lockAndMint: {
         in: {

@@ -56,7 +56,6 @@ export const optimism: ScalingProject = opStackL2({
   },
   interopConfig: {
     name: 'OP Canonical',
-    showAlways: ['lockAndMint'],
     durationSplit: {
       lockAndMint: {
         in: {
