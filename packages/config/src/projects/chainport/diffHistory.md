@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x53949198cd1ae91dd3df1123f40b9ce638608d16
+
+# Diff at Wed, 11 Feb 2026 12:59:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@141974a80471f8dbed910bc3deae728f2ae1bec7 block: 1765464194
+- current timestamp: 1770814689
+
+## Description
+
+proposal to add new operators.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        69
++        70
+    }
+```
+
 Generated with discovered.json: 0x9f338bc11f9fff5fcbbf4dfed5803c51f5543e2d
 
 # Diff at Thu, 11 Dec 2025 14:44:22 GMT:

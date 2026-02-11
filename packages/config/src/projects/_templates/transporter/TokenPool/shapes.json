@@ -251,5 +251,17 @@
     "address": "eth:0x1e955af2CB2345a9e7aa8B99219bE76Ab704f94C",
     "chain": "ethereum",
     "blockNumber": 24268139
+  },
+  "FUSDBurnMintTokenPool.sol": {
+    "hash": "0x61546bbdeae7c6d79dfd90b79ad661d74684e467a88d2f0bd5e69caa3b99c6ed",
+    "address": "eth:0x91FEbCFB698CC2e653f7e053205a347957F325D1",
+    "chain": "ethereum",
+    "blockNumber": 24433713
+  },
+  "FUSDLPBurnMintTokenPool.sol": {
+    "hash": "0xe598f6571ea31f03a429581af0857af627fea619a898b80f465a8f9cd23167f9",
+    "address": "eth:0x42a07B1BcA0fbD02c684D3Aae29CA4d7A17C0773",
+    "chain": "ethereum",
+    "blockNumber": 24433713
   }
 }
