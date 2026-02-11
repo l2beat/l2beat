@@ -1,7 +1,7 @@
 {
   "name": "skale-ima",
   "timestamp": 1770815023,
-  "configHash": "0xe8fc3e3720d06370940517fb54ab5807127abe7014005e3044de1dc8d2d9e47c",
+  "configHash": "0x1819e9759dd04c0a15375e8ad2f40d42f6bf6e69ef5e9def9baa4e2a9e8b7b7a",
   "entries": [
     {
       "name": "Skale IMA Multisig",
@@ -789,6 +789,31 @@
       }
     },
     {
+      "address": "eth:0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x145205742269092c975b4e26e4fcfb7f5f67bd109f3ccf6c8227df36ce875325"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0xd6CEDDe84be40893d153Be9d467CD6aD37875b28",
+        "accountId": "kernel.advanced.v0.3.3",
+        "currentNonce": 0,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Kernel",
+          "version": "0.3.3",
+          "chainId": 1,
+          "verifyingContract": "eth:0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entrypoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "rootValidator": "0x000000000000000000000000000000000000000000",
+        "validNonceFrom": 0
+      }
+    },
+    {
       "address": "eth:0xDB90FaAb0c78Fd055cDE86C03A8a483F22eC2858",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1193,6 +1218,81 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function version() view returns (string)"
     ],
+    "eth:0xd6CEDDe84be40893d153Be9d467CD6aD37875b28": [
+      "constructor(address _entrypoint)",
+      "error AlreadyInitialized()",
+      "error EnableNotApproved()",
+      "error ExecutionReverted()",
+      "error InitConfigError(uint256 idx)",
+      "error InvalidCallType()",
+      "error InvalidCaller()",
+      "error InvalidExecutor()",
+      "error InvalidFallback()",
+      "error InvalidMode()",
+      "error InvalidModuleType()",
+      "error InvalidNonce()",
+      "error InvalidSelector()",
+      "error InvalidSelectorData()",
+      "error InvalidSignature()",
+      "error InvalidValidationType()",
+      "error InvalidValidator()",
+      "error NonceInvalidationError()",
+      "error NotSupportedCallType()",
+      "error OnlyExecuteUserOp()",
+      "error PermissionDataLengthMismatch()",
+      "error PermissionNotAlllowedForSignature()",
+      "error PermissionNotAlllowedForUserOp()",
+      "error PolicyDataTooLarge()",
+      "error PolicyFailed(uint256 i)",
+      "error PolicySignatureOrderError()",
+      "error RootValidatorCannotBeRemoved()",
+      "error SignerPrefixNotPresent()",
+      "event ModuleInstalled(uint256 moduleTypeId, address module)",
+      "event ModuleUninstallResult(address module, bool result)",
+      "event ModuleUninstalled(uint256 moduleTypeId, address module)",
+      "event NonceInvalidated(uint32 nonce)",
+      "event PermissionInstalled(bytes4 permission, uint32 nonce)",
+      "event PermissionUninstalled(bytes4 permission)",
+      "event Received(address sender, uint256 amount)",
+      "event RootValidatorUpdated(bytes21 rootValidator)",
+      "event SelectorSet(bytes4 selector, bytes21 vId, bool allowed)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "event Upgraded(address indexed implementation)",
+      "event ValidatorInstalled(address validator, uint32 nonce)",
+      "event ValidatorUninstalled(address validator)",
+      "function accountId() pure returns (string accountImplementationId)",
+      "function changeRootValidator(bytes21 _rootValidator, address hook, bytes validatorData, bytes hookData) payable",
+      "function currentNonce() view returns (uint32)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function entrypoint() view returns (address)",
+      "function execute(bytes32 execMode, bytes executionCalldata) payable",
+      "function executeFromExecutor(bytes32 execMode, bytes executionCalldata) payable returns (bytes[] returnData)",
+      "function executeUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash) payable",
+      "function executorConfig(address executor) view returns (tuple(address hook))",
+      "function grantAccess(bytes21 vId, bytes4 selector, bool allow) payable",
+      "function initialize(bytes21 _rootValidator, address hook, bytes validatorData, bytes hookData, bytes[] initConfig)",
+      "function installModule(uint256 moduleType, address module, bytes initData) payable",
+      "function installValidations(bytes21[] vIds, tuple(uint32 nonce, address hook)[] configs, bytes[] validationData, bytes[] hookData) payable",
+      "function invalidateNonce(uint32 nonce) payable",
+      "function isAllowedSelector(bytes21 vId, bytes4 selector) view returns (bool)",
+      "function isModuleInstalled(uint256 moduleType, address module, bytes additionalContext) view returns (bool)",
+      "function isValidSignature(bytes32 hash, bytes data) view returns (bytes4)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) pure returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
+      "function permissionConfig(bytes4 pId) view returns (tuple(bytes2 permissionFlag, address signer, bytes22[] policyData))",
+      "function replayableUserOpHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, address entryPoint) pure returns (bytes32)",
+      "function rootValidator() view returns (bytes21)",
+      "function selectorConfig(bytes4 selector) view returns (tuple(address hook, address target, bytes1 callType))",
+      "function supportsExecutionMode(bytes32 mode) pure returns (bool)",
+      "function supportsModule(uint256 moduleTypeId) pure returns (bool)",
+      "function uninstallModule(uint256 moduleType, address module, bytes deInitData) payable",
+      "function uninstallValidation(bytes21 vId, bytes deinitData, bytes hookDeinitData) payable",
+      "function upgradeTo(address _newImplementation) payable",
+      "function validNonceFrom() view returns (uint32)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) payable returns (uint256 validationData)",
+      "function validationConfig(bytes21 vId) view returns (tuple(uint32 nonce, address hook))"
+    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -1374,5 +1474,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24433706 },
-  "permissionsConfigHash": "0x135953aa9fb1c3004b9b8cb8c173c936628a0f41769cb92f0cbec044af846a97"
+  "permissionsConfigHash": "0x801d5360c611ba5006aa914e763e7470a2b9cde4214e1f7aa8b56b6f573a927f"
 }

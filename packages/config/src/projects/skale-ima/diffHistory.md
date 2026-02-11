@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xc74dc9cf39d37ea6344fd6c2aa368f2fa9ac2bef
+Generated with discovered.json: 0x4ff6dbdfdbc50a21e51a85ce25e7acf689f3892f
+
+# Diff at Wed, 11 Feb 2026 13:26:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@141974a80471f8dbed910bc3deae728f2ae1bec7 block: 1768370885
+- current timestamp: 1770815023
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x145205742269092c975b4e26e4fcfb7f5f67bd109f3ccf6c8227df36ce875325"]
+      values:
++        {"$implementation":"eth:0xd6CEDDe84be40893d153Be9d467CD6aD37875b28","accountId":"kernel.advanced.v0.3.3","currentNonce":0,"eip712Domain":{"fields":"0x0f","name":"Kernel","version":"0.3.3","chainId":1,"verifyingContract":"eth:0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entrypoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","rootValidator":"0x000000000000000000000000000000000000000000","validNonceFrom":0}
+    }
+```
+
+Generated with discovered.json: 0x44a5bf30978a593b120da932b4520ae25c0bfee0
 
 # Diff at Wed, 14 Jan 2026 06:09:17 GMT:
 

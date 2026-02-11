@@ -14,7 +14,7 @@
   },
   "overrides": {
     "eth:0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd": {
-      "ignoreDiscovery": true
+      "ignoreMethods": ["supportsModule"]
     },
     "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404": {
       "ignoreInWatchMode": [
