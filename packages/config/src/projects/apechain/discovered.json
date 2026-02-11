@@ -1,6 +1,6 @@
 {
   "name": "apechain",
-  "timestamp": 1770736061,
+  "timestamp": 1770822607,
   "configHash": "0x2e012665f91cb90c6b62b837bbf1a3d03f6818319570417fbff15be0b55c40b9",
   "entries": [
     {
@@ -366,13 +366,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 12343,
+        "firstUnresolvedNode": 12367,
         "inbox": "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 12342,
-        "latestNodeCreated": 12494,
+        "latestConfirmed": 12366,
+        "latestNodeCreated": 12518,
         "loserStakeEscrow": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -697,8 +697,8 @@
         "outboxHistory": ["arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 73904,
-        "sequencerReportedSubMessageCount": 33546813
+        "sequencerMessageCount": 73928,
+        "sequencerReportedSubMessageCount": 33591644
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1130,7 +1130,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 73904,
+        "batchCount": 73928,
         "batchPosterManager": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
         "batchPosters": ["arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"],
         "bridge": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -1990,6 +1990,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 430657677 },
+  "usedBlockNumbers": { "arbitrum": 431005210 },
   "permissionsConfigHash": "0xc17fc95fa51d5b9431efe59d66a703c3785a9e1ef29ef3b56ca60c9e2844f633"
 }
