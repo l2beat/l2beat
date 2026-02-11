@@ -240,6 +240,7 @@ function createTransfer(
     plugin,
     transferId,
     type,
+    bridgeType: undefined,
     timestamp,
     srcTime: timestamp,
     srcTxHash: 'random-hash',
