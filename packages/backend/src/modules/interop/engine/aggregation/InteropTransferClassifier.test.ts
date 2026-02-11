@@ -219,6 +219,114 @@ describe(InteropTransferClassifier.name, () => {
       expect(result.nonMinting).toEqual([])
       expect(result.unknown).toEqual([])
     })
+
+    it('matches only transfers of specified bridgeType when plugin has bridgeType', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+        createTransfer('across', 'msg2', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'usdc',
+          dstAbstractTokenId: 'usdc',
+          srcWasBurned: true,
+          dstWasMinted: true,
+        }),
+      ]
+
+      const config: InteropAggregationConfig = {
+        id: 'config1',
+        plugins: [{ plugin: 'across', bridgeType: 'burnAndMint' }],
+      }
+
+      const result = classifier.classifyTransfers(transfers, config)
+
+      expect(result.lockAndMint).toHaveLength(0)
+      expect(result.burnAndMint).toHaveLength(1)
+      expect(result.burnAndMint[0].transferId).toEqual('msg2')
+    })
+
+    it('matches only transfers of specified transferType when plugin has transferType', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+        createTransfer('across', 'msg2', 'withdrawal', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+      ]
+
+      const config: InteropAggregationConfig = {
+        id: 'config1',
+        plugins: [{ plugin: 'across', transferType: 'withdrawal' }],
+      }
+
+      const result = classifier.classifyTransfers(transfers, config)
+
+      expect(result.lockAndMint).toHaveLength(1)
+      expect(result.lockAndMint[0].transferId).toEqual('msg2')
+    })
+
+    it('uses transfer bridgeType when set, otherwise infers from srcWasBurned/dstWasMinted', () => {
+      // msg1: explicit bridgeType overrides burn/mint data for filter matching
+      // msg2: no bridgeType → inferred lockAndMint from srcWasBurned=false, dstWasMinted=true
+      // msg3: no bridgeType → inferred burnAndMint, does not match plugin's lockAndMint
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: true,
+          dstWasMinted: true,
+          bridgeType: 'lockAndMint',
+        }),
+        createTransfer('across', 'msg2', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+        createTransfer('across', 'msg3', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: true,
+          dstWasMinted: true,
+        }),
+      ]
+
+      const config: InteropAggregationConfig = {
+        id: 'config1',
+        plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+      }
+
+      const result = classifier.classifyTransfers(transfers, config)
+
+      expect(result.lockAndMint).toHaveLength(1)
+      expect(result.lockAndMint[0].transferId).toEqual('msg2')
+      expect(result.burnAndMint).toHaveLength(1)
+      expect(result.burnAndMint[0].transferId).toEqual('msg1')
+    })
   })
 })
 
@@ -233,6 +341,7 @@ function createTransfer(
     dstAbstractTokenId: string
     srcWasBurned?: boolean
     dstWasMinted?: boolean
+    bridgeType?: 'lockAndMint' | 'burnAndMint' | 'nonMinting'
   },
 ): InteropTransferRecord {
   const timestamp = UnixTime.now()
@@ -240,7 +349,7 @@ function createTransfer(
     plugin,
     transferId,
     type,
-    bridgeType: undefined,
+    bridgeType: overrides.bridgeType,
     timestamp,
     srcTime: timestamp,
     srcTxHash: 'random-hash',
