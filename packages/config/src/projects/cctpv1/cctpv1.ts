@@ -8,7 +8,7 @@ export const cctpv1: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769523398),
   interopConfig: {
-    showAlways: ['omnichain'],
+    showAlways: ['burnAndMint'],
     plugins: [
       {
         plugin: 'cctp-v1',

@@ -70,7 +70,7 @@ export function getBridgeType({
   srcChain,
   dstChain,
   deployedToAbstractMap,
-  defaultBridgeType = 'omnichain',
+  defaultBridgeType = 'burnAndMint',
 }: {
   srcTokenAddress: Address32 | undefined
   dstTokenAddress: Address32 | undefined
@@ -79,7 +79,7 @@ export function getBridgeType({
   srcChain: string
   dstChain: string
   deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>
-  defaultBridgeType?: 'omnichain' | 'nonMinting'
+  defaultBridgeType?: 'burnAndMint' | 'nonMinting'
 }): InteropBridgeType | undefined {
   if (
     !srcTokenAddress ||

@@ -5,19 +5,19 @@ import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
-import type { OmniChainProtocolEntry } from './tables/getBridgeTypeEntries'
-import { OmniChainTable } from './tables/OmniChainTable'
+import { BurnAndMintTable } from './tables/BurnAndMintTable'
+import type { BurnAndMintProtocolEntry } from './tables/getBridgeTypeEntries'
 
-export function OmniChainCard({
+export function BurnAndMintCard({
   entries,
   isLoading,
 }: {
-  entries: OmniChainProtocolEntry[] | undefined
+  entries: BurnAndMintProtocolEntry[] | undefined
   isLoading: boolean
 }) {
   const { selectedChains, allChainIds } = useInteropSelectedChains()
   const viewAllUrl = buildInteropUrl(
-    '/interop/omnichain',
+    '/interop/burn-and-mint',
     selectedChains,
     allChainIds,
   )
@@ -27,7 +27,7 @@ export function OmniChainCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <h2 className="font-bold text-heading-20 decoration-teal-500 underline-offset-6 max-md:underline md:text-heading-24">
-            Omnichain
+            Burn & Mint
           </h2>
           <TopNBadge n={5} />
         </div>
@@ -48,7 +48,7 @@ export function OmniChainCard({
       {isLoading ? (
         <Skeleton className="mt-2 h-62 w-full rounded-sm" />
       ) : entries && entries.length > 0 ? (
-        <OmniChainTable entries={entries} />
+        <BurnAndMintTable entries={entries} />
       ) : (
         <NoResultsInfo />
       )}

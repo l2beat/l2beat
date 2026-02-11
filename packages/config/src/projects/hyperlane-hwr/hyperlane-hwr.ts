@@ -8,7 +8,7 @@ export const hyperlaneHwr: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1768926236),
   interopConfig: {
-    showAlways: ['omnichain'],
+    showAlways: ['burnAndMint'],
     plugins: [
       {
         plugin: 'hyperlane-hwr',

@@ -8,7 +8,7 @@ export const axelarits: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769520298),
   interopConfig: {
-    showAlways: ['omnichain'],
+    showAlways: ['burnAndMint'],
     plugins: [
       {
         plugin: 'axelar-its',

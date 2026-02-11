@@ -130,9 +130,9 @@ export function SideNavLayout({
               ),
             },
             {
-              title: 'Omnichain tokens',
+              title: 'Burn & Mint protocols',
               href: buildInteropUrl(
-                '/interop/omnichain',
+                '/interop/burn-and-mint',
                 selectedChainsContext?.selectedChains,
                 selectedChainsContext?.allChainIds,
               ),

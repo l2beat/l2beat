@@ -9,18 +9,18 @@ import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type {
+  BurnAndMintProtocolEntry,
   LockAndMintProtocolEntry,
   NonMintingProtocolEntry,
-  OmniChainProtocolEntry,
 } from './getBridgeTypeEntries'
 
 export type NonMintingProtocolRow = NonMintingProtocolEntry & BasicTableRow
 export type LockAndMintProtocolRow = LockAndMintProtocolEntry & BasicTableRow
-export type OmniChainProtocolRow = OmniChainProtocolEntry & BasicTableRow
+export type BurnAndMintProtocolRow = BurnAndMintProtocolEntry & BasicTableRow
 
 const nonMintingColumnHelper = createColumnHelper<NonMintingProtocolRow>()
 const lockAndMintColumnHelper = createColumnHelper<LockAndMintProtocolRow>()
-const omniChainColumnHelper = createColumnHelper<OmniChainProtocolRow>()
+const burnAndMintColumnHelper = createColumnHelper<BurnAndMintProtocolRow>()
 
 function getCommonColumns<
   T extends {
@@ -177,8 +177,8 @@ export const lockAndMintColumns = [
   getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
 ]
 
-export const omniChainColumns = [
-  ...getCommonColumns(omniChainColumnHelper),
-  getLast24hVolumeColumn(omniChainColumnHelper),
-  getTokensByVolumeColumn(omniChainColumnHelper, 'omnichain'),
+export const burnAndMintColumns = [
+  ...getCommonColumns(burnAndMintColumnHelper),
+  getLast24hVolumeColumn(burnAndMintColumnHelper),
+  getTokensByVolumeColumn(burnAndMintColumnHelper, 'burnAndMint'),
 ]

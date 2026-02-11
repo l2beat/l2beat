@@ -140,7 +140,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     subgroup: undefined,
     iconSlug: project.slug,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    bridgeTypes: ['lockAndMint', 'nonMinting', 'omnichain'],
+    bridgeTypes: ['lockAndMint', 'nonMinting', 'burnAndMint'],
     volume: 15_000_000,
     tokens: { items: mockTokens, remainingCount: 2 },
     chains: { items: mockChains, remainingCount: 4 },

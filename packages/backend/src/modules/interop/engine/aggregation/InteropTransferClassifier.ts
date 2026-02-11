@@ -3,7 +3,7 @@ import type { InteropAggregationConfig } from '../../../../config/features/inter
 
 export interface ClassifiedTransfers {
   lockAndMint: InteropTransferRecord[]
-  omnichain: InteropTransferRecord[]
+  burnAndMint: InteropTransferRecord[]
   nonMinting: InteropTransferRecord[]
   unknown: InteropTransferRecord[]
 }
@@ -25,7 +25,7 @@ export class InteropTransferClassifier {
     records: InteropTransferRecord[],
   ): ClassifiedTransfers {
     const lockAndMint: InteropTransferRecord[] = []
-    const omnichain: InteropTransferRecord[] = []
+    const burnAndMint: InteropTransferRecord[] = []
     const nonMinting: InteropTransferRecord[] = []
     const unknown: InteropTransferRecord[] = []
 
@@ -36,7 +36,7 @@ export class InteropTransferClassifier {
       ) {
         lockAndMint.push(record)
       } else if (record.srcWasBurned === true && record.dstWasMinted === true) {
-        omnichain.push(record)
+        burnAndMint.push(record)
       } else if (
         record.srcWasBurned === false &&
         record.dstWasMinted === false
@@ -47,7 +47,7 @@ export class InteropTransferClassifier {
       }
     }
 
-    return { lockAndMint, omnichain, nonMinting, unknown }
+    return { lockAndMint, burnAndMint, nonMinting, unknown }
   }
 
   private buildMatchers(config: InteropAggregationConfig) {

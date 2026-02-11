@@ -47,7 +47,7 @@ describe(InteropTransferClassifier.name, () => {
       expect(result.lockAndMint[0].transferId).toEqual('msg1')
       expect(result.nonMinting).toHaveLength(1)
       expect(result.nonMinting[0].transferId).toEqual('msg2')
-      expect(result.omnichain).toHaveLength(0)
+      expect(result.burnAndMint).toHaveLength(0)
       expect(result.unknown).toHaveLength(0)
     })
 
@@ -94,7 +94,7 @@ describe(InteropTransferClassifier.name, () => {
 
       expect(result.lockAndMint).toHaveLength(1)
       expect(result.lockAndMint[0].transferId).toEqual('msg1')
-      expect(result.omnichain).toHaveLength(0)
+      expect(result.burnAndMint).toHaveLength(0)
       expect(result.nonMinting).toHaveLength(0)
       expect(result.unknown).toHaveLength(0)
     })
@@ -169,8 +169,8 @@ describe(InteropTransferClassifier.name, () => {
       expect(result.lockAndMint).toHaveLength(2)
       expect(result.lockAndMint[0].transferId).toEqual('msg1')
       expect(result.lockAndMint[1].transferId).toEqual('msg4')
-      expect(result.omnichain).toHaveLength(1)
-      expect(result.omnichain[0].transferId).toEqual('msg2')
+      expect(result.burnAndMint).toHaveLength(1)
+      expect(result.burnAndMint[0].transferId).toEqual('msg2')
       expect(result.nonMinting).toHaveLength(1)
       expect(result.nonMinting[0].transferId).toEqual('msg3')
       expect(result.unknown).toHaveLength(3)
@@ -199,7 +199,7 @@ describe(InteropTransferClassifier.name, () => {
       const result = classifier.classifyTransfers(transfers, config)
 
       expect(result.lockAndMint).toEqual([])
-      expect(result.omnichain).toEqual([])
+      expect(result.burnAndMint).toEqual([])
       expect(result.nonMinting).toEqual([])
       expect(result.unknown).toEqual([])
     })
@@ -215,7 +215,7 @@ describe(InteropTransferClassifier.name, () => {
       const result = classifier.classifyTransfers(transfers, config)
 
       expect(result.lockAndMint).toEqual([])
-      expect(result.omnichain).toEqual([])
+      expect(result.burnAndMint).toEqual([])
       expect(result.nonMinting).toEqual([])
       expect(result.unknown).toEqual([])
     })

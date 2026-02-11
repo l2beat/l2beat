@@ -35,7 +35,7 @@ export const agglayer: BaseProject = {
     },
   },
   interopConfig: {
-    showAlways: ['lockAndMint', 'omnichain'],
+    showAlways: ['lockAndMint', 'burnAndMint'],
     plugins: [
       {
         plugin: 'agglayer',
