@@ -257,7 +257,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
         (a, b) => a.ctx.timestamp - b.ctx.timestamp,
       )[0]
 
-      const extraResult: MatchResult = []
+      const wrappers: MatchResult = []
       const mayanForwarded = db.find(MayanForwarded, {
         sameTxAfter: messageSent,
       })
@@ -265,7 +265,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
         sameTxAfter: messageReceived,
       })
       if (mayanForwarded && orderFulfilled) {
-        extraResult.push(
+        wrappers.push(
           Result.Message('mayan.Message', {
             app: 'mctp',
             srcEvent: mayanForwarded,
@@ -275,7 +275,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       }
 
       return [
-        ...extraResult,
+        ...wrappers,
         Result.Message(
           messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
           {
