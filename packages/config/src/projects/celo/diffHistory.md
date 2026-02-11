@@ -8,7 +8,7 @@ Generated with discovered.json: 0xcdc5ba2261c45831df3808f167a1360abbc201cc
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+OPSuccinctFaultDisputeGame implementation replaced in DisputeGameFactory (game42).
 
 ## Watched changes
 

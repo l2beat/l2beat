@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0ffe508bb9d4d39ef829d59a2d84419dab3e5f2d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+SystemConfig gas limit increased from 150M to 175M.
 
 ## Watched changes
 

@@ -8,7 +8,7 @@ Generated with discovered.json: 0x9b1dbac847ff79e267c93eb77b0b597e50834496
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New member added to Safe multisig, threshold changed from 2 of 3 to 2 of 4.
 
 ## Watched changes
 

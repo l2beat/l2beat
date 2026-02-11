@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0d06a6dafc32dcd0f39dcd874bef540415113099
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New SafeL2 multisig discovered.
 
 ## Watched changes
 

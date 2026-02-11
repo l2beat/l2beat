@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7cf57a7eb8633bf539cc3684e4356bdbbcd7f3a8
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Two new members added to Caldera Multisig 2, threshold changed from 2 of 6 to 2 of 8.
 
 ## Watched changes
 

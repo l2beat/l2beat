@@ -8,7 +8,7 @@ Generated with discovered.json: 0x6202db0da8eb637b2b2664590eeb7903347d70a3
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+EspressoMultisig expanded from 3 to 5 members with threshold raised from 2 to 3 (now 3 of 5).
 
 ## Watched changes
 

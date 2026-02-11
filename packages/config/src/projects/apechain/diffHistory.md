@@ -8,7 +8,7 @@ Generated with discovered.json: 0xba25ed6867ac2bb6a1697a103fffd00dc2271be5
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Ownership of Espresso TEE verifier contracts (EspressoSGXTEEVerifier, EspressoTEEVerifier, EspressoNitroTEEVerifier) transferred from EOA to new SafeL2 multisig.
 
 ## Watched changes
 
