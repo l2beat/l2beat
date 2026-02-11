@@ -470,7 +470,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const record3 = record({
           id: 'protocol1',
@@ -593,7 +593,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const record3 = record({
           id: 'protocol3',
@@ -641,7 +641,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const records = [record1, record2]
 
@@ -693,7 +693,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           transferCount: 7,
           totalDurationSum: 3000,
           volume: 7000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const records = [record1, record2, record3]
 

@@ -705,7 +705,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 3,
           identifiedCount: 2000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const record3 = record({
           id: 'protocol3',
@@ -747,7 +747,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 3,
           identifiedCount: 2000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const records = [record1, record2]
 
@@ -882,7 +882,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 10,
           identifiedCount: 2000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         await repository.insertMany([record1, record2])
 
@@ -918,7 +918,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 10,
           identifiedCount: 2000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         await repository.insertMany([record1, record2])
 
@@ -1001,7 +1001,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 7,
           identifiedCount: 3000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const records = [record1, record2, record3]
 

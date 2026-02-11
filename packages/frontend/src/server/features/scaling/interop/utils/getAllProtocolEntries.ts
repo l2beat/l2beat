@@ -188,19 +188,19 @@ function getByBridgeTypeData(
           averageValueInFlight: data.nonMinting.averageValueInFlight,
         }
       : undefined,
-    omnichain: data.omnichain
+    burnAndMint: data.burnAndMint
       ? {
-          volume: data.omnichain.volume,
+          volume: data.burnAndMint.volume,
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeType: 'omnichain',
-              tokens: data.omnichain.tokens,
+              bridgeType: 'burnAndMint',
+              tokens: data.burnAndMint.tokens,
               tokensDetailsMap,
               durationSplitMap,
               unknownTransfersCount:
-                data.omnichain.transferCount -
-                data.omnichain.identifiedTransferCount,
+                data.burnAndMint.transferCount -
+                data.burnAndMint.identifiedTransferCount,
               logger,
             }),
             TOP_ITEMS_LIMIT,

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x7cf57a7eb8633bf539cc3684e4356bdbbcd7f3a8
+
+# Diff at Tue, 10 Feb 2026 15:08:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1758875688
+- current timestamp: 1770736053
+
+## Description
+
+Two new members added to Caldera Multisig 2, threshold changed from 2 of 6 to 2 of 8.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.0:
++        "base:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$members.1:
++        "base:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 8 (25%)"
+    }
+```
+
 Generated with discovered.json: 0xbde48e94552719f6150f9d31a4591899a235af24
 
 # Diff at Tue, 04 Nov 2025 11:32:25 GMT:

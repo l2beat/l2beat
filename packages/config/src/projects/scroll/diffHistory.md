@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x007657833b132abf1c775400355d52ce1c7c143a
+
+# Diff at Tue, 10 Feb 2026 15:13:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1766408981
+- current timestamp: 1770736063
+
+## Description
+
+EURC (Euro Coin) bridge integration: new L1USDCGateway, Euro Coin Token, and MasterMinter contracts added. L1GatewayRouter updated with new gateway entry. Scroll Multisig 3 member replaced on both L1 and L2.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      directlyReceivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2","role":"admin"}
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xfc31892C5500AbE00974280b28907BaA9190E384"
++        "eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      values.gateways.eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c:
++        "eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.3:
+-        "scr:0xfc31892C5500AbE00974280b28907BaA9190E384"
++        "scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (eth:0x02398771Fd1db790Ef2b656ca3BcB3075f27A72c)
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
++   Status: CREATED
+    contract Euro Coin Token (eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1USDCGateway (eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/Euro Coin Token/FiatTokenProxy.p.sol     |  417 ++++
+ .../scroll/.flat/Euro Coin Token/FiatTokenV2_2.sol | 2357 ++++++++++++++++++++
+ .../L1USDCGateway.sol                              | 1231 ++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 ++++++
+ .../L1USDCGateway.sol                              |    0
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ ...0x02398771Fd1db790Ef2b656ca3BcB3075f27A72c.sol} |    0
+ ...:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE.sol |  454 ++++
+ 8 files changed, 5188 insertions(+)
+```
+
 Generated with discovered.json: 0xb9f5f4fc7a54444dac41f58d865e6a238ee555e5
 
 # Diff at Wed, 28 Jan 2026 08:41:36 GMT:

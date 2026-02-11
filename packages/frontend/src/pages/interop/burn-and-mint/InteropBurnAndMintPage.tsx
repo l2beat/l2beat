@@ -24,7 +24,7 @@ interface Props extends AppLayoutProps {
   initialSelectedChains: { from: string[]; to: string[] }
 }
 
-export function InteropOmnichainPage({
+export function InteropBurnAndMintPage({
   interopChains,
   queryState,
   initialSelectedChains,
@@ -58,7 +58,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { data, isLoading } = api.interop.dashboard.useQuery({
     from: selectedChains.from,
     to: selectedChains.to,
-    type: 'omnichain',
+    type: 'burnAndMint',
   })
 
   if (
@@ -101,7 +101,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       />
       <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
       <AllProtocolsCard
-        type="omnichain"
+        type="burnAndMint"
         entries={data?.entries}
         isLoading={isLoading}
         hideTypeColumn

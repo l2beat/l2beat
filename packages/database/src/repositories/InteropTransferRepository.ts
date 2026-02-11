@@ -15,7 +15,7 @@ import type { InteropTransfer } from '../kysely/generated/types'
 const EXPECTED_DB_INTEROP_BRIDGE_TYPES = [
   'lockAndMint',
   'nonMinting',
-  'omnichain',
+  'burnAndMint',
   'unknown',
 ] as const
 const _interopBridgeTypesMustMatchDbContract: typeof EXPECTED_DB_INTEROP_BRIDGE_TYPES =
