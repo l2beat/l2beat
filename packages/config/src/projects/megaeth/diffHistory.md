@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf262bc6cb900bb8f5fb3d5093ea3a4d794db340f
+Generated with discovered.json: 0x005962f940b64052a3a63ee30f17f3652da92d65
 
-# Diff at Tue, 10 Feb 2026 14:37:44 GMT:
+# Diff at Wed, 11 Feb 2026 09:48:23 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@3ed515d72a3ee13169bc3e44f3cacfb40ed698a3 block: 1769535661
-- current timestamp: 1770734196
+- comparing to: main@d8d7849eeca6acaf38e3906f30da1c0c878658af block: 1769535661
+- current timestamp: 1770803234
 
 ## Description
 
@@ -120,12 +120,6 @@ The KailuaGame and KailuaTreasury have an immutable `ROLLUP_CONFIG_HASH` (0x16eb
 
 ```diff
 +   Status: CREATED
-    reference AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A)
     +++ description: None
 ```
@@ -133,24 +127,6 @@ The KailuaGame and KailuaTreasury have an immutable `ROLLUP_CONFIG_HASH` (0x16eb
 ```diff
 +   Status: CREATED
     contract EigenDA Multisig (eth:0x338477FfaF63c04AC06048787f910671eC914B34)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    reference EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    reference DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    reference EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390)
     +++ description: None
 ```
 
@@ -200,12 +176,6 @@ The KailuaGame and KailuaTreasury have an immutable `ROLLUP_CONFIG_HASH` (0x16eb
 +   Status: CREATED
     contract IndexRegistry (eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030)
     +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
-```
-
-```diff
-+   Status: CREATED
-    reference EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90)
-    +++ description: None
 ```
 
 ```diff
