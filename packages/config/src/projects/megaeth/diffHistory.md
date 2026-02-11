@@ -1,3 +1,237 @@
+Generated with discovered.json: 0x005962f940b64052a3a63ee30f17f3652da92d65
+
+# Diff at Wed, 11 Feb 2026 09:48:23 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d8d7849eeca6acaf38e3906f30da1c0c878658af block: 1769535661
+- current timestamp: 1770803234
+
+## Description
+
+Major update: MegaETH transitions to onchain EigenDA certificate verification via a new BunnyInbox contract.
+
+**SystemConfig upgrade (v2.5.0 → v2.7.0):**
+Upgraded implementation from 0x2425EB to 0x7f84fE. The only code change is the addition of a new `setBatchInbox(address)` function allowing the owner to change the batch inbox address on-chain ([diff](https://disco.l2beat.com/diff/eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639/eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9)). The batchInbox was changed from the old EOA (0x00656C) to the new BunnyInbox contract (0x02B8d1).
+
+**BunnyInbox (new, 0x02B8d1):**
+New upgradeable contract serving as the batch inbox. Its `fallback()` function strips a 4-byte prefix from calldata, RLP-decodes an EigenDACertV3 struct, and calls `EigenDACertVerifier.checkDACertReverts()` to validate the EigenDA certificate on-chain. This means every batch submission now verifies the EigenDA data availability certificate on L1.
+
+**EigenDACertVerifier (new, 0xa4F386) + EigenDA/EigenLayer infrastructure:**
+An immutable EigenDA V3 certificate verifier referenced by BunnyInbox. It verifies batch data attestations against operator signatures and stake thresholds via the EigenDAServiceManager. 
+
+**Stale proof system config:**
+The KailuaGame and KailuaTreasury have an immutable `ROLLUP_CONFIG_HASH` (0x16ebac7d...) that commits to the rollup config including the batch inbox address. Since the batch inbox changed from the old EOA (0x00656C) to BunnyInbox (0x02B8d1), but the games were NOT redeployed, the on-chain `ROLLUP_CONFIG_HASH` no longer matches the current chain config. Any ZK proof generated against the current derivation pipeline would produce a different config hash and fail on-chain verification. Additionally, the `FPVM_IMAGE_ID` likely needs updating so the prover program rejects reverted BunnyInbox transactions - otherwise the batcher could submit invalid DA certs that revert on L1 but are still picked up by derivation. The games should be redeployed with updated `ROLLUP_CONFIG_HASH` and `FPVM_IMAGE_ID`.
+
+**Governance changes:**
+- MegaETH Safe multisig changed from 4/8 (50%) to 6/10 (60%) threshold
+- Two new members added: a 1-of-3 nested Safe (0x63eC, nonce 0) and an EOA (0x0D17)
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x5f25d989fb6ccdc8dcf6fec90727faecf13ba2e3a9cc2d4ca902a5be71e10b9a"
++        "0x18ecfc662e320a3cf78978511db8f7d6f3819d32a52e70d74cc636c9a43335e8"
+      values.$implementation:
+-        "eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639"
++        "eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9"
+      values.$pastUpgrades.1:
++        ["2026-02-09T04:47:59.000Z","0x9c539698c6852b92c7289498f8b808d3ede8c412362dbb31c485c94e09e0cd10",["eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.batchInbox:
+-        "eth:0x00656C604FC470e6a566A695B74455e18a6D75D3"
++        "eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2"
+      values.sequencerInbox:
+-        "eth:0x00656C604FC470e6a566A695B74455e18a6D75D3"
++        "eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2"
+      values.version:
+-        "2.5.0"
++        "2.7.0"
+      implementationNames.eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639:
+-        "SystemConfig"
+      implementationNames.eth:0x7f84fEb1cEb9C91844ee80C63d153d9128Fb40e9:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract Safe (eth:0x92e0E0B15e3e99b32c9ED9AD284F939553C7b7d6) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x63eCafD27E0B86B37903c8aA64beD47244Ad909A"
+      values.$members.1:
++        "eth:0x0D173c5d6d6018075f63F4977ae7561f7F9A40eF"
+      values.$threshold:
+-        4
++        6
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "6 of 10 (60%)"
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D)
+    +++ description: Keeps track of the total stake of each operator.
+```
+
+```diff
++   Status: CREATED
+    contract BLSApkRegistry (eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505)
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+```
+
+```diff
++   Status: CREATED
+    contract BunnyInbox (eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2)
+    +++ description: Onchain EigenDA certificate verification inbox. Receives batch data, strips 4-byte prefix, RLP-decodes EigenDACertV3 and calls the EigenDACertVerifier to validate the certificate. Used as the batch inbox for EigenDA-based data availability.
+```
+
+```diff
++   Status: CREATED
+    contract RegistryCoordinator (eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656)
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+```
+
+```diff
++   Status: CREATED
+    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060)
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+```
+
+```diff
++   Status: CREATED
+    contract EjectionManager (eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E)
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDA Multisig (eth:0x338477FfaF63c04AC06048787f910671eC914B34)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SocketRegistry (eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x63eCafD27E0B86B37903c8aA64beD47244Ad909A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad)
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0)
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifier (eth:0xa4F38615e6a1846ccD7ff08E8179CBdAC8F5ff3B)
+    +++ description: A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.
+```
+
+```diff
++   Status: CREATED
+    contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05)
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+```
+
+```diff
++   Status: CREATED
+    contract IndexRegistry (eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030)
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B)
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15)
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+```
+
+## Source code changes
+
+```diff
+.../.flat/BLSApkRegistry/BLSApkRegistry.sol        | 1038 +++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../megaeth/.flat/BunnyInbox/BunnyInbox.sol        | 1402 ++++++++++
+ .../BunnyInbox/TransparentUpgradeableProxy.p.sol   |  631 +++++
+ .../megaeth/.flat/EigenDA Multisig/Safe.sol        | 1088 ++++++++
+ .../megaeth/.flat/EigenDA Multisig/SafeProxy.p.sol |   37 +
+ .../projects/megaeth/.flat/EigenDACertVerifier.sol | 1329 +++++++++
+ .../EigenDADisperserRegistry.sol                   |  410 +++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../.flat/EigenDAOperationsMultisig/Safe.sol       | 1088 ++++++++
+ .../EigenDAOperationsMultisig/SafeProxy.p.sol      |   37 +
+ .../EigenDARelayRegistry/EigenDARelayRegistry.sol  |  420 +++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../EigenDAServiceManager.sol                      | 2699 +++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../EigenDAThresholdRegistry.sol                   |  715 +++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../GnosisSafe.sol                                 |  953 +++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../.flat/EjectionManager/EjectionManager.sol      |  593 ++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../megaeth/.flat/IndexRegistry/IndexRegistry.sol  |  724 +++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../src/projects/megaeth/.flat/PauserRegistry.sol  |   58 +
+ .../megaeth/.flat/PaymentVault/PaymentVault.sol    |  594 ++++
+ .../PaymentVault/TransparentUpgradeableProxy.p.sol |  631 +++++
+ ...:0x8247EF5705d3345516286B72bFE6D690197C2E99.sol |  147 +
+ .../RegistryCoordinator/RegistryCoordinator.sol    | 2847 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../Safe.sol                                       | 1088 ++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../.flat/SocketRegistry/SocketRegistry.sol        |   53 +
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../megaeth/.flat/StakeRegistry/StakeRegistry.sol  | 1176 ++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++
+ .../SystemConfig/SystemConfig.sol                  |   16 +-
+ 36 files changed, 26154 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x3e3c2ac5fc6f4de059ee493adb99384715acc81c
 
 # Diff at Wed, 21 Jan 2026 10:06:24 GMT:
