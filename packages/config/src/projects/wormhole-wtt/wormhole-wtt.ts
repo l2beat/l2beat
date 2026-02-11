@@ -8,10 +8,10 @@ export const wormholeWtt: BaseProject = {
   shortName: 'Wormhole WTT',
   addedAt: UnixTime(1770637610),
   interopConfig: {
-    showAlways: ['lockAndMint'],
     plugins: [
       {
         plugin: 'wormhole-token-bridge',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

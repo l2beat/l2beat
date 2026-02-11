@@ -61,10 +61,9 @@ export class InteropTransferClassifier {
 
       if (plugin.bridgeType) {
         pluginConditions.push((transfer) => {
-          if (!plugin.bridgeType) {
-            return this.getBridgeType(transfer) === plugin.bridgeType
-          }
-          return plugin.bridgeType === transfer.bridgeType
+          const transferBridgeType =
+            transfer.bridgeType ?? this.inferBridgeType(transfer)
+          return plugin.bridgeType === transferBridgeType
         })
       }
 
@@ -96,7 +95,7 @@ export class InteropTransferClassifier {
     return conditions
   }
 
-  private getBridgeType(transfer: InteropTransferRecord): InteropBridgeType {
+  private inferBridgeType(transfer: InteropTransferRecord): InteropBridgeType {
     if (
       (transfer.srcWasBurned === false && transfer.dstWasMinted === true) ||
       (transfer.srcWasBurned === true && transfer.dstWasMinted === false)
