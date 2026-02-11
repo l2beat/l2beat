@@ -60,7 +60,7 @@ export async function getInteropBurnAndMintData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url: req.originalUrl,
-          image: '/meta-images/interop/burn-and-mint/opengraph-image.png',
+          image: '/meta-images/interop/burn-&-mint/opengraph-image.png',
         },
       }),
     },
