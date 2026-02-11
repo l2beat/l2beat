@@ -11,6 +11,7 @@ export type ProtocolEntry = {
   id: ProjectId
   iconUrl: string
   protocolName: string
+  bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
     | {
@@ -22,8 +23,8 @@ export type ProtocolEntry = {
   tokens: TopItems<TokenData>
   chains: TopItems<ChainData>
   transferCount: number
-  averageValue: number
-  averageDuration: AverageDuration
+  averageValue: number | null
+  averageDuration: AverageDuration | null
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
@@ -38,7 +39,7 @@ export type ByBridgeTypeData = {
 export type LockAndMintProtocolData = {
   volume: number
   tokens: TopItems<TokenData>
-  averageDuration: AverageDuration
+  averageDuration: AverageDuration | null
 }
 
 export type NonMintingProtocolData = {

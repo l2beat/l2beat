@@ -1,6 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
-import { assert, type KnownInteropBridgeType } from '@l2beat/shared-pure'
+import {
+  assert,
+  type KnownInteropBridgeType,
+  notUndefined,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
 import type {
@@ -27,6 +32,7 @@ export function getProtocolEntries(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   interopProjects: Project<'interopConfig'>[],
+  type: KnownInteropBridgeType | undefined,
 ): ProtocolEntry[] {
   const durationSplitMap = buildDurationSplitMap(interopProjects)
   const transfersTimeModeMap = buildTransfersTimeModeMap(interopProjects)
@@ -35,6 +41,8 @@ export function getProtocolEntries(
     records,
     transfersTimeModeMap,
     durationSplitMap,
+    interopProjects,
+    type,
   )
   const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(
     records,
@@ -56,16 +64,23 @@ export function getProtocolEntries(
       )
 
       const byBridgeType = getByBridgeTypeData(
-        projectId,
+        project.id,
         protocolsDataByBridgeTypeMap,
         tokensDetailsMap,
         durationSplitMap,
         logger,
       )
-
-      const bridgeTypes = Object.entries(byBridgeType ?? {})
+      const bridgeTypesFromData = Object.entries(byBridgeType ?? {})
         .filter(([_, value]) => value !== undefined)
         .map(([key]) => key) as KnownInteropBridgeType[]
+
+      const bridgeTypesFromPlugins = project.interopConfig.plugins
+        .map((p) => p.bridgeType)
+        .filter(notUndefined)
+
+      const bridgeTypes = [
+        ...new Set([...bridgeTypesFromData, ...bridgeTypesFromPlugins]),
+      ]
 
       const averageDuration =
         project.interopConfig.transfersTimeMode === 'unknown'
@@ -103,6 +118,7 @@ export function getProtocolEntries(
         id: project.id,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         protocolName: project.interopConfig.name ?? project.name,
+        bridgeTypes,
         isAggregate: project.interopConfig.isAggregate,
         subgroup: subgroupProject
           ? {
@@ -118,7 +134,7 @@ export function getProtocolEntries(
         averageValue:
           data.identifiedTransferCount > 0
             ? data.volume / data.identifiedTransferCount
-            : 0,
+            : null,
         averageDuration,
         averageValueInFlight: data.averageValueInFlight,
         netMintedValue:
@@ -133,7 +149,7 @@ export function getProtocolEntries(
 }
 
 function getByBridgeTypeData(
-  projectId: string,
+  projectId: ProjectId,
   protocolsDataByBridgeTypeMap: Map<string, ProtocolDataByBridgeType>,
   tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
   durationSplitMap: DurationSplitMap | undefined,

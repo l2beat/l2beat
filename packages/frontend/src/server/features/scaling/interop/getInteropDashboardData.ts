@@ -62,7 +62,12 @@ export async function getInteropDashboardData(
       subgroupProjects,
     }),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
-    entries: getProtocolEntries(records, tokensDetailsMap, interopProjects),
+    entries: getProtocolEntries(
+      records,
+      tokensDetailsMap,
+      interopProjects,
+      params.type,
+    ),
   }
 }
 
