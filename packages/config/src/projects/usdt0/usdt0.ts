@@ -12,7 +12,7 @@ export const usdt0: BaseProject = {
   addedAt: UnixTime(1767959267),
   interopConfig: {
     subgroupId: ProjectId('layerzero'),
-    showAlways: ['omnichain', 'lockAndMint'],
+    showAlways: ['burnAndMint', 'lockAndMint'],
     plugins: [
       {
         abstractTokenId: ID_USDT,

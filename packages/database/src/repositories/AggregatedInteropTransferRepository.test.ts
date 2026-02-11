@@ -830,7 +830,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 3,
           identifiedCount: 2000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const record3 = record({
           id: 'protocol3',
@@ -872,7 +872,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           dstChain: 'arbitrum',
           transferCount: 3,
           identifiedCount: 2000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const records = [record1, record2]
 

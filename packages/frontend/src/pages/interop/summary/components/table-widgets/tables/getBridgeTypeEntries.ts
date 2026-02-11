@@ -1,7 +1,7 @@
 import type {
+  BurnAndMintProtocolData,
   LockAndMintProtocolData,
   NonMintingProtocolData,
-  OmniChainProtocolData,
   ProtocolEntry,
 } from '~/server/features/scaling/interop/types'
 
@@ -16,23 +16,23 @@ export type NonMintingProtocolEntry = BridgeTypeProtocolEntryCommon &
 export type LockAndMintProtocolEntry = BridgeTypeProtocolEntryCommon &
   LockAndMintProtocolData
 
-export type OmniChainProtocolEntry = BridgeTypeProtocolEntryCommon &
-  OmniChainProtocolData
+export type BurnAndMintProtocolEntry = BridgeTypeProtocolEntryCommon &
+  BurnAndMintProtocolData
 
 export type GroupedBridgeTypeProtocolEntries = {
   lockAndMint: LockAndMintProtocolEntry[]
   nonMinting: NonMintingProtocolEntry[]
-  omnichain: OmniChainProtocolEntry[]
+  burnAndMint: BurnAndMintProtocolEntry[]
 }
 
 export function getBridgeTypeEntries(entries: ProtocolEntry[]): {
   lockAndMint: LockAndMintProtocolEntry[]
   nonMinting: NonMintingProtocolEntry[]
-  omnichain: OmniChainProtocolEntry[]
+  burnAndMint: BurnAndMintProtocolEntry[]
 } {
   const lockAndMint: LockAndMintProtocolEntry[] = []
   const nonMinting: NonMintingProtocolEntry[] = []
-  const omnichain: OmniChainProtocolEntry[] = []
+  const burnAndMint: BurnAndMintProtocolEntry[] = []
 
   for (const entry of entries) {
     if (entry.byBridgeType?.lockAndMint) {
@@ -53,13 +53,13 @@ export function getBridgeTypeEntries(entries: ProtocolEntry[]): {
         ...entry.byBridgeType.nonMinting,
       })
     }
-    if (entry.byBridgeType?.omnichain) {
-      omnichain.push({
+    if (entry.byBridgeType?.burnAndMint) {
+      burnAndMint.push({
         iconUrl: entry.iconUrl,
         protocolName: entry.protocolName,
         subgroup: entry.subgroup,
         isAggregate: entry.isAggregate,
-        ...entry.byBridgeType.omnichain,
+        ...entry.byBridgeType.burnAndMint,
       })
     }
   }
@@ -67,6 +67,6 @@ export function getBridgeTypeEntries(entries: ProtocolEntry[]): {
   return {
     lockAndMint: lockAndMint.sort((a, b) => b.volume - a.volume).slice(0, 5),
     nonMinting: nonMinting.sort((a, b) => b.volume - a.volume).slice(0, 5),
-    omnichain: omnichain.sort((a, b) => b.volume - a.volume).slice(0, 5),
+    burnAndMint: burnAndMint.sort((a, b) => b.volume - a.volume).slice(0, 5),
   }
 }

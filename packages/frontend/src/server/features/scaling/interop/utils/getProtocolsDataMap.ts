@@ -12,7 +12,7 @@ export interface ProtocolDataByBridgeType {
   nonMinting?: {
     averageValueInFlight: number
   } & ProtocolDataByBridgeTypeCommon
-  omnichain?: ProtocolDataByBridgeTypeCommon
+  burnAndMint?: ProtocolDataByBridgeTypeCommon
 }
 
 type ProtocolDataByBridgeTypeCommon = {
@@ -61,7 +61,7 @@ export function getProtocolsDataMapByBridgeType(
     const bridgeTypeMap = protocolsDataMap.get(record.id) ?? {
       lockAndMint: undefined,
       nonMinting: undefined,
-      omnichain: undefined,
+      burnAndMint: undefined,
     }
 
     const durationSplit = durationSplitMap
@@ -125,21 +125,21 @@ export function getProtocolsDataMapByBridgeType(
             (record.avgValueInFlight ?? 0),
         }
         break
-      case 'omnichain':
-        bridgeTypeMap.omnichain = {
+      case 'burnAndMint':
+        bridgeTypeMap.burnAndMint = {
           volume:
-            (bridgeTypeMap.omnichain?.volume ?? 0) +
+            (bridgeTypeMap.burnAndMint?.volume ?? 0) +
             (record.srcValueUsd ?? record.dstValueUsd ?? 0),
           tokens: mergeTokensData(
-            bridgeTypeMap.omnichain?.tokens,
+            bridgeTypeMap.burnAndMint?.tokens,
             record.tokens,
             direction,
           ),
           transferCount:
-            (bridgeTypeMap.omnichain?.transferCount ?? 0) +
+            (bridgeTypeMap.burnAndMint?.transferCount ?? 0) +
             record.transferCount,
           identifiedTransferCount:
-            (bridgeTypeMap.omnichain?.identifiedTransferCount ?? 0) +
+            (bridgeTypeMap.burnAndMint?.identifiedTransferCount ?? 0) +
             record.identifiedCount,
         }
         break

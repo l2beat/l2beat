@@ -31,7 +31,7 @@ export type ProtocolEntry = {
 export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined
-  omnichain: OmniChainProtocolData | undefined
+  burnAndMint: BurnAndMintProtocolData | undefined
 }
 
 export type LockAndMintProtocolData = {
@@ -46,7 +46,7 @@ export type NonMintingProtocolData = {
   averageValueInFlight: number
 }
 
-export type OmniChainProtocolData = {
+export type BurnAndMintProtocolData = {
   volume: number
   tokens: TokenData[]
 }
