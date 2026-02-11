@@ -659,10 +659,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
     ],
     trackedTxs: [
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1636978914),
@@ -674,10 +671,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.7,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1702921247),
@@ -689,10 +683,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.7,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1704855731),
@@ -704,10 +695,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.7,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1710252995),
@@ -719,10 +707,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.65,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1710625271),
@@ -734,10 +719,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.65,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1715783986),
@@ -749,10 +731,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.2,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1724856227),
@@ -764,10 +743,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.2,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1724856227),
@@ -779,10 +755,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.2,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1732747391),
@@ -794,10 +767,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.05,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742836319),
@@ -809,10 +779,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742967335),
@@ -824,10 +791,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
@@ -839,10 +803,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC
@@ -853,10 +814,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1732747391),
@@ -868,10 +826,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.05,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1742836319),
@@ -883,10 +838,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1756737695), // Sep-01-2025 02:41:35 PM UTC
@@ -898,10 +850,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         _hackCostMultiplier: 0.17,
       },
       {
-        uses: [
-          { type: 'liveness', subtype: 'proofSubmissions' },
-          { type: 'l2costs', subtype: 'proofSubmissions' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1765378643), // Sep-01-2025 02:41:35 PM UTC
