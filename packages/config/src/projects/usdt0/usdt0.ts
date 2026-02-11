@@ -21,7 +21,7 @@ export const usdt0: BaseProject = {
       {
         abstractTokenId: ID_USDT0,
         plugin: 'layerzero-v2-ofts',
-        bridgeType: 'omnichain',
+        bridgeType: 'burnAndMint',
       },
     ],
   },

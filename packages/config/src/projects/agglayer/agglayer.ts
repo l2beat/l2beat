@@ -42,7 +42,7 @@ export const agglayer: BaseProject = {
       },
       {
         plugin: 'agglayer',
-        bridgeType: 'omnichain',
+        bridgeType: 'burnAndMint',
       },
     ],
   },

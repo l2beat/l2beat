@@ -11,7 +11,7 @@ export const wormholeNtt: BaseProject = {
     plugins: [
       {
         plugin: 'wormhole-ntt',
-        bridgeType: 'omnichain',
+        bridgeType: 'burnAndMint',
       },
       {
         plugin: 'wormhole-ntt',

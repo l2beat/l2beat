@@ -103,7 +103,7 @@ export class InteropTransferClassifier {
       return 'lockAndMint'
     }
     if (transfer.srcWasBurned === true && transfer.dstWasMinted === true) {
-      return 'omnichain'
+      return 'burnAndMint'
     }
     if (transfer.srcWasBurned === false && transfer.dstWasMinted === false) {
       return 'nonMinting'
