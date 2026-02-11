@@ -34,6 +34,7 @@ export const megaeth: ScalingProject = opStackL2({
       discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
     ),
   ],
+  architectureImage: 'megaeth',
   stateValidationImage: 'megaeth',
   display: {
     name: 'MegaETH',
