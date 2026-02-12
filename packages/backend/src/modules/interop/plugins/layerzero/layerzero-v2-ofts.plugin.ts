@@ -90,6 +90,14 @@ export function getBridgeType({
     return
   }
 
+  // chainspecificaddress does not support 'native' so we return early
+  if (
+    srcTokenAddress === Address32.NATIVE ||
+    dstTokenAddress === Address32.NATIVE
+  ) {
+    return defaultBridgeType
+  }
+
   const srcAbstractToken = deployedToAbstractMap.get(
     ChainSpecificAddress.fromLong(
       srcChain,

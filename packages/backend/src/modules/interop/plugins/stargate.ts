@@ -492,11 +492,10 @@ export class StargatePlugin implements InteropPlugin {
       ]
 
       for (const oftSentBusRode of oftSentBusRodeBatch) {
-        const passengerReceiver = Address32.cropToEthereumAddress(
-          oftSentBusRode.args.receiver as Address32,
-        )
         const matchedIndex = oftReceivedBatch.findIndex(
-          (o) => o.args.receiver === passengerReceiver,
+          (o) =>
+            Address32.from(o.args.receiver) ===
+            Address32.from(oftSentBusRode.args.receiver),
         )
         if (matchedIndex === -1) return
 
