@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x788a5780460cf8e71d0d6ff6d4f23ac3c308ac8d
+Generated with discovered.json: 0x40afe9740bce8d1a96ad3c3e7d4d5acb4d68225c
 
-# Diff at Wed, 11 Feb 2026 10:12:34 GMT:
+# Diff at Thu, 12 Feb 2026 16:26:35 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@d8d7849eeca6acaf38e3906f30da1c0c878658af block: 1769272429
+- comparing to: main@632144c808f959f8e2164511b7a59e409831ae61 block: 1769272429
 - current timestamp: 1770804689
 
 ## Description
@@ -71,6 +71,8 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
 +        "3.7.0"
       values.getStartingAnchorRoot:
 +        {"root":"0x0da4462cd1b36cd4947cb82f9a307b776532841c14360e98082937b7cf401637","l2SequenceNumber":36510968}
+      errors:
+-        {"absolutePrestateFromGame":"Processing error occurred.","challengePeriodFromOracle":"Processing error occurred.","oracleFromVm":"Processing error occurred.","vmFromGame":"Processing error occurred."}
       implementationNames.eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E:
 -        "AnchorStateRegistry"
       implementationNames.eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5:
@@ -242,6 +244,20 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
  .../PreimageOracle.sol => /dev/null                | 1311 ----------
  .../SystemConfig/SystemConfig.sol                  |   40 +-
  11 files changed, 321 insertions(+), 6246 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769272429 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x54027b388330415a34b2dBa9E6d25895649eEFf1) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      errors:
++        {"absolutePrestateFromGame":"Processing error occurred.","challengePeriodFromOracle":"Processing error occurred.","oracleFromVm":"Processing error occurred.","vmFromGame":"Processing error occurred."}
+    }
 ```
 
 Generated with discovered.json: 0x86fbdb8cb1dce17cd570479f59275bd7d435426a

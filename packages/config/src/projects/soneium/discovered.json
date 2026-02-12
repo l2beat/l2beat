@@ -448,7 +448,14 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
-      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "ignoreInWatchMode": [
+        "anchorGame",
+        "getAnchorRoot",
+        "absolutePrestateFromGame",
+        "vmFromGame",
+        "oracleFromVm",
+        "challengePeriodFromOracle"
+      ],
       "sinceTimestamp": 1753380095,
       "sinceBlock": 22990670,
       "values": {
@@ -467,7 +474,9 @@
           ]
         ],
         "$upgradeCount": 2,
+        "absolutePrestateFromGame": "eth:0x0000000000000000000000000000000000000000",
         "anchorGame": "eth:0x0000000000000000000000000000000000000000",
+        "challengePeriodFromOracle": "eth:0x0000000000000000000000000000000000000000",
         "disputeGameFactory": "eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
@@ -475,6 +484,7 @@
           5084269
         ],
         "initVersion": 1,
+        "oracleFromVm": "eth:0x0000000000000000000000000000000000000000",
         "paused": false,
         "proxyAdmin": "eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -483,7 +493,8 @@
         "retirementTimestamp": 1753380095,
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "systemConfig": "eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3",
-        "version": "3.5.0"
+        "version": "3.5.0",
+        "vmFromGame": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
       "implementationNames": {
@@ -3199,7 +3210,7 @@
     "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lido/L1LidoTokensBridge": "0xfbf3e83ab86a74d691bbceaf7d057f48ce1eb84928da555a82dee64747e5facc",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
+    "opstack/AnchorStateRegistry_post13": "0x41986d622dec95b73fecf0920cc45124f99a0c121e94d0782a9bc5e72fd75957",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
     "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",

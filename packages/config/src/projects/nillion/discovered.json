@@ -933,7 +933,14 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
-      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "ignoreInWatchMode": [
+        "anchorGame",
+        "getAnchorRoot",
+        "absolutePrestateFromGame",
+        "vmFromGame",
+        "oracleFromVm",
+        "challengePeriodFromOracle"
+      ],
       "sinceTimestamp": 1768924643,
       "sinceBlock": 24277031,
       "values": {
@@ -947,7 +954,9 @@
           ]
         ],
         "$upgradeCount": 1,
+        "absolutePrestateFromGame": "eth:0x0000000000000000000000000000000000000000",
         "anchorGame": "eth:0x0000000000000000000000000000000000000000",
+        "challengePeriodFromOracle": "eth:0x0000000000000000000000000000000000000000",
         "disputeGameFactory": "eth:0x5931f05809932a43C2A6c86f3F9BC2788f840b1C",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
@@ -955,6 +964,7 @@
           0
         ],
         "initVersion": 1,
+        "oracleFromVm": "eth:0x0000000000000000000000000000000000000000",
         "paused": false,
         "proxyAdmin": "eth:0x5306B2A086d477eCc7302447519dA688f9176e3D",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -963,7 +973,8 @@
         "retirementTimestamp": 1768924643,
         "superchainConfig": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
         "systemConfig": "eth:0x8a502d8EEa2Ed3e89c4D52DE51364688590cE591",
-        "version": "3.5.0"
+        "version": "3.5.0",
+        "vmFromGame": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
       "implementationNames": {
@@ -1949,7 +1960,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
+    "opstack/AnchorStateRegistry_post13": "0x41986d622dec95b73fecf0920cc45124f99a0c121e94d0782a9bc5e72fd75957",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",

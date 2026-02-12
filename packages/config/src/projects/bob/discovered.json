@@ -1634,7 +1634,14 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.",
-      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "ignoreInWatchMode": [
+        "anchorGame",
+        "getAnchorRoot",
+        "absolutePrestateFromGame",
+        "vmFromGame",
+        "oracleFromVm",
+        "challengePeriodFromOracle"
+      ],
       "sinceTimestamp": 1768920023,
       "sinceBlock": 24276646,
       "values": {
@@ -1648,7 +1655,9 @@
           ]
         ],
         "$upgradeCount": 1,
+        "absolutePrestateFromGame": "eth:0x0000000000000000000000000000000000000000",
         "anchorGame": "eth:0x0000000000000000000000000000000000000000",
+        "challengePeriodFromOracle": "eth:0x0000000000000000000000000000000000000000",
         "disputeGameFactory": "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
@@ -1656,6 +1665,7 @@
           0
         ],
         "initVersion": 1,
+        "oracleFromVm": "eth:0x0000000000000000000000000000000000000000",
         "paused": false,
         "proxyAdmin": "eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
         "proxyAdminOwner": "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
@@ -1664,7 +1674,8 @@
         "retirementTimestamp": 1768920023,
         "superchainConfig": "eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46",
         "systemConfig": "eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
-        "version": "3.5.0"
+        "version": "3.5.0",
+        "vmFromGame": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
       "implementationNames": {
@@ -3221,7 +3232,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lido/L1ERC20TokenBridge": "0x1dbfb76725d8a5de94df533062c2232ad27f9bd9988b137706333c26e2ffc4d7",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
+    "opstack/AnchorStateRegistry_post13": "0x41986d622dec95b73fecf0920cc45124f99a0c121e94d0782a9bc5e72fd75957",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7d78d1a8b74a67f5c109395a2096687702f470ea
+Generated with discovered.json: 0x0da11488c99d85ae5f5803508bababdf07055e73
 
-# Diff at Wed, 11 Feb 2026 10:17:46 GMT:
+# Diff at Thu, 12 Feb 2026 16:05:01 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@d8d7849eeca6acaf38e3906f30da1c0c878658af block: 1769272178
-- current timestamp: 1770804702
+- comparing to: main@632144c808f959f8e2164511b7a59e409831ae61 block: 1769272178
+- current timestamp: 1770912106
 
 ## Description
 
@@ -247,8 +247,8 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 
 ```diff
 +   Status: CREATED
-    contract FaultDisputeGameV2 (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499)
-    +++ description: None
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 ## Source code changes
@@ -260,7 +260,7 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
  .../DelayedWETH.sol => /dev/null                   |  782 ------
  .../Proxy.p.sol => /dev/null                       |  200 --
  .../DisputeGameFactory/DisputeGameFactory.sol      |   56 +-
- .../FaultDisputeGameV2.sol}                        |  242 +-
+ .../FaultDisputeGame.sol                           |  242 +-
  .../.flat@1769272178/MIPS.sol => /dev/null         | 2643 --------------------
  .../Proxy.p.sol => /dev/null                       |   39 -
  .../Safe.sol => /dev/null                          | 1088 --------

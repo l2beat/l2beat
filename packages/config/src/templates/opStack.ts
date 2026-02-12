@@ -631,6 +631,23 @@ function getProgramHashes(
         'PermissionedDisputeGame',
         'absolutePrestate',
       )
+      // V2 dispute games store params in clone bytecode;
+      // the implementation contract returns zero.
+      // Read from AnchorStateRegistry's game clone instead.
+      if (absolutePrestate === '0x' + '0'.repeat(64)) {
+        const fromAnchor = templateVars.discovery.hasContract(
+          'AnchorStateRegistry',
+        )
+          ? templateVars.discovery.getContractValueOrUndefined<string>(
+              'AnchorStateRegistry',
+              'absolutePrestateFromGame',
+            )
+          : undefined
+        if (fromAnchor && fromAnchor !== '0x' + '0'.repeat(64)) {
+          return [PROGRAM_HASHES(fromAnchor)]
+        }
+        return []
+      }
       return [PROGRAM_HASHES(absolutePrestate)]
     }
     case 'Kailua': {
@@ -753,11 +770,7 @@ function getStateValidation(
           'splitDepth',
         )
 
-      const oracleChallengePeriod =
-        templateVars.discovery.getContractValue<number>(
-          'PreimageOracle',
-          'challengePeriod',
-        )
+      const oracleChallengePeriod = getOracleChallengePeriod(templateVars)
 
       return describeOPFP({
         disputeGameBonds: permissionedDisputeGameBonds,
@@ -770,6 +783,8 @@ function getStateValidation(
       })
     }
     case 'Permissionless': {
+      const faultDisputeGame = getFaultDisputeGameName(templateVars)
+
       const permissionlessDisputeGameBonds =
         templateVars.discovery.getContractValue<number[]>(
           'DisputeGameFactory',
@@ -777,33 +792,29 @@ function getStateValidation(
         )[0] // 0 is for permissionless games!
 
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
-        'FaultDisputeGame',
+        faultDisputeGame,
         'maxClockDuration',
       )
 
       const permissionlessGameMaxDepth =
         templateVars.discovery.getContractValue<number>(
-          'FaultDisputeGame',
+          faultDisputeGame,
           'maxGameDepth',
         )
 
       const permissionlessGameSplitDepth =
         templateVars.discovery.getContractValue<number>(
-          'FaultDisputeGame',
+          faultDisputeGame,
           'splitDepth',
         )
 
       const permissionlessGameClockExtension =
         templateVars.discovery.getContractValue<number>(
-          'FaultDisputeGame',
+          faultDisputeGame,
           'clockExtension',
         )
 
-      const oracleChallengePeriod =
-        templateVars.discovery.getContractValue<number>(
-          'PreimageOracle',
-          'challengePeriod',
-        )
+      const oracleChallengePeriod = getOracleChallengePeriod(templateVars)
 
       return describeOPFP({
         disputeGameBonds: permissionlessDisputeGameBonds,
@@ -1614,7 +1625,7 @@ function getTechnologyExitMechanism(
 
       const disputeGameName =
         fraudProofType === 'Permissionless'
-          ? 'FaultDisputeGame'
+          ? getFaultDisputeGameName(templateVars)
           : 'PermissionedDisputeGame'
 
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
@@ -2145,6 +2156,36 @@ function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
   }
 }
 
+// V2 dispute games renamed FaultDisputeGame → FaultDisputeGameV2
+function getFaultDisputeGameName(templateVars: OpStackConfigCommon): string {
+  if (templateVars.discovery.hasContract('FaultDisputeGame')) {
+    return 'FaultDisputeGame'
+  }
+  return 'FaultDisputeGameV2'
+}
+
+// V2 dispute games don't discover PreimageOracle (VM address is zero
+// in the implementation). The standard challenge period is 86400s.
+function getOracleChallengePeriod(templateVars: OpStackConfigCommon): number {
+  if (templateVars.discovery.hasContract('PreimageOracle')) {
+    return templateVars.discovery.getContractValue<number>(
+      'PreimageOracle',
+      'challengePeriod',
+    )
+  }
+  // V2: PreimageOracle not discovered (VM is zero in implementation).
+  // Read from AnchorStateRegistry's chained handler instead.
+  if (templateVars.discovery.hasContract('AnchorStateRegistry')) {
+    const fromAnchor =
+      templateVars.discovery.getContractValueOrUndefined<number>(
+        'AnchorStateRegistry',
+        'challengePeriodFromOracle',
+      )
+    if (fromAnchor !== undefined) return fromAnchor
+  }
+  return 86400
+}
+
 function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
   const fraudProofType = getFraudProofType(templateVars)
 
@@ -2200,7 +2241,7 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
     }
     case 'Permissionless': {
       return templateVars.discovery.getContractValue<number>(
-        'FaultDisputeGame',
+        getFaultDisputeGameName(templateVars),
         'maxClockDuration',
       )
     }

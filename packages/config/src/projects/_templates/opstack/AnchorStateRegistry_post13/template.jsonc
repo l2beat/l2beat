@@ -2,8 +2,15 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AnchorStateRegistry",
   "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the {{ RespectedGameString }}.",
-  "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
-  "ignoreRelatives": ["anchorGame"],
+  "ignoreInWatchMode": [
+    "anchorGame",
+    "getAnchorRoot",
+    "absolutePrestateFromGame",
+    "vmFromGame",
+    "oracleFromVm",
+    "challengePeriodFromOracle"
+  ],
+  "ignoreRelatives": ["anchorGame", "vmFromGame", "oracleFromVm"],
   "types": {
     "DisputeGameMap": {
       "typeCaster": "Mapping",
@@ -25,6 +32,46 @@
         "args": []
       },
       "edit": ["format", "DisputeGameMap"]
+    },
+    // Read absolutePrestate from an actual game clone (anchorGame).
+    // V2 dispute games store params in clone bytecode, so the
+    // implementation contract returns zero. The clone has real values.
+    "absolutePrestateFromGame": {
+      "handler": {
+        "type": "call",
+        "method": "function absolutePrestate() view returns (bytes32)",
+        "args": [],
+        "address": "{{ anchorGame }}"
+      },
+      "ignoreRelative": true
+    },
+    // Resolve VM → oracle → challengePeriod from the game clone.
+    "vmFromGame": {
+      "handler": {
+        "type": "call",
+        "method": "function vm() view returns (address)",
+        "args": [],
+        "address": "{{ anchorGame }}"
+      },
+      "ignoreRelative": true
+    },
+    "oracleFromVm": {
+      "handler": {
+        "type": "call",
+        "method": "function oracle() view returns (address)",
+        "args": [],
+        "address": "{{ vmFromGame }}"
+      },
+      "ignoreRelative": true
+    },
+    "challengePeriodFromOracle": {
+      "handler": {
+        "type": "call",
+        "method": "function challengePeriod() view returns (uint256)",
+        "args": [],
+        "address": "{{ oracleFromVm }}"
+      },
+      "ignoreRelative": true
     }
   }
 }

@@ -65,10 +65,22 @@ export class CallHandler implements Handler {
       provider,
       currentContractAddress,
     )
-    const resolved = resolveDependencies(this.definition, referenceInput)
+    const resolved = resolveDependencies(
+      this.definition,
+      referenceInput,
+      currentContractAddress,
+    )
+    const targetAddress = resolved.address ?? currentContractAddress
+    if (isZeroAddress(targetAddress)) {
+      return {
+        field: this.field,
+        value: ZERO_ADDRESS,
+        ignoreRelative: this.definition.ignoreRelative,
+      }
+    }
     const callResult = await callMethod(
       provider,
-      resolved.address ?? currentContractAddress,
+      targetAddress,
       this.fragment,
       resolved.args,
     )
@@ -93,6 +105,7 @@ export class CallHandler implements Handler {
 function resolveDependencies(
   definition: CallHandlerDefinition,
   referenceInput: ReferenceInput,
+  currentContractAddress: ChainSpecificAddress,
 ): {
   method: string | undefined
   args: ContractValue[]
@@ -100,14 +113,30 @@ function resolveDependencies(
 } {
   const args = definition.args.map((x) => resolveReference(x, referenceInput))
   const address = resolveReference(definition.address, referenceInput)
+  if (address === undefined) {
+    return { method: definition.method, args, address: undefined }
+  }
+  const addressStr = address.toString()
+  // Handler results are raw addresses (no chain prefix).
+  // Derive the chain from the current contract's ChainSpecificAddress.
+  if (!addressStr.includes(':')) {
+    const chain = currentContractAddress.split(':')[0]
+    return {
+      method: definition.method,
+      args,
+      address: ChainSpecificAddress(`${chain}:${addressStr}`),
+    }
+  }
   return {
     method: definition.method,
     args,
-    address:
-      address !== undefined
-        ? ChainSpecificAddress(address.toString())
-        : undefined,
+    address: ChainSpecificAddress(addressStr),
   }
+}
+
+const ZERO_ADDRESS = '0x' + '0'.repeat(40)
+function isZeroAddress(address: ChainSpecificAddress): boolean {
+  return address.endsWith(ZERO_ADDRESS)
 }
 
 function isViewFragment(fragment: utils.FunctionFragment): boolean {
