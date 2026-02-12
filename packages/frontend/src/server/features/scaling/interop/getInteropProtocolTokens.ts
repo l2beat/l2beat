@@ -5,6 +5,7 @@ import { getLogger } from '~/server/utils/logger'
 import type {
   CommonInteropData,
   InteropProtocolTokensParams,
+  SelectedChains,
   TokenData,
 } from './types'
 import { accumulateTokens } from './utils/accumulate'
@@ -19,8 +20,7 @@ import { getTokensData } from './utils/getTokensData'
 
 export async function getInteropProtocolTokens({
   id,
-  first,
-  second,
+  selectedChains,
   type,
 }: InteropProtocolTokensParams): Promise<TokenData[]> {
   const logger = getLogger().for('getProtocolTokens')
@@ -44,15 +44,13 @@ export async function getInteropProtocolTokens({
     await db.aggregatedInteropTransfer.getSummedTransferCountsByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      first,
-      second,
+      selectedChains as SelectedChains,
       type,
     ),
     db.aggregatedInteropToken.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      first,
-      second,
+      selectedChains as SelectedChains,
       type,
     ),
   ])

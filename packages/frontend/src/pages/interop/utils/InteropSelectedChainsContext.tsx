@@ -11,16 +11,13 @@ import {
 } from 'react'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
+import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { buildInteropUrl } from './buildInteropUrl'
 
 interface InteropSelectedChainsContextType {
-  selectedChains: {
-    first: string | undefined
-    second: string | undefined
-  }
+  selectedChains: SelectedChains
   allChainIds: string[]
-  toggleFirst: (chainId: string) => void
-  toggleSecond: (chainId: string) => void
+  selectChain: (index: 0 | 1, chainId: string) => void
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -30,10 +27,7 @@ export const InteropSelectedChainsContext = createContext<
 interface InteropSelectedChainsProviderProps {
   children: ReactNode
   interopChains: InteropChain[]
-  initialSelectedChains: {
-    first: string | undefined
-    second: string | undefined
-  }
+  initialSelectedChains: SelectedChains
 }
 
 export function InteropSelectedChainsProvider({
@@ -57,10 +51,7 @@ export function InteropSelectedChainsProvider({
       return
     }
 
-    const newUrl = buildInteropUrl(window.location.pathname, {
-      first: debouncedChains.first,
-      second: debouncedChains.second,
-    })
+    const newUrl = buildInteropUrl(window.location.pathname, debouncedChains)
 
     const currentUrl = window.location.pathname + window.location.search
     if (newUrl !== currentUrl) {
@@ -71,23 +62,25 @@ export function InteropSelectedChainsProvider({
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
     const params = new URLSearchParams(window.location.search)
-    setSelectedChains({
-      first: parseChainIdsFromUrl(params.get('first'), allChainIds),
-      second: parseChainIdsFromUrl(params.get('second'), allChainIds),
-    })
+    setSelectedChains((current) =>
+      parseSelectedChainsQuery(
+        params.get('selectedChains') ?? undefined,
+        allChainIds,
+        current,
+      ),
+    )
   })
 
-  const toggleFirst = useCallback((chainId: string) => {
+  const selectChain = useCallback((index: 0 | 1, chainId: string) => {
     setSelectedChains((prev) => {
-      if (prev.second === chainId) return prev
-      return { ...prev, first: chainId }
-    })
-  }, [])
+      const oppositeIndex = index === 0 ? 1 : 0
+      if (prev[oppositeIndex] === chainId || prev[index] === chainId) {
+        return prev
+      }
 
-  const toggleSecond = useCallback((chainId: string) => {
-    setSelectedChains((prev) => {
-      if (prev.first === chainId) return prev
-      return { ...prev, second: chainId }
+      const next = [...prev] as SelectedChains
+      next[index] = chainId
+      return next
     })
   }, [])
 
@@ -96,8 +89,7 @@ export function InteropSelectedChainsProvider({
       value={{
         selectedChains,
         allChainIds,
-        toggleFirst,
-        toggleSecond,
+        selectChain,
       }}
     >
       {children}
@@ -105,16 +97,29 @@ export function InteropSelectedChainsProvider({
   )
 }
 
-function parseChainIdsFromUrl(
-  param: string | null,
+function parseSelectedChainsQuery(
+  value: string | undefined,
   allChainIds: string[],
-): string | undefined {
-  if (!param) return undefined
-  const id = param
-  if (allChainIds.includes(id)) {
-    return id
+  fallback: SelectedChains,
+): SelectedChains {
+  if (!value) {
+    return fallback
   }
-  return undefined
+
+  const [first, second, ...rest] = value.split(',')
+  if (!first || !second || rest.length > 0) {
+    return fallback
+  }
+
+  if (!allChainIds.includes(first) || !allChainIds.includes(second)) {
+    return fallback
+  }
+
+  if (first === second) {
+    return fallback
+  }
+
+  return [first, second]
 }
 
 export function useInteropSelectedChains() {

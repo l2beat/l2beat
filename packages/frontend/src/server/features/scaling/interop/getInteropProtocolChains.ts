@@ -5,6 +5,7 @@ import type {
   ChainData,
   CommonInteropData,
   InteropProtocolTokensParams,
+  SelectedChains,
 } from './types'
 import { accumulateChains } from './utils/accumulate'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
@@ -13,8 +14,7 @@ import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
 
 export async function getInteropProtocolChains({
   id,
-  first,
-  second,
+  selectedChains,
   type,
 }: InteropProtocolTokensParams): Promise<ChainData[]> {
   const logger = getLogger().for('getProtocolChains')
@@ -39,8 +39,7 @@ export async function getInteropProtocolChains({
     await db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      first,
-      second,
+      selectedChains as SelectedChains,
       type,
     )
 

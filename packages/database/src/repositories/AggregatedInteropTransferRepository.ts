@@ -256,10 +256,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
 
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    first: string | undefined,
-    second: string | undefined,
+    selectedChains: [string | undefined, string | undefined],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
+    const [first, second] = selectedChains
     if (!first || !second) {
       return []
     }
@@ -283,10 +283,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getSummedTransferCountsByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    first: string | undefined,
-    second: string | undefined,
+    selectedChains: [string | undefined, string | undefined],
     type?: InteropBridgeType,
   ) {
+    const [first, second] = selectedChains
     if (!first || !second) {
       return {
         transferCount: 0,
@@ -323,10 +323,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    first: string | undefined,
-    second: string | undefined,
+    selectedChains: [string | undefined, string | undefined],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
+    const [first, second] = selectedChains
     if (!first || !second) {
       return []
     }

@@ -1,6 +1,7 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
+import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -8,10 +9,10 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { withProjectIcon } from '~/utils/withProjectIcon'
-import type { FirstSecondQuery } from '../InteropRouter'
+import type { SelectedChainsQuery } from '../InteropRouter'
 
 export async function getInteropNonMintingData(
-  req: Request<unknown, unknown, unknown, FirstSecondQuery>,
+  req: Request<unknown, unknown, unknown, SelectedChainsQuery>,
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
@@ -19,20 +20,16 @@ export async function getInteropNonMintingData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
-  const initialSelectedChains = {
-    first: interopChainsIds.find((id) => id === req.query.first) ?? 'ethereum',
-    second:
-      interopChainsIds.find((id) => id === req.query.second) ?? 'arbitrum',
-  }
+  const initialSelectedChains: SelectedChains = [
+    interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
+      'ethereum',
+    interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ??
+      'arbitrum',
+  ]
+
   const queryState = await cache.get(
     {
-      key: [
-        'interop',
-        'non-minting',
-        'prefetch',
-        initialSelectedChains.first,
-        initialSelectedChains.second,
-      ],
+      key: ['interop', 'non-minting', 'prefetch', ...initialSelectedChains],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
@@ -66,18 +63,14 @@ export async function getInteropNonMintingData(
   }
 }
 
-async function getCachedData(initialSelectedChains: {
-  first: string | undefined
-  second: string | undefined
-}) {
+async function getCachedData(initialSelectedChains: SelectedChains) {
   const helpers = getSsrHelpers()
   const [protocols] = await Promise.all([
     ps.getProjects({
       select: ['interopConfig'],
     }),
     helpers.interop.dashboard.prefetch({
-      first: initialSelectedChains.first,
-      second: initialSelectedChains.second,
+      selectedChains: initialSelectedChains,
     }),
   ])
 

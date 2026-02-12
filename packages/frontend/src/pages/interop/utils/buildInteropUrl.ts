@@ -1,19 +1,15 @@
+import type { SelectedChains } from '~/server/features/scaling/interop/types'
+
 export function buildInteropUrl(
   path: string,
-  queryParams?: { first?: string; second?: string },
+  selectedChains?: SelectedChains,
 ): string {
-  if (!queryParams) {
+  if (!selectedChains) {
     return path
   }
 
   const params = new URLSearchParams()
-
-  if (queryParams.first) {
-    params.set('first', queryParams.first)
-  }
-  if (queryParams.second) {
-    params.set('second', queryParams.second)
-  }
+  params.set('selectedChains', selectedChains.join(','))
 
   return params.size > 0 ? `${path}?${params.toString()}` : path
 }

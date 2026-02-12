@@ -11,33 +11,28 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/Popover'
-import { InfoIcon } from '~/icons/Info'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
 import type { InteropChainWithIcon } from './types'
 
 export function ChainSelectorButton({
   allChains,
-  type,
+  index,
 }: {
   allChains: InteropChainWithIcon[]
-  type: 'first' | 'second'
+  index: 0 | 1
 }) {
-  const { selectedChains, toggleFirst, toggleSecond } =
-    useInteropSelectedChains()
+  const { selectedChains, selectChain } = useInteropSelectedChains()
 
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
     name,
     iconUrl,
-    isSelected: {
-      first: selectedChains.first === id,
-      second: selectedChains.second === id,
-    },
+    isSelected: [selectedChains[0] === id, selectedChains[1] === id] as const,
   }))
 
   const selectedChain = chainsWithDetails.find(
-    (chain) => chain.isSelected[type],
+    (chain) => chain.isSelected[index],
   )
 
   const trigger = (
@@ -65,8 +60,6 @@ export function ChainSelectorButton({
             <DrawerDescription className="font-semibold text-secondary text-xs leading-none">
               Select the chains you want to include
             </DrawerDescription>
-            {(selectedChains.first === undefined ||
-              selectedChains.second === undefined) && <EmptyStateError />}
           </DrawerHeader>
           <div className="mb-2 font-semibold text-xs leading-none">From</div>
           <div className="flex flex-wrap gap-1">
@@ -74,8 +67,8 @@ export function ChainSelectorButton({
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected.first}
-                toggleSelected={toggleFirst}
+                isSelected={chain.isSelected[0]}
+                toggleSelected={(chainId) => selectChain(0, chainId)}
               />
             ))}
           </div>
@@ -85,8 +78,8 @@ export function ChainSelectorButton({
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected.second}
-                toggleSelected={toggleSecond}
+                isSelected={chain.isSelected[1]}
+                toggleSelected={(chainId) => selectChain(1, chainId)}
               />
             ))}
           </div>
@@ -102,30 +95,18 @@ export function ChainSelectorButton({
           align="start"
           side="bottom"
         >
-          {selectedChains[type] === undefined && <EmptyStateError />}
           <div className="mt-2.5 flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected[type]}
-                toggleSelected={type === 'first' ? toggleFirst : toggleSecond}
+                isSelected={chain.isSelected[index]}
+                toggleSelected={(chainId) => selectChain(index, chainId)}
               />
             ))}
           </div>
         </PopoverContent>
       </Popover>
-    </div>
-  )
-}
-
-function EmptyStateError() {
-  return (
-    <div className="flex items-center gap-1">
-      <InfoIcon className="fill-negative" />
-      <div className="font-medium text-negative text-paragraph-14">
-        Select at least one pair of chains to display results.
-      </div>
     </div>
   )
 }

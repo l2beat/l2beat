@@ -500,8 +500,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(100),
-          'ethereum',
-          'arbitrum',
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -553,21 +552,19 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndTimestamp(
-          UnixTime(100),
+        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
           'ethereum',
           'arbitrum',
-        )
+        ])
 
         expect(result).toEqualUnsorted([record1, record2, record3, record4])
       })
 
       it('returns empty array when no records exist', async () => {
-        const result = await repository.getByChainsAndTimestamp(
-          UnixTime(100),
+        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
           'ethereum',
           'arbitrum',
-        )
+        ])
 
         expect(result).toEqual([])
       })
@@ -587,18 +584,16 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         ])
 
         expect(
-          await repository.getByChainsAndTimestamp(
-            UnixTime(100),
+          await repository.getByChainsAndTimestamp(UnixTime(100), [
             undefined,
             'arbitrum',
-          ),
+          ]),
         ).toEqual([])
         expect(
-          await repository.getByChainsAndTimestamp(
-            UnixTime(100),
+          await repository.getByChainsAndTimestamp(UnixTime(100), [
             'ethereum',
             undefined,
-          ),
+          ]),
         ).toEqual([])
       })
 
@@ -642,8 +637,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(100),
-          'ethereum',
-          'arbitrum',
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -677,11 +671,10 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndTimestamp(
-          UnixTime(100),
+        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
           'ethereum',
           'arbitrum',
-        )
+        ])
 
         expect(result).toEqualUnsorted([record1, record2])
       })
@@ -732,8 +725,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const result = await repository.getByChainsIdAndTimestamp(
           UnixTime(100),
           'protocol1',
-          'ethereum',
-          'arbitrum',
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -758,16 +750,14 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           await repository.getByChainsIdAndTimestamp(
             UnixTime(100),
             'protocol1',
-            undefined,
-            'arbitrum',
+            [undefined, 'arbitrum'],
           ),
         ).toEqual([])
         expect(
           await repository.getByChainsIdAndTimestamp(
             UnixTime(100),
             'protocol1',
-            'ethereum',
-            undefined,
+            ['ethereum', undefined],
           ),
         ).toEqual([])
       })

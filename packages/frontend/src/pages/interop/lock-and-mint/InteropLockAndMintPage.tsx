@@ -3,6 +3,7 @@ import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
@@ -24,10 +25,7 @@ interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   protocols: WithProjectIcon<Project<'interopConfig'>>[]
-  initialSelectedChains: {
-    first: string | undefined
-    second: string | undefined
-  }
+  initialSelectedChains: SelectedChains
 }
 
 export function InteropLockAndMintPage({
@@ -63,8 +61,7 @@ export function InteropLockAndMintPage({
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    first: selectedChains.first,
-    second: selectedChains.second,
+    selectedChains,
     type: 'lockAndMint',
   })
 
