@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -13,6 +14,7 @@ import { getPermissionsSection } from '~/utils/project/contracts-and-permissions
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getLivenessSection } from '~/utils/project/liveness/getLivenessSection'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
+import { optionToRange } from '~/utils/range/range'
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getDaProjectRiskSummarySection } from './getDaProjectRiskSummarySection'
 import { getDaThroughputSection } from './getDaThroughputSection'
@@ -329,6 +331,18 @@ export async function getEthereumDaProjectSections({
       },
     })
   }
+
+  items.push({
+    type: 'ActivitySection',
+    props: {
+      id: 'activity',
+      title: 'Activity',
+      dataSource: undefined,
+      defaultRange: optionToRange('1y', { offset: -UnixTime.DAY }),
+      project: withProjectIcon(layer),
+      milestones: layer.milestones ?? [],
+    },
+  })
 
   if (
     riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)
