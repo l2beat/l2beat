@@ -85,7 +85,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   const topProtocols: InteropProtocolData[] = interopProjects
     .slice(0, 5)
     .map((project, i) => ({
-      protocolName: project.interopConfig.name ?? project.name,
+      protocolName:
+        project.interopConfig.name ?? project.shortName ?? project.name,
       volume: { value: 20_000_000 - i * 3_000_000, share: 20 - i * 3 },
       transfers: { value: 5000 - i * 800, share: 20 - i * 3 },
     }))
@@ -140,7 +141,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
 
   const entries: ProtocolEntry[] = interopProjects.map((project) => ({
     id: project.id,
-    protocolName: project.interopConfig.name ?? project.name,
+    protocolName:
+      project.interopConfig.name ?? project.shortName ?? project.name,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
     iconSlug: project.slug,
@@ -167,6 +169,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
           ? {
               name:
                 interopProjects[0].interopConfig.name ??
+                interopProjects[0].shortName ??
                 interopProjects[0].name,
               iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
             }
