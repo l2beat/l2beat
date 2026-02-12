@@ -5,7 +5,6 @@ import type {
   ChainData,
   CommonInteropData,
   InteropProtocolTokensParams,
-  SelectedChains,
 } from './types'
 import { accumulateChains } from './utils/accumulate'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
@@ -39,7 +38,7 @@ export async function getInteropProtocolChains({
     await db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selectedChains as SelectedChains,
+      selectedChains,
       type,
     )
 

@@ -5,7 +5,6 @@ import { getLogger } from '~/server/utils/logger'
 import type {
   CommonInteropData,
   InteropProtocolTokensParams,
-  SelectedChains,
   TokenData,
 } from './types'
 import { accumulateTokens } from './utils/accumulate'
@@ -44,13 +43,13 @@ export async function getInteropProtocolTokens({
     await db.aggregatedInteropTransfer.getSummedTransferCountsByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selectedChains as SelectedChains,
+      selectedChains,
       type,
     ),
     db.aggregatedInteropToken.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selectedChains as SelectedChains,
+      selectedChains,
       type,
     ),
   ])

@@ -75,7 +75,7 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
 
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    selectedChains: [string | undefined, string | undefined],
+    selectedChains: [string?, string?],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTokenRecord[]> {
     const [first, second] = selectedChains
@@ -101,7 +101,7 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    selectedChains: [string | undefined, string | undefined],
+    selectedChains: [string?, string?],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTokenRecord[]> {
     const [first, second] = selectedChains

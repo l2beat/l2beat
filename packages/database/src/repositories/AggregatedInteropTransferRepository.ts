@@ -256,7 +256,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
 
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    selectedChains: [string | undefined, string | undefined],
+    selectedChains: [string?, string?],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
     const [first, second] = selectedChains
@@ -283,7 +283,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getSummedTransferCountsByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    selectedChains: [string | undefined, string | undefined],
+    selectedChains: [string?, string?],
     type?: InteropBridgeType,
   ) {
     const [first, second] = selectedChains
@@ -323,7 +323,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    selectedChains: [string | undefined, string | undefined],
+    selectedChains: [string?, string?],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
     const [first, second] = selectedChains

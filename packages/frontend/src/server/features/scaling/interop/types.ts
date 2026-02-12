@@ -56,7 +56,7 @@ const SelectedChainsSchema = v.tuple([
   v.union([v.string(), v.undefined()]),
   v.union([v.string(), v.undefined()]),
 ])
-export type SelectedChains = [string | undefined, string | undefined]
+export type SelectedChains = v.infer<typeof SelectedChainsSchema>
 
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
