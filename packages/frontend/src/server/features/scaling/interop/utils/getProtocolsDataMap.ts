@@ -1,8 +1,5 @@
-import type { InteropDurationSplit, Project } from '@l2beat/config'
-import {
-  assertUnreachable,
-  type KnownInteropBridgeType,
-} from '@l2beat/shared-pure'
+import type { InteropDurationSplit } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
@@ -165,19 +162,8 @@ export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
   transfersTimeModeMap: TransfersTimeModeMap,
   durationSplitMap: DurationSplitMap | undefined,
-  interopProjects: Project<'interopConfig'>[],
-  type: KnownInteropBridgeType | undefined,
 ): Map<string, ProtocolData> {
   const protocolsDataMap = new Map<string, ProtocolData>()
-
-  for (const project of interopProjects) {
-    const hasPluginDefined = project.interopConfig.plugins.find(
-      (p) => p.bridgeType === type,
-    )
-    if (hasPluginDefined) {
-      protocolsDataMap.set(project.id, createInitialProtocolData())
-    }
-  }
 
   for (const record of records) {
     const current =
