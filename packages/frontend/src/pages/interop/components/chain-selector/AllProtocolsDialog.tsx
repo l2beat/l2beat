@@ -41,7 +41,7 @@ function Trigger({
   const remainingCount = protocols.slice(5).length
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center justify-end gap-2">
       <div className="font-medium text-xs leading-none max-md:opacity-50 md:text-base">
         Across {protocols.length} protocols
       </div>
