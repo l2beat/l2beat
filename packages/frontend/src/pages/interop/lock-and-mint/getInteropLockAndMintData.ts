@@ -19,8 +19,9 @@ export async function getInteropLockAndMintData(
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
   const initialSelectedChains = {
-    first: interopChainsIds.find((id) => id === req.query.first),
-    second: interopChainsIds.find((id) => id === req.query.second),
+    first: interopChainsIds.find((id) => id === req.query.first) ?? 'ethereum',
+    second:
+      interopChainsIds.find((id) => id === req.query.second) ?? 'arbitrum',
   }
   const queryState = await cache.get(
     {
