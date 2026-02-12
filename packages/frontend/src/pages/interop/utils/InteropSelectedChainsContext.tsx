@@ -78,17 +78,17 @@ export function InteropSelectedChainsProvider({
   })
 
   const toggleFirst = useCallback((chainId: string) => {
-    setSelectedChains((prev) => ({
-      ...prev,
-      first: chainId,
-    }))
+    setSelectedChains((prev) => {
+      if (prev.second === chainId) return prev
+      return { ...prev, first: chainId }
+    })
   }, [])
 
   const toggleSecond = useCallback((chainId: string) => {
-    setSelectedChains((prev) => ({
-      ...prev,
-      second: chainId,
-    }))
+    setSelectedChains((prev) => {
+      if (prev.first === chainId) return prev
+      return { ...prev, second: chainId }
+    })
   }, [])
 
   return (
