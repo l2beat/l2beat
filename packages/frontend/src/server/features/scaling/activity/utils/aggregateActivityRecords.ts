@@ -4,11 +4,14 @@ import { ProjectId } from '@l2beat/shared-pure'
 
 export function aggregateActivityRecords(
   entries: ActivityRecord[],
-  forEthereum = false,
+  options?: {
+    forEthereum?: boolean
+  },
 ) {
   const startTimestamp = entries.find(
     (e) =>
-      (forEthereum ? true : e.projectId !== ProjectId.ETHEREUM) && e.count > 0,
+      (options?.forEthereum ? true : e.projectId !== ProjectId.ETHEREUM) &&
+      e.count > 0,
   )?.timestamp
 
   if (!startTimestamp) {
