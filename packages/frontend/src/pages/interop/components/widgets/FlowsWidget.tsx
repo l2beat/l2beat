@@ -56,7 +56,7 @@ export function FlowsWidget({
             className="mt-2! h-1 w-full"
             values={flows?.map((flow, i) => ({
               value: flow.volume,
-              className: i === 0 ? 'bg-purple-100' : 'bg-[#6AC9FF]',
+              className: i === 0 ? 'bg-purple-100' : 'bg-[#FF5FFB]',
             }))}
           />
         )}
