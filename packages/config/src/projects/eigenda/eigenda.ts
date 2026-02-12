@@ -1,15 +1,11 @@
 import {
-  EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
-  DaRelayerFailureRisk,
-  DaUpgradeabilityRisk,
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -22,57 +18,6 @@ const EIGENUpgradeDelay = discovery.getContractValue<number>(
   'TimelockControllerOwning',
   'getMinDelay',
 )
-
-const quorumThresholds = discovery.getContractValue<string>(
-  'EigenDAServiceManager',
-  'quorumConfirmationThresholdPercentages',
-)
-
-const quorum1Threshold = Number.parseInt(quorumThresholds.substring(2, 4), 16)
-const quorum2Threshold = Number.parseInt(quorumThresholds.substring(4, 6), 16)
-
-const quorumAdversaryThresholds = discovery.getContractValue<string>(
-  'EigenDAServiceManager',
-  'quorumAdversaryThresholdPercentages',
-)
-
-const quorum1AdversaryThreshold = Number.parseInt(
-  quorumAdversaryThresholds.substring(2, 4),
-  16,
-)
-const quorum2AdversaryThreshold = Number.parseInt(
-  quorumAdversaryThresholds.substring(4, 6),
-  16,
-)
-
-const ejectionCooldown = discovery.getContractValue<number>(
-  'RegistryCoordinator',
-  'ejectionCooldown',
-)
-
-const ejectionRateLimitWindow = discovery.getContractValue<number[]>(
-  'EjectionManager',
-  'ejectionRateLimitWindow',
-) // [0] for quorum 1. [1] for quorum 2.
-
-const ejectableStakePercentParam = discovery.getContractValue<string>(
-  'EjectionManager',
-  'ejectableStakePercent',
-)
-const ejectableStakePercent =
-  Number.parseFloat(ejectableStakePercentParam) / 100
-
-const operatorSetParamsQuorum1 = discovery.getContractValue<{
-  maxOperatorCount: number
-  kickBIPsOfOperatorStake: number
-  kickBIPsOfTotalStake: number
-}>('RegistryCoordinator', 'operatorSetParamsQuorum1')
-
-const operatorSetParamsQuorum2 = discovery.getContractValue<{
-  maxOperatorCount: number
-  kickBIPsOfOperatorStake: number
-  kickBIPsOfTotalStake: number
-}>('RegistryCoordinator', 'operatorSetParamsQuorum2')
 
 const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
   'RegistryCoordinator',
@@ -106,34 +51,7 @@ export const eigenda: BaseProject = {
     },
     badges: [],
   },
-  trackedTxsConfig: [
-    {
-      projectId: ProjectId('eigenda'),
-      sinceTimestamp: 1712353787,
-      type: 'liveness',
-      subtype: 'proofSubmissions',
-      params: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0'),
-        selector: '0x7794965a',
-        signature:
-          'function confirmBatch(tuple batchHeader, tuple nonSignerStakesAndSignature)',
-      },
-    },
-    {
-      projectId: ProjectId('eigenda'),
-      sinceTimestamp: 1712353787,
-      type: 'l2costs',
-      subtype: 'proofSubmissions',
-      params: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0'),
-        selector: '0x7794965a',
-        signature:
-          'function confirmBatch(tuple batchHeader, tuple nonSignerStakesAndSignature)',
-      },
-    },
-  ],
+  trackedTxsConfig: [],
   colors: {
     primary: {
       light: '#6258FF',
@@ -155,24 +73,24 @@ export const eigenda: BaseProject = {
     EigenDA is composed by three types of off-chain entities: node operators, a disperser and a retriever.
     - EigenDA **operators** are node operators running the EigenDA node software and are registered to the EigenDA AVS in EigenLayer.
     - The **disperser** is the entity responsible for collecting the blobs from the sequencer, erasure coding them and generating the encoded blob's KZG commitments for each chunk. Although the disperser could be rollup-operated, it is currently a centralised entity operated by Eigen Labs.
-    - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructing the original blob. 
-    
-    ### Operators Registration 
+    - Lastly, the **retriever** client is responsible for querying the EigenDA operators to retrieve blob chunks, verifying their integrity and reconstructing the original blob.
+
+    ### Operators Registration
     Operators register with the EigenDAServiceManager via the registerOperatorToAVS() function, enabling them to participate in the data availability network. They are responsible for holding and serving blobs data, and earn rewards for their participation in the network.
 
     ![EigenDA operator registration](/images/da-layer-technology/eigenda/registration.png#center)
 
-    ### Operators Stake Update  
-    
+    ### Operators Stake Update
+
     EigenDA operators' stake for quorum verification is fetched from the EigenDA StakeRegistry contract. To keep the stake in sync with changes in share balances in the EigenLayer DelegationManager (e.g., due to tokens delegated/undelegated to operators), the permissionless updateOperators() function on the RegistryCoordinator contract needs to be called periodically. This function updates the operators' quorum weight in the StakeRegistry contract based on the operators' shares in the EigenLayer DelegationManager contract.
     ![EigenDA operator stake sync](/images/da-layer-technology/eigenda/stakesync.png#center)
 
-    ### Operators Blob Storage and Retrieval 
+    ### Operators Blob Storage and Retrieval
 
     The process of storing a blob on EigenDA works as follows. A sequencer submits blobs to the EigenDA Disperser, which erasure codes the blobs into chunks and generates KZG commitments and proofs for each chunk, certifying the correctness of the data. The disperser then sends the chunks, KZG commitments, and KZG proofs to the operators.
     Multiple operators are responsible for storing chunks of the encoded data blobs and their associated KZG commitment and proof.
     Once the chunks, KZG commitments, and KZG proofs are sent to the operators, each of them generates a signature certifying that they have stored the data. These signatures are then sent to the Disperser which aggregates them and submits them to Ethereum by sending a transaction to the EigenDAServiceManager (the DA bridge).
-    
+
     ![EigenDA storing/retrieving](/images/da-layer-technology/eigenda/storing-retrieving.png#center)
 
     ## Data Availability Certificates
@@ -181,7 +99,7 @@ export const eigenda: BaseProject = {
 
     ### Certificate Types
     - **V1 Certificates**: Used in EigenDA V1, verified through the EigenDAServiceManager contract via the confirmBatch() function. These certificates contain batch headers with KZG commitments and BLS aggregated signatures from operators.
-    
+
     - **V2/V3 Certificates**: Used in EigenDA V2, which introduces significant architectural changes. The sequencer acts as the relayer and does not post batches to the service manager. Instead, certificates are verified through dedicated DACert Verifier contracts that correspond to different certificate versions.
 
     ### EigenDA V2 Changes
@@ -205,7 +123,7 @@ export const eigenda: BaseProject = {
 
     Threshold BLS signatures are not used. Instead, the threshold check is performed on the signers' total stake fetched by the StakeRegistry, and the stake threshold percentage to reach is provided in the batch header input data.
 
-    The EigenDARollupUtils.sol library's verifyBlob() function can then be used by L2s to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager (V1) or through the appropriate DACert Verifier contract (V2/V3). 
+    The EigenDARollupUtils.sol library's verifyBlob() function can then be used by L2s to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager (V1) or through the appropriate DACert Verifier contract (V2/V3).
     This function is not used by the EigenDAServiceManager contract itself, but rather by L2 systems to prove inclusion of the blob and that their trust assumptions (i.e., batch confirmation threshold) were as expected.
   `,
       references: [
@@ -445,89 +363,6 @@ export const eigenda: BaseProject = {
         ],
       },
     ],
-  },
-  daBridge: {
-    name: 'DACert Verifier (EigenDA V1)',
-    daLayer: ProjectId('eigenda'),
-    relayerType: {
-      value: 'Permissioned',
-      sentiment: 'warning',
-      description:
-        'EigenDA V1 uses whitelisted relayers to post attestations to the ServiceManager bridge through the confirmBatch() function.',
-    },
-    validationType: {
-      value: 'BLS Signature',
-      description:
-        'EigenDA V1 attestations require onchain BLS signatures verification through the EigenDAServiceManager contract. The total stake of signers is verified to have reached the required threshold.',
-    },
-    technology: {
-      description: `
-## Architecture
-
-![EigenDA architecture once stored](/images/da-bridge-technology/eigenda/architecture1.png#center)
-
-### EigenDA V1 Bridge Architecture
-The EigenDAServiceManager acts as a DA bridge smart contract verifying data availability claims from operators via signature verification.
-The checkSignatures() function checks that the signature of all signers plus non-signers is equal to the registered quorum aggregated public key from the BLS registry. The quorum aggregated public key gets updated every time an operator is registered.
-The bridge requires a threshold of signatures to be met before the data commitment is accepted. 
-To verify the threshold is met, the function takes the total stake at the reference block for the quorum from the StakeRegistry, and it subtracts the stake of non signers to get the signed stake.
-Finally, it checks that the signed stake over the total stake is more than the required stake threshold.
-
-![EigenDA bridge architecture](/images/da-bridge-technology/eigenda/architecture2.png#center)
-
-Although thresholds are not enforced onchain by the confirmBatch method, the minimum thresholds that the disperser would need to reach before relaying the batch commitment to Ethereum are set to ${quorum1Threshold}% of the registered stake for the ETH quorum and ${quorum2Threshold}% for the EIGEN token quorum. Meeting these dispersal thresholds allows the system to tolerate up to ${quorum1AdversaryThreshold}% (quorum 1) and ${quorum2AdversaryThreshold}% (quorum 2) of the total stake being adversarial, achieving this with approximately 4.5 data redundancy.  
-The quorum thresholds are set on the EigenDAServiceManager contract and can be changed by the contract owner.
-There is a maximum of ${operatorSetParamsQuorum1.maxOperatorCount} operators that can register for the ETH quorum and ${operatorSetParamsQuorum2.maxOperatorCount} for the EIGEN token quorum. Once the cap is reached, new operators must have 10% more weight than the lowest-weighted operator to join the active set. Entering the quorum is subject to the approval of the churn approver. Operators can be ejected from a quorum by the ejectors without delay should they violate the Service Legal Agreement (SLA). \n
-
-Ejectors can eject maximum ${ejectableStakePercent}% of the total stake in a ${formatSeconds(ejectionRateLimitWindow[0])} window for the ETH quorum, and the same stake percentage over a ${formatSeconds(ejectionRateLimitWindow[1])} window for the EIGEN quorum.
-An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown)}. 
-    `,
-      references: [
-        {
-          title: 'EigenDA Integration Spec - Lifecycle Phases',
-          url: 'https://layr-labs.github.io/eigenda/integration/spec/5-lifecycle-phases.html#secure-dispersal',
-        },
-        {
-          title: 'EigenDA Registry Coordinator - Etherscan',
-          url: 'https://etherscan.io/address/0xdcabf0be991d4609096cce316df08d091356e03f',
-        },
-        {
-          title: 'EigenDA Service Manager - Etherscan',
-          url: 'https://etherscan.io/address/0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07',
-        },
-      ],
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'the relayer posts an invalid commitment and EigenDA operators do not make the data available for verification.',
-        },
-        {
-          category: 'Funds can be frozen if',
-          text: 'excluding L2-specific DA fallback - the permissioned relayers are unable to submit DA commitments to the bridge contract.',
-        },
-        {
-          category: 'Funds can be frozen if',
-          text: 'the bridge (EigenDAServiceManager) contract is paused by the pausers.',
-        },
-      ],
-    },
-    dac: {
-      requiredMembers: 0, // currently 0 since threshold is not enforced
-      membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
-    },
-    usedIn: linkByDA({
-      layer: ProjectId('eigenda'),
-      bridge: ProjectId('eigenda'),
-    }),
-    risks: {
-      committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
-        'Permissioned',
-        undefined,
-        totalNumberOfRegisteredOperators,
-      ),
-      upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
-      relayerFailure: DaRelayerFailureRisk.NoMechanism,
-    },
   },
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
