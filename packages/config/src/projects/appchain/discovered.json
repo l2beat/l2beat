@@ -1,6 +1,6 @@
 {
   "name": "appchain",
-  "timestamp": 1770736056,
+  "timestamp": 1770822537,
   "configHash": "0xbdaadbaedeff0818e52f6e703ee47695b14df2c0e2564e28936e49018f8ee268",
   "entries": [
     {
@@ -130,7 +130,7 @@
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
         ],
         "allowedOutboxList": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
-        "delayedMessageCount": 6102,
+        "delayedMessageCount": 6107,
         "inboxHistory": [
           "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
@@ -138,8 +138,8 @@
         "outboxHistory": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerInbox": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
-        "sequencerMessageCount": 3337,
-        "sequencerReportedSubMessageCount": 783266
+        "sequencerMessageCount": 3342,
+        "sequencerReportedSubMessageCount": 783373
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -273,13 +273,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 680,
+        "firstUnresolvedNode": 681,
         "inbox": "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21145825,
-        "latestConfirmed": 679,
-        "latestNodeCreated": 682,
+        "latestConfirmed": 680,
+        "latestNodeCreated": 683,
         "loserStakeEscrow": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd",
@@ -705,7 +705,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "batchCount": 3337,
+        "batchCount": 3342,
         "batchPosterManager": "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C",
         "batchPosters": ["eth:0xC5dD640885cE582464e2fCa7b169581417822e6C"],
         "bridge": "eth:0x19df42E085e2c3fC4497172E412057F54D9f013E",
@@ -736,7 +736,7 @@
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 6101,
+        "totalDelayedMessagesRead": 6106,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1938,6 +1938,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24427167 },
+  "usedBlockNumbers": { "ethereum": 24434328 },
   "permissionsConfigHash": "0x907180e9cb5eacb2d60b7c6919577ab46cdc38f25aa2b1359d3d6ee83c468326"
 }
