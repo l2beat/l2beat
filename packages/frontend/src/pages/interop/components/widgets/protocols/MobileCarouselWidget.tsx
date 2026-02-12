@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
-import { TopPathsWidget } from '../TopPathsWidget'
+import { FlowsWidget } from '../FlowsWidget'
 import { TopProtocolsByTransfers } from './TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './TopProtocolsByVolume'
 
@@ -10,12 +10,12 @@ type View = 'paths' | 'volume' | 'transfers'
 
 export function MobileCarouselWidget({
   interopChains,
-  top3Paths,
+  flows,
   topProtocols,
   isLoading,
 }: {
   interopChains: InteropChainWithIcon[]
-  top3Paths: InteropDashboardData['top3Paths'] | undefined
+  flows: InteropDashboardData['flows'] | undefined
   topProtocols: InteropDashboardData['topProtocols'] | undefined
   isLoading: boolean
 }) {
@@ -35,9 +35,9 @@ export function MobileCarouselWidget({
       >
         {/* Paths widget - only visible below 1024px */}
         <div className="min-w-full flex-shrink-0 min-[1024px]:hidden">
-          <TopPathsWidget
+          <FlowsWidget
             interopChains={interopChains}
-            top3Paths={top3Paths}
+            flows={flows}
             isLoading={isLoading}
             className="max-[1024px]:pb-8!"
           />

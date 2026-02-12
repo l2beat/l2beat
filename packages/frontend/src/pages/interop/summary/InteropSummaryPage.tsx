@@ -9,10 +9,10 @@ import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
-import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import {
   InteropSelectedChainsProvider,
@@ -71,7 +71,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
 
   if (
     data?.entries.length === 0 &&
-    data.top3Paths.length === 0 &&
+    data.flows.length === 0 &&
     data.topProtocols.length === 0
   ) {
     return <InteropEmptyState />
@@ -87,10 +87,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       data-hide-overflow-x
     >
       <div className="z-10 max-[1024px]:hidden">
-        <TopPathsWidget
+        <FlowsWidget
           interopChains={interopChains}
           isLoading={isLoading}
-          top3Paths={data?.top3Paths}
+          flows={data?.flows}
         />
       </div>
       <div className="h-full max-[1600px]:hidden">
@@ -107,7 +107,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       </div>
       <MobileCarouselWidget
         interopChains={interopChains}
-        top3Paths={data?.top3Paths}
+        flows={data?.flows}
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />

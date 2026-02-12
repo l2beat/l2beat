@@ -2,10 +2,12 @@ import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { withProjectIcon } from '~/utils/withProjectIcon'
 import type { FirstSecondQuery } from '../InteropRouter'
 
 export async function getInteropBurnAndMintData(
@@ -13,7 +15,6 @@ export async function getInteropBurnAndMintData(
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
-  const helpers = getSsrHelpers()
   const appLayoutProps = await getAppLayoutProps()
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
@@ -35,14 +36,7 @@ export async function getInteropBurnAndMintData(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    async () => {
-      await helpers.interop.dashboard.prefetch({
-        first: initialSelectedChains.first,
-        second: initialSelectedChains.second,
-        type: 'burnAndMint',
-      })
-      return helpers.dehydrate()
-    },
+    async () => getCachedData(initialSelectedChains),
   )
 
   const interopChainsWithIcons = interopChains.map((chain) => ({
@@ -64,10 +58,31 @@ export async function getInteropBurnAndMintData(
       page: 'InteropBurnAndMintPage',
       props: {
         ...appLayoutProps,
-        queryState,
+        ...queryState,
         interopChains: interopChainsWithIcons,
         initialSelectedChains,
       },
     },
+  }
+}
+
+async function getCachedData(initialSelectedChains: {
+  first: string | undefined
+  second: string | undefined
+}) {
+  const helpers = getSsrHelpers()
+  const [protocols] = await Promise.all([
+    ps.getProjects({
+      select: ['interopConfig'],
+    }),
+    helpers.interop.dashboard.prefetch({
+      first: initialSelectedChains.first,
+      second: initialSelectedChains.second,
+    }),
+  ])
+
+  return {
+    queryState: helpers.dehydrate(),
+    protocols: protocols.map(withProjectIcon),
   }
 }
