@@ -140,6 +140,7 @@ export const linea: ScalingProject = {
         'https://twitter.com/LineaBuild',
         'https://discord.gg/linea',
         'https://linea.mirror.xyz/',
+        'https://www.linkedin.com/company/lineabuild/',
         'https://community.linea.build/',
       ],
       other: [
