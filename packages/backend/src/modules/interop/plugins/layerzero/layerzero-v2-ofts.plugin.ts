@@ -93,13 +93,17 @@ export function getBridgeType({
   const srcAbstractToken = deployedToAbstractMap.get(
     ChainSpecificAddress.fromLong(
       srcChain,
-      Address32.cropToEthereumAddress(srcTokenAddress),
+      srcTokenAddress === Address32.NATIVE
+        ? Address32.NATIVE
+        : Address32.cropToEthereumAddress(srcTokenAddress),
     ),
   )
   const dstAbstractToken = deployedToAbstractMap.get(
     ChainSpecificAddress.fromLong(
       dstChain,
-      Address32.cropToEthereumAddress(dstTokenAddress),
+      dstTokenAddress === Address32.NATIVE
+        ? Address32.NATIVE
+        : Address32.cropToEthereumAddress(dstTokenAddress),
     ),
   )
   if (!srcAbstractToken || !dstAbstractToken) return
