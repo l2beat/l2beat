@@ -95,23 +95,18 @@ export const eigenda: BaseProject = {
 
     - **V2/V3 Certificates**: Used in EigenDA V2, which introduces significant architectural changes. The sequencer acts as the relayer and does not post batches to the service manager. Instead, certificates are verified through dedicated DACert Verifier contracts that correspond to different certificate versions.
 
-    ### EigenDA V2 Changes
+    ### EigenDA V2
     In EigenDA V2, the architecture has evolved to improve efficiency:
     - **Sequencer as Relayer**: The sequencer now acts as the relayer, eliminating the need to post batches to the service manager
     - **Direct Certificate Verification**: Certificates are verified directly through version-specific DACert Verifier contracts
     - **Improved Throughput**: The new architecture supports higher throughput by removing bottlenecks in the batch confirmation process
 
-    ### Certificate Verification Process
-    1. **Certificate Construction**: The EigenDA client constructs certificates from BlobStatusReply data received from the disperser
-    2. **Version Detection**: The certificate version is determined from the commitment structure
-    3. **Verifier Selection**: The appropriate DACert Verifier contract is selected based on the certificate version
-    4. **Onchain Verification**: The verifier contract's checkDACert function validates the certificate against operator signatures and stake thresholds
 
     ## L2 Data Availability
     The verification process differs between EigenDA versions:
 
     **EigenDA V1**: The Disperser collects operators' signatures and submits them to the EigenDAServiceManager contract via the confirmBatch() function. This submission includes a call to the BLSRegistry contract to verify signatures and check whether the required quorum of operators' stake has been achieved.
-
+    
     **EigenDA V2**: Certificate verification is handled by dedicated DACert Verifier contracts. Each certificate version corresponds to a specific verifier that validates the certificate format and cryptographic proofs without requiring batch submissions to a central service manager.
 
     Threshold BLS signatures are not used. Instead, the threshold check is performed on the signers' total stake fetched by the StakeRegistry, and the stake threshold percentage to reach is provided in the batch header input data.
