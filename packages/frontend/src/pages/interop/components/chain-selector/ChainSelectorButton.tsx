@@ -36,7 +36,7 @@ export function ChainSelectorButton({
   )
 
   const trigger = (
-    <div className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-divider bg-surface-primary px-4 py-[7px] text-xs leading-none md:text-sm">
+    <div className="flex h-10 items-center justify-center gap-2 rounded-lg border border-divider bg-surface-primary px-4 py-[7px] text-xs leading-none md:text-sm">
       <img
         key={selectedChain?.id}
         src={selectedChain?.iconUrl}

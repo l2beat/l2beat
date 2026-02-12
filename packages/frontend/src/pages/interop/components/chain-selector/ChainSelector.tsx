@@ -20,7 +20,7 @@ export function ChainSelector({ chains, protocols }: Props) {
               Chain Selector
             </div>
             <div className="h-10 w-px bg-black/16 max-md:hidden" />
-            <div className="grid grid-cols-[1fr_12px_1fr] items-center gap-3 max-md:w-full">
+            <div className="flex items-center gap-3 max-md:grid max-md:w-full max-md:grid-cols-[1fr_12px_1fr]">
               <ChainSelectorButton allChains={chains} index={0} />
               <span className="font-semibold leading-[115%]">&</span>
               <ChainSelectorButton allChains={chains} index={1} />
