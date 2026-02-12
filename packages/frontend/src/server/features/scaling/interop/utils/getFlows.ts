@@ -16,7 +16,6 @@ export function getFlows(
   for (const record of records) {
     // Skip projects that are part of other projects to not double count
     if (subgroupProjects.has(record.id as ProjectId)) continue
-    if (record.srcChain === record.dstChain) continue
 
     const key = `${record.srcChain}::${record.dstChain}`
     const current = map.get(key) ?? 0
