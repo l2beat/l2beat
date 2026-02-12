@@ -1,12 +1,5 @@
-import {
-  formatSeconds,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
-import {
-  DaEconomicSecurityRisk,
-  DaFraudDetectionRisk,
-} from '../../common'
+import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
