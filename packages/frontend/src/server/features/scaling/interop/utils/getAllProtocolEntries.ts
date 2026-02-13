@@ -149,7 +149,7 @@ export function getProtocolEntries(
   }
 
   return {
-    entries: entries,
+    entries: entries.sort((a, b) => b.volume - a.volume),
     zeroTransferProtocols,
   }
 }
