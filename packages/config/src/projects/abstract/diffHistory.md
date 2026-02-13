@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xdbb023c437d7aabeac94a652f55cf5dac81ab6d9
+
+# Diff at Fri, 13 Feb 2026 09:43:31 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@76c91db634aafdce14aca08d74e9d04bb256d971 block: 1769510461
+- current timestamp: 1770975745
+
+## Description
+
+Added new member and decreased threshold of a ms.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x392C009a49E9368Fc2bDd8B1e5520E62DEB8276c"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x5685ca99aaa33357e47f7e6c0e2176ab45cbddf2
 
 # Diff at Tue, 27 Jan 2026 10:42:06 GMT:

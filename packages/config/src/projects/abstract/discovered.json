@@ -1,6 +1,6 @@
 {
   "name": "abstract",
-  "timestamp": 1769510461,
+  "timestamp": 1770975745,
   "configHash": "0x716ccec87a46949325e140be028cdb47122f837d6964f15794f41e19995637e8",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -31,7 +31,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 12,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -438,7 +438,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 25285,
+        "getFirstUnprocessedPriorityTx": 25532,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -446,8 +446,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 1,
-        "getPriorityTreeRoot": "0x22c220fb1e7e26420ab3f414e6cfcb9cda45f2796821ef523b2beaa225bac68d",
+        "getPriorityQueueSize": 10,
+        "getPriorityTreeRoot": "0x70543320bf28a2d830ef8306889af81d5306ffb928e7adb9e5cb729317a1819a",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051587,
@@ -455,13 +455,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 3],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 48537,
-        "getTotalBatchesExecuted": 48525,
-        "getTotalBatchesVerified": 48533,
-        "getTotalBlocksCommitted": 48537,
-        "getTotalBlocksExecuted": 48525,
-        "getTotalBlocksVerified": 48533,
-        "getTotalPriorityTxs": 25286,
+        "getTotalBatchesCommitted": 50036,
+        "getTotalBatchesExecuted": 50024,
+        "getTotalBatchesVerified": 50033,
+        "getTotalBlocksCommitted": 50036,
+        "getTotalBlocksExecuted": 50024,
+        "getTotalBlocksVerified": 50033,
+        "getTotalPriorityTxs": 25542,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B",
         "getVerifierParams": {
@@ -549,18 +549,19 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x392C009a49E9368Fc2bDd8B1e5520E62DEB8276c",
           "eth:0xfBbBa4FbAA3A99bA842924d4c47C14d6d61D9615",
           "eth:0x23F48e7BF163941Ebeb7a6106B8ac712a8c54f75",
           "eth:0x4d64Ff9c7aB6F4Dc6dD7D9438BCBA70e3E094e3E",
           "eth:0xa925fac7B26C2959b5d55173B21CAc5729372459",
           "eth:0xFa700392b4B2223356401eDb1AA51665CC4bD9A4"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x6bd5d176dc3e359b9e03bf0149c82e26ee9a80a970d54f4b7713ef1027771bec",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -574,6 +575,11 @@
       "type": "Reference",
       "targetType": "EOA",
       "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0x392C009a49E9368Fc2bDd8B1e5520E62DEB8276c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
@@ -663,7 +669,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 13,
+        "nonce": 15,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1499,6 +1505,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 24325635 },
-  "permissionsConfigHash": "0x09a07735ed014a5aa8a887ae50031942b0f511df7a0f14f23ba5af93d50facbc"
+  "usedBlockNumbers": { "ethereum": 24447034 },
+  "permissionsConfigHash": "0x0058d35e7e8e6cdc8de5eeb6ce2cdee48f3dfc01a5f58900ae36e8fb37b7584c"
 }
