@@ -281,7 +281,11 @@ describe(InteropTransferClassifier.name, () => {
       const config: InteropAggregationConfig = {
         id: 'config1',
         plugins: [
-          { plugin: 'across', bridgeType: 'lockAndMint', transferType: 'withdrawal' },
+          {
+            plugin: 'across',
+            bridgeType: 'lockAndMint',
+            transferType: 'withdrawal',
+          },
         ],
       }
 
