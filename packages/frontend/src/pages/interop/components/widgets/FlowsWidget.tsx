@@ -40,7 +40,7 @@ export function FlowsWidget({
         <table className="-mb-1.5 mt-0.5 w-full border-separate border-spacing-y-1.5">
           <tbody>
             {isLoading &&
-              times(3).map((index) => (
+              times(4).map((index) => (
                 <tr key={index}>
                   <td>
                     <Skeleton className="h-9.5 w-full" />
