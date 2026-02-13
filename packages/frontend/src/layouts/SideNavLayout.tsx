@@ -110,7 +110,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/summary',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
             {
@@ -118,7 +117,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/non-minting',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
             {
@@ -126,7 +124,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/lock-and-mint',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
             {
@@ -134,7 +131,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/burn-and-mint',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
           ],
@@ -237,7 +233,7 @@ export function SideNavLayout({
             })),
         },
       ]),
-    [selectedChainsContext?.selectedChains, selectedChainsContext?.allChainIds],
+    [selectedChainsContext?.selectedChains],
   )
 
   return (

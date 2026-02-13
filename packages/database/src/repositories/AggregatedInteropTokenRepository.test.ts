@@ -500,8 +500,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(100),
-          ['ethereum'],
-          ['arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -522,8 +521,8 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const record2 = record({
           id: 'protocol2',
           timestamp: UnixTime(100),
-          srcChain: 'polygon',
-          dstChain: 'optimism',
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
           abstractTokenId: 'token2',
           transferCount: 3,
           totalDurationSum: 2000,
@@ -542,8 +541,8 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const record4 = record({
           id: 'protocol2',
           timestamp: UnixTime(100),
-          srcChain: 'polygon',
-          dstChain: 'optimism',
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
           abstractTokenId: 'token4',
           transferCount: 2,
           totalDurationSum: 4000,
@@ -553,23 +552,49 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndTimestamp(
-          UnixTime(100),
-          ['ethereum', 'polygon'],
-          ['arbitrum', 'optimism'],
-        )
+        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
+          'ethereum',
+          'arbitrum',
+        ])
 
         expect(result).toEqualUnsorted([record1, record2, record3, record4])
       })
 
       it('returns empty array when no records exist', async () => {
-        const result = await repository.getByChainsAndTimestamp(
-          UnixTime(100),
-          ['ethereum'],
-          ['arbitrum'],
-        )
+        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
+          'ethereum',
+          'arbitrum',
+        ])
 
         expect(result).toEqual([])
+      })
+
+      it('returns empty array when undefined first or second', async () => {
+        await repository.insertMany([
+          record({
+            id: 'protocol1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            abstractTokenId: 'token1',
+            transferCount: 5,
+            totalDurationSum: 1000,
+            volume: 5000,
+          }),
+        ])
+
+        expect(
+          await repository.getByChainsAndTimestamp(UnixTime(100), [
+            undefined,
+            'arbitrum',
+          ]),
+        ).toEqual([])
+        expect(
+          await repository.getByChainsAndTimestamp(UnixTime(100), [
+            'ethereum',
+            undefined,
+          ]),
+        ).toEqual([])
       })
 
       it('filters by bridgeType when provided', async () => {
@@ -612,8 +637,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(100),
-          ['ethereum'],
-          ['arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -647,11 +671,10 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndTimestamp(
-          UnixTime(100),
-          ['ethereum'],
-          ['arbitrum'],
-        )
+        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
+          'ethereum',
+          'arbitrum',
+        ])
 
         expect(result).toEqualUnsorted([record1, record2])
       })
@@ -702,15 +725,14 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const result = await repository.getByChainsIdAndTimestamp(
           UnixTime(100),
           'protocol1',
-          ['ethereum'],
-          ['arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
         expect(result).toEqualUnsorted([record1])
       })
 
-      it('returns empty array when empty srcChains or dstChains', async () => {
+      it('returns empty array when undefined first or second', async () => {
         await repository.insertMany([
           record({
             id: 'protocol1',
@@ -728,16 +750,14 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           await repository.getByChainsIdAndTimestamp(
             UnixTime(100),
             'protocol1',
-            [],
-            ['arbitrum'],
+            [undefined, 'arbitrum'],
           ),
         ).toEqual([])
         expect(
           await repository.getByChainsIdAndTimestamp(
             UnixTime(100),
             'protocol1',
-            ['ethereum'],
-            [],
+            ['ethereum', undefined],
           ),
         ).toEqual([])
       })

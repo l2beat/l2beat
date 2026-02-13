@@ -5,8 +5,8 @@ import { manifest } from '~/utils/Manifest'
 import type { InteropDashboardParams, ProtocolEntry } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getProtocolEntries } from './utils/getAllProtocolEntries'
+import { getFlows, type InteropFlowData } from './utils/getFlows'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
-import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
 import {
   getTopProtocols,
   type InteropProtocolData,
@@ -18,7 +18,7 @@ import {
 } from './utils/getTransferSizeChartData'
 
 export type InteropDashboardData = {
-  top3Paths: InteropPathData[]
+  flows: InteropFlowData[]
   topProtocols: InteropProtocolData[]
   topToken: InteropTopTokenData | undefined
   transferSizeChartData: TransferSizeChartData | undefined
@@ -37,8 +37,7 @@ export async function getInteropDashboardData(
   })
 
   const records = await getLatestAggregatedInteropTransferWithTokens(
-    params.from,
-    params.to,
+    params.selectedChains,
     params.type,
   )
 
@@ -53,7 +52,7 @@ export async function getInteropDashboardData(
   )
 
   return {
-    top3Paths: getTopPaths(records, subgroupProjects),
+    flows: getFlows(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     topToken: getTopToken({
       records,
@@ -76,10 +75,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     select: ['interopConfig'],
   })
 
-  const top3Paths: InteropPathData[] = [
+  const flows: InteropFlowData[] = [
     { srcChain: 'ethereum', dstChain: 'optimism', volume: 35_000_000 },
-    { srcChain: 'ethereum', dstChain: 'arbitrum', volume: 30_000_000 },
-    { srcChain: 'ethereum', dstChain: 'base', volume: 22_000_000 },
+    { srcChain: 'optimism', dstChain: 'ethereum', volume: 30_000_000 },
   ]
 
   const topProtocols: InteropProtocolData[] = interopProjects
@@ -205,7 +203,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   }
 
   return {
-    top3Paths,
+    flows,
     topProtocols,
     topToken,
     transferSizeChartData,

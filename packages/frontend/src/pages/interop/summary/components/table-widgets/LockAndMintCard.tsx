@@ -15,12 +15,8 @@ export function LockAndMintCard({
   entries: LockAndMintProtocolEntry[] | undefined
   isLoading: boolean
 }) {
-  const { selectedChains, allChainIds } = useInteropSelectedChains()
-  const viewAllUrl = buildInteropUrl(
-    '/interop/lock-and-mint',
-    selectedChains,
-    allChainIds,
-  )
+  const { selectedChains } = useInteropSelectedChains()
+  const viewAllUrl = buildInteropUrl('/interop/lock-and-mint', selectedChains)
 
   return (
     <PrimaryCard className="flex flex-col max-md:border-b max-md:border-b-divider md:border-t-4 md:border-t-yellow-700">

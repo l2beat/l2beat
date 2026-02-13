@@ -1,5 +1,4 @@
 import type { InteropChain } from '@l2beat/config'
-import xor from 'lodash/xor'
 import {
   createContext,
   type ReactNode,
@@ -12,22 +11,13 @@ import {
 } from 'react'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
+import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { buildInteropUrl } from './buildInteropUrl'
 
 interface InteropSelectedChainsContextType {
-  selectedChains: {
-    from: string[]
-    to: string[]
-  }
+  selectedChains: SelectedChains
   allChainIds: string[]
-  toggleFrom: (chainId: string) => void
-  toggleTo: (chainId: string) => void
-  reset: () => void
-  isDirty: boolean
-  setPath: (paths: { from: string; to: string }) => void
-  swapPaths: () => void
-  selectAll: (type?: 'from' | 'to') => void
-  deselectAll: (type?: 'from' | 'to') => void
+  selectChain: (index: 0 | 1, chainId: string) => void
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -37,7 +27,7 @@ export const InteropSelectedChainsContext = createContext<
 interface InteropSelectedChainsProviderProps {
   children: ReactNode
   interopChains: InteropChain[]
-  initialSelectedChains: { from: string[]; to: string[] }
+  initialSelectedChains: SelectedChains
 }
 
 export function InteropSelectedChainsProvider({
@@ -61,89 +51,37 @@ export function InteropSelectedChainsProvider({
       return
     }
 
-    const newUrl = buildInteropUrl(
-      window.location.pathname,
-      {
-        from: debouncedChains.from,
-        to: debouncedChains.to,
-      },
-      allChainIds,
-    )
+    const newUrl = buildInteropUrl(window.location.pathname, debouncedChains)
 
     const currentUrl = window.location.pathname + window.location.search
     if (newUrl !== currentUrl) {
       window.history.pushState({}, '', newUrl)
     }
-  }, [debouncedChains, allChainIds])
+  }, [debouncedChains])
 
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
     const params = new URLSearchParams(window.location.search)
-    setSelectedChains({
-      from: parseChainIdsFromUrl(params.get('from'), allChainIds),
-      to: parseChainIdsFromUrl(params.get('to'), allChainIds),
-    })
+    setSelectedChains((current) =>
+      parseSelectedChainsQuery(
+        params.get('selectedChains') ?? undefined,
+        allChainIds,
+        current,
+      ),
+    )
   })
 
-  const toggleFrom = useCallback((chainId: string) => {
-    setSelectedChains((prev) => ({
-      ...prev,
-      from: xor(prev.from, [chainId]),
-    }))
-  }, [])
+  const selectChain = useCallback((index: 0 | 1, chainId: string) => {
+    setSelectedChains((prev) => {
+      const oppositeIndex = index === 0 ? 1 : 0
+      if (prev[oppositeIndex] === chainId || prev[index] === chainId) {
+        return prev
+      }
 
-  const toggleTo = useCallback((chainId: string) => {
-    setSelectedChains((prev) => ({
-      ...prev,
-      to: xor(prev.to, [chainId]),
-    }))
-  }, [])
-
-  const reset = useCallback(() => {
-    setSelectedChains({
-      from: allChainIds,
-      to: allChainIds,
+      const next = [...prev] as SelectedChains
+      next[index] = chainId
+      return next
     })
-  }, [allChainIds])
-
-  const isDirty = useMemo(() => {
-    return (
-      selectedChains.from.length !== allChainIds.length ||
-      selectedChains.to.length !== allChainIds.length
-    )
-  }, [selectedChains, allChainIds])
-
-  const setPath = useCallback((paths: { from: string; to: string }) => {
-    setSelectedChains({
-      from: [paths.from],
-      to: [paths.to],
-    })
-  }, [])
-
-  const swapPaths = useCallback(() => {
-    setSelectedChains((prev) => ({
-      from: prev.to,
-      to: prev.from,
-    }))
-  }, [])
-
-  const selectAll = useCallback(
-    (type?: 'from' | 'to') => {
-      setSelectedChains((prev) => ({
-        ...prev,
-        ...(type
-          ? { [type]: allChainIds }
-          : { from: allChainIds, to: allChainIds }),
-      }))
-    },
-    [allChainIds],
-  )
-
-  const deselectAll = useCallback((type?: 'from' | 'to') => {
-    setSelectedChains((prev) => ({
-      ...prev,
-      ...(type ? { [type]: [] } : { from: [], to: [] }),
-    }))
   }, [])
 
   return (
@@ -151,14 +89,7 @@ export function InteropSelectedChainsProvider({
       value={{
         selectedChains,
         allChainIds,
-        toggleFrom,
-        toggleTo,
-        reset,
-        isDirty,
-        setPath,
-        swapPaths,
-        selectAll,
-        deselectAll,
+        selectChain,
       }}
     >
       {children}
@@ -166,13 +97,29 @@ export function InteropSelectedChainsProvider({
   )
 }
 
-function parseChainIdsFromUrl(
-  param: string | null,
+function parseSelectedChainsQuery(
+  value: string | undefined,
   allChainIds: string[],
-): string[] {
-  if (!param) return allChainIds
-  const ids = param.split(',').filter((id) => allChainIds.includes(id))
-  return ids.length > 0 ? ids : allChainIds
+  fallback: SelectedChains,
+): SelectedChains {
+  if (!value) {
+    return fallback
+  }
+
+  const [first, second, ...rest] = value.split(',')
+  if (!first || !second || rest.length > 0) {
+    return fallback
+  }
+
+  if (!allChainIds.includes(first) || !allChainIds.includes(second)) {
+    return fallback
+  }
+
+  if (first === second) {
+    return fallback
+  }
+
+  return [first, second]
 }
 
 export function useInteropSelectedChains() {

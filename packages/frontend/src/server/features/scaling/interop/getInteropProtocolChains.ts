@@ -13,8 +13,7 @@ import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
 
 export async function getInteropProtocolChains({
   id,
-  from,
-  to,
+  selectedChains,
   type,
 }: InteropProtocolTokensParams): Promise<ChainData[]> {
   const logger = getLogger().for('getProtocolChains')
@@ -39,8 +38,7 @@ export async function getInteropProtocolChains({
     await db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      from,
-      to,
+      selectedChains,
       type,
     )
 

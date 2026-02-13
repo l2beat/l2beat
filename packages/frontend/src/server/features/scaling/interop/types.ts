@@ -53,10 +53,15 @@ export type BurnAndMintProtocolData = {
   tokens: TopItems<TokenData>
 }
 
+const SelectedChainsSchema = v.tuple([
+  v.union([v.string(), v.undefined()]),
+  v.union([v.string(), v.undefined()]),
+])
+export type SelectedChains = v.infer<typeof SelectedChainsSchema>
+
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  selectedChains: SelectedChainsSchema,
   type: KnownInteropBridgeType.optional(),
 })
 
@@ -65,8 +70,7 @@ export type InteropProtocolTokensParams = v.infer<
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  selectedChains: SelectedChainsSchema,
   type: KnownInteropBridgeType.optional(),
 })
 
