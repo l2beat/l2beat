@@ -38,7 +38,10 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'across' }, { plugin: 'stargate' }],
+        plugins: [
+          { plugin: 'across', bridgeType: 'lockAndMint' },
+          { plugin: 'stargate', bridgeType: 'nonMinting' },
+        ],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -84,6 +87,7 @@ describe(InteropTransferClassifier.name, () => {
         plugins: [
           {
             plugin: 'stargate',
+            bridgeType: 'lockAndMint',
             chain: 'ethereum',
             abstractTokenId: 'eth',
           },
@@ -161,7 +165,11 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'across' }],
+        plugins: [
+          { plugin: 'across', bridgeType: 'lockAndMint' },
+          { plugin: 'across', bridgeType: 'burnAndMint' },
+          { plugin: 'across', bridgeType: 'nonMinting' },
+        ],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -173,10 +181,8 @@ describe(InteropTransferClassifier.name, () => {
       expect(result.burnAndMint[0].transferId).toEqual('msg2')
       expect(result.nonMinting).toHaveLength(1)
       expect(result.nonMinting[0].transferId).toEqual('msg3')
-      expect(result.unknown).toHaveLength(3)
-      expect(result.unknown[0].transferId).toEqual('msg5')
-      expect(result.unknown[1].transferId).toEqual('msg6')
-      expect(result.unknown[2].transferId).toEqual('msg7')
+      // Transfers with 'unknown' bridge type cannot be matched since 'unknown' is not a valid KnownInteropBridgeType
+      expect(result.unknown).toHaveLength(0)
     })
 
     it('returns empty arrays when no transfers match', () => {
@@ -193,7 +199,7 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'stargate' }],
+        plugins: [{ plugin: 'stargate', bridgeType: 'lockAndMint' }],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -209,7 +215,7 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'across' }],
+        plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -274,7 +280,13 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'across', transferType: 'withdrawal' }],
+        plugins: [
+          {
+            plugin: 'across',
+            bridgeType: 'lockAndMint',
+            transferType: 'withdrawal',
+          },
+        ],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -325,7 +337,11 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'across' }],
+        plugins: [
+          { plugin: 'across', bridgeType: 'lockAndMint' },
+          { plugin: 'across', bridgeType: 'burnAndMint' },
+          { plugin: 'across', bridgeType: 'nonMinting' },
+        ],
       }
 
       const result = classifier.classifyTransfers(transfers, config)

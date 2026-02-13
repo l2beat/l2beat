@@ -1,12 +1,11 @@
-import type { Project } from '@l2beat/config'
-import type { WithProjectIcon } from '~/utils/withProjectIcon'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { AllProtocolsDialog } from './AllProtocolsDialog'
 import { ChainSelectorButton } from './ChainSelectorButton'
 import type { InteropChainWithIcon } from './types'
 
 interface Props {
   chains: InteropChainWithIcon[]
-  protocols: WithProjectIcon<Project<'interopConfig'>>[]
+  protocols: ProtocolDisplayable[]
 }
 
 export function ChainSelector({ chains, protocols }: Props) {
@@ -27,7 +26,12 @@ export function ChainSelector({ chains, protocols }: Props) {
             </div>
           </div>
         </div>
-        <AllProtocolsDialog protocols={protocols} />
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-xs leading-none max-md:opacity-50 md:text-base">
+            Across {protocols.length} protocols
+          </span>
+          <AllProtocolsDialog protocols={protocols} />
+        </div>
       </div>
     </div>
   )

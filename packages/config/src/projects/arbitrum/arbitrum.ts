@@ -181,18 +181,22 @@ export const arbitrum: ScalingProject = orbitStackL2({
       {
         chain: 'arbitrum',
         plugin: 'orbitstack',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'arbitrum',
         plugin: 'orbitstack-standardgateway',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'arbitrum',
         plugin: 'orbitstack-wethgateway',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'arbitrum',
         plugin: 'orbitstack-customgateway',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

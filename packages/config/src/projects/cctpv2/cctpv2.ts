@@ -11,6 +11,7 @@ export const cctpv2: BaseProject = {
     plugins: [
       {
         plugin: 'cctp-v2',
+        bridgeType: 'burnAndMint',
       },
     ],
   },

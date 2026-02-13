@@ -97,6 +97,7 @@ export const polygonpos: ScalingProject = {
     plugins: [
       {
         plugin: 'polygon',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

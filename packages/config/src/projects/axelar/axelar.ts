@@ -12,6 +12,12 @@ export const axelar: BaseProject = {
       {
         plugin: 'axelar',
         transferType: 'axelar.Transfer',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        plugin: 'axelar',
+        transferType: 'axelar.Transfer',
+        bridgeType: 'burnAndMint',
       },
     ],
   },
