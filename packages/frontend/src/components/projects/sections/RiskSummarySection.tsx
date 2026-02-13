@@ -4,6 +4,7 @@ import { HostChainRisksWarning } from '~/components/HostChainRisksWarning'
 import { WarningBar } from '~/components/WarningBar'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnverifiedIcon } from '~/icons/Unverified'
+import type { ProjectVerificationWarnings } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
@@ -11,7 +12,7 @@ import type { ProjectSectionProps } from './types'
 export interface RiskSummarySectionProps extends ProjectSectionProps {
   riskGroups: RiskGroup[]
   warning: string | undefined
-  isVerified: boolean | undefined
+  verificationWarnings: ProjectVerificationWarnings
   redWarning: string | undefined
   hostChainWarning?: HostChainRisksWarningProps
 }
@@ -30,7 +31,7 @@ interface RiskItem {
 
 export function RiskSummarySection({
   riskGroups,
-  isVerified,
+  verificationWarnings,
   redWarning,
   warning,
   hostChainWarning,
@@ -42,9 +43,18 @@ export function RiskSummarySection({
   return (
     <ProjectSection {...sectionProps}>
       {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
-      {isVerified === false && (
+      {verificationWarnings.contracts && (
         <WarningBar
           text="This project includes unverified contracts."
+          color="red"
+          isCritical={true}
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
+          icon={UnverifiedIcon}
+        />
+      )}
+      {verificationWarnings.programHashes && (
+        <WarningBar
+          text="This project uses program hashes that cannot be independently reproduced."
           color="red"
           isCritical={true}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"

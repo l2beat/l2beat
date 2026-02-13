@@ -15,7 +15,7 @@ import type {
 } from '../../scaling/liveness/types'
 import { getHasTrackedContractChanged } from '../../scaling/liveness/utils/getHasTrackedContractChanged'
 import { getLivenessSyncWarning } from '../../scaling/liveness/utils/isLivenessSynced'
-import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
@@ -108,7 +108,7 @@ function getDaLivenessEntry(
         slug: b.slug,
         href: `/data-availability/projects/${layer.slug}/${b.slug}#da-bridge-liveness`,
         statuses: {
-          verificationWarning: !getIsProjectVerified(
+          verificationWarnings: getProjectVerificationWarnings(
             b.statuses.unverifiedContracts,
             projectsChangeReport.getChanges(b.id),
           ),

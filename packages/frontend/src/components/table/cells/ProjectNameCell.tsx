@@ -40,6 +40,9 @@ export function ProjectNameCell({
   withInfoTooltip,
   ignoreUnderReviewIcon,
 }: ProjectCellProps) {
+  if (project.name === 'INTMAX') {
+    console.log('project.statuses', project.statuses)
+  }
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
@@ -69,16 +72,20 @@ export function ProjectNameCell({
             </TooltipContent>
           </Tooltip>
         )}
-        {project.statuses?.verificationWarning === true && (
-          <Tooltip>
-            <TooltipTrigger>
-              <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
-            </TooltipTrigger>
-            <TooltipContent>
-              This project contains unverified contracts.
-            </TooltipContent>
-          </Tooltip>
-        )}
+        {project.statuses?.verificationWarnings &&
+          Object.values(project.statuses.verificationWarnings).some(
+            (value) => value !== undefined,
+          ) && (
+            <Tooltip>
+              <TooltipTrigger>
+                <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
+              </TooltipTrigger>
+              <TooltipContent>
+                {project.statuses.verificationWarnings.contracts}
+                {project.statuses.verificationWarnings.programHashes}
+              </TooltipContent>
+            </Tooltip>
+          )}
         {project.statuses?.redWarning && (
           <Tooltip>
             <TooltipTrigger>

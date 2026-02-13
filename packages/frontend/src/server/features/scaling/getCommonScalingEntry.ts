@@ -6,7 +6,7 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
-import { getIsProjectVerified } from '../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../utils/getIsProjectVerified'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -26,10 +26,13 @@ export function getCommonScalingEntry({
   syncWarning?: string
   ongoingAnomaly?: boolean
 }): CommonScalingEntry {
+  if (project.id === 'intmax') {
+    console.log('project.statuses', project.statuses)
+  }
   const statuses = {
     yellowWarning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
-    verificationWarning: !getIsProjectVerified(
+    verificationWarnings: getProjectVerificationWarnings(
       project.statuses.unverifiedContracts,
       changes,
     ),

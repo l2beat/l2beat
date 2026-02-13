@@ -121,6 +121,17 @@ export function getScalingSummaryEntry(
   const associatedTokensExcludedWarnings = compact(project.tvsInfo?.warnings)
   const activitySyncWarning = getActivitySyncWarning(activity?.syncState)
 
+  if (project.id === 'intmax') {
+    console.log(
+      'project.statuses',
+      getCommonScalingEntry({
+        project,
+        changes,
+        ongoingAnomaly,
+        syncWarning: activitySyncWarning,
+      }),
+    )
+  }
   return {
     ...getCommonScalingEntry({
       project,

@@ -7,7 +7,7 @@ import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
-import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
   getCommonDacDaEntry,
@@ -87,7 +87,7 @@ function getDaRiskEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarning: !getIsProjectVerified(
+        verificationWarnings: getProjectVerificationWarnings(
           b.statuses.unverifiedContracts,
           projectsChangeReport.getChanges(b.id),
         ),

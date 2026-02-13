@@ -58,7 +58,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                   // Hide 3rd and further bridges on mobile (will be shown in a drawer)
                   index > 2 && 'max-md:hidden',
                   index === 0 && 'md:rounded-t-none',
-                  bridge.verificationWarning
+                  bridge.verificationWarnings
                     ? getRowClassNamesWithoutOpacity('red')
                     : bridge.impactfulChangeWarning
                       ? getRowClassNamesWithoutOpacity('yellow')
@@ -78,16 +78,18 @@ export function MultipleBridgeDetails({ project }: Props) {
 
                 <div className="flex flex-1 items-center gap-1 font-bold text-primary text-sm">
                   {bridge.name}
-                  {bridge.verificationWarning && (
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        This bridge contains unverified contracts.
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
+                  {bridge.verificationWarnings?.contracts ||
+                    (bridge.verificationWarnings?.programHashes && (
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          {bridge.verificationWarnings.contracts}
+                          {bridge.verificationWarnings.programHashes}
+                        </TooltipContent>
+                      </Tooltip>
+                    ))}
                   {bridge.impactfulChangeWarning && (
                     <Tooltip>
                       <TooltipTrigger>
