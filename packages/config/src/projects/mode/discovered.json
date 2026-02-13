@@ -1,7 +1,7 @@
 {
   "name": "mode",
   "timestamp": 1770912815,
-  "configHash": "0x7d72a5f5fd01d161ce6995c41166920e084d7c2284fde62936225b4a526c2e10",
+  "configHash": "0x3270ee8c995cc38912b7744d6334db2d0c451e5de6ccf2e29bc33709f36cd19b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1028,7 +1028,14 @@
     {
       "address": "eth:0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E",
+          "role": ".proposerFromDGF"
+        }
+      ]
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -1678,6 +1685,13 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E",
+          "role": ".challengerFromDGF"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "sinceBlock": 11670007,
@@ -1744,6 +1758,14 @@
       "proxyType": "immutable",
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E",
+          "role": ".challengerFromDGF",
+          "via": [
+            { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" }
+          ]
+        },
         {
           "permission": "guard",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -2990,5 +3012,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 24441817 },
-  "permissionsConfigHash": "0x047a20c71f24cc4718fc1397d2708f4f0559b855c4ea165e0a5a9c6a0d49481b"
+  "permissionsConfigHash": "0xb20a8c839d68de41135dc4d214a1880fc86ca82b6549e96c062523b863210f36"
 }

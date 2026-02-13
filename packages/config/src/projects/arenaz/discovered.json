@@ -1,7 +1,7 @@
 {
   "name": "arenaz",
   "timestamp": 1770912796,
-  "configHash": "0xf525444c6f8b22c17c504549d50f51dbc65db9214f536b8248c9f42afbfdd058",
+  "configHash": "0xd8e852b277bc9c8ed87e4ae743d7d1a96b3ea4998147183caf39c1d06d615273",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -985,7 +985,14 @@
     {
       "address": "eth:0x5f16E66D8736B689a430564a31c8d887ca357CD8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x658656A14AFdf9c507096aC406564497d13EC754",
+          "role": ".proposerFromDGF"
+        }
+      ]
     },
     {
       "address": "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
@@ -1311,6 +1318,13 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x658656A14AFdf9c507096aC406564497d13EC754",
+          "role": ".challengerFromDGF"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "sinceBlock": 11670007,
@@ -1405,6 +1419,14 @@
       "proxyType": "immutable",
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x658656A14AFdf9c507096aC406564497d13EC754",
+          "role": ".challengerFromDGF",
+          "via": [
+            { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" }
+          ]
+        },
         {
           "permission": "guard",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -2943,5 +2965,5 @@
     "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
   "usedBlockNumbers": { "ethereum": 24441815 },
-  "permissionsConfigHash": "0x667cd476568c0885e808a5e0b0d2d975fe197c51cb6fd0abbb365fb5b5434951"
+  "permissionsConfigHash": "0x2e6cdd906cb979946bd6c6e5eacdf1462cdeb5a036e0b9f63f473573ddb03802"
 }

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb99743b3594640d5f20f288a69746f600a8f28cc
+Generated with discovered.json: 0x5c9a52b0bb0441b2b9b20d407f13fd2a3d68cedd
 
-# Diff at Fri, 13 Feb 2026 10:00:44 GMT:
+# Diff at Fri, 13 Feb 2026 11:09:06 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769513575
@@ -81,7 +81,7 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
     EOA  (eth:0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB) {
     +++ description: None
       receivedPermissions:
--        [{"permission":"propose","from":"eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D","role":".proposer"}]
++        [{"permission":"propose","from":"eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E","role":".proposerFromDGF"}]
     }
 ```
 
@@ -172,7 +172,7 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
     contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
     +++ description: None
       receivedPermissions:
--        [{"permission":"challenge","from":"eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D","role":".challenger"}]
++        [{"permission":"challenge","from":"eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E","role":".challengerFromDGF"}]
     }
 ```
 
@@ -180,7 +180,7 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
     contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
     +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
       receivedPermissions.0:
--        {"permission":"challenge","from":"eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D","role":".challenger","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}]}
++        {"permission":"challenge","from":"eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E","role":".challengerFromDGF","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}]}
     }
 ```
 
@@ -236,6 +236,14 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1769513575 (main branch discovery), not current.
 
 ```diff
+    EOA  (eth:0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D","role":".proposer"}]
+    }
+```
+
+```diff
     contract DisputeGameFactory (eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E) {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
       values.challengerFromDGF:
@@ -246,6 +254,22 @@ discovery. Values are for block 1769513575 (main branch discovery), not current.
 +        "UNRESOLVED"
       usedTypes:
 +        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D","role":".challenger"}]
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D","role":".challenger","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}]}
     }
 ```
 

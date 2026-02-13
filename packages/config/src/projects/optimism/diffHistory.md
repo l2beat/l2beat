@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x540d6ed1708f9fae55cc63a98d2ce32d2eaac81c
+Generated with discovered.json: 0x35ec3049cd29c0ef649d1e78dd42c1a9926c3b60
 
-# Diff at Fri, 13 Feb 2026 10:00:46 GMT:
+# Diff at Fri, 13 Feb 2026 11:12:10 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272178
@@ -92,6 +92,14 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 ```
 
 ```diff
+    EOA  (eth:0x473300df21D047806A082244b417f96b32f13A33) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9","role":".proposerFromDGF"}]
+    }
+```
+
+```diff
 -   Status: DELETED
     contract FaultDisputeGame (eth:0x478c26109b169a840D61E95B19512FF0b5F19c87)
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
@@ -139,6 +147,22 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 -   Status: DELETED
     contract PermissionedDisputeGame (eth:0x8081faB7cc5D0e56122bB6651928e0bcF94b95bf)
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9","role":".challengerFromDGF"}]
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9","role":".challengerFromDGF","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}]}
+    }
 ```
 
 ```diff

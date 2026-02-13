@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe92a913cc073eac5ebe6fa1f8db8abb1eafad547
+Generated with discovered.json: 0x15b66030b0b911feabe790b9597e97e4892d8997
 
-# Diff at Fri, 13 Feb 2026 10:00:40 GMT:
+# Diff at Fri, 13 Feb 2026 11:10:28 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272339
@@ -137,6 +137,14 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 ```
 
 ```diff
+    EOA  (eth:0x65436ddCbc026F34118954F229f7F132b696b3B4) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD","role":".proposerFromDGF"}]
+    }
+```
+
+```diff
     contract L1ERC721Bridge (eth:0x661235a238B11191211fa95D4Dd9E423d521E0Be) {
     +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
       values.$pastUpgrades.6:
@@ -162,6 +170,22 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 -   Status: DELETED
     contract DelayedWETH (eth:0x71CC5E57cE659e8E2cc78F86b14BDDCb626691Fd)
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD","role":".challengerFromDGF"}]
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD","role":".challengerFromDGF","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}]}
+    }
 ```
 
 ```diff

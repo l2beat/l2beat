@@ -74,7 +74,8 @@
         "args": [1],
         "expectRevert": true
       },
-      "edit": ["format", "ProposerFromArgs"]
+      "edit": ["format", "ProposerFromArgs"],
+      "permissions": [{ "type": "propose" }]
     },
     "challengerFromDGF": {
       "handler": {
@@ -83,7 +84,8 @@
         "args": [1],
         "expectRevert": true
       },
-      "edit": ["format", "ChallengerFromArgs"]
+      "edit": ["format", "ChallengerFromArgs"],
+      "permissions": [{ "type": "challenge" }]
     },
     "permissionedGamesTotal": {
       "handler": {

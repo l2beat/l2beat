@@ -6,12 +6,6 @@
   "overrides": {
     "eth:0x658656A14AFdf9c507096aC406564497d13EC754": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
-    },
-    "eth:0x63BD36A7E8f5f1774F692EF2ef4B0743A2262D47": {
-      "fields": {
-        "proposer": { "permissions": [{ "type": "propose" }] },
-        "challenger": { "permissions": [{ "type": "challenge" }] }
-      }
     }
   }
 }
