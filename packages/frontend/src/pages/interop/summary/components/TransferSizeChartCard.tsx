@@ -2,6 +2,7 @@ import round from 'lodash/round'
 import { useMemo } from 'react'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { TransferSizeChartData } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
+import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
 import { TransferSizeChart } from './charts/TransferSizeChart'
 import { TopNBadge } from './TopNBadge'
 
@@ -51,7 +52,7 @@ export function TransferSizeChartCard({
         </h2>
         <TopNBadge n={15} />
       </div>
-
+      <BetweenChainsInfo className="mt-1" />
       <TransferSizeChart data={chartData} isLoading={isLoading} />
     </PrimaryCard>
   )

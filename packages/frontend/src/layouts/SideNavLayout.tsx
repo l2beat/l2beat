@@ -20,6 +20,7 @@ import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
+import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
 
@@ -41,7 +42,17 @@ export function SideNavLayout({
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
+
   const selectedChainsContext = useContext(InteropSelectedChainsContext)
+  const selectedChainIds = useMemo(
+    () =>
+      selectedChainsContext?.selectedChains
+        ? (selectedChainsContext.selectedChains.map(
+            (chain) => chain?.id,
+          ) as SelectedChains)
+        : undefined,
+    [selectedChainsContext?.selectedChains],
+  )
 
   const groups = useMemo(
     () =>
@@ -107,31 +118,19 @@ export function SideNavLayout({
           links: [
             {
               title: 'Summary',
-              href: buildInteropUrl(
-                '/interop/summary',
-                selectedChainsContext?.selectedChains,
-              ),
+              href: buildInteropUrl('/interop/summary', selectedChainIds),
             },
             {
               title: 'Non-minting protocols',
-              href: buildInteropUrl(
-                '/interop/non-minting',
-                selectedChainsContext?.selectedChains,
-              ),
+              href: buildInteropUrl('/interop/non-minting', selectedChainIds),
             },
             {
               title: 'Lock & Mint protocols',
-              href: buildInteropUrl(
-                '/interop/lock-and-mint',
-                selectedChainsContext?.selectedChains,
-              ),
+              href: buildInteropUrl('/interop/lock-and-mint', selectedChainIds),
             },
             {
               title: 'Burn & Mint protocols',
-              href: buildInteropUrl(
-                '/interop/burn-and-mint',
-                selectedChainsContext?.selectedChains,
-              ),
+              href: buildInteropUrl('/interop/burn-and-mint', selectedChainIds),
             },
           ],
         },
@@ -233,7 +232,7 @@ export function SideNavLayout({
             })),
         },
       ]),
-    [selectedChainsContext?.selectedChains],
+    [selectedChainIds],
   )
 
   return (
