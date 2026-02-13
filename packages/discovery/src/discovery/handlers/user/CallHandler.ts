@@ -1,4 +1,8 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
@@ -74,7 +78,7 @@ export class CallHandler implements Handler {
     if (isZeroAddress(targetAddress)) {
       return {
         field: this.field,
-        value: ZERO_ADDRESS,
+        value: EthereumAddress.ZERO,
         ignoreRelative: this.definition.ignoreRelative,
       }
     }
@@ -112,31 +116,37 @@ function resolveDependencies(
   address: ChainSpecificAddress | undefined
 } {
   const args = definition.args.map((x) => resolveReference(x, referenceInput))
-  const address = resolveReference(definition.address, referenceInput)
-  if (address === undefined) {
+  const addressToCall = resolveReference(definition.address, referenceInput)
+
+  if (addressToCall === undefined) {
     return { method: definition.method, args, address: undefined }
   }
-  const addressStr = address.toString()
+
+  assert(
+    typeof addressToCall === 'string',
+    `Address to call must be a string - ${addressToCall} given`,
+  )
+
   // Handler results are raw addresses (no chain prefix).
   // Derive the chain from the current contract's ChainSpecificAddress.
-  if (!addressStr.includes(':')) {
-    const chain = currentContractAddress.split(':')[0]
+  if (!ChainSpecificAddress.check(addressToCall)) {
+    const chain = ChainSpecificAddress.chain(currentContractAddress)
     return {
       method: definition.method,
       args,
-      address: ChainSpecificAddress(`${chain}:${addressStr}`),
+      address: ChainSpecificAddress.from(chain, addressToCall),
     }
   }
+
   return {
     method: definition.method,
     args,
-    address: ChainSpecificAddress(addressStr),
+    address: ChainSpecificAddress(addressToCall),
   }
 }
 
-const ZERO_ADDRESS = '0x' + '0'.repeat(40)
 function isZeroAddress(address: ChainSpecificAddress): boolean {
-  return address.endsWith(ZERO_ADDRESS)
+  return ChainSpecificAddress.address(address) === EthereumAddress.ZERO
 }
 
 function isViewFragment(fragment: utils.FunctionFragment): boolean {

@@ -631,10 +631,11 @@ function getProgramHashes(
         'PermissionedDisputeGame',
         'absolutePrestate',
       )
+      const EMPTY_PRESTATE = '0x' + '0'.repeat(64)
       // V2 dispute games store params in clone bytecode;
       // the implementation contract returns zero.
       // Read from AnchorStateRegistry's game clone instead.
-      if (absolutePrestate === '0x' + '0'.repeat(64)) {
+      if (absolutePrestate === EMPTY_PRESTATE) {
         const fromAnchor = templateVars.discovery.hasContract(
           'AnchorStateRegistry',
         )
@@ -643,7 +644,7 @@ function getProgramHashes(
               'absolutePrestateFromGame',
             )
           : undefined
-        if (fromAnchor && fromAnchor !== '0x' + '0'.repeat(64)) {
+        if (fromAnchor && fromAnchor !== EMPTY_PRESTATE) {
           return [PROGRAM_HASHES(fromAnchor)]
         }
         return []
