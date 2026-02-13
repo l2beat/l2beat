@@ -414,6 +414,8 @@ function MainPageLayout(props: {
       <a href="/interop/configs" target="_blank">
         Automated configs
       </a>
+      {' | '}
+      <a href="/interop/aggregates">Aggregates dashboard</a>
       <LiveTransfers />
       <DataTablePage
         showHome={false}
