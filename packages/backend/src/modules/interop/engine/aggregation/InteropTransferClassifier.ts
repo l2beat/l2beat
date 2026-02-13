@@ -31,7 +31,8 @@ export class InteropTransferClassifier {
     const unknown: InteropTransferRecord[] = []
 
     for (const record of records) {
-      const bridgeType = record.bridgeType ?? InteropTransferClassifier.inferBridgeType(record)
+      const bridgeType =
+        record.bridgeType ?? InteropTransferClassifier.inferBridgeType(record)
       switch (bridgeType) {
         case 'lockAndMint':
           lockAndMint.push(record)
@@ -61,7 +62,8 @@ export class InteropTransferClassifier {
       // Required plugin fields
       pluginConditions.push((transfer) => {
         const transferBridgeType =
-          transfer.bridgeType ?? InteropTransferClassifier.inferBridgeType(transfer)
+          transfer.bridgeType ??
+          InteropTransferClassifier.inferBridgeType(transfer)
         return (
           plugin.plugin === transfer.plugin &&
           plugin.bridgeType === transferBridgeType
