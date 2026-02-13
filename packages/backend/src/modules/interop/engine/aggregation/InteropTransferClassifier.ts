@@ -57,15 +57,16 @@ export class InteropTransferClassifier {
     for (const plugin of config.plugins) {
       const pluginConditions: ((transfer: InteropTransferRecord) => boolean)[] =
         []
-      pluginConditions.push((transfer) => plugin.plugin === transfer.plugin)
 
-      if (plugin.bridgeType) {
-        pluginConditions.push((transfer) => {
-          const transferBridgeType =
-            transfer.bridgeType ?? this.inferBridgeType(transfer)
-          return plugin.bridgeType === transferBridgeType
-        })
-      }
+      // Required plugin fields
+      pluginConditions.push((transfer) => {
+        const transferBridgeType =
+          transfer.bridgeType ?? this.inferBridgeType(transfer)
+        return (
+          plugin.plugin === transfer.plugin &&
+          plugin.bridgeType === transferBridgeType
+        )
+      })
 
       if (plugin.chain) {
         pluginConditions.push(
