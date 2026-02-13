@@ -78,8 +78,7 @@
         "args": [1],
         "expectRevert": true
       },
-      "edit": ["format", "ProposerFromArgs"],
-      "permissions": [{ "type": "propose" }]
+      "edit": ["format", "ProposerFromArgs"]
     },
     "challengerFromDGF": {
       "handler": {
@@ -88,8 +87,7 @@
         "args": [1],
         "expectRevert": true
       },
-      "edit": ["format", "ChallengerFromArgs"],
-      "permissions": [{ "type": "challenge" }]
+      "edit": ["format", "ChallengerFromArgs"]
     },
     "wethFromDGF": {
       "handler": {

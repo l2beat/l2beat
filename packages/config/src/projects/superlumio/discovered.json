@@ -1,6 +1,6 @@
 {
   "name": "superlumio",
-  "timestamp": 1770982516,
+  "timestamp": 1770983165,
   "configHash": "0xe884ef40c807623831052ec8d4f22e519e0ff3cfa7969f9686924455b2a0453a",
   "entries": [
     {
@@ -1938,6 +1938,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24447597 },
+  "usedBlockNumbers": { "ethereum": 24447650 },
   "permissionsConfigHash": "0x89274f5ea6ef7b5b8bc3e673ada4c9e92afcf0fd71122dad9e9d6fba01e57bb2"
 }

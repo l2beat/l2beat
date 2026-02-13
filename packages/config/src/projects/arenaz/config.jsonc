@@ -5,7 +5,11 @@
   "initialAddresses": ["eth:0x564Eb0CeFCcA86160649a8986C419693c82F3678"],
   "overrides": {
     "eth:0x658656A14AFdf9c507096aC406564497d13EC754": {
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "fields": {
+        "proposerFromDGF": { "permissions": [{ "type": "propose" }] },
+        "challengerFromDGF": { "permissions": [{ "type": "challenge" }] }
+      }
     }
   }
 }

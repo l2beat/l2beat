@@ -1,6 +1,6 @@
 {
   "name": "snaxchain",
-  "timestamp": 1770982510,
+  "timestamp": 1770983159,
   "configHash": "0x6c7e17a8dce55376f04e5579465077440503100fe877d42f1d6fa57847944a69",
   "entries": [
     {
@@ -1880,6 +1880,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24447596 },
+  "usedBlockNumbers": { "ethereum": 24447650 },
   "permissionsConfigHash": "0xa1fc27fd6479c3f5fc6b809ecc8f316f4a9c2c2bf2516e8c513b5102a49054a7"
 }

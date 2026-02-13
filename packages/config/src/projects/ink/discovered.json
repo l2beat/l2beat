@@ -958,14 +958,7 @@
     {
       "address": "eth:0x65436ddCbc026F34118954F229f7F132b696b3B4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
-          "role": ".proposerFromDGF"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1ERC721Bridge",
@@ -1578,13 +1571,6 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
-          "role": ".challengerFromDGF"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "sinceBlock": 11670007,
@@ -1631,14 +1617,6 @@
       "proxyType": "immutable",
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
       "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
-          "role": ".challengerFromDGF",
-          "via": [
-            { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" }
-          ]
-        },
         {
           "permission": "guard",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -4538,5 +4516,5 @@
     "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
   "usedBlockNumbers": { "ethereum": 24441816, "ink": 37414392 },
-  "permissionsConfigHash": "0x2f682d3280720dc0b2ce816cdadf905762a65ab8de1cff78d9e51bca7aa91c38"
+  "permissionsConfigHash": "0x4ae7981e0847d3827e53ee0dc32cb7ec29e918c18012915751dd1dc7c616837a"
 }

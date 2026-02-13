@@ -725,14 +725,7 @@
     {
       "address": "eth:0x473300df21D047806A082244b417f96b32f13A33",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
-          "role": ".proposerFromDGF"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
@@ -1740,13 +1733,6 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
-          "role": ".challengerFromDGF"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "sinceBlock": 11670007,
@@ -1817,14 +1803,6 @@
       "proxyType": "immutable",
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
       "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
-          "role": ".challengerFromDGF",
-          "via": [
-            { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" }
-          ]
-        },
         {
           "permission": "guard",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -5126,5 +5104,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 24441758, "optimism": 147656664 },
-  "permissionsConfigHash": "0xb7eeda33bd53546a686bcf54bddb2f8e231a48f1cbaf3f8cd97d3920128f3fb4"
+  "permissionsConfigHash": "0x9c884e62c3719753eec9395924507a41cb69fff4e0620be6ba4c40f1e33ce6af"
 }
