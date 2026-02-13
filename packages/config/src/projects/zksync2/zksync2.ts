@@ -69,6 +69,7 @@ export const zksync2: ScalingProject = zkStackL2({
       {
         plugin: 'zkstack',
         chain: 'zksync2',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

@@ -151,6 +151,7 @@ export const acrossV3: Bridge = {
     plugins: [
       {
         plugin: 'across',
+        bridgeType: 'nonMinting',
       },
     ],
   },
