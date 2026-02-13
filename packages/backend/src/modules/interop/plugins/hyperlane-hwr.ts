@@ -325,7 +325,7 @@ export type ParsedTransferLog = {
 }
 
 // meson has a different version of this that normalizes amounts (for unknown decimal situations)
-function findBestTransferLog(
+export function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,
   startLogIndex: number,
@@ -335,6 +335,10 @@ function findBestTransferLog(
   let closestDistance: number | undefined
   let hasTransfer = false
 
+  console.log(
+    'Finding best transfer log for target amount:',
+    targetAmount.toString(),
+  )
   for (const log of logs) {
     const transfer = parseTransfer(log, null)
     if (!transfer) continue

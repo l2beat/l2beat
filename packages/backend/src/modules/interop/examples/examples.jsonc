@@ -475,11 +475,11 @@
     "txs": [
       {
         "chain": "arbitrum",
-        "tx": "0x284aed9764a451c32bae3ade17ce61daf420f20d80f3b0849db45af54a16cf1c"
+        "tx": "0xf92f360f763853152ae4b3a7ba9424d00b9402d2b326d48fa08b024d82ad7845"
       },
       {
         "chain": "ethereum",
-        "tx": "0x607ef6ded5162ece9b8c8d9df7ef0be69aa6005863403a963295bb362222d5a0"
+        "tx": "0x5606294e9a0886f996d9900b9ccc96afc2468514768165de1cda270757af4ea6"
       }
     ]
   },
