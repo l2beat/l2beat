@@ -7,6 +7,7 @@ import type { InteropChainWithIcon } from '~/pages/interop/components/chain-sele
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { BetweenChainsInfo } from '../BetweenChainsInfo'
 
 export function FlowsWidget({
   interopChains,
@@ -37,6 +38,7 @@ export function FlowsWidget({
         <h2 className="font-bold text-heading-16 md:text-heading-20">
           Last 24h flows
         </h2>
+        <BetweenChainsInfo className="mt-0.5" />
         <table className="-mb-1.5 mt-0.5 w-full border-separate border-spacing-y-1.5">
           <tbody>
             {isLoading &&
