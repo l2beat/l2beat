@@ -76,12 +76,12 @@ function PathItem({
       <td className="rounded-l-lg border-divider border-t border-b border-l py-2 pl-2.5 leading-none">
         <div className="flex items-center gap-1.5">
           <img src={from.iconUrl} alt={from.name} className="size-5" />
-          <div className="@max-[465px]:hidden font-medium text-label-value-15">
+          <div className="@max-[472px]:hidden font-medium text-label-value-15">
             {from.name}
           </div>
           <ArrowRightIcon className="size-5 fill-brand" />
           <img src={to.iconUrl} alt={to.name} className="size-5" />
-          <div className="@max-[465px]:hidden font-medium text-label-value-15">
+          <div className="@max-[472px]:hidden font-medium text-label-value-15">
             {to.name}
           </div>
         </div>
