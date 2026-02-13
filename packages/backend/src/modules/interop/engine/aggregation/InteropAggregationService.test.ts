@@ -36,7 +36,7 @@ describe(InteropAggregationService.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          plugins: [{ plugin: 'across' }],
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
         },
       ]
 
@@ -112,7 +112,7 @@ describe(InteropAggregationService.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          plugins: [{ plugin: 'across' }],
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
         },
       ]
 
@@ -146,7 +146,7 @@ describe(InteropAggregationService.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          plugins: [{ plugin: 'across' }],
+          plugins: [{ plugin: 'across', bridgeType: 'nonMinting' }],
         },
       ]
 
@@ -179,7 +179,7 @@ describe(InteropAggregationService.name, () => {
           duration: 6000,
           srcValueUsd: 3000,
           dstValueUsd: 3000,
-          srcWasBurned: false,
+          srcWasBurned: true,
           dstWasMinted: true,
         }),
       ]
@@ -187,11 +187,11 @@ describe(InteropAggregationService.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          plugins: [{ plugin: 'across' }],
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
         },
         {
           id: 'config2',
-          plugins: [{ plugin: 'stargate' }],
+          plugins: [{ plugin: 'stargate', bridgeType: 'burnAndMint' }],
         },
       ]
 
@@ -211,7 +211,7 @@ describe(InteropAggregationService.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          plugins: [{ plugin: 'across' }],
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
         },
       ]
 
