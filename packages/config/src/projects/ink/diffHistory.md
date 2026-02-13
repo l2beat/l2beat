@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb5f4be717f56fe90731f2e49231f57a81f71d477
+Generated with discovered.json: 0xe92a913cc073eac5ebe6fa1f8db8abb1eafad547
 
-# Diff at Thu, 12 Feb 2026 16:26:29 GMT:
+# Diff at Fri, 13 Feb 2026 10:00:40 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@632144c808f959f8e2164511b7a59e409831ae61 block: 1769272339
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272339
 - current timestamp: 1770912803
 
 ## Description
@@ -36,6 +36,9 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
       values.$upgradeCount:
 -        5
 +        6
+      values.challengerFromDGF:
+-        "UNRESOLVED"
++        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
 +++ severity: HIGH
       values.gameImpls.0:
 -        "eth:0x4cBFBA0AfEb3a36878eb52fAE78335751076250C"
@@ -44,6 +47,9 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
       values.gameImpls.1:
 -        "eth:0x467E6a8D6916E7394F9715b4DE9339ee36887382"
 +        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
+      values.proposerFromDGF:
+-        "UNRESOLVED"
++        "eth:0x65436ddCbc026F34118954F229f7F132b696b3B4"
       values.version:
 -        "1.3.0"
 +        "1.4.0"
@@ -52,12 +58,6 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
       implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
 +        "DisputeGameFactory"
     }
-```
-
-```diff
--   Status: DELETED
-    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
-    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
 ```
 
 ```diff
@@ -75,8 +75,6 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 ```diff
     contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
     +++ description: None
-      receivedPermissions.7:
--        {"permission":"upgrade","from":"eth:0x6Cbd14DA021e39A7895Ae151Ac72eCc9023e87F6","role":"admin","via":[{"address":"eth:0xd56045E68956FCe2576E680c95a4750cf8241f79"}]}
       receivedPermissions.8:
 -        {"permission":"upgrade","from":"eth:0x71CC5E57cE659e8E2cc78F86b14BDDCb626691Fd","role":"admin","via":[{"address":"eth:0xd56045E68956FCe2576E680c95a4750cf8241f79"}]}
     }
@@ -139,12 +137,6 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 ```
 
 ```diff
--   Status: DELETED
-    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908)
-    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
-```
-
-```diff
     contract L1ERC721Bridge (eth:0x661235a238B11191211fa95D4Dd9E423d521E0Be) {
     +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
       values.$pastUpgrades.6:
@@ -168,28 +160,8 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 
 ```diff
 -   Status: DELETED
-    contract DelayedWETH (eth:0x6Cbd14DA021e39A7895Ae151Ac72eCc9023e87F6)
-    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-```
-
-```diff
--   Status: DELETED
     contract DelayedWETH (eth:0x71CC5E57cE659e8E2cc78F86b14BDDCb626691Fd)
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-```
-
-```diff
--   Status: DELETED
-    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)
-    +++ description: None
-```
-
-```diff
-    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
-    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
-      directlyReceivedPermissions.1:
--        {"permission":"act","from":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A","role":".GnosisSafe_modules"}
-    }
 ```
 
 ```diff
@@ -206,8 +178,6 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 ```diff
     contract ProxyAdmin (eth:0xd56045E68956FCe2576E680c95a4750cf8241f79) {
     +++ description: None
-      directlyReceivedPermissions.6:
--        {"permission":"upgrade","from":"eth:0x6Cbd14DA021e39A7895Ae151Ac72eCc9023e87F6","role":"admin"}
       directlyReceivedPermissions.7:
 -        {"permission":"upgrade","from":"eth:0x71CC5E57cE659e8E2cc78F86b14BDDCb626691Fd","role":"admin"}
     }
@@ -254,21 +224,35 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 ## Source code changes
 
 ```diff
-.../AnchorStateRegistry/AnchorStateRegistry.sol    |   24 +-
- .../DelayedWETH.sol => /dev/null                   |  782 ------
- .../Proxy.p.sol => /dev/null                       |  200 --
- .../DelayedWETH.sol => /dev/null                   |  782 ------
- .../Proxy.p.sol => /dev/null                       |  200 --
- .../DisputeGameFactory/DisputeGameFactory.sol      |   56 +-
- .../FaultDisputeGame.sol                           |  242 +-
- .../ink/.flat@1769272339/MIPS.sol => /dev/null     | 2643 --------------------
- .../Proxy.p.sol => /dev/null                       |   39 -
- .../Safe.sol => /dev/null                          | 1088 --------
- .../OptimismPortal2/OptimismPortal2.sol            |   44 +-
- .../PermissionedDisputeGame.sol                    |  340 +--
- .../PreimageOracle.sol => /dev/null                | 1311 ----------
- .../SystemConfig/SystemConfig.sol                  |   40 +-
- 14 files changed, 441 insertions(+), 7350 deletions(-)
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  24 +-
+ .../DelayedWETH}/DelayedWETH.sol                   |   0
+ .../DelayedWETH}/Proxy.p.sol                       |   0
+ .../DelayedWETH.sol => /dev/null                   | 782 ---------------------
+ .../Proxy.p.sol => /dev/null                       | 200 ------
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  56 +-
+ .../FaultDisputeGame.sol                           | 242 ++++---
+ .../OptimismPortal2/OptimismPortal2.sol            |  44 +-
+ .../PermissionedDisputeGame.sol                    | 340 +++++----
+ .../SystemConfig/SystemConfig.sol                  |  40 +-
+ 10 files changed, 441 insertions(+), 1287 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769272339 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}}]
+    }
 ```
 
 Generated with discovered.json: 0x2dfeea1c9e8a2538fc6b65ba61e8d9b716bb3d45

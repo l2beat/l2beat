@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x9b31118729dfe37e8eaecebc8c4a22ea86de742f
+Generated with discovered.json: 0xb99743b3594640d5f20f288a69746f600a8f28cc
 
-# Diff at Thu, 12 Feb 2026 16:26:33 GMT:
+# Diff at Fri, 13 Feb 2026 10:00:44 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@632144c808f959f8e2164511b7a59e409831ae61 block: 1769513575
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769513575
 - current timestamp: 1770912815
 
 ## Description
@@ -24,20 +24,14 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
 
 ```diff
 -   Status: DELETED
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
     contract PermissionedDisputeGame (eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D)
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
-```
-
-```diff
--   Status: DELETED
-    contract DelayedWETH (eth:0x1C823D585B2b4325A0DB845cEBe32FC7Ad67514a)
-    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-```
-
-```diff
--   Status: DELETED
-    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
-    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
 ```
 
 ```diff
@@ -48,22 +42,6 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
       values.$upgradeCount:
 -        9
 +        10
-    }
-```
-
-```diff
-    contract ProxyAdmin (eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7) {
-    +++ description: None
-      directlyReceivedPermissions.1:
--        {"permission":"upgrade","from":"eth:0x1C823D585B2b4325A0DB845cEBe32FC7Ad67514a","role":"admin"}
-    }
-```
-
-```diff
-    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
-    +++ description: None
-      receivedPermissions.2:
--        {"permission":"upgrade","from":"eth:0x1C823D585B2b4325A0DB845cEBe32FC7Ad67514a","role":"admin","via":[{"address":"eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7"}]}
     }
 ```
 
@@ -100,9 +78,11 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
 ```
 
 ```diff
--   Status: DELETED
-    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908)
-    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+    EOA  (eth:0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D","role":".proposer"}]
+    }
 ```
 
 ```diff
@@ -130,10 +110,19 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
       values.$upgradeCount:
 -        4
 +        5
+      values.challengerFromDGF:
+-        "UNRESOLVED"
++        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
 +++ severity: HIGH
       values.gameImpls.1:
 -        "eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D"
 +        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
+      values.permissionedGameArgs:
+-        "0x"
++        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb908eb9d917868276cee5457609dbbf470fde41bade81c823d585b2b4325a0db845cebe32fc7ad67514a000000000000000000000000000000000000000000000000000000000000868b674f64d64ddc198db83cd9047df54bf89ccd0ddb9ba6e03d8b90de867373db8cf1a58d2f7f006b3a"
+      values.proposerFromDGF:
+-        "UNRESOLVED"
++        "eth:0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB"
       values.version:
 -        "1.3.0"
 +        "1.4.0"
@@ -180,9 +169,11 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
 ```
 
 ```diff
--   Status: DELETED
-    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
     +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D","role":".challenger"}]
+    }
 ```
 
 ```diff
@@ -190,8 +181,6 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
     +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
       receivedPermissions.0:
 -        {"permission":"challenge","from":"eth:0x181102F5c0FBb03c6f642b596aa53BC5F5526d3D","role":".challenger","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}]}
-      directlyReceivedPermissions.1:
--        {"permission":"act","from":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A","role":".GnosisSafe_modules"}
     }
 ```
 
@@ -231,17 +220,39 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
 
 ```diff
 .../AnchorStateRegistry/AnchorStateRegistry.sol    |   24 +-
- .../DelayedWETH/DelayedWETH.sol => /dev/null       |  782 ------
- .../DelayedWETH/Proxy.p.sol => /dev/null           |  200 --
  .../DisputeGameFactory/DisputeGameFactory.sol      |   56 +-
- .../mode/.flat@1769513575/MIPS.sol => /dev/null    | 2643 --------------------
- .../Proxy.p.sol => /dev/null                       |   39 -
- .../Safe.sol => /dev/null                          | 1088 --------
+ .../dev/null                                       | 2664 --------------------
+ .../MIPS.sol}                                      |    0
  .../OptimismPortal2/OptimismPortal2.sol            |   44 +-
  .../PermissionedDisputeGame.sol                    |  340 +--
- .../PreimageOracle.sol => /dev/null                | 1311 ----------
  .../SystemConfig/SystemConfig.sol                  |   40 +-
- 11 files changed, 321 insertions(+), 6246 deletions(-)
+ 7 files changed, 321 insertions(+), 2847 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769513575 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "0x"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
 ```
 
 Generated with discovered.json: 0xfa17cc0358aa54ea37ccec68fc468ba1c92dd7a9

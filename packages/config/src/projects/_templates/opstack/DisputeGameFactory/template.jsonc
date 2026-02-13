@@ -2,8 +2,18 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "DisputeGameFactory",
   "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-  "ignoreInWatchMode": ["gameCount"],
+  "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
   "ignoreMethods": ["gameAtIndex"],
+  "types": {
+    "ProposerFromArgs": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 124 }
+    },
+    "ChallengerFromArgs": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 144 }
+    }
+  },
   "fields": {
     "gameImpls": {
       "severity": "HIGH",
@@ -48,6 +58,32 @@
         "type": "array",
         "length": 5
       }
+    },
+    "permissionedGameArgs": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      }
+    },
+    "proposerFromDGF": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "ProposerFromArgs"]
+    },
+    "challengerFromDGF": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "ChallengerFromArgs"]
     },
     "permissionedGamesTotal": {
       "handler": {

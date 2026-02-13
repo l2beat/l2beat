@@ -8,9 +8,10 @@
     "absolutePrestateFromGame",
     "vmFromGame",
     "oracleFromVm",
-    "challengePeriodFromOracle"
+    "challengePeriodFromOracle",
+    "wethFromGame"
   ],
-  "ignoreRelatives": ["anchorGame", "vmFromGame", "oracleFromVm"],
+  "ignoreRelatives": ["anchorGame"],
   "types": {
     "DisputeGameMap": {
       "typeCaster": "Mapping",
@@ -52,8 +53,7 @@
         "method": "function vm() view returns (address)",
         "args": [],
         "address": "{{ anchorGame }}"
-      },
-      "ignoreRelative": true
+      }
     },
     "oracleFromVm": {
       "handler": {
@@ -61,8 +61,15 @@
         "method": "function oracle() view returns (address)",
         "args": [],
         "address": "{{ vmFromGame }}"
-      },
-      "ignoreRelative": true
+      }
+    },
+    "wethFromGame": {
+      "handler": {
+        "type": "call",
+        "method": "function weth() view returns (address)",
+        "args": [],
+        "address": "{{ anchorGame }}"
+      }
     },
     "challengePeriodFromOracle": {
       "handler": {

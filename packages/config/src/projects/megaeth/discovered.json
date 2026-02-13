@@ -1643,7 +1643,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1657,6 +1657,7 @@
           ]
         ],
         "$upgradeCount": 1,
+        "challengerFromDGF": "UNRESOLVED",
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
@@ -1673,7 +1674,9 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x92e0E0B15e3e99b32c9ED9AD284F939553C7b7d6",
+        "permissionedGameArgs": "EXPECT_REVERT",
         "permissionedGamesTotal": 0,
+        "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.1"
       },
       "fieldMeta": {
@@ -1686,6 +1689,10 @@
         "eth:0x8546840adF796875cD9AAcc5B3B048f6B2c9D563": "Proxy",
         "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0": "DisputeGameFactory"
       },
+      "usedTypes": [
+        { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -4456,7 +4463,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
+    "opstack/DisputeGameFactory": "0x3bb6d74e8318a9fb79e540be481f949a8d6396ad6e7441a97383c9a47df2b677",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",

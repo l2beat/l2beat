@@ -60,9 +60,9 @@ export function decodeHandlerResults(
 
   for (const fieldName in fieldOverrides) {
     const edit = (fieldOverrides ?? {})[fieldName]?.edit
-    if (edit !== undefined) {
-      // biome-ignore lint/style/noNonNullAssertion: It's fine
-      values[fieldName] = runtime.executeBlip(values[fieldName]!, edit)
+    if (edit !== undefined && values[fieldName] !== undefined) {
+      const edited = runtime.executeBlip(values[fieldName], edit)
+      values[fieldName] = prefixAddresses(longChain, edited)
     }
   }
 
