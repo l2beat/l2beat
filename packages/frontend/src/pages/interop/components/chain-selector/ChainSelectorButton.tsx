@@ -28,7 +28,10 @@ export function ChainSelectorButton({
     id,
     name,
     iconUrl,
-    isSelected: [selectedChains[0] === id, selectedChains[1] === id] as const,
+    isSelected: [
+      selectedChains[0]?.id === id,
+      selectedChains[1]?.id === id,
+    ] as const,
   }))
 
   const selectedChain = chainsWithDetails.find(

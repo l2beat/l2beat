@@ -61,7 +61,7 @@ export function InteropLockAndMintPage({
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChains,
+    selectedChains: selectedChains.map((chain) => chain?.id) as SelectedChains,
     type: 'lockAndMint',
   })
 

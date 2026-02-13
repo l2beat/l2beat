@@ -62,7 +62,9 @@ export function InteropSummaryPage({
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({ selectedChains })
+  const { data, isLoading } = api.interop.dashboard.useQuery({
+    selectedChains: selectedChains.map((chain) => chain?.id) as SelectedChains,
+  })
 
   if (
     data?.entries.length === 0 &&
