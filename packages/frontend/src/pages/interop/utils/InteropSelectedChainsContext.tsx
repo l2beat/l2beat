@@ -1,4 +1,3 @@
-import type { InteropChain } from '@l2beat/config'
 import {
   createContext,
   type ReactNode,
@@ -12,10 +11,12 @@ import {
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
 import type { SelectedChains } from '~/server/features/scaling/interop/types'
+import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 
 interface InteropSelectedChainsContextType {
   selectedChains: SelectedChains
+  selectedChainsIcons: SelectedChains
   allChainIds: string[]
   selectChain: (index: 0 | 1, chainId: string) => void
 }
@@ -26,7 +27,7 @@ export const InteropSelectedChainsContext = createContext<
 
 interface InteropSelectedChainsProviderProps {
   children: ReactNode
-  interopChains: InteropChain[]
+  interopChains: InteropChainWithIcon[]
   initialSelectedChains: SelectedChains
 }
 
@@ -84,12 +85,21 @@ export function InteropSelectedChainsProvider({
     })
   }, [])
 
+  const selectedChainsIcons = useMemo(() => {
+    return selectedChains.map((chainId) => {
+      const chain = interopChains.find((chain) => chain.id === chainId)
+      if (!chain) return
+      return chain.iconUrl
+    }) as SelectedChains
+  }, [selectedChains, interopChains])
+
   return (
     <InteropSelectedChainsContext.Provider
       value={{
         selectedChains,
         allChainIds,
         selectChain,
+        selectedChainsIcons,
       }}
     >
       {children}

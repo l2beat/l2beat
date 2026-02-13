@@ -5,6 +5,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
+import { BetweenChainsInfo } from '../../BetweenChainsInfo'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
 import { useProtocolColorMap } from './useProtocolColorMap'
@@ -49,9 +50,7 @@ export function TopProtocolsWidget({
         <h2 className="font-bold text-heading-16 md:text-heading-20">
           {heading}
         </h2>
-        <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-          Between selected chains
-        </div>
+        <BetweenChainsInfo className="mt-0.5" />
         <table className="mt-2 w-fit border-separate border-spacing-y-1 pr-1">
           <tbody>
             {isLoading || protocolsWithOthers.length === 0
