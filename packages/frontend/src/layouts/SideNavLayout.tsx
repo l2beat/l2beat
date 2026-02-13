@@ -1,5 +1,5 @@
 import compact from 'lodash/compact'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { HiringBadge } from '~/components/badge/HiringBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
@@ -19,7 +19,7 @@ import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
-import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
+import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
@@ -42,13 +42,16 @@ export function SideNavLayout({
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
-  const { selectedChains } = useInteropSelectedChains()
+
+  const selectedChainsContext = useContext(InteropSelectedChainsContext)
   const selectedChainIds = useMemo(
     () =>
-      selectedChains
-        ? (selectedChains.map((chain) => chain?.id) as SelectedChains)
+      selectedChainsContext?.selectedChains
+        ? (selectedChainsContext.selectedChains.map(
+            (chain) => chain?.id,
+          ) as SelectedChains)
         : undefined,
-    [selectedChains],
+    [selectedChainsContext?.selectedChains],
   )
 
   const groups = useMemo(
