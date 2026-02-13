@@ -91,7 +91,10 @@ export function getTopToken({
     : undefined
   const topProtocol = protocolProject
     ? {
-        name: protocolProject.interopConfig.name ?? protocolProject.name,
+        name:
+          protocolProject.interopConfig.name ??
+          protocolProject.shortName ??
+          protocolProject.name,
         iconUrl: manifest.getUrl(`/icons/${protocolProject.slug}.png`),
       }
     : undefined

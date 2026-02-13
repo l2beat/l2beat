@@ -138,7 +138,8 @@ export function getProtocolEntries(
       const record: ProtocolEntry = {
         id: project.id,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        protocolName: project.interopConfig.name ?? project.name,
+        protocolName:
+          project.interopConfig.name ?? project.shortName ?? project.name,
         bridgeTypes,
         isAggregate: project.interopConfig.isAggregate,
         subgroup: subgroupProject
