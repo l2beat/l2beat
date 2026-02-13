@@ -86,8 +86,11 @@ function PathItem({
           </div>
         </div>
       </td>
-      <td className="rounded-r-lg border-divider border-t border-r border-b py-2 pr-1 leading-none">
-        <div className="flex items-center gap-1">
+      <td
+        align="right"
+        className="w-0 rounded-r-lg border-divider border-t border-r border-b py-2 pr-6 text-left leading-none"
+      >
+        <div className="flex items-center justify-start gap-1">
           <div className="font-medium text-[13px] text-secondary leading-none">
             Volume:
           </div>
