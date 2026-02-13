@@ -30,6 +30,11 @@ export type ProtocolEntry = {
   netMintedValue: number | undefined
 }
 
+export type ProtocolDisplayable = {
+  name: string
+  iconUrl: string
+}
+
 export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined

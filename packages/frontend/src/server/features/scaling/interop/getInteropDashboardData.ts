@@ -23,6 +23,7 @@ export type InteropDashboardData = {
   topToken: InteropTopTokenData | undefined
   transferSizeChartData: TransferSizeChartData | undefined
   entries: ProtocolEntry[]
+  zeroTransferProtocols: { name: string; iconUrl: string }[]
 }
 
 export async function getInteropDashboardData(
@@ -61,7 +62,7 @@ export async function getInteropDashboardData(
       subgroupProjects,
     }),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
-    entries: getProtocolEntries(
+    ...getProtocolEntries(
       records,
       tokensDetailsMap,
       interopProjects,
@@ -208,5 +209,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     topToken,
     transferSizeChartData,
     entries,
+    zeroTransferProtocols: [
+      { name: 'Base Canonical', iconUrl: manifest.getUrl('/icons/base.png') },
+    ],
   }
 }
