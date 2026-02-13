@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x89d89392613548cfb7f74c05edcb010f591a9bf8
+Generated with discovered.json: 0x1b29203196d3f953e029c5778e181716b004a715
 
-# Diff at Fri, 13 Feb 2026 11:09:08 GMT:
+# Diff at Fri, 13 Feb 2026 11:33:27 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272429
@@ -169,6 +169,9 @@ New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, 
       values.version:
 -        "1.3.0"
 +        "1.4.0"
+      values.wethFromDGF:
+-        "UNRESOLVED"
++        "eth:0x842ffD6EB189bccDbb817E1cee3286434eD7Ae6E"
       implementationNames.eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50:
 -        "DisputeGameFactory"
       implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
@@ -260,8 +263,10 @@ discovery. Values are for block 1769272429 (main branch discovery), not current.
 +        "0x"
       values.proposerFromDGF:
 +        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
       usedTypes:
-+        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}}]
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
     }
 ```
 

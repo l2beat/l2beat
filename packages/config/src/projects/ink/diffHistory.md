@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x15b66030b0b911feabe790b9597e97e4892d8997
+Generated with discovered.json: 0x562fedebbf2b13556e24e781c6b3e1ac8a40286f
 
-# Diff at Fri, 13 Feb 2026 11:10:28 GMT:
+# Diff at Fri, 13 Feb 2026 11:33:12 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272339
@@ -53,6 +53,9 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
       values.version:
 -        "1.3.0"
 +        "1.4.0"
+      values.wethFromDGF:
+-        "UNRESOLVED"
++        "eth:0x71CC5E57cE659e8E2cc78F86b14BDDCb626691Fd"
       implementationNames.eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50:
 -        "DisputeGameFactory"
       implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
@@ -70,14 +73,6 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 -   Status: DELETED
     contract FaultDisputeGame (eth:0x4cBFBA0AfEb3a36878eb52fAE78335751076250C)
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
-```
-
-```diff
-    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
-    +++ description: None
-      receivedPermissions.8:
--        {"permission":"upgrade","from":"eth:0x71CC5E57cE659e8E2cc78F86b14BDDCb626691Fd","role":"admin","via":[{"address":"eth:0xd56045E68956FCe2576E680c95a4750cf8241f79"}]}
-    }
 ```
 
 ```diff
@@ -167,12 +162,6 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 ```
 
 ```diff
--   Status: DELETED
-    contract DelayedWETH (eth:0x71CC5E57cE659e8E2cc78F86b14BDDCb626691Fd)
-    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-```
-
-```diff
     contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
     +++ description: None
       receivedPermissions:
@@ -196,14 +185,6 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
       values.$upgradeCount:
 -        3
 +        4
-    }
-```
-
-```diff
-    contract ProxyAdmin (eth:0xd56045E68956FCe2576E680c95a4750cf8241f79) {
-    +++ description: None
-      directlyReceivedPermissions.7:
--        {"permission":"upgrade","from":"eth:0x71CC5E57cE659e8E2cc78F86b14BDDCb626691Fd","role":"admin"}
     }
 ```
 
@@ -249,16 +230,12 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 
 ```diff
 .../AnchorStateRegistry/AnchorStateRegistry.sol    |  24 +-
- .../DelayedWETH}/DelayedWETH.sol                   |   0
- .../DelayedWETH}/Proxy.p.sol                       |   0
- .../DelayedWETH.sol => /dev/null                   | 782 ---------------------
- .../Proxy.p.sol => /dev/null                       | 200 ------
- .../DisputeGameFactory/DisputeGameFactory.sol      |  56 +-
- .../FaultDisputeGame.sol                           | 242 ++++---
- .../OptimismPortal2/OptimismPortal2.sol            |  44 +-
- .../PermissionedDisputeGame.sol                    | 340 +++++----
- .../SystemConfig/SystemConfig.sol                  |  40 +-
- 10 files changed, 441 insertions(+), 1287 deletions(-)
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  56 ++--
+ .../FaultDisputeGame.sol                           | 242 ++++++++-------
+ .../OptimismPortal2/OptimismPortal2.sol            |  44 ++-
+ .../PermissionedDisputeGame.sol                    | 340 +++++++++++----------
+ .../SystemConfig/SystemConfig.sol                  |  40 ++-
+ 6 files changed, 441 insertions(+), 305 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -274,8 +251,10 @@ discovery. Values are for block 1769272339 (main branch discovery), not current.
 +        "UNRESOLVED"
       values.proposerFromDGF:
 +        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
       usedTypes:
-+        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}}]
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
     }
 ```
 

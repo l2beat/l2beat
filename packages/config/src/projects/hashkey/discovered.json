@@ -96,7 +96,8 @@
         "permissionedGameArgs": "EXPECT_REVERT",
         "permissionedGamesTotal": 476,
         "proposerFromDGF": "UNRESOLVED",
-        "version": "1.0.1-beta.1"
+        "version": "1.0.1-beta.1",
+        "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
@@ -110,7 +111,8 @@
       },
       "usedTypes": [
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -2001,7 +2003,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x3bb6d74e8318a9fb79e540be481f949a8d6396ad6e7441a97383c9a47df2b677",
+    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",

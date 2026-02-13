@@ -12,6 +12,10 @@
     "ChallengerFromArgs": {
       "typeCaster": "SliceAddress",
       "arg": { "offset": 144 }
+    },
+    "WethFromArgs": {
+      "typeCaster": "SliceAddress",
+      "arg": { "offset": 72 }
     }
   },
   "fields": {
@@ -86,6 +90,15 @@
       },
       "edit": ["format", "ChallengerFromArgs"],
       "permissions": [{ "type": "challenge" }]
+    },
+    "wethFromDGF": {
+      "handler": {
+        "type": "call",
+        "method": "function gameArgs(uint32) view returns (bytes)",
+        "args": [1],
+        "expectRevert": true
+      },
+      "edit": ["format", "WethFromArgs"]
     },
     "permissionedGamesTotal": {
       "handler": {

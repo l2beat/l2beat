@@ -443,7 +443,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "2d 16h",
+        "timeSinceLastL2beatInteraction": "2d 18h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -813,6 +813,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
           "role": "admin"
         }
@@ -1025,6 +1030,14 @@
         {
           "permission": "upgrade",
           "from": "eth:0xD061AB95069987868768818cc1248705351e2D0e",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4",
           "role": "admin",
           "via": [
             { "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
@@ -2140,6 +2153,48 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "DelayedWETH",
+      "address": "eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4",
+      "type": "Contract",
+      "template": "opstack/DelayedWETH",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1759422923,
+      "sinceBlock": 23491328,
+      "values": {
+        "$admin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+        "$implementation": "eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998",
+        "$pastUpgrades": [
+          [
+            "2025-10-02T16:35:23.000Z",
+            "0x744cf7d28324729cace731ac736872da669439a0d380f1f52b8d31af203f7329",
+            ["eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "config": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "decimals": 18,
+        "delay": 302400,
+        "initVersion": 1,
+        "name": "Wrapped Ether",
+        "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+        "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+        "symbol": "WETH",
+        "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+        "totalSupply": 0,
+        "version": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4": "Proxy",
+        "eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998": "DelayedWETH"
+      }
+    },
+    {
       "name": "DisputeGameFactory",
       "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
       "type": "Contract",
@@ -2210,7 +2265,8 @@
         "proposerFromDGF": "eth:0x473300df21D047806A082244b417f96b32f13A33",
         "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "version": "1.4.0"
+        "version": "1.4.0",
+        "wethFromDGF": "eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4"
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
@@ -2224,7 +2280,8 @@
       },
       "usedTypes": [
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -4432,6 +4489,16 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -5029,7 +5096,7 @@
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0x3bb6d74e8318a9fb79e540be481f949a8d6396ad6e7441a97383c9a47df2b677",
+    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
     "opstack/ETHLockbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
@@ -5059,5 +5126,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 24441758, "optimism": 147656664 },
-  "permissionsConfigHash": "0x1ce39ed3ffade4535c83ecd6a079038f2a4b8c95121f2da7f74626e41b6d7326"
+  "permissionsConfigHash": "0xb7eeda33bd53546a686bcf54bddb2f8e231a48f1cbaf3f8cd97d3920128f3fb4"
 }

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7a180f8494d3615a4d0bc41ca158d5a94ea49b1a
+Generated with discovered.json: 0x03aea88fb2472d0587a315f05e1cc64d801e8b36
 
-# Diff at Fri, 13 Feb 2026 10:00:35 GMT:
+# Diff at Fri, 13 Feb 2026 11:33:07 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1770329869
@@ -23,8 +23,10 @@ discovery. Values are for block 1770329869 (main branch discovery), not current.
 +        "UNRESOLVED"
       values.proposerFromDGF:
 +        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
       usedTypes:
-+        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}}]
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
     }
 ```
 

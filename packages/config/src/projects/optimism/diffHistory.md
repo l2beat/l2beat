@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x35ec3049cd29c0ef649d1e78dd42c1a9926c3b60
+Generated with discovered.json: 0x366abe44b26baead43cccf899a0505e8f328b728
 
-# Diff at Fri, 13 Feb 2026 11:12:10 GMT:
+# Diff at Fri, 13 Feb 2026 11:33:18 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272178
@@ -106,22 +106,6 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 ```
 
 ```diff
-    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
-    +++ description: None
-      directlyReceivedPermissions.11:
--        {"permission":"upgrade","from":"eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4","role":"admin"}
-    }
-```
-
-```diff
-    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
-    +++ description: None
-      receivedPermissions.11:
--        {"permission":"upgrade","from":"eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4","role":"admin","via":[{"address":"eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
-    }
-```
-
-```diff
     contract L1ERC721Bridge (eth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
     +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
       values.$pastUpgrades.11:
@@ -190,12 +174,6 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 ```
 
 ```diff
--   Status: DELETED
-    contract DelayedWETH (eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4)
-    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-```
-
-```diff
     contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
       sourceHashes.1:
@@ -226,6 +204,9 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
       values.version:
 -        "1.3.0"
 +        "1.4.0"
+      values.wethFromDGF:
+-        "UNRESOLVED"
++        "eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4"
       implementationNames.eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50:
 -        "DisputeGameFactory"
       implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
@@ -249,16 +230,12 @@ New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, W
 
 ```diff
 .../AnchorStateRegistry/AnchorStateRegistry.sol    |  24 +-
- .../DelayedWETH}/DelayedWETH.sol                   |   0
- .../DelayedWETH}/Proxy.p.sol                       |   0
- .../DelayedWETH.sol => /dev/null                   | 782 ---------------------
- .../Proxy.p.sol => /dev/null                       | 200 ------
- .../DisputeGameFactory/DisputeGameFactory.sol      |  56 +-
- .../FaultDisputeGame.sol                           | 242 ++++---
- .../OptimismPortal2/OptimismPortal2.sol            |  44 +-
- .../PermissionedDisputeGame.sol                    | 340 +++++----
- .../SystemConfig/SystemConfig.sol                  |  40 +-
- 10 files changed, 441 insertions(+), 1287 deletions(-)
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  56 ++--
+ .../FaultDisputeGame.sol                           | 242 ++++++++-------
+ .../OptimismPortal2/OptimismPortal2.sol            |  44 ++-
+ .../PermissionedDisputeGame.sol                    | 340 +++++++++++----------
+ .../SystemConfig/SystemConfig.sol                  |  40 ++-
+ 6 files changed, 441 insertions(+), 305 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -274,8 +251,10 @@ discovery. Values are for block 1769272178 (main branch discovery), not current.
 +        "UNRESOLVED"
       values.proposerFromDGF:
 +        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
       usedTypes:
-+        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}}]
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
     }
 ```
 

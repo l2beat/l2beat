@@ -1529,7 +1529,8 @@
         "proposerFromDGF": "eth:0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "proxyAdmin": "eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "version": "1.4.0"
+        "version": "1.4.0",
+        "wethFromDGF": "eth:0x3dAa8aFA6e7f6CDD3be5f2Ea610a0e795B76BB1f"
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
@@ -1543,7 +1544,8 @@
       },
       "usedTypes": [
         { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
-        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } }
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -2979,7 +2981,7 @@
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0x3bb6d74e8318a9fb79e540be481f949a8d6396ad6e7441a97383c9a47df2b677",
+    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
