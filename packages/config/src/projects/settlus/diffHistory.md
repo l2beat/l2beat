@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x32689309aa202f04886883f0edc9077d29d6b2b8
+
+# Diff at Fri, 13 Feb 2026 14:33:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e1a04313e06de62db68bde894bcda2e7a6630a45 block: 1769272378
+- current timestamp: 1770993147
+
+## Description
+
+Settlus switched DA from Ethereum blobs to Celestia. The sequencer is no longer sending blob transactions.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x15C1dAED5443A77b4DcF6FE35cAFcCEBb0c6da0E) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSequencerSendingBlobTx:
+-        true
++        false
+      values.opStackDA.isUsingCelestia:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x7f21537e0f38ad017234549f2f2ea58434b8c8d2
 
 # Diff at Fri, 13 Feb 2026 11:33:20 GMT:

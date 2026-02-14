@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x17a5c41c8061c8d4466c5c830a1c111ec6e8fb87
+
+# Diff at Fri, 13 Feb 2026 14:50:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e1a04313e06de62db68bde894bcda2e7a6630a45 block: 1770800795
+- current timestamp: 1770994184
+
+## Description
+
+EigenLayer multisig member rotations.
+
+EigenLayerPauserMultisig: 3 members removed, threshold changed from 1 of 10 to 1 of 7.
+
+EigenLayerOperationsMultisig: 1 member replaced (0xdC54→0xf26d), 1 removed (0x9572), 1 replaced (0xFBB1→0xE5Ad), threshold changed from 3 of 6 to 3 of 5.
+
+## Watched changes
+
+```diff
+    contract EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89"
+      values.$members.5:
+-        "eth:0xEFca484E497a9de170Da32abfa11650957dD2a95"
+      values.$members.8:
+-        "eth:0x4a3CD82B73821d075799680AcDff3e884B726777"
+      values.multisigThreshold:
+-        "1 of 10 (10%)"
++        "1 of 7 (14%)"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
++        "eth:0xf26dA751ede765864CA92D8aE7522edD21aF0523"
+      values.$members.2:
+-        "eth:0x957236B539bfA49b650B66426BcaFbF477C1c334"
+      values.$members.4:
+-        "eth:0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0"
++        "eth:0xE5Ad7cB2692c3A03dd9279a733c4A20666f6909c"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x1b5364313f35bcfad13b850da6e8ebfb719aee3a
 
 # Diff at Sun, 08 Feb 2026 21:22:26 GMT:

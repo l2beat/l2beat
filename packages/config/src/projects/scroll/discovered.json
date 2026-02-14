@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1770736063,
-  "configHash": "0xb7229e9992d6f2c363f1bb050d5c55f5be74520cecce43df19ec2b590fd2feb0",
+  "timestamp": 1770994456,
+  "configHash": "0xcac3dfff45dda99994b63f5a4fc8a96bc864bbf7c6512b6fa7202fe6e1e1e842",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -623,7 +623,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "EURC",
-        "totalSupply": 249463328880000,
+        "totalSupply": 247395300490000,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -1149,11 +1149,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1770730619,
+        "getFirstUnfinalizedMessageEnqueueTime": 1770985991,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 987077,
-        "nextUnfinalizedQueueIndex": 987063,
+        "nextCrossDomainMessageIndex": 987620,
+        "nextUnfinalizedQueueIndex": 987598,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -2344,14 +2344,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 503859,
+        "lastFinalizedBatchIndex": 504732,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 503862,
-          "lastFinalizedBatchIndex": 503859,
-          "lastFinalizeTimestamp": 1770731975,
+          "lastCommittedBatchIndex": 504732,
+          "lastFinalizedBatchIndex": 504732,
+          "lastFinalizeTimestamp": 1770993863,
           "flags": 1,
           "reserved": 0
         },
@@ -2568,6 +2568,7 @@
         "0x8a47e80cb18f724607630b6b5e3c4cd2082f7f3e218c8bbf5985ec3bb171237b"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["totalBridgedUSDC"],
       "sinceTimestamp": 1770271583,
       "sinceBlock": 24388735,
       "values": {
@@ -2594,7 +2595,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 100000,
+        "totalBridgedUSDC": 8361943,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3167,7 +3168,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 31128424058047,
+        "totalBridgedUSDC": 27622219648564,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -4180,9 +4181,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x43aeb9993c2e95ff4b69c7a23c34b05f518f9bfa3a31003c34f5079a4a551e7e",
+        "messageRoot": "0xb6597ed8cc93cc35e7d705e3a86f7d1d2fedac7d17b056d065cbfeaf2a7dddea",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 220535,
+        "nextMessageIndex": 220608,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -7964,6 +7965,6 @@
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97"
   },
-  "usedBlockNumbers": { "ethereum": 24427167, "scroll": 29890345 },
+  "usedBlockNumbers": { "ethereum": 24448586, "scroll": 30076858 },
   "permissionsConfigHash": "0x3f95946b5cbff214ebd3849585455ef954d7c6c8a23793f83fbd7a3c17ff5ce6"
 }

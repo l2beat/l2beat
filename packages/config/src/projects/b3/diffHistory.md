@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x8eb1c71fc5229c00dda64e88f61ae6496d961ef9
+
+# Diff at Fri, 13 Feb 2026 14:33:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e1a04313e06de62db68bde894bcda2e7a6630a45 block: 1770736053
+- current timestamp: 1770993136
+
+## Description
+
+Caldera Multisig 2: One signer rotated - member at position 5 removed, new member added at position 0.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.0:
++        "base:0xEC114946E7213d113c9B9481028271B5E9e09371"
+      values.$members.5:
+-        "base:0xc4548687682246e5B6ee8f914635c9f47836eDFe"
+    }
+```
+
 Generated with discovered.json: 0x7cf57a7eb8633bf539cc3684e4356bdbbcd7f3a8
 
 # Diff at Tue, 10 Feb 2026 15:08:39 GMT:
