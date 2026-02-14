@@ -14,14 +14,14 @@ import {
 import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
 import {
   getTransferSizeChartData,
-  type TransferSizeChartData,
+  type TransferSizeDataPoint,
 } from './utils/getTransferSizeChartData'
 
 export type InteropDashboardData = {
   flows: InteropFlowData[]
   topProtocols: InteropProtocolData[]
   topToken: InteropTopTokenData | undefined
-  transferSizeChartData: TransferSizeChartData | undefined
+  transferSizeChartData: TransferSizeDataPoint[] | undefined
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
 }
@@ -173,35 +173,50 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       }
     : undefined
 
-  const transferSizeChartData: TransferSizeChartData = {
-    arbitrum: {
+  const transferSizeChartData: TransferSizeDataPoint[] = [
+    {
       name: 'Arbitrum Canonical',
       iconUrl: manifest.getUrl('/icons/arbitrum.png'),
       countUnder100: 10,
+      percentageUnder100: 10,
       count100To1K: 12,
+      percentage100To1K: 12,
       count1KTo10K: 50,
+      percentage1KTo10K: 50,
       count10KTo100K: 35,
+      percentage10KTo100K: 35,
       countOver100K: 1,
+      percentageOver100K: 1,
     },
-    optimism: {
+    {
       name: 'Optimism Canonical',
       iconUrl: manifest.getUrl('/icons/optimism.png'),
       countUnder100: 5,
+      percentageUnder100: 5,
       count100To1K: 8,
+      percentage100To1K: 8,
       count1KTo10K: 10,
+      percentage1KTo10K: 10,
       count10KTo100K: 4,
+      percentage10KTo100K: 4,
       countOver100K: 0,
+      percentageOver100K: 0,
     },
-    base: {
+    {
       name: 'Base Canonical',
       iconUrl: manifest.getUrl('/icons/base.png'),
       countUnder100: 5,
+      percentageUnder100: 5,
       count100To1K: 8,
+      percentage100To1K: 8,
       count1KTo10K: 10,
+      percentage1KTo10K: 10,
       count10KTo100K: 4,
+      percentage10KTo100K: 4,
       countOver100K: 0,
+      percentageOver100K: 0,
     },
-  }
+  ]
 
   return {
     flows,
