@@ -222,6 +222,11 @@ interface EventDataRequest {
   addresses: ChainSpecificAddress[] | '*'
 }
 
+export type DeployedToAbstractMap = Map<
+  ChainSpecificAddress,
+  AbstractTokenRecord
+>
+
 export interface InteropPlugin {
   readonly name: InteropPluginName
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
@@ -230,7 +235,7 @@ export interface InteropPlugin {
   match?: (
     event: InteropEvent,
     db: InteropEventDb,
-    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
+    deployedToAbstractMap: DeployedToAbstractMap,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
 }
 
