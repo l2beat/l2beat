@@ -201,6 +201,10 @@ export const cartesiprthoneypotv2: ScalingProject = {
         usersHave7DaysToExit: null,
         usersCanExitWithoutCooperation: null,
         securityCouncilProperlySetUp: null,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,

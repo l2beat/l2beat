@@ -155,6 +155,10 @@ export const degate2: ScalingProject = {
       usersHave7DaysToExit: null,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: null,
+      noRedTrustedSetups: null,
+      programHashesReproducible: null,
+      proverSourcePublished: null,
+      verifierContractsReproducible: null,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: null,
