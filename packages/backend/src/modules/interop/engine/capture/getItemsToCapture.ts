@@ -3,7 +3,24 @@ import type { Log as ViemLog } from 'viem'
 import type { LogToCapture, TxToCapture } from '../../plugins/types'
 
 export function getItemsToCapture(chain: string, block: Block, logs: Log[]) {
-  const viemLogs = logs.map(logToViemLog)
+  const txLogsByHash = new Map<string, ViemLog[]>()
+  for (const log of logs) {
+    const viemLog = logToViemLog(log)
+    const txHash = viemLog.transactionHash
+
+    if (!txHash) {
+      // ???
+      continue
+    }
+
+    const txLogs = txLogsByHash.get(txHash)
+    if (txLogs) {
+      txLogs.push(viemLog)
+    } else {
+      txLogsByHash.set(txHash, [viemLog])
+    }
+  }
+
   const logsToCapture: LogToCapture[] = []
   const txsToCapture = block.transactions
     .filter((x) => !!x.hash) // TODO: why can this be missing!?
@@ -12,7 +29,7 @@ export function getItemsToCapture(chain: string, block: Block, logs: Log[]) {
         block,
         tx,
         chain,
-        txLogs: viemLogs.filter((log) => log.transactionHash === tx.hash),
+        txLogs: tx.hash ? (txLogsByHash.get(tx.hash) ?? []) : [],
       }),
     )
   for (const tx of txsToCapture) {

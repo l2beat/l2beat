@@ -141,9 +141,19 @@ we need to check that:
 */
 const LOGS_BLOOM_ZERO = `0x${'0'.repeat(512)}`
 export function onlyConsistent(blocks: Block[], logs: Log[]) {
+  const logsByBlockHash = new Map<string, Log[]>()
+  for (const log of logs) {
+    const existing = logsByBlockHash.get(log.blockHash)
+    if (existing) {
+      existing.push(log)
+    } else {
+      logsByBlockHash.set(log.blockHash, [log])
+    }
+  }
+
   const result: { block: Block; logs: Log[] }[] = []
   for (const block of blocks) {
-    const blockLogs = logs.filter((l) => l.blockHash === block.hash)
+    const blockLogs = logsByBlockHash.get(block.hash) ?? []
 
     // https://polygonscan.com/block/79061984 this block has logs bloom ZERO - although it has transaction with 10 logs.
     // This broke our validation logic. We decided to update our validation scheme to accommodate this issue.

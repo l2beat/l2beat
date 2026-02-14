@@ -28,6 +28,10 @@ export class InteropEventStore implements InteropEventDb {
   }
 
   async saveNewEvents(events: InteropEvent[]): Promise<void> {
+    if (events.length === 0) {
+      return
+    }
+
     // Add to DB first, so if it fails, events will not be added to memory
     const records = events.map((e) => toDbRecord(e))
     await this.db.interopEvent.insertMany(records)
