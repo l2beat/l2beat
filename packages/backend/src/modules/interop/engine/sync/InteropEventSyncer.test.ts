@@ -41,7 +41,7 @@ describe(InteropEventSyncer.name, () => {
       const syncer = createSyncer()
 
       expect(syncer.state).toBeA(FollowingState)
-      expect(syncer.state.type).toEqual('blockProcessor')
+      expect(syncer.state.type).toEqual('hybrid')
     })
   })
 

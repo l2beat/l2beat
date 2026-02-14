@@ -6,10 +6,11 @@ import type {
   BlockProcessorState,
   InteropEventSyncer,
   SyncerState,
+  TimeloopState,
 } from './InteropEventSyncer'
 
-export class FollowingState implements BlockProcessorState {
-  type = 'blockProcessor' as const
+export class FollowingState implements BlockProcessorState, TimeloopState {
+  type = 'hybrid' as const
   name = 'following'
   status = 'starting'
 
@@ -17,6 +18,22 @@ export class FollowingState implements BlockProcessorState {
     private readonly syncer: InteropEventSyncer,
     private readonly logger: Logger,
   ) {}
+
+  async run(): Promise<SyncerState> {
+    if (this.status === 'processing') {
+      return this
+    }
+
+    this.status = 'checking resync'
+    const resyncRequested =
+      (await this.syncer.isResyncRequestedFrom()) !== undefined
+    if (resyncRequested) {
+      return new CatchingUpState(this.syncer, this.logger)
+    }
+
+    this.status = 'idle'
+    return this
+  }
 
   async processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState> {
     this.status = 'processing'

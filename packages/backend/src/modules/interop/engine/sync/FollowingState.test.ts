@@ -14,6 +14,34 @@ const BLOCK = makeBlock(100, UnixTime(1_000))
 const LOGS: Log[] = [mockObject<Log>({})]
 
 describe(FollowingState.name, () => {
+  describe(FollowingState.prototype.run.name, () => {
+    it('switches to catching up when resync is requested', async () => {
+      const getLastSyncedRange = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        isResyncRequestedFrom: mockFn().resolvesTo(UnixTime(1)),
+        getLastSyncedRange,
+      })
+      const state = new FollowingState(syncer, Logger.SILENT)
+
+      const nextState = await state.run()
+
+      expect(nextState).toBeA(CatchingUpState)
+      expect(getLastSyncedRange).not.toHaveBeenCalled()
+    })
+
+    it('stays idle when no resync is requested', async () => {
+      const syncer = createSyncer({
+        isResyncRequestedFrom: mockFn().resolvesTo(undefined),
+      })
+      const state = new FollowingState(syncer, Logger.SILENT)
+
+      const nextState = await state.run()
+
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('idle')
+    })
+  })
+
   describe(FollowingState.prototype.processNewestBlock.name, () => {
     it('switches to catching up when resync is requested', async () => {
       const getLastSyncedRange = mockFn().resolvesTo(undefined)
