@@ -98,10 +98,7 @@ function TopTokensContent({
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokens.useQuery(
     {
-      selectedChains: [
-        selectedChains.first?.id,
-        selectedChains.second?.id,
-      ],
+      selectedChains: [selectedChains.first?.id, selectedChains.second?.id],
       id: protocol.id,
       type,
     },

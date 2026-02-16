@@ -37,7 +37,9 @@ export function ChainSelectorButton({
     },
   }))
 
-  const selectedChain = chainsWithDetails.find((chain) => chain.isSelected[chainKey])
+  const selectedChain = chainsWithDetails.find(
+    (chain) => chain.isSelected[chainKey],
+  )
 
   const trigger = (
     <div className="flex h-10 items-center justify-center gap-2 rounded-lg border border-divider bg-surface-primary px-4 py-[7px] text-xs leading-none md:text-sm">

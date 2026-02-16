@@ -94,10 +94,7 @@ function TopChainsContent({
 
   const { data, isLoading } = api.interop.chains.useQuery(
     {
-      selectedChains: [
-        selectedChains.first?.id,
-        selectedChains.second?.id,
-      ],
+      selectedChains: [selectedChains.first?.id, selectedChains.second?.id],
       id: protocol.id,
       type: undefined,
     },
