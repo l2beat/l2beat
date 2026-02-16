@@ -315,7 +315,7 @@ export const starknet: ScalingProject = {
         noRedTrustedSetups: true,
         programHashesReproducible: false,
         proverSourcePublished: null,
-        verifierContractsReproducible: null,
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

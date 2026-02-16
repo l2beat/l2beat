@@ -191,7 +191,7 @@ export const aztec: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
-        noRedTrustedSetups: null,
+        noRedTrustedSetups: true,
         programHashesReproducible: null,
         proverSourcePublished: null,
         verifierContractsReproducible: null,
