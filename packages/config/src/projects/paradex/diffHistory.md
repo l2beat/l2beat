@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x2134990d904055a72408211770bab1d4ae459de2
+
+# Diff at Fri, 13 Feb 2026 09:43:15 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@76c91db634aafdce14aca08d74e9d04bb256d971 block: 1770723933
+- current timestamp: 1770975731
+
+## Description
+
+Added new security agent to USDC bridge.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      values.accessControl.SECURITY_AGENT.members.1:
++        "eth:0x3e87462D152DFDeD22b6AC5bcde702B20ed70CB6"
+      values.secAgentAC.1:
++        "eth:0x3e87462D152DFDeD22b6AC5bcde702B20ed70CB6"
+    }
+```
+
 Generated with discovered.json: 0x42cdfc98026def539297f11c91553572918fb0e8
 
 # Diff at Tue, 10 Feb 2026 11:46:36 GMT:

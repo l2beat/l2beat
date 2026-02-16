@@ -107,6 +107,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       <AllProtocolsCard
         type="nonMinting"
         entries={data?.entries}
+        zeroTransferProtocols={data?.zeroTransferProtocols}
         isLoading={isLoading}
         hideTypeColumn
         showAverageInFlightValueColumn

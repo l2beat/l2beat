@@ -11,6 +11,7 @@ export const fusionplus: BaseProject = {
     plugins: [
       {
         plugin: 'oneinch-fusion-plus',
+        bridgeType: 'nonMinting',
       },
     ],
   },

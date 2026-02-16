@@ -107,6 +107,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       <AllProtocolsCard
         type="lockAndMint"
         entries={data?.entries}
+        zeroTransferProtocols={data?.zeroTransferProtocols}
         isLoading={isLoading}
         hideTypeColumn
         showNetMintedValueColumn

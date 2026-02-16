@@ -1,12 +1,13 @@
-import type { Project } from '@l2beat/config'
 import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { SelectedChains } from '~/server/features/scaling/interop/types'
+import type {
+  ProtocolDisplayable,
+  SelectedChains,
+} from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
-import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
@@ -29,7 +30,7 @@ import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridg
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
-  protocols: WithProjectIcon<Project<'interopConfig'>>[]
+  protocols: ProtocolDisplayable[]
   initialSelectedChains: SelectedChains
 }
 
@@ -121,6 +122,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       <AllProtocolsCard
         type={undefined}
         entries={data?.entries}
+        zeroTransferProtocols={data?.zeroTransferProtocols}
         isLoading={isLoading}
       />
     </div>

@@ -107,6 +107,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       <AllProtocolsCard
         type="burnAndMint"
         entries={data?.entries}
+        zeroTransferProtocols={data?.zeroTransferProtocols}
         isLoading={isLoading}
         hideTypeColumn
       />

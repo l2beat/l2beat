@@ -68,22 +68,27 @@ export const base: ScalingProject = opStackL2({
       {
         chain: 'base',
         plugin: 'opstack',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'base',
         plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'base',
         plugin: 'beefy-bridge',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'base',
         plugin: 'maker-bridge',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'base',
         plugin: 'sorare-base',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

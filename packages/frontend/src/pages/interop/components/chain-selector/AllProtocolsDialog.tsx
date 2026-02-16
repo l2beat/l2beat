@@ -1,4 +1,3 @@
-import type { Project } from '@l2beat/config'
 import { useState } from 'react'
 import {
   Command,
@@ -14,12 +13,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import type { WithProjectIcon } from '~/utils/withProjectIcon'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import { cn } from '~/utils/cn'
 
 export function AllProtocolsDialog({
   protocols,
 }: {
-  protocols: WithProjectIcon<Project<'interopConfig'>>[]
+  protocols: ProtocolDisplayable[]
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -35,23 +35,23 @@ function Trigger({
   protocols,
   setIsOpen,
 }: {
-  protocols: WithProjectIcon<Project<'interopConfig'>>[]
+  protocols: ProtocolDisplayable[]
   setIsOpen: (isOpen: boolean) => void
 }) {
   const remainingCount = protocols.slice(5).length
 
   return (
-    <div className="flex flex-wrap items-center justify-end gap-2">
-      <div className="font-medium text-xs leading-none max-md:opacity-50 md:text-base">
-        Across {protocols.length} protocols
-      </div>
+    <div className="inline-flex flex-wrap items-center gap-2">
       <button
-        className="group/dialog-trigger grid grid-cols-[76px_30px] items-center gap-1"
+        className={cn(
+          'group/dialog-trigger grid grid-cols-[76px] items-center gap-1',
+          remainingCount > 0 && 'grid-cols-[76px_30px]',
+        )}
         onClick={() => setIsOpen(true)}
       >
         <div className="-space-x-1.5 flex items-center">
           {protocols.slice(0, 5).map((protocol, i) => (
-            <Tooltip key={protocol.id}>
+            <Tooltip key={protocol.name}>
               <TooltipTrigger asChild>
                 <img
                   src={protocol.iconUrl}
@@ -81,7 +81,7 @@ function Dialog({
   isOpen,
   setIsOpen,
 }: {
-  protocols: WithProjectIcon<Project<'interopConfig'>>[]
+  protocols: ProtocolDisplayable[]
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }) {
@@ -99,7 +99,7 @@ function Dialog({
           <CommandGroup>
             {protocols.map((protocol) => (
               <CommandItem
-                key={protocol.id}
+                key={protocol.name}
                 className="flex items-center gap-3"
               >
                 <img

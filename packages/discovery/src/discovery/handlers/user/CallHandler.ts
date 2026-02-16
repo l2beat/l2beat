@@ -1,4 +1,8 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
@@ -65,10 +69,22 @@ export class CallHandler implements Handler {
       provider,
       currentContractAddress,
     )
-    const resolved = resolveDependencies(this.definition, referenceInput)
+    const resolved = resolveDependencies(
+      this.definition,
+      referenceInput,
+      currentContractAddress,
+    )
+    const targetAddress = resolved.address ?? currentContractAddress
+    if (isZeroAddress(targetAddress)) {
+      return {
+        field: this.field,
+        value: EthereumAddress.ZERO,
+        ignoreRelative: this.definition.ignoreRelative,
+      }
+    }
     const callResult = await callMethod(
       provider,
-      resolved.address ?? currentContractAddress,
+      targetAddress,
       this.fragment,
       resolved.args,
     )
@@ -93,21 +109,44 @@ export class CallHandler implements Handler {
 function resolveDependencies(
   definition: CallHandlerDefinition,
   referenceInput: ReferenceInput,
+  currentContractAddress: ChainSpecificAddress,
 ): {
   method: string | undefined
   args: ContractValue[]
   address: ChainSpecificAddress | undefined
 } {
   const args = definition.args.map((x) => resolveReference(x, referenceInput))
-  const address = resolveReference(definition.address, referenceInput)
+  const addressToCall = resolveReference(definition.address, referenceInput)
+
+  if (addressToCall === undefined) {
+    return { method: definition.method, args, address: undefined }
+  }
+
+  assert(
+    typeof addressToCall === 'string',
+    `Address to call must be a string - ${addressToCall} given`,
+  )
+
+  // Handler results are raw addresses (no chain prefix).
+  // Derive the chain from the current contract's ChainSpecificAddress.
+  if (!ChainSpecificAddress.check(addressToCall)) {
+    const chain = ChainSpecificAddress.chain(currentContractAddress)
+    return {
+      method: definition.method,
+      args,
+      address: ChainSpecificAddress.from(chain, addressToCall),
+    }
+  }
+
   return {
     method: definition.method,
     args,
-    address:
-      address !== undefined
-        ? ChainSpecificAddress(address.toString())
-        : undefined,
+    address: ChainSpecificAddress(addressToCall),
   }
+}
+
+function isZeroAddress(address: ChainSpecificAddress): boolean {
+  return ChainSpecificAddress.address(address) === EthereumAddress.ZERO
 }
 
 function isViewFragment(fragment: utils.FunctionFragment): boolean {

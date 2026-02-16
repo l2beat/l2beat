@@ -74,22 +74,27 @@ export const optimism: ScalingProject = opStackL2({
       {
         chain: 'optimism',
         plugin: 'opstack',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'optimism',
         plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'optimism',
         plugin: 'beefy-bridge',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'optimism',
         plugin: 'maker-bridge',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'optimism',
         plugin: 'sorare-base',
+        bridgeType: 'lockAndMint',
       },
     ],
   },
