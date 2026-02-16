@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x0883680030756de201f53091a06aa62b274d403a
+
+# Diff at Mon, 16 Feb 2026 14:33:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1770814689
+- current timestamp: 1771252302
+
+## Description
+
+Two upgrades proposed/in execution, description texts:
+1
+```
+BSR Deployment - Upgrade AM
+LM
+SideBridge + Set BSR
+```
+2
+```
+Fix BSR Recipients - Set correct proxy addresses for LM and AM recipients
+```
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        70
++        72
+    }
+```
+
 Generated with discovered.json: 0x53949198cd1ae91dd3df1123f40b9ce638608d16
 
 # Diff at Wed, 11 Feb 2026 12:59:12 GMT:

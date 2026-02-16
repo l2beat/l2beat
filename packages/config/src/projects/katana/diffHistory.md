@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xb9de6662a6efa643fddd22c05c4f5d3999eb97f5
+
+# Diff at Mon, 16 Feb 2026 13:57:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1770814418
+- current timestamp: 1771250113
+
+## Description
+
+Move aggchain and op mode manager to Polygon Multisig 2.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.aggchainManager:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      values.pendingOptimisticModeManager:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation.","role":".aggchainManager"}
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation.","role":".aggchainManager"}
+    }
+```
+
 Generated with discovered.json: 0x2955b4c9e21cd6ff6befe49504249fa0dcc8d47a
 
 # Diff at Fri, 13 Feb 2026 11:33:13 GMT:
