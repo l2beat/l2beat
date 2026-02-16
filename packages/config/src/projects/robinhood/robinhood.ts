@@ -5,7 +5,7 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const robinhood: ScalingProject = upcomingL2({
   id: 'robinhood',
   capability: 'universal',
-  addedAt: UnixTime(1759624683),
+  addedAt: UnixTime(1771258645), //16.02.2026
   hasTestnet: true,
   display: {
     name: 'Robinhood Chain',
