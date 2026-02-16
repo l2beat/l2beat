@@ -314,7 +314,7 @@ export const starknet: ScalingProject = {
         securityCouncilProperlySetUp: true,
         noRedTrustedSetups: true,
         programHashesReproducible: false,
-        proverSourcePublished: null,
+        proverSourcePublished: true,
         verifierContractsReproducible: true,
       },
       stage2: {
