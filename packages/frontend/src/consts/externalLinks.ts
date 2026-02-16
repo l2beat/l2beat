@@ -18,7 +18,7 @@ export const externalLinks = {
     recategorisation:
       'https://medium.com/l2beat/framework-update-l2-projects-recategorisation-5d43b0d1fe50',
     stageOneRequirementsChange:
-      'https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338',
+      'https://medium.com/l2beat/about-new-stage-1-requirements-a055058924ff',
     trustedSetupFramework:
       'https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381',
   },
