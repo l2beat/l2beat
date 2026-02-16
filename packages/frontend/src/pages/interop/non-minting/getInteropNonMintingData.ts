@@ -20,12 +20,17 @@ export async function getInteropNonMintingData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
-  const initialSelectedChains: SelectedChains = [
-    interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
-      'ethereum',
-    interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ??
-      'arbitrum',
-  ]
+  const hasQueryChains =
+    req.query.selectedChains?.[0] && req.query.selectedChains?.[1]
+
+  const initialSelectedChains: SelectedChains = hasQueryChains
+    ? [
+        interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
+          null,
+        interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ??
+          null,
+      ]
+    : [null, null]
 
   const queryState = await cache.get(
     {
