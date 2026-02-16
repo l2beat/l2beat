@@ -193,7 +193,7 @@ export const aztec: ScalingProject = {
         securityCouncilProperlySetUp: null,
         noRedTrustedSetups: true,
         programHashesReproducible: null,
-        proverSourcePublished: null,
+        proverSourcePublished: true,
         verifierContractsReproducible: null,
       },
       stage2: {
