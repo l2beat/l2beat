@@ -1,3 +1,60 @@
+Generated with discovered.json: 0xdb26688e72291d3ba889575d1695d24131d429eb
+
+# Diff at Mon, 16 Feb 2026 14:54:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1769432788
+- current timestamp: 1771253570
+
+## Description
+
+TGE happened. Sequencers can claim block production rewards, AZTEC is transferable and tradable on uniswap. Token governance is launched.
+
+## Watched changes
+
+```diff
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      values.isRewardsClaimable:
+-        false
++        true
+    }
+```
+
+```diff
+    contract AztecTokenPositionRegistry_Sequencers (eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde) {
+    +++ description: A registry for contracts related to Sequencer staking and token unlock parameters.
+      values.getGlobalLockParams.startTime:
+-        1763042400
++        1739343611
+      values.getNextStakerVersion:
+-        2
++        3
+      values.getStakerImplementation.2:
++        "eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95"
+      values.getUnlockStartTime:
+-        1763042400
++        1739343611
+      values.owner:
+-        "eth:0xa04129571DacB1dEB57caB6bbA58e52E2B5CDF9b"
++        "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e"
+      values.pendingOwner:
+-        "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract GovernanceAcceleratedLock (eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e) {
+    +++ description: None
+      values.lockAccelerated:
+-        false
++        true
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde","description":"set staker implementations and manage the unlock time for associated ATP escrows.","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0x23e18f2b5d441f0d11e389024ea3e9e2f7bc0e9b
 
 # Diff at Mon, 26 Jan 2026 13:07:34 GMT:

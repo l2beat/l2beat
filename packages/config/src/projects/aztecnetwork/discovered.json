@@ -1,6 +1,6 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1769432788,
+  "timestamp": 1771253570,
   "configHash": "0xaed546101c970e65353aeaa8f11ac0947e0bae7b09f634577d57e062e5f71c74",
   "entries": [
     {
@@ -82,7 +82,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 89,
+        "getCurrentRound": 114,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
@@ -156,8 +156,8 @@
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 2,
-        "totalPowerNow": "666352592611063730736182133",
-        "withdrawalCount": 187
+        "totalPowerNow": "739736408764502236944515814",
+        "withdrawalCount": 1894
       },
       "implementationNames": {
         "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": "Governance"
@@ -313,7 +313,7 @@
       "values": {
         "_epochProofVerifier": "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5",
         "$immutable": true,
-        "archive": "0x0a86521cf8e0727cdb868f147e25c5ba0d18c4ac12319745a7bbb90840a136d1",
+        "archive": "0x2d96c86d74cbbb6f9b702545fb58d7148ec952a779d6ed749c9cbb424ec1a36b",
         "checkBlob": true,
         "eip712Domain": {
           "fields": "0x0f",
@@ -325,18 +325,18 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 3323,
-        "getAvailableValidatorFlushes": 0,
+        "getActiveAttesterCount": 3689,
+        "getAvailableValidatorFlushes": 4,
         "getBlockReward": "400000000000000000000",
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x00cae3ec2f62bf0acae8ce2d6e8a5d578a3f92577d7280474a00eba6441fb18c",
-        "getCurrentEpoch": 2794,
-        "getCurrentSampleSeed": "65726354311269570586215946456808484413345368193442369608156216116875086500821",
-        "getCurrentSlot": 89411,
+        "getCurrentBlobCommitmentsHash": "0x0041d493cb5397cf73bb31425654497acfd8fdb31e335cd5977ceb0d1d9512fd",
+        "getCurrentEpoch": 3584,
+        "getCurrentSampleSeed": "87776115169088982375423355518345271688094710952721881441389143081265218177941",
+        "getCurrentSlot": 114700,
         "getEarliestRewardsClaimableTimestamp": 1770818400,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 4,
-        "getEntryQueueLength": 1111,
+        "getEntryQueueLength": 0,
         "getEpochDuration": 32,
         "getEpochForBlock": [],
         "getExitDelay": 345600,
@@ -352,11 +352,11 @@
         "getLocalEjectionThreshold": "196000000000000000000000",
         "getManaLimit": 0,
         "getManaTarget": 0,
-        "getNextFlushableEpoch": 2795,
+        "getNextFlushableEpoch": 3583,
         "getOutbox": "eth:0xf006c41097861AFeb18b05e586B921c081411Ee9",
-        "getPendingBlockNumber": 73771,
+        "getPendingBlockNumber": 95172,
         "getProofSubmissionEpochs": 1,
-        "getProvenBlockNumber": 73767,
+        "getProvenBlockNumber": 95162,
         "getProvingCostPerManaInEth": 0,
         "getProvingCostPerManaInFeeAsset": 0,
         "getRewardConfig": {
@@ -373,9 +373,9 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 24,
-        "getTips": { "pendingBlockNumber": 73771, "provenBlockNumber": 73767 },
+        "getTips": { "pendingBlockNumber": 95172, "provenBlockNumber": 95162 },
         "getVersion": 0,
-        "isRewardsClaimable": false,
+        "isRewardsClaimable": true,
         "L1_BLOCK_AT_GENESIS": 23786836,
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
       },
@@ -434,21 +434,22 @@
         "$immutable": true,
         "getExecuteAllowedAt": 0,
         "getGlobalLockParams": {
-          "startTime": 1763042400,
+          "startTime": 1739343611,
           "cliffDuration": 31536000,
           "lockDuration": 31536000
         },
         "getNextMilestoneId": 0,
-        "getNextStakerVersion": 2,
+        "getNextStakerVersion": 3,
         "getRevoker": "eth:0x0000000000000000000000000000000000000000",
         "getRevokerOperator": "eth:0x0000000000000000000000000000000000000000",
         "getStakerImplementation": [
           "eth:0x6131D4900CD8dC328FB3CF6DFFEfbC628F02e7d9",
-          "eth:0x7C009AE557234d094D798A03D21E3c1C1CAD3b42"
+          "eth:0x7C009AE557234d094D798A03D21E3c1C1CAD3b42",
+          "eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95"
         ],
-        "getUnlockStartTime": 1763042400,
-        "owner": "eth:0xa04129571DacB1dEB57caB6bbA58e52E2B5CDF9b",
-        "pendingOwner": "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e"
+        "getUnlockStartTime": 1739343611,
+        "owner": "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde": "Registry"
@@ -582,7 +583,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 698,
+        "getCurrentRound": 896,
         "INSTANCE": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -639,12 +640,20 @@
         "0xfb438774e06a1be7d3332d42ac3698c2d6cbd37cb52aa964d35814bf4725a2d4"
       ],
       "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde",
+          "description": "set staker implementations and manage the unlock time for associated ATP escrows.",
+          "role": ".owner"
+        }
+      ],
       "sinceTimestamp": 1762995647,
       "sinceBlock": 23786877,
       "values": {
         "$immutable": true,
         "EXTENDED_LOCK_TIME": 31536000,
-        "lockAccelerated": false,
+        "lockAccelerated": true,
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "SHORTER_LOCK_TIME": 7776000,
         "START_TIME": 1763042400
@@ -819,7 +828,7 @@
         "getLatestRollup": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "664514000000000000000000000"
+        "totalSupply": "737688000000000000000000000"
       },
       "implementationNames": {
         "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
@@ -2017,6 +2026,6 @@
     "aztecnetwork/TGEPayload": "0xd94c4d4a0e1fefd5d6e81f71f5817224358c97666e22b600eb506923c6e6de6e",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24319194 },
-  "permissionsConfigHash": "0x4f53c0e768cbb8f35156f26eb13085a1fd9f74de2a36b2026d94c2a00821681c"
+  "usedBlockNumbers": { "ethereum": 24470102 },
+  "permissionsConfigHash": "0x36522bb7cb8def1e8f55ef40b0e5609db13b1a25dd1fbb8345e735c6fd3ccfcd"
 }
