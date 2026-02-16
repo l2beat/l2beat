@@ -2411,66 +2411,12 @@
   "gaszip": {
     "txs": [
       {
-        "chain": "ethereum",
-        "tx": "0xf69385c4dbdad1783768535af78cfb5037778aed6835fec29837b212bebf040e"
-      },
-      // deposit with 16 dest chains
-      {
-        "chain": "ethereum",
-        "tx": "0xccfadc74e02b2c48146a516a6ed884093cf841ec77d8dde2bc04a157ffec65fb"
-      },
-      // fills for above
-      {
-        "chain": "optimism",
-        "tx": "0xf158c458d32b8ba8f71d631d67bfd5d6f0d839e04bd38dfe0e41300839fbe136"
-      },
-      {
-        "chain": "base",
-        "tx": "0xfcd4de0142d7eef3aea9f05e5b9bed2e3de5d2f1464b3d1b8c3a4e07fb7995fb"
+        "chain": "polygonpos",
+        "tx": "0xe8a7526bbe9d0cf9db9571afa998dea40fffd7501c5267d435a836a7ec5dfb17"
       },
       {
         "chain": "arbitrum",
-        "tx": "0x717897c55295b740b184d9e200439760ea922273b451346c9e54e79bab473557"
-      },
-      //end fills
-      {
-        "chain": "base",
-        "tx": "0xa6af4de8b78915d4cf25612fde14a87a3f9d243f5b3d1b056782c15f1be9d112"
-      },
-      // invalid deposit with two times the same dest
-      {
-        "chain": "base",
-        "tx": "0xad5a716619a66cc0631a68416b6bff62b586f385a64ec33ed0c8ab518d25936e"
-      },
-      {
-        "chain": "base",
-        "tx": "0x8e6b5f2ec5a4e87a0b0d44c1d5679ac479284364ca5a990da807ef14a0f24f51"
-      },
-      // contract deposits
-      {
-        "chain": "base",
-        "tx": "0x8d297faa50fe724a3cb5e8aeb2e1470ce46f21d7852d0454cbcde719c91c725e"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x1f2b6e04846afc5f9547ef7970e8c26e1f8d95ab32352db04e699b04e0a4739b"
-      },
-      {
-        "chain": "base",
-        "tx": "0x2de129557d9d6928255ef9604115f3f4a093247aecf84bcb2b08f0ec06b92b64"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0x2b996c0833a7a18e0e04aa5e2fb370c0ffc919b1523f9de36a5ba669336bd44d"
-      },
-      // same-chain transfer, >5% tolerance needed on the amount
-      {
-        "chain": "base",
-        "tx": "0x55aea9285bf98a898e5dbde152a69f26dd3c367e6ea2dc7191668d3f9e0ac7d8"
-      },
-      {
-        "chain": "base",
-        "tx": "0xe313f2567de7f2b39c284ab2ce1c5b65e1c232907d74514c44087354df630685"
+        "tx": "0x84dc7abb4dc8b4587e8fff0ccd779f4d235abb47549f61a5f9dad63cb6991e3c"
       }
     ]
   },
