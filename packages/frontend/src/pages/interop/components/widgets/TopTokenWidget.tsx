@@ -6,6 +6,7 @@ import type { InteropDashboardData } from '~/server/features/scaling/interop/get
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { BetweenChainsInfo } from '../BetweenChainsInfo'
 
 interface Props {
   topToken: InteropDashboardData['topToken'] | undefined
@@ -48,9 +49,10 @@ function TopTokenHeading() {
       <h2 className="font-bold text-heading-16 md:text-heading-20">
         Top token
       </h2>
-      <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-        Across the selected paths based on 24h volume
-      </div>
+      <BetweenChainsInfo
+        className="mt-1"
+        additionalText="based on 24h volume"
+      />
     </div>
   )
 }

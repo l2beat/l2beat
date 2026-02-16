@@ -11,16 +11,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/Popover'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import {
+  type InteropSelectedChains,
+  useInteropSelectedChains,
+} from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
 import type { InteropChainWithIcon } from './types'
 
 export function ChainSelectorButton({
+  chainKey,
   allChains,
-  index,
 }: {
+  chainKey: keyof InteropSelectedChains
   allChains: InteropChainWithIcon[]
-  index: 0 | 1
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
@@ -28,11 +31,14 @@ export function ChainSelectorButton({
     id,
     name,
     iconUrl,
-    isSelected: [selectedChains[0] === id, selectedChains[1] === id] as const,
+    isSelected: {
+      first: selectedChains.first?.id === id,
+      second: selectedChains.second?.id === id,
+    },
   }))
 
   const selectedChain = chainsWithDetails.find(
-    (chain) => chain.isSelected[index],
+    (chain) => chain.isSelected[chainKey],
   )
 
   const trigger = (
@@ -67,8 +73,8 @@ export function ChainSelectorButton({
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected[0]}
-                toggleSelected={(chainId) => selectChain(0, chainId)}
+                isSelected={chain.isSelected['first']}
+                toggleSelected={(chainId) => selectChain('first', chainId)}
               />
             ))}
           </div>
@@ -78,8 +84,8 @@ export function ChainSelectorButton({
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected[1]}
-                toggleSelected={(chainId) => selectChain(1, chainId)}
+                isSelected={chain.isSelected['second']}
+                toggleSelected={(chainId) => selectChain('second', chainId)}
               />
             ))}
           </div>
@@ -100,8 +106,8 @@ export function ChainSelectorButton({
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected[index]}
-                toggleSelected={(chainId) => selectChain(index, chainId)}
+                isSelected={chain.isSelected[chainKey]}
+                toggleSelected={(chainId) => selectChain(chainKey, chainId)}
               />
             ))}
           </div>

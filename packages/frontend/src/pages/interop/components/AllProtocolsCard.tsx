@@ -6,6 +6,7 @@ import type {
   ProtocolEntry,
 } from '~/server/features/scaling/interop/types'
 import { NoResultsInfo } from '../summary/components/NoResultsInfo'
+import { BetweenChainsInfo } from './BetweenChainsInfo'
 import { AllProtocolsDialog } from './chain-selector/AllProtocolsDialog'
 import { AllProtocolsTable } from './table/AllProtocolsTable'
 
@@ -31,6 +32,7 @@ export function AllProtocolsCard({
       <h2 className="font-bold text-heading-20 md:text-heading-24">
         All Protocols
       </h2>
+      <BetweenChainsInfo className="mt-1" />
       {isLoading && <Skeleton className="mt-2 h-[400px] w-full rounded-sm" />}
       {entries ? (
         entries.length === 0 ? (
