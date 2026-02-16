@@ -149,7 +149,7 @@ export class GasZipPlugin implements InteropPlugin {
   match(gasZipFill: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!GasZipFill.checkType(gasZipFill)) return
 
-    const gasZipDeposits = db.findApproximate(
+    let gasZipDeposits = db.findApproximate(
       GasZipDeposit,
       {
         $dstChain: gasZipFill.ctx.chain,
@@ -162,6 +162,20 @@ export class GasZipPlugin implements InteropPlugin {
         toleranceDown: 0.03, // for some reason some fills are more
       },
     )
+
+    const dst = GASZIP_NETWORKS.find((n) => n.chain === gasZipFill.ctx.chain)
+    const srcChain = gasZipDeposits[0]?.args.$dstChain
+    const src = srcChain
+      ? GASZIP_NETWORKS.find((n) => n.chain === srcChain)
+      : undefined
+
+    // fallback to matching by sender only in case of non-eth gastoken
+    if (!dst || !src || dst.customGas || src.customGas) {
+      gasZipDeposits = db.findAll(GasZipDeposit, {
+        $dstChain: gasZipFill.ctx.chain,
+        destinationAddress: gasZipFill.args.receiver,
+      })
+    }
     const gasZipDeposit = gasZipDeposits[0]
     if (!gasZipDeposit) return
 

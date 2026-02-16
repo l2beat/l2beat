@@ -2471,6 +2471,15 @@
       {
         "chain": "base",
         "tx": "0xe313f2567de7f2b39c284ab2ce1c5b65e1c232907d74514c44087354df630685"
+      },
+      // non eth example that ignores amount matching
+      {
+        "chain": "polygonpos",
+        "tx": "0xe8a7526bbe9d0cf9db9571afa998dea40fffd7501c5267d435a836a7ec5dfb17"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9ff0c8056035b0dabb3b42c9a60ada4cf80080f23d23f2955a33a730493213aa"
       }
     ]
   },
