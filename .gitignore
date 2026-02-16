@@ -7,6 +7,7 @@ yarn-error.log
 
 # AI stuff
 .codex
+.claude
 
 # IDEs
 .vscode
