@@ -12,6 +12,7 @@ export const circlegateway: BaseProject = {
     plugins: [
       {
         plugin: 'circle-gateway',
+        bridgeType: 'burnAndMint',
       },
     ],
   },

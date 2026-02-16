@@ -7,8 +7,7 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
-import type { Manifest } from '~/utils/Manifest'
-import { withProjectIcon } from '~/utils/withProjectIcon'
+import { type Manifest, manifest } from '~/utils/Manifest'
 import type { SelectedChainsQuery } from '../InteropRouter'
 
 export async function getInteropSummaryData(
@@ -81,6 +80,9 @@ async function getCachedData(initialSelectedChains: SelectedChains) {
 
   return {
     queryState: helpers.dehydrate(),
-    protocols: protocols.map(withProjectIcon),
+    protocols: protocols.map((protocol) => ({
+      name: protocol.interopConfig.name ?? protocol.name,
+      iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
+    })),
   }
 }

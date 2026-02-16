@@ -1,3 +1,239 @@
+Generated with discovered.json: 0x2fb615f8aedfc5a8099ac4eb7304a21078cd62a5
+
+# Diff at Fri, 13 Feb 2026 11:46:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272178
+- current timestamp: 1770912106
+
+## Description
+
+OP Contracts Upgrade 18 (op-contracts/v6.0.0).
+
+OptimismPortal2 v5.1.1→v5.2.0: adds Custom Gas Token safety guards preventing ETH value operations in CGT mode. ([diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B))
+
+AnchorStateRegistry v3.5.0→v3.7.0: adds safe re-initialization guard for retirementTimestamp and a new getStartingAnchorRoot() getter. ([diff](https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5))
+
+SystemConfig v3.11.0→v3.13.1: adds DelayedWETH storage slot, setBatcherHash(address) convenience setter, and isCustomGasToken() legacy getter. ([diff](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2))
+
+DisputeGameFactory v1.3.0→v1.4.0: cloning logic now embeds gameType in clone bytecode when gameArgs are present. ([diff](https://disco.l2beat.com/diff/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c))
+
+New PermissionedDisputeGameV2 and FaultDisputeGameV2 move game parameters (VM, WETH, anchor registry, etc.) from constructor immutables into clone bytecode, allowing the factory to configure per-clone without separate implementations.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x09e12b8c0307a4da75a8b84ed7c88ced81e386ec09025ec5b36873b4f69614d0"
++        "0x86dc9ef5cbf4cc436d50678ad7b2abbf9cc1905641ebbeccddbf1adf9b724403"
+      values.$implementation:
+-        "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"
++        "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"
+      values.$pastUpgrades.14:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"]]
+      values.$upgradeCount:
+-        14
++        15
+      values.getAddresses.delayedWETH:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.version:
+-        "3.11.0"
++        "3.13.1"
+      values.DELAYED_WETH_SLOT:
++        "0x51547f31a231e1007dca33017faa3da20d959b95087c588a7768bfb922fd58ff"
+      values.delayedWETH:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.isCustomGasToken:
++        false
+      implementationNames.eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED:
+-        "SystemConfig"
+      implementationNames.eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x23B2C62946350F4246f9f9D027e071f0264FD113) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      sourceHashes.1:
+-        "0x1601463fd2e47d8994c28a90b556c6933f38e8685214f702dc41a5ae08d9787c"
++        "0xa1c629e3a86e4cba49482956c04d921b52551c4ee9833ddda7e44ca155bc6cab"
+      values.$implementation:
+-        "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E"
++        "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"
+      values.$pastUpgrades.2:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "3.5.0"
++        "3.7.0"
+      values.getStartingAnchorRoot:
++        {"root":"0xfce6d556d11e1662f316ed1408782a3227b1c1dcd8f643c1f563043298822e62","l2SequenceNumber":138585637}
+      implementationNames.eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5:
++        "AnchorStateRegistry"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.15:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"]]
+      values.$upgradeCount:
+-        15
++        16
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (eth:0x478c26109b169a840D61E95B19512FF0b5F19c87)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.11:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"]]
+      values.$upgradeCount:
+-        11
++        12
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades.7:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"]]
+      values.$upgradeCount:
+-        7
++        8
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x8081faB7cc5D0e56122bB6651928e0bcF94b95bf)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      sourceHashes.1:
+-        "0xec3fef2865ee3bd465fea37851bfc490f143eba36d1e45d220832d39770aa8f2"
++        "0x3410684a7a8c16c4f87db990b834ce7c3be33136857c103791b132b824bfd951"
+      values.$implementation:
+-        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
++        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"
+      values.$pastUpgrades.12:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.version:
+-        "5.1.1"
++        "5.2.0"
+      implementationNames.eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202:
+-        "OptimismPortal2"
+      implementationNames.eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x19f3f7c7ee3977705261bfb86f826d5f97b885796f2246be7cc3e815c3e95dca"
++        "0x0fdb3ea7873ad716dd0f5f9d2fdbab989f3b308066977be182ddc31d150e12f5"
+      values.$implementation:
+-        "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50"
++        "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"
+      values.$pastUpgrades.5:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.challengerFromDGF:
+-        "UNRESOLVED"
++        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++++ severity: HIGH
+      values.gameImpls.0:
+-        "eth:0x478c26109b169a840D61E95B19512FF0b5F19c87"
++        "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499"
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0x8081faB7cc5D0e56122bB6651928e0bcF94b95bf"
++        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
+      values.proposerFromDGF:
+-        "UNRESOLVED"
++        "eth:0x473300df21D047806A082244b417f96b32f13A33"
+      values.version:
+-        "1.3.0"
++        "1.4.0"
+      values.wethFromDGF:
+-        "UNRESOLVED"
++        "eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4"
+      implementationNames.eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50:
+-        "DisputeGameFactory"
+      implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  24 +-
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  56 ++--
+ .../FaultDisputeGame.sol                           | 242 ++++++++-------
+ .../OptimismPortal2/OptimismPortal2.sol            |  44 ++-
+ .../PermissionedDisputeGame.sol                    | 340 +++++++++++----------
+ .../SystemConfig/SystemConfig.sol                  |  40 ++-
+ 6 files changed, 441 insertions(+), 305 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769272178 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
 Generated with discovered.json: 0xbf84bce0fbb32ef36d0e3f0de05a66704fbf99bb
 
 # Diff at Mon, 26 Jan 2026 09:08:14 GMT:

@@ -11,6 +11,7 @@ export const gaszip: BaseProject = {
     plugins: [
       {
         plugin: 'gaszip',
+        bridgeType: 'nonMinting',
       },
     ],
   },

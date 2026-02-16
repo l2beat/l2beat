@@ -30,6 +30,11 @@ export type ProtocolEntry = {
   netMintedValue: number | undefined
 }
 
+export type ProtocolDisplayable = {
+  name: string
+  iconUrl: string
+}
+
 export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined
@@ -38,8 +43,8 @@ export type ByBridgeTypeData = {
 
 export type LockAndMintProtocolData = {
   volume: number
+  netMintedValue: number | undefined
   tokens: TopItems<TokenData>
-  averageDuration: AverageDuration | null
 }
 
 export type NonMintingProtocolData = {

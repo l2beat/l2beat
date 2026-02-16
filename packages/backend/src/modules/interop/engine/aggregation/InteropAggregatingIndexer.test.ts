@@ -38,7 +38,7 @@ describe(InteropAggregatingIndexer.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          plugins: [{ plugin: 'across' }],
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
         },
       ]
 
@@ -163,7 +163,7 @@ describe(InteropAggregatingIndexer.name, () => {
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
-          plugins: [{ plugin: 'across' }],
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
         },
       ]
 

@@ -12,9 +12,11 @@ export const squid: BaseProject = {
       {
         plugin: 'axelar',
         transferType: 'axelar-squid.Transfer',
+        bridgeType: 'nonMinting',
       },
       {
         plugin: 'squid-coral',
+        bridgeType: 'nonMinting',
       },
     ],
   },

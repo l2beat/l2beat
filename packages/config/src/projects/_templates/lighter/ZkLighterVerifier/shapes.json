@@ -33,5 +33,11 @@
     "address": "eth:0x6d456bCAAc437EAa3f8603E06C5850d88D3A48F7",
     "chain": "ethereum",
     "blockNumber": 24340970
+  },
+  "ZkLighterVerifier_v0.0.5": {
+    "hash": "0x416b91076dec996ebb7ab201896a76509106ed06864f1e84a468a897241040c8",
+    "address": "eth:0xC5d17b2ae295F81209410B00a791720660efc706",
+    "chain": "ethereum",
+    "blockNumber": 24447047
   }
 }

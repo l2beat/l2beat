@@ -2,6 +2,7 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { Address32, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { InteropTransferClassifier } from '../aggregation/InteropTransferClassifier'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import {
@@ -29,16 +30,18 @@ function BooleanCell({
   )
 }
 
-function TransfersTable(props: {
+export function TransfersTable(props: {
   transfers: InteropTransferRecord[]
   getExplorerUrl: (chain: string) => string | undefined
+  tableId?: string
 }) {
   return (
-    <table id="myTable" className="display">
+    <table id={props.tableId ?? 'myTable'} className="display">
       <thead>
         <tr>
-          <th>Plugin</th>
           <th>Timestamp UTC</th>
+          <th>Plugin</th>
+          <th>Bridge Type</th>
           <th>Duration</th>
           <th>srcToken</th>
           <th>srcValue</th>
@@ -63,9 +66,12 @@ function TransfersTable(props: {
             <tr
               key={`${e.srcChain}-${e.srcTxHash}-${e.dstChain}-${e.dstTxHash}`}
             >
-              <td>{e.plugin}</td>
               <td data-order={e.timestamp}>
                 {new Date(e.timestamp * 1000).toLocaleString()}
+              </td>
+              <td>{e.plugin}</td>
+              <td>
+                {e.bridgeType ?? InteropTransferClassifier.inferBridgeType(e)}
               </td>
               <td data-order={e.duration} data-sort={e.duration}>
                 {e.duration && formatSeconds(e.duration)}

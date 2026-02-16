@@ -11,6 +11,7 @@ export const relay: BaseProject = {
     plugins: [
       {
         plugin: 'relay',
+        bridgeType: 'nonMinting',
       },
     ],
   },

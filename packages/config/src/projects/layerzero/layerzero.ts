@@ -12,6 +12,11 @@ export const layerzero: BaseProject = {
     plugins: [
       {
         plugin: 'layerzero-v2-ofts',
+        bridgeType: 'burnAndMint',
+      },
+      {
+        plugin: 'layerzero-v2-ofts',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

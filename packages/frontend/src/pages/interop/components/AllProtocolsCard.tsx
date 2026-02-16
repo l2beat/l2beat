@@ -1,13 +1,18 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
+import type {
+  ProtocolDisplayable,
+  ProtocolEntry,
+} from '~/server/features/scaling/interop/types'
 import { NoResultsInfo } from '../summary/components/NoResultsInfo'
+import { AllProtocolsDialog } from './chain-selector/AllProtocolsDialog'
 import { AllProtocolsTable } from './table/AllProtocolsTable'
 
 export function AllProtocolsCard({
   type,
   entries,
+  zeroTransferProtocols,
   isLoading,
   hideTypeColumn,
   showAverageInFlightValueColumn,
@@ -15,6 +20,7 @@ export function AllProtocolsCard({
 }: {
   type: KnownInteropBridgeType | undefined
   entries: ProtocolEntry[] | undefined
+  zeroTransferProtocols: ProtocolDisplayable[] | undefined
   isLoading: boolean
   hideTypeColumn?: boolean
   showAverageInFlightValueColumn?: boolean
@@ -30,13 +36,23 @@ export function AllProtocolsCard({
         entries.length === 0 ? (
           <NoResultsInfo />
         ) : (
-          <AllProtocolsTable
-            type={type}
-            entries={entries}
-            hideTypeColumn={hideTypeColumn}
-            showAverageInFlightValueColumn={showAverageInFlightValueColumn}
-            showNetMintedValueColumn={showNetMintedValueColumn}
-          />
+          <>
+            <AllProtocolsTable
+              type={type}
+              entries={entries}
+              hideTypeColumn={hideTypeColumn}
+              showAverageInFlightValueColumn={showAverageInFlightValueColumn}
+              showNetMintedValueColumn={showNetMintedValueColumn}
+            />
+            {zeroTransferProtocols && zeroTransferProtocols.length > 0 && (
+              <div className="mt-2 ml-auto flex items-center gap-2">
+                <AllProtocolsDialog protocols={zeroTransferProtocols} />
+                <span className="font-medium text-xs leading-none max-md:opacity-50 md:text-base">
+                  have no transfers for the selected path.
+                </span>
+              </div>
+            )}
+          </>
         )
       ) : null}
     </PrimaryCard>

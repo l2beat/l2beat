@@ -1270,10 +1270,10 @@ export interface InteropConfig {
 
 export type InteropPlugin = {
   plugin: InteropPluginName
+  bridgeType: KnownInteropBridgeType
   chain?: string
   abstractTokenId?: string
   transferType?: string
-  bridgeType?: KnownInteropBridgeType
 }
 
 export type InteropDurationSplit = {

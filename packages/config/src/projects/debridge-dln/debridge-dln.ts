@@ -11,6 +11,7 @@ export const debridgeDln: BaseProject = {
     plugins: [
       {
         plugin: 'debridge-dln',
+        bridgeType: 'nonMinting',
       },
     ],
   },
