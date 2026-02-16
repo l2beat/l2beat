@@ -20,8 +20,8 @@ export type InteropSelectedChain = {
 }
 
 export type InteropSelectedChains = {
-  first: InteropSelectedChain | undefined
-  second: InteropSelectedChain | undefined
+  first: InteropSelectedChain | null
+  second: InteropSelectedChain | null
 }
 
 interface InteropSelectedChainsContextType {
@@ -133,15 +133,15 @@ export function InteropSelectedChainsProvider({
 }
 
 function getInteropSelectedChainFromId(
-  id: string | undefined,
+  id: string | null,
   interopChains: InteropChainWithIcon[],
-): InteropSelectedChain | undefined {
+): InteropSelectedChain | null {
   if (!id) {
-    return undefined
+    return null
   }
   const interopChain = interopChains.find((c) => c.id === id)
   if (!interopChain) {
-    return undefined
+    return null
   }
   return {
     id: interopChain.id,

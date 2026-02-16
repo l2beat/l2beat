@@ -1,4 +1,4 @@
-import { InteropSelectedChains } from './InteropSelectedChainsContext'
+import type { InteropSelectedChains } from './InteropSelectedChainsContext'
 
 export function buildInteropUrl(
   path: string,

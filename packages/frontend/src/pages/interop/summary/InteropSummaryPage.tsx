@@ -70,7 +70,7 @@ function Content({
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
-  if (!selectedChains[0] || !selectedChains[1]) {
+  if (!selectedChains.first || !selectedChains.second) {
     return (
       <InitialChainSelector
         interopChains={interopChains}
@@ -92,7 +92,10 @@ function Content({
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChainsIds: [selectedChains.first?.id, selectedChains.second?.id],
+    selectedChainsIds: [
+      selectedChains.first?.id ?? null,
+      selectedChains.second?.id ?? null,
+    ],
   })
 
   if (

@@ -79,7 +79,6 @@ async function getCachedData(initialSelectedChains: SelectedChainsIds) {
       ? helpers.interop.dashboard.prefetch({
           selectedChainsIds: initialSelectedChains,
           type: 'nonMinting',
-          type: 'nonMinting',
         })
       : undefined,
   ])

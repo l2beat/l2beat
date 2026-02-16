@@ -19,7 +19,7 @@ import { getTokensData } from './utils/getTokensData'
 
 export async function getInteropProtocolTokens({
   id,
-  selectedChains,
+  selectedChainsIds: selectedChains,
   type,
 }: InteropProtocolTokensParams): Promise<TokenData[]> {
   const logger = getLogger().for('getProtocolTokens')

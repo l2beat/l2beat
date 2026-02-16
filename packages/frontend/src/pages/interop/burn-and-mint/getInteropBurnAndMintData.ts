@@ -23,7 +23,7 @@ export async function getInteropBurnAndMintData(
   const hasQueryChains =
     req.query.selectedChains?.[0] && req.query.selectedChains?.[1]
 
-  const initialSelectedChains: SelectedChains = hasQueryChains
+  const initialSelectedChains: SelectedChainsIds = hasQueryChains
     ? [
         interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
           null,
@@ -76,7 +76,7 @@ async function getCachedData(initialSelectedChains: SelectedChainsIds) {
     }),
     initialSelectedChains[0] && initialSelectedChains[1]
       ? helpers.interop.dashboard.prefetch({
-          selectedChains: initialSelectedChains,
+          selectedChainsIds: initialSelectedChains,
           type: 'burnAndMint',
         })
       : undefined,

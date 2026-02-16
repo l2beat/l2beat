@@ -76,7 +76,7 @@ async function getCachedData(initialSelectedChains: SelectedChainsIds) {
     }),
     initialSelectedChains[0] && initialSelectedChains[1]
       ? helpers.interop.dashboard.prefetch({
-          selectedChains: initialSelectedChains,
+          selectedChainsIds: initialSelectedChains,
           type: 'lockAndMint',
         })
       : undefined,

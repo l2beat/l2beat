@@ -1,13 +1,16 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
-import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import type { InteropSelectedChains } from '../utils/InteropSelectedChainsContext'
 import type { InteropChainWithIcon } from './chain-selector/types'
 
 interface Props {
-  selectedChains: SelectedChains
+  selectedChains: InteropSelectedChains
   interopChains: InteropChainWithIcon[]
-  selectChain: (index: 0 | 1, chainId: string | null) => void
+  selectChain: (
+    index: keyof InteropSelectedChains,
+    chainId: string | null,
+  ) => void
   type: KnownInteropBridgeType | undefined
 }
 
@@ -19,18 +22,18 @@ export function InitialChainSelector({
 }: Props) {
   const utils = api.useUtils()
   function toggleChain(chainId: string) {
-    if (selectedChains[0] === null) {
-      selectChain(0, chainId)
+    if (selectedChains.first === null) {
+      selectChain('first', chainId)
       return
     }
 
-    if (selectedChains[0] === chainId) {
-      selectChain(0, null)
+    if (selectedChains.first?.id === chainId) {
+      selectChain('first', null)
       return
     }
 
-    if (selectedChains[1] === null) {
-      selectChain(1, chainId)
+    if (selectedChains.second === null) {
+      selectChain('second', chainId)
       return
     }
   }
@@ -42,17 +45,18 @@ export function InitialChainSelector({
           <ChainSelectorButton
             key={chain.id}
             chain={chain}
-            selected={selectedChains.some(
-              (selectedChain) => selectedChain === chain.id,
-            )}
+            selected={
+              selectedChains.first?.id === chain.id ||
+              selectedChains.second?.id === chain.id
+            }
             onClick={() => toggleChain(chain.id)}
             onMouseEnter={() => {
-              if (!selectedChains[0]) {
+              if (!selectedChains.first) {
                 return
               }
 
               utils.interop.dashboard.prefetch({
-                selectedChains: [selectedChains[0], chain.id],
+                selectedChainsIds: [selectedChains.first.id, chain.id],
                 type,
               })
             }}

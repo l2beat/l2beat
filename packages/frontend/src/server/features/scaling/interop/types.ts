@@ -75,7 +75,7 @@ export type InteropProtocolTokensParams = v.infer<
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
-  selectedChains: SelectedChainsIds,
+  selectedChainsIds: SelectedChainsIds,
   type: KnownInteropBridgeType.optional(),
 })
 
