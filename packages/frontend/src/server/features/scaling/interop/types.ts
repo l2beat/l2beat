@@ -43,8 +43,8 @@ export type ByBridgeTypeData = {
 
 export type LockAndMintProtocolData = {
   volume: number
+  netMintedValue: number | undefined
   tokens: TopItems<TokenData>
-  averageDuration: AverageDuration | null
 }
 
 export type NonMintingProtocolData = {

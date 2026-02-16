@@ -182,12 +182,12 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
-          averageDuration: getAverageDuration(
-            projectId,
-            'lockAndMint',
-            data.lockAndMint,
-            durationSplitMap,
-          ),
+          netMintedValue:
+            data.lockAndMint.mintedValueUsd !== undefined &&
+            data.lockAndMint.burnedValueUsd !== undefined
+              ? data.lockAndMint.mintedValueUsd -
+                data.lockAndMint.burnedValueUsd
+              : undefined,
         }
       : undefined,
     nonMinting: data.nonMinting
