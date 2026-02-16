@@ -4,7 +4,7 @@ export function buildInteropUrl(
   path: string,
   selectedChains?: SelectedChains,
 ): string {
-  if (!selectedChains) {
+  if (!selectedChains || selectedChains.some((chain) => chain === undefined)) {
     return path
   }
 
