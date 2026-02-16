@@ -19,6 +19,7 @@ import {
   type ParseAbiItem,
   parseAbi,
 } from 'viem'
+import type { TokenMap } from '../engine/match/TokenMap'
 
 export interface InteropEvent<T = unknown> {
   plugin: string
@@ -222,6 +223,11 @@ interface EventDataRequest {
   addresses: ChainSpecificAddress[] | '*'
 }
 
+export type DeployedToAbstractMap = Map<
+  ChainSpecificAddress,
+  AbstractTokenRecord
+>
+
 export interface InteropPlugin {
   readonly name: InteropPluginName
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
@@ -230,7 +236,7 @@ export interface InteropPlugin {
   match?: (
     event: InteropEvent,
     db: InteropEventDb,
-    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
+    deployedToAbstractMap: TokenMap,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
 }
 
