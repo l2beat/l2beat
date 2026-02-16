@@ -62,7 +62,7 @@ export function ProjectsUsedIn({
     <div
       className={cn('grid grid-cols-2', className)}
       style={{
-        gridTemplateColumns: `${cappedProjects.length * 15}px  30px`,
+        gridTemplateColumns: `${cappedProjects.length === 1 ? 20 : cappedProjects.length * 15}px  30px`,
       }}
     >
       <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
@@ -74,7 +74,7 @@ export function ProjectsUsedIn({
                 height={20}
                 src={project.icon}
                 alt={`${project.name} logo`}
-                className="relative rounded-full bg-white shadow"
+                className="relative size-5 min-w-5 rounded-full bg-white shadow"
                 style={{ zIndex: maxProjects - index }}
               />
             </TooltipTrigger>
