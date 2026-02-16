@@ -4,6 +4,7 @@ import type { AuthConfig, Config } from '../config/Config'
 import { getSession } from './getSession'
 
 const READ_ONLY_TOKEN = 'read-only-token-abcd-1234'
+const READ_ONLY_TOKEN_2 = 'read-only-token-zxyw-9876'
 
 const mockConfig = mockObject<Config>({
   auth: mockObject<AuthConfig>({
@@ -11,7 +12,7 @@ const mockConfig = mockObject<Config>({
     aud: undefined,
     teamDomain: undefined,
   }),
-  readOnlyAuthToken: READ_ONLY_TOKEN,
+  readOnlyAuthTokens: [READ_ONLY_TOKEN, READ_ONLY_TOKEN_2],
 })
 
 describe(getSession.name, () => {
@@ -81,6 +82,24 @@ describe(getSession.name, () => {
 
     const session = await getSession(headers, mockConfig, {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
+    })
+
+    expect(session).toEqual({
+      email: 'dev-readonly@l2beat.com',
+      permissions: ['read'],
+    })
+  })
+
+  it('works as expected for another read-only token', async () => {
+    const headers = new Headers([
+      ['cookie', `CF_Authorization=${READ_ONLY_TOKEN_2}`],
+    ])
+    const jwtVerifyFn = async () => {
+      throw new Error('Incorrect JWT token')
+    }
+
+    const session = await getSession(headers, mockConfig, {
+      jwtVerifyFn,
     })
 
     expect(session).toEqual({

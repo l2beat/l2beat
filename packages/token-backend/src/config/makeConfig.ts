@@ -13,9 +13,21 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
     auth: options.isLocal ? false : getAuthConfig(env),
     coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
     etherscanApiKey: env.optionalString('ETHERSCAN_API_KEY'),
-    readOnlyAuthToken: env.optionalString('TOKEN_BACKEND_READONLY_AUTH_TOKEN'),
+    readOnlyAuthTokens: getReadOnlyAuthTokens(env),
     jsonBodyLimitMb: env.integer('TOKEN_BACKEND_JSON_BODY_LIMIT_MB', 20),
   }
+}
+
+function getReadOnlyAuthTokens(env: Env): string[] {
+  const tokensEnv = env.optionalString('TOKEN_BACKEND_READONLY_AUTH_TOKENS')
+  if (tokensEnv) {
+    return tokensEnv
+      .split(',')
+      .map((token) => token.trim())
+      .filter((token) => token.length > 0)
+  }
+
+  return []
 }
 
 function getDatabaseConfig(
