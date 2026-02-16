@@ -4,7 +4,33 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "morph-BGB",
+      "id": "morph-BGB-1",
+      "priceId": "bitget-token",
+      "symbol": "BGB",
+      "name": "BitgetToken",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11610/large/Bitget_logo.png?1736925727",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x389C08Bc23A7317000a1FD76c7c5B0cb0b4640b5",
+        "chain": "morph",
+        "decimals": 18,
+        "sinceTimestamp": 1767510574
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "morph-BGB-2",
       "priceId": "bitget-token",
       "symbol": "BGB",
       "name": "BitgetToken",
@@ -106,6 +132,41 @@
         ]
       },
       "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "morph-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 18,
+            "sinceTimestamp": 1729307651,
+            "untilTimestamp": 1742428800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 18,
+            "sinceTimestamp": 1729307783,
+            "untilTimestamp": 1742428800
+          }
+        ]
+      },
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },
@@ -273,6 +334,41 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "morph-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 18,
+            "sinceTimestamp": 1729307651,
+            "untilTimestamp": 1742169600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 18,
+            "sinceTimestamp": 1729307783,
+            "untilTimestamp": 1742169600
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
