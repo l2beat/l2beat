@@ -62,7 +62,7 @@ export function ProjectsUsedIn({
     <div
       className={cn('grid grid-cols-2', className)}
       style={{
-        gridTemplateColumns: `${cappedProjects.length}fr 30px`,
+        gridTemplateColumns: `${cappedProjects.length * 15}px  30px`,
       }}
     >
       <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
