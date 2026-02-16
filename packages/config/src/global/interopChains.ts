@@ -71,4 +71,11 @@ export const INTEROP_CHAINS: InteropChain[] = [
     type: 'evm',
     display: 'BSC',
   },
+  {
+    id: 'forknet',
+    iconSlug: 'forknet',
+    name: 'Forknet',
+    type: 'evm',
+    display: 'FORK',
+  },
 ]
