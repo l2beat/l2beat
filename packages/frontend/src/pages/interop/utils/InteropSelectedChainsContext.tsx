@@ -10,7 +10,7 @@ import {
 } from 'react'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
-import type { SelectedChains } from '~/server/features/scaling/interop/types'
+import type { SelectedChainsIds } from '~/server/features/scaling/interop/types'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 
@@ -19,15 +19,18 @@ export type InteropSelectedChain = {
   iconUrl: string
 }
 
-export type InteropSelectedChains = [
-  InteropSelectedChain | undefined,
-  InteropSelectedChain | undefined,
-]
+export type InteropSelectedChains = {
+  first: InteropSelectedChain | undefined
+  second: InteropSelectedChain | undefined
+}
 
 interface InteropSelectedChainsContextType {
   selectedChains: InteropSelectedChains
   allChainIds: string[]
-  selectChain: (index: 0 | 1, chainId: string) => void
+  selectChain: (
+    index: keyof InteropSelectedChainsContextType['selectedChains'],
+    chainId: string,
+  ) => void
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -37,7 +40,7 @@ export const InteropSelectedChainsContext = createContext<
 interface InteropSelectedChainsProviderProps {
   children: ReactNode
   interopChains: InteropChainWithIcon[]
-  initialSelectedChains: SelectedChains
+  initialSelectedChains: SelectedChainsIds
 }
 
 export function InteropSelectedChainsProvider({
@@ -49,11 +52,22 @@ export function InteropSelectedChainsProvider({
     () => interopChains.map((c) => c.id),
     [interopChains],
   )
-  const [selectedChainIds, setSelectedChainIds] = useState(
-    initialSelectedChains,
+  const defaultSelectedChains = useMemo(
+    () => ({
+      first: getInteropSelectedChainFromId(
+        initialSelectedChains[0],
+        interopChains,
+      ),
+      second: getInteropSelectedChainFromId(
+        initialSelectedChains[1],
+        interopChains,
+      ),
+    }),
+    [initialSelectedChains, interopChains],
   )
+  const [selectedChains, setSelectedChains] = useState(defaultSelectedChains)
 
-  const debouncedChains = useDebouncedValue(selectedChainIds, 500)
+  const debouncedChains = useDebouncedValue(selectedChains, 500)
   const skipNextUrlUpdate = useRef(false)
 
   // Sync debounced state to URL
@@ -74,50 +88,31 @@ export function InteropSelectedChainsProvider({
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
     const params = new URLSearchParams(window.location.search)
-    setSelectedChainIds((current) =>
+    setSelectedChains((current) =>
       parseSelectedChainsQuery(
         params.get('selectedChains') ?? undefined,
         allChainIds,
+        interopChains,
         current,
       ),
     )
   })
 
-  const selectChain = useCallback((index: 0 | 1, chainId: string) => {
-    setSelectedChainIds((prev) => {
-      const oppositeIndex = index === 0 ? 1 : 0
-      if (prev[oppositeIndex] === chainId || prev[index] === chainId) {
-        return prev
-      }
-
-      const next = [...prev] as SelectedChains
-      next[index] = chainId
-      return next
-    })
-  }, [])
-
-  const interopChainsById = useMemo(
-    () => new Map(interopChains.map((chain) => [chain.id, chain])),
+  const selectChain = useCallback(
+    (index: keyof InteropSelectedChains, chainId: string) => {
+      setSelectedChains((prev) => {
+        const chain = getInteropSelectedChainFromId(chainId, interopChains)
+        if (!chain) {
+          return prev
+        }
+        return {
+          ...prev,
+          [index]: chain,
+        }
+      })
+    },
     [interopChains],
   )
-
-  const selectedChains = useMemo(() => {
-    return selectedChainIds.map((chainId) => {
-      if (!chainId) {
-        return undefined
-      }
-
-      const chain = interopChainsById.get(chainId)
-      if (!chain) {
-        return undefined
-      }
-
-      return {
-        id: chain.id,
-        iconUrl: chain.iconUrl,
-      }
-    }) as InteropSelectedChains
-  }, [selectedChainIds, interopChainsById])
 
   return (
     <InteropSelectedChainsContext.Provider
@@ -132,11 +127,29 @@ export function InteropSelectedChainsProvider({
   )
 }
 
+function getInteropSelectedChainFromId(
+  id: string | undefined,
+  interopChains: InteropChainWithIcon[],
+): InteropSelectedChain | undefined {
+  if (!id) {
+    return undefined
+  }
+  const interopChain = interopChains.find((c) => c.id === id)
+  if (!interopChain) {
+    return undefined
+  }
+  return {
+    id: interopChain.id,
+    iconUrl: interopChain.iconUrl,
+  }
+}
+
 function parseSelectedChainsQuery(
   value: string | undefined,
   allChainIds: string[],
-  fallback: SelectedChains,
-): SelectedChains {
+  interopChains: InteropChainWithIcon[],
+  fallback: InteropSelectedChains,
+): InteropSelectedChains {
   if (!value) {
     return fallback
   }
@@ -154,7 +167,17 @@ function parseSelectedChainsQuery(
     return fallback
   }
 
-  return [first, second]
+  const firstChain = getInteropSelectedChainFromId(first, interopChains)
+  const secondChain = getInteropSelectedChainFromId(second, interopChains)
+
+  if (!firstChain || !secondChain) {
+    return fallback
+  }
+
+  return {
+    first: firstChain,
+    second: secondChain,
+  }
 }
 
 export function useInteropSelectedChains() {

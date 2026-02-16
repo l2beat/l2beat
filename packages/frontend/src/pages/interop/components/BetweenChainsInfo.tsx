@@ -9,7 +9,6 @@ export function BetweenChainsInfo({
   additionalText?: string
 }) {
   const { selectedChains } = useInteropSelectedChains()
-  const [chain1, chain2] = selectedChains
 
   return (
     <div
@@ -19,9 +18,13 @@ export function BetweenChainsInfo({
       )}
     >
       <span>Between</span>
-      {chain1 && <img src={chain1.iconUrl} className="size-4" />}
+      {selectedChains.first && (
+        <img src={selectedChains.first.iconUrl} className="size-4" />
+      )}
       <span>&</span>
-      {chain2 && <img src={chain2.iconUrl} className="size-4" />}
+      {selectedChains.second && (
+        <img src={selectedChains.second.iconUrl} className="size-4" />
+      )}
       {additionalText && <span>{additionalText}</span>}
     </div>
   )

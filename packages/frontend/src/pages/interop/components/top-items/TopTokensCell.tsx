@@ -16,10 +16,7 @@ import {
 import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
-import type {
-  SelectedChains,
-  TokenData,
-} from '~/server/features/scaling/interop/types'
+import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
@@ -63,9 +60,10 @@ export function TopTokensCell({
         }}
         onMouseEnter={() =>
           utils.interop.tokens.prefetch({
-            selectedChains: selectedChains.map(
-              (chain) => chain?.id,
-            ) as SelectedChains,
+            selectedChains: [
+              selectedChains.first?.id,
+              selectedChains.second?.id,
+            ],
             id: protocol.id,
             type,
           })
@@ -100,9 +98,10 @@ function TopTokensContent({
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokens.useQuery(
     {
-      selectedChains: selectedChains.map(
-        (chain) => chain?.id,
-      ) as SelectedChains,
+      selectedChains: [
+        selectedChains.first?.id,
+        selectedChains.second?.id,
+      ],
       id: protocol.id,
       type,
     },

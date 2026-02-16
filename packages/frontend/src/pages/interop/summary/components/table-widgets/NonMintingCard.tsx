@@ -2,7 +2,6 @@ import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
-import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
@@ -18,10 +17,7 @@ export function NonMintingCard({
   isLoading: boolean
 }) {
   const { selectedChains } = useInteropSelectedChains()
-  const viewAllUrl = buildInteropUrl(
-    '/interop/non-minting',
-    selectedChains.map((chain) => chain?.id) as SelectedChains,
-  )
+  const viewAllUrl = buildInteropUrl('/interop/non-minting', selectedChains)
 
   return (
     <PrimaryCard className="flex flex-col border-t-blue-600 max-md:border-b max-md:border-b-divider md:border-t-4">

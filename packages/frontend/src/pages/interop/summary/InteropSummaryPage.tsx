@@ -5,7 +5,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type {
   ProtocolDisplayable,
-  SelectedChains,
+  SelectedChainsIds,
 } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
@@ -31,7 +31,7 @@ interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
-  initialSelectedChains: SelectedChains
+  initialSelectedChains: SelectedChainsIds
 }
 
 export function InteropSummaryPage({
@@ -64,7 +64,7 @@ export function InteropSummaryPage({
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChains: selectedChains.map((chain) => chain?.id) as SelectedChains,
+    selectedChainsIds: [selectedChains.first?.id, selectedChains.second?.id],
   })
 
   if (

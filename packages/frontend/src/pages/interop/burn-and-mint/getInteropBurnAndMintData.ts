@@ -1,7 +1,7 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import type { SelectedChains } from '~/server/features/scaling/interop/types'
+import type { SelectedChainsIds } from '~/server/features/scaling/interop/types'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -20,7 +20,7 @@ export async function getInteropBurnAndMintData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
-  const initialSelectedChains: SelectedChains = [
+  const initialSelectedChains: SelectedChainsIds = [
     interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
       'ethereum',
     interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ??
@@ -63,14 +63,15 @@ export async function getInteropBurnAndMintData(
   }
 }
 
-async function getCachedData(initialSelectedChains: SelectedChains) {
+async function getCachedData(initialSelectedChains: SelectedChainsIds) {
   const helpers = getSsrHelpers()
   const [protocols] = await Promise.all([
     ps.getProjects({
       select: ['interopConfig'],
     }),
     helpers.interop.dashboard.prefetch({
-      selectedChains: initialSelectedChains,
+      selectedChainsIds: initialSelectedChains,
+      type: 'burnAndMint',
     }),
   ])
 

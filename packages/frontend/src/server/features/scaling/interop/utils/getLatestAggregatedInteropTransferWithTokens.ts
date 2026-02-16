@@ -2,11 +2,11 @@ import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type {
   AggregatedInteropTransferWithTokens,
-  SelectedChains,
+  SelectedChainsIds,
 } from '../types'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
-  selectedChains: SelectedChains,
+  selectedChains: SelectedChainsIds,
   type?: KnownInteropBridgeType,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
   const db = getDb()
