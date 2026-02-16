@@ -16,7 +16,7 @@ export const robinhood: ScalingProject = upcomingL2({
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://robinhood.com/eu/en/chain/'],
-      bridges: ['https://testnet.bridge.intuition.systems'],
+      bridges: [],
       documentation: ['https://docs.robinhood.com/chain'],
       repositories: [],
       explorers: ['https://explorer.testnet.chain.robinhood.com/stats'],
