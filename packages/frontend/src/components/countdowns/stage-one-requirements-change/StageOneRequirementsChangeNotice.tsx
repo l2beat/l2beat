@@ -2,6 +2,7 @@ import type { StageConfigured } from '@l2beat/config'
 import { StageBadge } from '~/components/badge/StageBadge'
 import { Countdown } from '~/components/Countdown'
 import { CustomLink } from '~/components/link/CustomLink'
+import { Markdown } from '~/components/markdown/Markdown'
 import { externalLinks } from '~/consts/externalLinks'
 import { useDevice } from '~/hooks/useDevice'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
@@ -41,7 +42,7 @@ export function StageOneRequirementsChangeNotice({
             className="flex gap-2 rounded-lg bg-red-600/20 p-4 text-paragraph-15 md:text-paragraph-16"
           >
             <CloseIcon className="mt-[3px] size-[15px] shrink-0 fill-negative md:mt-1 md:size-3.5" />{' '}
-            <span>{reason}</span>
+            <Markdown>{reason}</Markdown>
           </div>
         ))}
       </div>
@@ -81,7 +82,7 @@ export function StageOneRequirementsChangeStageSectionNotice({
             className="flex gap-2 text-paragraph-15 md:text-paragraph-16"
           >
             <MissingIcon className="mt-[5px] size-4 shrink-0 fill-negative" />
-            <span>{reason}</span>
+            <Markdown>{reason}</Markdown>
           </div>
         ))}{' '}
         {stage1PrincipleDescription && (

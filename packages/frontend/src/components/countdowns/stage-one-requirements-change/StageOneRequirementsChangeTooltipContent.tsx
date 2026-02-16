@@ -33,7 +33,10 @@ export function StageOneRequirementsChangeTooltipContent({
       {downgradePending.reasons.map((reason, i) => (
         <div key={i} className="flex gap-2">
           <MissingIcon className="size-4 shrink-0 fill-negative" />
-          <span>{reason}</span>
+          <span>
+            {/* remove markdown links */}
+            {reason.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')}
+          </span>
         </div>
       ))}
     </div>
