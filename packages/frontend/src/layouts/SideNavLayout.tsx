@@ -110,7 +110,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/summary',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
             {
@@ -118,7 +117,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/non-minting',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
             {
@@ -126,15 +124,13 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/lock-and-mint',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
             {
-              title: 'Omnichain tokens',
+              title: 'Burn & Mint protocols',
               href: buildInteropUrl(
-                '/interop/omnichain',
+                '/interop/burn-and-mint',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
           ],
@@ -237,7 +233,7 @@ export function SideNavLayout({
             })),
         },
       ]),
-    [selectedChainsContext?.selectedChains, selectedChainsContext?.allChainIds],
+    [selectedChainsContext?.selectedChains],
   )
 
   return (

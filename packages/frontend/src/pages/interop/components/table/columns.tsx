@@ -75,53 +75,6 @@ const last24hVolumeColumn = columnHelper.accessor('volume', {
   },
 })
 
-function getTokensByVolumeColumn(showNetMintedValueColumn?: boolean) {
-  return columnHelper.accessor('tokens', {
-    header: 'Tokens\nby volume',
-    meta: {
-      cellClassName: '!pr-0',
-      headClassName: 'text-2xs',
-      tooltip:
-        'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
-    },
-    cell: (ctx) => (
-      <TopTokensCell
-        tokens={ctx.row.original.tokens}
-        protocol={{
-          name: ctx.row.original.protocolName,
-          iconUrl: ctx.row.original.iconUrl,
-        }}
-        showNetMintedValueColumn={showNetMintedValueColumn}
-      />
-    ),
-  })
-}
-
-const averageDurationColumn = columnHelper.accessor(
-  (row) =>
-    row.averageDuration.type === 'unknown'
-      ? undefined
-      : row.averageDuration.type === 'single'
-        ? row.averageDuration.duration
-        : (row.averageDuration.in.duration ??
-          row.averageDuration.out.duration ??
-          Number.POSITIVE_INFINITY),
-  {
-    header: 'Last 24h avg.\ntransfer time',
-    invertSorting: true,
-    sortUndefined: 'last',
-    meta: {
-      align: 'right',
-      headClassName: 'text-2xs',
-      tooltip:
-        'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
-    },
-    cell: (ctx) => (
-      <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
-    ),
-  },
-)
-
 const averageInFlightValueColumn = columnHelper.accessor(
   'averageValueInFlight',
   {
@@ -134,7 +87,7 @@ const averageInFlightValueColumn = columnHelper.accessor(
         'The average USD value of funds in transit at any given second over the past 24 hours.',
     },
     cell: (ctx) => {
-      if (ctx.row.original.averageValueInFlight === undefined) return '-'
+      if (ctx.row.original.averageValueInFlight === undefined) return EM_DASH
       return (
         <span className="font-medium text-label-value-15">
           {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
@@ -145,6 +98,7 @@ const averageInFlightValueColumn = columnHelper.accessor(
 )
 
 export function getAllProtocolsColumns(
+  type: KnownInteropBridgeType | undefined,
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
   showNetMintedValueColumn?: boolean,
@@ -162,17 +116,13 @@ export function getAllProtocolsColumns(
     }),
     ...commonColumns,
     !hideTypeColumn &&
-      columnHelper.accessor((row) => Object.keys(row.byBridgeType ?? {}), {
+      columnHelper.accessor('bridgeTypes', {
         header: 'Type',
         enableSorting: false,
         cell: (ctx) => {
           return (
             <div className="flex items-center gap-1" key={ctx.row.original.id}>
-              {(
-                Object.keys(
-                  ctx.row.original.byBridgeType ?? {},
-                ) as KnownInteropBridgeType[]
-              ).map((bridgeType) => (
+              {ctx.row.original.bridgeTypes.map((bridgeType) => (
                 <BridgeTypeBadge key={bridgeType} bridgeType={bridgeType} />
               ))}
             </div>
@@ -197,7 +147,35 @@ export function getAllProtocolsColumns(
           'The total number of token transfer transactions completed in the past 24 hours.',
       },
     }),
-    averageDurationColumn,
+    columnHelper.accessor(
+      (row) =>
+        row.averageDuration?.type === 'unknown' || row.averageDuration === null
+          ? undefined
+          : row.averageDuration.type === 'single'
+            ? row.averageDuration.duration
+            : (row.averageDuration.in.duration ??
+              row.averageDuration.out.duration ??
+              Number.POSITIVE_INFINITY),
+      {
+        header: 'Last 24h avg.\ntransfer time',
+        invertSorting: true,
+        sortUndefined: 'last',
+        meta: {
+          align: 'right',
+          headClassName: 'text-2xs',
+          tooltip:
+            'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
+        },
+        cell: (ctx) => {
+          if (ctx.row.original.averageDuration === null) return EM_DASH
+          return (
+            <AvgDurationCell
+              averageDuration={ctx.row.original.averageDuration}
+            />
+          )
+        },
+      },
+    ),
     columnHelper.accessor('averageValue', {
       header: 'Last 24h avg.\ntransfer value',
       meta: {
@@ -208,7 +186,9 @@ export function getAllProtocolsColumns(
       },
       cell: (ctx) => (
         <span className="font-medium text-label-value-15">
-          {formatCurrency(ctx.row.original.averageValue, 'usd')}
+          {ctx.row.original.averageValue
+            ? formatCurrency(ctx.row.original.averageValue, 'usd')
+            : EM_DASH}
         </span>
       ),
     }),
@@ -228,7 +208,30 @@ export function getAllProtocolsColumns(
           </span>
         ),
       }),
-    getTokensByVolumeColumn(showNetMintedValueColumn),
+    columnHelper.accessor('tokens', {
+      header: 'Tokens\nby volume',
+      meta: {
+        cellClassName: '!pr-0',
+        headClassName: 'text-2xs',
+        tooltip:
+          'Tokens involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination token.',
+      },
+      cell: (ctx) => {
+        if (ctx.row.original.tokens.items.length === 0) return EM_DASH
+        return (
+          <TopTokensCell
+            topItems={ctx.row.original.tokens}
+            type={type}
+            protocol={{
+              id: ctx.row.original.id,
+              name: ctx.row.original.protocolName,
+              iconUrl: ctx.row.original.iconUrl,
+            }}
+            showNetMintedValueColumn={showNetMintedValueColumn}
+          />
+        )
+      },
+    }),
     columnHelper.accessor('chains', {
       header: 'Chains\nby volume',
       meta: {
@@ -237,16 +240,20 @@ export function getAllProtocolsColumns(
         tooltip:
           'Chains involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination chain.',
       },
-      cell: (ctx) => (
-        <TopChainsCell
-          chains={ctx.row.original.chains}
-          protocol={{
-            name: ctx.row.original.protocolName,
-            iconUrl: ctx.row.original.iconUrl,
-          }}
-          showNetMintedValueColumn={showNetMintedValueColumn}
-        />
-      ),
+      cell: (ctx) => {
+        if (ctx.row.original.chains.items.length === 0) return EM_DASH
+        return (
+          <TopChainsCell
+            topItems={ctx.row.original.chains}
+            protocol={{
+              id: ctx.row.original.id,
+              name: ctx.row.original.protocolName,
+              iconUrl: ctx.row.original.iconUrl,
+            }}
+            showNetMintedValueColumn={showNetMintedValueColumn}
+          />
+        )
+      },
     }),
   ])
 }

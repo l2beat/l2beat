@@ -23,27 +23,13 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { Logo } from '~/components/Logo'
 import { useIsClient } from '~/hooks/useIsClient'
+import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
   data: TransferSizeDataPoint[]
   isLoading: boolean
-}
-
-type TransferSizeDataPoint = {
-  name: string
-  iconUrl: string
-  countUnder100: number
-  percentageUnder100: number
-  count100To1K: number
-  percentage100To1K: number
-  count1KTo10K: number
-  percentage1KTo10K: number
-  count10KTo100K: number
-  percentage10KTo100K: number
-  countOver100K: number
-  percentageOver100K: number
 }
 
 const chartMeta = {

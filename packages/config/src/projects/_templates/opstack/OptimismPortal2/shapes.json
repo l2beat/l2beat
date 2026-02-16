@@ -51,5 +51,11 @@
     "address": "eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9",
     "chain": "ethereum",
     "blockNumber": 24047652
+  },
+  "OptimismPortal2_v5_2_0": {
+    "hash": "0x3410684a7a8c16c4f87db990b834ce7c3be33136857c103791b132b824bfd951",
+    "address": "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B",
+    "chain": "ethereum",
+    "blockNumber": 24305724
   }
 }

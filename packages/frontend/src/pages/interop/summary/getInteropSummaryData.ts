@@ -1,52 +1,38 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
+import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
-import type { Manifest } from '~/utils/Manifest'
-import type { FromToQuery } from '../InteropRouter'
+import { type Manifest, manifest } from '~/utils/Manifest'
+import type { SelectedChainsQuery } from '../InteropRouter'
 
 export async function getInteropSummaryData(
-  req: Request<unknown, unknown, unknown, FromToQuery>,
+  req: Request<unknown, unknown, unknown, SelectedChainsQuery>,
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
-  const helpers = getSsrHelpers()
   const appLayoutProps = await getAppLayoutProps()
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
-  const initialSelectedChains = {
-    from: (
-      req.query.from?.filter((id) => interopChainsIds.includes(id)) ??
-      interopChainsIds
-    ).sort(),
-    to: (
-      req.query.to?.filter((id) => interopChainsIds.includes(id)) ??
-      interopChainsIds
-    ).sort(),
-  }
+  const initialSelectedChains: SelectedChains = [
+    interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
+      'ethereum',
+    interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ??
+      'arbitrum',
+  ]
+
   const queryState = await cache.get(
     {
-      key: [
-        'interop',
-        'summary',
-        'prefetch',
-        initialSelectedChains.from.join(','),
-        initialSelectedChains.to.join(','),
-      ],
+      key: ['interop', 'summary', 'prefetch', ...initialSelectedChains],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    async () => {
-      await helpers.interop.dashboard.prefetch({
-        from: initialSelectedChains.from,
-        to: initialSelectedChains.to,
-      })
-      return helpers.dehydrate()
-    },
+    async () => getCachedData(initialSelectedChains),
   )
 
   const interopChainsWithIcons = interopChains.map((chain) => ({
@@ -68,10 +54,30 @@ export async function getInteropSummaryData(
       page: 'InteropSummaryPage',
       props: {
         ...appLayoutProps,
-        queryState,
+        ...queryState,
         interopChains: interopChainsWithIcons,
         initialSelectedChains,
       },
     },
+  }
+}
+
+async function getCachedData(initialSelectedChains: SelectedChains) {
+  const helpers = getSsrHelpers()
+  const [protocols] = await Promise.all([
+    ps.getProjects({
+      select: ['interopConfig'],
+    }),
+    helpers.interop.dashboard.prefetch({
+      selectedChains: initialSelectedChains,
+    }),
+  ])
+
+  return {
+    queryState: helpers.dehydrate(),
+    protocols: protocols.map((protocol) => ({
+      name: protocol.interopConfig.name ?? protocol.name,
+      iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
+    })),
   }
 }

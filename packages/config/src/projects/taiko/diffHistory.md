@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x1a913d0e78b423ab3630bb703c99ed33f8652adb
+
+# Diff at Wed, 11 Feb 2026 13:18:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@141974a80471f8dbed910bc3deae728f2ae1bec7 block: 1770041480
+- current timestamp: 1770815650
+
+## Description
+
+fee proposal executed: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/24
+
+voting period proposal moves to optimistic phase: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/25
+
+TaikoAnchor fee changes: https://disco.l2beat.com/diff/taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0/taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        25
++        26
+      values.proposalIds.25:
++        "602381146540321106777275740158610369409831665689"
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+      values.$threshold:
+-        5
++        4
+      values.multisigThreshold:
+-        "5 of 7 (71%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        16
++        17
+    }
+```
+
+```diff
+    contract TaikoAnchor (taiko:0x1670000000000000000000000000000000010001) {
+    +++ description: Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.
+      sourceHashes.1:
+-        "0x94dfc8c1aa6a1ce9447da9bf865b6e827ffe8c9cb0b08e4d7c7589b8c4193134"
++        "0x3b17f3b24c2a1ab8b2cc942628d831d030a6c4a03ae0c5fb548b7142843c4e6d"
+      values.$implementation:
+-        "taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0"
++        "taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"
+      values.$pastUpgrades.4:
++        ["2026-02-11T02:45:07.000Z","0xd044da28e6a74c63e79bcf8ac14fec397dae61afc9166ca7754af5e0b6e5c7fb",["taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.BASEFEE_MIN_VALUE:
+-        25000000
++        10000000
+      values.impl:
+-        "taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0"
++        "taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"
+      implementationNames.taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0:
+-        "TaikoAnchor"
+      implementationNames.taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9:
++        "TaikoAnchor"
+    }
+```
+
+## Source code changes
+
+```diff
+.../taiko/{.flat@1770041480 => .flat}/TaikoAnchor/TaikoAnchor.sol       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x800770a71240bb75ae6629bb71b398830b2a3e8a
 
 # Diff at Mon, 02 Feb 2026 14:13:29 GMT:

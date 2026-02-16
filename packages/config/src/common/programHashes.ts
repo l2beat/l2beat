@@ -64,6 +64,50 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
     `,
   },
+  '0x00b37da93c30bef199e4f70190c46367ade11ab988c3cff4c661960919718afd': {
+    title: 'Aggregation program of OP Succinct FDP',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client in fault dispute proof mode.',
+    proverSystemProject: ProjectId('sp1'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v1.0.2/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.2\` . Commit hash should be  \`a8d870c320c158a2a2e4eee0303c688b15bea2c0\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+  `,
+  },
+  '0x05ca7dfb1b7ca7a103fa36750d622f81182eb7c9679b9487418968400e2b1a29': {
+    title: 'Range program of OP Succinct FDP',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks in fault dispute proof mode.',
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v1.0.2/programs/range/eigenda',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.2\` . Commit hash should be  \`a8d870c320c158a2a2e4eee0303c688b15bea2c0\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+    `,
+  },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     title: 'Aggregation program of OP Succinct',
     description:
@@ -517,9 +561,10 @@ Verify:
     title: 'Kailua fault proof program (SOON)',
     description:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs for SOON SVM chain, is a part of ZK non-interactive fault proof system.',
-    programUrl: 'https://github.com/soonlabs/kailua-soon',
     proverSystemProject: ProjectId('risc0'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to the SOON team, this Kailua FPVM program was compiled using a local version with some additional logging added for debugging purposes. The code is not public and thus the program hash cannot be independently verified.',
   },
   '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
     title: 'Kailua fault proof program (MegaETH)',
@@ -613,8 +658,8 @@ cd cairo-lang
 git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
 \`\`\`
 
-4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/BUILD_ADDITION) at the end.
-5. Copy [this hash_bootloaders.py script](/files/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/starkware_proghash_artifacts/56407b69f3f19f69302a8623baa8c5f71f967eed/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/56407b69f3f19f69302a8623baa8c5f71f967eed/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
 6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
       `,
     },
@@ -647,8 +692,8 @@ cd cairo-lang
 git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
 \`\`\`
 
-4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/BUILD_ADDITION) at the end.
-5. Copy [this hash_bootloaders.py script](/files/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/starkware_proghash_artifacts/56407b69f3f19f69302a8623baa8c5f71f967eed/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/56407b69f3f19f69302a8623baa8c5f71f967eed/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
 6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
       `,
     },
@@ -665,12 +710,36 @@ git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
     {
       title:
         'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2024_10)',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/v0.13.5/src/starkware/cairo/bootloaders/simple_bootloader',
       description:
         'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
       proverSystemProject: ProjectId('stwo'),
-      verificationStatus: 'notVerified',
-    },
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
 
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout v0.13.5
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/starkware_proghash_artifacts/v0.13.5/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/v0.13.5/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
+    },
   '3585039955034622347908243360088523999417661979601115750324841620224559981237':
     {
       title:
@@ -687,7 +756,32 @@ git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
       description:
         'Cairo program that verifies the correct aggregation of several proofs of a base program.',
       proverSystemProject: ProjectId('stwo'),
-      verificationStatus: 'notVerified',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/v0.13.5/src/starkware/cairo/bootloaders/applicative_bootloader',
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
+
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout v0.13.5
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/starkware_proghash_artifacts/v0.13.5/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/v0.13.5/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
     },
   '3480185788024326007166778030599498673382667448173974782477620863541158415714':
     {

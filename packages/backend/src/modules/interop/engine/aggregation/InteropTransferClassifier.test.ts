@@ -38,7 +38,10 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'across' }, { plugin: 'stargate' }],
+        plugins: [
+          { plugin: 'across', bridgeType: 'lockAndMint' },
+          { plugin: 'stargate', bridgeType: 'nonMinting' },
+        ],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -47,7 +50,7 @@ describe(InteropTransferClassifier.name, () => {
       expect(result.lockAndMint[0].transferId).toEqual('msg1')
       expect(result.nonMinting).toHaveLength(1)
       expect(result.nonMinting[0].transferId).toEqual('msg2')
-      expect(result.omnichain).toHaveLength(0)
+      expect(result.burnAndMint).toHaveLength(0)
       expect(result.unknown).toHaveLength(0)
     })
 
@@ -84,6 +87,7 @@ describe(InteropTransferClassifier.name, () => {
         plugins: [
           {
             plugin: 'stargate',
+            bridgeType: 'lockAndMint',
             chain: 'ethereum',
             abstractTokenId: 'eth',
           },
@@ -94,7 +98,7 @@ describe(InteropTransferClassifier.name, () => {
 
       expect(result.lockAndMint).toHaveLength(1)
       expect(result.lockAndMint[0].transferId).toEqual('msg1')
-      expect(result.omnichain).toHaveLength(0)
+      expect(result.burnAndMint).toHaveLength(0)
       expect(result.nonMinting).toHaveLength(0)
       expect(result.unknown).toHaveLength(0)
     })
@@ -161,7 +165,11 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'across' }],
+        plugins: [
+          { plugin: 'across', bridgeType: 'lockAndMint' },
+          { plugin: 'across', bridgeType: 'burnAndMint' },
+          { plugin: 'across', bridgeType: 'nonMinting' },
+        ],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -169,14 +177,12 @@ describe(InteropTransferClassifier.name, () => {
       expect(result.lockAndMint).toHaveLength(2)
       expect(result.lockAndMint[0].transferId).toEqual('msg1')
       expect(result.lockAndMint[1].transferId).toEqual('msg4')
-      expect(result.omnichain).toHaveLength(1)
-      expect(result.omnichain[0].transferId).toEqual('msg2')
+      expect(result.burnAndMint).toHaveLength(1)
+      expect(result.burnAndMint[0].transferId).toEqual('msg2')
       expect(result.nonMinting).toHaveLength(1)
       expect(result.nonMinting[0].transferId).toEqual('msg3')
-      expect(result.unknown).toHaveLength(3)
-      expect(result.unknown[0].transferId).toEqual('msg5')
-      expect(result.unknown[1].transferId).toEqual('msg6')
-      expect(result.unknown[2].transferId).toEqual('msg7')
+      // Transfers with 'unknown' bridge type cannot be matched since 'unknown' is not a valid KnownInteropBridgeType
+      expect(result.unknown).toHaveLength(0)
     })
 
     it('returns empty arrays when no transfers match', () => {
@@ -193,13 +199,13 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'stargate' }],
+        plugins: [{ plugin: 'stargate', bridgeType: 'lockAndMint' }],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
 
       expect(result.lockAndMint).toEqual([])
-      expect(result.omnichain).toEqual([])
+      expect(result.burnAndMint).toEqual([])
       expect(result.nonMinting).toEqual([])
       expect(result.unknown).toEqual([])
     })
@@ -209,15 +215,144 @@ describe(InteropTransferClassifier.name, () => {
 
       const config: InteropAggregationConfig = {
         id: 'config1',
-        plugins: [{ plugin: 'across' }],
+        plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
       }
 
       const result = classifier.classifyTransfers(transfers, config)
 
       expect(result.lockAndMint).toEqual([])
-      expect(result.omnichain).toEqual([])
+      expect(result.burnAndMint).toEqual([])
       expect(result.nonMinting).toEqual([])
       expect(result.unknown).toEqual([])
+    })
+
+    it('matches only transfers of specified bridgeType when plugin has bridgeType', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+        createTransfer('across', 'msg2', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'usdc',
+          dstAbstractTokenId: 'usdc',
+          srcWasBurned: true,
+          dstWasMinted: true,
+        }),
+      ]
+
+      const config: InteropAggregationConfig = {
+        id: 'config1',
+        plugins: [{ plugin: 'across', bridgeType: 'burnAndMint' }],
+      }
+
+      const result = classifier.classifyTransfers(transfers, config)
+
+      expect(result.lockAndMint).toHaveLength(0)
+      expect(result.burnAndMint).toHaveLength(1)
+      expect(result.burnAndMint[0].transferId).toEqual('msg2')
+    })
+
+    it('matches only transfers of specified transferType when plugin has transferType', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+        createTransfer('across', 'msg2', 'withdrawal', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+      ]
+
+      const config: InteropAggregationConfig = {
+        id: 'config1',
+        plugins: [
+          {
+            plugin: 'across',
+            bridgeType: 'lockAndMint',
+            transferType: 'withdrawal',
+          },
+        ],
+      }
+
+      const result = classifier.classifyTransfers(transfers, config)
+
+      expect(result.lockAndMint).toHaveLength(1)
+      expect(result.lockAndMint[0].transferId).toEqual('msg2')
+    })
+
+    it('uses transfer bridgeType when set, otherwise infers from srcWasBurned/dstWasMinted', () => {
+      // msg1: explicit bridgeType overrides burn/mint data for filter matching
+      // msg2: no bridgeType → inferred lockAndMint from srcWasBurned=false, dstWasMinted=true
+      // msg3: no bridgeType → inferred burnAndMint, does not match plugin's lockAndMint
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: true,
+          dstWasMinted: true,
+          bridgeType: 'lockAndMint',
+        }),
+        createTransfer('across', 'msg2', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+        createTransfer('across', 'msg3', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: true,
+          dstWasMinted: true,
+        }),
+        createTransfer('across', 'msg4', 'deposit', {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcWasBurned: false,
+          dstWasMinted: false,
+        }),
+      ]
+
+      const config: InteropAggregationConfig = {
+        id: 'config1',
+        plugins: [
+          { plugin: 'across', bridgeType: 'lockAndMint' },
+          { plugin: 'across', bridgeType: 'burnAndMint' },
+          { plugin: 'across', bridgeType: 'nonMinting' },
+        ],
+      }
+
+      const result = classifier.classifyTransfers(transfers, config)
+
+      expect(result.lockAndMint).toHaveLength(2)
+      expect(result.lockAndMint[0].transferId).toEqual('msg1')
+      expect(result.lockAndMint[1].transferId).toEqual('msg2')
+      expect(result.burnAndMint).toHaveLength(1)
+      expect(result.burnAndMint[0].transferId).toEqual('msg3')
+      expect(result.nonMinting).toHaveLength(1)
+      expect(result.nonMinting[0].transferId).toEqual('msg4')
     })
   })
 })
@@ -233,6 +368,7 @@ function createTransfer(
     dstAbstractTokenId: string
     srcWasBurned?: boolean
     dstWasMinted?: boolean
+    bridgeType?: 'lockAndMint' | 'burnAndMint' | 'nonMinting'
   },
 ): InteropTransferRecord {
   const timestamp = UnixTime.now()
@@ -240,6 +376,7 @@ function createTransfer(
     plugin,
     transferId,
     type,
+    bridgeType: overrides.bridgeType,
     timestamp,
     srcTime: timestamp,
     srcTxHash: 'random-hash',

@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x2134990d904055a72408211770bab1d4ae459de2
+
+# Diff at Fri, 13 Feb 2026 09:43:15 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@76c91db634aafdce14aca08d74e9d04bb256d971 block: 1770723933
+- current timestamp: 1770975731
+
+## Description
+
+Added new security agent to USDC bridge.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      values.accessControl.SECURITY_AGENT.members.1:
++        "eth:0x3e87462D152DFDeD22b6AC5bcde702B20ed70CB6"
+      values.secAgentAC.1:
++        "eth:0x3e87462D152DFDeD22b6AC5bcde702B20ed70CB6"
+    }
+```
+
+Generated with discovered.json: 0x42cdfc98026def539297f11c91553572918fb0e8
+
+# Diff at Tue, 10 Feb 2026 11:46:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a071ede88cd58345921a58b8c0087cb337d915e6 block: 1768919498
+- current timestamp: 1770723933
+
+## Description
+
+Added new Paradex admin (already known multisig).
+
+## Watched changes
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
++++ description: Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls.
++++ severity: HIGH
+      values.$admin:
+-        "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
++        ["eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93","eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"governStarknet","from":"eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640","role":".$admin"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640","role":".$admin"}
+    }
+```
+
 Generated with discovered.json: 0x504c824e99e1768580d29a192436d8c7b0168188
 
 # Diff at Tue, 20 Jan 2026 14:32:43 GMT:

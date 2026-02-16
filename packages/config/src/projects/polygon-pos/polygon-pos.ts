@@ -80,7 +80,6 @@ export const polygonpos: ScalingProject = {
     stage: 'NotApplicable',
   },
   interopConfig: {
-    showAlways: ['lockAndMint'],
     durationSplit: {
       lockAndMint: {
         in: {
@@ -98,6 +97,7 @@ export const polygonpos: ScalingProject = {
     plugins: [
       {
         plugin: 'polygon',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

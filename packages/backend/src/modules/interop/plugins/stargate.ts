@@ -1,8 +1,14 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import type { AbstractTokenRecord } from '@l2beat/database'
+import {
+  Address32,
+  type ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
+  getBridgeType,
   parseOFTReceived,
   parseOFTSent,
 } from './layerzero/layerzero-v2-ofts.plugin'
@@ -444,6 +450,7 @@ export class StargatePlugin implements InteropPlugin {
   match(
     packetDelivered: InteropEvent,
     db: InteropEventDb,
+    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
   ): MatchResult | undefined {
     if (!PacketDelivered.checkType(packetDelivered)) return
 
@@ -485,11 +492,10 @@ export class StargatePlugin implements InteropPlugin {
       ]
 
       for (const oftSentBusRode of oftSentBusRodeBatch) {
-        const passengerReceiver = Address32.cropToEthereumAddress(
-          oftSentBusRode.args.receiver as Address32,
-        )
         const matchedIndex = oftReceivedBatch.findIndex(
-          (o) => o.args.receiver === passengerReceiver,
+          (o) =>
+            Address32.from(o.args.receiver) ===
+            Address32.from(oftSentBusRode.args.receiver),
         )
         if (matchedIndex === -1) return
 
@@ -505,6 +511,16 @@ export class StargatePlugin implements InteropPlugin {
             dstAmount: matchedOftReceived.args.amountReceivedLD,
             srcWasBurned: oftSentBusRode.args.hydra,
             dstWasMinted: matchedOftReceived.args.hydra,
+            bridgeType: getBridgeType({
+              srcTokenAddress: oftSentBusRode.args.tokenAddress,
+              dstTokenAddress: matchedOftReceived.args.tokenAddress,
+              srcWasBurned: oftSentBusRode.args.hydra,
+              dstWasMinted: matchedOftReceived.args.hydra,
+              srcChain: oftSentBusRode.ctx.chain,
+              dstChain: matchedOftReceived.ctx.chain,
+              deployedToAbstractMap,
+              defaultBridgeType: 'nonMinting',
+            }),
           }),
         )
       }
@@ -532,6 +548,16 @@ export class StargatePlugin implements InteropPlugin {
           dstAmount: oftReceived.args.amountReceivedLD,
           srcWasBurned: oftSentTaxi.args.hydra,
           dstWasMinted: oftReceived.args.hydra,
+          bridgeType: getBridgeType({
+            srcTokenAddress: oftSentTaxi.args.tokenAddress,
+            dstTokenAddress: oftReceived.args.tokenAddress,
+            srcWasBurned: oftSentTaxi.args.hydra,
+            dstWasMinted: oftReceived.args.hydra,
+            srcChain: oftSentTaxi.ctx.chain,
+            dstChain: oftReceived.ctx.chain,
+            deployedToAbstractMap,
+            defaultBridgeType: 'nonMinting',
+          }),
         }),
       ]
     }

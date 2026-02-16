@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xa89653d05e9cbd79a2c6eef1d1ace9236efa6d44
+
+# Diff at Fri, 13 Feb 2026 11:47:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1768984469
+- current timestamp: 1770983159
+
+## Description
+
+Conduit Multisig 1: new member added, threshold now 4 of 13 (31%).
+
+DisputeGameFactory: template updated with new fields for gameArgs decoding (config-related, no on-chain changes).
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 13 (31%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984469 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x0fD13C7f11d95070cE5CF31BAf1aCf9355BF4578) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "EXPECT_REVERT"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
 Generated with discovered.json: 0x930c68e73446812654840d2dd5f404ddcbc1ade1
 
 # Diff at Wed, 21 Jan 2026 08:35:32 GMT:

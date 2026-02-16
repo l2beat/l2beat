@@ -447,9 +447,9 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
   )
 
   describe(
-    AggregatedInteropTokenRepository.prototype.getByChainsTimestampAndId.name,
+    AggregatedInteropTokenRepository.prototype.getByChainsAndTimestamp.name,
     () => {
-      it('returns records matching timestamp, srcChains, dstChains, and protocolIds', async () => {
+      it('returns records matching timestamp, srcChains, dstChains, and bridgeType', async () => {
         const record1 = record({
           id: 'protocol1',
           timestamp: UnixTime(100),
@@ -470,7 +470,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const record3 = record({
           id: 'protocol1',
@@ -498,10 +498,9 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsTimestampAndId(
+        const result = await repository.getByChainsAndTimestamp(
           UnixTime(100),
-          ['ethereum'],
-          ['arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -522,8 +521,8 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const record2 = record({
           id: 'protocol2',
           timestamp: UnixTime(100),
-          srcChain: 'polygon',
-          dstChain: 'optimism',
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
           abstractTokenId: 'token2',
           transferCount: 3,
           totalDurationSum: 2000,
@@ -542,8 +541,8 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const record4 = record({
           id: 'protocol2',
           timestamp: UnixTime(100),
-          srcChain: 'polygon',
-          dstChain: 'optimism',
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
           abstractTokenId: 'token4',
           transferCount: 2,
           totalDurationSum: 4000,
@@ -553,23 +552,49 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsTimestampAndId(
-          UnixTime(100),
-          ['ethereum', 'polygon'],
-          ['arbitrum', 'optimism'],
-        )
+        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
+          'ethereum',
+          'arbitrum',
+        ])
 
         expect(result).toEqualUnsorted([record1, record2, record3, record4])
       })
 
       it('returns empty array when no records exist', async () => {
-        const result = await repository.getByChainsTimestampAndId(
-          UnixTime(100),
-          ['ethereum'],
-          ['arbitrum'],
-        )
+        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
+          'ethereum',
+          'arbitrum',
+        ])
 
         expect(result).toEqual([])
+      })
+
+      it('returns empty array when undefined first or second', async () => {
+        await repository.insertMany([
+          record({
+            id: 'protocol1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            abstractTokenId: 'token1',
+            transferCount: 5,
+            totalDurationSum: 1000,
+            volume: 5000,
+          }),
+        ])
+
+        expect(
+          await repository.getByChainsAndTimestamp(UnixTime(100), [
+            undefined,
+            'arbitrum',
+          ]),
+        ).toEqual([])
+        expect(
+          await repository.getByChainsAndTimestamp(UnixTime(100), [
+            'ethereum',
+            undefined,
+          ]),
+        ).toEqual([])
       })
 
       it('filters by bridgeType when provided', async () => {
@@ -593,7 +618,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const record3 = record({
           id: 'protocol3',
@@ -610,10 +635,9 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsTimestampAndId(
+        const result = await repository.getByChainsAndTimestamp(
           UnixTime(100),
-          ['ethereum'],
-          ['arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -641,19 +665,101 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         })
         const records = [record1, record2]
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsTimestampAndId(
-          UnixTime(100),
-          ['ethereum'],
-          ['arbitrum'],
-        )
+        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
+          'ethereum',
+          'arbitrum',
+        ])
 
         expect(result).toEqualUnsorted([record1, record2])
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTokenRepository.prototype.getByChainsIdAndTimestamp.name,
+    () => {
+      it('returns records matching timestamp, id, srcChains, dstChains, and bridgeType', async () => {
+        const record1 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'token1',
+          transferCount: 5,
+          totalDurationSum: 1000,
+          volume: 5000,
+          bridgeType: 'lockAndMint',
+        })
+        const record2 = record({
+          id: 'protocol2',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'token2',
+          transferCount: 3,
+          totalDurationSum: 2000,
+          volume: 6000,
+          bridgeType: 'lockAndMint',
+        })
+        const record3 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'token3',
+          transferCount: 7,
+          totalDurationSum: 3000,
+          volume: 7000,
+          bridgeType: 'burnAndMint',
+        })
+        const records = [record1, record2, record3]
+
+        await repository.insertMany(records)
+
+        const result = await repository.getByChainsIdAndTimestamp(
+          UnixTime(100),
+          'protocol1',
+          ['ethereum', 'arbitrum'],
+          'lockAndMint',
+        )
+
+        expect(result).toEqualUnsorted([record1])
+      })
+
+      it('returns empty array when undefined first or second', async () => {
+        await repository.insertMany([
+          record({
+            id: 'protocol1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            abstractTokenId: 'token1',
+            transferCount: 5,
+            totalDurationSum: 1000,
+            volume: 5000,
+          }),
+        ])
+
+        expect(
+          await repository.getByChainsIdAndTimestamp(
+            UnixTime(100),
+            'protocol1',
+            [undefined, 'arbitrum'],
+          ),
+        ).toEqual([])
+        expect(
+          await repository.getByChainsIdAndTimestamp(
+            UnixTime(100),
+            'protocol1',
+            ['ethereum', undefined],
+          ),
+        ).toEqual([])
       })
     },
   )

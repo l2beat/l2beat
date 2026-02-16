@@ -9,6 +9,7 @@ import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { useTable } from '~/hooks/useTable'
+import { MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN } from '~/server/features/scaling/project/const'
 import type { ProjectTvsBreakdownTokenEntry } from '~/server/features/scaling/tvs/breakdown/getProjectTokensEntries'
 import { columns } from './columns'
 import { renderFormulaSubComponent } from './FormulaSubRow'
@@ -58,6 +59,10 @@ export function ProjectTvsBreakdownTokenTable(props: Props) {
           table={table}
           renderSubComponent={renderFormulaSubComponent}
         />
+        <p className="mt-1 text-secondary text-subtitle-12 md:text-subtitle-14">
+          Tokens with value below ${MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN} are not
+          included in the list.
+        </p>
       </PrimaryCard>
     </div>
   )

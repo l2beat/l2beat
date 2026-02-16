@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x9cb15096d408e317666645a07de63de38e3bb9a4
+
+# Diff at Tue, 10 Feb 2026 12:15:54 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a071ede88cd58345921a58b8c0087cb337d915e6 block: 1768216753
+- current timestamp: 1770724065
+
+## Description
+
+Paused the operation of Intmax L3. In particular:
+
+- Added functionality to pause withdrawals for the main contract on Ethereum: https://disco.l2beat.com/diff/eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA/eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9. 
+- Also added functionality to pause block posting on the rollup contract on scroll: https://disco.l2beat.com/diff/scr:0xF34299210fB8505232649e9BEa14a84DD75e746b/scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820. 
+- Updated circuitDigest on withdrawal contract, which prevents submission of withdrawal validity proofs.
+
+- Paused Liquidity contract (no deposits/withdrawals possible now)
+- Paused Rollup contract (no blocks could be posted)
+
+## Watched changes
+
+```diff
+    contract Liquidity (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check.
+      sourceHashes.1:
+-        "0xe050f1745884847699cff3db5506410a82629972bb6fd8a52199442b01351485"
++        "0xf23a0f0c4af93cdcb226ce3de63c8ed56ce4267448a659414e5a459b4e5b94db"
+      values.$implementation:
+-        "eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA"
++        "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9"
+      values.$pastUpgrades.3:
++        ["2026-02-07T14:29:35.000Z","0x95073b3d48f892101baf0c2e857a0b0b8f72dd6ae5fdfecd49c0814dfec4cd69",["eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.accessControl.WITHDRAWAL.members.0:
+-        "eth:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449"
+      values.accessControl.WITHDRAWAL.members.1:
+-        "eth:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5"
+      values.paused:
+-        false
++        true
+      implementationNames.eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA:
+-        "Liquidity"
+      implementationNames.eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9:
++        "Liquidity"
+    }
+```
+
+```diff
+    contract Rollup (scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e) {
+    +++ description: Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.
+      sourceHashes.1:
+-        "0xfbb7d02542bc666f4b049d5138aced4257fcc21b784009966f830eae7b197643"
++        "0x210e1b4c7ca45694431b4a558e68cf0fc6e9c0f1444fe91538af462e050f3604"
+      values.$implementation:
+-        "scr:0xF34299210fB8505232649e9BEa14a84DD75e746b"
++        "scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820"
+      values.$pastUpgrades.1:
++        ["2026-02-10T09:51:40.000Z","0xbd41e060791e0e158dc07aafdfb52c0e26c76ea9193852ab9d4d5c8eb9e9fe70",["scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.paused:
++        true
+      implementationNames.scr:0xF34299210fB8505232649e9BEa14a84DD75e746b:
+-        "Rollup"
+      implementationNames.scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820:
++        "Rollup"
+    }
+```
+
+```diff
+    contract Withdrawal (scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449) {
+    +++ description: Contract handling withdrawal requests, which require a validity proof of sufficient balance. It tracks amount of funds already withdrawn to prevent double withdrawals.
+      values.circuitDigest:
+-        "10639849666975086414110868463771120369189468607622759510754735453420311446140"
++        0
+    }
+```
+
+## Source code changes
+
+```diff
+.../Liquidity/Liquidity.sol                        |   2 +-
+ .../{.flat@1768216753 => .flat}/Rollup/Rollup.sol  | 172 ++++++++++++++++++++-
+ 2 files changed, 167 insertions(+), 7 deletions(-)
+```
+
 Generated with discovered.json: 0x5a5e21d1f702b4a978de82815108776870ac993a
 
 # Diff at Mon, 12 Jan 2026 11:20:19 GMT:

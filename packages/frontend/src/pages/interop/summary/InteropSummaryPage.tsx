@@ -3,14 +3,18 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type {
+  ProtocolDisplayable,
+  SelectedChains,
+} from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
-import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import {
   InteropSelectedChainsProvider,
@@ -18,21 +22,23 @@ import {
 } from '../utils/InteropSelectedChainsContext'
 import { InteropEmptyState } from './components/InteropEmptyState'
 import { TransferSizeChartCard } from './components/TransferSizeChartCard'
+import { BurnAndMintCard } from './components/table-widgets/BurnAndMintCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
-import { OmniChainCard } from './components/table-widgets/OmniChainCard'
 import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridgeTypeEntries'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
-  initialSelectedChains: { from: string[]; to: string[] }
+  protocols: ProtocolDisplayable[]
+  initialSelectedChains: SelectedChains
 }
 
 export function InteropSummaryPage({
   interopChains,
   queryState,
   initialSelectedChains,
+  protocols,
   ...props
 }: Props) {
   return (
@@ -45,7 +51,7 @@ export function InteropSummaryPage({
           <SideNavLayout maxWidth="wide">
             <div className="flex min-h-screen flex-col">
               <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-              <ChainSelector chains={interopChains} />
+              <ChainSelector chains={interopChains} protocols={protocols} />
               <Widgets interopChains={interopChains} />
             </div>
           </SideNavLayout>
@@ -56,21 +62,18 @@ export function InteropSummaryPage({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains, isDirty } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
-  })
+  const { selectedChains } = useInteropSelectedChains()
+  const { data, isLoading } = api.interop.dashboard.useQuery({ selectedChains })
 
   if (
     data?.entries.length === 0 &&
-    data.top3Paths.length === 0 &&
+    data.flows.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState isDirty={isDirty} />
+    return <InteropEmptyState />
   }
 
-  const { lockAndMint, nonMinting, omnichain } = getBridgeTypeEntries(
+  const { lockAndMint, nonMinting, burnAndMint } = getBridgeTypeEntries(
     data?.entries ?? [],
   )
 
@@ -80,10 +83,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       data-hide-overflow-x
     >
       <div className="z-10 max-[1024px]:hidden">
-        <TopPathsWidget
+        <FlowsWidget
           interopChains={interopChains}
           isLoading={isLoading}
-          top3Paths={data?.top3Paths}
+          flows={data?.flows}
         />
       </div>
       <div className="h-full max-[1600px]:hidden">
@@ -100,7 +103,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       </div>
       <MobileCarouselWidget
         interopChains={interopChains}
-        top3Paths={data?.top3Paths}
+        flows={data?.flows}
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
@@ -108,13 +111,18 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
         <NonMintingCard entries={nonMinting} isLoading={isLoading} />
         <LockAndMintCard entries={lockAndMint} isLoading={isLoading} />
-        <OmniChainCard entries={omnichain} isLoading={isLoading} />
+        <BurnAndMintCard entries={burnAndMint} isLoading={isLoading} />
         <TransferSizeChartCard
           transferSizeChartData={data?.transferSizeChartData}
           isLoading={isLoading}
         />
       </div>
-      <AllProtocolsCard entries={data?.entries} isLoading={isLoading} />
+      <AllProtocolsCard
+        type={undefined}
+        entries={data?.entries}
+        zeroTransferProtocols={data?.zeroTransferProtocols}
+        isLoading={isLoading}
+      />
     </div>
   )
 }

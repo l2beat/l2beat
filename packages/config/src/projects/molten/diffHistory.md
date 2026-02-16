@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xac9f652bb86eefad66137adc4c1bb89ba48e5f44
+
+# Diff at Tue, 10 Feb 2026 15:13:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1770329874
+- current timestamp: 1770736057
+
+## Description
+
+New member added to the SafeL2 multisig, threshold changed from 2 of 3 to 2 of 4.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xb9e40b6E60CcD5361774cf4D36d1fCe66B649b63"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x697e7dbdd937128a40cb6dc0493e597947ce1992
 
 # Diff at Thu, 05 Feb 2026 22:19:51 GMT:

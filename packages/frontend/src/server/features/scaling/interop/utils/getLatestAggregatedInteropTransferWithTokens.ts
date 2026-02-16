@@ -1,10 +1,12 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import type {
+  AggregatedInteropTransferWithTokens,
+  SelectedChains,
+} from '../types'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
-  from: string[],
-  to: string[],
+  selectedChains: SelectedChains,
   type?: KnownInteropBridgeType,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
   const db = getDb()
@@ -15,16 +17,14 @@ export async function getLatestAggregatedInteropTransferWithTokens(
   }
 
   const [transfers, tokens] = await Promise.all([
-    db.aggregatedInteropTransfer.getByChainsTimestampAndId(
+    db.aggregatedInteropTransfer.getByChainsAndTimestamp(
       latestTimestamp,
-      from,
-      to,
+      selectedChains,
       type,
     ),
-    db.aggregatedInteropToken.getByChainsTimestampAndId(
+    db.aggregatedInteropToken.getByChainsAndTimestamp(
       latestTimestamp,
-      from,
-      to,
+      selectedChains,
       type,
     ),
   ])
@@ -36,7 +36,8 @@ export async function getLatestAggregatedInteropTransferWithTokens(
         (token) =>
           token.id === transfer.id &&
           token.srcChain === transfer.srcChain &&
-          token.dstChain === transfer.dstChain,
+          token.dstChain === transfer.dstChain &&
+          token.bridgeType === transfer.bridgeType,
       )
       .map((token) => ({
         abstractTokenId: token.abstractTokenId,

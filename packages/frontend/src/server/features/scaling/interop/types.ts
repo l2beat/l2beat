@@ -3,13 +3,15 @@ import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
 } from '@l2beat/database'
-import { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { TopItems } from './utils/getTopItems'
 
 export type ProtocolEntry = {
-  id: string
+  id: ProjectId
   iconUrl: string
   protocolName: string
+  bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
     | {
@@ -18,51 +20,63 @@ export type ProtocolEntry = {
       }
     | undefined
   volume: number
-  tokens: TokenData[]
-  chains: ChainData[]
+  tokens: TopItems<TokenData>
+  chains: TopItems<ChainData>
   transferCount: number
-  averageValue: number
-  averageDuration: AverageDuration
+  averageValue: number | null
+  averageDuration: AverageDuration | null
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
 }
 
+export type ProtocolDisplayable = {
+  name: string
+  iconUrl: string
+}
+
 export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined
-  omnichain: OmniChainProtocolData | undefined
+  burnAndMint: BurnAndMintProtocolData | undefined
 }
 
 export type LockAndMintProtocolData = {
   volume: number
-  tokens: TokenData[]
-  averageDuration: AverageDuration
+  netMintedValue: number | undefined
+  tokens: TopItems<TokenData>
 }
 
 export type NonMintingProtocolData = {
   volume: number
-  tokens: TokenData[]
+  tokens: TopItems<TokenData>
   averageValueInFlight: number
 }
 
-export type OmniChainProtocolData = {
+export type BurnAndMintProtocolData = {
   volume: number
-  tokens: TokenData[]
+  tokens: TopItems<TokenData>
 }
+
+const SelectedChainsSchema = v.tuple([
+  v.union([v.string(), v.undefined()]),
+  v.union([v.string(), v.undefined()]),
+])
+export type SelectedChains = v.infer<typeof SelectedChainsSchema>
 
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  selectedChains: SelectedChainsSchema,
   type: KnownInteropBridgeType.optional(),
 })
 
-export type InteropSubpageParams = v.infer<typeof InteropSubpageParams>
-export const InteropSubpageParams = v.object({
-  type: KnownInteropBridgeType,
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+export type InteropProtocolTokensParams = v.infer<
+  typeof InteropProtocolTokensParams
+>
+export const InteropProtocolTokensParams = v.object({
+  id: v.string().transform((value) => ProjectId(value)),
+  selectedChains: SelectedChainsSchema,
+  type: KnownInteropBridgeType.optional(),
 })
 
 export type AggregatedInteropTransferWithTokens =

@@ -8,10 +8,10 @@ export const relay: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769070497),
   interopConfig: {
-    showAlways: ['nonMinting'],
     plugins: [
       {
         plugin: 'relay',
+        bridgeType: 'nonMinting',
       },
     ],
   },

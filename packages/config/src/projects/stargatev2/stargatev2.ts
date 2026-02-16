@@ -82,14 +82,18 @@ export const stargatev2: Bridge = {
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL, // TODO: find Hydra onchain
   },
   interopConfig: {
-    showAlways: ['nonMinting'],
     plugins: [
       {
         plugin: 'stargate',
         transferType: 'stargate-v2-taxi.Transfer',
+        bridgeType: 'nonMinting',
+      },
+      {
+        plugin: 'stargate',
+        transferType: 'stargate-v2-taxi.Transfer',
+        bridgeType: 'lockAndMint',
       },
       // TODO: needs bus/taxi duration split
-      // TODO: needs hydra filtering by minted label
     ],
   },
   technology: {
