@@ -47,7 +47,9 @@ export function InteropNonMintingPage({
           initialSelectedChains={initialSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <Content interopChains={interopChains} protocols={protocols} />
+            <div className="flex min-h-screen flex-col">
+              <Content interopChains={interopChains} protocols={protocols} />
+            </div>
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
@@ -72,6 +74,7 @@ function Content({
           interopChains={interopChains}
           selectedChains={selectedChains}
           selectChain={selectChain}
+          type="nonMinting"
         />
       </>
     )

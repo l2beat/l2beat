@@ -74,9 +74,12 @@ async function getCachedData(initialSelectedChains: SelectedChains) {
     ps.getProjects({
       select: ['interopConfig'],
     }),
-    helpers.interop.dashboard.prefetch({
-      selectedChains: initialSelectedChains,
-    }),
+    initialSelectedChains[0] && initialSelectedChains[1]
+      ? helpers.interop.dashboard.prefetch({
+          selectedChains: initialSelectedChains,
+          type: 'burnAndMint',
+        })
+      : undefined,
   ])
 
   return {

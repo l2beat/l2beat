@@ -74,6 +74,7 @@ function Content({
           interopChains={interopChains}
           selectedChains={selectedChains}
           selectChain={selectChain}
+          type="lockAndMint"
         />
       </>
     )

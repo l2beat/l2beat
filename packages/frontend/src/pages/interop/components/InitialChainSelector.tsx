@@ -1,17 +1,22 @@
+import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from './chain-selector/types'
 
+interface Props {
+  selectedChains: SelectedChains
+  interopChains: InteropChainWithIcon[]
+  selectChain: (index: 0 | 1, chainId: string | null) => void
+  type: KnownInteropBridgeType | undefined
+}
+
 export function InitialChainSelector({
   interopChains,
   selectedChains,
   selectChain,
-}: {
-  selectedChains: SelectedChains
-  interopChains: InteropChainWithIcon[]
-  selectChain: (index: 0 | 1, chainId: string | null) => void
-}) {
+  type,
+}: Props) {
   const utils = api.useUtils()
   function toggleChain(chainId: string) {
     if (selectedChains[0] === null) {
@@ -48,6 +53,7 @@ export function InitialChainSelector({
 
               utils.interop.dashboard.prefetch({
                 selectedChains: [selectedChains[0], chain.id],
+                type,
               })
             }}
           />

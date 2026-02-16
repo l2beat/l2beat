@@ -54,7 +54,12 @@ export function InteropSelectedChainsProvider({
     const newUrl = buildInteropUrl(window.location.pathname, debouncedChains)
 
     const currentUrl = window.location.pathname + window.location.search
+
     if (newUrl !== currentUrl) {
+      if (window.location.search === '') {
+        window.history.replaceState({}, '', newUrl)
+        return
+      }
       window.history.pushState({}, '', newUrl)
     }
   }, [debouncedChains])
