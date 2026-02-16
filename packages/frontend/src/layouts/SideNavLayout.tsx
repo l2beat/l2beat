@@ -41,6 +41,7 @@ export function SideNavLayout({
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
+
   const selectedChainsContext = useContext(InteropSelectedChainsContext)
 
   const groups = useMemo(

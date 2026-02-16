@@ -5,7 +5,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type {
   ProtocolDisplayable,
-  SelectedChains,
+  SelectedChainsIds,
 } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
@@ -29,7 +29,7 @@ interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   protocols: WithProjectIcon<Project<'interopConfig'>>[]
-  initialSelectedChains: SelectedChains
+  initialSelectedChains: SelectedChainsIds
 }
 
 export function InteropBurnAndMintPage({
@@ -97,7 +97,7 @@ function Content({
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChains,
+    selectedChainsIds: [selectedChains.first?.id, selectedChains.second?.id],
     type: 'burnAndMint',
   })
 

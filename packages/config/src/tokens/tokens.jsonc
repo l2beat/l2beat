@@ -7566,6 +7566,21 @@
   ],
   "morph": [
     {
+      "symbol": "BGB",
+      "coingeckoId": "bitget-token",
+      "address": "0x389C08Bc23A7317000a1FD76c7c5B0cb0b4640b5",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDa", // avalon
       "coingeckoId": "usda-2",
       "address": "0xff12470a969Dd362EB6595FFB44C82c959Fe9ACc",

@@ -1,7 +1,7 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import type { SelectedChains } from '~/server/features/scaling/interop/types'
+import type { SelectedChainsIds } from '~/server/features/scaling/interop/types'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -23,7 +23,7 @@ export async function getInteropNonMintingData(
   const hasQueryChains =
     req.query.selectedChains?.[0] && req.query.selectedChains?.[1]
 
-  const initialSelectedChains: SelectedChains = hasQueryChains
+  const initialSelectedChains: SelectedChainsIds = hasQueryChains
     ? [
         interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
           null,
@@ -68,7 +68,7 @@ export async function getInteropNonMintingData(
   }
 }
 
-async function getCachedData(initialSelectedChains: SelectedChains) {
+async function getCachedData(initialSelectedChains: SelectedChainsIds) {
   const helpers = getSsrHelpers()
   console.log('initialSelectedChains', initialSelectedChains)
   const [protocols] = await Promise.all([
@@ -77,7 +77,8 @@ async function getCachedData(initialSelectedChains: SelectedChains) {
     }),
     initialSelectedChains[0] && initialSelectedChains[1]
       ? helpers.interop.dashboard.prefetch({
-          selectedChains: initialSelectedChains,
+          selectedChainsIds: initialSelectedChains,
+          type: 'nonMinting',
           type: 'nonMinting',
         })
       : undefined,

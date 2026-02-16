@@ -1,6 +1,7 @@
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
@@ -37,6 +38,7 @@ export function LockAndMintCard({
           </Button>
         </a>
       </div>
+      <BetweenChainsInfo className="mt-1" />
       <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
         One-sided risk. If user bridge back, the original tokens are unlocked
         and the bridge risk is removed.
