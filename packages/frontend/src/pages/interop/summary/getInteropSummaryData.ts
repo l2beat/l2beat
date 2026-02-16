@@ -20,12 +20,15 @@ export async function getInteropSummaryData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
-  const initialSelectedChains: SelectedChains = [
-    interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
-      'ethereum',
-    interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ??
-      'arbitrum',
-  ]
+  const hasQueryChains =
+    req.query.selectedChains?.[0] && req.query.selectedChains?.[1]
+
+  const initialSelectedChains: SelectedChains = hasQueryChains
+    ? [
+        interopChainsIds.find((id) => id === req.query.selectedChains?.[0]),
+        interopChainsIds.find((id) => id === req.query.selectedChains?.[1]),
+      ]
+    : [undefined, undefined]
 
   const queryState = await cache.get(
     {
@@ -69,9 +72,11 @@ async function getCachedData(initialSelectedChains: SelectedChains) {
     ps.getProjects({
       select: ['interopConfig'],
     }),
-    helpers.interop.dashboard.prefetch({
-      selectedChains: initialSelectedChains,
-    }),
+    initialSelectedChains[0] && initialSelectedChains[1]
+      ? helpers.interop.dashboard.prefetch({
+          selectedChains: initialSelectedChains,
+        })
+      : undefined,
   ])
 
   return {
