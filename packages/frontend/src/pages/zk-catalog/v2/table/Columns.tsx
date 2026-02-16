@@ -90,20 +90,14 @@ export const zkCatalogColumns = [
             ctx.row.original.trustedSetupsByProofSystem,
           )[0]
           if (!first) return null
-          return (
-            <ProjectsUsedIn usedIn={first.projectsUsedIn} variant="compact" />
-          )
+          return <ProjectsUsedIn usedIn={first.projectsUsedIn} />
         },
         meta: {
           additionalRows: (ctx) => {
             return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
               .slice(1)
               .map(([key, ts]) => (
-                <ProjectsUsedIn
-                  key={key}
-                  usedIn={ts.projectsUsedIn}
-                  variant="compact"
-                />
+                <ProjectsUsedIn key={key} usedIn={ts.projectsUsedIn} />
               ))
           },
         },
