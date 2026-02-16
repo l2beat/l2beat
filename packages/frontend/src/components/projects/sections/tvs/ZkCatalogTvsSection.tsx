@@ -1,9 +1,7 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
-import type { ProjectWithRanges } from '@l2beat/dal'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { ZkCatalogAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogAssetCategoryTvsChart'
-import { ZkCatalogBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogBridgeTypeTvsChart'
+import { ZkCatalogProjectsTvsChart } from '~/components/chart/tvs/stacked/zk-catalog/ZkCatalogProjectsTvsChart'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
@@ -37,6 +35,7 @@ export interface ZkCatalogTvsSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   projectsForTvs: {
     projectId: ProjectId
+    name: string
     sinceTimestamp: UnixTime
     untilTimestamp?: UnixTime
   }[]
@@ -55,12 +54,7 @@ export function ZkCatalogTvsSection({
       <ScalingRwaRestrictedTokensContextProvider>
         <TvsChartControlsContextProvider defaultRange={defaultRange}>
           <ChartControls projectsForTvs={projectsForTvs} />
-          <ZkCatalogBridgeTypeTvsChart
-            project={project}
-            milestones={milestones}
-            projectsForTvs={projectsForTvs}
-          />
-          <ZkCatalogAssetCategoryTvsChart
+          <ZkCatalogProjectsTvsChart
             project={project}
             milestones={milestones}
             projectsForTvs={projectsForTvs}
@@ -80,6 +74,7 @@ function ChartControls({
 }: {
   projectsForTvs: {
     projectId: ProjectId
+    name: string
     sinceTimestamp: UnixTime
     untilTimestamp?: UnixTime
   }[]
@@ -97,7 +92,7 @@ function ChartControls({
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
-        data?.chart.map(([timestamp]) => ({ timestamp })),
+        data?.chart.map(({ timestamp }) => ({ timestamp })),
       ),
     [data?.chart],
   )
@@ -121,7 +116,12 @@ function TvsProjectStats({
   projectsForTvs,
 }: {
   tvsInfo: ProjectTvsInfo | undefined
-  projectsForTvs: ProjectWithRanges[]
+  projectsForTvs: {
+    projectId: ProjectId
+    name: string
+    sinceTimestamp: UnixTime
+    untilTimestamp?: UnixTime
+  }[]
 }) {
   const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
   const { data, isLoading } = api.tvs.detailedChartWithProjectsRanges.useQuery({
@@ -150,76 +150,78 @@ function getStats(
 ): TvsData | undefined {
   if (!data) return undefined
 
-  const filteredData = data.chart.filter((dataPoint) =>
-    dataPoint.slice(2).every((value) => value !== null),
-  ) as [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-  ][]
+  const syncedChart = data.chart.filter(
+    (dataPoint) => dataPoint.timestamp <= data.syncedUntil,
+  )
+  const latestDataPoint = syncedChart.at(-1)
+  const oldestDataPoint = syncedChart.at(0)
 
-  const latestValueRecord = filteredData.at(-1)
-  const oldestValueRecord = filteredData.at(0)
-
-  if (!latestValueRecord || !oldestValueRecord) {
+  if (!latestDataPoint || !oldestDataPoint) {
     return undefined
   }
 
-  const [
-    _latestTimestamp,
-    _latestEthPrice,
-    latestNative,
-    latestCanonical,
-    latestExternal,
-    latestEther,
-    latestStablecoin,
-    latestBtc,
-    latestOther,
-  ] = latestValueRecord
+  const latest = getSummedStats(latestDataPoint.projects)
+  const oldest = getSummedStats(oldestDataPoint.projects)
 
-  const [
-    _oldestTimestamp,
-    _oldestEthPrice,
-    oldestNative,
-    oldestCanonical,
-    oldestExternal,
-    oldestEther,
-    oldestStablecoin,
-    oldestBtc,
-    oldestOther,
-  ] = oldestValueRecord
-
-  const latestTotal = latestNative + latestCanonical + latestExternal
-  const oldestTotal = oldestNative + oldestCanonical + oldestExternal
+  const latestTotal = latest.total
+  const oldestTotal = oldest.total
 
   return {
     breakdown: {
       total: latestTotal,
-      native: latestNative,
-      canonical: latestCanonical,
-      external: latestExternal,
-      ether: latestEther,
-      stablecoin: latestStablecoin,
-      btc: latestBtc,
-      other: latestOther,
+      native: latest.native,
+      canonical: latest.canonical,
+      external: latest.external,
+      ether: latest.ether,
+      stablecoin: latest.stablecoin,
+      btc: latest.btc,
+      other: latest.other,
     },
     change: {
       total: calculatePercentageChange(latestTotal, oldestTotal),
-      native: calculatePercentageChange(latestNative, oldestNative),
-      canonical: calculatePercentageChange(latestCanonical, oldestCanonical),
-      external: calculatePercentageChange(latestExternal, oldestExternal),
-      ether: calculatePercentageChange(latestEther, oldestEther),
-      stablecoin: calculatePercentageChange(latestStablecoin, oldestStablecoin),
-      btc: calculatePercentageChange(latestBtc, oldestBtc),
-      other: calculatePercentageChange(latestOther, oldestOther),
+      native: calculatePercentageChange(latest.native, oldest.native),
+      canonical: calculatePercentageChange(latest.canonical, oldest.canonical),
+      external: calculatePercentageChange(latest.external, oldest.external),
+      ether: calculatePercentageChange(latest.ether, oldest.ether),
+      stablecoin: calculatePercentageChange(
+        latest.stablecoin,
+        oldest.stablecoin,
+      ),
+      btc: calculatePercentageChange(latest.btc, oldest.btc),
+      other: calculatePercentageChange(latest.other, oldest.other),
     },
   }
+}
+
+function getSummedStats(
+  projects: DetailedTvsChartWithProjectsRangesData['chart'][number]['projects'],
+) {
+  return Object.values(projects).reduce(
+    (acc, projectData) => {
+      if (!projectData) {
+        return acc
+      }
+
+      acc.total += projectData.value
+      acc.native += projectData.native
+      acc.canonical += projectData.canonical
+      acc.external += projectData.external
+      acc.ether += projectData.ether
+      acc.stablecoin += projectData.stablecoin
+      acc.btc += projectData.btc
+      acc.other += projectData.other
+
+      return acc
+    },
+    {
+      total: 0,
+      native: 0,
+      canonical: 0,
+      external: 0,
+      ether: 0,
+      stablecoin: 0,
+      btc: 0,
+      other: 0,
+    },
+  )
 }

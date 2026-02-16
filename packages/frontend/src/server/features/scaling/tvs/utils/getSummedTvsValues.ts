@@ -1,7 +1,4 @@
-import type {
-  ProjectWithRanges,
-  SummedByTimestampTvsValuesRecord,
-} from '@l2beat/dal'
+import type { SummedByTimestampTvsValuesRecord } from '@l2beat/dal'
 import type { ProjectId } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -25,7 +22,7 @@ export type SummedTvsValues = {
 }
 
 export async function getSummedTvsValues(
-  projects: ProjectId[] | ProjectWithRanges[],
+  projects: ProjectId[],
   range: ChartRange,
   {
     forSummary,
