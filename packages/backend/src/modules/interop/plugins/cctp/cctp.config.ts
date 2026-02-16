@@ -101,8 +101,9 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     private store: InteropConfigStore,
     protected logger: Logger,
     private rpcs: Map<string, IRpcClient>,
+    intervalMs: number,
   ) {
-    super({ intervalMs: 20 * 60 * 1000 })
+    super({ intervalMs })
     this.logger = logger.for(this).tag({ tag: 'cctp' })
   }
 

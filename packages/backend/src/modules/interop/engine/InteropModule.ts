@@ -54,6 +54,7 @@ export function createInteropModule({
     logger,
     rpcClients: providers.clients.rpcClients,
     tokenDbClient,
+    configIntervalMs: config.interop.config.configIntervalMs,
   })
 
   const syncersManager = new InteropSyncersManager(

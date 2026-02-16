@@ -59,8 +59,9 @@ export class WormholeConfigPlugin
     protected logger: Logger,
     private http: HttpClient,
     private rpcs: Map<string, IRpcClient>,
+    intervalMs: number,
   ) {
-    super({ intervalMs: 20 * 60 * 1000 })
+    super({ intervalMs })
     this.logger = logger.for(this)
   }
 

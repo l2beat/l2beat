@@ -81,6 +81,7 @@ export class ExampleRunner {
       logger: this.$.logger,
       rpcClients,
       tokenDbClient: this.$.tokenDbClient,
+      configIntervalMs: -1,
     })
 
     await this.loadConfigs(plugins)
