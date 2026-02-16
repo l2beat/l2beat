@@ -19,6 +19,11 @@ export async function getInteropProtocolChains({
   const logger = getLogger().for('getProtocolChains')
   const db = getDb()
 
+  const [firstChain, secondChain] = selectedChains
+  if (!firstChain || !secondChain) {
+    return []
+  }
+
   const interopProject = await ps.getProject({
     id,
     select: ['interopConfig'],
@@ -38,7 +43,7 @@ export async function getInteropProtocolChains({
     await db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selectedChains,
+      [firstChain, secondChain],
       type,
     )
 

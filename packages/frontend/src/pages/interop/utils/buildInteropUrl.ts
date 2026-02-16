@@ -1,10 +1,8 @@
-import type { SelectedChains } from '~/server/features/scaling/interop/types'
-
 export function buildInteropUrl(
   path: string,
-  selectedChains?: SelectedChains,
+  selectedChains?: [string | null, string | null],
 ): string {
-  if (!selectedChains || selectedChains.some((chain) => chain === undefined)) {
+  if (!selectedChains || selectedChains.some((chain) => chain === null)) {
     return path
   }
 

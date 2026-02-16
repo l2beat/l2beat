@@ -17,7 +17,7 @@ import { buildInteropUrl } from './buildInteropUrl'
 interface InteropSelectedChainsContextType {
   selectedChains: SelectedChains
   allChainIds: string[]
-  selectChain: (index: 0 | 1, chainId: string) => void
+  selectChain: (index: 0 | 1, chainId: string | null) => void
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -71,7 +71,7 @@ export function InteropSelectedChainsProvider({
     )
   })
 
-  const selectChain = useCallback((index: 0 | 1, chainId: string) => {
+  const selectChain = useCallback((index: 0 | 1, chainId: string | null) => {
     setSelectedChains((prev) => {
       const oppositeIndex = index === 0 ? 1 : 0
       if (prev[oppositeIndex] === chainId || prev[index] === chainId) {

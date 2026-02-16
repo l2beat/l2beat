@@ -59,8 +59,8 @@ export type BurnAndMintProtocolData = {
 }
 
 const SelectedChainsSchema = v.tuple([
-  v.union([v.string(), v.undefined()]),
-  v.union([v.string(), v.undefined()]),
+  v.union([v.string(), v.null()]),
+  v.union([v.string(), v.null()]),
 ])
 export type SelectedChains = v.infer<typeof SelectedChainsSchema>
 

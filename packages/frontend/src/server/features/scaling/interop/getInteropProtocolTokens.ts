@@ -25,6 +25,11 @@ export async function getInteropProtocolTokens({
   const logger = getLogger().for('getProtocolTokens')
   const db = getDb()
 
+  const [firstChain, secondChain] = selectedChains
+  if (!firstChain || !secondChain) {
+    return []
+  }
+
   const interopProject = await ps.getProject({
     id,
     select: ['interopConfig'],
@@ -43,13 +48,13 @@ export async function getInteropProtocolTokens({
     await db.aggregatedInteropTransfer.getSummedTransferCountsByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selectedChains,
+      [firstChain, secondChain],
       type,
     ),
     db.aggregatedInteropToken.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selectedChains,
+      [firstChain, secondChain],
       type,
     ),
   ])

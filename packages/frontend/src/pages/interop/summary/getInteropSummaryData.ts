@@ -24,10 +24,12 @@ export async function getInteropSummaryData(
 
   const initialSelectedChains: SelectedChains = hasQueryChains
     ? [
-        interopChainsIds.find((id) => id === req.query.selectedChains?.[0]),
-        interopChainsIds.find((id) => id === req.query.selectedChains?.[1]),
+        interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
+          null,
+        interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ??
+          null,
       ]
-    : [undefined, undefined]
+    : [null, null]
 
   const queryState = await cache.get(
     {
