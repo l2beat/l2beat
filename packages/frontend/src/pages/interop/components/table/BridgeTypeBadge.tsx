@@ -10,8 +10,8 @@ const typeToLabel = {
     label: 'Lock & Mint',
     bgColor: 'bg-yellow-700',
   },
-  omnichain: {
-    label: 'Omnichain',
+  burnAndMint: {
+    label: 'Burn & Mint',
     bgColor: 'bg-teal-500',
   },
 } as const

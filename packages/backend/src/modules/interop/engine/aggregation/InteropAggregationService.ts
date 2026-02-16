@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -16,12 +15,7 @@ export interface AggregationResult {
 }
 
 export class InteropAggregationService {
-  constructor(
-    private readonly classifier: InteropTransferClassifier,
-    private readonly logger: Logger,
-  ) {
-    this.logger = logger.for(this)
-  }
+  constructor(private readonly classifier: InteropTransferClassifier) {}
 
   aggregate(
     transfers: InteropTransferRecord[],
@@ -30,38 +24,12 @@ export class InteropAggregationService {
   ): AggregationResult {
     const aggregatedTransfers: AggregatedInteropTransferRecord[] = []
     const aggregatedTokens: AggregatedInteropTokenRecord[] = []
-    const missingInConfigMap = new Map<string, Map<InteropBridgeType, number>>()
 
     for (const config of configs) {
       const classifiedTransfers = this.classifier.classifyTransfers(
         transfers,
         config,
       )
-
-      for (const [type, records] of Object.entries(classifiedTransfers)) {
-        const bridgeType = type as InteropBridgeType
-        if (
-          !config.showAlways ||
-          bridgeType === 'unknown' ||
-          config.showAlways.includes(bridgeType)
-        ) {
-          continue
-        }
-
-        if (records.length === 0) {
-          continue
-        }
-
-        const current = missingInConfigMap.get(config.id)
-        if (current) {
-          current.set(bridgeType, records.length)
-        } else {
-          missingInConfigMap.set(
-            config.id,
-            new Map([[bridgeType, records.length]]),
-          )
-        }
-      }
 
       // Aggregate transfers and tokens
       for (const [type, records] of Object.entries(classifiedTransfers)) {
@@ -91,20 +59,6 @@ export class InteropAggregationService {
           )
         }
       }
-    }
-
-    if (missingInConfigMap.size > 0) {
-      this.logger.warn(
-        'Some bridge types were automatically detected and are not defined in configs',
-        {
-          missingInConfigs: Array.from(missingInConfigMap.entries()).map(
-            ([key, value]) => ({
-              id: key,
-              ...Object.fromEntries(value.entries()),
-            }),
-          ),
-        },
-      )
     }
 
     return {

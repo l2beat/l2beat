@@ -60,8 +60,7 @@ export function TopTokensCell({
         }}
         onMouseEnter={() =>
           utils.interop.tokens.prefetch({
-            from: selectedChains.from,
-            to: selectedChains.to,
+            selectedChains,
             id: protocol.id,
             type,
           })
@@ -96,8 +95,7 @@ function TopTokensContent({
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokens.useQuery(
     {
-      from: selectedChains.from,
-      to: selectedChains.to,
+      selectedChains,
       id: protocol.id,
       type,
     },

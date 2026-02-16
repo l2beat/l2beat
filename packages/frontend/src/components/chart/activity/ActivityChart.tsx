@@ -1,5 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  assertUnreachable,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
 import type {
@@ -46,7 +51,7 @@ export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
 interface ActivityChartDataPoint {
   timestamp: number
-  projects: number | null
+  projects?: number | null
   ethereum: number | null
 }
 
@@ -58,7 +63,7 @@ interface Props {
   scale: ChartScale
   metric: ActivityMetric
   type: ActivityChartType
-  project?: ChartProject
+  project: ChartProject
   className?: string
   tickCount?: number
 }
@@ -77,16 +82,22 @@ export function ActivityChart({
 }: Props) {
   const chartMeta = useMemo(
     () => ({
-      projects: {
-        label:
-          project?.shortName ??
-          project?.name ??
-          (type === 'ValidiumsAndOptimiums' ? 'Validiums & Optimiums' : type),
-        color: typeToColor(type),
-        indicatorType: {
-          shape: 'line',
-        },
-      },
+      ...(project.id !== ProjectId.ETHEREUM
+        ? {
+            projects: {
+              label:
+                project?.shortName ??
+                project?.name ??
+                (type === 'ValidiumsAndOptimiums'
+                  ? 'Validiums & Optimiums'
+                  : type),
+              color: typeToColor(type),
+              indicatorType: {
+                shape: 'line',
+              },
+            },
+          }
+        : {}),
       ethereum: {
         label: 'Ethereum',
         color: 'var(--chart-ethereum)',
@@ -95,21 +106,24 @@ export function ActivityChart({
         },
       },
     }),
-    [project?.name, project?.shortName, type],
+    [project.id, project.name, project.shortName, type],
   ) satisfies ChartMeta
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
-
   return (
     <ChartContainer
       data={data}
       className={className}
       meta={chartMeta}
       isLoading={isLoading}
-      interactiveLegend={{
-        dataKeys,
-        onItemClick: toggleDataKey,
-      }}
+      interactiveLegend={
+        project.id === ProjectId.ETHEREUM
+          ? undefined
+          : {
+              dataKeys,
+              onItemClick: toggleDataKey,
+            }
+      }
       project={project}
       milestones={milestones}
     >
@@ -125,12 +139,16 @@ export function ActivityChart({
               fill: 'url(#fillEthereum)',
               hide: !dataKeys.includes('ethereum'),
             },
-            {
-              dataKey: 'projects',
-              stroke: 'url(#strokeProjects)',
-              fill: 'url(#fillProjects)',
-              hide: !dataKeys.includes('projects'),
-            },
+            ...(project.id !== ProjectId.ETHEREUM
+              ? [
+                  {
+                    dataKey: 'projects',
+                    stroke: 'url(#strokeProjects)',
+                    fill: 'url(#fillProjects)',
+                    hide: !dataKeys.includes('projects'),
+                  },
+                ]
+              : []),
           ]}
         />
         <ChartCommonComponents

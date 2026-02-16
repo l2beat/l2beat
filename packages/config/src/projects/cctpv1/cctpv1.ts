@@ -8,10 +8,10 @@ export const cctpv1: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769523398),
   interopConfig: {
-    showAlways: ['omnichain'],
     plugins: [
       {
         plugin: 'cctp-v1',
+        bridgeType: 'burnAndMint',
       },
     ],
   },

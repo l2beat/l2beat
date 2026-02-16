@@ -3,7 +3,7 @@ import {
   Address32,
   assert,
   ChainSpecificAddress,
-  type InteropBridgeType,
+  type KnownInteropBridgeType,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findParsedAround } from '../hyperlane-hwr'
@@ -70,7 +70,7 @@ export function getBridgeType({
   srcChain,
   dstChain,
   deployedToAbstractMap,
-  defaultBridgeType = 'omnichain',
+  defaultBridgeType = 'burnAndMint',
 }: {
   srcTokenAddress: Address32 | undefined
   dstTokenAddress: Address32 | undefined
@@ -79,8 +79,8 @@ export function getBridgeType({
   srcChain: string
   dstChain: string
   deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>
-  defaultBridgeType?: 'omnichain' | 'nonMinting'
-}): InteropBridgeType | undefined {
+  defaultBridgeType?: 'burnAndMint' | 'nonMinting'
+}): KnownInteropBridgeType | undefined {
   if (
     !srcTokenAddress ||
     !dstTokenAddress ||
@@ -90,16 +90,24 @@ export function getBridgeType({
     return
   }
 
+  // chainspecificaddress does not support 'native' so we return early
+  if (
+    srcTokenAddress === Address32.NATIVE ||
+    dstTokenAddress === Address32.NATIVE
+  ) {
+    return defaultBridgeType
+  }
+
   const srcAbstractToken = deployedToAbstractMap.get(
     ChainSpecificAddress.fromLong(
-      Address32.cropToEthereumAddress(srcTokenAddress),
       srcChain,
+      Address32.cropToEthereumAddress(srcTokenAddress),
     ),
   )
   const dstAbstractToken = deployedToAbstractMap.get(
     ChainSpecificAddress.fromLong(
-      Address32.cropToEthereumAddress(dstTokenAddress),
       dstChain,
+      Address32.cropToEthereumAddress(dstTokenAddress),
     ),
   )
   if (!srcAbstractToken || !dstAbstractToken) return

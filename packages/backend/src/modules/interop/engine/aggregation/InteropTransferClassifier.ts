@@ -1,9 +1,10 @@
 import type { InteropTransferRecord } from '@l2beat/database'
+import type { InteropBridgeType } from '@l2beat/shared-pure'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 
 export interface ClassifiedTransfers {
   lockAndMint: InteropTransferRecord[]
-  omnichain: InteropTransferRecord[]
+  burnAndMint: InteropTransferRecord[]
   nonMinting: InteropTransferRecord[]
   unknown: InteropTransferRecord[]
 }
@@ -25,29 +26,30 @@ export class InteropTransferClassifier {
     records: InteropTransferRecord[],
   ): ClassifiedTransfers {
     const lockAndMint: InteropTransferRecord[] = []
-    const omnichain: InteropTransferRecord[] = []
+    const burnAndMint: InteropTransferRecord[] = []
     const nonMinting: InteropTransferRecord[] = []
     const unknown: InteropTransferRecord[] = []
 
     for (const record of records) {
-      if (
-        (record.srcWasBurned === false && record.dstWasMinted === true) ||
-        (record.srcWasBurned === true && record.dstWasMinted === false)
-      ) {
-        lockAndMint.push(record)
-      } else if (record.srcWasBurned === true && record.dstWasMinted === true) {
-        omnichain.push(record)
-      } else if (
-        record.srcWasBurned === false &&
-        record.dstWasMinted === false
-      ) {
-        nonMinting.push(record)
-      } else {
-        unknown.push(record)
+      const bridgeType =
+        record.bridgeType ?? InteropTransferClassifier.inferBridgeType(record)
+      switch (bridgeType) {
+        case 'lockAndMint':
+          lockAndMint.push(record)
+          break
+        case 'burnAndMint':
+          burnAndMint.push(record)
+          break
+        case 'nonMinting':
+          nonMinting.push(record)
+          break
+        case 'unknown':
+          unknown.push(record)
+          break
       }
     }
 
-    return { lockAndMint, omnichain, nonMinting, unknown }
+    return { lockAndMint, burnAndMint, nonMinting, unknown }
   }
 
   private buildMatchers(config: InteropAggregationConfig) {
@@ -56,7 +58,18 @@ export class InteropTransferClassifier {
     for (const plugin of config.plugins) {
       const pluginConditions: ((transfer: InteropTransferRecord) => boolean)[] =
         []
-      pluginConditions.push((transfer) => plugin.plugin === transfer.plugin)
+
+      // Required plugin fields
+      pluginConditions.push((transfer) => {
+        const transferBridgeType =
+          transfer.bridgeType ??
+          InteropTransferClassifier.inferBridgeType(transfer)
+        return (
+          plugin.plugin === transfer.plugin &&
+          plugin.bridgeType === transferBridgeType
+        )
+      })
+
       if (plugin.chain) {
         pluginConditions.push(
           (transfer) =>
@@ -83,5 +96,21 @@ export class InteropTransferClassifier {
     }
 
     return conditions
+  }
+
+  static inferBridgeType(transfer: InteropTransferRecord): InteropBridgeType {
+    if (
+      (transfer.srcWasBurned === false && transfer.dstWasMinted === true) ||
+      (transfer.srcWasBurned === true && transfer.dstWasMinted === false)
+    ) {
+      return 'lockAndMint'
+    }
+    if (transfer.srcWasBurned === true && transfer.dstWasMinted === true) {
+      return 'burnAndMint'
+    }
+    if (transfer.srcWasBurned === false && transfer.dstWasMinted === false) {
+      return 'nonMinting'
+    }
+    return 'unknown'
   }
 }

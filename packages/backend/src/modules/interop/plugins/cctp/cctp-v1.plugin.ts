@@ -55,6 +55,7 @@ import {
 } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { findBestTransferLog } from '../hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -78,7 +79,6 @@ const parseV1MessageReceived = createEventParser(v1MessageReceivedLog)
 
 const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
-const parseTransfer = createEventParser(transferLog)
 
 export const CCTPv1MessageSent = createInteropEventType<{
   messageBody: string
@@ -176,15 +176,12 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       network.messageTransmitter,
     ])
     if (v1MessageReceived) {
-      // const messageBody = decodeMessageBody(v1MessageReceived.messageBody) // only encodes the source token, so no value to us
-      // if (!messageBody) return
-      // use erc20 transfer event instead (fragile because it might not be 2 logs before)
-      const previouspreviousLog = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 2,
+      const messageBody = decodeV1MessageBody(v1MessageReceived.messageBody) // only encodes the source token, so no value to us
+      const transferMatch = findBestTransferLog(
+        input.txLogs,
+        messageBody?.amount ?? 0n,
+        input.log.logIndex ?? -1,
       )
-      const transfer =
-        previouspreviousLog && parseTransfer(previouspreviousLog, null)
       return [
         CCTPv1MessageReceived.create(input, {
           caller: EthereumAddress(v1MessageReceived.caller),
@@ -195,10 +192,10 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
           ),
           nonce: Number(v1MessageReceived.nonce),
           messageBody: v1MessageReceived.messageBody,
-          dstTokenAddress: previouspreviousLog
-            ? Address32.from(previouspreviousLog.address)
+          dstTokenAddress: transferMatch.transfer
+            ? Address32.from(transferMatch.transfer.logAddress)
             : undefined,
-          dstAmount: transfer?.value ?? undefined,
+          dstAmount: transferMatch.transfer?.value ?? undefined,
         }),
       ]
     }
@@ -239,7 +236,7 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
           dstAmount: messageReceived.args.dstAmount,
           srcWasBurned: true,
           dstWasMinted: true,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         }),
       ]
     }

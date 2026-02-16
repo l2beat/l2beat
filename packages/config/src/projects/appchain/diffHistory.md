@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x3133e5f833eea45ffb5ec67ca5edf8e912a2d573
+
+# Diff at Tue, 10 Feb 2026 15:08:45 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1769773236
+- current timestamp: 1770736056
+
+## Description
+
+New member added to Safe multisig, threshold changed from 2 of 3 to 2 of 4.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xb9e40b6E60CcD5361774cf4D36d1fCe66B649b63"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x0d7758403a806c7131be79cfd81d186c7ef3858a
 
 # Diff at Fri, 30 Jan 2026 11:41:43 GMT:

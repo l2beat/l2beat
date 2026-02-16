@@ -2,25 +2,25 @@ import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import { AvgDurationCell } from '~/pages/interop/components/table/AvgDurationCell'
+import { EM_DASH } from '~/consts/characters'
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type {
+  BurnAndMintProtocolEntry,
   LockAndMintProtocolEntry,
   NonMintingProtocolEntry,
-  OmniChainProtocolEntry,
 } from './getBridgeTypeEntries'
 
 export type NonMintingProtocolRow = NonMintingProtocolEntry & BasicTableRow
 export type LockAndMintProtocolRow = LockAndMintProtocolEntry & BasicTableRow
-export type OmniChainProtocolRow = OmniChainProtocolEntry & BasicTableRow
+export type BurnAndMintProtocolRow = BurnAndMintProtocolEntry & BasicTableRow
 
 const nonMintingColumnHelper = createColumnHelper<NonMintingProtocolRow>()
 const lockAndMintColumnHelper = createColumnHelper<LockAndMintProtocolRow>()
-const omniChainColumnHelper = createColumnHelper<OmniChainProtocolRow>()
+const burnAndMintColumnHelper = createColumnHelper<BurnAndMintProtocolRow>()
 
 function getCommonColumns<
   T extends {
@@ -150,35 +150,25 @@ export const nonMintingColumns = [
 export const lockAndMintColumns = [
   ...getCommonColumns(lockAndMintColumnHelper),
   getLast24hVolumeColumn(lockAndMintColumnHelper),
-  lockAndMintColumnHelper.accessor(
-    (row) =>
-      row.averageDuration.type === 'unknown'
-        ? undefined
-        : row.averageDuration.type === 'single'
-          ? row.averageDuration.duration
-          : (row.averageDuration.in.duration ??
-            row.averageDuration.out.duration ??
-            Number.POSITIVE_INFINITY),
-    {
-      header: 'Last 24h avg.\ntransfer time',
-      invertSorting: true,
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        headClassName: 'text-2xs',
-        tooltip:
-          'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
-      },
-      cell: (ctx) => (
-        <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
-      ),
+  lockAndMintColumnHelper.accessor('netMintedValue', {
+    header: 'Last 24h net\nminted value',
+    meta: {
+      align: 'right',
+      headClassName: 'text-2xs',
     },
-  ),
+    cell: (ctx) => (
+      <span className="font-medium text-label-value-15">
+        {ctx.row.original.netMintedValue
+          ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
+          : EM_DASH}
+      </span>
+    ),
+  }),
   getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
 ]
 
-export const omniChainColumns = [
-  ...getCommonColumns(omniChainColumnHelper),
-  getLast24hVolumeColumn(omniChainColumnHelper),
-  getTokensByVolumeColumn(omniChainColumnHelper, 'omnichain'),
+export const burnAndMintColumns = [
+  ...getCommonColumns(burnAndMintColumnHelper),
+  getLast24hVolumeColumn(burnAndMintColumnHelper),
+  getTokensByVolumeColumn(burnAndMintColumnHelper, 'burnAndMint'),
 ]

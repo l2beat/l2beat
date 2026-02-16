@@ -56,6 +56,9 @@ import {
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { findBestTransferLog } from '../hyperlane-hwr'
+import { MayanForwarded } from '../mayan-forwarder'
+import { OrderFulfilled } from '../mayan-mctp-fast'
 import {
   createEventParser,
   createInteropEventType,
@@ -79,7 +82,6 @@ const parseV2MessageReceived = createEventParser(v2MessageReceivedLog)
 
 const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
-const parseTransfer = createEventParser(transferLog)
 
 export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
@@ -197,24 +199,12 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       const messageHash = hashV2MessageBody(v2MessageReceived.messageBody)
       if (!messageHash) return
 
-      const previouspreviousLog = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 2,
+      const transferMatch = findBestTransferLog(
+        input.txLogs,
+        messageBody?.amount ?? 0n,
+        input.log.logIndex ?? -1,
       )
-      const fourback = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 4,
-      )
-      const transfer =
-        previouspreviousLog && parseTransfer(previouspreviousLog, null)
-      const fallbackTransfer = fourback && parseTransfer(fourback, null)
-      let dstAmount = transfer?.value
-      if (
-        fallbackTransfer?.value !== undefined &&
-        fallbackTransfer.value > (transfer?.value ?? 0)
-      ) {
-        dstAmount = fallbackTransfer.value
-      }
+
       return [
         CCTPv2MessageReceived.create(input, {
           app: messageBody ? 'TokenMessengerV2' : undefined,
@@ -231,10 +221,10 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
             v2MessageReceived.finalityThresholdExecuted,
           ),
           messageHash,
-          dstTokenAddress: previouspreviousLog
-            ? Address32.from(previouspreviousLog.address)
+          dstTokenAddress: transferMatch.transfer
+            ? Address32.from(transferMatch.transfer?.logAddress)
             : undefined,
-          dstAmount,
+          dstAmount: transferMatch.transfer?.value,
         }),
       ]
     }
@@ -254,7 +244,26 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       const messageSent = messageSentMatches.sort(
         (a, b) => a.ctx.timestamp - b.ctx.timestamp,
       )[0]
+
+      const wrappers: MatchResult = []
+      const mayanForwarded = db.find(MayanForwarded, {
+        sameTxAfter: messageSent,
+      })
+      const orderFulfilled = db.find(OrderFulfilled, {
+        sameTxAfter: messageReceived,
+      })
+      if (mayanForwarded && orderFulfilled) {
+        wrappers.push(
+          Result.Message('mayan.Message', {
+            app: 'mctp',
+            srcEvent: mayanForwarded,
+            dstEvent: orderFulfilled,
+          }),
+        )
+      }
+
       return [
+        ...wrappers,
         Result.Message(
           messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
           {
@@ -272,7 +281,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
           dstAmount: messageReceived.args.dstAmount,
           srcWasBurned: true,
           dstWasMinted: true,
-          bridgeType: 'omnichain',
+          bridgeType: 'burnAndMint',
         }),
       ]
     }

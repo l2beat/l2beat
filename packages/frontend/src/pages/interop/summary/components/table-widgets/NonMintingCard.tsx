@@ -15,12 +15,8 @@ export function NonMintingCard({
   entries: NonMintingProtocolEntry[] | undefined
   isLoading: boolean
 }) {
-  const { selectedChains, allChainIds } = useInteropSelectedChains()
-  const viewAllUrl = buildInteropUrl(
-    '/interop/non-minting',
-    selectedChains,
-    allChainIds,
-  )
+  const { selectedChains } = useInteropSelectedChains()
+  const viewAllUrl = buildInteropUrl('/interop/non-minting', selectedChains)
 
   return (
     <PrimaryCard className="flex flex-col border-t-blue-600 max-md:border-b max-md:border-b-divider md:border-t-4">

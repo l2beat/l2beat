@@ -9,10 +9,14 @@ export const layerzero: BaseProject = {
   addedAt: UnixTime(1769421770),
   interopConfig: {
     isAggregate: true,
-    showAlways: ['omnichain'],
     plugins: [
       {
         plugin: 'layerzero-v2-ofts',
+        bridgeType: 'burnAndMint',
+      },
+      {
+        plugin: 'layerzero-v2-ofts',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

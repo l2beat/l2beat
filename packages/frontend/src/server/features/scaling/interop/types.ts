@@ -11,6 +11,7 @@ export type ProtocolEntry = {
   id: ProjectId
   iconUrl: string
   protocolName: string
+  bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
     | {
@@ -22,23 +23,28 @@ export type ProtocolEntry = {
   tokens: TopItems<TokenData>
   chains: TopItems<ChainData>
   transferCount: number
-  averageValue: number
-  averageDuration: AverageDuration
+  averageValue: number | null
+  averageDuration: AverageDuration | null
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
 }
 
+export type ProtocolDisplayable = {
+  name: string
+  iconUrl: string
+}
+
 export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined
-  omnichain: OmniChainProtocolData | undefined
+  burnAndMint: BurnAndMintProtocolData | undefined
 }
 
 export type LockAndMintProtocolData = {
   volume: number
+  netMintedValue: number | undefined
   tokens: TopItems<TokenData>
-  averageDuration: AverageDuration
 }
 
 export type NonMintingProtocolData = {
@@ -47,15 +53,20 @@ export type NonMintingProtocolData = {
   averageValueInFlight: number
 }
 
-export type OmniChainProtocolData = {
+export type BurnAndMintProtocolData = {
   volume: number
   tokens: TopItems<TokenData>
 }
 
+const SelectedChainsSchema = v.tuple([
+  v.union([v.string(), v.undefined()]),
+  v.union([v.string(), v.undefined()]),
+])
+export type SelectedChains = v.infer<typeof SelectedChainsSchema>
+
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  selectedChains: SelectedChainsSchema,
   type: KnownInteropBridgeType.optional(),
 })
 
@@ -64,8 +75,7 @@ export type InteropProtocolTokensParams = v.infer<
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  selectedChains: SelectedChainsSchema,
   type: KnownInteropBridgeType.optional(),
 })
 

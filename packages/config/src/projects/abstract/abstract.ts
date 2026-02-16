@@ -66,7 +66,6 @@ export const abstract: ScalingProject = zkStackL2({
     ],
   },
   interopConfig: {
-    showAlways: ['lockAndMint'],
     durationSplit: {
       lockAndMint: {
         in: {
@@ -85,6 +84,7 @@ export const abstract: ScalingProject = zkStackL2({
       {
         plugin: 'zkstack',
         chain: 'abstract',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

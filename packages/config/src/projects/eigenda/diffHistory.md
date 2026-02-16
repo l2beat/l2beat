@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x850cec99c0efc6f451d5ab61c031eda3f4e44561
+
+# Diff at Thu, 12 Feb 2026 14:57:30 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@632144c808f959f8e2164511b7a59e409831ae61 block: 1769597655
+- current timestamp: 1770908185
+
+## Description
+
+One signer was removed from the EigenDAOperationsMultisig, reducing it from 6 to 5 members. The threshold remains at 3, changing the ratio from 50% to 60%.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xb27f3cbef3e17b1f122a68a3fdf06a3347836e95
 
 # Diff at Wed, 28 Jan 2026 10:55:20 GMT:

@@ -72,7 +72,7 @@ const OVERRIDES_V1 = [
     chain: 'polygonpos',
     domain: 7,
     messageTransmitter: EthereumAddress(
-      '0xAD09780d193884d503182aD4588450C416D6F9D4',
+      '0xF3be9355363857F3e001be68856A2f96b4C39Ba9',
     ),
   },
   // {

@@ -1,6 +1,6 @@
 {
   "name": "eigenda",
-  "timestamp": 1769597655,
+  "timestamp": 1770908185,
   "configHash": "0x892ebea752f55cf257a83ce2dca497b9d5fb68216dca083eced501f86c092e1d",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -142,15 +142,14 @@
           "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753",
           "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6",
           "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a",
-          "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489",
-          "eth:0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3"
+          "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
         ],
         "$threshold": 3,
         "domainSeparator": "0x0f8eb27939d8e0595e7cc493a40b145f31803628460538623d3988094d1a63f9",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 34,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 37,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -325,7 +324,6 @@
         "PUBKEY_REGISTRATION_TYPEHASH": "0x2bd82124057f0913bc3b772ce7b83e8057c1ad1f3510fc83778be20f10ec5de6",
         "quorumCount": 3,
         "registeredOperators": [
-          "0x62fd7709add808809511fe2d3a230cd9cb7321cc2f47e2c35fd959d0449be8ee",
           "0x3a6f497e1db3dcc4aec8b8822f9bc3f35c8dccc361505cb308d0015c3793f567",
           "0xedebd1222578e5cd75d76c8972ab5ee7439591ee667094aea695b092484877fb",
           "0x35a645a980a13c0cb3024a5e78408ddde2b5affd306cd331ce2be9cd5968ca23",
@@ -380,7 +378,6 @@
           "0x832c0fae231eb044c5f7ceb2f72a77caef174f46e60c8c257aab5160603b05b3",
           "0x13cb0150a640902f3d32e152e340384441e1c0bcfd3b34cf17b3f76c6030ab82",
           "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
-          "0x903031a70695f8c94aed1a36044804a65be3da21523663c5e44d95bce12bb261",
           "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
           "0x40ade5577b77152036616d1655f9127a6ae08cd8234c1043e08626f59bf8065f",
           "0x960dc057a3b0c24385c25845f5eebe1fafcc4739a94351b4550cb0d0e53d3655",
@@ -395,7 +392,6 @@
           "0x2aa77dfcccd51126c0affefa1235a2c53905fe864fccfd93ffe4d8d4f8912a8a",
           "0xb523e0b4efdc2c267da48e837e419fda92085151dea3d59834da2dc153dc157c",
           "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
-          "0x4825931d12cb01526583db450d5d10fa99f02b12ceec5eedef81de95d0f4abd4",
           "0x4b4c68dd8324d92c733fd9e8571b59a88e28f417b8e8d90a580c8d70eac650d0",
           "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
           "0x0955e7dff023cbc1818fb1439e69caf4647d504851f58ed09552eae3393e58a1",
@@ -423,7 +419,8 @@
           "0x32293d3ad6447b8c67a1f02ff0bfae0e73ec4d442842cd816e9395b0e370858c",
           "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
           "0x155ffb09581c003557d6614d7764b3a594a9a689ca705ec6ea5e9dcf29ea9e56",
-          "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086"
+          "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
+          "0xc07a06bef2237cb01b3714510ea2d7e2b0f056081e8fe0ace4c8f3e00f1c2697"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -725,11 +722,6 @@
     },
     {
       "address": "eth:0x3C20b05f44ef008A5b848761e58e5Ca9594163e9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1081,7 +1073,7 @@
           "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 151600,
+        "batchId": 153155,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1117,7 +1109,7 @@
         "stakeRegistry": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 151600,
+        "taskNumber": 153155,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -2182,6 +2174,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24332870 },
-  "permissionsConfigHash": "0xc635e5c4f81287ab6afbbe843df20d8f63624d745cc8fee1bc1067687c83367d"
+  "usedBlockNumbers": { "ethereum": 24441433 },
+  "permissionsConfigHash": "0xcfbbaa58b8ca8c01812625d89f2e904742b500d7f9f28c141a54603a73aa9f12"
 }

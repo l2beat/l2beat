@@ -1,15 +1,18 @@
+import type { Project } from '@l2beat/config'
 import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { SelectedChains } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
+import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
-import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
@@ -21,13 +24,15 @@ import { HeaderWithDescription } from './components/HeaderWithDescription'
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
-  initialSelectedChains: { from: string[]; to: string[] }
+  protocols: WithProjectIcon<Project<'interopConfig'>>[]
+  initialSelectedChains: SelectedChains
 }
 
 export function InteropNonMintingPage({
   interopChains,
   queryState,
   initialSelectedChains,
+  protocols,
   ...props
 }: Props) {
   return (
@@ -41,7 +46,7 @@ export function InteropNonMintingPage({
             <div className="max-md:hidden">
               <HeaderWithDescription />
             </div>
-            <ChainSelector chains={interopChains} />
+            <ChainSelector chains={interopChains} protocols={protocols} />
             <div className="md:hidden">
               <HeaderWithDescription />
             </div>
@@ -54,19 +59,18 @@ export function InteropNonMintingPage({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains, isDirty } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
+    selectedChains,
     type: 'nonMinting',
   })
 
   if (
     data?.entries.length === 0 &&
-    data.top3Paths.length === 0 &&
+    data.flows.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState isDirty={isDirty} />
+    return <InteropEmptyState />
   }
 
   return (
@@ -75,10 +79,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       data-hide-overflow-x
     >
       <div className="z-10 max-[1024px]:hidden">
-        <TopPathsWidget
+        <FlowsWidget
           interopChains={interopChains}
           isLoading={isLoading}
-          top3Paths={data?.top3Paths}
+          flows={data?.flows}
         />
       </div>
       <div className="h-full max-[1600px]:hidden">
@@ -95,7 +99,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       </div>
       <MobileCarouselWidget
         interopChains={interopChains}
-        top3Paths={data?.top3Paths}
+        flows={data?.flows}
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
@@ -103,6 +107,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       <AllProtocolsCard
         type="nonMinting"
         entries={data?.entries}
+        zeroTransferProtocols={data?.zeroTransferProtocols}
         isLoading={isLoading}
         hideTypeColumn
         showAverageInFlightValueColumn

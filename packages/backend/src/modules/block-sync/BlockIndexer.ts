@@ -88,6 +88,7 @@ export class BlockIndexer extends ManagedChildIndexer {
       count: consistentBlocks.length,
     })
 
+    const processingStart = Date.now()
     for (const { block, logs } of consistentBlocks) {
       for (const processor of this.$.blockProcessors) {
         try {
@@ -111,6 +112,14 @@ export class BlockIndexer extends ManagedChildIndexer {
         logs: logs.length,
       })
     }
+    const processingDuration = Date.now() - processingStart
+    this.logger.info('Processed blocks', {
+      chain: this.$.source,
+      blocks: consistentBlocks.length,
+      logs: consistentBlocks.reduce((acc, { logs }) => acc + logs.length, 0),
+      processors: this.$.blockProcessors.length,
+      durationMs: Number.parseFloat(processingDuration.toFixed(2)),
+    })
 
     return actualTo
   }

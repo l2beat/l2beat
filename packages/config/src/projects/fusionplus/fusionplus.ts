@@ -8,10 +8,10 @@ export const fusionplus: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1770021647),
   interopConfig: {
-    showAlways: ['nonMinting'],
     plugins: [
       {
         plugin: 'oneinch-fusion-plus',
+        bridgeType: 'nonMinting',
       },
     ],
   },
