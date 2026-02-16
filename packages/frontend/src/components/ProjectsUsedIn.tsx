@@ -27,6 +27,7 @@ interface Props {
   noL2ClassName?: string
   maxProjects?: number
   noLink?: boolean
+  variant?: 'default' | 'compact'
 }
 
 export function ProjectsUsedIn({
@@ -35,6 +36,7 @@ export function ProjectsUsedIn({
   noL2ClassName,
   maxProjects = 5,
   noLink,
+  variant = 'default',
 }: Props) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -62,6 +64,7 @@ export function ProjectsUsedIn({
     <div
       className={cn(
         'flex shrink-0 flex-row flex-nowrap items-center gap-1.5',
+        variant === 'compact' && '-space-x-2',
         className,
       )}
     >
@@ -101,13 +104,16 @@ export function ProjectsUsedIn({
       {rest.length > 0 && (
         <>
           <button
-            className="text-2xs hover:underline"
+            className={cn(
+              'text-2xs hover:underline',
+              variant === 'compact' && 'ml-2 text-secondary',
+            )}
             onClick={(e) => {
               e.preventDefault()
               setOpen(true)
             }}
           >
-            +{rest.length} more
+            +{rest.length} {variant === 'default' && 'more'}
           </button>
           <CommandDialog
             open={open}

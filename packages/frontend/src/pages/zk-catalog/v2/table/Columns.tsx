@@ -1,5 +1,6 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
@@ -75,7 +76,35 @@ export const zkCatalogColumns = [
           additionalRows: (ctx) => {
             return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
               .slice(1)
-              .map(([key, ts]) => <TrustedSetupCell key={key} {...ts} />)
+              .map(([key, ts]) => (
+                <TrustedSetupCell key={key} trustedSetups={ts.trustedSetups} />
+              ))
+          },
+        },
+      }),
+      columnHelper.display({
+        id: 'used-in',
+        header: 'Used in',
+        cell: (ctx) => {
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
+          )[0]
+          if (!first) return null
+          return (
+            <ProjectsUsedIn usedIn={first.projectsUsedIn} variant="compact" />
+          )
+        },
+        meta: {
+          additionalRows: (ctx) => {
+            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
+              .slice(1)
+              .map(([key, ts]) => (
+                <ProjectsUsedIn
+                  key={key}
+                  usedIn={ts.projectsUsedIn}
+                  variant="compact"
+                />
+              ))
           },
         },
       }),

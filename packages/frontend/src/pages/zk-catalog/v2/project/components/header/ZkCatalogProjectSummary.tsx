@@ -10,7 +10,7 @@ import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TechStackCell } from '../../../components/TechStackCell'
-import { TrustedSetupCellTooltip } from '../../../components/TrustedSetupCell'
+import { TrustedSetupCell } from '../../../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../../../components/VerifiedCountWithDetails'
 
 interface Props {
@@ -71,10 +71,7 @@ export function TrustedSetupsByProofSystemSection({
 
             return (
               <div key={key} className="flex flex-col gap-3">
-                <TrustedSetupCellTooltip
-                  trustedSetups={trustedSetups}
-                  dotSize="lg"
-                />
+                <TrustedSetupCell trustedSetups={trustedSetups} dotSize="lg" />
                 <div className="grid grid-cols-[200px_1fr] gap-1">
                   {projectsUsedIn && (
                     <div className="flex flex-col gap-2">
@@ -111,7 +108,7 @@ export function TrustedSetupsByProofSystemSection({
                 return (
                   <tr key={key} className="h-8 align-middle">
                     <td>
-                      <TrustedSetupCellTooltip
+                      <TrustedSetupCell
                         trustedSetups={trustedSetups}
                         dotSize="lg"
                       />
