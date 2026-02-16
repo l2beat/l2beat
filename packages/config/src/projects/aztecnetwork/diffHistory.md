@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xdb26688e72291d3ba889575d1695d24131d429eb
+Generated with discovered.json: 0xd11bc141182aa6d49b30900edad6f62b44bda83c
 
-# Diff at Mon, 16 Feb 2026 14:54:17 GMT:
+# Diff at Mon, 16 Feb 2026 15:13:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1769432788
-- current timestamp: 1771253570
+- current timestamp: 1771254730
 
 ## Description
 
@@ -21,38 +21,64 @@ TGE happened. Sequencers can claim block production rewards, AZTEC is transferab
     }
 ```
 
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769432788 (main branch discovery), not current.
+
 ```diff
-    contract AztecTokenPositionRegistry_Sequencers (eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde) {
-    +++ description: A registry for contracts related to Sequencer staking and token unlock parameters.
-      values.getGlobalLockParams.startTime:
--        1763042400
-+        1739343611
-      values.getNextStakerVersion:
--        2
-+        3
-      values.getStakerImplementation.2:
-+        "eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95"
-      values.getUnlockStartTime:
--        1763042400
-+        1739343611
-      values.owner:
--        "eth:0xa04129571DacB1dEB57caB6bbA58e52E2B5CDF9b"
-+        "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e"
-      values.pendingOwner:
--        "eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e"
-+        "eth:0x0000000000000000000000000000000000000000"
-    }
+-   Status: DELETED
+    contract StakingRegistry (eth:0x042dF8f42790d6943F41C25C2132400fd727f452)
+    +++ description: Manages staking providers for delegation.
 ```
 
 ```diff
-    contract GovernanceAcceleratedLock (eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e) {
+-   Status: DELETED
+    contract BaseStaker (eth:0x0Cb8fe28D35fD4763C4f3E3761904bAcF829BbF8)
+    +++ description: A template contract used for staker proxies within the StakingRegistry.
+```
+
+```diff
+-   Status: DELETED
+    contract ATPWithdrawableAndClaimableStakerV2 (eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95)
+    +++ description: Standard escrow implementation used to simplify and manage staking with locked AZTEC tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract BaseStaker (eth:0x6131D4900CD8dC328FB3CF6DFFEfbC628F02e7d9)
+    +++ description: A template contract used for staker proxies within the StakingRegistry.
+```
+
+```diff
+-   Status: DELETED
+    contract AztecTokenPositionRegistry_Sequencers (eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde)
+    +++ description: A registry for contracts related to Sequencer staking and token unlock parameters.
+```
+
+```diff
+-   Status: DELETED
+    contract TGEPayload (eth:0x77A5EEF319E23615B848a09Ebd151744547b959C)
     +++ description: None
-      values.lockAccelerated:
--        false
-+        true
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde","description":"set staker implementations and manage the unlock time for associated ATP escrows.","role":".owner"}]
-    }
+```
+
+```diff
+-   Status: DELETED
+    contract ATPWithdrawableAndClaimableStaker (eth:0x7C009AE557234d094D798A03D21E3c1C1CAD3b42)
+    +++ description: Standard escrow implementation used to simplify and manage staking with locked AZTEC tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract GovernanceAcceleratedLock (eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AztecTokenPositionRegistry_Sequencers (eth:0x8F778768aDed86AB778a47cd81b3b42B4b3F655B)
+    +++ description: A registry for contracts related to Sequencer staking and token unlock parameters.
 ```
 
 Generated with discovered.json: 0x23e18f2b5d441f0d11e389024ea3e9e2f7bc0e9b
