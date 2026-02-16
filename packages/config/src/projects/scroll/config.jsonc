@@ -298,6 +298,9 @@
     "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": { "category": "spam" },
     "scr:0x0c67D8D067E349669dfEAB132A7c03A90594eE09": {
       "ignoreDiscovery": true
+    },
+    "eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2": {
+      "ignoreInWatchMode": ["totalBridgedUSDC"]
     }
   }
 }

@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x855aa2ce97914efd8c549ddee879ed7c81603872
+
+# Diff at Fri, 13 Feb 2026 15:26:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e1a04313e06de62db68bde894bcda2e7a6630a45 block: 1764934764
+- current timestamp: 1770993167
+
+## Description
+
+Zircuit Multisig 1 signer rotation: 3 signers removed, 3 replaced. Threshold reduced from 6/8 (75%) to 4/6 (67%). Same change reflected on both Ethereum and Zircuit chain instances of the multisig.
+
+## Watched changes
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4"
+      values.$members.1:
+-        "eth:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+      values.$members.2:
+-        "eth:0x63cbB9fA540F6249AE4A3576f48BF07609b3a355"
++        "eth:0xaAf347c2381369cA0bE97320413E3C04f8561f7e"
+      values.$members.3:
+-        "eth:0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4"
++        "eth:0xa65e20D8CB0598A1060e8359B07Ef846C3E12750"
+      values.$members.4:
+-        "eth:0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec"
++        "eth:0xf715F6E706dB2765DdD6140a4C654EBa13be1382"
+      values.$threshold:
+-        6
++        4
+      values.multisigThreshold:
+-        "6 of 8 (75%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      values.$members.0:
+-        "zircuit:0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4"
+      values.$members.1:
+-        "zircuit:0xf5B2C0bfA18561d5374EAcc5FFfA3E39B049c1ae"
+      values.$members.2:
+-        "zircuit:0x63cbB9fA540F6249AE4A3576f48BF07609b3a355"
++        "zircuit:0xaAf347c2381369cA0bE97320413E3C04f8561f7e"
+      values.$members.3:
+-        "zircuit:0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4"
++        "zircuit:0xa65e20D8CB0598A1060e8359B07Ef846C3E12750"
+      values.$members.4:
+-        "zircuit:0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec"
++        "zircuit:0xf715F6E706dB2765DdD6140a4C654EBa13be1382"
+      values.$threshold:
+-        6
++        4
+      values.multisigThreshold:
+-        "6 of 8 (75%)"
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x497fdfebac80750e1dc32df0133bc0b45970b152
 
 # Diff at Fri, 05 Dec 2025 11:41:25 GMT:
