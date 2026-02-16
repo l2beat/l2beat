@@ -335,10 +335,6 @@ export function findBestTransferLog(
   let closestDistance: number | undefined
   let hasTransfer = false
 
-  console.log(
-    'Finding best transfer log for target amount:',
-    targetAmount.toString(),
-  )
   for (const log of logs) {
     const transfer = parseTransfer(log, null)
     if (!transfer) continue
