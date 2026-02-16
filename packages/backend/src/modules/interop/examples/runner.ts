@@ -11,10 +11,8 @@ import { logToViemLog } from '../engine/capture/getItemsToCapture'
 import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { toDeployedId } from '../engine/financials/InteropFinancialsLoop'
-import {
-  buildDeployedToAbstractMap,
-  match,
-} from '../engine/match/InteropMatchingLoop'
+import { match } from '../engine/match/InteropMatchingLoop'
+import { buildTokenMap, type TokenMap } from '../engine/match/TokenMap'
 import {
   createInteropPlugins,
   flattenClusters,
@@ -23,6 +21,7 @@ import {
 import type { InteropEvent } from '../plugins/types'
 import { getAdditionalChainsForConfigs } from './configAdditionalChains'
 import type { Example, RunResult } from './core'
+import { TokenCaptureMap, TokenReplayMap } from './snapshot/map'
 import { RpcReplay } from './snapshot/replay'
 import {
   type ExampleInputs,
@@ -140,9 +139,7 @@ export class ExampleRunner {
       eventDb.addEvent(event)
     }
 
-    const deployedToAbstractMap = await buildDeployedToAbstractMap(
-      this.$.tokenDbClient,
-    )
+    const tokenMap = await this.getTokenMap()
 
     const result = await match(
       eventDb,
@@ -152,7 +149,7 @@ export class ExampleRunner {
       flattenClusters(plugins.eventPlugins),
       this.$.example.txs.map((x) => x.chain),
       this.$.logger,
-      deployedToAbstractMap,
+      tokenMap,
     )
 
     const unsupportedEventIds = new Set(
@@ -191,6 +188,8 @@ export class ExampleRunner {
 
   public async flush(result: RunResult) {
     if (this.$.mode === 'capture') {
+      // rpc write on-the-fly
+      // token-map write on-the-fly
       this.inputs.writeSpace('config', this.store.getAll())
     }
 
@@ -224,6 +223,20 @@ export class ExampleRunner {
         await config.run()
       }
     }
+  }
+
+  private async getTokenMap(): Promise<TokenMap> {
+    if (this.$.mode === 'replay') {
+      return new TokenReplayMap(this.inputs) as unknown as TokenMap
+    }
+
+    const map = await buildTokenMap(this.$.tokenDbClient)
+
+    if (this.$.mode === 'capture') {
+      return new TokenCaptureMap(map, this.inputs)
+    }
+
+    return map
   }
 
   private async getRpcClient(chain: string) {

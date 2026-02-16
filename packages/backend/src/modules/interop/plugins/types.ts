@@ -19,6 +19,7 @@ import {
   type ParseAbiItem,
   parseAbi,
 } from 'viem'
+import type { TokenMap } from '../engine/match/TokenMap'
 
 export interface InteropEvent<T = unknown> {
   plugin: string
@@ -235,7 +236,7 @@ export interface InteropPlugin {
   match?: (
     event: InteropEvent,
     db: InteropEventDb,
-    deployedToAbstractMap: DeployedToAbstractMap,
+    deployedToAbstractMap: TokenMap,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
 }
 

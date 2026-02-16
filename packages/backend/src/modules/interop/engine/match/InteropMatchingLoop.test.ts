@@ -10,11 +10,8 @@ import {
   type InteropPlugin,
 } from '../../plugins/types'
 import { InMemoryEventDb } from '../capture/InMemoryEventDb'
-import {
-  buildDeployedToAbstractMap,
-  InteropMatchingLoop,
-  match,
-} from './InteropMatchingLoop'
+import { InteropMatchingLoop, match } from './InteropMatchingLoop'
+import { buildTokenMap, type TokenMap } from './TokenMap'
 
 const TOKEN_A = {
   symbol: 'ABC',
@@ -29,7 +26,7 @@ const TOKEN_A = {
 } satisfies AbstractTokenRecord
 
 describe(InteropMatchingLoop.name, () => {
-  describe(buildDeployedToAbstractMap.name, () => {
+  describe(buildTokenMap.name, () => {
     it('builds deployed to abstract token map and skips invalid deployed tokens', async () => {
       const validAddress = '0x1111111111111111111111111111111111111111'
       const query = mockFn().resolvesTo({
@@ -48,8 +45,7 @@ describe(InteropMatchingLoop.name, () => {
         abstractTokens: { getAllWithDeployedTokens: { query } },
       } as any)
 
-      const deployedToAbstractMap =
-        await buildDeployedToAbstractMap(tokenDbClient)
+      const deployedToAbstractMap = await buildTokenMap(tokenDbClient)
 
       const chainSpecificAddress = ChainSpecificAddress.fromLong(
         'ethereum',
@@ -141,6 +137,7 @@ describe('match', () => {
       [plugin],
       [],
       Logger.SILENT,
+      mockObject<TokenMap>({}),
     )
 
     expect(sawEventC).toEqual(true)

@@ -1,11 +1,7 @@
-import type { AbstractTokenRecord } from '@l2beat/database'
-import {
-  Address32,
-  type ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import type { TokenMap } from '../engine/match/TokenMap'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
   getBridgeType,
@@ -450,7 +446,7 @@ export class StargatePlugin implements InteropPlugin {
   match(
     packetDelivered: InteropEvent,
     db: InteropEventDb,
-    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
+    tokenMap: TokenMap,
   ): MatchResult | undefined {
     if (!PacketDelivered.checkType(packetDelivered)) return
 
@@ -518,7 +514,7 @@ export class StargatePlugin implements InteropPlugin {
               dstWasMinted: matchedOftReceived.args.hydra,
               srcChain: oftSentBusRode.ctx.chain,
               dstChain: matchedOftReceived.ctx.chain,
-              deployedToAbstractMap,
+              tokenMap,
               defaultBridgeType: 'nonMinting',
             }),
           }),
@@ -555,7 +551,7 @@ export class StargatePlugin implements InteropPlugin {
             dstWasMinted: oftReceived.args.hydra,
             srcChain: oftSentTaxi.ctx.chain,
             dstChain: oftReceived.ctx.chain,
-            deployedToAbstractMap,
+            tokenMap,
             defaultBridgeType: 'nonMinting',
           }),
         }),

@@ -1,15 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
-  AbstractTokenRecord,
   Database,
   InteropMessageRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
-  type DeployedToAbstractMap,
   generateId,
   type InteropApproximateQuery,
   type InteropEvent,
@@ -23,6 +20,7 @@ import {
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import type { InteropTransferStream } from '../stream/InteropTransferStream'
+import { buildTokenMap, type TokenMap } from './TokenMap'
 
 export class InteropMatchingLoop extends TimeLoop {
   constructor(
@@ -40,9 +38,7 @@ export class InteropMatchingLoop extends TimeLoop {
   }
 
   async run() {
-    const deployedToAbstractMap = await buildDeployedToAbstractMap(
-      this.tokenDbClient,
-    )
+    const tokenMap = await buildTokenMap(this.tokenDbClient)
 
     const result = await match(
       this.store,
@@ -52,7 +48,7 @@ export class InteropMatchingLoop extends TimeLoop {
       this.plugins,
       this.supportedChains,
       this.logger,
-      deployedToAbstractMap,
+      tokenMap,
     )
 
     const messageRecords = result.messages.map(toMessageRecord)
@@ -81,36 +77,6 @@ export class InteropMatchingLoop extends TimeLoop {
   }
 }
 
-export async function buildDeployedToAbstractMap(
-  tokenDbClient: TokenDbClient,
-): Promise<DeployedToAbstractMap> {
-  let resp
-  try {
-    resp = await tokenDbClient.abstractTokens.getAllWithDeployedTokens.query()
-  } catch (error) {
-    throw new Error('Token DB unavailable for matching', { cause: error })
-  }
-
-  const result = new Map<ChainSpecificAddress, AbstractTokenRecord>()
-  for (const { deployedTokens, ...abstractToken } of resp.abstractTokens) {
-    for (const deployedToken of deployedTokens) {
-      let chainSpecificAddr: ChainSpecificAddress
-      try {
-        chainSpecificAddr = ChainSpecificAddress.fromLong(
-          deployedToken.chain,
-          deployedToken.address,
-        )
-      } catch {
-        // ignore deployed address that we can't construct as ChainSpecificAddress
-        // (this can happen because of unsupported chain name or address being e.g. 'native')
-        continue
-      }
-      result.set(chainSpecificAddr, abstractToken)
-    }
-  }
-  return result
-}
-
 export async function match(
   db: InteropEventDb,
   getEvents: (type: string) => InteropEvent[],
@@ -119,10 +85,7 @@ export async function match(
   plugins: InteropPlugin[],
   supportedChains: string[],
   logger: Logger,
-  deployedToAbstractMap: Map<
-    ChainSpecificAddress,
-    AbstractTokenRecord
-  > = new Map(),
+  tokenMap: TokenMap,
 ) {
   const start = Date.now()
   logger.info('Matching started', {
@@ -162,11 +125,7 @@ export async function match(
         }
         let result: MatchResult | undefined
         try {
-          result = await plugin.match?.(
-            event,
-            filteredDb,
-            deployedToAbstractMap,
-          )
+          result = await plugin.match?.(event, filteredDb, tokenMap)
         } catch (e) {
           logger.error('Matching failed', e, {
             plugin: plugin.name,

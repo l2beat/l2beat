@@ -46,38 +46,38 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     )
   }
 
-  async getLatestBlockNumber(): Promise<number> {
+  getLatestBlockNumber(): Promise<number> {
     const key = this.buildSnapshotKey(['latestBlockNumber'])
-    const snapshot = await this.$.inputs.readRpc<number>(key)
+    const snapshot = this.$.inputs.readRpc<number>(key)
     if (snapshot) {
-      return snapshot
+      return Promise.resolve(snapshot)
     }
 
     throw new ReplayError(key)
   }
 
-  async getBlockWithTransactions(
+  getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<EVMBlockWithTransactions> {
     const key = this.buildSnapshotKey([
       'blockWithTransactions',
       blockNumber.toString(),
     ])
-    const snapshot = await this.$.inputs.readRpc<EVMBlockWithTransactions>(key)
+    const snapshot = this.$.inputs.readRpc<EVMBlockWithTransactions>(key)
     if (snapshot) {
-      return snapshot
+      return Promise.resolve(snapshot)
     }
     throw new ReplayError(key)
   }
 
-  async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
+  getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
     const key = this.buildSnapshotKey([
       'blockParentBeaconRoot',
       blockNumber.toString(),
     ])
-    const snapshot = await this.$.inputs.readRpc<string>(key)
+    const snapshot = this.$.inputs.readRpc<string>(key)
     if (snapshot) {
-      return snapshot
+      return Promise.resolve(snapshot)
     }
 
     throw new ReplayError(key)
@@ -88,7 +88,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     blockNumber: 'latest' | number,
     includeTxs: true,
   ): Promise<EVMBlockWithTransactions>
-  async getBlock(
+  getBlock(
     blockNumber: number | 'latest',
     includeTxs: boolean,
   ): Promise<EVMBlock | EVMBlockWithTransactions> {
@@ -97,37 +97,37 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       blockNumber.toString(),
       includeTxs.toString(),
     ])
-    const snapshot = await this.$.inputs.readRpc<
-      EVMBlock | EVMBlockWithTransactions
-    >(key)
+    const snapshot = this.$.inputs.readRpc<EVMBlock | EVMBlockWithTransactions>(
+      key,
+    )
     if (snapshot) {
-      return snapshot
+      return Promise.resolve(snapshot)
     }
 
     throw new ReplayError(key)
   }
 
-  async getTransaction(txHash: string): Promise<EVMTransaction> {
+  getTransaction(txHash: string): Promise<EVMTransaction> {
     const key = this.buildSnapshotKey(['transaction', txHash])
-    const snapshot = await this.$.inputs.readRpc<EVMTransaction>(key)
+    const snapshot = this.$.inputs.readRpc<EVMTransaction>(key)
     if (snapshot) {
-      return snapshot
+      return Promise.resolve(snapshot)
     }
 
     throw new ReplayError(key)
   }
 
-  async getTransactionReceipt(txHash: string): Promise<Receipt> {
+  getTransactionReceipt(txHash: string): Promise<Receipt> {
     const key = this.buildSnapshotKey(['transactionReceipt', txHash])
-    const snapshot = await this.$.inputs.readRpc<Receipt>(key)
+    const snapshot = this.$.inputs.readRpc<Receipt>(key)
     if (snapshot) {
-      return snapshot
+      return Promise.resolve(snapshot)
     }
 
     throw new ReplayError(key)
   }
 
-  async getBalance(
+  getBalance(
     holder: EthereumAddress,
     blockNumber: number | 'latest',
   ): Promise<bigint> {
@@ -136,15 +136,15 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       holder.toString(),
       blockNumber.toString(),
     ])
-    const snapshot = await this.$.inputs.readRpc<string>(key)
+    const snapshot = this.$.inputs.readRpc<string>(key)
     if (snapshot) {
-      return BigInt(snapshot)
+      return Promise.resolve(BigInt(snapshot))
     }
 
     throw new ReplayError(key)
   }
 
-  async getLogs(
+  getLogs(
     from: number,
     to: number,
     addresses?: string[],
@@ -159,15 +159,15 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       addressKey,
       topicsKey,
     ])
-    const snapshot = await this.$.inputs.readRpc<EVMLog[]>(key)
+    const snapshot = this.$.inputs.readRpc<EVMLog[]>(key)
     if (snapshot) {
-      return snapshot
+      return Promise.resolve(snapshot)
     }
 
     throw new ReplayError(key)
   }
 
-  async getFeeHistory(
+  getFeeHistory(
     blockCount: number,
     newestBlock: number,
     rewardPercentiles: number[],
@@ -179,15 +179,15 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       newestBlock.toString(),
       percentilesKey,
     ])
-    const snapshot = await this.$.inputs.readRpc<EVMFeeHistory>(key)
+    const snapshot = this.$.inputs.readRpc<EVMFeeHistory>(key)
     if (snapshot) {
-      return snapshot
+      return Promise.resolve(snapshot)
     }
 
     throw new ReplayError(key)
   }
 
-  async call(
+  call(
     callParams: CallParameters,
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
@@ -197,16 +197,16 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       callParams.data.toString(),
       blockNumber.toString(),
     ])
-    const snapshot = await this.$.inputs.readRpc<string>(key)
+    const snapshot = this.$.inputs.readRpc<string>(key)
 
     if (snapshot) {
-      return Bytes.fromHex(snapshot)
+      return Promise.resolve(Bytes.fromHex(snapshot))
     }
 
     throw new ReplayError(key)
   }
 
-  async multicall(
+  multicall(
     calls: CallParameters[],
     blockNumber: number,
   ): Promise<MulticallV3Response[]> {
@@ -218,10 +218,10 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
       blockNumber.toString(),
       callsKey,
     ])
-    const snapshot = await this.$.inputs.readRpc<MulticallV3Response[]>(key)
+    const snapshot = this.$.inputs.readRpc<MulticallV3Response[]>(key)
 
     if (snapshot) {
-      return snapshot
+      return Promise.resolve(snapshot)
     }
 
     throw new ReplayError(key)
@@ -234,7 +234,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
 
 class ReplayError extends Error {
   constructor(key: string) {
-    super(`missing snapshot data - ${key}`)
+    super(`missing rpc snapshot data - ${key}`)
     this.name = 'ReplayError'
   }
 }
