@@ -20,9 +20,7 @@ export const robinhood: ScalingProject = upcomingL2({
       documentation: ['https://docs.robinhood.com/chain'],
       repositories: [],
       explorers: ['https://explorer.testnet.chain.robinhood.com/stats'],
-      socialMedia: [
-        'https://x.com/RobinhoodApp'
-      ],
+      socialMedia: ['https://x.com/RobinhoodApp'],
     },
   },
   ecosystemInfo: {
