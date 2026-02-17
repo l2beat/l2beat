@@ -70,7 +70,6 @@ export async function getInteropNonMintingData(
 
 async function getCachedData(initialSelectedChains: SelectedChainsIds) {
   const helpers = getSsrHelpers()
-  console.log('initialSelectedChains', initialSelectedChains)
   const [protocols] = await Promise.all([
     ps.getProjects({
       select: ['interopConfig'],

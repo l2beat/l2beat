@@ -50,10 +50,8 @@ export function InteropSummaryPage({
           initialSelectedChains={initialSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <div className="flex min-h-screen flex-col">
-              <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-              <Content interopChains={interopChains} protocols={protocols} />
-            </div>
+            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
+            <Content interopChains={interopChains} protocols={protocols} />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>

@@ -47,9 +47,7 @@ export function InteropBurnAndMintPage({
           initialSelectedChains={initialSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <div className="flex min-h-screen flex-col">
-              <Content interopChains={interopChains} protocols={protocols} />
-            </div>
+            <Content interopChains={interopChains} protocols={protocols} />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
