@@ -3,7 +3,7 @@ import { assert, type ProjectId } from '@l2beat/shared-pure'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export type InteropProtocolData = {
-  protocolName: string
+  name: string
   volume: {
     value: number
     share: number
@@ -44,8 +44,7 @@ export function getTopProtocols(
     assert(project, `Project not found: ${key}`)
 
     return {
-      protocolName:
-        project.interopConfig.name ?? project.shortName ?? project.name,
+      name: project.interopConfig.name ?? project.name,
       volume: {
         value: data.volume,
         share: totalVolume > 0 ? (data.volume / totalVolume) * 100 : 0,

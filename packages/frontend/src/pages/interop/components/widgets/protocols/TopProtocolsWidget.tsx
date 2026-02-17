@@ -71,16 +71,16 @@ export function TopProtocolsWidget({
               : null}
             {protocolsWithOthers.length > 0 &&
               protocolsWithOthers.map((protocol) => (
-                <tr key={protocol.protocolName}>
+                <tr key={protocol.name}>
                   <td className="flex items-center gap-1 font-medium text-2xs">
                     <div
                       className="size-3 min-w-3 rounded-xs"
                       style={{ backgroundColor: protocol.color }}
                     />
                     <div className="leading-none">
-                      {protocol.protocolName === 'Others'
+                      {protocol.name === 'Others'
                         ? `Others (${protocol.othersCount ?? 0})`
-                        : protocol.protocolName}
+                        : protocol.name}
                     </div>
                   </td>
                   <td className="w-10 text-right font-medium text-2xs text-secondary">

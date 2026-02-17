@@ -1251,6 +1251,7 @@ export type InteropPluginName =
 
 export interface InteropConfig {
   name?: string
+  shortName?: string
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured
