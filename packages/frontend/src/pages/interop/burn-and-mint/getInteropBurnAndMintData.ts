@@ -20,17 +20,10 @@ export async function getInteropBurnAndMintData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
-  const hasQueryChains =
-    req.query.selectedChains?.[0] && req.query.selectedChains?.[1]
-
-  const initialSelectedChains: SelectedChainsIds = hasQueryChains
-    ? [
-        interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
-          null,
-        interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ??
-          null,
-      ]
-    : [null, null]
+  const initialSelectedChains: SelectedChainsIds = [
+    interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ?? null,
+    interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ?? null,
+  ]
 
   const queryState = await cache.get(
     {
