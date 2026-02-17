@@ -86,9 +86,14 @@ export const stargatev2: Bridge = {
       {
         plugin: 'stargate',
         transferType: 'stargate-v2-taxi.Transfer',
+        bridgeType: 'nonMinting',
+      },
+      {
+        plugin: 'stargate',
+        transferType: 'stargate-v2-taxi.Transfer',
+        bridgeType: 'lockAndMint',
       },
       // TODO: needs bus/taxi duration split
-      // TODO: needs hydra filtering by minted label
     ],
   },
   technology: {

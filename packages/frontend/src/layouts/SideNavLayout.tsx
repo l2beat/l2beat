@@ -41,6 +41,7 @@ export function SideNavLayout({
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
+
   const selectedChainsContext = useContext(InteropSelectedChainsContext)
 
   const groups = useMemo(
@@ -110,7 +111,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/summary',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
             {
@@ -118,7 +118,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/non-minting',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
             {
@@ -126,7 +125,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/lock-and-mint',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
             {
@@ -134,7 +132,6 @@ export function SideNavLayout({
               href: buildInteropUrl(
                 '/interop/burn-and-mint',
                 selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
               ),
             },
           ],
@@ -237,12 +234,12 @@ export function SideNavLayout({
             })),
         },
       ]),
-    [selectedChainsContext?.selectedChains, selectedChainsContext?.allChainIds],
+    [selectedChainsContext?.selectedChains],
   )
 
   return (
     <SidebarProvider>
-      <div className="relative flex flex-col lg:flex-row">
+      <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
         <MobileTopNavbar
           groups={groups}
@@ -257,7 +254,7 @@ export function SideNavLayout({
         />
         <div
           className={cn(
-            'min-w-0 flex-1 has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
+            'flex min-w-0 flex-1 flex-col has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
             childrenWrapperClassName,
           )}
         >
@@ -269,7 +266,7 @@ export function SideNavLayout({
               } as React.CSSProperties
             }
             className={cn(
-              'mx-auto min-h-screen md:px-(--tablet-content-horizontal-padding) lg:pl-0',
+              'mx-auto flex w-full grow flex-col md:px-(--tablet-content-horizontal-padding) lg:pl-0',
               maxWidth === 'default' && 'max-w-(--breakpoint-lg)',
               maxWidth === 'wide' && 'max-w-412',
             )}

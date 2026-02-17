@@ -16,7 +16,7 @@ const config: InteropFeatureConfig = {
   dashboard: { enabled: true, getExplorerUrl: () => undefined },
   compare: { enabled: false },
   financials: { enabled: false, tokenDbApiUrl: '' },
-  config: { enabled: false, chains: [] },
+  config: { enabled: false, chains: [], configIntervalMs: -1 },
   inMemoryEventCap: 0,
 }
 

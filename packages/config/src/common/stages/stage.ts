@@ -1,5 +1,4 @@
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import type {
   MissingStageDetails,
   Stage,
@@ -27,6 +26,16 @@ type StageBlueprint = Record<
   }
 >
 
+export type UpcomingStageRequirements = Partial<
+  Record<
+    string,
+    {
+      expiresAt: number
+      items: string[]
+    }
+  >
+>
+
 type ChecklistValue =
   | Satisfied
   | null
@@ -49,9 +58,9 @@ export type ChecklistTemplate<T extends StageBlueprint> = {
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
+  upcoming?: UpcomingStageRequirements,
 ): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
-    const countdownExpired = PROJECT_COUNTDOWNS.stageChanges < UnixTime.now()
     const summary: StageSummary[] = []
     let highestStageReached: Stage = 'Stage 0'
     let missing: MissingStageDetails | undefined
@@ -76,6 +85,13 @@ export function createGetStage<T extends StageBlueprint>(
           : undefined,
       }
 
+      const upcomingStage = upcoming?.[stage]
+      const upcomingCountdownExpired = upcomingStage
+        ? upcomingStage.expiresAt < UnixTime.now()
+        : true
+      const upcomingItems = new Set<string>(upcomingStage?.items ?? [])
+      const pendingReasons: string[] = []
+
       // Loop through stage requirements
       for (const [key, blueprintItem] of Object.entries(blueprintStage.items)) {
         const requirement = evaluate(blueprintItem, checklist[stage][key])
@@ -83,11 +99,39 @@ export function createGetStage<T extends StageBlueprint>(
           continue
         }
 
+        const isUpcoming = upcomingItems.has(key)
+
         // Add to output
         summaryStage.requirements.push({
           satisfied: requirement.satisfied,
           description: requirement.description,
+          ...(isUpcoming && !upcomingCountdownExpired
+            ? { upcoming: true }
+            : {}),
         })
+
+        if (isUpcoming) {
+          if (requirement.satisfied !== true) {
+            if (upcomingCountdownExpired) {
+              // Treat as regular requirement
+              if (blueprintStage.name !== 'Stage 0') {
+                if (missing === undefined) {
+                  missing = {
+                    nextStage: blueprintStage.name,
+                    requirements: [],
+                    principle: undefined,
+                  }
+                }
+                if (missing.nextStage === blueprintStage.name) {
+                  missing.requirements.push(requirement.description)
+                }
+              }
+            } else {
+              pendingReasons.push(requirement.description)
+            }
+          }
+          continue
+        }
 
         // Add to missing
         if (
@@ -126,20 +170,25 @@ export function createGetStage<T extends StageBlueprint>(
           missing.principle = principle.description
         }
 
-        if (!missing && countdownExpired) {
+        if (!missing) {
           missing = {
             nextStage: blueprintStage.name,
             requirements: [],
             principle: principle.description,
           }
         }
+      }
 
-        if (!missing && !countdownExpired) {
-          downgradePending = {
-            expiresAt: PROJECT_COUNTDOWNS.stageChanges,
-            reason: principle.description,
-            toStage: highestStageReached,
-          }
+      if (
+        upcomingStage &&
+        !upcomingCountdownExpired &&
+        pendingReasons.length > 0 &&
+        !missing
+      ) {
+        downgradePending = {
+          expiresAt: upcomingStage.expiresAt,
+          reasons: pendingReasons,
+          toStage: highestStageReached,
         }
       }
 

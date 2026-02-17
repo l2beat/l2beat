@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x18f54f29431bd8be37f4ca9516cca28ad566ece9
+
+# Diff at Mon, 16 Feb 2026 15:01:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1770815984
+- current timestamp: 1771253897
+
+## Description
+
+lido related upgrade scheduler.
+
+## Watched changes
+
+```diff
+    contract TwoPhaseFrameConfigUpdate (eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1) {
+    +++ description: None
+      values.isReadyForOffsetPhase:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x20ebf180e1efc2f52005bb558dedba075a0f3791
 
 # Diff at Mon, 02 Feb 2026 14:42:24 GMT:

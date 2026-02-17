@@ -4,9 +4,9 @@ import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import type { InteropDashboardParams, ProtocolEntry } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
-import { getProtocolEntries } from './utils/getAllProtocolEntries'
+import { getFlows, type InteropFlowData } from './utils/getFlows'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
-import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
+import { getProtocolEntries } from './utils/getProtocolEntries'
 import {
   getTopProtocols,
   type InteropProtocolData,
@@ -14,15 +14,16 @@ import {
 import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
 import {
   getTransferSizeChartData,
-  type TransferSizeChartData,
+  type TransferSizeDataPoint,
 } from './utils/getTransferSizeChartData'
 
 export type InteropDashboardData = {
-  top3Paths: InteropPathData[]
+  flows: InteropFlowData[]
   topProtocols: InteropProtocolData[]
   topToken: InteropTopTokenData | undefined
-  transferSizeChartData: TransferSizeChartData | undefined
+  transferSizeChartData: TransferSizeDataPoint[] | undefined
   entries: ProtocolEntry[]
+  zeroTransferProtocols: { name: string; iconUrl: string }[]
 }
 
 export async function getInteropDashboardData(
@@ -37,8 +38,7 @@ export async function getInteropDashboardData(
   })
 
   const records = await getLatestAggregatedInteropTransferWithTokens(
-    params.from,
-    params.to,
+    params.selectedChainsIds,
     params.type,
   )
 
@@ -53,7 +53,7 @@ export async function getInteropDashboardData(
   )
 
   return {
-    top3Paths: getTopPaths(records, subgroupProjects),
+    flows: getFlows(records, subgroupProjects),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     topToken: getTopToken({
       records,
@@ -62,7 +62,7 @@ export async function getInteropDashboardData(
       subgroupProjects,
     }),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
-    entries: getProtocolEntries(
+    ...getProtocolEntries(
       records,
       tokensDetailsMap,
       interopProjects,
@@ -76,16 +76,15 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     select: ['interopConfig'],
   })
 
-  const top3Paths: InteropPathData[] = [
+  const flows: InteropFlowData[] = [
     { srcChain: 'ethereum', dstChain: 'optimism', volume: 35_000_000 },
-    { srcChain: 'ethereum', dstChain: 'arbitrum', volume: 30_000_000 },
-    { srcChain: 'ethereum', dstChain: 'base', volume: 22_000_000 },
+    { srcChain: 'optimism', dstChain: 'ethereum', volume: 30_000_000 },
   ]
 
   const topProtocols: InteropProtocolData[] = interopProjects
     .slice(0, 5)
     .map((project, i) => ({
-      protocolName: project.interopConfig.name ?? project.name,
+      name: project.interopConfig.name ?? project.name,
       volume: { value: 20_000_000 - i * 3_000_000, share: 20 - i * 3 },
       transfers: { value: 5000 - i * 800, share: 20 - i * 3 },
     }))
@@ -140,7 +139,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
 
   const entries: ProtocolEntry[] = interopProjects.map((project) => ({
     id: project.id,
-    protocolName: project.interopConfig.name ?? project.name,
+    name: project.interopConfig.name ?? project.name,
+    shortName: project.interopConfig.shortName,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
     iconSlug: project.slug,
@@ -167,6 +167,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
           ? {
               name:
                 interopProjects[0].interopConfig.name ??
+                interopProjects[0].shortName ??
                 interopProjects[0].name,
               iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
             }
@@ -174,41 +175,59 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       }
     : undefined
 
-  const transferSizeChartData: TransferSizeChartData = {
-    arbitrum: {
+  const transferSizeChartData: TransferSizeDataPoint[] = [
+    {
       name: 'Arbitrum Canonical',
       iconUrl: manifest.getUrl('/icons/arbitrum.png'),
       countUnder100: 10,
+      percentageUnder100: 10,
       count100To1K: 12,
+      percentage100To1K: 12,
       count1KTo10K: 50,
+      percentage1KTo10K: 50,
       count10KTo100K: 35,
+      percentage10KTo100K: 35,
       countOver100K: 1,
+      percentageOver100K: 1,
     },
-    optimism: {
+    {
       name: 'Optimism Canonical',
       iconUrl: manifest.getUrl('/icons/optimism.png'),
       countUnder100: 5,
+      percentageUnder100: 5,
       count100To1K: 8,
+      percentage100To1K: 8,
       count1KTo10K: 10,
+      percentage1KTo10K: 10,
       count10KTo100K: 4,
+      percentage10KTo100K: 4,
       countOver100K: 0,
+      percentageOver100K: 0,
     },
-    base: {
+    {
       name: 'Base Canonical',
       iconUrl: manifest.getUrl('/icons/base.png'),
       countUnder100: 5,
+      percentageUnder100: 5,
       count100To1K: 8,
+      percentage100To1K: 8,
       count1KTo10K: 10,
+      percentage1KTo10K: 10,
       count10KTo100K: 4,
+      percentage10KTo100K: 4,
       countOver100K: 0,
+      percentageOver100K: 0,
     },
-  }
+  ]
 
   return {
-    top3Paths,
+    flows,
     topProtocols,
     topToken,
     transferSizeChartData,
     entries,
+    zeroTransferProtocols: [
+      { name: 'Base Canonical', iconUrl: manifest.getUrl('/icons/base.png') },
+    ],
   }
 }

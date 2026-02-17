@@ -10,7 +10,8 @@ import type { TopItems } from './utils/getTopItems'
 export type ProtocolEntry = {
   id: ProjectId
   iconUrl: string
-  protocolName: string
+  name: string
+  shortName: string | undefined
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
@@ -30,6 +31,11 @@ export type ProtocolEntry = {
   netMintedValue: number | undefined
 }
 
+export type ProtocolDisplayable = {
+  name: string
+  iconUrl: string
+}
+
 export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined
@@ -38,8 +44,8 @@ export type ByBridgeTypeData = {
 
 export type LockAndMintProtocolData = {
   volume: number
+  netMintedValue: number | undefined
   tokens: TopItems<TokenData>
-  averageDuration: AverageDuration | null
 }
 
 export type NonMintingProtocolData = {
@@ -53,10 +59,15 @@ export type BurnAndMintProtocolData = {
   tokens: TopItems<TokenData>
 }
 
+const SelectedChainsIds = v.tuple([
+  v.union([v.string(), v.null()]),
+  v.union([v.string(), v.null()]),
+])
+export type SelectedChainsIds = v.infer<typeof SelectedChainsIds>
+
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  selectedChainsIds: SelectedChainsIds,
   type: KnownInteropBridgeType.optional(),
 })
 
@@ -65,8 +76,7 @@ export type InteropProtocolTokensParams = v.infer<
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  selectedChainsIds: SelectedChainsIds,
   type: KnownInteropBridgeType.optional(),
 })
 

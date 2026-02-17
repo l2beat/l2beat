@@ -4,6 +4,7 @@ import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
+import { isLinkActive } from '~/utils/isLinkActive'
 import {
   Collapsible,
   CollapsibleContent,
@@ -65,7 +66,7 @@ export function NavSidebar({ groups, logoLink, sideLinks, whatsNew }: Props) {
                 <SidebarGroupItem key={group.title}>
                   <SidebarGroupLink
                     href={group.href}
-                    isActive={getIsActive(group.href, pathname)}
+                    isActive={isLinkActive({ href: group.href, pathname })}
                   >
                     {group.icon}
                     <span>{group.title}</span>
@@ -80,7 +81,7 @@ export function NavSidebar({ groups, logoLink, sideLinks, whatsNew }: Props) {
             <SidebarGroupItem key={link.title}>
               <SidebarGroupSmallLink
                 href={link.href}
-                isActive={getIsActive(link.href, pathname)}
+                isActive={isLinkActive({ href: link.href, pathname })}
               >
                 {link.title}
                 {link.accessory}
@@ -111,7 +112,7 @@ function NavCollapsibleItem({
   )
   const isGroupActive = pathname.startsWith('/' + group.match)
   const isAnyLinkActive = allGroupLinks.some((link) =>
-    getIsActive(link.href, pathname),
+    isLinkActive({ href: link.href, pathname }),
   )
   const breakpoint = useBreakpoint()
 
@@ -163,7 +164,7 @@ function NavCollapsibleItem({
             <SidebarGroupSubButton
               href={item.href}
               key={item.title}
-              isActive={getIsActive(item.href, pathname)}
+              isActive={isLinkActive({ href: item.href, pathname })}
             >
               <span className="leading-tight">{item.title}</span>
             </SidebarGroupSubButton>
@@ -175,7 +176,7 @@ function NavCollapsibleItem({
                 <SidebarGroupSubButton
                   href={item.href}
                   key={item.title}
-                  isActive={getIsActive(item.href, pathname)}
+                  isActive={isLinkActive({ href: item.href, pathname })}
                 >
                   <span>{item.title}</span>
                 </SidebarGroupSubButton>
@@ -186,10 +187,4 @@ function NavCollapsibleItem({
       </CollapsibleContent>
     </Collapsible>
   )
-}
-
-function getIsActive(href: string, pathname: string) {
-  // Strip query parameters from href for comparison
-  const hrefPath = href.split('?')[0]
-  return pathname === hrefPath || pathname.startsWith(hrefPath + '/')
 }

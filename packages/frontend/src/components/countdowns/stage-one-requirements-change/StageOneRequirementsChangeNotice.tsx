@@ -2,6 +2,7 @@ import type { StageConfigured } from '@l2beat/config'
 import { StageBadge } from '~/components/badge/StageBadge'
 import { Countdown } from '~/components/Countdown'
 import { CustomLink } from '~/components/link/CustomLink'
+import { Markdown } from '~/components/markdown/Markdown'
 import { externalLinks } from '~/consts/externalLinks'
 import { useDevice } from '~/hooks/useDevice'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
@@ -29,14 +30,21 @@ export function StageOneRequirementsChangeNotice({
       <div className="mt-4 font-medium text-paragraph-15 md:text-paragraph-16">
         The project will be downgraded to{' '}
         <StageBadge stage="Stage 0" isAppchain={false} className="inline" />{' '}
-        because it does not satisfy an upcoming Stage 1 principle.
+        because it does not satisfy upcoming Stage 1 requirements.
       </div>
       <p className="mt-6 mb-2 font-bold text-paragraph-15 md:text-paragraph-16">
         The project will move to Stage 0 because:
       </p>
-      <div className="flex gap-2 bg-red-600/20 p-4 text-paragraph-15 md:text-paragraph-16">
-        <CloseIcon className="mt-[3px] size-[15px] shrink-0 fill-negative md:mt-1 md:size-3.5" />{' '}
-        <span>{downgradePending.reason}</span>
+      <div className="space-y-2">
+        {downgradePending.reasons.map((reason, i) => (
+          <div
+            key={i}
+            className="flex gap-2 rounded-lg bg-red-600/20 p-4 text-paragraph-15 md:text-paragraph-16"
+          >
+            <CloseIcon className="mt-[3px] size-[15px] shrink-0 fill-negative md:mt-1 md:size-3.5" />{' '}
+            <Markdown>{reason}</Markdown>
+          </div>
+        ))}
       </div>
       <CustomLink
         href={externalLinks.articles.stageOneRequirementsChange}
@@ -66,12 +74,17 @@ export function StageOneRequirementsChangeStageSectionNotice({
         <div className="mt-4 font-medium text-paragraph-15 md:text-paragraph-16">
           The project will be downgraded to{' '}
           <StageBadge stage="Stage 0" isAppchain={false} className="inline" />{' '}
-          because it does not satisfy an upcoming Stage 1 principle.
+          because it does not satisfy upcoming Stage 1 requirements.
         </div>
-        <div className="flex gap-2 text-paragraph-15 md:text-paragraph-16">
-          <MissingIcon className="mt-[5px] size-4 shrink-0 fill-negative" />
-          <span>{downgradePending.reason}</span>
-        </div>{' '}
+        {downgradePending.reasons.map((reason, i) => (
+          <div
+            key={i}
+            className="flex gap-2 text-paragraph-15 md:text-paragraph-16"
+          >
+            <MissingIcon className="mt-[5px] size-4 shrink-0 fill-negative" />
+            <Markdown>{reason}</Markdown>
+          </div>
+        ))}{' '}
         {stage1PrincipleDescription && (
           <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
             {stage1PrincipleDescription}

@@ -11,6 +11,11 @@ export const ccip: BaseProject = {
     plugins: [
       {
         plugin: 'ccip',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        plugin: 'ccip',
+        bridgeType: 'burnAndMint',
       },
     ],
   },

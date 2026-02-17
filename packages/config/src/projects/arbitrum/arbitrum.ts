@@ -181,18 +181,22 @@ export const arbitrum: ScalingProject = orbitStackL2({
       {
         chain: 'arbitrum',
         plugin: 'orbitstack',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'arbitrum',
         plugin: 'orbitstack-standardgateway',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'arbitrum',
         plugin: 'orbitstack-wethgateway',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'arbitrum',
         plugin: 'orbitstack-customgateway',
+        bridgeType: 'lockAndMint',
       },
     ],
   },
@@ -345,6 +349,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

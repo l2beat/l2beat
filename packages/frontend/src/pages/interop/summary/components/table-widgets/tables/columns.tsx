@@ -3,7 +3,6 @@ import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
-import { AvgDurationCell } from '~/pages/interop/components/table/AvgDurationCell'
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
 import type { TokenData } from '~/server/features/scaling/interop/types'
@@ -26,7 +25,8 @@ const burnAndMintColumnHelper = createColumnHelper<BurnAndMintProtocolRow>()
 function getCommonColumns<
   T extends {
     iconUrl: string
-    protocolName: string
+    name: string
+    shortName: string | undefined
     subgroup: { name: string; iconUrl: string } | undefined
     isAggregate: boolean | undefined
   },
@@ -40,7 +40,7 @@ function getCommonColumns<
           src={ctx.row.original.iconUrl}
           width={20}
           height={20}
-          alt={`${ctx.row.original.protocolName} logo`}
+          alt={`${ctx.row.original.name} logo`}
         />
       ),
       meta: {
@@ -50,13 +50,13 @@ function getCommonColumns<
       size: 28,
       enableHiding: false,
     }),
-    columnHelper.accessor((row) => row.protocolName, {
+    columnHelper.accessor((row) => row.shortName ?? row.name, {
       header: 'Name',
       cell: (ctx) => (
         <TwoRowCell>
           <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
             <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-              {ctx.row.original.protocolName}
+              {ctx.row.original.shortName ?? ctx.row.original.name}
             </div>
             {ctx.row.original.subgroup && (
               <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
@@ -98,7 +98,7 @@ function getTokensByVolumeColumn<
   T extends {
     tokens: TopItems<TokenData>
     id: ProjectId
-    protocolName: string
+    name: string
     iconUrl: string
   },
 >(columnHelper: ColumnHelper<T>, type: KnownInteropBridgeType) {
@@ -116,7 +116,7 @@ function getTokensByVolumeColumn<
         type={type}
         protocol={{
           id: ctx.row.original.id,
-          name: ctx.row.original.protocolName,
+          name: ctx.row.original.name,
           iconUrl: ctx.row.original.iconUrl,
         }}
       />
@@ -151,33 +151,20 @@ export const nonMintingColumns = [
 export const lockAndMintColumns = [
   ...getCommonColumns(lockAndMintColumnHelper),
   getLast24hVolumeColumn(lockAndMintColumnHelper),
-  lockAndMintColumnHelper.accessor(
-    (row) =>
-      row.averageDuration?.type === 'unknown' || row.averageDuration === null
-        ? undefined
-        : row.averageDuration.type === 'single'
-          ? row.averageDuration.duration
-          : (row.averageDuration.in.duration ??
-            row.averageDuration.out.duration ??
-            Number.POSITIVE_INFINITY),
-    {
-      header: 'Last 24h avg.\ntransfer time',
-      invertSorting: true,
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        headClassName: 'text-2xs',
-        tooltip:
-          'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
-      },
-      cell: (ctx) => {
-        if (ctx.row.original.averageDuration === null) return EM_DASH
-        return (
-          <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
-        )
-      },
+  lockAndMintColumnHelper.accessor('netMintedValue', {
+    header: 'Last 24h net\nminted value',
+    meta: {
+      align: 'right',
+      headClassName: 'text-2xs',
     },
-  ),
+    cell: (ctx) => (
+      <span className="font-medium text-label-value-15">
+        {ctx.row.original.netMintedValue
+          ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
+          : EM_DASH}
+      </span>
+    ),
+  }),
   getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
 ]
 

@@ -1,7 +1,7 @@
 {
   "name": "intmax",
-  "timestamp": 1770724065,
-  "configHash": "0x5f968f2838793a96ae19b6ee0af31bf4fa3637236814e79ce8144481e8142ef4",
+  "timestamp": 1771280072,
+  "configHash": "0x9deaea6d12f4866cfe5af5486c84453e14ca7ac7dbb0fde9d219552e0f8daf59",
   "entries": [
     {
       "address": "eth:0x110b66ea6F97c0391eEfFDd19CD0cFd73e9871fA",
@@ -94,6 +94,44 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Exit",
+      "address": "eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
+        "0xea1d4e7fc9312bcb235af8d02b25007964a45ba7d95baf30406d46ae55ac744b"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Timelocked exit mechanism. SUBMITTER_ROLE queues withdrawal requests with a 24-hour timelock, after which anyone can execute them permissionlessly. GUARDIAN_ROLE can cancel pending requests and pause the contract.",
+      "ignoreInWatchMode": ["getRequest"],
+      "sinceTimestamp": 1771122743,
+      "sinceBlock": 24459233,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x24b880Ee40387dc86e374F707B5081c34Edb5eA3",
+        "$pastUpgrades": [
+          [
+            "2026-02-15T02:32:23.000Z",
+            "0x098a5a57b90967c06973d8aad9d74c83057b522650f5ab125202162b3e95857b",
+            ["eth:0x24b880Ee40387dc86e374F707B5081c34Edb5eA3"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "getRequest": [],
+        "GUARDIAN_ROLE": "0x8b5b16d04624687fcf0d0228f19993c9157c1ed07b41d8d430fd9100eb099fe8",
+        "LIQUIDITY": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+        "paused": false,
+        "SUBMITTER_ROLE": "0x12b80c3c1a8f58857e0e80e1961585f574502e089ca974eb9fcf05cf904fe012",
+        "TIMELOCK_DURATION": 86400,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B": "ERC1967Proxy",
+        "eth:0x24b880Ee40387dc86e374F707B5081c34Edb5eA3": "Exit"
+      }
+    },
+    {
       "name": "Contribution",
       "address": "eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2",
       "type": "Contract",
@@ -120,7 +158,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 33,
+        "getCurrentPeriod": 34,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -201,7 +239,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -246,7 +284,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -326,22 +364,22 @@
       }
     },
     {
-      "name": "Liquidity",
+      "name": "LiquidityV2",
       "address": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
       "type": "Contract",
       "template": "intmax/Liquidity",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xf23a0f0c4af93cdcb226ce3de63c8ed56ce4267448a659414e5a459b4e5b94db"
+        "0xbfcd0c18579ccd70e1bdf498b14c4f017af16483f44f45015752901149ef0668"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check.",
+      "description": "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.",
       "ignoreInWatchMode": ["getLastDepositId", "getLastRelayedDepositId"],
       "sinceTimestamp": 1750500599,
       "sinceBlock": 22752152,
       "values": {
         "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9",
+        "$implementation": "eth:0x890662DF84603CcF62b940292252BDd3aa0b5382",
         "$pastUpgrades": [
           [
             "2025-06-21T10:09:59.000Z",
@@ -362,9 +400,14 @@
             "2026-02-07T14:29:35.000Z",
             "0x95073b3d48f892101baf0c2e857a0b0b8f72dd6ae5fdfecd49c0814dfec4cd69",
             ["eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9"]
+          ],
+          [
+            "2026-02-15T09:41:11.000Z",
+            "0x7ae0a3b4f0284d10ee582d9f28124a5798fb68f4f5ecdeddcd915d77abf30799",
+            ["eth:0x890662DF84603CcF62b940292252BDd3aa0b5382"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -374,13 +417,18 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0xA8E0Db294aD54E9187CeE41c4d471186bf5Aa7A6"]
           },
-          "WITHDRAWAL": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] }
+          "WITHDRAWAL": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] },
+          "EXIT": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B"]
+          }
         },
         "amlPermitter": "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
         "contribution": "eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
+        "EXIT_ROLE": "0xa5e2908dfcbbc823d163e6a6cb40ec3285fe62c08afd9b92045ead9eed2f77db",
         "getLastDepositId": 67964,
         "getLastRelayedDepositId": 67964,
         "getNativeTokenIndex": 0,
@@ -395,7 +443,7 @@
       },
       "implementationNames": {
         "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3": "ERC1967Proxy",
-        "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9": "Liquidity"
+        "eth:0x890662DF84603CcF62b940292252BDd3aa0b5382": "LiquidityV2"
       }
     },
     {
@@ -502,7 +550,8 @@
           "x-aztec-identity-007",
           "x-aztec-aml-007",
           "x-aztec-aml-008",
-          "x-aztec-identity-008"
+          "x-aztec-identity-008",
+          "x-nest-prod-006"
         ],
         "getRestakeableStrategies": [
           "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
@@ -671,7 +720,7 @@
           "numPhases": 7,
           "phase0Period": 16
         },
-        "getCurrentPeriod": 234,
+        "getCurrentPeriod": 240,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
@@ -720,7 +769,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 33,
+        "getCurrentPeriod": 34,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -899,6 +948,68 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x24b880Ee40387dc86e374F707B5081c34Edb5eA3": [
+      "constructor(address _liquidity, uint256 _timelockDuration)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error ArrayLengthMismatch()",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EmptyBatch()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error RequestAlreadyExists(uint256 requestId)",
+      "error RequestNotFound(uint256 requestId)",
+      "error RequestNotPending(uint256 requestId)",
+      "error TimelockNotExpired(uint256 requestId, uint256 executableAt)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event Initialized(uint64 version)",
+      "event Paused(address account)",
+      "event RequestCancelled(uint256 indexed requestId)",
+      "event RequestExecuted(uint256 indexed requestId)",
+      "event RequestSubmitted(uint256 indexed requestId, address indexed recipient, uint32 tokenIndex, uint256 amount, uint256 executableAt)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GUARDIAN_ROLE() view returns (bytes32)",
+      "function LIQUIDITY() view returns (address)",
+      "function SUBMITTER_ROLE() view returns (bytes32)",
+      "function TIMELOCK_DURATION() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function batchCancelRequests(uint256[] requestIds)",
+      "function batchExecuteRequests(uint256[] requestIds)",
+      "function batchSubmitRequests(uint256[] requestIds, address[] recipients, uint32[] tokenIndices, uint256[] amounts)",
+      "function cancelRequest(uint256 requestId)",
+      "function executeRequest(uint256 requestId)",
+      "function getPendingRequests() view returns (uint256[])",
+      "function getRequest(uint256 requestId) view returns (tuple(address recipient, uint32 tokenIndex, uint8 status, uint256 amount, uint256 submittedAt))",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _admin, address _submitter, address _guardian)",
+      "function initializeV2()",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function requests(uint256 requestId) view returns (address recipient, uint32 tokenIndex, uint256 amount, uint256 submittedAt, uint8 status)",
+      "function revokeRole(bytes32 role, address account)",
+      "function submitRequest(uint256 requestId, address recipient, uint32 tokenIndex, uint256 amount)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -997,6 +1108,14 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -1083,14 +1202,7 @@
       "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
       "function validateSignatures(tuple(string taskId, address msgSender, address target, uint256 value, bytes encodedSigAndArgs, string policyID, uint32 quorumThresholdCount, uint256 expireByTime) _task, address[] signerAddresses, bytes[] signatures) returns (bool isVerified)"
     ],
-    "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9": [
-      "constructor()",
+    "eth:0x890662DF84603CcF62b940292252BDd3aa0b5382": [
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
       "error AddressEmptyCode(address target)",
@@ -1122,12 +1234,14 @@
       "error WithdrawalAddressNotSet()",
       "error WithdrawalFeeRatioExceedsLimit()",
       "error WithdrawalNotFound(bytes32 withdrawalHash)",
+      "error ZeroAmount()",
       "event ClaimedWithdrawal(address indexed recipient, bytes32 indexed withdrawalHash)",
       "event DepositCanceled(uint256 indexed depositId)",
       "event Deposited(uint256 indexed depositId, address indexed sender, bytes32 indexed recipientSaltHash, uint32 tokenIndex, uint256 amount, bool isEligible, uint256 depositedAt)",
       "event DepositsRelayed(uint256 indexed upToDepositId, uint256 gasLimit, bytes message)",
       "event DirectWithdrawalFailed(bytes32 indexed withdrawalHash, tuple(address recipient, uint32 tokenIndex, uint256 amount, bytes32 nullifier) withdrawal)",
       "event DirectWithdrawalSuccessed(bytes32 indexed withdrawalHash, address indexed recipient)",
+      "event ExitTransfer(address indexed recipient, uint32 indexed tokenIndex, uint256 amount)",
       "event Initialized(uint64 version)",
       "event Paused(address account)",
       "event PermitterSet(address indexed amlPermitter, address indexed eligibilityPermitter)",
@@ -1142,6 +1256,7 @@
       "event WithdrawalFeeRatioSet(uint32 indexed tokenIndex, uint256 feeRatio)",
       "event WithdrawalFeeWithdrawn(address indexed recipient, uint32 indexed token, uint256 amount)",
       "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXIT_ROLE() view returns (bytes32)",
       "function RELAYER() view returns (bytes32)",
       "function RELAY_LIMIT() view returns (uint256)",
       "function UPGRADE_INTERFACE_VERSION() view returns (string)",
@@ -1160,6 +1275,7 @@
       "function depositNativeToken(bytes32 recipientSaltHash, bytes amlPermission, bytes eligibilityPermission) payable",
       "function doesDepositHashExist(bytes32) view returns (bool)",
       "function eligibilityPermitter() view returns (address)",
+      "function exitTransfer(address recipient, uint32 tokenIndex, uint256 amount)",
       "function getDepositData(uint256 depositId) view returns (tuple(bytes32 depositHash, address sender))",
       "function getDepositDataBatch(uint256[] depositIds) view returns (tuple(bytes32 depositHash, address sender)[])",
       "function getDepositDataHash(uint256 depositId) view returns (bytes32)",
@@ -1191,6 +1307,12 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function withdrawCollectedFees(address recipient, uint32[] tokenIndices)",
       "function withdrawalFeeRatio(uint32) view returns (uint256)"
+    ],
+    "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD": [
+      "constructor(address _singleton)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -1627,12 +1749,12 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Claim": "0x96ba300a18f4cb6ac05e9c5f4fcc8b3916daca44ae2a839e88592b0a700c1638",
     "intmax/Contribution": "0x5b054bae35b8a718a705f49eb6b59b86926069d57f1a3a7b698ea12aad64e991",
-    "intmax/Liquidity": "0xd7d5acf0c2574b4d98b015b7e23864f0e8f319fe1fa58532e649aabe51a35cfd",
+    "intmax/Liquidity": "0xb66a29e642609550379d8fb5b70944ab64807620f147511c229d4524d94d4e00",
     "intmax/PlonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728",
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "ethereum": 24426172, "scroll": 29879991 },
-  "permissionsConfigHash": "0x25d882192eb3083a2f8e180f12138432457c0d386f8f4352076002af13bf51a2"
+  "usedBlockNumbers": { "ethereum": 24472300, "scroll": 30267475 },
+  "permissionsConfigHash": "0xd42e2d06b9670b1d4b25855253402da785780e684dde4bce9708d7b27c5c50f7"
 }

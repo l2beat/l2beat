@@ -13,7 +13,7 @@ export function getProtocolsDataWithOthers(
 
   const top5 = topProtocolsData.slice(0, 5).map((protocol) => ({
     ...protocol,
-    color: protocolColorMap.get(protocol.protocolName) ?? '#000000',
+    color: protocolColorMap.get(protocol.name) ?? '#000000',
   }))
 
   const others = topProtocolsData.slice(5)
@@ -31,7 +31,7 @@ export function getProtocolsDataWithOthers(
   return [
     ...top5,
     {
-      protocolName: OTHERS_PROTOCOL_NAME,
+      name: OTHERS_PROTOCOL_NAME,
       volume: {
         value: metricType === 'volume' ? othersValue : 0,
         share: metricType === 'volume' ? othersShare : 0,

@@ -11,16 +11,11 @@ export const hyperlaneHwr: BaseProject = {
     plugins: [
       {
         plugin: 'hyperlane-hwr',
-      },
-      // TODO: where should we count the AMB apps below? (messages without transfer)
-      {
-        plugin: 'hyperlane',
+        bridgeType: 'burnAndMint',
       },
       {
-        plugin: 'hyperlane-simple-apps',
-      },
-      {
-        plugin: 'hyperlane-eco',
+        plugin: 'hyperlane-hwr',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

@@ -15,11 +15,11 @@ export function TopProtocolsByTransfersChart({
 }) {
   const chartMeta = useMemo(() => {
     return protocols.reduce((acc, protocol) => {
-      acc[protocol.protocolName] = {
+      acc[protocol.name] = {
         label:
-          protocol.protocolName === 'Others'
+          protocol.name === 'Others'
             ? `Others (${protocol.othersCount ?? 0})`
-            : protocol.protocolName,
+            : protocol.name,
         color: protocol.color,
         indicatorType: { shape: 'square' },
       }
@@ -29,7 +29,7 @@ export function TopProtocolsByTransfersChart({
 
   const chartData = useMemo(() => {
     return protocols.map((protocol) => ({
-      name: protocol.protocolName,
+      name: protocol.name,
       value: protocol.transfers.value,
       fill: protocol.color,
     }))

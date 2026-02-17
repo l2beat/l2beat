@@ -1,6 +1,7 @@
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
@@ -15,12 +16,8 @@ export function BurnAndMintCard({
   entries: BurnAndMintProtocolEntry[] | undefined
   isLoading: boolean
 }) {
-  const { selectedChains, allChainIds } = useInteropSelectedChains()
-  const viewAllUrl = buildInteropUrl(
-    '/interop/burn-and-mint',
-    selectedChains,
-    allChainIds,
-  )
+  const { selectedChains } = useInteropSelectedChains()
+  const viewAllUrl = buildInteropUrl('/interop/burn-and-mint', selectedChains)
 
   return (
     <PrimaryCard className="flex flex-col border-t-teal-500 max-md:border-b max-md:border-b-divider md:border-t-4">
@@ -41,6 +38,7 @@ export function BurnAndMintCard({
           </Button>
         </a>
       </div>
+      <BetweenChainsInfo className="mt-1" />
       <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
         The bridge risk is present at all times, as it can mint tokens on all
         chains. Flow limits might be applied.

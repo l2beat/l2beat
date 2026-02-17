@@ -11,6 +11,11 @@ export const axelarits: BaseProject = {
     plugins: [
       {
         plugin: 'axelar-its',
+        bridgeType: 'burnAndMint',
+      },
+      {
+        plugin: 'axelar-its',
+        bridgeType: 'lockAndMint',
       },
     ],
   },
