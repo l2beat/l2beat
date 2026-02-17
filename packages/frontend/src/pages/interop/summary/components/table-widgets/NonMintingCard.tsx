@@ -1,6 +1,8 @@
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
+import { interopDescriptions } from '~/pages/interop/descriptions'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
@@ -37,9 +39,9 @@ export function NonMintingCard({
           </Button>
         </a>
       </div>
+      <BetweenChainsInfo className="mt-1" />
       <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
-        In-flight risk only. Tokens are therefore first bridged using a
-        different minting bridge that needs to be separately assessed.
+        {interopDescriptions.nonMinting}
       </div>
       {isLoading ? (
         <Skeleton className="mt-2 h-62 w-full rounded-sm" />

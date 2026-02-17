@@ -5,6 +5,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
+import { BetweenChainsInfo } from '../../BetweenChainsInfo'
 import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
 import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
 import { useProtocolColorMap } from './useProtocolColorMap'
@@ -49,9 +50,7 @@ export function TopProtocolsWidget({
         <h2 className="font-bold text-heading-16 md:text-heading-20">
           {heading}
         </h2>
-        <div className="mt-0.5 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-          Between selected chains
-        </div>
+        <BetweenChainsInfo className="mt-0.5" />
         <table className="mt-2 w-fit border-separate border-spacing-y-1 pr-1">
           <tbody>
             {isLoading || protocolsWithOthers.length === 0
@@ -65,16 +64,16 @@ export function TopProtocolsWidget({
               : null}
             {protocolsWithOthers.length > 0 &&
               protocolsWithOthers.map((protocol) => (
-                <tr key={protocol.protocolName}>
+                <tr key={protocol.name}>
                   <td className="flex items-center gap-1 font-medium text-2xs">
                     <div
                       className="size-3 min-w-3 rounded-xs"
                       style={{ backgroundColor: protocol.color }}
                     />
                     <div className="leading-none">
-                      {protocol.protocolName === 'Others'
+                      {protocol.name === 'Others'
                         ? `Others (${protocol.othersCount ?? 0})`
-                        : protocol.protocolName}
+                        : protocol.name}
                     </div>
                   </td>
                   <td className="w-10 text-right font-medium text-2xs text-secondary">

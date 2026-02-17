@@ -11,7 +11,7 @@ import { manifest } from '~/utils/Manifest'
 class FakeCache implements ICache {
   get: <T>(
     options: {
-      key: (string | undefined)[]
+      key: (string | null | undefined)[]
       ttl: number
       staleWhileRevalidate?: number
     },

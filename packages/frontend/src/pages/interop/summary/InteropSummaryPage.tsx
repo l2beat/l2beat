@@ -5,12 +5,13 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type {
   ProtocolDisplayable,
-  SelectedChains,
+  SelectedChainsIds,
 } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { InitialChainSelector } from '../components/InitialChainSelector'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
@@ -31,7 +32,7 @@ interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
-  initialSelectedChains: SelectedChains
+  initialSelectedChains: SelectedChainsIds
 }
 
 export function InteropSummaryPage({
@@ -49,11 +50,8 @@ export function InteropSummaryPage({
           initialSelectedChains={initialSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <div className="flex min-h-screen flex-col">
-              <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-              <ChainSelector chains={interopChains} protocols={protocols} />
-              <Widgets interopChains={interopChains} />
-            </div>
+            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
+            <Content interopChains={interopChains} protocols={protocols} />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
@@ -61,9 +59,42 @@ export function InteropSummaryPage({
   )
 }
 
+function Content({
+  interopChains,
+  protocols,
+}: {
+  interopChains: InteropChainWithIcon[]
+  protocols: ProtocolDisplayable[]
+}) {
+  const { selectedChains, selectChain } = useInteropSelectedChains()
+
+  if (!selectedChains.first || !selectedChains.second) {
+    return (
+      <InitialChainSelector
+        interopChains={interopChains}
+        selectedChains={selectedChains}
+        selectChain={selectChain}
+        type={undefined}
+      />
+    )
+  }
+
+  return (
+    <>
+      <ChainSelector chains={interopChains} protocols={protocols} />
+      <Widgets interopChains={interopChains} />
+    </>
+  )
+}
+
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({ selectedChains })
+  const { data, isLoading } = api.interop.dashboard.useQuery({
+    selectedChainsIds: [
+      selectedChains.first?.id ?? null,
+      selectedChains.second?.id ?? null,
+    ],
+  })
 
   if (
     data?.entries.length === 0 &&

@@ -399,6 +399,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
                 securityCouncilProperlySetUp: true,
+                noRedTrustedSetups: null,
+                programHashesReproducible: null,
+                proverSourcePublished: null,
+                verifierContractsReproducible: null,
               },
               stage2: {
                 proofSystemOverriddenOnlyInCaseOfABug: null,

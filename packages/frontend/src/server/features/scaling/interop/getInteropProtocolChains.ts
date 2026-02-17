@@ -13,11 +13,16 @@ import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
 
 export async function getInteropProtocolChains({
   id,
-  selectedChains,
+  selectedChainsIds: selectedChains,
   type,
 }: InteropProtocolTokensParams): Promise<ChainData[]> {
   const logger = getLogger().for('getProtocolChains')
   const db = getDb()
+
+  const [firstChain, secondChain] = selectedChains
+  if (!firstChain || !secondChain) {
+    return []
+  }
 
   const interopProject = await ps.getProject({
     id,
@@ -38,7 +43,7 @@ export async function getInteropProtocolChains({
     await db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selectedChains,
+      [firstChain, secondChain],
       type,
     )
 

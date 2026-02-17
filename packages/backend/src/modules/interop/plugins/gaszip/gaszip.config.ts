@@ -6,6 +6,7 @@ export interface GasZipNetwork {
   gaszipId: number
   chainId: number
   solver: EthereumAddress
+  customGas?: boolean
 }
 
 export const DEPOSIT_EOA_ADDRESS = EthereumAddress(
@@ -46,12 +47,14 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     gaszipId: 296,
     chainId: 33139,
     solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    customGas: true,
   },
   {
     chain: 'polygonpos',
     gaszipId: 17,
     chainId: 137,
     solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    customGas: true,
   },
   {
     chain: 'zksync2',
@@ -76,6 +79,7 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     gaszipId: 14,
     chainId: 56,
     solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    customGas: true,
   },
 ])
 

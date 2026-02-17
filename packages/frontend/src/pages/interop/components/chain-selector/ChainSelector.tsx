@@ -16,13 +16,13 @@ export function ChainSelector({ chains, protocols }: Props) {
         <div className="mr-2 max-md:w-full">
           <div className="flex items-center gap-2 max-md:w-full max-md:flex-col max-md:items-start md:gap-[17px]">
             <div className="whitespace-nowrap font-semibold text-xs uppercase">
-              Chain Selector
+              Chain selector
             </div>
             <div className="h-10 w-px bg-black/16 max-md:hidden" />
             <div className="flex items-center gap-3 max-md:grid max-md:w-full max-md:grid-cols-[1fr_12px_1fr]">
-              <ChainSelectorButton allChains={chains} index={0} />
+              <ChainSelectorButton allChains={chains} chainKey="first" />
               <span className="font-semibold leading-[115%]">&</span>
-              <ChainSelectorButton allChains={chains} index={1} />
+              <ChainSelectorButton allChains={chains} chainKey="second" />
             </div>
           </div>
         </div>

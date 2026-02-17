@@ -1,11 +1,9 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { interopDescriptions } from '~/pages/interop/descriptions'
 
 export function HeaderWithDescription() {
   return (
-    <MainPageHeader
-      description="In-flight risk only. Tokens are therefore first bridged using a different
-          minting bridge that needs to be separately assessed."
-    >
+    <MainPageHeader description={interopDescriptions.nonMinting}>
       Non-minting Protocols
     </MainPageHeader>
   )

@@ -10,7 +10,8 @@ import type { TopItems } from './utils/getTopItems'
 export type ProtocolEntry = {
   id: ProjectId
   iconUrl: string
-  protocolName: string
+  name: string
+  shortName: string | undefined
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
@@ -58,15 +59,15 @@ export type BurnAndMintProtocolData = {
   tokens: TopItems<TokenData>
 }
 
-const SelectedChainsSchema = v.tuple([
-  v.union([v.string(), v.undefined()]),
-  v.union([v.string(), v.undefined()]),
+const SelectedChainsIds = v.tuple([
+  v.union([v.string(), v.null()]),
+  v.union([v.string(), v.null()]),
 ])
-export type SelectedChains = v.infer<typeof SelectedChainsSchema>
+export type SelectedChainsIds = v.infer<typeof SelectedChainsIds>
 
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
-  selectedChains: SelectedChainsSchema,
+  selectedChainsIds: SelectedChainsIds,
   type: KnownInteropBridgeType.optional(),
 })
 
@@ -75,7 +76,7 @@ export type InteropProtocolTokensParams = v.infer<
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
-  selectedChains: SelectedChainsSchema,
+  selectedChainsIds: SelectedChainsIds,
   type: KnownInteropBridgeType.optional(),
 })
 

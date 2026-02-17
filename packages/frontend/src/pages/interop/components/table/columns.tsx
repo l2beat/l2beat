@@ -7,7 +7,6 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { TopChainsCell } from '../top-items/TopChainsCell'
 import { TopTokensCell } from '../top-items/TopTokensCell'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
@@ -26,7 +25,7 @@ const commonColumns = [
         src={ctx.row.original.iconUrl}
         width={20}
         height={20}
-        alt={`${ctx.row.original.protocolName} logo`}
+        alt={`${ctx.row.original.name} logo`}
       />
     ),
     meta: {
@@ -36,13 +35,13 @@ const commonColumns = [
     size: 28,
     enableHiding: false,
   }),
-  columnHelper.accessor('protocolName', {
+  columnHelper.accessor('name', {
     header: 'Name',
     cell: (ctx) => (
       <TwoRowCell>
         <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
           <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-            {ctx.row.original.protocolName}
+            {ctx.row.original.name}
           </div>
           {ctx.row.original.subgroup && (
             <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
@@ -199,6 +198,8 @@ export function getAllProtocolsColumns(
         meta: {
           align: 'right',
           headClassName: 'text-2xs',
+          tooltip:
+            "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
         },
         cell: (ctx) => (
           <span className="font-medium text-label-value-15">
@@ -224,30 +225,7 @@ export function getAllProtocolsColumns(
             type={type}
             protocol={{
               id: ctx.row.original.id,
-              name: ctx.row.original.protocolName,
-              iconUrl: ctx.row.original.iconUrl,
-            }}
-            showNetMintedValueColumn={showNetMintedValueColumn}
-          />
-        )
-      },
-    }),
-    columnHelper.accessor('chains', {
-      header: 'Chains\nby volume',
-      meta: {
-        cellClassName: '!pr-0',
-        headClassName: 'text-2xs',
-        tooltip:
-          'Chains involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination chain.',
-      },
-      cell: (ctx) => {
-        if (ctx.row.original.chains.items.length === 0) return EM_DASH
-        return (
-          <TopChainsCell
-            topItems={ctx.row.original.chains}
-            protocol={{
-              id: ctx.row.original.id,
-              name: ctx.row.original.protocolName,
+              name: ctx.row.original.name,
               iconUrl: ctx.row.original.iconUrl,
             }}
             showNetMintedValueColumn={showNetMintedValueColumn}

@@ -190,6 +190,10 @@ export const lighter: ScalingProject = {
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: false,
+      noRedTrustedSetups: true,
+      programHashesReproducible: null,
+      proverSourcePublished: true,
+      verifierContractsReproducible: false,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,

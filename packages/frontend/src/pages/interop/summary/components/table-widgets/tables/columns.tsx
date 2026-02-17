@@ -25,7 +25,8 @@ const burnAndMintColumnHelper = createColumnHelper<BurnAndMintProtocolRow>()
 function getCommonColumns<
   T extends {
     iconUrl: string
-    protocolName: string
+    name: string
+    shortName: string | undefined
     subgroup: { name: string; iconUrl: string } | undefined
     isAggregate: boolean | undefined
   },
@@ -39,7 +40,7 @@ function getCommonColumns<
           src={ctx.row.original.iconUrl}
           width={20}
           height={20}
-          alt={`${ctx.row.original.protocolName} logo`}
+          alt={`${ctx.row.original.name} logo`}
         />
       ),
       meta: {
@@ -49,13 +50,13 @@ function getCommonColumns<
       size: 28,
       enableHiding: false,
     }),
-    columnHelper.accessor((row) => row.protocolName, {
+    columnHelper.accessor((row) => row.shortName ?? row.name, {
       header: 'Name',
       cell: (ctx) => (
         <TwoRowCell>
           <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
             <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-              {ctx.row.original.protocolName}
+              {ctx.row.original.shortName ?? ctx.row.original.name}
             </div>
             {ctx.row.original.subgroup && (
               <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
@@ -97,7 +98,7 @@ function getTokensByVolumeColumn<
   T extends {
     tokens: TopItems<TokenData>
     id: ProjectId
-    protocolName: string
+    name: string
     iconUrl: string
   },
 >(columnHelper: ColumnHelper<T>, type: KnownInteropBridgeType) {
@@ -113,9 +114,10 @@ function getTokensByVolumeColumn<
       <TopTokensCell
         topItems={ctx.row.original.tokens}
         type={type}
+        showNetMintedValueColumn={type === 'lockAndMint'}
         protocol={{
           id: ctx.row.original.id,
-          name: ctx.row.original.protocolName,
+          name: ctx.row.original.name,
           iconUrl: ctx.row.original.iconUrl,
         }}
       />
@@ -155,6 +157,8 @@ export const lockAndMintColumns = [
     meta: {
       align: 'right',
       headClassName: 'text-2xs',
+      tooltip:
+        "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
     },
     cell: (ctx) => (
       <span className="font-medium text-label-value-15">

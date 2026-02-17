@@ -136,6 +136,10 @@ export const scroll: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
+        noRedTrustedSetups: true,
+        programHashesReproducible: true,
+        proverSourcePublished: true,
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

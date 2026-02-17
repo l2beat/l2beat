@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xab33e41c784444f8e1f52531be06e35aece10c0f
+
+# Diff at Mon, 16 Feb 2026 22:15:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@86c312c16a9d1b19cdc00db282a75e0517b172d4 block: 1770724065
+- current timestamp: 1771280072
+
+## Description
+
+Upgraded Liquidity to LiquidityV2 and deployed a new Exit contract, introducing a timelocked exit mechanism.
+
+LiquidityV2 extends the original Liquidity contract with a new `exitTransfer` function gated by an `EXIT_ROLE`, which can transfer any token type (ETH, ERC20, ERC721, ERC1155) from the contract: https://disco.l2beat.com/diff/eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9/eth:0x890662DF84603CcF62b940292252BDd3aa0b5382
+
+New Exit contract (eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B) holds the EXIT_ROLE and implements a timelocked withdrawal flow:
+- SUBMITTER_ROLE (backend) submits withdrawal requests with recipient, token, and amount
+- 24-hour timelock before execution
+- After timelock, anyone can execute permissionlessly via `executeRequest()`
+- GUARDIAN_ROLE can cancel requests during timelock and pause the contract
+- Execution calls `LIQUIDITY.exitTransfer()` to transfer tokens from LiquidityV2
+
+Note: LiquidityV2 remains paused (from Feb 10 update), so deposits/relaying are still disabled, but the Exit contract is active and processing withdrawal requests.
+
+## Watched changes
+
+```diff
+    contract LiquidityV2 (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.
+      name:
+-        "Liquidity"
++        "LiquidityV2"
+      sourceHashes.1:
+-        "0xf23a0f0c4af93cdcb226ce3de63c8ed56ce4267448a659414e5a459b4e5b94db"
++        "0xbfcd0c18579ccd70e1bdf498b14c4f017af16483f44f45015752901149ef0668"
+      values.$implementation:
+-        "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9"
++        "eth:0x890662DF84603CcF62b940292252BDd3aa0b5382"
+      values.$pastUpgrades.4:
++        ["2026-02-15T09:41:11.000Z","0x7ae0a3b4f0284d10ee582d9f28124a5798fb68f4f5ecdeddcd915d77abf30799",["eth:0x890662DF84603CcF62b940292252BDd3aa0b5382"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.accessControl.EXIT:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B"]}
+      values.EXIT_ROLE:
++        "0xa5e2908dfcbbc823d163e6a6cb40ec3285fe62c08afd9b92045ead9eed2f77db"
+      implementationNames.eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9:
+-        "Liquidity"
+      implementationNames.eth:0x890662DF84603CcF62b940292252BDd3aa0b5382:
++        "LiquidityV2"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Exit (eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B)
+    +++ description: Timelocked exit mechanism. SUBMITTER_ROLE queues withdrawal requests with a 24-hour timelock, after which anyone can execute them permissionlessly. GUARDIAN_ROLE can cancel pending requests and pause the contract.
+```
+
+## Source code changes
+
+```diff
+.../projects/intmax/.flat/Exit/ERC1967Proxy.p.sol  |  522 +++
+ .../src/projects/intmax/.flat/Exit/Exit.sol        | 1677 +++++++++
+ .../LiquidityV2}/ERC1967Proxy.p.sol                |    0
+ .../LiquidityV2/LiquidityV2.sol}                   | 3778 ++++++++++----------
+ 4 files changed, 4110 insertions(+), 1867 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770724065 (main branch discovery), not current.
+
+```diff
+    contract Liquidity (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.
+      description:
+-        "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check."
++        "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract."
+    }
+```
+
 Generated with discovered.json: 0x9cb15096d408e317666645a07de63de38e3bb9a4
 
 # Diff at Tue, 10 Feb 2026 12:15:54 GMT:

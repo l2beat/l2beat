@@ -1,11 +1,9 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { interopDescriptions } from '~/pages/interop/descriptions'
 
 export function HeaderWithDescription() {
   return (
-    <MainPageHeader
-      description="The bridge risk is present at all times, as it can mint tokens on all
-        chains. Flow limits might be applied."
-    >
+    <MainPageHeader description={interopDescriptions.burnAndMint}>
       Burn & Mint Protocols
     </MainPageHeader>
   )

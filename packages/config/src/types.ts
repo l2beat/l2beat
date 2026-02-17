@@ -468,7 +468,7 @@ export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
 
 export interface StageDowngrade {
   expiresAt: number
-  reason: string
+  reasons: string[]
   toStage: Stage
 }
 
@@ -494,6 +494,7 @@ export interface StageSummary {
   requirements: {
     satisfied: boolean | 'UnderReview'
     description: string
+    upcoming?: boolean
   }[]
 }
 
@@ -1251,6 +1252,7 @@ export type InteropPluginName =
 
 export interface InteropConfig {
   name?: string
+  shortName?: string
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured

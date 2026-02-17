@@ -5,8 +5,8 @@
  * OMNICHAIN
  */
 
-import type { AbstractTokenRecord } from '@l2beat/database'
-import { Address32, type ChainSpecificAddress } from '@l2beat/shared-pure'
+import { Address32 } from '@l2beat/shared-pure'
+import type { TokenMap } from '../engine/match/TokenMap'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
@@ -221,7 +221,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   match(
     event: InteropEvent,
     db: InteropEventDb,
-    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
+    tokenMap: TokenMap,
   ): MatchResult | undefined {
     if (!HwrTransferReceived.checkType(event)) return
 
@@ -266,7 +266,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       dstWasMinted,
       srcChain: hwrSent.ctx.chain,
       dstChain: event.ctx.chain,
-      deployedToAbstractMap,
+      tokenMap,
     })
 
     return [
@@ -335,10 +335,6 @@ export function findBestTransferLog(
   let closestDistance: number | undefined
   let hasTransfer = false
 
-  console.log(
-    'Finding best transfer log for target amount:',
-    targetAmount.toString(),
-  )
   for (const log of logs) {
     const transfer = parseTransfer(log, null)
     if (!transfer) continue

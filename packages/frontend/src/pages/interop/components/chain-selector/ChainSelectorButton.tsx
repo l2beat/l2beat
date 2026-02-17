@@ -11,28 +11,56 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/Popover'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import {
+  type InteropSelectedChains,
+  useInteropSelectedChains,
+} from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
 import type { InteropChainWithIcon } from './types'
 
 export function ChainSelectorButton({
+  chainKey,
   allChains,
-  index,
 }: {
+  chainKey: keyof InteropSelectedChains
   allChains: InteropChainWithIcon[]
-  index: 0 | 1
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
+
+  const toggleMobileChain = (chainId: string) => {
+    if (
+      selectedChains.first?.id === chainId ||
+      selectedChains.second?.id === chainId
+    ) {
+      return
+    }
+
+    if (!selectedChains.first) {
+      selectChain('first', chainId)
+      return
+    }
+
+    if (!selectedChains.second) {
+      selectChain('second', chainId)
+      return
+    }
+
+    selectChain('first', selectedChains.second.id)
+    selectChain('second', chainId)
+  }
 
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
     name,
     iconUrl,
-    isSelected: [selectedChains[0] === id, selectedChains[1] === id] as const,
+    isSelected: {
+      first: selectedChains.first?.id === id,
+      second: selectedChains.second?.id === id,
+    },
   }))
 
   const selectedChain = chainsWithDetails.find(
-    (chain) => chain.isSelected[index],
+    (chain) => chain.isSelected[chainKey],
   )
 
   const trigger = (
@@ -55,31 +83,19 @@ export function ChainSelectorButton({
         <DrawerContent className="pb-4">
           <DrawerHeader className="mb-4 gap-2">
             <DrawerTitle className="mb-0 font-semibold text-lg text-primary leading-none">
-              Chains
+              Chain selector
             </DrawerTitle>
             <DrawerDescription className="font-semibold text-secondary text-xs leading-none">
-              Select the chains you want to include
+              Select two chains
             </DrawerDescription>
           </DrawerHeader>
-          <div className="mb-2 font-semibold text-xs leading-none">From</div>
           <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected[0]}
-                toggleSelected={(chainId) => selectChain(0, chainId)}
-              />
-            ))}
-          </div>
-          <div className="mt-3 mb-2 font-semibold text-xs leading-none">To</div>
-          <div className="flex flex-wrap gap-1">
-            {chainsWithDetails.map((chain) => (
-              <ChainSelectorChainToggle
-                key={chain.id}
-                chain={chain}
-                isSelected={chain.isSelected[1]}
-                toggleSelected={(chainId) => selectChain(1, chainId)}
+                isSelected={chain.isSelected.first || chain.isSelected.second}
+                toggleSelected={toggleMobileChain}
               />
             ))}
           </div>
@@ -100,8 +116,8 @@ export function ChainSelectorButton({
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected[index]}
-                toggleSelected={(chainId) => selectChain(index, chainId)}
+                isSelected={chain.isSelected[chainKey]}
+                toggleSelected={(chainId) => selectChain(chainKey, chainId)}
               />
             ))}
           </div>
