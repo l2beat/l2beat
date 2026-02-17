@@ -30,7 +30,7 @@ export async function getDaLivenessEntries(): Promise<
     }),
     ps.getProjects({
       select: ['daBridge', 'statuses', 'trackedTxsConfig'],
-      optional: ['livenessInfo'],
+      optional: ['livenessInfo', 'contracts'],
     }),
   ])
 
@@ -83,7 +83,7 @@ function getDaLivenessEntry(
   layer: Project<'daLayer' | 'statuses'>,
   bridges: Project<
     'daBridge' | 'statuses' | 'trackedTxsConfig',
-    'livenessInfo'
+    'livenessInfo' | 'contracts'
   >[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   projectsChangeReport: ProjectsChangeReport,
@@ -109,7 +109,7 @@ function getDaLivenessEntry(
         href: `/data-availability/projects/${layer.slug}/${b.slug}#da-bridge-liveness`,
         statuses: {
           verificationWarnings: getProjectVerificationWarnings(
-            b.statuses.unverifiedContracts,
+            b,
             projectsChangeReport.getChanges(b.id),
           ),
           underReview:

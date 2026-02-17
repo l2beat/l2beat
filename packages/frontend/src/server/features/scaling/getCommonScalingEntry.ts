@@ -21,21 +21,15 @@ export function getCommonScalingEntry({
   syncWarning,
   ongoingAnomaly,
 }: {
-  project: Project<'scalingInfo' | 'statuses' | 'display'>
+  project: Project<'scalingInfo' | 'statuses' | 'display', 'contracts'>
   changes: ProjectChanges | undefined
   syncWarning?: string
   ongoingAnomaly?: boolean
 }): CommonScalingEntry {
-  if (project.id === 'intmax') {
-    console.log('project.statuses', project.statuses)
-  }
   const statuses = {
     yellowWarning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
-    verificationWarnings: getProjectVerificationWarnings(
-      project.statuses.unverifiedContracts,
-      changes,
-    ),
+    verificationWarnings: getProjectVerificationWarnings(project, changes),
     underReview: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       impactfulChange: !!changes?.impactfulChange,

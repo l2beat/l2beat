@@ -45,7 +45,7 @@ export function RiskSummarySection({
       {hostChainWarning && <HostChainRisksWarning {...hostChainWarning} />}
       {verificationWarnings.contracts && (
         <WarningBar
-          text="This project includes unverified contracts."
+          text={verificationWarnings.contracts}
           color="red"
           isCritical={true}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"
@@ -54,7 +54,7 @@ export function RiskSummarySection({
       )}
       {verificationWarnings.programHashes && (
         <WarningBar
-          text="This project uses program hashes that cannot be independently reproduced."
+          text={verificationWarnings.programHashes}
           color="red"
           isCritical={true}
           className="mt-4 text-paragraph-15 md:text-paragraph-16"

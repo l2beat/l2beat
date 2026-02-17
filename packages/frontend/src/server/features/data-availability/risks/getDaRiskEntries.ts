@@ -30,7 +30,10 @@ export async function getDaRiskEntries(): Promise<
         select: ['daLayer', 'statuses'],
         whereNot: ['archivedAt'],
       }),
-      ps.getProjects({ select: ['daBridge', 'statuses'] }),
+      ps.getProjects({
+      select: ['daBridge', 'statuses'],
+      optional: ['contracts'],
+    }),
       ps.getProjects({
         select: ['customDa', 'statuses'],
         whereNot: ['archivedAt'],
@@ -76,7 +79,7 @@ export interface DaBridgeRiskEntry
 
 function getDaRiskEntry(
   layer: Project<'daLayer' | 'statuses'>,
-  bridges: Project<'daBridge' | 'statuses'>[],
+  bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
   projectsChangeReport: ProjectsChangeReport,
@@ -88,7 +91,7 @@ function getDaRiskEntry(
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
         verificationWarnings: getProjectVerificationWarnings(
-          b.statuses.unverifiedContracts,
+          b,
           projectsChangeReport.getChanges(b.id),
         ),
         underReview:

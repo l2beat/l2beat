@@ -38,7 +38,7 @@ export async function getScalingLivenessEntries() {
           'display',
           'trackedTxsConfig',
         ],
-        optional: ['scalingDa'],
+        optional: ['scalingDa', 'contracts'],
         where: ['isScaling'],
         whereNot: ['isUpcoming', 'archivedAt'],
       }),
@@ -82,7 +82,7 @@ function getScalingLivenessEntry(
     | 'livenessInfo'
     | 'display'
     | 'trackedTxsConfig',
-    'scalingDa'
+    'scalingDa' | 'contracts'
   >,
   projectsChangeReport: ProjectsChangeReport,
   liveness: LivenessProject | undefined,

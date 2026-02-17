@@ -196,7 +196,7 @@ export async function getDaProjectEntry(
       name: bridge.daBridge.name,
       slug: bridge.slug,
       verificationWarnings: getProjectVerificationWarnings(
-        bridge.statuses.unverifiedContracts,
+        bridge,
         projectsChangeReport.getChanges(bridge.id),
       ),
       impactfulChangeWarning: projectsChangeReport.getChanges(bridge.id)

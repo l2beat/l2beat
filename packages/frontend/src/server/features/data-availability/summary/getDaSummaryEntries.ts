@@ -40,7 +40,10 @@ export async function getDaSummaryEntries(): Promise<
       select: ['daLayer', 'statuses'],
       whereNot: ['archivedAt'],
     }),
-    ps.getProjects({ select: ['daBridge', 'statuses'] }),
+    ps.getProjects({
+      select: ['daBridge', 'statuses'],
+      optional: ['contracts'],
+    }),
     ps.getProjects({
       select: ['customDa', 'statuses'],
       whereNot: ['archivedAt'],
@@ -114,7 +117,7 @@ export interface DaBridgeSummaryEntry
 
 function getDaSummaryEntry(
   layer: Project<'daLayer' | 'statuses'>,
-  bridges: Project<'daBridge' | 'statuses'>[],
+  bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
@@ -131,7 +134,7 @@ function getDaSummaryEntry(
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
         verificationWarnings: getProjectVerificationWarnings(
-          b.statuses.unverifiedContracts,
+          b,
           projectsChangeReport.getChanges(b.id),
         ),
         underReview:

@@ -30,6 +30,7 @@ export async function getScalingRiskStateValidationEntries() {
       getProjectsChangeReport(),
       ps.getProjects({
         select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
+        optional: ['contracts'],
         where: ['isScaling'],
         whereNot: ['isUpcoming', 'archivedAt'],
       }),
@@ -91,7 +92,10 @@ export interface ScalingRiskStateValidationValidityEntry
 }
 
 function getScalingRiskStateValidationValidityEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'display' | 'scalingRisks'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'display' | 'scalingRisks',
+    'contracts'
+  >,
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
@@ -135,7 +139,10 @@ export interface ScalingRiskStateValidationOptimisticEntry
 }
 
 function getScalingRiskStateValidationOptimisticEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'display' | 'scalingRisks'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'display' | 'scalingRisks',
+    'contracts'
+  >,
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingRiskStateValidationOptimisticEntry {

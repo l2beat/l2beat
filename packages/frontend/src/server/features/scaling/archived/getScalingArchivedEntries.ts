@@ -23,6 +23,7 @@ export async function getScalingArchivedEntries() {
       get7dTvsBreakdown({ type: 'layer2' }),
       ps.getProjects({
         select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
+        optional: ['contracts'],
         where: ['isScaling', 'archivedAt'],
       }),
       ps.getProjects({
@@ -52,7 +53,10 @@ export interface ScalingArchivedEntry extends CommonScalingEntry {
 }
 
 function getScalingArchivedEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks' | 'display'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'scalingRisks' | 'display',
+    'contracts'
+  >,
   changes: ProjectChanges,
   latestTvs: ProjectSevenDayTvsBreakdown | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],

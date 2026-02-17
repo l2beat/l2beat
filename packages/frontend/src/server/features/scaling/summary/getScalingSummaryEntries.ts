@@ -32,7 +32,7 @@ import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarnin
 export async function getScalingSummaryEntries() {
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-    optional: ['tvsInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
+    optional: ['tvsInfo', 'scalingDa', 'scalingStage', 'chainConfig', 'contracts'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })
@@ -101,7 +101,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
 export function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
-    'tvsInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig'
+    'tvsInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig' | 'contracts'
   >,
   changes: ProjectChanges,
   latestTvs: ProjectSevenDayTvsBreakdown | undefined,
@@ -121,17 +121,6 @@ export function getScalingSummaryEntry(
   const associatedTokensExcludedWarnings = compact(project.tvsInfo?.warnings)
   const activitySyncWarning = getActivitySyncWarning(activity?.syncState)
 
-  if (project.id === 'intmax') {
-    console.log(
-      'project.statuses',
-      getCommonScalingEntry({
-        project,
-        changes,
-        ongoingAnomaly,
-        syncWarning: activitySyncWarning,
-      }),
-    )
-  }
   return {
     ...getCommonScalingEntry({
       project,

@@ -42,7 +42,7 @@ export async function getScalingDaEntries() {
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
-      optional: ['customDa'],
+      optional: ['customDa', 'contracts'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -105,7 +105,7 @@ export interface ScalingDaEntry extends CommonScalingEntry {
 function getScalingDaEntry(
   project: Project<
     'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
-    'customDa'
+    'customDa' | 'contracts'
   >,
   risks: ScalingDaEntry['risks'] | undefined,
   daLayers: Project<'daLayer'>[],

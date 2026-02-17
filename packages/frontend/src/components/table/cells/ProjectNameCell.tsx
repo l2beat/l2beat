@@ -40,9 +40,6 @@ export function ProjectNameCell({
   withInfoTooltip,
   ignoreUnderReviewIcon,
 }: ProjectCellProps) {
-  if (project.name === 'INTMAX') {
-    console.log('project.statuses', project.statuses)
-  }
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
@@ -81,8 +78,12 @@ export function ProjectNameCell({
                 <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
               </TooltipTrigger>
               <TooltipContent>
-                {project.statuses.verificationWarnings.contracts}
-                {project.statuses.verificationWarnings.programHashes}
+                {project.statuses.verificationWarnings.contracts && (
+                  <p>{project.statuses.verificationWarnings.contracts}</p>
+                )}
+                {project.statuses.verificationWarnings.programHashes && (
+                  <p>{project.statuses.verificationWarnings.programHashes}</p>
+                )}
               </TooltipContent>
             </Tooltip>
           )}

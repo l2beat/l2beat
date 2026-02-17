@@ -324,10 +324,12 @@ export async function getScalingProjectEntry(
         })
       : undefined
 
-  const verificationWarnings = getProjectVerificationWarnings(
-    hostChain?.statuses.unverifiedContracts ?? [],
-    projectsChangeReport.getChanges(hostChain?.id ?? ''),
-  )
+  const verificationWarnings = hostChain
+    ? getProjectVerificationWarnings(
+        hostChain,
+        projectsChangeReport.getChanges(hostChain.id),
+      )
+    : { contracts: undefined, programHashes: undefined }
   const hostChainWarning = hostChain
     ? {
         hostChainName: hostChain.name,
@@ -452,10 +454,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const isProjectVerified = getProjectVerificationWarnings(
-    project.statuses.unverifiedContracts ?? [],
-    changes,
-  )
+  const isProjectVerified = getProjectVerificationWarnings(project, changes)
   const riskSummary = getScalingRiskSummarySection(project, isProjectVerified)
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
@@ -495,7 +494,7 @@ export async function getScalingProjectEntry(
         combined: common.rosette.stacked,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !!verificationWarnings.contracts,
+        isVerified: !verificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
@@ -508,7 +507,7 @@ export async function getScalingProjectEntry(
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !!verificationWarnings.contracts,
+        isVerified: !verificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
@@ -686,7 +685,7 @@ export async function getScalingProjectEntry(
   const contractsSection = getContractsSection(
     {
       id: project.id,
-      isVerified: !!verificationWarnings.contracts,
+      isVerified: !verificationWarnings.contracts,
       slug: project.slug,
       contracts: project.contracts,
       isUnderReview: !!project.statuses.reviewStatus,

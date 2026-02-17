@@ -29,7 +29,7 @@ import { getProjectsChangeReport } from '../../projects-change-report/getProject
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { checkIfTvsExist } from '../../scaling/tvs/utils/checkIfTvsExist'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
-import { getProjectVerificationWarnings as getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 
 export interface BridgesProjectEntry {
   name: string
@@ -211,10 +211,7 @@ export async function getBridgesProjectEntry(
       },
     })
   }
-  const verificationWarnings = getProjectVerificationWarnings(
-    project.statuses.unverifiedContracts,
-    changes,
-  )
+  const verificationWarnings = getProjectVerificationWarnings(project, changes)
   const riskSummary = getBridgesRiskSummarySection(
     project,
     verificationWarnings,
@@ -308,7 +305,7 @@ export async function getBridgesProjectEntry(
     {
       id: project.id,
       slug: project.slug,
-      isVerified: !!verificationWarnings.contracts,
+      isVerified: !verificationWarnings.contracts,
       isUnderReview: !!project.statuses.reviewStatus,
       contracts: project.contracts,
     },

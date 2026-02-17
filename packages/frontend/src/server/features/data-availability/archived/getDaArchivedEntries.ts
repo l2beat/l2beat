@@ -32,7 +32,10 @@ export async function getDaArchivedEntries(): Promise<
         select: ['daLayer', 'statuses'],
         where: ['archivedAt'],
       }),
-      ps.getProjects({ select: ['daBridge', 'statuses'] }),
+      ps.getProjects({
+      select: ['daBridge', 'statuses'],
+      optional: ['contracts'],
+    }),
       ps.getProjects({
         select: ['customDa', 'statuses'],
         where: ['archivedAt'],
@@ -73,7 +76,7 @@ export interface DaBridgeArchivedEntry
 
 function getDaArchivedEntry(
   layer: Project<'daLayer' | 'statuses'>,
-  bridges: Project<'daBridge' | 'statuses'>[],
+  bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
   projectsChangeReport: ProjectsChangeReport,
@@ -85,7 +88,7 @@ function getDaArchivedEntry(
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
         verificationWarnings: getProjectVerificationWarnings(
-          b.statuses.unverifiedContracts,
+          b,
           projectsChangeReport.getChanges(b.id),
         ),
         underReview:

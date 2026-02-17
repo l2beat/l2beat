@@ -17,15 +17,12 @@ export function getCommonBridgesEntry({
   project,
   changes,
 }: {
-  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks'>
+  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks', 'contracts'>
   changes: ProjectChanges
 }): CommonBridgesEntry {
   const statuses = {
     yellowWarning: project.statuses.yellowWarning,
-    verificationWarnings: getProjectVerificationWarnings(
-      project.statuses.unverifiedContracts,
-      changes,
-    ),
+    verificationWarnings: getProjectVerificationWarnings(project, changes),
     underReview: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       ...changes,
