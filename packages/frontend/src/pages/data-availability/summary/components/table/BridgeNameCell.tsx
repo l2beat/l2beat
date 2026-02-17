@@ -30,13 +30,20 @@ export function BridgeNameCell({
     >
       {bridge.name}
       {bridge.statuses?.verificationWarnings &&
-        Object.values(bridge.statuses.verificationWarnings).length !== 0 && (
+        Object.values(bridge.statuses.verificationWarnings).some(
+          (value) => value !== undefined,
+        ) && (
           <Tooltip>
             <TooltipTrigger>
               <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>
-              {Object.values(bridge.statuses.verificationWarnings).join(' ')}
+              {bridge.statuses.verificationWarnings.contracts && (
+                <p>{bridge.statuses.verificationWarnings.contracts}</p>
+              )}
+              {bridge.statuses.verificationWarnings.programHashes && (
+                <p>{bridge.statuses.verificationWarnings.programHashes}</p>
+              )}
             </TooltipContent>
           </Tooltip>
         )}
