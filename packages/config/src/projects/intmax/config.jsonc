@@ -7,5 +7,12 @@
     "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
     "scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5",
     "scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449"
-  ]
+  ],
+  "overrides": {
+    "eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B": {
+      "description": "Timelocked exit mechanism. SUBMITTER_ROLE queues withdrawal requests with a 24-hour timelock, after which anyone can execute them permissionlessly. GUARDIAN_ROLE can cancel pending requests and pause the contract.",
+      "ignoreMethods": ["getPendingRequests", "requests", "proxiableUUID"],
+      "ignoreInWatchMode": ["getRequest"]
+    }
+  }
 }
