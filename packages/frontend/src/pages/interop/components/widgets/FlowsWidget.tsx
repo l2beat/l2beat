@@ -36,7 +36,7 @@ export function FlowsWidget({
     >
       <div className="flex flex-col">
         <h2 className="font-bold text-heading-16 md:text-heading-20">
-          Last 24h flows
+          Last 24 hours flows
         </h2>
         <BetweenChainsInfo className="mt-0.5" />
         <table className="-mb-1.5 mt-0.5 w-full border-separate border-spacing-y-1.5">
