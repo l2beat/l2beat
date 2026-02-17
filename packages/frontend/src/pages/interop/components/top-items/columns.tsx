@@ -111,6 +111,8 @@ export const getTopItemsColumns = (
         meta: {
           align: 'right',
           headClassName: 'text-2xs',
+          tooltip:
+            "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
         },
         cell: (ctx) => {
           if (ctx.row.original.netMintedValue === undefined) return EM_DASH
