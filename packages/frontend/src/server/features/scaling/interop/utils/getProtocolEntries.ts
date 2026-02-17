@@ -76,29 +76,12 @@ export function getProtocolEntries(
     ).sort(sortBridgeTypesFn)
 
     // Show zeros for projects that don't have data but have plugins for the given type
-    if (!data && (!type || bridgeTypesFromPlugins.includes(type))) {
-      return {
-        id: project.id,
+    if (!data && (!type || bridgeTypes.includes(type))) {
+      zeroTransferProtocols.push({
+        name: project.interopConfig.name ?? project.name,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        protocolName: project.interopConfig.name ?? project.name,
-        bridgeTypes,
-        isAggregate: project.interopConfig.isAggregate,
-        subgroup: subgroupProject
-          ? {
-              name: subgroupProject.name,
-              iconUrl: manifest.getUrl(`/icons/${subgroupProject.slug}.png`),
-            }
-          : undefined,
-        volume: 0,
-        byBridgeType: undefined,
-        tokens: { items: [], remainingCount: 0 },
-        chains: { items: [], remainingCount: 0 },
-        transferCount: 0,
-        averageValue: null,
-        averageDuration: null,
-        averageValueInFlight: undefined,
-        netMintedValue: undefined,
-      }
+      })
+      continue
     }
 
     // Skip projects that don't have data and don't have plugins for the given type
