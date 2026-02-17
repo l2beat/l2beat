@@ -88,6 +88,31 @@ export class InteropRecentPricesRepository extends BaseRepository {
     return result
   }
 
+  async getClosestPrice(
+    coingeckoId: string,
+    timestamp: UnixTime,
+    errorMargin: UnixTime,
+  ): Promise<number | undefined> {
+    const targetTimestamp = UnixTime.toDate(timestamp)
+    const fromTime = UnixTime.toDate(timestamp - errorMargin)
+    const toTime = UnixTime.toDate(timestamp + errorMargin)
+
+    const row = await this.db
+      .selectFrom('InteropRecentPrices')
+      .select('priceUsd')
+      .where('coingeckoId', '=', coingeckoId)
+      .where('timestamp', '>=', fromTime)
+      .where('timestamp', '<=', toTime)
+      .orderBy(
+        sql`abs(extract(epoch from age(timestamp, ${targetTimestamp})))`,
+        'asc',
+      )
+      .orderBy('timestamp', 'desc')
+      .executeTakeFirst()
+
+    return row?.priceUsd
+  }
+
   // Test only methods
 
   async getAll(): Promise<InteropRecentPricesRecord[]> {

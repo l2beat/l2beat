@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database, InteropTransferUpdate } from '@l2beat/database'
+import type {
+  Database,
+  InteropTransferRecord,
+  InteropTransferUpdate,
+} from '@l2beat/database'
 import {
   Address32,
   assertUnreachable,
@@ -10,15 +14,37 @@ import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import { DeployedTokenId } from './DeployedTokenId'
 
-export type TokenInfos = Map<
-  string,
-  {
-    abstractId: string
-    symbol: string
-    coingeckoId: string
-    decimals: number
-  }
->
+const PRICE_ERROR_MARGIN = UnixTime.DAY
+
+interface TokenInfo {
+  abstractId: string
+  symbol: string
+  coingeckoId: string
+  decimals: number
+}
+
+export type TokenInfos = Map<DeployedTokenId, TokenInfo>
+
+interface TransferWithResolvedIds {
+  transfer: InteropTransferRecord
+  srcId: DeployedTokenId | undefined
+  dstId: DeployedTokenId | undefined
+}
+
+interface SideInput {
+  id: DeployedTokenId
+  timestamp: UnixTime
+  rawAmount: bigint | undefined
+  prefix: 'src' | 'dst'
+}
+
+interface TokenUpdate {
+  abstractTokenId: string
+  symbol: string
+  price: number
+  amount: number
+  valueUsd: number
+}
 
 export class InteropFinancialsLoop extends TimeLoop {
   constructor(
@@ -39,140 +65,150 @@ export class InteropFinancialsLoop extends TimeLoop {
       return
     }
 
-    const unprocessed = (await this.db.interopTransfer.getUnprocessed()).map(
-      (u) => ({
-        transfer: u,
-        srcId: toDeployedId(this.chains, u.srcChain, u.srcTokenAddress),
-        dstId: toDeployedId(this.chains, u.dstChain, u.dstTokenAddress),
-      }),
-    )
+    const transfersToProcess =
+      await this.db.interopTransfer.getWithMissingFinancials()
 
-    if (unprocessed.length === 0) {
+    if (transfersToProcess.length === 0) {
       this.logger.info('Skipping run, no transfers to process.')
       return
     }
 
-    this.logger.info('Processing transfers', {
-      transfers: unprocessed.length,
-    })
-
-    const tokens = unique(
-      unprocessed
-        .flatMap((t) => [t.srcId, t.dstId])
-        .filter((x) => x !== undefined),
-    )
+    const resolveIds = createIdResolver(this.chains)
+    const transfersWithTokenIds = transfersToProcess.map(resolveIds)
+    const tokenIds = getUniqueTokenIds(transfersWithTokenIds)
 
     const tokenInfos = await getTokenInfos(
-      tokens,
+      tokenIds,
       this.tokenDbClient,
       this.logger,
     )
 
-    const coingeckoIds = unique(
-      Array.from(tokenInfos.values())
-        .map((t) => t.coingeckoId)
-        .filter((u) => u !== undefined),
-    )
-
-    const prices = await this.db.interopRecentPrices.getClosestPrices(
-      coingeckoIds,
-      UnixTime.now(),
-      UnixTime.DAY,
-    )
-
-    const updates: { id: string; update: InteropTransferUpdate }[] =
-      unprocessed.map((t) => {
-        const update: InteropTransferUpdate = {}
-        if (t.srcId) {
-          this.applyTokenUpdate(
-            tokenInfos,
-            prices,
-            t.srcId,
-            t.transfer.srcRawAmount,
-            'src',
-            update,
-          )
-        }
-        if (t.dstId) {
-          this.applyTokenUpdate(
-            tokenInfos,
-            prices,
-            t.dstId,
-            t.transfer.dstRawAmount,
-            'dst',
-            update,
-          )
-        }
-        return { id: t.transfer.transferId, update }
+    for (const transferWithIds of transfersWithTokenIds) {
+      const { transfer } = transferWithIds
+      this.logger.info('Processing transfer', {
+        transferId: transfer.transferId,
       })
 
-    await this.db.transaction(async () => {
-      for (const { id, update } of updates) {
-        await this.db.interopTransfer.updateFinancials(id, update)
-      }
-    })
+      try {
+        const update = await this.processTransfer(transferWithIds, tokenInfos)
 
-    this.logger.info('Transfers processed', {
-      transfers: updates.length,
-      transfersWithUpdatedValue: updates.filter(
-        (u) => u.update.srcValueUsd || u.update.dstValueUsd,
-      ).length,
-    })
+        if (Object.keys(update).length === 0) {
+          this.logger.info('Transfer skipped, no financial fields to update', {
+            transferId: transfer.transferId,
+          })
+          continue
+        }
+
+        // TODO: isProcessed flag became useless
+        await this.db.interopTransfer.updateFinancials(
+          transfer.transferId,
+          update,
+        )
+
+        this.logger.info('Transfer processed', {
+          transferId: transfer.transferId,
+          transferWithUpdatedValue:
+            update.srcValueUsd !== undefined ||
+            update.dstValueUsd !== undefined,
+        })
+      } catch (error) {
+        this.logger.error('Transfer processing failed', error, {
+          transferId: transfer.transferId,
+        })
+      }
+    }
   }
 
-  private applyTokenUpdate(
+  private async processTransfer(
+    transferWithIds: TransferWithResolvedIds,
     tokenInfos: TokenInfos,
-    prices: Map<string, number | undefined>,
-    id: DeployedTokenId,
-    rawAmount: bigint | undefined,
-    prefix: 'src' | 'dst',
-    update: InteropTransferUpdate,
-  ) {
-    const tokenUpdate = this.generateTokenUpdate(
-      tokenInfos,
-      prices,
-      id,
-      rawAmount,
+  ): Promise<InteropTransferUpdate> {
+    const { transfer, srcId, dstId } = transferWithIds
+    const update: InteropTransferUpdate = {}
+
+    if (srcId) {
+      const sourceSideFinancials = await this.processSide(
+        {
+          id: srcId,
+          timestamp: transfer.srcTime,
+          rawAmount: transfer.srcRawAmount,
+          prefix: 'src',
+        },
+        tokenInfos,
+      )
+
+      Object.assign(update, sourceSideFinancials)
+    }
+
+    if (dstId) {
+      const destinationSideFinancials = await this.processSide(
+        {
+          id: dstId,
+          timestamp: transfer.dstTime,
+          rawAmount: transfer.dstRawAmount,
+          prefix: 'dst',
+        },
+        tokenInfos,
+      )
+
+      Object.assign(update, destinationSideFinancials)
+    }
+
+    return update
+  }
+
+  private async processSide(side: SideInput, tokenInfos: TokenInfos) {
+    if (!side.id) {
+      return {}
+    }
+
+    const tokenInfo = tokenInfos.get(side.id)
+    if (!tokenInfo) {
+      return {}
+    }
+
+    const price = await this.getPriceForTimestamp(
+      tokenInfo.coingeckoId,
+      side.timestamp,
     )
-    if (!tokenUpdate) return
+    const tokenUpdate = this.generateTokenUpdate(
+      tokenInfo,
+      price,
+      side.id,
+      side.rawAmount,
+    )
 
-    const fieldMapping = {
-      abstractTokenId: `${prefix}AbstractTokenId`,
-      symbol: `${prefix}Symbol`,
-      price: `${prefix}Price`,
-      amount: `${prefix}Amount`,
-      valueUsd: `${prefix}ValueUsd`,
-    } as const
+    if (!tokenUpdate) {
+      return {}
+    }
 
-    Object.entries(tokenUpdate).forEach(([key, value]) => {
-      if (value !== undefined) {
-        const updateKey = fieldMapping[key as keyof typeof fieldMapping]
-        // biome-ignore lint/suspicious/noExplicitAny: generic type
-        ;(update as any)[updateKey] = value
-      }
-    })
+    return toTransferSideUpdate(side.prefix, tokenUpdate)
+  }
+
+  private getPriceForTimestamp(coingeckoId: string, timestamp: UnixTime) {
+    return this.db.interopRecentPrices.getClosestPrice(
+      coingeckoId,
+      timestamp,
+      PRICE_ERROR_MARGIN,
+    )
   }
 
   private generateTokenUpdate(
-    tokenInfos: TokenInfos,
-    prices: Map<string, number | undefined>,
-    id: DeployedTokenId,
+    tokenInfo: TokenInfo,
+    price: number | undefined,
+    deployedTokenId: DeployedTokenId,
     rawAmount: bigint | undefined,
-  ) {
-    const tokenInfo = tokenInfos.get(id)
-    if (!tokenInfo) return
-
-    const price = prices.get(tokenInfo.coingeckoId)
+  ): TokenUpdate | undefined {
     if (price === undefined) {
       this.logger.warn('Missing price data', {
-        id,
+        id: deployedTokenId,
         coingeckoId: tokenInfo.coingeckoId,
       })
       return
     }
 
     if (rawAmount === undefined) {
-      this.logger.warn('Missing raw amount', { id })
+      this.logger.warn('Missing raw amount', { id: deployedTokenId })
       return
     }
 
@@ -245,6 +281,46 @@ export async function getTokenInfos(
   }
 
   return result
+}
+
+function createIdResolver(chains: readonly { id: string; type: 'evm' }[]) {
+  return function (transfer: InteropTransferRecord) {
+    return {
+      transfer,
+      srcId: toDeployedId(chains, transfer.srcChain, transfer.srcTokenAddress),
+      dstId: toDeployedId(chains, transfer.dstChain, transfer.dstTokenAddress),
+    }
+  }
+}
+
+function getUniqueTokenIds(
+  transfersWithTokenIds: TransferWithResolvedIds[],
+): DeployedTokenId[] {
+  return unique(
+    transfersWithTokenIds
+      .flatMap((transfer) => [transfer.srcId, transfer.dstId])
+      .filter((id) => id !== undefined),
+  )
+}
+
+function toTransferSideUpdate(prefix: 'src' | 'dst', tokenUpdate: TokenUpdate) {
+  if (prefix === 'src') {
+    return {
+      srcAbstractTokenId: tokenUpdate.abstractTokenId,
+      srcSymbol: tokenUpdate.symbol,
+      srcPrice: tokenUpdate.price,
+      srcAmount: tokenUpdate.amount,
+      srcValueUsd: tokenUpdate.valueUsd,
+    } satisfies InteropTransferUpdate
+  }
+
+  return {
+    dstAbstractTokenId: tokenUpdate.abstractTokenId,
+    dstSymbol: tokenUpdate.symbol,
+    dstPrice: tokenUpdate.price,
+    dstAmount: tokenUpdate.amount,
+    dstValueUsd: tokenUpdate.valueUsd,
+  } satisfies InteropTransferUpdate
 }
 
 export function toDeployedId(

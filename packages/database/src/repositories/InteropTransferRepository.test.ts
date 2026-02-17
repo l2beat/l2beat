@@ -381,6 +381,57 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.getWithMissingFinancials.name,
+    () => {
+      it('returns transfers with missing financial fields ordered by timestamp', async () => {
+        const completeRecord = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+        )
+        const missingSrcField = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+        )
+        missingSrcField.srcPrice = undefined
+        const missingDstField = transfer(
+          'plugin1',
+          'msg3',
+          'deposit',
+          UnixTime(300),
+        )
+        missingDstField.dstAbstractTokenId = undefined
+
+        await repository.insertMany([
+          missingDstField,
+          completeRecord,
+          missingSrcField,
+        ])
+
+        const result = await repository.getWithMissingFinancials()
+
+        expect(result).toHaveLength(2)
+        expect(result[0]?.transferId).toEqual('msg2')
+        expect(result[1]?.transferId).toEqual('msg3')
+      })
+
+      it('returns empty array when all transfers have complete financial fields', async () => {
+        await repository.insertMany([
+          transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+          transfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
+        ])
+
+        const result = await repository.getWithMissingFinancials()
+
+        expect(result).toEqual([])
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.updateFinancials.name, () => {
     it('updates financial data and marks transfer as processed', async () => {
       const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))

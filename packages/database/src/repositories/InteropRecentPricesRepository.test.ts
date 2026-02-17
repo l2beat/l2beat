@@ -206,6 +206,40 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
     },
   )
 
+  describe(
+    InteropRecentPricesRepository.prototype.getClosestPrice.name,
+    () => {
+      it('returns closest price for a single coingeckoId', async () => {
+        const targetTime = UnixTime(1000)
+        await repository.insertMany([
+          mock('bitcoin', UnixTime(900), 30000),
+          mock('bitcoin', UnixTime(1100), 31000),
+        ])
+
+        const result = await repository.getClosestPrice(
+          'bitcoin',
+          targetTime,
+          UnixTime.DAY,
+        )
+        expect(result).toEqual(31000)
+      })
+
+      it('returns undefined when no price is found in the error margin', async () => {
+        const targetTime = UnixTime(1000)
+        await repository.insertMany([
+          mock('bitcoin', targetTime + UnixTime.DAY + 1, 30000),
+        ])
+
+        const result = await repository.getClosestPrice(
+          'bitcoin',
+          targetTime,
+          UnixTime.DAY,
+        )
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
   describe(InteropRecentPricesRepository.prototype.deleteBefore.name, () => {
     it('deletes records before timestamp and returns count', async () => {
       const records = [

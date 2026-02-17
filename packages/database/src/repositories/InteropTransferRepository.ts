@@ -256,6 +256,30 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getWithMissingFinancials() {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .where((eb) =>
+        eb.or([
+          eb('srcAbstractTokenId', 'is', null),
+          eb('srcSymbol', 'is', null),
+          eb('srcAmount', 'is', null),
+          eb('srcPrice', 'is', null),
+          eb('srcValueUsd', 'is', null),
+          eb('dstAbstractTokenId', 'is', null),
+          eb('dstSymbol', 'is', null),
+          eb('dstAmount', 'is', null),
+          eb('dstPrice', 'is', null),
+          eb('dstValueUsd', 'is', null),
+        ]),
+      )
+      .orderBy('timestamp', 'asc')
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async updateFinancials(
     id: string,
     update: InteropTransferUpdate,
