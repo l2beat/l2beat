@@ -378,6 +378,31 @@ const abiItems = parseAbi([
   // mayanSwap2
 ])
 
+const SELECTOR_CREATE_ORDER_WITH_TOKEN = '0x8e8d142b'
+const SELECTOR_CREATE_ORDER_WITH_ETH = '0xb866e173'
+const SELECTOR_CREATE_ORDER_MAYAN_CIRCLE = '0x1c59b7fc'
+const SELECTOR_BRIDGE_WITH_FEE = '0x2072197f'
+const SELECTOR_BRIDGE_WITH_LOCKED_FEE = '0x9be95bb4'
+const SELECTOR_CREATE_ORDER_FAST_MCTP = '0x2337e236'
+const SELECTOR_BRIDGE_FAST_MCTP = '0xf58b6de8'
+const SELECTOR_SWAP = '0x6111ad25'
+const SELECTOR_WRAP_AND_SWAP_ETH = '0x1eb1cff0'
+
+type DestinationIdSpace = 'wormhole' | 'cctp'
+
+// selectors include destinations encoded with circle ids vs wormhole ids 
+const DESTINATION_ID_SPACE_BY_SELECTOR: Record<string, DestinationIdSpace> = {
+  [SELECTOR_CREATE_ORDER_WITH_TOKEN]: 'wormhole',
+  [SELECTOR_CREATE_ORDER_WITH_ETH]: 'wormhole',
+  [SELECTOR_CREATE_ORDER_MAYAN_CIRCLE]: 'wormhole',
+  [SELECTOR_SWAP]: 'wormhole',
+  [SELECTOR_WRAP_AND_SWAP_ETH]: 'wormhole',
+  [SELECTOR_BRIDGE_WITH_FEE]: 'cctp',
+  [SELECTOR_BRIDGE_WITH_LOCKED_FEE]: 'cctp',
+  [SELECTOR_CREATE_ORDER_FAST_MCTP]: 'cctp',
+  [SELECTOR_BRIDGE_FAST_MCTP]: 'cctp',
+}
+
 interface DecodedData {
   functionName: string
   methodSignature: `0x${string}`
@@ -412,7 +437,12 @@ function decodeProtocolData(
 
   decoded.functionName = res.functionName
   decoded.args = res.args
+  const destinationIdSpace =
+    DESTINATION_ID_SPACE_BY_SELECTOR[decoded.methodSignature]
 
+  // Use selectors to disambiguate overloaded createOrder variants:
+  // - 0x1c59b7fc (mayanCircle) -> Wormhole chain IDs
+  // - 0x2337e236 (fastMCTP) -> CCTP domains
   if (res.functionName === 'createOrderWithToken') {
     decoded.dstChain = getChainFromWormholeId(
       wormholeNetworks,
@@ -431,21 +461,43 @@ function decodeProtocolData(
     decoded.tokenOut = tokenOutOrNative(res.args[0].tokenOut)
     decoded.minAmountOut = res.args[0].minAmountOut
   } else if (res.functionName === 'createOrder') {
-    if (res.args.length === 1) {
+    if (decoded.methodSignature === SELECTOR_CREATE_ORDER_MAYAN_CIRCLE) {
+      if (destinationIdSpace !== 'wormhole') return decoded
+      const args = res.args as unknown as readonly [
+        {
+          tokenIn: `0x${string}`
+          amountIn: bigint
+          destChain: number
+          tokenOut: `0x${string}`
+          minAmountOut: bigint
+        },
+      ]
       decoded.dstChain = getChainFromWormholeId(
         wormholeNetworks,
-        res.args[0].destChain,
+        args[0].destChain,
       )
-      decoded.tokenIn = Address32.from(res.args[0].tokenIn)
-      decoded.amountIn = res.args[0].amountIn
-      decoded.tokenOut = tokenOutOrNative(res.args[0].tokenOut)
-      decoded.minAmountOut = res.args[0].minAmountOut
-    } else {
-      decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[3])
-      decoded.tokenIn = Address32.from(res.args[0])
-      decoded.amountIn = res.args[1]
-      decoded.tokenOut = tokenOutOrNative(res.args[5].tokenOut)
-      decoded.minAmountOut = res.args[5].amountOutMin
+      decoded.tokenIn = Address32.from(args[0].tokenIn)
+      decoded.amountIn = args[0].amountIn
+      decoded.tokenOut = tokenOutOrNative(args[0].tokenOut)
+      decoded.minAmountOut = args[0].minAmountOut
+    } else if (decoded.methodSignature === SELECTOR_CREATE_ORDER_FAST_MCTP) {
+      if (destinationIdSpace !== 'cctp') return decoded
+      const args = res.args as unknown as readonly [
+        `0x${string}`,
+        bigint,
+        bigint,
+        number,
+        number,
+        {
+          tokenOut: `0x${string}`
+          amountOutMin: bigint
+        },
+      ]
+      decoded.dstChain = getChainFromCctpDomain(cctpNetworks, args[3])
+      decoded.tokenIn = Address32.from(args[0])
+      decoded.amountIn = args[1]
+      decoded.tokenOut = tokenOutOrNative(args[5].tokenOut)
+      decoded.minAmountOut = args[5].amountOutMin
     }
   } else if (res.functionName === 'bridgeWithFee') {
     decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[5])
