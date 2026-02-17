@@ -7,7 +7,7 @@ import type {
 
 type BridgeTypeProtocolEntryCommon = Pick<
   ProtocolEntry,
-  'iconUrl' | 'protocolName' | 'id' | 'subgroup' | 'isAggregate'
+  'iconUrl' | 'name' | 'shortName' | 'id' | 'subgroup' | 'isAggregate'
 >
 
 export type NonMintingProtocolEntry = BridgeTypeProtocolEntryCommon &
@@ -39,7 +39,8 @@ export function getBridgeTypeEntries(entries: ProtocolEntry[]): {
       lockAndMint.push({
         id: entry.id,
         iconUrl: entry.iconUrl,
-        protocolName: entry.protocolName,
+        shortName: entry.shortName,
+        name: entry.name,
         subgroup: entry.subgroup,
         isAggregate: entry.isAggregate,
         ...entry.byBridgeType.lockAndMint,
@@ -49,7 +50,8 @@ export function getBridgeTypeEntries(entries: ProtocolEntry[]): {
       nonMinting.push({
         id: entry.id,
         iconUrl: entry.iconUrl,
-        protocolName: entry.protocolName,
+        shortName: entry.shortName,
+        name: entry.name,
         subgroup: entry.subgroup,
         isAggregate: entry.isAggregate,
         ...entry.byBridgeType.nonMinting,
@@ -59,7 +61,8 @@ export function getBridgeTypeEntries(entries: ProtocolEntry[]): {
       burnAndMint.push({
         id: entry.id,
         iconUrl: entry.iconUrl,
-        protocolName: entry.protocolName,
+        shortName: entry.shortName,
+        name: entry.name,
         subgroup: entry.subgroup,
         isAggregate: entry.isAggregate,
         ...entry.byBridgeType.burnAndMint,

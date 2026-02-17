@@ -26,7 +26,7 @@ const commonColumns = [
         src={ctx.row.original.iconUrl}
         width={20}
         height={20}
-        alt={`${ctx.row.original.protocolName} logo`}
+        alt={`${ctx.row.original.name} logo`}
       />
     ),
     meta: {
@@ -36,13 +36,13 @@ const commonColumns = [
     size: 28,
     enableHiding: false,
   }),
-  columnHelper.accessor('protocolName', {
+  columnHelper.accessor('name', {
     header: 'Name',
     cell: (ctx) => (
       <TwoRowCell>
         <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
           <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-            {ctx.row.original.protocolName}
+            {ctx.row.original.name}
           </div>
           {ctx.row.original.subgroup && (
             <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
@@ -224,7 +224,7 @@ export function getAllProtocolsColumns(
             type={type}
             protocol={{
               id: ctx.row.original.id,
-              name: ctx.row.original.protocolName,
+              name: ctx.row.original.name,
               iconUrl: ctx.row.original.iconUrl,
             }}
             showNetMintedValueColumn={showNetMintedValueColumn}
@@ -247,7 +247,7 @@ export function getAllProtocolsColumns(
             topItems={ctx.row.original.chains}
             protocol={{
               id: ctx.row.original.id,
-              name: ctx.row.original.protocolName,
+              name: ctx.row.original.name,
               iconUrl: ctx.row.original.iconUrl,
             }}
             showNetMintedValueColumn={showNetMintedValueColumn}

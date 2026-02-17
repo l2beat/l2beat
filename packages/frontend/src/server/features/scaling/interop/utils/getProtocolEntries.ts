@@ -121,7 +121,8 @@ export function getProtocolEntries(
     entries.push({
       id: project.id,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      protocolName: project.interopConfig.name ?? project.name,
+      name: project.interopConfig.name ?? project.name,
+      shortName: project.interopConfig.shortName,
       bridgeTypes,
       isAggregate: project.interopConfig.isAggregate,
       subgroup: subgroupProject

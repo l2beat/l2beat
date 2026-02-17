@@ -10,7 +10,8 @@ import type { TopItems } from './utils/getTopItems'
 export type ProtocolEntry = {
   id: ProjectId
   iconUrl: string
-  protocolName: string
+  name: string
+  shortName: string | undefined
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
