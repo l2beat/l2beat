@@ -79,7 +79,7 @@ export function getBridgeType({
   srcChain: string
   dstChain: string
   tokenMap: TokenMap
-  defaultBridgeType?: 'burnAndMint' | 'nonMinting'
+  defaultBridgeType?: 'burnAndMint' | 'nonMinting' // defaults to burnAndMint, see above
 }): KnownInteropBridgeType | undefined {
   if (
     !srcTokenAddress ||
@@ -90,12 +90,18 @@ export function getBridgeType({
     return
   }
 
-  // chainspecificaddress does not support 'native' so we return early
+  // chainspecificaddress does not support 'native' so we make do without the abstract map
+  if (
+    srcTokenAddress === Address32.NATIVE &&
+    dstTokenAddress === Address32.NATIVE
+  ) {
+    return 'nonMinting'
+  }
   if (
     srcTokenAddress === Address32.NATIVE ||
     dstTokenAddress === Address32.NATIVE
   ) {
-    return defaultBridgeType
+    return 'lockAndMint'
   }
 
   const srcAbstractToken = tokenMap.get(
