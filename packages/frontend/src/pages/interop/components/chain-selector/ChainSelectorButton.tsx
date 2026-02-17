@@ -27,6 +27,28 @@ export function ChainSelectorButton({
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
+  const toggleMobileChain = (chainId: string) => {
+    if (
+      selectedChains.first?.id === chainId ||
+      selectedChains.second?.id === chainId
+    ) {
+      return
+    }
+
+    if (!selectedChains.first) {
+      selectChain('first', chainId)
+      return
+    }
+
+    if (!selectedChains.second) {
+      selectChain('second', chainId)
+      return
+    }
+
+    selectChain('first', selectedChains.second.id)
+    selectChain('second', chainId)
+  }
+
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
     name,
@@ -61,31 +83,21 @@ export function ChainSelectorButton({
         <DrawerContent className="pb-4">
           <DrawerHeader className="mb-4 gap-2">
             <DrawerTitle className="mb-0 font-semibold text-lg text-primary leading-none">
-              Chains
+              Chain selector
             </DrawerTitle>
             <DrawerDescription className="font-semibold text-secondary text-xs leading-none">
-              Select the chains you want to include
+              Select two chains
             </DrawerDescription>
           </DrawerHeader>
-          <div className="mb-2 font-semibold text-xs leading-none">From</div>
           <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected['first']}
-                toggleSelected={(chainId) => selectChain('first', chainId)}
-              />
-            ))}
-          </div>
-          <div className="mt-3 mb-2 font-semibold text-xs leading-none">To</div>
-          <div className="flex flex-wrap gap-1">
-            {chainsWithDetails.map((chain) => (
-              <ChainSelectorChainToggle
-                key={chain.id}
-                chain={chain}
-                isSelected={chain.isSelected['second']}
-                toggleSelected={(chainId) => selectChain('second', chainId)}
+                isSelected={
+                  chain.isSelected['first'] || chain.isSelected['second']
+                }
+                toggleSelected={toggleMobileChain}
               />
             ))}
           </div>
