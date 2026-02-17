@@ -22,6 +22,7 @@ import {
 } from '@l2beat/shared-pure'
 import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import {
   createEventParser,
   createInteropEventType,
@@ -30,7 +31,6 @@ import {
   type InteropPluginResyncable,
   type LogToCapture,
 } from './types'
-import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import { WormholeConfig } from './wormhole/wormhole.config'
 
 // MayanForwarder contract address - same across all EVM chains
@@ -313,7 +313,11 @@ export function logToProtocolData(
   // For SwapAndForwarded events, use tokenIn/amountIn from the event (user's actual tokens)
   const swapERC20 = parseSwapAndForwardedERC20(log, null)
   if (swapERC20) {
-    const decoded = decodeProtocolData(swapERC20.mayanData, wormholeNetworks, [])
+    const decoded = decodeProtocolData(
+      swapERC20.mayanData,
+      wormholeNetworks,
+      [],
+    )
     if (decoded) {
       decoded.tokenIn = Address32.from(swapERC20.tokenIn)
       decoded.amountIn = swapERC20.amountIn
@@ -390,7 +394,7 @@ const SELECTOR_WRAP_AND_SWAP_ETH = '0x1eb1cff0'
 
 type DestinationIdSpace = 'wormhole' | 'cctp'
 
-// selectors include destinations encoded with circle ids vs wormhole ids 
+// selectors include destinations encoded with circle ids vs wormhole ids
 const DESTINATION_ID_SPACE_BY_SELECTOR: Record<string, DestinationIdSpace> = {
   [SELECTOR_CREATE_ORDER_WITH_TOKEN]: 'wormhole',
   [SELECTOR_CREATE_ORDER_WITH_ETH]: 'wormhole',
