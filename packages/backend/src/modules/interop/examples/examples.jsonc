@@ -862,51 +862,51 @@
       {
         "chain": "ethereum",
         "tx": "0x53dc125b2e3a9e173f229052e59d4fb68c56d72a995c5e6f4dc56b3bef8c6abf"
+      },
+      // contractcallwithtoken
+      {
+        "chain": "base",
+        "tx": "0xf5aa1b316e29ea7703db8abc97c61401d052ae597560470531148bfac2fd5604"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4ffd8966901a60321f91bcff3caed4879f5839ed473c1a18df2276fb124d0bb0"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x39c05cfbecd0bbbfdd79ad70c9df270f4ecb48a24081af31e65e09e6c1896cd6"
+      },
+      // contractCall (layerzerowrapper)
+      {
+        "chain": "arbitrum",
+        "tx": "0xa69efc2230d17f040125f5bec483b2725e81721c93c71a792377b8268c8cc218"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x298c7d3403c91f2d0b1ec2206870b13f3a6932818d2f4322247476872fa0a9bd"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xee5fda453ba6fefa80deea9fa9781d0784bbb757cee564fe8bb61fcd3c216bbd"
+      },
+      // only needed for layerzero
+      {
+        "chain": "ethereum",
+        "tx": "0x3eed91622df527fb056b651a83c96ed956749eebf1d19112e05dd9f542af73f7"
+      },
+      // contractcallwithtoken, no express, axlUSDC execution (amountUnsafe fix)
+      {
+        "chain": "ethereum",
+        "tx": "0x066aeb47a399e49dc10ebfe34cc0d49caa734e177305eec09b59af024a0e2840"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x12288c68ad085819e445e28f145a3c24c88610efb457fb7db28075ad9c4a71dc"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x86fd6f0fa2719ab88d35cfae7d124ee4f8214f09a5b993550d49ae097481859a"
       }
-      // // contractcallwithtoken
-      // {
-      //   "chain": "base",
-      //   "tx": "0xf5aa1b316e29ea7703db8abc97c61401d052ae597560470531148bfac2fd5604"
-      // },
-      // {
-      //   "chain": "ethereum",
-      //   "tx": "0x4ffd8966901a60321f91bcff3caed4879f5839ed473c1a18df2276fb124d0bb0"
-      // },
-      // {
-      //   "chain": "ethereum",
-      //   "tx": "0x39c05cfbecd0bbbfdd79ad70c9df270f4ecb48a24081af31e65e09e6c1896cd6"
-      // },
-      // // contractCall (layerzerowrapper)
-      // {
-      //   "chain": "arbitrum",
-      //   "tx": "0xa69efc2230d17f040125f5bec483b2725e81721c93c71a792377b8268c8cc218"
-      // },
-      // {
-      //   "chain": "ethereum",
-      //   "tx": "0x298c7d3403c91f2d0b1ec2206870b13f3a6932818d2f4322247476872fa0a9bd"
-      // },
-      // {
-      //   "chain": "ethereum",
-      //   "tx": "0xee5fda453ba6fefa80deea9fa9781d0784bbb757cee564fe8bb61fcd3c216bbd"
-      // },
-      // // only needed for layerzero
-      // {
-      //   "chain": "ethereum",
-      //   "tx": "0x3eed91622df527fb056b651a83c96ed956749eebf1d19112e05dd9f542af73f7"
-      // },
-      // // contractcallwithtoken, no express, axlUSDC execution (amountUnsafe fix)
-      // {
-      //   "chain": "ethereum",
-      //   "tx": "0x066aeb47a399e49dc10ebfe34cc0d49caa734e177305eec09b59af024a0e2840"
-      // },
-      // {
-      //   "chain": "polygonpos",
-      //   "tx": "0x12288c68ad085819e445e28f145a3c24c88610efb457fb7db28075ad9c4a71dc"
-      // },
-      // {
-      //   "chain": "polygonpos",
-      //   "tx": "0x86fd6f0fa2719ab88d35cfae7d124ee4f8214f09a5b993550d49ae097481859a"
-      // }
     ]
   },
   "axelar-its": {
