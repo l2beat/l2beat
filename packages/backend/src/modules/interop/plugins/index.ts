@@ -88,6 +88,7 @@ export interface InteropPluginDependencies {
   logger: Logger
   configs: InteropConfigStore
   tokenDbClient: TokenDbClient
+  configIntervalMs: number
 }
 
 export function createInteropPlugins(
@@ -104,34 +105,50 @@ export function createInteropPlugins(
         deps.configs,
         deps.logger,
         ethereumRpc,
+        deps.configIntervalMs,
       ),
       new LayerZeroConfigPlugin(
         deps.chains,
         deps.configs,
         deps.logger,
         deps.httpClient,
+        deps.configIntervalMs,
       ),
-      new CCTPConfigPlugin(deps.chains, deps.configs, deps.logger, rpcs),
+      new CCTPConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        rpcs,
+        deps.configIntervalMs,
+      ),
       new WormholeConfigPlugin(
         deps.chains,
         deps.configs,
         deps.logger,
         deps.httpClient,
         rpcs,
+        deps.configIntervalMs,
       ),
       new CCIPConfigPlugin(
         deps.chains,
         deps.configs,
         deps.logger,
         deps.httpClient,
+        deps.configIntervalMs,
       ),
       new ZkStackConfigPlugin(
         deps.configs,
         deps.logger,
         rpcs,
         deps.tokenDbClient,
+        deps.configIntervalMs,
       ),
-      new PolygonConfigPlugin(deps.configs, deps.logger, rpcs),
+      new PolygonConfigPlugin(
+        deps.configs,
+        deps.logger,
+        rpcs,
+        deps.configIntervalMs,
+      ),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),

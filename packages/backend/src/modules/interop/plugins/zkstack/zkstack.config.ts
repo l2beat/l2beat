@@ -86,8 +86,9 @@ export class ZkStackConfigPlugin
     protected logger: Logger,
     private rpcs: Map<string, IRpcClient>,
     private tokenDbClient: TokenDbClient,
+    intervalMs: number,
   ) {
-    super({ intervalMs: 20 * 60 * 1000 })
+    super({ intervalMs })
     this.logger = logger.for(this).tag({ tag: ZkStackConfig.key })
   }
 

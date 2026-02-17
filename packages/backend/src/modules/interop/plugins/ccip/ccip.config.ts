@@ -85,8 +85,9 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     private store: InteropConfigStore,
     protected logger: Logger,
     private http: HttpClient,
+    intervalMs: number,
   ) {
-    super({ intervalMs: 60 * 60 * 1000 }) // Refresh every hour
+    super({ intervalMs })
     this.logger = logger.for(this)
   }
 
