@@ -69,7 +69,9 @@ function Content({
   if (!selectedChains.first || !selectedChains.second) {
     return (
       <>
-        <HeaderWithDescription />
+        <div className="max-md:hidden">
+          <HeaderWithDescription />
+        </div>
         <InitialChainSelector
           interopChains={interopChains}
           selectedChains={selectedChains}
