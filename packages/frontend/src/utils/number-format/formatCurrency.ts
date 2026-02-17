@@ -25,14 +25,27 @@ export function formatCurrency(
   const num = formatFn(value, decimals)
 
   if (symbol) {
-    if (num.startsWith('<') || num.startsWith('>')) {
-      return `${num.slice(0, 1)}${symbol}${num.slice(1)}`
-    }
-
-    return `${symbol}${num}`
+    return formatWithSymbol(num, symbol)
   }
 
   return `${num} ${currency}`
+}
+
+function formatWithSymbol(num: string, symbol: string) {
+  if (num.startsWith('<') || num.startsWith('>')) {
+    const comparator = num.slice(0, 1)
+    const value = num.slice(1)
+    if (value.startsWith('-')) {
+      return `${comparator}-${symbol}${value.slice(1)}`
+    }
+    return `${comparator}${symbol}${value}`
+  }
+
+  if (num.startsWith('-')) {
+    return `-${symbol}${num.slice(1)}`
+  }
+
+  return `${symbol}${num}`
 }
 
 export function formatCurrencyExactValue(value: number, currency: string) {
