@@ -79,7 +79,7 @@ function ChainSelectorButton({
   return (
     <button
       className={cn(
-        'flex h-18 w-[calc((100%-0.75rem)/3)] min-w-0 flex-col items-center justify-center gap-2 rounded border border-divider px-2 py-3 transition-colors hover:border-brand md:size-[148px] md:gap-3 md:px-3',
+        'flex h-18 w-[32%] flex-col items-center justify-center gap-2 rounded border border-divider px-2 py-3 transition-colors hover:border-brand md:size-[148px] md:gap-3 md:px-3',
 
         selected && 'border-brand bg-brand/15',
         className,
@@ -87,7 +87,7 @@ function ChainSelectorButton({
       {...props}
     >
       <img src={chain.iconUrl} alt={chain.name} className="size-6 md:size-8" />
-      <span className="w-full text-center font-medium text-base leading-none md:text-lg">
+      <span className="w-full text-center font-medium text-sm leading-none md:text-lg">
         {chain.name}
       </span>
     </button>
