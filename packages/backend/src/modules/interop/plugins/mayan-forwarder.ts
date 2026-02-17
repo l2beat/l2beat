@@ -30,6 +30,7 @@ import {
   type InteropPluginResyncable,
   type LogToCapture,
 } from './types'
+import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import { WormholeConfig } from './wormhole/wormhole.config'
 
 // MayanForwarder contract address - same across all EVM chains
@@ -173,14 +174,19 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
-    const wormholeNetworks = this.configs.get(WormholeConfig)
-    if (!wormholeNetworks) return
+    const wormholeNetworks = this.configs.get(WormholeConfig) ?? []
+    const cctpNetworks = [
+      ...(this.configs.get(CCTPV1Config) ?? []),
+      ...(this.configs.get(CCTPV2Config) ?? []),
+    ]
+    if (wormholeNetworks.length === 0 && cctpNetworks.length === 0) return
 
     const forwardedEth = parseForwardedEth(input.log, null)
     if (forwardedEth) {
       const decodedData = decodeProtocolData(
         forwardedEth.protocolData,
         wormholeNetworks,
+        cctpNetworks,
       )
       if (!decodedData) return
 
@@ -225,6 +231,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       const decodedData = decodeProtocolData(
         forwardedERC20.protocolData,
         wormholeNetworks,
+        cctpNetworks,
       )
       if (!decodedData) return
       return [
@@ -250,6 +257,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       const decodedData = decodeProtocolData(
         swapAndForwardedEth.mayanData,
         wormholeNetworks,
+        cctpNetworks,
       )
       if (!decodedData) return
       return [
@@ -273,6 +281,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       const decodedData = decodeProtocolData(
         swapAndForwardedERC20.mayanData,
         wormholeNetworks,
+        cctpNetworks,
       )
       if (!decodedData) return
       return [
@@ -299,12 +308,12 @@ export function logToProtocolData(
 ): DecodedData | undefined {
   const parsed1 = parseForwardedEth(log, null) ?? parseForwardedERC20(log, null)
   if (parsed1) {
-    return decodeProtocolData(parsed1.protocolData, wormholeNetworks)
+    return decodeProtocolData(parsed1.protocolData, wormholeNetworks, [])
   }
   // For SwapAndForwarded events, use tokenIn/amountIn from the event (user's actual tokens)
   const swapERC20 = parseSwapAndForwardedERC20(log, null)
   if (swapERC20) {
-    const decoded = decodeProtocolData(swapERC20.mayanData, wormholeNetworks)
+    const decoded = decodeProtocolData(swapERC20.mayanData, wormholeNetworks, [])
     if (decoded) {
       decoded.tokenIn = Address32.from(swapERC20.tokenIn)
       decoded.amountIn = swapERC20.amountIn
@@ -313,7 +322,7 @@ export function logToProtocolData(
   }
   const swapEth = parseSwapAndForwardedEth(log, null)
   if (swapEth) {
-    const decoded = decodeProtocolData(swapEth.mayanData, wormholeNetworks)
+    const decoded = decodeProtocolData(swapEth.mayanData, wormholeNetworks, [])
     if (decoded) {
       decoded.tokenIn = Address32.NATIVE
       decoded.amountIn = swapEth.amountIn
@@ -343,6 +352,13 @@ function getChainFromWormholeId(
   wormholeId: number,
 ) {
   return findChain(wormholeNetworks, (x) => x.wormholeChainId, wormholeId)
+}
+
+function getChainFromCctpDomain(
+  cctpNetworks: { chain: string; domain: number }[],
+  domain: number,
+) {
+  return findChain(cctpNetworks, (x) => x.domain, domain)
 }
 
 const abiItems = parseAbi([
@@ -376,6 +392,7 @@ interface DecodedData {
 function decodeProtocolData(
   data: `0x${string}`,
   wormholeNetworks: { chain: string; wormholeChainId: number }[],
+  cctpNetworks: { chain: string; domain: number }[],
 ): DecodedData | undefined {
   const decoded: DecodedData = {
     functionName: 'unknown',
@@ -424,22 +441,22 @@ function decodeProtocolData(
       decoded.tokenOut = tokenOutOrNative(res.args[0].tokenOut)
       decoded.minAmountOut = res.args[0].minAmountOut
     } else {
-      decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[4])
+      decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[3])
       decoded.tokenIn = Address32.from(res.args[0])
       decoded.amountIn = res.args[1]
       decoded.tokenOut = tokenOutOrNative(res.args[5].tokenOut)
       decoded.minAmountOut = res.args[5].amountOutMin
     }
   } else if (res.functionName === 'bridgeWithFee') {
-    decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[5])
+    decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[5])
     decoded.tokenIn = Address32.from(res.args[0])
     decoded.amountIn = res.args[1]
   } else if (res.functionName === 'bridgeWithLockedFee') {
-    decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[4])
+    decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[4])
     decoded.tokenIn = Address32.from(res.args[0])
     decoded.amountIn = res.args[1]
   } else if (res.functionName === 'bridge') {
-    decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[6])
+    decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[6])
     decoded.tokenIn = Address32.from(res.args[0])
     decoded.amountIn = res.args[1]
   } else if (res.functionName === 'swap') {

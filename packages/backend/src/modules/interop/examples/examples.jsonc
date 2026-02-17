@@ -426,6 +426,27 @@
       }
     ]
   },
+  "mayan-forwarder-cctp-domain-mapping": {
+    "loadConfigs": ["wormhole", "cctp-v1", "cctp-v2"],
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x01b5f12874335e7eb0c5efe57a3bfc4aef5e92a2c3b08aa907a9ca50f5a3ae82"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xd1189ae051bf14fe75e552b658feb905f4dcc1ceb88d81c7d7f2e7489f890cdc"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "args": { "$dstChain": "optimism" }
+        }
+      ]
+    }
+  },
   "meson": {
     "description": "Liquidity swap + tunnel samples from MESON_PLAN",
     "txs": [
