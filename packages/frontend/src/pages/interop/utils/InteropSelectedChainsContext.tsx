@@ -107,7 +107,11 @@ export function InteropSelectedChainsProvider({
     (index: keyof InteropSelectedChains, chainId: string | null) => {
       setSelectedChains((prev) => {
         const chain = getInteropSelectedChainFromId(chainId, interopChains)
-        if (!chain) {
+        if (
+          !chain ||
+          prev.first?.id === chainId ||
+          prev.second?.id === chainId
+        ) {
           return prev
         }
         return {
