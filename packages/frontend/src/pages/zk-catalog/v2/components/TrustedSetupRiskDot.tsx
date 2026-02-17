@@ -3,6 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 const riskDotVariants = cva('rounded-full', {
   variants: {
     risk: {
+      'N/A': 'border-2 border-positive bg-radial from-green-500 to-[#52D347]',
       green: 'bg-positive',
       yellow: 'bg-surface-warning',
       red: 'bg-negative',

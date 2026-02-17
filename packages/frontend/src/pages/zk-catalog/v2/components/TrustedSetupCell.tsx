@@ -24,11 +24,7 @@ export function TrustedSetupCell({ trustedSetups, dotSize }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-2">
-        {worstRisk === 'N/A' ? (
-          <span className="text-2xl leading-none">🤩</span>
-        ) : (
-          <TrustedSetupRiskDot risk={worstRisk} size={dotSize} />
-        )}
+        <TrustedSetupRiskDot risk={worstRisk} size={dotSize} />
         <TechStackTag tag={proofSystem} withoutTooltip />
       </TooltipTrigger>
       <TooltipContent>
@@ -43,15 +39,11 @@ export function TrustedSetupCell({ trustedSetups, dotSize }: Props) {
         {trustedSetups.map((trustedSetup) => {
           return (
             <div key={trustedSetup.id} className="flex gap-2">
-              {trustedSetup.risk === 'N/A' ? (
-                <div className="mt-px text-lg leading-none">🤩</div>
-              ) : (
-                <TrustedSetupRiskDot
-                  risk={trustedSetup.risk}
-                  size="sm"
-                  className="shrink-0"
-                />
-              )}
+              <TrustedSetupRiskDot
+                risk={trustedSetup.risk}
+                size="sm"
+                className="shrink-0"
+              />
               <span className="text-xs leading-normal">
                 {trustedSetup.shortDescription}
               </span>
