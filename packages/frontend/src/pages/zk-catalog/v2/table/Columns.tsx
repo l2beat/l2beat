@@ -140,6 +140,9 @@ export const zkCatalogColumns = [
         />
       )
     },
+    meta: {
+      cellClassName: 'pr-1!',
+    },
   }),
   columnHelper.display({
     id: 'arrow',
@@ -153,12 +156,20 @@ export const zkCatalogColumns = [
 
       return <FilledArrowIcon className="fill-secondary" />
     },
+    meta: {
+      cellClassName: 'pr-1!',
+    },
   }),
   columnHelper.display({
     id: 'final-wrap-stack',
     header: 'Final wrap stack',
     cell: (ctx) => {
-      return <TechStackCell tags={ctx.row.original.techStack.finalWrap ?? []} />
+      return (
+        <TechStackCell
+          tags={ctx.row.original.techStack.finalWrap ?? []}
+          className="md:min-w-[180px]"
+        />
+      )
     },
   }),
 ]

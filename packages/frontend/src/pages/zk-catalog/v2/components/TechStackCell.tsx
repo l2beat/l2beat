@@ -27,7 +27,7 @@ export function TechStackCell({
   return (
     <div
       className={cn(
-        'flex flex-nowrap gap-x-[5px] gap-y-1 overflow-x-auto py-2 md:max-h-16.5 md:min-w-[250px] md:flex-wrap',
+        'flex flex-nowrap gap-x-[5px] gap-y-1 overflow-x-auto py-2 md:max-h-16.5 md:min-w-[200px] md:flex-wrap',
         className,
       )}
     >
