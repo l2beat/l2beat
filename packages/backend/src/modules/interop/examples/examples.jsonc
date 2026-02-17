@@ -578,13 +578,18 @@
         "cctp-v2.MessageReceived",
         "mayan-mctp-fast.OrderFulfilled",
         "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "cctp-v2.MessageReceived",
+        "cctp-v2.MessageSent",
         "mayan-forwarder.MayanForwarded"
       ],
       "messages": [
         { "type": "mayan.Message", "app": "mctp" },
+        { "type": "cctp-v2.FastMessage", "app": "cctp-v2" },
+        { "type": "mayan.Message", "app": "mctp" },
         { "type": "cctp-v2.FastMessage", "app": "cctp-v2" }
       ],
-      "transfers": ["cctp-v2.Transfer"]
+      "transfers": ["cctp-v2.Transfer", "cctp-v2.Transfer"]
     }
   },
   "mayan-mctp-bridge-fee-on-dst": {

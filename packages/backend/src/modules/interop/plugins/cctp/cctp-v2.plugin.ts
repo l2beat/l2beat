@@ -252,12 +252,15 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       const orderFulfilled = db.find(OrderFulfilled, {
         sameTxAfter: messageReceived,
       })
-      if (mayanForwarded && orderFulfilled) {
+      if (mayanForwarded) {
         wrappers.push(
           Result.Message('mayan.Message', {
             app: 'mctp',
             srcEvent: mayanForwarded,
-            dstEvent: orderFulfilled,
+            // Keep Mayan message detection anchored to source forwarder event.
+            // If OrderFulfilled exists, include it so it gets consumed.
+            dstEvent: messageReceived,
+            extraEvents: orderFulfilled ? [orderFulfilled] : undefined,
           }),
         )
       }
