@@ -95,7 +95,7 @@ export function ChainSelectorButton({
                 key={chain.id}
                 chain={chain}
                 isSelected={
-                  chain.isSelected['first'] || chain.isSelected['second']
+                  chain.isSelected.first || chain.isSelected.second
                 }
                 toggleSelected={toggleMobileChain}
               />
