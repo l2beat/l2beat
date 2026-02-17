@@ -154,12 +154,7 @@ function TechStackSection({
     <div className="mt-3 flex flex-col gap-2">
       <h2 className="font-semibold text-subtitle-12 uppercase">Tech Stack</h2>
       <div className="rounded-sm border-divider md:border md:p-4">
-        <TechStackCell
-          techStack={techStack}
-          className="flex flex-row flex-wrap py-0 max-md:flex-col md:gap-6"
-          labelClassName="text-2xs mb-1.5"
-          tagWrapperClassName="flex-wrap"
-        />
+        <TechStackCell tags={techStack.zkVM} className="flex-wrap" />
       </div>
     </div>
   )

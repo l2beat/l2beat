@@ -4,6 +4,7 @@ import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
+import { FilledArrowIcon } from '~/icons/FilledArrow'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { TechStackCell } from '../components/TechStackCell'
@@ -127,10 +128,37 @@ export const zkCatalogColumns = [
     ],
   }),
   columnHelper.display({
-    id: 'tech-stack',
-    header: 'Tech stack',
+    id: 'zkevm-tech-stack',
+    header: 'zkEVM tech stack',
     cell: (ctx) => {
-      return <TechStackCell techStack={ctx.row.original.techStack} />
+      return (
+        <TechStackCell
+          tags={[
+            ...(ctx.row.original.techStack.zkVM ?? []),
+            ...(ctx.row.original.techStack.snark ?? []),
+          ]}
+        />
+      )
+    },
+  }),
+  columnHelper.display({
+    id: 'arrow',
+    cell: (ctx) => {
+      const { finalWrap, zkVM, snark } = ctx.row.original.techStack
+
+      const leftSideEmpty = !(zkVM?.length || snark?.length)
+      const rightSideEmpty = !finalWrap?.length
+
+      if (leftSideEmpty || rightSideEmpty) return null
+
+      return <FilledArrowIcon className="fill-secondary" />
+    },
+  }),
+  columnHelper.display({
+    id: 'final-wrap-stack',
+    header: 'Final wrap stack',
+    cell: (ctx) => {
+      return <TechStackCell tags={ctx.row.original.techStack.finalWrap ?? []} />
     },
   }),
 ]

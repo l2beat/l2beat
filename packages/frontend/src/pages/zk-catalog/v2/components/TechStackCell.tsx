@@ -1,65 +1,39 @@
-import type { ProjectZkCatalogInfo } from '@l2beat/config'
-import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import type { ZkCatalogTag } from '@l2beat/config'
+import { Badge } from '~/components/badge/Badge'
 import { cn } from '~/utils/cn'
 import { TechStackTag } from './TechStackTag'
 
 export function TechStackCell({
-  techStack,
+  tags,
   className,
-  labelClassName,
-  tagWrapperClassName,
 }: {
-  techStack: ProjectZkCatalogInfo['techStack']
+  tags: ZkCatalogTag[] | undefined
   className?: string
   labelClassName?: string
   tagWrapperClassName?: string
 }) {
-  if (!techStack.zkVM && !techStack.finalWrap && !techStack.snark) {
-    return <NoDataBadge />
+  if (!tags || tags.length === 0) {
+    return (
+      <Badge
+        type="gray"
+        size="small"
+        className="border border-[#656565] bg-[#c2c2c2] py-0.5 text-[13px] text-secondary"
+      >
+        No final wrap
+      </Badge>
+    )
   }
 
-  const mergedLabelClassName = cn(
-    'font-medium text-[11px] text-secondary leading-none',
-    labelClassName,
-  )
-
-  const mergedTagWrapperClassName = cn(
-    'flex flex-nowrap gap-x-[5px] gap-y-1 overflow-x-auto md:max-h-[50px] md:min-w-[250px] md:flex-wrap',
-    tagWrapperClassName,
-  )
-
   return (
-    <div className={cn('space-y-2 py-4', className)}>
-      {techStack.zkVM && (
-        <div className="flex flex-col gap-0.5">
-          <span className={mergedLabelClassName}>zkVM</span>
-          <div className={mergedTagWrapperClassName}>
-            {techStack.zkVM.map((zkVM, i) => (
-              <TechStackTag key={`${zkVM.name}-${i}`} tag={zkVM} />
-            ))}
-          </div>
-        </div>
+    <div
+      className={cn(
+        'flex flex-nowrap gap-x-[5px] gap-y-1 overflow-x-auto py-2 md:max-h-16.5 md:min-w-[250px] md:flex-wrap',
+        className,
       )}
-      {techStack.snark && (
-        <div className="flex flex-col gap-0.5">
-          <span className={mergedLabelClassName}>SNARK</span>
-          <div className={mergedTagWrapperClassName}>
-            {techStack.snark.map((snark, i) => (
-              <TechStackTag key={`${snark.name}-${i}`} tag={snark} />
-            ))}
-          </div>
-        </div>
-      )}
-      {techStack.finalWrap && (
-        <div className="flex flex-col gap-0.5">
-          <span className={mergedLabelClassName}>Final wrap</span>
-          <div className={mergedTagWrapperClassName}>
-            {techStack.finalWrap.map((finalWrap, i) => (
-              <TechStackTag key={`${finalWrap.name}-${i}`} tag={finalWrap} />
-            ))}
-          </div>
-        </div>
-      )}
+    >
+      {tags.map((tag, i) => (
+        <TechStackTag key={`${tag.name}-${i}`} tag={tag} />
+      ))}
     </div>
   )
 }
