@@ -119,6 +119,9 @@ export function ChainSelectorButton({
                 chain={chain}
                 isSelected={chain.isSelected[chainKey]}
                 toggleSelected={(chainId) => selectChain(chainKey, chainId)}
+                disabled={
+                  chain.isSelected[chainKey === 'first' ? 'second' : 'first']
+                }
               />
             ))}
           </div>
