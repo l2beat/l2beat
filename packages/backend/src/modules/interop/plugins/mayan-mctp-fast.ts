@@ -1,3 +1,8 @@
+/**
+ * captures mctp-specific orderfulfilled event
+ * matching happens in cctp plugin and a mayan message is produced
+ * the transfer is cctp (no mayan transfer)
+ */
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
