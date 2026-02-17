@@ -1,6 +1,7 @@
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { interopDescriptions } from '~/pages/interop/descriptions'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
@@ -40,8 +41,7 @@ export function BurnAndMintCard({
       </div>
       <BetweenChainsInfo className="mt-1" />
       <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
-        The bridge risk is present at all times, as it can mint tokens on all
-        chains. Flow limits might be applied.
+        {interopDescriptions.burnAndMint}
       </div>
       {isLoading ? (
         <Skeleton className="mt-2 h-62 w-full rounded-sm" />
