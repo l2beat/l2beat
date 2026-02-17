@@ -10239,6 +10239,28 @@
       }
     },
     {
+      "name": "BitgetToken",
+      "coingeckoId": "bitget-token",
+      "address": "0x389C08Bc23A7317000a1FD76c7c5B0cb0b4640b5",
+      "symbol": "BGB",
+      "decimals": 18,
+      "deploymentTimestamp": 1767510574,
+      "coingeckoListingTimestamp": 1591747200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11610/large/Bitget_logo.png?1736925727",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "pumpBTC",
       "coingeckoId": "pumpbtc",
       "address": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",

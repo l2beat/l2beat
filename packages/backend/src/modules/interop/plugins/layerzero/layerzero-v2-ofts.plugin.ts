@@ -1,4 +1,3 @@
-import type { AbstractTokenRecord } from '@l2beat/database'
 import {
   Address32,
   assert,
@@ -6,6 +5,7 @@ import {
   type KnownInteropBridgeType,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import type { TokenMap } from '../../engine/match/TokenMap'
 import { findParsedAround } from '../hyperlane-hwr'
 import {
   createEventParser,
@@ -69,7 +69,7 @@ export function getBridgeType({
   dstWasMinted,
   srcChain,
   dstChain,
-  deployedToAbstractMap,
+  tokenMap,
   defaultBridgeType = 'burnAndMint',
 }: {
   srcTokenAddress: Address32 | undefined
@@ -78,7 +78,7 @@ export function getBridgeType({
   dstWasMinted: boolean | undefined
   srcChain: string
   dstChain: string
-  deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>
+  tokenMap: TokenMap
   defaultBridgeType?: 'burnAndMint' | 'nonMinting'
 }): KnownInteropBridgeType | undefined {
   if (
@@ -90,13 +90,21 @@ export function getBridgeType({
     return
   }
 
-  const srcAbstractToken = deployedToAbstractMap.get(
+  // chainspecificaddress does not support 'native' so we return early
+  if (
+    srcTokenAddress === Address32.NATIVE ||
+    dstTokenAddress === Address32.NATIVE
+  ) {
+    return defaultBridgeType
+  }
+
+  const srcAbstractToken = tokenMap.get(
     ChainSpecificAddress.fromLong(
       srcChain,
       Address32.cropToEthereumAddress(srcTokenAddress),
     ),
   )
-  const dstAbstractToken = deployedToAbstractMap.get(
+  const dstAbstractToken = tokenMap.get(
     ChainSpecificAddress.fromLong(
       dstChain,
       Address32.cropToEthereumAddress(dstTokenAddress),
@@ -260,7 +268,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   match(
     oftReceivedPacketDelivered: InteropEvent,
     db: InteropEventDb,
-    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
+    tokenMap: TokenMap,
   ): MatchResult | undefined {
     if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
       return
@@ -287,7 +295,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       dstWasMinted,
       srcChain: oftSentPacketSent.ctx.chain,
       dstChain: packetDelivered.ctx.chain,
-      deployedToAbstractMap,
+      tokenMap,
     })
 
     return [

@@ -3,14 +3,19 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type {
+  ProtocolDisplayable,
+  SelectedChainsIds,
+} from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { InitialChainSelector } from '../components/InitialChainSelector'
+import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
-import { TopPathsWidget } from '../components/widgets/TopPathsWidget'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import {
   InteropSelectedChainsProvider,
@@ -26,13 +31,15 @@ import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridg
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
-  initialSelectedChains: { from: string[]; to: string[] }
+  protocols: ProtocolDisplayable[]
+  initialSelectedChains: SelectedChainsIds
 }
 
 export function InteropSummaryPage({
   interopChains,
   queryState,
   initialSelectedChains,
+  protocols,
   ...props
 }: Props) {
   return (
@@ -43,11 +50,8 @@ export function InteropSummaryPage({
           initialSelectedChains={initialSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <div className="flex min-h-screen flex-col">
-              <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-              <ChainSelector chains={interopChains} />
-              <Widgets interopChains={interopChains} />
-            </div>
+            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
+            <Content interopChains={interopChains} protocols={protocols} />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
@@ -55,19 +59,49 @@ export function InteropSummaryPage({
   )
 }
 
+function Content({
+  interopChains,
+  protocols,
+}: {
+  interopChains: InteropChainWithIcon[]
+  protocols: ProtocolDisplayable[]
+}) {
+  const { selectedChains, selectChain } = useInteropSelectedChains()
+
+  if (!selectedChains.first || !selectedChains.second) {
+    return (
+      <InitialChainSelector
+        interopChains={interopChains}
+        selectedChains={selectedChains}
+        selectChain={selectChain}
+        type={undefined}
+      />
+    )
+  }
+
+  return (
+    <>
+      <ChainSelector chains={interopChains} protocols={protocols} />
+      <Widgets interopChains={interopChains} />
+    </>
+  )
+}
+
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains, isDirty } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    from: selectedChains.from,
-    to: selectedChains.to,
+    selectedChainsIds: [
+      selectedChains.first?.id ?? null,
+      selectedChains.second?.id ?? null,
+    ],
   })
 
   if (
     data?.entries.length === 0 &&
-    data.top3Paths.length === 0 &&
+    data.flows.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState isDirty={isDirty} />
+    return <InteropEmptyState />
   }
 
   const { lockAndMint, nonMinting, burnAndMint } = getBridgeTypeEntries(
@@ -80,10 +114,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       data-hide-overflow-x
     >
       <div className="z-10 max-[1024px]:hidden">
-        <TopPathsWidget
+        <FlowsWidget
           interopChains={interopChains}
           isLoading={isLoading}
-          top3Paths={data?.top3Paths}
+          flows={data?.flows}
         />
       </div>
       <div className="h-full max-[1600px]:hidden">
@@ -100,7 +134,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       </div>
       <MobileCarouselWidget
         interopChains={interopChains}
-        top3Paths={data?.top3Paths}
+        flows={data?.flows}
         topProtocols={data?.topProtocols}
         isLoading={isLoading}
       />
@@ -117,6 +151,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       <AllProtocolsCard
         type={undefined}
         entries={data?.entries}
+        zeroTransferProtocols={data?.zeroTransferProtocols}
         isLoading={isLoading}
       />
     </div>

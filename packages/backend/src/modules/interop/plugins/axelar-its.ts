@@ -3,8 +3,8 @@
  * OMNICHAIN token standard
  */
 
-import type { AbstractTokenRecord } from '@l2beat/database'
-import { Address32, type ChainSpecificAddress } from '@l2beat/shared-pure'
+import { Address32 } from '@l2beat/shared-pure'
+import type { TokenMap } from '../engine/match/TokenMap'
 import {
   AXELAR_NETWORKS,
   ContractCall,
@@ -152,7 +152,7 @@ export class AxelarITSPlugin implements InteropPlugin {
   match(
     contractCallExecuted: InteropEvent,
     db: InteropEventDb,
-    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
+    tokenMap: TokenMap,
   ): MatchResult | undefined {
     if (ContractCallExecuted.checkType(contractCallExecuted)) {
       const interchainTransferReceived = db.find(InterchainTransferReceived, {
@@ -185,7 +185,7 @@ export class AxelarITSPlugin implements InteropPlugin {
         dstWasMinted,
         srcChain: interchainTransfer.ctx.chain,
         dstChain: interchainTransferReceived.ctx.chain,
-        deployedToAbstractMap,
+        tokenMap,
       })
 
       return [

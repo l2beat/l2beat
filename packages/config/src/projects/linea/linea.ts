@@ -452,6 +452,10 @@ export const linea: ScalingProject = {
           message: 'Security Council members are not publicly known.',
           mode: 'replace',
         },
+        noRedTrustedSetups: true,
+        programHashesReproducible: null,
+        proverSourcePublished: true,
+        verifierContractsReproducible: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

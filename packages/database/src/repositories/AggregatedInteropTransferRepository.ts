@@ -256,20 +256,15 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
 
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    srcChains: string[],
-    dstChains: string[],
+    selectedChains: [string, string],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
-    if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
+      .where('srcChain', 'in', selectedChains)
+      .where('dstChain', 'in', selectedChains)
 
     if (type) {
       query = query.where('bridgeType', '=', type)
@@ -283,24 +278,16 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getSummedTransferCountsByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    srcChains: string[],
-    dstChains: string[],
+    selectedChains: [string, string],
     type?: InteropBridgeType,
   ) {
-    if (srcChains.length === 0 || dstChains.length === 0) {
-      return {
-        transferCount: 0,
-        identifiedCount: 0,
-      }
-    }
-
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .select((eb) => eb.fn.sum('transferCount').as('transferCountSum'))
       .select((eb) => eb.fn.sum('identifiedCount').as('identifiedCountSum'))
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
+      .where('srcChain', 'in', selectedChains)
+      .where('dstChain', 'in', selectedChains)
       .where('id', '=', id)
 
     if (type) {
@@ -323,20 +310,15 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    srcChains: string[],
-    dstChains: string[],
+    selectedChains: [string, string],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTransferRecord[]> {
-    if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
+      .where('srcChain', 'in', selectedChains)
+      .where('dstChain', 'in', selectedChains)
       .where('id', '=', id)
 
     if (type) {

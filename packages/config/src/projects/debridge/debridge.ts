@@ -57,6 +57,7 @@ export const debridge: Bridge = {
     plugins: [
       {
         plugin: 'debridge',
+        bridgeType: 'lockAndMint',
       },
     ],
   },

@@ -9,13 +9,9 @@ import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMint
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 
-export type FromToQuery = v.infer<typeof FromToQuery>
-const FromToQuery = v.object({
-  from: v
-    .string()
-    .optional()
-    .transform((v) => v?.split(',')),
-  to: v
+export type SelectedChainsQuery = v.infer<typeof SelectedChainsQuerySchema>
+const SelectedChainsQuerySchema = v.object({
+  selectedChains: v
     .string()
     .optional()
     .transform((v) => v?.split(',')),
@@ -35,7 +31,7 @@ export function createInteropRouter(
   router.get(
     '/interop/summary',
     validateRoute({
-      query: FromToQuery,
+      query: SelectedChainsQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropSummaryData(req, manifest, cache)
@@ -47,7 +43,7 @@ export function createInteropRouter(
   router.get(
     '/interop/non-minting',
     validateRoute({
-      query: FromToQuery,
+      query: SelectedChainsQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropNonMintingData(req, manifest, cache)
@@ -59,7 +55,7 @@ export function createInteropRouter(
   router.get(
     '/interop/lock-and-mint',
     validateRoute({
-      query: FromToQuery,
+      query: SelectedChainsQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropLockAndMintData(req, manifest, cache)
@@ -71,7 +67,7 @@ export function createInteropRouter(
   router.get(
     '/interop/burn-and-mint',
     validateRoute({
-      query: FromToQuery,
+      query: SelectedChainsQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropBurnAndMintData(req, manifest, cache)

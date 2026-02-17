@@ -25,7 +25,7 @@ export class SnapshotService {
 
   async saveInputs(exampleName: string, inputs: ExampleInputs): Promise<void> {
     const path = this.getExampleInputsPath(exampleName)
-    const content = await inputs.readAll()
+    const content = inputs.readAll()
     await this.save(path, toSafeJSON(content, this.options.noCompression))
   }
 
@@ -135,7 +135,7 @@ export class SnapshotService {
     )
   }
 }
-type InputSource = 'rpc' | 'config'
+type InputSource = 'rpc' | 'config' | 'tokenDb'
 
 export type RawExampleInputs = Record<InputSource, Record<string, unknown>>
 
@@ -143,14 +143,19 @@ export class ExampleInputs {
   private content: RawExampleInputs = {
     rpc: {},
     config: {},
+    tokenDb: {},
   }
 
-  readRpc<T>(key: string): Promise<T | undefined> {
-    return Promise.resolve(this.content.rpc[key] as T | undefined)
+  readRpc<T>(key: string): T | undefined {
+    return this.content.rpc[key] as T | undefined
   }
 
-  readAll(): Promise<Record<string, unknown>> {
-    return Promise.resolve(this.content)
+  readTokenDb<T>(key: string): T | undefined {
+    return this.content.tokenDb[key] as T | undefined
+  }
+
+  readAll(): Record<string, unknown> {
+    return this.content
   }
 
   readSpace(source: InputSource): Record<string, unknown> {
@@ -161,9 +166,12 @@ export class ExampleInputs {
     this.content[source] = content
   }
 
-  writeRpc<T>(key: string, value: T): Promise<void> {
+  writeRpc<T>(key: string, value: T): void {
     this.content.rpc[key] = value
-    return Promise.resolve()
+  }
+
+  writeTokenDb<T>(key: string, value: T): void {
+    this.content.tokenDb[key] = value
   }
 
   writeAll(
@@ -173,6 +181,7 @@ export class ExampleInputs {
     this.content = {
       rpc: safeContent.rpc ?? {},
       config: safeContent.config ?? {},
+      tokenDb: safeContent.tokenDb ?? {},
     }
     return Promise.resolve()
   }

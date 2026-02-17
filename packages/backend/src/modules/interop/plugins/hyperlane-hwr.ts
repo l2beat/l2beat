@@ -5,8 +5,8 @@
  * OMNICHAIN
  */
 
-import type { AbstractTokenRecord } from '@l2beat/database'
-import { Address32, type ChainSpecificAddress } from '@l2beat/shared-pure'
+import { Address32 } from '@l2beat/shared-pure'
+import type { TokenMap } from '../engine/match/TokenMap'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
@@ -221,7 +221,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   match(
     event: InteropEvent,
     db: InteropEventDb,
-    deployedToAbstractMap: Map<ChainSpecificAddress, AbstractTokenRecord>,
+    tokenMap: TokenMap,
   ): MatchResult | undefined {
     if (!HwrTransferReceived.checkType(event)) return
 
@@ -266,7 +266,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       dstWasMinted,
       srcChain: hwrSent.ctx.chain,
       dstChain: event.ctx.chain,
-      deployedToAbstractMap,
+      tokenMap,
     })
 
     return [
@@ -325,7 +325,7 @@ export type ParsedTransferLog = {
 }
 
 // meson has a different version of this that normalizes amounts (for unknown decimal situations)
-function findBestTransferLog(
+export function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,
   startLogIndex: number,

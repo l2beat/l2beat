@@ -192,6 +192,10 @@ export async function makeConfig(
         chains: activeChains
           .filter((c) => c.chainId !== undefined)
           .map((c) => ({ id: c.chainId as number, name: c.name })),
+        configIntervalMs: env.integer(
+          'INTEROP_CONFIG_INTERVAL_MS',
+          12 * 60 * 1000, // 12 hours
+        ),
       },
       inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
     },

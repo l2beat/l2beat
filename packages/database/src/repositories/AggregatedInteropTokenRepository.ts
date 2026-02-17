@@ -75,20 +75,15 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
 
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    srcChains: string[],
-    dstChains: string[],
+    selectedChains: [string, string],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTokenRecord[]> {
-    if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
     let query = this.db
       .selectFrom('AggregatedInteropToken')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
+      .where('srcChain', 'in', selectedChains)
+      .where('dstChain', 'in', selectedChains)
 
     if (type) {
       query = query.where('bridgeType', '=', type)
@@ -101,20 +96,15 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    srcChains: string[],
-    dstChains: string[],
+    selectedChains: [string, string],
     type?: InteropBridgeType,
   ): Promise<AggregatedInteropTokenRecord[]> {
-    if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
     let query = this.db
       .selectFrom('AggregatedInteropToken')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
+      .where('srcChain', 'in', selectedChains)
+      .where('dstChain', 'in', selectedChains)
       .where('id', '=', id)
 
     if (type) {

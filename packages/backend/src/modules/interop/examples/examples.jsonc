@@ -475,11 +475,11 @@
     "txs": [
       {
         "chain": "arbitrum",
-        "tx": "0x284aed9764a451c32bae3ade17ce61daf420f20d80f3b0849db45af54a16cf1c"
+        "tx": "0xf92f360f763853152ae4b3a7ba9424d00b9402d2b326d48fa08b024d82ad7845"
       },
       {
         "chain": "ethereum",
-        "tx": "0x607ef6ded5162ece9b8c8d9df7ef0be69aa6005863403a963295bb362222d5a0"
+        "tx": "0x5606294e9a0886f996d9900b9ccc96afc2468514768165de1cda270757af4ea6"
       }
     ]
   },
@@ -986,6 +986,15 @@
       {
         "chain": "base",
         "tx": "0x60e502eaae1d5e525b699e4ecfe5007ef6917a7bb920141b1ae77aefd7a61fc8"
+      },
+      // intent fill using new event sig
+      {
+        "chain": "base",
+        "tx": "0xa9ce83fda9e2c08be08af41301bcf3a36c264093323bcef99292cd86b1876256"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xec207de4433472870d5a9e0ed95aab8f9ffec565a859346dbe23eab27fdffe8a"
       },
       // settlement (including the above intent)
       {
@@ -2471,6 +2480,15 @@
       {
         "chain": "base",
         "tx": "0xe313f2567de7f2b39c284ab2ce1c5b65e1c232907d74514c44087354df630685"
+      },
+      // non eth example that ignores amount matching
+      {
+        "chain": "polygonpos",
+        "tx": "0xe8a7526bbe9d0cf9db9571afa998dea40fffd7501c5267d435a836a7ec5dfb17"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9ff0c8056035b0dabb3b42c9a60ada4cf80080f23d23f2955a33a730493213aa"
       }
     ]
   },

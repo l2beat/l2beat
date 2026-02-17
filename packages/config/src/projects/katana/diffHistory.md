@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xb9de6662a6efa643fddd22c05c4f5d3999eb97f5
+
+# Diff at Mon, 16 Feb 2026 13:57:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1770814418
+- current timestamp: 1771250113
+
+## Description
+
+Move aggchain and op mode manager to Polygon Multisig 2.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.aggchainManager:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      values.pendingOptimisticModeManager:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation.","role":".aggchainManager"}
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"change verification keys (aggregationVkey, rangeVkeyCommitment, aggchainVkey) and the rollupConfigHash, manage multisig signers for permissioned state transitions and change critical configs for state validation.","role":".aggchainManager"}
+    }
+```
+
+Generated with discovered.json: 0x2955b4c9e21cd6ff6befe49504249fa0dcc8d47a
+
+# Diff at Fri, 13 Feb 2026 11:33:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1770814418
+- current timestamp: 1770814418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770814418 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
 Generated with discovered.json: 0x2932591d2ba8f1adcffa09bccb7deaaf8a723dd6
 
 # Diff at Wed, 11 Feb 2026 12:54:49 GMT:

@@ -468,7 +468,7 @@ export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
 
 export interface StageDowngrade {
   expiresAt: number
-  reason: string
+  reasons: string[]
   toStage: Stage
 }
 
@@ -494,6 +494,7 @@ export interface StageSummary {
   requirements: {
     satisfied: boolean | 'UnderReview'
     description: string
+    upcoming?: boolean
   }[]
 }
 
@@ -1271,10 +1272,10 @@ export interface InteropConfig {
 
 export type InteropPlugin = {
   plugin: InteropPluginName
+  bridgeType: KnownInteropBridgeType
   chain?: string
   abstractTokenId?: string
   transferType?: string
-  bridgeType?: KnownInteropBridgeType
 }
 
 export type InteropDurationSplit = {

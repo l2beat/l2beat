@@ -16,8 +16,12 @@ const parseCreatedOrder = createEventParser(
   'event CreatedOrder((uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, bytes affiliateFee, uint256 nativeFixFee, uint256 percentFee, uint32 referralCode, bytes metadata)',
 )
 
-const parseFulfilledOrder = createEventParser(
+const parseFulfilledOrder1 = createEventParser(
   'event FulfilledOrder((uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, address sender, address unlockAuthority)',
+)
+
+const parseFulfilledOrder2 = createEventParser(
+  'event FulfilledOrder((uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId,  uint256 actualFulfillAmount, address sender, address unlockAuthority)',
 )
 
 const parseSentOrderUnlock = createEventParser(
@@ -106,8 +110,11 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
       ]
     }
 
-    const fulfilledOrder = parseFulfilledOrder(input.log, null)
-    if (fulfilledOrder) {
+    const fulfilledOrder1 = parseFulfilledOrder1(input.log, null)
+    const fulfilledOrder2 = parseFulfilledOrder2(input.log, null)
+    if (fulfilledOrder1 || fulfilledOrder2) {
+      // biome-ignore lint/style/noNonNullAssertion: logically one of them is non-null
+      const fulfilledOrder = fulfilledOrder1 ?? fulfilledOrder2!
       const fromToken =
         Address32.from(fulfilledOrder.order.giveTokenAddress) === Address32.ZERO
           ? Address32.NATIVE

@@ -237,6 +237,7 @@ export interface InteropFeatureConfig {
   config: {
     enabled: boolean
     chains: { id: number; name: string }[]
+    configIntervalMs: number
   }
   inMemoryEventCap: number
 }

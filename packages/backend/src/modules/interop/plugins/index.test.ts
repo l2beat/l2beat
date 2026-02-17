@@ -23,6 +23,7 @@ describe('Interop Plugins', async () => {
     logger: Logger.SILENT,
     rpcClients: [mockObject<RpcClient>({ chain: 'ethereum' })],
     tokenDbClient: mockObject<TokenDbClient>(),
+    configIntervalMs: -1,
   })
 
   before(async () => {

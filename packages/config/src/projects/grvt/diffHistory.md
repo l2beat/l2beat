@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xae22a6990e589e1ca337d396a5f518ad33a6bd60
+
+# Diff at Mon, 16 Feb 2026 14:18:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1770038308
+- current timestamp: 1771251447
+
+## Description
+
+Upgrade executed (target is some diamond contract on L2).
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        28
++        29
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        28
++        29
+    }
+```
+
 Generated with discovered.json: 0xfe61b3bc0eff6985bf0680da269686e62f74a5d3
 
 # Diff at Mon, 02 Feb 2026 13:19:32 GMT:

@@ -30,10 +30,15 @@ export function StageOneRequirementsChangeTooltipContent({
       <p className="mt-4! font-bold text-label-value-14 text-primary">
         Reasons
       </p>
-      <div className="flex gap-2">
-        <MissingIcon className="size-4 shrink-0 fill-negative" />
-        <span>{downgradePending.reason}</span>
-      </div>
+      {downgradePending.reasons.map((reason, i) => (
+        <div key={i} className="flex gap-2">
+          <MissingIcon className="size-4 shrink-0 fill-negative" />
+          <span>
+            {/* remove markdown links */}
+            {reason.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')}
+          </span>
+        </div>
+      ))}
     </div>
   )
 }

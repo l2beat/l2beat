@@ -4,12 +4,14 @@ import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
+import { InteropTransferClassifier } from '../aggregation/InteropTransferClassifier'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
 import type {
   InteropTransferStream,
   SerializableInteropTransfer,
 } from '../stream/InteropTransferStream'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
+import { renderAggregatesPage } from './AggregatesPage'
 import { renderAnomaliesPage } from './AnomaliesPage'
 import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderEventsPage } from './EventsPage'
@@ -90,6 +92,38 @@ export function createInteropRouter(
       params.id,
     )
     ctx.body = renderAnomalyIdPage({ id: params.id, series })
+  })
+
+  router.get('/interop/aggregates', async (ctx) => {
+    const latestTimestamp =
+      await db.aggregatedInteropTransfer.getLatestTimestamp()
+    if (!latestTimestamp) {
+      return (ctx.body = {
+        error: 'No latest timestamp found',
+      })
+    }
+    const from = latestTimestamp - UnixTime.DAY
+    const transfers = await db.interopTransfer.getByRange(from, latestTimestamp)
+    const configs = config.aggregation ? config.aggregation.configs : []
+
+    const classifier = new InteropTransferClassifier()
+    const consumedIds = new Set<string>()
+    for (const aggConfig of configs) {
+      const classified = classifier.classifyTransfers(transfers, aggConfig)
+      for (const records of Object.values(classified)) {
+        for (const r of records) {
+          consumedIds.add(r.transferId)
+        }
+      }
+    }
+
+    const unconsumed = transfers.filter((t) => !consumedIds.has(t.transferId))
+
+    ctx.body = renderAggregatesPage({
+      transfers: unconsumed,
+      configs,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+    })
   })
 
   router.get('/interop/memory', (ctx) => {

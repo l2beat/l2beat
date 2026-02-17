@@ -3,7 +3,6 @@ import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
-import { AvgDurationCell } from '~/pages/interop/components/table/AvgDurationCell'
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
 import type { TokenData } from '~/server/features/scaling/interop/types'
@@ -152,33 +151,20 @@ export const nonMintingColumns = [
 export const lockAndMintColumns = [
   ...getCommonColumns(lockAndMintColumnHelper),
   getLast24hVolumeColumn(lockAndMintColumnHelper),
-  lockAndMintColumnHelper.accessor(
-    (row) =>
-      row.averageDuration?.type === 'unknown' || row.averageDuration === null
-        ? undefined
-        : row.averageDuration.type === 'single'
-          ? row.averageDuration.duration
-          : (row.averageDuration.in.duration ??
-            row.averageDuration.out.duration ??
-            Number.POSITIVE_INFINITY),
-    {
-      header: 'Last 24h avg.\ntransfer time',
-      invertSorting: true,
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        headClassName: 'text-2xs',
-        tooltip:
-          'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
-      },
-      cell: (ctx) => {
-        if (ctx.row.original.averageDuration === null) return EM_DASH
-        return (
-          <AvgDurationCell averageDuration={ctx.row.original.averageDuration} />
-        )
-      },
+  lockAndMintColumnHelper.accessor('netMintedValue', {
+    header: 'Last 24h net\nminted value',
+    meta: {
+      align: 'right',
+      headClassName: 'text-2xs',
     },
-  ),
+    cell: (ctx) => (
+      <span className="font-medium text-label-value-15">
+        {ctx.row.original.netMintedValue
+          ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
+          : EM_DASH}
+      </span>
+    ),
+  }),
   getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
 ]
 

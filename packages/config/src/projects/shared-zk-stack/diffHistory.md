@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x6c462e0a412c212e829379018116cad1f54d410d
+
+# Diff at Mon, 16 Feb 2026 14:22:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1770638873
+- current timestamp: 1771251633
+
+## Description
+
+Two ZK token props created:
+- https://www.tally.xyz/gov/zksync/proposal/52899273737246738438218414127099712652047337592218084212368843786372445167418?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746
+- https://www.tally.xyz/gov/zksync/proposal/8950122199701470735770347707974232219581467243459743675708682806836533533051?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        14
++        17
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770638873 (main branch discovery), not current.
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
++        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+    }
+```
+
 Generated with discovered.json: 0x85756fb88e0e77d5b2f088e1ff8c5948204c41a8
 
 # Diff at Mon, 09 Feb 2026 12:09:02 GMT:

@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x598d62c73a0ef48111dd87f3534bf92c3877d5d4
+
+# Diff at Mon, 16 Feb 2026 14:49:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1770815107
+- current timestamp: 1771252693
+
+## Description
+
+pools added.
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (eth:0x8356D3261bef4d7f6f8427FE651660b35D8a2Cd3) {
+    +++ description: None
+      values.owner:
+-        "eth:0x062f05CD6c835677B05a8658A351969476861316"
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.347:
++        "eth:0x44384E067bf22145746A7637B68A5D465425171d"
+      values.pools.348:
++        "eth:0x16FBCCA1B84AC2C6cB21c589D063c113c44388c5"
+      values.pools.349:
++        "eth:0x3908B28C59C731bDE09Be0ca11b312491f9C8646"
+      values.poolsMap.eth:0xAf1157149ff040DAd186a0142a796d901bEF1cf1:
++        "eth:0x44384E067bf22145746A7637B68A5D465425171d"
+      values.poolsMap.eth:0xf2Cb8Cd8b2b2f070b293AA2ead196c1Ad93dCDc3:
++        "eth:0x16FBCCA1B84AC2C6cB21c589D063c113c44388c5"
+      values.poolsMap.eth:0x1F8206D2feB37c6D2D4b5dc4A2DBF064c0181118:
++        "eth:0x3908B28C59C731bDE09Be0ca11b312491f9C8646"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x16FBCCA1B84AC2C6cB21c589D063c113c44388c5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x3908B28C59C731bDE09Be0ca11b312491f9C8646)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x44384E067bf22145746A7637B68A5D465425171d)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x16FBCCA1B84AC2C6cB21c589D063c113c44388c5.sol | 1766 ++++++++++++++++++++
+ ...:0x3908B28C59C731bDE09Be0ca11b312491f9C8646.sol | 1766 ++++++++++++++++++++
+ ...:0x44384E067bf22145746A7637B68A5D465425171d.sol | 1766 ++++++++++++++++++++
+ 3 files changed, 5298 insertions(+)
+```
+
 Generated with discovered.json: 0xe073a55ddd096b915647b40c7d936639b9e3b806
 
 # Diff at Wed, 11 Feb 2026 13:10:46 GMT:

@@ -1,14 +1,9 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EmptyStateIcon } from '~/icons/EmptyState'
-import { ChainSelectorResetButton } from '../../components/chain-selector/ChainSelectorResetButton'
 
-interface Props {
-  isDirty: boolean
-}
-
-export function InteropEmptyState({ isDirty }: Props) {
+export function InteropEmptyState() {
   return (
-    <PrimaryCard className="mt-5 mb-12 flex w-full grow items-center justify-center">
+    <PrimaryCard className="mt-5 flex w-full grow items-center justify-center">
       <div className="flex flex-col items-center justify-center">
         <EmptyStateIcon className="size-9 fill-yellow-700 dark:fill-yellow-200" />
         <span className="mt-4 text-heading-24">
@@ -18,7 +13,6 @@ export function InteropEmptyState({ isDirty }: Props) {
           We couldn&apos;t find data for this path. Select another route or
           adjust your filters.
         </span>
-        {isDirty && <ChainSelectorResetButton />}
       </div>
     </PrimaryCard>
   )
