@@ -22,6 +22,7 @@ import {
 } from '@l2beat/shared-pure'
 import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import {
   createEventParser,
   createInteropEventType,
@@ -173,14 +174,19 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
-    const wormholeNetworks = this.configs.get(WormholeConfig)
-    if (!wormholeNetworks) return
+    const wormholeNetworks = this.configs.get(WormholeConfig) ?? []
+    const cctpNetworks = [
+      ...(this.configs.get(CCTPV1Config) ?? []),
+      ...(this.configs.get(CCTPV2Config) ?? []),
+    ]
+    if (wormholeNetworks.length === 0 && cctpNetworks.length === 0) return
 
     const forwardedEth = parseForwardedEth(input.log, null)
     if (forwardedEth) {
       const decodedData = decodeProtocolData(
         forwardedEth.protocolData,
         wormholeNetworks,
+        cctpNetworks,
       )
       if (!decodedData) return
 
@@ -225,6 +231,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       const decodedData = decodeProtocolData(
         forwardedERC20.protocolData,
         wormholeNetworks,
+        cctpNetworks,
       )
       if (!decodedData) return
       return [
@@ -250,6 +257,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       const decodedData = decodeProtocolData(
         swapAndForwardedEth.mayanData,
         wormholeNetworks,
+        cctpNetworks,
       )
       if (!decodedData) return
       return [
@@ -273,6 +281,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       const decodedData = decodeProtocolData(
         swapAndForwardedERC20.mayanData,
         wormholeNetworks,
+        cctpNetworks,
       )
       if (!decodedData) return
       return [
@@ -299,12 +308,16 @@ export function logToProtocolData(
 ): DecodedData | undefined {
   const parsed1 = parseForwardedEth(log, null) ?? parseForwardedERC20(log, null)
   if (parsed1) {
-    return decodeProtocolData(parsed1.protocolData, wormholeNetworks)
+    return decodeProtocolData(parsed1.protocolData, wormholeNetworks, [])
   }
   // For SwapAndForwarded events, use tokenIn/amountIn from the event (user's actual tokens)
   const swapERC20 = parseSwapAndForwardedERC20(log, null)
   if (swapERC20) {
-    const decoded = decodeProtocolData(swapERC20.mayanData, wormholeNetworks)
+    const decoded = decodeProtocolData(
+      swapERC20.mayanData,
+      wormholeNetworks,
+      [],
+    )
     if (decoded) {
       decoded.tokenIn = Address32.from(swapERC20.tokenIn)
       decoded.amountIn = swapERC20.amountIn
@@ -313,7 +326,7 @@ export function logToProtocolData(
   }
   const swapEth = parseSwapAndForwardedEth(log, null)
   if (swapEth) {
-    const decoded = decodeProtocolData(swapEth.mayanData, wormholeNetworks)
+    const decoded = decodeProtocolData(swapEth.mayanData, wormholeNetworks, [])
     if (decoded) {
       decoded.tokenIn = Address32.NATIVE
       decoded.amountIn = swapEth.amountIn
@@ -345,6 +358,13 @@ function getChainFromWormholeId(
   return findChain(wormholeNetworks, (x) => x.wormholeChainId, wormholeId)
 }
 
+function getChainFromCctpDomain(
+  cctpNetworks: { chain: string; domain: number }[],
+  domain: number,
+) {
+  return findChain(cctpNetworks, (x) => x.domain, domain)
+}
+
 const abiItems = parseAbi([
   // mayanSwift 0xC38e4e6A15593f908255214653d3D947CA1c2338
   'function createOrderWithToken(address tokenIn, uint256 amountIn, (bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random))',
@@ -362,6 +382,31 @@ const abiItems = parseAbi([
   // mayanSwap2
 ])
 
+const SELECTOR_CREATE_ORDER_WITH_TOKEN = '0x8e8d142b'
+const SELECTOR_CREATE_ORDER_WITH_ETH = '0xb866e173'
+const SELECTOR_CREATE_ORDER_MAYAN_CIRCLE = '0x1c59b7fc'
+const SELECTOR_BRIDGE_WITH_FEE = '0x2072197f'
+const SELECTOR_BRIDGE_WITH_LOCKED_FEE = '0x9be95bb4'
+const SELECTOR_CREATE_ORDER_FAST_MCTP = '0x2337e236'
+const SELECTOR_BRIDGE_FAST_MCTP = '0xf58b6de8'
+const SELECTOR_SWAP = '0x6111ad25'
+const SELECTOR_WRAP_AND_SWAP_ETH = '0x1eb1cff0'
+
+type DestinationIdSpace = 'wormhole' | 'cctp'
+
+// selectors include destinations encoded with circle ids vs wormhole ids
+const DESTINATION_ID_SPACE_BY_SELECTOR: Record<string, DestinationIdSpace> = {
+  [SELECTOR_CREATE_ORDER_WITH_TOKEN]: 'wormhole',
+  [SELECTOR_CREATE_ORDER_WITH_ETH]: 'wormhole',
+  [SELECTOR_CREATE_ORDER_MAYAN_CIRCLE]: 'wormhole',
+  [SELECTOR_SWAP]: 'wormhole',
+  [SELECTOR_WRAP_AND_SWAP_ETH]: 'wormhole',
+  [SELECTOR_BRIDGE_WITH_FEE]: 'cctp',
+  [SELECTOR_BRIDGE_WITH_LOCKED_FEE]: 'cctp',
+  [SELECTOR_CREATE_ORDER_FAST_MCTP]: 'cctp',
+  [SELECTOR_BRIDGE_FAST_MCTP]: 'cctp',
+}
+
 interface DecodedData {
   functionName: string
   methodSignature: `0x${string}`
@@ -376,6 +421,7 @@ interface DecodedData {
 function decodeProtocolData(
   data: `0x${string}`,
   wormholeNetworks: { chain: string; wormholeChainId: number }[],
+  cctpNetworks: { chain: string; domain: number }[],
 ): DecodedData | undefined {
   const decoded: DecodedData = {
     functionName: 'unknown',
@@ -395,8 +441,19 @@ function decodeProtocolData(
 
   decoded.functionName = res.functionName
   decoded.args = res.args
+  // Mayan forwards multiple protocol calls. Destination IDs are in two spaces:
+  // - Wormhole chain IDs (destChain/destChainId)
+  // - CCTP domains (destDomain)
+  // This selector map makes the expected ID space explicit.
+  const destinationIdSpace =
+    DESTINATION_ID_SPACE_BY_SELECTOR[decoded.methodSignature]
 
+  // decodeFunctionData gives us functionName + args.
+  // We branch by functionName, and use selector only for overloaded createOrder.
+  // - 0x1c59b7fc (mayanCircle) -> Wormhole chain IDs
+  // - 0x2337e236 (fastMCTP) -> CCTP domains
   if (res.functionName === 'createOrderWithToken') {
+    // Swift token flow (Wormhole destination id).
     decoded.dstChain = getChainFromWormholeId(
       wormholeNetworks,
       res.args[2].destChainId,
@@ -406,6 +463,7 @@ function decodeProtocolData(
     decoded.tokenOut = tokenOutOrNative(res.args[2].tokenOut)
     decoded.minAmountOut = res.args[2].minAmountOut
   } else if (res.functionName === 'createOrderWithEth') {
+    // Swift native flow (Wormhole destination id).
     decoded.dstChain = getChainFromWormholeId(
       wormholeNetworks,
       res.args[0].destChainId,
@@ -414,41 +472,70 @@ function decodeProtocolData(
     decoded.tokenOut = tokenOutOrNative(res.args[0].tokenOut)
     decoded.minAmountOut = res.args[0].minAmountOut
   } else if (res.functionName === 'createOrder') {
-    if (res.args.length === 1) {
+    if (decoded.methodSignature === SELECTOR_CREATE_ORDER_MAYAN_CIRCLE) {
+      if (destinationIdSpace !== 'wormhole') return decoded
+      // Circle createOrder overload with Wormhole-style destination id.
+      const args = res.args as unknown as readonly [
+        {
+          tokenIn: `0x${string}`
+          amountIn: bigint
+          destChain: number
+          tokenOut: `0x${string}`
+          minAmountOut: bigint
+        },
+      ]
       decoded.dstChain = getChainFromWormholeId(
         wormholeNetworks,
-        res.args[0].destChain,
+        args[0].destChain,
       )
-      decoded.tokenIn = Address32.from(res.args[0].tokenIn)
-      decoded.amountIn = res.args[0].amountIn
-      decoded.tokenOut = tokenOutOrNative(res.args[0].tokenOut)
-      decoded.minAmountOut = res.args[0].minAmountOut
-    } else {
-      decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[4])
-      decoded.tokenIn = Address32.from(res.args[0])
-      decoded.amountIn = res.args[1]
-      decoded.tokenOut = tokenOutOrNative(res.args[5].tokenOut)
-      decoded.minAmountOut = res.args[5].amountOutMin
+      decoded.tokenIn = Address32.from(args[0].tokenIn)
+      decoded.amountIn = args[0].amountIn
+      decoded.tokenOut = tokenOutOrNative(args[0].tokenOut)
+      decoded.minAmountOut = args[0].minAmountOut
+    } else if (decoded.methodSignature === SELECTOR_CREATE_ORDER_FAST_MCTP) {
+      if (destinationIdSpace !== 'cctp') return decoded
+      // FastMCTP createOrder overload with CCTP destination domain.
+      const args = res.args as unknown as readonly [
+        `0x${string}`,
+        bigint,
+        bigint,
+        number,
+        number,
+        {
+          tokenOut: `0x${string}`
+          amountOutMin: bigint
+        },
+      ]
+      decoded.dstChain = getChainFromCctpDomain(cctpNetworks, args[3])
+      decoded.tokenIn = Address32.from(args[0])
+      decoded.amountIn = args[1]
+      decoded.tokenOut = tokenOutOrNative(args[5].tokenOut)
+      decoded.minAmountOut = args[5].amountOutMin
     }
   } else if (res.functionName === 'bridgeWithFee') {
-    decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[5])
+    // CCTP bridge paths use Circle domains, not Wormhole ids.
+    decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[5])
     decoded.tokenIn = Address32.from(res.args[0])
     decoded.amountIn = res.args[1]
   } else if (res.functionName === 'bridgeWithLockedFee') {
-    decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[4])
+    // CCTP bridge paths use Circle domains, not Wormhole ids.
+    decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[4])
     decoded.tokenIn = Address32.from(res.args[0])
     decoded.amountIn = res.args[1]
   } else if (res.functionName === 'bridge') {
-    decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[6])
+    // CCTP bridge paths use Circle domains, not Wormhole ids.
+    decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[6])
     decoded.tokenIn = Address32.from(res.args[0])
     decoded.amountIn = res.args[1]
   } else if (res.functionName === 'swap') {
+    // MayanSwap uses Wormhole destination ids.
     decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[3])
     decoded.tokenIn = Address32.from(res.args[5])
     decoded.amountIn = res.args[6]
     decoded.tokenOut = tokenOutOrNative(res.args[2])
     decoded.minAmountOut = res.args[4].amountOutMin
   } else if (res.functionName === 'wrapAndSwapETH') {
+    // MayanSwap native variant uses Wormhole destination ids.
     decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[3])
     decoded.tokenIn = Address32.NATIVE
     decoded.tokenOut = tokenOutOrNative(res.args[2])

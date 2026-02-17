@@ -56,6 +56,7 @@ import {
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findBestTransferLog } from '../hyperlane-hwr'
+import { MayanForwarded } from '../mayan-forwarder'
 import {
   createEventParser,
   createInteropEventType,
@@ -221,7 +222,21 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       const messageSent = messageSentMatches.sort(
         (a, b) => a.ctx.timestamp - b.ctx.timestamp,
       )[0]
+      const wrappers: MatchResult = []
+      const mayanForwarded = db.find(MayanForwarded, {
+        sameTxAfter: messageSent,
+      })
+      if (mayanForwarded) {
+        wrappers.push(
+          Result.Message('mayan.Message', {
+            app: 'mctp',
+            srcEvent: mayanForwarded,
+            dstEvent: messageReceived,
+          }),
+        )
+      }
       return [
+        ...wrappers,
         Result.Message('cctp-v1.Message', {
           app: 'cctp-v1',
           srcEvent: messageSent,

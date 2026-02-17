@@ -426,6 +426,27 @@
       }
     ]
   },
+  "mayan-forwarder-cctp-domain-mapping": {
+    "loadConfigs": ["wormhole", "cctp-v1", "cctp-v2"],
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x01b5f12874335e7eb0c5efe57a3bfc4aef5e92a2c3b08aa907a9ca50f5a3ae82"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xd1189ae051bf14fe75e552b658feb905f4dcc1ceb88d81c7d7f2e7489f890cdc"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "args": { "$dstChain": "optimism" }
+        }
+      ]
+    }
+  },
   "meson": {
     "description": "Liquidity swap + tunnel samples from MESON_PLAN",
     "txs": [
@@ -535,12 +556,21 @@
     "loadConfigs": ["wormhole", "cctp-v2"],
     "txs": [
       {
+        "chain": "optimism",
+        "tx": "0xbe39bcd13c8d7f37570b4536f40432ec12f167e2aa6b42710e815059c32bda04"
+      },
+      {
         "chain": "base",
         "tx": "0x4bedb6bca328cc57f6c5612deeb1b0d16871e63b25fe15d68f9923bc54916c5d"
       },
+      // no 'orderfulfilled'
+      {
+        "chain": "base",
+        "tx": "0x01b070f620aa34ac50111b4b45c796d8198d53d0ec5df04caaf31fdc87b2285d"
+      },
       {
         "chain": "optimism",
-        "tx": "0xbe39bcd13c8d7f37570b4536f40432ec12f167e2aa6b42710e815059c32bda04"
+        "tx": "0x53757875a9275f260be13cc93b53970c36226ddb7eb04a23d0a8fdadd9d00cc5"
       }
     ],
     "expects": {
@@ -548,13 +578,18 @@
         "cctp-v2.MessageReceived",
         "mayan-mctp-fast.OrderFulfilled",
         "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "cctp-v2.MessageReceived",
+        "cctp-v2.MessageSent",
         "mayan-forwarder.MayanForwarded"
       ],
       "messages": [
         { "type": "mayan.Message", "app": "mctp" },
+        { "type": "cctp-v2.FastMessage", "app": "cctp-v2" },
+        { "type": "mayan.Message", "app": "mctp" },
         { "type": "cctp-v2.FastMessage", "app": "cctp-v2" }
       ],
-      "transfers": ["cctp-v2.Transfer"]
+      "transfers": ["cctp-v2.Transfer", "cctp-v2.Transfer"]
     }
   },
   "mayan-mctp-bridge-fee-on-dst": {
