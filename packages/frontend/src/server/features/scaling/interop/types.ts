@@ -59,8 +59,8 @@ export type BurnAndMintProtocolData = {
 }
 
 const SelectedChainsIds = v.tuple([
-  v.union([v.string(), v.undefined()]),
-  v.union([v.string(), v.undefined()]),
+  v.union([v.string(), v.null()]),
+  v.union([v.string(), v.null()]),
 ])
 export type SelectedChainsIds = v.infer<typeof SelectedChainsIds>
 
@@ -75,7 +75,7 @@ export type InteropProtocolTokensParams = v.infer<
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
-  selectedChains: SelectedChainsIds,
+  selectedChainsIds: SelectedChainsIds,
   type: KnownInteropBridgeType.optional(),
 })
 

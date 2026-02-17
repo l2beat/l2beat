@@ -3,12 +3,16 @@ import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { SelectedChainsIds } from '~/server/features/scaling/interop/types'
+import type {
+  ProtocolDisplayable,
+  SelectedChainsIds,
+} from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { InitialChainSelector } from '../components/InitialChainSelector'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
@@ -43,14 +47,7 @@ export function InteropNonMintingPage({
           initialSelectedChains={initialSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <div className="max-md:hidden">
-              <HeaderWithDescription />
-            </div>
-            <ChainSelector chains={interopChains} protocols={protocols} />
-            <div className="md:hidden">
-              <HeaderWithDescription />
-            </div>
-            <Widgets interopChains={interopChains} />
+            <Content interopChains={interopChains} protocols={protocols} />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
@@ -58,10 +55,52 @@ export function InteropNonMintingPage({
   )
 }
 
+function Content({
+  interopChains,
+  protocols,
+}: {
+  interopChains: InteropChainWithIcon[]
+  protocols: ProtocolDisplayable[]
+}) {
+  const { selectedChains, selectChain } = useInteropSelectedChains()
+
+  if (!selectedChains.first || !selectedChains.second) {
+    return (
+      <>
+        <div className="max-md:hidden">
+          <HeaderWithDescription />
+        </div>
+        <InitialChainSelector
+          interopChains={interopChains}
+          selectedChains={selectedChains}
+          selectChain={selectChain}
+          type="nonMinting"
+        />
+      </>
+    )
+  }
+
+  return (
+    <>
+      <div className="max-md:hidden">
+        <HeaderWithDescription />
+      </div>
+      <ChainSelector chains={interopChains} protocols={protocols} />
+      <div className="md:hidden">
+        <HeaderWithDescription />
+      </div>
+      <Widgets interopChains={interopChains} />
+    </>
+  )
+}
+
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChainsIds: [selectedChains.first?.id, selectedChains.second?.id],
+    selectedChainsIds: [
+      selectedChains.first?.id ?? null,
+      selectedChains.second?.id ?? null,
+    ],
     type: 'nonMinting',
   })
 

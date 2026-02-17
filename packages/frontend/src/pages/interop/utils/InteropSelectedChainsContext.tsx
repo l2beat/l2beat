@@ -20,8 +20,8 @@ export type InteropSelectedChain = {
 }
 
 export type InteropSelectedChains = {
-  first: InteropSelectedChain | undefined
-  second: InteropSelectedChain | undefined
+  first: InteropSelectedChain | null
+  second: InteropSelectedChain | null
 }
 
 interface InteropSelectedChainsContextType {
@@ -29,7 +29,7 @@ interface InteropSelectedChainsContextType {
   allChainIds: string[]
   selectChain: (
     index: keyof InteropSelectedChainsContextType['selectedChains'],
-    chainId: string,
+    chainId: string | null,
   ) => void
 }
 
@@ -80,7 +80,12 @@ export function InteropSelectedChainsProvider({
     const newUrl = buildInteropUrl(window.location.pathname, debouncedChains)
 
     const currentUrl = window.location.pathname + window.location.search
+
     if (newUrl !== currentUrl) {
+      if (window.location.search === '') {
+        window.history.replaceState({}, '', newUrl)
+        return
+      }
       window.history.pushState({}, '', newUrl)
     }
   }, [debouncedChains])
@@ -99,7 +104,7 @@ export function InteropSelectedChainsProvider({
   })
 
   const selectChain = useCallback(
-    (index: keyof InteropSelectedChains, chainId: string) => {
+    (index: keyof InteropSelectedChains, chainId: string | null) => {
       setSelectedChains((prev) => {
         const chain = getInteropSelectedChainFromId(chainId, interopChains)
         if (!chain) {
@@ -128,15 +133,15 @@ export function InteropSelectedChainsProvider({
 }
 
 function getInteropSelectedChainFromId(
-  id: string | undefined,
+  id: string | null,
   interopChains: InteropChainWithIcon[],
-): InteropSelectedChain | undefined {
+): InteropSelectedChain | null {
   if (!id) {
-    return undefined
+    return null
   }
   const interopChain = interopChains.find((c) => c.id === id)
   if (!interopChain) {
-    return undefined
+    return null
   }
   return {
     id: interopChain.id,

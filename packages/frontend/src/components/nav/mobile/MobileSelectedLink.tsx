@@ -1,4 +1,5 @@
 import { usePathname } from '~/hooks/usePathname'
+import { isLinkActive } from '~/utils/isLinkActive'
 import { VerticalSeparator } from '../../core/VerticalSeparator'
 import type { NavGroup, NavLink } from '../types'
 
@@ -10,11 +11,15 @@ export function MobileSelectedLink({
   sideLinks: NavLink[]
 }) {
   const pathname = usePathname()
-  const selectedGroup = groups.find((group) =>
-    group.type === 'single'
-      ? pathname.startsWith(group.href)
-      : group.links.some((link) => pathname.startsWith(link.href)),
-  )
+
+  const selectedGroup = groups.find((group) => {
+    if (group.type === 'single') {
+      return isLinkActive({ href: group.href, pathname })
+    }
+    return group.links.some((link) =>
+      isLinkActive({ href: link.href, pathname }),
+    )
+  })
 
   const selectedSideLink = sideLinks.find((link) =>
     pathname.startsWith(link.href),

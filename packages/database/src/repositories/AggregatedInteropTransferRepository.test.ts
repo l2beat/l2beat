@@ -685,32 +685,6 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         expect(result).toEqual([])
       })
 
-      it('returns empty array when undefined first or second', async () => {
-        await repository.insertMany([
-          record({
-            id: 'protocol1',
-            timestamp: UnixTime(100),
-            srcChain: 'ethereum',
-            dstChain: 'arbitrum',
-            transferCount: 5,
-            identifiedCount: 1000,
-          }),
-        ])
-
-        expect(
-          await repository.getByChainsAndTimestamp(UnixTime(100), [
-            undefined,
-            'arbitrum',
-          ]),
-        ).toEqual([])
-        expect(
-          await repository.getByChainsAndTimestamp(UnixTime(100), [
-            'ethereum',
-            undefined,
-          ]),
-        ).toEqual([])
-      })
-
       it('filters by bridgeType when provided', async () => {
         const record1 = record({
           id: 'protocol1',
@@ -843,40 +817,6 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           )
 
         expect(result).toEqual({
-          transferCount: 0,
-          identifiedCount: 0,
-        })
-      })
-
-      it('returns zeros when first or second is undefined', async () => {
-        await repository.insertMany([
-          record({
-            id: 'protocol1',
-            timestamp: UnixTime(100),
-            srcChain: 'ethereum',
-            dstChain: 'arbitrum',
-            transferCount: 5,
-            identifiedCount: 1000,
-          }),
-        ])
-
-        expect(
-          await repository.getSummedTransferCountsByChainsIdAndTimestamp(
-            UnixTime(100),
-            'protocol1',
-            [undefined, 'arbitrum'],
-          ),
-        ).toEqual({
-          transferCount: 0,
-          identifiedCount: 0,
-        })
-        expect(
-          await repository.getSummedTransferCountsByChainsIdAndTimestamp(
-            UnixTime(100),
-            'protocol1',
-            ['ethereum', undefined],
-          ),
-        ).toEqual({
           transferCount: 0,
           identifiedCount: 0,
         })
@@ -1029,34 +969,6 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
 
         expect(result).toEqualUnsorted([record1])
-      })
-
-      it('returns empty array when undefined first or second', async () => {
-        await repository.insertMany([
-          record({
-            id: 'protocol1',
-            timestamp: UnixTime(100),
-            srcChain: 'ethereum',
-            dstChain: 'arbitrum',
-            transferCount: 5,
-            identifiedCount: 1000,
-          }),
-        ])
-
-        expect(
-          await repository.getByChainsIdAndTimestamp(
-            UnixTime(100),
-            'protocol1',
-            [undefined, 'arbitrum'],
-          ),
-        ).toEqual([])
-        expect(
-          await repository.getByChainsIdAndTimestamp(
-            UnixTime(100),
-            'protocol1',
-            ['ethereum', undefined],
-          ),
-        ).toEqual([])
       })
     },
   )

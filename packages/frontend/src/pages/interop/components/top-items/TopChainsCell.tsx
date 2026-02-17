@@ -58,9 +58,9 @@ export function TopChainsCell({
         }}
         onMouseEnter={() =>
           utils.interop.chains.prefetch({
-            selectedChains: [
-              selectedChains.first?.id,
-              selectedChains.second?.id,
+            selectedChainsIds: [
+              selectedChains.first?.id ?? null,
+              selectedChains.second?.id ?? null,
             ],
             id: protocol.id,
             type: undefined,
@@ -94,7 +94,10 @@ function TopChainsContent({
 
   const { data, isLoading } = api.interop.chains.useQuery(
     {
-      selectedChains: [selectedChains.first?.id, selectedChains.second?.id],
+      selectedChainsIds: [
+        selectedChains.first?.id ?? null,
+        selectedChains.second?.id ?? null,
+      ],
       id: protocol.id,
       type: undefined,
     },

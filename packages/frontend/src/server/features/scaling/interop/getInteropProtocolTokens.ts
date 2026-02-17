@@ -19,11 +19,16 @@ import { getTokensData } from './utils/getTokensData'
 
 export async function getInteropProtocolTokens({
   id,
-  selectedChains,
+  selectedChainsIds: selectedChains,
   type,
 }: InteropProtocolTokensParams): Promise<TokenData[]> {
   const logger = getLogger().for('getProtocolTokens')
   const db = getDb()
+
+  const [firstChain, secondChain] = selectedChains
+  if (!firstChain || !secondChain) {
+    return []
+  }
 
   const interopProject = await ps.getProject({
     id,
@@ -43,13 +48,13 @@ export async function getInteropProtocolTokens({
     await db.aggregatedInteropTransfer.getSummedTransferCountsByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selectedChains,
+      [firstChain, secondChain],
       type,
     ),
     db.aggregatedInteropToken.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selectedChains,
+      [firstChain, secondChain],
       type,
     ),
   ])

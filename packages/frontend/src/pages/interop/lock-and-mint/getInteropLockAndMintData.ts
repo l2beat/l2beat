@@ -21,10 +21,8 @@ export async function getInteropLockAndMintData(
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
   const initialSelectedChains: SelectedChainsIds = [
-    interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ??
-      'ethereum',
-    interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ??
-      'arbitrum',
+    interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ?? null,
+    interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ?? null,
   ]
 
   const queryState = await cache.get(
@@ -69,10 +67,12 @@ async function getCachedData(initialSelectedChains: SelectedChainsIds) {
     ps.getProjects({
       select: ['interopConfig'],
     }),
-    helpers.interop.dashboard.prefetch({
-      selectedChainsIds: initialSelectedChains,
-      type: 'lockAndMint',
-    }),
+    initialSelectedChains[0] && initialSelectedChains[1]
+      ? helpers.interop.dashboard.prefetch({
+          selectedChainsIds: initialSelectedChains,
+          type: 'lockAndMint',
+        })
+      : undefined,
   ])
 
   return {
