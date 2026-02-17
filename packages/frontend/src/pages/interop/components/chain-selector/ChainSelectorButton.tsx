@@ -45,8 +45,9 @@ export function ChainSelectorButton({
       return
     }
 
-    selectChain('first', selectedChains.second.id)
+    const temp = selectedChains.second.id
     selectChain('second', chainId)
+    selectChain('first', temp)
   }
 
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
