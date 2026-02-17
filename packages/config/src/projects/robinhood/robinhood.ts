@@ -11,7 +11,7 @@ export const robinhood: ScalingProject = upcomingL2({
     name: 'Robinhood Chain',
     slug: 'robinhood',
     description:
-      'Robinhood Chain is a permissionless Layer 2 blockchain built for financial services and tokenized real-world assets. It uses the Arbitrum Orbit stack.',
+      'Robinhood Chain is a Layer 2 blockchain built for financial services and tokenized real-world assets. It uses the Arbitrum Orbit stack.',
     purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {
