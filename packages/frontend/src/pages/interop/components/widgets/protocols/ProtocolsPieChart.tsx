@@ -50,7 +50,7 @@ export function ProtocolsPieChart({
   }
 
   return (
-    <div className="flex h-full items-center">
+    <div className="flex h-full @min-[430px]:w-[calc(100%-240px)] items-center justify-center">
       <SimpleChartContainer
         height={showSmallerChart ? 110 : 164}
         width="100%"

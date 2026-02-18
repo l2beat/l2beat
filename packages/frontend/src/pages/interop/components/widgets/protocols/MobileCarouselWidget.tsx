@@ -22,24 +22,24 @@ export function MobileCarouselWidget({
   const [view, setView] = useState<View>('paths')
 
   return (
-    <div className="relative max-md:mx-4 max-md:mb-4 max-[1024px]:min-h-[213px] min-[1600px]:hidden">
+    <div className="relative max-md:mx-4 max-md:mb-4 max-md:min-h-[213px] min-[1600px]:hidden">
       <div
         className={cn(
           'flex h-full gap-5 transition-transform duration-300 ease-in-out',
           view === 'paths' && 'translate-x-0',
           view === 'volume' &&
-            '-translate-x-[calc(100%+1.25rem)] min-[1024px]:-translate-x-0',
+            '-translate-x-[calc(100%+1.25rem)] min-md:-translate-x-0',
           view === 'transfers' &&
-            '-translate-x-[calc(200%+2.5rem)] min-[1024px]:-translate-x-[calc(100%+1.25rem)]',
+            '-translate-x-[calc(200%+2.5rem)] min-md:-translate-x-[calc(100%+1.25rem)]',
         )}
       >
-        {/* Paths widget - only visible below 1024px */}
-        <div className="min-w-full flex-shrink-0 min-[1024px]:hidden">
+        {/* Paths widget - only visible below md */}
+        <div className="min-w-full flex-shrink-0 min-md:hidden">
           <FlowsWidget
             interopChains={interopChains}
             flows={flows}
             isLoading={isLoading}
-            className="max-[1024px]:pb-8!"
+            className="max-md:pb-8!"
           />
         </div>
         <div className="min-w-full flex-shrink-0">
@@ -56,10 +56,10 @@ export function MobileCarouselWidget({
         </div>
       </div>
       <div className="-translate-x-1/2 absolute bottom-3 left-1/2 z-20 flex">
-        {/* Paths dot - only visible below 1024px */}
+        {/* Paths dot - only visible below md */}
         <DotElement
           onClick={() => setView('paths')}
-          wrapperClassName="min-[1024px]:hidden"
+          wrapperClassName="min-md:hidden"
           dotClassName={view === 'paths' ? 'bg-brand' : 'bg-secondary'}
         />
         <DotElement
@@ -67,7 +67,7 @@ export function MobileCarouselWidget({
           dotClassName={cn(
             view === 'volume' ? 'bg-brand' : 'bg-secondary',
             // When paths is selected but hidden on large screens, highlight volume
-            view === 'paths' && 'min-[1024px]:bg-brand',
+            view === 'paths' && 'min-md:bg-brand',
           )}
         />
         <DotElement
