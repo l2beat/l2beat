@@ -10,17 +10,15 @@ import type {
 } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -156,20 +154,9 @@ export function ZkCatalogProjectsTvsChart({
       project={project}
     >
       <AreaChart data={chartData} margin={{ top: 20 }}>
-        <ChartLegend
-          content={
-            <ChartLegendContent>
-              <div className="flex shrink-0 items-center">
-                <button
-                  className="w-11 cursor-pointer select-none text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity hover:opacity-50 [&>svg]:text-secondary"
-                  onClick={toggleAllDataKeys}
-                >
-                  {showAllSelected ? 'Hide' : 'Show'} all
-                </button>
-                <VerticalSeparator className="mx-2 h-3" />
-              </div>
-            </ChartLegendContent>
-          }
+        <ChartLegendToggleAll
+          showAllSelected={showAllSelected}
+          onToggleAll={toggleAllDataKeys}
         />
         {chartOrderedIds.map((projectId) => (
           <Area
