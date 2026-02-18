@@ -35,7 +35,7 @@ export const zkCatalogColumns = [
     },
     enableHiding: false,
   }),
-  columnHelper.accessor((row) => row.tvs, {
+  columnHelper.accessor((row) => row.tvs.value, {
     id: 'tvs',
     meta: {
       tooltip:
@@ -46,7 +46,7 @@ export const zkCatalogColumns = [
         <TwoRowCell>
           <TwoRowCell.First>
             <div className="font-bold text-base">
-              {formatCurrency(ctx.row.original.tvs.value, 'usd')}
+              {formatCurrency(ctx.getValue(), 'usd')}
             </div>
           </TwoRowCell.First>
           <TwoRowCell.Second>
