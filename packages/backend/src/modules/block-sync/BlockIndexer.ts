@@ -14,6 +14,7 @@ export interface BlockIndexerDeps
   blockProvider: BlockProvider
   logsProvider: LogsProvider
   blockProcessors: BlockProcessor[]
+  stopBlockIndexerAtTimestampMs?: number
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
 }
@@ -89,7 +90,29 @@ export class BlockIndexer extends ManagedChildIndexer {
     })
 
     const processingStart = Date.now()
+    const stopBlockIndexerAtTimestampMs = this.$.stopBlockIndexerAtTimestampMs
+    let processedBlocks = 0
+    let processedLogs = 0
+    let lastProcessedBlockNumber: number | undefined
     for (const { block, logs } of consistentBlocks) {
+      const blockTimestampMs = block.timestamp * 1000
+      if (
+        stopBlockIndexerAtTimestampMs !== undefined &&
+        blockTimestampMs > stopBlockIndexerAtTimestampMs
+      ) {
+        this.logger.info('Stopping block sync at configured timestamp', {
+          blockNumber: block.number,
+          blockTimestampMs,
+          stopBlockIndexerAtTimestampMs,
+        })
+        if (lastProcessedBlockNumber === undefined) {
+          throw new Error(
+            `Block ${block.number} timestamp (${blockTimestampMs}) is greater than STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS (${stopBlockIndexerAtTimestampMs})`,
+          )
+        }
+        break
+      }
+
       for (const processor of this.$.blockProcessors) {
         try {
           const start = Date.now()
@@ -111,17 +134,20 @@ export class BlockIndexer extends ManagedChildIndexer {
         blockNumber: block.number,
         logs: logs.length,
       })
+      processedBlocks++
+      processedLogs += logs.length
+      lastProcessedBlockNumber = block.number
     }
     const processingDuration = Date.now() - processingStart
     this.logger.info('Processed blocks', {
       chain: this.$.source,
-      blocks: consistentBlocks.length,
-      logs: consistentBlocks.reduce((acc, { logs }) => acc + logs.length, 0),
+      blocks: processedBlocks,
+      logs: processedLogs,
       processors: this.$.blockProcessors.length,
       durationMs: Number.parseFloat(processingDuration.toFixed(2)),
     })
 
-    return actualTo
+    return lastProcessedBlockNumber ?? actualTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
