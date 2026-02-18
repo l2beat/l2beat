@@ -9,7 +9,7 @@ import { type providers, utils } from 'ethers'
 
 import type { IProvider } from '../../provider/IProvider'
 import { rpcWithRetries } from '../../provider/LowLevelProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type ArbitrumSequencerVersionDefinition = v.infer<
   typeof ArbitrumSequencerVersionDefinition
@@ -222,3 +222,12 @@ export class ArbitrumSequencerVersionHandler implements Handler {
     return undefined
   }
 }
+
+export const ArbitrumSequencerVersionHandlerBundle = declareHandler(
+  'arbitrumSequencerVersion',
+  {
+    definition: ArbitrumSequencerVersionDefinition,
+    create: ({ field, definition }) =>
+      new ArbitrumSequencerVersionHandler(field, definition),
+  },
+)

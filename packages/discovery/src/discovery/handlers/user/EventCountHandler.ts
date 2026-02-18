@@ -2,7 +2,7 @@ import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type EventCountHandlerDefinition = v.infer<
   typeof EventCountHandlerDefinition
@@ -31,3 +31,8 @@ export class EventCountHandler implements Handler {
     }
   }
 }
+
+export const EventCountHandlerBundle = declareHandler('eventCount', {
+  definition: EventCountHandlerDefinition,
+  create: ({ field, definition }) => new EventCountHandler(field, definition),
+})

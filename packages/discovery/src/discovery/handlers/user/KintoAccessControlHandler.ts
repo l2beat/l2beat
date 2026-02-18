@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 
 import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type KintoAccessControlHandlerDefinition = v.infer<
   typeof KintoAccessControlHandlerDefinition
@@ -383,3 +383,12 @@ function parseTargetLog(
       } as const
   }
 }
+
+export const KintoAccessControlHandlerBundle = declareHandler(
+  'kintoAccessControl',
+  {
+    definition: KintoAccessControlHandlerDefinition,
+    create: ({ field, definition, abi }) =>
+      new KintoAccessControlHandler(field, definition, abi),
+  },
+)
