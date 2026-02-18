@@ -17,7 +17,7 @@ export function TechStackCell({
       <Badge
         type="gray"
         size="small"
-        className="border border-[#656565] bg-[#c2c2c2] py-0.5 text-[13px] text-secondary"
+        className="select-none border border-[#656565] bg-[#c2c2c2] py-0.5 text-[13px] text-secondary"
       >
         No final wrap
       </Badge>
