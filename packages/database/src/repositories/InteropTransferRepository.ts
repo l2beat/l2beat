@@ -399,9 +399,16 @@ export class InteropTransferRepository extends BaseRepository {
         'dstChain',
         'dstTokenAddress',
       ])
-      .where('isProcessed', '=', true)
       .where((eb) =>
-        eb.or([eb('srcValueUsd', 'is', null), eb('dstValueUsd', 'is', null)]),
+        eb.and([
+          // makes no sense to show token as missing if we cannot determine usd
+          // value without raw amounts - some plugins are unable to determine value - if we have raw amount and no usd amount then something is missing
+          eb.and([
+            eb('srcRawAmount', 'is not', null),
+            eb('dstRawAmount', 'is not', null),
+          ]),
+          eb.or([eb('srcValueUsd', 'is', null), eb('dstValueUsd', 'is', null)]),
+        ]),
       )
       .execute()
 

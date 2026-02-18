@@ -605,6 +605,72 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.getMissingTokensInfo.name,
+    () => {
+      it('returns missing tokens only when both raw amounts are present', async () => {
+        const missingSrcUsdWithRawAmounts = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+        )
+        missingSrcUsdWithRawAmounts.srcValueUsd = undefined
+
+        const missingDstUsdWithRawAmounts = transfer(
+          'plugin2',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+        )
+        missingDstUsdWithRawAmounts.dstValueUsd = undefined
+
+        const missingUsdButNoSrcRawAmount = transfer(
+          'plugin3',
+          'msg3',
+          'deposit',
+          UnixTime(300),
+        )
+        missingUsdButNoSrcRawAmount.srcValueUsd = undefined
+        missingUsdButNoSrcRawAmount.srcRawAmount = undefined
+
+        const missingUsdButNoDstRawAmount = transfer(
+          'plugin4',
+          'msg4',
+          'deposit',
+          UnixTime(400),
+        )
+        missingUsdButNoDstRawAmount.dstValueUsd = undefined
+        missingUsdButNoDstRawAmount.dstRawAmount = undefined
+
+        await repository.insertMany([
+          missingSrcUsdWithRawAmounts,
+          missingDstUsdWithRawAmounts,
+          missingUsdButNoSrcRawAmount,
+          missingUsdButNoDstRawAmount,
+        ])
+
+        const result = await repository.getMissingTokensInfo()
+
+        expect(result).toHaveLength(2)
+
+        const srcToken = result.find(
+          (x) =>
+            x.chain === missingSrcUsdWithRawAmounts.srcChain &&
+            x.tokenAddress === missingSrcUsdWithRawAmounts.srcTokenAddress,
+        )
+        const dstToken = result.find(
+          (x) =>
+            x.chain === missingDstUsdWithRawAmounts.dstChain &&
+            x.tokenAddress === missingDstUsdWithRawAmounts.dstTokenAddress,
+        )
+
+        expect(srcToken?.count).toEqual(1)
+        expect(dstToken?.count).toEqual(1)
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.getByRange.name, () => {
     beforeEach(async () => {
       await repository.insertMany([

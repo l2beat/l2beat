@@ -158,10 +158,6 @@ export class InteropFinancialsLoop extends TimeLoop {
   }
 
   private async processSide(side: SideInput, tokenInfos: TokenInfos) {
-    if (!side.id) {
-      return {}
-    }
-
     const tokenInfo = tokenInfos.get(side.id)
     if (!tokenInfo) {
       return {}
