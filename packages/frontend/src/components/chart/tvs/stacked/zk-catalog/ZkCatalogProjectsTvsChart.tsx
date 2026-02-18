@@ -65,6 +65,14 @@ export function ZkCatalogProjectsTvsChart({
     )
   }, [projectsForTvs])
 
+  const sinceByProjectId = useMemo(
+    () =>
+      new Map(
+        projectsForTvs.map((p) => [p.projectId.toString(), p.sinceTimestamp]),
+      ),
+    [projectsForTvs],
+  )
+
   const colors = useMemo(
     () => generateAccessibleColors(data?.projectIds.length ?? 0),
     [data?.projectIds.length],
@@ -100,15 +108,12 @@ export function ZkCatalogProjectsTvsChart({
   // Chart: oldest sinceTimestamp at the bottom, newest at the top
   const chartOrderedIds = useMemo(() => {
     if (!data) return []
-    const sinceMap = new Map(
-      projectsForTvs.map((p) => [p.projectId.toString(), p.sinceTimestamp]),
-    )
     return [...data.projectIds].sort(
       (a, b) =>
-        (sinceMap.get(a) ?? Number.POSITIVE_INFINITY) -
-        (sinceMap.get(b) ?? Number.POSITIVE_INFINITY),
+        (sinceByProjectId.get(a) ?? Number.POSITIVE_INFINITY) -
+        (sinceByProjectId.get(b) ?? Number.POSITIVE_INFINITY),
     )
-  }, [data, projectsForTvs])
+  }, [data, sinceByProjectId])
 
   // Legend: biggest current value first
   const legendOrderedIds = useMemo(() => {
@@ -189,7 +194,9 @@ export function ZkCatalogProjectsTvsChart({
           syncedUntil={data?.syncedUntil}
         />
         <ChartTooltip
-          content={<CustomTooltip unit={unit} />}
+          content={
+            <CustomTooltip unit={unit} sinceByProjectId={sinceByProjectId} />
+          }
           filterNull={false}
         />
       </AreaChart>
@@ -201,13 +208,21 @@ function CustomTooltip({
   payload,
   label,
   unit,
-}: CustomChartTooltipProps & { unit: ChartUnit }) {
+  sinceByProjectId,
+}: CustomChartTooltipProps & {
+  unit: ChartUnit
+  sinceByProjectId: Map<string, number>
+}) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 
   const actualPayload = [...payload]
     .sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
-    .filter((entry) => !entry.hide)
+    .filter((entry) => {
+      if (entry.hide || !entry.name) return false
+      const since = sinceByProjectId.get(entry.name)
+      return since !== undefined && label >= since
+    })
 
   const total = actualPayload.reduce((acc, entry) => {
     return acc + (entry.value ?? 0)
