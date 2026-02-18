@@ -1,13 +1,14 @@
 import type { Project, ProjectRisk } from '@l2beat/config'
 import isArray from 'lodash/isArray'
 import uniqBy from 'lodash/uniqBy'
+import type { ProjectVerificationWarnings } from '~/server/features/utils/getCommonProjectEntry'
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/RiskSummarySection'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { groupRisks } from './groupRisks'
 
 export function getScalingRiskSummarySection(
   project: Project<'scalingTechnology', 'contracts'>,
-  isVerified: boolean,
+  verificationWarnings: ProjectVerificationWarnings,
 ): Omit<RiskSummarySectionProps, keyof ProjectSectionProps> {
   const sections = [
     {
@@ -60,7 +61,7 @@ export function getScalingRiskSummarySection(
   return {
     riskGroups: groupRisks(uniqRisks),
     warning: project.scalingTechnology.warning,
-    isVerified,
+    verificationWarnings,
     redWarning: undefined,
   }
 }

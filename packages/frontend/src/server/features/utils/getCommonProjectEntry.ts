@@ -15,7 +15,10 @@ export interface CommonProjectEntry {
     | {
         yellowWarning?: string
         redWarning?: string
-        verificationWarning?: boolean
+        verificationWarnings?: {
+          contracts: string | undefined
+          programHashes: string | undefined
+        }
         underReview?: UnderReviewStatus
         syncWarning?: string
         emergencyWarning?: string
@@ -24,4 +27,9 @@ export interface CommonProjectEntry {
     | undefined
   description?: string
   badges?: BadgeWithParams[]
+}
+
+export interface ProjectVerificationWarnings {
+  contracts: string | undefined
+  programHashes: string | undefined
 }
