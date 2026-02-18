@@ -19,7 +19,6 @@ import {
   type MatchResult,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
-import type { InteropTransferStream } from '../stream/InteropTransferStream'
 import { buildTokenMap, type TokenMap } from './TokenMap'
 
 export class InteropMatchingLoop extends TimeLoop {
@@ -30,7 +29,6 @@ export class InteropMatchingLoop extends TimeLoop {
     private plugins: InteropPlugin[],
     private supportedChains: string[],
     protected logger: Logger,
-    private transferStream: InteropTransferStream,
     private readonly intervalMs = 10_000,
   ) {
     super({ intervalMs })
@@ -70,10 +68,6 @@ export class InteropMatchingLoop extends TimeLoop {
         transfers,
       })
     })
-
-    if (transferRecords.length > 0) {
-      this.transferStream?.publishBulk(transferRecords, this.intervalMs)
-    }
   }
 }
 
