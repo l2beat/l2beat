@@ -32,7 +32,13 @@ import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarnin
 export async function getScalingSummaryEntries() {
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-    optional: ['tvsInfo', 'scalingDa', 'scalingStage', 'chainConfig', 'contracts'],
+    optional: [
+      'tvsInfo',
+      'scalingDa',
+      'scalingStage',
+      'chainConfig',
+      'contracts',
+    ],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })

@@ -33,9 +33,9 @@ export async function getDaArchivedEntries(): Promise<
         where: ['archivedAt'],
       }),
       ps.getProjects({
-      select: ['daBridge', 'statuses'],
-      optional: ['contracts'],
-    }),
+        select: ['daBridge', 'statuses'],
+        optional: ['contracts'],
+      }),
       ps.getProjects({
         select: ['customDa', 'statuses'],
         where: ['archivedAt'],

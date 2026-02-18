@@ -31,9 +31,9 @@ export async function getDaRiskEntries(): Promise<
         whereNot: ['archivedAt'],
       }),
       ps.getProjects({
-      select: ['daBridge', 'statuses'],
-      optional: ['contracts'],
-    }),
+        select: ['daBridge', 'statuses'],
+        optional: ['contracts'],
+      }),
       ps.getProjects({
         select: ['customDa', 'statuses'],
         whereNot: ['archivedAt'],
