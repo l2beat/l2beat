@@ -23,6 +23,7 @@ import {
 import { decodeFunctionData, type Log, parseAbi } from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
+import { findBestTransferLog } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
@@ -106,6 +107,8 @@ export const swapAndForwardedEthLog =
 export const swapAndForwardedERC20Log =
   'event SwapAndForwardedERC20(address tokenIn, uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)'
 const wethWithdrawalLog = 'event Withdrawal(address indexed src, uint256 wad)'
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
 
 const parseWethWithdrawal = createEventParser(wethWithdrawalLog)
 
@@ -126,10 +129,15 @@ export const MayanForwarded = createInteropEventType<{
   methodSignature: `0x${string}`
   tokenIn: Address32
   amountIn?: bigint
+  srcWasBurned?: boolean
   tokenOut?: Address32
   minAmountOut?: bigint
   $dstChain: string
 }>('mayan-forwarder.MayanForwarded')
+
+const DEAD_ADDRESS = Address32.from(
+  '0x000000000000000000000000000000000000dEaD',
+)
 
 export class MayanForwarderPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-forwarder'
@@ -158,6 +166,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: forwardedERC20Log,
+        includeTxEvents: [transferLog],
         addresses: forwarderAddresses,
       },
       {
@@ -168,6 +177,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: swapAndForwardedERC20Log,
+        includeTxEvents: [transferLog],
         addresses: forwarderAddresses,
       },
     ]
@@ -209,6 +219,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
           }
         }
       }
+      const tokenIn = decodedData.tokenIn ?? Address32.NATIVE
 
       return [
         MayanForwarded.create(input, {
@@ -217,8 +228,9 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
             forwardedEth.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
-          tokenIn: decodedData.tokenIn ?? Address32.NATIVE,
+          tokenIn,
           amountIn,
+          srcWasBurned: inferSrcWasBurned(input, amountIn, tokenIn),
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -234,6 +246,9 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
         cctpNetworks,
       )
       if (!decodedData) return
+      const tokenIn =
+        decodedData.tokenIn ?? Address32.from(forwardedERC20.token)
+      const amountIn = decodedData.amountIn ?? forwardedERC20.amount
       return [
         MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
@@ -241,8 +256,9 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
             forwardedERC20.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
-          tokenIn: decodedData.tokenIn ?? Address32.from(forwardedERC20.token),
-          amountIn: decodedData.amountIn ?? forwardedERC20.amount,
+          tokenIn,
+          amountIn,
+          srcWasBurned: inferSrcWasBurned(input, amountIn, tokenIn),
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -260,6 +276,8 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
         cctpNetworks,
       )
       if (!decodedData) return
+      const tokenIn = Address32.NATIVE
+      const amountIn = swapAndForwardedEth.amountIn
       return [
         MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
@@ -267,8 +285,9 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
             swapAndForwardedEth.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
-          tokenIn: Address32.NATIVE,
-          amountIn: swapAndForwardedEth.amountIn,
+          tokenIn,
+          amountIn,
+          srcWasBurned: inferSrcWasBurned(input, amountIn, tokenIn),
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -284,6 +303,8 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
         cctpNetworks,
       )
       if (!decodedData) return
+      const tokenIn = Address32.from(swapAndForwardedERC20.tokenIn)
+      const amountIn = swapAndForwardedERC20.amountIn
       return [
         MayanForwarded.create(input, {
           mayanProtocol: decodeMayanProtocol(
@@ -291,8 +312,9 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
             swapAndForwardedERC20.mayanProtocol,
           ),
           methodSignature: decodedData.methodSignature,
-          tokenIn: Address32.from(swapAndForwardedERC20.tokenIn),
-          amountIn: swapAndForwardedERC20.amountIn,
+          tokenIn,
+          amountIn,
+          srcWasBurned: inferSrcWasBurned(input, amountIn, tokenIn),
           tokenOut: decodedData.tokenOut,
           minAmountOut: decodedData.minAmountOut,
           $dstChain: decodedData.dstChain,
@@ -300,6 +322,35 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       ]
     }
   }
+}
+
+function inferSrcWasBurned(
+  input: LogToCapture,
+  amountIn: bigint | undefined,
+  tokenIn: Address32 | undefined,
+): boolean | undefined {
+  if (
+    input.log.logIndex === null ||
+    amountIn === undefined ||
+    amountIn === 0n ||
+    tokenIn === undefined ||
+    tokenIn === Address32.NATIVE
+  ) {
+    return undefined
+  }
+
+  const transfer = findBestTransferLog(
+    input.txLogs,
+    amountIn,
+    input.log.logIndex,
+  ).transfer
+  if (!transfer) return undefined
+  if (transfer.logAddress !== tokenIn) return undefined
+  return isBurnAddress(transfer.to)
+}
+
+function isBurnAddress(address: Address32): boolean {
+  return address === Address32.ZERO || address === DEAD_ADDRESS
 }
 
 export function logToProtocolData(

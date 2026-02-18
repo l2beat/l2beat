@@ -688,6 +688,15 @@
       {
         "chain": "base",
         "tx": "0x0015b68093c56f3c80e48d3e21fe6fa09560bb6bc04bd8c546401c07758b9207"
+      },
+      // no forwarder event
+      {
+        "chain": "optimism",
+        "tx": "0x74cc616108c148d691c85d49c1d0470e74c6e9923488332cd0ad634e4b2e0a29"
+      },
+      {
+        "chain": "base",
+        "tx": "0x0d9e645e1d491611634f8f5545291f6a999889bf6abaadde541217e3b917df6a"
       }
     ],
     "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
