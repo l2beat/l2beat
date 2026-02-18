@@ -22,6 +22,6 @@ export function getCommonPinningStyles<T>(
       `linear-gradient(to ${
         isLastPinned === 'left' ? 'right' : 'left'
       }, transparent 0, black 0px, black calc(100% - 10px), transparent 100%)`,
-    zIndex: 1,
+    zIndex: 10,
   }
 }
