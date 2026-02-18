@@ -21,6 +21,7 @@ import type {
   ApiCallGraphResponse,
   ApiAIModelsResponse,
   ApiTokenInfoResponse,
+  ApiResearcherInfoResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -39,6 +40,15 @@ export async function getAIModels(): Promise<ApiAIModelsResponse[]> {
   }
   const data = await res.json()
   return data as ApiAIModelsResponse[]
+}
+
+export async function getResearcherInfo(): Promise<ApiResearcherInfoResponse> {
+  const res = await fetch('/api/researcher-info')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiResearcherInfoResponse
 }
 
 export async function getProject(project: string): Promise<ApiProjectResponse> {

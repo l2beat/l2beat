@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getContractTags, updateContractTag } from '../api/api'
-import type { ApiContractTagsUpdateRequest } from '../api/types'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { getContractTags, updateContractTag } from '../../../../api/api'
+import type { ApiContractTagsUpdateRequest } from '../../../../api/types'
 
 export function useContractTags(project: string) {
   return useQuery({
@@ -28,7 +28,10 @@ export function useUpdateContractTag(project: string) {
   })
 }
 
-export function useIsContractExternal(project: string, contractAddress: string) {
+export function useIsContractExternal(
+  project: string,
+  contractAddress: string,
+) {
   const { data: contractTags } = useContractTags(project)
 
   // Normalize both addresses for comparison (handle eth: prefix)
@@ -38,7 +41,7 @@ export function useIsContractExternal(project: string, contractAddress: string) 
 
   const normalizedNodeAddress = normalizeAddress(contractAddress)
 
-  const tag = contractTags?.tags.find(tag => {
+  const tag = contractTags?.tags.find((tag) => {
     const normalizedTagAddress = normalizeAddress(tag.contractAddress)
     return normalizedTagAddress === normalizedNodeAddress
   })

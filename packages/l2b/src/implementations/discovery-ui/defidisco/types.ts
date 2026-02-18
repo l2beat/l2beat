@@ -332,6 +332,17 @@ export interface ContractFunctions {
   functions: FunctionEntry[]
 }
 
+export interface FunctionAttribution {
+  author: string // GitHub handle
+  date: string // ISO 8601
+}
+
+export interface FunctionComment {
+  author: string
+  date: string
+  text: string
+}
+
 export interface FunctionEntry {
   functionName: string
   isPermissioned: boolean
@@ -353,6 +364,11 @@ export interface FunctionEntry {
   dependencies?: {
     contractAddress: string
   }[]
+  // Attribution tracking
+  lastChangedBy?: FunctionAttribution
+  completedBy?: FunctionAttribution
+  // Audit trail comments
+  comments?: FunctionComment[]
 }
 
 // Owner definition types - unified path expression approach
@@ -386,6 +402,12 @@ export interface ApiFunctionsUpdateRequest {
   dependencies?: {
     contractAddress: string
   }[]
+  // Frontend sends only the text; backend stamps author + date
+  newComment?: { text: string }
+}
+
+export interface ApiResearcherInfoResponse {
+  githubHandle: string | null
 }
 
 // Contract tags types

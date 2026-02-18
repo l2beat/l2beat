@@ -17,6 +17,7 @@ import { ContractConfigDialog } from './contract-config-dialog/ContractConfigDia
 import { FieldDisplay } from './Field'
 import { FieldTag } from './FieldTag'
 import { Folder } from './Folder'
+import { ExternalIndicator } from '../defidisco/ExternalIndicator'
 import { ValuesPanelExtensions } from '../defidisco/ValuesPanelExtensions'
 import { ClearPermissionsDialog } from '../defidisco/ClearPermissionsDialog'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
@@ -199,6 +200,7 @@ function Display({
             {selected.type === 'Unverified' && (
               <span className="text-aux-red"> (Unverified)</span>
             )}
+            <ExternalIndicator address={selected.address} name={selected.name} />
           </div>
           <div className="flex items-center gap-2">
             {templateDialog}

@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useParams } from 'react-router-dom'
-import { useGlobalSettingsStore } from '../../store/global-settings-store'
+import { ClickableConnection } from '../../defidisco/ClickableConnection'
+import { EdgeCallGraphPopup } from '../../defidisco/EdgeCallGraphPopup'
 import {
-  useEdgeCallGraph,
+  type BidirectionalCalls,
   getEdgeCalls,
   hasEdgeCalls,
-  type BidirectionalCalls,
-} from '../../defidisco/useEdgeCallGraph'
-import { EdgeCallGraphPopup } from '../../defidisco/EdgeCallGraphPopup'
-import { ClickableConnection } from '../../defidisco/ClickableConnection'
+  useEdgeCallGraph,
+} from '../../defidisco/hooks/useEdgeCallGraph'
+import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import { useStore } from '../store/store'
 import { NodeView } from './NodeView'
 
@@ -63,7 +63,11 @@ export function NodesAndConnections() {
 
         // Check if this edge has call graph data (in either direction)
         const calls = getEdgeCalls(edgeCallsMap, node.id, field.target)
-        const hasCallGraphData = hasEdgeCalls(edgeCallsMap, node.id, field.target)
+        const hasCallGraphData = hasEdgeCalls(
+          edgeCallsMap,
+          node.id,
+          field.target,
+        )
 
         return {
           key: `${node.id}-${i}-${field.target}`,
@@ -136,29 +140,39 @@ export function NodesAndConnections() {
         style={{ left: minX, top: minY, width, height, pointerEvents: 'none' }}
         fill="none"
       >
-        {connections.map(({ key, sourceAddress, sourceName, targetAddress, targetName, calls, ...rest }) => (
-          <ClickableConnection
-            key={key}
-            {...rest}
-            onClick={
-              rest.hasCallGraphData
-                ? (e) =>
-                    handleEdgeClick(
-                      {
-                        key,
-                        sourceAddress,
-                        sourceName,
-                        targetAddress,
-                        targetName,
-                        calls,
-                        ...rest,
-                      },
-                      e,
-                    )
-                : undefined
-            }
-          />
-        ))}
+        {connections.map(
+          ({
+            key,
+            sourceAddress,
+            sourceName,
+            targetAddress,
+            targetName,
+            calls,
+            ...rest
+          }) => (
+            <ClickableConnection
+              key={key}
+              {...rest}
+              onClick={
+                rest.hasCallGraphData
+                  ? (e) =>
+                      handleEdgeClick(
+                        {
+                          key,
+                          sourceAddress,
+                          sourceName,
+                          targetAddress,
+                          targetName,
+                          calls,
+                          ...rest,
+                        },
+                        e,
+                      )
+                  : undefined
+              }
+            />
+          ),
+        )}
       </svg>
 
       {visible.map((node) => {

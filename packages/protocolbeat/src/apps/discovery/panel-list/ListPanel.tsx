@@ -12,6 +12,7 @@ import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
+import { useContractTags } from '../defidisco/hooks/useContractTags'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
 
@@ -47,10 +48,32 @@ export function ListPanel() {
 
 function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
   const [open, setOpen] = useState(true)
+  const { data: contractTags } = useContractTags(props.entry.project)
 
   function onFocus() {
     setOpen(true)
   }
+
+  const isExternal = (address: string) => {
+    if (!contractTags?.tags) return false
+    const normalized = address.toLowerCase().replace('eth:', '')
+    return contractTags.tags.some(
+      (tag) =>
+        tag.isExternal &&
+        tag.contractAddress.toLowerCase().replace('eth:', '') === normalized,
+    )
+  }
+
+  const initialNonExternal = props.entry.initialContracts.filter(
+    (c) => !isExternal(c.address),
+  )
+  const discoveredNonExternal = props.entry.discoveredContracts.filter(
+    (c) => !isExternal(c.address),
+  )
+  const externalContracts = [
+    ...props.entry.initialContracts.filter((c) => isExternal(c.address)),
+    ...props.entry.discoveredContracts.filter((c) => isExternal(c.address)),
+  ]
 
   return Object.entries(props.entry.blockNumbers).map(
     ([chain, blockNumber]) => (
@@ -76,14 +99,21 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
             <ListItemContracts
               title="Initial"
               onFocus={onFocus}
-              entries={props.entry.initialContracts}
+              entries={initialNonExternal}
               chain={chain}
             />
             <ListItemContracts
               title="Discovered"
               onFocus={onFocus}
-              entries={props.entry.discoveredContracts}
+              entries={discoveredNonExternal}
               chain={chain}
+            />
+            <ListItemContracts
+              title="External Dependencies"
+              onFocus={onFocus}
+              entries={externalContracts}
+              chain={chain}
+              titleClassName="text-aux-orange"
             />
             <ListItemContracts
               startClosed
@@ -105,6 +135,7 @@ function ListItemContracts(props: {
   onFocus?: () => void
   startClosed?: boolean
   chain: string
+  titleClassName?: string
 }) {
   const [open, setOpen] = useState(!props.startClosed)
   const selected = usePanelStore((state) => state.selected)
@@ -144,7 +175,7 @@ function ListItemContracts(props: {
             <IconFolder />
           </>
         )}
-        {props.title}
+        <span className={props.titleClassName}>{props.title}</span>
       </button>
       {open && (
         <ol>

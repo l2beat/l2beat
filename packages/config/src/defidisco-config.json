@@ -6,7 +6,8 @@
     "uniswap-v2",
     "morpho",
     "lido",
-    "liquity-v2"
+    "liquity-v2",
+    "ethena-test"
   ],
-  "lastUpdated": "2026-02-05"
+  "lastUpdated": "2026-02-13"
 }

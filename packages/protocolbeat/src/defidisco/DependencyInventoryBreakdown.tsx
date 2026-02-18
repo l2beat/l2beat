@@ -8,9 +8,9 @@ import type {
   Impact,
   Likelihood,
 } from '../api/types'
+import { useContractTags } from '../apps/discovery/defidisco/hooks/useContractTags'
 import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
-import { useContractTags } from '../hooks/useContractTags'
 import {
   computeDeduplicatedCapital,
   computeWorstGrade,

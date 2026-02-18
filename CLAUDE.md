@@ -494,7 +494,7 @@ packages/
           "functionName": "pause",
           "userClassification": "permissioned",
           "checked": true,
-          "score": "high-risk",
+          "score": "critical",
           "description": "Emergency pause function",
           "ownerDefinitions": [
             {
@@ -570,15 +570,9 @@ packages/
 - **Permission Owner System**: Uses generalized path expressions that work with **any** handler's data structure (ACL, AccessControl, custom handlers, future handlers). No special cases or hardcoded logic needed.
 - **Migration**: All existing permission-overrides.json files have been migrated to the new unified path format (one-off migration, October 2025).
 - **Score vs Impact Terminology**:
-  - **CRITICAL**: In `functions.json`, the field is called `score` with values: `'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'`
-  - **TypeScript types** use `Impact` with values: `'low' | 'medium' | 'high' | 'critical'`
-  - **Conversion required**: When working with backend scoring (e.g., V2 scoring, dependencies), convert:
-    - `'low-risk'` → `'low'`
-    - `'medium-risk'` → `'medium'`
-    - `'high-risk'` → `'high'`
-    - `'critical'` → `'critical'`
-    - `'unscored'` → `undefined`
-  - Example conversion function in `DependencyInventoryModule.scoreToImpact()`
+  - In `functions.json`, the field is called `score` with values: `'unscored' | 'critical'` (binary scoring)
+  - **TypeScript types** use `Impact` with value: `'critical'`
+  - **Conversion**: `'unscored'` maps to `undefined`, `'critical'` maps to `'critical'`
 
 **Future Development:** Follow the minimal integration principle to ensure easy upstream merges and maintainable code separation.
 

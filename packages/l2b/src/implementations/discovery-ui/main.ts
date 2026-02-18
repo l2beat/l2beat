@@ -111,6 +111,12 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.status(200).send('OK')
   })
 
+  app.get('/api/researcher-info', (_req, res) => {
+    res.json({
+      githubHandle: process.env.RESEARCHER_GITHUB || null,
+    })
+  })
+
   app.get('/api/ai-models', (_req, res) => {
     const models = getAvailableModels()
     res.json(models)

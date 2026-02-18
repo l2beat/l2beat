@@ -1,7 +1,12 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getCode, getFunctions, updateFunction } from '../../../api/api'
+import {
+  getCode,
+  getFunctions,
+  getResearcherInfo,
+  updateFunction,
+} from '../../../api/api'
 import type {
   ApiAbi,
   ApiAbiEntry,
@@ -12,7 +17,6 @@ import type {
 import { useCodeStore } from '../../../components/editor/store'
 import { partition } from '../../../utils/partition'
 import { useMultiViewStore } from '../multi-view/store'
-import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { Folder } from '../panel-values/Folder'
 import { usePanelStore } from '../store/panel-store'
 import { FunctionFolder } from './FunctionFolder'
@@ -63,7 +67,13 @@ function findAllFunctionOccurrences(
   return occurrences
 }
 
-export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
+export function PermissionsDisplay({
+  abis,
+  contractAddress,
+}: {
+  abis: ApiAbi[]
+  contractAddress: string
+}) {
   const { project } = useParams()
   const queryClient = useQueryClient()
   const [localFunctions, setLocalFunctions] = useState<
@@ -82,6 +92,13 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   // Code store for editor operations
   const { showRange, setSourceIndex } = useCodeStore()
 
+  // Load researcher info (cached indefinitely)
+  const { data: researcherInfo } = useQuery({
+    queryKey: ['researcher-info'],
+    queryFn: getResearcherInfo,
+    staleTime: Number.POSITIVE_INFINITY,
+  })
+
   // Load functions data for this project
   const { data: functionsData } = useQuery({
     queryKey: ['functions', project],
@@ -89,12 +106,18 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     enabled: !!project,
   })
 
-  // Get functions for the specific contracts we're displaying (much more efficient!)
+  // Get functions for the specific contracts we're displaying (case-insensitive lookup)
   const getFunctionsForContract = (contractAddress: string) => {
+    const normalizedAddr = contractAddress.toLowerCase()
+    const matchingKey = Object.keys(functionsData?.contracts || {}).find(
+      (k) => k.toLowerCase() === normalizedAddr,
+    )
     const contractFunctions =
-      functionsData?.contracts?.[contractAddress]?.functions || []
+      (matchingKey
+        ? functionsData?.contracts?.[matchingKey]?.functions
+        : undefined) || []
     const localFunctionsForContract = localFunctions.filter(
-      (o) => o.contractAddress === contractAddress,
+      (o) => o.contractAddress.toLowerCase() === normalizedAddr,
     )
 
     // Map contract functions to include contractAddress (functions in contracts don't have it)
@@ -144,12 +167,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
   ) => {
     if (!project) return
 
-    const scoreOrder: Array<
-      'unscored' | 'low-risk' | 'medium-risk' | 'high-risk' | 'critical'
-    > = ['unscored', 'low-risk', 'medium-risk', 'high-risk', 'critical']
-    const currentIndex = scoreOrder.indexOf(currentScore)
-    const nextIndex = (currentIndex + 1) % scoreOrder.length
-    const newScore = scoreOrder[nextIndex]
+    const newScore = currentScore === 'critical' ? 'unscored' : 'critical'
 
     await updateFunctionEntry(contractAddress, functionName, {
       score: newScore,
@@ -236,6 +254,29 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     if (!project) return
 
     await updateFunctionEntry(contractAddress, functionName, { dependencies })
+  }
+
+  const handleAddComment = async (
+    contractAddress: string,
+    functionName: string,
+    commentText: string,
+  ) => {
+    if (!project || !commentText.trim()) return
+
+    try {
+      await updateFunction(project, {
+        contractAddress,
+        functionName,
+        newComment: { text: commentText },
+      })
+
+      // Invalidate and refetch the query to get fresh data
+      await queryClient.invalidateQueries({
+        queryKey: ['functions', project],
+      })
+    } catch (error) {
+      console.error('Failed to add comment:', error)
+    }
   }
 
   const handleOpenInCode = async (
@@ -411,37 +452,40 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
     return null
   }
 
+  const isMultiAbi = abisWithWriteFunctions.length > 1
+
   return (
     <ol>
-      {abisWithWriteFunctions.map((abi) => (
-        <li key={abi.address}>
-          <div className="px-5 pt-[3px] pb-0.5 font-mono text-xs">
-            <AddressDisplay
-              simplified
-              value={{
-                type: 'address',
-                address: abi.address,
-                addressType: 'Unknown',
-              }}
+      {abisWithWriteFunctions.map((abi) => {
+        const abiLabel = isMultiAbi
+          ? abi.address === contractAddress
+            ? 'Proxy'
+            : 'Implementation'
+          : undefined
+
+        return (
+          <li key={abi.address}>
+            <PermissionsCode
+              entries={abi.entries}
+              contractAddress={abi.address}
+              abiLabel={abiLabel}
+              functions={getFunctionsForContract(abi.address)}
+              onPermissionToggle={handlePermissionToggle}
+              onCheckedToggle={handleCheckedToggle}
+              onScoreToggle={handleScoreToggle}
+              onLikelihoodToggle={handleLikelihoodToggle}
+              onDescriptionUpdate={handleDescriptionUpdate}
+              onConstraintsUpdate={handleConstraintsUpdate}
+              onOpenInCode={handleOpenInCode}
+              onOwnerDefinitionsUpdate={handleOwnerDefinitionsUpdate}
+              onDelayUpdate={handleDelayUpdate}
+              onDependenciesUpdate={handleDependenciesUpdate}
+              onAddComment={handleAddComment}
+              researcherGithub={researcherInfo?.githubHandle ?? null}
             />
-          </div>
-          <PermissionsCode
-            entries={abi.entries}
-            contractAddress={abi.address}
-            functions={getFunctionsForContract(abi.address)}
-            onPermissionToggle={handlePermissionToggle}
-            onCheckedToggle={handleCheckedToggle}
-            onScoreToggle={handleScoreToggle}
-            onLikelihoodToggle={handleLikelihoodToggle}
-            onDescriptionUpdate={handleDescriptionUpdate}
-            onConstraintsUpdate={handleConstraintsUpdate}
-            onOpenInCode={handleOpenInCode}
-            onOwnerDefinitionsUpdate={handleOwnerDefinitionsUpdate}
-            onDelayUpdate={handleDelayUpdate}
-            onDependenciesUpdate={handleDependenciesUpdate}
-          />
-        </li>
-      ))}
+          </li>
+        )
+      })}
     </ol>
   )
 }
@@ -449,6 +493,7 @@ export function PermissionsDisplay({ abis }: { abis: ApiAbi[] }) {
 function PermissionsCode({
   entries,
   contractAddress,
+  abiLabel,
   functions,
   onPermissionToggle,
   onCheckedToggle,
@@ -460,9 +505,12 @@ function PermissionsCode({
   onOwnerDefinitionsUpdate,
   onDelayUpdate,
   onDependenciesUpdate,
+  onAddComment,
+  researcherGithub,
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
+  abiLabel?: string
   functions: FunctionEntryWithContract[]
   onPermissionToggle: (
     contractAddress: string,
@@ -515,6 +563,12 @@ function PermissionsCode({
     functionName: string,
     dependencies?: { contractAddress: string }[],
   ) => void
+  onAddComment: (
+    contractAddress: string,
+    functionName: string,
+    commentText: string,
+  ) => void
+  researcherGithub: string | null
 }) {
   const readMarkers = [' view ', ' pure ']
 
@@ -527,7 +581,11 @@ function PermissionsCode({
   return (
     <div>
       <Folder
-        title={`Write Functions (${write.length})`}
+        title={
+          abiLabel
+            ? `Write Functions ${abiLabel} (${write.length})`
+            : `Write Functions (${write.length})`
+        }
         collapsed={write.length === 0}
       >
         <WritePermissionsCodeEntries
@@ -544,6 +602,8 @@ function PermissionsCode({
           onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
           onDelayUpdate={onDelayUpdate}
           onDependenciesUpdate={onDependenciesUpdate}
+          onAddComment={onAddComment}
+          researcherGithub={researcherGithub}
         />
       </Folder>
     </div>
@@ -564,6 +624,8 @@ function WritePermissionsCodeEntries({
   onOwnerDefinitionsUpdate,
   onDelayUpdate,
   onDependenciesUpdate,
+  onAddComment,
+  researcherGithub,
 }: {
   entries: ApiAbiEntry[]
   contractAddress: string
@@ -619,6 +681,12 @@ function WritePermissionsCodeEntries({
     functionName: string,
     dependencies?: { contractAddress: string }[],
   ) => void
+  onAddComment: (
+    contractAddress: string,
+    functionName: string,
+    commentText: string,
+  ) => void
+  researcherGithub: string | null
 }) {
   const extractFunctionName = (abiEntry: string): string | null => {
     const match = abiEntry.match(/function\s+(\w+)\s*\(/)
@@ -661,6 +729,8 @@ function WritePermissionsCodeEntries({
             onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
             onDelayUpdate={onDelayUpdate}
             onDependenciesUpdate={onDependenciesUpdate}
+            onAddComment={onAddComment}
+            researcherGithub={researcherGithub}
           />
         )
       })}

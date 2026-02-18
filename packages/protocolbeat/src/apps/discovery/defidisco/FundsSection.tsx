@@ -6,9 +6,9 @@ import type {
   FundsPositionProtocol,
   FundsTokenBalance,
 } from '../../../api/types'
-import { useContractTags } from '../../../hooks/useContractTags'
 import { usePanelStore } from '../store/panel-store'
 import { formatUsdValue } from './formatUtils'
+import { useContractTags } from './hooks/useContractTags'
 import { ProxyTypeTag } from './ProxyTypeTag'
 import { buildProxyTypeMap } from './proxyTypeUtils'
 
@@ -638,7 +638,7 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
 
             {/* Protocol Tokens Section */}
             {tokenEntries.length > 0 && (
-              <div className="ml-2 mb-3">
+              <div className="mb-3 ml-2">
                 <div className="mb-1 font-semibold text-aux-blue text-sm">
                   Protocol Tokens ({tokenEntries.length})
                 </div>

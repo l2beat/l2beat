@@ -1,24 +1,27 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
+import { getFundsData, getProject } from '../../../api/api'
 import type {
   ApiAbiEntry,
+  ContractFundsData,
   FunctionEntry,
   Likelihood,
   OwnerDefinition,
 } from '../../../api/types'
 import * as solidity from '../../../components/editor/languages/solidity'
-import { useContractTags } from '../../../hooks/useContractTags'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { usePanelStore } from '../store/panel-store'
+import { formatUsdValue } from './formatUtils'
+import { useContractTags } from './hooks/useContractTags'
 import { IconCheckFalse } from './IconCheckFalse'
 import { IconCheckTrue } from './IconCheckTrue'
+import { IconDependency } from './IconDependency'
+import { IconKey } from './IconKey'
 import { IconLockClosed } from './IconLockClosed'
 import { IconLockOpen } from './IconLockOpen'
 import { IconOpen } from './IconOpen'
-import { IconProbability } from './IconProbability'
 import { IconVoltage } from './IconVoltage'
 import { resolvePathExpression, UIContractDataAccess } from './ownerResolution'
 
@@ -83,6 +86,12 @@ interface FunctionFolderProps {
     functionName: string,
     dependencies?: { contractAddress: string }[],
   ) => void
+  onAddComment: (
+    contractAddress: string,
+    functionName: string,
+    commentText: string,
+  ) => void
+  researcherGithub: string | null
 }
 
 export function FunctionFolder({
@@ -100,6 +109,8 @@ export function FunctionFolder({
   onOwnerDefinitionsUpdate,
   onDelayUpdate,
   onDependenciesUpdate,
+  onAddComment,
+  researcherGithub,
 }: FunctionFolderProps) {
   const { project } = useParams()
   const [isOpen, setIsOpen] = useState(false)
@@ -119,6 +130,16 @@ export function FunctionFolder({
 
   // Fetch contract tags to get external contracts and their attributes
   const { data: contractTags } = useContractTags(project || '')
+
+  // Fetch funds data for impact section
+  const { data: fundsData } = useQuery({
+    queryKey: ['funds-data', project],
+    queryFn: () => (project ? getFundsData(project) : null),
+    enabled: !!project,
+  })
+
+  const contractFunds: ContractFundsData | null =
+    fundsData?.contracts?.[contractAddress] ?? null
 
   // Owner resolution using unified path expressions with shared utility
   const resolvedOwners = React.useMemo(() => {
@@ -418,6 +439,11 @@ export function FunctionFolder({
   // State for managing dependencies
   const [isAddingDependency, setIsAddingDependency] = useState(false)
 
+  // State for audit trail
+  const [isCommentsOpen, setIsCommentsOpen] = useState(false)
+  const [newCommentText, setNewCommentText] = useState('')
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false)
+
   // Update local description when external data changes
   useEffect(() => {
     setLocalDescription(description)
@@ -460,20 +486,12 @@ export function FunctionFolder({
 
   const canCheck = isCheckingAllowed()
 
-  // Score colors
+  // Score colors (binary: gray for unscored, red for any score)
   const getScoreColor = (score: string, isHover = false) => {
-    switch (score) {
-      case 'low-risk':
-        return isHover ? '#6ee7b7' : '#10b981' // green-300 : green-500
-      case 'medium-risk':
-        return isHover ? '#fcd34d' : '#f59e0b' // yellow-300 : yellow-500
-      case 'high-risk':
-        return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
-      case 'critical':
-        return isHover ? '#c084fc' : '#a855f7' // purple-400 : purple-500
-      default:
-        return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
+    if (score !== 'unscored') {
+      return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
     }
+    return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
   }
 
   const handleDescriptionChange = (
@@ -681,6 +699,15 @@ export function FunctionFolder({
             {isPermissioned ? <IconLockClosed /> : <IconLockOpen />}
           </button>
 
+          {/* Admin Key Icon */}
+          <span
+            className="inline-block"
+            style={{ color: '#9ca3af' }}
+            title="Admin (not yet resolved)"
+          >
+            <IconKey />
+          </span>
+
           {/* Score Icon */}
           <button
             onClick={() =>
@@ -701,32 +728,23 @@ export function FunctionFolder({
             <IconVoltage />
           </button>
 
-          {/* Likelihood Icon */}
-          <button
-            onClick={() =>
-              onLikelihoodToggle(
-                contractAddress,
-                functionName,
-                likelihoodStatus,
-              )
-            }
-            className="inline-block cursor-pointer transition-colors"
+          {/* Dependency Indicator Icon */}
+          <span
+            className="inline-block"
             style={{
-              color: getLikelihoodColor(likelihoodStatus),
+              color:
+                (currentFunction?.dependencies?.length ?? 0) > 0
+                  ? '#f97316' // orange-500 (has dependencies)
+                  : '#9ca3af', // gray-400 (no dependencies)
             }}
-            title={`Current likelihood: ${likelihoodStatus}. Click to cycle: mitigated → low → medium → high`}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = getLikelihoodColor(
-                likelihoodStatus,
-                true,
-              )
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = getLikelihoodColor(likelihoodStatus)
-            }}
+            title={
+              (currentFunction?.dependencies?.length ?? 0) > 0
+                ? `Has ${currentFunction?.dependencies?.length} external dependency/dependencies`
+                : 'No external dependencies'
+            }
           >
-            <IconProbability />
-          </button>
+            <IconDependency />
+          </span>
 
           {/* Open in Code Icon */}
           <button
@@ -773,13 +791,76 @@ export function FunctionFolder({
         </code>
       </button>
 
-      {/* Expanded content - description textarea and owners */}
+      {/* Expanded content */}
       {isOpen && (
         <div className="border-coffee-700 border-t bg-coffee-900">
-          {/* Manage Function Owners Section */}
+          {/* 1. Last Change Section */}
+          <div className="border-coffee-700 border-b p-3">
+            <label className="mb-1 flex items-center gap-1 text-coffee-300 text-xs">
+              <span
+                style={{
+                  color: isChecked ? '#10b981' : '#9ca3af',
+                }}
+              >
+                {isChecked ? <IconCheckTrue /> : <IconCheckFalse />}
+              </span>
+              Last Change
+            </label>
+            {currentFunction?.checked && currentFunction?.completedBy ? (
+              <div className="text-coffee-400 text-xs">
+                Completed by{' '}
+                <a
+                  href={`https://github.com/${currentFunction.completedBy.author}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-aux-cyan hover:underline"
+                >
+                  {currentFunction.completedBy.author}
+                </a>{' '}
+                on {currentFunction.completedBy.date.split('T')[0]}
+              </div>
+            ) : currentFunction?.lastChangedBy ? (
+              <div className="text-coffee-400 text-xs">
+                Last change by{' '}
+                <a
+                  href={`https://github.com/${currentFunction.lastChangedBy.author}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-aux-cyan hover:underline"
+                >
+                  {currentFunction.lastChangedBy.author}
+                </a>{' '}
+                on {currentFunction.lastChangedBy.date.split('T')[0]}
+              </div>
+            ) : (
+              <div className="text-coffee-500 text-xs">No changes recorded</div>
+            )}
+          </div>
+
+          {/* 2. Function Description Section */}
+          <div className="border-coffee-700 border-b p-3">
+            <label className="mb-2 block text-coffee-300 text-xs">
+              Function Description
+            </label>
+            <textarea
+              value={localDescription}
+              onChange={handleDescriptionChange}
+              placeholder="Add a description for this function..."
+              className="h-20 w-full resize-none rounded border border-coffee-600 bg-coffee-800 px-2 py-1 font-mono text-coffee-100 text-xs focus:border-coffee-500 focus:outline-none"
+            />
+          </div>
+
+          {/* 3. Manage Function Owners Section */}
           <div className="border-coffee-700 border-b p-3">
             <div className="mb-2 flex items-center justify-between">
-              <label className="block text-coffee-300 text-xs">
+              <label className="flex items-center gap-1 text-coffee-300 text-xs">
+                <span
+                  style={{
+                    color: isPermissioned ? '#f87171' : '#9ca3af',
+                  }}
+                >
+                  {isPermissioned ? <IconLockClosed /> : <IconLockOpen />}
+                </span>
                 Manage Function Owners
               </label>
               <button
@@ -788,6 +869,9 @@ export function FunctionFolder({
               >
                 {isAddingOwner ? 'Cancel' : '+ Add Owner'}
               </button>
+            </div>
+            <div className="mb-2 text-coffee-500 text-xs">
+              Permissioned function only callable by the addresses listed here
             </div>
 
             {/* Current owner definitions with resolved addresses and delete buttons */}
@@ -1059,7 +1143,340 @@ export function FunctionFolder({
             )}
           </div>
 
-          {/* Function Delay Section */}
+          {/* 4. Admin Section (stub) */}
+          <div className="border-coffee-700 border-b p-3">
+            <div className="mb-2 flex items-center justify-between">
+              <label className="flex items-center gap-1 text-coffee-300 text-xs">
+                <span style={{ color: '#9ca3af' }}>
+                  <IconKey />
+                </span>
+                Admin
+              </label>
+              <button
+                disabled
+                className="cursor-not-allowed rounded bg-coffee-700 px-2 py-1 text-coffee-100 text-xs opacity-50"
+                title="Coming soon"
+              >
+                Read from callgraph
+              </button>
+            </div>
+            <div className="mb-2 text-coffee-500 text-xs">
+              Ultimate external owner of the function that calls into this
+              permissioned function
+            </div>
+            <div className="text-coffee-500 text-xs">Not yet resolved</div>
+          </div>
+
+          {/* 5. Impact Section */}
+          <div className="border-coffee-700 border-b p-3">
+            <label className="mb-1 flex items-center gap-1 text-coffee-300 text-xs">
+              <span style={{ color: getScoreColor(scoreStatus) }}>
+                <IconVoltage />
+              </span>
+              Impact
+            </label>
+            <div className="mb-2 text-coffee-500 text-xs">
+              Funds that are at risk by malicious calls into this function
+            </div>
+            {contractFunds ? (
+              <div className="space-y-2">
+                {/* Token Balances */}
+                {contractFunds.balances &&
+                  contractFunds.balances.tokens.filter((t) => t.usdValue > 0)
+                    .length > 0 && (
+                    <div>
+                      <div className="mb-1 text-coffee-400 text-xs">
+                        Token Balances
+                      </div>
+                      <div className="space-y-1">
+                        {contractFunds.balances.tokens
+                          .filter((t) => t.usdValue > 0)
+                          .sort((a, b) => b.usdValue - a.usdValue)
+                          .map((token, idx) => (
+                            <div
+                              key={idx}
+                              className="flex items-center justify-between text-xs"
+                            >
+                              <span className="text-coffee-200">
+                                {token.symbol}
+                              </span>
+                              <span className="text-green-400">
+                                {formatUsdValue(token.usdValue)}
+                              </span>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
+                {/* DeFi Positions */}
+                {contractFunds.positions &&
+                  contractFunds.positions.protocols.length > 0 && (
+                    <div>
+                      <div className="mb-1 text-coffee-400 text-xs">
+                        DeFi Positions
+                      </div>
+                      <div className="space-y-1">
+                        {contractFunds.positions.protocols.map(
+                          (protocol, idx) => (
+                            <div
+                              key={idx}
+                              className="flex items-center justify-between text-xs"
+                            >
+                              <span className="text-coffee-200">
+                                {protocol.name}
+                              </span>
+                              <span className="text-green-400">
+                                {formatUsdValue(protocol.totalUsdValue)}
+                              </span>
+                            </div>
+                          ),
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                {/* Token Info */}
+                {contractFunds.tokenInfo && (
+                  <div>
+                    <div className="mb-1 text-coffee-400 text-xs">
+                      Token Info
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-coffee-200">
+                        {contractFunds.tokenInfo.symbol} Market Cap
+                      </span>
+                      <span className="text-aux-yellow">
+                        {formatUsdValue(contractFunds.tokenInfo.tokenValue)}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Show message if funds data exists but no balances/positions/token */}
+                {!contractFunds.balances?.tokens.some((t) => t.usdValue > 0) &&
+                  !contractFunds.positions?.protocols.length &&
+                  !contractFunds.tokenInfo && (
+                    <div className="text-coffee-500 text-xs">
+                      No funds detected for this contract
+                    </div>
+                  )}
+              </div>
+            ) : (
+              <div className="text-coffee-500 text-xs">
+                No funds data available
+              </div>
+            )}
+          </div>
+
+          {/* 6. External Dependencies Section */}
+          <div className="border-coffee-700 border-b p-3">
+            <div className="mb-2 flex items-center justify-between">
+              <label className="flex items-center gap-1 text-coffee-300 text-xs">
+                <span
+                  style={{
+                    color:
+                      (currentFunction?.dependencies?.length ?? 0) > 0
+                        ? '#f97316'
+                        : '#9ca3af',
+                  }}
+                >
+                  <IconDependency />
+                </span>
+                External Dependencies
+              </label>
+              <button
+                onClick={() => setIsAddingDependency(!isAddingDependency)}
+                className="rounded bg-coffee-700 px-2 py-1 text-coffee-100 text-xs hover:bg-coffee-600"
+              >
+                {isAddingDependency ? 'Cancel' : '+ Add Dependency'}
+              </button>
+            </div>
+            <div className="mb-2 text-coffee-500 text-xs">
+              From this function, calls to these external contracts outside of
+              the analysed protocol are made
+            </div>
+
+            {/* Display current dependencies */}
+            {currentFunction?.dependencies &&
+              currentFunction.dependencies.length > 0 && (
+                <div className="mb-3">
+                  <div className="mb-1 text-coffee-400 text-xs">
+                    Current Dependencies ({currentFunction.dependencies.length}
+                    ):
+                  </div>
+
+                  <div className="space-y-2">
+                    {currentFunction.dependencies.map((dependency, index) => {
+                      const depInfo = getDependencyInfo(
+                        dependency.contractAddress,
+                      )
+
+                      return (
+                        <div key={index} className="rounded bg-coffee-800 p-2">
+                          <div className="mb-1 flex items-center justify-between">
+                            <div className="flex flex-1 items-center gap-2">
+                              <button
+                                onClick={() =>
+                                  usePanelStore
+                                    .getState()
+                                    .select(dependency.contractAddress)
+                                }
+                                className="font-mono text-aux-cyan text-xs hover:text-aux-cyan-light"
+                                title={`Select ${dependency.contractAddress}`}
+                              >
+                                {depInfo?.name ||
+                                  dependency.contractAddress.slice(0, 10) +
+                                    '...'}
+                              </button>
+                              <button
+                                onClick={() =>
+                                  usePanelStore
+                                    .getState()
+                                    .select(dependency.contractAddress)
+                                }
+                                className="text-coffee-400 hover:text-coffee-300"
+                                title="Select this contract"
+                              >
+                                <IconOpen />
+                              </button>
+                            </div>
+                            <button
+                              onClick={() => handleRemoveDependency(index)}
+                              className="ml-2 flex-shrink-0 text-aux-red hover:opacity-80"
+                              title="Remove this dependency"
+                            >
+                              ✕
+                            </button>
+                          </div>
+
+                          {/* Show centralization and likelihood attributes */}
+                          {depInfo &&
+                            (depInfo.centralization || depInfo.likelihood) && (
+                              <div className="mt-1 flex items-center gap-3 text-xs">
+                                {depInfo.centralization && (
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-coffee-400">
+                                      Centralization:
+                                    </span>
+                                    <span
+                                      style={{
+                                        color: getCentralizationColor(
+                                          depInfo.centralization,
+                                        ),
+                                      }}
+                                      className="font-semibold"
+                                    >
+                                      {depInfo.centralization}
+                                    </span>
+                                  </div>
+                                )}
+                                {depInfo.likelihood && (
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-coffee-400">
+                                      Likelihood:
+                                    </span>
+                                    <span
+                                      style={{
+                                        color: getLikelihoodColor(
+                                          depInfo.likelihood,
+                                        ),
+                                      }}
+                                      className="font-semibold"
+                                    >
+                                      {depInfo.likelihood}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+            {/* Add dependency form */}
+            {isAddingDependency && (
+              <div className="rounded bg-coffee-800 p-3">
+                <div className="mb-3 text-coffee-400 text-xs">
+                  Select an external contract to add as a dependency
+                </div>
+
+                {getExternalContracts.length === 0 ? (
+                  <div className="text-coffee-400 text-xs">
+                    No external contracts found. Mark contracts as external in
+                    the Values panel to add them as dependencies.
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {getExternalContracts.map((contract) => (
+                      <button
+                        key={contract.address}
+                        onClick={() => handleAddDependency(contract.address)}
+                        disabled={currentFunction?.dependencies?.some(
+                          (d) => d.contractAddress === contract.address,
+                        )}
+                        className="w-full rounded bg-coffee-700 p-2 text-left hover:bg-coffee-600 disabled:cursor-not-allowed disabled:bg-coffee-600 disabled:opacity-50"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <div className="font-mono text-coffee-100 text-xs">
+                              {contract.name}
+                            </div>
+                            <div className="mt-1 text-coffee-400 text-xs">
+                              {contract.address.slice(0, 10)}...
+                            </div>
+                          </div>
+                          <div className="ml-2 flex items-center gap-2">
+                            {contract.centralization && (
+                              <div className="flex items-center gap-1">
+                                <span className="text-coffee-400 text-xs">
+                                  C:
+                                </span>
+                                <span
+                                  style={{
+                                    color: getCentralizationColor(
+                                      contract.centralization,
+                                    ),
+                                  }}
+                                  className="font-semibold text-xs"
+                                >
+                                  {contract.centralization
+                                    .charAt(0)
+                                    .toUpperCase()}
+                                </span>
+                              </div>
+                            )}
+                            {contract.likelihood && (
+                              <div className="flex items-center gap-1">
+                                <span className="text-coffee-400 text-xs">
+                                  L:
+                                </span>
+                                <span
+                                  style={{
+                                    color: getLikelihoodColor(
+                                      contract.likelihood,
+                                    ),
+                                  }}
+                                  className="font-semibold text-xs"
+                                >
+                                  {contract.likelihood.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* 7. Function Delay Section */}
           <div className="border-coffee-700 border-b p-3">
             <div className="mb-2 flex items-center justify-between">
               <label className="block text-coffee-300 text-xs">
@@ -1182,213 +1599,8 @@ export function FunctionFolder({
             )}
           </div>
 
-          {/* Dependencies Section */}
+          {/* 8. Function Constraints Section */}
           <div className="border-coffee-700 border-b p-3">
-            <div className="mb-2 flex items-center justify-between">
-              <label className="block text-coffee-300 text-xs">
-                External Dependencies
-              </label>
-              <button
-                onClick={() => setIsAddingDependency(!isAddingDependency)}
-                className="rounded bg-coffee-700 px-2 py-1 text-coffee-100 text-xs hover:bg-coffee-600"
-              >
-                {isAddingDependency ? 'Cancel' : '+ Add Dependency'}
-              </button>
-            </div>
-
-            {/* Display current dependencies */}
-            {currentFunction?.dependencies &&
-              currentFunction.dependencies.length > 0 && (
-                <div className="mb-3">
-                  <div className="mb-1 text-coffee-400 text-xs">
-                    Current Dependencies ({currentFunction.dependencies.length}
-                    ):
-                  </div>
-
-                  <div className="space-y-2">
-                    {currentFunction.dependencies.map((dependency, index) => {
-                      const depInfo = getDependencyInfo(
-                        dependency.contractAddress,
-                      )
-
-                      return (
-                        <div key={index} className="rounded bg-coffee-800 p-2">
-                          <div className="mb-1 flex items-center justify-between">
-                            <div className="flex flex-1 items-center gap-2">
-                              <button
-                                onClick={() =>
-                                  usePanelStore
-                                    .getState()
-                                    .select(dependency.contractAddress)
-                                }
-                                className="font-mono text-aux-cyan text-xs hover:text-aux-cyan-light"
-                                title={`Select ${dependency.contractAddress}`}
-                              >
-                                {depInfo?.name ||
-                                  dependency.contractAddress.slice(0, 10) +
-                                    '...'}
-                              </button>
-                              <button
-                                onClick={() =>
-                                  usePanelStore
-                                    .getState()
-                                    .select(dependency.contractAddress)
-                                }
-                                className="text-coffee-400 hover:text-coffee-300"
-                                title="Select this contract"
-                              >
-                                <IconOpen />
-                              </button>
-                            </div>
-                            <button
-                              onClick={() => handleRemoveDependency(index)}
-                              className="ml-2 flex-shrink-0 text-aux-red hover:opacity-80"
-                              title="Remove this dependency"
-                            >
-                              ✕
-                            </button>
-                          </div>
-
-                          {/* Show centralization and likelihood attributes */}
-                          {depInfo &&
-                            (depInfo.centralization || depInfo.likelihood) && (
-                              <div className="mt-1 flex items-center gap-3 text-xs">
-                                {depInfo.centralization && (
-                                  <div className="flex items-center gap-1">
-                                    <span className="text-coffee-400">
-                                      Centralization:
-                                    </span>
-                                    <span
-                                      style={{
-                                        color: getCentralizationColor(
-                                          depInfo.centralization,
-                                        ),
-                                      }}
-                                      className="font-semibold"
-                                    >
-                                      {depInfo.centralization}
-                                    </span>
-                                  </div>
-                                )}
-                                {depInfo.likelihood && (
-                                  <div className="flex items-center gap-1">
-                                    <span className="text-coffee-400">
-                                      Likelihood:
-                                    </span>
-                                    <span
-                                      style={{
-                                        color: getLikelihoodColor(
-                                          depInfo.likelihood,
-                                        ),
-                                      }}
-                                      className="font-semibold"
-                                    >
-                                      {depInfo.likelihood}
-                                    </span>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              )}
-
-            {/* Description Section */}
-            <div className="p-3">
-              <label className="mb-2 block text-coffee-300 text-xs">
-                Function Description
-              </label>
-              <textarea
-                value={localDescription}
-                onChange={handleDescriptionChange}
-                placeholder="Add a description for this function..."
-                className="h-20 w-full resize-none rounded border border-coffee-600 bg-coffee-800 px-2 py-1 font-mono text-coffee-100 text-xs focus:border-coffee-500 focus:outline-none"
-              />
-            </div>
-
-            {/* Add dependency form */}
-            {isAddingDependency && (
-              <div className="rounded bg-coffee-800 p-3">
-                <div className="mb-3 text-coffee-400 text-xs">
-                  Select an external contract to add as a dependency
-                </div>
-
-                {getExternalContracts.length === 0 ? (
-                  <div className="text-coffee-400 text-xs">
-                    No external contracts found. Mark contracts as external in
-                    the Values panel to add them as dependencies.
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    {getExternalContracts.map((contract) => (
-                      <button
-                        key={contract.address}
-                        onClick={() => handleAddDependency(contract.address)}
-                        disabled={currentFunction?.dependencies?.some(
-                          (d) => d.contractAddress === contract.address,
-                        )}
-                        className="w-full rounded bg-coffee-700 p-2 text-left hover:bg-coffee-600 disabled:cursor-not-allowed disabled:bg-coffee-600 disabled:opacity-50"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <div className="font-mono text-coffee-100 text-xs">
-                              {contract.name}
-                            </div>
-                            <div className="mt-1 text-coffee-400 text-xs">
-                              {contract.address.slice(0, 10)}...
-                            </div>
-                          </div>
-                          <div className="ml-2 flex items-center gap-2">
-                            {contract.centralization && (
-                              <div className="flex items-center gap-1">
-                                <span className="text-coffee-400 text-xs">
-                                  C:
-                                </span>
-                                <span
-                                  style={{
-                                    color: getCentralizationColor(
-                                      contract.centralization,
-                                    ),
-                                  }}
-                                  className="font-semibold text-xs"
-                                >
-                                  {contract.centralization
-                                    .charAt(0)
-                                    .toUpperCase()}
-                                </span>
-                              </div>
-                            )}
-                            {contract.likelihood && (
-                              <div className="flex items-center gap-1">
-                                <span className="text-coffee-400 text-xs">
-                                  L:
-                                </span>
-                                <span
-                                  style={{
-                                    color: getLikelihoodColor(
-                                      contract.likelihood,
-                                    ),
-                                  }}
-                                  className="font-semibold text-xs"
-                                >
-                                  {contract.likelihood.charAt(0).toUpperCase()}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-
-          <div className="p-3">
             <label className="mb-2 block text-coffee-300 text-xs">
               Function Constraints
             </label>
@@ -1398,6 +1610,195 @@ export function FunctionFolder({
               placeholder="Add constraints for this function..."
               className="h-20 w-full resize-none rounded border border-coffee-600 bg-coffee-800 px-2 py-1 font-mono text-coffee-100 text-xs focus:border-coffee-500 focus:outline-none"
             />
+          </div>
+
+          {/* 9. Comments Section (renamed from Audit Trail) */}
+          <div className="border-coffee-700 border-b p-3">
+            <label className="mb-2 block text-coffee-300 text-xs">
+              Comments
+            </label>
+            {currentFunction && (currentFunction.comments?.length || 0) > 0 ? (
+              <>
+                <button
+                  onClick={() => setIsCommentsOpen(!isCommentsOpen)}
+                  className="flex cursor-pointer items-center gap-1 text-coffee-400 text-xs hover:text-coffee-300"
+                >
+                  {isCommentsOpen ? <IconChevronDown /> : <IconChevronRight />}
+                  <span>
+                    {isCommentsOpen ? 'collapse' : 'expand'} comments (
+                    {currentFunction.comments?.length || 0})
+                  </span>
+                </button>
+                {!isCommentsOpen &&
+                  currentFunction.comments &&
+                  currentFunction.comments.length > 0 && (
+                    <div className="mt-1 text-coffee-500 text-xs">
+                      Last:{' '}
+                      {
+                        currentFunction.comments[
+                          currentFunction.comments.length - 1
+                        ]!.date.split('T')[0]
+                      }{' '}
+                      by{' '}
+                      <a
+                        href={`https://github.com/${currentFunction.comments[currentFunction.comments.length - 1]!.author}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-aux-cyan hover:underline"
+                      >
+                        {
+                          currentFunction.comments[
+                            currentFunction.comments.length - 1
+                          ]!.author
+                        }
+                      </a>
+                    </div>
+                  )}
+                {isCommentsOpen && (
+                  <div className="mt-2">
+                    {/* Comment list */}
+                    <div className="mb-2 space-y-0">
+                      {currentFunction.comments?.map((comment, idx) => (
+                        <div
+                          key={idx}
+                          className={`border-coffee-700 p-2 ${
+                            idx === 0
+                              ? 'rounded-t border-t border-r border-l'
+                              : 'border-r border-b border-l'
+                          } ${idx === (currentFunction.comments?.length || 0) - 1 ? 'rounded-b' : ''}`}
+                        >
+                          <div className="mb-1 flex items-center gap-2 text-coffee-400 text-xs">
+                            <a
+                              href={`https://github.com/${comment.author}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-semibold text-aux-cyan hover:underline"
+                            >
+                              {comment.author}
+                            </a>
+                            <span>{comment.date.split('T')[0]}</span>
+                          </div>
+                          <div className="text-coffee-200 text-xs">
+                            {comment.text}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    {/* Add comment form */}
+                    <div className="mt-2">
+                      <textarea
+                        value={newCommentText}
+                        onChange={(e) => setNewCommentText(e.target.value)}
+                        placeholder="Add a comment..."
+                        className="h-16 w-full resize-none rounded border border-coffee-600 bg-coffee-800 px-2 py-1 font-mono text-coffee-100 text-xs focus:border-coffee-500 focus:outline-none"
+                      />
+                      <div className="mt-1 flex items-center justify-between">
+                        <span className="text-coffee-500 text-xs">
+                          {researcherGithub ? (
+                            <>
+                              Posting as{' '}
+                              <span className="text-aux-cyan">
+                                {researcherGithub}
+                              </span>
+                            </>
+                          ) : (
+                            <span className="text-aux-red">
+                              RESEARCHER_GITHUB not set
+                            </span>
+                          )}
+                        </span>
+                        <button
+                          onClick={async () => {
+                            if (!newCommentText.trim()) return
+                            setIsSubmittingComment(true)
+                            try {
+                              await onAddComment(
+                                contractAddress,
+                                functionName,
+                                newCommentText,
+                              )
+                              setNewCommentText('')
+                            } finally {
+                              setIsSubmittingComment(false)
+                            }
+                          }}
+                          disabled={
+                            !newCommentText.trim() || isSubmittingComment
+                          }
+                          className="rounded bg-coffee-700 px-3 py-1 text-coffee-100 text-xs hover:bg-coffee-600 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          {isSubmittingComment ? 'Adding...' : 'Add Comment'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {!isCommentsOpen ? (
+                  <button
+                    onClick={() => setIsCommentsOpen(true)}
+                    className="text-coffee-400 text-xs hover:text-coffee-300"
+                  >
+                    + Add comment
+                  </button>
+                ) : (
+                  <div>
+                    <button
+                      onClick={() => setIsCommentsOpen(false)}
+                      className="mb-2 flex cursor-pointer items-center gap-1 text-coffee-400 text-xs hover:text-coffee-300"
+                    >
+                      <IconChevronDown />
+                      <span>collapse</span>
+                    </button>
+                    <textarea
+                      value={newCommentText}
+                      onChange={(e) => setNewCommentText(e.target.value)}
+                      placeholder="Add a comment..."
+                      className="h-16 w-full resize-none rounded border border-coffee-600 bg-coffee-800 px-2 py-1 font-mono text-coffee-100 text-xs focus:border-coffee-500 focus:outline-none"
+                    />
+                    <div className="mt-1 flex items-center justify-between">
+                      <span className="text-coffee-500 text-xs">
+                        {researcherGithub ? (
+                          <>
+                            Posting as{' '}
+                            <span className="text-aux-cyan">
+                              {researcherGithub}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-aux-red">
+                            RESEARCHER_GITHUB not set
+                          </span>
+                        )}
+                      </span>
+                      <button
+                        onClick={async () => {
+                          if (!newCommentText.trim()) return
+                          setIsSubmittingComment(true)
+                          try {
+                            await onAddComment(
+                              contractAddress,
+                              functionName,
+                              newCommentText,
+                            )
+                            setNewCommentText('')
+                            setIsCommentsOpen(false)
+                          } finally {
+                            setIsSubmittingComment(false)
+                          }
+                        }}
+                        disabled={!newCommentText.trim() || isSubmittingComment}
+                        className="rounded bg-coffee-700 px-3 py-1 text-coffee-100 text-xs hover:bg-coffee-600 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {isSubmittingComment ? 'Adding...' : 'Add Comment'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       )}

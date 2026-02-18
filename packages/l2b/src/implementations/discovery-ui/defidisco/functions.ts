@@ -6,6 +6,7 @@ import type {
   ApiFunctionsResponse,
   ApiFunctionsUpdateRequest,
   ContractFunctions,
+  FunctionComment,
   FunctionEntry,
   OwnerDefinition,
 } from './types'
@@ -87,7 +88,8 @@ function isFunctionEntryEmpty(func: FunctionEntry): boolean {
     func.constraints !== undefined ||
     (func.ownerDefinitions !== undefined && func.ownerDefinitions.length > 0) ||
     func.delay !== undefined ||
-    (func.dependencies !== undefined && func.dependencies.length > 0)
+    (func.dependencies !== undefined && func.dependencies.length > 0) ||
+    (func.comments !== undefined && func.comments.length > 0)
 
   return !hasManualOverrides
 }
@@ -111,11 +113,18 @@ export function updateFunction(
     }
   }
 
-  const contractAddress = updateRequest.contractAddress
+  const contractAddress = updateRequest.contractAddress.toLowerCase()
   const functionName = updateRequest.functionName
 
-  // Get or create contract entry
-  if (!userContracts[contractAddress]) {
+  // Get or create contract entry (case-insensitive key migration)
+  const existingKey = Object.keys(userContracts).find(
+    (k) => k.toLowerCase() === contractAddress,
+  )
+  if (existingKey && existingKey !== contractAddress) {
+    // Migrate existing entry to lowercase key
+    userContracts[contractAddress] = userContracts[existingKey]
+    delete userContracts[existingKey]
+  } else if (!existingKey) {
     userContracts[contractAddress] = { functions: [] }
   }
 
@@ -127,6 +136,30 @@ export function updateFunction(
     existingFunctionIndex >= 0
       ? userContracts[contractAddress].functions[existingFunctionIndex]
       : undefined
+
+  // Attribution: stamp author on every update
+  const researcherGithub = process.env.RESEARCHER_GITHUB || 'unknown'
+  const now = new Date().toISOString()
+  const attribution = { author: researcherGithub, date: now }
+
+  // Determine completedBy based on checked state
+  let completedBy = existingFunction?.completedBy
+  if (updateRequest.checked === true) {
+    completedBy = attribution
+  } else if (updateRequest.checked === false) {
+    completedBy = undefined
+  }
+
+  // Handle comments: preserve existing, append new if provided
+  let comments: FunctionComment[] | undefined = existingFunction?.comments
+  if (updateRequest.newComment?.text?.trim()) {
+    const newComment: FunctionComment = {
+      author: researcherGithub,
+      date: now,
+      text: updateRequest.newComment.text.trim(),
+    }
+    comments = [...(comments || []), newComment]
+  }
 
   // Create new function entry, merging with existing data
   const newFunction: FunctionEntry = {
@@ -158,7 +191,10 @@ export function updateFunction(
           ? updateRequest.dependencies
           : undefined
         : existingFunction?.dependencies,
-    timestamp: new Date().toISOString(),
+    timestamp: now,
+    lastChangedBy: attribution,
+    completedBy,
+    comments,
   }
 
   // Check if function entry should be cleaned up (no manual overrides)
@@ -221,8 +257,12 @@ export function deleteContractFunctions(
     }
   }
 
-  // Remove the contract entry
-  delete userContracts[contractAddress]
+  // Remove the contract entry (case-insensitive key lookup)
+  const keyToDelete =
+    Object.keys(userContracts).find(
+      (k) => k.toLowerCase() === contractAddress.toLowerCase(),
+    ) ?? contractAddress
+  delete userContracts[keyToDelete]
 
   // Create updated data
   const updatedData: ApiFunctionsResponse = {
@@ -339,11 +379,22 @@ function mergeContractFunctions(
 ): Record<string, ContractFunctions> {
   const result: Record<string, ContractFunctions> = {}
 
+  // Build case-insensitive lookup for user contracts
+  const userLookup = new Map<string, ContractFunctions>()
+  for (const [addr, contract] of Object.entries(userContracts)) {
+    userLookup.set(addr.toLowerCase(), contract)
+  }
+
+  // Track which discovered addresses we've processed (lowercase)
+  const discoveredAddrsLower = new Set<string>()
+
   // Start with discovered contracts
   for (const [contractAddress, discoveredContract] of Object.entries(
     discoveredContracts,
   )) {
-    const userContract = userContracts[contractAddress]
+    const normalizedAddr = contractAddress.toLowerCase()
+    discoveredAddrsLower.add(normalizedAddr)
+    const userContract = userLookup.get(normalizedAddr)
 
     if (!userContract) {
       // No user functions for this contract, use discovered functions
@@ -375,7 +426,7 @@ function mergeContractFunctions(
 
   // Add user-only contracts (contracts that have user functions but no discovered data)
   for (const [contractAddress, userContract] of Object.entries(userContracts)) {
-    if (!discoveredContracts[contractAddress]) {
+    if (!discoveredAddrsLower.has(contractAddress.toLowerCase())) {
       result[contractAddress] = { functions: [...userContract.functions] }
     }
   }
@@ -555,7 +606,8 @@ export function resolveDelayFromDiscovered(
 
     const contractEntry = discovered.entries.find(
       (entry: any) =>
-        entry.type === 'Contract' && entry.address === delayRef.contractAddress,
+        entry.type === 'Contract' &&
+        entry.address.toLowerCase() === delayRef.contractAddress.toLowerCase(),
     )
 
     if (!contractEntry) {

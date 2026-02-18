@@ -45,9 +45,8 @@ type Action = {
 }
 
 const DEFAULT_LAYOUT: Panel[] = [
-  { id: 'list', size: 0.5 },
-  { id: 'values', size: 1 },
   { id: 'nodes', size: 1 },
+  { id: 'defiscan', size: 1 },
 ]
 
 const MAX_LAYOUTS = 6

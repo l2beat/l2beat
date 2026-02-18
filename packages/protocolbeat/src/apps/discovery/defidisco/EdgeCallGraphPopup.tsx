@@ -5,7 +5,10 @@ import type { ExternalCall } from '../../../api/types'
 import { useCodeStore } from '../../../components/editor/store'
 import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store/panel-store'
-import { type BidirectionalCalls, groupCallsByType } from './useEdgeCallGraph'
+import {
+  type BidirectionalCalls,
+  groupCallsByType,
+} from './hooks/useEdgeCallGraph'
 
 interface EdgeCallGraphPopupProps {
   sourceAddress: string

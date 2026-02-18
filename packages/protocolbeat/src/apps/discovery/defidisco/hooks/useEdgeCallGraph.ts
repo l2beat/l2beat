@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { getCallGraphData } from '../../../api/api'
-import type { ExternalCall } from '../../../api/types'
+import { getCallGraphData } from '../../../../api/api'
+import type { ExternalCall } from '../../../../api/types'
 
 export type EdgeCallsMap = Record<string, Record<string, ExternalCall[]>>
 

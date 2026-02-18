@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  useContractTags,
-  useUpdateContractTag,
-} from '../../../hooks/useContractTags'
 import { ControlButton } from '../panel-nodes/controls/ControlButton'
 import { useStore } from '../panel-nodes/store/store'
+import { useContractTags, useUpdateContractTag } from './hooks/useContractTags'
 
 export function FundsTagsButton() {
   const { project } = useParams()

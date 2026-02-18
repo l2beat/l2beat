@@ -184,9 +184,10 @@ export function ValuesPanelExtensions({ selected, abis }: Props) {
   return (
     <>
       {hasAbis && (
-        <Folder title="Permissions" collapsed={false}>
-          <PermissionsDisplay abis={selected.abis} />
-        </Folder>
+        <PermissionsDisplay
+          abis={selected.abis}
+          contractAddress={selected.address}
+        />
       )}
       <ContractFundsSection address={selected.address} />
     </>
