@@ -324,7 +324,7 @@ export async function getScalingProjectEntry(
         })
       : undefined
 
-  const verificationWarnings = hostChain
+  const hostChainVerificationWarnings = hostChain
     ? getProjectVerificationWarnings(
         hostChain,
         projectsChangeReport.getChanges(hostChain.id),
@@ -338,7 +338,8 @@ export async function getScalingProjectEntry(
       }
     : undefined
   const hostChainRisksSummary =
-    hostChain && getScalingRiskSummarySection(hostChain, verificationWarnings)
+    hostChain &&
+    getScalingRiskSummarySection(hostChain, hostChainVerificationWarnings)
   const hostChainWarningWithRiskCount =
     hostChain && hostChainRisksSummary
       ? {
@@ -454,8 +455,15 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const isProjectVerified = getProjectVerificationWarnings(project, changes)
-  const riskSummary = getScalingRiskSummarySection(project, isProjectVerified)
+  const projectVerificationWarnings = getProjectVerificationWarnings(
+    project,
+    changes,
+  )
+
+  const riskSummary = getScalingRiskSummarySection(
+    project,
+    projectVerificationWarnings,
+  )
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
       type: 'RiskSummarySection',
@@ -494,7 +502,7 @@ export async function getScalingProjectEntry(
         combined: common.rosette.stacked,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !verificationWarnings.contracts,
+        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
@@ -507,7 +515,7 @@ export async function getScalingProjectEntry(
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !verificationWarnings.contracts,
+        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
@@ -685,7 +693,7 @@ export async function getScalingProjectEntry(
   const contractsSection = getContractsSection(
     {
       id: project.id,
-      isVerified: !verificationWarnings.contracts,
+      isVerified: !hostChainVerificationWarnings.contracts,
       slug: project.slug,
       contracts: project.contracts,
       isUnderReview: !!project.statuses.reviewStatus,

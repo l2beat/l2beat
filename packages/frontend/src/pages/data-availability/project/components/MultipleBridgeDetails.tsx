@@ -78,18 +78,18 @@ export function MultipleBridgeDetails({ project }: Props) {
 
                 <div className="flex flex-1 items-center gap-1 font-bold text-primary text-sm">
                   {bridge.name}
-                  {bridge.verificationWarnings?.contracts ||
-                    (bridge.verificationWarnings?.programHashes && (
+                  {(bridge.verificationWarnings?.contracts ||
+                    bridge.verificationWarnings?.programHashes) && (
                       <Tooltip>
                         <TooltipTrigger>
                           <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
                         </TooltipTrigger>
                         <TooltipContent>
-                          {bridge.verificationWarnings.contracts}
-                          {bridge.verificationWarnings.programHashes}
+                          {bridge.verificationWarnings.contracts && <p>{bridge.verificationWarnings.contracts}</p>}
+                          {bridge.verificationWarnings.programHashes && <p>{bridge.verificationWarnings.programHashes}</p>}
                         </TooltipContent>
                       </Tooltip>
-                    ))}
+                    )}
                   {bridge.impactfulChangeWarning && (
                     <Tooltip>
                       <TooltipTrigger>
