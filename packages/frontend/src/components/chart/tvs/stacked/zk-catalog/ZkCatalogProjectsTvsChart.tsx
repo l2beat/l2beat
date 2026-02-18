@@ -14,9 +14,9 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
-import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
