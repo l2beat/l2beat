@@ -52,12 +52,12 @@ export function ProtocolsPieChart({
   return (
     <div className="flex h-full @min-[430px]:w-[calc(100%-240px)] items-center justify-center">
       <SimpleChartContainer
-        height={showSmallerChart ? 110 : 164}
+        height={showSmallerChart ? 128 : 164}
         width="100%"
         meta={chartMeta}
         className={cn(
           'aspect-square h-41 min-h-41',
-          showSmallerChart && 'h-[110px] min-h-[110px]',
+          showSmallerChart && 'h-[128px] min-h-[128px]',
         )}
       >
         <PieChart>
@@ -67,8 +67,8 @@ export function ProtocolsPieChart({
             dataKey="value"
             nameKey="name"
             isAnimationActive={false}
-            innerRadius={showSmallerChart ? 35 : 54}
-            outerRadius={showSmallerChart ? 55 : 82}
+            innerRadius={showSmallerChart ? 42 : 54}
+            outerRadius={showSmallerChart ? 64 : 82}
           >
             <Label
               content={() => {
@@ -87,7 +87,7 @@ export function ProtocolsPieChart({
                       y="50%"
                       className={cn(
                         'fill-primary font-semibold text-2xl leading-none',
-                        showSmallerChart && 'text-sm',
+                        showSmallerChart && 'text-lg',
                       )}
                       dy={9}
                     >

@@ -76,7 +76,7 @@ export function TopProtocolsWidget({
                         : protocol.name}
                     </div>
                   </td>
-                  <td className="w-10 text-right font-medium text-2xs text-secondary">
+                  <td className="@max-[373px]:hidden w-10 text-right font-medium text-2xs text-secondary">
                     {protocol[metricType].share.toFixed(1)}%
                   </td>
                   <td className="w-12.5 text-right font-medium text-2xs">
