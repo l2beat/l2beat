@@ -19,11 +19,12 @@ Because of this, we only capture the settlement LogMessagePublished in extraEven
 */
 
 import {
-  type Address32,
+  Address32,
   ChainSpecificAddress,
   EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { findBestTransferLog, findParsedAround } from './hyperlane-hwr'
 import {
   forwardedERC20Log,
   forwardedEthLog,
@@ -60,12 +61,16 @@ const orderFulfilledLog =
   'event OrderFulfilled(bytes32 key, uint64 sequence, uint256 netAmount)'
 const logMessagePublishedLog =
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
 
 const parseOrderCreated = createEventParser(orderCreatedLog)
 
 const parseOrderFulfilled = createEventParser(orderFulfilledLog)
 
 const parseLogMessagePublished = createEventParser(logMessagePublishedLog)
+
+const parseTransfer = createEventParser(transferLog)
 
 export const OrderCreated = createInteropEventType<{
   key: string
@@ -78,6 +83,7 @@ export const OrderCreated = createInteropEventType<{
 export const OrderFulfilled = createInteropEventType<{
   key: string
   dstAmount: bigint
+  dstTokenAddress?: Address32
   $srcChain?: string
 }>('mayan-swift.OrderFulfilled')
 
@@ -113,13 +119,14 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
           forwardedERC20Log,
           swapAndForwardedEthLog,
           swapAndForwardedERC20Log,
+          transferLog,
         ],
         addresses: mayanSwiftAddresses,
       },
       {
         type: 'event',
         signature: orderFulfilledLog,
-        includeTxEvents: [logMessagePublishedLog],
+        includeTxEvents: [logMessagePublishedLog, transferLog],
         addresses: mayanSwiftAddresses,
       },
     ]
@@ -131,6 +138,15 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
 
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
+      const transferMatch =
+        input.log.logIndex !== null
+          ? findBestTransferLog(
+              input.txLogs,
+              orderFulfilled.netAmount,
+              input.log.logIndex,
+            )
+          : { hasTransfer: false as const }
+
       // Find LogMessagePublished in same tx from Mayan Swift to extract source chain
       // The settlement message goes back to the source chain
       // For non-batched (Ethereum destinations), also create SettlementSent event
@@ -176,7 +192,8 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
       >[] = [
         OrderFulfilled.create(input, {
           key: orderFulfilled.key,
-          dstAmount: orderFulfilled.netAmount,
+          dstAmount: transferMatch.transfer?.value ?? orderFulfilled.netAmount,
+          dstTokenAddress: transferMatch.transfer?.logAddress,
           $srcChain,
         }),
       ]
@@ -188,19 +205,33 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
 
     const orderCreated = parseOrderCreated(input.log, null)
     if (orderCreated) {
-      // see if we have Forwarded event in the same tx
-      const nextLog = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! + 1,
-      )
-      const parsed = nextLog && logToProtocolData(nextLog, wormholeNetworks)
+      const logIndex = input.log.logIndex
+      const parsed =
+        logIndex !== null
+          ? findParsedAround(input.txLogs, logIndex, (log) =>
+              logToProtocolData(log, wormholeNetworks),
+            )
+          : undefined
+      const transferData =
+        !parsed && logIndex !== null
+          ? findParsedAround(input.txLogs, logIndex, (log) => {
+              const transfer = parseTransfer(log, null)
+              if (!transfer) return
+              if (EthereumAddress(transfer.to) !== MAYAN_SWIFT) return
+              return {
+                tokenAddress: Address32.from(log.address),
+                amount: transfer.value,
+              }
+            })
+          : undefined
+
       const dstChain = parsed?.dstChain ?? 'unknown_missing_protocolData'
       return [
         OrderCreated.create(input, {
           key: orderCreated.key,
           $dstChain: dstChain,
-          amountIn: parsed?.amountIn ?? input.tx.value, // for eth as srcToken there is no amountIn in protocoldata
-          srcTokenAddress: parsed?.tokenIn,
+          amountIn: parsed?.amountIn ?? transferData?.amount ?? input.tx.value, // for eth as srcToken there is no amountIn in protocoldata
+          srcTokenAddress: parsed?.tokenIn ?? transferData?.tokenAddress,
           dstTokenAddress: parsed?.tokenOut,
         }),
       ]
@@ -220,7 +251,20 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
     const mayanForwarded = db.find(MayanForwarded, {
       sameTxAfter: orderCreated,
     })
-    if (!mayanForwarded) return
+    const orderCreatedAmount = orderCreated.args.amountIn
+    const forwardedAmount = mayanForwarded?.args.amountIn
+    const srcAmount =
+      forwardedAmount !== undefined && forwardedAmount !== 0n
+        ? forwardedAmount // MayanForwarded has WETH Withdrawal detection for ForwardedEth with tx.value=0
+        : orderCreatedAmount !== undefined && orderCreatedAmount !== 0n
+          ? orderCreatedAmount
+          : undefined // 7702 + native ETH with no WETH Withdrawal - can't determine from events
+    const srcTokenAddress =
+      mayanForwarded?.args.tokenIn ?? orderCreated.args.srcTokenAddress
+    const dstTokenAddress =
+      mayanForwarded?.args.tokenOut ??
+      orderFulfilled.args.dstTokenAddress ??
+      orderCreated.args.dstTokenAddress
 
     // Settlement messages (LogMessagePublished → OrderUnlocked) are matched separately
     // by the mayan-swift-settlement plugin
@@ -234,17 +278,12 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
       }),
       Result.Transfer('mayan-swift.Transfer', {
         srcEvent: orderCreated,
-        srcAmount:
-          orderCreated.args.amountIn !== 0n
-            ? orderCreated.args.amountIn
-            : mayanForwarded.args.amountIn !== 0n
-              ? mayanForwarded.args.amountIn // MayanForwarded has WETH Withdrawal detection for ForwardedEth with tx.value=0
-              : undefined, // 7702 + native ETH with no WETH Withdrawal - can't determine from events
-        srcTokenAddress: orderCreated.args.srcTokenAddress,
+        srcAmount,
+        srcTokenAddress,
         dstEvent: orderFulfilled,
         dstAmount: orderFulfilled.args.dstAmount,
-        dstTokenAddress: orderCreated.args.dstTokenAddress,
-        extraEvents: [mayanForwarded],
+        dstTokenAddress,
+        extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
       }),
     ]
   }
