@@ -553,7 +553,7 @@
     }
   },
   "mayan-mctp-fast": {
-    "loadConfigs": ["wormhole", "cctp-v2"],
+    "loadConfigs": ["wormhole", "cctp-v2","cctp-v1"],
     "txs": [
       {
         "chain": "optimism",
