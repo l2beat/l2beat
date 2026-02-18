@@ -5,7 +5,6 @@ import {
 } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
 import {
-  basicTableDataRoles,
   getTableBleedWrapperClassName,
   getTableElementClassName,
   getTableScrollWrapperClassName,
@@ -20,17 +19,10 @@ const Table = ({
   tableWrapperClassName?: string
 }) => {
   return (
-    <div
-      data-role={basicTableDataRoles.bleedWrapper}
-      className={getTableBleedWrapperClassName()}
-    >
-      <div
-        data-role={basicTableDataRoles.scrollWrapper}
-        className={getTableScrollWrapperClassName(tableWrapperClassName)}
-      >
+    <div className={getTableBleedWrapperClassName()}>
+      <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
         <HighlightedTableRowProvider>
           <table
-            data-role={basicTableDataRoles.table}
             className={getTableElementClassName(className)}
             cellSpacing={0}
             cellPadding={0}

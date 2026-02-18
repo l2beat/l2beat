@@ -13,7 +13,6 @@ import { useHighlightedTableRowContext } from '~/components/table/HighlightedTab
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../core/Skeleton'
 import {
-  basicTableDataRoles,
   getBasicTableBodyCellClassName,
   getBasicTableColumnFillerClassName,
   getBasicTableGroupedHeaderCellClassName,
@@ -99,7 +98,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   return (
     <Table tableWrapperClassName={props.tableWrapperClassName}>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
-      <TableHeader data-role={basicTableDataRoles.header}>
+      <TableHeader>
         {groupedHeader && (
           <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
         )}
@@ -140,13 +139,12 @@ function BasicTableGroupedHeaderRow<T>({
   }
 
   return (
-    <TableHeaderRow data-role={basicTableDataRoles.headerGroupedRow}>
+    <TableHeaderRow>
       {groupedHeader.headers.map((header, index) => {
         const isLast = index === groupedHeader.headers.length - 1
         return (
           <React.Fragment key={header.id}>
             <th
-              data-role={basicTableDataRoles.groupedHeaderCell}
               colSpan={header.colSpan}
               className={getBasicTableGroupedHeaderCellClassName({
                 isPlaceholder: header.isPlaceholder,
@@ -175,14 +173,13 @@ function BasicTableActualHeaderRow<T>({
   actualHeader: HeaderGroup<T>
 }) {
   return (
-    <TableHeaderRow data-role={basicTableDataRoles.headerMainRow}>
+    <TableHeaderRow>
       {actualHeader.headers.map((header, index) => {
         const isLast = index === actualHeader.headers.length - 1
         const groupParams = getBasicTableGroupParams(header.column)
         return (
           <React.Fragment key={`${actualHeader.id}-${header.id}`}>
             <TableHead
-              data-role={basicTableDataRoles.headerCell}
               colSpan={header.colSpan}
               className={getBasicTableHeaderCellClassName({
                 groupParams,
@@ -220,12 +217,8 @@ function BasicTableActualHeaderRow<T>({
 
 function BasicTableHeaderDividerRow() {
   return (
-    <TableHeaderRow data-role={basicTableDataRoles.headerDividerRow}>
-      <th
-        data-role={basicTableDataRoles.headerDividerCell}
-        colSpan={100}
-        className="mx-0.5 h-0.5 rounded-full bg-divider"
-      />
+    <TableHeaderRow>
+      <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
     </TableHeaderRow>
   )
 }
@@ -468,7 +461,6 @@ function BasicTableColumnFiller({
 }) {
   return (
     <Comp
-      data-role={basicTableDataRoles.columnFiller}
       className={getBasicTableColumnFillerClassName()}
       rowSpan={rowSpan}
       colSpan={colSpan}

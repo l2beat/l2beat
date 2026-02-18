@@ -4,20 +4,6 @@ import {
   type RowBackgroundColor,
 } from './utils/rowType'
 
-export const basicTableDataRoles = {
-  bleedWrapper: 'table-bleed-wrapper',
-  scrollWrapper: 'table-scroll-wrapper',
-  table: 'table-element',
-  header: 'basic-table-header',
-  headerGroupedRow: 'basic-table-header-grouped-row',
-  headerMainRow: 'basic-table-header-main-row',
-  headerDividerRow: 'basic-table-header-divider-row',
-  groupedHeaderCell: 'basic-table-header-grouped-cell',
-  headerCell: 'basic-table-header-cell',
-  headerDividerCell: 'basic-table-header-divider-cell',
-  columnFiller: 'basic-table-column-filler',
-} as const
-
 export type BasicTableGroupParams = {
   headerTitle: unknown
   isFirstInGroup: boolean
