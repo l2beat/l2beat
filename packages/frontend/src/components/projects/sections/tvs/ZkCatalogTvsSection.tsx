@@ -254,7 +254,7 @@ function getStats(
   if (!data) return undefined
 
   const syncedChart = data.chart.filter(
-    (dataPoint) => dataPoint[0] <= data.syncedUntil,
+    ([timestamp]) => timestamp <= data.syncedUntil,
   )
   const latestDataPoint = syncedChart.at(-1)
   const oldestDataPoint = syncedChart.at(0)
@@ -263,8 +263,11 @@ function getStats(
     return undefined
   }
 
-  const latest = getSummedStats(latestDataPoint[2])
-  const oldest = getSummedStats(oldestDataPoint[2])
+  const [, , latestProjectsData] = latestDataPoint
+  const [, , oldestProjectsData] = oldestDataPoint
+
+  const latest = getSummedStats(latestProjectsData)
+  const oldest = getSummedStats(oldestProjectsData)
 
   const latestTotal = latest.total
   const oldestTotal = oldest.total
