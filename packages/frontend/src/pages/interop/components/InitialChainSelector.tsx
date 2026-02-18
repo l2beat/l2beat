@@ -79,8 +79,8 @@ function ChainSelectorButton({
   return (
     <button
       className={cn(
-        'flex h-18 w-[32%] flex-col items-center justify-center gap-2 rounded border border-divider px-2 py-3 transition-colors hover:bg-brand/5 md:size-[148px] md:gap-3 md:px-3',
-        selected && 'border-brand bg-brand/15',
+        'flex h-18 w-[32%] flex-col items-center justify-center gap-2 rounded border border-divider px-2 py-3 transition-colors md:size-[148px] md:gap-3 md:px-3',
+        selected ? 'border-brand bg-brand/15' : 'hover:bg-brand/5',
         className,
       )}
       {...props}
