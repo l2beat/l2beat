@@ -45,8 +45,9 @@ export function ChainSelectorButton({
       return
     }
 
-    selectChain('first', selectedChains.second.id)
+    const temp = selectedChains.second.id
     selectChain('second', chainId)
+    selectChain('first', temp)
   }
 
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
@@ -118,6 +119,9 @@ export function ChainSelectorButton({
                 chain={chain}
                 isSelected={chain.isSelected[chainKey]}
                 toggleSelected={(chainId) => selectChain(chainKey, chainId)}
+                disabled={
+                  chain.isSelected[chainKey === 'first' ? 'second' : 'first']
+                }
               />
             ))}
           </div>
