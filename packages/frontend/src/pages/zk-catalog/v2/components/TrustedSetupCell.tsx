@@ -1,18 +1,20 @@
 import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
-import type { ComponentProps } from 'react'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { TechStackTag } from './TechStackTag'
-import { TrustedSetupRiskDot } from './TrustedSetupRiskDot'
+import {
+  TrustedSetupRiskDot,
+  type TrustedSetupRiskDotSize,
+} from './TrustedSetupRiskDot'
 
 interface Props {
   trustedSetups: (TrustedSetup & {
     proofSystem: ZkCatalogTag
   })[]
-  dotSize?: ComponentProps<typeof TrustedSetupRiskDot>['size']
+  dotSize?: TrustedSetupRiskDotSize
 }
 
 export function TrustedSetupCell({ trustedSetups, dotSize }: Props) {

@@ -20,6 +20,10 @@ const riskDotVariants = cva('rounded-full', {
   },
 })
 
+export type TrustedSetupRiskDotSize = VariantProps<
+  typeof riskDotVariants
+>['size']
+
 export function TrustedSetupRiskDot({
   risk,
   size,
