@@ -132,16 +132,14 @@ function getChartData(
     )
   }
 
-  if (
-    minTimestamp === Number.POSITIVE_INFINITY ||
-    maxTimestamp === Number.NEGATIVE_INFINITY
-  ) {
-    return {
-      chart: [],
-      projectIds,
-      syncedUntil: 0,
-    }
-  }
+  assert(
+    minTimestamp !== Number.POSITIVE_INFINITY,
+    'Min timestamp is positive infinity',
+  )
+  assert(
+    maxTimestamp !== Number.NEGATIVE_INFINITY,
+    'Max timestamp is negative infinity',
+  )
 
   const syncedUntil = maxTimestamp
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
