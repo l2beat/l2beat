@@ -80,7 +80,7 @@ export function L2BeatDevTools() {
                 className="h-5 w-auto translate-y-0 overflow-hidden"
               />
               <span className="font-semibold text-2xs text-primary uppercase tracking-[0.08em]">
-                L2BEAT DevTools
+                DevTools
               </span>
             </div>
             <div className="flex items-center gap-2">
