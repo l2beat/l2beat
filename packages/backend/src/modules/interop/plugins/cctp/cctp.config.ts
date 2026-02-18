@@ -40,13 +40,13 @@ const OVERRIDES_V1 = [
       '0x0a992d191DEeC32aFe36203Ad87D7d289a738F81',
     ),
   },
-  // {
-  //   chain: 'avalanche',
-  //   domain: 1,
-  //   messageTransmitter: EthereumAddress(
-  //     '0x8186359aF5F57FbB40c6b14A588d2A59C0C29880',
-  //   ),
-  // },
+  {
+    chain: 'avalanche',
+    domain: 1,
+    messageTransmitter: EthereumAddress(
+      '0x8186359aF5F57FbB40c6b14A588d2A59C0C29880',
+    ),
+  },
   {
     chain: 'optimism',
     domain: 2,
@@ -75,13 +75,13 @@ const OVERRIDES_V1 = [
       '0xF3be9355363857F3e001be68856A2f96b4C39Ba9',
     ),
   },
-  // {
-  //   chain: 'unichain',
-  //   domain: 10,
-  //   messageTransmitter: EthereumAddress(
-  //     '0x353bE9E2E38AB1D19104534e4edC21c643Df86f4',
-  //   ),
-  // },
+  {
+    chain: 'unichain',
+    domain: 10,
+    messageTransmitter: EthereumAddress(
+      '0x353bE9E2E38AB1D19104534e4edC21c643Df86f4',
+    ),
+  },
 ]
 
 // https://developers.circle.com/cctp/evm-smart-contracts
