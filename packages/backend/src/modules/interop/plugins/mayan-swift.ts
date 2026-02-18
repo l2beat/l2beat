@@ -77,6 +77,7 @@ export const OrderCreated = createInteropEventType<{
   $dstChain: string
   amountIn?: bigint
   srcTokenAddress?: Address32
+  srcWasBurned?: boolean
   dstTokenAddress?: Address32
 }>('mayan-swift.OrderCreated')
 
@@ -84,6 +85,7 @@ export const OrderFulfilled = createInteropEventType<{
   key: string
   dstAmount: bigint
   dstTokenAddress?: Address32
+  dstWasMinted?: boolean
   $srcChain?: string
 }>('mayan-swift.OrderFulfilled')
 
@@ -92,6 +94,35 @@ export const SettlementSent = createInteropEventType<{
   key: string
   $dstChain?: string
 }>('mayan-swift.SettlementSent')
+
+const DEAD_ADDRESS = Address32.from(
+  '0x000000000000000000000000000000000000dEaD',
+)
+
+type TransferData = NonNullable<
+  ReturnType<typeof findBestTransferLog>['transfer']
+>
+
+function findTransferToMayan(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
+): TransferData | undefined {
+  return findParsedAround(logs, startLogIndex, (log) => {
+    const transfer = parseTransfer(log, null)
+    if (!transfer) return
+    if (EthereumAddress(transfer.to) !== MAYAN_SWIFT) return
+    return {
+      logAddress: Address32.from(log.address),
+      from: Address32.from(transfer.from),
+      to: Address32.from(transfer.to),
+      value: transfer.value,
+    }
+  })
+}
+
+function isBurnAddress(address: Address32): boolean {
+  return address === Address32.ZERO || address === DEAD_ADDRESS
+}
 
 export class MayanSwiftPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-swift'
@@ -192,8 +223,14 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
       >[] = [
         OrderFulfilled.create(input, {
           key: orderFulfilled.key,
-          dstAmount: transferMatch.transfer?.value ?? orderFulfilled.netAmount,
+          dstAmount: orderFulfilled.netAmount,
           dstTokenAddress: transferMatch.transfer?.logAddress,
+          dstWasMinted:
+            transferMatch.transfer?.from === Address32.ZERO
+              ? true
+              : transferMatch.transfer
+                ? false
+                : undefined,
           $srcChain,
         }),
       ]
@@ -212,26 +249,33 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
               logToProtocolData(log, wormholeNetworks),
             )
           : undefined
-      const transferData =
-        !parsed && logIndex !== null
-          ? findParsedAround(input.txLogs, logIndex, (log) => {
-              const transfer = parseTransfer(log, null)
-              if (!transfer) return
-              if (EthereumAddress(transfer.to) !== MAYAN_SWIFT) return
-              return {
-                tokenAddress: Address32.from(log.address),
-                amount: transfer.value,
-              }
-            })
+      const sourceTransferFromAmount =
+        logIndex !== null &&
+        parsed?.amountIn !== undefined &&
+        parsed.amountIn > 0n
+          ? findBestTransferLog(input.txLogs, parsed.amountIn, logIndex)
+              .transfer
           : undefined
+      const sourceTransfer =
+        (sourceTransferFromAmount &&
+        (parsed?.tokenIn === undefined ||
+          sourceTransferFromAmount.logAddress === parsed.tokenIn)
+          ? sourceTransferFromAmount
+          : undefined) ??
+        (logIndex !== null
+          ? findTransferToMayan(input.txLogs, logIndex)
+          : undefined)
 
       const dstChain = parsed?.dstChain ?? 'unknown_missing_protocolData'
       return [
         OrderCreated.create(input, {
           key: orderCreated.key,
           $dstChain: dstChain,
-          amountIn: parsed?.amountIn ?? transferData?.amount ?? input.tx.value, // for eth as srcToken there is no amountIn in protocoldata
-          srcTokenAddress: parsed?.tokenIn ?? transferData?.tokenAddress,
+          amountIn: parsed?.amountIn ?? sourceTransfer?.value ?? input.tx.value, // for eth as srcToken there is no amountIn in protocoldata
+          srcTokenAddress: parsed?.tokenIn ?? sourceTransfer?.logAddress,
+          srcWasBurned: sourceTransfer
+            ? isBurnAddress(sourceTransfer.to)
+            : undefined,
           dstTokenAddress: parsed?.tokenOut,
         }),
       ]
@@ -265,6 +309,9 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
       mayanForwarded?.args.tokenOut ??
       orderFulfilled.args.dstTokenAddress ??
       orderCreated.args.dstTokenAddress
+    const srcWasBurned =
+      mayanForwarded?.args.srcWasBurned ?? orderCreated.args.srcWasBurned
+    const dstWasMinted = orderFulfilled.args.dstWasMinted
 
     // Settlement messages (LogMessagePublished → OrderUnlocked) are matched separately
     // by the mayan-swift-settlement plugin
@@ -283,6 +330,8 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
         dstEvent: orderFulfilled,
         dstAmount: orderFulfilled.args.dstAmount,
         dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
         extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
       }),
     ]
