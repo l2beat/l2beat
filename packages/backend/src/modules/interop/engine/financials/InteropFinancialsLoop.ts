@@ -52,7 +52,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     private db: Database,
     private tokenDbClient: TokenDbClient,
     protected logger: Logger,
-    intervalMs = 10_000,
+    intervalMs = 60_000,
   ) {
     super({ intervalMs })
     this.logger = logger.for(this)
