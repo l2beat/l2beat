@@ -298,8 +298,24 @@ solc-select install all
 Once you have a clear overview of the permissions, it's important to know which funds are controlled by these permissions.
 
 > ⚠️ First setup the DeFiScan Endpoint service before you continue: https://github.com/deficollective/defiscan-v2/tree/main/packages/defiscan-endpoints
+### Marking Contracts for Funds Fetching
 
-Start by marking which contract you want funds data on using the `Nodes` panel of the UI. You can decide to fetch all balances or DeFi positions for a given contract, and/or mark it as a token contract to know its the token price and market capitalization. Use the button `Fetch Funds` inside the terminal to fetch the data. Make sure the DeFiScan API service is running.
+In the **Nodes** panel, select a contract and click the **Funds** button in the bottom toolbar. You'll see three options:
+
+| Option | What it fetches | Use case |
+|--------|-----------------|----------|
+| **Fetch Token Balances** | Tokens held *by* this contract | Treasury contracts, vaults, pools |
+| **Fetch DeFi Positions** | DeFi positions *of* this contract | Contracts that deposit into other protocols |
+| **Token Contract** | Market cap and price of the token | Protocol's native token (e.g., UNI, AAVE) |
+
+> **Note:** "Token Contract" fetches the token's market cap, not its TVL or distribution. To see what assets a token contract holds (like reserves), use "Fetch Token Balances".
+
+### Running the Fetch
+
+1. Mark contracts using the options above
+2. Start the DeFiScan API service: `cd packages/defiscan-endpoints && pnpm dev`
+3. In the Terminal panel, click **Fetch Funds**
+4. View results in the **DeFiScan** panel
 
 ## DeFiScan Panel
 
