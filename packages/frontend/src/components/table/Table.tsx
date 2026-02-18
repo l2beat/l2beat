@@ -4,6 +4,12 @@ import {
   useHighlightedTableRowContext,
 } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
+import {
+  basicTableDataRoles,
+  getTableBleedWrapperClassName,
+  getTableElementClassName,
+  getTableScrollWrapperClassName,
+} from './basicTable.layout'
 import { TableTooltip } from './TableTooltip'
 
 const Table = ({
@@ -14,16 +20,18 @@ const Table = ({
   tableWrapperClassName?: string
 }) => {
   return (
-    <div className="max-md:-mr-4">
+    <div
+      data-role={basicTableDataRoles.bleedWrapper}
+      className={getTableBleedWrapperClassName()}
+    >
       <div
-        className={cn(
-          'relative w-full overflow-auto pb-3 max-md:pr-4',
-          tableWrapperClassName,
-        )}
+        data-role={basicTableDataRoles.scrollWrapper}
+        className={getTableScrollWrapperClassName(tableWrapperClassName)}
       >
         <HighlightedTableRowProvider>
           <table
-            className={cn('w-full border-collapse text-left', className)}
+            data-role={basicTableDataRoles.table}
+            className={getTableElementClassName(className)}
             cellSpacing={0}
             cellPadding={0}
             {...props}
