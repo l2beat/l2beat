@@ -70,24 +70,6 @@ export function ZkCatalogProjectsTvsChart({
     [data?.projectIds.length],
   )
 
-  const chartMeta = useMemo(() => {
-    let colorIndex = 0
-    return (data?.projectIds ?? []).reduce((acc, projectId) => {
-      const key = projectId.toString()
-      const color = colors[colorIndex++] ?? '#999999'
-
-      acc[key] = {
-        label: projectLabels[key] ?? key,
-        color,
-        indicatorType: { shape: 'square' },
-      }
-      return acc
-    }, {} as ChartMeta)
-  }, [colors, projectLabels, data?.projectIds])
-
-  const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
-    useChartDataKeys(chartMeta)
-
   const chartData = useMemo(() => {
     if (!data) return undefined
 
@@ -114,6 +96,46 @@ export function ZkCatalogProjectsTvsChart({
       return dataPoint
     })
   }, [data, unit])
+
+  // Chart: oldest sinceTimestamp at the bottom, newest at the top
+  const chartOrderedIds = useMemo(() => {
+    if (!data) return []
+    const sinceMap = new Map(
+      projectsForTvs.map((p) => [p.projectId.toString(), p.sinceTimestamp]),
+    )
+    return [...data.projectIds].sort(
+      (a, b) =>
+        (sinceMap.get(a) ?? Number.POSITIVE_INFINITY) -
+        (sinceMap.get(b) ?? Number.POSITIVE_INFINITY),
+    )
+  }, [data, projectsForTvs])
+
+  // Legend: biggest current value first
+  const legendOrderedIds = useMemo(() => {
+    if (!data) return []
+    const lastPoint = chartData?.[chartData.length - 1]
+    return [...data.projectIds].sort(
+      (a, b) => (lastPoint?.[b] ?? 0) - (lastPoint?.[a] ?? 0),
+    )
+  }, [data, chartData])
+
+  const chartMeta = useMemo(() => {
+    let colorIndex = 0
+    return legendOrderedIds.reduce((acc, projectId) => {
+      const key = projectId.toString()
+      const color = colors[colorIndex++] ?? '#999999'
+
+      acc[key] = {
+        label: projectLabels[key] ?? key,
+        color: color ?? '#999999',
+        indicatorType: { shape: 'square' },
+      }
+      return acc
+    }, {} as ChartMeta)
+  }, [legendOrderedIds, projectLabels, colors])
+
+  const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
+    useChartDataKeys(chartMeta)
 
   return (
     <ChartContainer
@@ -144,7 +166,7 @@ export function ZkCatalogProjectsTvsChart({
             </ChartLegendContent>
           }
         />
-        {(data?.projectIds ?? []).map((projectId) => (
+        {chartOrderedIds.map((projectId) => (
           <Area
             key={projectId}
             dataKey={projectId}
