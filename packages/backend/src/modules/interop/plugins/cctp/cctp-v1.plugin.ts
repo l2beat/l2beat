@@ -69,6 +69,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
+import { findWrappedMayanWormholeLog } from '../wormhole/wormhole.plugin'
 import { CCTPV1Config } from './cctp.config'
 
 const messageSentLog = 'event MessageSent(bytes message)'
@@ -227,11 +228,18 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
         sameTxAfter: messageSent,
       })
       if (mayanForwarded) {
+        const mayanWrappedWormholeLog = findWrappedMayanWormholeLog(
+          db,
+          mayanForwarded,
+        )
         wrappers.push(
           Result.Message('mayan.Message', {
             app: 'mctp',
             srcEvent: mayanForwarded,
             dstEvent: messageReceived,
+            extraEvents: mayanWrappedWormholeLog
+              ? [mayanWrappedWormholeLog]
+              : undefined,
           }),
         )
       }

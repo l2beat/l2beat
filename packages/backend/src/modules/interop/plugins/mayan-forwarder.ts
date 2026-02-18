@@ -358,7 +358,7 @@ function getChainFromWormholeId(
   return findChain(wormholeNetworks, (x) => x.wormholeChainId, wormholeId)
 }
 
-function getChainFromCctpDomain(
+export function getChainFromCctpDomain(
   cctpNetworks: { chain: string; domain: number }[],
   domain: number,
 ) {
