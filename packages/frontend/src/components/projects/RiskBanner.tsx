@@ -95,7 +95,7 @@ export function RiskBanner({
           />
           <WarningBar
             className={cn(
-              'rounded-t-none pl-5 md:pl-6',
+              'rounded-t-none pt-0 pl-5 md:pl-6',
               sentimentToTransparentBgColor(warning.sentiment),
             )}
             icon={RoundedWarningIcon}
