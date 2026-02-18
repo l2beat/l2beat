@@ -32,6 +32,14 @@ interface Props {
 export function MultipleBridgeDetails({ project }: Props) {
   const router = useRouter()
 
+  const hasVerificationWarnings = (
+    bridge: DaProjectPageEntry['bridges'][number],
+  ) =>
+    bridge.verificationWarnings &&
+    Object.values(bridge.verificationWarnings).some(
+      (value) => value !== undefined,
+    )
+
   return (
     <div className="space-y-4">
       <div className="space-y-2">
@@ -58,7 +66,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                   // Hide 3rd and further bridges on mobile (will be shown in a drawer)
                   index > 2 && 'max-md:hidden',
                   index === 0 && 'md:rounded-t-none',
-                  bridge.verificationWarnings
+                  hasVerificationWarnings(bridge)
                     ? getRowClassNamesWithoutOpacity('red')
                     : bridge.impactfulChangeWarning
                       ? getRowClassNamesWithoutOpacity('yellow')
@@ -78,18 +86,21 @@ export function MultipleBridgeDetails({ project }: Props) {
 
                 <div className="flex flex-1 items-center gap-1 font-bold text-primary text-sm">
                   {bridge.name}
-                  {(bridge.verificationWarnings?.contracts ||
-                    bridge.verificationWarnings?.programHashes) && (
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          {bridge.verificationWarnings.contracts && <p>{bridge.verificationWarnings.contracts}</p>}
-                          {bridge.verificationWarnings.programHashes && <p>{bridge.verificationWarnings.programHashes}</p>}
-                        </TooltipContent>
-                      </Tooltip>
-                    )}
+                  {hasVerificationWarnings(bridge) && (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {bridge.verificationWarnings?.contracts && (
+                          <p>{bridge.verificationWarnings.contracts}</p>
+                        )}
+                        {bridge.verificationWarnings?.programHashes && (
+                          <p>{bridge.verificationWarnings.programHashes}</p>
+                        )}
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
                   {bridge.impactfulChangeWarning && (
                     <Tooltip>
                       <TooltipTrigger>
