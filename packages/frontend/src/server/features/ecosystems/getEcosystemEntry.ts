@@ -156,6 +156,7 @@ export async function getEcosystemEntry(
         'archivedAt',
         'isUpcoming',
         'hasTestnet',
+        'contracts',
       ],
       where: ['isScaling'],
     }),

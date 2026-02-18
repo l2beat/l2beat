@@ -17,6 +17,8 @@ import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
+  type InteropEvent,
+  type InteropEventDb,
   type InteropPluginResyncable,
   type LogToCapture,
 } from '../types'
@@ -24,9 +26,15 @@ import { FOLKS_CHAIN_ID_TO_CHAIN } from './folks-finance'
 import { WormholeConfig } from './wormhole.config'
 
 // Mayan Circle contract address (same on all chains)
-const MAYAN_CIRCLE = EthereumAddress(
+export const MAYAN_CIRCLE = EthereumAddress(
   '0x875d6d37EC55c8cF220B9E5080717549d8Aa8EcA',
 )
+
+// only these are accompanied by LogMessagePublished
+export const MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS = new Set([
+  '0x2072197f', // mayanCircle.bridgeWithFee
+  '0x1c59b7fc', // mayanCircle.createOrder (legacy)
+])
 
 const logMessagePublishedLog =
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
@@ -215,6 +223,39 @@ export class WormholePlugin implements InteropPluginResyncable {
   }
   // no matching because wormhole matches by (msg.sender,sequence) (sender=emitter in wormhole core contracts, not to be confused with event emitter),
   // of which the destination event depends on the app layer
+}
+
+// imported by cctps
+export function findWrappedMayanWormholeLog(
+  db: InteropEventDb,
+  mayanForwarded: InteropEvent<{ methodSignature: `0x${string}` }>,
+) {
+  // Only these methods emit Wormhole LogMessagePublished on source side.
+  if (
+    !MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS.has(
+      mayanForwarded.args.methodSignature,
+    )
+  ) {
+    return undefined
+  }
+
+  const candidates = db
+    .findAll(LogMessagePublished, {
+      sender: MAYAN_CIRCLE,
+      ctx: { txHash: mayanForwarded.ctx.txHash },
+    })
+    .filter((event) => event.ctx.chain === mayanForwarded.ctx.chain)
+
+  if (candidates.length === 0) return undefined
+
+  // If there are multiple candidates in the same tx, pick the one closest
+  // to the source forwarder event.
+  return candidates.sort((a, b) => {
+    const aDistance = Math.abs(a.ctx.logIndex - mayanForwarded.ctx.logIndex)
+    const bDistance = Math.abs(b.ctx.logIndex - mayanForwarded.ctx.logIndex)
+    if (aDistance !== bDistance) return aDistance - bDistance
+    return a.ctx.logIndex - b.ctx.logIndex
+  })[0]
 }
 
 // Portal Token Bridge transfer payload format:

@@ -71,6 +71,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
+import { findWrappedMayanWormholeLog } from '../wormhole/wormhole.plugin'
 import { CCTPV2Config } from './cctp.config'
 
 const messageSentLog = 'event MessageSent(bytes message)'
@@ -252,12 +253,22 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       const orderFulfilled = db.find(OrderFulfilled, {
         sameTxAfter: messageReceived,
       })
-      if (mayanForwarded && orderFulfilled) {
+      if (mayanForwarded) {
+        const mayanWrappedWormholeLog = findWrappedMayanWormholeLog(
+          db,
+          mayanForwarded,
+        )
         wrappers.push(
           Result.Message('mayan.Message', {
             app: 'mctp',
             srcEvent: mayanForwarded,
-            dstEvent: orderFulfilled,
+            // Keep Mayan message detection anchored to source forwarder event.
+            // Consume only extra events that are confidently part of Mayan wrapping.
+            dstEvent: messageReceived,
+            extraEvents: [
+              ...(mayanWrappedWormholeLog ? [mayanWrappedWormholeLog] : []),
+              ...(orderFulfilled ? [orderFulfilled] : []),
+            ],
           }),
         )
       }

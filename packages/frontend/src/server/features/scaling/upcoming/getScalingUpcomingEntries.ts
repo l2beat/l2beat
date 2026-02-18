@@ -13,7 +13,7 @@ export async function getScalingUpcomingEntries() {
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'display'],
       where: ['isScaling', 'isUpcoming'],
-      optional: ['hasTestnet'],
+      optional: ['hasTestnet', 'contracts'],
     }),
     ps.getProjects({
       select: ['zkCatalogInfo'],
@@ -36,7 +36,10 @@ export interface ScalingUpcomingEntry extends CommonScalingEntry {
 }
 
 export function getScalingUpcomingEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'display', 'hasTestnet'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'display',
+    'hasTestnet' | 'contracts'
+  >,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingUpcomingEntry {
   const commonEntry = getCommonScalingEntry({

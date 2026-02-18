@@ -1,16 +1,18 @@
+import type { ProjectVerificationWarnings } from '~/server/features/utils/getCommonProjectEntry'
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 
 export type RowBackgroundColor = 'blue' | 'red' | 'yellow' | undefined
 export function getRowBackgroundColor(statuses: {
   redWarning?: string
-  verificationWarning?: boolean
+  verificationWarnings?: ProjectVerificationWarnings
   underReview?: UnderReviewStatus
   ongoingAnomaly?: boolean
 }): RowBackgroundColor | undefined {
   if (
-    !!statuses?.verificationWarning ||
-    !!statuses?.redWarning ||
-    !!statuses?.ongoingAnomaly
+    statuses.verificationWarnings?.contracts ||
+    statuses.verificationWarnings?.programHashes ||
+    !!statuses.redWarning ||
+    !!statuses.ongoingAnomaly
   ) {
     return 'red'
   }

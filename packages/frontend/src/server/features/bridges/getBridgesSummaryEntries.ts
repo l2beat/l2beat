@@ -31,6 +31,7 @@ export async function getBridgesSummaryEntries() {
         'tvsInfo',
         'bridgeTechnology',
       ],
+      optional: ['contracts'],
       where: ['isBridge'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -89,7 +90,8 @@ interface TvsData {
 
 function getBridgesSummaryEntry(
   project: Project<
-    'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvsInfo' | 'bridgeTechnology'
+    'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvsInfo' | 'bridgeTechnology',
+    'contracts'
   >,
   changes: ProjectChanges,
   bridgeTvs: ProjectSevenDayTvsBreakdown | undefined,

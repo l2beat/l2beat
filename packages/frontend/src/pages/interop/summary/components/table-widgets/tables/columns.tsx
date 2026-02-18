@@ -114,6 +114,7 @@ function getTokensByVolumeColumn<
       <TopTokensCell
         topItems={ctx.row.original.tokens}
         type={type}
+        showNetMintedValueColumn={type === 'lockAndMint'}
         protocol={{
           id: ctx.row.original.id,
           name: ctx.row.original.name,

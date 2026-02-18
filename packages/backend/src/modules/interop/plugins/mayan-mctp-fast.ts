@@ -1,14 +1,19 @@
+/**
+ * captures mctp-specific orderfulfilled event
+ * matching happens in cctp plugin and a mayan message is produced
+ * the transfer is cctp (no mayan transfer)
+ */
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
+import { getChainFromCctpDomain } from './mayan-forwarder'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropPluginResyncable,
   type LogToCapture,
 } from './types'
-import { WormholeConfig } from './wormhole/wormhole.config'
 
 // FastMCTP contract address (same on all chains)
 const FAST_MCTP = EthereumAddress('0xC1062b7C5Dc8E4b1Df9F200fe360cDc0eD6e7741')
@@ -58,14 +63,16 @@ export class MayanMctpFastPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
-    const wormholeNetworks = this.configs.get(WormholeConfig)
-    if (!wormholeNetworks) return
+    const cctpNetworks = [
+      ...(this.configs.get(CCTPV1Config) ?? []),
+      ...(this.configs.get(CCTPV2Config) ?? []),
+    ]
+    if (cctpNetworks.length === 0) return
 
     const orderFulfilled = parseOrderFulfilled(input.log, null)
     if (orderFulfilled) {
-      const $srcChain = findChain(
-        wormholeNetworks,
-        (x) => x.wormholeChainId,
+      const $srcChain = getChainFromCctpDomain(
+        cctpNetworks,
         Number(orderFulfilled.sourceDomain),
       )
       return [
