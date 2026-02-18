@@ -91,15 +91,15 @@ export function ZkCatalogProjectsTvsChart({
   const chartData = useMemo(() => {
     if (!data) return undefined
 
-    return data.chart.map((entry) => {
-      const divider = unit === 'usd' ? 1 : entry.ethPrice
+    return data.chart.map(([timestamp, ethPrice, projects]) => {
+      const divider = unit === 'usd' ? 1 : ethPrice
       const dataPoint: {
         timestamp: number
         [key: string]: number | null
-      } = { timestamp: entry.timestamp }
+      } = { timestamp }
 
       for (const projectId of data.projectIds) {
-        const value = entry.projects[projectId] ?? null
+        const value = projects[projectId] ?? null
         if (value === null) {
           dataPoint[projectId] = null
           continue
@@ -108,7 +108,7 @@ export function ZkCatalogProjectsTvsChart({
           dataPoint[projectId] = null
           continue
         }
-        dataPoint[projectId] = value.value / divider
+        dataPoint[projectId] = value[0] / divider
       }
 
       return dataPoint

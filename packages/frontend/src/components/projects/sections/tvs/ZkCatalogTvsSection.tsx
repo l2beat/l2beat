@@ -17,7 +17,10 @@ import {
   TvsBreakdownSummaryBox,
   type TvsData,
 } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
-import type { DetailedTvsChartWithProjectsRangesData } from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
+import type {
+  DetailedTvsChartWithProjectRangesDataPoint,
+  DetailedTvsChartWithProjectsRangesData,
+} from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
 import { api } from '~/trpc/React'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -95,7 +98,7 @@ function ChartControls({
   const timeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
-        data?.chart.map(({ timestamp }) => ({ timestamp })),
+        data?.chart.map(([timestamp]) => ({ timestamp })),
       ),
     [data?.chart],
   )
@@ -251,7 +254,7 @@ function getStats(
   if (!data) return undefined
 
   const syncedChart = data.chart.filter(
-    (dataPoint) => dataPoint.timestamp <= data.syncedUntil,
+    (dataPoint) => dataPoint[0] <= data.syncedUntil,
   )
   const latestDataPoint = syncedChart.at(-1)
   const oldestDataPoint = syncedChart.at(0)
@@ -260,8 +263,8 @@ function getStats(
     return undefined
   }
 
-  const latest = getSummedStats(latestDataPoint.projects)
-  const oldest = getSummedStats(oldestDataPoint.projects)
+  const latest = getSummedStats(latestDataPoint[2])
+  const oldest = getSummedStats(oldestDataPoint[2])
 
   const latestTotal = latest.total
   const oldestTotal = oldest.total
@@ -294,7 +297,7 @@ function getStats(
 }
 
 function getSummedStats(
-  projects: DetailedTvsChartWithProjectsRangesData['chart'][number]['projects'],
+  projects: DetailedTvsChartWithProjectRangesDataPoint[2],
 ) {
   return Object.values(projects).reduce(
     (acc, projectData) => {
@@ -302,14 +305,27 @@ function getSummedStats(
         return acc
       }
 
-      acc.total += projectData.value
-      acc.native += projectData.native
-      acc.canonical += projectData.canonical
-      acc.external += projectData.external
-      acc.ether += projectData.ether
-      acc.stablecoin += projectData.stablecoin
-      acc.btc += projectData.btc
-      acc.other += projectData.other
+      const [
+        value,
+        canonical,
+        external,
+        native,
+        ether,
+        stablecoin,
+        btc,
+        _,
+        __,
+        other,
+      ] = projectData
+
+      acc.total += value
+      acc.canonical += canonical
+      acc.external += external
+      acc.native += native
+      acc.ether += ether
+      acc.stablecoin += stablecoin
+      acc.btc += btc
+      acc.other += other
 
       return acc
     },

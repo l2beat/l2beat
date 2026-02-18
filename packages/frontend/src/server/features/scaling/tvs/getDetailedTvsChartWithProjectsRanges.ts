@@ -27,24 +27,24 @@ export type TvsChartWithProjectsRangesDataParams = v.infer<
   typeof TvsChartWithProjectsRangesDataParams
 >
 
-export type ProjectTvsChartData = {
-  value: number
-  canonical: number
-  external: number
-  native: number
-  ether: number
-  stablecoin: number
-  btc: number
-  rwaRestricted: number
-  rwaPublic: number
-  other: number
-}
+export type ProjectTvsChartDataPoint = [
+  value: number,
+  canonical: number,
+  external: number,
+  native: number,
+  ether: number,
+  stablecoin: number,
+  btc: number,
+  rwaRestricted: number,
+  rwaPublic: number,
+  other: number,
+]
 
-type DetailedTvsChartWithProjectRangesDataPoint = {
-  timestamp: number
-  ethPrice: number | null
-  projects: Record<string, ProjectTvsChartData | null>
-}
+export type DetailedTvsChartWithProjectRangesDataPoint = [
+  timestamp: number,
+  ethPrice: number | null,
+  projects: Record<string, ProjectTvsChartDataPoint | null>,
+]
 
 export type DetailedTvsChartWithProjectsRangesData = {
   chart: DetailedTvsChartWithProjectRangesDataPoint[]
@@ -157,38 +157,30 @@ function getChartData(
   const chart: DetailedTvsChartWithProjectRangesDataPoint[] = timestamps.map(
     (timestamp) => {
       const isSynced = timestamp <= syncedUntil
-      const projectsForTimestamp: Record<string, ProjectTvsChartData | null> =
-        {}
+      const projectsForTimestamp: Record<
+        string,
+        ProjectTvsChartDataPoint | null
+      > = {}
 
       for (const projectId of projectIds) {
         const value = valuesByProjectId.get(projectId)?.get(timestamp)
 
         if (value) {
-          projectsForTimestamp[projectId] = value
+          projectsForTimestamp[projectId] = mapValue(value)
           continue
         }
 
-        projectsForTimestamp[projectId] = isSynced
-          ? { ...EMPTY_PROJECT_TVS }
-          : null
+        projectsForTimestamp[projectId] = isSynced ? EMPTY_PROJECT_TVS : null
       }
 
       if (!isSynced) {
-        return {
-          timestamp,
-          ethPrice: null,
-          projects: projectsForTimestamp,
-        }
+        return [timestamp, null, projectsForTimestamp]
       }
 
       const ethPrice = ethPrices[timestamp]
       assert(ethPrice, 'No ETH price for ' + timestamp)
 
-      return {
-        timestamp,
-        ethPrice,
-        projects: projectsForTimestamp,
-      }
+      return [timestamp, ethPrice, projectsForTimestamp]
     },
   )
 
@@ -212,47 +204,38 @@ function getMockDetailedTvsChartWithProjectsRangesData({
   const projectIds = Object.keys(groupedProjects) as ProjectId[]
 
   return {
-    chart: timestamps.map((timestamp) => ({
+    chart: timestamps.map((timestamp) => [
       timestamp,
-      ethPrice: 3000,
-      projects: Object.fromEntries(
+      3000,
+      Object.fromEntries(
         projectIds.map((projectId, index) => {
           const base = 1000 * (index + 1)
           return [
             projectId,
-            {
-              value: base * 2,
-              canonical: base / 3,
-              external: base / 3,
-              native: base / 3,
-              ether: base / 2,
-              stablecoin: base / 2,
-              btc: base / 3,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: base / 3,
-            } satisfies ProjectTvsChartData,
+            [
+              base * 2,
+              base / 3,
+              base / 3,
+              base / 3,
+              base / 2,
+              base / 2,
+              base / 3,
+              0,
+              0,
+              base / 3,
+            ] as ProjectTvsChartDataPoint,
           ]
         }),
       ),
-    })),
+    ]),
     projectIds,
     syncedUntil: timestamps[timestamps.length - 1] ?? 0,
   }
 }
 
-const EMPTY_PROJECT_TVS: ProjectTvsChartData = {
-  value: 0,
-  canonical: 0,
-  external: 0,
-  native: 0,
-  ether: 0,
-  stablecoin: 0,
-  btc: 0,
-  rwaRestricted: 0,
-  rwaPublic: 0,
-  other: 0,
-}
+const EMPTY_PROJECT_TVS: ProjectTvsChartDataPoint = [
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+]
 
 type PerProjectTvsValuesRecord = {
   projectId: ProjectId
@@ -297,4 +280,19 @@ function mapArrayToObject([
     rwaPublic,
     other,
   }
+}
+
+function mapValue(value: PerProjectTvsValuesRecord): ProjectTvsChartDataPoint {
+  return [
+    value.value,
+    value.canonical,
+    value.external,
+    value.native,
+    value.ether,
+    value.stablecoin,
+    value.btc,
+    value.rwaRestricted,
+    value.rwaPublic,
+    value.other,
+  ]
 }
