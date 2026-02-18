@@ -18,7 +18,7 @@ export function ChainSelectorChainToggle({
   return (
     <button
       className={cn(
-        'flex h-8 cursor-pointer select-none items-center gap-2 rounded-sm border border-divider bg-surface-secondary py-1.5 pr-3 pl-2 transition-all focus:outline-none focus:ring focus:ring-brand disabled:cursor-not-allowed disabled:opacity-60',
+        'flex h-8 cursor-pointer select-none items-center gap-2 rounded-sm border border-divider bg-surface-secondary py-1.5 pr-3 pl-2 transition-all focus:outline-none focus:ring focus:ring-brand disabled:cursor-not-allowed disabled:opacity-40',
         isSelected && 'border-brand bg-brand/15',
       )}
       onClick={() => toggleSelected(chain.id)}
