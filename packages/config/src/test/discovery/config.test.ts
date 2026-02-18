@@ -191,9 +191,8 @@ describe('discovery config.jsonc', () => {
     return lines.join('\n')
   }
 
-  // biome-ignore lint/suspicious/noFocusedTests: focused locally while debugging template collisions
-  describe.only('templateized contracts have a unique template match', () => {
-    it('each shape-based templateized contract matches exactly one template (including criteria)', () => {
+  describe('templatized contracts have a unique template match', () => {
+    it('each shape-based templatized contract matches exactly one template (including criteria)', () => {
       const mismatches: TemplateMatchMismatch[] = []
       const allShapes = templateService.getAllShapes()
 
