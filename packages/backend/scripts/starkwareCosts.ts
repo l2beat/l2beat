@@ -31,15 +31,6 @@ import {
 import { existsSync, readFileSync } from 'fs'
 import { resolve } from 'path'
 
-const SHARP_BI_BASE_URL =
-  'http://sharp-bi.provingservice.io/sharp_bi/aggregations'
-const SHARP_VERIFIER_ADDRESS = '0x47312450b3ac8b5b8e247a6bb6d523e7605bdb60'
-const ETH_GET_TX_BY_HASH_BATCH_SIZE = 200
-const ETH_RPC_MAX_429_RETRIES = 8
-const ETH_RPC_RETRY_BASE_DELAY_MS = 1_000
-const ETH_RPC_RETRY_MAX_DELAY_MS = 30_000
-const ETH_RPC_RETRY_JITTER_RATIO = 0.25
-
 const customCustomerIds = {
   starknet: 'gcp-starknet-production_starknet-mainnet',
   paradex: 'gcp-paradigm-otc-prod_potc-production',
@@ -48,6 +39,15 @@ const customCustomerIds = {
   myria: 'gcp-myria-prod_myria-production',
   immutable: 'immutable-production_immutable-production',
 } as const satisfies Record<string, string>
+
+const SHARP_BI_BASE_URL =
+  'http://sharp-bi.provingservice.io/sharp_bi/aggregations'
+const SHARP_VERIFIER_ADDRESS = '0x47312450b3ac8b5b8e247a6bb6d523e7605bdb60'
+const ETH_GET_TX_BY_HASH_BATCH_SIZE = 200
+const ETH_RPC_MAX_429_RETRIES = 8
+const ETH_RPC_RETRY_BASE_DELAY_MS = 1_000
+const ETH_RPC_RETRY_MAX_DELAY_MS = 30_000
+const ETH_RPC_RETRY_JITTER_RATIO = 0.25
 
 const customNameByCustomerId: Record<string, string> = Object.fromEntries(
   Object.entries(customCustomerIds).map(([customName, customerId]) => [
