@@ -1,0 +1,493 @@
+import { HttpClient } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
+import {
+  boolean,
+  command,
+  flag,
+  option,
+  optional,
+  positional,
+  run,
+  string,
+} from 'cmd-ts'
+import { existsSync, readFileSync } from 'fs'
+import { resolve } from 'path'
+
+const SHARP_BI_BASE_URL =
+  'http://sharp-bi.provingservice.io/sharp_bi/aggregations'
+const SHARP_VERIFIER_ADDRESS = '0x47312450b3ac8b5b8e247a6bb6d523e7605bdb60'
+const ETH_GET_TX_BY_HASH_BATCH_SIZE = 200
+
+const customCustomerIds = {
+  starknet: 'gcp-starknet-production_starknet-mainnet',
+  paradex: 'gcp-paradigm-otc-prod_potc-production',
+} as const satisfies Record<string, string>
+
+const customNameByCustomerId: Record<string, string> = Object.fromEntries(
+  Object.entries(customCustomerIds).map(([customName, customerId]) => [
+    customerId,
+    customName,
+  ]),
+)
+
+type CostResponse = {
+  proof_cost_eth: number
+  onchain_data_cost_eth: number
+}
+
+type PackageResponse = {
+  train_id: number
+  tx_hash: string
+}
+
+type TransactionByHashRpcResult = {
+  result?: {
+    to: string | null
+  } | null
+}
+
+type CustomerSummary = {
+  customerId: string
+  displayCustomer: string
+  proofCostEth: number
+  onchainDataCostEth: number
+}
+
+const args = {
+  startDate: positional({
+    type: optional(string),
+    displayName: 'start date',
+    description:
+      'Start date of the period (YYYY-MM-DD or DD-MM-YYYY). Defaults to yesterday.',
+  }),
+  endDate: positional({
+    type: optional(string),
+    displayName: 'end date',
+    description:
+      'End date of the period (YYYY-MM-DD or DD-MM-YYYY). Defaults to today.',
+  }),
+  listCustomerIds: flag({
+    type: boolean,
+    long: 'list-customer-ids',
+    short: 'ls',
+    description: 'List all customer ids for the period and exit.',
+  }),
+  txTarget: flag({
+    type: boolean,
+    long: 'tx-target',
+    description:
+      'List transaction.to addresses and counts for a single customer in this period.',
+  }),
+  customerId: option({
+    type: optional(string),
+    long: 'customer-id',
+    short: 'c',
+    description:
+      'Customer id used in --tx-target mode. Alias is also accepted (e.g. starknet, paradex).',
+  }),
+}
+
+const cmd = command({
+  name: 'starkware-costs',
+  args,
+  handler: async (args) => {
+    const [startDate, endDate] = getDateRange(args.startDate, args.endDate)
+    const http = new HttpClient()
+
+    console.log(`Using period: ${startDate}..${endDate}`)
+
+    if (args.txTarget) {
+      if (!args.customerId) {
+        throw new Error(
+          '`--customer-id` is required when `--tx-target` is set.',
+        )
+      }
+      await runTxTargetMode(http, startDate, endDate, args.customerId)
+      return
+    }
+
+    if (args.customerId) {
+      console.log('Ignoring --customer-id because --tx-target is not enabled.')
+    }
+
+    const customerIds = await fetchCustomerIds(http, startDate, endDate)
+
+    if (customerIds.length === 0) {
+      console.log('No customer ids found for this period.')
+      return
+    }
+
+    if (args.listCustomerIds) {
+      const rows = customerIds.map((customerId) => ({
+        customer: getDisplayCustomerName(customerId),
+        customerId,
+      }))
+      console.table(rows, ['customer', 'customerId'])
+      return
+    }
+
+    console.log(`Fetching /cost for ${customerIds.length} customer ids...`)
+    const summaries = await Promise.all(
+      customerIds.map((customerId) =>
+        fetchCustomerSummary(http, startDate, endDate, customerId),
+      ),
+    )
+
+    const totals = summaries.reduce(
+      (acc, row) => ({
+        proofCostEth: acc.proofCostEth + row.proofCostEth,
+        onchainDataCostEth: acc.onchainDataCostEth + row.onchainDataCostEth,
+      }),
+      {
+        proofCostEth: 0,
+        onchainDataCostEth: 0,
+      },
+    )
+
+    const table = summaries
+      .sort((a, b) => b.onchainDataCostEth - a.onchainDataCostEth)
+      .map((row) => ({
+        customer: row.displayCustomer,
+        customerId: row.customerId,
+        proofCostEth: formatEth(row.proofCostEth),
+        proofCostFrac: formatPercent(
+          safeFraction(row.proofCostEth, totals.proofCostEth),
+        ),
+        onchainDataCostEth: formatEth(row.onchainDataCostEth),
+        onchainDataCostFrac: formatPercent(
+          safeFraction(row.onchainDataCostEth, totals.onchainDataCostEth),
+        ),
+      }))
+
+    console.log(`total_proof_cost_eth=${totals.proofCostEth.toFixed(18)}`)
+    console.log(
+      `total_onchain_data_cost_eth=${totals.onchainDataCostEth.toFixed(18)}`,
+    )
+    console.table(table, [
+      'customer',
+      'customerId',
+      'proofCostEth',
+      'proofCostFrac',
+      'onchainDataCostEth',
+      'onchainDataCostFrac',
+    ])
+  },
+})
+
+run(cmd, process.argv.slice(2))
+
+async function runTxTargetMode(
+  http: HttpClient,
+  startDate: string,
+  endDate: string,
+  customerIdInput: string,
+) {
+  const customerId = resolveCustomerId(customerIdInput)
+  const displayCustomer = getDisplayCustomerName(customerId)
+
+  console.log(`tx-target mode for ${displayCustomer} (${customerId})`)
+
+  const trains = await fetchTrains(http, startDate, endDate, customerId)
+  console.log(`trains_count=${trains.length}`)
+  if (trains.length === 0) {
+    console.log('No trains found for this customer in the selected period.')
+    return
+  }
+
+  const packages = await fetchPackages(http, startDate, endDate)
+  const txHashes = getUniqueTxHashesForTrains(trains, packages)
+  console.log(`tx_hashes_count=${txHashes.length}`)
+  if (txHashes.length === 0) {
+    console.log('No tx_hashes found for this customer in the selected period.')
+    return
+  }
+
+  const ethereumRpcUrl = getEthereumRpcUrl()
+  console.log('Resolving transaction.to addresses from Ethereum RPC...')
+  const { toCounts, rpcResultCount } = await getToAddressCounts(
+    http,
+    ethereumRpcUrl,
+    txHashes,
+  )
+
+  const totalToCount = [...toCounts.values()].reduce(
+    (sum, count) => sum + count,
+    0,
+  )
+  const sharpCount = toCounts.get(SHARP_VERIFIER_ADDRESS) ?? 0
+
+  console.log(`rpc_results_count=${rpcResultCount}`)
+  console.log(`tx_to_count=${totalToCount}`)
+  console.log(`sharp_address=${SHARP_VERIFIER_ADDRESS}`)
+  console.log(`sharp_to_count=${sharpCount}`)
+  console.log(
+    `sharp_to_frac=${formatPercent(safeFraction(sharpCount, totalToCount))}`,
+  )
+
+  const rows = [...toCounts.entries()]
+    .map(([address, count]) => ({
+      address,
+      count,
+      fraction: formatPercent(safeFraction(count, totalToCount)),
+      sharp: address === SHARP_VERIFIER_ADDRESS ? '<< SHARP' : '',
+    }))
+    .sort((a, b) => b.count - a.count || a.address.localeCompare(b.address))
+
+  console.table(rows, ['address', 'count', 'fraction', 'sharp'])
+}
+
+async function fetchCustomerSummary(
+  http: HttpClient,
+  startDate: string,
+  endDate: string,
+  customerId: string,
+): Promise<CustomerSummary> {
+  const cost = await fetchCost(http, startDate, endDate, customerId)
+
+  return {
+    customerId,
+    displayCustomer: getDisplayCustomerName(customerId),
+    proofCostEth: cost.proof_cost_eth,
+    onchainDataCostEth: cost.onchain_data_cost_eth,
+  }
+}
+
+async function fetchCustomerIds(
+  http: HttpClient,
+  startDate: string,
+  endDate: string,
+): Promise<string[]> {
+  const ids = await fetchAggregation<string[]>(http, 'customer_ids', {
+    day_start: startDate,
+    day_end: endDate,
+  })
+  return [...ids].sort((a, b) => a.localeCompare(b))
+}
+
+function fetchCost(
+  http: HttpClient,
+  startDate: string,
+  endDate: string,
+  customerId: string,
+): Promise<CostResponse> {
+  return fetchAggregation<CostResponse>(http, 'cost', {
+    day_start: startDate,
+    day_end: endDate,
+    customer_id: customerId,
+  })
+}
+
+function fetchTrains(
+  http: HttpClient,
+  startDate: string,
+  endDate: string,
+  customerId: string,
+): Promise<number[]> {
+  return fetchAggregation<number[]>(http, 'trains', {
+    day_start: startDate,
+    day_end: endDate,
+    customer_id: customerId,
+  })
+}
+
+function fetchPackages(
+  http: HttpClient,
+  startDate: string,
+  endDate: string,
+): Promise<PackageResponse[]> {
+  return fetchAggregation<PackageResponse[]>(http, 'packages', {
+    day_start: startDate,
+    day_end: endDate,
+  })
+}
+
+async function fetchAggregation<T>(
+  http: HttpClient,
+  path: string,
+  params: Record<string, string>,
+): Promise<T> {
+  const query = new URLSearchParams(params)
+  const url = `${SHARP_BI_BASE_URL}/${path}?${query.toString()}`
+  return (await http.fetch(url, {
+    timeout: 30_000,
+  })) as T
+}
+
+async function getToAddressCounts(
+  http: HttpClient,
+  ethereumRpcUrl: string,
+  txHashes: string[],
+) {
+  let rpcResultCount = 0
+  const toCounts = new Map<string, number>()
+
+  for (let i = 0; i < txHashes.length; i += ETH_GET_TX_BY_HASH_BATCH_SIZE) {
+    const txHashBatch = txHashes.slice(i, i + ETH_GET_TX_BY_HASH_BATCH_SIZE)
+    const requestBody = txHashBatch.map((txHash, index) => ({
+      jsonrpc: '2.0',
+      id: i + index,
+      method: 'eth_getTransactionByHash',
+      params: [txHash],
+    }))
+    const response = (await http.fetch(ethereumRpcUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+      timeout: 120_000,
+    })) as TransactionByHashRpcResult[]
+
+    for (const item of response) {
+      if (!item.result) {
+        continue
+      }
+      rpcResultCount += 1
+      const to = item.result.to?.toLowerCase()
+      if (!to) {
+        continue
+      }
+      toCounts.set(to, (toCounts.get(to) ?? 0) + 1)
+    }
+  }
+
+  return {
+    toCounts,
+    rpcResultCount,
+  }
+}
+
+function getUniqueTxHashesForTrains(
+  trains: number[],
+  packages: PackageResponse[],
+): string[] {
+  const trainsSet = new Set(trains)
+  const txHashes = new Set<string>()
+
+  for (const pkg of packages) {
+    if (!trainsSet.has(pkg.train_id)) {
+      continue
+    }
+    txHashes.add(pkg.tx_hash.toLowerCase())
+  }
+
+  return [...txHashes]
+}
+
+function getEthereumRpcUrl(): string {
+  const candidatePaths = [
+    resolve(process.cwd(), 'packages/config/.env'),
+    resolve(process.cwd(), '../config/.env'),
+    resolve(__dirname, '../../config/.env'),
+  ]
+
+  for (const envPath of candidatePaths) {
+    if (!existsSync(envPath)) {
+      continue
+    }
+    const file = readFileSync(envPath, 'utf8')
+    const line = file
+      .split(/\r?\n/)
+      .find((line) => line.startsWith('ETHEREUM_RPC_URL='))
+    if (!line) {
+      continue
+    }
+    const value = line.slice('ETHEREUM_RPC_URL='.length).trim()
+    if (value.length > 0) {
+      return value
+    }
+  }
+
+  if (process.env.ETHEREUM_RPC_URL) {
+    return process.env.ETHEREUM_RPC_URL
+  }
+
+  throw new Error(
+    'ETHEREUM_RPC_URL is not set and was not found in packages/config/.env',
+  )
+}
+
+function resolveCustomerId(customerIdOrAlias: string): string {
+  return (
+    customCustomerIds[customerIdOrAlias as keyof typeof customCustomerIds] ??
+    customerIdOrAlias
+  )
+}
+
+function getDateRange(
+  startDateInput: string | undefined,
+  endDateInput: string | undefined,
+): [string, string] {
+  if (!startDateInput) {
+    console.log('No start date provided, using default value (yesterday)')
+  }
+  if (!endDateInput) {
+    console.log('No end date provided, using default value (today)')
+  }
+
+  const startDate = startDateInput
+    ? normalizeDateInput(startDateInput)
+    : UnixTime.toYYYYMMDD(
+        UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY,
+      )
+  const endDate = endDateInput
+    ? normalizeDateInput(endDateInput)
+    : UnixTime.toYYYYMMDD(UnixTime.toStartOf(UnixTime.now(), 'day'))
+
+  if (startDate > endDate) {
+    throw new Error(
+      `Start date must be <= end date, got ${startDate}..${endDate}`,
+    )
+  }
+
+  return [startDate, endDate]
+}
+
+function normalizeDateInput(input: string): string {
+  const trimmed = input.trim()
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    validateIsoDate(trimmed)
+    return trimmed
+  }
+
+  if (/^\d{2}-\d{2}-\d{4}$/.test(trimmed)) {
+    const [day, month, year] = trimmed.split('-')
+    const iso = `${year}-${month}-${day}`
+    validateIsoDate(iso)
+    return iso
+  }
+
+  throw new Error(
+    `Invalid date "${input}". Expected YYYY-MM-DD or DD-MM-YYYY format.`,
+  )
+}
+
+function validateIsoDate(date: string) {
+  const parsed = new Date(`${date}T00:00:00.000Z`)
+  if (Number.isNaN(parsed.getTime())) {
+    throw new Error(`Invalid date: ${date}`)
+  }
+  if (parsed.toISOString().slice(0, 10) !== date) {
+    throw new Error(`Invalid date: ${date}`)
+  }
+}
+
+function getDisplayCustomerName(customerId: string): string {
+  return customNameByCustomerId[customerId] ?? customerId
+}
+
+function safeFraction(value: number, total: number): number {
+  if (total === 0) {
+    return 0
+  }
+  return value / total
+}
+
+function formatEth(value: number): string {
+  return value.toFixed(6)
+}
+
+function formatPercent(value: number): string {
+  return `${(value * 100).toFixed(4)}%`
+}
