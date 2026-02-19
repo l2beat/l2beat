@@ -1,7 +1,8 @@
-import { assert, unique } from '@l2beat/shared-pure'
+import { unique } from '@l2beat/shared-pure'
 import type {
-  Column,
+  Cell,
   Header,
+  HeaderGroup,
   Row,
   Table as TanstackTable,
 } from '@tanstack/react-table'
@@ -22,7 +23,18 @@ import {
   TableRow,
 } from './Table'
 import { TableEmptyState } from './TableEmptyState'
+import { applyBasicTableRowSorting } from './utils/applyBasicTableRowSorting'
+import {
+  getBasicTableBodyCellClassName,
+  getBasicTableColumnFillerClassName,
+  getBasicTableGroupedHeaderCellClassName,
+  getBasicTableHeaderCellClassName,
+} from './utils/classNames'
 import { getCommonPinningStyles } from './utils/commonPinningStyles'
+import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
+import { getBasicTableGroupParams } from './utils/getBasicTableGroupParams'
+import { getBasicTableHeaderSections } from './utils/getBasicTableHeaderSections'
+import { getBasicTableRowSpanDenominator } from './utils/getBasicTableRowSpanDenominator'
 import {
   getRowClassNames,
   getRowClassNamesWithoutOpacity,
@@ -48,128 +60,48 @@ export interface BasicTableProps<T extends BasicTableRow> {
    * Custom sub component render function
    */
   renderSubComponent?: (props: { row: Row<T> }) => React.ReactElement
-  /**
-   * If the table is inside a main page card - bypass right margin by adding classes
-   */
-  insideMainPageCard?: boolean
   getHighlightId?: (ctx: T) => string
   tableWrapperClassName?: string
+}
+
+type BasicTableCellData = {
+  isLastInGroup: boolean
+  props: React.ComponentProps<typeof TableCell>
+}
+
+type BasicTableVisibleCellData<T extends BasicTableRow> = {
+  index: number
+  cell: Cell<T, unknown>
+  additionalRows: React.ReactNode[] | undefined
+  isHidden: boolean
+  colSpan: number | undefined
+  meta: Cell<T, unknown>['column']['columnDef']['meta']
+  rowSpan: number
 }
 
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   if (props.table.getRowCount() === 0 && !props.isLoading) {
     return <TableEmptyState />
   }
-  const headerGroups = props.table.getHeaderGroups()
-  const maxDepth = headerGroups.length - 1
-  assert(maxDepth <= 1, 'Only 1 level of headers is supported')
 
-  const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
-  const actualHeader = maxDepth === 1 ? headerGroups[1] : headerGroups[0]
-  assert(actualHeader, 'Actual header is required')
+  const { groupedHeader, actualHeader } = getBasicTableHeaderSections(
+    props.table.getHeaderGroups(),
+  )
 
-  const rows = props.table.getRowModel().rows
-  const rowSortingFn = props.rowSortingFn
-  if (rowSortingFn !== undefined) {
-    rows.sort((a, b) => rowSortingFn(a, b))
-  }
+  const rows = applyBasicTableRowSorting(
+    props.table.getRowModel().rows,
+    props.rowSortingFn,
+  )
 
   return (
     <Table tableWrapperClassName={props.tableWrapperClassName}>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
       <TableHeader>
-        {groupedHeader &&
-          groupedHeader.headers.some(
-            (header) =>
-              !header.isPlaceholder && !!header.column.columnDef.header,
-          ) && (
-            <TableHeaderRow>
-              {groupedHeader.headers.map((header, index) => {
-                const isLast = index === groupedHeader.headers.length - 1
-                return (
-                  <React.Fragment key={header.id}>
-                    <th
-                      colSpan={header.colSpan}
-                      className={cn(
-                        'font-medium text-primary tracking-[-0.13px]',
-                        !header.isPlaceholder &&
-                          !!header.column.columnDef.header &&
-                          'rounded-t-lg px-6 pt-4',
-                        header.column.getIsPinned() &&
-                          getRowClassNamesWithoutOpacity(null),
-                      )}
-                      style={getCommonPinningStyles(header.column)}
-                    >
-                      {!header.isPlaceholder &&
-                        !!header.column.columnDef.header &&
-                        flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                    </th>
-                    {!header.isPlaceholder && !isLast && (
-                      <BasicTableColumnFiller as="th" />
-                    )}
-                  </React.Fragment>
-                )
-              })}
-            </TableHeaderRow>
-          )}
-        <TableHeaderRow>
-          {actualHeader.headers.map((header, index) => {
-            const isLast = index === actualHeader.headers.length - 1
-            const groupParams = getBasicTableGroupParams(header.column)
-            return (
-              <React.Fragment key={`${actualHeader.id}-${header.id}`}>
-                <TableHead
-                  colSpan={header.colSpan}
-                  className={cn(
-                    groupParams && [
-                      groupParams.isFirstInGroup && 'pl-6',
-                      groupParams.isLastInGroup && 'pr-6',
-                      !groupParams.headerTitle &&
-                        groupParams.isFirstInGroup &&
-                        'rounded-tl-lg',
-                      !groupParams.headerTitle &&
-                        groupParams.isLastInGroup &&
-                        'rounded-tr-lg',
-                    ],
-                    header.column.getIsPinned() &&
-                      getRowClassNamesWithoutOpacity(null),
-                    header.column.columnDef.meta?.headClassName,
-                  )}
-                  align={header.column.columnDef.meta?.align}
-                  tooltip={header.column.columnDef.meta?.tooltip}
-                  style={getCommonPinningStyles(header.column)}
-                >
-                  {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                    <SortingArrows
-                      direction={header.column.getIsSorted()}
-                      nextDirection={header.column.getNextSortingOrder()}
-                      onClick={header.column.getToggleSortingHandler()}
-                    >
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </SortingArrows>
-                  ) : (
-                    flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )
-                  )}
-                </TableHead>
-                {groupParams?.isLastInGroup && !isLast && (
-                  <BasicTableColumnFiller as="th" />
-                )}
-              </React.Fragment>
-            )
-          })}
-        </TableHeaderRow>
-        <TableHeaderRow>
-          <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
-        </TableHeaderRow>
+        {groupedHeader && (
+          <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
+        )}
+        <BasicTableActualHeaderRow actualHeader={actualHeader} />
+        <BasicTableHeaderDividerRow />
       </TableHeader>
       <TableBody>
         {rows.map((row) => (
@@ -192,39 +124,149 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
   )
 }
 
+function BasicTableGroupedHeaderRow<T>({
+  groupedHeader,
+}: {
+  groupedHeader: HeaderGroup<T>
+}) {
+  const shouldRenderGroupedHeaderRow = groupedHeader.headers.some(
+    (header) => !header.isPlaceholder && !!header.column.columnDef.header,
+  )
+  if (!shouldRenderGroupedHeaderRow) {
+    return null
+  }
+
+  return (
+    <TableHeaderRow>
+      {groupedHeader.headers.map((header, index) => {
+        const isLast = index === groupedHeader.headers.length - 1
+        return (
+          <React.Fragment key={header.id}>
+            <th
+              colSpan={header.colSpan}
+              className={getBasicTableGroupedHeaderCellClassName({
+                isPlaceholder: header.isPlaceholder,
+                hasHeader: !!header.column.columnDef.header,
+                isPinned: header.column.getIsPinned() !== false,
+              })}
+              style={getCommonPinningStyles(header.column)}
+            >
+              {!header.isPlaceholder &&
+                !!header.column.columnDef.header &&
+                flexRender(header.column.columnDef.header, header.getContext())}
+            </th>
+            {!header.isPlaceholder && !isLast && (
+              <BasicTableColumnFiller as="th" />
+            )}
+          </React.Fragment>
+        )
+      })}
+    </TableHeaderRow>
+  )
+}
+
+function BasicTableActualHeaderRow<T>({
+  actualHeader,
+}: {
+  actualHeader: HeaderGroup<T>
+}) {
+  return (
+    <TableHeaderRow>
+      {actualHeader.headers.map((header, index) => {
+        const isLast = index === actualHeader.headers.length - 1
+        const groupParams = getBasicTableGroupParams(header.column)
+        return (
+          <React.Fragment key={`${actualHeader.id}-${header.id}`}>
+            <TableHead
+              colSpan={header.colSpan}
+              className={getBasicTableHeaderCellClassName({
+                groupParams,
+                isPinned: header.column.getIsPinned() !== false,
+                headClassName: header.column.columnDef.meta?.headClassName,
+              })}
+              align={header.column.columnDef.meta?.align}
+              tooltip={header.column.columnDef.meta?.tooltip}
+              style={getCommonPinningStyles(header.column)}
+            >
+              {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                <SortingArrows
+                  direction={header.column.getIsSorted()}
+                  nextDirection={header.column.getNextSortingOrder()}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </SortingArrows>
+              ) : (
+                flexRender(header.column.columnDef.header, header.getContext())
+              )}
+            </TableHead>
+            {groupParams?.isLastInGroup && !isLast && (
+              <BasicTableColumnFiller as="th" />
+            )}
+          </React.Fragment>
+        )
+      })}
+    </TableHeaderRow>
+  )
+}
+
+function BasicTableHeaderDividerRow() {
+  return (
+    <TableHeaderRow>
+      <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
+    </TableHeaderRow>
+  )
+}
+
 export function BasicTableRow<T extends BasicTableRow>({
   row,
   className,
   ...props
 }: BasicTableProps<T> & { row: Row<T>; className?: string }) {
   const { highlightedId } = useHighlightedTableRowContext()
+  const { cells, denominator } = prepareBasicTableVisibleCells(row)
 
-  const uniqueRowsCount = unique(
-    row
-      .getVisibleCells()
-      .map(
-        (cell) =>
-          (cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
-            .length ?? 0) + 1,
-      ),
-  )
-
-  const denominator = commonDenominator(uniqueRowsCount)
-  const maxRowSpan = Math.max(...uniqueRowsCount)
-  assert(denominator === maxRowSpan, 'Incorrect row configuration')
-
-  const cellDataMap = new Map<
-    number,
-    {
-      isLastInGroup: boolean
-      props: React.ComponentProps<typeof TableCell>
-    }
-  >()
+  const cellDataMap = new Map<number, BasicTableCellData>()
 
   const highlightId = props.getHighlightId?.(row.original) ?? row.original.slug
-
   const isHighlighted =
     highlightId !== undefined && highlightedId === highlightId
+
+  const shouldRenderSubComponentRow =
+    row.getIsExpanded() && !!props.renderSubComponent
+  const renderedSubComponent = shouldRenderSubComponentRow
+    ? props.renderSubComponent?.({ row })
+    : undefined
+
+  for (const cellData of cells) {
+    if (cellData.isHidden) {
+      continue
+    }
+
+    const groupParams = getBasicTableGroupParams(cellData.cell.column)
+
+    const cellProps: React.ComponentProps<typeof TableCell> = {
+      align: cellData.meta?.align,
+      className: getBasicTableBodyCellClassName({
+        groupParams,
+        isSortable: cellData.cell.column.getCanSort(),
+        align: cellData.meta?.align,
+        isPinned: cellData.cell.column.getIsPinned() !== false,
+        rowBackgroundColor: row.original.backgroundColor,
+        isHighlighted,
+        cellClassName: cellData.meta?.cellClassName,
+      }),
+      style: getCommonPinningStyles(cellData.cell.column),
+    }
+
+    cellDataMap.set(cellData.index, {
+      isLastInGroup: groupParams?.isLastInGroup ?? false,
+      props: cellProps,
+    })
+  }
 
   return (
     <>
@@ -232,63 +274,35 @@ export function BasicTableRow<T extends BasicTableRow>({
         highlightId={highlightId}
         className={cn(
           getRowClassNames(row.original.backgroundColor),
-          row.getIsExpanded() &&
-            props.renderSubComponent?.({ row }) &&
-            'border-none!',
+          shouldRenderSubComponentRow && renderedSubComponent && 'border-none!',
           className,
         )}
       >
-        {row.getVisibleCells().map((cell, index) => {
-          const { meta } = cell.column.columnDef
-          const groupParams = getBasicTableGroupParams(cell.column)
-
-          if (meta?.hideIfNull && cell.renderValue() === null) {
+        {cells.map((cellData) => {
+          if (cellData.isHidden) {
             return null
           }
 
-          const colSpan = meta?.colSpan
-            ? meta.colSpan(cell.getContext())
-            : undefined
-
-          const rowSpan =
-            denominator /
-            ((cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
-              ?.length ?? 0) +
-              1)
-
-          const cellProps: React.ComponentProps<typeof TableCell> = {
-            align: meta?.align,
-            className: cn(
-              groupParams?.isFirstInGroup && 'pl-6!',
-              groupParams?.isLastInGroup && 'pr-6!',
-              cell.column.getCanSort() && meta?.align === undefined
-                ? groupParams?.isFirstInGroup
-                  ? 'pl-10'
-                  : 'pl-4'
-                : undefined,
-              cell.column.getIsPinned() &&
-                getRowClassNamesWithoutOpacity(row.original.backgroundColor),
-              cell.column.getIsPinned() &&
-                isHighlighted &&
-                'animate-row-highlight-no-opacity',
-              meta?.cellClassName,
-            ),
-            style: getCommonPinningStyles(cell.column),
+          const currentCell = cellDataMap.get(cellData.index)
+          if (!currentCell) {
+            return null
           }
 
-          cellDataMap.set(index, {
-            isLastInGroup: groupParams?.isLastInGroup ?? false,
-            props: cellProps,
-          })
-
-          const prevCell = cellDataMap.get(index - 1)
+          const prevCell = cellDataMap.get(cellData.index - 1)
           return (
-            <React.Fragment key={`${row.id}-${cell.id}`}>
+            <React.Fragment key={`${row.id}-${cellData.cell.id}`}>
               {prevCell && prevCell.isLastInGroup && (
-                <BasicTableColumnFiller as="td" rowSpan={rowSpan} />
+                <BasicTableColumnFiller as="td" rowSpan={cellData.rowSpan} />
               )}
-              <TableCell rowSpan={rowSpan} colSpan={colSpan} {...cellProps}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              <TableCell
+                rowSpan={cellData.rowSpan}
+                colSpan={cellData.colSpan}
+                {...currentCell.props}
+              >
+                {flexRender(
+                  cellData.cell.column.columnDef.cell,
+                  cellData.cell.getContext(),
+                )}
               </TableCell>
             </React.Fragment>
           )
@@ -301,17 +315,17 @@ export function BasicTableRow<T extends BasicTableRow>({
             highlightId={highlightId}
             className={getRowClassNames(row.original.backgroundColor)}
           >
-            {row.getVisibleCells().map((cell, index) => {
-              const additionalRows =
-                cell.column.columnDef.meta?.additionalRows?.(cell.getContext())
+            {cells.map((cellData) => {
+              const additionalRows = cellData.additionalRows
               if (!additionalRows) {
                 return null
               }
 
-              const rowSpan = denominator / (additionalRows.length + 1)
-
-              const actualIndex = (additionalRowIndex + 1) / rowSpan - 1
-              if (!Number.isInteger(actualIndex)) {
+              const actualIndex = getBasicTableAdditionalRowIndex(
+                additionalRowIndex,
+                cellData.rowSpan,
+              )
+              if (actualIndex === undefined) {
                 return null
               }
 
@@ -320,17 +334,22 @@ export function BasicTableRow<T extends BasicTableRow>({
                 return null
               }
 
-              const cellData = cellDataMap.get(index)
-              const prevCell = cellDataMap.get(index - 1)
+              const cellProps = cellDataMap.get(cellData.index)
+              const prevCell = cellDataMap.get(cellData.index - 1)
               return (
-                <React.Fragment key={`${cell.id}-${additionalRowIndex}`}>
+                <React.Fragment
+                  key={`${cellData.cell.id}-${additionalRowIndex}`}
+                >
                   {prevCell && prevCell.isLastInGroup && (
-                    <BasicTableColumnFiller as="td" rowSpan={rowSpan} />
+                    <BasicTableColumnFiller
+                      as="td"
+                      rowSpan={cellData.rowSpan}
+                    />
                   )}
                   <TableCell
-                    rowSpan={rowSpan}
-                    {...cellData?.props}
-                    className={cn(cellData?.props.className, 'first:pl-0')}
+                    rowSpan={cellData.rowSpan}
+                    {...cellProps?.props}
+                    className={cn(cellProps?.props.className, 'first:pl-0')}
                   >
                     {additionalRow}
                   </TableCell>
@@ -340,16 +359,46 @@ export function BasicTableRow<T extends BasicTableRow>({
           </TableRow>
         )
       })}
-      {row.getIsExpanded() && props.renderSubComponent && (
+      {shouldRenderSubComponentRow && (
         <tr className="border-divider border-b">
           {/* 2nd row is a custom 1 cell row */}
-          <td colSpan={row.getVisibleCells().length}>
-            {props.renderSubComponent({ row })}
-          </td>
+          <td colSpan={row.getVisibleCells().length}>{renderedSubComponent}</td>
         </tr>
       )}
     </>
   )
+}
+
+function prepareBasicTableVisibleCells<T extends BasicTableRow>(
+  row: Row<T>,
+): { cells: BasicTableVisibleCellData<T>[]; denominator: number } {
+  const preparedCells = row.getVisibleCells().map((cell, index) => {
+    const { meta } = cell.column.columnDef
+    const context = cell.getContext()
+    const additionalRows = meta?.additionalRows?.(context)
+    const rowCount = (additionalRows?.length ?? 0) + 1
+
+    return {
+      index,
+      cell,
+      additionalRows,
+      isHidden: !!(meta?.hideIfNull && cell.renderValue() === null),
+      colSpan: meta?.colSpan ? meta.colSpan(context) : undefined,
+      meta,
+      rowSpan: rowCount,
+    }
+  })
+
+  const uniqueRowsCount = unique(preparedCells.map((cell) => cell.rowSpan))
+  const denominator = getBasicTableRowSpanDenominator(uniqueRowsCount)
+
+  return {
+    denominator,
+    cells: preparedCells.map((cell) => ({
+      ...cell,
+      rowSpan: denominator / cell.rowSpan,
+    })),
+  }
 }
 
 function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
@@ -407,39 +456,12 @@ function BasicTableColumnFiller({
   as: 'th' | 'colgroup' | 'td'
   rowSpan?: number
   colSpan?: number
-  className?: string
 }) {
   return (
-    <Comp className="h-full w-4 min-w-4" rowSpan={rowSpan} colSpan={colSpan} />
+    <Comp
+      className={getBasicTableColumnFillerClassName()}
+      rowSpan={rowSpan}
+      colSpan={colSpan}
+    />
   )
-}
-
-export function getBasicTableGroupParams<T>(column: Column<T>) {
-  if (!column.parent) return undefined
-
-  const leafColumns = column.parent
-    .getLeafColumns()
-    .filter((c) => c.getIsVisible())
-  const index = leafColumns.findIndex((c) => c.id === column.id)
-  const isFirstInGroup = index !== undefined ? index === 0 : undefined
-  const isLastInGroup = leafColumns
-    ? index === leafColumns.length - 1
-    : undefined
-  return {
-    headerTitle: column.parent.columnDef.header,
-    isFirstInGroup,
-    isLastInGroup,
-  }
-}
-
-function greatestCommonDivisor(a: number, b: number): number {
-  return b === 0 ? a : greatestCommonDivisor(b, a % b)
-}
-
-function leastCommonMultiple(a: number, b: number): number {
-  return (a * b) / greatestCommonDivisor(a, b)
-}
-
-function commonDenominator(numbers: number[]): number {
-  return numbers.reduce((acc, num) => leastCommonMultiple(acc, num))
 }
