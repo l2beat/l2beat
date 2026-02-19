@@ -10,7 +10,7 @@ export type BasicTableGroupParams = {
   isLastInGroup: boolean
 }
 
-export function getTableBleedWrapperClassName() {
+export function getTableOuterWrapperClassName() {
   return 'max-md:-mr-4'
 }
 

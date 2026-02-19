@@ -6,8 +6,8 @@ import {
 import { cn } from '~/utils/cn'
 import { TableTooltip } from './TableTooltip'
 import {
-  getTableBleedWrapperClassName,
   getTableElementClassName,
+  getTableOuterWrapperClassName,
   getTableScrollWrapperClassName,
 } from './utils/classNames'
 
@@ -19,7 +19,7 @@ const Table = ({
   tableWrapperClassName?: string
 }) => {
   return (
-    <div className={getTableBleedWrapperClassName()}>
+    <div className={getTableOuterWrapperClassName()}>
       <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
         <HighlightedTableRowProvider>
           <table
