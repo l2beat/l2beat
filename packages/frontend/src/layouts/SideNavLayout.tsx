@@ -296,6 +296,10 @@ const sideLinks = compact([
     href: '/publications',
   },
   {
+    title: 'Changelog',
+    href: '/changelog',
+  },
+  {
     title: 'Forum',
     href: externalLinks.forum,
   },
