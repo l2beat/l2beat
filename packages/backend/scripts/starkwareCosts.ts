@@ -251,7 +251,9 @@ async function runTxTargetMode(
     `sharp_to_frac=${formatPercent(safeFraction(sharpCount, totalToCount))}`,
   )
   console.log('-----------------------------')
-  console.log('There are usually 4 targets (by number of tx): 0 MemoryPageFactRegistry, 1 FriStatementContract, 2 MerkleStatementContract, 3 SHARPVerifier CallProxy')
+  console.log(
+    'There are usually 4 targets (by number of tx): 0 MemoryPageFactRegistry, 1 FriStatementContract, 2 MerkleStatementContract, 3 SHARPVerifier CallProxy',
+  )
   console.log('of which only the MemoryPageFactRegistry are batchSubmissions')
 
   const rows = [...toCounts.entries()]
