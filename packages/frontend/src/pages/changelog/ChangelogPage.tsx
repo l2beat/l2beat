@@ -22,7 +22,10 @@ export function ChangelogPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader description="A running list of product and content updates shipped on L2BEAT.">
+        <MainPageHeader
+          description="A running list of product and content updates shipped on L2BEAT."
+          hideDescriptionOnMobile
+        >
           Changelog
         </MainPageHeader>
         <PrimaryCard className="md:p-8">
@@ -38,7 +41,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                   id={entry.id}
                   key={entry.id}
                 >
-                  <span className="mt-2 size-[14px] shrink-0 rounded-full border-2 border-surface-primary bg-brand" />
+                  <span className="mt-2 size-[15px] shrink-0 rounded-full border-2 border-surface-primary bg-brand" />
                   <article className="w-full rounded-lg border border-divider bg-surface-secondary p-4 md:p-6">
                     <p className="font-semibold text-brand text-subtitle-12 uppercase">
                       {entry.publishedOn}
