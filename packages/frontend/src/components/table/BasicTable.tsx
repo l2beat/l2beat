@@ -12,19 +12,6 @@ import React from 'react'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../core/Skeleton'
-import {
-  getBasicTableBodyCellClassName,
-  getBasicTableColumnFillerClassName,
-  getBasicTableGroupedHeaderCellClassName,
-  getBasicTableHeaderCellClassName,
-} from './basicTable.layout'
-import {
-  applyBasicTableRowSorting,
-  getBasicTableAdditionalRowIndex,
-  getBasicTableGroupParams,
-  getBasicTableHeaderSections,
-  getBasicTableRowSpanDenominator,
-} from './basicTable.utils'
 import { SortingArrows } from './sorting/SortingArrows'
 import {
   Table,
@@ -36,7 +23,18 @@ import {
   TableRow,
 } from './Table'
 import { TableEmptyState } from './TableEmptyState'
+import { applyBasicTableRowSorting } from './utils/applyBasicTableRowSorting'
+import {
+  getBasicTableBodyCellClassName,
+  getBasicTableColumnFillerClassName,
+  getBasicTableGroupedHeaderCellClassName,
+  getBasicTableHeaderCellClassName,
+} from './utils/classNames'
 import { getCommonPinningStyles } from './utils/commonPinningStyles'
+import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
+import { getBasicTableGroupParams } from './utils/getBasicTableGroupParams'
+import { getBasicTableHeaderSections } from './utils/getBasicTableHeaderSections'
+import { getBasicTableRowSpanDenominator } from './utils/getBasicTableRowSpanDenominator'
 import {
   getRowClassNames,
   getRowClassNamesWithoutOpacity,
@@ -151,7 +149,7 @@ function BasicTableGroupedHeaderRow<T>({
                 hasHeader: !!header.column.columnDef.header,
                 isPinned: header.column.getIsPinned() !== false,
               })}
-              style={getCommonPinningStyles(header.column, 'header-group')}
+              style={getCommonPinningStyles(header.column)}
             >
               {!header.isPlaceholder &&
                 !!header.column.columnDef.header &&
@@ -188,7 +186,7 @@ function BasicTableActualHeaderRow<T>({
               })}
               align={header.column.columnDef.meta?.align}
               tooltip={header.column.columnDef.meta?.tooltip}
-              style={getCommonPinningStyles(header.column, 'header-main')}
+              style={getCommonPinningStyles(header.column)}
             >
               {header.isPlaceholder ? null : header.column.getCanSort() ? (
                 <SortingArrows
@@ -261,7 +259,7 @@ export function BasicTableRow<T extends BasicTableRow>({
         isHighlighted,
         cellClassName: cellData.meta?.cellClassName,
       }),
-      style: getCommonPinningStyles(cellData.cell.column, 'body'),
+      style: getCommonPinningStyles(cellData.cell.column),
     }
 
     cellDataMap.set(cellData.index, {
@@ -438,7 +436,7 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
                 header.column.getIsPinned() &&
                   getRowClassNamesWithoutOpacity(null),
               )}
-              style={getCommonPinningStyles(header.column, 'footer-filler')}
+              style={getCommonPinningStyles(header.column)}
             />
             {!header.isPlaceholder && !isLast && (
               <BasicTableColumnFiller as="td" />

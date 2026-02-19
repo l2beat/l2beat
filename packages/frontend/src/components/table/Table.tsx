@@ -4,12 +4,12 @@ import {
   useHighlightedTableRowContext,
 } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
+import { TableTooltip } from './TableTooltip'
 import {
   getTableBleedWrapperClassName,
   getTableElementClassName,
   getTableScrollWrapperClassName,
-} from './basicTable.layout'
-import { TableTooltip } from './TableTooltip'
+} from './utils/classNames'
 
 const Table = ({
   className,

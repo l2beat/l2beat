@@ -1,21 +1,8 @@
 import type { Column } from '@tanstack/react-table'
 import type { CSSProperties } from 'react'
 
-export type PinningLayerRole =
-  | 'body'
-  | 'header-main'
-  | 'header-group'
-  | 'footer-filler'
-
-export function getPinningLayerZIndex(_role: PinningLayerRole) {
-  // Keep current visual stacking for now; role mapping is a sticky-header
-  // preparation point for future layering changes.
-  return 1
-}
-
 export function getCommonPinningStyles<T>(
   column: Column<T>,
-  role: PinningLayerRole = 'body',
 ): CSSProperties | undefined {
   const isPinned = column.getIsPinned()
   if (!isPinned) return undefined
@@ -35,6 +22,6 @@ export function getCommonPinningStyles<T>(
       `linear-gradient(to ${
         isLastPinned === 'left' ? 'right' : 'left'
       }, transparent 0, black 0px, black calc(100% - 10px), transparent 100%)`,
-    zIndex: getPinningLayerZIndex(role),
+    zIndex: 1,
   }
 }

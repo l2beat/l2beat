@@ -3,9 +3,9 @@ import {
   getBasicTableBodyCellClassName,
   getBasicTableGroupedHeaderCellClassName,
   getBasicTableHeaderCellClassName,
-} from './basicTable.layout'
+} from './classNames'
 
-describe('basicTable.layout', () => {
+describe('classNames', () => {
   describe(getBasicTableGroupedHeaderCellClassName.name, () => {
     it('adds grouped header spacing only when header exists and is not placeholder', () => {
       const visibleGroupClassName = getBasicTableGroupedHeaderCellClassName({

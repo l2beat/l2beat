@@ -2,7 +2,7 @@ import { cn } from '~/utils/cn'
 import {
   getRowClassNamesWithoutOpacity,
   type RowBackgroundColor,
-} from './utils/rowType'
+} from './rowType'
 
 export type BasicTableGroupParams = {
   headerTitle: unknown

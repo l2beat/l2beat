@@ -1,13 +1,11 @@
 import type { HeaderGroup, Row } from '@tanstack/react-table'
 import { expect } from 'earl'
-import {
-  applyBasicTableRowSorting,
-  getBasicTableAdditionalRowIndex,
-  getBasicTableHeaderSections,
-  getBasicTableRowSpanDenominator,
-} from './basicTable.utils'
+import { applyBasicTableRowSorting } from './utils/applyBasicTableRowSorting'
+import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
+import { getBasicTableHeaderSections } from './utils/getBasicTableHeaderSections'
+import { getBasicTableRowSpanDenominator } from './utils/getBasicTableRowSpanDenominator'
 
-describe('basicTable.utils', () => {
+describe('table utils', () => {
   describe(getBasicTableHeaderSections.name, () => {
     it('returns only actual header for one-level headers', () => {
       const header = { id: 'h0' } as HeaderGroup<unknown>
