@@ -40,7 +40,10 @@ export function FlowsWidget({
 
   return (
     <PrimaryCard
-      className={cn('@container h-full max-md:rounded-lg', className)}
+      className={cn(
+        '@container h-full border-divider max-md:border-b',
+        className,
+      )}
     >
       <div className="flex flex-col">
         <h2 className="font-bold text-heading-16 md:text-heading-20">

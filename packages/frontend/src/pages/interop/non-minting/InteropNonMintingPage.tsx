@@ -86,7 +86,7 @@ function Content({
         <HeaderWithDescription />
       </div>
       <ChainSelector chains={interopChains} protocols={protocols} />
-      <div className="md:hidden">
+      <div className="max-md:bg-surface-primary md:hidden">
         <HeaderWithDescription />
       </div>
       <Widgets interopChains={interopChains} />
@@ -114,10 +114,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
 
   return (
     <div
-      className="mt-5 grid grid-cols-1 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
+      className="grid grid-cols-1 md:mt-5 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
       data-hide-overflow-x
     >
-      <div className="z-10 max-md:hidden">
+      <div className="z-10">
         <FlowsWidget
           interopChains={interopChains}
           isLoading={isLoading}

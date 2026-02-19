@@ -43,7 +43,7 @@ export function TopProtocolsWidget({
 
   return (
     <PrimaryCard
-      className="@container flex h-full items-start justify-between max-md:rounded-lg"
+      className="@container flex h-full items-start justify-between"
       ref={containerRef}
     >
       <div>
