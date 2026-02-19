@@ -495,12 +495,12 @@
     "loadConfigs": ["cctp-v2"],
     "txs": [
       {
-        "chain": "arbitrum",
-        "tx": "0xf92f360f763853152ae4b3a7ba9424d00b9402d2b326d48fa08b024d82ad7845"
+        "chain": "optimism",
+        "tx": "0x9c1e856a46e156e06260d64bf1344053530f5b8cf9d2186630ef130b509ca5c6"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x5606294e9a0886f996d9900b9ccc96afc2468514768165de1cda270757af4ea6"
+        "chain": "base",
+        "tx": "0xf3455d6cb9b30bfcae1f202688605efeaecde76bd03f8d2b171afa83e7c6cc24"
       }
     ]
   },
