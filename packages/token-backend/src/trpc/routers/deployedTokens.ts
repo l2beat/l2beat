@@ -151,6 +151,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         })
 
         let decimals: number | undefined
+        let symbolFromChain: string | undefined
         if (chain.rpc) {
           try {
             decimals = await chain.rpc.getDecimals(input.address)
@@ -169,6 +170,12 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
                 abstractTokenId: undefined,
               },
             }
+          }
+
+          try {
+            symbolFromChain = await chain.rpc.getSymbol(input.address)
+          } catch (error) {
+            console.error(error)
           }
         }
 
@@ -209,7 +216,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
               message: 'Coin not found on Coingecko',
             },
             data: {
-              symbol: undefined,
+              symbol: symbolFromChain,
               suggestions: undefined,
               decimals,
               deploymentTimestamp,
@@ -226,7 +233,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         return {
           error: undefined,
           data: {
-            symbol: coin.symbol,
+            symbol: symbolFromChain ?? coin.symbol,
             decimals,
             deploymentTimestamp,
             abstractTokenId: abstractToken?.id,

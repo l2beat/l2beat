@@ -39,7 +39,8 @@
     "@l2beat/validate": "workspace:*",
     "@trpc/server": "^11.0.0-rc.446",
     "fuzzysort": "3.1.0",
-    "jose": "^6.1.0"
+    "jose": "^6.1.0",
+    "viem": "^2.31.6"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
