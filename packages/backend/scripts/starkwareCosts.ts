@@ -2,6 +2,10 @@
  * script to fetch starkware api data about proof and batch costs
  *
  * earliest usable api data is from ~ 2024-03-01
+ * 
+ * just use plain `pnpm starkware-costs` to get an idea
+ * or `pnpm starkware-costs 2026-02-09 2024-02-15` for a random week
+ * or `pnpm starkware-costs -ls -c starknet` to list all tx targets for starknet in the last day
  *
  * ARGUMENTS:
  * [start date] - Start date of the period (YYYY-MM-DD or DD-MM-YYYY). Defaults to yesterday. [optional]
@@ -9,7 +13,7 @@
  *
  * FLAGS:
  * --list-customer-ids, -ls - List all customer ids for the period and exit.
- * --tx-target, -t              - List transaction.to addresses and counts for a single customer in this period.
+ * --tx-target, -t          - List transaction.to addresses and counts for a single customer in this period.
  * --help, -h               - show help
  *
  * OPTIONS:
