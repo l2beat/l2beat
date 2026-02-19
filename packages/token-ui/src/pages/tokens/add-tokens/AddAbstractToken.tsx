@@ -80,7 +80,7 @@ export function AddAbstractToken({
       form.setValue('iconUrl', checks.data.iconUrl)
     }
     if (checks.data?.symbol) {
-      form.setValue('symbol', checks.data.symbol)
+      form.setValue('symbol', checks.data.symbol.toUpperCase())
     }
     if (checks.data?.listingTimestamp) {
       form.setValue(
