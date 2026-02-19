@@ -86,7 +86,7 @@ function Content({
         <HeaderWithDescription />
       </div>
       <ChainSelector chains={interopChains} protocols={protocols} />
-      <div className="md:hidden">
+      <div className="max-md:bg-surface-primary md:hidden">
         <HeaderWithDescription />
       </div>
       <Widgets interopChains={interopChains} />
