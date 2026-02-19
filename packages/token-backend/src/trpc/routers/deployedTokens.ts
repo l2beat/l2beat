@@ -1,4 +1,5 @@
 import type { TokenDatabase } from '@l2beat/database'
+import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Chain } from '../../chains/Chain'
@@ -9,10 +10,18 @@ import { router } from '../trpc'
 export interface DeployedTokensRouterDeps {
   coingeckoClient: CoingeckoClient
   etherscanApiKey: string | undefined
+  createChain?: (chainRecord: ChainRecord) => Chain
 }
 
 export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
-  const { coingeckoClient, etherscanApiKey } = deps
+  const {
+    coingeckoClient,
+    etherscanApiKey,
+    createChain = (chainRecord) =>
+      new Chain(chainRecord, {
+        etherscanApiKey,
+      }),
+  } = deps
 
   async function getCoinByChainAndAddress(
     db: TokenDatabase,
@@ -146,34 +155,18 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         const chainRecord = await ctx.db.chain.findByName(input.chain)
         assert(chainRecord, 'Chain not found')
 
-        const chain = new Chain(chainRecord, {
-          etherscanApiKey,
-        })
+        const chain = createChain(chainRecord)
 
         let decimals: number | undefined
-        let symbolFromChain: string | undefined
+        let symbol: string | undefined
         if (chain.rpc) {
           try {
-            decimals = await chain.rpc.getDecimals(input.address)
-          } catch (error) {
-            console.error(error)
-            return {
-              error: {
-                type: 'not-found-on-chain' as const,
-                message: 'Token not found on chain',
-              },
-              data: {
-                symbol: undefined,
-                otherChains: undefined,
-                decimals: undefined,
-                deploymentTimestamp: undefined,
-                abstractTokenId: undefined,
-              },
-            }
-          }
-
-          try {
-            symbolFromChain = await chain.rpc.getSymbol(input.address)
+            const [rpcDecimals, rpcSymbol] = await Promise.all([
+              chain.rpc.getDecimals(input.address),
+              chain.rpc.getSymbol(input.address),
+            ])
+            decimals = rpcDecimals
+            symbol = rpcSymbol
           } catch (error) {
             console.error(error)
           }
@@ -216,7 +209,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
               message: 'Coin not found on Coingecko',
             },
             data: {
-              symbol: symbolFromChain,
+              symbol,
               suggestions: undefined,
               decimals,
               deploymentTimestamp,
@@ -233,7 +226,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         return {
           error: undefined,
           data: {
-            symbol: symbolFromChain ?? coin.symbol,
+            symbol: symbol ?? coin.symbol,
             decimals,
             deploymentTimestamp,
             abstractTokenId: abstractToken?.id,
