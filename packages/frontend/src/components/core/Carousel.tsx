@@ -141,7 +141,7 @@ function CarouselContent({
   return (
     <div
       ref={carouselRef}
-      className={cn('overflow-hidden', viewportClassName)}
+      className={viewportClassName}
       data-slot="carousel-content"
     >
       <div
