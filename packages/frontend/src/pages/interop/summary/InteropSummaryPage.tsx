@@ -110,10 +110,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
 
   return (
     <div
-      className="mt-5 grid grid-cols-1 min-[1024px]:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
+      className="mt-5 grid grid-cols-1 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
       data-hide-overflow-x
     >
-      <div className="z-10 max-[1024px]:hidden">
+      <div className="z-10 max-md:hidden">
         <FlowsWidget
           interopChains={interopChains}
           isLoading={isLoading}
