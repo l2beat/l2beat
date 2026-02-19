@@ -1,8 +1,8 @@
 /**
  * script to fetch starkware api data about proof and batch costs
- * 
+ *
  * earliest usable api data is from ~ 2024-03-01
- * 
+ *
  * ARGUMENTS:
  * [start date] - Start date of the period (YYYY-MM-DD or DD-MM-YYYY). Defaults to yesterday. [optional]
  * [end date]   - End date of the period (YYYY-MM-DD or DD-MM-YYYY). Defaults to today. [optional]
