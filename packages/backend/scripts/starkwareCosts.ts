@@ -2,7 +2,7 @@
  * script to fetch starkware api data about proof and batch costs
  *
  * earliest usable api data is from ~ 2024-03-01
- * 
+ *
  * just use plain `pnpm starkware-costs` to get an idea
  * or `pnpm starkware-costs 2026-02-09 2024-02-15` for a random week
  * or `pnpm starkware-costs -ls -c starknet` to list all tx targets for starknet in the last day
