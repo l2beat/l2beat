@@ -12,7 +12,7 @@ export interface GovernancePublicationEntry {
   title: string
   shortTitle: string | undefined
   description: string | undefined
-  excerpt: string
+  excerpt: string | undefined
   readTimeInMinutes: number
   author: GovernanceAuthorEntry
   publishedOn: string
