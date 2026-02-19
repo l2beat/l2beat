@@ -35,7 +35,7 @@ export function MainPageHeader({
         <div
           className={cn(
             'flex flex-col pl-0 md:flex-col-reverse md:gap-2 md:pb-3 lg:pl-2',
-            hideDescriptionOnMobile && 'hidden',
+            hideDescriptionOnMobile && 'max-md:hidden',
           )}
         >
           {description && (
