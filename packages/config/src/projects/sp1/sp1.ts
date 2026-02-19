@@ -373,6 +373,19 @@ make build-circuits
         ],
         verificationStatus: 'notVerified',
       },
+      {
+        hash: '0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
     ],
   },
 }

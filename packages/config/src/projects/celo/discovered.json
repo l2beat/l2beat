@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1770736055,
+  "timestamp": 1771496067,
   "configHash": "0x3c01874246b9753da6cb1a7875cd6d75b8a871b5b86760be492921f66f9dc27e",
   "entries": [
     {
@@ -238,7 +238,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620949",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620984",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -491,6 +491,10 @@
           {
             "selector": "0xd4e8ecd2",
             "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xbb1a6f29",
+            "verifier": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
           }
         ],
         "allVerifiers": [
@@ -533,6 +537,10 @@
           {
             "selector": "0xd4e8ecd2",
             "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xbb1a6f29",
+            "verifier": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
           }
         ],
         "owner": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
@@ -950,7 +958,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 32,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1272,7 +1280,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 50,
+        "nonce": 52,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1393,6 +1401,28 @@
         "eth:0x9c61C5a8FF9408B83ac92571278550097A9d2BB5": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.0.0).",
+      "sinceTimestamp": 1771084331,
+      "sinceBlock": 24456046,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317",
+        "VERSION": "v6.0.0",
+        "VK_ROOT": "0x008cd56e10c2fe24795cff1e1d1f40d3a324528d315674da45d26afb376e8670"
+      },
+      "implementationNames": {
+        "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": "SP1Verifier"
+      }
     },
     {
       "address": "eth:0x8b4b85f78F799F8364198FFEd2266d3cb3EA0daE",
@@ -1659,11 +1689,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0xCbAc531dc59c5E685C5Cbf6BcEA6Dc9819786525",
+        "anchorGame": "eth:0xD526F4727154A76b72eE25B615c0b419d872DD79",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "getAnchorRoot": [
-          "0x4ca4a4b7cd1503d4b0d871dcbeef7e7057d9b5c53a212e7f948995ffb03614f6",
-          58228629
+          "0x43af61399a7ff75fc29cfcc68171744df8edf777449aaa6415301793b6b46d1d",
+          58988229
         ],
         "portal": "eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC",
         "respectedGameType": 42,
@@ -1949,7 +1979,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 51,
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2076,8 +2106,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 463628,
-          "prevBlockNum": 24425840
+          "prevBoughtGas": 517494,
+          "prevBlockNum": 24485664
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2162,7 +2192,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2391,7 +2421,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1770735815,
+        "getLastProposalTimestamp": 1771495019,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
         "proposers": [
@@ -2447,7 +2477,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xc5bd131ceAEb72F15C66418bc2668332AB99DE37",
-        "gameCount": 28553,
+        "gameCount": 28975,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -3222,6 +3252,18 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3734,6 +3776,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24427167 },
-  "permissionsConfigHash": "0xf6f92d3faf7e8988c824baf8ffdadd79cc1a38af2e3630733b9025deb4a813b2"
+  "usedBlockNumbers": { "ethereum": 24490224 },
+  "permissionsConfigHash": "0x5abd322cc8462af2441234b6bc11bf7143129143880bfd3af1c62ae1910a5145"
 }
