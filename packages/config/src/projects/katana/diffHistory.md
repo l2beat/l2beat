@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x0a59c7c34ba43637747a7bccbbfe306351db3f61
+
+# Diff at Thu, 19 Feb 2026 08:41:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@31cbacb6d899b700558dd36eccfd1161fc0b3b74 block: 1771250113
+- current timestamp: 1771490328
+
+## Description
+
+optimistic mode manager moved to Polygon Multisig 2.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.optimisticModeManager:
+-        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      values.pendingOptimisticModeManager:
+-        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"toggle the 'optimisticMode'.","role":".optimisticModeManager"}]
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"toggle the 'optimisticMode'.","role":".optimisticModeManager"}
+    }
+```
+
 Generated with discovered.json: 0xb9de6662a6efa643fddd22c05c4f5d3999eb97f5
 
 # Diff at Mon, 16 Feb 2026 13:57:07 GMT:
