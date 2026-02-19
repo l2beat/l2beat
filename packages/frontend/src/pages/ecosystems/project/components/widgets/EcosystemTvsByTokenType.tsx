@@ -1,6 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Label, Pie, PieChart } from 'recharts'
+import { assetCategoryTvsChartMeta } from '~/components/chart/tvs/stacked/AssetCategoryTvsChart'
 import type {
   ChartMeta,
   CustomChartTooltipProps,
@@ -20,35 +21,15 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './EcosystemWidget'
 
-const chartMeta = {
-  ether: {
-    label: 'ETH & LSTs',
-    color: 'var(--ecosystem-primary)',
-    indicatorType: {
-      shape: 'square',
-    },
-  },
-  stablecoins: {
-    label: 'Stablecoins',
-    color: 'var(--ecosystem-primary-50)',
-    indicatorType: {
-      shape: 'square',
-    },
-  },
-  other: {
-    label: 'Other',
-    color: 'var(--ecosystem-primary-25)',
-    indicatorType: {
-      shape: 'square',
-    },
-  },
-} satisfies ChartMeta
-
-const tokenTypeLabels: Record<keyof TvsByTokenType, string> = {
-  ether: 'ETH & LSTs',
-  stablecoins: 'Stablecoins',
-  other: 'Other',
-}
+const chartMeta = assetCategoryTvsChartMeta satisfies ChartMeta
+const tokenTypeOrder: (keyof TvsByTokenType)[] = [
+  'ether',
+  'stablecoin',
+  'btc',
+  'other',
+  'rwaPublic',
+  'rwaRestricted',
+]
 
 export function EcosystemTvsByTokenType({
   tvsByTokenTypeData: { withRwaRestricted, withoutRwaRestricted },
@@ -66,27 +47,16 @@ export function EcosystemTvsByTokenType({
     : withRwaRestricted
 
   const chartData = useMemo(() => {
-    return [
-      {
-        tokenType: 'ether' as const,
-        tvs: tvsByTokenType.ether,
-        fill: 'var(--ecosystem-primary)',
-      },
-      {
-        tokenType: 'stablecoins' as const,
-        tvs: tvsByTokenType.stablecoins,
-        fill: 'var(--ecosystem-primary-50)',
-      },
-      {
-        tokenType: 'other' as const,
-        tvs: tvsByTokenType.other,
-        fill: 'var(--ecosystem-primary-25)',
-      },
-    ]
+    return tokenTypeOrder
+      .map((tokenType) => ({
+        tokenType,
+        tvs: tvsByTokenType[tokenType],
+        fill: chartMeta[tokenType].color,
+      }))
+      .filter((data) => data.tvs > 0)
   }, [tvsByTokenType])
 
-  const totalTvs =
-    tvsByTokenType.ether + tvsByTokenType.stablecoins + tvsByTokenType.other
+  const totalTvs = chartData.reduce((acc, curr) => acc + curr.tvs, 0)
 
   return (
     <EcosystemWidget className={className}>
@@ -110,7 +80,7 @@ export function EcosystemTvsByTokenType({
                         type={{ shape: 'square' }}
                       />
                       <div className="font-medium text-xs">
-                        {tokenTypeLabels[data.tokenType]}
+                        {chartMeta[data.tokenType].label}
                       </div>
                     </div>
                   </td>
@@ -177,7 +147,7 @@ function CustomTooltip({ payload }: CustomChartTooltipProps) {
   if (!payload) return null
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-36 flex-col gap-1">
+      <div className="flex flex-col gap-1">
         {payload.map((entry) => {
           if (
             entry.name === undefined ||
