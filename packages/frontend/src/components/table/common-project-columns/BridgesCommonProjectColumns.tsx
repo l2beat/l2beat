@@ -1,7 +1,7 @@
 import type { ColumnHelper } from '@tanstack/react-table'
 import { TableLink } from '~/components/table/TableLink'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
-import { ProjectNameCell } from '../../cells/ProjectNameCell'
+import { ProjectNameCell } from '../cells/ProjectNameCell'
 import { getCommonProjectColumns } from './CommonProjectColumns'
 
 export function getBridgesCommonProjectColumns<T extends CommonProjectEntry>(

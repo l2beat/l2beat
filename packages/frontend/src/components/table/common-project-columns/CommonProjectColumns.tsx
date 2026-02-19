@@ -1,5 +1,5 @@
 import type { ColumnHelper } from '@tanstack/react-table'
-import { IndexCell } from '../../cells/IndexCell'
+import { IndexCell } from '../cells/IndexCell'
 
 export interface CommonProjectColumnsEntry {
   slug: string
