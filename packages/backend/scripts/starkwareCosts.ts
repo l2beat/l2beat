@@ -1,3 +1,21 @@
+/**
+ * script to fetch starkware api data about proof and batch costs
+ * 
+ * earliest usable api data is from ~ 2024-03-01
+ * 
+ * ARGUMENTS:
+ * [start date] - Start date of the period (YYYY-MM-DD or DD-MM-YYYY). Defaults to yesterday. [optional]
+ * [end date]   - End date of the period (YYYY-MM-DD or DD-MM-YYYY). Defaults to today. [optional]
+ *
+ * FLAGS:
+ * --list-customer-ids, -ls - List all customer ids for the period and exit.
+ * --tx-target, -t              - List transaction.to addresses and counts for a single customer in this period.
+ * --help, -h               - show help
+ *
+ * OPTIONS:
+ * --customer-id, -c <str> - Customer id used in --tx-target mode. Alias is also accepted (e.g. starknet, paradex). [optional]
+ */
+
 import { HttpClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
@@ -79,6 +97,7 @@ const args = {
   txTarget: flag({
     type: boolean,
     long: 'tx-target',
+    short: 't',
     description:
       'List transaction.to addresses and counts for a single customer in this period.',
   }),
