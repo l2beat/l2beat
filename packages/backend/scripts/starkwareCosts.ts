@@ -21,6 +21,10 @@ const ETH_GET_TX_BY_HASH_BATCH_SIZE = 200
 const customCustomerIds = {
   starknet: 'gcp-starknet-production_starknet-mainnet',
   paradex: 'gcp-paradigm-otc-prod_potc-production',
+  edgex: 'edgex-production_edgex-production',
+  sorare: 'sorare-production_sorare-prodcution',
+  myria: 'gcp-myria-prod_myria-production',
+  immutable: 'immutable-production_immutable-production',
 } as const satisfies Record<string, string>
 
 const customNameByCustomerId: Record<string, string> = Object.fromEntries(
