@@ -35,6 +35,10 @@ const SHARP_BI_BASE_URL =
   'http://sharp-bi.provingservice.io/sharp_bi/aggregations'
 const SHARP_VERIFIER_ADDRESS = '0x47312450b3ac8b5b8e247a6bb6d523e7605bdb60'
 const ETH_GET_TX_BY_HASH_BATCH_SIZE = 200
+const ETH_RPC_MAX_429_RETRIES = 8
+const ETH_RPC_RETRY_BASE_DELAY_MS = 1_000
+const ETH_RPC_RETRY_MAX_DELAY_MS = 30_000
+const ETH_RPC_RETRY_JITTER_RATIO = 0.25
 
 const customCustomerIds = {
   starknet: 'gcp-starknet-production_starknet-mainnet',
@@ -246,6 +250,9 @@ async function runTxTargetMode(
   console.log(
     `sharp_to_frac=${formatPercent(safeFraction(sharpCount, totalToCount))}`,
   )
+  console.log('-----------------------------')
+  console.log('There are usually 4 targets (by number of tx): 0 MemoryPageFactRegistry, 1 FriStatementContract, 2 MerkleStatementContract, 3 SHARPVerifier CallProxy')
+  console.log('of which only the MemoryPageFactRegistry are batchSubmissions')
 
   const rows = [...toCounts.entries()]
     .map(([address, count]) => ({
@@ -352,14 +359,11 @@ async function getToAddressCounts(
       method: 'eth_getTransactionByHash',
       params: [txHash],
     }))
-    const response = (await http.fetch(ethereumRpcUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-      timeout: 120_000,
-    })) as TransactionByHashRpcResult[]
+    const response = await fetchRpcBatchWith429Backoff(
+      http,
+      ethereumRpcUrl,
+      requestBody,
+    )
 
     for (const item of response) {
       if (!item.result) {
@@ -378,6 +382,74 @@ async function getToAddressCounts(
     toCounts,
     rpcResultCount,
   }
+}
+
+async function fetchRpcBatchWith429Backoff(
+  http: HttpClient,
+  ethereumRpcUrl: string,
+  requestBody: unknown[],
+): Promise<TransactionByHashRpcResult[]> {
+  const body = JSON.stringify(requestBody)
+  let retries = 0
+
+  while (true) {
+    const res = await http.fetchRaw(ethereumRpcUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body,
+      timeout: 120_000,
+    })
+
+    if (res.ok) {
+      return (await res.json()) as TransactionByHashRpcResult[]
+    }
+
+    if (res.status !== 429 || retries >= ETH_RPC_MAX_429_RETRIES) {
+      throw new Error(`HTTP error: ${res.status} ${res.statusText}`)
+    }
+
+    retries += 1
+
+    const retryAfterMs = parseRetryAfterMs(res.headers.get('retry-after'))
+    const exponentialMs = Math.min(
+      ETH_RPC_RETRY_MAX_DELAY_MS,
+      ETH_RPC_RETRY_BASE_DELAY_MS * 2 ** (retries - 1),
+    )
+    const baseDelayMs = retryAfterMs ?? exponentialMs
+    const jitterMs = Math.floor(
+      baseDelayMs * ETH_RPC_RETRY_JITTER_RATIO * Math.random(),
+    )
+    const delayMs = baseDelayMs + jitterMs
+
+    console.log(
+      `Ethereum RPC rate-limited (429). Retrying in ${delayMs}ms (attempt ${retries}/${ETH_RPC_MAX_429_RETRIES}).`,
+    )
+    await sleep(delayMs)
+  }
+}
+
+function parseRetryAfterMs(value: string | null): number | undefined {
+  if (!value) {
+    return undefined
+  }
+
+  const seconds = Number(value)
+  if (Number.isFinite(seconds) && seconds >= 0) {
+    return seconds * 1_000
+  }
+
+  const retryAt = Date.parse(value)
+  if (Number.isNaN(retryAt)) {
+    return undefined
+  }
+
+  return Math.max(0, retryAt - Date.now())
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 function getUniqueTxHashesForTrains(
