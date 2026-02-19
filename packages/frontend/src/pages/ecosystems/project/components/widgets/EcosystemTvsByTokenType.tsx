@@ -147,7 +147,7 @@ function CustomTooltip({ payload }: CustomChartTooltipProps) {
   if (!payload) return null
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-36 flex-col gap-1">
+      <div className="flex flex-col gap-1">
         {payload.map((entry) => {
           if (
             entry.name === undefined ||
