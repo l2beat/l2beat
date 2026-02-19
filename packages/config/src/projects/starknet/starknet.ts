@@ -700,8 +700,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       },
       {
         // Since 2024-03-01, Starknet SHARP proof share is estimated via
-        // customer fractions from sharp-bi API.
-        // Boundaries and stats: ./starkwareProofFractionBoundaries.md
+        // customer fractions from sharp-bi API. (see `pnpm starkware-costs -h` in backend)
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'functionCall',
