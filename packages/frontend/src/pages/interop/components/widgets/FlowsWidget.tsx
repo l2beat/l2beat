@@ -46,10 +46,10 @@ export function FlowsWidget({
         <h2 className="font-bold text-heading-16 md:text-heading-20">
           Last 24 hours flows
         </h2>
-        <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
+        <div className="mt-1 font-medium text-label-value-12 text-secondary max-md:hidden md:text-label-value-14">
           By volume
         </div>
-        <div className="mt-4 grid grid-cols-2 gap-3">
+        <div className="mt-3 grid grid-cols-2 gap-3 md:mt-4">
           {isLoading &&
             times(2).map((index) => (
               <Skeleton key={index} className="h-20 w-full" />
@@ -68,7 +68,7 @@ export function FlowsWidget({
             <TooltipTrigger asChild>
               <div className="cursor-pointer">
                 <Breakdown
-                  className="mt-4! h-1.5 w-full"
+                  className="mt-3! h-1.5 w-full md:mt-4!"
                   values={flows?.map((flow, i) => ({
                     value: flow.volume,
                     className: i === 0 ? 'bg-purple-100' : 'bg-n-pink-350',
@@ -136,16 +136,16 @@ function FlowItem({
   volume: number
 }) {
   return (
-    <div className="flex flex-col items-center rounded-lg border border-divider px-4 py-7">
+    <div className="flex flex-col items-center rounded-lg border border-divider px-4 py-3 md:py-7">
       <div className="flex gap-1.5">
         <img src={from.iconUrl} alt={from.id} className="size-5" />
         <ArrowRightIcon className="size-5 fill-brand" />
         <img src={to.iconUrl} alt={to.id} className="size-5" />
       </div>
-      <span className="mt-2 font-medium text-label-value-14 text-secondary">
+      <span className="mt-2 font-medium text-label-value-12 text-secondary md:text-label-value-14">
         Volume
       </span>
-      <div className="mt-0.5 font-bold text-label-value-24">
+      <div className="mt-0.5 font-bold text-heading-20 md:text-heading-24">
         {formatCurrency(volume, 'usd')}
       </div>
     </div>
