@@ -10,17 +10,17 @@ whatsNew:
 
 This entry announces the launch of the changelog feature and its integration with the navigation widget.
 
-## New
+### New
 
 - Added a dedicated **Changelog** page to track product updates.
 - Added a **Changelog** link to the side navigation.
 
-## Improved
+### Improved
 
 - The existing **What's New** widget can now be driven from changelog entries.
 - Editors can schedule widget visibility with an explicit expiration date.
 
-## How to publish updates
+### How to publish updates
 
 1. Create a new markdown file in `src/content/changelog`.
 2. Fill in frontmatter (`title`, `publishedAt`, optional `summary`).

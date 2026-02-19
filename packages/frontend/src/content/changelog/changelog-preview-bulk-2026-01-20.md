@@ -6,7 +6,7 @@ publishedAt: "2026-01-20T10:00:00.000Z"
 
 This synthetic mega entry contains a long fake list to preview heavy changelog density.
 
-## Hallucinated changes
+### Hallucinated changes
 
 - Introduced an experimental risk-diff ribbon for every project table row.
 - Added a synthetic DA fallback monitor with hourly confidence snapshots.
