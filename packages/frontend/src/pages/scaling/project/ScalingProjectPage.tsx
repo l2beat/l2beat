@@ -1,5 +1,10 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import { useState } from 'react'
+import {
+  BadgeDetailsDialog,
+  useBadgeDetails,
+} from '~/components/badge-details/BadgeDetailsDialog'
 import { CssVariables } from '~/components/CssVariables'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
@@ -19,22 +24,30 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
+import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { ProjectScalingSummary } from './components/ScalingProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectScalingEntry
   queryState: DehydratedState
+  scalingSummaryEntries?: ScalingSummaryEntry[]
 }
 
 export function ScalingProjectPage({
   projectEntry,
   queryState,
+  scalingSummaryEntries,
   ...props
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(
     projectEntry.sections,
   )
   const isNavigationEmpty = navigationSections.length === 0
+
+  const [openedBadgeId, setOpenedBadgeId] = useState<string>()
+  const badgeDetailsById = useBadgeDetails(scalingSummaryEntries ?? [])
+  const hasBadgeDetails = scalingSummaryEntries && scalingSummaryEntries.length > 0
+
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
@@ -83,6 +96,9 @@ export function ScalingProjectPage({
                     <BadgesSection
                       badges={projectEntry.header.badges}
                       className="mb-4 md:hidden"
+                      onBadgeClick={
+                        hasBadgeDetails ? setOpenedBadgeId : undefined
+                      }
                     />
                   )}
                   {projectEntry.header.description && (
@@ -100,7 +116,12 @@ export function ScalingProjectPage({
                   </div>
                 </div>
                 <div className="row-start-2">
-                  <ProjectScalingSummary project={projectEntry} />
+                  <ProjectScalingSummary
+                    project={projectEntry}
+                    onBadgeClick={
+                      hasBadgeDetails ? setOpenedBadgeId : undefined
+                    }
+                  />
 
                   {projectEntry.header.category === 'Other' &&
                     projectEntry.reasonsForBeingOther &&
@@ -139,6 +160,14 @@ export function ScalingProjectPage({
               <ScrollToTopButton />
             </div>
           </div>
+
+          {hasBadgeDetails && (
+            <BadgeDetailsDialog
+              badgeDetailsById={badgeDetailsById}
+              openedBadgeId={openedBadgeId}
+              onOpenedBadgeIdChange={setOpenedBadgeId}
+            />
+          )}
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>

@@ -27,9 +27,10 @@ import { ProjectScalingStats } from './ScalingProjectStats'
 
 interface Props {
   project: ProjectScalingEntry
+  onBadgeClick?: (badgeId: string) => void
 }
 
-export function ProjectScalingSummary({ project }: Props) {
+export function ProjectScalingSummary({ project, onBadgeClick }: Props) {
   const hasTokenWarnings =
     project.header.tvs && project.header.tvs?.tokens.warnings?.length > 0
 
@@ -206,7 +207,7 @@ export function ProjectScalingSummary({ project }: Props) {
       <div className="max-md:hidden">
         <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
           {project.header.badges && project.header.badges.length > 0 && (
-            <BadgesSection badges={project.header.badges} />
+            <BadgesSection badges={project.header.badges} onBadgeClick={onBadgeClick} />
           )}
           {project.header.description && (
             <AboutSection description={project.header.description} />

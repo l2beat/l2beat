@@ -1,5 +1,6 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
+import { getScalingSummaryEntries } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
@@ -47,10 +48,19 @@ export async function getScalingProjectData(
   })
   if (!project) return undefined
 
-  const [appLayoutProps, projectEntry] = await Promise.all([
+  const [appLayoutProps, projectEntry, summaryEntries] = await Promise.all([
     getAppLayoutProps(),
     getScalingProjectEntry(project, helpers),
+    getScalingSummaryEntries(),
   ])
+
+  const scalingSummaryEntries = [
+    ...summaryEntries.rollups,
+    ...summaryEntries.validiumsAndOptimiums,
+    ...summaryEntries.others,
+    ...summaryEntries.notReviewed,
+  ].sort((a, b) => b.tvsOrder - a.tvsOrder)
+
   return {
     head: {
       manifest,
@@ -69,6 +79,7 @@ export async function getScalingProjectData(
         ...appLayoutProps,
         projectEntry,
         queryState: helpers.dehydrate(),
+        scalingSummaryEntries,
       },
     },
   }
