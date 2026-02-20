@@ -52,7 +52,7 @@ export function InteropSummaryPage({
           initialSelectedChains={initialSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
+            <MainPageHeader>Interoperability</MainPageHeader>
             <Content
               interopChains={interopChains}
               onboardingInteropChains={onboardingInteropChains}
