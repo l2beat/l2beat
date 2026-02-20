@@ -87,6 +87,7 @@ function ChainSelectorButton({
         selected
           ? 'border-brand bg-brand/15'
           : '[&:not([disabled]):hover:bg-brand/5',
+        !chain.isUpcoming && 'bg-header-secondary',
         className,
       )}
       disabled={chain.isUpcoming}
