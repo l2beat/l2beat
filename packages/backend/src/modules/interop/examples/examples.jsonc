@@ -697,6 +697,15 @@
       {
         "chain": "base",
         "tx": "0x0d9e645e1d491611634f8f5545291f6a999889bf6abaadde541217e3b917df6a"
+      },
+      // Refunded order on Base
+      {
+        "chain": "base",
+        "tx": "0xfa2a7f45a7db62aaf7071c602dfe2890d8b0741052c506da7afba8b1e3fd1718"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe6ceacc75b0e8a0c8f724bde613c551edb976045835e24681d7646e1f6aad53e"
       }
     ],
     "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
