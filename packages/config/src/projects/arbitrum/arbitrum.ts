@@ -142,6 +142,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
         'https://youtube.com/@Arbitrum',
+        'https://www.linkedin.com/company/arbitrum',
         'https://t.me/arbitrum',
       ],
 
