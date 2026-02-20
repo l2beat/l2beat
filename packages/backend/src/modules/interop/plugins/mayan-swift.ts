@@ -59,6 +59,7 @@ import { WormholeConfig } from './wormhole/wormhole.config'
 const orderCreatedLog = 'event OrderCreated(bytes32 key)'
 const orderFulfilledLog =
   'event OrderFulfilled(bytes32 key, uint64 sequence, uint256 netAmount)'
+const orderRefundedLog = 'event OrderRefunded(bytes32 key, uint256 netAmount)'
 const logMessagePublishedLog =
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
 const transferLog =
@@ -67,6 +68,8 @@ const transferLog =
 const parseOrderCreated = createEventParser(orderCreatedLog)
 
 const parseOrderFulfilled = createEventParser(orderFulfilledLog)
+
+const parseOrderRefunded = createEventParser(orderRefundedLog)
 
 const parseLogMessagePublished = createEventParser(logMessagePublishedLog)
 
@@ -88,6 +91,11 @@ export const OrderFulfilled = createInteropEventType<{
   dstWasMinted?: boolean
   $srcChain?: string
 }>('mayan-swift.OrderFulfilled')
+
+export const OrderRefunded = createInteropEventType<{
+  key: string
+  refundedAmount: bigint
+}>('mayan-swift.OrderRefunded')
 
 // Settlement message sent via wormhole (non-batched case, same tx as OrderFulfilled)
 export const SettlementSent = createInteropEventType<{
@@ -158,6 +166,11 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
         type: 'event',
         signature: orderFulfilledLog,
         includeTxEvents: [logMessagePublishedLog, transferLog],
+        addresses: mayanSwiftAddresses,
+      },
+      {
+        type: 'event',
+        signature: orderRefundedLog,
         addresses: mayanSwiftAddresses,
       },
     ]
@@ -280,21 +293,47 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
         }),
       ]
     }
+
+    const orderRefunded = parseOrderRefunded(input.log, null)
+    if (orderRefunded) {
+      return [
+        OrderRefunded.create(input, {
+          key: orderRefunded.key,
+          refundedAmount: orderRefunded.netAmount,
+        }),
+      ]
+    }
   }
 
-  matchTypes = [OrderFulfilled]
-  match(
-    orderFulfilled: InteropEvent,
-    db: InteropEventDb,
-  ): MatchResult | undefined {
-    if (!OrderFulfilled.checkType(orderFulfilled)) return
+  matchTypes = [OrderFulfilled, OrderRefunded]
+  match(orderEvent: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (
+      !OrderFulfilled.checkType(orderEvent) &&
+      !OrderRefunded.checkType(orderEvent)
+    ) {
+      return
+    }
+
     const orderCreated = db.find(OrderCreated, {
-      key: orderFulfilled.args.key,
+      key: orderEvent.args.key,
     })
     if (!orderCreated) return
     const mayanForwarded = db.find(MayanForwarded, {
       sameTxAfter: orderCreated,
     })
+
+    if (OrderRefunded.checkType(orderEvent)) {
+      return [
+        // no Transfer for refunds
+        Result.Message('mayan-swift.Message', {
+          app: 'mayan-swift-refund',
+          srcEvent: orderCreated,
+          dstEvent: orderEvent,
+          extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
+        }),
+      ]
+    }
+
     const orderCreatedAmount = orderCreated.args.amountIn
     const forwardedAmount = mayanForwarded?.args.amountIn
     const srcAmount =
@@ -307,11 +346,11 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
       mayanForwarded?.args.tokenIn ?? orderCreated.args.srcTokenAddress
     const dstTokenAddress =
       mayanForwarded?.args.tokenOut ??
-      orderFulfilled.args.dstTokenAddress ??
+      orderEvent.args.dstTokenAddress ??
       orderCreated.args.dstTokenAddress
     const srcWasBurned =
       mayanForwarded?.args.srcWasBurned ?? orderCreated.args.srcWasBurned
-    const dstWasMinted = orderFulfilled.args.dstWasMinted
+    const dstWasMinted = orderEvent.args.dstWasMinted
 
     // Settlement messages (LogMessagePublished → OrderUnlocked) are matched separately
     // by the mayan-swift-settlement plugin
@@ -321,14 +360,14 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
       Result.Message('mayan-swift.Message', {
         app: 'mayan-swift',
         srcEvent: orderCreated,
-        dstEvent: orderFulfilled,
+        dstEvent: orderEvent,
       }),
       Result.Transfer('mayan-swift.Transfer', {
         srcEvent: orderCreated,
         srcAmount,
         srcTokenAddress,
-        dstEvent: orderFulfilled,
-        dstAmount: orderFulfilled.args.dstAmount,
+        dstEvent: orderEvent,
+        dstAmount: orderEvent.args.dstAmount,
         dstTokenAddress,
         srcWasBurned,
         dstWasMinted,
