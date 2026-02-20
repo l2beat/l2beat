@@ -23,7 +23,6 @@ import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
-import { InteropTransferStream } from './stream/InteropTransferStream'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
 export function createInteropModule({
@@ -66,8 +65,6 @@ export function createInteropModule({
     logger,
   )
 
-  const transferStream = new InteropTransferStream()
-
   const processors = []
   if (config.interop.capture.enabled) {
     for (const chain of config.interop.capture.chains) {
@@ -92,7 +89,6 @@ export function createInteropModule({
     flattenClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id),
     logger,
-    transferStream,
   )
 
   const router = createInteropRouter(
@@ -101,7 +97,6 @@ export function createInteropModule({
     processors,
     syncersManager,
     logger.for('InteropRouter'),
-    transferStream,
   )
 
   const compareLoops = plugins.comparePlugins.map(

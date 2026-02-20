@@ -15,7 +15,6 @@ import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
-import { LiveTransfers } from './LiveTransfers'
 import { PluginsStatusTable } from './PluginsStatusTable'
 import {
   type ProcessorsStatus,
@@ -416,7 +415,6 @@ function MainPageLayout(props: {
       </a>
       {' | '}
       <a href="/interop/aggregates">Aggregates dashboard</a>
-      <LiveTransfers />
       <DataTablePage
         showHome={false}
         tables={[
