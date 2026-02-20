@@ -39,6 +39,7 @@ export type {
   InteropEventContext,
   InteropEventRecord,
   InteropEventStatsRecord,
+  InteropEventUpdate,
 } from './repositories/InteropEventRepository'
 export type {
   InteropMessageDetailedStatsRecord,

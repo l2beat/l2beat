@@ -18,6 +18,13 @@ export interface InteropEventRecord {
   matched: boolean
   unsupported: boolean
   direction: string | undefined
+
+  abstractTokenId: string | undefined
+  symbol: string | undefined
+  amount: number | undefined
+  price: number | undefined
+  valueUsd: number | undefined
+  isProcessed: boolean
 }
 
 export interface InteropEventContext {
@@ -41,6 +48,12 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     ctx: reviveBigInts(row.ctx) as InteropEventContext,
     matched: row.matched,
     unsupported: row.unsupported,
+    abstractTokenId: row.abstractTokenId ?? undefined,
+    symbol: row.symbol ?? undefined,
+    amount: row.amount ?? undefined,
+    price: row.price ?? undefined,
+    valueUsd: row.valueUsd ?? undefined,
+    isProcessed: row.isProcessed,
   }
 }
 
@@ -56,6 +69,12 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     blockNumber: record.blockNumber,
     matched: record.matched,
     unsupported: record.unsupported,
+    abstractTokenId: record.abstractTokenId,
+    symbol: record.symbol,
+    amount: record.amount,
+    price: record.price,
+    valueUsd: record.valueUsd,
+    isProcessed: record.isProcessed,
     args: JSON.stringify(record.args, (_, value) =>
       typeof value === 'bigint' ? `BigInt(${value})` : value,
     ),
@@ -73,6 +92,14 @@ export interface InteropEventStatsRecord {
   unmatched: number
   oldUnmatched: number
   unsupported: number
+}
+
+export interface InteropEventUpdate {
+  abstractTokenId?: string
+  symbol?: string
+  price?: number
+  amount?: number
+  valueUsd?: number
 }
 
 export class InteropEventRepository extends BaseRepository {
@@ -221,6 +248,17 @@ export class InteropEventRepository extends BaseRepository {
         .where('eventId', 'in', batch)
         .execute()
     })
+  }
+
+  async updateFinancials(
+    eventId: string,
+    update: InteropEventUpdate,
+  ): Promise<void> {
+    await this.db
+      .updateTable('InteropEvent')
+      .set({ ...update, isProcessed: true })
+      .where('eventId', '=', eventId)
+      .execute()
   }
 
   async deleteExpired(currentTime: UnixTime): Promise<number> {

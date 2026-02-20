@@ -128,6 +128,12 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     matched: false,
     unsupported: false,
     ctx: event.ctx,
+    abstractTokenId: undefined,
+    symbol: undefined,
+    amount: undefined,
+    price: undefined,
+    valueUsd: undefined,
+    isProcessed: false,
     // Deprecated
     blockNumber: 0,
   }
