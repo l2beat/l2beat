@@ -28,7 +28,7 @@ export async function getSession(
   }
 
   // If the cookie is a predefined read-only token
-  if (token === config.readOnlyAuthToken) {
+  if (config.readOnlyAuthTokens.includes(token)) {
     return { email: 'dev-readonly@l2beat.com', permissions: ['read'] }
   }
 
