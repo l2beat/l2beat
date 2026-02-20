@@ -3428,6 +3428,41 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1689552000,
+            "untilTimestamp": 1742428800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1689552000,
+            "untilTimestamp": 1742428800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-FORT",
       "priceId": "forta",
       "symbol": "FORT",
@@ -6336,6 +6371,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-PGOLD",
+      "priceId": "pleasing-gold",
+      "symbol": "PGOLD",
+      "name": "Pleasing Gold",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70395/large/%E9%BB%84%E9%87%91.png?1761795141",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1761782400
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-PLUME",
       "priceId": "plume",
       "symbol": "PLUME",
@@ -8798,6 +8851,41 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1706918400,
+            "untilTimestamp": 1742169600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1706918400,
+            "untilTimestamp": 1742169600
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-TRIBE",
       "priceId": "tribe-2",
       "symbol": "TRIBE",
@@ -8893,6 +8981,26 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-UMAMI",
+      "priceId": "umami-finance",
+      "symbol": "UMAMI",
+      "name": "Umami",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21159/large/_UMAMI-200px.jpg?1696520536",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "umami-finance",
+        "decimals": 9,
+        "sinceTimestamp": 1638403200,
+        "untilTimestamp": 1731196800,
+        "address": "0x1622bF67e6e5747b81866fE0b85178a93C7F86e3",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
