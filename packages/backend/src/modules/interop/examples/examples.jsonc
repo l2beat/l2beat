@@ -525,36 +525,19 @@
       "transfers": ["wormhole-tokenbridge.Transfer"]
     }
   },
-  "mayan-mctp-circle-src-unsupported": {
-    "loadConfigs": ["wormhole"],
-    "txs": [
-      {
-        "chain": "base",
-        "tx": "0x941d2a4147c9e0775459e9fcef015e608502232e6684ad67d8d1261b55f59846"
-      }
-    ],
-    "expects": {
-      "events": [
-        "mayan-forwarder.MayanForwarded",
-        "wormhole.LogMessagePublished"
-      ]
-    }
-  },
-  "mayan-mctp-circle-dst-skipped": {
-    "loadConfigs": ["wormhole", "cctp-v1"],
-    "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0x1f2039651ebe7826f366b6f83a845a3224810450e234c2ba036a9ac676f7039a"
-      }
-    ],
-    "expects": {
-      "events": ["cctp-v1.MessageReceived"]
-    }
-  },
-  "mayan-mctp-fast": {
+  "mayan-mctp": {
     "loadConfigs": ["wormhole", "cctp-v2", "cctp-v1"],
     "txs": [
+      // cctp v1
+      {
+        "chain": "arbitrum",
+        "tx": "0xcd3e330e687e969354c4402151f04a7ae377b2ec1bcf9f8d1a043b2f0ba4eed5"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd6181ec44595a8d9c36dd0395df0b9da64ad9d078c33bab7de95a96c6208c5c8"
+      },
+      // cctp v2
       {
         "chain": "optimism",
         "tx": "0xbe39bcd13c8d7f37570b4536f40432ec12f167e2aa6b42710e815059c32bda04"
@@ -563,7 +546,7 @@
         "chain": "base",
         "tx": "0x4bedb6bca328cc57f6c5612deeb1b0d16871e63b25fe15d68f9923bc54916c5d"
       },
-      // no 'orderfulfilled'
+      // no 'orderfulfilled', cctp v2
       {
         "chain": "base",
         "tx": "0x01b070f620aa34ac50111b4b45c796d8198d53d0ec5df04caaf31fdc87b2285d"
@@ -581,26 +564,33 @@
         "mayan-forwarder.MayanForwarded",
         "cctp-v2.MessageReceived",
         "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "wormhole.LogMessagePublished",
+        "cctp-v1.MessageReceived",
+        "cctp-v1.MessageSent",
         "mayan-forwarder.MayanForwarded"
       ],
       "messages": [
         { "type": "mayan.Message", "app": "mctp" },
         { "type": "cctp-v2.FastMessage", "app": "cctp-v2" },
         { "type": "mayan.Message", "app": "mctp" },
-        { "type": "cctp-v2.FastMessage", "app": "cctp-v2" }
+        { "type": "cctp-v2.FastMessage", "app": "cctp-v2" },
+        { "type": "mayan.Message", "app": "mctp" },
+        { "type": "cctp-v1.Message", "app": "cctp-v1" }
       ],
-      "transfers": ["cctp-v2.Transfer", "cctp-v2.Transfer"]
+      "transfers": ["cctp-v2.Transfer", "cctp-v2.Transfer", "cctp-v1.Transfer"]
     }
   },
-  "mayan-mctp-bridge-fee-on-dst": {
+  "msw": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
         "chain": "base",
-        "tx": "0xcb533450fe53baf53d82e61be8c3a7dc8967a8d9ade6c745301f3e16326cbf49"
+        "tx": "0xc8c1fa568f8724439043810ec6c72f29c325bdbfa7ce98d1f59161fd4aad071d"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x62f7808a27b877880526c6ae606598e368e9af36f4137ad3236de49af1a5b6b1"
+        "chain": "arbitrum",
+        "tx": "0xaf5bccec595abdf8cd2a3a47c9f1929c973265c74bd38c7d375b831071e71474"
       }
     ]
   },
