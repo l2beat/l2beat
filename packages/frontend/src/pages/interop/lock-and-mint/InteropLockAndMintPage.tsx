@@ -28,12 +28,14 @@ import { HeaderWithDescription } from './components/HeaderWithDescription'
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: WithProjectIcon<Project<'interopConfig'>>[]
   initialSelectedChains: SelectedChainsIds
 }
 
 export function InteropLockAndMintPage({
   interopChains,
+  onboardingInteropChains,
   queryState,
   initialSelectedChains,
   protocols,
@@ -47,7 +49,11 @@ export function InteropLockAndMintPage({
           initialSelectedChains={initialSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <Content interopChains={interopChains} protocols={protocols} />
+            <Content
+              interopChains={interopChains}
+              onboardingInteropChains={onboardingInteropChains}
+              protocols={protocols}
+            />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
@@ -57,9 +63,11 @@ export function InteropLockAndMintPage({
 
 function Content({
   interopChains,
+  onboardingInteropChains,
   protocols,
 }: {
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
@@ -71,7 +79,7 @@ function Content({
           <HeaderWithDescription />
         </div>
         <InitialChainSelector
-          interopChains={interopChains}
+          interopChains={onboardingInteropChains}
           selectedChains={selectedChains}
           selectChain={selectChain}
           type="lockAndMint"
