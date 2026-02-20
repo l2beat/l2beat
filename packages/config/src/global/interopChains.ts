@@ -74,7 +74,6 @@ export const INTEROP_CHAINS: InteropChain[] = [
   },
   {
     id: 'solana',
-    iconSlug: 'soon',
     name: 'Solana',
     type: 'evm',
     display: 'SOL',
