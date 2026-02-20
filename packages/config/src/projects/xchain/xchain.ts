@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('xchain')
 
 export const xchain: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1725235200), // 2024-09-02T00:00:00Z
+  archivedAt: UnixTime(1771582624),
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
