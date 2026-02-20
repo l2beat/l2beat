@@ -84,7 +84,7 @@ function ChainSelectorButton({
     <button
       className={cn(
         'group relative flex h-10 items-center justify-center gap-2 rounded border border-divider px-3 py-2 transition-colors enabled:bg-header-secondary md:h-[104px] md:w-[128px] md:flex-col md:gap-1.5 md:py-4 lg:h-[128px] lg:w-[148px] lg:gap-3 lg:py-7.5',
-        selected ? 'border-brand bg-brand/15' : 'enabled:hover:bg-brand/5',
+        selected ? 'border-brand bg-brand/15!' : 'enabled:hover:bg-brand/5',
         className,
       )}
       disabled={chain.isUpcoming}
