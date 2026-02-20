@@ -1,0 +1,51 @@
+<svg width="1178" height="672" viewBox="0 0 1178 672" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="60" x2="1090" y2="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B1222"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="220" y1="210" x2="980" y2="560" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <filter id="blur" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+  </defs>
+  <rect width="1178" height="672" rx="24" fill="url(#bg)"/>
+  <circle cx="260" cy="160" r="170" fill="#0EA5E9" opacity="0.25" filter="url(#blur)"/>
+  <circle cx="900" cy="500" r="220" fill="#22D3EE" opacity="0.18" filter="url(#blur)"/>
+  <g opacity="0.4">
+    <path d="M0 540H1178" stroke="#334155"/>
+    <path d="M0 430H1178" stroke="#334155"/>
+    <path d="M0 320H1178" stroke="#334155"/>
+    <path d="M0 210H1178" stroke="#334155"/>
+    <path d="M0 100H1178" stroke="#334155"/>
+  </g>
+  <rect x="86" y="84" width="180" height="44" rx="22" fill="#0F172A" stroke="#334155"/>
+  <text x="176" y="112" text-anchor="middle" fill="#94A3B8" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="1.2">L2BEAT</text>
+  <text x="86" y="225" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="76" font-weight="800" letter-spacing="1.4">What&apos;s New</text>
+  <text x="86" y="306" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="74" font-weight="800" letter-spacing="1.2">Product Changelog</text>
+  <text x="86" y="382" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="34" font-weight="500">
+    Latest improvements, releases, and updates in one place.
+  </text>
+  <g transform="translate(86 456)">
+    <rect width="388" height="78" rx="39" fill="url(#accent)"/>
+    <text x="194" y="50" text-anchor="middle" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="31" font-weight="700">Read Changelog</text>
+  </g>
+  <g transform="translate(720 170)">
+    <rect width="360" height="330" rx="24" fill="#0F172A" stroke="#334155"/>
+    <circle cx="44" cy="56" r="9" fill="#22D3EE"/>
+    <rect x="66" y="45" width="250" height="22" rx="11" fill="#1E293B"/>
+    <circle cx="44" cy="112" r="9" fill="#38BDF8"/>
+    <rect x="66" y="101" width="220" height="22" rx="11" fill="#1E293B"/>
+    <circle cx="44" cy="168" r="9" fill="#60A5FA"/>
+    <rect x="66" y="157" width="266" height="22" rx="11" fill="#1E293B"/>
+    <circle cx="44" cy="224" r="9" fill="#93C5FD"/>
+    <rect x="66" y="213" width="194" height="22" rx="11" fill="#1E293B"/>
+    <rect x="28" y="272" width="304" height="30" rx="15" fill="#111827" stroke="#334155"/>
+    <text x="180" y="293" text-anchor="middle" fill="#94A3B8" font-family="Arial, sans-serif" font-size="16" font-weight="600" letter-spacing="0.8">
+      Updated frequently
+    </text>
+  </g>
+</svg>

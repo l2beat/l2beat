@@ -25,7 +25,7 @@ interface ContentCollectionEntry<T extends CollectionKey> {
   id: string
   data: v.infer<Collection[T]['schema']>
   content: string
-  excerpt: string
+  excerpt: string | undefined
   readTimeInMinutes: number
 }
 export type CollectionEntry<T extends CollectionKey> =
@@ -141,7 +141,12 @@ function getContentCollectionEntry(
   const parsedFile = matter(file.toString())
 
   const data = contentEntry.schema.parse(parsedFile.data)
-  const excerpt = getExcerpt(parsedFile.content)
+  let excerpt: string | undefined = undefined
+  try {
+    excerpt = getExcerpt(parsedFile.content)
+  } catch (_) {
+    // ignore
+  }
   const readTimeInMinutes = getReadTimeInMinutes(parsedFile.content)
 
   return {
