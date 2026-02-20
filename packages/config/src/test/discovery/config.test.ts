@@ -6,6 +6,7 @@ import {
   generatePermissionConfigHash,
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
+  getHashToBeMatched,
   makeEntryStructureConfig,
   TemplateService,
 } from '@l2beat/discovery'
@@ -146,6 +147,100 @@ describe('discovery config.jsonc', () => {
         expect(addresses).toHaveLength(uniqueAddresses.length)
       })
     }
+  })
+
+  interface TemplateMatchMismatch {
+    project: string
+    contract: string
+    address: string
+    expectedTemplate: string
+    matchingTemplates: string[]
+    hash: string
+  }
+
+  function formatTemplateMatchMismatches(
+    mismatches: TemplateMatchMismatch[],
+  ): string {
+    const lines = [
+      'Found templateized contracts with ambiguous or incorrect template matches.',
+      'Each shape-based templateized contract should match exactly one template (including criteria).',
+      '',
+      `Mismatches: ${mismatches.length}`,
+      '',
+    ]
+
+    for (const [index, mismatch] of mismatches.entries()) {
+      const reason =
+        mismatch.matchingTemplates.length === 0
+          ? 'no template matched'
+          : mismatch.matchingTemplates.length > 1
+            ? 'multiple templates matched'
+            : 'matched a different template'
+
+      lines.push(
+        `${index + 1}. ${mismatch.project} :: ${mismatch.contract}`,
+        `   reason: ${reason}`,
+        `   address: ${mismatch.address}`,
+        `   expected: ${mismatch.expectedTemplate}`,
+        `   matched (${mismatch.matchingTemplates.length}): ${mismatch.matchingTemplates.join(', ') || '(none)'}`,
+        `   hash: ${mismatch.hash}`,
+        '',
+      )
+    }
+
+    return lines.join('\n')
+  }
+
+  describe('templatized contracts have a unique template match', () => {
+    it('each shape-based templatized contract matches exactly one template (including criteria)', () => {
+      const mismatches: TemplateMatchMismatch[] = []
+      const allShapes = templateService.getAllShapes()
+
+      for (const c of configs) {
+        const discovery = configReader.readDiscovery(c.name)
+
+        for (const contract of discovery.entries) {
+          if (
+            contract.template === undefined ||
+            contract.sourceHashes === undefined ||
+            contract.unverified
+          ) {
+            continue
+          }
+
+          if ((allShapes[contract.template]?.hashes.length ?? 0) === 0) {
+            continue
+          }
+
+          const hashToBeMatched = getHashToBeMatched(contract.sourceHashes)
+
+          if (hashToBeMatched === undefined) {
+            continue
+          }
+
+          const matchingTemplates = templateService.findMatchingTemplatesByHash(
+            hashToBeMatched,
+            contract.address,
+          )
+
+          if (
+            matchingTemplates.length !== 1 ||
+            matchingTemplates[0] !== contract.template
+          ) {
+            mismatches.push({
+              project: c.name,
+              contract: contract.name ?? contract.address.toString(),
+              address: contract.address.toString(),
+              expectedTemplate: contract.template,
+              matchingTemplates,
+              hash: hashToBeMatched.toString(),
+            })
+          }
+        }
+      }
+
+      assert(mismatches.length === 0, formatTemplateMatchMismatches(mismatches))
+    })
   })
 
   describe('description is not default', () => {
