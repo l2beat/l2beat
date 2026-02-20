@@ -229,6 +229,56 @@ export const sp1: BaseProject = {
     ],
     verifierHashes: [
       {
+        hash: '0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `
+The regeneration process consumed around 70 GiB of memory on the peak.
+
+1. Install necessary dependencies: rust, docker, sp1 toolkit, go.
+
+\`\`\`
+sudo apt update
+sudo apt install build-essential golang-go protobuf-compiler
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+cargo install --debug --locked cargo-make
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+sudo apt install -y docker-ce
+sudo usermod -aG docker $\{USER\}
+
+curl -L https://sp1up.succinct.xyz/ | bash
+source ~/.bashrc
+sp1up
+\`\`\`
+
+2. Clone [sp1 repo](https://github.com/succinctlabs/sp1), set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to regenerate verifiers.
+
+\`\`\`
+git clone https://github.com/succinctlabs/sp1.git
+cd sp1/crates/prover
+git checkout v6.0.0   # commit should be f87f8d6ff005d542db22e241928319f5e96a4609
+export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
+
+make build-circuits
+\`\`\`
+      
+The script will generate Plonk verifier smart contract with verification keys and the verifier hash in \`build/plonk\` dir.
+        `,
+      },
+      {
         hash: '0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
@@ -283,24 +333,17 @@ The script will generate Plonk verifier smart contract with verification keys an
         `,
       },
       // {
-      //   hash: '0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d',
-      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //   hash: '0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896',
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
       //   knownDeployments: [
       //     {
       //       address: EthereumAddress(
-      //         '0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
+      //         '0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508',
       //       ),
       //       chain: 'ethereum',
       //     },
       //   ],
-      //   verificationStatus: 'successful',
-      //   verificationSteps: `
-      // - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
-      // - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
-      // - Make sure that you have [go lang installed](https://go.dev/doc/install).
-      // - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
-      // `,
-      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //   verificationStatus: 'notVerified',
       // },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
