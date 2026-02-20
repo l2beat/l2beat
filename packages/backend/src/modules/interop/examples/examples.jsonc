@@ -525,36 +525,19 @@
       "transfers": ["wormhole-tokenbridge.Transfer"]
     }
   },
-  "mayan-mctp-circle-src-unsupported": {
-    "loadConfigs": ["wormhole"],
-    "txs": [
-      {
-        "chain": "base",
-        "tx": "0x941d2a4147c9e0775459e9fcef015e608502232e6684ad67d8d1261b55f59846"
-      }
-    ],
-    "expects": {
-      "events": [
-        "mayan-forwarder.MayanForwarded",
-        "wormhole.LogMessagePublished"
-      ]
-    }
-  },
-  "mayan-mctp-circle-dst-skipped": {
-    "loadConfigs": ["wormhole", "cctp-v1"],
-    "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0x1f2039651ebe7826f366b6f83a845a3224810450e234c2ba036a9ac676f7039a"
-      }
-    ],
-    "expects": {
-      "events": ["cctp-v1.MessageReceived"]
-    }
-  },
-  "mayan-mctp-fast": {
+  "mayan-mctp": {
     "loadConfigs": ["wormhole", "cctp-v2", "cctp-v1"],
     "txs": [
+      // cctp v1
+      {
+        "chain": "arbitrum",
+        "tx": "0xcd3e330e687e969354c4402151f04a7ae377b2ec1bcf9f8d1a043b2f0ba4eed5"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd6181ec44595a8d9c36dd0395df0b9da64ad9d078c33bab7de95a96c6208c5c8"
+      },
+      // cctp v2
       {
         "chain": "optimism",
         "tx": "0xbe39bcd13c8d7f37570b4536f40432ec12f167e2aa6b42710e815059c32bda04"
@@ -563,7 +546,7 @@
         "chain": "base",
         "tx": "0x4bedb6bca328cc57f6c5612deeb1b0d16871e63b25fe15d68f9923bc54916c5d"
       },
-      // no 'orderfulfilled'
+      // no 'orderfulfilled', cctp v2
       {
         "chain": "base",
         "tx": "0x01b070f620aa34ac50111b4b45c796d8198d53d0ec5df04caaf31fdc87b2285d"
@@ -581,26 +564,33 @@
         "mayan-forwarder.MayanForwarded",
         "cctp-v2.MessageReceived",
         "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "wormhole.LogMessagePublished",
+        "cctp-v1.MessageReceived",
+        "cctp-v1.MessageSent",
         "mayan-forwarder.MayanForwarded"
       ],
       "messages": [
         { "type": "mayan.Message", "app": "mctp" },
         { "type": "cctp-v2.FastMessage", "app": "cctp-v2" },
         { "type": "mayan.Message", "app": "mctp" },
-        { "type": "cctp-v2.FastMessage", "app": "cctp-v2" }
+        { "type": "cctp-v2.FastMessage", "app": "cctp-v2" },
+        { "type": "mayan.Message", "app": "mctp" },
+        { "type": "cctp-v1.Message", "app": "cctp-v1" }
       ],
-      "transfers": ["cctp-v2.Transfer", "cctp-v2.Transfer"]
+      "transfers": ["cctp-v2.Transfer", "cctp-v2.Transfer", "cctp-v1.Transfer"]
     }
   },
-  "mayan-mctp-bridge-fee-on-dst": {
+  "msw": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
-        "chain": "base",
-        "tx": "0xcb533450fe53baf53d82e61be8c3a7dc8967a8d9ade6c745301f3e16326cbf49"
+        "chain": "ethereum",
+        "tx": "0xdcb99151d5e52655f47fca088f5431365777f59375fe319bce724143ef5f151f"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x62f7808a27b877880526c6ae606598e368e9af36f4137ad3236de49af1a5b6b1"
+        "chain": "base",
+        "tx": "0x1c6682291531b2fe91e336f67a848abff1e1e3c858d7e5f896b98d8cf2bd99c8"
       }
     ]
   },
@@ -708,7 +698,72 @@
         "tx": "0xe6ceacc75b0e8a0c8f724bde613c551edb976045835e24681d7646e1f6aad53e"
       }
     ],
-    "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
+    "expects": {
+      "events": [
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderRefunded",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.SettlementSent"
+      ],
+      "messages": [
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift-refund" }
+      ],
+      "transfers": [
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer"
+      ],
+      "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
+    }
   },
   "mayan-swift-settlement-non-batched": {
     "loadConfigs": ["wormhole"],
@@ -747,15 +802,17 @@
         "tx": "0x4c63d872d324fda368e1612e8f5ce8df3e61a13913d4b6c6bd8b30b93773aa07"
       }
     ],
-    "events": [
-      "mayan-swift.OrderCreated",
-      "mayan-forwarder.MayanForwarded",
-      "mayan-swift.OrderFulfilled",
-      "mayan-swift.SettlementSent",
-      "mayan-swift.OrderUnlocked"
-    ],
-    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
-    "transfers": ["mayan-swift.Transfer"]
+    "expects": {
+      "events": [
+        "mayan-swift.OrderCreated",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.OrderUnlocked"
+      ],
+      "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+      "transfers": ["mayan-swift.Transfer"]
+    }
   },
   "mayan-swift-settlement-batched": {
     "loadConfigs": ["wormhole"],
@@ -805,14 +862,16 @@
         "tx": "0x1cce878d867321728632a6e4d898e1b029e208dd9ae3d1e92f500dd4405abc5c"
       }
     ],
-    "events": [
-      "mayan-swift.OrderCreated",
-      "mayan-swift.OrderFulfilled",
-      "mayan-swift.SettlementSent",
-      "mayan-swift.OrderUnlocked"
-    ],
-    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
-    "transfers": ["mayan-swift.Transfer"]
+    "expects": {
+      "events": [
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.OrderUnlocked"
+      ],
+      "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+      "transfers": ["mayan-swift.Transfer"]
+    }
   },
   "circle-gateway": {
     "loadConfigs": ["cctp-v2"],
