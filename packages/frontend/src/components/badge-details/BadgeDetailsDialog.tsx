@@ -138,7 +138,7 @@ export function BadgeDetailsDialog({
                   <DialogTitle className="mt-3 text-center !text-xl">
                     {openedBadge.badge.name}
                   </DialogTitle>
-                  <p className="mt-1.5 text-center text-xs leading-relaxed text-secondary">
+                  <p className="mt-1.5 text-center text-xs leading-relaxed text-secondary dark:text-zinc-300">
                     {openedBadge.badge.description}
                   </p>
                   <div className="mt-3 flex items-center divide-x divide-divider">
