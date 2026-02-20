@@ -57,10 +57,10 @@ const args = {
     short: 'appr',
     description: 'Approve ongoing anomaly to be shown on website widget',
   }),
-  remove: option({
+  unapprove: option({
     type: optional(AnomalyKey),
-    long: 'remove',
-    short: 'r',
+    long: 'unapprove',
+    short: 'unappr',
     description:
       'Remove approval of ongoing anomaly to be hidden from website widget',
   }),
@@ -142,27 +142,27 @@ const cmd = command({
 
       await db.realTimeAnomalies.upsertMany([toApprove])
       console.log('Done')
-    } else if (args.remove) {
+    } else if (args.unapprove) {
       const ongoingAnomalies = await db.realTimeAnomalies.getOngoingAnomalies()
-      const toRemove = ongoingAnomalies.find(
+      const toUnapprove = ongoingAnomalies.find(
         (anomaly) =>
-          anomaly.projectId === args.remove?.projectId &&
-          anomaly.subtype === args.remove?.subtype,
+          anomaly.projectId === args.unapprove?.projectId &&
+          anomaly.subtype === args.unapprove?.subtype,
       )
 
-      if (!toRemove || !toRemove.isApproved) {
+      if (!toUnapprove || !toUnapprove.isApproved) {
         console.error(
-          `No approved anomaly found for project ${args.remove.projectId} and subtype ${args.remove.subtype}.`,
+          `No approved anomaly found for project ${args.unapprove.projectId} and subtype ${args.unapprove.subtype}.`,
         )
         process.exit(1)
       }
 
       console.log(
-        `Removing approval of anomaly for project ${toRemove.projectId} and subtype ${toRemove.subtype}...`,
+        `Removing approval of anomaly for project ${toUnapprove.projectId} and subtype ${toUnapprove.subtype}...`,
       )
-      toRemove.isApproved = false
+      toUnapprove.isApproved = false
 
-      await db.realTimeAnomalies.upsertMany([toRemove])
+      await db.realTimeAnomalies.upsertMany([toUnapprove])
       console.log('Done')
     } else {
       console.log(
