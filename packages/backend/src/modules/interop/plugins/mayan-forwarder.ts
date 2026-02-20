@@ -234,6 +234,10 @@ function resolveAmountIn(
   normalized: NormalizedForwarderLog,
   decodedData: DecodedData,
 ): bigint | undefined {
+  // Amount hierarchy for MayanForwarded:
+  // 1) decoded protocolData / explicit event amount
+  // 2) tx.value for native-forwarded calls (native amount sometimes cannot be detected though)
+  // 3) wrapped-native Withdrawal before ForwardedEth (aggregator unwrapping path)
   if (normalized.kind === 'ForwardedEth') {
     // When tx.value is 0 (e.g. aggregator wrappers), derive ETH amount from wrapped-native Withdrawal.
     const amountIn = decodedData.amountIn ?? input.tx.value
@@ -278,6 +282,11 @@ function inferSrcWasBurned(
   amountIn: bigint | undefined,
   tokenIn: Address32 | undefined,
 ): boolean | undefined {
+  // Native source token is never burned; ERC20 burn inference needs amount+matching Transfer.
+  if (tokenIn === Address32.NATIVE) {
+    return false
+  }
+
   if (
     input.log.logIndex === null ||
     amountIn === undefined ||
@@ -285,9 +294,6 @@ function inferSrcWasBurned(
     tokenIn === undefined
   ) {
     return undefined
-  }
-  if (tokenIn === Address32.NATIVE) {
-    return false
   }
 
   const transfer = findBestTransferLog(
