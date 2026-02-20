@@ -95,7 +95,7 @@ export class BlockIndexer extends ManagedChildIndexer {
     let processedLogs = 0
     let lastProcessedBlockNumber: number | undefined
     for (const { block, logs } of consistentBlocks) {
-      const blockTimestampMs = block.timestamp * 1000
+      const blockTimestampMs = block.timestamp
       if (
         stopBlockIndexerAtTimestampMs !== undefined &&
         blockTimestampMs > stopBlockIndexerAtTimestampMs

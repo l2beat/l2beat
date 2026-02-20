@@ -71,9 +71,9 @@ describe(BlockIndexer.name, () => {
 
   describe(BlockIndexer.prototype.update.name, () => {
     it('stops at configured timestamp and returns last processed block', async () => {
-      const block1 = makeBlock(10, 1)
-      const block2 = makeBlock(11, 2)
-      const block3 = makeBlock(12, 3)
+      const block1 = makeBlock(10, 1_000)
+      const block2 = makeBlock(11, 2_000)
+      const block3 = makeBlock(12, 3_000)
       const log1 = makeLog(block1, 1)
       const log2 = makeLog(block2, 2)
       const log3 = makeLog(block3, 3)
@@ -107,7 +107,7 @@ describe(BlockIndexer.name, () => {
     })
 
     it('throws without processing when first block exceeds configured timestamp', async () => {
-      const block = makeBlock(10, 3)
+      const block = makeBlock(10, 3_000)
       const log = makeLog(block, 1)
       const processBlock = mockFn().resolvesTo(undefined)
 
