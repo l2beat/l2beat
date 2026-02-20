@@ -708,7 +708,72 @@
         "tx": "0xe6ceacc75b0e8a0c8f724bde613c551edb976045835e24681d7646e1f6aad53e"
       }
     ],
-    "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
+    "expects": {
+      "events": [
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderRefunded",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.SettlementSent"
+      ],
+      "messages": [
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift-refund" }
+      ],
+      "transfers": [
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer"
+      ],
+      "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
+    }
   },
   "mayan-swift-settlement-non-batched": {
     "loadConfigs": ["wormhole"],
@@ -747,15 +812,17 @@
         "tx": "0x4c63d872d324fda368e1612e8f5ce8df3e61a13913d4b6c6bd8b30b93773aa07"
       }
     ],
-    "events": [
-      "mayan-swift.OrderCreated",
-      "mayan-forwarder.MayanForwarded",
-      "mayan-swift.OrderFulfilled",
-      "mayan-swift.SettlementSent",
-      "mayan-swift.OrderUnlocked"
-    ],
-    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
-    "transfers": ["mayan-swift.Transfer"]
+    "expects": {
+      "events": [
+        "mayan-swift.OrderCreated",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.OrderUnlocked"
+      ],
+      "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+      "transfers": ["mayan-swift.Transfer"]
+    }
   },
   "mayan-swift-settlement-batched": {
     "loadConfigs": ["wormhole"],
@@ -805,14 +872,16 @@
         "tx": "0x1cce878d867321728632a6e4d898e1b029e208dd9ae3d1e92f500dd4405abc5c"
       }
     ],
-    "events": [
-      "mayan-swift.OrderCreated",
-      "mayan-swift.OrderFulfilled",
-      "mayan-swift.SettlementSent",
-      "mayan-swift.OrderUnlocked"
-    ],
-    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
-    "transfers": ["mayan-swift.Transfer"]
+    "expects": {
+      "events": [
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.OrderUnlocked"
+      ],
+      "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+      "transfers": ["mayan-swift.Transfer"]
+    }
   },
   "circle-gateway": {
     "loadConfigs": ["cctp-v2"],

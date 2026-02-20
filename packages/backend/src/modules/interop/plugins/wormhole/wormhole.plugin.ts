@@ -6,35 +6,20 @@ import {
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
-  forwardedERC20Log,
-  forwardedEthLog,
-  logToProtocolData,
-  swapAndForwardedERC20Log,
-  swapAndForwardedEthLog,
-} from '../mayan-forwarder'
-import { MAYAN_SWIFT } from '../mayan-swift.utils'
+  findMayanCircleDestinationChain,
+  isMayanCircleSender,
+  isMayanSwiftSender,
+  MAYAN_FORWARDER_TX_EVENT_SIGNATURES,
+} from '../mayan-wormhole'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  type InteropEvent,
-  type InteropEventDb,
   type InteropPluginResyncable,
   type LogToCapture,
 } from '../types'
 import { FOLKS_CHAIN_ID_TO_CHAIN } from './folks-finance'
 import { WormholeConfig } from './wormhole.config'
-
-// Mayan Circle contract address (same on all chains)
-export const MAYAN_CIRCLE = EthereumAddress(
-  '0x875d6d37EC55c8cF220B9E5080717549d8Aa8EcA',
-)
-
-// only these are accompanied by LogMessagePublished
-export const MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS = new Set([
-  '0x2072197f', // mayanCircle.bridgeWithFee
-  '0x1c59b7fc', // mayanCircle.createOrder (legacy)
-])
 
 const logMessagePublishedLog =
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
@@ -88,10 +73,7 @@ export class WormholePlugin implements InteropPluginResyncable {
         includeTxEvents: [
           transferLog,
           folksSendMessageLog,
-          forwardedEthLog,
-          forwardedERC20Log,
-          swapAndForwardedEthLog,
-          swapAndForwardedERC20Log,
+          ...MAYAN_FORWARDER_TX_EVENT_SIGNATURES,
         ],
         addresses: coreContractAddresses,
       },
@@ -123,7 +105,7 @@ export class WormholePlugin implements InteropPluginResyncable {
     // mayan-swift-settlement.ts which create SettlementSent events with extracted order keys
     // for matching with OrderUnlocked. If we captured them here as LogMessagePublished,
     // they would remain unmatched since the settlement matching uses SettlementSent.
-    if (senderAddress === MAYAN_SWIFT) {
+    if (isMayanSwiftSender(senderAddress)) {
       return
     }
 
@@ -131,21 +113,18 @@ export class WormholePlugin implements InteropPluginResyncable {
     // event in the same tx. Source-side messages always have a ForwardedERC20/ForwardedEth.
     // Destination-side confirmations (bridgeWithLockedFee) have no forwarder event and are
     // never matchable, so we skip them.
-    if (senderAddress === MAYAN_CIRCLE) {
-      const wormholeNetworks = this.configs.get(WormholeConfig) ?? []
-      for (const candidateLog of input.txLogs) {
-        const decoded = logToProtocolData(candidateLog, wormholeNetworks)
-        if (decoded) {
-          return [
-            LogMessagePublished.create(input, {
-              payload: parsed.payload,
-              sequence: parsed.sequence,
-              wormholeChainId: network.wormholeChainId,
-              sender: senderAddress,
-              $dstChain: decoded.dstChain,
-            }),
-          ]
-        }
+    if (isMayanCircleSender(senderAddress)) {
+      const $dstChain = findMayanCircleDestinationChain(input.txLogs, networks)
+      if ($dstChain) {
+        return [
+          LogMessagePublished.create(input, {
+            payload: parsed.payload,
+            sequence: parsed.sequence,
+            wormholeChainId: network.wormholeChainId,
+            sender: senderAddress,
+            $dstChain,
+          }),
+        ]
       }
       // No forwarder event found — destination-side confirmation, skip capture
       return
@@ -223,39 +202,6 @@ export class WormholePlugin implements InteropPluginResyncable {
   }
   // no matching because wormhole matches by (msg.sender,sequence) (sender=emitter in wormhole core contracts, not to be confused with event emitter),
   // of which the destination event depends on the app layer
-}
-
-// imported by cctps
-export function findWrappedMayanWormholeLog(
-  db: InteropEventDb,
-  mayanForwarded: InteropEvent<{ methodSignature: `0x${string}` }>,
-) {
-  // Only these methods emit Wormhole LogMessagePublished on source side.
-  if (
-    !MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS.has(
-      mayanForwarded.args.methodSignature,
-    )
-  ) {
-    return undefined
-  }
-
-  const candidates = db
-    .findAll(LogMessagePublished, {
-      sender: MAYAN_CIRCLE,
-      ctx: { txHash: mayanForwarded.ctx.txHash },
-    })
-    .filter((event) => event.ctx.chain === mayanForwarded.ctx.chain)
-
-  if (candidates.length === 0) return undefined
-
-  // If there are multiple candidates in the same tx, pick the one closest
-  // to the source forwarder event.
-  return candidates.sort((a, b) => {
-    const aDistance = Math.abs(a.ctx.logIndex - mayanForwarded.ctx.logIndex)
-    const bDistance = Math.abs(b.ctx.logIndex - mayanForwarded.ctx.logIndex)
-    if (aDistance !== bDistance) return aDistance - bDistance
-    return a.ctx.logIndex - b.ctx.logIndex
-  })[0]
 }
 
 // Portal Token Bridge transfer payload format:
