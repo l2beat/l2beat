@@ -11,7 +11,10 @@ import type {
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { createCallerFactory } from '../trpc'
-import { deployedTokensRouter } from './deployedTokens'
+import {
+  type DeployedTokensRouterDeps,
+  deployedTokensRouter,
+} from './deployedTokens'
 
 describe('deployedTokensRouter', () => {
   describe('findByChainAndAddress', () => {
@@ -256,6 +259,128 @@ describe('deployedTokensRouter', () => {
           address: '0x123',
         }),
       ).toBeRejectedWith('Chain not found')
+    })
+
+    it('includes rpc symbol and decimals in success response when available', async () => {
+      const chainRecord = {
+        id: 1,
+        name: 'ethereum',
+        chainId: 1,
+        aliases: [],
+        apis: [],
+      }
+      const mockGetDecimals = mockFn().resolvesTo(18)
+      const mockGetSymbol = mockFn().resolvesTo('RPC-TKN')
+      const mockCreateChain = mockFn().returns({
+        rpc: {
+          getDecimals: mockGetDecimals,
+          getSymbol: mockGetSymbol,
+        },
+      })
+      const mockDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          getByChainsAndAddresses: mockFn().resolvesTo([]),
+        }),
+        chain: mockObject<ChainRepository>({
+          findByName: mockFn().resolvesTo(chainRecord),
+          getAll: mockFn().resolvesTo([chainRecord]),
+        }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          findByCoingeckoId: mockFn().resolvesTo(undefined),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([
+          {
+            id: 'token-id',
+            name: 'Token',
+            symbol: 'TKN',
+            platforms: {
+              ethereum: '0x123',
+            },
+          },
+        ]),
+      })
+
+      const caller = createRouter(mockDb, mockCoingeckoClient, {
+        createChain: mockCreateChain,
+      })
+      const result = await caller.checks({
+        chain: 'ethereum',
+        address: '0x123',
+      })
+
+      expect(result).toEqual({
+        error: undefined,
+        data: {
+          symbol: 'RPC-TKN',
+          suggestions: [],
+          decimals: 18,
+          deploymentTimestamp: undefined,
+          abstractTokenId: undefined,
+          coingeckoId: 'token-id',
+        },
+      })
+      expect(mockCreateChain).toHaveBeenCalledWith(chainRecord)
+      expect(mockGetDecimals).toHaveBeenCalledWith('0x123')
+      expect(mockGetSymbol).toHaveBeenCalledWith('0x123')
+    })
+
+    it('includes rpc symbol and decimals in not-found-on-coingecko response', async () => {
+      const chainRecord = {
+        id: 1,
+        name: 'ethereum',
+        chainId: 1,
+        aliases: [],
+        apis: [],
+      }
+      const mockGetDecimals = mockFn().resolvesTo(6)
+      const mockGetSymbol = mockFn().resolvesTo('USDC-RPC')
+      const mockCreateChain = mockFn().returns({
+        rpc: {
+          getDecimals: mockGetDecimals,
+          getSymbol: mockGetSymbol,
+        },
+      })
+      const mockDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+        }),
+        chain: mockObject<ChainRepository>({
+          findByName: mockFn().resolvesTo(chainRecord),
+          getAll: mockFn().resolvesTo([chainRecord]),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([]),
+      })
+
+      const caller = createRouter(mockDb, mockCoingeckoClient, {
+        createChain: mockCreateChain,
+      })
+      const result = await caller.checks({
+        chain: 'ethereum',
+        address: '0x123',
+      })
+
+      expect(result).toEqual({
+        error: {
+          type: 'not-found-on-coingecko',
+          message: 'Coin not found on Coingecko',
+        },
+        data: {
+          symbol: 'USDC-RPC',
+          suggestions: undefined,
+          decimals: 6,
+          deploymentTimestamp: undefined,
+          abstractTokenId: undefined,
+          coingeckoId: undefined,
+        },
+      })
+      expect(mockCreateChain).toHaveBeenCalledWith(chainRecord)
+      expect(mockGetDecimals).toHaveBeenCalledWith('0x123')
+      expect(mockGetSymbol).toHaveBeenCalledWith('0x123')
     })
 
     it('returns not-found-on-coingecko error when coin is not found', async () => {
@@ -889,10 +1014,12 @@ describe('deployedTokensRouter', () => {
 function createRouter(
   mockDb: TokenDatabase,
   mockCoingeckoClient: CoingeckoClient,
+  deps: Partial<Pick<DeployedTokensRouterDeps, 'createChain'>> = {},
 ) {
   const router = deployedTokensRouter({
     coingeckoClient: mockCoingeckoClient,
     etherscanApiKey: 'test-api-key',
+    ...deps,
   })
 
   const callerFactory = createCallerFactory(router)

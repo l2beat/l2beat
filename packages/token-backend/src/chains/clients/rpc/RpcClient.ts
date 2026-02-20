@@ -1,8 +1,17 @@
 import { v } from '@l2beat/validate'
+import {
+  decodeFunctionResult,
+  encodeFunctionData,
+  type Hex,
+  parseAbi,
+} from 'viem'
 import type { RpcClientConfig, RpcResponse } from './types'
 
-// ERC20 decimals() function selector: 0x313ce567
-const DECIMALS_SELECTOR = '0x313ce567'
+const DECIMALS_ABI = parseAbi(['function decimals() view returns (uint8)'])
+const SYMBOL_ABI = parseAbi(['function symbol() view returns (string)'])
+const SYMBOL_BYTES32_ABI = parseAbi([
+  'function symbol() view returns (bytes32)',
+])
 
 const RpcResponseSchema = v.object({
   id: v.union([v.string(), v.number()]),
@@ -42,7 +51,10 @@ export class RpcClient {
   async getDecimals(address: string): Promise<number> {
     const callData = {
       to: address,
-      data: DECIMALS_SELECTOR,
+      data: encodeFunctionData({
+        abi: DECIMALS_ABI,
+        functionName: 'decimals',
+      }),
     }
 
     const response = await this.call(callData, 'latest')
@@ -53,15 +65,13 @@ export class RpcClient {
       )
     }
 
-    // Decode uint8 from hex string
-    // Response is padded (e.g., "0x0000000000000000000000000000000000000000000000000000000000000012")
-    // or can be shorter (e.g., "0x12")
-    // Remove '0x' prefix and parse as integer
-    const hexValue = response.result.startsWith('0x')
-      ? response.result.slice(2)
-      : response.result
-
-    const decimals = Number.parseInt(hexValue, 16)
+    const decimals = Number(
+      decodeFunctionResult({
+        abi: DECIMALS_ABI,
+        functionName: 'decimals',
+        data: response.result as Hex,
+      }),
+    )
 
     if (Number.isNaN(decimals)) {
       throw new Error(
@@ -70,6 +80,59 @@ export class RpcClient {
     }
 
     return decimals
+  }
+
+  async getSymbol(address: string): Promise<string> {
+    const callData = {
+      to: address,
+      data: encodeFunctionData({
+        abi: SYMBOL_ABI,
+        functionName: 'symbol',
+      }),
+    }
+
+    const response = await this.call(callData, 'latest')
+
+    if (!response.result || response.result === '0x') {
+      throw new Error(
+        `Could not get symbol for token ${address} for URL ${this.config.url}`,
+      )
+    }
+
+    try {
+      const symbol = decodeFunctionResult({
+        abi: SYMBOL_ABI,
+        functionName: 'symbol',
+        data: response.result as Hex,
+      })
+
+      if (!symbol) {
+        throw new Error(
+          `Invalid symbol response for token ${address} for URL ${this.config.url}: ${response.result}`,
+        )
+      }
+
+      return symbol
+    } catch {
+      console.log('Fallback to bytes32 symbol')
+    }
+
+    const bytes32Symbol = decodeFunctionResult({
+      abi: SYMBOL_BYTES32_ABI,
+      functionName: 'symbol',
+      data: response.result as Hex,
+    })
+    const symbol = Buffer.from(bytes32Symbol.slice(2), 'hex')
+      .toString('utf8')
+      .replace(/\0+$/g, '')
+
+    if (!symbol) {
+      throw new Error(
+        `Invalid symbol response for token ${address} for URL ${this.config.url}: ${response.result}`,
+      )
+    }
+
+    return symbol
   }
 
   private async call(

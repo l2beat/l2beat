@@ -12,10 +12,14 @@ export function getZkCatalogTvsSection(
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
 ): Omit<ZkCatalogTvsSectionProps, keyof ProjectSectionProps> | undefined {
+  const allProjectsMap = new Map(
+    allProjects.map((project) => [project.id, project]),
+  )
+
   const projectsForTvs: ZkCatalogTvsSectionProps['projectsForTvs'] =
     project.zkCatalogInfo.projectsForTvs
       ?.flatMap((tvsProject) => {
-        const project = allProjects.find((p) => p.id === tvsProject.projectId)
+        const project = allProjectsMap.get(tvsProject.projectId)
         if (!project) {
           const logger = getLogger().for('getZkCatalogTvsSection')
           logger.warn(`Project ${tvsProject.projectId} not found`)
@@ -23,13 +27,28 @@ export function getZkCatalogTvsSection(
         }
 
         if (project.daBridge) {
-          return project.daBridge.usedIn.flatMap((p) => ({
-            projectId: p.id,
-            sinceTimestamp: tvsProject.sinceTimestamp,
-            untilTimestamp: tvsProject.untilTimestamp,
-          }))
+          return project.daBridge.usedIn.flatMap((p) => {
+            const usedProject = allProjectsMap.get(p.id)
+            if (!usedProject) {
+              const logger = getLogger().for('getZkCatalogTvsSection')
+              logger.warn(`Project ${p.id} not found`)
+              return []
+            }
+
+            return {
+              projectId: p.id,
+              name: usedProject.name,
+              sinceTimestamp: tvsProject.sinceTimestamp,
+              untilTimestamp: tvsProject.untilTimestamp,
+            }
+          })
         }
-        return tvsProject
+        return {
+          projectId: tvsProject.projectId,
+          name: project.name,
+          sinceTimestamp: tvsProject.sinceTimestamp,
+          untilTimestamp: tvsProject.untilTimestamp,
+        }
       })
       .filter((p) => p !== undefined) ?? []
 

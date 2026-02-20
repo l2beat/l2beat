@@ -13,5 +13,10 @@
     "hash": "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582",
     "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
     "blockNumber": 22985449
+  },
+  "SP1Verifier_v6": {
+    "hash": "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c",
+    "address": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C",
+    "blockNumber": 24456046
   }
 }

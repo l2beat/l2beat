@@ -22,6 +22,7 @@ export function makeQueryExecutor({ redisUrl, db, logger, envs, ci }: Options) {
   return new QueryExecutor(db, logger, cache, ci)
 }
 
+export { type SummedByTimestampTvsValuesPerProjectRecord } from './queries/tvl/getSummedByTimestampTvsValuesPerProjectQuery'
 export {
   type ProjectWithRanges,
   type SummedByTimestampTvsValuesRecord,
