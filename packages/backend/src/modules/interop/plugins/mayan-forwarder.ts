@@ -282,10 +282,12 @@ function inferSrcWasBurned(
     input.log.logIndex === null ||
     amountIn === undefined ||
     amountIn === 0n ||
-    tokenIn === undefined ||
-    tokenIn === Address32.NATIVE
+    tokenIn === undefined
   ) {
     return undefined
+  }
+  if (tokenIn === Address32.NATIVE) {
+    return false
   }
 
   const transfer = findBestTransferLog(

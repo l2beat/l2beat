@@ -20,7 +20,7 @@ Because of this, we only capture the settlement LogMessagePublished in extraEven
 
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import { findBestTransferLog, findParsedAround } from './hyperlane-hwr'
+import { findParsedAround } from './hyperlane-hwr'
 import {
   forwardedERC20Log,
   forwardedEthLog,
@@ -100,9 +100,13 @@ export const SettlementSent = createInteropEventType<{
   $dstChain?: string
 }>('mayan-swift.SettlementSent')
 
-type TransferData = NonNullable<
-  ReturnType<typeof findBestTransferLog>['transfer']
->
+type TransferData = {
+  logAddress: Address32
+  from: Address32
+  to: Address32
+  value: bigint
+}
+type TransferCandidate = TransferData & { distance: number }
 type WormholeNetwork = { chain: string; wormholeChainId: number }
 type FulfilledOrderEvent = InteropEvent<{
   key: string
@@ -135,21 +139,137 @@ type MayanForwardedEvent = InteropEvent<{
   $dstChain: string
 }>
 
-function findTransferToMayan(
+function findBestTransferForContext(
   logs: LogToCapture['txLogs'],
   startLogIndex: number,
+  options: {
+    amount?: bigint
+    tokenAddress?: Address32
+    preferTransferToMayan?: boolean
+  },
 ): TransferData | undefined {
-  return findParsedAround(logs, startLogIndex, (log) => {
+  const amount =
+    options.amount !== undefined && options.amount > 0n
+      ? options.amount
+      : undefined
+  const tokenAddress =
+    options.tokenAddress !== undefined &&
+    options.tokenAddress !== Address32.NATIVE
+      ? options.tokenAddress
+      : undefined
+  const candidates = getTransferCandidates(logs, startLogIndex)
+  if (candidates.length === 0) return
+
+  const tokenMatches = (candidate: TransferCandidate) =>
+    tokenAddress === undefined || candidate.logAddress === tokenAddress
+  const toMayan = (candidate: TransferCandidate) =>
+    EthereumAddress(candidate.to) === MAYAN_SWIFT
+
+  // 1st priority: exact amount (if provided) and/or transfer.to == MAYAN_SWIFT.
+  if (amount !== undefined && options.preferTransferToMayan) {
+    const exactAmountToMayan = pickNearestTransfer(
+      candidates.filter(
+        (candidate) =>
+          candidate.value === amount &&
+          toMayan(candidate) &&
+          tokenMatches(candidate),
+      ),
+    )
+    if (exactAmountToMayan) return exactAmountToMayan
+  }
+
+  if (amount !== undefined) {
+    const exactAmount = pickNearestTransfer(
+      candidates.filter(
+        (candidate) => candidate.value === amount && tokenMatches(candidate),
+      ),
+    )
+    if (exactAmount) return exactAmount
+  }
+
+  if (options.preferTransferToMayan) {
+    const transferToMayan = pickNearestTransfer(
+      candidates.filter(
+        (candidate) => toMayan(candidate) && tokenMatches(candidate),
+      ),
+    )
+    if (transferToMayan) return transferToMayan
+  }
+
+  // 2nd priority: token match + approximate amount (if amount exists), else token-only.
+  if (tokenAddress !== undefined) {
+    const tokenMatchesOnly = candidates.filter(
+      (candidate) => candidate.logAddress === tokenAddress,
+    )
+    if (amount !== undefined) {
+      return pickClosestAmountTransfer(tokenMatchesOnly, amount)
+    }
+    return pickNearestTransfer(tokenMatchesOnly)
+  }
+}
+
+function getTransferCandidates(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
+): TransferCandidate[] {
+  const candidates: TransferCandidate[] = []
+
+  for (const log of logs) {
     const transfer = parseTransfer(log, null)
-    if (!transfer) return
-    if (EthereumAddress(transfer.to) !== MAYAN_SWIFT) return
-    return {
+    if (!transfer) continue
+    candidates.push({
       logAddress: Address32.from(log.address),
       from: Address32.from(transfer.from),
       to: Address32.from(transfer.to),
       value: transfer.value,
+      distance:
+        log.logIndex === null
+          ? Number.POSITIVE_INFINITY
+          : Math.abs(log.logIndex - startLogIndex),
+    })
+  }
+
+  return candidates
+}
+
+function pickNearestTransfer(
+  candidates: TransferCandidate[],
+): TransferData | undefined {
+  let best: TransferCandidate | undefined
+  for (const candidate of candidates) {
+    if (!best || candidate.distance < best.distance) {
+      best = candidate
     }
-  })
+  }
+  return best
+}
+
+function pickClosestAmountTransfer(
+  candidates: TransferCandidate[],
+  targetAmount: bigint,
+): TransferData | undefined {
+  let best: TransferCandidate | undefined
+  let bestDelta: bigint | undefined
+
+  for (const candidate of candidates) {
+    const delta = absDiff(candidate.value, targetAmount)
+    if (
+      bestDelta === undefined ||
+      delta < bestDelta ||
+      (delta === bestDelta &&
+        best !== undefined &&
+        candidate.distance < best.distance)
+    ) {
+      best = candidate
+      bestDelta = delta
+    }
+  }
+
+  return best
+}
+
+function absDiff(value: bigint, target: bigint): bigint {
+  return value >= target ? value - target : target - value
 }
 
 function captureOrderFulfilled(
@@ -159,14 +279,12 @@ function captureOrderFulfilled(
   const orderFulfilled = parseOrderFulfilled(input.log, null)
   if (!orderFulfilled) return
 
-  const transferMatch =
+  const transfer =
     input.log.logIndex !== null
-      ? findBestTransferLog(
-          input.txLogs,
-          orderFulfilled.netAmount,
-          input.log.logIndex,
-        )
-      : { hasTransfer: false as const }
+      ? findBestTransferForContext(input.txLogs, input.log.logIndex, {
+          amount: orderFulfilled.netAmount,
+        })
+      : undefined
 
   const settlementSent = findSingleSettlementSentInTx(
     input,
@@ -180,13 +298,9 @@ function captureOrderFulfilled(
     OrderFulfilled.create(input, {
       key: orderFulfilled.key,
       dstAmount: orderFulfilled.netAmount,
-      dstTokenAddress: transferMatch.transfer?.logAddress,
+      dstTokenAddress: transfer?.logAddress,
       dstWasMinted:
-        transferMatch.transfer?.from === Address32.ZERO
-          ? true
-          : transferMatch.transfer
-            ? false
-            : undefined,
+        transfer?.from === Address32.ZERO ? true : transfer ? false : undefined,
       $srcChain: settlementSent?.args.$dstChain,
     }),
   ]
@@ -245,19 +359,14 @@ function captureOrderCreated(
           logToProtocolData(log, wormholeNetworks),
         )
       : undefined
-  const sourceTransferFromAmount =
-    logIndex !== null && parsed?.amountIn !== undefined && parsed.amountIn > 0n
-      ? findBestTransferLog(input.txLogs, parsed.amountIn, logIndex).transfer
-      : undefined
   const sourceTransfer =
-    (sourceTransferFromAmount &&
-    (parsed?.tokenIn === undefined ||
-      sourceTransferFromAmount.logAddress === parsed.tokenIn)
-      ? sourceTransferFromAmount
-      : undefined) ??
-    (logIndex !== null
-      ? findTransferToMayan(input.txLogs, logIndex)
-      : undefined)
+    logIndex !== null
+      ? findBestTransferForContext(input.txLogs, logIndex, {
+          amount: parsed?.amountIn,
+          tokenAddress: parsed?.tokenIn,
+          preferTransferToMayan: true,
+        })
+      : undefined
 
   return [
     OrderCreated.create(input, {
