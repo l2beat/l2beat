@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x2f027441ff928f63822358028852448b15e6b161
+
+# Diff at Fri, 30 Jan 2026 13:33:06 GMT:
+
+- author: allush (<al.lushnikov@yandex.ru>)
+- comparing to: main@b4d760c60a8dc77642594613c4613b23402952df block: 1762264533
+- current timestamp: 1762264533
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264533 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA) {
+    +++ description: None
+      name:
+-        "ProxyAdminBridge"
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0xd4a531d3be03c37db801439857205cae4609207f
 
 # Diff at Tue, 04 Nov 2025 13:56:38 GMT:
