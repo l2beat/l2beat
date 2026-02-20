@@ -2290,6 +2290,13 @@
   ],
   "arbitrum": [
     {
+      "symbol": "PGOLD",
+      "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic" // tradable on uniswap
+    },
+    {
       "symbol": "RAIN",
       "address": "0x25118290e6A5f4139381D072181157035864099d",
       "source": "native",
