@@ -163,7 +163,7 @@ function findBestTransferForContext(
   const tokenMatches = (candidate: TransferCandidate) =>
     tokenAddress === undefined || candidate.logAddress === tokenAddress
   const toMayan = (candidate: TransferCandidate) =>
-    EthereumAddress(candidate.to) === MAYAN_SWIFT
+    Address32.cropToEthereumAddress(Address32.from(candidate.to)) === MAYAN_SWIFT
 
   // 1st priority: exact amount (if provided) and/or transfer.to == MAYAN_SWIFT.
   if (amount !== undefined && options.preferTransferToMayan) {

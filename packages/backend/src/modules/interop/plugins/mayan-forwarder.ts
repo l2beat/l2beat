@@ -371,9 +371,7 @@ const SELECTOR_SWAP = '0x6111ad25'
 const SELECTOR_WRAP_AND_SWAP_ETH = '0x1eb1cff0'
 
 interface DecodedData {
-  functionName: string
   methodSignature: `0x${string}`
-  args: unknown
   dstChain: string
   tokenIn?: Address32
   amountIn?: bigint
@@ -386,10 +384,9 @@ function decodeProtocolData(
   wormholeNetworks: { chain: string; wormholeChainId: number }[],
   cctpNetworks: { chain: string; domain: number }[],
 ): DecodedData | undefined {
-  const decoded: DecodedData = {
-    functionName: 'unknown',
-    methodSignature: data.slice(0, 10) as `0x${string}`,
-    args: [],
+  const methodSignature = data.slice(0, 10) as `0x${string}`
+  const fallback: DecodedData = {
+    methodSignature,
     dstChain: 'unknown',
   }
   let res
@@ -402,34 +399,36 @@ function decodeProtocolData(
     return undefined
   }
 
-  decoded.functionName = res.functionName
-  decoded.args = res.args
-  switch (decoded.methodSignature) {
+  switch (methodSignature) {
     case SELECTOR_CREATE_ORDER_WITH_TOKEN: {
-      if (res.functionName !== 'createOrderWithToken') return decoded
-      decoded.dstChain = getChainFromWormholeId(
-        wormholeNetworks,
-        res.args[2].destChainId,
-      )
-      decoded.tokenIn = Address32.from(res.args[0])
-      decoded.amountIn = res.args[1]
-      decoded.tokenOut = tokenOutOrNative(res.args[2].tokenOut)
-      decoded.minAmountOut = res.args[2].minAmountOut
-      return decoded
+      if (res.functionName !== 'createOrderWithToken') return fallback
+      return {
+        ...fallback,
+        dstChain: getChainFromWormholeId(
+          wormholeNetworks,
+          res.args[2].destChainId,
+        ),
+        tokenIn: Address32.from(res.args[0]),
+        amountIn: res.args[1],
+        tokenOut: tokenOutOrNative(res.args[2].tokenOut),
+        minAmountOut: res.args[2].minAmountOut,
+      }
     }
     case SELECTOR_CREATE_ORDER_WITH_ETH: {
-      if (res.functionName !== 'createOrderWithEth') return decoded
-      decoded.dstChain = getChainFromWormholeId(
-        wormholeNetworks,
-        res.args[0].destChainId,
-      )
-      decoded.tokenIn = Address32.NATIVE
-      decoded.tokenOut = tokenOutOrNative(res.args[0].tokenOut)
-      decoded.minAmountOut = res.args[0].minAmountOut
-      return decoded
+      if (res.functionName !== 'createOrderWithEth') return fallback
+      return {
+        ...fallback,
+        dstChain: getChainFromWormholeId(
+          wormholeNetworks,
+          res.args[0].destChainId,
+        ),
+        tokenIn: Address32.NATIVE,
+        tokenOut: tokenOutOrNative(res.args[0].tokenOut),
+        minAmountOut: res.args[0].minAmountOut,
+      }
     }
     case SELECTOR_CREATE_ORDER_MAYAN_CIRCLE: {
-      if (res.functionName !== 'createOrder') return decoded
+      if (res.functionName !== 'createOrder') return fallback
       const args = res.args as unknown as readonly [
         {
           tokenIn: `0x${string}`
@@ -439,18 +438,17 @@ function decodeProtocolData(
           minAmountOut: bigint
         },
       ]
-      decoded.dstChain = getChainFromWormholeId(
-        wormholeNetworks,
-        args[0].destChain,
-      )
-      decoded.tokenIn = Address32.from(args[0].tokenIn)
-      decoded.amountIn = args[0].amountIn
-      decoded.tokenOut = tokenOutOrNative(args[0].tokenOut)
-      decoded.minAmountOut = args[0].minAmountOut
-      return decoded
+      return {
+        ...fallback,
+        dstChain: getChainFromWormholeId(wormholeNetworks, args[0].destChain),
+        tokenIn: Address32.from(args[0].tokenIn),
+        amountIn: args[0].amountIn,
+        tokenOut: tokenOutOrNative(args[0].tokenOut),
+        minAmountOut: args[0].minAmountOut,
+      }
     }
     case SELECTOR_CREATE_ORDER_FAST_MCTP: {
-      if (res.functionName !== 'createOrder') return decoded
+      if (res.functionName !== 'createOrder') return fallback
       const args = res.args as unknown as readonly [
         `0x${string}`,
         bigint,
@@ -462,52 +460,64 @@ function decodeProtocolData(
           amountOutMin: bigint
         },
       ]
-      decoded.dstChain = getChainFromCctpDomain(cctpNetworks, args[3])
-      decoded.tokenIn = Address32.from(args[0])
-      decoded.amountIn = args[1]
-      decoded.tokenOut = tokenOutOrNative(args[5].tokenOut)
-      decoded.minAmountOut = args[5].amountOutMin
-      return decoded
+      return {
+        ...fallback,
+        dstChain: getChainFromCctpDomain(cctpNetworks, args[3]),
+        tokenIn: Address32.from(args[0]),
+        amountIn: args[1],
+        tokenOut: tokenOutOrNative(args[5].tokenOut),
+        minAmountOut: args[5].amountOutMin,
+      }
     }
     case SELECTOR_BRIDGE_WITH_FEE: {
-      if (res.functionName !== 'bridgeWithFee') return decoded
-      decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[5])
-      decoded.tokenIn = Address32.from(res.args[0])
-      decoded.amountIn = res.args[1]
-      return decoded
+      if (res.functionName !== 'bridgeWithFee') return fallback
+      return {
+        ...fallback,
+        dstChain: getChainFromCctpDomain(cctpNetworks, res.args[5]),
+        tokenIn: Address32.from(res.args[0]),
+        amountIn: res.args[1],
+      }
     }
     case SELECTOR_BRIDGE_WITH_LOCKED_FEE: {
-      if (res.functionName !== 'bridgeWithLockedFee') return decoded
-      decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[4])
-      decoded.tokenIn = Address32.from(res.args[0])
-      decoded.amountIn = res.args[1]
-      return decoded
+      if (res.functionName !== 'bridgeWithLockedFee') return fallback
+      return {
+        ...fallback,
+        dstChain: getChainFromCctpDomain(cctpNetworks, res.args[4]),
+        tokenIn: Address32.from(res.args[0]),
+        amountIn: res.args[1],
+      }
     }
     case SELECTOR_BRIDGE_FAST_MCTP: {
-      if (res.functionName !== 'bridge') return decoded
-      decoded.dstChain = getChainFromCctpDomain(cctpNetworks, res.args[6])
-      decoded.tokenIn = Address32.from(res.args[0])
-      decoded.amountIn = res.args[1]
-      return decoded
+      if (res.functionName !== 'bridge') return fallback
+      return {
+        ...fallback,
+        dstChain: getChainFromCctpDomain(cctpNetworks, res.args[6]),
+        tokenIn: Address32.from(res.args[0]),
+        amountIn: res.args[1],
+      }
     }
     case SELECTOR_SWAP: {
-      if (res.functionName !== 'swap') return decoded
-      decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[3])
-      decoded.tokenIn = Address32.from(res.args[5])
-      decoded.amountIn = res.args[6]
-      decoded.tokenOut = tokenOutOrNative(res.args[2])
-      decoded.minAmountOut = res.args[4].amountOutMin
-      return decoded
+      if (res.functionName !== 'swap') return fallback
+      return {
+        ...fallback,
+        dstChain: getChainFromWormholeId(wormholeNetworks, res.args[3]),
+        tokenIn: Address32.from(res.args[5]),
+        amountIn: res.args[6],
+        tokenOut: tokenOutOrNative(res.args[2]),
+        minAmountOut: res.args[4].amountOutMin,
+      }
     }
     case SELECTOR_WRAP_AND_SWAP_ETH: {
-      if (res.functionName !== 'wrapAndSwapETH') return decoded
-      decoded.dstChain = getChainFromWormholeId(wormholeNetworks, res.args[3])
-      decoded.tokenIn = Address32.NATIVE
-      decoded.tokenOut = tokenOutOrNative(res.args[2])
-      decoded.minAmountOut = res.args[4].amountOutMin
-      return decoded
+      if (res.functionName !== 'wrapAndSwapETH') return fallback
+      return {
+        ...fallback,
+        dstChain: getChainFromWormholeId(wormholeNetworks, res.args[3]),
+        tokenIn: Address32.NATIVE,
+        tokenOut: tokenOutOrNative(res.args[2]),
+        minAmountOut: res.args[4].amountOutMin,
+      }
     }
     default:
-      return decoded
+      return fallback
   }
 }
