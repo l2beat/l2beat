@@ -8985,26 +8985,6 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-UMAMI",
-      "priceId": "umami-finance",
-      "symbol": "UMAMI",
-      "name": "Umami",
-      "iconUrl": "https://assets.coingecko.com/coins/images/21159/large/_UMAMI-200px.jpg?1696520536",
-      "amount": {
-        "type": "circulatingSupply",
-        "apiId": "umami-finance",
-        "decimals": 9,
-        "sinceTimestamp": 1638403200,
-        "untilTimestamp": 1731196800,
-        "address": "0x1622bF67e6e5747b81866fE0b85178a93C7F86e3",
-        "chain": "arbitrum"
-      },
-      "category": "other",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "arbitrum-UNI",
       "priceId": "uniswap",
       "symbol": "UNI",
