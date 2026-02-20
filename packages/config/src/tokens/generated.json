@@ -577,6 +577,20 @@
       "supply": "zero"
     },
     {
+      "name": "AZTEC",
+      "coingeckoId": "aztec",
+      "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "symbol": "AZTEC",
+      "decimals": 18,
+      "deploymentTimestamp": 1751359739,
+      "coingeckoListingTimestamp": 1770854400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70681/large/aztec.png?1763091883",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Baby Doge Coin",
       "coingeckoId": "baby-doge-coin",
       "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",

@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "AZTEC",
+      "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "coingeckoId": "aztec"
+    },
+    {
       "symbol": "NIL",
       "address": "0x7cf9a80db3b29ee8efe3710aadb7b95270572d47",
       "coingeckoId": "nillion",
