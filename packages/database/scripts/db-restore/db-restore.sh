@@ -9,7 +9,7 @@ FEATURES_TABLES=(
     "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue SyncMetadata"
     "IndexerState IndexerConfiguration Activity SyncMetadata"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
-    "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer InteropConfig InteropRecentPrices"
+    "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer InteropConfig InteropRecentPrices InteropPluginSyncState InteropPluginSyncedRange"
     "IndexerState IndexerConfiguration AggregatedInteropTransfer AggregatedInteropToken"
     "AbstractToken DeployedToken TokenConnection Chain"
     "IndexerState IndexerConfiguration L2Cost Liveness AggregatedL2Cost AggregatedLiveness"
