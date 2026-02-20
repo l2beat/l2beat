@@ -28,6 +28,9 @@ export function createBlockSyncModule({
   const chains = blockProcessors
     .map((x) => x.chain)
     .filter((x, i, a) => a.indexOf(x) === i)
+  const stopBlockIndexerAtTimestampMs = env.optionalInteger(
+    'STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS',
+  )
 
   const indexers: Indexer[] = []
   for (const chain of chains) {
@@ -56,6 +59,7 @@ export function createBlockSyncModule({
         indexerService,
         batchSize:
           env.optionalInteger(Env.key(chain, 'BLOCKSYNC_BATCH_SIZE')) ?? 50,
+        stopBlockIndexerAtTimestampMs,
       },
       logger,
     )

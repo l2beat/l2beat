@@ -6336,6 +6336,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-PGOLD",
+      "priceId": "pleasing-gold",
+      "symbol": "PGOLD",
+      "name": "Pleasing Gold",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70395/large/%E9%BB%84%E9%87%91.png?1761795141",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1761782400
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-PLUME",
       "priceId": "plume",
       "symbol": "PLUME",
