@@ -1,7 +1,7 @@
 {
   "name": "ondo-stock-token",
   "timestamp": 1771241067,
-  "configHash": "0x5b65ff37ee2d850b9f81dd10c5cda9f618e47e50f07746bcdb56f6ad0d3acc40",
+  "configHash": "0x76ad0ae6e740c304cba6acf2e0af2d08ee4bc8fc9ffe52fed2de4e41074ae58a",
   "entries": [
     {
       "address": "eth:0x020679fF2Bc53758bEbAD1bBe0ab0CF7c1beD241",
@@ -137,6 +137,8 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "GMBlocklist": "eth:0x5857FEB095302407a718bA6386A53c35dA0DEdDf",
+        "GMSactionList": "eth:0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
         "MASTER_CONFIGURER_ROLE": "0xc53827191131104841d7a5b7b667c2fdbe7684fc91b19e368ca2d81ab99f8d7a",
         "RWA_ROLE_MANAGER": "0x889057569e0bde7affd2c3854adb0e5fac09df9e2c933e40bc1dde0ccc517cba"
       },
@@ -786,6 +788,26 @@
       "address": "eth:0x58417F57F29c6b03114129e0EB59A174B1f41504",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Blocklist",
+      "address": "eth:0x5857FEB095302407a718bA6386A53c35dA0DEdDf",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3eee07d873905b39824016ff6608d2dfc39d19501223b1cbd056e5dc63ff050e"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1753064735,
+      "sinceBlock": 22964566,
+      "values": {
+        "$immutable": true,
+        "name": "Ondo Finance Blocklist Oracle",
+        "owner": "eth:0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x5857FEB095302407a718bA6386A53c35dA0DEdDf": "Blocklist"
+      }
     },
     {
       "name": "BridgeRegistrar",
@@ -3559,6 +3581,22 @@
       "function setOndoRegistry(address _ondoIDRegistry)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
+    "eth:0x5857FEB095302407a718bA6386A53c35dA0DEdDf": [
+      "constructor()",
+      "event BlockedAddressesAdded(address[] accounts)",
+      "event BlockedAddressesRemoved(address[] accounts)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function addToBlocklist(address[] accounts)",
+      "function isBlocked(address addr) view returns (bool)",
+      "function name() pure returns (string)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function removeFromBlocklist(address[] accounts)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0x58910371d0b52dCF9d2E0a1Af4e0078C58436908": [
       "constructor()",
       "error BlockedAccount()",
@@ -4976,5 +5014,5 @@
     "layerzero/SendUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": { "ethereum": 24469062 },
-  "permissionsConfigHash": "0x77c1c5d89e24cfbf52a50ce504ae825bd1d1ff5d1a97beb0859459a087ea79bf"
+  "permissionsConfigHash": "0x659e965b93c28527aa961cfa12b1b0c0fd396b9b8224bd23aede59d0854b7371"
 }

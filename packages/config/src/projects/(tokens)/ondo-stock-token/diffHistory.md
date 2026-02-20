@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x47cc4e5d51ce1bb164a4c7582f629ee460620546
+Generated with discovered.json: 0xfafa000af0c71420d4b6392b694c1a8381ad7bcb
 
-# Diff at Tue, 17 Feb 2026 14:32:03 GMT:
+# Diff at Thu, 19 Feb 2026 13:34:26 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - current timestamp: 1771241067
@@ -140,6 +140,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract OndoIDRegistryView (eth:0x56A5D911052323D688C731d516530878557463e7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Blocklist (eth:0x5857FEB095302407a718bA6386A53c35dA0DEdDf)
     +++ description: None
 ```
 

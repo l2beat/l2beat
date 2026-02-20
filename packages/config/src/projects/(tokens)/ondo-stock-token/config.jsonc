@@ -135,6 +135,20 @@
               "0xc53827191131104841d7a5b7b667c2fdbe7684fc91b19e368ca2d81ab99f8d7a": "MASTER_CONFIGURER_ROLE"
             }
           }
+        }, 
+        "GMBlocklist": {
+          "handler": {
+            "type": "call",
+            "method": "rwaTokenToBlocklist",
+            "args": ["0x428ECB70E90d1527A5f5e177789f51747b883F34"]
+          }
+        },
+        "GMSactionList": {
+          "handler": {
+            "type": "call",
+            "method": "rwaTokenToSanctionsList",
+            "args": ["0x428ECB70E90d1527A5f5e177789f51747b883F34"]
+          }
         }
       }
     },
