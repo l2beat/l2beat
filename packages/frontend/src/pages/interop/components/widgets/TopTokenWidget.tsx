@@ -18,7 +18,7 @@ export function TopTokenWidget({ topToken, isLoading, className }: Props) {
   return (
     <PrimaryCard
       className={cn(
-        'col-span-full max-md:rounded-t-lg max-md:border-b max-md:border-b-divider',
+        'col-span-full max-md:border-b max-md:border-b-divider',
         className,
       )}
     >

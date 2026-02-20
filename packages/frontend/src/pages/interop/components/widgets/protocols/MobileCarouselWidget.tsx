@@ -1,80 +1,72 @@
-import { useState } from 'react'
+'use client'
+
+import * as React from 'react'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  useCarousel,
+} from '~/components/core/Carousel'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
-import { FlowsWidget } from '../FlowsWidget'
 import { TopProtocolsByTransfers } from './TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from './TopProtocolsByVolume'
 
-type View = 'paths' | 'volume' | 'transfers'
-
-export function MobileCarouselWidget({
-  interopChains,
-  flows,
-  topProtocols,
-  isLoading,
-}: {
+interface Props {
   interopChains: InteropChainWithIcon[]
   flows: InteropDashboardData['flows'] | undefined
   topProtocols: InteropDashboardData['topProtocols'] | undefined
   isLoading: boolean
-}) {
-  const [view, setView] = useState<View>('paths')
+}
+
+export function MobileCarouselWidget({ topProtocols, isLoading }: Props) {
+  return (
+    <div className="relative h-full max-md:min-h-[213px] max-md:border-divider max-md:border-b min-[1600px]:hidden">
+      <Carousel opts={{ loop: true }} className="h-full">
+        <CarouselContent viewportClassName="h-full" className="-ml-5 h-full">
+          <CarouselItem className="select-none pl-5">
+            <TopProtocolsByVolume
+              topProtocols={topProtocols}
+              isLoading={isLoading}
+            />
+          </CarouselItem>
+          <CarouselItem className="select-none pl-5">
+            <TopProtocolsByTransfers
+              topProtocols={topProtocols}
+              isLoading={isLoading}
+            />
+          </CarouselItem>
+        </CarouselContent>
+        <DotButtons />
+      </Carousel>
+    </div>
+  )
+}
+
+function DotButtons() {
+  const { api } = useCarousel()
+  const [selected, setSelected] = React.useState(0)
+
+  React.useEffect(() => {
+    if (!api) return
+
+    const onSelect = () => {
+      setSelected(api.selectedScrollSnap())
+    }
+
+    onSelect()
+    api.on('select', onSelect)
+
+    return () => {
+      api.off('select', onSelect)
+    }
+  }, [api])
 
   return (
-    <div className="relative max-md:mx-4 max-md:mb-4 max-[1024px]:min-h-[213px] min-[1600px]:hidden">
-      <div
-        className={cn(
-          'flex h-full gap-5 transition-transform duration-300 ease-in-out',
-          view === 'paths' && 'translate-x-0',
-          view === 'volume' &&
-            '-translate-x-[calc(100%+1.25rem)] min-[1024px]:-translate-x-0',
-          view === 'transfers' &&
-            '-translate-x-[calc(200%+2.5rem)] min-[1024px]:-translate-x-[calc(100%+1.25rem)]',
-        )}
-      >
-        {/* Paths widget - only visible below 1024px */}
-        <div className="min-w-full flex-shrink-0 min-[1024px]:hidden">
-          <FlowsWidget
-            interopChains={interopChains}
-            flows={flows}
-            isLoading={isLoading}
-            className="max-[1024px]:pb-8!"
-          />
-        </div>
-        <div className="min-w-full flex-shrink-0">
-          <TopProtocolsByVolume
-            topProtocols={topProtocols}
-            isLoading={isLoading}
-          />
-        </div>
-        <div className="min-w-full flex-shrink-0">
-          <TopProtocolsByTransfers
-            topProtocols={topProtocols}
-            isLoading={isLoading}
-          />
-        </div>
-      </div>
-      <div className="-translate-x-1/2 absolute bottom-3 left-1/2 z-20 flex">
-        {/* Paths dot - only visible below 1024px */}
-        <DotElement
-          onClick={() => setView('paths')}
-          wrapperClassName="min-[1024px]:hidden"
-          dotClassName={view === 'paths' ? 'bg-brand' : 'bg-secondary'}
-        />
-        <DotElement
-          onClick={() => setView('volume')}
-          dotClassName={cn(
-            view === 'volume' ? 'bg-brand' : 'bg-secondary',
-            // When paths is selected but hidden on large screens, highlight volume
-            view === 'paths' && 'min-[1024px]:bg-brand',
-          )}
-        />
-        <DotElement
-          onClick={() => setView('transfers')}
-          dotClassName={view === 'transfers' ? 'bg-brand' : 'bg-secondary'}
-        />
-      </div>
+    <div className="-translate-x-1/2 absolute bottom-3 left-1/2 z-20 flex">
+      <DotElement onClick={() => api?.scrollTo(0)} selected={selected === 0} />
+      <DotElement onClick={() => api?.scrollTo(1)} selected={selected === 1} />
     </div>
   )
 }
@@ -82,11 +74,11 @@ export function MobileCarouselWidget({
 function DotElement({
   onClick,
   wrapperClassName,
-  dotClassName,
+  selected,
 }: {
   onClick: () => void
   wrapperClassName?: string
-  dotClassName?: string
+  selected: boolean
 }) {
   return (
     <div
@@ -96,7 +88,12 @@ function DotElement({
       )}
       onClick={onClick}
     >
-      <div className={cn('size-2 rounded-xs', dotClassName)} />
+      <div
+        className={cn(
+          'size-2 rounded-xs',
+          selected ? 'bg-brand' : 'bg-secondary',
+        )}
+      />
     </div>
   )
 }

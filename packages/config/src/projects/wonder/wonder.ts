@@ -43,6 +43,7 @@ export const wonder: ScalingProject = zkStackL2({
     chainId,
     explorerUrl: 'https://explorer.mainnet.wonderchain.org',
     sinceTimestamp: genesisTimestamp,
+    untilTimestamp: UnixTime(1771369200),
     apis: [
       {
         type: 'rpc',

@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x87a7ba4e053b34fcf0f8ab77a143c6bbd17bc219
+
+# Diff at Thu, 19 Feb 2026 09:39:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@31cbacb6d899b700558dd36eccfd1161fc0b3b74 block: 1771252693
+- current timestamp: 1771493664
+
+## Description
+
+new pool.
+
+## Watched changes
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.350:
++        "eth:0xB76A4C231123303caAbC7fb90aeCfB095B76cE4f"
+      values.poolsMap.eth:0xB6B02ea4EafaC6A33608d2a3b45D9F502F860416:
++        "eth:0xB76A4C231123303caAbC7fb90aeCfB095B76cE4f"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0xB76A4C231123303caAbC7fb90aeCfB095B76cE4f)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xB76A4C231123303caAbC7fb90aeCfB095B76cE4f.sol | 1766 ++++++++++++++++++++
+ 1 file changed, 1766 insertions(+)
+```
+
 Generated with discovered.json: 0x598d62c73a0ef48111dd87f3534bf92c3877d5d4
 
 # Diff at Mon, 16 Feb 2026 14:49:39 GMT:

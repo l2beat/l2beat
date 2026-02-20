@@ -202,7 +202,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
 
       const transferMatch = findBestTransferLog(
         input.txLogs,
-        messageBody?.amount ?? 0n,
+        messageBody ? messageBody.amount - messageBody.feeExecuted : 0n,
         input.log.logIndex ?? -1,
       )
 
@@ -222,6 +222,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
             v2MessageReceived.finalityThresholdExecuted,
           ),
           messageHash,
+
           dstTokenAddress: transferMatch.transfer
             ? Address32.from(transferMatch.transfer?.logAddress)
             : undefined,
