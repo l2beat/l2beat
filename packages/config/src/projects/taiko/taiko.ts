@@ -114,7 +114,7 @@ export const taiko: ScalingProject = {
       repositories: ['https://github.com/taikoxyz'],
       socialMedia: [
         'https://twitter.com/taikoxyz',
-        'https://discord.gg/taikoxyz',
+        'https://discord.gg/8RJAjGtp',
         'https://taiko.mirror.xyz',
         'https://community.taiko.xyz',
         'https://youtube.com/@taikoxyz',
