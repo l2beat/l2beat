@@ -21,6 +21,7 @@ export const hop: Bridge = {
         'https://twitter.com/HopProtocol',
         'https://medium.com/hop-protocol',
         'https://discord.com/invite/PwCF88emV4',
+        'https://forum.hop.exchange',
       ],
     },
     description:
