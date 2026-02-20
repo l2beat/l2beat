@@ -504,7 +504,7 @@
       ]
     },
     {
-      "name": "Aztec",
+      "name": "AZTEC Token",
       "address": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
       "type": "Contract",
       "template": "aztecnetwork/Aztec",
@@ -1452,5 +1452,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24470197 },
-  "permissionsConfigHash": "0x42e4e7ed08fb2908628ce01ea6586f4244caaf9911ba1d01ef820c503a727d7a"
+  "permissionsConfigHash": "0xe46631b522d6cfd8c922ae3f47f43b7aa1cae2632797e75b172718ada5ec7fb1"
 }
