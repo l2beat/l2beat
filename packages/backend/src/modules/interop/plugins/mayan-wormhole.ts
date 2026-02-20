@@ -23,7 +23,7 @@ export const MAYAN_FORWARDER_TX_EVENT_SIGNATURES = [
 ]
 
 // Only these methods are accompanied by Wormhole LogMessagePublished on source side.
-export const MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS = new Set([
+const MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS = new Set([
   '0x2072197f', // mayanCircle.bridgeWithFee
   '0x1c59b7fc', // mayanCircle.createOrder (legacy)
 ])

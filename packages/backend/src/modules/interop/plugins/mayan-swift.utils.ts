@@ -1,8 +1,5 @@
 import { decodeFunctionData, parseAbi } from 'viem'
 import { BinaryReader } from '../../../tools/BinaryReader'
-import { MAYAN_SWIFT, MAYAN_SWIFT_CHAINS } from './mayan-shared'
-
-export { MAYAN_SWIFT, MAYAN_SWIFT_CHAINS }
 
 export const MAYAN_SWIFT_MSG_TYPE_UNLOCK = 0x02
 export const MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK = 0x04
@@ -34,7 +31,7 @@ const mayanSwiftUnlockAbi = parseAbi([
 const MAYAN_SWIFT_UNLOCK_MIN_BYTES = 34
 const MAYAN_SWIFT_BATCH_ENTRY_BYTES = 98
 
-export function decodeMayanSwiftSettlementPayload(
+function decodeMayanSwiftSettlementPayload(
   payload: string,
 ): MayanSwiftSettlementPayload | undefined {
   try {

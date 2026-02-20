@@ -31,6 +31,8 @@ import {
 } from './mayan-forwarder'
 import {
   isBurnAddress,
+  MAYAN_SWIFT,
+  MAYAN_SWIFT_CHAINS,
   MAYAN_WRAPPED_NATIVE_ADDRESSES,
   toChainSpecificAddresses,
 } from './mayan-shared'
@@ -38,8 +40,6 @@ import {
   extractMayanSwiftSettlementDestChain,
   extractMayanSwiftSettlementOrderKey,
   getMayanSwiftSettlementMsgType,
-  MAYAN_SWIFT,
-  MAYAN_SWIFT_CHAINS,
   MAYAN_SWIFT_MSG_TYPE_UNLOCK,
 } from './mayan-swift.utils'
 import {
@@ -115,7 +115,6 @@ type TransferData = {
 type TransferCandidate = TransferData & { distance: number }
 type WithdrawalData = {
   logAddress: Address32
-  src: Address32
   value: bigint
 }
 type WithdrawalCandidate = WithdrawalData & { distance: number }
@@ -273,7 +272,6 @@ function findBestWrappedNativeWithdrawal(
     if (!withdrawal) continue
     candidates.push({
       logAddress: Address32.from(log.address),
-      src: Address32.from(withdrawal.src),
       value: withdrawal.wad,
       distance:
         log.logIndex === null

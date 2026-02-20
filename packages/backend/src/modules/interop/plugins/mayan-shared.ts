@@ -18,15 +18,13 @@ export const MAYAN_CIRCLE = EthereumAddress(
 export const MAYAN_FAST_MCTP = EthereumAddress(
   '0xC1062b7C5Dc8E4b1Df9F200fe360cDc0eD6e7741',
 )
-export const MAYAN_SWAP = EthereumAddress(
-  '0xBF5f3f65102aE745A48BD521d10BaB5BF02A9eF4',
-)
-export const MAYAN_SWAP2 = EthereumAddress(
+const MAYAN_SWAP = EthereumAddress('0xBF5f3f65102aE745A48BD521d10BaB5BF02A9eF4')
+const MAYAN_SWAP2 = EthereumAddress(
   '0x238856DE6d9d32EA3Dd4e9e7dbfe08b23cD5048c',
 )
 
 // Chains where Mayan contracts are deployed
-export const MAYAN_EVM_CHAINS = [
+const MAYAN_EVM_CHAINS = [
   'ethereum',
   'arbitrum',
   'base',
@@ -59,7 +57,7 @@ export const MAYAN_WRAPPED_NATIVE_ADDRESSES: Record<
   bsc: EthereumAddress('0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'),
 }
 
-export const MAYAN_PROTOCOLS_BY_CHAIN: Record<
+const MAYAN_PROTOCOLS_BY_CHAIN: Record<
   string,
   Record<string, EthereumAddressValue>
 > = {

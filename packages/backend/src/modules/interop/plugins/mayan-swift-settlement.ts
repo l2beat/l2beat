@@ -17,14 +17,16 @@ We create one SettlementSent event per order key to enable 1-on-1 matching.
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import { toChainSpecificAddresses } from './mayan-shared'
+import {
+  MAYAN_SWIFT,
+  MAYAN_SWIFT_CHAINS,
+  toChainSpecificAddresses,
+} from './mayan-shared'
 import { SettlementSent } from './mayan-swift'
 import {
   extractMayanSwiftBatchOrderKeys,
   extractWormholeEmitterChainFromTxData,
   getMayanSwiftSettlementMsgType,
-  MAYAN_SWIFT,
-  MAYAN_SWIFT_CHAINS,
   MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK,
 } from './mayan-swift.utils'
 import {
