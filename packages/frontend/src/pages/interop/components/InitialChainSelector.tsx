@@ -83,7 +83,7 @@ function ChainSelectorButton({
   return (
     <button
       className={cn(
-        'group relative flex h-10 items-center justify-center gap-2 rounded border border-divider px-3 py-2 transition-colors md:h-[96px] md:w-[128px] md:flex-col md:gap-3 md:py-4 disabled:md:justify-end disabled:md:gap-1 disabled:md:max-lg:pb-3 lg:h-[128px] lg:w-[148px] lg:py-7.5',
+        'group relative flex h-10 items-center justify-center gap-2 rounded border border-divider px-3 py-2 transition-colors md:h-[104px] md:w-[128px] md:flex-col md:gap-1.5 md:py-4 lg:h-[128px] lg:w-[148px] lg:gap-3 lg:py-7.5',
         selected
           ? 'border-brand bg-brand/15'
           : '[&:not([disabled]):hover:bg-brand/5',
