@@ -4,6 +4,7 @@ export interface InteropChain {
   type: 'evm'
   display: string
   iconSlug?: string
+  isUpcoming?: boolean
 }
 
 export const INTEROP_CHAINS: InteropChain[] = [
@@ -66,10 +67,61 @@ export const INTEROP_CHAINS: InteropChain[] = [
   },
   {
     id: 'bsc',
-    iconSlug: 'bsc',
     name: 'BNB Smart Chain',
     type: 'evm',
     display: 'BSC',
+    isUpcoming: true,
+  },
+  {
+    id: 'solana',
+    iconSlug: 'soon',
+    name: 'Solana',
+    type: 'evm',
+    display: 'SOL',
+    isUpcoming: true,
+  },
+  {
+    id: 'starknet',
+    name: 'Starknet',
+    type: 'evm',
+    display: 'STRK',
+    isUpcoming: true,
+  },
+  {
+    id: 'ink',
+    name: 'Ink',
+    type: 'evm',
+    display: 'INK',
+    isUpcoming: true,
+  },
+  {
+    id: 'megaeth',
+    name: 'MegaETH',
+    type: 'evm',
+    display: 'MEGA',
+    isUpcoming: true,
+  },
+  {
+    id: 'worldchain',
+    iconSlug: 'world',
+    name: 'World Chain',
+    type: 'evm',
+    display: 'WORLD',
+    isUpcoming: true,
+  },
+  {
+    id: 'celo',
+    name: 'Celo',
+    type: 'evm',
+    display: 'CELO',
+    isUpcoming: true,
+  },
+  {
+    id: 'unichain',
+    name: 'Unichain',
+    type: 'evm',
+    display: 'UNI',
+    isUpcoming: true,
   },
   {
     id: 'forknet',
