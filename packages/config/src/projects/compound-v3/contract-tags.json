@@ -86,8 +86,7 @@
       "contractAddress": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "isExternal": true,
       "timestamp": "2025-09-30T19:47:42.278Z",
-      "centralization": "high",
-      "likelihood": "high"
+      "centralization": "high"
     },
     {
       "contractAddress": "eth:0xF38326579519377178725A741C35999E8051e907",
@@ -213,8 +212,7 @@
       "contractAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "isExternal": true,
       "timestamp": "2025-09-30T19:47:51.353Z",
-      "centralization": "high",
-      "likelihood": "mitigated"
+      "centralization": "high"
     },
     {
       "contractAddress": "eth:0x4914f61d25e5C567143774B76EdbF4D5109a8566",

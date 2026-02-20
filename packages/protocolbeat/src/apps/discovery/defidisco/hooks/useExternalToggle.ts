@@ -331,7 +331,6 @@ export function useExternalToggle(
           ...(isExternal && tag
             ? {
                 centralization: tag.centralization,
-                likelihood: tag.likelihood,
               }
             : {}),
         })

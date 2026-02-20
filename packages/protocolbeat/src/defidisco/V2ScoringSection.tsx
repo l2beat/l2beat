@@ -1,36 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { getV2Score } from '../api/api'
-import type { LetterGrade, ModuleScore } from '../api/types'
+import type { ModuleScore } from '../api/types'
 import { AdminsInventoryBreakdown } from './AdminsInventoryBreakdown'
 import { DependencyInventoryBreakdown } from './DependencyInventoryBreakdown'
 import { FunctionBreakdown } from './FunctionBreakdown'
 
 interface V2ScoringSectionProps {
   project: string
-}
-
-/**
- * Get semantic color class for a letter grade
- */
-function getGradeColor(grade: LetterGrade): string {
-  switch (grade) {
-    case 'AAA':
-    case 'AA':
-    case 'A':
-      return 'text-green-400'
-    case 'BBB':
-    case 'BB':
-    case 'B':
-      return 'text-yellow-400'
-    case 'CCC':
-    case 'CC':
-    case 'C':
-      return 'text-orange-400'
-    case 'D':
-      return 'text-red-400'
-    case 'Unscored':
-      return 'text-gray-400'
-  }
 }
 
 /**
@@ -43,24 +19,17 @@ function InventoryItem({
   label: string
   score: ModuleScore
 }) {
-  const gradeColor = getGradeColor(score.grade)
-
   return (
     <div className="flex items-center justify-between text-coffee-300">
       <span className="font-medium">{label}:</span>
-      <span>
-        {score.inventory}{' '}
-        <span className={`font-semibold ${gradeColor}`}>
-          (Grade: {score.grade})
-        </span>
-      </span>
+      <span>{score.inventory}</span>
     </div>
   )
 }
 
 /**
  * V2 Scoring Section Component
- * Displays V2 framework scoring with inventory counts and letter grades
+ * Displays V2 framework scoring with inventory counts
  */
 export function V2ScoringSection({ project }: V2ScoringSectionProps) {
   const {
@@ -100,8 +69,6 @@ export function V2ScoringSection({ project }: V2ScoringSectionProps) {
     return null
   }
 
-  const finalGradeColor = getGradeColor(scoreData.finalScore)
-
   return (
     <div className="border-b border-b-coffee-600 pb-2">
       <h2 className="p-2 font-bold text-2xl text-blue-600">V2 Scoring:</h2>
@@ -122,19 +89,6 @@ export function V2ScoringSection({ project }: V2ScoringSectionProps) {
               adminScore={scoreData.inventory.admins}
             />
             <AdminsInventoryBreakdown score={scoreData.inventory.admins} />
-          </div>
-        </div>
-
-        {/* Score Subsection */}
-        <div>
-          <h3 className="mb-2 font-semibold text-lg text-orange-400">Score</h3>
-          <div className="ml-4 text-sm">
-            <p className="text-coffee-300">
-              Final score:{' '}
-              <span className={`font-bold text-xl ${finalGradeColor}`}>
-                {scoreData.finalScore}
-              </span>
-            </p>
           </div>
         </div>
       </div>

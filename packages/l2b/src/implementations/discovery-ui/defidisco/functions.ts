@@ -82,7 +82,6 @@ function isFunctionEntryEmpty(func: FunctionEntry): boolean {
     func.isPermissioned === true || // Explicitly marked as permissioned
     func.checked !== undefined ||
     func.score !== undefined ||
-    func.likelihood !== undefined ||
     func.reason !== undefined ||
     func.description !== undefined ||
     func.constraints !== undefined ||
@@ -168,13 +167,6 @@ export function updateFunction(
       updateRequest.isPermissioned ?? existingFunction?.isPermissioned ?? false,
     checked: updateRequest.checked ?? existingFunction?.checked,
     score: updateRequest.score ?? existingFunction?.score,
-    // Handle likelihood: convert null (from JSON) to undefined, otherwise use value if present
-    likelihood:
-      'likelihood' in updateRequest
-        ? updateRequest.likelihood === null
-          ? undefined
-          : updateRequest.likelihood
-        : existingFunction?.likelihood,
     reason: updateRequest.reason ?? existingFunction?.reason,
     description: updateRequest.description ?? existingFunction?.description,
     constraints: updateRequest.constraints ?? existingFunction?.constraints,

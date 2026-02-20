@@ -1,28 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject, updateContractTag, updateFunction } from '../api/api'
-import type {
-  AdminModuleScore,
-  DependencyModuleScore,
-  Impact,
-  Likelihood,
-} from '../api/types'
+import { getProject } from '../api/api'
+import type { AdminModuleScore, DependencyModuleScore } from '../api/types'
 import { useContractTags } from '../apps/discovery/defidisco/hooks/useContractTags'
 import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
 import {
   computeDeduplicatedCapital,
-  computeWorstGrade,
   formatUsdValue,
-  getGradeBadgeStyles,
-  getGradeColor,
-  getLikelihoodColor,
+  getImpactColor,
   hasCapitalData,
-  ImpactPicker,
-  impactToScore,
   isZeroAddress,
-  LikelihoodPicker,
   OwnerSection,
 } from './scoringShared'
 
@@ -34,24 +23,9 @@ interface DependencyInventoryBreakdownProps {
 /**
  * Dependency section component - displays functions for a single external contract
  */
-function DependencySection({
-  dependency,
-  onUpdateLikelihood,
-  onUpdateImpact,
-}: {
-  dependency: any
-  onUpdateLikelihood: (contractAddress: string, likelihood: Likelihood) => void
-  onUpdateImpact: (
-    contractAddress: string,
-    functionName: string,
-    impact: Impact,
-  ) => void
-}) {
+function DependencySection({ dependency }: { dependency: any }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const selectGlobal = usePanelStore((state) => state.select)
-
-  const worstGrade = computeWorstGrade(dependency.functions)
-  const badgeStyles = worstGrade ? getGradeBadgeStyles(worstGrade) : null
 
   return (
     <div className="mb-1 ml-4">
@@ -62,18 +36,6 @@ function DependencySection({
         <span className="text-coffee-400 text-xs">
           {isExpanded ? '▼' : '▶'}
         </span>
-        {badgeStyles && (
-          <span
-            className="inline-block rounded border px-2 py-0.5 font-mono text-xs"
-            style={{
-              backgroundColor: badgeStyles.backgroundColor,
-              borderColor: badgeStyles.borderColor,
-              color: badgeStyles.color,
-            }}
-          >
-            {worstGrade}
-          </span>
-        )}
         <button
           onClick={(e) => {
             e.stopPropagation()
@@ -83,15 +45,6 @@ function DependencySection({
         >
           {dependency.dependencyName}
         </button>
-        <span className="mx-1 text-coffee-500 text-xs">|</span>
-        <span className="text-coffee-400 text-xs">Likelihood:</span>
-        <LikelihoodPicker
-          currentLikelihood={dependency.likelihood}
-          onUpdate={(likelihood) =>
-            onUpdateLikelihood(dependency.dependencyAddress, likelihood)
-          }
-          allowUnscored={true}
-        />
         <span className="ml-2 text-coffee-400 text-xs">
           ({dependency.functions.length} function
           {dependency.functions.length !== 1 ? 's' : ''})
@@ -100,62 +53,29 @@ function DependencySection({
 
       {isExpanded && (
         <ul className="mt-2 ml-8 space-y-1.5">
-          {dependency.functions.map((func: any, idx: number) => {
-            const likelihoodColor = getLikelihoodColor(
-              dependency.likelihood || '',
-            )
-            const gradeBadgeStyles = func.grade
-              ? getGradeBadgeStyles(func.grade)
-              : null
-
-            return (
-              <li
-                key={idx}
-                className="flex items-center gap-2 text-coffee-300 text-xs"
+          {dependency.functions.map((func: any, idx: number) => (
+            <li
+              key={idx}
+              className="flex items-center gap-2 text-coffee-300 text-xs"
+            >
+              <button
+                onClick={() => selectGlobal(func.contractAddress)}
+                className="cursor-pointer font-medium text-coffee-200 transition-colors hover:text-blue-400"
               >
-                {gradeBadgeStyles ? (
-                  <span
-                    className="inline-block rounded border px-1.5 py-0.5 font-mono text-xs"
-                    style={{
-                      backgroundColor: gradeBadgeStyles.backgroundColor,
-                      borderColor: gradeBadgeStyles.borderColor,
-                      color: gradeBadgeStyles.color,
-                    }}
-                  >
-                    {func.grade}
-                  </span>
-                ) : (
-                  <span className="inline-block px-1.5 py-0.5 text-coffee-500 text-xs">
-                    -
-                  </span>
-                )}
-                <button
-                  onClick={() => selectGlobal(func.contractAddress)}
-                  className="cursor-pointer font-medium text-coffee-200 transition-colors hover:text-blue-400"
-                >
-                  {func.contractName}
-                </button>
-                <span className="text-coffee-500">.</span>
-                <span className="text-blue-400">{func.functionName}()</span>
-                <span className="ml-2 text-coffee-500">(Impact: </span>
-                <ImpactPicker
-                  currentImpact={func.impact}
-                  onUpdate={(impact) =>
-                    onUpdateImpact(
-                      func.contractAddress,
-                      func.functionName,
-                      impact,
-                    )
-                  }
-                />
-                <span className="text-coffee-500">, Likelihood: </span>
-                <span style={{ color: likelihoodColor }}>
-                  {dependency.likelihood || 'unscored'}
-                </span>
-                <span className="text-coffee-500">)</span>
-              </li>
-            )
-          })}
+                {func.contractName}
+              </button>
+              <span className="text-coffee-500">.</span>
+              <span className="text-blue-400">{func.functionName}()</span>
+              <span className="ml-2 text-coffee-500">(</span>
+              <span
+                className="text-xs capitalize"
+                style={{ color: getImpactColor(func.impact) }}
+              >
+                {func.impact}
+              </span>
+              <span className="text-coffee-500">)</span>
+            </li>
+          ))}
         </ul>
       )}
     </div>
@@ -172,9 +92,7 @@ export function DependencyInventoryBreakdown({
   adminScore,
 }: DependencyInventoryBreakdownProps) {
   const { project } = useParams()
-  const queryClient = useQueryClient()
   const { data: contractTags } = useContractTags(project!)
-  const gradeColor = getGradeColor(score.grade)
 
   // Fetch project data for proxy type information (needed for external owners)
   const { data: projectData } = useQuery({
@@ -187,75 +105,6 @@ export function DependencyInventoryBreakdown({
     () => buildProxyTypeMap(projectData),
     [projectData],
   )
-
-  // Mutation for updating likelihood
-  const updateLikelihoodMutation = useMutation({
-    mutationFn: ({
-      contractAddress,
-      likelihood,
-    }: {
-      contractAddress: string
-      likelihood: Likelihood
-    }) => {
-      if (!project) throw new Error('Project not found')
-
-      const existingTag = contractTags?.tags.find(
-        (tag) =>
-          tag.contractAddress.toLowerCase() === contractAddress.toLowerCase(),
-      )
-
-      return updateContractTag(project, {
-        contractAddress: contractAddress,
-        isExternal: existingTag?.isExternal ?? true,
-        centralization: existingTag?.centralization,
-        likelihood: likelihood,
-      })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['contract-tags', project] })
-      queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
-    },
-  })
-
-  const handleUpdateLikelihood = (
-    contractAddress: string,
-    likelihood: Likelihood,
-  ) => {
-    updateLikelihoodMutation.mutate({ contractAddress, likelihood })
-  }
-
-  // Mutation for updating impact
-  const updateImpactMutation = useMutation({
-    mutationFn: ({
-      contractAddress,
-      functionName,
-      impact,
-    }: {
-      contractAddress: string
-      functionName: string
-      impact: Impact
-    }) => {
-      if (!project) throw new Error('Project not found')
-
-      return updateFunction(project, {
-        contractAddress,
-        functionName,
-        score: impactToScore(impact),
-      })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['functions', project] })
-      queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
-    },
-  })
-
-  const handleUpdateImpact = (
-    contractAddress: string,
-    functionName: string,
-    impact: Impact,
-  ) => {
-    updateImpactMutation.mutate({ contractAddress, functionName, impact })
-  }
 
   // Toggle for showing/hiding immutable dependencies (default: on)
   const [showImmutable, setShowImmutable] = useState(true)
@@ -349,12 +198,7 @@ export function DependencyInventoryBreakdown({
               Show immutable
             </label>
           )}
-          <span>
-            {score.inventory}{' '}
-            <span className={`font-semibold ${gradeColor}`}>
-              (Grade: {score.grade})
-            </span>
-          </span>
+          <span>{score.inventory}</span>
         </span>
       </div>
 
@@ -375,12 +219,7 @@ export function DependencyInventoryBreakdown({
 
             {/* Regular dependencies */}
             {regularDeps.map((dep) => (
-              <DependencySection
-                key={dep.dependencyAddress}
-                dependency={dep}
-                onUpdateLikelihood={handleUpdateLikelihood}
-                onUpdateImpact={handleUpdateImpact}
-              />
+              <DependencySection key={dep.dependencyAddress} dependency={dep} />
             ))}
 
             {/* External owners (rendered with OwnerSection for full tags/funds) */}
@@ -389,8 +228,6 @@ export function DependencyInventoryBreakdown({
                 key={admin.adminAddress}
                 admin={admin}
                 proxyType={proxyTypeMap.get(admin.adminAddress.toLowerCase())}
-                onUpdateLikelihood={handleUpdateLikelihood}
-                onUpdateImpact={handleUpdateImpact}
               />
             ))}
           </>

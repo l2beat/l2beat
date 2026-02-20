@@ -61,7 +61,6 @@ export function ExternalButton() {
 
   const handleSetAttributes = async (
     centralization: 'high' | 'medium' | 'low' | 'immutable',
-    likelihood: 'high' | 'medium' | 'low' | 'mitigated',
   ) => {
     const promises = selectedNodes.map((node) => {
       const normalizedNodeAddress = node.address
@@ -76,7 +75,6 @@ export function ExternalButton() {
         contractAddress: node.address, // Backend will normalize to ensure eth: prefix
         isExternal: tag?.isExternal ?? true,
         centralization,
-        likelihood,
       })
     })
 
@@ -121,7 +119,6 @@ interface AttributePickerProps {
   onToggleExternal: () => void | Promise<void>
   onSetAttributes: (
     centralization: 'high' | 'medium' | 'low' | 'immutable',
-    likelihood: 'high' | 'medium' | 'low' | 'mitigated',
   ) => Promise<void>
   hasExternalContract: boolean
   selectedNodes: Array<{ id: string; address: string }>
@@ -130,7 +127,6 @@ interface AttributePickerProps {
         tags: Array<{
           contractAddress: string
           centralization?: 'high' | 'medium' | 'low' | 'immutable'
-          likelihood?: 'high' | 'medium' | 'low' | 'mitigated'
         }>
       }
     | undefined
@@ -145,12 +141,6 @@ function AttributePicker({
 }: AttributePickerProps) {
   const centralizationOptions: Array<'high' | 'medium' | 'low' | 'immutable'> =
     ['high', 'medium', 'low', 'immutable']
-  const likelihoodOptions: Array<'high' | 'medium' | 'low' | 'mitigated'> = [
-    'high',
-    'medium',
-    'low',
-    'mitigated',
-  ]
 
   // Get current attributes from first selected node
   const getCurrentAttributes = () => {
@@ -165,19 +155,15 @@ function AttributePicker({
       )
       return {
         centralization: tag?.centralization || 'high',
-        likelihood: tag?.likelihood || 'high',
       }
     }
-    return { centralization: 'high' as const, likelihood: 'high' as const }
+    return { centralization: 'high' as const }
   }
 
   const currentAttrs = getCurrentAttributes()
   const [selectedCentralization, setSelectedCentralization] = useState<
     'high' | 'medium' | 'low' | 'immutable'
   >(currentAttrs.centralization)
-  const [selectedLikelihood, setSelectedLikelihood] = useState<
-    'high' | 'medium' | 'low' | 'mitigated'
-  >(currentAttrs.likelihood)
 
   return (
     <div className="flex flex-col gap-3 rounded border border-coffee-600 bg-coffee-800 p-3 shadow-xl">
@@ -189,11 +175,10 @@ function AttributePicker({
         {hasExternalContract ? 'Mark Internal' : 'Mark External'}
       </button>
 
-      {/* Centralization + Likelihood Columns */}
+      {/* Centralization Column */}
       {hasExternalContract && (
         <>
           <div className="flex gap-3">
-            {/* Centralization Column */}
             <div className="flex flex-col gap-2">
               <div className="font-semibold text-coffee-300 text-xs">
                 Centralization
@@ -212,34 +197,12 @@ function AttributePicker({
                 </button>
               ))}
             </div>
-
-            {/* Likelihood Column */}
-            <div className="flex flex-col gap-2">
-              <div className="font-semibold text-coffee-300 text-xs">
-                Likelihood
-              </div>
-              {likelihoodOptions.map((lik) => (
-                <button
-                  key={lik}
-                  className={`rounded border border-coffee-600 px-3 py-2 text-xs capitalize ${
-                    selectedLikelihood === lik
-                      ? 'bg-coffee-600'
-                      : 'bg-coffee-700 hover:bg-coffee-600'
-                  }`}
-                  onClick={() => setSelectedLikelihood(lik)}
-                >
-                  {lik}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Apply Button */}
           <button
             className="w-full rounded border border-coffee-600 bg-coffee-700 px-3 py-2 text-xs hover:bg-coffee-600"
-            onClick={() =>
-              onSetAttributes(selectedCentralization, selectedLikelihood)
-            }
+            onClick={() => onSetAttributes(selectedCentralization)}
           >
             Apply
           </button>

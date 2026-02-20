@@ -108,7 +108,7 @@
           "functionName": "absorb",
           "isPermissioned": false,
           "timestamp": "2025-09-18T21:34:51.373Z",
-          "score": "medium-risk"
+          "score": "critical"
         }
       ]
     },
@@ -135,7 +135,7 @@
           "isPermissioned": true,
           "timestamp": "2025-10-01T19:09:44.175Z",
           "checked": true,
-          "score": "high-risk",
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
@@ -154,7 +154,7 @@
           "isPermissioned": true,
           "timestamp": "2025-09-30T15:21:54.826Z",
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "delay": {
             "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
             "fieldName": "delay"
@@ -165,7 +165,7 @@
           "isPermissioned": true,
           "timestamp": "2025-10-01T19:01:59.563Z",
           "checked": true,
-          "score": "medium-risk",
+          "score": "critical",
           "description": "This function is a simple getter on the current admin address.",
           "ownerDefinitions": []
         }
@@ -178,33 +178,33 @@
           "isPermissioned": true,
           "timestamp": "2025-09-18T22:07:55.636Z",
           "checked": true,
-          "score": "low-risk"
+          "score": "critical"
         },
         {
           "functionName": "upgradeTo",
           "isPermissioned": true,
           "timestamp": "2025-09-18T22:08:37.444Z",
-          "score": "high-risk"
+          "score": "critical"
         },
         {
           "functionName": "upgradeToAndCall",
           "isPermissioned": true,
           "timestamp": "2025-09-18T22:08:38.899Z",
-          "score": "high-risk"
+          "score": "critical"
         },
         {
           "functionName": "implementation",
           "isPermissioned": true,
           "timestamp": "2025-09-22T23:05:27.892Z",
           "checked": false,
-          "score": "low-risk"
+          "score": "critical"
         },
         {
           "functionName": "changeAdmin",
           "isPermissioned": true,
           "timestamp": "2025-09-22T23:05:28.567Z",
           "checked": false,
-          "score": "high-risk"
+          "score": "critical"
         }
       ]
     },

@@ -1,16 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject, updateContractTag, updateFunction } from '../api/api'
-import type { AdminModuleScore, Impact, Likelihood } from '../api/types'
+import { getProject } from '../api/api'
+import type { AdminModuleScore } from '../api/types'
 import { useContractTags } from '../apps/discovery/defidisco/hooks/useContractTags'
 import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import {
   computeDeduplicatedCapital,
   formatUsdValue,
-  getGradeColor,
   hasCapitalData,
-  impactToScore,
   isZeroAddress,
   OwnerSection,
 } from './scoringShared'
@@ -27,9 +25,7 @@ export function AdminsInventoryBreakdown({
   score,
 }: AdminsInventoryBreakdownProps) {
   const { project } = useParams()
-  const queryClient = useQueryClient()
   const { data: contractTags } = useContractTags(project!)
-  const gradeColor = getGradeColor(score.grade)
 
   // Fetch project data for proxy type information
   const { data: projectData } = useQuery({
@@ -43,75 +39,6 @@ export function AdminsInventoryBreakdown({
     () => buildProxyTypeMap(projectData),
     [projectData],
   )
-
-  // Mutation for updating likelihood
-  const updateLikelihoodMutation = useMutation({
-    mutationFn: ({
-      adminAddress,
-      likelihood,
-    }: {
-      adminAddress: string
-      likelihood: Likelihood
-    }) => {
-      if (!project) throw new Error('Project not found')
-
-      const existingTag = contractTags?.tags.find(
-        (tag) =>
-          tag.contractAddress.toLowerCase() === adminAddress.toLowerCase(),
-      )
-
-      return updateContractTag(project, {
-        contractAddress: adminAddress,
-        isExternal: existingTag?.isExternal ?? false,
-        centralization: existingTag?.centralization,
-        likelihood: likelihood,
-      })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['contract-tags', project] })
-      queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
-    },
-  })
-
-  const handleUpdateLikelihood = (
-    adminAddress: string,
-    likelihood: Likelihood,
-  ) => {
-    updateLikelihoodMutation.mutate({ adminAddress, likelihood })
-  }
-
-  // Mutation for updating impact
-  const updateImpactMutation = useMutation({
-    mutationFn: ({
-      contractAddress,
-      functionName,
-      impact,
-    }: {
-      contractAddress: string
-      functionName: string
-      impact: Impact
-    }) => {
-      if (!project) throw new Error('Project not found')
-
-      return updateFunction(project, {
-        contractAddress,
-        functionName,
-        score: impactToScore(impact),
-      })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['functions', project] })
-      queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
-    },
-  })
-
-  const handleUpdateImpact = (
-    contractAddress: string,
-    functionName: string,
-    impact: Impact,
-  ) => {
-    updateImpactMutation.mutate({ contractAddress, functionName, impact })
-  }
 
   // Toggle for showing/hiding immutable contracts
   const [showImmutable, setShowImmutable] = useState(false)
@@ -196,12 +123,7 @@ export function AdminsInventoryBreakdown({
               Show immutable
             </label>
           )}
-          <span>
-            {score.inventory}{' '}
-            <span className={`font-semibold ${gradeColor}`}>
-              (Grade: {score.grade})
-            </span>
-          </span>
+          <span>{score.inventory}</span>
         </span>
       </div>
 
@@ -224,8 +146,6 @@ export function AdminsInventoryBreakdown({
                 key={admin.adminAddress}
                 admin={admin}
                 proxyType={proxyTypeMap.get(admin.adminAddress.toLowerCase())}
-                onUpdateLikelihood={handleUpdateLikelihood}
-                onUpdateImpact={handleUpdateImpact}
               />
             ))}
           </>

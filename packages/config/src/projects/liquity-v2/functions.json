@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-01-23T10:43:01.119Z",
+  "lastModified": "2026-02-19T16:23:15.703Z",
   "contracts": {
     "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": {
       "functions": [
@@ -37,55 +37,13 @@
         }
       ]
     },
-    "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": {
-      "functions": [
-        {
-          "functionName": "setBranchAddresses",
-          "isPermissioned": true,
-          "checked": true,
-          "score": "low-risk",
-          "description": "The permissioned allows owner of the permission to record core contract addresses for a given branch in the BOLDToken contract. It is used once, purely for contract initialization upon deployment.",
-          "ownerDefinitions": [
-            {
-              "path": "$self.owner"
-            }
-          ],
-          "timestamp": "2025-12-22T07:31:40.575Z"
-        },
-        {
-          "functionName": "setCollateralRegistry",
-          "isPermissioned": true,
-          "checked": true,
-          "score": "low-risk",
-          "description": "The permission allows owner of the permission to record the CollateralRegistry core contract address in the BOLDToken contract. It is used once, purely for contract initialization upon deployment, and it renounces ownership after recording the address.",
-          "ownerDefinitions": [
-            {
-              "path": "$self.owner"
-            }
-          ],
-          "timestamp": "2025-12-22T07:31:59.777Z"
-        },
-        {
-          "functionName": "mint",
-          "isPermissioned": false,
-          "score": "high-risk",
-          "timestamp": "2026-01-23T09:36:34.750Z"
-        },
-        {
-          "functionName": "burn",
-          "isPermissioned": false,
-          "score": "low-risk",
-          "timestamp": "2026-01-23T08:36:30.344Z"
-        }
-      ]
-    },
     "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": {
       "functions": [
         {
           "functionName": "sendColl",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Transfers collateral to the specified address",
           "ownerDefinitions": [
             {
@@ -104,7 +62,7 @@
           "functionName": "sendCollToDefaultPool",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Transfers the collateral from a redistribution liquidation to the DefaultPool",
           "ownerDefinitions": [
             {
@@ -143,7 +101,7 @@
           "functionName": "mintAggInterestAndAccountForTroveChange",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Upon a Trove debt change it mints the aggregate pending interest since the last minting operation and updates the interest accounting, incorporating the Trove debt change.",
           "ownerDefinitions": [
             {
@@ -159,7 +117,7 @@
           "functionName": "mintAggInterest",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Mints the aggregate pending interest since the last minting operation and updates the interest accounting",
           "ownerDefinitions": [
             {
@@ -175,7 +133,7 @@
           "functionName": "mintBatchManagementFeeAndAccountForChange",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Upon a batch fee operation it mints the aggregate pending interest since the last minting operation and updates the interest accounting, incorporating the batch fee charged.",
           "ownerDefinitions": [
             {
@@ -307,7 +265,7 @@
           "functionName": "setAddresses",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Sets the addresses of the relevant V2 protocol contract upon initialisation.",
           "ownerDefinitions": [
             {
@@ -426,7 +384,7 @@
           "functionName": "setAddresses",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Sets the relevant addresses of the V2 contracts upon initialisation.",
           "ownerDefinitions": [
             {
@@ -1008,7 +966,7 @@
           "functionName": "setAddresses",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Sets the relevant addresses for the V2 upon initialization.",
           "ownerDefinitions": [
             {
@@ -1253,7 +1211,7 @@
           "functionName": "setParams",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Sets the different parameters and addresses of V2 upon initialization.",
           "ownerDefinitions": [
             {
@@ -1340,7 +1298,7 @@
           "functionName": "setAddresses",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Sets the addresses of the relevant V2 contracts upon initialisation.",
           "ownerDefinitions": [
             {
@@ -1357,7 +1315,7 @@
           "functionName": "triggerBoldRewards",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Upon interest minting, updates the pool's reward accounting for depositors with the interest portion assigned to the SP",
           "ownerDefinitions": [
             {
@@ -1370,7 +1328,7 @@
           "functionName": "offset",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Cancels the specified amount of liquidated BOLD debt against BOLD tokens held in the pool, transfers liquidated collateral to the pool, and updates collateral rewards accounting for depositors",
           "ownerDefinitions": [
             {
@@ -1387,7 +1345,7 @@
           "functionName": "triggerBoldRewards",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Upon interest minting, updates the pool's reward accounting for depositors with the interest portion assigned to the SP",
           "ownerDefinitions": [
             {
@@ -1400,7 +1358,7 @@
           "functionName": "offset",
           "isPermissioned": true,
           "checked": true,
-          "score": "low-risk",
+          "score": "critical",
           "description": "Cancels the specified amount of liquidated BOLD debt against BOLD tokens held in the pool, transfers liquidated collateral to the pool, and updates collateral rewards accounting for depositors",
           "ownerDefinitions": [
             {
@@ -1408,6 +1366,62 @@
             }
           ],
           "timestamp": "2025-12-22T07:45:41.727Z"
+        }
+      ]
+    },
+    "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d": {
+      "functions": [
+        {
+          "functionName": "setBranchAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "The permissioned allows owner of the permission to record core contract addresses for a given branch in the BOLDToken contract. It is used once, purely for contract initialization upon deployment.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2025-12-22T07:31:40.575Z"
+        },
+        {
+          "functionName": "setCollateralRegistry",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "The permission allows owner of the permission to record the CollateralRegistry core contract address in the BOLDToken contract. It is used once, purely for contract initialization upon deployment, and it renounces ownership after recording the address.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-02-19T16:23:05.618Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-02-19T16:23:05.618Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": false,
+          "score": "critical",
+          "timestamp": "2026-01-23T09:36:34.750Z"
+        },
+        {
+          "functionName": "burn",
+          "isPermissioned": false,
+          "score": "critical",
+          "timestamp": "2026-01-23T08:36:30.344Z"
+        },
+        {
+          "functionName": "transfer",
+          "isPermissioned": false,
+          "score": "unscored",
+          "timestamp": "2026-02-19T16:23:15.703Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-02-19T16:23:15.703Z"
+          }
         }
       ]
     }

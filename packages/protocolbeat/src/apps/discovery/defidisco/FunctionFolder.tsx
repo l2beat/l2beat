@@ -6,7 +6,6 @@ import type {
   ApiAbiEntry,
   ContractFundsData,
   FunctionEntry,
-  Likelihood,
   OwnerDefinition,
 } from '../../../api/types'
 import * as solidity from '../../../components/editor/languages/solidity'
@@ -48,17 +47,7 @@ interface FunctionFolderProps {
   onScoreToggle: (
     contractAddress: string,
     functionName: string,
-    currentScore:
-      | 'unscored'
-      | 'low-risk'
-      | 'medium-risk'
-      | 'high-risk'
-      | 'critical',
-  ) => void
-  onLikelihoodToggle: (
-    contractAddress: string,
-    functionName: string,
-    currentLikelihood?: Likelihood,
+    currentScore: 'unscored' | 'critical',
   ) => void
   onDescriptionUpdate: (
     contractAddress: string,
@@ -102,7 +91,6 @@ export function FunctionFolder({
   onPermissionToggle,
   onCheckedToggle,
   onScoreToggle,
-  onLikelihoodToggle,
   onDescriptionUpdate,
   onConstraintsUpdate,
   onOpenInCode,
@@ -315,7 +303,7 @@ export function FunctionFolder({
     return []
   }
 
-  // Get external contracts with their centralization and likelihood attributes
+  // Get external contracts with their centralization attributes
   const getExternalContracts = React.useMemo(() => {
     if (!projectData?.entries || !contractTags?.tags) return []
 
@@ -324,7 +312,6 @@ export function FunctionFolder({
       address: string
       name: string
       centralization?: 'high' | 'medium' | 'low' | 'immutable'
-      likelihood?: 'high' | 'medium' | 'low' | 'mitigated'
     }> = []
 
     externalTags.forEach((tag) => {
@@ -339,7 +326,6 @@ export function FunctionFolder({
           address: tag.contractAddress,
           name: contract.name || 'Unknown Contract',
           centralization: tag.centralization,
-          likelihood: tag.likelihood,
         })
       }
     })
@@ -347,7 +333,7 @@ export function FunctionFolder({
     return contracts
   }, [projectData, contractTags])
 
-  // Helper to get dependency info (name, centralization, likelihood)
+  // Helper to get dependency info (name, centralization)
   const getDependencyInfo = (address: string) => {
     return getExternalContracts.find((c) => c.address === address)
   }
@@ -389,29 +375,9 @@ export function FunctionFolder({
     }
   }
 
-  // Helper to get likelihood color
-  const getLikelihoodColor = (
-    likelihood?: 'high' | 'medium' | 'low' | 'mitigated',
-    isHover = false,
-  ) => {
-    switch (likelihood) {
-      case 'high':
-        return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
-      case 'medium':
-        return isHover ? '#fdba74' : '#fb923c' // orange-300 : orange-400
-      case 'low':
-        return isHover ? '#6ee7b7' : '#10b981' // green-300 : green-500 (swapped from amber to match new mapping)
-      case 'mitigated':
-        return isHover ? '#93c5fd' : '#60a5fa' // blue-300 : blue-400
-      default:
-        return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400 (unassigned)
-    }
-  }
-
   const isPermissioned = currentFunction?.isPermissioned || false
   const checkedStatus = currentFunction?.checked || false
   const scoreStatus = currentFunction?.score || 'unscored'
-  const likelihoodStatus = currentFunction?.likelihood // Keep undefined as-is (unassigned)
   const description = currentFunction?.description || ''
   const constraints = currentFunction?.constraints || ''
 
@@ -717,7 +683,7 @@ export function FunctionFolder({
             style={{
               color: getScoreColor(scoreStatus),
             }}
-            title={`Current score: ${scoreStatus}. Click to cycle: unscored → low-risk → medium-risk → high-risk → critical`}
+            title={`Current score: ${scoreStatus}. Click to toggle: unscored ↔ critical`}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = getScoreColor(scoreStatus, true)
             }}
@@ -1350,46 +1316,28 @@ export function FunctionFolder({
                             </button>
                           </div>
 
-                          {/* Show centralization and likelihood attributes */}
-                          {depInfo &&
-                            (depInfo.centralization || depInfo.likelihood) && (
-                              <div className="mt-1 flex items-center gap-3 text-xs">
-                                {depInfo.centralization && (
-                                  <div className="flex items-center gap-1">
-                                    <span className="text-coffee-400">
-                                      Centralization:
-                                    </span>
-                                    <span
-                                      style={{
-                                        color: getCentralizationColor(
-                                          depInfo.centralization,
-                                        ),
-                                      }}
-                                      className="font-semibold"
-                                    >
-                                      {depInfo.centralization}
-                                    </span>
-                                  </div>
-                                )}
-                                {depInfo.likelihood && (
-                                  <div className="flex items-center gap-1">
-                                    <span className="text-coffee-400">
-                                      Likelihood:
-                                    </span>
-                                    <span
-                                      style={{
-                                        color: getLikelihoodColor(
-                                          depInfo.likelihood,
-                                        ),
-                                      }}
-                                      className="font-semibold"
-                                    >
-                                      {depInfo.likelihood}
-                                    </span>
-                                  </div>
-                                )}
-                              </div>
-                            )}
+                          {/* Show centralization attributes */}
+                          {depInfo && depInfo.centralization && (
+                            <div className="mt-1 flex items-center gap-3 text-xs">
+                              {depInfo.centralization && (
+                                <div className="flex items-center gap-1">
+                                  <span className="text-coffee-400">
+                                    Centralization:
+                                  </span>
+                                  <span
+                                    style={{
+                                      color: getCentralizationColor(
+                                        depInfo.centralization,
+                                      ),
+                                    }}
+                                    className="font-semibold"
+                                  >
+                                    {depInfo.centralization}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          )}
                         </div>
                       )
                     })}
@@ -1446,23 +1394,6 @@ export function FunctionFolder({
                                   {contract.centralization
                                     .charAt(0)
                                     .toUpperCase()}
-                                </span>
-                              </div>
-                            )}
-                            {contract.likelihood && (
-                              <div className="flex items-center gap-1">
-                                <span className="text-coffee-400 text-xs">
-                                  L:
-                                </span>
-                                <span
-                                  style={{
-                                    color: getLikelihoodColor(
-                                      contract.likelihood,
-                                    ),
-                                  }}
-                                  className="font-semibold text-xs"
-                                >
-                                  {contract.likelihood.charAt(0).toUpperCase()}
                                 </span>
                               </div>
                             )}
