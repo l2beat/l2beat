@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Loader } from '../../../../components/Loader'
 import {
   Tooltip,
@@ -8,6 +9,7 @@ import { IS_READONLY } from '../../../../config/readonly'
 import { IconChecked } from '../../../../icons/IconChcked'
 import { IconDatabase } from '../../../../icons/IconDatabase'
 import { IconDots } from '../../../../icons/IconDots'
+import { IconLink } from '../../../../icons/IconLink'
 import { IconTriangleAlert } from '../../../../icons/IconTriangleAlert'
 import { IconWebApp } from '../../../../icons/IconWebApp'
 import { useConfigModels } from '../../hooks/useConfigModels'
@@ -29,6 +31,14 @@ export function StatusRibbon() {
 
   return (
     <div className="flex h-full items-center justify-center gap-4">
+      <div className="flex max-h-fit items-center justify-center gap-2 border border-coffee-200 bg-coffee-200 px-1.5 py-0.5 text-coffee-800 text-xs">
+        <Link
+          to="/ui/reports/config-health"
+          className="flex items-center gap-1 hover:underline"
+        >
+          Health <IconLink className="size-3" />
+        </Link>
+      </div>
       <div className="flex items-center justify-center border border-coffee-200">
         <div className="bg-coffee-200 px-1.5 py-0.5 text-coffee-800 text-xs">
           Outputs

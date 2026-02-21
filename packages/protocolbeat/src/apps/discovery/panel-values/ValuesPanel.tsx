@@ -216,8 +216,8 @@ function Display({
       {fields.length > 0 && (
         <Folder title="Fields">
           <ol>
-            {fields.map((field, i) => (
-              <FieldDisplay key={i} field={field} />
+            {fields.map((field) => (
+              <FieldDisplay key={field.name} field={field} />
             ))}
           </ol>
         </Folder>

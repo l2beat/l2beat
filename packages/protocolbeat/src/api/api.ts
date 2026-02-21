@@ -3,6 +3,7 @@ import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
+  ApiConfigHealthResponse,
   ApiConfigSyncStatusResponse,
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
@@ -166,6 +167,15 @@ export async function getGlobalConfigSyncStatus(): Promise<ApiGlobalConfigSyncSt
   }
   const data = await res.json()
   return data as ApiGlobalConfigSyncStatusResponse
+}
+
+export async function getConfigHealth(): Promise<ApiConfigHealthResponse> {
+  const res = await fetch('/api/config/health')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiConfigHealthResponse
 }
 
 export async function createConfigFile(

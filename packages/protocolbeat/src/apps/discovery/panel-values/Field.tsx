@@ -99,9 +99,9 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
         <div className="flex flex-wrap items-center gap-1">{field.name}</div>
         {templateTags
           .filter((x) => x.isActive)
-          .map((x, i) => (
+          .map((x) => (
             <FieldTag
-              key={i}
+              key={`${field.name}:${x.tag}`}
               source="template"
               onRemoveClick={canModify ? x.onClick : undefined}
             >
@@ -111,9 +111,9 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
 
         {configTags
           .filter((x) => x.isActive)
-          .map((x, i) => (
+          .map((x) => (
             <FieldTag
-              key={i}
+              key={`${field.name}:${x.tag}`}
               source="config"
               onRemoveClick={canModify ? x.onClick : undefined}
             >

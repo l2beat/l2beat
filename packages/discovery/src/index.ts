@@ -22,6 +22,10 @@ export {
   TemplateService,
 } from './discovery/analysis/TemplateService'
 export { colorize } from './discovery/colorize/colorize'
+export {
+  ConfigHealthService,
+  type HealthHint,
+} from './discovery/config/ConfigHealthService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
 export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
