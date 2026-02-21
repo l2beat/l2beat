@@ -1,12 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getFundsData, getProject } from '../../../api/api'
+import { getFundsData, getProject, getEnhancedTraversal } from '../../../api/api'
 import type {
   ApiAbiEntry,
+  ApiAddressType,
   ContractFundsData,
   FunctionEntry,
+  FunctionTraversalResult,
   OwnerDefinition,
+  TraversalTerminal,
 } from '../../../api/types'
 import * as solidity from '../../../components/editor/languages/solidity'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
@@ -23,6 +26,206 @@ import { IconLockOpen } from './IconLockOpen'
 import { IconOpen } from './IconOpen'
 import { IconVoltage } from './IconVoltage'
 import { resolvePathExpression, UIContractDataAccess } from './ownerResolution'
+
+// ============================================================================
+// Enhanced Traversal Helpers
+// ============================================================================
+
+/** Normalize type for display — 'Untemplatized' → 'Contract' */
+function displayType(type: ApiAddressType): string {
+  if (type === 'Untemplatized') return 'Contract'
+  return type
+}
+
+function isZeroAddress(address: string): boolean {
+  const normalized = address.toLowerCase().replace('eth:', '')
+  return normalized === '0x0000000000000000000000000000000000000000'
+}
+
+/** A step in a collapsed chain — groups all functions at the same position */
+interface CollapsedChainStep {
+  contractAddress: string
+  contractName: string
+  contractType: ApiAddressType
+  edgeType: 'permission' | 'callgraph'
+  functionNames: string[]
+}
+
+/** Group traversal terminals by address, then collapse chains sharing the same contract sequence */
+interface GroupedOwner {
+  address: string
+  name: string
+  type: ApiAddressType
+  hasPublicFunction: boolean
+  /** True if resolution stopped due to incomplete data */
+  isUnresolved: boolean
+  /** Collapsed chains — chains with the same contract sequence are merged */
+  collapsedChains: CollapsedChainStep[][]
+}
+
+/**
+ * Collapse multiple chains that share the same sequence of contract addresses
+ * into a single chain with all function names grouped per step.
+ * e.g. 12 paths (2 functions × 6 functions) → 1 collapsed chain with 2 steps.
+ */
+function collapseChains(
+  chains: TraversalTerminal['chain'][],
+): CollapsedChainStep[][] {
+  // Group by contract address sequence
+  const groups = new Map<string, TraversalTerminal['chain'][]>()
+  for (const chain of chains) {
+    const key = chain
+      .map((s) => s.contractAddress.toLowerCase())
+      .join('\u2192')
+    const group = groups.get(key)
+    if (group) {
+      group.push(chain)
+    } else {
+      groups.set(key, [chain])
+    }
+  }
+
+  const result: CollapsedChainStep[][] = []
+  for (const group of groups.values()) {
+    const template = group[0]
+    const collapsed: CollapsedChainStep[] = template.map((step, i) => {
+      const fnSet = new Set<string>()
+      for (const chain of group) {
+        if (chain[i]?.functionName) fnSet.add(chain[i].functionName!)
+      }
+      return {
+        contractAddress: step.contractAddress,
+        contractName: step.contractName,
+        contractType: step.contractType,
+        edgeType: step.edgeType,
+        functionNames: Array.from(fnSet).sort(),
+      }
+    })
+    result.push(collapsed)
+  }
+  return result
+}
+
+function groupOwnersByAddress(owners: TraversalTerminal[]): GroupedOwner[] {
+  const grouped = new Map<
+    string,
+    {
+      address: string
+      name: string
+      type: ApiAddressType
+      hasPublicFunction: boolean
+      isUnresolved: boolean
+      chains: TraversalTerminal['chain'][]
+    }
+  >()
+  for (const owner of owners) {
+    const key = owner.address.toLowerCase()
+    const existing = grouped.get(key)
+    if (existing) {
+      existing.chains.push(owner.chain)
+      if (owner.hasPublicFunction) existing.hasPublicFunction = true
+      if (owner.isUnresolved) existing.isUnresolved = true
+    } else {
+      grouped.set(key, {
+        address: owner.address,
+        name: owner.name,
+        type: owner.type,
+        hasPublicFunction: owner.hasPublicFunction,
+        isUnresolved: owner.isUnresolved ?? false,
+        chains: [owner.chain],
+      })
+    }
+  }
+  return Array.from(grouped.values()).map((g) => ({
+    address: g.address,
+    name: g.name,
+    type: g.type,
+    hasPublicFunction: g.hasPublicFunction,
+    isUnresolved: g.isUnresolved,
+    collapsedChains: collapseChains(g.chains),
+  }))
+}
+
+function formatFunctionNames(names: string[]): string {
+  if (names.length <= 3) {
+    return '.' + names.map((fn) => `${fn}()`).join(', .')
+  }
+  return (
+    '.' +
+    names
+      .slice(0, 2)
+      .map((fn) => `${fn}()`)
+      .join(', .') +
+    ` +${names.length - 2} more`
+  )
+}
+
+function getAdminTypeColor(type: ApiAddressType): string {
+  switch (type) {
+    case 'EOA':
+    case 'EOAPermissioned':
+      return '#f87171' // red
+    case 'Multisig':
+      return '#fbbf24' // amber
+    case 'Timelock':
+      return '#10b981' // green
+    case 'Contract':
+    case 'Diamond':
+      return '#60a5fa' // blue
+    default:
+      return '#9ca3af' // gray
+  }
+}
+
+function getAdminIconColor(
+  owners: FunctionTraversalResult | null,
+): string {
+  if (!owners || owners.terminals.length === 0) return '#9ca3af' // gray - unresolved
+
+  const hasEOA = owners.terminals.some(
+    (o) => o.type === 'EOA' || o.type === 'EOAPermissioned',
+  )
+  const hasMultisig = owners.terminals.some(
+    (o) => o.type === 'Multisig',
+  )
+
+  if (hasEOA) return '#f87171' // red
+  if (hasMultisig) return '#fbbf24' // amber
+  return '#10b981' // green - only contracts/timelocks
+}
+
+function getAdminIconTitle(
+  owners: FunctionTraversalResult | null,
+): string {
+  if (!owners || owners.terminals.length === 0)
+    return 'Admin (not yet resolved)'
+  const types = [...new Set(owners.terminals.map((o) => o.type))]
+  return `Terminals: ${types.join(', ')} (${owners.terminals.length} total)`
+}
+
+function CollapsibleErrors({ errors }: { errors: string[] }) {
+  const [isOpen, setIsOpen] = React.useState(false)
+  return (
+    <div className="mt-1">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-1 text-red-400/70 text-xs hover:text-red-400"
+      >
+        <span>{isOpen ? '▼' : '▶'}</span>
+        {errors.length} resolution error{errors.length !== 1 ? 's' : ''}
+      </button>
+      {isOpen && (
+        <div className="mt-0.5 ml-3 space-y-0.5">
+          {errors.map((err, i) => (
+            <div key={i} className="text-red-400/70 text-xs">
+              {err}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 // Extended type for local display with contractAddress
 interface FunctionEntryWithContract extends FunctionEntry {
@@ -128,6 +331,24 @@ export function FunctionFolder({
 
   const contractFunds: ContractFundsData | null =
     fundsData?.contracts?.[contractAddress] ?? null
+
+  // Fetch enhanced traversal data (React Query caches by key — shared across all FunctionFolder instances)
+  const { data: traversalData } = useQuery({
+    queryKey: ['enhanced-traversal', project],
+    queryFn: () => (project ? getEnhancedTraversal(project) : null),
+    enabled: !!project,
+  })
+
+  const functionTraversal: FunctionTraversalResult | null =
+    React.useMemo(() => {
+      if (!traversalData?.contracts) return null
+      // Case-insensitive lookup — functions.json keys may differ in case from project data
+      const normalizedAddr = contractAddress.toLowerCase()
+      const contractEntry = Object.entries(traversalData.contracts).find(
+        ([key]) => key.toLowerCase() === normalizedAddr,
+      )
+      return contractEntry?.[1]?.[functionName] ?? null
+    }, [traversalData, contractAddress, functionName])
 
   // Owner resolution using unified path expressions with shared utility
   const resolvedOwners = React.useMemo(() => {
@@ -668,8 +889,8 @@ export function FunctionFolder({
           {/* Admin Key Icon */}
           <span
             className="inline-block"
-            style={{ color: '#9ca3af' }}
-            title="Admin (not yet resolved)"
+            style={{ color: getAdminIconColor(functionTraversal) }}
+            title={getAdminIconTitle(functionTraversal)}
           >
             <IconKey />
           </span>
@@ -1109,28 +1330,171 @@ export function FunctionFolder({
             )}
           </div>
 
-          {/* 4. Admin Section (stub) */}
+          {/* 4. Admin Section — Enhanced Traversal */}
           <div className="border-coffee-700 border-b p-3">
             <div className="mb-2 flex items-center justify-between">
               <label className="flex items-center gap-1 text-coffee-300 text-xs">
-                <span style={{ color: '#9ca3af' }}>
+                <span
+                  style={{
+                    color: getAdminIconColor(functionTraversal),
+                  }}
+                >
                   <IconKey />
                 </span>
                 Admin
               </label>
-              <button
-                disabled
-                className="cursor-not-allowed rounded bg-coffee-700 px-2 py-1 text-coffee-100 text-xs opacity-50"
-                title="Coming soon"
-              >
-                Read from callgraph
-              </button>
+              {traversalData?.callGraphStale && (
+                <span
+                  className="rounded bg-yellow-900/30 px-1.5 py-0.5 text-yellow-400 text-xs"
+                  title="Functions were modified after the call graph was generated. Consider re-generating the call graph."
+                >
+                  Stale call graph
+                </span>
+              )}
             </div>
             <div className="mb-2 text-coffee-500 text-xs">
-              Ultimate external owner of the function that calls into this
-              permissioned function
+              Terminal entities that can trigger this permissioned function
             </div>
-            <div className="text-coffee-500 text-xs">Not yet resolved</div>
+
+            {!traversalData ? (
+              <div className="text-coffee-500 text-xs">Loading...</div>
+            ) : functionTraversal &&
+              functionTraversal.terminals.length > 0 ? (
+                <div className="space-y-2">
+                  {groupOwnersByAddress(functionTraversal.terminals).map((owner, idx) => {
+                    const revoked = isZeroAddress(owner.address)
+                    return (
+                    <div key={idx} className="rounded bg-coffee-800 p-2">
+                      {/* Owner header: type badge + name */}
+                      <div className="flex items-center gap-2">
+                        {revoked ? (
+                          <span
+                            className="rounded border px-1 text-xs font-semibold"
+                            style={{
+                              color: '#10b981',
+                              borderColor: '#10b98140',
+                              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            }}
+                          >
+                            Revoked
+                          </span>
+                        ) : owner.isUnresolved ? (
+                          <span
+                            className="rounded border px-1 text-xs font-semibold"
+                            style={{
+                              color: '#9ca3af',
+                              borderColor: '#9ca3af40',
+                              backgroundColor: 'rgba(156, 163, 175, 0.1)',
+                            }}
+                          >
+                            Unresolved
+                          </span>
+                        ) : (
+                          <span
+                            className="rounded border px-1 text-xs font-semibold"
+                            style={{
+                              color: getAdminTypeColor(owner.type),
+                              borderColor:
+                                getAdminTypeColor(owner.type) + '40',
+                            }}
+                          >
+                            {displayType(owner.type)}
+                          </span>
+                        )}
+                        <button
+                          onClick={() => {
+                            if (!revoked) usePanelStore.getState().select(owner.address)
+                          }}
+                          className={`font-mono text-xs ${revoked ? 'cursor-default text-coffee-400' : 'hover:underline'}`}
+                          style={revoked ? undefined : { color: '#67e8f9' }}
+                        >
+                          {revoked ? '0x0000...0000' : owner.name}
+                        </button>
+                        {owner.hasPublicFunction && (
+                          <span className="rounded bg-orange-900/30 px-1 text-orange-400 text-xs">
+                            public fn in path
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Chain tree: each collapsed chain = a branch */}
+                      {owner.collapsedChains.map((chain, chainIdx) => {
+                        if (chain.length === 0) return null
+                        // Reverse to owner→target order
+                        const reversed = [...chain].reverse()
+                        // Step 0 = owner (already in header), grab its functions
+                        const ownerFns = reversed[0]?.functionNames ?? []
+                        const viaSteps = reversed.slice(1)
+                        const isLast = chainIdx === owner.collapsedChains.length - 1
+
+                        return (
+                        <div key={chainIdx} className="mt-1 text-xs">
+                          {/* Owner's functions (root of this branch) */}
+                          <div className="flex items-center gap-1">
+                            <span className="text-coffee-600">
+                              {isLast ? '\u2514' : '\u251C'}
+                            </span>
+                            {ownerFns.length > 0 ? (
+                              <span className="text-coffee-400">
+                                {formatFunctionNames(ownerFns)}
+                              </span>
+                            ) : (
+                              <span className="text-coffee-600 italic">
+                                (permission)
+                              </span>
+                            )}
+                          </div>
+                          {/* Via steps — indented under the branch */}
+                          {viaSteps.map((step, stepIdx) => (
+                            <div
+                              key={stepIdx}
+                              className="flex items-center gap-1"
+                              style={{ paddingLeft: `${(stepIdx + 1) * 16}px` }}
+                            >
+                              <span className="text-coffee-600">
+                                {stepIdx === viaSteps.length - 1 ? '\u2514' : '\u251C'}
+                              </span>
+                              <button
+                                onClick={() =>
+                                  usePanelStore
+                                    .getState()
+                                    .select(step.contractAddress)
+                                }
+                                className="hover:underline shrink-0"
+                                style={{ color: '#67e8f9' }}
+                              >
+                                {step.contractName}
+                              </button>
+                              {step.functionNames.length > 0 && (
+                                <span className="text-coffee-500">
+                                  {formatFunctionNames(step.functionNames)}
+                                </span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                        )
+                      })}
+                    </div>
+                    )
+                  })}
+
+                  {/* Errors — collapsible */}
+                  {functionTraversal.errors.length > 0 && (
+                    <CollapsibleErrors errors={functionTraversal.errors} />
+                  )}
+                  {functionTraversal.depthLimitReached && (
+                    <div className="mt-1 text-yellow-400 text-xs">
+                      Depth limit reached — chain may be incomplete
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-coffee-500 text-xs">
+                  No terminals found (no owner definitions or empty
+                  resolution)
+                </div>
+              )}
           </div>
 
           {/* 5. Impact Section */}

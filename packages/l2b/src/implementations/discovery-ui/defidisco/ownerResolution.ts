@@ -337,22 +337,37 @@ export class DiscoveredDataAccess implements IContractDataAccess {
       throw new Error('No entries found in discovered data')
     }
 
+    const normalized = address.toLowerCase()
+
+    // Direct lookup by address
     const contract = this.discovered.entries.find(
-      (entry: any) => entry.type === 'Contract' && entry.address === address,
+      (entry: any) =>
+        entry.type === 'Contract' &&
+        entry.address.toLowerCase() === normalized,
     )
+    if (contract) return contract
 
-    if (!contract) {
-      const available = this.discovered.entries
-        .filter((e: any) => e.type === 'Contract')
-        .map((e: any) => e.address)
-        .slice(0, 5)
-        .join(', ')
-      throw new Error(
-        `Contract ${address} not found. Available: ${available}...`,
-      )
-    }
+    // Implementation address → resolve to parent proxy contract
+    // Functions are stored under implementation addresses in functions.json,
+    // but values (like owner) live on the proxy contract in discovered.json
+    const proxy = this.discovered.entries.find(
+      (entry: any) =>
+        entry.type === 'Contract' &&
+        entry.implementationNames &&
+        Object.keys(entry.implementationNames).some(
+          (implAddr: string) => implAddr.toLowerCase() === normalized,
+        ),
+    )
+    if (proxy) return proxy
 
-    return contract
+    const available = this.discovered.entries
+      .filter((e: any) => e.type === 'Contract')
+      .map((e: any) => e.address)
+      .slice(0, 5)
+      .join(', ')
+    throw new Error(
+      `Contract ${address} not found. Available: ${available}...`,
+    )
   }
 
   getFieldValue(contract: any, fieldName: string): any {

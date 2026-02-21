@@ -22,6 +22,7 @@ import type {
   ApiAIModelsResponse,
   ApiTokenInfoResponse,
   ApiResearcherInfoResponse,
+  ApiEnhancedTraversalResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -493,4 +494,13 @@ export function executeGenerateCallGraph(project: string, devMode: boolean): Eve
     devMode: devMode.toString(),
   })
   return new EventSource(`/api/terminal/generate-call-graph?${params}`)
+}
+
+export async function getEnhancedTraversal(project: string): Promise<ApiEnhancedTraversalResponse> {
+  const res = await fetch(`/api/projects/${project}/enhanced-traversal`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiEnhancedTraversalResponse
 }
