@@ -103,12 +103,17 @@ export class InteropSyncersManager {
   }
 
   async processNewestBlock(chain: LongChainName, block: Block, logs: Log[]) {
+    const syncersForChain: InteropEventSyncer[] = []
     for (const v of this.syncers.values()) {
       const syncer = v.get(chain)
       if (syncer) {
-        await syncer.processNewestBlock(block, logs)
+        syncersForChain.push(syncer)
       }
     }
+
+    await Promise.all(
+      syncersForChain.map((syncer) => syncer.processNewestBlock(block, logs)),
+    )
   }
 
   getBlockProcessor(chain: LongChainName): BlockProcessor {
