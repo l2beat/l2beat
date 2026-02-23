@@ -10,7 +10,6 @@ import { accumulateChains } from './utils/accumulate'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
 import { getChainsData } from './utils/getChainsData'
 import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
-import { normalizeInteropSelection } from './utils/resolveInteropSelection'
 
 export async function getInteropProtocolChains({
   id,
@@ -20,11 +19,6 @@ export async function getInteropProtocolChains({
 }: InteropProtocolTokensParams): Promise<ChainData[]> {
   const logger = getLogger().for('getProtocolChains')
   const db = getDb()
-
-  const selection = normalizeInteropSelection({ from, to })
-  if (!selection) {
-    return []
-  }
 
   const interopProject = await ps.getProject({
     id,
@@ -45,8 +39,8 @@ export async function getInteropProtocolChains({
     await db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selection.from,
-      selection.to,
+      from,
+      to,
       type,
     )
 

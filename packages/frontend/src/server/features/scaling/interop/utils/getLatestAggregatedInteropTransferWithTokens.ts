@@ -4,17 +4,11 @@ import type {
   AggregatedInteropTransferWithTokens,
   InteropSelectionInput,
 } from '../types'
-import { normalizeInteropSelection } from './resolveInteropSelection'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
-  selectionInput: InteropSelectionInput,
+  selection: InteropSelectionInput,
   type?: KnownInteropBridgeType,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
-  const selection = normalizeInteropSelection(selectionInput)
-  if (!selection) {
-    return []
-  }
-
   const db = getDb()
 
   const latestTimestamp =

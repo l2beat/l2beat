@@ -16,7 +16,6 @@ import {
   INITIAL_COMMON_INTEROP_DATA,
 } from './utils/getProtocolsDataMap'
 import { getTokensData } from './utils/getTokensData'
-import { normalizeInteropSelection } from './utils/resolveInteropSelection'
 
 export async function getInteropProtocolTokens({
   id,
@@ -26,11 +25,6 @@ export async function getInteropProtocolTokens({
 }: InteropProtocolTokensParams): Promise<TokenData[]> {
   const logger = getLogger().for('getProtocolTokens')
   const db = getDb()
-
-  const selection = normalizeInteropSelection({ from, to })
-  if (!selection) {
-    return []
-  }
 
   const interopProject = await ps.getProject({
     id,
@@ -50,15 +44,15 @@ export async function getInteropProtocolTokens({
     db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selection.from,
-      selection.to,
+      from,
+      to,
       type,
     ),
     db.aggregatedInteropToken.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      selection.from,
-      selection.to,
+      from,
+      to,
       type,
     ),
   ])
