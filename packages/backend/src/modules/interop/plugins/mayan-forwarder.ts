@@ -23,6 +23,7 @@ import { findBestTransferLog } from './hyperlane-hwr'
 import {
   decodeMayanProtocol,
   isBurnAddress,
+  isMayanWrappedNativeEmitter,
   MAYAN_FORWARDER,
   MAYAN_FORWARDER_CHAINS,
   MAYAN_WRAPPED_NATIVE_ADDRESSES,
@@ -303,7 +304,11 @@ function inferSrcWasBurned(
   ).transfer
   if (!transfer) return undefined
   if (transfer.logAddress !== tokenIn) return undefined
-  return isBurnAddress(transfer.to)
+  if (!isBurnAddress(transfer.to)) return false
+
+  // Wrapped-native burn-like Transfer events come from unwrap/deposit mechanics.
+  // They are not interop bridge burn semantics.
+  return !isMayanWrappedNativeEmitter(input.chain, transfer.logAddress)
 }
 
 export function logToProtocolData(

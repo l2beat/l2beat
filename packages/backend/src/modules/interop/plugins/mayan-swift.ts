@@ -31,6 +31,7 @@ import {
 } from './mayan-forwarder'
 import {
   isBurnAddress,
+  isMayanWrappedNativeEmitter,
   MAYAN_SWIFT,
   MAYAN_SWIFT_CHAINS,
   MAYAN_WRAPPED_NATIVE_ADDRESSES,
@@ -369,7 +370,9 @@ function captureOrderFulfilled(
     })
     if (transfer) {
       dstTokenAddress ??= transfer.logAddress
-      dstWasMinted ??= transfer.from === Address32.ZERO
+      dstWasMinted ??=
+        transfer.from === Address32.ZERO &&
+        !isMayanWrappedNativeEmitter(input.chain, transfer.logAddress)
     }
   }
 
@@ -475,7 +478,9 @@ function captureOrderCreated(
         srcTokenAddress !== Address32.NATIVE &&
         sourceTransfer.logAddress === srcTokenAddress
       ) {
-        srcWasBurned = isBurnAddress(sourceTransfer.to)
+        srcWasBurned =
+          isBurnAddress(sourceTransfer.to) &&
+          !isMayanWrappedNativeEmitter(input.chain, sourceTransfer.logAddress)
       }
     }
   }

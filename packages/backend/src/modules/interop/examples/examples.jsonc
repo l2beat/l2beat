@@ -585,12 +585,12 @@
     "loadConfigs": ["wormhole"],
     "txs": [
       {
-        "chain": "ethereum",
-        "tx": "0xdcb99151d5e52655f47fca088f5431365777f59375fe319bce724143ef5f151f"
+        "chain": "arbitrum",
+        "tx": "0x9cd049ec905c02ee9cf4946724ba2714f0e84cd221448c8e7a0f6278d7dd54e7"
       },
       {
         "chain": "base",
-        "tx": "0x1c6682291531b2fe91e336f67a848abff1e1e3c858d7e5f896b98d8cf2bd99c8"
+        "tx": "0x6edc80451a459d72bb17a016f5e06f066452172039cd34852de0a259fa4a9fb2"
       }
     ]
   },
