@@ -120,7 +120,11 @@ export function TransferSizeChart({ data, isLoading }: Props) {
             interval={0}
             tick={(props) => <XAxisTick {...props} data={data} />}
           />
-          <ChartTooltip filterNull={false} content={<CustomTooltip />} />
+          <ChartTooltip
+            filterNull={false}
+            content={<CustomTooltip />}
+            allowEscapeViewBox={{ y: true }}
+          />
         </BarChart>
       </SimpleChartContainer>
       <Logo
