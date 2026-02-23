@@ -9,16 +9,12 @@ import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMint
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 
-export type SelectedChainsQuery = v.infer<typeof SelectedChainsQuerySchema>
-const SelectedChainsQuerySchema = v.object({
+export type InteropQuery = v.infer<typeof InteropQuerySchema>
+const InteropQuerySchema = v.object({
   selectedChains: v
     .string()
     .optional()
     .transform((v) => v?.split(',')),
-})
-
-export type InternalFromToQuery = v.infer<typeof InternalFromToQuerySchema>
-const InternalFromToQuerySchema = v.object({
   from: v
     .string()
     .optional()
@@ -41,13 +37,25 @@ export function createInteropRouter(
   })
 
   router.get('/interop/internal', (_req, res) => {
-    res.redirect('/interop/internal/summary')
+    res.redirect('/interop/summary/internal')
+  })
+  router.get('/interop/internal/summary', (_req, res) => {
+    res.redirect('/interop/summary/internal')
+  })
+  router.get('/interop/internal/non-minting', (_req, res) => {
+    res.redirect('/interop/non-minting/internal')
+  })
+  router.get('/interop/internal/lock-and-mint', (_req, res) => {
+    res.redirect('/interop/lock-and-mint/internal')
+  })
+  router.get('/interop/internal/burn-and-mint', (_req, res) => {
+    res.redirect('/interop/burn-and-mint/internal')
   })
 
   router.get(
     '/interop/summary',
     validateRoute({
-      query: SelectedChainsQuerySchema,
+      query: InteropQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropSummaryData(req, manifest, cache)
@@ -59,7 +67,7 @@ export function createInteropRouter(
   router.get(
     '/interop/non-minting',
     validateRoute({
-      query: SelectedChainsQuerySchema,
+      query: InteropQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropNonMintingData(req, manifest, cache)
@@ -71,7 +79,7 @@ export function createInteropRouter(
   router.get(
     '/interop/lock-and-mint',
     validateRoute({
-      query: SelectedChainsQuerySchema,
+      query: InteropQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropLockAndMintData(req, manifest, cache)
@@ -83,7 +91,7 @@ export function createInteropRouter(
   router.get(
     '/interop/burn-and-mint',
     validateRoute({
-      query: SelectedChainsQuerySchema,
+      query: InteropQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropBurnAndMintData(req, manifest, cache)
@@ -93,9 +101,9 @@ export function createInteropRouter(
   )
 
   router.get(
-    '/interop/internal/summary',
+    '/interop/summary/internal',
     validateRoute({
-      query: InternalFromToQuerySchema,
+      query: InteropQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropSummaryData(req, manifest, cache, {
@@ -107,9 +115,9 @@ export function createInteropRouter(
   )
 
   router.get(
-    '/interop/internal/non-minting',
+    '/interop/non-minting/internal',
     validateRoute({
-      query: InternalFromToQuerySchema,
+      query: InteropQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropNonMintingData(req, manifest, cache, {
@@ -121,9 +129,9 @@ export function createInteropRouter(
   )
 
   router.get(
-    '/interop/internal/lock-and-mint',
+    '/interop/lock-and-mint/internal',
     validateRoute({
-      query: InternalFromToQuerySchema,
+      query: InteropQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropLockAndMintData(req, manifest, cache, {
@@ -135,9 +143,9 @@ export function createInteropRouter(
   )
 
   router.get(
-    '/interop/internal/burn-and-mint',
+    '/interop/burn-and-mint/internal',
     validateRoute({
-      query: InternalFromToQuerySchema,
+      query: InteropQuerySchema,
     }),
     async (req, res) => {
       const data = await getInteropBurnAndMintData(req, manifest, cache, {

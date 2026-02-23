@@ -9,7 +9,12 @@ export function BetweenChainsInfo({
   className?: string
   additionalText?: string
 }) {
-  const { mode, selectedChains } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
+  const isSinglePair =
+    selectedChains.from.length === 1 &&
+    selectedChains.to.length === 1 &&
+    selectedChains.first &&
+    selectedChains.second
 
   return (
     <div
@@ -18,14 +23,7 @@ export function BetweenChainsInfo({
         className,
       )}
     >
-      {mode === 'internal' ? (
-        <span>
-          Between {selectedChains.from.length}{' '}
-          {pluralize(selectedChains.from.length, 'source chain')} and{' '}
-          {selectedChains.to.length}{' '}
-          {pluralize(selectedChains.to.length, 'destination chain')}
-        </span>
-      ) : (
+      {isSinglePair ? (
         <>
           <span>Between</span>
           {selectedChains.first && (
@@ -36,6 +34,13 @@ export function BetweenChainsInfo({
             <img src={selectedChains.second.iconUrl} className="size-4" />
           )}
         </>
+      ) : (
+        <span>
+          Between {selectedChains.from.length}{' '}
+          {pluralize(selectedChains.from.length, 'source chain')} and{' '}
+          {selectedChains.to.length}{' '}
+          {pluralize(selectedChains.to.length, 'destination chain')}
+        </span>
       )}
       {additionalText && <span>{additionalText}</span>}
     </div>

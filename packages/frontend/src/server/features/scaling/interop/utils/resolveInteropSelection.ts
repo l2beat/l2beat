@@ -28,11 +28,23 @@ export type ResolvedInteropSelection =
 export function resolveInteropSelection(
   input: InteropSelectionInput,
 ): ResolvedInteropSelection {
-  if (input.from !== undefined && input.to !== undefined) {
-    const from = normalizeChainIds(input.from)
-    const to = normalizeChainIds(input.to)
+  const from = normalizeChainIds(input.from)
+  const to = normalizeChainIds(input.to)
 
-    if (from.length === 0 || to.length === 0) {
+  if (from.length === 0 || to.length === 0) {
+    return {
+      mode: 'empty',
+      from: [],
+      to: [],
+      union: [],
+    }
+  }
+
+  if (from.length === 1 && to.length === 1) {
+    const [first] = from
+    const [second] = to
+    if (!first || !second || first === second) {
+      // Keep same-chain behavior consistent with production: exclude same-chain.
       return {
         mode: 'empty',
         from: [],
@@ -42,29 +54,18 @@ export function resolveInteropSelection(
     }
 
     return {
-      mode: 'directional',
-      from,
-      to,
-      union: unique([...from, ...to]),
-    }
-  }
-
-  const [first, second] = input.selectedChainsIds ?? [null, null]
-
-  if (!first || !second) {
-    return {
-      mode: 'empty',
-      from: [],
-      to: [],
-      union: [],
+      mode: 'pair',
+      from: [first],
+      to: [second],
+      union: [first, second],
     }
   }
 
   return {
-    mode: 'pair',
-    from: [first],
-    to: [second],
-    union: [first, second],
+    mode: 'directional',
+    from,
+    to,
+    union: unique([...from, ...to]),
   }
 }
 
@@ -90,7 +91,9 @@ export function filterDirectionalTransfers(
 
   return transfers.filter(
     (transfer) =>
-      fromSet.has(transfer.srcChain) && toSet.has(transfer.dstChain),
+      transfer.srcChain !== transfer.dstChain &&
+      fromSet.has(transfer.srcChain) &&
+      toSet.has(transfer.dstChain),
   )
 }
 
@@ -103,6 +106,9 @@ export function filterDirectionalTokens(
   const toSet = new Set(to)
 
   return tokens.filter(
-    (token) => fromSet.has(token.srcChain) && toSet.has(token.dstChain),
+    (token) =>
+      token.srcChain !== token.dstChain &&
+      fromSet.has(token.srcChain) &&
+      toSet.has(token.dstChain),
   )
 }

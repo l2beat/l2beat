@@ -1,15 +1,14 @@
-- [x] Remove duplicated internal interop UI and backend stacks (`pages/interop/internal/**`, `server/features/scaling/interop/internal/**`, `trpc/routers/interopInternal.ts`).
-- [x] Unify API to `interop.*` with dual selection inputs (`selectedChainsIds` for public pair, `from`/`to` for internal directional mode).
-- [x] Implement shared directional selection resolver and directional post-filtering in existing interop services.
-- [x] Refactor shared interop context to support both modes with URL sync (`selectedChains` vs `from`/`to`) and mode-aware API/url builders.
-- [x] Reuse the same 4 interop pages for public/internal modes with mode-aware selector rendering and query input wiring.
-- [x] Keep hidden `/interop/internal/*` routes and route them to shared loaders/pages with internal defaults (`all/all`) and `noindex`.
-- [x] Reuse existing widgets/cards/tables and top-item modals; remove internal duplicated component variants.
-- [x] Run verification (`lint`, `typecheck`, `build`) and confirm public pair behavior remains intact.
+- [x] Move hidden internal interop routes to suffix form (`/interop/{page}/internal`) and keep legacy `/interop/internal/*` redirects.
+- [x] Add staging-only public navigation button to jump to internal interop dashboard.
+- [x] Unify interop tRPC/server input model to one selection interface (`from: string[]`, `to: string[]`) and remove `selectedChainsIds` usage.
+- [x] Refactor interop selection context to a single selection state shape and one API input builder.
+- [x] Replace split initial-selection helpers with one shared `initialSelection` parser for SSR/client URL sync.
+- [x] Keep shared pages/components, update links/builders for suffix internal paths, and preserve hidden internal/noindex behavior.
+- [x] Run verification (`lint`, `typecheck`, `build`).
 
 ## Review
 - `pnpm --filter @l2beat/frontend lint` (pass)
 - `pnpm --filter @l2beat/frontend typecheck` (pass)
 - `pnpm --filter @l2beat/frontend build` (pass)
-- Public pair-mode flow remains on `/interop/*` with `selectedChains=a,b` query semantics.
-- Internal hidden routes `/interop/internal/*` now reuse shared pages/components and use directional `from`/`to` semantics.
+- Public interop now uses `from`/`to` URL params and still keeps pair UX (initial pair picker + pair chain selector).
+- Internal interop now uses `/interop/{page}/internal` paths and the same shared selection/API interface.

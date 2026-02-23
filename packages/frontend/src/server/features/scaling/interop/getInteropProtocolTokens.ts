@@ -25,7 +25,6 @@ import {
 
 export async function getInteropProtocolTokens({
   id,
-  selectedChainsIds,
   from,
   to,
   type,
@@ -33,11 +32,7 @@ export async function getInteropProtocolTokens({
   const logger = getLogger().for('getProtocolTokens')
   const db = getDb()
 
-  const selection = resolveInteropSelection({
-    selectedChainsIds,
-    from,
-    to,
-  })
+  const selection = resolveInteropSelection({ from, to })
   if (selection.mode === 'empty') {
     return []
   }

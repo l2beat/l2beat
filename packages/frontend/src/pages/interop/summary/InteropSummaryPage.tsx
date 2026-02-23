@@ -3,10 +3,7 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type {
-  ProtocolDisplayable,
-  SelectedChainsIds,
-} from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
@@ -18,7 +15,7 @@ import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCaro
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
-import type { DirectionalSelectedChains } from '../utils/getInitialDirectionalSelectedChains'
+import type { InteropSelection } from '../utils/getInitialInteropSelection'
 import {
   type InteropMode,
   InteropSelectedChainsProvider,
@@ -36,16 +33,14 @@ interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
-  initialSelectedChains: SelectedChainsIds
-  initialDirectionalSelectedChains?: DirectionalSelectedChains
+  initialSelection: InteropSelection
 }
 
 export function InteropSummaryPage({
   mode,
   interopChains,
   queryState,
-  initialSelectedChains,
-  initialDirectionalSelectedChains,
+  initialSelection,
   protocols,
   ...props
 }: Props) {
@@ -55,8 +50,7 @@ export function InteropSummaryPage({
         <InteropSelectedChainsProvider
           mode={mode}
           interopChains={interopChains}
-          initialSelectedChains={initialSelectedChains}
-          initialDirectionalSelectedChains={initialDirectionalSelectedChains}
+          initialSelection={initialSelection}
         >
           <SideNavLayout maxWidth="wide">
             <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>

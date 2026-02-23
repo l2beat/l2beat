@@ -1,18 +1,31 @@
-import type { InteropPublicSelectedChains } from './InteropSelectedChainsContext'
+import { serializeDirectionalSelectionToQueryValue } from './directionalSelection'
+import type { InteropSelection } from './getInitialInteropSelection'
 
 export function buildInteropUrl(
   path: string,
-  selectedChains?: InteropPublicSelectedChains,
+  selection: InteropSelection,
+  allChainIds: string[],
+  defaultSelection: InteropSelection,
 ): string {
-  if (!selectedChains || !selectedChains.first || !selectedChains.second) {
-    return path
+  const params = new URLSearchParams()
+
+  const fromValue = serializeDirectionalSelectionToQueryValue(
+    selection.from,
+    allChainIds,
+    defaultSelection.from,
+  )
+  if (fromValue !== undefined) {
+    params.set('from', fromValue)
   }
 
-  const params = new URLSearchParams()
-  params.set(
-    'selectedChains',
-    [selectedChains.first.id, selectedChains.second.id].join(','),
+  const toValue = serializeDirectionalSelectionToQueryValue(
+    selection.to,
+    allChainIds,
+    defaultSelection.to,
   )
+  if (toValue !== undefined) {
+    params.set('to', toValue)
+  }
 
   return params.size > 0 ? `${path}?${params.toString()}` : path
 }

@@ -18,7 +18,6 @@ import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
-import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
@@ -108,31 +107,31 @@ export function SideNavLayout({
           links: [
             {
               title: 'Summary',
-              href: buildInteropUrl(
-                '/interop/summary',
-                selectedChainsContext?.selectedChains,
-              ),
+              href:
+                selectedChainsContext?.buildUrl('/interop/summary', {
+                  mode: 'public',
+                }) ?? '/interop/summary',
             },
             {
               title: 'Non-minting protocols',
-              href: buildInteropUrl(
-                '/interop/non-minting',
-                selectedChainsContext?.selectedChains,
-              ),
+              href:
+                selectedChainsContext?.buildUrl('/interop/non-minting', {
+                  mode: 'public',
+                }) ?? '/interop/non-minting',
             },
             {
               title: 'Lock & Mint protocols',
-              href: buildInteropUrl(
-                '/interop/lock-and-mint',
-                selectedChainsContext?.selectedChains,
-              ),
+              href:
+                selectedChainsContext?.buildUrl('/interop/lock-and-mint', {
+                  mode: 'public',
+                }) ?? '/interop/lock-and-mint',
             },
             {
               title: 'Burn & Mint protocols',
-              href: buildInteropUrl(
-                '/interop/burn-and-mint',
-                selectedChainsContext?.selectedChains,
-              ),
+              href:
+                selectedChainsContext?.buildUrl('/interop/burn-and-mint', {
+                  mode: 'public',
+                }) ?? '/interop/burn-and-mint',
             },
           ],
         },
@@ -234,7 +233,7 @@ export function SideNavLayout({
             })),
         },
       ]),
-    [selectedChainsContext?.selectedChains],
+    [selectedChainsContext],
   )
 
   return (

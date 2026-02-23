@@ -4,6 +4,13 @@ function uniquePreservingOrder(values: string[]) {
   return [...new Set(values)]
 }
 
+function resolveFallbackSelection(
+  allChainIds: string[],
+  fallback: 'all' | 'empty',
+) {
+  return fallback === 'all' ? [...allChainIds] : []
+}
+
 export function normalizeDirectionalSelection(
   values: string[],
   allChainIds: string[],
@@ -22,36 +29,39 @@ export function normalizeDirectionalSelection(
 export function parseDirectionalSelectionFromQueryValue(
   value: string | null,
   allChainIds: string[],
+  fallback: 'all' | 'empty' = 'all',
 ): string[] {
   if (value === null) {
-    return [...allChainIds]
+    return resolveFallbackSelection(allChainIds, fallback)
   }
 
   if (value === NO_CHAINS_MARKER) {
     return []
   }
 
-  return normalizeDirectionalSelection(value.split(','), allChainIds, 'all')
+  return normalizeDirectionalSelection(value.split(','), allChainIds, fallback)
 }
 
 export function parseDirectionalSelectionFromQueryArray(
   value: string[] | undefined,
   allChainIds: string[],
+  fallback: 'all' | 'empty' = 'all',
 ): string[] {
   if (!value) {
-    return [...allChainIds]
+    return resolveFallbackSelection(allChainIds, fallback)
   }
 
   if (value.length === 1 && value[0] === NO_CHAINS_MARKER) {
     return []
   }
 
-  return normalizeDirectionalSelection(value, allChainIds, 'all')
+  return normalizeDirectionalSelection(value, allChainIds, fallback)
 }
 
 export function serializeDirectionalSelectionToQueryValue(
   selection: string[],
   allChainIds: string[],
+  defaultSelection: string[],
 ): string | undefined {
   const normalized = normalizeDirectionalSelection(
     selection,
@@ -59,7 +69,16 @@ export function serializeDirectionalSelectionToQueryValue(
     'empty',
   )
 
-  if (normalized.length === allChainIds.length) {
+  const normalizedDefault = normalizeDirectionalSelection(
+    defaultSelection,
+    allChainIds,
+    'empty',
+  )
+
+  if (
+    normalized.length === normalizedDefault.length &&
+    normalized.every((value, index) => value === normalizedDefault[index])
+  ) {
     return undefined
   }
 

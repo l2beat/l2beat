@@ -3,10 +3,7 @@ import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type {
-  ProtocolDisplayable,
-  SelectedChainsIds,
-} from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
@@ -20,7 +17,7 @@ import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProt
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
-import type { DirectionalSelectedChains } from '../utils/getInitialDirectionalSelectedChains'
+import type { InteropSelection } from '../utils/getInitialInteropSelection'
 import {
   type InteropMode,
   InteropSelectedChainsProvider,
@@ -33,16 +30,14 @@ interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   protocols: WithProjectIcon<Project<'interopConfig'>>[]
-  initialSelectedChains: SelectedChainsIds
-  initialDirectionalSelectedChains?: DirectionalSelectedChains
+  initialSelection: InteropSelection
 }
 
 export function InteropNonMintingPage({
   mode,
   interopChains,
   queryState,
-  initialSelectedChains,
-  initialDirectionalSelectedChains,
+  initialSelection,
   protocols,
   ...props
 }: Props) {
@@ -52,8 +47,7 @@ export function InteropNonMintingPage({
         <InteropSelectedChainsProvider
           mode={mode}
           interopChains={interopChains}
-          initialSelectedChains={initialSelectedChains}
-          initialDirectionalSelectedChains={initialDirectionalSelectedChains}
+          initialSelection={initialSelection}
         >
           <SideNavLayout maxWidth="wide">
             <Content

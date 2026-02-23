@@ -1,7 +1,6 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import type { SelectedChainsIds } from '~/server/features/scaling/interop/types'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -9,8 +8,11 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { withProjectIcon } from '~/utils/withProjectIcon'
-import type { InternalFromToQuery, SelectedChainsQuery } from '../InteropRouter'
-import { getInitialDirectionalSelectedChains } from '../utils/getInitialDirectionalSelectedChains'
+import type { InteropQuery } from '../InteropRouter'
+import {
+  getInitialInteropSelection,
+  type InteropSelection,
+} from '../utils/getInitialInteropSelection'
 
 type InteropMode = 'public' | 'internal'
 
@@ -19,12 +21,7 @@ interface GetInteropNonMintingDataOptions {
 }
 
 export async function getInteropNonMintingData(
-  req: Request<
-    unknown,
-    unknown,
-    unknown,
-    SelectedChainsQuery & InternalFromToQuery
-  >,
+  req: Request<unknown, unknown, unknown, InteropQuery>,
   manifest: Manifest,
   cache: ICache,
   options?: GetInteropNonMintingDataOptions,
@@ -34,37 +31,26 @@ export async function getInteropNonMintingData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
-  const initialSelectedChains: SelectedChainsIds = [
-    interopChainsIds.find((id) => id === req.query.selectedChains?.[0]) ?? null,
-    interopChainsIds.find((id) => id === req.query.selectedChains?.[1]) ?? null,
-  ]
-  const initialDirectionalSelectedChains = getInitialDirectionalSelectedChains(
-    req.query,
+  const initialSelection = getInitialInteropSelection({
+    query: req.query,
     interopChainsIds,
-  )
+    fallback: mode === 'internal' ? 'all' : 'empty',
+  })
 
   const queryState = await cache.get(
     {
-      key:
-        mode === 'internal'
-          ? [
-              'interop',
-              'non-minting',
-              'internal',
-              'prefetch',
-              initialDirectionalSelectedChains.from.join(','),
-              initialDirectionalSelectedChains.to.join(','),
-            ]
-          : ['interop', 'non-minting', 'prefetch', ...initialSelectedChains],
+      key: [
+        'interop',
+        'non-minting',
+        mode,
+        'prefetch',
+        initialSelection.from.join(','),
+        initialSelection.to.join(','),
+      ],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    async () =>
-      getCachedData(
-        mode,
-        initialSelectedChains,
-        initialDirectionalSelectedChains,
-      ),
+    async () => getCachedData(initialSelection),
   )
 
   const interopChainsWithIcons = interopChains.map((chain) => ({
@@ -90,36 +76,24 @@ export async function getInteropNonMintingData(
         mode,
         ...queryState,
         interopChains: interopChainsWithIcons,
-        initialSelectedChains,
-        initialDirectionalSelectedChains:
-          mode === 'internal' ? initialDirectionalSelectedChains : undefined,
+        initialSelection,
       },
     },
   }
 }
 
-async function getCachedData(
-  mode: InteropMode,
-  initialSelectedChains: SelectedChainsIds,
-  initialDirectionalSelectedChains: { from: string[]; to: string[] },
-) {
+async function getCachedData(initialSelection: InteropSelection) {
   const helpers = getSsrHelpers()
   const [protocols] = await Promise.all([
     ps.getProjects({
       select: ['interopConfig'],
     }),
-    mode === 'internal'
+    initialSelection.from.length > 0 && initialSelection.to.length > 0
       ? helpers.interop.dashboard.prefetch({
-          from: initialDirectionalSelectedChains.from,
-          to: initialDirectionalSelectedChains.to,
+          ...initialSelection,
           type: 'nonMinting',
         })
-      : initialSelectedChains[0] && initialSelectedChains[1]
-        ? helpers.interop.dashboard.prefetch({
-            selectedChainsIds: initialSelectedChains,
-            type: 'nonMinting',
-          })
-        : undefined,
+      : undefined,
   ])
 
   return {

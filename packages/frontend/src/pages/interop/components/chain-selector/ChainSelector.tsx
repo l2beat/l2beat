@@ -1,4 +1,6 @@
+import { env } from '~/env'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { AllProtocolsDialog } from './AllProtocolsDialog'
 import { ChainSelectorButton } from './ChainSelectorButton'
 import type { InteropChainWithIcon } from './types'
@@ -9,6 +11,9 @@ interface Props {
 }
 
 export function ChainSelector({ chains, protocols }: Props) {
+  const { buildUrl } = useInteropSelectedChains()
+  const internalSummaryUrl = buildUrl('/interop/summary', { mode: 'internal' })
+
   return (
     <div className="sticky top-0 z-30 md:pt-4">
       <div className="-z-10 absolute top-0 h-22 w-full bg-gradient-to-b from-surface-secondary via-60% via-surface-secondary to-transparent max-md:hidden dark:from-background dark:via-background" />
@@ -27,6 +32,14 @@ export function ChainSelector({ chains, protocols }: Props) {
           </div>
         </div>
         <div className="flex items-center gap-2">
+          {env.DEPLOYMENT_ENV === 'staging' && (
+            <a
+              href={internalSummaryUrl}
+              className="rounded border border-brand px-2 py-1 font-semibold text-brand text-xs leading-none md:px-3 md:py-1.5 md:text-sm"
+            >
+              Internal dashboard
+            </a>
+          )}
           <span className="font-medium text-xs leading-none max-md:opacity-50 md:text-base">
             Across {protocols.length} protocols
           </span>

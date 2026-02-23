@@ -10,15 +10,14 @@ import {
 } from 'react'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
-import type { SelectedChainsIds } from '~/server/features/scaling/interop/types'
+import type { InteropSelectionInput } from '~/server/features/scaling/interop/types'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
+import { normalizeDirectionalSelection } from './directionalSelection'
 import {
-  normalizeDirectionalSelection,
-  parseDirectionalSelectionFromQueryValue,
-  serializeDirectionalSelectionToQueryValue,
-} from './directionalSelection'
-import type { DirectionalSelectedChains } from './getInitialDirectionalSelectedChains'
+  getInitialInteropSelection,
+  type InteropSelection,
+} from './getInitialInteropSelection'
 
 export type InteropMode = 'public' | 'internal'
 
@@ -33,19 +32,7 @@ export type InteropPublicSelectedChains = {
 }
 
 export type InteropSelectedChains = InteropPublicSelectedChains &
-  DirectionalSelectedChains
-
-export type InteropApiSelectionInput =
-  | {
-      selectedChainsIds: SelectedChainsIds
-      from?: undefined
-      to?: undefined
-    }
-  | {
-      selectedChainsIds?: undefined
-      from: string[]
-      to: string[]
-    }
+  InteropSelection
 
 interface InteropSelectedChainsContextType {
   mode: InteropMode
@@ -62,8 +49,8 @@ interface InteropSelectedChainsContextType {
   swapPaths: () => void
   reset: () => void
   isDirty: boolean
-  apiSelectionInput: InteropApiSelectionInput
-  buildUrl: (path: string) => string
+  apiSelectionInput: InteropSelectionInput
+  buildUrl: (path: string, options?: { mode?: InteropMode }) => string
 }
 
 export const InteropSelectedChainsContext = createContext<
@@ -74,120 +61,93 @@ interface InteropSelectedChainsProviderProps {
   children: ReactNode
   mode: InteropMode
   interopChains: InteropChainWithIcon[]
-  initialSelectedChains: SelectedChainsIds
-  initialDirectionalSelectedChains?: DirectionalSelectedChains
+  initialSelection: InteropSelection
 }
 
 export function InteropSelectedChainsProvider({
   children,
   mode,
   interopChains,
-  initialSelectedChains,
-  initialDirectionalSelectedChains,
+  initialSelection,
 }: InteropSelectedChainsProviderProps) {
   const allChainIds = useMemo(
     () => interopChains.map((c) => c.id),
     [interopChains],
   )
 
-  const defaultPublicSelectedChains = useMemo(
+  const defaultSelectionByMode = useMemo(
     () => ({
-      first: getInteropSelectedChainFromId(
-        initialSelectedChains[0],
-        interopChains,
-      ),
-      second: getInteropSelectedChainFromId(
-        initialSelectedChains[1],
-        interopChains,
-      ),
+      public: {
+        from: [],
+        to: [],
+      },
+      internal: {
+        from: [...allChainIds],
+        to: [...allChainIds],
+      },
     }),
-    [initialSelectedChains, interopChains],
+    [allChainIds],
   )
 
-  const defaultDirectionalSelectedChains = useMemo(
-    () => ({
-      from: normalizeDirectionalSelection(
-        initialDirectionalSelectedChains?.from ?? allChainIds,
+  const normalizedInitialSelection = useMemo(
+    () =>
+      normalizeSelection(
+        initialSelection,
         allChainIds,
-        'all',
+        defaultSelectionByMode[mode],
       ),
-      to: normalizeDirectionalSelection(
-        initialDirectionalSelectedChains?.to ?? allChainIds,
-        allChainIds,
-        'all',
-      ),
-    }),
-    [initialDirectionalSelectedChains, allChainIds],
+    [initialSelection, allChainIds, defaultSelectionByMode, mode],
   )
 
-  const [publicSelectedChains, setPublicSelectedChains] = useState(
-    defaultPublicSelectedChains,
-  )
-  const [directionalSelectedChains, setDirectionalSelectedChains] = useState(
-    defaultDirectionalSelectedChains,
-  )
+  const [selection, setSelection] = useState(normalizedInitialSelection)
 
   useEffect(() => {
-    setPublicSelectedChains(defaultPublicSelectedChains)
-  }, [defaultPublicSelectedChains])
-
-  useEffect(() => {
-    setDirectionalSelectedChains(defaultDirectionalSelectedChains)
-  }, [defaultDirectionalSelectedChains])
+    setSelection(normalizedInitialSelection)
+  }, [normalizedInitialSelection])
 
   const selectedChains = useMemo((): InteropSelectedChains => {
-    if (mode === 'public') {
-      return {
-        ...publicSelectedChains,
-        from: publicSelectedChains.first ? [publicSelectedChains.first.id] : [],
-        to: publicSelectedChains.second ? [publicSelectedChains.second.id] : [],
-      }
-    }
+    const firstChainId = getSingleChainId(selection.from)
+    const secondChainId = getSingleChainId(selection.to)
+    const first =
+      firstChainId !== null
+        ? getInteropSelectedChainFromId(firstChainId, interopChains)
+        : null
+    const second =
+      secondChainId !== null
+        ? getInteropSelectedChainFromId(secondChainId, interopChains)
+        : null
 
     return {
-      first: null,
-      second: null,
-      from: directionalSelectedChains.from,
-      to: directionalSelectedChains.to,
+      first,
+      second,
+      from: selection.from,
+      to: selection.to,
     }
-  }, [mode, publicSelectedChains, directionalSelectedChains])
+  }, [selection, interopChains])
 
-  const apiSelectionInput = useMemo((): InteropApiSelectionInput => {
-    if (mode === 'public') {
-      return {
-        selectedChainsIds: [
-          publicSelectedChains.first?.id ?? null,
-          publicSelectedChains.second?.id ?? null,
-        ],
-      }
-    }
-
-    return {
-      from: directionalSelectedChains.from,
-      to: directionalSelectedChains.to,
-    }
-  }, [mode, publicSelectedChains, directionalSelectedChains])
+  const apiSelectionInput = useMemo(
+    (): InteropSelectionInput => ({
+      from: selection.from,
+      to: selection.to,
+    }),
+    [selection],
+  )
 
   const buildUrl = useCallback(
-    (path: string) => {
-      if (mode === 'public') {
-        return buildInteropUrl(path, publicSelectedChains)
-      }
-
-      return buildDirectionalInteropUrl(
-        path,
-        directionalSelectedChains,
+    (path: string, options?: { mode?: InteropMode }) => {
+      const targetMode = options?.mode ?? mode
+      const targetPath = toInteropPathMode(path, targetMode)
+      return buildInteropUrl(
+        targetPath,
+        selection,
         allChainIds,
+        defaultSelectionByMode[targetMode],
       )
     },
-    [mode, publicSelectedChains, directionalSelectedChains, allChainIds],
+    [mode, selection, allChainIds, defaultSelectionByMode],
   )
 
-  const debouncedPublicChains = useDebouncedValue(publicSelectedChains, 500)
-  const debouncedDirectionalChains = useDebouncedValue(
-    directionalSelectedChains,
-    500,
-  )
+  const debouncedSelection = useDebouncedValue(selection, 500)
   const skipNextUrlUpdate = useRef(false)
 
   useEffect(() => {
@@ -196,180 +156,125 @@ export function InteropSelectedChainsProvider({
       return
     }
 
-    const newUrl =
-      mode === 'public'
-        ? buildInteropUrl(window.location.pathname, debouncedPublicChains)
-        : buildDirectionalInteropUrl(
-            window.location.pathname,
-            debouncedDirectionalChains,
-            allChainIds,
-          )
+    const nextUrl = buildInteropUrl(
+      toInteropPathMode(window.location.pathname, mode),
+      debouncedSelection,
+      allChainIds,
+      defaultSelectionByMode[mode],
+    )
 
     const currentUrl = window.location.pathname + window.location.search
-
-    if (newUrl !== currentUrl) {
-      if (window.location.search === '') {
-        window.history.replaceState({}, '', newUrl)
-        return
-      }
-      window.history.pushState({}, '', newUrl)
+    if (nextUrl === currentUrl) {
+      return
     }
-  }, [mode, allChainIds, debouncedPublicChains, debouncedDirectionalChains])
+
+    if (window.location.search === '') {
+      window.history.replaceState({}, '', nextUrl)
+      return
+    }
+
+    window.history.pushState({}, '', nextUrl)
+  }, [debouncedSelection, mode, allChainIds, defaultSelectionByMode])
 
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
 
     const params = new URLSearchParams(window.location.search)
-
-    if (mode === 'public') {
-      setPublicSelectedChains((current) =>
-        parseSelectedChainsQuery(
-          params.get('selectedChains') ?? undefined,
-          allChainIds,
-          interopChains,
-          current,
-        ),
-      )
-      return
-    }
-
-    setDirectionalSelectedChains({
-      from: parseDirectionalSelectionFromQueryValue(
-        params.get('from'),
-        allChainIds,
-      ),
-      to: parseDirectionalSelectionFromQueryValue(
-        params.get('to'),
-        allChainIds,
-      ),
+    const fallback = mode === 'internal' ? 'all' : 'empty'
+    const parsedSelection = getInitialInteropSelection({
+      query: {
+        selectedChains: parseQueryArray(params.get('selectedChains')),
+        from: parseQueryArray(params.get('from')),
+        to: parseQueryArray(params.get('to')),
+      },
+      interopChainsIds: allChainIds,
+      fallback,
     })
+
+    setSelection(
+      normalizeSelection(
+        parsedSelection,
+        allChainIds,
+        defaultSelectionByMode[mode],
+      ),
+    )
   })
 
   const selectChain = useCallback(
     (index: keyof InteropPublicSelectedChains, chainId: string | null) => {
-      if (mode !== 'public') {
-        return
-      }
+      setSelection((prev) => {
+        const side = index === 'first' ? 'from' : 'to'
+        const opposite = index === 'first' ? prev.to : prev.from
 
-      setPublicSelectedChains((prev) => {
-        const chain = getInteropSelectedChainFromId(chainId, interopChains)
-        if (
-          !chain ||
-          prev.first?.id === chainId ||
-          prev.second?.id === chainId
-        ) {
+        if (chainId && opposite.length === 1 && opposite[0] === chainId) {
           return prev
         }
+
         return {
           ...prev,
-          [index]: chain,
+          [side]: chainId ? [chainId] : [],
         }
       })
     },
-    [interopChains, mode],
-  )
-
-  const toggle = useCallback(
-    (type: 'from' | 'to', chainId: string) => {
-      if (mode !== 'internal') {
-        return
-      }
-
-      setDirectionalSelectedChains((prev) => {
-        const nextSet = new Set(prev[type])
-        if (nextSet.has(chainId)) {
-          nextSet.delete(chainId)
-        } else {
-          nextSet.add(chainId)
-        }
-
-        const next = allChainIds.filter((id) => nextSet.has(id))
-        return {
-          ...prev,
-          [type]: next,
-        }
-      })
-    },
-    [allChainIds, mode],
+    [],
   )
 
   const toggleFrom = useCallback(
     (chainId: string) => {
-      toggle('from', chainId)
+      setSelection((prev) => ({
+        ...prev,
+        from: toggleSelection(prev.from, chainId, allChainIds),
+      }))
     },
-    [toggle],
+    [allChainIds],
   )
 
   const toggleTo = useCallback(
     (chainId: string) => {
-      toggle('to', chainId)
+      setSelection((prev) => ({
+        ...prev,
+        to: toggleSelection(prev.to, chainId, allChainIds),
+      }))
     },
-    [toggle],
+    [allChainIds],
   )
 
   const selectAll = useCallback(
     (type?: 'from' | 'to') => {
-      if (mode !== 'internal') {
-        return
-      }
-
-      setDirectionalSelectedChains((prev) => ({
+      setSelection((prev) => ({
         ...prev,
         ...(type
           ? { [type]: allChainIds }
           : { from: allChainIds, to: allChainIds }),
       }))
     },
-    [allChainIds, mode],
+    [allChainIds],
   )
 
-  const deselectAll = useCallback(
-    (type?: 'from' | 'to') => {
-      if (mode !== 'internal') {
-        return
-      }
-
-      setDirectionalSelectedChains((prev) => ({
-        ...prev,
-        ...(type ? { [type]: [] } : { from: [], to: [] }),
-      }))
-    },
-    [mode],
-  )
+  const deselectAll = useCallback((type?: 'from' | 'to') => {
+    setSelection((prev) => ({
+      ...prev,
+      ...(type ? { [type]: [] } : { from: [], to: [] }),
+    }))
+  }, [])
 
   const swapPaths = useCallback(() => {
-    if (mode !== 'internal') {
-      return
-    }
-
-    setDirectionalSelectedChains((prev) => ({
+    setSelection((prev) => ({
       from: prev.to,
       to: prev.from,
     }))
-  }, [mode])
+  }, [])
 
   const reset = useCallback(() => {
-    if (mode === 'public') {
-      setPublicSelectedChains(defaultPublicSelectedChains)
-      return
-    }
+    setSelection(defaultSelectionByMode[mode])
+  }, [defaultSelectionByMode, mode])
 
-    setDirectionalSelectedChains({
-      from: allChainIds,
-      to: allChainIds,
-    })
-  }, [mode, defaultPublicSelectedChains, allChainIds])
-
-  const isDirty = useMemo(() => {
-    if (mode !== 'internal') {
-      return false
-    }
-
-    return (
-      directionalSelectedChains.from.length !== allChainIds.length ||
-      directionalSelectedChains.to.length !== allChainIds.length
-    )
-  }, [mode, directionalSelectedChains, allChainIds])
+  const isDirty = useMemo(
+    () =>
+      !isSameSelection(selection.from, defaultSelectionByMode[mode].from) ||
+      !isSameSelection(selection.to, defaultSelectionByMode[mode].to),
+    [selection, defaultSelectionByMode, mode],
+  )
 
   return (
     <InteropSelectedChainsContext.Provider
@@ -394,56 +299,100 @@ export function InteropSelectedChainsProvider({
   )
 }
 
-function getInteropSelectedChainFromId(
-  id: string | null,
-  interopChains: InteropChainWithIcon[],
-): InteropSelectedChain | null {
-  if (!id) {
+function normalizeSelection(
+  selection: InteropSelection,
+  allChainIds: string[],
+  defaultSelection: InteropSelection,
+): InteropSelection {
+  return {
+    from: normalizeDirectionalSelection(
+      selection.from,
+      allChainIds,
+      getFallbackFromDefault(defaultSelection.from, allChainIds),
+    ),
+    to: normalizeDirectionalSelection(
+      selection.to,
+      allChainIds,
+      getFallbackFromDefault(defaultSelection.to, allChainIds),
+    ),
+  }
+}
+
+function getFallbackFromDefault(
+  defaultSelection: string[],
+  allChainIds: string[],
+): 'all' | 'empty' {
+  return isSameSelection(defaultSelection, allChainIds) ? 'all' : 'empty'
+}
+
+function toggleSelection(
+  selection: string[],
+  chainId: string,
+  allChainIds: string[],
+): string[] {
+  const nextSet = new Set(selection)
+  if (nextSet.has(chainId)) {
+    nextSet.delete(chainId)
+  } else {
+    nextSet.add(chainId)
+  }
+
+  return allChainIds.filter((id) => nextSet.has(id))
+}
+
+function parseQueryArray(value: string | null) {
+  if (value === null) {
+    return undefined
+  }
+
+  return value.split(',')
+}
+
+function getSingleChainId(selection: string[]) {
+  if (selection.length !== 1) {
     return null
   }
+
+  const [chainId] = selection
+  return chainId ?? null
+}
+
+function toInteropPathMode(path: string, mode: InteropMode) {
+  const normalizedPath = path.endsWith('/') ? path.slice(0, -1) : path
+
+  if (mode === 'internal') {
+    if (normalizedPath.endsWith('/internal')) {
+      return normalizedPath
+    }
+    return `${normalizedPath}/internal`
+  }
+
+  if (normalizedPath.endsWith('/internal')) {
+    return normalizedPath.slice(0, -'/internal'.length)
+  }
+
+  return normalizedPath
+}
+
+function isSameSelection(left: string[], right: string[]) {
+  return (
+    left.length === right.length &&
+    left.every((value, index) => value === right[index])
+  )
+}
+
+function getInteropSelectedChainFromId(
+  id: string,
+  interopChains: InteropChainWithIcon[],
+): InteropSelectedChain | null {
   const interopChain = interopChains.find((c) => c.id === id)
   if (!interopChain) {
     return null
   }
+
   return {
     id: interopChain.id,
     iconUrl: interopChain.iconUrl,
-  }
-}
-
-function parseSelectedChainsQuery(
-  value: string | undefined,
-  allChainIds: string[],
-  interopChains: InteropChainWithIcon[],
-  fallback: InteropPublicSelectedChains,
-): InteropPublicSelectedChains {
-  if (!value) {
-    return fallback
-  }
-
-  const [first, second, ...rest] = value.split(',')
-  if (!first || !second || rest.length > 0) {
-    return fallback
-  }
-
-  if (!allChainIds.includes(first) || !allChainIds.includes(second)) {
-    return fallback
-  }
-
-  if (first === second) {
-    return fallback
-  }
-
-  const firstChain = getInteropSelectedChainFromId(first, interopChains)
-  const secondChain = getInteropSelectedChainFromId(second, interopChains)
-
-  if (!firstChain || !secondChain) {
-    return fallback
-  }
-
-  return {
-    first: firstChain,
-    second: secondChain,
   }
 }
 
@@ -455,30 +404,4 @@ export function useInteropSelectedChains() {
     )
   }
   return context
-}
-
-function buildDirectionalInteropUrl(
-  path: string,
-  selectedChains: DirectionalSelectedChains,
-  allChainIds: string[],
-) {
-  const params = new URLSearchParams()
-
-  const fromValue = serializeDirectionalSelectionToQueryValue(
-    selectedChains.from,
-    allChainIds,
-  )
-  if (fromValue !== undefined) {
-    params.set('from', fromValue)
-  }
-
-  const toValue = serializeDirectionalSelectionToQueryValue(
-    selectedChains.to,
-    allChainIds,
-  )
-  if (toValue !== undefined) {
-    params.set('to', toValue)
-  }
-
-  return params.size > 0 ? `${path}?${params.toString()}` : path
 }

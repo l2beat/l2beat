@@ -59,7 +59,8 @@ export function InitialChainSelector({
               }
 
               utils.interop.dashboard.prefetch({
-                selectedChainsIds: [selectedChains.first.id, chain.id],
+                from: [selectedChains.first.id],
+                to: [chain.id],
                 type,
               })
             }}
