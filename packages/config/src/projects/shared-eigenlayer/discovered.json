@@ -32,7 +32,8 @@
       },
       "implementationNames": {
         "eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5": "RewardAllStakersActionGenerator"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "AllocationManagerView",
@@ -56,7 +57,8 @@
       },
       "implementationNames": {
         "eth:0x0D4e5723daAD06510CFd6864b8eB8a08CF0c4a34": "AllocationManagerView"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "StrategiesBeacon",
@@ -77,7 +79,8 @@
       },
       "implementationNames": {
         "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": "UpgradeableBeacon"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "swETH-Strategy",
@@ -152,7 +155,8 @@
       "implementationNames": {
         "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "TaskMailbox",
@@ -198,7 +202,8 @@
       "implementationNames": {
         "eth:0x132b466d9d5723531F68797519DfED701aC2C749": "TransparentUpgradeableProxy",
         "eth:0xA2A9D0F957D81A0f8134F68803240f1CAD81c55e": "TaskMailbox"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "AVSDirectory",
@@ -330,7 +335,8 @@
       "implementationNames": {
         "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": "TransparentUpgradeableProxy",
         "eth:0xcD35Cef328b496fA9d70a8d7C34EF3434614862b": "AVSDirectory"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "ankrETH-Strategy",
@@ -405,7 +411,8 @@
       "implementationNames": {
         "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x17919FAC7024d5b770322E5Cb81607D247654116",
@@ -485,7 +492,8 @@
       "implementationNames": {
         "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "PermissionController",
@@ -520,7 +528,8 @@
       "implementationNames": {
         "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5": "TransparentUpgradeableProxy",
         "eth:0x36dd260AbF606172875E6B5B7A96B435DC74EEd2": "PermissionController"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x26dDbf2A2f0bf8A7F656fA6F63AA9571af002551",
@@ -682,7 +691,8 @@
       "implementationNames": {
         "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129": "TransparentUpgradeableProxy",
         "eth:0x611C5b2Fe677a3C09e4D58a1fE40FD6547d5e29E": "ProtocolRegistry"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
@@ -762,7 +772,8 @@
       "implementationNames": {
         "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x2E158da11961426E2A1Cc9e79f40244486b6845C",
@@ -809,7 +820,8 @@
       },
       "implementationNames": {
         "eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d": "TokenHopper"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x33E816008E7bc7798A73d0eaa640CC24f34d1626",
@@ -935,7 +947,8 @@
       "implementationNames": {
         "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": "TransparentUpgradeableProxy",
         "eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75": "DelegationManager"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE",
@@ -983,7 +996,8 @@
       "implementationNames": {
         "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A": "TransparentUpgradeableProxy",
         "eth:0x9907690007b7ECFE1E03F96beca1a957faE3eaD2": "BN254CertificateVerifier"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "ProxyAdmin",
@@ -1566,7 +1580,8 @@
       },
       "implementationNames": {
         "eth:0x53cC2D82E08370Fe1e44a96f69CEc7d5b54ae868": "EigenPod"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "cbETH-Strategy",
@@ -1641,7 +1656,8 @@
       "implementationNames": {
         "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "KeyRegistrar",
@@ -1682,7 +1698,8 @@
       "implementationNames": {
         "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4": "TransparentUpgradeableProxy",
         "eth:0x0f939726Ab8514c13546804311149a8CC244C219": "KeyRegistrar"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "OperatorTableUpdater",
@@ -1751,7 +1768,8 @@
       "implementationNames": {
         "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5": "TransparentUpgradeableProxy",
         "eth:0x8c4F429e6d884899ebf4602bd2691920B056adF7": "OperatorTableUpdater"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x55b067375146e015677F739CBBd04104d46744E8",
@@ -1836,7 +1854,8 @@
       "implementationNames": {
         "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "UpgradeableBeacon",
@@ -1857,7 +1876,8 @@
       },
       "implementationNames": {
         "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073": "UpgradeableBeacon"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x5CCF59B92bb50377Ce8aF5Fed188B400B868d060",
@@ -1907,7 +1927,8 @@
       "implementationNames": {
         "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647": "TransparentUpgradeableProxy",
         "eth:0x5194D2a6A0900796903503926E9CF775b926c8AF": "StrategyFactory"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5",
@@ -1991,7 +2012,8 @@
       },
       "implementationNames": {
         "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53": "TimelockController"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x7474E1D80E844e6EdB430841DeEF702a6B747863",
@@ -2062,7 +2084,8 @@
       "implementationNames": {
         "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda": "TransparentUpgradeableProxy",
         "eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF": "RewardsCoordinator"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "wBETH-Strategy",
@@ -2137,7 +2160,8 @@
       "implementationNames": {
         "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Safe",
@@ -2228,7 +2252,8 @@
       "implementationNames": {
         "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": "TransparentUpgradeableProxy",
         "eth:0xF2b225815F70c9b327DC9db758A36c92A4279b17": "BackingEigen"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "StrategyManager",
@@ -2295,7 +2320,8 @@
       "implementationNames": {
         "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A": "TransparentUpgradeableProxy",
         "eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c": "StrategyManager"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "EigenLayerProxyAdmin",
@@ -2541,7 +2567,8 @@
       "implementationNames": {
         "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x8f94F55fD8c9E090296283137C303fE97d32A9e2",
@@ -2627,7 +2654,8 @@
       "implementationNames": {
         "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "TransparentUpgradeableProxy",
         "eth:0xd22dd829779ADBf3869fb224F703452f7F95E9dB": "EigenPodManager"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x9229C290F60F303884073F28EB8E81F9B82506d5",
@@ -2691,7 +2719,8 @@
       "implementationNames": {
         "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b": "TransparentUpgradeableProxy",
         "eth:0xdc2354FaDd4bf0f9857038381917D0089880642C": "CrossChainRegistry"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "stETH-Strategy",
@@ -2766,7 +2795,8 @@
       "implementationNames": {
         "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "EigenLayerBeigenOwningMultisig",
@@ -2855,7 +2885,8 @@
       "implementationNames": {
         "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39": "TransparentUpgradeableProxy",
         "eth:0xdA2A68D318A571dD550F2EcbCb09bf50497e97C4": "AllocationManager"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815",
@@ -2945,7 +2976,8 @@
       "implementationNames": {
         "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "OETH-Strategy",
@@ -3020,7 +3052,8 @@
       "implementationNames": {
         "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0xA75600b7914f78486b7d15E962A5247444A78445",
@@ -3099,7 +3132,8 @@
       "implementationNames": {
         "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7": "TransparentUpgradeableProxy",
         "eth:0x4a0aee93BE6C87B227cA0B450E15245631233532": "EigenStrategy"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3",
@@ -3179,7 +3213,8 @@
       "implementationNames": {
         "eth:0xAe60d8180437b5C34bB956822ac2710972584473": "TransparentUpgradeableProxy",
         "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7": "StrategyBaseTVLLimits"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0xAF4D94Cd299211de542530399290877E2c85F061",
@@ -3210,7 +3245,8 @@
       },
       "implementationNames": {
         "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806": "PauserRegistry"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "EigenLayerOperationsMultisig",
@@ -3746,7 +3782,8 @@
       },
       "implementationNames": {
         "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockController"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0xc5280E368648b0e192b355c7d8330593bA7af700",
@@ -3799,7 +3836,8 @@
       "implementationNames": {
         "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25": "TransparentUpgradeableProxy",
         "eth:0x2d52c39461795835b1F8F6cD242f4955AaC040dC": "ECDSACertificateVerifier"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "StrategyBase",
@@ -3842,7 +3880,8 @@
       },
       "implementationNames": {
         "eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780": "StrategyBase"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0xd757D6A02cD5af9AEF163D7eB8034f75ac22B553",
@@ -3953,7 +3992,8 @@
       "implementationNames": {
         "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "TransparentUpgradeableProxy",
         "eth:0x2C4A81e257381F87F5A5C4bd525116466D972E50": "Eigen"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0xED732DEb32034e603bEEEdA84605dAbb8933594b",
@@ -3994,7 +4034,8 @@
       "implementationNames": {
         "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F": "TransparentUpgradeableProxy",
         "eth:0xD0cb07Df397b122bB7ebaA453356F21f8Ff813bd": "ReleaseManager"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0xf26dA751ede765864CA92D8aE7522edD21aF0523",
