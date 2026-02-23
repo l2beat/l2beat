@@ -13,7 +13,10 @@ import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('megaeth', undefined, {
-  useReachableEntries: true,
+  reachableEntries: {
+    use: true,
+    maxDepth: 1,
+  },
 })
 
 export const megaeth: ScalingProject = opStackL2({

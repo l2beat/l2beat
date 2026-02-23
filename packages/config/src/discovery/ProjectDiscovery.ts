@@ -51,7 +51,7 @@ const paths = getDiscoveryPaths()
 interface ProjectDiscoveryOptions {
   reachableEntries?: {
     use: boolean
-    maxDepth: number
+    maxDepth?: number
   }
 }
 
