@@ -15,6 +15,7 @@ import {
   type InteropSelection,
 } from '../utils/getInitialInteropSelection'
 import type { InteropMode } from '../utils/InteropSelectedChainsContext'
+import { toInteropApiSelection } from '../utils/toInteropApiSelection'
 
 interface GetInteropBurnAndMintDataOptions {
   mode?: InteropMode
@@ -34,7 +35,7 @@ export async function getInteropBurnAndMintData(
   const initialSelection = getInitialInteropSelection({
     query: req.query,
     interopChainsIds,
-    fallback: mode === 'internal' ? 'all' : 'empty',
+    mode,
   })
 
   const queryState = await cache.get(
@@ -50,7 +51,7 @@ export async function getInteropBurnAndMintData(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    async () => getCachedData(initialSelection),
+    async () => getCachedData(initialSelection, mode),
   )
 
   const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
@@ -87,15 +88,19 @@ export async function getInteropBurnAndMintData(
   }
 }
 
-async function getCachedData(initialSelection: InteropSelection) {
+async function getCachedData(
+  initialSelection: InteropSelection,
+  mode: InteropMode,
+) {
   const helpers = getSsrHelpers()
+  const apiSelection = toInteropApiSelection(initialSelection, mode)
   const [protocols] = await Promise.all([
     ps.getProjects({
       select: ['interopConfig'],
     }),
-    initialSelection.from.length > 0 && initialSelection.to.length > 0
+    apiSelection.from.length > 0 && apiSelection.to.length > 0
       ? helpers.interop.dashboard.prefetch({
-          ...initialSelection,
+          ...apiSelection,
           type: 'burnAndMint',
         })
       : undefined,

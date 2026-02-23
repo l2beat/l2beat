@@ -1,30 +1,23 @@
 import type { InteropSelection } from './getInitialInteropSelection'
-import { serializeMultiChainSelectionToQueryValue } from './multiChainSelection'
+
+type BuildInteropUrlMode = 'public' | 'internal'
 
 export function buildInteropUrl(
   path: string,
   selection: InteropSelection,
-  allChainIds: string[],
-  defaultSelection: InteropSelection,
+  mode: BuildInteropUrlMode,
 ): string {
   const params = new URLSearchParams()
 
-  const fromValue = serializeMultiChainSelectionToQueryValue(
-    selection.from,
-    allChainIds,
-    defaultSelection.from,
-  )
-  if (fromValue !== undefined) {
-    params.set('from', fromValue)
-  }
+  if (mode === 'public') {
+    if (selection.from.length !== 1 || selection.to.length !== 1) {
+      return path
+    }
 
-  const toValue = serializeMultiChainSelectionToQueryValue(
-    selection.to,
-    allChainIds,
-    defaultSelection.to,
-  )
-  if (toValue !== undefined) {
-    params.set('to', toValue)
+    params.set('selectedChains', [selection.from[0], selection.to[0]].join(','))
+  } else {
+    params.set('from', selection.from.join(','))
+    params.set('to', selection.to.join(','))
   }
 
   return params.size > 0 ? `${path}?${params.toString()}` : path

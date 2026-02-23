@@ -3,6 +3,7 @@ import partition from 'lodash/partition'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import type { InteropSelection } from '../utils/getInitialInteropSelection'
+import { toInteropApiSelection } from '../utils/toInteropApiSelection'
 import type { InteropChainWithIcon } from './chain-selector/types'
 
 interface Props {
@@ -65,9 +66,16 @@ export function InitialChainSelector({
                 return
               }
 
+              const apiSelection = toInteropApiSelection(
+                {
+                  from: [firstSelectedChainId],
+                  to: [chain.id],
+                },
+                'public',
+              )
+
               utils.interop.dashboard.prefetch({
-                from: [firstSelectedChainId],
-                to: [chain.id],
+                ...apiSelection,
                 type,
               })
             }}

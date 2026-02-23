@@ -16,7 +16,7 @@ import {
   getInitialInteropSelection,
   type InteropSelection,
 } from './getInitialInteropSelection'
-import { normalizeMultiChainSelection } from './multiChainSelection'
+import { getValidInteropChains } from './getValidInteropChains'
 
 export type InteropMode = 'public' | 'internal'
 
@@ -77,13 +77,8 @@ export function InteropSelectedChainsProvider({
   )
 
   const normalizedInitialSelection = useMemo(
-    () =>
-      normalizeSelection(
-        initialSelection,
-        allChainIds,
-        defaultSelectionByMode[mode],
-      ),
-    [initialSelection, allChainIds, defaultSelectionByMode, mode],
+    () => normalizeSelection(initialSelection, allChainIds),
+    [initialSelection, allChainIds],
   )
 
   const [selection, setSelection] = useState(normalizedInitialSelection)
@@ -101,14 +96,9 @@ export function InteropSelectedChainsProvider({
     (path: string, options?: { mode?: InteropMode }) => {
       const targetMode = options?.mode ?? mode
       const targetPath = toInteropPathMode(path, targetMode)
-      return buildInteropUrl(
-        targetPath,
-        selection,
-        allChainIds,
-        defaultSelectionByMode[targetMode],
-      )
+      return buildInteropUrl(targetPath, selection, targetMode)
     },
-    [mode, selection, allChainIds, defaultSelectionByMode],
+    [mode, selection],
   )
 
   const debouncedSelection = useDebouncedValue(selection, 500)
@@ -123,8 +113,7 @@ export function InteropSelectedChainsProvider({
     const nextUrl = buildInteropUrl(
       toInteropPathMode(window.location.pathname, mode),
       debouncedSelection,
-      allChainIds,
-      defaultSelectionByMode[mode],
+      mode,
     )
 
     const currentUrl = window.location.pathname + window.location.search
@@ -138,29 +127,23 @@ export function InteropSelectedChainsProvider({
     }
 
     window.history.pushState({}, '', nextUrl)
-  }, [debouncedSelection, mode, allChainIds, defaultSelectionByMode])
+  }, [debouncedSelection, mode])
 
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
 
     const params = new URLSearchParams(window.location.search)
-    const fallback = mode === 'internal' ? 'all' : 'empty'
     const parsedSelection = getInitialInteropSelection({
       query: {
         from: parseQueryArray(params.get('from')),
         to: parseQueryArray(params.get('to')),
+        selectedChains: parseQueryArray(params.get('selectedChains')),
       },
       interopChainsIds: allChainIds,
-      fallback,
+      mode,
     })
 
-    setSelection(
-      normalizeSelection(
-        parsedSelection,
-        allChainIds,
-        defaultSelectionByMode[mode],
-      ),
-    )
+    setSelection(normalizeSelection(parsedSelection, allChainIds))
   })
 
   const selectChain = useCallback(
@@ -264,27 +247,11 @@ export function InteropSelectedChainsProvider({
 function normalizeSelection(
   selection: InteropSelection,
   allChainIds: string[],
-  defaultSelection: InteropSelection,
 ): InteropSelection {
   return {
-    from: normalizeMultiChainSelection(
-      selection.from,
-      allChainIds,
-      getFallbackFromDefault(defaultSelection.from, allChainIds),
-    ),
-    to: normalizeMultiChainSelection(
-      selection.to,
-      allChainIds,
-      getFallbackFromDefault(defaultSelection.to, allChainIds),
-    ),
+    from: getValidInteropChains(selection.from, allChainIds),
+    to: getValidInteropChains(selection.to, allChainIds),
   }
-}
-
-function getFallbackFromDefault(
-  defaultSelection: string[],
-  allChainIds: string[],
-): 'all' | 'empty' {
-  return isSameSelection(defaultSelection, allChainIds) ? 'all' : 'empty'
 }
 
 function toggleSelection(

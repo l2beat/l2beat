@@ -21,6 +21,7 @@ import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
+import { toInteropApiSelection } from '../utils/toInteropApiSelection'
 import { InteropEmptyState } from './components/InteropEmptyState'
 import { TransferSizeChartCard } from './components/TransferSizeChartCard'
 import { BurnAndMintCard } from './components/table-widgets/BurnAndMintCard'
@@ -110,7 +111,8 @@ function Content({
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains, mode, isDirty, reset } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery(selectedChains)
+  const apiSelection = toInteropApiSelection(selectedChains, mode)
+  const { data, isLoading } = api.interop.dashboard.useQuery(apiSelection)
 
   if (
     data?.entries.length === 0 &&

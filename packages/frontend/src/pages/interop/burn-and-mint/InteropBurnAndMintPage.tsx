@@ -23,6 +23,7 @@ import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
+import { toInteropApiSelection } from '../utils/toInteropApiSelection'
 import { HeaderWithDescription } from './components/HeaderWithDescription'
 
 interface Props extends AppLayoutProps {
@@ -117,8 +118,9 @@ function Content({
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectedChains, mode, isDirty, reset } = useInteropSelectedChains()
+  const apiSelection = toInteropApiSelection(selectedChains, mode)
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    ...selectedChains,
+    ...apiSelection,
     type: 'burnAndMint',
   })
 
