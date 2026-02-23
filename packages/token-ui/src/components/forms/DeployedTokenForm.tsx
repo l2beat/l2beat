@@ -68,7 +68,7 @@ export const fieldToDataSource: Record<
   'symbol' | 'decimals' | 'deploymentTimestamp' | 'abstractTokenId',
   DataSource[]
 > = {
-  symbol: ['rpc','coingecko'],
+  symbol: ['rpc', 'coingecko'],
   decimals: ['rpc'],
   deploymentTimestamp: ['etherscan', 'blockscout'],
   abstractTokenId: ['coingecko'],
