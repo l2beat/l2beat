@@ -158,17 +158,39 @@ class InterfaceNameHeuristic implements ResolutionHeuristic {
     const expectedContractName = interfaceName.slice(1) // Remove 'I' prefix
 
     // Find all contracts with matching name (case-insensitive)
+    // Checks both entry.name and implementationNames values to handle:
+    // - Aliases: entry.name is the alias, but implementationNames has the code-derived name
+    // - Proxies: entry.name is the proxy name, but implementationNames has the implementation name
     const matches: HeuristicMatch[] = []
+    const expectedLower = expectedContractName.toLowerCase()
 
     for (const entry of discovered.entries) {
       if (entry.type !== 'Contract') continue
 
       const contractName = entry.name || ''
-      if (contractName.toLowerCase() === expectedContractName.toLowerCase()) {
+      if (contractName.toLowerCase() === expectedLower) {
         matches.push({
           address: entry.address,
           contractName: entry.name,
         })
+        continue // Don't double-match same entry
+      }
+
+      // Check implementationNames values (code-derived names from Etherscan source)
+      if (entry.implementationNames) {
+        const implNames = entry.implementationNames
+        let matched = false
+        for (const implName of Object.values(implNames)) {
+          if (implName.toLowerCase() === expectedLower) {
+            matches.push({
+              address: entry.address,
+              contractName: entry.name,
+            })
+            matched = true
+            break // One match per entry is enough
+          }
+        }
+        if (matched) continue
       }
     }
 
@@ -213,15 +235,27 @@ class FunctionSignatureHeuristic implements ResolutionHeuristic {
     for (const entry of discovered.entries) {
       if (entry.type !== 'Contract') continue
 
-      const abi = discovered.abis[entry.address]
-      if (!abi) continue
+      // Collect ABI addresses: entry address + implementation address for proxies
+      const abiAddresses = [entry.address]
+      const implValue = entry.values?.$implementation
+      if (typeof implValue === 'string' && implValue.startsWith('eth:')) {
+        abiAddresses.push(implValue as typeof entry.address)
+      }
 
-      // Check if this contract has the function
-      const hasFunction = abi.some((abiEntry) => {
-        if (!abiEntry.startsWith('function ')) return false
-        const match = abiEntry.match(/^function\s+(\w+)\(/)
-        return match && match[1] === functionName
-      })
+      // Check if any of the contract's ABIs have the function
+      let hasFunction = false
+      for (const abiAddress of abiAddresses) {
+        const abi = discovered.abis[abiAddress]
+        if (!abi) continue
+
+        hasFunction = abi.some((abiEntry) => {
+          if (!abiEntry.startsWith('function ')) return false
+          const match = abiEntry.match(/^function\s+(\w+)\(/)
+          return match && match[1] === functionName
+        })
+
+        if (hasFunction) break
+      }
 
       if (hasFunction) {
         matches.push({
