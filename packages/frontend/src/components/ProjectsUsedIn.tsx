@@ -60,23 +60,27 @@ export function ProjectsUsedIn({
 
   return (
     <div
-      className={cn('grid grid-cols-2', className)}
+      className={cn('grid grid-cols-2 items-center', className)}
       style={{
-        gridTemplateColumns: `${cappedProjects.length === 1 ? 20 : cappedProjects.length * 15}px  30px`,
+        gridTemplateColumns: `${cappedProjects.length === 1 ? 24 : cappedProjects.length * 19}px  30px`,
       }}
     >
       <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
         {cappedProjects.map((project, index) => {
           const trigger = (
             <TooltipTrigger>
-              <img
-                width={20}
-                height={20}
-                src={project.icon}
-                alt={`${project.name} logo`}
-                className="relative size-5 min-w-5 rounded-full bg-white shadow"
+              <div
+                className="relative flex size-6 items-center justify-center overflow-clip rounded-full bg-white shadow"
                 style={{ zIndex: maxProjects - index }}
-              />
+              >
+                <img
+                  width={18}
+                  height={18}
+                  src={project.icon}
+                  alt={`${project.name} logo`}
+                  className="size-4.5 min-w-4.5"
+                />
+              </div>
             </TooltipTrigger>
           )
 
@@ -85,7 +89,7 @@ export function ProjectsUsedIn({
               {noLink ? (
                 trigger
               ) : (
-                <a href={project.url} className="size-5">
+                <a href={project.url} className="size-6">
                   {trigger}
                 </a>
               )}
