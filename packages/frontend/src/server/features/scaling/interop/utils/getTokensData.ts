@@ -54,7 +54,8 @@ export function getTokensData({
         volume: token.volume,
         transferCount: token.transferCount,
         avgDuration: avgDuration,
-        avgValue: Math.floor(token.volume / token.transferCount),
+        avgValue:
+          token.transferCount > 0 ? token.volume / token.transferCount : null,
         netMintedValue:
           token.mintedValueUsd !== undefined &&
           token.burnedValueUsd !== undefined

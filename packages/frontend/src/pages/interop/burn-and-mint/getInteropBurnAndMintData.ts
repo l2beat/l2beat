@@ -75,7 +75,10 @@ export async function getInteropBurnAndMintData(
         ...appLayoutProps,
         mode,
         ...queryState,
-        interopChains: interopChainsWithIcons,
+        interopChains: interopChainsWithIcons.filter(
+          (chain) => !chain.isUpcoming,
+        ),
+        onboardingInteropChains: interopChainsWithIcons,
         initialSelection,
       },
     },

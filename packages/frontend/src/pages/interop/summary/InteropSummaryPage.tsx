@@ -32,6 +32,7 @@ interface Props extends AppLayoutProps {
   mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
   initialSelection: InteropSelection
 }
@@ -39,6 +40,7 @@ interface Props extends AppLayoutProps {
 export function InteropSummaryPage({
   mode,
   interopChains,
+  onboardingInteropChains,
   queryState,
   initialSelection,
   protocols,
@@ -53,10 +55,11 @@ export function InteropSummaryPage({
           initialSelection={initialSelection}
         >
           <SideNavLayout maxWidth="wide">
-            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
+            <MainPageHeader>Interoperability</MainPageHeader>
             <Content
               mode={mode}
               interopChains={interopChains}
+              onboardingInteropChains={onboardingInteropChains}
               protocols={protocols}
             />
           </SideNavLayout>
@@ -69,10 +72,12 @@ export function InteropSummaryPage({
 function Content({
   mode,
   interopChains,
+  onboardingInteropChains,
   protocols,
 }: {
   mode: InteropMode
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
@@ -80,7 +85,7 @@ function Content({
   if (mode === 'public' && (!selectedChains.first || !selectedChains.second)) {
     return (
       <InitialChainSelector
-        interopChains={interopChains}
+        interopChains={onboardingInteropChains}
         selectedChains={selectedChains}
         selectChain={selectChain}
         type={undefined}
@@ -123,10 +128,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
 
   return (
     <div
-      className="mt-5 grid grid-cols-1 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
+      className="grid grid-cols-1 md:mt-5 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
       data-hide-overflow-x
     >
-      <div className="z-10 max-md:hidden">
+      <div className="z-10">
         <FlowsWidget
           interopChains={interopChains}
           isLoading={isLoading}

@@ -75,7 +75,10 @@ export async function getInteropLockAndMintData(
         ...appLayoutProps,
         mode,
         ...queryState,
-        interopChains: interopChainsWithIcons,
+        interopChains: interopChainsWithIcons.filter(
+          (chain) => !chain.isUpcoming,
+        ),
+        onboardingInteropChains: interopChainsWithIcons,
         initialSelection,
       },
     },

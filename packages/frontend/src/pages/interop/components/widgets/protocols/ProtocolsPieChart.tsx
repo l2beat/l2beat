@@ -34,10 +34,12 @@ export function ProtocolsPieChart({
 }) {
   const isClient = useIsClient()
   const showSmallerChart = containerWidth && containerWidth < 373
+  const chartWrapperClassName =
+    'flex h-full @min-[430px]:w-[calc(100%-240px)] items-center justify-center'
 
   if (!isClient || (isLoading && containerWidth)) {
     return (
-      <div className="flex h-full items-center">
+      <div className={chartWrapperClassName}>
         <Skeleton
           className="rounded-full"
           style={{
@@ -50,7 +52,7 @@ export function ProtocolsPieChart({
   }
 
   return (
-    <div className="flex h-full @min-[430px]:w-[calc(100%-240px)] items-center justify-center">
+    <div className={chartWrapperClassName}>
       <SimpleChartContainer
         height={showSmallerChart ? 128 : 164}
         width="100%"

@@ -59,6 +59,7 @@ import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findBestTransferLog } from '../hyperlane-hwr'
 import { MayanForwarded } from '../mayan-forwarder'
 import { OrderFulfilled } from '../mayan-mctp-fast'
+import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
   createEventParser,
   createInteropEventType,
@@ -71,7 +72,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-import { findWrappedMayanWormholeLog } from '../wormhole/wormhole.plugin'
+import { LogMessagePublished } from '../wormhole/wormhole.plugin'
 import { CCTPV2Config } from './cctp.config'
 
 const messageSentLog = 'event MessageSent(bytes message)'
@@ -202,7 +203,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
 
       const transferMatch = findBestTransferLog(
         input.txLogs,
-        messageBody?.amount ?? 0n,
+        messageBody ? messageBody.amount - messageBody.feeExecuted : 0n,
         input.log.logIndex ?? -1,
       )
 
@@ -222,6 +223,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
             v2MessageReceived.finalityThresholdExecuted,
           ),
           messageHash,
+
           dstTokenAddress: transferMatch.transfer
             ? Address32.from(transferMatch.transfer?.logAddress)
             : undefined,
@@ -257,6 +259,7 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
         const mayanWrappedWormholeLog = findWrappedMayanWormholeLog(
           db,
           mayanForwarded,
+          LogMessagePublished,
         )
         wrappers.push(
           Result.Message('mayan.Message', {

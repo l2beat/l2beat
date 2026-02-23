@@ -29,6 +29,7 @@ interface Props extends AppLayoutProps {
   mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: WithProjectIcon<Project<'interopConfig'>>[]
   initialSelection: InteropSelection
 }
@@ -36,6 +37,7 @@ interface Props extends AppLayoutProps {
 export function InteropBurnAndMintPage({
   mode,
   interopChains,
+  onboardingInteropChains,
   queryState,
   initialSelection,
   protocols,
@@ -53,6 +55,7 @@ export function InteropBurnAndMintPage({
             <Content
               mode={mode}
               interopChains={interopChains}
+              onboardingInteropChains={onboardingInteropChains}
               protocols={protocols}
             />
           </SideNavLayout>
@@ -65,10 +68,12 @@ export function InteropBurnAndMintPage({
 function Content({
   mode,
   interopChains,
+  onboardingInteropChains,
   protocols,
 }: {
   mode: InteropMode
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
@@ -80,7 +85,7 @@ function Content({
           <HeaderWithDescription />
         </div>
         <InitialChainSelector
-          interopChains={interopChains}
+          interopChains={onboardingInteropChains}
           selectedChains={selectedChains}
           selectChain={selectChain}
           type="burnAndMint"
@@ -99,7 +104,7 @@ function Content({
       ) : (
         <DirectionalChainSelector chains={interopChains} />
       )}
-      <div className="md:hidden">
+      <div className="max-md:bg-surface-primary md:hidden">
         <HeaderWithDescription />
       </div>
       <Widgets interopChains={interopChains} />
@@ -129,10 +134,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
 
   return (
     <div
-      className="mt-5 grid grid-cols-1 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
+      className="grid grid-cols-1 md:mt-5 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
       data-hide-overflow-x
     >
-      <div className="z-10 max-md:hidden">
+      <div className="z-10">
         <FlowsWidget
           interopChains={interopChains}
           isLoading={isLoading}

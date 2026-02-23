@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x34c3c1a487f50a38473976f1163f3edc0ad84312
+
+# Diff at Thu, 19 Feb 2026 09:33:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@31cbacb6d899b700558dd36eccfd1161fc0b3b74 block: 1770116349
+- current timestamp: 1771493145
+
+## Description
+
+add adapter for tempo L1.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.4217:
++        "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c"
+      values.CrossChainContracts.4217:
++        "eth:0x2d4710F04Da90184255782d3715224A6C776955D"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c)
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+```
+
+## Source code changes
+
+```diff
+...:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c.sol | 792 +++++++++++++++++++++
+ 1 file changed, 792 insertions(+)
+```
+
 Generated with discovered.json: 0xda0c26d6822a0801b8305ef42c04efd6870d4702
 
 # Diff at Tue, 03 Feb 2026 11:18:43 GMT:
