@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe5eee29acd8bdd1cb668f3f78167369d8f365fe6
+Generated with discovered.json: 0xf49584c2b758e7808dab27d282c45b26df09931a
 
-# Diff at Mon, 23 Feb 2026 11:41:55 GMT:
+# Diff at Mon, 23 Feb 2026 13:24:45 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@8ea1d353103c63e310b14d3ded6658c49507e12c block: 1770803234
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c4cf1ff95badc1fe50c3d987fcd0219f3d947c2d block: 1770803234
 - current timestamp: 1771841876
 
 ## Description
@@ -27,40 +27,68 @@ discovery. Values are for block 1770803234 (main branch discovery), not current.
 ```diff
     contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
     +++ description: Keeps track of the total stake of each operator.
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
 ```diff
     contract BLSApkRegistry (eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
     +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
+    }
+```
+
+```diff
+    contract BunnyInbox (eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2) {
+    +++ description: Onchain EigenDA certificate verification inbox. Receives batch data, strips 4-byte prefix, RLP-decodes EigenDACertV3 and calls the EigenDACertVerifier to validate the certificate. Used as the batch inbox for EigenDA-based data availability.
       category:
--        {"name":"Spam","priority":-1}
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
 ```diff
     contract RegistryCoordinator (eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
     +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
 ```diff
     contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060) {
     +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
 ```diff
     contract EjectionManager (eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
     +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
@@ -73,6 +101,14 @@ discovery. Values are for block 1770803234 (main branch discovery), not current.
 ```
 
 ```diff
+    contract MegaPreDepositVaultRefund (eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071) {
+    +++ description: Refund escrow designed to hold the funds extracted from the predeposit vault and send them back to the users listed in the vault.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
     contract EigenDA Multisig (eth:0x338477FfaF63c04AC06048787f910671eC914B34) {
     +++ description: None
       category:
@@ -81,18 +117,34 @@ discovery. Values are for block 1770803234 (main branch discovery), not current.
 ```
 
 ```diff
+    contract MegaUSDmPreDeposit (eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6) {
+    +++ description: Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
     contract SocketRegistry (eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2) {
     +++ description: None
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
 ```diff
     contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad) {
     +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
@@ -107,40 +159,68 @@ discovery. Values are for block 1770803234 (main branch discovery), not current.
 ```diff
     contract EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
     +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
 ```diff
     contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05) {
     +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
 ```diff
     contract IndexRegistry (eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
     +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
 ```diff
     contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B) {
     +++ description: Registry for EigenDA relay keys, maps key to address.
-      category:
--        {"name":"Spam","priority":-1}
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 
 ```diff
     contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15) {
     +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xE4e456c64B9b0de5FE8a90d809180cA71534D623) {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.00001 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
       category:
--        {"name":"Spam","priority":-1}
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
