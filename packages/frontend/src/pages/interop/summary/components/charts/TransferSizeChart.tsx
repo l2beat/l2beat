@@ -39,22 +39,22 @@ const chartMeta = {
     indicatorType: { shape: 'square' },
   },
   percentage100To1K: {
-    label: '$100-$1,000',
+    label: '$100-$1K',
     color: '#7AE7C7',
     indicatorType: { shape: 'square' },
   },
   percentage1KTo10K: {
-    label: '$1,000-$10,000',
+    label: '$1K-$10K',
     color: '#F7CB15',
     indicatorType: { shape: 'square' },
   },
   percentage10KTo100K: {
-    label: '$10,000-$100,000',
+    label: '$10K-$100K',
     color: '#503047',
     indicatorType: { shape: 'square' },
   },
   percentageOver100K: {
-    label: 'Over $100,000',
+    label: 'Over $100K',
     color: '#F55D3E',
     indicatorType: { shape: 'square' },
   },
@@ -120,7 +120,11 @@ export function TransferSizeChart({ data, isLoading }: Props) {
             interval={0}
             tick={(props) => <XAxisTick {...props} data={data} />}
           />
-          <ChartTooltip filterNull={false} content={<CustomTooltip />} />
+          <ChartTooltip
+            filterNull={false}
+            content={<CustomTooltip />}
+            allowEscapeViewBox={{ y: true }}
+          />
         </BarChart>
       </SimpleChartContainer>
       <Logo
