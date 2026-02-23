@@ -61,8 +61,8 @@ export type BurnAndMintProtocolData = {
 
 export type InteropSelectionInput = v.infer<typeof InteropSelectionInput>
 const InteropSelectionInputShape = {
-  from: v.array(v.string()),
-  to: v.array(v.string()),
+  from: v.array(v.string().check((value) => value.length > 0)),
+  to: v.array(v.string().check((value) => value.length > 0)),
 }
 export const InteropSelectionInput = v.object(InteropSelectionInputShape)
 

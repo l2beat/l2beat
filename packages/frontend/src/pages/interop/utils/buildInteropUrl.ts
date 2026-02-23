@@ -1,11 +1,9 @@
-import type { InteropSelection } from './getInitialInteropSelection'
-
-type BuildInteropUrlMode = 'public' | 'internal'
+import type { InteropMode, InteropSelection } from './types'
 
 export function buildInteropUrl(
   path: string,
   selection: InteropSelection,
-  mode: BuildInteropUrlMode,
+  mode: InteropMode,
 ): string {
   const params = new URLSearchParams()
 

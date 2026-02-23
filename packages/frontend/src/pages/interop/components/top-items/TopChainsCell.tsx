@@ -20,7 +20,6 @@ import type { ChainData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import { toInteropApiSelection } from '../../utils/toInteropApiSelection'
 import { getTopItemsColumns, type TopItemRow } from './columns'
 import { InteropTopItems } from './TopItems'
 
@@ -39,8 +38,7 @@ export function TopChainsCell({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const utils = api.useUtils()
-  const { selectedChains, mode } = useInteropSelectedChains()
-  const apiSelection = toInteropApiSelection(selectedChains, mode)
+  const { selectionForApi } = useInteropSelectedChains()
 
   return (
     <>
@@ -60,7 +58,7 @@ export function TopChainsCell({
         }}
         onMouseEnter={() =>
           utils.interop.chains.prefetch({
-            ...apiSelection,
+            ...selectionForApi,
             id: protocol.id,
             type: undefined,
           })
@@ -89,12 +87,11 @@ function TopChainsContent({
   showNetMintedValueColumn?: boolean
 }) {
   const breakpoint = useBreakpoint()
-  const { selectedChains, mode } = useInteropSelectedChains()
-  const apiSelection = toInteropApiSelection(selectedChains, mode)
+  const { selectionForApi } = useInteropSelectedChains()
 
   const { data, isLoading } = api.interop.chains.useQuery(
     {
-      ...apiSelection,
+      ...selectionForApi,
       id: protocol.id,
       type: undefined,
     },

@@ -15,13 +15,12 @@ import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCaro
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
-import type { InteropSelection } from '../utils/getInitialInteropSelection'
 import {
   type InteropMode,
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
+import type { InteropSelection } from '../utils/types'
 import { InteropEmptyState } from './components/InteropEmptyState'
 import { TransferSizeChartCard } from './components/TransferSizeChartCard'
 import { BurnAndMintCard } from './components/table-widgets/BurnAndMintCard'
@@ -110,9 +109,8 @@ function Content({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains, mode, isDirty, reset } = useInteropSelectedChains()
-  const apiSelection = toInteropApiSelection(selectedChains, mode)
-  const { data, isLoading } = api.interop.dashboard.useQuery(apiSelection)
+  const { selectionForApi, mode, isDirty, reset } = useInteropSelectedChains()
+  const { data, isLoading } = api.interop.dashboard.useQuery(selectionForApi)
 
   if (
     data?.entries.length === 0 &&

@@ -1,5 +1,4 @@
-import type { InteropSelection } from './getInitialInteropSelection'
-import type { InteropMode } from './InteropSelectedChainsContext'
+import type { InteropMode, InteropSelection } from './types'
 
 export function toInteropApiSelection(
   selection: InteropSelection,

@@ -1,17 +1,15 @@
-import type { InteropQuery } from '../InteropRouter'
-import { getValidInteropChains } from './getValidInteropChains'
+import type { InteropMode, InteropSelection } from './types'
 
-export interface InteropSelection {
-  from: string[]
-  to: string[]
+export interface InteropSelectionQuery {
+  from?: string[]
+  to?: string[]
+  selectedChains?: string[]
 }
 
-type InteropSelectionMode = 'public' | 'internal'
-
 interface GetInitialInteropSelectionOptions {
-  query: InteropQuery
+  query: InteropSelectionQuery | undefined
   interopChainsIds: string[]
-  mode: InteropSelectionMode
+  mode: InteropMode
 }
 
 export function getInitialInteropSelection({
@@ -27,7 +25,7 @@ export function getInitialInteropSelection({
 }
 
 function getPublicInitialSelection(
-  query: InteropQuery,
+  query: InteropSelectionQuery | undefined,
   interopChainsIds: string[],
 ): InteropSelection {
   const selectedChains = query?.selectedChains
@@ -53,7 +51,7 @@ function getPublicInitialSelection(
 }
 
 function getInternalInitialSelection(
-  query: InteropQuery,
+  query: InteropSelectionQuery | undefined,
   interopChainsIds: string[],
 ): InteropSelection {
   const from =

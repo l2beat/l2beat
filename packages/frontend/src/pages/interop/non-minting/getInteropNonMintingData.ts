@@ -10,12 +10,9 @@ import type { Manifest } from '~/utils/Manifest'
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
-import {
-  getInitialInteropSelection,
-  type InteropSelection,
-} from '../utils/getInitialInteropSelection'
-import type { InteropMode } from '../utils/InteropSelectedChainsContext'
+import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
 import { toInteropApiSelection } from '../utils/toInteropApiSelection'
+import type { InteropMode, InteropSelection } from '../utils/types'
 
 interface GetInteropNonMintingDataOptions {
   mode?: InteropMode

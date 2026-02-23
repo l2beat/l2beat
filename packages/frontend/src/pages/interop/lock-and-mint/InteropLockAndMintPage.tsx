@@ -17,13 +17,12 @@ import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProt
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
-import type { InteropSelection } from '../utils/getInitialInteropSelection'
 import {
   type InteropMode,
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
+import type { InteropSelection } from '../utils/types'
 import { HeaderWithDescription } from './components/HeaderWithDescription'
 
 interface Props extends AppLayoutProps {
@@ -117,10 +116,9 @@ function Content({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains, mode, isDirty, reset } = useInteropSelectedChains()
-  const apiSelection = toInteropApiSelection(selectedChains, mode)
+  const { selectionForApi, mode, isDirty, reset } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    ...apiSelection,
+    ...selectionForApi,
     type: 'lockAndMint',
   })
 
