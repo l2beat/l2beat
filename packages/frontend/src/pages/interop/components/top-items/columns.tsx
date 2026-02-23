@@ -79,21 +79,31 @@ export const getTopItemsColumns = (
         align: 'right',
       },
     }),
-    columnHelper.accessor('avgDuration', {
-      header: 'Last 24h avg.\ntransfer time',
-      cell: (ctx) => {
-        if (ctx.row.original.avgDuration === null) return EM_DASH
-        return (
-          <AvgDurationCell
-            averageDuration={ctx.row.original.avgDuration}
-            disableTooltip
-          />
-        )
+    columnHelper.accessor(
+      (row) =>
+        row.avgDuration?.type === 'unknown' || row.avgDuration === null
+          ? undefined
+          : row.avgDuration.type === 'single'
+            ? row.avgDuration.duration
+            : (row.avgDuration.in.duration ??
+              row.avgDuration.out.duration ??
+              Number.POSITIVE_INFINITY),
+      {
+        header: 'Last 24h avg.\ntransfer time',
+        cell: (ctx) => {
+          if (ctx.row.original.avgDuration === null) return EM_DASH
+          return (
+            <AvgDurationCell
+              averageDuration={ctx.row.original.avgDuration}
+              disableTooltip
+            />
+          )
+        },
+        meta: {
+          align: 'right',
+        },
       },
-      meta: {
-        align: 'right',
-      },
-    }),
+    ),
     columnHelper.accessor('avgValue', {
       header: 'Last 24h avg.\ntransfer value',
       cell: (ctx) => {
