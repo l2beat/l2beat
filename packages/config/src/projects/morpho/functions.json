@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-12-03T16:26:10.846Z",
+  "lastModified": "2026-02-20T16:21:24.905Z",
   "contracts": {
     "eth:0x4364fd2371b6318159366abFA51f190df5C24852": {
       "functions": [
@@ -63,6 +63,94 @@
             }
           ],
           "timestamp": "2025-12-03T16:25:21.150Z"
+        }
+      ]
+    },
+    "eth:0x9994e35db50125e0df82e4c2dde62496ce330999": {
+      "functions": [
+        {
+          "functionName": "setPublicCapability",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-02-20T16:21:24.900Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-02-20T16:21:24.900Z"
+          }
+        },
+        {
+          "functionName": "setRoleCapability",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-02-20T16:21:24.902Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-02-20T16:21:24.902Z"
+          }
+        },
+        {
+          "functionName": "setUserRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-02-20T16:21:24.902Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-02-20T16:21:24.902Z"
+          }
+        },
+        {
+          "functionName": "transfer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-02-20T16:21:24.904Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-02-20T16:21:24.904Z"
+          }
+        },
+        {
+          "functionName": "transferFrom",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-02-20T16:21:24.904Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-02-20T16:21:24.904Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-02-20T16:21:24.905Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-02-20T16:21:24.905Z"
+          }
         }
       ]
     }

@@ -8,7 +8,7 @@ import type {
   FundsTokenBalance,
 } from '../../../api/types'
 import { Folder } from '../panel-values/Folder'
-import { formatUsdValue } from './formatUtils'
+import { formatUsdValue } from '../../../defidisco/scoringShared'
 import { PermissionsDisplay } from './PermissionsDisplay'
 
 interface Props {

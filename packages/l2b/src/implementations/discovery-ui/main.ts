@@ -48,6 +48,8 @@ import {
 import { filterDefiProjects } from './defidisco/defiProjectFilter'
 import { detectPermissionsWithAI, combineSourceFiles } from './defidisco/aiPermissionDetection'
 import { calculateV2Score } from './defidisco/v2Scoring'
+import { resolveEnhancedTraversal } from './defidisco/enhancedTraversal'
+import { computeFunctionAnalysis } from './defidisco/functionAnalysis'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
@@ -704,6 +706,47 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error loading call graph data:', error)
       res.status(500).json({ error: 'Failed to load call graph data' })
+    }
+  })
+
+  // Enhanced traversal endpoint
+  app.get('/api/projects/:project/enhanced-traversal', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const response = resolveEnhancedTraversal(
+        paths,
+        configReader,
+        templateService,
+        project,
+      )
+      res.json(response)
+    } catch (error) {
+      console.error('Error resolving enhanced traversal:', error)
+      res.status(500).json({ error: 'Failed to resolve enhanced traversal' })
+    }
+  })
+
+  // Function analysis endpoint (impact + dependencies)
+  app.get('/api/projects/:project/function-analysis', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const response = computeFunctionAnalysis(paths, project)
+      res.json(response)
+    } catch (error) {
+      console.error('Error computing function analysis:', error)
+      res.status(500).json({ error: 'Failed to compute function analysis' })
     }
   })
 

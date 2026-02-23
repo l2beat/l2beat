@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-02-13T08:44:03.550Z",
+  "lastModified": "2026-02-23T13:08:40.500Z",
   "tags": [
     {
       "contractAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
@@ -233,11 +233,6 @@
       "isExternal": false,
       "isToken": true,
       "timestamp": "2026-02-13T06:59:51.157Z"
-    },
-    {
-      "contractAddress": "eth:0x4c517d4e2c851ca76d7ec94b805269df0f2201de",
-      "isExternal": true,
-      "timestamp": "2026-02-13T08:43:51.472Z"
     }
   ]
 }

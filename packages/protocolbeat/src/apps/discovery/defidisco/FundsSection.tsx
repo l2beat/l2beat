@@ -7,7 +7,7 @@ import type {
   FundsTokenBalance,
 } from '../../../api/types'
 import { usePanelStore } from '../store/panel-store'
-import { formatUsdValue } from './formatUtils'
+import { formatUsdValue } from '../../../defidisco/scoringShared'
 import { useContractTags } from './hooks/useContractTags'
 import { ProxyTypeTag } from './ProxyTypeTag'
 import { buildProxyTypeMap } from './proxyTypeUtils'

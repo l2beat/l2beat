@@ -1,18 +1,32 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getFundsData, getProject } from '../../../api/api'
+import {
+  getFundsData,
+  getFunctionAnalysis,
+  getProject,
+  getEnhancedTraversal,
+} from '../../../api/api'
 import type {
   ApiAbiEntry,
+  ApiAddressType,
+  CallPathStep,
   ContractFundsData,
+  FunctionAnalysis,
   FunctionEntry,
+  FunctionTraversalResult,
   OwnerDefinition,
+  TraversalTerminal,
 } from '../../../api/types'
 import * as solidity from '../../../components/editor/languages/solidity'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { usePanelStore } from '../store/panel-store'
-import { formatUsdValue } from './formatUtils'
+import {
+  formatUsdValue,
+  getAdminTypeColor,
+  isZeroAddress,
+} from '../../../defidisco/scoringShared'
 import { useContractTags } from './hooks/useContractTags'
 import { IconCheckFalse } from './IconCheckFalse'
 import { IconCheckTrue } from './IconCheckTrue'
@@ -23,6 +37,207 @@ import { IconLockOpen } from './IconLockOpen'
 import { IconOpen } from './IconOpen'
 import { IconVoltage } from './IconVoltage'
 import { resolvePathExpression, UIContractDataAccess } from './ownerResolution'
+
+// ============================================================================
+// Enhanced Traversal Helpers
+// ============================================================================
+
+/** Normalize type for display — 'Untemplatized' → 'Contract' */
+function displayType(type: ApiAddressType): string {
+  if (type === 'Untemplatized') return 'Contract'
+  return type
+}
+
+/** A step in a collapsed chain — groups all functions at the same position */
+interface CollapsedChainStep {
+  contractAddress: string
+  contractName: string
+  contractType: ApiAddressType
+  edgeType: 'permission' | 'callgraph'
+  functionNames: string[]
+}
+
+/** Group traversal terminals by address, then collapse chains sharing the same contract sequence */
+interface GroupedOwner {
+  address: string
+  name: string
+  type: ApiAddressType
+  hasPublicFunction: boolean
+  /** True if resolution stopped due to incomplete data */
+  isUnresolved: boolean
+  /** Collapsed chains — chains with the same contract sequence are merged */
+  collapsedChains: CollapsedChainStep[][]
+}
+
+/**
+ * Collapse multiple chains that share the same sequence of contract addresses
+ * into a single chain with all function names grouped per step.
+ * e.g. 12 paths (2 functions × 6 functions) → 1 collapsed chain with 2 steps.
+ */
+function collapseChains(
+  chains: TraversalTerminal['chain'][],
+): CollapsedChainStep[][] {
+  // Group by contract address sequence
+  const groups = new Map<string, TraversalTerminal['chain'][]>()
+  for (const chain of chains) {
+    const key = chain.map((s) => s.contractAddress.toLowerCase()).join('\u2192')
+    const group = groups.get(key)
+    if (group) {
+      group.push(chain)
+    } else {
+      groups.set(key, [chain])
+    }
+  }
+
+  const result: CollapsedChainStep[][] = []
+  for (const group of groups.values()) {
+    const template = group[0]
+    const collapsed: CollapsedChainStep[] = template.map((step, i) => {
+      const fnSet = new Set<string>()
+      for (const chain of group) {
+        if (chain[i]?.functionName) fnSet.add(chain[i].functionName!)
+      }
+      return {
+        contractAddress: step.contractAddress,
+        contractName: step.contractName,
+        contractType: step.contractType,
+        edgeType: step.edgeType,
+        functionNames: Array.from(fnSet).sort(),
+      }
+    })
+    result.push(collapsed)
+  }
+  return result
+}
+
+function groupOwnersByAddress(owners: TraversalTerminal[]): GroupedOwner[] {
+  const grouped = new Map<
+    string,
+    {
+      address: string
+      name: string
+      type: ApiAddressType
+      hasPublicFunction: boolean
+      isUnresolved: boolean
+      chains: TraversalTerminal['chain'][]
+    }
+  >()
+  for (const owner of owners) {
+    const key = owner.address.toLowerCase()
+    const existing = grouped.get(key)
+    if (existing) {
+      existing.chains.push(owner.chain)
+      if (owner.hasPublicFunction) existing.hasPublicFunction = true
+      if (owner.isUnresolved) existing.isUnresolved = true
+    } else {
+      grouped.set(key, {
+        address: owner.address,
+        name: owner.name,
+        type: owner.type,
+        hasPublicFunction: owner.hasPublicFunction,
+        isUnresolved: owner.isUnresolved ?? false,
+        chains: [owner.chain],
+      })
+    }
+  }
+  return Array.from(grouped.values()).map((g) => ({
+    address: g.address,
+    name: g.name,
+    type: g.type,
+    hasPublicFunction: g.hasPublicFunction,
+    isUnresolved: g.isUnresolved,
+    collapsedChains: collapseChains(g.chains),
+  }))
+}
+
+function formatFunctionNames(names: string[]): string {
+  if (names.length <= 3) {
+    return '.' + names.map((fn) => `${fn}()`).join(', .')
+  }
+  return (
+    '.' +
+    names
+      .slice(0, 2)
+      .map((fn) => `${fn}()`)
+      .join(', .') +
+    ` +${names.length - 2} more`
+  )
+}
+
+function getAdminIconColor(owners: FunctionTraversalResult | null): string {
+  if (!owners || owners.terminals.length === 0) return '#9ca3af' // gray - unresolved
+
+  const hasEOA = owners.terminals.some(
+    (o) => o.type === 'EOA' || o.type === 'EOAPermissioned',
+  )
+  const hasMultisig = owners.terminals.some((o) => o.type === 'Multisig')
+
+  if (hasEOA) return '#f87171' // red
+  if (hasMultisig) return '#fbbf24' // amber
+  return '#10b981' // green - only contracts/timelocks
+}
+
+function getAdminIconTitle(owners: FunctionTraversalResult | null): string {
+  if (!owners || owners.terminals.length === 0)
+    return 'Admin (not yet resolved)'
+  const types = [...new Set(owners.terminals.map((o) => o.type))]
+  return `Terminals: ${types.join(', ')} (${owners.terminals.length} total)`
+}
+
+/** Renders a call path as an indented tree when expanded */
+function CallPathDisplay({ path }: { path: CallPathStep[] }) {
+  if (path.length === 0) return null
+  return (
+    <div className="mt-1 border-coffee-700 border-t pt-1">
+      <div className="text-coffee-500 text-[10px] mb-1">Call path:</div>
+      {path.map((step, idx) => (
+        <div
+          key={idx}
+          className="flex items-center gap-1 text-[10px]"
+          style={{ paddingLeft: `${idx * 12}px` }}
+        >
+          <span className="text-coffee-600">
+            {idx === path.length - 1 ? '\u2514' : '\u251C'}
+          </span>
+          <button
+            onClick={() =>
+              usePanelStore.getState().select(step.contractAddress)
+            }
+            className="text-aux-cyan hover:underline"
+          >
+            {step.contractName}
+          </button>
+          <span className="text-coffee-500">.{step.functionName}()</span>
+          {step.isViewCall && <span className="text-coffee-600">[view]</span>}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function CollapsibleErrors({ errors }: { errors: string[] }) {
+  const [isOpen, setIsOpen] = React.useState(false)
+  return (
+    <div className="mt-1">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-1 text-red-400/70 text-xs hover:text-red-400"
+      >
+        <span>{isOpen ? '▼' : '▶'}</span>
+        {errors.length} resolution error{errors.length !== 1 ? 's' : ''}
+      </button>
+      {isOpen && (
+        <div className="mt-0.5 ml-3 space-y-0.5">
+          {errors.map((err, i) => (
+            <div key={i} className="text-red-400/70 text-xs">
+              {err}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 // Extended type for local display with contractAddress
 interface FunctionEntryWithContract extends FunctionEntry {
@@ -128,6 +343,40 @@ export function FunctionFolder({
 
   const contractFunds: ContractFundsData | null =
     fundsData?.contracts?.[contractAddress] ?? null
+
+  // Fetch enhanced traversal data (React Query caches by key — shared across all FunctionFolder instances)
+  const { data: traversalData } = useQuery({
+    queryKey: ['enhanced-traversal', project],
+    queryFn: () => (project ? getEnhancedTraversal(project) : null),
+    enabled: !!project,
+  })
+
+  const functionTraversal: FunctionTraversalResult | null =
+    React.useMemo(() => {
+      if (!traversalData?.contracts) return null
+      // Case-insensitive lookup — functions.json keys may differ in case from project data
+      const normalizedAddr = contractAddress.toLowerCase()
+      const contractEntry = Object.entries(traversalData.contracts).find(
+        ([key]) => key.toLowerCase() === normalizedAddr,
+      )
+      return contractEntry?.[1]?.[functionName] ?? null
+    }, [traversalData, contractAddress, functionName])
+
+  // Fetch function analysis data (impact + dependencies from call graph)
+  const { data: analysisData } = useQuery({
+    queryKey: ['function-analysis', project],
+    queryFn: () => (project ? getFunctionAnalysis(project) : null),
+    enabled: !!project,
+  })
+
+  const functionAnalysis: FunctionAnalysis | null = React.useMemo(() => {
+    if (!analysisData?.contracts) return null
+    const normalizedAddr = contractAddress.toLowerCase()
+    const contractEntry = Object.entries(analysisData.contracts).find(
+      ([key]) => key.toLowerCase() === normalizedAddr,
+    )
+    return contractEntry?.[1]?.[functionName] ?? null
+  }, [analysisData, contractAddress, functionName])
 
   // Owner resolution using unified path expressions with shared utility
   const resolvedOwners = React.useMemo(() => {
@@ -405,6 +654,17 @@ export function FunctionFolder({
   // State for managing dependencies
   const [isAddingDependency, setIsAddingDependency] = useState(false)
 
+  // State for expanded call paths (impact + dependency cards)
+  const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set())
+  const togglePath = (key: string) => {
+    setExpandedPaths((prev) => {
+      const next = new Set(prev)
+      if (next.has(key)) next.delete(key)
+      else next.add(key)
+      return next
+    })
+  }
+
   // State for audit trail
   const [isCommentsOpen, setIsCommentsOpen] = useState(false)
   const [newCommentText, setNewCommentText] = useState('')
@@ -668,44 +928,66 @@ export function FunctionFolder({
           {/* Admin Key Icon */}
           <span
             className="inline-block"
-            style={{ color: '#9ca3af' }}
-            title="Admin (not yet resolved)"
+            style={{ color: getAdminIconColor(functionTraversal) }}
+            title={getAdminIconTitle(functionTraversal)}
           >
             <IconKey />
           </span>
 
-          {/* Score Icon */}
-          <button
-            onClick={() =>
-              onScoreToggle(contractAddress, functionName, scoreStatus)
-            }
-            className="inline-block cursor-pointer transition-colors"
-            style={{
-              color: getScoreColor(scoreStatus),
-            }}
-            title={`Current score: ${scoreStatus}. Click to toggle: unscored ↔ critical`}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = getScoreColor(scoreStatus, true)
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = getScoreColor(scoreStatus)
-            }}
-          >
-            <IconVoltage />
-          </button>
+          {/* Score / Impact Icon */}
+          {(() => {
+            const hasImpactData =
+              (functionAnalysis?.impact?.totalFundsAtRisk ?? 0) > 0 ||
+              (functionAnalysis?.impact?.totalTokenValueAtRisk ?? 0) > 0
+            const impactColor =
+              scoreStatus !== 'unscored'
+                ? getScoreColor(scoreStatus)
+                : hasImpactData
+                  ? '#fbbf24' // amber-400 — has funds at risk but unscored
+                  : '#9ca3af' // gray-400
+            const impactHoverColor =
+              scoreStatus !== 'unscored'
+                ? getScoreColor(scoreStatus, true)
+                : hasImpactData
+                  ? '#fcd34d' // amber-300
+                  : '#d1d5db' // gray-300
+            const impactTitle = hasImpactData
+              ? `Score: ${scoreStatus}. Funds at risk: ${formatUsdValue((functionAnalysis?.impact?.totalFundsAtRisk ?? 0) + (functionAnalysis?.impact?.totalTokenValueAtRisk ?? 0))}. Click to toggle: unscored ↔ critical`
+              : `Current score: ${scoreStatus}. Click to toggle: unscored ↔ critical`
+            return (
+              <button
+                onClick={() =>
+                  onScoreToggle(contractAddress, functionName, scoreStatus)
+                }
+                className="inline-block cursor-pointer transition-colors"
+                style={{ color: impactColor }}
+                title={impactTitle}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = impactHoverColor
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = impactColor
+                }}
+              >
+                <IconVoltage />
+              </button>
+            )
+          })()}
 
           {/* Dependency Indicator Icon */}
           <span
             className="inline-block"
             style={{
               color:
-                (currentFunction?.dependencies?.length ?? 0) > 0
+                (currentFunction?.dependencies?.length ?? 0) > 0 ||
+                (functionAnalysis?.dependencies?.entries?.length ?? 0) > 0
                   ? '#f97316' // orange-500 (has dependencies)
                   : '#9ca3af', // gray-400 (no dependencies)
             }}
             title={
-              (currentFunction?.dependencies?.length ?? 0) > 0
-                ? `Has ${currentFunction?.dependencies?.length} external dependency/dependencies`
+              (currentFunction?.dependencies?.length ?? 0) > 0 ||
+              (functionAnalysis?.dependencies?.entries?.length ?? 0) > 0
+                ? `Has ${(currentFunction?.dependencies?.length ?? 0) + (functionAnalysis?.dependencies?.entries?.filter((d) => d.isAutoDetected).length ?? 0)} external dependency/dependencies`
                 : 'No external dependencies'
             }
           >
@@ -1109,28 +1391,222 @@ export function FunctionFolder({
             )}
           </div>
 
-          {/* 4. Admin Section (stub) */}
+          {/* 4. Admin Section — Enhanced Traversal */}
           <div className="border-coffee-700 border-b p-3">
             <div className="mb-2 flex items-center justify-between">
               <label className="flex items-center gap-1 text-coffee-300 text-xs">
-                <span style={{ color: '#9ca3af' }}>
+                <span
+                  style={{
+                    color: getAdminIconColor(functionTraversal),
+                  }}
+                >
                   <IconKey />
                 </span>
                 Admin
               </label>
-              <button
-                disabled
-                className="cursor-not-allowed rounded bg-coffee-700 px-2 py-1 text-coffee-100 text-xs opacity-50"
-                title="Coming soon"
-              >
-                Read from callgraph
-              </button>
+              {traversalData && (
+                <span
+                  className="rounded px-1.5 py-0.5 text-xs"
+                  style={
+                    traversalData.callGraphStale
+                      ? {
+                          color: '#facc15',
+                          backgroundColor: 'rgba(161, 98, 7, 0.3)',
+                        }
+                      : {
+                          color: '#78716c',
+                          backgroundColor: '#292524',
+                        }
+                  }
+                  title={
+                    traversalData.callGraphStale
+                      ? 'Functions were modified after the call graph was generated. Consider re-generating the call graph.'
+                      : 'Call graph is up to date'
+                  }
+                >
+                  {traversalData.callGraphStale
+                    ? 'Stale call graph'
+                    : 'Call graph synced'}
+                </span>
+              )}
             </div>
             <div className="mb-2 text-coffee-500 text-xs">
-              Ultimate external owner of the function that calls into this
-              permissioned function
+              Terminal entities that can trigger this permissioned function
             </div>
-            <div className="text-coffee-500 text-xs">Not yet resolved</div>
+
+            {!traversalData ? (
+              <div className="text-coffee-500 text-xs">Loading...</div>
+            ) : functionTraversal && functionTraversal.terminals.length > 0 ? (
+              <div className="space-y-2">
+                {groupOwnersByAddress(functionTraversal.terminals).map(
+                  (owner, idx) => {
+                    const revoked = isZeroAddress(owner.address)
+                    const adminKey = `admin-${idx}`
+                    const isAdminExpanded = expandedPaths.has(adminKey)
+                    const hasChains = owner.collapsedChains.some(
+                      (c) => c.length > 0,
+                    )
+                    return (
+                      <div
+                        key={idx}
+                        className={`rounded bg-coffee-800 p-2 ${hasChains ? 'cursor-pointer' : ''}`}
+                        onClick={
+                          hasChains ? () => togglePath(adminKey) : undefined
+                        }
+                      >
+                        {/* Owner header: chevron + type badge + name */}
+                        <div className="flex items-center gap-2">
+                          {hasChains && (
+                            <span className="text-coffee-500 text-[10px]">
+                              {isAdminExpanded ? (
+                                <IconChevronDown />
+                              ) : (
+                                <IconChevronRight />
+                              )}
+                            </span>
+                          )}
+                          {revoked ? (
+                            <span
+                              className="rounded border px-1 text-xs font-semibold"
+                              style={{
+                                color: '#10b981',
+                                borderColor: '#10b98140',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                              }}
+                            >
+                              Revoked
+                            </span>
+                          ) : owner.isUnresolved ? (
+                            <span
+                              className="rounded border px-1 text-xs font-semibold"
+                              style={{
+                                color: '#9ca3af',
+                                borderColor: '#9ca3af40',
+                                backgroundColor: 'rgba(156, 163, 175, 0.1)',
+                              }}
+                            >
+                              Unresolved
+                            </span>
+                          ) : (
+                            <span
+                              className="rounded border px-1 text-xs font-semibold"
+                              style={{
+                                color: getAdminTypeColor(owner.type),
+                                borderColor:
+                                  getAdminTypeColor(owner.type) + '40',
+                              }}
+                            >
+                              {displayType(owner.type)}
+                            </span>
+                          )}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              if (!revoked)
+                                usePanelStore.getState().select(owner.address)
+                            }}
+                            className={`font-mono text-xs ${revoked ? 'cursor-default text-coffee-400' : 'hover:underline'}`}
+                            style={revoked ? undefined : { color: '#67e8f9' }}
+                          >
+                            {revoked ? '0x0000...0000' : owner.name}
+                          </button>
+                          {owner.hasPublicFunction && (
+                            <span className="rounded bg-orange-900/30 px-1 text-orange-400 text-xs">
+                              public fn in path
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Chain tree: each collapsed chain = a branch (shown when expanded) */}
+                        {isAdminExpanded &&
+                          owner.collapsedChains.map((chain, chainIdx) => {
+                            if (chain.length === 0) return null
+                            // Reverse to owner→target order
+                            const reversed = [...chain].reverse()
+                            // Step 0 = owner (already in header), grab its functions
+                            const ownerFns = reversed[0]?.functionNames ?? []
+                            const viaSteps = reversed.slice(1)
+                            const isLast =
+                              chainIdx === owner.collapsedChains.length - 1
+
+                            return (
+                              <div
+                                key={chainIdx}
+                                className="mt-1 border-coffee-700 border-t pt-1 text-xs"
+                              >
+                                {/* Owner's functions (root of this branch) */}
+                                <div className="flex items-center gap-1">
+                                  <span className="text-coffee-600">
+                                    {isLast ? '\u2514' : '\u251C'}
+                                  </span>
+                                  {ownerFns.length > 0 ? (
+                                    <span className="text-coffee-400">
+                                      {formatFunctionNames(ownerFns)}
+                                    </span>
+                                  ) : (
+                                    <span className="text-coffee-600 italic">
+                                      (permission)
+                                    </span>
+                                  )}
+                                </div>
+                                {/* Via steps — indented under the branch */}
+                                {viaSteps.map((step, stepIdx) => (
+                                  <div
+                                    key={stepIdx}
+                                    className="flex items-center gap-1"
+                                    style={{
+                                      paddingLeft: `${(stepIdx + 1) * 16}px`,
+                                    }}
+                                  >
+                                    <span className="text-coffee-600">
+                                      {stepIdx === viaSteps.length - 1
+                                        ? '\u2514'
+                                        : '\u251C'}
+                                    </span>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        usePanelStore
+                                          .getState()
+                                          .select(step.contractAddress)
+                                      }}
+                                      className="hover:underline shrink-0"
+                                      style={{ color: '#67e8f9' }}
+                                    >
+                                      {step.contractName}
+                                    </button>
+                                    {step.functionNames.length > 0 && (
+                                      <span className="text-coffee-500">
+                                        {formatFunctionNames(
+                                          step.functionNames,
+                                        )}
+                                      </span>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            )
+                          })}
+                      </div>
+                    )
+                  },
+                )}
+
+                {/* Errors — collapsible */}
+                {functionTraversal.errors.length > 0 && (
+                  <CollapsibleErrors errors={functionTraversal.errors} />
+                )}
+                {functionTraversal.depthLimitReached && (
+                  <div className="mt-1 text-yellow-400 text-xs">
+                    Depth limit reached — chain may be incomplete
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-coffee-500 text-xs">
+                No terminals found (no owner definitions or empty resolution)
+              </div>
+            )}
           </div>
 
           {/* 5. Impact Section */}
@@ -1144,9 +1620,13 @@ export function FunctionFolder({
             <div className="mb-2 text-coffee-500 text-xs">
               Funds that are at risk by malicious calls into this function
             </div>
+
+            {/* Direct contract funds */}
             {contractFunds ? (
               <div className="space-y-2">
-                {/* Token Balances */}
+                <div className="mb-1 text-coffee-400 text-xs font-semibold">
+                  Direct Contract Funds
+                </div>
                 {contractFunds.balances &&
                   contractFunds.balances.tokens.filter((t) => t.usdValue > 0)
                     .length > 0 && (
@@ -1175,7 +1655,6 @@ export function FunctionFolder({
                     </div>
                   )}
 
-                {/* DeFi Positions */}
                 {contractFunds.positions &&
                   contractFunds.positions.protocols.length > 0 && (
                     <div>
@@ -1202,7 +1681,6 @@ export function FunctionFolder({
                     </div>
                   )}
 
-                {/* Token Info */}
                 {contractFunds.tokenInfo && (
                   <div>
                     <div className="mb-1 text-coffee-400 text-xs">
@@ -1219,7 +1697,6 @@ export function FunctionFolder({
                   </div>
                 )}
 
-                {/* Show message if funds data exists but no balances/positions/token */}
                 {!contractFunds.balances?.tokens.some((t) => t.usdValue > 0) &&
                   !contractFunds.positions?.protocols.length &&
                   !contractFunds.tokenInfo && (
@@ -1233,6 +1710,117 @@ export function FunctionFolder({
                 No funds data available
               </div>
             )}
+
+            {/* Reachable contracts with funds (from call graph) */}
+            {functionAnalysis?.impact &&
+              functionAnalysis.impact.reachableContracts.length > 0 && (
+                <div className="mt-3 space-y-2">
+                  <div className="text-coffee-400 text-xs font-semibold">
+                    Reachable Contracts with Funds
+                  </div>
+                  <div className="space-y-1">
+                    {functionAnalysis.impact.reachableContracts.map(
+                      (entry, idx) => {
+                        const pathKey = `impact-${idx}`
+                        const isExpanded = expandedPaths.has(pathKey)
+                        const hasPath = entry.callPath.length > 0
+                        return (
+                          <div
+                            key={idx}
+                            className={`rounded bg-coffee-800 p-2 ${hasPath ? 'cursor-pointer' : ''}`}
+                            onClick={
+                              hasPath ? () => togglePath(pathKey) : undefined
+                            }
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                {hasPath && (
+                                  <span className="text-coffee-500 text-[10px]">
+                                    {isExpanded ? (
+                                      <IconChevronDown />
+                                    ) : (
+                                      <IconChevronRight />
+                                    )}
+                                  </span>
+                                )}
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    usePanelStore
+                                      .getState()
+                                      .select(entry.contractAddress)
+                                  }}
+                                  className="font-mono text-aux-cyan text-xs hover:text-aux-cyan-light"
+                                >
+                                  {entry.contractName}
+                                </button>
+                                {entry.viewOnlyPath && (
+                                  <span className="rounded bg-coffee-600 px-1 py-0.5 text-coffee-300 text-[10px]">
+                                    view only
+                                  </span>
+                                )}
+                                {entry.permissionedFunctions.length > 0 && (
+                                  <span className="rounded bg-orange-900 px-1 py-0.5 text-orange-300 text-[10px]">
+                                    permissioned
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-2">
+                                {entry.fundsUsd > 0 && (
+                                  <span className="text-green-400 text-xs">
+                                    {formatUsdValue(entry.fundsUsd)}
+                                  </span>
+                                )}
+                                {entry.tokenValueUsd > 0 && (
+                                  <span className="text-aux-yellow text-xs">
+                                    {formatUsdValue(entry.tokenValueUsd)}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            {entry.calledFunctions.length > 0 && (
+                              <div className="mt-1 text-coffee-500 text-[10px]">
+                                calls: {entry.calledFunctions.join(', ')}
+                              </div>
+                            )}
+                            {isExpanded && (
+                              <CallPathDisplay path={entry.callPath} />
+                            )}
+                          </div>
+                        )
+                      },
+                    )}
+                  </div>
+                  {functionAnalysis.impact.unresolvedCallsCount > 0 && (
+                    <div className="text-yellow-400 text-xs">
+                      {functionAnalysis.impact.unresolvedCallsCount} unresolved
+                      external call
+                      {functionAnalysis.impact.unresolvedCallsCount > 1
+                        ? 's'
+                        : ''}
+                    </div>
+                  )}
+                  <div className="flex items-center justify-between border-coffee-600 border-t pt-1 text-xs">
+                    <span className="text-coffee-400">Total at risk</span>
+                    <div className="flex items-center gap-2">
+                      {functionAnalysis.impact.totalFundsAtRisk > 0 && (
+                        <span className="text-green-400">
+                          {formatUsdValue(
+                            functionAnalysis.impact.totalFundsAtRisk,
+                          )}
+                        </span>
+                      )}
+                      {functionAnalysis.impact.totalTokenValueAtRisk > 0 && (
+                        <span className="text-aux-yellow">
+                          {formatUsdValue(
+                            functionAnalysis.impact.totalTokenValueAtRisk,
+                          )}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
           </div>
 
           {/* 6. External Dependencies Section */}
@@ -1242,7 +1830,8 @@ export function FunctionFolder({
                 <span
                   style={{
                     color:
-                      (currentFunction?.dependencies?.length ?? 0) > 0
+                      (currentFunction?.dependencies?.length ?? 0) > 0 ||
+                      (functionAnalysis?.dependencies?.entries?.length ?? 0) > 0
                         ? '#f97316'
                         : '#9ca3af',
                   }}
@@ -1263,13 +1852,107 @@ export function FunctionFolder({
               the analysed protocol are made
             </div>
 
-            {/* Display current dependencies */}
+            {/* Auto-detected dependencies from call graph */}
+            {functionAnalysis?.dependencies?.entries &&
+              functionAnalysis.dependencies.entries.filter(
+                (d) => d.isAutoDetected,
+              ).length > 0 && (
+                <div className="mb-3">
+                  <div className="mb-1 text-coffee-400 text-xs">
+                    Auto-detected (
+                    {
+                      functionAnalysis.dependencies.entries.filter(
+                        (d) => d.isAutoDetected,
+                      ).length
+                    }
+                    ):
+                  </div>
+                  <div className="space-y-2">
+                    {functionAnalysis.dependencies.entries
+                      .filter((d) => d.isAutoDetected)
+                      .map((dep, idx) => {
+                        const pathKey = `dep-auto-${idx}`
+                        const isExpanded = expandedPaths.has(pathKey)
+                        const hasPath = dep.callPath.length > 0
+                        return (
+                          <div
+                            key={idx}
+                            className={`rounded bg-coffee-800 p-2 ${hasPath ? 'cursor-pointer' : ''}`}
+                            onClick={
+                              hasPath ? () => togglePath(pathKey) : undefined
+                            }
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                {hasPath && (
+                                  <span className="text-coffee-500 text-[10px]">
+                                    {isExpanded ? (
+                                      <IconChevronDown />
+                                    ) : (
+                                      <IconChevronRight />
+                                    )}
+                                  </span>
+                                )}
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    usePanelStore
+                                      .getState()
+                                      .select(dep.contractAddress)
+                                  }}
+                                  className="font-mono text-aux-cyan text-xs hover:text-aux-cyan-light"
+                                  title={`Select ${dep.contractAddress}`}
+                                >
+                                  {dep.contractName}
+                                </button>
+                                <span className="rounded bg-coffee-600 px-1 py-0.5 text-coffee-300 text-[10px]">
+                                  auto
+                                </span>
+                                {dep.viewOnlyPath && (
+                                  <span className="rounded bg-coffee-600 px-1 py-0.5 text-coffee-300 text-[10px]">
+                                    view only
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            {dep.calledFunctions.length > 0 && (
+                              <div className="mt-1 text-coffee-500 text-[10px]">
+                                calls: {dep.calledFunctions.join(', ')}
+                              </div>
+                            )}
+                            {dep.centralization && (
+                              <div className="mt-1 flex items-center gap-1 text-xs">
+                                <span className="text-coffee-400">
+                                  Centralization:
+                                </span>
+                                <span
+                                  style={{
+                                    color: getCentralizationColor(
+                                      dep.centralization,
+                                    ),
+                                  }}
+                                  className="font-semibold"
+                                >
+                                  {dep.centralization}
+                                </span>
+                              </div>
+                            )}
+                            {isExpanded && (
+                              <CallPathDisplay path={dep.callPath} />
+                            )}
+                          </div>
+                        )
+                      })}
+                  </div>
+                </div>
+              )}
+
+            {/* Manual dependencies */}
             {currentFunction?.dependencies &&
               currentFunction.dependencies.length > 0 && (
                 <div className="mb-3">
                   <div className="mb-1 text-coffee-400 text-xs">
-                    Current Dependencies ({currentFunction.dependencies.length}
-                    ):
+                    Manual ({currentFunction.dependencies.length}):
                   </div>
 
                   <div className="space-y-2">
@@ -1316,7 +1999,6 @@ export function FunctionFolder({
                             </button>
                           </div>
 
-                          {/* Show centralization attributes */}
                           {depInfo && depInfo.centralization && (
                             <div className="mt-1 flex items-center gap-3 text-xs">
                               {depInfo.centralization && (
@@ -1342,6 +2024,18 @@ export function FunctionFolder({
                       )
                     })}
                   </div>
+                </div>
+              )}
+
+            {/* No dependencies message */}
+            {(!currentFunction?.dependencies ||
+              currentFunction.dependencies.length === 0) &&
+              (!functionAnalysis?.dependencies?.entries ||
+                functionAnalysis.dependencies.entries.filter(
+                  (d) => d.isAutoDetected,
+                ).length === 0) && (
+                <div className="mb-3 text-coffee-500 text-xs">
+                  No dependencies detected
                 </div>
               )}
 

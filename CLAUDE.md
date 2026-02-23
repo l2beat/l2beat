@@ -325,6 +325,29 @@ PORT=3001
 }
 ```
 
+### Enhanced Traversal & Function Analysis ✅
+
+**Owner chain traversal and per-function impact/dependency analysis using call graph + permission data**
+
+| Endpoint | Backend | Purpose |
+|---|---|---|
+| `GET /api/projects/:project/enhanced-traversal` | `enhancedTraversal.ts` | Backward BFS → governance chain terminals (owners) for each permissioned function |
+| `GET /api/projects/:project/function-analysis` | `functionAnalysis.ts` | Forward BFS → reachable contracts with funds (impact) + external dependencies |
+
+**Enhanced Traversal** (`enhancedTraversal.ts`):
+- Unified graph from call graph edges (caller→callee) + permission edges (owner→function)
+- Backward BFS from each permissioned function, collapses chains into `CollapsedChainStep[]`
+- Response: `ApiEnhancedTraversalResponse` — `contracts[address][functionName] → FunctionTraversalResult`
+
+**Function Analysis** (`functionAnalysis.ts`):
+- **Impact** (permissioned only): Forward BFS via call graph, filters contracts with funds. Includes `callPath: CallPathStep[]` (shortest path)
+- **Dependencies** (all functions): Auto-detected external contracts (BFS + `isExternal` tag) merged with manual deps from `functions.json`. `isAutoDetected` flag distinguishes them
+- Response: `ApiFunctionAnalysisResponse` — `contracts[address][functionName] → FunctionAnalysis`
+
+**Key types** (in both backend and frontend `types.ts`):
+- `FunctionTraversalResult`, `TraversalTerminal`, `OwnershipChainStep` — enhanced traversal
+- `FunctionImpactEntry`, `FunctionDependencyEntry`, `FunctionAnalysis`, `CallPathStep` — function analysis
+
 ### V2 Scoring UI ✅
 
 **Scoring Dashboard**: V2 scoring breakdown in DeFiScan panel (`/defidisco/V2ScoringSection.tsx`)
@@ -437,7 +460,9 @@ packages/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts
 │   ├── contractTags.ts
-│   └── generatePermissionsReport.ts
+│   ├── generatePermissionsReport.ts
+│   ├── enhancedTraversal.ts          # Backward BFS governance chains
+│   └── functionAnalysis.ts           # Forward BFS impact & dependencies
 └── config/src/projects/compound-v3/
     └── permission-overrides.json
 ```

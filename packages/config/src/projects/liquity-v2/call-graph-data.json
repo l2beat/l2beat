@@ -1,12 +1,12 @@
 {
   "version": "1.0",
-  "lastModified": "2026-01-15T16:21:58.303Z",
+  "lastModified": "2026-02-23T13:25:44.988Z",
   "contracts": {
     "eth:0x13cE2ABB82D2484F7aC55a02dd0f5c5e4dd6B5Fa": {
       "address": "eth:0x13cE2ABB82D2484F7aC55a02dd0f5c5e4dd6B5Fa",
       "name": "Unknown",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:51.306Z",
+      "generatedAt": "2026-02-23T13:25:36.732Z",
       "skipped": true,
       "skipReason": "Unverified contract"
     },
@@ -185,7 +185,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:51.312Z"
+      "generatedAt": "2026-02-23T13:25:36.746Z"
     },
     "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013": {
       "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
@@ -234,13 +234,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:51.317Z"
+      "generatedAt": "2026-02-23T13:25:36.759Z"
     },
     "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c": {
       "address": "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c",
       "name": "Safe",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:51.318Z"
+      "generatedAt": "2026-02-23T13:25:36.760Z"
     },
     "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007": {
       "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
@@ -3269,19 +3269,19 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:51.362Z"
+      "generatedAt": "2026-02-23T13:25:36.805Z"
     },
     "eth:0x25BC01FD5a01B1864A7dBADDb05BfEd642340dA2": {
       "address": "eth:0x25BC01FD5a01B1864A7dBADDb05BfEd642340dA2",
       "name": "BolderCashProxy",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:51.362Z"
+      "generatedAt": "2026-02-23T13:25:36.806Z"
     },
     "eth:0x260260c3B1AFF1ED9E45e355Ff4D05BEEdD5efeb": {
       "address": "eth:0x260260c3B1AFF1ED9E45e355Ff4D05BEEdD5efeb",
       "name": "Unknown",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:52.689Z",
+      "generatedAt": "2026-02-23T13:25:38.161Z",
       "skipped": true,
       "skipReason": "Unverified contract"
     },
@@ -3289,13 +3289,13 @@
       "address": "eth:0x271293c67E2D3140a0E9381EfF1F9b01E07B0795",
       "name": "DSProxyCache",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:52.690Z"
+      "generatedAt": "2026-02-23T13:25:38.161Z"
     },
     "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B": {
       "address": "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B",
       "name": "LockupContractFactory",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:52.693Z"
+      "generatedAt": "2026-02-23T13:25:38.164Z"
     },
     "eth:0x3400874305E1547020fb8e80eAF1308B757171Af": {
       "address": "eth:0x3400874305E1547020fb8e80eAF1308B757171Af",
@@ -3564,13 +3564,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:52.703Z"
+      "generatedAt": "2026-02-23T13:25:38.169Z"
     },
     "eth:0x3421ffcB20E26382A383B90f729B902403638b9d": {
       "address": "eth:0x3421ffcB20E26382A383B90f729B902403638b9d",
       "name": "DSGuard",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:52.703Z"
+      "generatedAt": "2026-02-23T13:25:38.173Z"
     },
     "eth:0x362f822dF79790C8077e61110484Fffa48F682A1": {
       "address": "eth:0x362f822dF79790C8077e61110484Fffa48F682A1",
@@ -3839,7 +3839,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:52.709Z"
+      "generatedAt": "2026-02-23T13:25:38.179Z"
     },
     "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65": {
       "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
@@ -8140,7 +8140,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:52.773Z"
+      "generatedAt": "2026-02-23T13:25:38.229Z"
     },
     "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De": {
       "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
@@ -8217,7 +8217,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:52.778Z"
+      "generatedAt": "2026-02-23T13:25:38.234Z"
     },
     "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d": {
       "address": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
@@ -8264,13 +8264,13 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:52.783Z"
+      "generatedAt": "2026-02-23T13:25:38.237Z"
     },
     "eth:0x50Bc019abdb9951602BC4fE92947d3c15d5e45Df": {
       "address": "eth:0x50Bc019abdb9951602BC4fE92947d3c15d5e45Df",
       "name": "BolderCashProxy",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:52.784Z"
+      "generatedAt": "2026-02-23T13:25:38.238Z"
     },
     "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": {
       "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
@@ -8357,7 +8357,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:52.792Z"
+      "generatedAt": "2026-02-23T13:25:38.243Z"
     },
     "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": {
       "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
@@ -8534,7 +8534,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:52.801Z"
+      "generatedAt": "2026-02-23T13:25:38.248Z"
     },
     "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b": {
       "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
@@ -8571,13 +8571,13 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:52.808Z"
+      "generatedAt": "2026-02-23T13:25:38.253Z"
     },
     "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0": {
       "address": "eth:0x5CcA549ca706C39D68156e5E0a72CcBC95f563d0",
       "name": "Unknown",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:54.113Z",
+      "generatedAt": "2026-02-23T13:25:39.588Z",
       "skipped": true,
       "skipReason": "Unverified contract"
     },
@@ -8585,13 +8585,13 @@
       "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
       "name": "LUSD Stablecoin Token",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:54.116Z"
+      "generatedAt": "2026-02-23T13:25:39.590Z"
     },
     "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": {
       "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
       "name": "BoldToken",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:54.119Z"
+      "generatedAt": "2026-02-23T13:25:39.593Z"
     },
     "eth:0x65f9A98009Aecaa3fc8A3A83FEF44e2b6931A7b2": {
       "address": "eth:0x65f9A98009Aecaa3fc8A3A83FEF44e2b6931A7b2",
@@ -8768,7 +8768,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:54.121Z"
+      "generatedAt": "2026-02-23T13:25:39.594Z"
     },
     "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb": {
       "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
@@ -9001,19 +9001,19 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:54.130Z"
+      "generatedAt": "2026-02-23T13:25:39.600Z"
     },
     "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D": {
       "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
       "name": "LQTY Token",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:54.134Z"
+      "generatedAt": "2026-02-23T13:25:39.605Z"
     },
     "eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552": {
       "address": "eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552",
       "name": "BolderCashProxy",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:54.135Z"
+      "generatedAt": "2026-02-23T13:25:39.605Z"
     },
     "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873": {
       "address": "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873",
@@ -9062,7 +9062,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:54.144Z"
+      "generatedAt": "2026-02-23T13:25:39.613Z"
     },
     "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A": {
       "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
@@ -10322,7 +10322,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:54.172Z"
+      "generatedAt": "2026-02-23T13:25:39.632Z"
     },
     "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5": {
       "address": "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5",
@@ -10743,7 +10743,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:54.180Z"
+      "generatedAt": "2026-02-23T13:25:39.640Z"
     },
     "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1": {
       "address": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
@@ -11024,13 +11024,13 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:54.188Z"
+      "generatedAt": "2026-02-23T13:25:39.644Z"
     },
     "eth:0x84087689B0D6a8A8f11C297e9e7f8De99f398258": {
       "address": "eth:0x84087689B0D6a8A8f11C297e9e7f8De99f398258",
       "name": "FixedAssetReader",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:54.188Z"
+      "generatedAt": "2026-02-23T13:25:39.645Z"
     },
     "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1": {
       "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
@@ -11207,7 +11207,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:54.196Z"
+      "generatedAt": "2026-02-23T13:25:39.650Z"
     },
     "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04": {
       "address": "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04",
@@ -11256,13 +11256,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:54.204Z"
+      "generatedAt": "2026-02-23T13:25:39.656Z"
     },
     "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42": {
       "address": "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42",
       "name": "Unknown",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:55.440Z",
+      "generatedAt": "2026-02-23T13:25:40.949Z",
       "skipped": true,
       "skipReason": "Unverified contract"
     },
@@ -11270,13 +11270,13 @@
       "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
       "name": "Tellor Tributes Token",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:55.440Z"
+      "generatedAt": "2026-02-23T13:25:40.949Z"
     },
     "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C": {
       "address": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
       "name": "DefaultPool",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:55.443Z"
+      "generatedAt": "2026-02-23T13:25:40.952Z"
     },
     "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6": {
       "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
@@ -11339,7 +11339,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:55.448Z"
+      "generatedAt": "2026-02-23T13:25:40.957Z"
     },
     "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F": {
       "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
@@ -11426,13 +11426,13 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:55.453Z"
+      "generatedAt": "2026-02-23T13:25:40.962Z"
     },
     "eth:0x90cdBBb44143b87883287589c29Eb869FC906E91": {
       "address": "eth:0x90cdBBb44143b87883287589c29Eb869FC906E91",
       "name": "Unknown",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:56.727Z",
+      "generatedAt": "2026-02-23T13:25:43.384Z",
       "skipped": true,
       "skipReason": "Unverified contract"
     },
@@ -11611,7 +11611,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.734Z"
+      "generatedAt": "2026-02-23T13:25:43.392Z"
     },
     "eth:0x9B36C3B16299D68c79F174df7e728E35b6AF4A12": {
       "address": "eth:0x9B36C3B16299D68c79F174df7e728E35b6AF4A12",
@@ -11880,13 +11880,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.741Z"
+      "generatedAt": "2026-02-23T13:25:43.403Z"
     },
     "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9": {
       "address": "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
       "name": "SimpleWriteAccessController",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:56.741Z"
+      "generatedAt": "2026-02-23T13:25:43.413Z"
     },
     "eth:0xA1CbA1fCEf2CD7379f74fEec9a7d8B17d430cc6f": {
       "address": "eth:0xA1CbA1fCEf2CD7379f74fEec9a7d8B17d430cc6f",
@@ -11943,7 +11943,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.742Z"
+      "generatedAt": "2026-02-23T13:25:43.414Z"
     },
     "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4": {
       "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
@@ -12120,7 +12120,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.748Z"
+      "generatedAt": "2026-02-23T13:25:43.421Z"
     },
     "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22": {
       "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
@@ -13380,7 +13380,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.767Z"
+      "generatedAt": "2026-02-23T13:25:43.436Z"
     },
     "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2": {
       "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
@@ -14954,13 +14954,13 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.787Z"
+      "generatedAt": "2026-02-23T13:25:43.454Z"
     },
     "eth:0xa5224865040034A9f8E5C60e0a616c9c8A63f237": {
       "address": "eth:0xa5224865040034A9f8E5C60e0a616c9c8A63f237",
       "name": "FixedAssetReader",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:56.790Z"
+      "generatedAt": "2026-02-23T13:25:43.456Z"
     },
     "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3": {
       "address": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
@@ -21559,7 +21559,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.932Z"
+      "generatedAt": "2026-02-23T13:25:43.499Z"
     },
     "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112": {
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
@@ -21599,7 +21599,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.934Z"
+      "generatedAt": "2026-02-23T13:25:43.500Z"
     },
     "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": {
       "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
@@ -22859,25 +22859,25 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.957Z"
+      "generatedAt": "2026-02-23T13:25:43.516Z"
     },
     "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C": {
       "address": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
       "name": "GnosisSafe",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:56.959Z"
+      "generatedAt": "2026-02-23T13:25:43.516Z"
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "name": "Wrapped Ether Token",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:56.959Z"
+      "generatedAt": "2026-02-23T13:25:43.517Z"
     },
     "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e": {
       "address": "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e",
       "name": "FixedAssetReader",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:56.960Z"
+      "generatedAt": "2026-02-23T13:25:43.517Z"
     },
     "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695": {
       "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
@@ -23054,7 +23054,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.966Z"
+      "generatedAt": "2026-02-23T13:25:43.525Z"
     },
     "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0": {
       "address": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
@@ -23091,7 +23091,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.972Z"
+      "generatedAt": "2026-02-23T13:25:43.529Z"
     },
     "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1": {
       "address": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
@@ -23128,7 +23128,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.978Z"
+      "generatedAt": "2026-02-23T13:25:43.534Z"
     },
     "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816": {
       "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
@@ -23155,13 +23155,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.981Z"
+      "generatedAt": "2026-02-23T13:25:43.537Z"
     },
     "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F": {
       "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
       "name": "ActivePool",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:56.983Z"
+      "generatedAt": "2026-02-23T13:25:43.539Z"
     },
     "eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695": {
       "address": "eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695",
@@ -23405,7 +23405,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-01-15T16:21:56.985Z"
+      "generatedAt": "2026-02-23T13:25:43.541Z"
     },
     "eth:0xe8119fC02953B27a1b48D2573855738485A17329": {
       "address": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
@@ -30004,7 +30004,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:57.048Z"
+      "generatedAt": "2026-02-23T13:25:43.594Z"
     },
     "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE": {
       "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
@@ -30091,7 +30091,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:57.055Z"
+      "generatedAt": "2026-02-23T13:25:43.598Z"
     },
     "eth:0xf309Ac4c07Be9c93d7a14b5B74e94F7aC29E8eCE": {
       "address": "eth:0xf309Ac4c07Be9c93d7a14b5B74e94F7aC29E8eCE",
@@ -30146,13 +30146,13 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-01-15T16:21:57.055Z"
+      "generatedAt": "2026-02-23T13:25:43.599Z"
     },
     "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4": {
       "address": "eth:0xf4a3fE99227F6060e4C1c62b557EEE050B6483E4",
       "name": "Unknown",
       "externalCalls": [],
-      "generatedAt": "2026-01-15T16:21:58.298Z",
+      "generatedAt": "2026-02-23T13:25:44.985Z",
       "skipped": true,
       "skipReason": "Unverified contract"
     },
@@ -30321,7 +30321,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-15T16:21:58.301Z"
+      "generatedAt": "2026-02-23T13:25:44.987Z"
     }
   }
 }

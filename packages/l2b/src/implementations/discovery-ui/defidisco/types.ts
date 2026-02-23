@@ -523,3 +523,130 @@ export interface ExternalCall {
   resolutionConfidence?: number // 0-100, dynamic based on match count
   resolutionCandidates?: ResolutionCandidate[] // All matches when multiple found
 }
+
+// ============================================================================
+// Ultimate Owners Types (Reverse ownership chain resolution)
+// ============================================================================
+
+/** A single step in the ownership chain */
+export interface OwnershipChainStep {
+  /** The contract address at this step */
+  contractAddress: string
+  /** Name of the contract */
+  contractName: string
+  /** The function on this contract in the chain (if known) */
+  functionName?: string
+  /** Type of the contract (EOA, Multisig, Timelock, Contract, etc.) */
+  contractType: ApiAddressType
+  /** How this step connects to the next: 'permission' or 'callgraph' */
+  edgeType: 'permission' | 'callgraph'
+}
+
+/** A terminal entity found by enhanced graph traversal */
+export interface TraversalTerminal {
+  /** The terminal address (EOA or Multisig) */
+  address: string
+  /** Display name */
+  name: string
+  /** Type of the terminal entity */
+  type: ApiAddressType
+  /** Full chain from this terminal back to the target function */
+  chain: OwnershipChainStep[]
+  /** True if any step in the chain involves a public (non-permissioned) function */
+  hasPublicFunction: boolean
+  /** True if resolution stopped due to incomplete data (not a real terminal) */
+  isUnresolved?: boolean
+}
+
+/** Enhanced traversal result for a single function */
+export interface FunctionTraversalResult {
+  contractAddress: string
+  functionName: string
+  /** The resolved terminal entities */
+  terminals: TraversalTerminal[]
+  /** Errors encountered during resolution */
+  errors: string[]
+  /** True if resolution hit the depth limit */
+  depthLimitReached: boolean
+}
+
+/** API response for the enhanced traversal endpoint */
+export interface ApiEnhancedTraversalResponse {
+  version: string
+  lastModified: string
+  /** Map of contractAddress -> functionName -> FunctionTraversalResult */
+  contracts: Record<string, Record<string, FunctionTraversalResult>>
+  /** True if functions.json was modified after call-graph-data.json */
+  callGraphStale: boolean
+}
+
+// ============================================================================
+// Function Analysis Types (Per-function impact & dependencies)
+// ============================================================================
+
+/** A single step in a call path showing how one contract reaches another */
+export interface CallPathStep {
+  contractAddress: string
+  contractName: string
+  functionName: string
+  isViewCall: boolean
+}
+
+/** A contract reachable from a function that holds funds */
+export interface FunctionImpactEntry {
+  contractAddress: string
+  contractName: string
+  /** True if ALL paths to this contract are view-only */
+  viewOnlyPath: boolean
+  /** Functions called on the target contract */
+  calledFunctions: string[]
+  /** Subset of calledFunctions that are permissioned */
+  permissionedFunctions: string[]
+  /** Funds in this contract (balances + positions) */
+  fundsUsd: number
+  /** Token market cap if contract is a token */
+  tokenValueUsd: number
+  /** Shortest call path from the starting function to this contract */
+  callPath: CallPathStep[]
+}
+
+/** An external dependency of a function */
+export interface FunctionDependencyEntry {
+  contractAddress: string
+  contractName: string
+  /** True if auto-detected from call graph, false if manually specified */
+  isAutoDetected: boolean
+  /** True if ALL calls to this dependency are view-only */
+  viewOnlyPath: boolean
+  /** Functions called on this dependency (empty for manual) */
+  calledFunctions: string[]
+  /** Centralization attribute from contract-tags */
+  centralization?: string
+  /** Mitigations attribute from contract-tags */
+  mitigations?: string
+  /** Shortest call path from the starting function to this dependency */
+  callPath: CallPathStep[]
+}
+
+/** Per-function analysis combining impact and dependencies */
+export interface FunctionAnalysis {
+  /** Reachable contracts with funds — only for permissioned functions, null otherwise */
+  impact: {
+    reachableContracts: FunctionImpactEntry[]
+    totalFundsAtRisk: number
+    totalTokenValueAtRisk: number
+    unresolvedCallsCount: number
+  } | null
+  /** External dependencies — for all functions */
+  dependencies: {
+    entries: FunctionDependencyEntry[]
+  }
+}
+
+/** API response for the function analysis endpoint */
+export interface ApiFunctionAnalysisResponse {
+  version: string
+  lastModified: string
+  /** Map of contractAddress -> functionName -> FunctionAnalysis */
+  contracts: Record<string, Record<string, FunctionAnalysis>>
+}
