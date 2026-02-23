@@ -29,6 +29,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
   {
     id: 'optimism',
     name: 'OP Mainnet',
+    iconSlug: 'op-mainnet',
     type: 'evm',
     display: 'OP',
   },
