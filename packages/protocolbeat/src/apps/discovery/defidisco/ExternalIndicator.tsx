@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { IS_READONLY } from '../../../config/readonly'
 import { DependencyPropagationDialog } from './DependencyPropagationDialog'
+import { GovernanceIndicator } from './GovernanceIndicator'
 import { useExternalToggle } from './hooks/useExternalToggle'
 
 export function ExternalIndicator({
@@ -34,6 +35,7 @@ export function ExternalIndicator({
           {hasExternalContract ? 'Mark Internal' : 'Mark External'}
         </button>
       )}
+      <GovernanceIndicator address={address} />
       {propagationDialogProps.show && (
         <DependencyPropagationDialog
           mode={propagationDialogProps.mode}

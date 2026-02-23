@@ -139,6 +139,14 @@ git fetch upstream && git merge upstream/main
 - **Backend**: `/defidisco/contractTags.ts` preserves attributes across updates
 - **Address Format**: Normalizes `eth:0x...` → `0x...` when comparing with tags
 
+### Governance Contract Tag ✅
+
+**Binary tag**: `isGovernance` in `contract-tags.json`, green in graph view
+
+- **UI**: `GovernanceButton.tsx` (node controls toggle), `GovernanceIndicator.tsx` (Values panel label, rendered inside `ExternalIndicator.tsx`)
+- **Node Coloring**: `useContractTagColor` hook in `useContractTags.ts` maps tags → color override. Priority: Unknown (red) > External (orange) > Governance (green) > Chain color
+- **Admin Filtering**: "Key owners" (shown by default) = EOA, EOAPermissioned, Multisig, or governance-tagged. "Show all contracts" checkbox reveals the rest
+
 ### AccessControl Role Support ✅
 
 **OpenZeppelin AccessControl Integration**: Full support for role-based access control
@@ -365,7 +373,8 @@ PORT=3001
 
 - **Owners** (`AdminsInventoryBreakdown.tsx`): Displays non-external permission owners
   - Filters out external owners (shown in Dependencies instead)
-  - "Show immutable" toggle (default: **off**) — includes immutable + revoked (0x0) addresses
+  - By default shows only "key owners": EOAs, EOAPermissioned, Multisigs, and governance-tagged contracts
+  - "Show all contracts" checkbox reveals all other contract-type admins
   - Uses `OwnerSection` from `scoringShared.tsx`
 - **Dependencies** (`DependencyInventoryBreakdown.tsx`): Displays call-graph dependencies + external owners
   - Regular dependencies: `DependencySection` (local component for call-graph entries)
@@ -376,7 +385,8 @@ PORT=3001
 **Key Design Decisions**:
 
 - External owners (`isExternal: true` in contract-tags) appear in Dependencies, not Owners
-- Immutable contracts and revoked addresses (0x0) are grouped together for toggle filtering
+- Governance contracts (`isGovernance: true`) are treated as "key owners" alongside EOAs and Multisigs
+- "Key owners" (shown by default): EOA, EOAPermissioned, Multisig, or governance-tagged contracts. All other contract types hidden unless "Show all contracts" is checked
 - `OwnerSection` is shared to avoid duplicating admin type badges, proxy type tags, funds display, and capital breakdown logic
 
 **Capital & Token Value Display**:
@@ -451,6 +461,8 @@ packages/
 │   ├── PermissionsDisplay.tsx
 │   ├── FunctionFolder.tsx
 │   ├── ExternalButton.tsx
+│   ├── GovernanceButton.tsx            # Toggle governance tag in node controls
+│   ├── GovernanceIndicator.tsx         # Inline governance label + toggle in Values panel
 │   ├── V2ScoringSection.tsx          # V2 scoring entry point
 │   ├── scoringShared.tsx             # Shared scoring utilities & components (DO NOT DUPLICATE)
 │   ├── AdminsInventoryBreakdown.tsx  # Owners section (imports from scoringShared)
@@ -491,6 +503,7 @@ packages/
     {
       "contractAddress": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "isExternal": true,
+      "isGovernance": true,
       "centralization": "high",
       "mitigations": "complete",
       "timestamp": "2025-09-30T19:47:42.278Z"
@@ -500,8 +513,9 @@ packages/
 ```
 
 - **File Location**: `packages/config/src/projects/{project}/contract-tags.json`
-- **Fields**: `isExternal` (boolean), `centralization` (high/medium/low), `mitigations` (complete/partial/none)
+- **Fields**: `isExternal` (boolean), `isGovernance` (boolean), `centralization` (high/medium/low), `mitigations` (complete/partial/none)
 - **Update Pattern**: Backend preserves existing attributes when updating individual fields
+- **Cleanup**: When all boolean tag fields (`isExternal`, `isGovernance`, `fetchBalances`, `fetchPositions`, `isToken`) are false, the entry is removed from the file
 
 ### Permission Overrides Data Structure ✅
 

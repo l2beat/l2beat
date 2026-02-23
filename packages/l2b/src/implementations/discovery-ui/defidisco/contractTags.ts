@@ -78,6 +78,8 @@ export function updateContractTag(
   const newFetchPositions =
     updateRequest.fetchPositions ?? existingTag?.fetchPositions ?? false
   const newIsToken = updateRequest.isToken ?? existingTag?.isToken ?? false
+  const newIsGovernance =
+    updateRequest.isGovernance ?? existingTag?.isGovernance ?? false
   const newCentralization =
     updateRequest.centralization !== undefined
       ? updateRequest.centralization
@@ -85,13 +87,18 @@ export function updateContractTag(
 
   // Check if any meaningful tag data exists
   const hasAnyTagData =
-    newIsExternal || newFetchBalances || newFetchPositions || newIsToken
+    newIsExternal ||
+    newIsGovernance ||
+    newFetchBalances ||
+    newFetchPositions ||
+    newIsToken
 
   if (hasAnyTagData) {
     // Create or update tag entry
     const newTag: ContractTag = {
       contractAddress: normalizedAddress,
       isExternal: newIsExternal,
+      isGovernance: newIsGovernance || undefined, // Only store if true
       centralization: newCentralization,
       fetchBalances: newFetchBalances || undefined, // Only store if true
       fetchPositions: newFetchPositions || undefined, // Only store if true

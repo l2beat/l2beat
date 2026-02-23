@@ -9,7 +9,6 @@ import {
   computeDeduplicatedCapital,
   formatUsdValue,
   hasCapitalData,
-  isZeroAddress,
   OwnerSection,
 } from './scoringShared'
 
@@ -40,14 +39,10 @@ export function AdminsInventoryBreakdown({
     [projectData],
   )
 
-  // Toggle for showing/hiding immutable contracts
-  const [showImmutable, setShowImmutable] = useState(false)
+  // Toggle for showing all contract owners (not just governance/EOA/multisig)
+  const [showAllContracts, setShowAllContracts] = useState(false)
 
   // Filter helpers
-  const isImmutableOrRevoked = (admin: any) =>
-    proxyTypeMap.get(admin.adminAddress.toLowerCase()) === 'immutable' ||
-    isZeroAddress(admin.adminAddress)
-
   const isExternalOwner = (admin: any) => {
     if (!contractTags?.tags) return false
     return contractTags.tags.some(
@@ -57,20 +52,34 @@ export function AdminsInventoryBreakdown({
     )
   }
 
+  const isGovernanceOwner = (admin: any) => {
+    if (!contractTags?.tags) return false
+    return contractTags.tags.some(
+      (tag) =>
+        tag.contractAddress.toLowerCase() ===
+          admin.adminAddress.toLowerCase() && tag.isGovernance,
+    )
+  }
+
+  const isKeyOwner = (admin: any) =>
+    admin.adminType === 'EOA' ||
+    admin.adminType === 'EOAPermissioned' ||
+    admin.adminType === 'Multisig' ||
+    isGovernanceOwner(admin)
+
   const displayedAdmins = useMemo(() => {
     if (!score.breakdown) return []
 
     // Always exclude external owners (they appear in Dependencies)
     const nonExternal = score.breakdown.filter((a) => !isExternalOwner(a))
 
-    if (showImmutable) {
-      const mutable = nonExternal.filter((a) => !isImmutableOrRevoked(a))
-      const immutable = nonExternal.filter((a) => isImmutableOrRevoked(a))
-      return [...mutable, ...immutable]
+    // Filter by key owners (governance/EOA/multisig) unless showing all
+    if (!showAllContracts) {
+      return nonExternal.filter(isKeyOwner)
     }
 
-    return nonExternal.filter((a) => !isImmutableOrRevoked(a))
-  }, [score.breakdown, proxyTypeMap, showImmutable, contractTags])
+    return nonExternal
+  }, [score.breakdown, showAllContracts, contractTags])
 
   // Recalculate displayed values from visible admins only
   const displayedFunctionCount = displayedAdmins.reduce(
@@ -87,12 +96,12 @@ export function AdminsInventoryBreakdown({
 
   const hasAnyCapital =
     score.totalCapitalAtRisk !== undefined && score.totalCapitalAtRisk > 0
-  const hasImmutableAdmins = useMemo(() => {
+
+  const hasHiddenContractOwners = useMemo(() => {
     if (!score.breakdown) return false
-    return score.breakdown.some(
-      (admin) => isImmutableOrRevoked(admin) && !isExternalOwner(admin),
-    )
-  }, [score.breakdown, proxyTypeMap, contractTags])
+    const nonExternal = score.breakdown.filter((a) => !isExternalOwner(a))
+    return nonExternal.some((a) => !isKeyOwner(a))
+  }, [score.breakdown, contractTags])
 
   return (
     <div className="text-coffee-300">
@@ -112,15 +121,15 @@ export function AdminsInventoryBreakdown({
           )}
         </span>
         <span className="flex items-center gap-2">
-          {hasImmutableAdmins && (
+          {hasHiddenContractOwners && (
             <label className="flex cursor-pointer items-center gap-1.5 text-coffee-400 text-xs">
               <input
                 type="checkbox"
-                checked={showImmutable}
-                onChange={(e) => setShowImmutable(e.target.checked)}
+                checked={showAllContracts}
+                onChange={(e) => setShowAllContracts(e.target.checked)}
                 className="h-3 w-3 cursor-pointer accent-coffee-500"
               />
-              Show immutable
+              Show all contracts
             </label>
           )}
           <span>{score.inventory}</span>
@@ -146,6 +155,7 @@ export function AdminsInventoryBreakdown({
                 key={admin.adminAddress}
                 admin={admin}
                 proxyType={proxyTypeMap.get(admin.adminAddress.toLowerCase())}
+                isGovernance={isGovernanceOwner(admin)}
               />
             ))}
           </>

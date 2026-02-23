@@ -669,6 +669,7 @@ export function FunctionFolder({
   const [isCommentsOpen, setIsCommentsOpen] = useState(false)
   const [newCommentText, setNewCommentText] = useState('')
   const [isSubmittingComment, setIsSubmittingComment] = useState(false)
+  const [showAllContracts, setShowAllContracts] = useState(false)
 
   // Update local description when external data changes
   useEffect(() => {
@@ -1437,171 +1438,220 @@ export function FunctionFolder({
             {!traversalData ? (
               <div className="text-coffee-500 text-xs">Loading...</div>
             ) : functionTraversal && functionTraversal.terminals.length > 0 ? (
-              <div className="space-y-2">
-                {groupOwnersByAddress(functionTraversal.terminals).map(
-                  (owner, idx) => {
-                    const revoked = isZeroAddress(owner.address)
-                    const adminKey = `admin-${idx}`
-                    const isAdminExpanded = expandedPaths.has(adminKey)
-                    const hasChains = owner.collapsedChains.some(
-                      (c) => c.length > 0,
-                    )
-                    return (
-                      <div
-                        key={idx}
-                        className={`rounded bg-coffee-800 p-2 ${hasChains ? 'cursor-pointer' : ''}`}
-                        onClick={
-                          hasChains ? () => togglePath(adminKey) : undefined
-                        }
-                      >
-                        {/* Owner header: chevron + type badge + name */}
-                        <div className="flex items-center gap-2">
-                          {hasChains && (
-                            <span className="text-coffee-500 text-[10px]">
-                              {isAdminExpanded ? (
-                                <IconChevronDown />
-                              ) : (
-                                <IconChevronRight />
-                              )}
-                            </span>
-                          )}
-                          {revoked ? (
-                            <span
-                              className="rounded border px-1 text-xs font-semibold"
-                              style={{
-                                color: '#10b981',
-                                borderColor: '#10b98140',
-                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                              }}
-                            >
-                              Revoked
-                            </span>
-                          ) : owner.isUnresolved ? (
-                            <span
-                              className="rounded border px-1 text-xs font-semibold"
-                              style={{
-                                color: '#9ca3af',
-                                borderColor: '#9ca3af40',
-                                backgroundColor: 'rgba(156, 163, 175, 0.1)',
-                              }}
-                            >
-                              Unresolved
-                            </span>
-                          ) : (
-                            <span
-                              className="rounded border px-1 text-xs font-semibold"
-                              style={{
-                                color: getAdminTypeColor(owner.type),
-                                borderColor:
-                                  getAdminTypeColor(owner.type) + '40',
-                              }}
-                            >
-                              {displayType(owner.type)}
-                            </span>
-                          )}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              if (!revoked)
-                                usePanelStore.getState().select(owner.address)
-                            }}
-                            className={`font-mono text-xs ${revoked ? 'cursor-default text-coffee-400' : 'hover:underline'}`}
-                            style={revoked ? undefined : { color: '#67e8f9' }}
-                          >
-                            {revoked ? '0x0000...0000' : owner.name}
-                          </button>
-                          {owner.hasPublicFunction && (
-                            <span className="rounded bg-orange-900/30 px-1 text-orange-400 text-xs">
-                              public fn in path
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Chain tree: each collapsed chain = a branch (shown when expanded) */}
-                        {isAdminExpanded &&
-                          owner.collapsedChains.map((chain, chainIdx) => {
-                            if (chain.length === 0) return null
-                            // Reverse to owner→target order
-                            const reversed = [...chain].reverse()
-                            // Step 0 = owner (already in header), grab its functions
-                            const ownerFns = reversed[0]?.functionNames ?? []
-                            const viaSteps = reversed.slice(1)
-                            const isLast =
-                              chainIdx === owner.collapsedChains.length - 1
-
-                            return (
-                              <div
-                                key={chainIdx}
-                                className="mt-1 border-coffee-700 border-t pt-1 text-xs"
+              (() => {
+                const allOwners = groupOwnersByAddress(
+                  functionTraversal.terminals,
+                )
+                const isGovernanceAddress = (addr: string) => {
+                  if (!contractTags?.tags) return false
+                  const norm = addr.toLowerCase().replace('eth:', '')
+                  return contractTags.tags.some(
+                    (tag) =>
+                      tag.contractAddress.toLowerCase().replace('eth:', '') ===
+                        norm && tag.isGovernance,
+                  )
+                }
+                const isKeyOwner = (owner: GroupedOwner) =>
+                  owner.type === 'EOA' ||
+                  owner.type === 'EOAPermissioned' ||
+                  owner.type === 'Multisig' ||
+                  isGovernanceAddress(owner.address)
+                const filteredOwners = showAllContracts
+                  ? allOwners
+                  : allOwners.filter(isKeyOwner)
+                const hasHiddenOwners = allOwners.some((o) => !isKeyOwner(o))
+                return (
+                  <div className="space-y-2">
+                    {hasHiddenOwners && (
+                      <label className="flex cursor-pointer items-center gap-1.5 text-coffee-400 text-xs">
+                        <input
+                          type="checkbox"
+                          checked={showAllContracts}
+                          onChange={(e) =>
+                            setShowAllContracts(e.target.checked)
+                          }
+                          className="h-3 w-3 cursor-pointer accent-coffee-500"
+                        />
+                        Show all contracts (
+                        {allOwners.length - filteredOwners.length} hidden)
+                      </label>
+                    )}
+                    {filteredOwners.map((owner, idx) => {
+                      const revoked = isZeroAddress(owner.address)
+                      const adminKey = `admin-${idx}`
+                      const isAdminExpanded = expandedPaths.has(adminKey)
+                      const hasChains = owner.collapsedChains.some(
+                        (c) => c.length > 0,
+                      )
+                      return (
+                        <div
+                          key={idx}
+                          className={`rounded bg-coffee-800 p-2 ${hasChains ? 'cursor-pointer' : ''}`}
+                          onClick={
+                            hasChains ? () => togglePath(adminKey) : undefined
+                          }
+                        >
+                          {/* Owner header: chevron + type badge + name */}
+                          <div className="flex items-center gap-2">
+                            {hasChains && (
+                              <span className="text-coffee-500 text-[10px]">
+                                {isAdminExpanded ? (
+                                  <IconChevronDown />
+                                ) : (
+                                  <IconChevronRight />
+                                )}
+                              </span>
+                            )}
+                            {revoked ? (
+                              <span
+                                className="rounded border px-1 text-xs font-semibold"
+                                style={{
+                                  color: '#10b981',
+                                  borderColor: '#10b98140',
+                                  backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                }}
                               >
-                                {/* Owner's functions (root of this branch) */}
-                                <div className="flex items-center gap-1">
-                                  <span className="text-coffee-600">
-                                    {isLast ? '\u2514' : '\u251C'}
-                                  </span>
-                                  {ownerFns.length > 0 ? (
-                                    <span className="text-coffee-400">
-                                      {formatFunctionNames(ownerFns)}
-                                    </span>
-                                  ) : (
-                                    <span className="text-coffee-600 italic">
-                                      (permission)
-                                    </span>
-                                  )}
-                                </div>
-                                {/* Via steps — indented under the branch */}
-                                {viaSteps.map((step, stepIdx) => (
-                                  <div
-                                    key={stepIdx}
-                                    className="flex items-center gap-1"
-                                    style={{
-                                      paddingLeft: `${(stepIdx + 1) * 16}px`,
-                                    }}
-                                  >
+                                Revoked
+                              </span>
+                            ) : owner.isUnresolved ? (
+                              <span
+                                className="rounded border px-1 text-xs font-semibold"
+                                style={{
+                                  color: '#9ca3af',
+                                  borderColor: '#9ca3af40',
+                                  backgroundColor: 'rgba(156, 163, 175, 0.1)',
+                                }}
+                              >
+                                Unresolved
+                              </span>
+                            ) : (
+                              <span
+                                className="rounded border px-1 text-xs font-semibold"
+                                style={{
+                                  color: getAdminTypeColor(owner.type),
+                                  borderColor:
+                                    getAdminTypeColor(owner.type) + '40',
+                                }}
+                              >
+                                {displayType(owner.type)}
+                              </span>
+                            )}
+                            {isGovernanceAddress(owner.address) && (
+                              <span
+                                className="rounded border px-1 text-xs font-semibold"
+                                style={{
+                                  color: '#10b981',
+                                  borderColor: '#10b98140',
+                                  backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                }}
+                              >
+                                Governance
+                              </span>
+                            )}
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                if (!revoked)
+                                  usePanelStore.getState().select(owner.address)
+                              }}
+                              className={`font-mono text-xs ${revoked ? 'cursor-default text-coffee-400' : 'hover:underline'}`}
+                              style={revoked ? undefined : { color: '#67e8f9' }}
+                            >
+                              {revoked ? '0x0000...0000' : owner.name}
+                            </button>
+                            {owner.hasPublicFunction && (
+                              <span className="rounded bg-orange-900/30 px-1 text-orange-400 text-xs">
+                                public fn in path
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Chain tree: each collapsed chain = a branch (shown when expanded) */}
+                          {isAdminExpanded &&
+                            owner.collapsedChains.map((chain, chainIdx) => {
+                              if (chain.length === 0) return null
+                              // Reverse to owner→target order
+                              const reversed = [...chain].reverse()
+                              // Step 0 = owner (already in header), grab its functions
+                              const ownerFns = reversed[0]?.functionNames ?? []
+                              const viaSteps = reversed.slice(1)
+                              const isLast =
+                                chainIdx === owner.collapsedChains.length - 1
+
+                              return (
+                                <div
+                                  key={chainIdx}
+                                  className="mt-1 border-coffee-700 border-t pt-1 text-xs"
+                                >
+                                  {/* Owner's functions (root of this branch) */}
+                                  <div className="flex items-center gap-1">
                                     <span className="text-coffee-600">
-                                      {stepIdx === viaSteps.length - 1
-                                        ? '\u2514'
-                                        : '\u251C'}
+                                      {isLast ? '\u2514' : '\u251C'}
                                     </span>
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation()
-                                        usePanelStore
-                                          .getState()
-                                          .select(step.contractAddress)
-                                      }}
-                                      className="hover:underline shrink-0"
-                                      style={{ color: '#67e8f9' }}
-                                    >
-                                      {step.contractName}
-                                    </button>
-                                    {step.functionNames.length > 0 && (
-                                      <span className="text-coffee-500">
-                                        {formatFunctionNames(
-                                          step.functionNames,
-                                        )}
+                                    {ownerFns.length > 0 ? (
+                                      <span className="text-coffee-400">
+                                        {formatFunctionNames(ownerFns)}
+                                      </span>
+                                    ) : (
+                                      <span className="text-coffee-600 italic">
+                                        (permission)
                                       </span>
                                     )}
                                   </div>
-                                ))}
-                              </div>
-                            )
-                          })}
-                      </div>
-                    )
-                  },
-                )}
+                                  {/* Via steps — indented under the branch */}
+                                  {viaSteps.map((step, stepIdx) => (
+                                    <div
+                                      key={stepIdx}
+                                      className="flex items-center gap-1"
+                                      style={{
+                                        paddingLeft: `${(stepIdx + 1) * 16}px`,
+                                      }}
+                                    >
+                                      <span className="text-coffee-600">
+                                        {stepIdx === viaSteps.length - 1
+                                          ? '\u2514'
+                                          : '\u251C'}
+                                      </span>
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation()
+                                          usePanelStore
+                                            .getState()
+                                            .select(step.contractAddress)
+                                        }}
+                                        className="hover:underline shrink-0"
+                                        style={{ color: '#67e8f9' }}
+                                      >
+                                        {step.contractName}
+                                      </button>
+                                      {step.functionNames.length > 0 && (
+                                        <span className="text-coffee-500">
+                                          {formatFunctionNames(
+                                            step.functionNames,
+                                          )}
+                                        </span>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              )
+                            })}
+                        </div>
+                      )
+                    })}
 
-                {/* Errors — collapsible */}
-                {functionTraversal.errors.length > 0 && (
-                  <CollapsibleErrors errors={functionTraversal.errors} />
-                )}
-                {functionTraversal.depthLimitReached && (
-                  <div className="mt-1 text-yellow-400 text-xs">
-                    Depth limit reached — chain may be incomplete
+                    {/* Errors — collapsible */}
+                    {functionTraversal.errors.length > 0 && (
+                      <CollapsibleErrors errors={functionTraversal.errors} />
+                    )}
+                    {functionTraversal.depthLimitReached && (
+                      <div className="mt-1 text-yellow-400 text-xs">
+                        Depth limit reached — chain may be incomplete
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                )
+              })()
             ) : (
               <div className="text-coffee-500 text-xs">
                 No terminals found (no owner definitions or empty resolution)

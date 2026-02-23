@@ -397,6 +397,7 @@ export interface ApiContractTagsResponse {
 export interface ContractTag {
   contractAddress: string
   isExternal: boolean
+  isGovernance?: boolean
   centralization?: 'high' | 'medium' | 'low' | 'immutable'
   fetchBalances?: boolean
   fetchPositions?: boolean
@@ -407,6 +408,7 @@ export interface ContractTag {
 export interface ApiContractTagsUpdateRequest {
   contractAddress: string
   isExternal?: boolean
+  isGovernance?: boolean
   centralization?: 'high' | 'medium' | 'low' | 'immutable'
   fetchBalances?: boolean
   fetchPositions?: boolean

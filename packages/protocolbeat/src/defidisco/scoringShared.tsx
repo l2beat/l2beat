@@ -299,9 +299,11 @@ export function FunctionCapitalBreakdown({
 export function OwnerSection({
   admin,
   proxyType,
+  isGovernance,
 }: {
   admin: any
   proxyType?: string
+  isGovernance?: boolean
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const selectGlobal = usePanelStore((state) => state.select)
@@ -347,6 +349,18 @@ export function OwnerSection({
             }}
           >
             {admin.adminType}
+          </span>
+        )}
+        {isGovernance && (
+          <span
+            className="inline-block rounded border px-1.5 py-0.5 font-semibold text-xs"
+            style={{
+              color: '#10b981',
+              borderColor: '#10b98140',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            }}
+          >
+            Governance
           </span>
         )}
         <ProxyTypeTag proxyType={proxyType} />
