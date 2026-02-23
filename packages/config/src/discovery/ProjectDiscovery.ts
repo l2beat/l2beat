@@ -49,7 +49,10 @@ import {
 const paths = getDiscoveryPaths()
 
 interface ProjectDiscoveryOptions {
-  useReachableEntries?: boolean
+  reachableEntries?: {
+    use: boolean
+    maxDepth: number
+  }
 }
 
 export class ProjectDiscovery {
@@ -82,10 +85,11 @@ export class ProjectDiscovery {
     this.discoveries.forEach((d) => removeReferences(d))
 
     // TODO: Uncomment me once cross-chain permissions are implemented
-    this.reachableEntries = this.options?.useReachableEntries
+    this.reachableEntries = this.options?.reachableEntries?.use
       ? getReachableEntries(
           this.discoveries.flatMap((discovery) => discovery.entries),
           entrypoints,
+          this.options.reachableEntries.maxDepth,
         )
       : this.discoveries.flatMap((discovery) => discovery.entries)
 
