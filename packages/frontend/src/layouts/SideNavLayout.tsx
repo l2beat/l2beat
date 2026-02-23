@@ -108,30 +108,26 @@ export function SideNavLayout({
             {
               title: 'Summary',
               href:
-                selectedChainsContext?.buildUrl('/interop/summary', {
-                  mode: 'public',
-                }) ?? '/interop/summary',
+                selectedChainsContext?.buildUrl('/interop/summary') ??
+                '/interop/summary',
             },
             {
               title: 'Non-minting protocols',
               href:
-                selectedChainsContext?.buildUrl('/interop/non-minting', {
-                  mode: 'public',
-                }) ?? '/interop/non-minting',
+                selectedChainsContext?.buildUrl('/interop/non-minting') ??
+                '/interop/non-minting',
             },
             {
               title: 'Lock & Mint protocols',
               href:
-                selectedChainsContext?.buildUrl('/interop/lock-and-mint', {
-                  mode: 'public',
-                }) ?? '/interop/lock-and-mint',
+                selectedChainsContext?.buildUrl('/interop/lock-and-mint') ??
+                '/interop/lock-and-mint',
             },
             {
               title: 'Burn & Mint protocols',
               href:
-                selectedChainsContext?.buildUrl('/interop/burn-and-mint', {
-                  mode: 'public',
-                }) ?? '/interop/burn-and-mint',
+                selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
+                '/interop/burn-and-mint',
             },
           ],
         },
