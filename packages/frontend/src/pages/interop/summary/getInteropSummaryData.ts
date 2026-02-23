@@ -13,8 +13,7 @@ import {
   getInitialInteropSelection,
   type InteropSelection,
 } from '../utils/getInitialInteropSelection'
-
-type InteropMode = 'public' | 'internal'
+import type { InteropMode } from '../utils/InteropSelectedChainsContext'
 
 interface GetInteropSummaryDataOptions {
   mode?: InteropMode
