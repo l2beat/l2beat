@@ -90,6 +90,17 @@ export function isBurnAddress(address: Address32): boolean {
   return address === Address32.ZERO || address === DEAD_ADDRESS
 }
 
+export function isMayanWrappedNativeEmitter(
+  chain: string,
+  tokenAddress: Address32,
+): boolean {
+  const wrappedNative = MAYAN_WRAPPED_NATIVE_ADDRESSES[chain]
+  return (
+    wrappedNative !== undefined &&
+    tokenAddress === Address32.from(wrappedNative)
+  )
+}
+
 export function decodeMayanProtocol(chain: string, protocolAddress: string) {
   const protocols = MAYAN_PROTOCOLS_BY_CHAIN[chain]
   if (!protocols) return `unknown_chain_${chain}`
