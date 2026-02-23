@@ -18,6 +18,7 @@ export function AllProtocolsDialog({
 }: {
   protocols: ProtocolDisplayable[]
 }) {
+  const cappedProtocols = protocols.slice(0, 5)
   const remainingCount = protocols.slice(5).length
 
   return (
@@ -25,12 +26,14 @@ export function AllProtocolsDialog({
       <DialogTrigger asChild>
         <button
           className={cn(
-            'group/dialog-trigger grid grid-cols-[76px] items-center gap-1',
-            remainingCount > 0 && 'grid-cols-[76px_30px]',
+            'group/dialog-trigger grid items-center gap-1 text-left',
           )}
+          style={{
+            gridTemplateColumns: `${protocols.length === 1 ? 20 : cappedProtocols.length * 15}px  1fr`,
+          }}
         >
           <div className="-space-x-1.5 flex items-center">
-            {protocols.slice(0, 5).map((protocol, i) => (
+            {cappedProtocols.map((protocol, i) => (
               <Tooltip key={protocol.name}>
                 <TooltipTrigger asChild>
                   <img
