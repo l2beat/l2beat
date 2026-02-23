@@ -315,6 +315,7 @@ describe('deployedTokensRouter', () => {
         error: undefined,
         data: {
           symbol: 'RPC-TKN',
+          symbolSource: 'rpc',
           suggestions: [],
           decimals: 18,
           deploymentTimestamp: undefined,
@@ -371,6 +372,7 @@ describe('deployedTokensRouter', () => {
         },
         data: {
           symbol: 'USDC-RPC',
+          symbolSource: 'rpc',
           suggestions: undefined,
           decimals: 6,
           deploymentTimestamp: undefined,
@@ -425,6 +427,7 @@ describe('deployedTokensRouter', () => {
         },
         data: {
           symbol: undefined,
+          symbolSource: undefined,
           suggestions: undefined,
           decimals: undefined,
           deploymentTimestamp: undefined,
@@ -493,6 +496,7 @@ describe('deployedTokensRouter', () => {
       expect(result.error).toEqual(undefined)
       expect(result.data).toEqual({
         symbol: 'USDC',
+        symbolSource: 'coingecko',
         decimals: undefined,
         deploymentTimestamp: undefined,
         abstractTokenId: '1',

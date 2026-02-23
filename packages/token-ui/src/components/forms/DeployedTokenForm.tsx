@@ -48,6 +48,7 @@ import type {
 } from '../../../../database/dist/repositories/ChainRepository'
 import { AutoFillIndicator } from '../AutoFillIndicator'
 import { CardActionButton, CardActionButtons } from '../CardActionButtons'
+import { Badge } from '../core/Badge'
 import { Card, CardContent } from '../core/Card'
 import { Checkbox } from '../core/Checkbox'
 import { Label } from '../core/Label'
@@ -67,20 +68,25 @@ export const fieldToDataSource: Record<
   'symbol' | 'decimals' | 'deploymentTimestamp' | 'abstractTokenId',
   DataSource[]
 > = {
-  symbol: ['coingecko'],
+  symbol: ['rpc', 'coingecko'],
   decimals: ['rpc'],
   deploymentTimestamp: ['etherscan', 'blockscout'],
   abstractTokenId: ['coingecko'],
 }
 
 export const dataSourceToLabel: Record<DataSource, string> = {
-  coingecko: 'Coingecko',
+  coingecko: 'CoinGecko',
   rpc: 'RPC',
   etherscan: 'Etherscan',
   blockscout: 'Blockscout',
   blockscoutV2: 'Blockscout V2',
   routescan: 'Routescan',
 }
+
+const symbolSourceToLabel = {
+  rpc: 'On-chain (RPC)',
+  coingecko: 'CoinGecko',
+} as const
 
 const TvsMetadata = v.object({
   includeInCalculations: v.boolean(),
@@ -153,9 +159,21 @@ export function DeployedTokenForm({
     (abstractToken) => abstractToken.id === abstractTokenId,
   )
   const chainValue = form.watch('chain')
+  const symbolValue = form.watch('symbol')
 
   const success =
     tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
+  const fetchedSymbol = tokenDetails.data?.data?.symbol
+  const symbolSource = tokenDetails.data?.data?.symbolSource as
+    | keyof typeof symbolSourceToLabel
+    | undefined
+  const shouldShowSymbolSourceIndicator =
+    symbolSource !== undefined &&
+    fetchedSymbol !== undefined &&
+    symbolValue === fetchedSymbol
+  const symbolSourceLabel = symbolSource
+    ? symbolSourceToLabel[symbolSource]
+    : undefined
 
   const metadata = form.watch('metadata')
 
@@ -331,6 +349,11 @@ export function DeployedTokenForm({
                       available={autofill.symbol}
                       chainName={chainValue}
                     />
+                  )}
+                  {shouldShowSymbolSourceIndicator && symbolSourceLabel && (
+                    <Badge variant="outline" className="ml-1 text-[10px]">
+                      {symbolSourceLabel}
+                    </Badge>
                   )}
                 </FormLabel>
                 <FormControl>

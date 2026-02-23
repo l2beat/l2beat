@@ -159,6 +159,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
 
         let decimals: number | undefined
         let symbol: string | undefined
+        let symbolSource: 'rpc' | undefined
         if (chain.rpc) {
           try {
             const [rpcDecimals, rpcSymbol] = await Promise.all([
@@ -167,6 +168,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
             ])
             decimals = rpcDecimals
             symbol = rpcSymbol
+            symbolSource = 'rpc'
           } catch (error) {
             console.error(error)
           }
@@ -210,6 +212,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
             },
             data: {
               symbol,
+              symbolSource,
               suggestions: undefined,
               decimals,
               deploymentTimestamp,
@@ -227,6 +230,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
           error: undefined,
           data: {
             symbol: symbol ?? coin.symbol,
+            symbolSource: symbolSource ?? 'coingecko',
             decimals,
             deploymentTimestamp,
             abstractTokenId: abstractToken?.id,
