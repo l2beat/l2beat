@@ -90,12 +90,6 @@ export function DataTablePage(props: DataTablePageProps) {
             justify-content: center;
             align-items: center;
           }
-          .add-token-link {
-            color: #888;
-          }
-          .add-token-link:visited {
-            color: #ccc;
-          }
         `}</style>
       </head>
       <body>
