@@ -1,7 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -56,12 +55,11 @@ export function AllProtocolsDialog({
           )}
         </button>
       </DialogTrigger>
-      <DialogContent className="overflow-hidden p-0 max-md:border-none md:top-1/4 md:max-w-lg">
-        <DialogHeader className="sr-only">
-          <DialogTitle>{`Across ${protocols.length} protocols`}</DialogTitle>
-          <DialogDescription>List of protocols</DialogDescription>
+      <DialogContent className="max-h-[320px] gap-0 overflow-y-auto bg-surface-primary p-0 max-md:border-none md:top-1/4 md:max-w-lg">
+        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary p-4">
+          <DialogTitle>List of protocols</DialogTitle>
         </DialogHeader>
-        <div className="max-h-[300px] overflow-y-auto p-2">
+        <div className="px-2 pb-2">
           {protocols.length === 0 ? (
             <p className="px-2 py-3 text-center text-sm">No protocols found.</p>
           ) : (
