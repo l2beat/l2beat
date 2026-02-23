@@ -1,3 +1,179 @@
+Generated with discovered.json: 0xe5eee29acd8bdd1cb668f3f78167369d8f365fe6
+
+# Diff at Mon, 23 Feb 2026 10:22:37 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@8ea1d353103c63e310b14d3ded6658c49507e12c block: 1770803234
+- current timestamp: 1771841876
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770803234 (main branch discovery), not current.
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: Keeps track of the total stake of each operator.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract BLSApkRegistry (eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract RegistryCoordinator (eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EjectionManager (eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EigenDA Multisig (eth:0x338477FfaF63c04AC06048787f910671eC914B34) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract SocketRegistry (eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad) {
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05) {
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract IndexRegistry (eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B) {
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15) {
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
++   Status: CREATED
+    reference AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9bb8dbe254646e18788dca7d180bc3df1b5297ca
 
 # Diff at Fri, 13 Feb 2026 11:33:14 GMT:
