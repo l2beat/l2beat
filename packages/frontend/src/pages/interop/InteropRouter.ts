@@ -32,22 +32,6 @@ export function createInteropRouter(
     res.redirect('/interop/summary')
   })
 
-  router.get('/interop/internal', (_req, res) => {
-    res.redirect('/interop/summary/internal')
-  })
-  router.get('/interop/internal/summary', (_req, res) => {
-    res.redirect('/interop/summary/internal')
-  })
-  router.get('/interop/internal/non-minting', (_req, res) => {
-    res.redirect('/interop/non-minting/internal')
-  })
-  router.get('/interop/internal/lock-and-mint', (_req, res) => {
-    res.redirect('/interop/lock-and-mint/internal')
-  })
-  router.get('/interop/internal/burn-and-mint', (_req, res) => {
-    res.redirect('/interop/burn-and-mint/internal')
-  })
-
   router.get(
     '/interop/summary',
     validateRoute({
