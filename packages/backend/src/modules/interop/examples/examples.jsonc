@@ -2061,23 +2061,59 @@
       ],
       "transfers": [
         // #1: src and dst must both be 99638260582708341042 (99.64 ETH)
-        { "type": "orbitstack.L1ToL2Transfer", "src": { "tokenAmount": "99638260582708341042" }, "dst": { "tokenAmount": "99638260582708341042" } },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "99638260582708341042" },
+          "dst": { "tokenAmount": "99638260582708341042" }
+        },
         // #2: 99568277625740241036 (99.57 ETH)
-        { "type": "orbitstack.L1ToL2Transfer", "src": { "tokenAmount": "99568277625740241036" }, "dst": { "tokenAmount": "99568277625740241036" } },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "99568277625740241036" },
+          "dst": { "tokenAmount": "99568277625740241036" }
+        },
         // #3: 99568276377004601828 (99.57 ETH)
-        { "type": "orbitstack.L1ToL2Transfer", "src": { "tokenAmount": "99568276377004601828" }, "dst": { "tokenAmount": "99568276377004601828" } },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "99568276377004601828" },
+          "dst": { "tokenAmount": "99568276377004601828" }
+        },
         // #4: 2520000000000000000 (2.52 ETH)
-        { "type": "orbitstack.L1ToL2Transfer", "src": { "tokenAmount": "2520000000000000000" }, "dst": { "tokenAmount": "2520000000000000000" } },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "2520000000000000000" },
+          "dst": { "tokenAmount": "2520000000000000000" }
+        },
         // #5: 1002908246394282415 (1.00 ETH)
-        { "type": "orbitstack.L1ToL2Transfer", "src": { "tokenAmount": "1002908246394282415" }, "dst": { "tokenAmount": "1002908246394282415" } },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "1002908246394282415" },
+          "dst": { "tokenAmount": "1002908246394282415" }
+        },
         // #6: 361524941036395607 (0.36 ETH)
-        { "type": "orbitstack.L1ToL2Transfer", "src": { "tokenAmount": "361524941036395607" }, "dst": { "tokenAmount": "361524941036395607" } },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "361524941036395607" },
+          "dst": { "tokenAmount": "361524941036395607" }
+        },
         // #7: 16787756779462298 (0.017 ETH)
-        { "type": "orbitstack.L1ToL2Transfer", "src": { "tokenAmount": "16787756779462298" }, "dst": { "tokenAmount": "16787756779462298" } },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "16787756779462298" },
+          "dst": { "tokenAmount": "16787756779462298" }
+        },
         // #8: 8040127013904382 (0.008 ETH)
-        { "type": "orbitstack.L1ToL2Transfer", "src": { "tokenAmount": "8040127013904382" }, "dst": { "tokenAmount": "8040127013904382" } },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "8040127013904382" },
+          "dst": { "tokenAmount": "8040127013904382" }
+        },
         // #9: 5240948878743354 (0.005 ETH)
-        { "type": "orbitstack.L1ToL2Transfer", "src": { "tokenAmount": "5240948878743354" }, "dst": { "tokenAmount": "5240948878743354" } }
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "5240948878743354" },
+          "dst": { "tokenAmount": "5240948878743354" }
+        }
       ]
     }
   },
