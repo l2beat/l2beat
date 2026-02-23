@@ -10,7 +10,6 @@ import {
 } from 'react'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
-import type { InteropSelectionInput } from '~/server/features/scaling/interop/types'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 import {
@@ -34,7 +33,6 @@ interface InteropSelectedChainsContextType {
   swapPaths: () => void
   reset: () => void
   isDirty: boolean
-  apiSelectionInput: InteropSelectionInput
   buildUrl: (path: string, options?: { mode?: InteropMode }) => string
 }
 
@@ -97,14 +95,6 @@ export function InteropSelectedChainsProvider({
   const getChainById = useCallback(
     (chainId: string) => chainsById.get(chainId),
     [chainsById],
-  )
-
-  const apiSelectionInput = useMemo(
-    (): InteropSelectionInput => ({
-      from: selection.from,
-      to: selection.to,
-    }),
-    [selection],
   )
 
   const buildUrl = useCallback(
@@ -263,7 +253,6 @@ export function InteropSelectedChainsProvider({
         swapPaths,
         reset,
         isDirty,
-        apiSelectionInput,
         buildUrl,
       }}
     >

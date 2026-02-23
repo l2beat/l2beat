@@ -109,8 +109,8 @@ function Content({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { apiSelectionInput, mode, isDirty, reset } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery(apiSelectionInput)
+  const { selectedChains, mode, isDirty, reset } = useInteropSelectedChains()
+  const { data, isLoading } = api.interop.dashboard.useQuery(selectedChains)
 
   if (
     data?.entries.length === 0 &&

@@ -38,7 +38,7 @@ export function TopChainsCell({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const utils = api.useUtils()
-  const { apiSelectionInput } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
   return (
     <>
@@ -58,7 +58,7 @@ export function TopChainsCell({
         }}
         onMouseEnter={() =>
           utils.interop.chains.prefetch({
-            ...apiSelectionInput,
+            ...selectedChains,
             id: protocol.id,
             type: undefined,
           })
@@ -87,11 +87,11 @@ function TopChainsContent({
   showNetMintedValueColumn?: boolean
 }) {
   const breakpoint = useBreakpoint()
-  const { apiSelectionInput } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
   const { data, isLoading } = api.interop.chains.useQuery(
     {
-      ...apiSelectionInput,
+      ...selectedChains,
       id: protocol.id,
       type: undefined,
     },
