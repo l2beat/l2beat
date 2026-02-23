@@ -235,7 +235,11 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
 
     const upgradersWithDelay: Record<string, number> = Object.fromEntries(
       issuedPermissions
-        ?.filter((p) => p.permission === 'upgrade')
+        ?.filter(
+          (p) =>
+            p.permission === 'upgrade' &&
+            this.projectDiscovery.isReachable(p.to),
+        )
         .map((p) => {
           const address = this.projectDiscovery.getName(p.to)
           const delay =
