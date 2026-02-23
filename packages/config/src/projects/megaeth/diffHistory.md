@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6bfdf6e5c08a907df5e76eb3ebd5d8bb46a283d4
+Generated with discovered.json: 0xe5eee29acd8bdd1cb668f3f78167369d8f365fe6
 
-# Diff at Mon, 23 Feb 2026 11:27:07 GMT:
+# Diff at Mon, 23 Feb 2026 11:41:55 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@8ea1d353103c63e310b14d3ded6658c49507e12c block: 1770803234
@@ -17,149 +17,161 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1770803234 (main branch discovery), not current.
 
 ```diff
--   Status: DELETED
-    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5)
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
     +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
--   Status: DELETED
-    contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D)
+    contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
     +++ description: Keeps track of the total stake of each operator.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
--   Status: DELETED
-    contract BLSApkRegistry (eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505)
+    contract BLSApkRegistry (eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
     +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
--   Status: DELETED
-    contract RegistryCoordinator (eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656)
+    contract RegistryCoordinator (eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
     +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
--   Status: DELETED
-    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060)
+    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060) {
     +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
--   Status: DELETED
-    contract EjectionManager (eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E)
+    contract EjectionManager (eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
     +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      category:
+-        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
--   Status: DELETED
-    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A)
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
     +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
--   Status: DELETED
-    contract EigenDA Multisig (eth:0x338477FfaF63c04AC06048787f910671eC914B34)
+    contract EigenDA Multisig (eth:0x338477FfaF63c04AC06048787f910671eC914B34) {
     +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
--   Status: DELETED
-    contract SocketRegistry (eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2)
+    contract SocketRegistry (eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2) {
     +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
 ```
 
 ```diff
--   Status: DELETED
-    contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad)
+    contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad) {
     +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
-```
-
-```diff
--   Status: DELETED
-    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99)
-    +++ description: None
-```
-
-```diff
-    reference EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
-    +++ description: None
-      type:
--        "Contract"
-+        "Reference"
-      template:
--        "eigenlayer/EigenDAServiceManager"
-      sourceHashes:
--        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x41471c5c89db3f645030775d3f3cc317047a179f36469fbd736db24baed6523e"]
-      proxyType:
--        "EIP1967 proxy"
-      description:
--        "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser."
-      sinceTimestamp:
--        1712353787
-      sinceBlock:
--        19592322
-      values:
--        {"$admin":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99","$implementation":"eth:0xae448D008B6F69033AfdA361b46b36C472B6FEE0","$pastUpgrades":[["2024-04-05T21:49:47.000Z","0x0742f1a4d072fc85fe39830a9d21536bf3e09c0ce5a7571cab93bd85d09ff576",["eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]],["2024-04-05T21:49:59.000Z","0xb51ad742d1c13af667acb1608d33790a5dcc4970153a6ac2f415390b16fb485e",["eth:0xF5fD25A90902c27068CF5eBe53Be8da693Ac899e"]],["2024-05-09T21:13:11.000Z","0xb40a6884127043977ba87604e5b6a7447b7f8e6fa88b3ab3d940507c8e1c92d8",["eth:0x26089e9738b809d8308B0011B93b4225a112DB8C"]],["2024-05-21T19:56:59.000Z","0x43cca617c25c2c5ac4164bdfbeedb8dbf7325056844893fe61bb9e2034ebad1e",["eth:0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"]],["2024-08-03T16:14:35.000Z","0xfacff9a26f07d7ae55c6b9fc80059faa016f249c4624841cfcd43c34717cbaf7",["eth:0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7"]],["2024-09-17T14:17:11.000Z","0xaedce35d052ceaed37943107a78d8fb3d833ac5619edeab62a8772d67afaaff9",["eth:0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"]],["2025-05-29T22:04:35.000Z","0xfa483d640a2793a223b75e6a2c6fb8f9eaa2a1c0df1e6ca69d7d332251981282",["eth:0xae448D008B6F69033AfdA361b46b36C472B6FEE0"]]],"$upgradeCount":7,"avsDirectory":"eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF","batchConfirmers":["eth:0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8","eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED","eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e"],"batchId":153155,"BLOCK_STALE_MEASURE":300,"blsApkRegistry":"eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","delegation":"eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A","eigenDADisperserRegistry":"eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad","eigenDARelayRegistry":"eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B","eigenDAThresholdRegistry":"eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15","getRestakeableStrategies":["eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0","eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D","eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059","eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184","eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","eth:0xAe60d8180437b5C34bB956822ac2710972584473","eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2","eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7","eth:0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"],"owner":"eth:0x002721B4790d97dC140a049936aA710152Ba92D5","paused":0,"pauserRegistry":"eth:0x0c431C66F4dE941d089625E5B423D00707977060","paymentVault":"eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05","quorumAdversaryThresholdPercentages":"0x212121","quorumConfirmationThresholdPercentages":"0x373737","quorumNumbersRequired":"0x0001","registryCoordinator":"eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","rewardsInitiator":"eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A","stakeRegistry":"eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D","staleStakesForbidden":false,"STORE_DURATION_BLOCKS":100800,"taskNumber":153155,"THRESHOLD_DENOMINATOR":100}
-      fieldMeta:
--        {"BLOCK_STALE_MEASURE":{"severity":"HIGH","description":"This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert.","type":"RISK_PARAMETER"},"quorumAdversaryThresholdPercentages":{"severity":"HIGH","description":"The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.","type":"RISK_PARAMETER"},"quorumConfirmationThresholdPercentages":{"severity":"HIGH","description":"The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.","type":"RISK_PARAMETER"},"batchConfirmers":{"severity":"HIGH","description":"The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.","type":"RISK_PARAMETER"}}
       category:
 -        {"name":"Spam","priority":-1}
-      targetType:
-+        "Contract"
-      targetProject:
-+        "eigenda"
     }
 ```
 
 ```diff
--   Status: DELETED
-    contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05)
+    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05) {
     +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
-```
-
-```diff
--   Status: DELETED
-    contract IndexRegistry (eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030)
-    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
-```
-
-```diff
--   Status: DELETED
-    contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B)
-    +++ description: Registry for EigenDA relay keys, maps key to address.
-```
-
-```diff
-    reference EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15) {
-    +++ description: None
-      type:
--        "Contract"
-+        "Reference"
-      template:
--        "eigenlayer/EigenDAThresholdRegistry"
-      sourceHashes:
--        ["0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d","0x7de6bfaca27d4a2d2ff694543af488ed523e89a1f239036f972852611a228eae"]
-      proxyType:
--        "EIP1967 proxy"
-      description:
--        "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)"
-      sinceTimestamp:
--        1744750211
-      sinceBlock:
--        22276878
-      values:
--        {"$admin":"eth:0x8247EF5705d3345516286B72bFE6D690197C2E99","$implementation":"eth:0x92104977f16dAe423966caa5cD9C115F2D25a8D6","$pastUpgrades":[["2025-04-15T20:50:11.000Z","0x903e00f79e1b98e13ebbc40db4c023249e3dca47685bd30ad86962d60aa83292",["eth:0x92104977f16dAe423966caa5cD9C115F2D25a8D6"]]],"$upgradeCount":1,"nextBlobVersion":1,"owner":"eth:0x002721B4790d97dC140a049936aA710152Ba92D5","quorumAdversaryThresholdPercentages":"0x212121","quorumConfirmationThresholdPercentages":"0x373737","quorumNumbersRequired":"0x0001"}
-      fieldMeta:
--        {"getQuorumAdversaryThresholdPercentage":{"severity":"HIGH","type":"RISK_PARAMETER"},"getQuorumConfirmationThresholdPercentage":{"severity":"HIGH","type":"RISK_PARAMETER"},"quorumNumbersRequired":{"severity":"HIGH","type":"RISK_PARAMETER"}}
       category:
 -        {"name":"Spam","priority":-1}
-      targetType:
-+        "Contract"
-      targetProject:
-+        "eigenda"
     }
+```
+
+```diff
+    contract IndexRegistry (eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B) {
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15) {
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
++   Status: CREATED
+    reference AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x9bb8dbe254646e18788dca7d180bc3df1b5297ca
@@ -213,13 +225,12 @@ Upgraded implementation from 0x2425EB to 0x7f84fE. The only code change is the a
 New upgradeable contract serving as the batch inbox. Its `fallback()` function strips a 4-byte prefix from calldata, RLP-decodes an EigenDACertV3 struct, and calls `EigenDACertVerifier.checkDACertReverts()` to validate the EigenDA certificate on-chain. This means every batch submission now verifies the EigenDA data availability certificate on L1.
 
 **EigenDACertVerifier (new, 0xa4F386) + EigenDA/EigenLayer infrastructure:**
-An immutable EigenDA V3 certificate verifier referenced by BunnyInbox. It verifies batch data attestations against operator signatures and stake thresholds via the EigenDAServiceManager.
+An immutable EigenDA V3 certificate verifier referenced by BunnyInbox. It verifies batch data attestations against operator signatures and stake thresholds via the EigenDAServiceManager. 
 
 **Stale proof system config:**
 The KailuaGame and KailuaTreasury have an immutable `ROLLUP_CONFIG_HASH` (0x16ebac7d...) that commits to the rollup config including the batch inbox address. Since the batch inbox changed from the old EOA (0x00656C) to BunnyInbox (0x02B8d1), but the games were NOT redeployed, the on-chain `ROLLUP_CONFIG_HASH` no longer matches the current chain config. Any ZK proof generated against the current derivation pipeline would produce a different config hash and fail on-chain verification. Additionally, the `FPVM_IMAGE_ID` likely needs updating so the prover program rejects reverted BunnyInbox transactions - otherwise the batcher could submit invalid DA certs that revert on L1 but are still picked up by derivation. The games should be redeployed with updated `ROLLUP_CONFIG_HASH` and `FPVM_IMAGE_ID`.
 
 **Governance changes:**
-
 - MegaETH Safe multisig changed from 4/8 (50%) to 6/10 (60%) threshold
 - Two new members added: a 1-of-3 nested Safe (0x63eC, nonce 0) and an EOA (0x0D17)
 
@@ -465,13 +476,12 @@ Generated with discovered.json: 0x7c45d450fb2bdc3b24ca26628384d125cdc2ff16
 ## Description
 
 Initial discovery. Untemplatized contracts diff with most similar templatized:
-
-- SystemConfig:  
-  https://disco.l2beat.com/diff/eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647/eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639 (higher gas limit)
-- OptimismPortal2:  
-  https://disco.l2beat.com/diff/eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273/eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9 (no constructor params, system address)
-- SuperchainConfig:  
-  https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89 (guardian transfer functions)
+- SystemConfig:                                                                                                                                                                                                       
+  https://disco.l2beat.com/diff/eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647/eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639  (higher gas limit)
+- OptimismPortal2:                                                                                                                                                                                              
+  https://disco.l2beat.com/diff/eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273/eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9  (no constructor params, system address)
+- SuperchainConfig:                                                                                                                                                                                                   
+  https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89  (guardian transfer functions)
 
 basti 12/22: the verifier contract source is now available. looks like an older risc0groth16 verifier: https://disco.l2beat.com/diff/eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9/eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3
 
