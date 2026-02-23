@@ -579,3 +579,74 @@ export interface ApiEnhancedTraversalResponse {
   /** True if functions.json was modified after call-graph-data.json */
   callGraphStale: boolean
 }
+
+// ============================================================================
+// Function Analysis Types (Per-function impact & dependencies)
+// ============================================================================
+
+/** A single step in a call path showing how one contract reaches another */
+export interface CallPathStep {
+  contractAddress: string
+  contractName: string
+  functionName: string
+  isViewCall: boolean
+}
+
+/** A contract reachable from a function that holds funds */
+export interface FunctionImpactEntry {
+  contractAddress: string
+  contractName: string
+  /** True if ALL paths to this contract are view-only */
+  viewOnlyPath: boolean
+  /** Functions called on the target contract */
+  calledFunctions: string[]
+  /** Subset of calledFunctions that are permissioned */
+  permissionedFunctions: string[]
+  /** Funds in this contract (balances + positions) */
+  fundsUsd: number
+  /** Token market cap if contract is a token */
+  tokenValueUsd: number
+  /** Shortest call path from the starting function to this contract */
+  callPath: CallPathStep[]
+}
+
+/** An external dependency of a function */
+export interface FunctionDependencyEntry {
+  contractAddress: string
+  contractName: string
+  /** True if auto-detected from call graph, false if manually specified */
+  isAutoDetected: boolean
+  /** True if ALL calls to this dependency are view-only */
+  viewOnlyPath: boolean
+  /** Functions called on this dependency (empty for manual) */
+  calledFunctions: string[]
+  /** Centralization attribute from contract-tags */
+  centralization?: string
+  /** Mitigations attribute from contract-tags */
+  mitigations?: string
+  /** Shortest call path from the starting function to this dependency */
+  callPath: CallPathStep[]
+}
+
+/** Per-function analysis combining impact and dependencies */
+export interface FunctionAnalysis {
+  /** Reachable contracts with funds — only for permissioned functions, null otherwise */
+  impact: {
+    reachableContracts: FunctionImpactEntry[]
+    totalFundsAtRisk: number
+    totalTokenValueAtRisk: number
+    unresolvedCallsCount: number
+  } | null
+  /** External dependencies — for all functions */
+  dependencies: {
+    entries: FunctionDependencyEntry[]
+  }
+}
+
+/** API response for the function analysis endpoint */
+export interface ApiFunctionAnalysisResponse {
+  version: string
+  lastModified: string
+  /** Map of contractAddress -> functionName -> FunctionAnalysis */
+  contracts: Record<string, Record<string, FunctionAnalysis>>
+}

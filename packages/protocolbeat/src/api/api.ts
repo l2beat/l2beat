@@ -23,6 +23,7 @@ import type {
   ApiTokenInfoResponse,
   ApiResearcherInfoResponse,
   ApiEnhancedTraversalResponse,
+  ApiFunctionAnalysisResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -503,4 +504,13 @@ export async function getEnhancedTraversal(project: string): Promise<ApiEnhanced
   }
   const data = await res.json()
   return data as ApiEnhancedTraversalResponse
+}
+
+export async function getFunctionAnalysis(project: string): Promise<ApiFunctionAnalysisResponse> {
+  const res = await fetch(`/api/projects/${project}/function-analysis`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiFunctionAnalysisResponse
 }
