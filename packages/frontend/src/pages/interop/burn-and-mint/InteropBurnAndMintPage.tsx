@@ -11,6 +11,7 @@ import { api } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
+import { DirectionalChainSelector } from '../components/chain-selector/DirectionalChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InitialChainSelector } from '../components/InitialChainSelector'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
@@ -19,23 +20,29 @@ import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProt
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
+import type { DirectionalSelectedChains } from '../utils/getInitialDirectionalSelectedChains'
 import {
+  type InteropMode,
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
 import { HeaderWithDescription } from './components/HeaderWithDescription'
 
 interface Props extends AppLayoutProps {
+  mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   protocols: WithProjectIcon<Project<'interopConfig'>>[]
   initialSelectedChains: SelectedChainsIds
+  initialDirectionalSelectedChains?: DirectionalSelectedChains
 }
 
 export function InteropBurnAndMintPage({
+  mode,
   interopChains,
   queryState,
   initialSelectedChains,
+  initialDirectionalSelectedChains,
   protocols,
   ...props
 }: Props) {
@@ -43,11 +50,17 @@ export function InteropBurnAndMintPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <InteropSelectedChainsProvider
+          mode={mode}
           interopChains={interopChains}
           initialSelectedChains={initialSelectedChains}
+          initialDirectionalSelectedChains={initialDirectionalSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <Content interopChains={interopChains} protocols={protocols} />
+            <Content
+              mode={mode}
+              interopChains={interopChains}
+              protocols={protocols}
+            />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
@@ -56,15 +69,17 @@ export function InteropBurnAndMintPage({
 }
 
 function Content({
+  mode,
   interopChains,
   protocols,
 }: {
+  mode: InteropMode
   interopChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
-  if (!selectedChains.first || !selectedChains.second) {
+  if (mode === 'public' && (!selectedChains.first || !selectedChains.second)) {
     return (
       <>
         <div className="max-md:hidden">
@@ -85,7 +100,11 @@ function Content({
       <div className="max-md:hidden">
         <HeaderWithDescription />
       </div>
-      <ChainSelector chains={interopChains} protocols={protocols} />
+      {mode === 'public' ? (
+        <ChainSelector chains={interopChains} protocols={protocols} />
+      ) : (
+        <DirectionalChainSelector chains={interopChains} />
+      )}
       <div className="md:hidden">
         <HeaderWithDescription />
       </div>
@@ -95,12 +114,9 @@ function Content({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains } = useInteropSelectedChains()
+  const { apiSelectionInput, mode, isDirty, reset } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChainsIds: [
-      selectedChains.first?.id ?? null,
-      selectedChains.second?.id ?? null,
-    ],
+    ...apiSelectionInput,
     type: 'burnAndMint',
   })
 
@@ -109,7 +125,12 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     data.flows.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState />
+    return (
+      <InteropEmptyState
+        showResetButton={mode === 'internal' && isDirty}
+        onResetButtonClick={reset}
+      />
+    )
   }
 
   return (

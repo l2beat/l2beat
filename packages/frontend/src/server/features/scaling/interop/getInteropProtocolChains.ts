@@ -10,17 +10,28 @@ import { accumulateChains } from './utils/accumulate'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
 import { getChainsData } from './utils/getChainsData'
 import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
+import {
+  filterDirectionalTransfers,
+  resolveInteropSelection,
+  toLegacySelectedChainsTuple,
+} from './utils/resolveInteropSelection'
 
 export async function getInteropProtocolChains({
   id,
-  selectedChainsIds: selectedChains,
+  selectedChainsIds,
+  from,
+  to,
   type,
 }: InteropProtocolTokensParams): Promise<ChainData[]> {
   const logger = getLogger().for('getProtocolChains')
   const db = getDb()
 
-  const [firstChain, secondChain] = selectedChains
-  if (!firstChain || !secondChain) {
+  const selection = resolveInteropSelection({
+    selectedChainsIds,
+    from,
+    to,
+  })
+  if (selection.mode === 'empty') {
     return []
   }
 
@@ -39,13 +50,19 @@ export async function getInteropProtocolChains({
   }
 
   const durationSplitMap = buildDurationSplitMap([interopProject])
-  const transfers =
+  const selectedChains = toLegacySelectedChainsTuple(selection.union)
+
+  const allTransfers =
     await db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      [firstChain, secondChain],
+      selectedChains,
       type,
     )
+  const transfers =
+    selection.mode === 'directional'
+      ? filterDirectionalTransfers(allTransfers, selection.from, selection.to)
+      : allTransfers
 
   const chainsMap = new Map<string, CommonInteropData>()
 

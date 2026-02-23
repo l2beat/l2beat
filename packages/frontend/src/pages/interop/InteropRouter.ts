@@ -17,6 +17,18 @@ const SelectedChainsQuerySchema = v.object({
     .transform((v) => v?.split(',')),
 })
 
+export type InternalFromToQuery = v.infer<typeof InternalFromToQuerySchema>
+const InternalFromToQuerySchema = v.object({
+  from: v
+    .string()
+    .optional()
+    .transform((v) => v?.split(',')),
+  to: v
+    .string()
+    .optional()
+    .transform((v) => v?.split(',')),
+})
+
 export function createInteropRouter(
   manifest: Manifest,
   render: RenderFunction,
@@ -26,6 +38,10 @@ export function createInteropRouter(
 
   router.get('/interop', (_req, res) => {
     res.redirect('/interop/summary')
+  })
+
+  router.get('/interop/internal', (_req, res) => {
+    res.redirect('/interop/internal/summary')
   })
 
   router.get(
@@ -71,6 +87,62 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropBurnAndMintData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
+
+  router.get(
+    '/interop/internal/summary',
+    validateRoute({
+      query: InternalFromToQuerySchema,
+    }),
+    async (req, res) => {
+      const data = await getInteropSummaryData(req, manifest, cache, {
+        mode: 'internal',
+      })
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
+
+  router.get(
+    '/interop/internal/non-minting',
+    validateRoute({
+      query: InternalFromToQuerySchema,
+    }),
+    async (req, res) => {
+      const data = await getInteropNonMintingData(req, manifest, cache, {
+        mode: 'internal',
+      })
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
+
+  router.get(
+    '/interop/internal/lock-and-mint',
+    validateRoute({
+      query: InternalFromToQuerySchema,
+    }),
+    async (req, res) => {
+      const data = await getInteropLockAndMintData(req, manifest, cache, {
+        mode: 'internal',
+      })
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
+
+  router.get(
+    '/interop/internal/burn-and-mint',
+    validateRoute({
+      query: InternalFromToQuerySchema,
+    }),
+    async (req, res) => {
+      const data = await getInteropBurnAndMintData(req, manifest, cache, {
+        mode: 'internal',
+      })
       const html = render(data, req.originalUrl)
       res.status(200).send(html)
     },

@@ -10,6 +10,7 @@ import type {
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
+import { DirectionalChainSelector } from '../components/chain-selector/DirectionalChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InitialChainSelector } from '../components/InitialChainSelector'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
@@ -17,7 +18,9 @@ import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCaro
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
+import type { DirectionalSelectedChains } from '../utils/getInitialDirectionalSelectedChains'
 import {
+  type InteropMode,
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
@@ -29,16 +32,20 @@ import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridgeTypeEntries'
 
 interface Props extends AppLayoutProps {
+  mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
   initialSelectedChains: SelectedChainsIds
+  initialDirectionalSelectedChains?: DirectionalSelectedChains
 }
 
 export function InteropSummaryPage({
+  mode,
   interopChains,
   queryState,
   initialSelectedChains,
+  initialDirectionalSelectedChains,
   protocols,
   ...props
 }: Props) {
@@ -46,12 +53,18 @@ export function InteropSummaryPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <InteropSelectedChainsProvider
+          mode={mode}
           interopChains={interopChains}
           initialSelectedChains={initialSelectedChains}
+          initialDirectionalSelectedChains={initialDirectionalSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
             <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-            <Content interopChains={interopChains} protocols={protocols} />
+            <Content
+              mode={mode}
+              interopChains={interopChains}
+              protocols={protocols}
+            />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
@@ -60,15 +73,17 @@ export function InteropSummaryPage({
 }
 
 function Content({
+  mode,
   interopChains,
   protocols,
 }: {
+  mode: InteropMode
   interopChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
-  if (!selectedChains.first || !selectedChains.second) {
+  if (mode === 'public' && (!selectedChains.first || !selectedChains.second)) {
     return (
       <InitialChainSelector
         interopChains={interopChains}
@@ -81,27 +96,31 @@ function Content({
 
   return (
     <>
-      <ChainSelector chains={interopChains} protocols={protocols} />
+      {mode === 'public' ? (
+        <ChainSelector chains={interopChains} protocols={protocols} />
+      ) : (
+        <DirectionalChainSelector chains={interopChains} />
+      )}
       <Widgets interopChains={interopChains} />
     </>
   )
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChainsIds: [
-      selectedChains.first?.id ?? null,
-      selectedChains.second?.id ?? null,
-    ],
-  })
+  const { apiSelectionInput, mode, isDirty, reset } = useInteropSelectedChains()
+  const { data, isLoading } = api.interop.dashboard.useQuery(apiSelectionInput)
 
   if (
     data?.entries.length === 0 &&
     data.flows.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState />
+    return (
+      <InteropEmptyState
+        showResetButton={mode === 'internal' && isDirty}
+        onResetButtonClick={reset}
+      />
+    )
   }
 
   const { lockAndMint, nonMinting, burnAndMint } = getBridgeTypeEntries(

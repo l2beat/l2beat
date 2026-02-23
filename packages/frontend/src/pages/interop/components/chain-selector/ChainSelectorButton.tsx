@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from '~/components/core/Popover'
 import {
-  type InteropSelectedChains,
+  type InteropPublicSelectedChains,
   useInteropSelectedChains,
 } from '../../utils/InteropSelectedChainsContext'
 import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
@@ -22,7 +22,7 @@ export function ChainSelectorButton({
   chainKey,
   allChains,
 }: {
-  chainKey: keyof InteropSelectedChains
+  chainKey: keyof InteropPublicSelectedChains
   allChains: InteropChainWithIcon[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()

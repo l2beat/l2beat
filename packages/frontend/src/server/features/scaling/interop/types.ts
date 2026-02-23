@@ -67,16 +67,25 @@ export type SelectedChainsIds = v.infer<typeof SelectedChainsIds>
 
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
-  selectedChainsIds: SelectedChainsIds,
+  selectedChainsIds: SelectedChainsIds.optional(),
+  from: v.array(v.string()).optional(),
+  to: v.array(v.string()).optional(),
   type: KnownInteropBridgeType.optional(),
 })
+
+export type InteropSelectionInput = Pick<
+  InteropDashboardParams,
+  'selectedChainsIds' | 'from' | 'to'
+>
 
 export type InteropProtocolTokensParams = v.infer<
   typeof InteropProtocolTokensParams
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
-  selectedChainsIds: SelectedChainsIds,
+  selectedChainsIds: SelectedChainsIds.optional(),
+  from: v.array(v.string()).optional(),
+  to: v.array(v.string()).optional(),
   type: KnownInteropBridgeType.optional(),
 })
 

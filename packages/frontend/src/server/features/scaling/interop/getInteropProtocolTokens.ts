@@ -16,17 +16,29 @@ import {
   INITIAL_COMMON_INTEROP_DATA,
 } from './utils/getProtocolsDataMap'
 import { getTokensData } from './utils/getTokensData'
+import {
+  filterDirectionalTokens,
+  filterDirectionalTransfers,
+  resolveInteropSelection,
+  toLegacySelectedChainsTuple,
+} from './utils/resolveInteropSelection'
 
 export async function getInteropProtocolTokens({
   id,
-  selectedChainsIds: selectedChains,
+  selectedChainsIds,
+  from,
+  to,
   type,
 }: InteropProtocolTokensParams): Promise<TokenData[]> {
   const logger = getLogger().for('getProtocolTokens')
   const db = getDb()
 
-  const [firstChain, secondChain] = selectedChains
-  if (!firstChain || !secondChain) {
+  const selection = resolveInteropSelection({
+    selectedChainsIds,
+    from,
+    to,
+  })
+  if (selection.mode === 'empty') {
     return []
   }
 
@@ -44,20 +56,60 @@ export async function getInteropProtocolTokens({
     return []
   }
 
-  const [counts, tokens] = await Promise.all([
-    await db.aggregatedInteropTransfer.getSummedTransferCountsByChainsIdAndTimestamp(
-      latestTimestamp,
-      id,
-      [firstChain, secondChain],
-      type,
-    ),
-    db.aggregatedInteropToken.getByChainsIdAndTimestamp(
-      latestTimestamp,
-      id,
-      [firstChain, secondChain],
-      type,
-    ),
-  ])
+  const selectedChains = toLegacySelectedChainsTuple(selection.union)
+
+  const [counts, tokens] =
+    selection.mode === 'pair'
+      ? await Promise.all([
+          db.aggregatedInteropTransfer.getSummedTransferCountsByChainsIdAndTimestamp(
+            latestTimestamp,
+            id,
+            selectedChains,
+            type,
+          ),
+          db.aggregatedInteropToken.getByChainsIdAndTimestamp(
+            latestTimestamp,
+            id,
+            selectedChains,
+            type,
+          ),
+        ])
+      : await Promise.all([
+          db.aggregatedInteropTransfer
+            .getByChainsIdAndTimestamp(
+              latestTimestamp,
+              id,
+              selectedChains,
+              type,
+            )
+            .then((transfers) => {
+              const filteredTransfers = filterDirectionalTransfers(
+                transfers,
+                selection.from,
+                selection.to,
+              )
+              return {
+                transferCount: filteredTransfers.reduce(
+                  (acc, transfer) => acc + transfer.transferCount,
+                  0,
+                ),
+                identifiedCount: filteredTransfers.reduce(
+                  (acc, transfer) => acc + transfer.identifiedCount,
+                  0,
+                ),
+              }
+            }),
+          db.aggregatedInteropToken
+            .getByChainsIdAndTimestamp(
+              latestTimestamp,
+              id,
+              selectedChains,
+              type,
+            )
+            .then((allTokens) =>
+              filterDirectionalTokens(allTokens, selection.from, selection.to),
+            ),
+        ])
 
   const abstractTokenIds = unique(tokens.map((token) => token.abstractTokenId))
   const transfersTimeModeMap = buildTransfersTimeModeMap([interopProject])

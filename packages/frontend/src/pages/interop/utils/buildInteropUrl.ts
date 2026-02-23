@@ -1,8 +1,8 @@
-import type { InteropSelectedChains } from './InteropSelectedChainsContext'
+import type { InteropPublicSelectedChains } from './InteropSelectedChainsContext'
 
 export function buildInteropUrl(
   path: string,
-  selectedChains?: InteropSelectedChains,
+  selectedChains?: InteropPublicSelectedChains,
 ): string {
   if (!selectedChains || !selectedChains.first || !selectedChains.second) {
     return path

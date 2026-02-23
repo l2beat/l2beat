@@ -1,14 +1,17 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import type { InteropSelectedChains } from '../utils/InteropSelectedChainsContext'
+import type {
+  InteropPublicSelectedChains,
+  InteropSelectedChains,
+} from '../utils/InteropSelectedChainsContext'
 import type { InteropChainWithIcon } from './chain-selector/types'
 
 interface Props {
   selectedChains: InteropSelectedChains
   interopChains: InteropChainWithIcon[]
   selectChain: (
-    index: keyof InteropSelectedChains,
+    index: keyof InteropPublicSelectedChains,
     chainId: string | null,
   ) => void
   type: KnownInteropBridgeType | undefined

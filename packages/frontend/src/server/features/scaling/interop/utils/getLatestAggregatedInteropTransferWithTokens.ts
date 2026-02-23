@@ -2,19 +2,25 @@ import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type {
   AggregatedInteropTransferWithTokens,
-  SelectedChainsIds,
+  InteropSelectionInput,
 } from '../types'
+import {
+  filterDirectionalTokens,
+  filterDirectionalTransfers,
+  resolveInteropSelection,
+  toLegacySelectedChainsTuple,
+} from './resolveInteropSelection'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
-  selectedChains: SelectedChainsIds,
+  selectionInput: InteropSelectionInput,
   type?: KnownInteropBridgeType,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
-  const db = getDb()
-
-  const [firstChain, secondChain] = selectedChains
-  if (!firstChain || !secondChain) {
+  const selection = resolveInteropSelection(selectionInput)
+  if (selection.mode === 'empty') {
     return []
   }
+
+  const db = getDb()
 
   const latestTimestamp =
     await db.aggregatedInteropTransfer.getLatestTimestamp()
@@ -22,20 +28,31 @@ export async function getLatestAggregatedInteropTransferWithTokens(
     return []
   }
 
-  const [transfers, tokens] = await Promise.all([
+  const selectedChains = toLegacySelectedChainsTuple(selection.union)
+
+  const [allTransfers, allTokens] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsAndTimestamp(
       latestTimestamp,
-      [firstChain, secondChain],
+      selectedChains,
       type,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
       latestTimestamp,
-      [firstChain, secondChain],
+      selectedChains,
       type,
     ),
   ])
 
-  const records = transfers.map((transfer) => ({
+  const transfers =
+    selection.mode === 'directional'
+      ? filterDirectionalTransfers(allTransfers, selection.from, selection.to)
+      : allTransfers
+  const tokens =
+    selection.mode === 'directional'
+      ? filterDirectionalTokens(allTokens, selection.from, selection.to)
+      : allTokens
+
+  return transfers.map((transfer) => ({
     ...transfer,
     tokens: tokens
       .filter(
@@ -54,6 +71,4 @@ export async function getLatestAggregatedInteropTransferWithTokens(
         burnedValueUsd: token.burnedValueUsd,
       })),
   }))
-
-  return records
 }
