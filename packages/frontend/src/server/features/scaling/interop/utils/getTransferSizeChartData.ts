@@ -77,11 +77,11 @@ export function getTransferSizeChartData(
   return Array.from(data.values())
     .filter(
       (p) =>
-        p.percentageUnder100 > 0 ||
-        p.percentage100To1K > 0 ||
-        p.percentage1KTo10K > 0 ||
-        p.percentage10KTo100K > 0 ||
-        p.percentageOver100K > 0,
+        p.countUnder100 > 0 ||
+        p.count100To1K > 0 ||
+        p.count1KTo10K > 0 ||
+        p.count10KTo100K > 0 ||
+        p.countOver100K > 0,
     )
     .sort((a, b) => b.percentageUnder100 - a.percentageUnder100)
     .slice(0, 15)
