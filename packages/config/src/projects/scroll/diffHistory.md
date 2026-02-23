@@ -8,7 +8,7 @@ Generated with discovered.json: 0x69d76a30c2c03488ab23d607388cc37980c49b64
 
 ## Description
 
-ZkEvmVerifierPostFeynman replaced at index 9 of MultipleVersionRollupVerifier: old verifier 0x4F43... deleted, new verifier 0x0dE1... created with identical source code but updated verifierDigest (verification key update).
+Emergency upgrade: ZkEvmVerifierPostFeynman replaced at index 9 of MultipleVersionRollupVerifier due to a bug in the guest prover program. Old verifier 0x4F43... deleted, new verifier 0x0dE1... created with identical source code but updated verifierDigest (verification key update).
 
 ## Watched changes
 
