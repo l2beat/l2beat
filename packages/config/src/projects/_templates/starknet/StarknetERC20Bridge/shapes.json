@@ -8,5 +8,11 @@
     "hash": "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a",
     "address": "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
     "blockNumber": 22188285
+  },
+  "StarknetTokenBridge_v2_0_5": {
+    "hash": "0xecdc47d2045525d1d373fdecc6478959fa5b2d2595713c2187c41ed98baa4738",
+    "address": "eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86",
+    "chain": "ethereum",
+    "blockNumber": 24519458
   }
 }

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xbdb9a56c4c51bd5e6820243d09b92fd5e897a160
+
+# Diff at Fri, 20 Feb 2026 10:41:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@21902f5765b5386e38d868a47fc71a5d69793f8f block: 1769768029
+- current timestamp: 1771584033
+
+## Description
+
+Removed one Caldera multisig member.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0xa042bc100e20fc8b277f85d1e276ca5ff782cc02
 
 # Diff at Fri, 30 Jan 2026 10:14:52 GMT:

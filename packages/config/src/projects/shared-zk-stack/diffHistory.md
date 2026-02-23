@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x11e63b7ec0a1cd9c4fae6e9d2d5ea64321fae956
+
+# Diff at Fri, 20 Feb 2026 10:25:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@21902f5765b5386e38d868a47fc71a5d69793f8f block: 1771493033
+- current timestamp: 1771583051
+
+## Description
+
+Config-related changes changed code hash for one zksync contract. Template changed, here is the code diff between two contracts from these templates: https://disco.l2beat.com/diff/zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC/eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d.
+
+No real change onchain.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771493033 (main branch discovery), not current.
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
++        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+    }
+```
+
 Generated with discovered.json: 0xfc0df7de78ccec90060622d5ff203bd7fb8bb5b6
 
 # Diff at Mon, 16 Feb 2026 14:22:19 GMT:
