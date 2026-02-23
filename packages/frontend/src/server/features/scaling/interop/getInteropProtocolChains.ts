@@ -41,7 +41,7 @@ export async function getInteropProtocolChains({
   }
 
   const durationSplitMap = buildDurationSplitMap([interopProject])
-  const allTransfers =
+  const transfers =
     await db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
@@ -49,7 +49,6 @@ export async function getInteropProtocolChains({
       selection.to,
       type,
     )
-  const transfers = allTransfers
 
   const chainsMap = new Map<string, CommonInteropData>()
 

@@ -46,7 +46,7 @@ export async function getInteropProtocolTokens({
     return []
   }
 
-  const [allTransfers, allTokens] = await Promise.all([
+  const [transfers, tokens] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
@@ -63,8 +63,6 @@ export async function getInteropProtocolTokens({
     ),
   ])
 
-  const transfers = allTransfers
-  const tokens = allTokens
   const counts = {
     transferCount: transfers.reduce(
       (acc, transfer) => acc + transfer.transferCount,
