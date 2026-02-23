@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xc57e8194aff0d2c821abaf01f29905676fec4080
+
+# Diff at Mon, 23 Feb 2026 12:39:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@20ede1de11e17f656c261821f0f270c0c75e5be0 block: 1771336788
+- current timestamp: 1771850198
+
+## Description
+
+Updated zk verifier. The changes are in this commit: https://github.com/elliottech/lighter-prover/commit/dd7d2182f7d9ec29ca452f410a5ffb1f3dc13925.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        42
++        43
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x85e6398edfbc4cbd9f9a869520badf263bc93a16d3e5d72dcbe7e55d5f479781"
++        "0x70c219a599bf68fee16b4e1d51e5613de77271898f7debaf4775315e10517ee4"
+      values.$implementation:
+-        "eth:0xae6961882D8Ad8d1d6840228CCca471ffffd5EA5"
++        "eth:0xa271Df8660A318F155A31e64d0529ed85C2d1616"
+      values.getTarget:
+-        "eth:0xae6961882D8Ad8d1d6840228CCca471ffffd5EA5"
++        "eth:0xa271Df8660A318F155A31e64d0529ed85C2d1616"
+      implementationNames.eth:0xae6961882D8Ad8d1d6840228CCca471ffffd5EA5:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0xa271Df8660A318F155A31e64d0529ed85C2d1616:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                       | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0x2799814c4f7261c4cef78afec00447fd5492a066
 
 # Diff at Tue, 17 Feb 2026 14:00:52 GMT:
