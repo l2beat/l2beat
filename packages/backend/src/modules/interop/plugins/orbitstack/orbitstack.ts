@@ -366,7 +366,7 @@ export class OrbitStackPlugin implements InteropPlugin {
         results.push(
           Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
-            srcAmount: messageDelivered.args.txValue,
+            srcAmount: event.args.ethAmount,
             srcTokenAddress: Address32.NATIVE,
             srcWasBurned: false,
             dstEvent: event,

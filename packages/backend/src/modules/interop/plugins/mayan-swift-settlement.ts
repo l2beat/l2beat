@@ -15,15 +15,18 @@ For batched settlements, a single LogMessagePublished contains multiple order ke
 We create one SettlementSent event per order key to enable 1-on-1 matching.
 */
 
-import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import {
+  MAYAN_SWIFT,
+  MAYAN_SWIFT_CHAINS,
+  toChainSpecificAddresses,
+} from './mayan-shared'
 import { SettlementSent } from './mayan-swift'
 import {
   extractMayanSwiftBatchOrderKeys,
   extractWormholeEmitterChainFromTxData,
   getMayanSwiftSettlementMsgType,
-  MAYAN_SWIFT,
-  MAYAN_SWIFT_CHAINS,
   MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK,
 } from './mayan-swift.utils'
 import {
@@ -64,16 +67,10 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
   constructor(private configs: InteropConfigStore) {}
 
   getDataRequests(): DataRequest[] {
-    const mayanSwiftAddresses: ChainSpecificAddress[] = []
-    for (const chain of MAYAN_SWIFT_CHAINS) {
-      try {
-        mayanSwiftAddresses.push(
-          ChainSpecificAddress.fromLong(chain, MAYAN_SWIFT),
-        )
-      } catch {
-        // Chain not supported by ChainSpecificAddress, skip
-      }
-    }
+    const mayanSwiftAddresses = toChainSpecificAddresses(
+      MAYAN_SWIFT_CHAINS,
+      MAYAN_SWIFT,
+    )
 
     return [
       {
