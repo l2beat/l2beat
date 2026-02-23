@@ -1,4 +1,3 @@
-import { pluralize } from '@l2beat/shared-pure'
 import { cn } from '~/utils/cn'
 import { useInteropSelectedChains } from '../utils/InteropSelectedChainsContext'
 
@@ -19,6 +18,8 @@ export function BetweenChainsInfo({
   const isSinglePair =
     selectedChains.from.length === 1 && selectedChains.to.length === 1
 
+  if (!isSinglePair) return null
+
   return (
     <div
       className={cn(
@@ -26,21 +27,10 @@ export function BetweenChainsInfo({
         className,
       )}
     >
-      {isSinglePair ? (
-        <>
-          <span>Between</span>
-          {fromChain && <img src={fromChain.iconUrl} className="size-4" />}
-          <span>&</span>
-          {toChain && <img src={toChain.iconUrl} className="size-4" />}
-        </>
-      ) : (
-        <span>
-          Between {selectedChains.from.length}{' '}
-          {pluralize(selectedChains.from.length, 'source chain')} and{' '}
-          {selectedChains.to.length}{' '}
-          {pluralize(selectedChains.to.length, 'destination chain')}
-        </span>
-      )}
+      <span>Between</span>
+      {fromChain && <img src={fromChain.iconUrl} className="size-4" />}
+      <span>&</span>
+      {toChain && <img src={toChain.iconUrl} className="size-4" />}
       {additionalText && <span>{additionalText}</span>}
     </div>
   )
