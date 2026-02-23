@@ -15,7 +15,8 @@ import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('megaeth', undefined, {
   reachableEntries: {
     use: true,
-    maxDepth: 1,
+    // Only directly referenced eigen-da contracts
+    maxDepth: 0,
   },
 })
 
