@@ -7,7 +7,7 @@ import type { ProtocolDisplayable } from '~/server/features/scaling/interop/type
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
-import { DirectionalChainSelector } from '../components/chain-selector/DirectionalChainSelector'
+import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InitialChainSelector } from '../components/InitialChainSelector'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
@@ -82,7 +82,10 @@ function Content({
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
-  if (mode === 'public' && (!selectedChains.first || !selectedChains.second)) {
+  if (
+    mode === 'public' &&
+    (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
+  ) {
     return (
       <InitialChainSelector
         interopChains={onboardingInteropChains}
@@ -98,7 +101,7 @@ function Content({
       {mode === 'public' ? (
         <ChainSelector chains={interopChains} protocols={protocols} />
       ) : (
-        <DirectionalChainSelector chains={interopChains} />
+        <MultiChainSelector chains={interopChains} />
       )}
       <Widgets interopChains={interopChains} />
     </>

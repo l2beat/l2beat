@@ -11,10 +11,6 @@ import { getInteropSummaryData } from './summary/getInteropSummaryData'
 
 export type InteropQuery = v.infer<typeof InteropQuerySchema>
 const InteropQuerySchema = v.object({
-  selectedChains: v
-    .string()
-    .optional()
-    .transform((v) => v?.split(',')),
   from: v
     .string()
     .optional()

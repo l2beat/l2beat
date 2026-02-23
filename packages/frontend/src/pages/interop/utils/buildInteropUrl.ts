@@ -1,5 +1,5 @@
-import { serializeDirectionalSelectionToQueryValue } from './directionalSelection'
 import type { InteropSelection } from './getInitialInteropSelection'
+import { serializeMultiChainSelectionToQueryValue } from './multiChainSelection'
 
 export function buildInteropUrl(
   path: string,
@@ -9,7 +9,7 @@ export function buildInteropUrl(
 ): string {
   const params = new URLSearchParams()
 
-  const fromValue = serializeDirectionalSelectionToQueryValue(
+  const fromValue = serializeMultiChainSelectionToQueryValue(
     selection.from,
     allChainIds,
     defaultSelection.from,
@@ -18,7 +18,7 @@ export function buildInteropUrl(
     params.set('from', fromValue)
   }
 
-  const toValue = serializeDirectionalSelectionToQueryValue(
+  const toValue = serializeMultiChainSelectionToQueryValue(
     selection.to,
     allChainIds,
     defaultSelection.to,

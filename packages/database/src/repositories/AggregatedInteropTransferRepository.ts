@@ -256,7 +256,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
 
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    selectedChains: [string, string],
+    sourceChains: string[],
+    destinationChains: string[],
     type?: InteropBridgeType,
     options?: {
       includeSameChainTransfers?: boolean
@@ -266,8 +267,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', selectedChains)
-      .where('dstChain', 'in', selectedChains)
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
 
     if (!options?.includeSameChainTransfers) {
       query = query.whereRef('srcChain', '!=', 'dstChain')
@@ -285,7 +286,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getSummedTransferCountsByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    selectedChains: [string, string],
+    sourceChains: string[],
+    destinationChains: string[],
     type?: InteropBridgeType,
     options?: {
       includeSameChainTransfers?: boolean
@@ -296,8 +298,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .select((eb) => eb.fn.sum('transferCount').as('transferCountSum'))
       .select((eb) => eb.fn.sum('identifiedCount').as('identifiedCountSum'))
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', selectedChains)
-      .where('dstChain', 'in', selectedChains)
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
       .where('id', '=', id)
 
     if (!options?.includeSameChainTransfers) {
@@ -324,7 +326,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    selectedChains: [string, string],
+    sourceChains: string[],
+    destinationChains: string[],
     type?: InteropBridgeType,
     options?: {
       includeSameChainTransfers?: boolean
@@ -334,8 +337,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', selectedChains)
-      .where('dstChain', 'in', selectedChains)
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
       .where('id', '=', id)
 
     if (!options?.includeSameChainTransfers) {

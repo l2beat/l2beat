@@ -20,7 +20,7 @@ import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsConte
 import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
 import type { InteropChainWithIcon } from './types'
 
-export function DirectionalChainSelectorButton({
+export function MultiChainSelectorButton({
   allChains,
   type,
 }: {
@@ -208,7 +208,7 @@ function EmptyStateError() {
     <div className="flex items-center gap-1">
       <InfoIcon className="fill-negative" />
       <div className="font-medium text-negative text-paragraph-14">
-        Select at least one pair of chains to display results.
+        Select at least one source and destination chain to display results.
       </div>
     </div>
   )

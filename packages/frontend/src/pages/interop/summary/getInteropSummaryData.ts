@@ -7,6 +7,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
+import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
 import {
   getInitialInteropSelection,
@@ -52,10 +53,12 @@ export async function getInteropSummaryData(
     async () => getCachedData(initialSelection),
   )
 
-  const interopChainsWithIcons = interopChains.map((chain) => ({
-    ...chain,
-    iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-  }))
+  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
+    (chain) => ({
+      ...chain,
+      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+    }),
+  )
 
   return {
     head: {

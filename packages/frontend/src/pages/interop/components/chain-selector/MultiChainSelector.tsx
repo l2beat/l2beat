@@ -1,13 +1,13 @@
 import { SwapIcon } from '~/icons/Swap'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import { DirectionalChainSelectorButton } from './DirectionalChainSelectorButton'
+import { MultiChainSelectorButton } from './MultiChainSelectorButton'
 import type { InteropChainWithIcon } from './types'
 
 interface Props {
   chains: InteropChainWithIcon[]
 }
 
-export function DirectionalChainSelector({ chains }: Props) {
+export function MultiChainSelector({ chains }: Props) {
   const { reset, isDirty, swapPaths } = useInteropSelectedChains()
 
   return (
@@ -20,8 +20,8 @@ export function DirectionalChainSelector({ chains }: Props) {
           </div>
           <div className="h-10 w-px bg-black/16 max-[1024px]:hidden" />
           <div className="flex items-center gap-3">
-            <DirectionalChainSelectorButton allChains={chains} type="from" />
-            <DirectionalChainSelectorButton allChains={chains} type="to" />
+            <MultiChainSelectorButton allChains={chains} type="from" />
+            <MultiChainSelectorButton allChains={chains} type="to" />
             <button
               className="cursor-pointer rounded-lg border border-brand p-[11px] max-md:hidden"
               onClick={swapPaths}

@@ -8,7 +8,7 @@ import { api } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
-import { DirectionalChainSelector } from '../components/chain-selector/DirectionalChainSelector'
+import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InitialChainSelector } from '../components/InitialChainSelector'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
@@ -78,7 +78,10 @@ function Content({
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
-  if (mode === 'public' && (!selectedChains.first || !selectedChains.second)) {
+  if (
+    mode === 'public' &&
+    (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
+  ) {
     return (
       <>
         <div className="max-md:hidden">
@@ -102,7 +105,7 @@ function Content({
       {mode === 'public' ? (
         <ChainSelector chains={interopChains} protocols={protocols} />
       ) : (
-        <DirectionalChainSelector chains={interopChains} />
+        <MultiChainSelector chains={interopChains} />
       )}
       <div className="max-md:bg-surface-primary md:hidden">
         <HeaderWithDescription />

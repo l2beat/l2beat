@@ -4,19 +4,14 @@ import type {
   AggregatedInteropTransferWithTokens,
   InteropSelectionInput,
 } from '../types'
-import {
-  filterDirectionalTokens,
-  filterDirectionalTransfers,
-  resolveInteropSelection,
-  toLegacySelectedChainsTuple,
-} from './resolveInteropSelection'
+import { normalizeInteropSelection } from './resolveInteropSelection'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
   selectionInput: InteropSelectionInput,
   type?: KnownInteropBridgeType,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
-  const selection = resolveInteropSelection(selectionInput)
-  if (selection.mode === 'empty') {
+  const selection = normalizeInteropSelection(selectionInput)
+  if (!selection) {
     return []
   }
 
@@ -28,29 +23,23 @@ export async function getLatestAggregatedInteropTransferWithTokens(
     return []
   }
 
-  const selectedChains = toLegacySelectedChainsTuple(selection.union)
-
   const [allTransfers, allTokens] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsAndTimestamp(
       latestTimestamp,
-      selectedChains,
+      selection.from,
+      selection.to,
       type,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
       latestTimestamp,
-      selectedChains,
+      selection.from,
+      selection.to,
       type,
     ),
   ])
 
-  const transfers =
-    selection.mode === 'directional'
-      ? filterDirectionalTransfers(allTransfers, selection.from, selection.to)
-      : allTransfers
-  const tokens =
-    selection.mode === 'directional'
-      ? filterDirectionalTokens(allTokens, selection.from, selection.to)
-      : allTokens
+  const transfers = allTransfers
+  const tokens = allTokens
 
   return transfers.map((transfer) => ({
     ...transfer,

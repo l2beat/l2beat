@@ -13,35 +13,20 @@ import { useEventListener } from '~/hooks/useEventListener'
 import type { InteropSelectionInput } from '~/server/features/scaling/interop/types'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
-import { normalizeDirectionalSelection } from './directionalSelection'
 import {
   getInitialInteropSelection,
   type InteropSelection,
 } from './getInitialInteropSelection'
+import { normalizeMultiChainSelection } from './multiChainSelection'
 
 export type InteropMode = 'public' | 'internal'
 
-export type InteropSelectedChain = {
-  id: string
-  iconUrl: string
-}
-
-export type InteropPublicSelectedChains = {
-  first: InteropSelectedChain | null
-  second: InteropSelectedChain | null
-}
-
-export type InteropSelectedChains = InteropPublicSelectedChains &
-  InteropSelection
-
 interface InteropSelectedChainsContextType {
   mode: InteropMode
-  selectedChains: InteropSelectedChains
+  selectedChains: InteropSelection
   allChainIds: string[]
-  selectChain: (
-    index: keyof InteropPublicSelectedChains,
-    chainId: string | null,
-  ) => void
+  getChainById: (chainId: string) => InteropChainWithIcon | undefined
+  selectChain: (type: 'from' | 'to', chainId: string | null) => void
   toggleFrom: (chainId: string) => void
   toggleTo: (chainId: string) => void
   selectAll: (type?: 'from' | 'to') => void
@@ -72,6 +57,10 @@ export function InteropSelectedChainsProvider({
 }: InteropSelectedChainsProviderProps) {
   const allChainIds = useMemo(
     () => interopChains.map((c) => c.id),
+    [interopChains],
+  )
+  const chainsById = useMemo(
+    () => new Map(interopChains.map((chain) => [chain.id, chain])),
     [interopChains],
   )
 
@@ -105,25 +94,10 @@ export function InteropSelectedChainsProvider({
     setSelection(normalizedInitialSelection)
   }, [normalizedInitialSelection])
 
-  const selectedChains = useMemo((): InteropSelectedChains => {
-    const firstChainId = getSingleChainId(selection.from)
-    const secondChainId = getSingleChainId(selection.to)
-    const first =
-      firstChainId !== null
-        ? getInteropSelectedChainFromId(firstChainId, interopChains)
-        : null
-    const second =
-      secondChainId !== null
-        ? getInteropSelectedChainFromId(secondChainId, interopChains)
-        : null
-
-    return {
-      first,
-      second,
-      from: selection.from,
-      to: selection.to,
-    }
-  }, [selection, interopChains])
+  const getChainById = useCallback(
+    (chainId: string) => chainsById.get(chainId),
+    [chainsById],
+  )
 
   const apiSelectionInput = useMemo(
     (): InteropSelectionInput => ({
@@ -183,7 +157,6 @@ export function InteropSelectedChainsProvider({
     const fallback = mode === 'internal' ? 'all' : 'empty'
     const parsedSelection = getInitialInteropSelection({
       query: {
-        selectedChains: parseQueryArray(params.get('selectedChains')),
         from: parseQueryArray(params.get('from')),
         to: parseQueryArray(params.get('to')),
       },
@@ -201,10 +174,9 @@ export function InteropSelectedChainsProvider({
   })
 
   const selectChain = useCallback(
-    (index: keyof InteropPublicSelectedChains, chainId: string | null) => {
+    (type: 'from' | 'to', chainId: string | null) => {
       setSelection((prev) => {
-        const side = index === 'first' ? 'from' : 'to'
-        const opposite = index === 'first' ? prev.to : prev.from
+        const opposite = type === 'from' ? prev.to : prev.from
 
         if (chainId && opposite.length === 1 && opposite[0] === chainId) {
           return prev
@@ -212,7 +184,7 @@ export function InteropSelectedChainsProvider({
 
         return {
           ...prev,
-          [side]: chainId ? [chainId] : [],
+          [type]: chainId ? [chainId] : [],
         }
       })
     },
@@ -280,8 +252,9 @@ export function InteropSelectedChainsProvider({
     <InteropSelectedChainsContext.Provider
       value={{
         mode,
-        selectedChains,
+        selectedChains: selection,
         allChainIds,
+        getChainById,
         selectChain,
         toggleFrom,
         toggleTo,
@@ -305,12 +278,12 @@ function normalizeSelection(
   defaultSelection: InteropSelection,
 ): InteropSelection {
   return {
-    from: normalizeDirectionalSelection(
+    from: normalizeMultiChainSelection(
       selection.from,
       allChainIds,
       getFallbackFromDefault(defaultSelection.from, allChainIds),
     ),
-    to: normalizeDirectionalSelection(
+    to: normalizeMultiChainSelection(
       selection.to,
       allChainIds,
       getFallbackFromDefault(defaultSelection.to, allChainIds),
@@ -348,15 +321,6 @@ function parseQueryArray(value: string | null) {
   return value.split(',')
 }
 
-function getSingleChainId(selection: string[]) {
-  if (selection.length !== 1) {
-    return null
-  }
-
-  const [chainId] = selection
-  return chainId ?? null
-}
-
 function toInteropPathMode(path: string, mode: InteropMode) {
   const normalizedPath = path.endsWith('/') ? path.slice(0, -1) : path
 
@@ -379,21 +343,6 @@ function isSameSelection(left: string[], right: string[]) {
     left.length === right.length &&
     left.every((value, index) => value === right[index])
   )
-}
-
-function getInteropSelectedChainFromId(
-  id: string,
-  interopChains: InteropChainWithIcon[],
-): InteropSelectedChain | null {
-  const interopChain = interopChains.find((c) => c.id === id)
-  if (!interopChain) {
-    return null
-  }
-
-  return {
-    id: interopChain.id,
-    iconUrl: interopChain.iconUrl,
-  }
 }
 
 export function useInteropSelectedChains() {

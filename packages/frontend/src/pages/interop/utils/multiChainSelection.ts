@@ -11,7 +11,7 @@ function resolveFallbackSelection(
   return fallback === 'all' ? [...allChainIds] : []
 }
 
-export function normalizeDirectionalSelection(
+export function normalizeMultiChainSelection(
   values: string[],
   allChainIds: string[],
   fallback: 'all' | 'empty',
@@ -26,23 +26,7 @@ export function normalizeDirectionalSelection(
   return filtered
 }
 
-export function parseDirectionalSelectionFromQueryValue(
-  value: string | null,
-  allChainIds: string[],
-  fallback: 'all' | 'empty' = 'all',
-): string[] {
-  if (value === null) {
-    return resolveFallbackSelection(allChainIds, fallback)
-  }
-
-  if (value === NO_CHAINS_MARKER) {
-    return []
-  }
-
-  return normalizeDirectionalSelection(value.split(','), allChainIds, fallback)
-}
-
-export function parseDirectionalSelectionFromQueryArray(
+export function parseMultiChainSelectionFromQueryArray(
   value: string[] | undefined,
   allChainIds: string[],
   fallback: 'all' | 'empty' = 'all',
@@ -55,21 +39,21 @@ export function parseDirectionalSelectionFromQueryArray(
     return []
   }
 
-  return normalizeDirectionalSelection(value, allChainIds, fallback)
+  return normalizeMultiChainSelection(value, allChainIds, fallback)
 }
 
-export function serializeDirectionalSelectionToQueryValue(
+export function serializeMultiChainSelectionToQueryValue(
   selection: string[],
   allChainIds: string[],
   defaultSelection: string[],
 ): string | undefined {
-  const normalized = normalizeDirectionalSelection(
+  const normalized = normalizeMultiChainSelection(
     selection,
     allChainIds,
     'empty',
   )
 
-  const normalizedDefault = normalizeDirectionalSelection(
+  const normalizedDefault = normalizeMultiChainSelection(
     defaultSelection,
     allChainIds,
     'empty',
