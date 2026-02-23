@@ -8,7 +8,7 @@ Generated with discovered.json: 0x6bfdf6e5c08a907df5e76eb3ebd5d8bb46a283d4
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Link eigenda shared module
 
 ## Config/verification related changes
 
@@ -213,12 +213,13 @@ Upgraded implementation from 0x2425EB to 0x7f84fE. The only code change is the a
 New upgradeable contract serving as the batch inbox. Its `fallback()` function strips a 4-byte prefix from calldata, RLP-decodes an EigenDACertV3 struct, and calls `EigenDACertVerifier.checkDACertReverts()` to validate the EigenDA certificate on-chain. This means every batch submission now verifies the EigenDA data availability certificate on L1.
 
 **EigenDACertVerifier (new, 0xa4F386) + EigenDA/EigenLayer infrastructure:**
-An immutable EigenDA V3 certificate verifier referenced by BunnyInbox. It verifies batch data attestations against operator signatures and stake thresholds via the EigenDAServiceManager. 
+An immutable EigenDA V3 certificate verifier referenced by BunnyInbox. It verifies batch data attestations against operator signatures and stake thresholds via the EigenDAServiceManager.
 
 **Stale proof system config:**
 The KailuaGame and KailuaTreasury have an immutable `ROLLUP_CONFIG_HASH` (0x16ebac7d...) that commits to the rollup config including the batch inbox address. Since the batch inbox changed from the old EOA (0x00656C) to BunnyInbox (0x02B8d1), but the games were NOT redeployed, the on-chain `ROLLUP_CONFIG_HASH` no longer matches the current chain config. Any ZK proof generated against the current derivation pipeline would produce a different config hash and fail on-chain verification. Additionally, the `FPVM_IMAGE_ID` likely needs updating so the prover program rejects reverted BunnyInbox transactions - otherwise the batcher could submit invalid DA certs that revert on L1 but are still picked up by derivation. The games should be redeployed with updated `ROLLUP_CONFIG_HASH` and `FPVM_IMAGE_ID`.
 
 **Governance changes:**
+
 - MegaETH Safe multisig changed from 4/8 (50%) to 6/10 (60%) threshold
 - Two new members added: a 1-of-3 nested Safe (0x63eC, nonce 0) and an EOA (0x0D17)
 
@@ -464,12 +465,13 @@ Generated with discovered.json: 0x7c45d450fb2bdc3b24ca26628384d125cdc2ff16
 ## Description
 
 Initial discovery. Untemplatized contracts diff with most similar templatized:
-- SystemConfig:                                                                                                                                                                                                       
-  https://disco.l2beat.com/diff/eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647/eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639  (higher gas limit)
-- OptimismPortal2:                                                                                                                                                                                              
-  https://disco.l2beat.com/diff/eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273/eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9  (no constructor params, system address)
-- SuperchainConfig:                                                                                                                                                                                                   
-  https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89  (guardian transfer functions)
+
+- SystemConfig:  
+  https://disco.l2beat.com/diff/eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647/eth:0x2425EB983A470eDE96E33c4E969Ac5440a80a639 (higher gas limit)
+- OptimismPortal2:  
+  https://disco.l2beat.com/diff/eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273/eth:0x55400445e384393f9c1BE23e7E734e8d44Ed9fd9 (no constructor params, system address)
+- SuperchainConfig:  
+  https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89 (guardian transfer functions)
 
 basti 12/22: the verifier contract source is now available. looks like an older risc0groth16 verifier: https://disco.l2beat.com/diff/eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9/eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3
 
