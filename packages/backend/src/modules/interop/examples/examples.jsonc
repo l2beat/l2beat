@@ -1942,6 +1942,181 @@
       "orbitstack.L1ToL2Transfer"
     ]
   },
+  "orbitstack-contract-deposit": {
+    "description": "ETH deposits via contract (tx.value != callvalue)",
+    "txs": [
+      // #1 tx.value ~0, callvalue ~99.6 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0x02a9d0fc53e11198f14565c7dbd771ca4dd26be81414791fa68aca3159e8a68c"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xdb6987cc9bb91eeba19b64696c6a4c0d08a6fff06a23bb75bfd820ce42e5e721"
+      },
+      // #2 tx.value ~0, callvalue ~99.6 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xb2fc9fafed817684f2217b36cada893eb3bd31edfefe375e1e0d541aa97251f5"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x97453ebf9c47c7034095e4cc9d1c75127c115b9fa3853e21ac0203b2dc360cce"
+      },
+      // #3 tx.value ~0, callvalue ~99.6 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xbb26c2bbb5e9422ff77d61d4289f6e041b8894b202bb3dd6c3fa4326d73a94e0"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x6307cb9329cecbbde94ec3ce80218b06090d124a0b85ccc9ea2bbef4df7fb56d"
+      },
+      // #4 tx.value ~0, callvalue ~2.52 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0x66330322ccd916034207528b468be7813e4894368710ab7d4a259e360c4fc17a"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x7fb5bbc2e9d0ea748eb51fd473feb18af779822af39aa099e42f08ba8cd5739c"
+      },
+      // #5 tx.value ~0.000003, callvalue ~1 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xf1f33691f3f4c8f30e9eb190daebe773b562773364d77f0d849ea43ac19f2451"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x06fc8e44ba5e622a903fa359ec9c434596b8f6dbca8c4131d311694657dc5dca"
+      },
+      // #6 tx.value ~0.000003, callvalue ~0.36 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xe121ca674e5dcf0e55ed5e1fb69447f698280a4b27bbb943b41d532b87647036"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x15890010ee0d19f07a968d495a35dd4134c02317aa96c72ee713b0f0edb6333c"
+      },
+      // #7 tx.value ~0.000003, callvalue ~0.017 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0x38404b48eac314e324aecd1acc7cc322d8d58505188c7ff6079b689ad8f3b1a7"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0e4730ce7315ae30eaa996c90e192adde4a0a9cf592fb950ec46b644204a44b5"
+      },
+      // #8 tx.value ~0.000003, callvalue ~0.008 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0x45985b1aa7e74df6ae590149a515e97e26f92311660be6bf1514e72895e37ab0"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0b4b0144f6080381b81d9c387861c1bf7362b48bb13ad3deb5a2910a0b1dbf71"
+      },
+      // #9 tx.value ~0.0003, callvalue ~0.005 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xb9e3bcd2005889095eebdcc7b1b0ec2abb045b1eccb8933d9f5aa54dbe088ace"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9cdcd3295dd590650d6c27c9bcfe2148105480b2b85c677c0a26b20e5adaa728"
+      }
+    ],
+    "expects": {
+      "events": [
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled"
+      ],
+      "messages": [
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "unknown" }
+      ],
+      "transfers": [
+        // #1: src and dst must both be 99638260582708341042 (99.64 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "99638260582708341042" },
+          "dst": { "tokenAmount": "99638260582708341042" }
+        },
+        // #2: 99568277625740241036 (99.57 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "99568277625740241036" },
+          "dst": { "tokenAmount": "99568277625740241036" }
+        },
+        // #3: 99568276377004601828 (99.57 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "99568276377004601828" },
+          "dst": { "tokenAmount": "99568276377004601828" }
+        },
+        // #4: 2520000000000000000 (2.52 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "2520000000000000000" },
+          "dst": { "tokenAmount": "2520000000000000000" }
+        },
+        // #5: 1002908246394282415 (1.00 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "1002908246394282415" },
+          "dst": { "tokenAmount": "1002908246394282415" }
+        },
+        // #6: 361524941036395607 (0.36 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "361524941036395607" },
+          "dst": { "tokenAmount": "361524941036395607" }
+        },
+        // #7: 16787756779462298 (0.017 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "16787756779462298" },
+          "dst": { "tokenAmount": "16787756779462298" }
+        },
+        // #8: 8040127013904382 (0.008 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "8040127013904382" },
+          "dst": { "tokenAmount": "8040127013904382" }
+        },
+        // #9: 5240948878743354 (0.005 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "5240948878743354" },
+          "dst": { "tokenAmount": "5240948878743354" }
+        }
+      ]
+    }
+  },
   "orbitstack-standardgateway": {
     "txs": [
       // arbitrum -> ethereum (erc20)
