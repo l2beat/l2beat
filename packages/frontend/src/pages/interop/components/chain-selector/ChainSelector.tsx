@@ -32,7 +32,7 @@ export function ChainSelector({ chains, protocols }: Props) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {env.DEPLOYMENT_ENV === 'staging' && (
+          {env.DEPLOYMENT_ENV !== 'production' && (
             <a
               href={internalSummaryUrl}
               className="rounded border border-brand px-2 py-1 font-semibold text-brand text-xs leading-none md:px-3 md:py-1.5 md:text-sm"
