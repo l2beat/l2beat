@@ -27,29 +27,6 @@ export function ChainSelectorButton({
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
-  const toggleMobileChain = (chainId: string) => {
-    if (
-      selectedChains.first?.id === chainId ||
-      selectedChains.second?.id === chainId
-    ) {
-      return
-    }
-
-    if (!selectedChains.first) {
-      selectChain('first', chainId)
-      return
-    }
-
-    if (!selectedChains.second) {
-      selectChain('second', chainId)
-      return
-    }
-
-    const temp = selectedChains.second.id
-    selectChain('second', chainId)
-    selectChain('first', temp)
-  }
-
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
     name,
