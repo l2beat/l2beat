@@ -90,13 +90,31 @@ export function ChainSelectorButton({
               Select two chains
             </DrawerDescription>
           </DrawerHeader>
+          <div className="mb-2 font-semibold text-xs leading-none">
+            First chain
+          </div>
           <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected.first || chain.isSelected.second}
-                toggleSelected={toggleMobileChain}
+                isSelected={chain.isSelected['first']}
+                toggleSelected={(chainId) => selectChain('first', chainId)}
+                disabled={chain.isSelected.second}
+              />
+            ))}
+          </div>
+          <div className="mt-3 mb-2 font-semibold text-xs leading-none">
+            Second chain
+          </div>
+          <div className="flex flex-wrap gap-1">
+            {chainsWithDetails.map((chain) => (
+              <ChainSelectorChainToggle
+                key={chain.id}
+                chain={chain}
+                isSelected={chain.isSelected['second']}
+                toggleSelected={(chainId) => selectChain('second', chainId)}
+                disabled={chain.isSelected.first}
               />
             ))}
           </div>
