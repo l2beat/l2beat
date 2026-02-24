@@ -25,7 +25,7 @@
     "test:config": "mocha --config .mocharc-smoke.json",
     "typecheck": "tsc --noEmit",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
-    "starkware-multiplier": "ts-node --transpile-only scripts/starkwareMultiplier.ts",
+    "starkware-costs": "ts-node --transpile-only scripts/starkwareCosts.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
     "db:inspect": "pnpm prisma studio",
