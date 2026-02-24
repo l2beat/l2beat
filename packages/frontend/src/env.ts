@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 
 const coerceBoolean = z.string().transform((val) => {
@@ -65,8 +66,7 @@ const SERVER_CONFIG = {
   INTEROP_DISABLED_CHAINS: stringArray.optional(),
   INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE: z
     .string()
-    .transform((v) => Number(v))
-    .check((v) => Number.isInteger(v) && v > 0)
+    .transform((v) => UnixTime(Number(v)))
     .optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
