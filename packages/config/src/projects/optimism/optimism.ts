@@ -96,6 +96,11 @@ export const optimism: ScalingProject = opStackL2({
         plugin: 'sorare-base',
         bridgeType: 'lockAndMint',
       },
+      {
+        chain: 'optimism',
+        plugin: 'lido-wsteth',
+        bridgeType: 'lockAndMint',
+      },
     ],
   },
   hasSuperchainScUpgrades: true,
