@@ -1,5 +1,6 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
+import { env } from '~/env'
 import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -12,6 +13,9 @@ export function createBridgesRouter(
   render: RenderFunction,
   cache: ICache,
 ) {
+  if (env.CLIENT_SIDE_INTEROP_ENABLED) {
+    return undefined
+  }
   const router = express.Router()
 
   router.get('/bridges', (_req, res) => {
