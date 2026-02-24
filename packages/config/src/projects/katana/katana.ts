@@ -202,10 +202,10 @@ export const katana: ScalingProject = {
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: false,
-      noRedTrustedSetups: null,
+      noRedTrustedSetups: true,
       programHashesReproducible: false,
-      proverSourcePublished: null,
-      verifierContractsReproducible: null,
+      proverSourcePublished: true,
+      verifierContractsReproducible: true,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,
