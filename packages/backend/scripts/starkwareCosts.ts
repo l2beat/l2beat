@@ -20,6 +20,7 @@
  * --customer-id, -c <str> - Customer id used in --tx-target mode. Alias is also accepted (e.g. starknet, paradex). [optional]
  */
 
+import { getEnv } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
@@ -32,8 +33,6 @@ import {
   run,
   string,
 } from 'cmd-ts'
-import { existsSync, readFileSync } from 'fs'
-import { resolve } from 'path'
 
 const customCustomerIds = {
   starknet: 'gcp-starknet-production_starknet-mainnet',
@@ -476,36 +475,8 @@ function getUniqueTxHashesForTrains(
 }
 
 function getEthereumRpcUrl(): string {
-  const candidatePaths = [
-    resolve(process.cwd(), 'packages/config/.env'),
-    resolve(process.cwd(), '../config/.env'),
-    resolve(__dirname, '../../config/.env'),
-  ]
-
-  for (const envPath of candidatePaths) {
-    if (!existsSync(envPath)) {
-      continue
-    }
-    const file = readFileSync(envPath, 'utf8')
-    const line = file
-      .split(/\r?\n/)
-      .find((line) => line.startsWith('ETHEREUM_RPC_URL='))
-    if (!line) {
-      continue
-    }
-    const value = line.slice('ETHEREUM_RPC_URL='.length).trim()
-    if (value.length > 0) {
-      return value
-    }
-  }
-
-  if (process.env.ETHEREUM_RPC_URL) {
-    return process.env.ETHEREUM_RPC_URL
-  }
-
-  throw new Error(
-    'ETHEREUM_RPC_URL is not set and was not found in packages/config/.env',
-  )
+  const env = getEnv({ FEATURES: 'tracked-txs' })
+  return env.string('ETHEREUM_RPC_URL')
 }
 
 function resolveCustomerId(customerIdOrAlias: string): string {
