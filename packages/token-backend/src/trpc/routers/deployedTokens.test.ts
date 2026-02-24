@@ -665,9 +665,8 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.data?.abstractTokenSuggestions?.length).toBeLessThanOrEqual(
-        5,
-      )
+      const suggestions = result.data?.abstractTokenSuggestions ?? []
+      expect(suggestions.length).toBeLessThanOrEqual(5)
     })
 
     it('returns success with token data when all checks pass', async () => {

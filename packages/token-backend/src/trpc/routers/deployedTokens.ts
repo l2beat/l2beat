@@ -123,14 +123,21 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         result: fuzzysort.single(t.symbol, deployedSymbol),
       }))
       .filter(
-        (r): r is { token: (typeof abstractTokens)[number]; result: NonNullable<typeof r.result> } =>
-          r.result !== null,
+        (
+          r,
+        ): r is {
+          token: (typeof abstractTokens)[number]
+          result: NonNullable<typeof r.result>
+        } => r.result !== null,
       )
       .sort((a, b) => b.result.score - a.result.score)
       .slice(0, limit)
 
     // Merge and deduplicate, preferring higher scores
-    const seen = new Map<string, { token: (typeof abstractTokens)[number]; score: number }>()
+    const seen = new Map<
+      string,
+      { token: (typeof abstractTokens)[number]; score: number }
+    >()
     for (const r of forward) {
       seen.set(r.obj.id, { token: r.obj, score: r.score })
     }
