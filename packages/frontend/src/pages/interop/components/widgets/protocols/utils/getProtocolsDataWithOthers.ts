@@ -9,22 +9,21 @@ export function getProtocolsDataWithOthers(
 ): DisplayProtocol[] {
   if (!topProtocolsData) return []
 
-  topProtocolsData.sort((a, b) => b[metricType].value - a[metricType].value)
+  const sorted = topProtocolsData.toSorted(
+    (a, b) => b[metricType].value - a[metricType].value,
+  )
 
-  const top5 = topProtocolsData.slice(0, 5).map((protocol) => ({
+  const top5 = sorted.slice(0, 5).map((protocol) => ({
     ...protocol,
     color: protocolColorMap.get(protocol.name) ?? '#000000',
   }))
 
-  const others = topProtocolsData.slice(5)
+  const others = sorted.slice(5)
   if (others.length === 0) {
     return top5
   }
 
-  const totalValue = topProtocolsData.reduce(
-    (sum, p) => sum + p[metricType].value,
-    0,
-  )
+  const totalValue = sorted.reduce((sum, p) => sum + p[metricType].value, 0)
   const othersValue = others.reduce((sum, p) => sum + p[metricType].value, 0)
   const othersShare = totalValue > 0 ? (othersValue / totalValue) * 100 : 0
 
