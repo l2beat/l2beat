@@ -179,8 +179,7 @@ export function getAggregatedTokens(
 
       if (options?.calculateNetMinted && isBurn) {
         tokens[transfer.srcAbstractTokenId].burnedValueUsd =
-          (tokens[transfer.srcAbstractTokenId]?.burnedValueUsd ?? 0) +
-          burnValue
+          (tokens[transfer.srcAbstractTokenId]?.burnedValueUsd ?? 0) + burnValue
       }
 
       if (
@@ -189,8 +188,7 @@ export function getAggregatedTokens(
         (isSameToken || !transfer.dstAbstractTokenId)
       ) {
         tokens[transfer.srcAbstractTokenId].mintedValueUsd =
-          (tokens[transfer.srcAbstractTokenId]?.mintedValueUsd ?? 0) +
-          mintValue
+          (tokens[transfer.srcAbstractTokenId]?.mintedValueUsd ?? 0) + mintValue
       }
     }
 
@@ -214,8 +212,7 @@ export function getAggregatedTokens(
 
       if (options?.calculateNetMinted && isMint) {
         tokens[transfer.dstAbstractTokenId].mintedValueUsd =
-          (tokens[transfer.dstAbstractTokenId]?.mintedValueUsd ?? 0) +
-          mintValue
+          (tokens[transfer.dstAbstractTokenId]?.mintedValueUsd ?? 0) + mintValue
       }
 
       if (
@@ -224,8 +221,7 @@ export function getAggregatedTokens(
         !transfer.srcAbstractTokenId
       ) {
         tokens[transfer.dstAbstractTokenId].burnedValueUsd =
-          (tokens[transfer.dstAbstractTokenId]?.burnedValueUsd ?? 0) +
-          burnValue
+          (tokens[transfer.dstAbstractTokenId]?.burnedValueUsd ?? 0) + burnValue
       }
     }
   }
