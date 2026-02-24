@@ -108,6 +108,7 @@ function getScalingLivenessEntry(
       changes,
       syncWarning,
       ongoingAnomaly: liveness.anomalies.some((a) => a.end === undefined),
+      zkCatalogProjects,
     }),
     stacks: project.scalingInfo.stacks,
     proofSystem: getProofSystemWithName(

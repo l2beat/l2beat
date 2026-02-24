@@ -61,6 +61,15 @@ export function RiskSummarySection({
           icon={UnverifiedIcon}
         />
       )}
+      {verificationWarnings.verifierIds && (
+        <WarningBar
+          text={verificationWarnings.verifierIds}
+          color="red"
+          isCritical={true}
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
+          icon={UnverifiedIcon}
+        />
+      )}
       {redWarning && (
         <WarningBar
           text={redWarning}

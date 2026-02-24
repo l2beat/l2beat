@@ -11,6 +11,7 @@ export function getRowBackgroundColor(statuses: {
   if (
     statuses.verificationWarnings?.contracts ||
     statuses.verificationWarnings?.programHashes ||
+    statuses.verificationWarnings?.verifierIds ||
     !!statuses.redWarning ||
     !!statuses.ongoingAnomaly
   ) {

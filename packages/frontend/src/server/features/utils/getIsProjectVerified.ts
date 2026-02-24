@@ -8,14 +8,23 @@ const UNVERIFIED_CONTRACTS_WARNING =
 const UNSUCCESSFUL_PROGRAM_HASHES_WARNING =
   'The project relies on program hashes that could not be successfully reproduced from their published sources.'
 
+const UNSUCCESSFUL_VERIFIER_IDS_WARNING =
+  'This project relies on ZK verifiers with unknown sources'
+
 interface ProjectVerificationWarnings {
   contracts: string | undefined
   programHashes: string | undefined
+  verifierIds: string | undefined
+}
+
+type ProjectForVerificationWarnings = Project<'statuses', 'contracts'> & {
+  scalingInfo?: Project<'scalingInfo'>['scalingInfo']
 }
 
 export function getProjectVerificationWarnings(
-  project: Project<'statuses', 'contracts'>,
+  project: ProjectForVerificationWarnings,
   changes: ProjectChanges | undefined,
+  zkCatalogProjects?: Project<'zkCatalogInfo'>[],
 ): ProjectVerificationWarnings {
   return {
     contracts: areContractsVerified(
@@ -29,7 +38,54 @@ export function getProjectVerificationWarnings(
     )
       ? UNSUCCESSFUL_PROGRAM_HASHES_WARNING
       : undefined,
+    verifierIds: hasUnsuccessfulVerifierIds(project, zkCatalogProjects)
+      ? UNSUCCESSFUL_VERIFIER_IDS_WARNING
+      : undefined,
   }
+}
+
+function hasUnsuccessfulVerifierIds(
+  project: ProjectForVerificationWarnings,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[] | undefined,
+): boolean {
+  const zkCatalogId = project.scalingInfo?.proofSystem?.zkCatalogId
+  if (!zkCatalogId || !zkCatalogProjects) {
+    return false
+  }
+
+  const zkCatalogProject = zkCatalogProjects.find((p) => p.id === zkCatalogId)
+  if (!zkCatalogProject) {
+    return false
+  }
+
+  const contractsByChain = new Map<string, Set<string>>()
+  for (const contracts of Object.values(project.contracts?.addresses ?? {})) {
+    for (const contract of contracts) {
+      const chain = ChainSpecificAddress.longChain(contract.address)
+      const address = ChainSpecificAddress.address(contract.address).toLowerCase()
+      const knownContracts = contractsByChain.get(chain) ?? new Set<string>()
+      knownContracts.add(address)
+      contractsByChain.set(chain, knownContracts)
+    }
+  }
+
+  return zkCatalogProject.zkCatalogInfo.verifierHashes.some((verifier) => {
+    if (verifier.verificationStatus !== 'unsuccessful') {
+      return false
+    }
+
+    return verifier.knownDeployments.some((deployment) => {
+      if (deployment.overrideUsedIn?.includes(project.id)) {
+        return true
+      }
+
+      return (
+        contractsByChain
+          .get(deployment.chain)
+          ?.has(deployment.address.toLowerCase()) === true
+      )
+    })
+  })
 }
 
 function areContractsVerified(

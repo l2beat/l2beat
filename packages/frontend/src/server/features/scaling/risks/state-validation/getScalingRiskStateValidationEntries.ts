@@ -119,7 +119,7 @@ function getScalingRiskStateValidationValidityEntry(
   )
 
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({ project, changes, zkCatalogProjects }),
     proofSystem: {
       ...proofSystem,
       name: proofSystem.name ?? zkCatalogProject?.name,
@@ -157,7 +157,7 @@ function getScalingRiskStateValidationOptimisticEntry(
     project.scalingRisks.stacked ?? project.scalingRisks.self
 
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({ project, changes, zkCatalogProjects }),
     proofSystem: {
       ...proofSystem,
       name: proofSystem.name ?? zkCatalogProject?.name,

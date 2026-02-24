@@ -46,6 +46,7 @@ export function getScalingUpcomingEntry(
     project,
     ongoingAnomaly: false,
     changes: undefined,
+    zkCatalogProjects,
   })
   return {
     ...commonEntry,

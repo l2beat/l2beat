@@ -98,6 +98,9 @@ export function MultipleBridgeDetails({ project }: Props) {
                         {bridge.verificationWarnings?.programHashes && (
                           <p>{bridge.verificationWarnings.programHashes}</p>
                         )}
+                        {bridge.verificationWarnings?.verifierIds && (
+                          <p>{bridge.verificationWarnings.verifierIds}</p>
+                        )}
                       </TooltipContent>
                     </Tooltip>
                   )}

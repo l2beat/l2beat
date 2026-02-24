@@ -133,6 +133,7 @@ export function getScalingSummaryEntry(
       changes,
       ongoingAnomaly,
       syncWarning: activitySyncWarning,
+      zkCatalogProjects,
     }),
     stage:
       project.scalingInfo.type === 'Other' || !project.scalingStage

@@ -12,22 +12,26 @@ import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingRiskEntries() {
-  const [tvs, projectsChangeReport, projects] = await Promise.all([
-    get7dTvsBreakdown({ type: 'layer2' }),
-    getProjectsChangeReport(),
-    ps.getProjects({
-      select: [
+  const [tvs, projectsChangeReport, projects, zkCatalogProjects] =
+    await Promise.all([
+      get7dTvsBreakdown({ type: 'layer2' }),
+      getProjectsChangeReport(),
+      ps.getProjects({
+        select: [
         'statuses',
         'scalingInfo',
         'scalingRisks',
         'display',
         'scalingTechnology',
       ],
-      optional: ['customDa', 'scalingDa', 'contracts'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
-    }),
-  ])
+        optional: ['customDa', 'scalingDa', 'contracts'],
+        where: ['isScaling'],
+        whereNot: ['isUpcoming', 'archivedAt'],
+      }),
+      ps.getProjects({
+        select: ['zkCatalogInfo'],
+      }),
+    ])
 
   const entries = projects
     .filter((p) => p.statuses.reviewStatus !== 'initialReview')
@@ -36,6 +40,7 @@ export async function getScalingRiskEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         tvs.projects[project.id]?.breakdown.total,
+        zkCatalogProjects,
       ),
     )
     .sort(compareTvs)
@@ -64,9 +69,10 @@ function getScalingRiskEntry(
   >,
   changes: ProjectChanges,
   tvs: number | undefined,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingRiskEntry {
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({ project, changes, zkCatalogProjects }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
     tvsOrder: tvs ?? -1,
     hasStateValidationSection: !!project.scalingTechnology?.stateValidation,

@@ -15,16 +15,20 @@ import type { CostsTableData } from './getCostsTableData'
 import { compareCosts } from './utils/compareCosts'
 
 export async function getScalingCostsEntries(helpers: SsrHelpers) {
-  const [projectsChangeReport, projects, costs] = await Promise.all([
-    getProjectsChangeReport(),
-    ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
-      optional: ['contracts'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
-    }),
-    helpers.costs.table.fetch({ range: optionToRange('30d') }),
-  ])
+  const [projectsChangeReport, projects, costs, zkCatalogProjects] =
+    await Promise.all([
+      getProjectsChangeReport(),
+      ps.getProjects({
+        select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
+        optional: ['contracts'],
+        where: ['isScaling'],
+        whereNot: ['isUpcoming', 'archivedAt'],
+      }),
+      helpers.costs.table.fetch({ range: optionToRange('30d') }),
+      ps.getProjects({
+        select: ['zkCatalogInfo'],
+      }),
+    ])
 
   const entries = projects
     .map((project) =>
@@ -32,6 +36,7 @@ export async function getScalingCostsEntries(helpers: SsrHelpers) {
         project,
         projectsChangeReport.getChanges(project.id),
         costs[project.id],
+        zkCatalogProjects,
       ),
     )
     .sort(compareCosts)
@@ -50,6 +55,7 @@ function getScalingCostEntry(
   >,
   changes: ProjectChanges,
   costs: CostsTableData[string] | undefined,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingCostsEntry {
   const costPerUop =
     costs?.uopsCount && costs.usd.total
@@ -57,7 +63,7 @@ function getScalingCostEntry(
       : Number.POSITIVE_INFINITY
 
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({ project, changes, zkCatalogProjects }),
     costsWarning: project.costsInfo.warning,
     costOrder: costPerUop,
   }

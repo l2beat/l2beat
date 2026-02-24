@@ -114,7 +114,7 @@ function getScalingDaEntry(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingDaEntry {
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({ project, changes, zkCatalogProjects }),
     dataAvailability: project.scalingDa.map((da) => ({
       ...da,
       daHref: getDaHref(project, da, daLayers),

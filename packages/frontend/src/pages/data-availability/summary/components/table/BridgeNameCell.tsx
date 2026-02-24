@@ -44,6 +44,9 @@ export function BridgeNameCell({
               {bridge.statuses.verificationWarnings.programHashes && (
                 <p>{bridge.statuses.verificationWarnings.programHashes}</p>
               )}
+              {bridge.statuses.verificationWarnings.verifierIds && (
+                <p>{bridge.statuses.verificationWarnings.verifierIds}</p>
+              )}
             </TooltipContent>
           </Tooltip>
         )}

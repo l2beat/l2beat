@@ -319,7 +319,7 @@ export async function getScalingProjectEntry(
     project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
       ? await ps.getProject({
           id: project.scalingInfo.hostChain.id,
-          select: ['scalingTechnology', 'statuses'],
+          select: ['scalingTechnology', 'statuses', 'scalingInfo'],
           optional: ['contracts'],
         })
       : undefined
@@ -328,8 +328,9 @@ export async function getScalingProjectEntry(
     ? getProjectVerificationWarnings(
         hostChain,
         projectsChangeReport.getChanges(hostChain.id),
+        zkCatalogProjects,
       )
-    : { contracts: undefined, programHashes: undefined }
+    : { contracts: undefined, programHashes: undefined, verifierIds: undefined }
   const hostChainWarning = hostChain
     ? {
         hostChainName: hostChain.name,
@@ -458,6 +459,7 @@ export async function getScalingProjectEntry(
   const projectVerificationWarnings = getProjectVerificationWarnings(
     project,
     changes,
+    zkCatalogProjects,
   )
 
   const riskSummary = getScalingRiskSummarySection(

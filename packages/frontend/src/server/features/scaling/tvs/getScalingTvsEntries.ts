@@ -16,16 +16,20 @@ import { compareTvs } from './utils/compareTvs'
 import { getAssociatedTokenWarning } from './utils/getAssociatedTokenWarning'
 
 export async function getScalingTvsEntries() {
-  const [projectsChangeReport, tvs, projects] = await Promise.all([
-    getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'layer2' }),
-    ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'tvsInfo', 'display'],
-      optional: ['contracts'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
-    }),
-  ])
+  const [projectsChangeReport, tvs, projects, zkCatalogProjects] =
+    await Promise.all([
+      getProjectsChangeReport(),
+      get7dTvsBreakdown({ type: 'layer2' }),
+      ps.getProjects({
+        select: ['statuses', 'scalingInfo', 'tvsInfo', 'display'],
+        optional: ['contracts'],
+        where: ['isScaling'],
+        whereNot: ['isUpcoming', 'archivedAt'],
+      }),
+      ps.getProjects({
+        select: ['zkCatalogInfo'],
+      }),
+    ])
 
   const entries = projects
     .map((project) =>
@@ -33,6 +37,7 @@ export async function getScalingTvsEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         tvs.projects[project.id.toString()],
+        zkCatalogProjects,
       ),
     )
     .filter((entry) => entry !== undefined)
@@ -56,6 +61,7 @@ function getScalingTvsEntry(
   >,
   changes: ProjectChanges,
   data: ProjectSevenDayTvsBreakdown | undefined,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingTvsEntry | undefined {
   const associatedTokenWarning =
     data?.breakdown && data.breakdown.total > 0
@@ -67,7 +73,7 @@ function getScalingTvsEntry(
       : undefined
 
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({ project, changes, zkCatalogProjects }),
     tvs: {
       associatedTokens: project.tvsInfo.associatedTokens,
       warnings: compact([

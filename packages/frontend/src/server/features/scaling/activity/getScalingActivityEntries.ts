@@ -26,10 +26,14 @@ export async function getScalingActivityEntries() {
   const projects = unfilteredProjects.filter(
     (p) => !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(p.id.toString()),
   )
-  const [projectsChangeReport, activityData] = await Promise.all([
-    getProjectsChangeReport(),
-    getActivityTable(projects),
-  ])
+  const [projectsChangeReport, activityData, zkCatalogProjects] =
+    await Promise.all([
+      getProjectsChangeReport(),
+      getActivityTable(projects),
+      ps.getProjects({
+        select: ['zkCatalogInfo'],
+      }),
+    ])
 
   const ethereumData = activityData[ProjectId.ETHEREUM]
   assert(ethereumData !== undefined, 'Ethereum data not found')
@@ -40,6 +44,7 @@ export async function getScalingActivityEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         activityData[project.id],
+        zkCatalogProjects,
       ),
     )
     .concat(getEthereumEntry(ethereumData))
@@ -81,13 +86,19 @@ function getScalingProjectActivityEntry(
   project: Project<'statuses' | 'scalingInfo' | 'display', 'contracts'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
+  zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingActivityEntry | undefined {
   const syncWarning = getActivitySyncWarning(data?.syncState)
 
   if (!data) return undefined
 
   return {
-    ...getCommonScalingEntry({ project, changes, syncWarning }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      syncWarning,
+      zkCatalogProjects,
+    }),
     type: project.scalingInfo.type,
     stacks: project.scalingInfo.stacks,
     data: {

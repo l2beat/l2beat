@@ -84,6 +84,9 @@ export function ProjectNameCell({
                 {project.statuses.verificationWarnings.programHashes && (
                   <p>{project.statuses.verificationWarnings.programHashes}</p>
                 )}
+                {project.statuses.verificationWarnings.verifierIds && (
+                  <p>{project.statuses.verificationWarnings.verifierIds}</p>
+                )}
               </TooltipContent>
             </Tooltip>
           )}

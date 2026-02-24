@@ -20,16 +20,22 @@ export function getCommonScalingEntry({
   changes,
   syncWarning,
   ongoingAnomaly,
+  zkCatalogProjects,
 }: {
   project: Project<'scalingInfo' | 'statuses' | 'display', 'contracts'>
   changes: ProjectChanges | undefined
   syncWarning?: string
   ongoingAnomaly?: boolean
+  zkCatalogProjects?: Project<'zkCatalogInfo'>[]
 }): CommonScalingEntry {
   const statuses = {
     yellowWarning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
-    verificationWarnings: getProjectVerificationWarnings(project, changes),
+    verificationWarnings: getProjectVerificationWarnings(
+      project,
+      changes,
+      zkCatalogProjects,
+    ),
     underReview: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       impactfulChange: !!changes?.impactfulChange,

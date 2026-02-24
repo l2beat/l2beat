@@ -62,7 +62,7 @@ function getScalingArchivedEntry(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingArchivedEntry {
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({ project, changes, zkCatalogProjects }),
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,
       zkCatalogProjects,
