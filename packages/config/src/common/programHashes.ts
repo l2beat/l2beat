@@ -1033,6 +1033,13 @@ fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
 \`\`\`
     `,
   },
+  '0x0091609acb607118f47f756c0f4db9aad227420326cbda96f0303384e0bbf8e3': {
+    title: 'Executable of the Scroll bundle program',
+    description:
+      "Proves the correct execution of a bundle of Scroll L2 blocks, which is the unit of L2 state finalisation from L1's perspective.",
+    proverSystemProject: ProjectId('openvmprover'),
+    verificationStatus: 'notVerified',
+  },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     title: 'Config of the Scroll bundle program',
     description:
