@@ -62,7 +62,9 @@ function hasUnsuccessfulVerifierIds(
   for (const contracts of Object.values(project.contracts?.addresses ?? {})) {
     for (const contract of contracts) {
       const chain = ChainSpecificAddress.longChain(contract.address)
-      const address = ChainSpecificAddress.address(contract.address).toLowerCase()
+      const address = ChainSpecificAddress.address(
+        contract.address,
+      ).toLowerCase()
       const knownContracts = contractsByChain.get(chain) ?? new Set<string>()
       knownContracts.add(address)
       contractsByChain.set(chain, knownContracts)

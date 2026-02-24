@@ -18,12 +18,12 @@ export async function getScalingRiskEntries() {
       getProjectsChangeReport(),
       ps.getProjects({
         select: [
-        'statuses',
-        'scalingInfo',
-        'scalingRisks',
-        'display',
-        'scalingTechnology',
-      ],
+          'statuses',
+          'scalingInfo',
+          'scalingRisks',
+          'display',
+          'scalingTechnology',
+        ],
         optional: ['customDa', 'scalingDa', 'contracts'],
         where: ['isScaling'],
         whereNot: ['isUpcoming', 'archivedAt'],
