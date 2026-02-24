@@ -4,6 +4,7 @@ import type {
   AggregatedInteropTransferWithTokens,
   SelectedChainsIds,
 } from '../types'
+import { getAggregatedInteropTimestamp } from './getAggregatedInteropTimestamp'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
   selectedChains: SelectedChainsIds,
@@ -16,8 +17,7 @@ export async function getLatestAggregatedInteropTransferWithTokens(
     return []
   }
 
-  const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
+  const latestTimestamp = await getAggregatedInteropTimestamp()
   if (!latestTimestamp) {
     return []
   }
