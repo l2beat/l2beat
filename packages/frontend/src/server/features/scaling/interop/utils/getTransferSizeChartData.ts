@@ -17,6 +17,8 @@ export type TransferSizeDataPoint = {
   percentage10KTo100K: number
   countOver100K: number
   percentageOver100K: number
+  minTransferSizeUsd: number | undefined
+  maxTransferSizeUsd: number | undefined
 }
 
 export function getTransferSizeChartData(
@@ -40,6 +42,8 @@ export function getTransferSizeChartData(
       count1KTo10K: 0,
       count10KTo100K: 0,
       countOver100K: 0,
+      minTransferSizeUsd: undefined,
+      maxTransferSizeUsd: undefined,
     }
 
     const countUnder100 = current.countUnder100 + record.countUnder100
@@ -47,6 +51,18 @@ export function getTransferSizeChartData(
     const count1KTo10K = current.count1KTo10K + record.count1KTo10K
     const count10KTo100K = current.count10KTo100K + record.count10KTo100K
     const countOver100K = current.countOver100K + record.countOver100K
+    const minTransferSizeUsd =
+      record.minTransferSizeUsd !== undefined
+        ? current.minTransferSizeUsd !== undefined
+          ? Math.min(current.minTransferSizeUsd, record.minTransferSizeUsd)
+          : record.minTransferSizeUsd
+        : current.minTransferSizeUsd
+    const maxTransferSizeUsd =
+      record.maxTransferSizeUsd !== undefined
+        ? current.maxTransferSizeUsd !== undefined
+          ? Math.max(current.maxTransferSizeUsd, record.maxTransferSizeUsd)
+          : record.maxTransferSizeUsd
+        : current.maxTransferSizeUsd
 
     const total =
       countUnder100 +
@@ -70,6 +86,8 @@ export function getTransferSizeChartData(
       percentage10KTo100K: round((count10KTo100K / total) * 100, 2),
       countOver100K,
       percentageOver100K: round((countOver100K / total) * 100, 2),
+      minTransferSizeUsd,
+      maxTransferSizeUsd,
     })
   }
 
@@ -89,5 +107,7 @@ export function getTransferSizeChartData(
       percentage10KTo100K: value.percentage10KTo100K,
       countOver100K: value.countOver100K,
       percentageOver100K: value.percentageOver100K,
+      minTransferSizeUsd: value.minTransferSizeUsd,
+      maxTransferSizeUsd: value.maxTransferSizeUsd,
     }))
 }

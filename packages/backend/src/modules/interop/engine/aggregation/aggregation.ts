@@ -43,13 +43,17 @@ export function getAggregatedTransfer(
   let count1KTo10K = 0
   let count10KTo100K = 0
   let countOver100K = 0
+  let minTransferSizeUsd: number | undefined = undefined
+  let maxTransferSizeUsd: number | undefined = undefined
 
   for (const transfer of group) {
+    const transferValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd
+
     totalDurationSum += transfer.duration
     if (srcValueUsd === undefined) {
-      srcValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd
+      srcValueUsd = transferValueUsd
     } else {
-      srcValueUsd += transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
+      srcValueUsd += transferValueUsd ?? 0
     }
 
     if (dstValueUsd === undefined) {
@@ -65,8 +69,19 @@ export function getAggregatedTransfer(
       identifiedCount++
     }
 
-    // Count transfers by bucket based on srcValueUsd
-    const bucket = getBucket(transfer.srcValueUsd ?? transfer.dstValueUsd)
+    if (transferValueUsd !== undefined) {
+      minTransferSizeUsd =
+        minTransferSizeUsd === undefined
+          ? transferValueUsd
+          : Math.min(minTransferSizeUsd, transferValueUsd)
+      maxTransferSizeUsd =
+        maxTransferSizeUsd === undefined
+          ? transferValueUsd
+          : Math.max(maxTransferSizeUsd, transferValueUsd)
+    }
+
+    // Count transfers by bucket based on identified transfer value
+    const bucket = getBucket(transferValueUsd)
     switch (bucket) {
       case 'under100':
         countUnder100++
@@ -112,6 +127,14 @@ export function getAggregatedTransfer(
     totalDurationSum,
     srcValueUsd: srcValueUsd ? Math.round(srcValueUsd * 100) / 100 : undefined,
     dstValueUsd: dstValueUsd ? Math.round(dstValueUsd * 100) / 100 : undefined,
+    minTransferSizeUsd:
+      minTransferSizeUsd !== undefined
+        ? Math.round(minTransferSizeUsd * 100) / 100
+        : undefined,
+    maxTransferSizeUsd:
+      maxTransferSizeUsd !== undefined
+        ? Math.round(maxTransferSizeUsd * 100) / 100
+        : undefined,
     avgValueInFlight: valueInFlight
       ? Math.round((valueInFlight / UnixTime.DAY) * 100) / 100
       : undefined,

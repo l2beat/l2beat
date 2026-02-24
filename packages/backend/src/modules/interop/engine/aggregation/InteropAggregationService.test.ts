@@ -55,6 +55,8 @@ describe(InteropAggregationService.name, () => {
         totalDurationSum: 11000,
         srcValueUsd: 5000,
         dstValueUsd: 5000,
+        minTransferSizeUsd: 2000,
+        maxTransferSizeUsd: 3000,
         avgValueInFlight: undefined,
         countUnder100: 0,
         count100To1K: 0,

@@ -14,6 +14,8 @@ export interface AggregatedInteropTransferRecord {
   totalDurationSum: number
   srcValueUsd: number | undefined
   dstValueUsd: number | undefined
+  minTransferSizeUsd: number | undefined
+  maxTransferSizeUsd: number | undefined
   avgValueInFlight: number | undefined
   mintedValueUsd: number | undefined
   burnedValueUsd: number | undefined
@@ -53,6 +55,8 @@ export function toRecord(
     totalDurationSum: row.totalDurationSum,
     srcValueUsd: row.srcValueUsd ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
+    minTransferSizeUsd: row.minTransferSizeUsd ?? undefined,
+    maxTransferSizeUsd: row.maxTransferSizeUsd ?? undefined,
     avgValueInFlight: row.avgValueInFlight ?? undefined,
     mintedValueUsd: row.mintedValueUsd ?? undefined,
     burnedValueUsd: row.burnedValueUsd ?? undefined,
@@ -78,6 +82,8 @@ export function toRow(
     totalDurationSum: record.totalDurationSum,
     srcValueUsd: record.srcValueUsd,
     dstValueUsd: record.dstValueUsd,
+    minTransferSizeUsd: record.minTransferSizeUsd,
+    maxTransferSizeUsd: record.maxTransferSizeUsd,
     avgValueInFlight: record.avgValueInFlight,
     mintedValueUsd: record.mintedValueUsd,
     burnedValueUsd: record.burnedValueUsd,

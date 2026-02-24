@@ -140,6 +140,8 @@ export function getProtocolEntries(
         data.identifiedTransferCount > 0
           ? data.volume / data.identifiedTransferCount
           : null,
+      minTransferSizeUsd: data.minTransferSizeUsd,
+      maxTransferSizeUsd: data.maxTransferSizeUsd,
       averageDuration,
       averageValueInFlight: data.averageValueInFlight,
       netMintedValue:

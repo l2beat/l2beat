@@ -28,6 +28,8 @@ export interface ProtocolData extends CommonInteropData {
   volume: number
   tokens: Map<string, CommonInteropData>
   chains: Map<string, CommonInteropData>
+  minTransferSizeUsd: number | undefined
+  maxTransferSizeUsd: number | undefined
   averageValueInFlight: number | undefined
   identifiedTransferCount: number
   mintedValueUsd: number | undefined
@@ -184,6 +186,18 @@ export function getProtocolsDataMap(
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),
       ...computeDurationSplits(current, direction, record),
+      minTransferSizeUsd:
+        record.minTransferSizeUsd !== undefined
+          ? current.minTransferSizeUsd !== undefined
+            ? Math.min(current.minTransferSizeUsd, record.minTransferSizeUsd)
+            : record.minTransferSizeUsd
+          : current.minTransferSizeUsd,
+      maxTransferSizeUsd:
+        record.maxTransferSizeUsd !== undefined
+          ? current.maxTransferSizeUsd !== undefined
+            ? Math.max(current.maxTransferSizeUsd, record.maxTransferSizeUsd)
+            : record.maxTransferSizeUsd
+          : current.maxTransferSizeUsd,
       averageValueInFlight:
         record.avgValueInFlight !== undefined
           ? (current.averageValueInFlight ?? 0) + record.avgValueInFlight
@@ -215,6 +229,8 @@ function createInitialProtocolData(): ProtocolData {
     inDurationSum: 0,
     outTransferCount: 0,
     outDurationSum: 0,
+    minTransferSizeUsd: undefined,
+    maxTransferSizeUsd: undefined,
     averageValueInFlight: undefined,
     identifiedTransferCount: 0,
     mintedValueUsd: undefined,

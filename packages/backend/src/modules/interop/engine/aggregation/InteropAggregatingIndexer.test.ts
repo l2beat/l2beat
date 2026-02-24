@@ -52,6 +52,8 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 5000,
           srcValueUsd: 2000,
           dstValueUsd: 2000,
+          minTransferSizeUsd: 2000,
+          maxTransferSizeUsd: 2000,
           avgValueInFlight: undefined,
           mintedValueUsd: 0,
           burnedValueUsd: 2000,
