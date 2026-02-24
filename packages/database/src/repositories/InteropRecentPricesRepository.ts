@@ -56,24 +56,6 @@ export class InteropRecentPricesRepository extends BaseRepository {
     return row !== undefined
   }
 
-  getClosestPrices(
-    coingeckoIds: string[],
-    timestamp: UnixTime,
-    errorMargin: UnixTime,
-  ): Promise<Map<string, number | undefined>> {
-    return this.getClosestPricesForQueries(
-      coingeckoIds.map((coingeckoId) => ({
-        key: coingeckoId,
-        coingeckoId,
-        timestamp,
-      })),
-      errorMargin,
-    )
-  }
-
-  /**
-   * For each tuple query closest coingecko price
-   */
   async getClosestPricesForQueries<TKey extends string>(
     queryTuples: InteropClosestPriceQuery<TKey>[],
     errorMargin: UnixTime,
@@ -120,31 +102,6 @@ export class InteropRecentPricesRepository extends BaseRepository {
     }
 
     return result
-  }
-
-  async getClosestPrice(
-    coingeckoId: string,
-    timestamp: UnixTime,
-    errorMargin: UnixTime,
-  ): Promise<number | undefined> {
-    const targetTimestamp = UnixTime.toDate(timestamp)
-    const fromTime = UnixTime.toDate(timestamp - errorMargin)
-    const toTime = UnixTime.toDate(timestamp + errorMargin)
-
-    const row = await this.db
-      .selectFrom('InteropRecentPrices')
-      .select('priceUsd')
-      .where('coingeckoId', '=', coingeckoId)
-      .where('timestamp', '>=', fromTime)
-      .where('timestamp', '<=', toTime)
-      .orderBy(
-        sql`abs(extract(epoch from age(timestamp, ${targetTimestamp})))`,
-        'asc',
-      )
-      .orderBy('timestamp', 'desc')
-      .executeTakeFirst()
-
-    return row?.priceUsd
   }
 
   // Test only methods

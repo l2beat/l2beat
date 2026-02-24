@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
+  type InteropClosestPriceQuery,
   type InteropRecentPricesRecord,
   InteropRecentPricesRepository,
 } from './InteropRecentPricesRepository'
@@ -60,182 +61,85 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
   })
 
   describe(
-    InteropRecentPricesRepository.prototype.getClosestPrices.name,
+    InteropRecentPricesRepository.prototype.getClosestPricesForQueries.name,
     () => {
-      describe('single coingeckoId queries', () => {
-        it('returns closest price within 1 day, earlier than target', async () => {
-          const targetTime = UnixTime(1000)
-          await repository.insertMany([
-            mock('bitcoin', UnixTime(900), 30000),
-            mock('bitcoin', UnixTime(1200), 31000),
-          ])
+      it('returns closest prices for multiple query tuples', async () => {
+        await repository.insertMany([
+          mock('bitcoin', UnixTime(900), 30_000),
+          mock('bitcoin', UnixTime(1_100), 31_000),
+          mock('ethereum', UnixTime(800), 2_000),
+          mock('ethereum', UnixTime(1_300), 2_500),
+        ])
 
-          const result = await repository.getClosestPrices(
-            ['bitcoin'],
-            targetTime,
-            UnixTime.DAY,
-          )
-          expect(result.get('bitcoin')).toEqual(30000)
-        })
+        const queries: InteropClosestPriceQuery<'btc' | 'eth'>[] = [
+          { key: 'btc', coingeckoId: 'bitcoin', timestamp: UnixTime(1_000) },
+          { key: 'eth', coingeckoId: 'ethereum', timestamp: UnixTime(1_000) },
+        ]
 
-        it('returns closest price within 1 day, later than target', async () => {
-          const targetTime = UnixTime(1000)
-          await repository.insertMany([
-            mock('bitcoin', UnixTime(800), 30000),
-            mock('bitcoin', UnixTime(1100), 31000),
-          ])
+        const result = await repository.getClosestPricesForQueries(
+          queries,
+          UnixTime.DAY,
+        )
 
-          const result = await repository.getClosestPrices(
-            ['bitcoin'],
-            targetTime,
-            UnixTime.DAY,
-          )
-          expect(result.get('bitcoin')).toEqual(31000)
-        })
-
-        it('returns exact price when timestamp matches exactly', async () => {
-          const targetTime = UnixTime(1000)
-          await repository.insertMany([
-            mock('bitcoin', targetTime, 30000),
-            mock('bitcoin', UnixTime(900)),
-          ])
-
-          const result = await repository.getClosestPrices(
-            ['bitcoin'],
-            targetTime,
-            UnixTime.DAY,
-          )
-          expect(result.get('bitcoin')).toEqual(30000)
-        })
-
-        it('returns price at boundary of 1 day range, earlier than target', async () => {
-          const targetTime = UnixTime.DAY + 7
-          const oneDayBefore = targetTime - UnixTime.DAY
-          await repository.insertMany([mock('bitcoin', oneDayBefore)])
-
-          const result = await repository.getClosestPrices(
-            ['bitcoin'],
-            targetTime,
-            UnixTime.DAY,
-          )
-          expect(result.get('bitcoin')).toEqual(1000)
-        })
-
-        it('returns price at boundary of 1 day range, later than target', async () => {
-          const targetTime = UnixTime.DAY + 7
-          const oneDayAfter = targetTime + UnixTime.DAY
-          await repository.insertMany([mock('bitcoin', oneDayAfter)])
-
-          const result = await repository.getClosestPrices(
-            ['bitcoin'],
-            targetTime,
-            UnixTime.DAY,
-          )
-          expect(result.get('bitcoin')).toEqual(1000)
-        })
-
-        it('returns undefined when no prices within 1 day', async () => {
-          const targetTime = UnixTime(1000)
-          await repository.insertMany([
-            mock('bitcoin', targetTime + UnixTime.DAY + 1),
-            mock('bitcoin', targetTime - UnixTime.DAY - 1),
-          ])
-
-          const result = await repository.getClosestPrices(
-            ['bitcoin'],
-            targetTime,
-            UnixTime.DAY,
-          )
-          expect(result.get('bitcoin')).toEqual(undefined)
-        })
-
-        it('returns undefined when coingeckoId does not exist', async () => {
-          const targetTime = UnixTime(1000)
-          await repository.insertMany([mock('ethereum', targetTime)])
-
-          const result = await repository.getClosestPrices(
-            ['bitcoin'],
-            targetTime,
-            UnixTime.DAY,
-          )
-          expect(result.get('bitcoin')).toEqual(undefined)
-        })
+        expect(result.get('btc')).toEqual(31_000)
+        expect(result.get('eth')).toEqual(2_000)
       })
 
-      describe('multiple coingeckoIds queries', () => {
-        it('returns closest prices for multiple tokens', async () => {
-          const targetTime = UnixTime(1000)
-          await repository.insertMany([
-            mock('bitcoin', UnixTime(900), 30000),
-            mock('bitcoin', UnixTime(1200), 20000),
-            mock('ethereum', UnixTime(800), 3000),
-            mock('ethereum', UnixTime(1100), 2000),
-            mock('polygon', UnixTime(1000), 0.8),
-            mock('polygon', UnixTime(1100), 0.9),
-          ])
+      it('uses query-specific timestamp for the same coingecko id', async () => {
+        await repository.insertMany([
+          mock('bitcoin', UnixTime(900), 30_000),
+          mock('bitcoin', UnixTime(1_100), 31_000),
+        ])
 
-          const result = await repository.getClosestPrices(
-            ['bitcoin', 'ethereum', 'polygon'],
-            targetTime,
-            UnixTime.DAY,
-          )
+        const queries: InteropClosestPriceQuery<'earlier' | 'later'>[] = [
+          {
+            key: 'earlier',
+            coingeckoId: 'bitcoin',
+            timestamp: UnixTime(950),
+          },
+          {
+            key: 'later',
+            coingeckoId: 'bitcoin',
+            timestamp: UnixTime(1_050),
+          },
+        ]
 
-          expect(result.get('bitcoin')).toEqual(30000)
-          expect(result.get('ethereum')).toEqual(2000)
-          expect(result.get('polygon')).toEqual(0.8)
-        })
+        const result = await repository.getClosestPricesForQueries(
+          queries,
+          UnixTime.DAY,
+        )
 
-        it('handles mixed scenarios with some tokens having data and others not', async () => {
-          const targetTime = UnixTime(1000)
-          await repository.insertMany([
-            mock('bitcoin', UnixTime(950), 30000),
-            mock('ethereum', targetTime + UnixTime.DAY + 1, 2000),
-          ])
+        expect(result.get('earlier')).toEqual(30_000)
+        expect(result.get('later')).toEqual(31_000)
+      })
 
-          const result = await repository.getClosestPrices(
-            ['bitcoin', 'ethereum', 'polygon'],
-            targetTime,
-            UnixTime.DAY,
-          )
+      it('returns undefined when no price is within error margin', async () => {
+        await repository.insertMany([
+          mock('bitcoin', UnixTime(1_000 + UnixTime.DAY + 1), 30_000),
+        ])
 
-          expect(result.get('bitcoin')).toEqual(30000)
-          expect(result.get('ethereum')).toEqual(undefined)
-          expect(result.get('polygon')).toEqual(undefined)
-        })
+        const queries: InteropClosestPriceQuery<'btc'>[] = [
+          { key: 'btc', coingeckoId: 'bitcoin', timestamp: UnixTime(1_000) },
+        ]
+
+        const result = await repository.getClosestPricesForQueries(
+          queries,
+          UnixTime.DAY,
+        )
+
+        expect(result.get('btc')).toEqual(undefined)
+      })
+
+      it('returns empty map for empty queries', async () => {
+        const result = await repository.getClosestPricesForQueries(
+          [],
+          UnixTime.DAY,
+        )
+
+        expect(result.size).toEqual(0)
       })
     },
   )
-
-  describe(InteropRecentPricesRepository.prototype.getClosestPrice.name, () => {
-    it('returns closest price for a single coingeckoId', async () => {
-      const targetTime = UnixTime(1000)
-      await repository.insertMany([
-        mock('bitcoin', UnixTime(900), 30000),
-        mock('bitcoin', UnixTime(1100), 31000),
-      ])
-
-      const result = await repository.getClosestPrice(
-        'bitcoin',
-        targetTime,
-        UnixTime.DAY,
-      )
-      expect(result).toEqual(31000)
-    })
-
-    it('returns undefined when no price is found in the error margin', async () => {
-      const targetTime = UnixTime(1000)
-      await repository.insertMany([
-        mock('bitcoin', targetTime + UnixTime.DAY + 1, 30000),
-      ])
-
-      const result = await repository.getClosestPrice(
-        'bitcoin',
-        targetTime,
-        UnixTime.DAY,
-      )
-      expect(result).toEqual(undefined)
-    })
-  })
 
   describe(InteropRecentPricesRepository.prototype.deleteBefore.name, () => {
     it('deletes records before timestamp and returns count', async () => {
