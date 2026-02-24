@@ -194,11 +194,16 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
       <div className="font-medium text-label-value-14 text-secondary">
         {label}
       </div>
-      <HorizontalSeparator className="my-1" />
       <div className="flex items-center justify-between gap-x-6">
         <span className="font-medium text-label-value-14">Total transfers</span>
         <span className="font-medium text-label-value-15 text-primary tabular-nums">
           {formatInteger(totalTransfers)} transfers
+        </span>
+      </div>
+      <div className="flex items-center justify-between gap-x-6">
+        <span className="font-medium text-label-value-14">Average size</span>
+        <span className="font-medium text-label-value-15 text-primary tabular-nums">
+          {formatTransferSize(data.averageTransferSizeUsd)}
         </span>
       </div>
       <HorizontalSeparator className="my-1" />

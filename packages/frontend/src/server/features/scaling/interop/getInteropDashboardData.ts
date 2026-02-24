@@ -193,6 +193,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       percentageOver100K: 1,
       minTransferSizeUsd: 50,
       maxTransferSizeUsd: 250_000,
+      averageTransferSizeUsd: 12_500,
     },
     {
       name: 'Optimism Canonical',
@@ -209,6 +210,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       percentageOver100K: 0,
       minTransferSizeUsd: 75,
       maxTransferSizeUsd: 90_000,
+      averageTransferSizeUsd: 6_700,
     },
     {
       name: 'Base Canonical',
@@ -225,6 +227,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       percentageOver100K: 0,
       minTransferSizeUsd: 120,
       maxTransferSizeUsd: 80_000,
+      averageTransferSizeUsd: 5_900,
     },
   ]
 

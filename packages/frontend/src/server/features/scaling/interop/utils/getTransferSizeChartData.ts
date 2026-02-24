@@ -19,13 +19,19 @@ export type TransferSizeDataPoint = {
   percentageOver100K: number
   minTransferSizeUsd: number | undefined
   maxTransferSizeUsd: number | undefined
+  averageTransferSizeUsd: number | undefined
+}
+
+type TransferSizeDataPointAccumulated = TransferSizeDataPoint & {
+  totalValueUsd: number
+  identifiedCount: number
 }
 
 export function getTransferSizeChartData(
   records: AggregatedInteropTransferRecord[],
   interopProjects: Project<'interopConfig'>[],
 ): TransferSizeDataPoint[] | undefined {
-  const data = new Map<string, TransferSizeDataPoint>()
+  const data = new Map<string, TransferSizeDataPointAccumulated>()
 
   if (records.length === 0) {
     return undefined
@@ -44,6 +50,9 @@ export function getTransferSizeChartData(
       countOver100K: 0,
       minTransferSizeUsd: undefined,
       maxTransferSizeUsd: undefined,
+      averageTransferSizeUsd: undefined,
+      totalValueUsd: 0,
+      identifiedCount: 0,
     }
 
     const countUnder100 = current.countUnder100 + record.countUnder100
@@ -63,6 +72,9 @@ export function getTransferSizeChartData(
           ? Math.max(current.maxTransferSizeUsd, record.maxTransferSizeUsd)
           : record.maxTransferSizeUsd
         : current.maxTransferSizeUsd
+    const totalValueUsd =
+      current.totalValueUsd + (record.srcValueUsd ?? record.dstValueUsd ?? 0)
+    const identifiedCount = current.identifiedCount + record.identifiedCount
 
     const total =
       countUnder100 +
@@ -88,6 +100,10 @@ export function getTransferSizeChartData(
       percentageOver100K: round((countOver100K / total) * 100, 2),
       minTransferSizeUsd,
       maxTransferSizeUsd,
+      averageTransferSizeUsd:
+        identifiedCount > 0 ? totalValueUsd / identifiedCount : undefined,
+      totalValueUsd,
+      identifiedCount,
     })
   }
 
@@ -109,5 +125,6 @@ export function getTransferSizeChartData(
       percentageOver100K: value.percentageOver100K,
       minTransferSizeUsd: value.minTransferSizeUsd,
       maxTransferSizeUsd: value.maxTransferSizeUsd,
+      averageTransferSizeUsd: value.averageTransferSizeUsd,
     }))
 }

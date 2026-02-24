@@ -219,6 +219,14 @@ export function getAllProtocolsColumns(
               <HorizontalSeparator className="my-1" />
               <div className="flex items-center justify-between gap-x-6">
                 <span className="font-medium text-label-value-14">
+                  Average size
+                </span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {averageValue}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">
                   Min size
                 </span>
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
