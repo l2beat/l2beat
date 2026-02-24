@@ -8,11 +8,17 @@ Generated with discovered.json: 0x5cb3f98dfdf8fb6cee3f1e5193602e4d8641ee7b
 
 ## Description
 
-Major upgrade: Corn migrated from Classic Arbitrum fraud proof system to BoLD (Bounded Liquidity Delay). All core contracts upgraded in tx 0x657c22e5b9be1d565e6464915276bcc262e66aac6ba82ffa73d1de7688204981 on 2026-02-20.
+Upgrade to BoLD dispute protocol and ArbOS v51 "Dia" (nitro-contracts v3.1.0+). Corn uses ERC20 BoLD variants (same implementations as Plume) since BTCN is its custom gas token.
 
-Old Classic system (RollupProxy at 0x828C..., ChallengeManager, ValidatorUtils, and all OneStepProvers) deleted and replaced with new BoLD system (RollupProxy at 0x09eD..., EdgeChallengeManager at 0x90f6..., new OneStepProvers).
+RollupProxy replaced with a new BoLD-enabled contract (`isPostBoLD: true`). Assertion-based state management replaces the old node-based system. Validators stake 0.1 ETH (WETH), validator whitelist remains enabled. `anyTrustFastConfirmer` is not set (zero address).
 
-Bridge, Outbox, Inbox, SequencerInbox, and RollupEventInbox all upgraded to new implementations pointing to the new RollupProxy. SequencerInbox gained `feeTokenPricer` and `isDelayBufferable` fields, and `delayBlocks` changed from 5760 to 7200. The UpgradeExecutor description no longer references the `fastConfirmer` role.
+ChallengeManager replaced with EdgeChallengeManager implementing the BoLD multi-level bisection protocol: block-level edges (height 67M), 1 big-step level (height 524K), small-step edges (height 8.4M), with 0.1 ETH stake for big-step and small-step edges.
+
+All core contracts upgraded: Bridge, Inbox, Outbox, RollupEventInbox, SequencerInbox. SequencerInbox gains delay buffer support (`isDelayBufferable: true`, currently set to max/disabled) and `feeTokenPricer` field. `delayBlocks` increased from 5760 to 7200.
+
+All four OneStepProvers and OneStepProofEntry replaced with new versions. ValidatorUtils removed (no longer needed in BoLD).
+
+ArbOS wasmModuleRoot updated to `0x8a7513bf...` (v51 "Dia").
 
 ## Watched changes
 
