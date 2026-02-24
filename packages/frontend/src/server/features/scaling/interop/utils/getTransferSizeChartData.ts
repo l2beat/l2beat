@@ -18,8 +18,8 @@ export type TransferSizeDataPoint = {
   percentage10KTo100K: number
   countOver100K: number
   percentageOver100K: number
-  minValueUsd: number | undefined
-  maxValueUsd: number | undefined
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   averageTransferSizeUsd: number | undefined
 }
 
@@ -49,8 +49,8 @@ export function getTransferSizeChartData(
       count1KTo10K: 0,
       count10KTo100K: 0,
       countOver100K: 0,
-      minValueUsd: undefined,
-      maxValueUsd: undefined,
+      minTransferValueUsd: undefined,
+      maxTransferValueUsd: undefined,
       averageTransferSizeUsd: undefined,
       totalValueUsd: 0,
       identifiedCount: 0,
@@ -61,18 +61,18 @@ export function getTransferSizeChartData(
     const count1KTo10K = current.count1KTo10K + record.count1KTo10K
     const count10KTo100K = current.count10KTo100K + record.count10KTo100K
     const countOver100K = current.countOver100K + record.countOver100K
-    const minValueUsd =
-      record.minValueUsd !== undefined
-        ? current.minValueUsd !== undefined
-          ? Math.min(current.minValueUsd, record.minValueUsd)
-          : record.minValueUsd
-        : current.minValueUsd
-    const maxValueUsd =
-      record.maxValueUsd !== undefined
-        ? current.maxValueUsd !== undefined
-          ? Math.max(current.maxValueUsd, record.maxValueUsd)
-          : record.maxValueUsd
-        : current.maxValueUsd
+    const minTransferValueUsd =
+      record.minTransferValueUsd !== undefined
+        ? current.minTransferValueUsd !== undefined
+          ? Math.min(current.minTransferValueUsd, record.minTransferValueUsd)
+          : record.minTransferValueUsd
+        : current.minTransferValueUsd
+    const maxTransferValueUsd =
+      record.maxTransferValueUsd !== undefined
+        ? current.maxTransferValueUsd !== undefined
+          ? Math.max(current.maxTransferValueUsd, record.maxTransferValueUsd)
+          : record.maxTransferValueUsd
+        : current.maxTransferValueUsd
     const totalValueUsd =
       current.totalValueUsd + (getTransferValueUsd(record) ?? 0)
     const identifiedCount = current.identifiedCount + record.identifiedCount
@@ -99,8 +99,8 @@ export function getTransferSizeChartData(
       percentage10KTo100K: round((count10KTo100K / total) * 100, 2),
       countOver100K,
       percentageOver100K: round((countOver100K / total) * 100, 2),
-      minValueUsd,
-      maxValueUsd,
+      minTransferValueUsd,
+      maxTransferValueUsd,
       averageTransferSizeUsd:
         identifiedCount > 0 ? totalValueUsd / identifiedCount : undefined,
       totalValueUsd,
@@ -124,8 +124,8 @@ export function getTransferSizeChartData(
       percentage10KTo100K: value.percentage10KTo100K,
       countOver100K: value.countOver100K,
       percentageOver100K: value.percentageOver100K,
-      minValueUsd: value.minValueUsd,
-      maxValueUsd: value.maxValueUsd,
+      minTransferValueUsd: value.minTransferValueUsd,
+      maxTransferValueUsd: value.maxTransferValueUsd,
       averageTransferSizeUsd: value.averageTransferSizeUsd,
     }))
 }

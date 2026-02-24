@@ -242,7 +242,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
       <div className="flex items-center justify-between gap-x-6">
         <span className="font-medium text-label-value-14">Min size</span>
         <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatTransferSize(data.minValueUsd)}
+          {formatTransferSize(data.minTransferValueUsd)}
         </span>
       </div>
       <div className="flex items-center justify-between gap-x-6">
@@ -254,7 +254,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
       <div className="flex items-center justify-between gap-x-6">
         <span className="font-medium text-label-value-14">Max size</span>
         <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatTransferSize(data.maxValueUsd)}
+          {formatTransferSize(data.maxTransferValueUsd)}
         </span>
       </div>
     </ChartTooltipWrapper>

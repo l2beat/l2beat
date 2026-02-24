@@ -25,8 +25,8 @@ export type ProtocolEntry = {
   chains: TopItems<ChainData>
   transferCount: number
   averageValue: number | null
-  minValueUsd: number | undefined
-  maxValueUsd: number | undefined
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   averageDuration: AverageDuration | null
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
@@ -98,6 +98,8 @@ export type CommonInteropData = {
   inDurationSum: number
   outTransferCount: number
   outDurationSum: number
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   mintedValueUsd: number | undefined
   burnedValueUsd: number | undefined
 }
@@ -110,6 +112,8 @@ export type TokenData = {
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
 }
 

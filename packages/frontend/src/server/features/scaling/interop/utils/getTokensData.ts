@@ -56,6 +56,8 @@ export function getTokensData({
         avgDuration: avgDuration,
         avgValue:
           token.transferCount > 0 ? token.volume / token.transferCount : null,
+        minTransferValueUsd: token.minTransferValueUsd,
+        maxTransferValueUsd: token.maxTransferValueUsd,
         netMintedValue:
           token.mintedValueUsd !== undefined &&
           token.burnedValueUsd !== undefined
@@ -75,6 +77,8 @@ export function getTokensData({
       avgDuration: null,
       avgValue: null,
       volume: null,
+      minTransferValueUsd: undefined,
+      maxTransferValueUsd: undefined,
       netMintedValue: undefined,
     })
   }
