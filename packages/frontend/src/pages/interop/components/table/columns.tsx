@@ -197,12 +197,12 @@ export function getAllProtocolsColumns(
           'usd',
         )
         const minTransferSize =
-          ctx.row.original.minTransferSizeUsd !== undefined
-            ? formatCurrency(ctx.row.original.minTransferSizeUsd, 'usd')
+          ctx.row.original.minValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.minValueUsd, 'usd')
             : EM_DASH
         const maxTransferSize =
-          ctx.row.original.maxTransferSizeUsd !== undefined
-            ? formatCurrency(ctx.row.original.maxTransferSizeUsd, 'usd')
+          ctx.row.original.maxValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.maxValueUsd, 'usd')
             : EM_DASH
 
         return (

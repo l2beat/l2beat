@@ -25,8 +25,8 @@ export type ProtocolEntry = {
   chains: TopItems<ChainData>
   transferCount: number
   averageValue: number | null
-  minTransferSizeUsd: number | undefined
-  maxTransferSizeUsd: number | undefined
+  minValueUsd: number | undefined
+  maxValueUsd: number | undefined
   averageDuration: AverageDuration | null
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined

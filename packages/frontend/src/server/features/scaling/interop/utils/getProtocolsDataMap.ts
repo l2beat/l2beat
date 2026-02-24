@@ -8,6 +8,7 @@ import type {
 import { accumulateChains, accumulateTokens } from './accumulate'
 import type { TransfersTimeModeMap } from './buildTransfersTimeModeMap'
 import { computeDurationSplits } from './computeDurationSplits'
+import { getTransferValueUsd } from './getTransferValueUsd'
 
 export interface ProtocolDataByBridgeType {
   lockAndMint?: ProtocolDataByBridgeTypeCommon & CommonInteropData
@@ -28,8 +29,8 @@ export interface ProtocolData extends CommonInteropData {
   volume: number
   tokens: Map<string, CommonInteropData>
   chains: Map<string, CommonInteropData>
-  minTransferSizeUsd: number | undefined
-  maxTransferSizeUsd: number | undefined
+  minValueUsd: number | undefined
+  maxValueUsd: number | undefined
   averageValueInFlight: number | undefined
   identifiedTransferCount: number
   mintedValueUsd: number | undefined
@@ -73,13 +74,13 @@ export function getProtocolsDataMapByBridgeType(
       ?.get(record.bridgeType)
     const transfersTimeMode = transfersTimeModeMap.get(record.id)
     const direction = getDirection(record, durationSplit, transfersTimeMode)
+    const transferValueUsd = getTransferValueUsd(record)
 
     switch (record.bridgeType) {
       case 'lockAndMint':
         bridgeTypeMap.lockAndMint = {
           volume:
-            (bridgeTypeMap.lockAndMint?.volume ?? 0) +
-            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+            (bridgeTypeMap.lockAndMint?.volume ?? 0) + (transferValueUsd ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.lockAndMint?.tokens,
             record.tokens,
@@ -111,8 +112,7 @@ export function getProtocolsDataMapByBridgeType(
       case 'nonMinting':
         bridgeTypeMap.nonMinting = {
           volume:
-            (bridgeTypeMap.nonMinting?.volume ?? 0) +
-            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+            (bridgeTypeMap.nonMinting?.volume ?? 0) + (transferValueUsd ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.nonMinting?.tokens,
             record.tokens,
@@ -132,8 +132,7 @@ export function getProtocolsDataMapByBridgeType(
       case 'burnAndMint':
         bridgeTypeMap.burnAndMint = {
           volume:
-            (bridgeTypeMap.burnAndMint?.volume ?? 0) +
-            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+            (bridgeTypeMap.burnAndMint?.volume ?? 0) + (transferValueUsd ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.burnAndMint?.tokens,
             record.tokens,
@@ -177,27 +176,28 @@ export function getProtocolsDataMap(
         ? durationSplitMap?.get(record.id)?.get(record.bridgeType)
         : undefined
     const direction = getDirection(record, durationSplit, transfersTimeMode)
+    const transferValueUsd = getTransferValueUsd(record)
 
     protocolsDataMap.set(record.id, {
-      volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+      volume: current.volume + (transferValueUsd ?? 0),
       tokens: mergeTokensData(current.tokens, record.tokens, direction),
       chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),
       ...computeDurationSplits(current, direction, record),
-      minTransferSizeUsd:
-        record.minTransferSizeUsd !== undefined
-          ? current.minTransferSizeUsd !== undefined
-            ? Math.min(current.minTransferSizeUsd, record.minTransferSizeUsd)
-            : record.minTransferSizeUsd
-          : current.minTransferSizeUsd,
-      maxTransferSizeUsd:
-        record.maxTransferSizeUsd !== undefined
-          ? current.maxTransferSizeUsd !== undefined
-            ? Math.max(current.maxTransferSizeUsd, record.maxTransferSizeUsd)
-            : record.maxTransferSizeUsd
-          : current.maxTransferSizeUsd,
+      minValueUsd:
+        record.minValueUsd !== undefined
+          ? current.minValueUsd !== undefined
+            ? Math.min(current.minValueUsd, record.minValueUsd)
+            : record.minValueUsd
+          : current.minValueUsd,
+      maxValueUsd:
+        record.maxValueUsd !== undefined
+          ? current.maxValueUsd !== undefined
+            ? Math.max(current.maxValueUsd, record.maxValueUsd)
+            : record.maxValueUsd
+          : current.maxValueUsd,
       averageValueInFlight:
         record.avgValueInFlight !== undefined
           ? (current.averageValueInFlight ?? 0) + record.avgValueInFlight
@@ -229,8 +229,8 @@ function createInitialProtocolData(): ProtocolData {
     inDurationSum: 0,
     outTransferCount: 0,
     outDurationSum: 0,
-    minTransferSizeUsd: undefined,
-    maxTransferSizeUsd: undefined,
+    minValueUsd: undefined,
+    maxValueUsd: undefined,
     averageValueInFlight: undefined,
     identifiedTransferCount: 0,
     mintedValueUsd: undefined,

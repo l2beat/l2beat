@@ -28,8 +28,8 @@ describe('aggregation', () => {
         totalDurationSum: 5000,
         srcValueUsd: 2000,
         dstValueUsd: 2000,
-        minTransferSizeUsd: 2000,
-        maxTransferSizeUsd: 2000,
+        minValueUsd: 2000,
+        maxValueUsd: 2000,
         avgValueInFlight: undefined,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
@@ -79,8 +79,8 @@ describe('aggregation', () => {
         totalDurationSum: 15000,
         srcValueUsd: 6500.5,
         dstValueUsd: 6500.5,
-        minTransferSizeUsd: 1500.5,
-        maxTransferSizeUsd: 3000,
+        minValueUsd: 1500.5,
+        maxValueUsd: 3000,
         avgValueInFlight: undefined,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
@@ -122,8 +122,8 @@ describe('aggregation', () => {
         totalDurationSum: 11000,
         srcValueUsd: 3000,
         dstValueUsd: 3000,
-        minTransferSizeUsd: 3000,
-        maxTransferSizeUsd: 3000,
+        minValueUsd: 3000,
+        maxValueUsd: 3000,
         avgValueInFlight: undefined,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
@@ -158,7 +158,7 @@ describe('aggregation', () => {
 
       const result = getAggregatedTransfer(transfers)
 
-      expect(result.srcValueUsd).toEqual(3000.23)
+      expect(result.srcValueUsd).toEqual(5001.21)
       expect(result.dstValueUsd).toEqual(5001.21)
     })
 
@@ -223,8 +223,8 @@ describe('aggregation', () => {
         totalDurationSum: 20000,
         srcValueUsd: 255550,
         dstValueUsd: 255550,
-        minTransferSizeUsd: 50,
-        maxTransferSizeUsd: 200000,
+        minValueUsd: 50,
+        maxValueUsd: 200000,
         avgValueInFlight: undefined,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,

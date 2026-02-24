@@ -1,5 +1,6 @@
 import { assert, type ProjectId } from '@l2beat/shared-pure'
 import type { AggregatedInteropTransferWithTokens } from '../types'
+import { getTransferValueUsd } from './getTransferValueUsd'
 
 export type InteropFlowData = {
   srcChain: string
@@ -19,7 +20,7 @@ export function getFlows(
 
     const key = `${record.srcChain}::${record.dstChain}`
     const current = map.get(key) ?? 0
-    map.set(key, current + (record.srcValueUsd ?? record.dstValueUsd ?? 0))
+    map.set(key, current + (getTransferValueUsd(record) ?? 0))
   }
 
   return Array.from(map.entries())

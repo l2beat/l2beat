@@ -1,3 +1,3 @@
 ALTER TABLE "AggregatedInteropTransfer"
-ADD COLUMN "minTransferSizeUsd" REAL,
-ADD COLUMN "maxTransferSizeUsd" REAL;
+ADD COLUMN "minValueUsd" REAL,
+ADD COLUMN "maxValueUsd" REAL;

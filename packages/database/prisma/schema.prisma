@@ -550,8 +550,8 @@ model AggregatedInteropTransfer {
   totalDurationSum Int
   srcValueUsd        Float? @db.Real
   dstValueUsd        Float? @db.Real
-  minTransferSizeUsd Float? @db.Real
-  maxTransferSizeUsd Float? @db.Real
+  minValueUsd Float? @db.Real
+  maxValueUsd Float? @db.Real
   avgValueInFlight   Float? @db.Real
   mintedValueUsd     Float? @db.Real
   burnedValueUsd     Float? @db.Real
