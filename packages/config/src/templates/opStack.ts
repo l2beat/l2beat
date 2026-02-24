@@ -709,6 +709,7 @@ function programHashesReproducible(
 ): boolean | null {
   const programHashes =
     templateVars.nonTemplateProgramHashes ?? getProgramHashes(templateVars)
+  if (programHashes.length === 0) return null
   if (programHashes.some((h) => h.verificationStatus === 'unsuccessful'))
     return false
   if (programHashes.every((h) => h.verificationStatus === 'successful'))
