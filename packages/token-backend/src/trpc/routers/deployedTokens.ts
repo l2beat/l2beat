@@ -102,6 +102,55 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
     }
   }
 
+  function findSimilarAbstractTokens(
+    deployedSymbol: string,
+    abstractTokens: { id: string; symbol: string; issuer: string | null }[],
+    limit: number,
+  ): { id: string; symbol: string; issuer: string | null }[] {
+    // Forward: deployed symbol as query against abstract token symbols
+    // Handles exact matches and when deployed symbol is shorter
+    const forward = fuzzysort.go(deployedSymbol, abstractTokens, {
+      key: (e) => e.symbol,
+      limit,
+      threshold: -1000,
+    })
+
+    // Reverse: each abstract symbol as query against deployed symbol
+    // Handles cases like USDC.e -> USDC where deployed symbol has a suffix
+    const reverse = abstractTokens
+      .map((t) => ({
+        token: t,
+        result: fuzzysort.single(t.symbol, deployedSymbol),
+      }))
+      .filter(
+        (r): r is { token: (typeof abstractTokens)[number]; result: NonNullable<typeof r.result> } =>
+          r.result !== null,
+      )
+      .sort((a, b) => b.result.score - a.result.score)
+      .slice(0, limit)
+
+    // Merge and deduplicate, preferring higher scores
+    const seen = new Map<string, { token: (typeof abstractTokens)[number]; score: number }>()
+    for (const r of forward) {
+      seen.set(r.obj.id, { token: r.obj, score: r.score })
+    }
+    for (const r of reverse) {
+      const existing = seen.get(r.token.id)
+      if (!existing || r.result.score > existing.score) {
+        seen.set(r.token.id, { token: r.token, score: r.result.score })
+      }
+    }
+
+    return [...seen.values()]
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit)
+      .map((r) => ({
+        id: r.token.id,
+        symbol: r.token.symbol,
+        issuer: r.token.issuer,
+      }))
+  }
+
   return router({
     findByChainAndAddress: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
@@ -215,16 +264,11 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
             | undefined
           if (symbol) {
             const allAbstractTokens = await ctx.db.abstractToken.getAll()
-            const results = fuzzysort.go(symbol, allAbstractTokens, {
-              key: (e) => e.symbol,
-              limit: 5,
-              threshold: -1000,
-            })
-            abstractTokenSuggestions = results.map((r) => ({
-              id: r.obj.id,
-              symbol: r.obj.symbol,
-              issuer: r.obj.issuer,
-            }))
+            abstractTokenSuggestions = findSimilarAbstractTokens(
+              symbol,
+              allAbstractTokens,
+              5,
+            )
           }
 
           return {
