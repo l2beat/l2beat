@@ -15,8 +15,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { getStage } from '../../common/stages/getStage'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { ScalingProject } from '../../internalTypes'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
