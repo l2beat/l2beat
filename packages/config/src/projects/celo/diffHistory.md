@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x689b6a7fcf56e61f67e987e4f558aaf57133e4a5
+
+# Diff at Thu, 19 Feb 2026 10:15:36 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2b96f087639b90912cc82e06e34e7b0beefda5ab block: 1770736055
+- current timestamp: 1771496067
+
+## Description
+
+New SP1Verifier (v6.0.0) registered on the SP1VerifierGateway with selector `0xbb1a6f29`.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.1:
++        {"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.10:
++        {"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C)
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+## Source code changes
+
+```diff
+...0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol} |    0
+ ...:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C.sol | 1423 ++++++++++++++++++++
+ 2 files changed, 1423 insertions(+)
+```
+
 Generated with discovered.json: 0x59b7998363c40179e885e8cb8b5b69c4e053abc1
 
 # Diff at Fri, 13 Feb 2026 11:33:09 GMT:

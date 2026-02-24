@@ -258,6 +258,9 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     timestamp: UnixTime,
     selectedChains: [string, string],
     type?: InteropBridgeType,
+    options?: {
+      includeSameChainTransfers?: boolean
+    },
   ): Promise<AggregatedInteropTransferRecord[]> {
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
@@ -265,6 +268,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .where('srcChain', 'in', selectedChains)
       .where('dstChain', 'in', selectedChains)
+
+    if (!options?.includeSameChainTransfers) {
+      query = query.whereRef('srcChain', '!=', 'dstChain')
+    }
 
     if (type) {
       query = query.where('bridgeType', '=', type)
@@ -280,6 +287,9 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     id: string,
     selectedChains: [string, string],
     type?: InteropBridgeType,
+    options?: {
+      includeSameChainTransfers?: boolean
+    },
   ) {
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
@@ -289,6 +299,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', selectedChains)
       .where('dstChain', 'in', selectedChains)
       .where('id', '=', id)
+
+    if (!options?.includeSameChainTransfers) {
+      query = query.whereRef('srcChain', '!=', 'dstChain')
+    }
 
     if (type) {
       query = query.where('bridgeType', '=', type)
@@ -312,6 +326,9 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     id: string,
     selectedChains: [string, string],
     type?: InteropBridgeType,
+    options?: {
+      includeSameChainTransfers?: boolean
+    },
   ): Promise<AggregatedInteropTransferRecord[]> {
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
@@ -320,6 +337,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', selectedChains)
       .where('dstChain', 'in', selectedChains)
       .where('id', '=', id)
+
+    if (!options?.includeSameChainTransfers) {
+      query = query.whereRef('srcChain', '!=', 'dstChain')
+    }
 
     if (type) {
       query = query.where('bridgeType', '=', type)

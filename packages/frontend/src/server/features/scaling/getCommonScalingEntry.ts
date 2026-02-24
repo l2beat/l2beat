@@ -6,7 +6,7 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
-import { getIsProjectVerified } from '../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../utils/getIsProjectVerified'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -21,7 +21,7 @@ export function getCommonScalingEntry({
   syncWarning,
   ongoingAnomaly,
 }: {
-  project: Project<'scalingInfo' | 'statuses' | 'display'>
+  project: Project<'scalingInfo' | 'statuses' | 'display', 'contracts'>
   changes: ProjectChanges | undefined
   syncWarning?: string
   ongoingAnomaly?: boolean
@@ -29,10 +29,7 @@ export function getCommonScalingEntry({
   const statuses = {
     yellowWarning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
-    verificationWarning: !getIsProjectVerified(
-      project.statuses.unverifiedContracts,
-      changes,
-    ),
+    verificationWarnings: getProjectVerificationWarnings(project, changes),
     underReview: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       impactfulChange: !!changes?.impactfulChange,

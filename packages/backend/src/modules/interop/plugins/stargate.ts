@@ -282,7 +282,6 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
         '0x55d398326f99059ff775485246999027b3197955',
       ),
       token: 'USDT',
-      hydra: true,
     },
     tokenMessaging: EthereumAddress(
       '0x6E3d884C96d640526F273C61dfcF08915eBd7e2B',

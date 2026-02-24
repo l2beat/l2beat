@@ -7,7 +7,9 @@
  * NON-MINTING (intents/squid)
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import type { TokenMap } from '../engine/match/TokenMap'
 import { findParsedAround } from './hyperlane-hwr'
+import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import {
   createEventParser,
   createInteropEventType,
@@ -321,6 +323,7 @@ export class AxelarPlugin implements InteropPlugin {
   match(
     contractCallExecuted: InteropEvent,
     db: InteropEventDb,
+    tokenMap: TokenMap,
   ): MatchResult | undefined {
     if (ContractCallExecuted.checkType(contractCallExecuted)) {
       const contractCallApproved = db.find(ContractCallApproved, {
@@ -368,8 +371,27 @@ export class AxelarPlugin implements InteropPlugin {
         commandId: contractCallExecuted.args.commandId,
       })
 
+      const srcTokenAddress = contractCallWithToken.args.tokenAddress
+      const dstTokenAddress = matchingUnsafeAmount
+        ? contractCallExecuted.args.tokenAddressUnsafe
+        : undefined
+      const srcWasBurned = contractCallWithToken.args.srcWasBurned
+      const dstWasMinted = contractCallExecuted.args.dstWasMinted
+      // we are using this implicitly with
+      // defaultBridgeType = 'burnAndMint' because axelar has axlUSDC
+      const bridgeType = getBridgeType({
+        srcTokenAddress,
+        dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
+        srcChain: contractCallWithToken.ctx.chain,
+        dstChain: contractCallExecuted.ctx.chain,
+        tokenMap,
+      })
+
+      const result: MatchResult = []
       if (expressExecuted) {
-        return [
+        result.push(
           // TODO: do we want to count intent fill AND settlement as message/transfer?
           // INTENT FILL
           Result.Message('axelar-squid.Message', {
@@ -386,54 +408,40 @@ export class AxelarPlugin implements InteropPlugin {
             dstTokenAddress: expressExecuted.args.tokenAddress,
             dstAmount: expressExecuted.args.amount,
             dstWasMinted: false,
+            // fast execution special case: the destination is intent-based (never minted)
+            // but the source often is burned since it is part of the token bridge
+            // so this fast execution is non-minting, while the
+            // axelar transfer (settlement) in lock-mint or even burn-mint
+            bridgeType: 'nonMinting',
           }),
-          // SETTLEMENT
-          // we count the transfer because it is using the
-          // axelar tokenbridge to settle at the destination
-          Result.Message('axelar.Message', {
-            app: 'axelar-tokenbridge-squid-settlement',
-            srcEvent: contractCallWithToken,
-            dstEvent: contractCallExecuted,
-            extraEvents: [contractCallApprovedWithMint],
-          }),
-          Result.Transfer('axelar.Transfer', {
-            srcEvent: contractCallWithToken,
-            srcTokenAddress: contractCallWithToken.args.tokenAddress,
-            srcAmount: contractCallWithToken.args.amount,
-            srcWasBurned: contractCallWithToken.args.srcWasBurned,
-            dstEvent: contractCallExecuted,
-            dstTokenAddress: matchingUnsafeAmount
-              ? contractCallExecuted.args.tokenAddressUnsafe
-              : undefined,
-            dstAmount: matchingUnsafeAmount
-              ? contractCallApprovedWithMint.args.amount
-              : undefined,
-            dstWasMinted: contractCallExecuted.args.dstWasMinted,
-          }),
-        ]
+        )
       }
-      return [
+
+      result.push(
         Result.Message('axelar.Message', {
-          app: 'axelar-tokenbridge',
+          app: expressExecuted
+            ? 'axelar-tokenbridge-squid-settlement'
+            : 'axelar-tokenbridge',
           srcEvent: contractCallWithToken,
           dstEvent: contractCallExecuted,
           extraEvents: [contractCallApprovedWithMint],
         }),
         Result.Transfer('axelar.Transfer', {
           srcEvent: contractCallWithToken,
-          srcTokenAddress: contractCallWithToken.args.tokenAddress,
+          srcTokenAddress,
           srcAmount: contractCallWithToken.args.amount,
-          srcWasBurned: contractCallWithToken.args.srcWasBurned,
+          srcWasBurned,
           dstEvent: contractCallExecuted,
-          dstTokenAddress: matchingUnsafeAmount
-            ? contractCallExecuted.args.tokenAddressUnsafe
-            : undefined,
+          dstTokenAddress,
           dstAmount: matchingUnsafeAmount
             ? contractCallApprovedWithMint.args.amount
             : undefined,
-          dstWasMinted: contractCallExecuted.args.dstWasMinted,
+          dstWasMinted,
+          bridgeType,
         }),
-      ]
+      )
+
+      return result
     }
   }
 }

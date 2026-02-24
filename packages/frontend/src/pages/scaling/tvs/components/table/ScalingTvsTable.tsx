@@ -73,7 +73,7 @@ export function ScalingTvsTable({
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} insideMainPageCard />
+      <BasicTable table={table} />
     </>
   )
 }

@@ -7,7 +7,6 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { TopChainsCell } from '../top-items/TopChainsCell'
 import { TopTokensCell } from '../top-items/TopTokensCell'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
@@ -199,6 +198,8 @@ export function getAllProtocolsColumns(
         meta: {
           align: 'right',
           headClassName: 'text-2xs',
+          tooltip:
+            "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
         },
         cell: (ctx) => (
           <span className="font-medium text-label-value-15">
@@ -222,29 +223,6 @@ export function getAllProtocolsColumns(
           <TopTokensCell
             topItems={ctx.row.original.tokens}
             type={type}
-            protocol={{
-              id: ctx.row.original.id,
-              name: ctx.row.original.name,
-              iconUrl: ctx.row.original.iconUrl,
-            }}
-            showNetMintedValueColumn={showNetMintedValueColumn}
-          />
-        )
-      },
-    }),
-    columnHelper.accessor('chains', {
-      header: 'Chains\nby volume',
-      meta: {
-        cellClassName: '!pr-0',
-        headClassName: 'text-2xs',
-        tooltip:
-          'Chains involved in transfers over the past 24 hours, ranked by total transfer volume. For each transfer, value is counted towards both the source and the destination chain.',
-      },
-      cell: (ctx) => {
-        if (ctx.row.original.chains.items.length === 0) return EM_DASH
-        return (
-          <TopChainsCell
-            topItems={ctx.row.original.chains}
             protocol={{
               id: ctx.row.original.id,
               name: ctx.row.original.name,

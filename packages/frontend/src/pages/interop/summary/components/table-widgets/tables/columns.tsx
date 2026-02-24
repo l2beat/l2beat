@@ -114,6 +114,7 @@ function getTokensByVolumeColumn<
       <TopTokensCell
         topItems={ctx.row.original.tokens}
         type={type}
+        showNetMintedValueColumn={type === 'lockAndMint'}
         protocol={{
           id: ctx.row.original.id,
           name: ctx.row.original.name,
@@ -156,6 +157,8 @@ export const lockAndMintColumns = [
     meta: {
       align: 'right',
       headClassName: 'text-2xs',
+      tooltip:
+        "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
     },
     cell: (ctx) => (
       <span className="font-medium text-label-value-15">

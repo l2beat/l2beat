@@ -1,3 +1,25 @@
+Generated with discovered.json: 0xad8cfdfed0f1c72747e46fbbd13e65f5889114dd
+
+# Diff at Thu, 19 Feb 2026 09:46:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@31cbacb6d899b700558dd36eccfd1161fc0b3b74 block: 1770815650
+- current timestamp: 1771493932
+
+## Description
+
+operator rotation.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+    }
+```
+
 Generated with discovered.json: 0x1a913d0e78b423ab3630bb703c99ed33f8652adb
 
 # Diff at Wed, 11 Feb 2026 13:18:12 GMT:

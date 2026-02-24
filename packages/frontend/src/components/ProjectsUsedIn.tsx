@@ -60,54 +60,55 @@ export function ProjectsUsedIn({
 
   return (
     <div
-      className={cn(
-        'flex shrink-0 flex-row flex-nowrap items-center gap-1.5',
-        className,
-      )}
+      className={cn('grid grid-cols-2', className)}
+      style={{
+        gridTemplateColumns: `${cappedProjects.length === 1 ? 20 : cappedProjects.length * 15}px  30px`,
+      }}
     >
-      {cappedProjects.map((project) => {
-        return (
-          <Tooltip key={project.slug}>
-            {noLink ? (
-              <TooltipTrigger>
-                <img
-                  width={20}
-                  height={20}
-                  src={project.icon}
-                  alt={`${project.name} logo`}
-                />
-              </TooltipTrigger>
-            ) : (
-              <a href={project.url} className="size-5">
-                <TooltipTrigger>
-                  <img
-                    width={20}
-                    height={20}
-                    src={project.icon}
-                    alt={`${project.name} logo`}
-                  />
-                </TooltipTrigger>
-              </a>
-            )}
-            <TooltipContent>
-              <p className="font-bold">{project.name}</p>
-              <p className="text-secondary text-xs">
-                Click to view project page
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        )
-      })}
+      <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
+        {cappedProjects.map((project, index) => {
+          const trigger = (
+            <TooltipTrigger>
+              <img
+                width={20}
+                height={20}
+                src={project.icon}
+                alt={`${project.name} logo`}
+                className="relative size-5 min-w-5 rounded-full bg-white shadow"
+                style={{ zIndex: maxProjects - index }}
+              />
+            </TooltipTrigger>
+          )
+
+          return (
+            <Tooltip key={project.slug}>
+              {noLink ? (
+                trigger
+              ) : (
+                <a href={project.url} className="size-5">
+                  {trigger}
+                </a>
+              )}
+              <TooltipContent>
+                <p className="font-bold">{project.name}</p>
+                <p className="text-secondary text-xs">
+                  Click to view project page
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          )
+        })}
+      </div>
       {rest.length > 0 && (
         <>
           <button
-            className="text-2xs hover:underline"
+            className="font-bold text-label-value-13 hover:underline"
             onClick={(e) => {
               e.preventDefault()
               setOpen(true)
             }}
           >
-            +{rest.length} more
+            +{rest.length}
           </button>
           <CommandDialog
             open={open}

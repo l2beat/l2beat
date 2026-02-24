@@ -5,7 +5,7 @@ import { manifest } from '~/utils/Manifest'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
-import { getIsProjectVerified } from '../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../utils/getIsProjectVerified'
 
 export interface CommonBridgesEntry
   extends CommonProjectEntry,
@@ -17,15 +17,12 @@ export function getCommonBridgesEntry({
   project,
   changes,
 }: {
-  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks'>
+  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks', 'contracts'>
   changes: ProjectChanges
 }): CommonBridgesEntry {
   const statuses = {
     yellowWarning: project.statuses.yellowWarning,
-    verificationWarning: !getIsProjectVerified(
-      project.statuses.unverifiedContracts,
-      changes,
-    ),
+    verificationWarnings: getProjectVerificationWarnings(project, changes),
     underReview: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       ...changes,

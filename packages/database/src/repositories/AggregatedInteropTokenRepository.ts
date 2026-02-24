@@ -77,6 +77,9 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
     timestamp: UnixTime,
     selectedChains: [string, string],
     type?: InteropBridgeType,
+    options?: {
+      includeSameChainTransfers?: boolean
+    },
   ): Promise<AggregatedInteropTokenRecord[]> {
     let query = this.db
       .selectFrom('AggregatedInteropToken')
@@ -84,6 +87,10 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .where('srcChain', 'in', selectedChains)
       .where('dstChain', 'in', selectedChains)
+
+    if (!options?.includeSameChainTransfers) {
+      query = query.whereRef('srcChain', '!=', 'dstChain')
+    }
 
     if (type) {
       query = query.where('bridgeType', '=', type)
@@ -98,6 +105,9 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
     id: string,
     selectedChains: [string, string],
     type?: InteropBridgeType,
+    options?: {
+      includeSameChainTransfers?: boolean
+    },
   ): Promise<AggregatedInteropTokenRecord[]> {
     let query = this.db
       .selectFrom('AggregatedInteropToken')
@@ -106,6 +116,10 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       .where('srcChain', 'in', selectedChains)
       .where('dstChain', 'in', selectedChains)
       .where('id', '=', id)
+
+    if (!options?.includeSameChainTransfers) {
+      query = query.whereRef('srcChain', '!=', 'dstChain')
+    }
 
     if (type) {
       query = query.where('bridgeType', '=', type)

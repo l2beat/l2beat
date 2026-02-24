@@ -1,8 +1,10 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
+import { FilledArrowIcon } from '~/icons/FilledArrow'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { TechStackCell } from '../components/TechStackCell'
@@ -33,7 +35,7 @@ export const zkCatalogColumns = [
     },
     enableHiding: false,
   }),
-  columnHelper.accessor((row) => row.tvs, {
+  columnHelper.accessor((row) => row.tvs.value, {
     id: 'tvs',
     meta: {
       tooltip:
@@ -44,7 +46,7 @@ export const zkCatalogColumns = [
         <TwoRowCell>
           <TwoRowCell.First>
             <div className="font-bold text-base">
-              {formatCurrency(ctx.row.original.tvs.value, 'usd')}
+              {formatCurrency(ctx.getValue(), 'usd')}
             </div>
           </TwoRowCell.First>
           <TwoRowCell.Second>
@@ -75,7 +77,29 @@ export const zkCatalogColumns = [
           additionalRows: (ctx) => {
             return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
               .slice(1)
-              .map(([key, ts]) => <TrustedSetupCell key={key} {...ts} />)
+              .map(([key, ts]) => (
+                <TrustedSetupCell key={key} trustedSetups={ts.trustedSetups} />
+              ))
+          },
+        },
+      }),
+      columnHelper.display({
+        id: 'used-in',
+        header: 'Used in',
+        cell: (ctx) => {
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
+          )[0]
+          if (!first) return null
+          return <ProjectsUsedIn usedIn={first.projectsUsedIn} />
+        },
+        meta: {
+          additionalRows: (ctx) => {
+            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
+              .slice(1)
+              .map(([key, ts]) => (
+                <ProjectsUsedIn key={key} usedIn={ts.projectsUsedIn} />
+              ))
           },
         },
       }),
@@ -104,10 +128,48 @@ export const zkCatalogColumns = [
     ],
   }),
   columnHelper.display({
-    id: 'tech-stack',
-    header: 'Tech stack',
+    id: 'zkevm-tech-stack',
+    header: 'zkEVM tech stack',
     cell: (ctx) => {
-      return <TechStackCell techStack={ctx.row.original.techStack} />
+      return (
+        <TechStackCell
+          tags={[
+            ...(ctx.row.original.techStack.zkVM ?? []),
+            ...(ctx.row.original.techStack.snark ?? []),
+          ]}
+        />
+      )
+    },
+    meta: {
+      cellClassName: 'pr-1!',
+    },
+  }),
+  columnHelper.display({
+    id: 'arrow',
+    cell: (ctx) => {
+      const { finalWrap, zkVM, snark } = ctx.row.original.techStack
+
+      const leftSideEmpty = !(zkVM?.length || snark?.length)
+      const rightSideEmpty = !finalWrap?.length
+
+      if (leftSideEmpty || rightSideEmpty) return null
+
+      return <FilledArrowIcon className="fill-secondary" />
+    },
+    meta: {
+      cellClassName: 'pr-1!',
+    },
+  }),
+  columnHelper.display({
+    id: 'final-wrap-stack',
+    header: 'Final wrap stack',
+    cell: (ctx) => {
+      return (
+        <TechStackCell
+          tags={ctx.row.original.techStack.finalWrap ?? []}
+          className="md:min-w-[180px]"
+        />
+      )
     },
   }),
 ]

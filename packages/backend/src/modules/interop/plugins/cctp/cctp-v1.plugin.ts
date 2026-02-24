@@ -56,6 +56,8 @@ import {
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findBestTransferLog } from '../hyperlane-hwr'
+import { MayanForwarded } from '../mayan-forwarder'
+import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
   createEventParser,
   createInteropEventType,
@@ -68,6 +70,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
+import { LogMessagePublished } from '../wormhole/wormhole.plugin'
 import { CCTPV1Config } from './cctp.config'
 
 const messageSentLog = 'event MessageSent(bytes message)'
@@ -221,7 +224,29 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
       const messageSent = messageSentMatches.sort(
         (a, b) => a.ctx.timestamp - b.ctx.timestamp,
       )[0]
+      const wrappers: MatchResult = []
+      const mayanForwarded = db.find(MayanForwarded, {
+        sameTxAfter: messageSent,
+      })
+      if (mayanForwarded) {
+        const mayanWrappedWormholeLog = findWrappedMayanWormholeLog(
+          db,
+          mayanForwarded,
+          LogMessagePublished,
+        )
+        wrappers.push(
+          Result.Message('mayan.Message', {
+            app: 'mctp',
+            srcEvent: mayanForwarded,
+            dstEvent: messageReceived,
+            extraEvents: mayanWrappedWormholeLog
+              ? [mayanWrappedWormholeLog]
+              : undefined,
+          }),
+        )
+      }
       return [
+        ...wrappers,
         Result.Message('cctp-v1.Message', {
           app: 'cctp-v1',
           srcEvent: messageSent,

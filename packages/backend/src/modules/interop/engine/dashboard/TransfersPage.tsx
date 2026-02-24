@@ -42,6 +42,7 @@ export function TransfersTable(props: {
           <th>Timestamp UTC</th>
           <th>Plugin</th>
           <th>Bridge Type</th>
+          <th>Type</th>
           <th>Duration</th>
           <th>srcToken</th>
           <th>srcValue</th>
@@ -73,6 +74,7 @@ export function TransfersTable(props: {
               <td>
                 {e.bridgeType ?? InteropTransferClassifier.inferBridgeType(e)}
               </td>
+              <td>{e.type}</td>
               <td data-order={e.duration} data-sort={e.duration}>
                 {e.duration && formatSeconds(e.duration)}
               </td>

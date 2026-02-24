@@ -1,11 +1,12 @@
 import type { Project, ProjectRisk } from '@l2beat/config'
+import type { ProjectVerificationWarnings } from '~/server/features/utils/getCommonProjectEntry'
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/RiskSummarySection'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { groupRisks } from './groupRisks'
 
 export function getBridgesRiskSummarySection(
   project: Project<'statuses' | 'bridgeTechnology', 'contracts'>,
-  isVerified: boolean,
+  verificationWarnings: ProjectVerificationWarnings,
 ): Omit<RiskSummarySectionProps, keyof ProjectSectionProps> {
   const sections = [
     {
@@ -32,7 +33,7 @@ export function getBridgesRiskSummarySection(
   return {
     riskGroups: groupRisks(risks),
     warning: project.statuses.yellowWarning,
-    isVerified,
+    verificationWarnings,
     redWarning: undefined,
   }
 }

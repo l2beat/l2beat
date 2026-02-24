@@ -28,7 +28,7 @@ export const columns = [
     meta: {
       headClassName: 'w-0',
     },
-    size: 48,
+    size: 44,
   }),
   columnHelper.display({
     id: 'logo',
