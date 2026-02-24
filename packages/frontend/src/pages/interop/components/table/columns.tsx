@@ -192,7 +192,10 @@ export function getAllProtocolsColumns(
       cell: (ctx) => {
         if (!ctx.row.original.averageValue) return EM_DASH
 
-        const averageValue = formatCurrency(ctx.row.original.averageValue, 'usd')
+        const averageValue = formatCurrency(
+          ctx.row.original.averageValue,
+          'usd',
+        )
         const minTransferSize =
           ctx.row.original.minTransferSizeUsd !== undefined
             ? formatCurrency(ctx.row.original.minTransferSizeUsd, 'usd')
