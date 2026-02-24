@@ -321,6 +321,7 @@ describe('deployedTokensRouter', () => {
           deploymentTimestamp: undefined,
           abstractTokenId: undefined,
           coingeckoId: 'token-id',
+          abstractTokenSuggestions: undefined,
         },
       })
       expect(mockCreateChain).toHaveBeenCalledWith(chainRecord)
@@ -352,6 +353,9 @@ describe('deployedTokensRouter', () => {
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo([]),
+        }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
         getCoinList: mockFn().resolvesTo([]),
@@ -378,6 +382,7 @@ describe('deployedTokensRouter', () => {
           deploymentTimestamp: undefined,
           abstractTokenId: undefined,
           coingeckoId: undefined,
+          abstractTokenSuggestions: [],
         },
       })
       expect(mockCreateChain).toHaveBeenCalledWith(chainRecord)
@@ -433,6 +438,7 @@ describe('deployedTokensRouter', () => {
           deploymentTimestamp: undefined,
           abstractTokenId: undefined,
           coingeckoId: undefined,
+          abstractTokenSuggestions: undefined,
         },
       })
     })
@@ -502,6 +508,7 @@ describe('deployedTokensRouter', () => {
         abstractTokenId: '1',
         suggestions: [],
         coingeckoId: 'usd-coin',
+        abstractTokenSuggestions: undefined,
       })
     })
 

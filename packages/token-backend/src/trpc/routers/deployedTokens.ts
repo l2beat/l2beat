@@ -2,6 +2,7 @@ import type { TokenDatabase } from '@l2beat/database'
 import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import fuzzysort from 'fuzzysort'
 import { Chain } from '../../chains/Chain'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import { readOnlyProcedure } from '../procedures'
@@ -205,6 +206,27 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
           input.address,
         )
         if (coin === null) {
+          let abstractTokenSuggestions:
+            | {
+                id: string
+                symbol: string
+                issuer: string | null
+              }[]
+            | undefined
+          if (symbol) {
+            const allAbstractTokens = await ctx.db.abstractToken.getAll()
+            const results = fuzzysort.go(symbol, allAbstractTokens, {
+              key: (e) => e.symbol,
+              limit: 5,
+              threshold: -1000,
+            })
+            abstractTokenSuggestions = results.map((r) => ({
+              id: r.obj.id,
+              symbol: r.obj.symbol,
+              issuer: r.obj.issuer,
+            }))
+          }
+
           return {
             error: {
               type: 'not-found-on-coingecko' as const,
@@ -218,6 +240,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
               deploymentTimestamp,
               abstractTokenId: undefined,
               coingeckoId: undefined,
+              abstractTokenSuggestions,
             },
           }
         }
@@ -236,6 +259,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
             abstractTokenId: abstractToken?.id,
             suggestions: coin.suggestions,
             coingeckoId: coin.id,
+            abstractTokenSuggestions: undefined,
           },
         }
       }),
