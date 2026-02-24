@@ -261,16 +261,14 @@ export class InteropTransferRepository extends BaseRepository {
       .selectFrom('InteropTransfer')
       .where((eb) =>
         eb.or([
-          eb('srcAbstractTokenId', 'is', null),
-          eb('srcSymbol', 'is', null),
-          eb('srcAmount', 'is', null),
-          eb('srcPrice', 'is', null),
-          eb('srcValueUsd', 'is', null),
-          eb('dstAbstractTokenId', 'is', null),
-          eb('dstSymbol', 'is', null),
-          eb('dstAmount', 'is', null),
-          eb('dstPrice', 'is', null),
-          eb('dstValueUsd', 'is', null),
+          eb.and([
+            eb('srcValueUsd', 'is', null),
+            eb('srcRawAmount', 'is not', null),
+          ]),
+          eb.and([
+            eb('dstValueUsd', 'is', null),
+            eb('dstRawAmount', 'is not', null),
+          ]),
         ]),
       )
       .orderBy('timestamp', 'asc')

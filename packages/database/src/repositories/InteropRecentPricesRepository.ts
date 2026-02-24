@@ -10,6 +10,12 @@ export interface InteropRecentPricesRecord {
   priceUsd: number
 }
 
+export interface InteropClosestPriceQuery<TKey extends string = string> {
+  key: TKey
+  coingeckoId: string
+  timestamp: UnixTime
+}
+
 export function toRecord(
   row: Selectable<InteropRecentPrices>,
 ): InteropRecentPricesRecord {
@@ -50,39 +56,67 @@ export class InteropRecentPricesRepository extends BaseRepository {
     return row !== undefined
   }
 
-  async getClosestPrices(
+  getClosestPrices(
     coingeckoIds: string[],
     timestamp: UnixTime,
     errorMargin: UnixTime,
   ): Promise<Map<string, number | undefined>> {
-    if (coingeckoIds.length === 0) {
+    return this.getClosestPricesForQueries(
+      coingeckoIds.map((coingeckoId) => ({
+        key: coingeckoId,
+        coingeckoId,
+        timestamp,
+      })),
+      errorMargin,
+    )
+  }
+
+  /**
+   * For each tuple query closest coingecko price
+   */
+  async getClosestPricesForQueries<TKey extends string>(
+    queryTuples: InteropClosestPriceQuery<TKey>[],
+    errorMargin: UnixTime,
+  ): Promise<Map<TKey, number | undefined>> {
+    if (queryTuples.length === 0) {
       return new Map()
     }
 
-    const targetTimestamp = UnixTime.toDate(timestamp)
-    const fromTime = UnixTime.toDate(timestamp - errorMargin)
-    const toTime = UnixTime.toDate(timestamp + errorMargin)
+    const queryValues = queryTuples.map(({ key, coingeckoId, timestamp }) => {
+      const targetTimestamp = UnixTime.toDate(timestamp)
+      const fromTime = UnixTime.toDate(timestamp - errorMargin)
+      const toTime = UnixTime.toDate(timestamp + errorMargin)
 
-    const rows = await this.db
-      .selectFrom('InteropRecentPrices')
-      .select([
-        'coingeckoId',
-        'priceUsd',
-        sql<string>`row_number() over (
-          partition by "coingeckoId"
-          order by abs(extract(epoch from age(timestamp, ${targetTimestamp})))
-        )`.as('rn'),
-      ])
-      .where('coingeckoId', 'in', coingeckoIds)
-      .where('timestamp', '>=', fromTime)
-      .where('timestamp', '<=', toTime)
-      .execute()
+      return sql`(
+        ${key},
+        ${coingeckoId},
+        ${fromTime},
+        ${toTime},
+        ${targetTimestamp}
+      )`
+    })
 
-    const closestRows = rows.filter((row) => row.rn === '1')
+    const queryResult = await sql<{ queryKey: TKey; priceUsd: number | null }>`
+      select q."queryKey", p."priceUsd"
+      from (
+        values ${sql.join(queryValues)}
+      ) as q("queryKey", "coingeckoId", "fromTime", "toTime", "targetTimestamp")
+      left join lateral (
+        select "priceUsd"
+        from "InteropRecentPrices" as rp
+        where rp."coingeckoId" = q."coingeckoId"
+          and rp."timestamp" >= q."fromTime"::timestamp
+          and rp."timestamp" <= q."toTime"::timestamp
+        order by abs(extract(epoch from age(rp."timestamp", q."targetTimestamp"::timestamp))) asc,
+          rp."timestamp" desc
+        limit 1
+      ) as p on true
+    `.execute(this.db)
 
-    const result = new Map<string, number | undefined>()
-    for (const row of closestRows) {
-      result.set(row.coingeckoId, row?.priceUsd)
+    const result = new Map<TKey, number | undefined>()
+
+    for (const row of queryResult.rows) {
+      result.set(row.queryKey, row.priceUsd ?? undefined)
     }
 
     return result

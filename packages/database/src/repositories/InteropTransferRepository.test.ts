@@ -384,42 +384,80 @@ describeDatabase(InteropTransferRepository.name, (db) => {
   describe(
     InteropTransferRepository.prototype.getWithMissingFinancials.name,
     () => {
-      it('returns transfers with missing financial fields ordered by timestamp', async () => {
-        const completeRecord = transfer(
+      it('returns only transfers with at least one side missing USD and having raw amount', async () => {
+        const missingSrcWithRaw = transfer(
           'plugin1',
           'msg1',
           'deposit',
           UnixTime(100),
         )
-        const missingSrcField = transfer(
+        missingSrcWithRaw.srcValueUsd = undefined
+
+        const missingDstWithRaw = transfer(
           'plugin1',
           'msg2',
           'deposit',
           UnixTime(200),
         )
-        missingSrcField.srcPrice = undefined
-        const missingDstField = transfer(
+        missingDstWithRaw.dstValueUsd = undefined
+
+        const missingSrcWithoutRaw = transfer(
           'plugin1',
           'msg3',
           'deposit',
           UnixTime(300),
         )
-        missingDstField.dstAbstractTokenId = undefined
+        missingSrcWithoutRaw.srcValueUsd = undefined
+        missingSrcWithoutRaw.srcRawAmount = undefined
+
+        const missingDstWithoutRaw = transfer(
+          'plugin1',
+          'msg4',
+          'deposit',
+          UnixTime(400),
+        )
+        missingDstWithoutRaw.dstValueUsd = undefined
+        missingDstWithoutRaw.dstRawAmount = undefined
+
+        const completeRecord = transfer(
+          'plugin1',
+          'msg5',
+          'deposit',
+          UnixTime(500),
+        )
 
         await repository.insertMany([
-          missingDstField,
+          missingDstWithoutRaw,
           completeRecord,
-          missingSrcField,
+          missingSrcWithRaw,
+          missingSrcWithoutRaw,
+          missingDstWithRaw,
         ])
 
         const result = await repository.getWithMissingFinancials()
 
-        expect(result).toHaveLength(2)
-        expect(result[0]?.transferId).toEqual('msg2')
-        expect(result[1]?.transferId).toEqual('msg3')
+        expect(result.map((r) => r.transferId)).toEqual(['msg1', 'msg2'])
       })
 
-      it('returns empty array when all transfers have complete financial fields', async () => {
+      it('returns transfer when both sides are missing usd values', async () => {
+        const missingBothSides = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+        )
+        missingBothSides.srcValueUsd = undefined
+        missingBothSides.dstValueUsd = undefined
+
+        await repository.insertMany([missingBothSides])
+
+        const result = await repository.getWithMissingFinancials()
+
+        expect(result).toHaveLength(1)
+        expect(result[0]?.transferId).toEqual('msg1')
+      })
+
+      it('returns empty array when all sides are financially complete', async () => {
         await repository.insertMany([
           transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
           transfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),

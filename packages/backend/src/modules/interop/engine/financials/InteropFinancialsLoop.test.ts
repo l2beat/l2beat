@@ -17,13 +17,7 @@ describe(InteropFinancialsLoop.name, () => {
       })
       const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
       const tokenDb = mockObject<TokenDbClient>({} as any)
-      const service = new InteropFinancialsLoop(
-        [],
-        db,
-        tokenDb,
-        Logger.SILENT,
-        1000,
-      )
+      const service = new InteropFinancialsLoop([], db, tokenDb, Logger.SILENT)
 
       await service.run()
 
@@ -31,30 +25,7 @@ describe(InteropFinancialsLoop.name, () => {
       expect(interopTransfer.getWithMissingFinancials).not.toHaveBeenCalled()
     })
 
-    it('skips when there are no transfers with missing financials', async () => {
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
-        getWithMissingFinancials: mockFn().resolvesTo([]),
-      })
-      const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
-      const tokenDb = mockObject<TokenDbClient>({} as any)
-      const service = new InteropFinancialsLoop(
-        [],
-        db,
-        tokenDb,
-        Logger.SILENT,
-        1000,
-      )
-
-      await service.run()
-
-      expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
-      expect(interopTransfer.getWithMissingFinancials).toHaveBeenCalledTimes(1)
-    })
-
-    it('processes a single transfer and uses src/dst timestamps for price lookups', async () => {
+    it('queries prices per side and updates both sides when both prices exist', async () => {
       const srcToken = DeployedTokenId.from(
         'ethereum',
         '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
@@ -72,59 +43,65 @@ describe(InteropFinancialsLoop.name, () => {
           srcChain: 'ethereum',
           srcTime,
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
-          srcRawAmount: BigInt('1000000000000000000'),
+          srcRawAmount: 1_000_000_000_000_000_000n,
+          srcValueUsd: undefined,
           dstChain: 'arbitrum',
           dstTime,
           dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
-          dstRawAmount: BigInt('2000000000000000000'),
+          dstRawAmount: 2_000_000_000_000_000_000n,
+          dstValueUsd: undefined,
         },
       ]
 
-      const prices = new Map<string, number>([
-        ['ethereum', 3000],
-        ['arbitrum', 1.5],
-      ])
-
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
         hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrice: mockFn((coingeckoId: string) =>
-          Promise.resolve(prices.get(coingeckoId)),
+        getClosestPricesForQueries: mockFn().resolvesTo(
+          new Map<string, number | undefined>([
+            ['msg1:src', 3000],
+            ['msg1:dst', 1.5],
+          ]),
         ),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getWithMissingFinancials: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
-      const transaction = mockFn(async (fn: any) => await fn())
       const db = mockObject<Database>({
         interopRecentPrices,
         interopTransfer,
-        transaction,
       })
 
-      const mockTokens = [
-        {
-          deployedToken: {
-            chain: 'ethereum',
-            address: DeployedTokenId.address(srcToken).toLowerCase(),
-            symbol: 'ETH',
-            decimals: 18,
-          },
-          abstractToken: { id: '123456:ethereum:ETH', coingeckoId: 'ethereum' },
-        },
-        {
-          deployedToken: {
-            chain: 'arbitrum',
-            address: DeployedTokenId.address(dstToken),
-            symbol: 'ARB',
-            decimals: 18,
-          },
-          abstractToken: { id: 'abcdef:arbitrum:ARB', coingeckoId: 'arbitrum' },
-        },
-      ]
-      const mockQuery = mockFn().resolvesTo(mockTokens)
       const tokenDb = mockObject<TokenDbClient>({
-        deployedTokens: { getByChainAndAddress: { query: mockQuery } },
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(srcToken).toLowerCase(),
+                  symbol: 'ETH',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: '123456:ethereum:ETH',
+                  coingeckoId: 'ethereum',
+                },
+              },
+              {
+                deployedToken: {
+                  chain: 'arbitrum',
+                  address: DeployedTokenId.address(dstToken),
+                  symbol: 'ARB',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'abcdef:arbitrum:ARB',
+                  coingeckoId: 'arbitrum',
+                },
+              },
+            ]),
+          },
+        },
       } as any)
 
       const service = new InteropFinancialsLoop(
@@ -135,26 +112,25 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        1000,
       )
 
       await service.run()
 
-      expect(interopTransfer.getWithMissingFinancials).toHaveBeenCalledTimes(1)
-      expect(mockQuery).toHaveBeenCalledWith([
-        { chain: 'ethereum', address: DeployedTokenId.address(srcToken) },
-        { chain: 'arbitrum', address: DeployedTokenId.address(dstToken) },
-      ])
-      expect(interopRecentPrices.getClosestPrice).toHaveBeenNthCalledWith(
-        1,
-        'ethereum',
-        srcTime,
-        UnixTime.DAY,
-      )
-      expect(interopRecentPrices.getClosestPrice).toHaveBeenNthCalledWith(
-        2,
-        'arbitrum',
-        dstTime,
+      expect(
+        interopRecentPrices.getClosestPricesForQueries,
+      ).toHaveBeenCalledWith(
+        [
+          {
+            key: 'msg1:src',
+            coingeckoId: 'ethereum',
+            timestamp: srcTime,
+          },
+          {
+            key: 'msg1:dst',
+            coingeckoId: 'arbitrum',
+            timestamp: dstTime,
+          },
+        ],
         UnixTime.DAY,
       )
 
@@ -177,7 +153,7 @@ describe(InteropFinancialsLoop.name, () => {
       expect(interopTransfer.updateFinancials).toHaveBeenCalledTimes(1)
     })
 
-    it('skips update when no financial fields can be produced', async () => {
+    it('updates only sides that have a resolved price', async () => {
       const srcToken = DeployedTokenId.from(
         'ethereum',
         EthereumAddress.random(),
@@ -193,31 +169,58 @@ describe(InteropFinancialsLoop.name, () => {
           srcChain: 'ethereum',
           srcTime: UnixTime(1_000),
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
-          srcRawAmount: BigInt('1000000000000000000'),
+          srcRawAmount: 1_000_000_000_000_000_000n,
+          srcValueUsd: undefined,
           dstChain: 'arbitrum',
           dstTime: UnixTime(2_000),
           dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
-          dstRawAmount: BigInt('2000000000000000000'),
+          dstRawAmount: 2_000_000_000_000_000_000n,
+          dstValueUsd: undefined,
         },
       ]
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
         hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrice: mockFn().resolvesTo(undefined),
+        getClosestPricesForQueries: mockFn().resolvesTo(
+          new Map<string, number | undefined>([['msg1:src', 3000]]),
+        ),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getWithMissingFinancials: mockFn().resolvesTo(mockTransfers),
         updateFinancials: mockFn().resolvesTo(undefined),
       })
-      const transaction = mockFn(async (fn: any) => await fn())
-      const db = mockObject<Database>({
-        interopRecentPrices,
-        interopTransfer,
-        transaction,
-      })
+      const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
+
       const tokenDb = mockObject<TokenDbClient>({
         deployedTokens: {
-          getByChainAndAddress: { query: mockFn().resolvesTo([]) },
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(srcToken),
+                  symbol: 'ETH',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: '123456:ethereum:ETH',
+                  coingeckoId: 'ethereum',
+                },
+              },
+              {
+                deployedToken: {
+                  chain: 'arbitrum',
+                  address: DeployedTokenId.address(dstToken),
+                  symbol: 'ARB',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: 'abcdef:arbitrum:ARB',
+                  coingeckoId: 'arbitrum',
+                },
+              },
+            ]),
+          },
         },
       } as any)
 
@@ -229,21 +232,23 @@ describe(InteropFinancialsLoop.name, () => {
         db,
         tokenDb,
         Logger.SILENT,
-        1000,
       )
 
       await service.run()
 
-      expect(interopTransfer.updateFinancials).not.toHaveBeenCalled()
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {
+        srcAbstractTokenId: '123456:ethereum:ETH',
+        srcSymbol: 'ETH',
+        srcPrice: 3000,
+        srcAmount: 1,
+        srcValueUsd: 3000,
+      })
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledTimes(1)
     })
 
-    it('continues processing other transfers when updating one transfer fails', async () => {
+    it('skips updates when no side has a price', async () => {
       const srcToken = DeployedTokenId.from(
         'ethereum',
-        '0xcebA9300f2b948710d2653dD7B07f33A8B32118C',
-      )
-      const dstToken = DeployedTokenId.from(
-        'arbitrum',
         EthereumAddress.random(),
       )
 
@@ -253,34 +258,101 @@ describe(InteropFinancialsLoop.name, () => {
           srcChain: 'ethereum',
           srcTime: UnixTime(1_000),
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
-          srcRawAmount: BigInt('1000000000000000000'),
+          srcRawAmount: 1_000_000_000_000_000_000n,
+          srcValueUsd: undefined,
           dstChain: 'arbitrum',
           dstTime: UnixTime(2_000),
-          dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
-          dstRawAmount: BigInt('2000000000000000000'),
+          dstTokenAddress: Address32.from(EthereumAddress.random()),
+          dstRawAmount: 2_000_000_000_000_000_000n,
+          dstValueUsd: 123,
+        },
+      ]
+
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+        hasAnyPrices: mockFn().resolvesTo(true),
+        getClosestPricesForQueries: mockFn().resolvesTo(new Map()),
+      })
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getWithMissingFinancials: mockFn().resolvesTo(mockTransfers),
+        updateFinancials: mockFn().resolvesTo(undefined),
+      })
+      const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
+
+      const tokenDb = mockObject<TokenDbClient>({
+        deployedTokens: {
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(srcToken),
+                  symbol: 'ETH',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: '123456:ethereum:ETH',
+                  coingeckoId: 'ethereum',
+                },
+              },
+            ]),
+          },
+        },
+      } as any)
+
+      const service = new InteropFinancialsLoop(
+        [{ id: 'ethereum', type: 'evm' as const }],
+        db,
+        tokenDb,
+        Logger.SILENT,
+      )
+
+      await service.run()
+
+      expect(interopTransfer.updateFinancials).not.toHaveBeenCalled()
+    })
+
+    it('continues processing next transfer when one update fails', async () => {
+      const srcToken = DeployedTokenId.from(
+        'ethereum',
+        EthereumAddress.random(),
+      )
+
+      const mockTransfers = [
+        {
+          transferId: 'msg1',
+          srcChain: 'ethereum',
+          srcTime: UnixTime(1_000),
+          srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
+          srcRawAmount: 1_000_000_000_000_000_000n,
+          srcValueUsd: undefined,
+          dstChain: 'arbitrum',
+          dstTime: UnixTime(2_000),
+          dstTokenAddress: Address32.from(EthereumAddress.random()),
+          dstRawAmount: undefined,
+          dstValueUsd: undefined,
         },
         {
           transferId: 'msg2',
           srcChain: 'ethereum',
           srcTime: UnixTime(1_100),
           srcTokenAddress: Address32.from(DeployedTokenId.address(srcToken)),
-          srcRawAmount: BigInt('1000000000000000000'),
+          srcRawAmount: 2_000_000_000_000_000_000n,
+          srcValueUsd: undefined,
           dstChain: 'arbitrum',
           dstTime: UnixTime(2_100),
-          dstTokenAddress: Address32.from(DeployedTokenId.address(dstToken)),
-          dstRawAmount: BigInt('2000000000000000000'),
+          dstTokenAddress: Address32.from(EthereumAddress.random()),
+          dstRawAmount: undefined,
+          dstValueUsd: undefined,
         },
       ]
 
-      const prices = new Map<string, number>([
-        ['ethereum', 3000],
-        ['arbitrum', 1.5],
-      ])
-
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
         hasAnyPrices: mockFn().resolvesTo(true),
-        getClosestPrice: mockFn((coingeckoId: string) =>
-          Promise.resolve(prices.get(coingeckoId)),
+        getClosestPricesForQueries: mockFn().resolvesTo(
+          new Map<string, number | undefined>([
+            ['msg1:src', 3000],
+            ['msg2:src', 3000],
+          ]),
         ),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
@@ -291,46 +363,34 @@ describe(InteropFinancialsLoop.name, () => {
           }
         }),
       })
-      const db = mockObject<Database>({
-        interopRecentPrices,
-        interopTransfer,
-      })
+      const db = mockObject<Database>({ interopRecentPrices, interopTransfer })
 
-      const mockTokens = [
-        {
-          deployedToken: {
-            chain: 'ethereum',
-            address: DeployedTokenId.address(srcToken).toLowerCase(),
-            symbol: 'ETH',
-            decimals: 18,
-          },
-          abstractToken: { id: '123456:ethereum:ETH', coingeckoId: 'ethereum' },
-        },
-        {
-          deployedToken: {
-            chain: 'arbitrum',
-            address: DeployedTokenId.address(dstToken),
-            symbol: 'ARB',
-            decimals: 18,
-          },
-          abstractToken: { id: 'abcdef:arbitrum:ARB', coingeckoId: 'arbitrum' },
-        },
-      ]
       const tokenDb = mockObject<TokenDbClient>({
         deployedTokens: {
-          getByChainAndAddress: { query: mockFn().resolvesTo(mockTokens) },
+          getByChainAndAddress: {
+            query: mockFn().resolvesTo([
+              {
+                deployedToken: {
+                  chain: 'ethereum',
+                  address: DeployedTokenId.address(srcToken),
+                  symbol: 'ETH',
+                  decimals: 18,
+                },
+                abstractToken: {
+                  id: '123456:ethereum:ETH',
+                  coingeckoId: 'ethereum',
+                },
+              },
+            ]),
+          },
         },
       } as any)
 
       const service = new InteropFinancialsLoop(
-        [
-          { id: 'ethereum', type: 'evm' as const },
-          { id: 'arbitrum', type: 'evm' as const },
-        ],
+        [{ id: 'ethereum', type: 'evm' as const }],
         db,
         tokenDb,
         Logger.SILENT,
-        1000,
       )
 
       await expect(service.run()).not.toBeRejected()
