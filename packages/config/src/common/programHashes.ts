@@ -115,7 +115,20 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/aggregation',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [op-succinct](https://github.com/succinctlabs/op-succinct) repo:  \`git checkout v2.3.1\` . Commit hash should be  \`2591527807f1da7018b57328614ca54b6bd02871\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir run: \`cargo run --bin config --release\` to compile the program from sources and output the program hash.
+  `,
   },
   '0x00afb45d8064ae10aa6a1793b8f39a24c27268efae2917b5c02950b2377fbf00': {
     title: 'Aggregation program of OP Succinct',
@@ -147,7 +160,20 @@ Verify:
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/range/ethereum',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [op-succinct](https://github.com/succinctlabs/op-succinct) repo:  \`git checkout v2.3.1\` . Commit hash should be  \`2591527807f1da7018b57328614ca54b6bd02871\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir run: \`cargo run --bin config --release\` to compile the program from sources and output the program hash.
+    `,
   },
   '0x416d710344b6b6fa2a0b1a1445f3d6ba4fdd5ab43f0e863b1c522db20f28ad9b': {
     title: 'Range program of OP Succinct',
@@ -353,8 +379,23 @@ fn main() {
     title: 'Aggregation program of OP Succinct',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.1.8/programs/aggregation',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/main) repo:  \`git checkout v2.1.8\` . Commit hash should be  \`9ec9d1a6f4b13b06a1bdbcc11dd3217337ca6d3b\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+  `,
   },
   '0x5d15e85151cc8f4b68d2721f675b0b8665a7a2752fa34ff935d5adbc3c8acab8': {
     title: 'Range program of OP Succinct',
@@ -367,8 +408,23 @@ fn main() {
     title: 'Range program of OP Succinct (Mantle)',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks. Mantle-specific build addressing revm/geth inconsistency.',
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.1.8/programs/range/eigenda',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/main) repo:  \`git checkout v2.1.8\` . Commit hash should be  \`9ec9d1a6f4b13b06a1bdbcc11dd3217337ca6d3b\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+  `,
   },
   '0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452': {
     title: 'Aggregation program of OP Succinct',
