@@ -791,6 +791,50 @@ describe('aggregation', () => {
         expect(ethToken?.burnedValueUsd).toEqual(1500) // uses dstValueUsd fallback
         expect(ethToken?.mintedValueUsd).toEqual(2000) // uses srcValueUsd fallback
       })
+
+      it('attributes net minted values to known token when opposite token is missing', () => {
+        const transfers: InteropTransferRecord[] = [
+          // Minted transfer with missing destination token ID.
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: 'axs',
+            dstAbstractTokenId: undefined,
+            duration: 4000,
+            srcValueUsd: 35.43,
+            dstValueUsd: undefined,
+            srcWasBurned: false,
+            dstWasMinted: true,
+          }),
+          // Burned transfer with missing source token ID.
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: undefined,
+            dstAbstractTokenId: 'usdc',
+            duration: 5000,
+            srcValueUsd: undefined,
+            dstValueUsd: 12.5,
+            srcWasBurned: true,
+            dstWasMinted: false,
+          }),
+        ]
+
+        const result = getAggregatedTokens(transfers, {
+          calculateNetMinted: true,
+        })
+
+        const axsToken = result.find((t) => t.abstractTokenId === 'axs')
+        const usdcToken = result.find((t) => t.abstractTokenId === 'usdc')
+
+        expect(axsToken?.mintedValueUsd).toEqual(35.43)
+        expect(axsToken?.burnedValueUsd).toEqual(0)
+
+        expect(usdcToken?.burnedValueUsd).toEqual(12.5)
+        expect(usdcToken?.mintedValueUsd).toEqual(0)
+      })
     })
   })
 })
