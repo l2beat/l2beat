@@ -214,29 +214,23 @@ export function getAllProtocolsColumns(
             </TooltipTrigger>
             <TooltipContent className="min-w-[200px]">
               <div className="font-medium text-label-value-14 text-secondary">
-                Transfer size
+                Transfer value
               </div>
               <HorizontalSeparator className="my-1" />
               <div className="flex items-center justify-between gap-x-6">
-                <span className="font-medium text-label-value-14">
-                  Average size
-                </span>
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {averageValue}
-                </span>
-              </div>
-              <div className="flex items-center justify-between gap-x-6">
-                <span className="font-medium text-label-value-14">
-                  Min size
-                </span>
+                <span className="font-medium text-label-value-14">Minimum</span>
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   {minTransferSize}
                 </span>
               </div>
               <div className="flex items-center justify-between gap-x-6">
-                <span className="font-medium text-label-value-14">
-                  Max size
+                <span className="font-medium text-label-value-14">Average</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {averageValue}
                 </span>
+              </div>
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Maximum</span>
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   {maxTransferSize}
                 </span>
