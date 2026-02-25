@@ -119,15 +119,27 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
             <div className="mt-2 flex flex-wrap text-paragraph-15 md:text-paragraph-16">
               <strong className="text-primary">Can be upgraded by:</strong>
               <div className="ml-1.5 flex flex-wrap gap-1.5">
-                {contract.upgradeableBy.map((entry) => (
-                  <a
-                    key={entry.name}
-                    className={linkVariants()}
-                    href={`#${entry.id ?? entry.name}`}
-                  >
-                    {`${entry.name} with ${entry.delay} delay`}
-                  </a>
-                ))}
+                {contract.upgradeableBy.map((entry) =>
+                  entry.unreachable ? (
+                    <span
+                      key={entry.name}
+                      className={linkVariants({
+                        variant: 'plain',
+                        underline: false,
+                      })}
+                    >
+                      {`${entry.name} with ${entry.delay} delay`}
+                    </span>
+                  ) : (
+                    <a
+                      key={entry.name}
+                      className={linkVariants()}
+                      href={`#${entry.id ?? entry.name}`}
+                    >
+                      {`${entry.name} with ${entry.delay} delay`}
+                    </a>
+                  ),
+                )}
               </div>
             </div>
           )}
