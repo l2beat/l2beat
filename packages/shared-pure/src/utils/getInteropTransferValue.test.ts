@@ -9,6 +9,13 @@ describe(getInteropTransferValue.name, () => {
     })
 
     expect(result).toEqual(150)
+
+    const result2 = getInteropTransferValue({
+      srcValueUsd: 150,
+      dstValueUsd: 100,
+    })
+
+    expect(result2).toEqual(150)
   })
 
   it('returns dst value when src is undefined', () => {
@@ -29,12 +36,12 @@ describe(getInteropTransferValue.name, () => {
     expect(result).toEqual(100)
   })
 
-  it('returns 0 when both values are undefined', () => {
+  it('returns undefined when both values are undefined', () => {
     const result = getInteropTransferValue({
       srcValueUsd: undefined,
       dstValueUsd: undefined,
     })
 
-    expect(result).toEqual(0)
+    expect(result).toEqual(undefined)
   })
 })
