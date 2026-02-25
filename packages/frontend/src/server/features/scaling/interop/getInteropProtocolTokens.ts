@@ -18,6 +18,10 @@ import {
 } from './utils/getProtocolsDataMap'
 import { getTokensData } from './utils/getTokensData'
 
+type TokenInteropData = CommonInteropData & {
+  netFlows: Map<string, TokenFlowData>
+}
+
 export async function getInteropProtocolTokens({
   id,
   selectedChainsIds: selectedChains,
@@ -65,11 +69,12 @@ export async function getInteropProtocolTokens({
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
   const durationSplitMap = buildDurationSplitMap([interopProject])
 
-  const result: Map<string, CommonInteropData> = new Map()
-  const tokenFlowsMap: Map<string, Map<string, TokenFlowData>> = new Map()
+  const result: Map<string, TokenInteropData> = new Map()
   for (const token of tokens) {
-    const current =
-      result.get(token.abstractTokenId) ?? INITIAL_COMMON_INTEROP_DATA
+    const current = result.get(token.abstractTokenId) ?? {
+      ...INITIAL_COMMON_INTEROP_DATA,
+      netFlows: new Map<string, TokenFlowData>(),
+    }
 
     const transfersTimeMode = transfersTimeModeMap.get(interopProject.id)
     const durationSplit =
@@ -78,42 +83,31 @@ export async function getInteropProtocolTokens({
         : undefined
     const direction = getDirection(token, durationSplit, transfersTimeMode)
 
-    result.set(
-      token.abstractTokenId,
-      accumulateTokens(current, token, direction),
-    )
+    result.set(token.abstractTokenId, {
+      ...accumulateTokens(current, token, direction),
+      netFlows: current.netFlows,
+    })
 
-    const tokenFlows = tokenFlowsMap.get(token.abstractTokenId) ?? new Map()
     const flowKey = `${token.srcChain}::${token.dstChain}`
-    const currentFlow = tokenFlows.get(flowKey)
+    const currentFlow = current.netFlows.get(flowKey)
     if (currentFlow) {
-      tokenFlows.set(flowKey, {
+      current.netFlows.set(flowKey, {
         ...currentFlow,
         volume: currentFlow.volume + token.volume,
       })
     } else {
-      tokenFlows.set(flowKey, {
+      current.netFlows.set(flowKey, {
         srcChain: token.srcChain,
         dstChain: token.dstChain,
         volume: token.volume,
       })
     }
-
-    tokenFlowsMap.set(token.abstractTokenId, tokenFlows)
   }
-
-  const sortedTokenFlowsMap = new Map<string, TokenFlowData[]>(
-    Array.from(tokenFlowsMap.entries()).map(([tokenId, flows]) => [
-      tokenId,
-      Array.from(flows.values()).toSorted((a, b) => b.volume - a.volume),
-    ]),
-  )
 
   return getTokensData({
     projectId: id,
     bridgeType: type,
     tokens: result,
-    tokenFlowsMap: sortedTokenFlowsMap,
     tokensDetailsMap,
     durationSplitMap,
     unknownTransfersCount: counts.transferCount - counts.identifiedCount,

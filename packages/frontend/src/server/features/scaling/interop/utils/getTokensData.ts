@@ -12,8 +12,10 @@ import { getAverageDuration } from './getAverageDuration'
 type Params = {
   projectId: string
   bridgeType: KnownInteropBridgeType | undefined
-  tokens: Map<string, CommonInteropData>
-  tokenFlowsMap?: Map<string, TokenFlowData[]>
+  tokens: Map<
+    string,
+    CommonInteropData & { netFlows?: Map<string, TokenFlowData> }
+  >
   tokensDetailsMap: Map<
     string,
     {
@@ -30,7 +32,6 @@ export function getTokensData({
   projectId,
   bridgeType,
   tokens,
-  tokenFlowsMap,
   tokensDetailsMap,
   durationSplitMap,
   unknownTransfersCount,
@@ -68,7 +69,11 @@ export function getTokensData({
           token.burnedValueUsd !== undefined
             ? token.mintedValueUsd - token.burnedValueUsd
             : undefined,
-        netFlows: tokenFlowsMap?.get(tokenId) ?? [],
+        netFlows: token.netFlows
+          ? Array.from(token.netFlows.values()).toSorted(
+              (a, b) => b.volume - a.volume,
+            )
+          : [],
       }
     })
     .filter(notUndefined)
