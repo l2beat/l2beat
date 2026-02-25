@@ -72,13 +72,9 @@ export function getTransferSizeChartData(
           ? Math.max(current.maxTransferValueUsd, record.maxTransferValueUsd)
           : record.maxTransferValueUsd
         : current.maxTransferValueUsd
-    const transferValueUsd =
-      record.srcValueUsd === undefined
-        ? record.dstValueUsd
-        : record.dstValueUsd === undefined
-          ? record.srcValueUsd
-          : Math.max(record.srcValueUsd, record.dstValueUsd)
-    const totalValueUsd = current.totalValueUsd + (transferValueUsd ?? 0)
+
+    const totalValueUsd =
+      current.totalValueUsd + (record.srcValueUsd ?? record.dstValueUsd ?? 0)
     const identifiedCount = current.identifiedCount + record.identifiedCount
 
     const total =
