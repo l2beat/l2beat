@@ -47,17 +47,24 @@ export function getAggregatedTransfer(
   let maxTransferValueUsd: number | undefined = undefined
 
   for (const transfer of group) {
+    const transferValueUsd =
+      transfer.srcValueUsd === undefined
+        ? transfer.dstValueUsd
+        : transfer.dstValueUsd === undefined
+          ? transfer.srcValueUsd
+          : Math.max(transfer.srcValueUsd, transfer.dstValueUsd)
+
     totalDurationSum += transfer.duration
     if (srcValueUsd === undefined) {
-      srcValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd
+      srcValueUsd = transferValueUsd
     } else {
-      srcValueUsd += transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
+      srcValueUsd += transferValueUsd ?? 0
     }
 
     if (dstValueUsd === undefined) {
-      dstValueUsd = transfer.dstValueUsd ?? transfer.srcValueUsd
+      dstValueUsd = transferValueUsd
     } else {
-      dstValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
+      dstValueUsd += transferValueUsd ?? 0
     }
 
     if (
@@ -67,22 +74,18 @@ export function getAggregatedTransfer(
       identifiedCount++
     }
 
-    if (
-      transfer.srcValueUsd !== undefined ||
-      transfer.dstValueUsd !== undefined
-    ) {
-      const value = transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
+    if (transferValueUsd !== undefined) {
       minTransferValueUsd =
         minTransferValueUsd === undefined
-          ? value
-          : Math.min(minTransferValueUsd, value)
+          ? transferValueUsd
+          : Math.min(minTransferValueUsd, transferValueUsd)
       maxTransferValueUsd =
         maxTransferValueUsd === undefined
-          ? value
-          : Math.max(maxTransferValueUsd, value)
+          ? transferValueUsd
+          : Math.max(maxTransferValueUsd, transferValueUsd)
     }
 
-    const bucket = getBucket(transfer.srcValueUsd ?? transfer.dstValueUsd)
+    const bucket = getBucket(transferValueUsd)
     switch (bucket) {
       case 'under100':
         countUnder100++
@@ -107,8 +110,7 @@ export function getAggregatedTransfer(
 
     if (options?.calculateValueInFlight) {
       valueInFlight =
-        (valueInFlight ?? 0) +
-        (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0) * transfer.duration
+        (valueInFlight ?? 0) + (transferValueUsd ?? 0) * transfer.duration
     }
 
     if (options?.calculateNetMinted) {
