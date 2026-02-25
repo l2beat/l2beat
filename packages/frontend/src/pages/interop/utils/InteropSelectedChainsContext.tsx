@@ -13,9 +13,9 @@ import { useEventListener } from '~/hooks/useEventListener'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 import { getValidInteropSelection } from './getValidInteropSelection'
+import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
 import { toInteropApiSelection } from './toInteropApiSelection'
 import type { InteropMode, InteropSelection } from './types'
-import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
 
 interface InteropSelectedChainsContextType {
   mode: InteropMode
