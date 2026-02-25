@@ -118,14 +118,6 @@ export const getTopItemsColumns = (
         if (ctx.row.original.avgValue === null) return EM_DASH
 
         const averageValue = formatCurrency(ctx.row.original.avgValue, 'usd')
-        if (itemType !== 'tokens') {
-          return (
-            <span className="font-medium text-label-value-15">
-              {averageValue}
-            </span>
-          )
-        }
-
         const minValue =
           ctx.row.original.minTransferValueUsd !== undefined
             ? formatCurrency(ctx.row.original.minTransferValueUsd, 'usd')

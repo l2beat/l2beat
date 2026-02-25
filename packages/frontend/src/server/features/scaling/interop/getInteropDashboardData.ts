@@ -127,6 +127,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 1000,
       avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 8_000,
+      minTransferValueUsd: 6_000,
+      maxTransferValueUsd: 12_000,
       netMintedValue: undefined,
     },
     {
@@ -137,6 +139,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 500,
       avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
+      minTransferValueUsd: 7_500,
+      maxTransferValueUsd: 14_000,
       netMintedValue: undefined,
     },
   ]

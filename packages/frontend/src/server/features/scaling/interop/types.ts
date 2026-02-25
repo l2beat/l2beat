@@ -125,6 +125,8 @@ export type ChainData = {
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
 }
 

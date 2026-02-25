@@ -45,6 +45,8 @@ export function getChainsData({
         transferCount: chainData.transferCount,
         avgDuration: avgDuration,
         avgValue: Math.floor(chainData.volume / chainData.transferCount),
+        minTransferValueUsd: chainData.minTransferValueUsd,
+        maxTransferValueUsd: chainData.maxTransferValueUsd,
         netMintedValue:
           chainData.mintedValueUsd !== undefined &&
           chainData.burnedValueUsd !== undefined
