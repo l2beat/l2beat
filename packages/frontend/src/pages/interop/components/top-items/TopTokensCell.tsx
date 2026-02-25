@@ -20,6 +20,7 @@ import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import { getTopItemsColumns, type TopItemRow } from './columns'
 import { InteropTopItems } from './TopItems'
 
@@ -149,8 +150,8 @@ function TopTokensContent({
     return (
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle className="text-xl">
+          <DrawerHeader className="mb-2">
+            <DrawerTitle className="mb-0 text-xl">
               <span>Top tokens by volume for </span>
               <img
                 src={protocol.iconUrl}
@@ -159,6 +160,7 @@ function TopTokensContent({
               />
               <span>{protocol.name}</span>
             </DrawerTitle>
+            <BetweenChainsInfo />
           </DrawerHeader>
           <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
             <BasicTable
@@ -186,6 +188,7 @@ function TopTokensContent({
             />
             <span>{protocol.name}</span>
           </DialogTitle>
+          <BetweenChainsInfo className="mt-1" />
         </DialogHeader>
         <div className="overflow-x-auto">
           <div className="mx-6">
