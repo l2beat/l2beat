@@ -25,7 +25,7 @@ export function GovernanceEventsSection({ events, className }: Props) {
 }
 
 function Event({ event }: { event: GovernanceEventEntry }) {
-  const isMobile = useDevice()
+  const { isMobile } = useDevice()
 
   return (
     <GovernanceCard

@@ -37,7 +37,7 @@ export function SideNavLayout({
   maxWidth = 'default',
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
-  const isMobile = useDevice()
+  const { isMobile } = useDevice()
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
