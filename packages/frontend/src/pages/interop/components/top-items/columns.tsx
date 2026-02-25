@@ -5,6 +5,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
@@ -134,30 +135,38 @@ export const getTopItemsColumns = (
                 {averageValue}
               </span>
             </TooltipTrigger>
-            <TooltipContent className="min-w-[200px]">
-              <div className="font-medium text-label-value-14 text-secondary">
-                Transfer value
-              </div>
-              <HorizontalSeparator className="my-1" />
-              <div className="flex items-center justify-between gap-x-6">
-                <span className="font-medium text-label-value-14">Minimum</span>
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {minValue}
-                </span>
-              </div>
-              <div className="flex items-center justify-between gap-x-6">
-                <span className="font-medium text-label-value-14">Average</span>
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {averageValue}
-                </span>
-              </div>
-              <div className="flex items-center justify-between gap-x-6">
-                <span className="font-medium text-label-value-14">Maximum</span>
-                <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  {maxValue}
-                </span>
-              </div>
-            </TooltipContent>
+            <TooltipPortal>
+              <TooltipContent className="z-[1000] min-w-[200px]">
+                <div className="font-medium text-label-value-14 text-secondary">
+                  Transfer value
+                </div>
+                <HorizontalSeparator className="my-1" />
+                <div className="flex items-center justify-between gap-x-6">
+                  <span className="font-medium text-label-value-14">
+                    Minimum
+                  </span>
+                  <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                    {minValue}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-x-6">
+                  <span className="font-medium text-label-value-14">
+                    Average
+                  </span>
+                  <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                    {averageValue}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-x-6">
+                  <span className="font-medium text-label-value-14">
+                    Maximum
+                  </span>
+                  <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                    {maxValue}
+                  </span>
+                </div>
+              </TooltipContent>
+            </TooltipPortal>
           </Tooltip>
         )
       },
