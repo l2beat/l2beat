@@ -207,13 +207,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
           input.address,
         )
         if (coin === null) {
-          let abstractTokenSuggestions:
-            | {
-                id: string
-                symbol: string
-                issuer: string | null
-              }[]
-            | undefined
+          let abstractTokenSuggestions: AbstractTokenSuggestion[] | undefined
           if (symbol) {
             const allAbstractTokens = await ctx.db.abstractToken.getAll()
             abstractTokenSuggestions = findSimilarAbstractTokens(
@@ -320,11 +314,16 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
   })
 }
 
+type AbstractTokenSuggestion = Pick<
+  AbstractTokenRecord,
+  'id' | 'symbol' | 'issuer'
+>
+
 function findSimilarAbstractTokens(
   deployedSymbol: string,
   abstractTokens: AbstractTokenRecord[],
   limit: number,
-): Pick<AbstractTokenRecord, 'id' | 'symbol' | 'issuer'>[] {
+): AbstractTokenSuggestion[] {
   // Forward: deployed symbol as query against abstract token symbols
   // Handles exact matches and when deployed symbol is shorter
   const forward = fuzzysort.go(deployedSymbol, abstractTokens, {
