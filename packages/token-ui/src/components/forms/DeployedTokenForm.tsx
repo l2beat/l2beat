@@ -562,8 +562,7 @@ export function DeployedTokenForm({
                     </Tooltip>
                   )}
                 </div>
-                {!field.value &&
-                  tokenDetails.data?.data?.abstractTokenSuggestions &&
+                {tokenDetails.data?.data?.abstractTokenSuggestions &&
                   tokenDetails.data.data.abstractTokenSuggestions.length >
                     0 && (
                     <div className="flex flex-wrap items-center gap-1.5">
