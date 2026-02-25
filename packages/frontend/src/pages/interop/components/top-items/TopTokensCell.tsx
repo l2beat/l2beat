@@ -94,7 +94,7 @@ function TopTokensContent({
   showNetMintedValueColumn?: boolean
 }) {
   const breakpoint = useBreakpoint()
-  const { selectionForApi } = useInteropSelectedChains()
+  const { selectionForApi, getChainById } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokens.useQuery(
     {
       ...selectionForApi,
@@ -106,16 +106,8 @@ function TopTokensContent({
     },
   )
 
-  const tableData = useMemo(() => {
-    const selectedChainsById = new Map<string, { iconUrl: string }>()
-    if (selectedChains.first) {
-      selectedChainsById.set(selectedChains.first.id, selectedChains.first)
-    }
-    if (selectedChains.second) {
-      selectedChainsById.set(selectedChains.second.id, selectedChains.second)
-    }
-
-    return (
+  const tableData = useMemo(
+    () =>
       data?.map((token) => ({
         id: token.id,
         displayName: token.symbol,
@@ -129,18 +121,18 @@ function TopTokensContent({
           (flow): TokenFlowDisplayData => ({
             srcChain: {
               id: flow.srcChain,
-              iconUrl: selectedChainsById.get(flow.srcChain)?.iconUrl,
+              iconUrl: getChainById(flow.srcChain)?.iconUrl,
             },
             dstChain: {
               id: flow.dstChain,
-              iconUrl: selectedChainsById.get(flow.dstChain)?.iconUrl,
+              iconUrl: getChainById(flow.dstChain)?.iconUrl,
             },
             volume: flow.volume,
           }),
         ),
-      })) ?? []
-    )
-  }, [data, selectedChains.first, selectedChains.second])
+      })) ?? [],
+    [data, getChainById],
+  )
 
   const columns = useMemo(() => {
     return getTopItemsColumns('tokens', showNetMintedValueColumn)
