@@ -1,3 +1,4 @@
+import { env } from '~/env'
 import { SwapIcon } from '~/icons/Swap'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { MultiChainSelectorButton } from './MultiChainSelectorButton'
@@ -30,14 +31,24 @@ export function MultiChainSelector({ chains }: Props) {
             </button>
           </div>
         </div>
-        {isDirty && (
-          <button
-            className="font-semibold text-base leading-[115%] underline max-md:hidden"
-            onClick={reset}
-          >
-            Reset to default
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {env.DEPLOYMENT_ENV !== 'production' && (
+            <a
+              href="/interop/summary"
+              className="rounded border border-brand px-2 py-1 font-semibold text-brand text-xs leading-none md:px-3 md:py-1.5 md:text-sm"
+            >
+              Public dashboard
+            </a>
+          )}
+          {isDirty && (
+            <button
+              className="font-semibold text-base leading-[115%] underline max-md:hidden"
+              onClick={reset}
+            >
+              Reset to default
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )
