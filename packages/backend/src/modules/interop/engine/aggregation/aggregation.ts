@@ -156,6 +156,8 @@ export function getAggregatedTokens(
       transfer.srcWasBurned === true && transfer.dstWasMinted === false
     const isMint =
       transfer.srcWasBurned === false && transfer.dstWasMinted === true
+    const mintValue = transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
+    const burnValue = transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
 
     if (transfer.srcAbstractTokenId) {
       tokens[transfer.srcAbstractTokenId] = {
@@ -177,14 +179,16 @@ export function getAggregatedTokens(
 
       if (options?.calculateNetMinted && isBurn) {
         tokens[transfer.srcAbstractTokenId].burnedValueUsd =
-          (tokens[transfer.srcAbstractTokenId]?.burnedValueUsd ?? 0) +
-          (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0)
+          (tokens[transfer.srcAbstractTokenId]?.burnedValueUsd ?? 0) + burnValue
       }
 
-      if (options?.calculateNetMinted && isSameToken && isMint) {
+      if (
+        options?.calculateNetMinted &&
+        isMint &&
+        (isSameToken || !transfer.dstAbstractTokenId)
+      ) {
         tokens[transfer.srcAbstractTokenId].mintedValueUsd =
-          (tokens[transfer.srcAbstractTokenId]?.mintedValueUsd ?? 0) +
-          (transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0)
+          (tokens[transfer.srcAbstractTokenId]?.mintedValueUsd ?? 0) + mintValue
       }
     }
 
@@ -208,8 +212,16 @@ export function getAggregatedTokens(
 
       if (options?.calculateNetMinted && isMint) {
         tokens[transfer.dstAbstractTokenId].mintedValueUsd =
-          (tokens[transfer.dstAbstractTokenId]?.mintedValueUsd ?? 0) +
-          (transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0)
+          (tokens[transfer.dstAbstractTokenId]?.mintedValueUsd ?? 0) + mintValue
+      }
+
+      if (
+        options?.calculateNetMinted &&
+        isBurn &&
+        !transfer.srcAbstractTokenId
+      ) {
+        tokens[transfer.dstAbstractTokenId].burnedValueUsd =
+          (tokens[transfer.dstAbstractTokenId]?.burnedValueUsd ?? 0) + burnValue
       }
     }
   }

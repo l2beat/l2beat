@@ -55,22 +55,21 @@ export function getTransferSizeChartData(
       count10KTo100K +
       countOver100K
 
+    if (total === 0) continue
+
     data.set(record.id, {
       name: current.name,
       iconUrl: current.iconUrl,
       countUnder100,
-      percentageUnder100:
-        total > 0 ? round((countUnder100 / total) * 100, 2) : 0,
+      percentageUnder100: round((countUnder100 / total) * 100, 2),
       count100To1K,
-      percentage100To1K: total > 0 ? round((count100To1K / total) * 100, 2) : 0,
+      percentage100To1K: round((count100To1K / total) * 100, 2),
       count1KTo10K,
-      percentage1KTo10K: total > 0 ? round((count1KTo10K / total) * 100, 2) : 0,
+      percentage1KTo10K: round((count1KTo10K / total) * 100, 2),
       count10KTo100K,
-      percentage10KTo100K:
-        total > 0 ? round((count10KTo100K / total) * 100, 2) : 0,
+      percentage10KTo100K: round((count10KTo100K / total) * 100, 2),
       countOver100K,
-      percentageOver100K:
-        total > 0 ? round((countOver100K / total) * 100, 2) : 0,
+      percentageOver100K: round((countOver100K / total) * 100, 2),
     })
   }
 

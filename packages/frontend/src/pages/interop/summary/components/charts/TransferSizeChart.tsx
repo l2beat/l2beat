@@ -39,22 +39,22 @@ const chartMeta = {
     indicatorType: { shape: 'square' },
   },
   percentage100To1K: {
-    label: '$100-$1,000',
+    label: '$100-$1K',
     color: '#7AE7C7',
     indicatorType: { shape: 'square' },
   },
   percentage1KTo10K: {
-    label: '$1,000-$10,000',
+    label: '$1K-$10K',
     color: '#F7CB15',
     indicatorType: { shape: 'square' },
   },
   percentage10KTo100K: {
-    label: '$10,000-$100,000',
+    label: '$10K-$100K',
     color: '#503047',
     indicatorType: { shape: 'square' },
   },
   percentageOver100K: {
-    label: 'Over $100,000',
+    label: 'Over $100K',
     color: '#F55D3E',
     indicatorType: { shape: 'square' },
   },
@@ -64,14 +64,14 @@ export function TransferSizeChart({ data, isLoading }: Props) {
   const isClient = useIsClient()
 
   if (isLoading || !isClient) {
-    return <Skeleton className="mt-5 h-full w-full" />
+    return <Skeleton className="mt-5 h-full min-h-[250px] w-full" />
   }
 
   return (
     <div className="relative size-full">
       <SimpleChartContainer
         meta={chartMeta}
-        className="size-full max-md:min-h-[200px] md:aspect-auto [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-bold [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-subtitle-11"
+        className="size-full min-h-[250px] md:aspect-auto [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-bold [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-subtitle-11"
       >
         <BarChart
           accessibilityLayer
@@ -120,7 +120,11 @@ export function TransferSizeChart({ data, isLoading }: Props) {
             interval={0}
             tick={(props) => <XAxisTick {...props} data={data} />}
           />
-          <ChartTooltip filterNull={false} content={<CustomTooltip />} />
+          <ChartTooltip
+            filterNull={false}
+            content={<CustomTooltip />}
+            allowEscapeViewBox={{ y: true }}
+          />
         </BarChart>
       </SimpleChartContainer>
       <Logo

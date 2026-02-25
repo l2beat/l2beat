@@ -1,3 +1,80 @@
+Generated with discovered.json: 0x6732546087fd05bff935a6f034735319c1c5d639
+
+# Diff at Mon, 23 Feb 2026 12:19:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@20ede1de11e17f656c261821f0f270c0c75e5be0 block: 1770975731
+- current timestamp: 1771848139
+
+## Description
+
+Removed LegacyBridge logic from the USDC bridge. Diff: https://disco.l2beat.com/diff/eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77/eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86. Also added a StarkgateManager for this bridge.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      sourceHashes.1:
+-        "0xbe08cd77d92ae2b4d333c5d2850e16d06e16d98de2a8435e0a49dc35ad73b915"
++        "0xecdc47d2045525d1d373fdecc6478959fa5b2d2595713c2187c41ed98baa4738"
+      values.$implementation:
+-        "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
++        "eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86"
+      values.$pastUpgrades.4:
++        ["2026-02-21T13:53:59.000Z","0xb0ea49fedd399a118b3f8a0c6a05b3e73a8235a184e1e5c61f57c601f94b59e7",["eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.identify:
+-        "StarkWare_StarknetERC20Bridge_2.0_4"
++        "StarkWare_StarknetTokenBridge_2.0_5"
+      values.implementation:
+-        "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
++        "eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86"
+      values.manager:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE"
+      implementationNames.eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86:
++        "StarknetTokenBridge"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE","role":".$admin"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280","role":".$admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateManager (eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE)
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateRegistry (eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280)
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+```
+
+## Source code changes
+
+```diff
+.../paradex/.flat/StarkgateManager/Proxy.p.sol     | 1068 ++++++++
+ .../.flat/StarkgateManager/StarkgateManager.sol    |  971 ++++++++
+ .../paradex/.flat/StarkgateRegistry/Proxy.p.sol    | 1068 ++++++++
+ .../.flat/StarkgateRegistry/StarkgateRegistry.sol  |  972 ++++++++
+ .../USDC Bridge/StarknetTokenBridge.sol}           | 2586 +++++++++-----------
+ 5 files changed, 5260 insertions(+), 1405 deletions(-)
+```
+
 Generated with discovered.json: 0x2134990d904055a72408211770bab1d4ae459de2
 
 # Diff at Fri, 13 Feb 2026 09:43:15 GMT:

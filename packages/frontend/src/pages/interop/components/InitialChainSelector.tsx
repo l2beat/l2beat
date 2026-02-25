@@ -1,4 +1,5 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import partition from 'lodash/partition'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import type { InteropSelectedChains } from '../utils/InteropSelectedChainsContext'
@@ -21,6 +22,12 @@ export function InitialChainSelector({
   type,
 }: Props) {
   const utils = api.useUtils()
+
+  const [activeChains, upcomingChains] = partition(
+    interopChains,
+    (chain) => !chain.isUpcoming,
+  )
+
   function toggleChain(chainId: string) {
     if (selectedChains.first === null) {
       selectChain('first', chainId)
@@ -39,9 +46,11 @@ export function InitialChainSelector({
   }
   return (
     <div className="flex w-full grow flex-col items-center justify-center gap-6 bg-surface-primary p-6 md:rounded-lg">
-      <h2 className="text-brand text-heading-32">Select a pair of chains</h2>
-      <div className="flex w-full flex-wrap justify-center gap-1.5 md:max-w-[616px] md:gap-2">
-        {interopChains.map((chain) => (
+      <h2 className="text-balance text-center text-brand text-heading-32">
+        Select a pair of chains
+      </h2>
+      <div className="flex w-full flex-wrap justify-center gap-1.5 md:max-w-[950px] md:gap-2">
+        {[...activeChains, ...upcomingChains].map((chain) => (
           <ChainSelectorButton
             key={chain.id}
             chain={chain}
@@ -79,16 +88,31 @@ function ChainSelectorButton({
   return (
     <button
       className={cn(
-        'flex h-18 w-[32%] flex-col items-center justify-center gap-2 rounded border border-divider px-2 py-3 transition-colors md:size-[148px] md:gap-3 md:px-3',
-        selected ? 'border-brand bg-brand/15' : 'hover:bg-brand/5',
+        'group relative flex h-10 items-center justify-center gap-2 rounded border border-divider px-3 py-2 transition-colors enabled:bg-header-secondary md:h-[104px] md:w-[128px] md:flex-col md:gap-1.5 md:py-4 lg:h-[128px] lg:w-[148px] lg:gap-3 lg:py-7.5',
+        selected ? 'border-brand bg-brand/15!' : 'enabled:hover:bg-brand/5',
         className,
       )}
+      disabled={chain.isUpcoming}
       {...props}
     >
-      <img src={chain.iconUrl} alt={chain.name} className="size-6 md:size-8" />
-      <span className="w-full text-center font-medium text-sm leading-none md:text-lg">
+      <img
+        src={chain.iconUrl}
+        alt={chain.name}
+        className="size-6 group-disabled:opacity-40 md:size-8"
+      />
+      <span className="w-full text-center font-medium text-sm leading-none group-disabled:text-secondary md:text-base lg:text-lg">
         {chain.name}
       </span>
+      {chain.isUpcoming && (
+        <>
+          <div className="-top-px -left-px absolute rounded-tl bg-zinc-400 px-[5px] pt-[5px] pb-1 font-medium text-[11px] text-primary-invert leading-none max-md:hidden">
+            Coming soon
+          </div>
+          <div className="rounded-full bg-zinc-400 px-1.5 py-1 font-medium text-[11px] text-primary-invert leading-none md:hidden">
+            Soon
+          </div>
+        </>
+      )}
     </button>
   )
 }

@@ -43,7 +43,7 @@ export function TopProtocolsWidget({
 
   return (
     <PrimaryCard
-      className="@container flex h-full items-start justify-between max-md:rounded-lg"
+      className="@container flex h-full items-start justify-between"
       ref={containerRef}
     >
       <div>
@@ -57,7 +57,7 @@ export function TopProtocolsWidget({
               ? times(5).map((index) => (
                   <tr key={index}>
                     <td colSpan={3}>
-                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-48" />
                     </td>
                   </tr>
                 ))

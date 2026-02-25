@@ -53,7 +53,10 @@ export async function getInteropSummaryData(
       props: {
         ...appLayoutProps,
         ...queryState,
-        interopChains: interopChainsWithIcons,
+        interopChains: interopChainsWithIcons.filter(
+          (chain) => !chain.isUpcoming,
+        ),
+        onboardingInteropChains: interopChainsWithIcons,
         initialSelectedChains,
       },
     },

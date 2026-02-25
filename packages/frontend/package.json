@@ -59,6 +59,7 @@
     "compression": "^1.8.0",
     "connect-timeout": "^1.9.0",
     "dotenv": "^16.4.5",
+    "embla-carousel-react": "^8.6.0",
     "express": "^5.0.0",
     "fuzzysort": "^3.1.0",
     "gray-matter": "^4.0.3",

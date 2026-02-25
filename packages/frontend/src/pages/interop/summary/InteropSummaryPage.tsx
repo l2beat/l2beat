@@ -31,12 +31,14 @@ import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridg
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
   initialSelectedChains: SelectedChainsIds
 }
 
 export function InteropSummaryPage({
   interopChains,
+  onboardingInteropChains,
   queryState,
   initialSelectedChains,
   protocols,
@@ -50,8 +52,12 @@ export function InteropSummaryPage({
           initialSelectedChains={initialSelectedChains}
         >
           <SideNavLayout maxWidth="wide">
-            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-            <Content interopChains={interopChains} protocols={protocols} />
+            <MainPageHeader>Interoperability</MainPageHeader>
+            <Content
+              interopChains={interopChains}
+              onboardingInteropChains={onboardingInteropChains}
+              protocols={protocols}
+            />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
@@ -61,9 +67,11 @@ export function InteropSummaryPage({
 
 function Content({
   interopChains,
+  onboardingInteropChains,
   protocols,
 }: {
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
@@ -71,7 +79,7 @@ function Content({
   if (!selectedChains.first || !selectedChains.second) {
     return (
       <InitialChainSelector
-        interopChains={interopChains}
+        interopChains={onboardingInteropChains}
         selectedChains={selectedChains}
         selectChain={selectChain}
         type={undefined}
@@ -110,10 +118,10 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
 
   return (
     <div
-      className="mt-5 grid grid-cols-1 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
+      className="grid grid-cols-1 md:mt-5 md:grid-cols-2 min-[1600px]:grid-cols-3 min-md:gap-5"
       data-hide-overflow-x
     >
-      <div className="z-10 max-md:hidden">
+      <div className="z-10">
         <FlowsWidget
           interopChains={interopChains}
           isLoading={isLoading}

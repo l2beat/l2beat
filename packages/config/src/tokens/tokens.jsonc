@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "AZTEC",
+      "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "coingeckoId": "aztec"
+    },
+    {
       "symbol": "NIL",
       "address": "0x7cf9a80db3b29ee8efe3710aadb7b95270572d47",
       "coingeckoId": "nillion",
@@ -2289,6 +2294,13 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "PGOLD",
+      "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic" // tradable on uniswap
+    },
     {
       "symbol": "RAIN",
       "address": "0x25118290e6A5f4139381D072181157035864099d",
