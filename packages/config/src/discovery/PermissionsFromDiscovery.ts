@@ -2,6 +2,7 @@ import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
 import { type ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
+import type { ProjectUpgradeableActor } from '../types'
 import { UltimatePermissionToPrefix } from './descriptions'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
@@ -226,34 +227,35 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       )
   }
 
-  getUpgradableBy(
-    contract: EntryParameters,
-  ): { name: string; delay: string }[] {
+  getUpgradableBy(contract: EntryParameters): ProjectUpgradeableActor[] {
     const issuedPermissions = this.getUltimatelyIssuedPermissions(
       contract.address,
     )
 
-    const upgradersWithDelay: Record<string, number> = Object.fromEntries(
+    const upgradersWithDelay: Record<
+      string,
+      { delay: number; unreachable: boolean }
+    > = Object.fromEntries(
       issuedPermissions
-        ?.filter(
-          (p) =>
-            p.permission === 'upgrade' &&
-            this.projectDiscovery.isReachable(p.to),
-        )
+        ?.filter((p) => p.permission === 'upgrade')
         .map((p) => {
-          const address = this.projectDiscovery.getName(p.to)
+          const actor = this.projectDiscovery.getName(p.to)
           const delay =
             (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
-          return [address, delay]
+          return [
+            actor,
+            {
+              delay,
+              unreachable: !this.projectDiscovery.isReachable(p.to),
+            },
+          ]
         }) ?? [],
     )
 
-    return Object.keys(upgradersWithDelay).map((actor) => ({
+    return Object.entries(upgradersWithDelay).map(([actor, value]) => ({
       name: actor,
-      delay:
-        upgradersWithDelay[actor] === 0
-          ? 'no'
-          : formatSeconds(upgradersWithDelay[actor]),
+      delay: value.delay === 0 ? 'no' : formatSeconds(value.delay),
+      ...(value.unreachable ? { unreachable: true } : {}),
     }))
   }
 

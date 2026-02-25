@@ -1106,6 +1106,9 @@ export class ProjectDiscovery {
     eoaActors: ProjectPermission[],
   ): ProjectUpgradeableActor[] {
     return upgradableBy.map((upgradableBy) => {
+      if (upgradableBy.unreachable === true) {
+        return upgradableBy
+      }
       const eoaActor = eoaActors.find((e) => e.name === upgradableBy.name)
       if (eoaActor) {
         return {

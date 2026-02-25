@@ -282,12 +282,26 @@ describe('getProjects', () => {
 
             if (upgradableBy) {
               it('contracts.upgradableBy is valid', () => {
-                const expectedToContain = upgradableBy.map(
-                  (a) => a.id ?? a.name,
-                )
+                for (const actor of upgradableBy) {
+                  const expected = actor.id ?? actor.name
 
-                for (const expected of expectedToContain) {
-                  const message = [
+                  if (actorIds.includes(expected)) {
+                    const reachableActorMarkedUnreachableMessage = [
+                      '',
+                      chalk.red('ERROR:'),
+                      `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} has upgrader ${chalk.magenta(expected)} marked as unreachable.`,
+                      'Reachable upgraders should not have unreachable: true.',
+                      '',
+                      `${chalk.green('POSSIBLE FIX')}: remove unreachable: true for reachable upgraders`,
+                    ].join('\n')
+                    assert(
+                      actor.unreachable !== true,
+                      reachableActorMarkedUnreachableMessage,
+                    )
+                    continue
+                  }
+
+                  const missingActorMessage = [
                     '',
                     chalk.red('ERROR:'),
                     `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} is marked as upgradable by an actor named ${chalk.magenta(expected)}.`,
@@ -295,10 +309,21 @@ describe('getProjects', () => {
                     '',
                     `${chalk.cyan('Current actors')}: ${all.map((a) => a.name).join(', ')}`,
                     '',
-                    `${chalk.green('POSSIBLE FIX')}: check if the actor is not marked as spam`,
+                    `${chalk.green('POSSIBLE FIX')}: check if the actor should be marked with unreachable: true`,
                   ].join('\n')
 
-                  assert(actorIds.includes(expected), message)
+                  assert(actor.unreachable === true, missingActorMessage)
+
+                  const unreachableActorWithIdMessage = [
+                    '',
+                    chalk.red('ERROR:'),
+                    `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} has unreachable upgrader ${chalk.magenta(actor.name)}.`,
+                    'Unreachable upgraders cannot be linked to a permission actor id.',
+                    '',
+                    `${chalk.green('POSSIBLE FIX')}: remove the id field for unreachable upgraders`,
+                  ].join('\n')
+
+                  assert(actor.id === undefined, unreachableActorWithIdMessage)
                 }
               })
             }
