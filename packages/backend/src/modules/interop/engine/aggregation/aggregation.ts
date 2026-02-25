@@ -82,7 +82,6 @@ export function getAggregatedTransfer(
           : Math.max(maxTransferValueUsd, value)
     }
 
-    // Count transfers by bucket based on identified transfer value
     const bucket = getBucket(transfer.srcValueUsd ?? transfer.dstValueUsd)
     switch (bucket) {
       case 'under100':
