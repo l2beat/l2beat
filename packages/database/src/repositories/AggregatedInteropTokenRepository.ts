@@ -82,6 +82,10 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTokenRecord[]> {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return []
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropToken')
       .selectAll()
@@ -111,6 +115,10 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTokenRecord[]> {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return []
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropToken')
       .selectAll()

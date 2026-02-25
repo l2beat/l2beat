@@ -263,6 +263,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTransferRecord[]> {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return []
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
@@ -293,6 +297,13 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       includeSameChainTransfers?: boolean
     },
   ) {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return {
+        transferCount: 0,
+        identifiedCount: 0,
+      }
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .select((eb) => eb.fn.sum('transferCount').as('transferCountSum'))
@@ -333,6 +344,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTransferRecord[]> {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return []
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
