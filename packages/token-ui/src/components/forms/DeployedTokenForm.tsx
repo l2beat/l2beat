@@ -562,6 +562,31 @@ export function DeployedTokenForm({
                     </Tooltip>
                   )}
                 </div>
+                {tokenDetails.data?.data?.abstractTokenSuggestions &&
+                  tokenDetails.data.data.abstractTokenSuggestions.length >
+                    0 && (
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-muted-foreground text-xs">
+                        Suggested:
+                      </span>
+                      {tokenDetails.data.data.abstractTokenSuggestions.map(
+                        (suggestion) => (
+                          <button
+                            key={suggestion.id}
+                            type="button"
+                            className="inline-flex items-center rounded-md border px-2 py-0.5 text-xs transition-colors hover:bg-accent"
+                            onClick={() => {
+                              form.setValue('abstractTokenId', suggestion.id, {
+                                shouldDirty: true,
+                              })
+                            }}
+                          >
+                            {getAbstractTokenDisplayId(suggestion)}
+                          </button>
+                        ),
+                      )}
+                    </div>
+                  )}
                 <FormMessage />
               </FormItem>
             )}
