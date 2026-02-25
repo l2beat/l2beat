@@ -14,7 +14,14 @@ export function createBridgesRouter(
   cache: ICache,
 ) {
   if (env.CLIENT_SIDE_INTEROP_ENABLED) {
-    return undefined
+    const router = express.Router()
+    router.get('/bridges/*', (_req, res) => {
+      res.redirect(301, '/interop')
+    })
+    router.get('/bridges', (_req, res) => {
+      res.redirect(301, '/interop')
+    })
+    return router
   }
   const router = express.Router()
 
