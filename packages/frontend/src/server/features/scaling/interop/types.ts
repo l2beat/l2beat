@@ -100,6 +100,12 @@ export type CommonInteropData = {
   burnedValueUsd: number | undefined
 }
 
+export type TokenFlowData = {
+  srcChain: string
+  dstChain: string
+  volume: number
+}
+
 export type TokenData = {
   id: string
   symbol: string
@@ -109,6 +115,7 @@ export type TokenData = {
   avgDuration: AverageDuration | null
   avgValue: number | null
   netMintedValue: number | undefined
+  netFlows: TokenFlowData[]
 }
 
 export type ChainData = {

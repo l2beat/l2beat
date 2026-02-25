@@ -100,6 +100,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 10_000,
       netMintedValue: undefined,
+      netFlows: [],
     },
     {
       id: 'usdc01',
@@ -111,6 +112,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
       netMintedValue: undefined,
+      netFlows: [],
     },
   ]
 
