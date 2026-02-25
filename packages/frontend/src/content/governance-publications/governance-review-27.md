@@ -198,7 +198,7 @@ You can find us to discuss all the above and more during our [Polygon Office Hou
 
 **Discuss with L2BEAT**
 
-Other than [Starknet’s first-ever vote](https://governance.starknet.io/voting-proposals/5) on Starknet mainnet successfully passing, we were unaware of any significant governance-related news in Starknet over the last week. If you think we have missed something important, please let us know! 
+Other than [Starknet’s first-ever vote](https://governance.starknet.io/#/proposal/5) on Starknet mainnet successfully passing, we were unaware of any significant governance-related news in Starknet over the last week. If you think we have missed something important, please let us know! 
 
 **When/where to catch us:**
 
