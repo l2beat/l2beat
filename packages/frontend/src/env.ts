@@ -63,6 +63,7 @@ const SERVER_CONFIG = {
     .transform((v) => Number(v))
     .optional(),
   INTEROP_DISABLED_CHAINS: stringArray.optional(),
+  INTEROP_UPCOMING_CHAINS: stringArray.optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -124,6 +125,7 @@ function getRawEnv(): Record<
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     INTEROP_DISABLED_CHAINS: process.env.INTEROP_DISABLED_CHAINS,
+    INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,

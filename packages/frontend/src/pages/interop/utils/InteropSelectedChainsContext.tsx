@@ -13,9 +13,9 @@ import { useEventListener } from '~/hooks/useEventListener'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 import { getValidInteropSelection } from './getValidInteropSelection'
-import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
 import { toInteropApiSelection } from './toInteropApiSelection'
 import type { InteropMode, InteropSelection } from './types'
+import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
 
 interface InteropSelectedChainsContextType {
   mode: InteropMode
@@ -120,11 +120,6 @@ export function InteropSelectedChainsProvider({
 
     const currentUrl = window.location.pathname + window.location.search
     if (nextUrl === currentUrl) {
-      return
-    }
-
-    if (window.location.search === '') {
-      window.history.replaceState({}, '', nextUrl)
       return
     }
 

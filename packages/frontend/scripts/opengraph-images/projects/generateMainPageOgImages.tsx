@@ -93,6 +93,9 @@ const mainPages: MainPage[] = [
     title: 'About Us',
   },
   {
+    title: 'Changelog',
+  },
+  {
     title: 'Donate',
   },
   {
