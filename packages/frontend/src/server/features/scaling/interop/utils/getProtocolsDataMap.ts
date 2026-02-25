@@ -77,18 +77,13 @@ export function getProtocolsDataMapByBridgeType(
       ?.get(record.bridgeType)
     const transfersTimeMode = transfersTimeModeMap.get(record.id)
     const direction = getDirection(record, durationSplit, transfersTimeMode)
-    const transferValueUsd =
-      record.srcValueUsd === undefined
-        ? record.dstValueUsd
-        : record.dstValueUsd === undefined
-          ? record.srcValueUsd
-          : Math.max(record.srcValueUsd, record.dstValueUsd)
 
     switch (record.bridgeType) {
       case 'lockAndMint':
         bridgeTypeMap.lockAndMint = {
           volume:
-            (bridgeTypeMap.lockAndMint?.volume ?? 0) + (transferValueUsd ?? 0),
+            (bridgeTypeMap.lockAndMint?.volume ?? 0) +
+            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.lockAndMint?.tokens,
             record.tokens,
@@ -104,19 +99,19 @@ export function getProtocolsDataMapByBridgeType(
             (bridgeTypeMap.lockAndMint?.totalDurationSum ?? 0) +
             (record.totalDurationSum ?? 0),
           minTransferValueUsd:
-            transferValueUsd !== undefined
+            record.minTransferValueUsd !== undefined
               ? Math.min(
                   bridgeTypeMap.lockAndMint?.minTransferValueUsd ??
-                    transferValueUsd,
-                  transferValueUsd,
+                    Number.POSITIVE_INFINITY,
+                  record.minTransferValueUsd,
                 )
               : bridgeTypeMap.lockAndMint?.minTransferValueUsd,
           maxTransferValueUsd:
-            transferValueUsd !== undefined
+            record.maxTransferValueUsd !== undefined
               ? Math.max(
                   bridgeTypeMap.lockAndMint?.maxTransferValueUsd ??
-                    transferValueUsd,
-                  transferValueUsd,
+                    Number.NEGATIVE_INFINITY,
+                  record.maxTransferValueUsd,
                 )
               : bridgeTypeMap.lockAndMint?.maxTransferValueUsd,
 
@@ -136,7 +131,8 @@ export function getProtocolsDataMapByBridgeType(
       case 'nonMinting':
         bridgeTypeMap.nonMinting = {
           volume:
-            (bridgeTypeMap.nonMinting?.volume ?? 0) + (transferValueUsd ?? 0),
+            (bridgeTypeMap.nonMinting?.volume ?? 0) +
+            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.nonMinting?.tokens,
             record.tokens,
@@ -149,19 +145,19 @@ export function getProtocolsDataMapByBridgeType(
             (bridgeTypeMap.nonMinting?.identifiedTransferCount ?? 0) +
             record.identifiedCount,
           minTransferValueUsd:
-            transferValueUsd !== undefined
+            record.minTransferValueUsd !== undefined
               ? Math.min(
                   bridgeTypeMap.nonMinting?.minTransferValueUsd ??
-                    transferValueUsd,
-                  transferValueUsd,
+                    Number.POSITIVE_INFINITY,
+                  record.minTransferValueUsd,
                 )
               : bridgeTypeMap.nonMinting?.minTransferValueUsd,
           maxTransferValueUsd:
-            transferValueUsd !== undefined
+            record.maxTransferValueUsd !== undefined
               ? Math.max(
                   bridgeTypeMap.nonMinting?.maxTransferValueUsd ??
-                    transferValueUsd,
-                  transferValueUsd,
+                    Number.NEGATIVE_INFINITY,
+                  record.maxTransferValueUsd,
                 )
               : bridgeTypeMap.nonMinting?.maxTransferValueUsd,
           averageValueInFlight:
@@ -172,7 +168,8 @@ export function getProtocolsDataMapByBridgeType(
       case 'burnAndMint':
         bridgeTypeMap.burnAndMint = {
           volume:
-            (bridgeTypeMap.burnAndMint?.volume ?? 0) + (transferValueUsd ?? 0),
+            (bridgeTypeMap.burnAndMint?.volume ?? 0) +
+            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.burnAndMint?.tokens,
             record.tokens,
@@ -185,19 +182,19 @@ export function getProtocolsDataMapByBridgeType(
             (bridgeTypeMap.burnAndMint?.identifiedTransferCount ?? 0) +
             record.identifiedCount,
           minTransferValueUsd:
-            transferValueUsd !== undefined
+            record.minTransferValueUsd !== undefined
               ? Math.min(
                   bridgeTypeMap.burnAndMint?.minTransferValueUsd ??
-                    transferValueUsd,
-                  transferValueUsd,
+                    Number.POSITIVE_INFINITY,
+                  record.minTransferValueUsd,
                 )
               : bridgeTypeMap.burnAndMint?.minTransferValueUsd,
           maxTransferValueUsd:
-            transferValueUsd !== undefined
+            record.maxTransferValueUsd !== undefined
               ? Math.max(
                   bridgeTypeMap.burnAndMint?.maxTransferValueUsd ??
-                    transferValueUsd,
-                  transferValueUsd,
+                    Number.NEGATIVE_INFINITY,
+                  record.maxTransferValueUsd,
                 )
               : bridgeTypeMap.burnAndMint?.maxTransferValueUsd,
         }
@@ -232,15 +229,9 @@ export function getProtocolsDataMap(
         ? durationSplitMap?.get(record.id)?.get(record.bridgeType)
         : undefined
     const direction = getDirection(record, durationSplit, transfersTimeMode)
-    const transferValueUsd =
-      record.srcValueUsd === undefined
-        ? record.dstValueUsd
-        : record.dstValueUsd === undefined
-          ? record.srcValueUsd
-          : Math.max(record.srcValueUsd, record.dstValueUsd)
 
     protocolsDataMap.set(record.id, {
-      volume: current.volume + (transferValueUsd ?? 0),
+      volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
       tokens: mergeTokensData(current.tokens, record.tokens, direction),
       chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),

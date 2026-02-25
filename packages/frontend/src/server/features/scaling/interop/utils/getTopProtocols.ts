@@ -26,14 +26,9 @@ export function getTopProtocols(
     if (subgroupProjects.has(record.id as ProjectId)) continue
 
     const currentVolume = map.get(record.id) ?? { volume: 0, transfers: 0 }
-    const transferValueUsd =
-      record.srcValueUsd === undefined
-        ? record.dstValueUsd
-        : record.dstValueUsd === undefined
-          ? record.srcValueUsd
-          : Math.max(record.srcValueUsd, record.dstValueUsd)
     map.set(record.id, {
-      volume: currentVolume.volume + (transferValueUsd ?? 0),
+      volume:
+        currentVolume.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
       transfers: currentVolume.transfers + (record.transferCount ?? 0),
     })
   }

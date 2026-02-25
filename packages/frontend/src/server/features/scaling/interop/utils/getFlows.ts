@@ -19,13 +19,7 @@ export function getFlows(
 
     const key = `${record.srcChain}::${record.dstChain}`
     const current = map.get(key) ?? 0
-    const transferValueUsd =
-      record.srcValueUsd === undefined
-        ? record.dstValueUsd
-        : record.dstValueUsd === undefined
-          ? record.srcValueUsd
-          : Math.max(record.srcValueUsd, record.dstValueUsd)
-    map.set(key, current + (transferValueUsd ?? 0))
+    map.set(key, current + (record.srcValueUsd ?? record.dstValueUsd ?? 0))
   }
 
   return Array.from(map.entries())
