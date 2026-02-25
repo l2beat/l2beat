@@ -22,6 +22,7 @@ import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import { getTopItemsColumns, type TopItemRow } from './columns'
+import type { TokenFlowDisplayData } from './TokenFlowsCell'
 import { InteropTopItems } from './TopItems'
 
 export function TopTokensCell({
@@ -111,8 +112,16 @@ function TopTokensContent({
     },
   )
 
-  const tableData = useMemo(
-    () =>
+  const tableData = useMemo(() => {
+    const selectedChainsById = new Map<string, { iconUrl: string }>()
+    if (selectedChains.first) {
+      selectedChainsById.set(selectedChains.first.id, selectedChains.first)
+    }
+    if (selectedChains.second) {
+      selectedChainsById.set(selectedChains.second.id, selectedChains.second)
+    }
+
+    return (
       data?.map((token) => ({
         id: token.id,
         displayName: token.symbol,
@@ -122,18 +131,26 @@ function TopTokensContent({
         avgDuration: token.avgDuration,
         avgValue: token.avgValue,
         netMintedValue: token.netMintedValue,
-        netFlows: token.netFlows,
-      })) ?? [],
-    [data],
-  )
+        netFlows: token.netFlows.map(
+          (flow): TokenFlowDisplayData => ({
+            srcChain: {
+              id: flow.srcChain,
+              iconUrl: selectedChainsById.get(flow.srcChain)?.iconUrl,
+            },
+            dstChain: {
+              id: flow.dstChain,
+              iconUrl: selectedChainsById.get(flow.dstChain)?.iconUrl,
+            },
+            volume: flow.volume,
+          }),
+        ),
+      })) ?? []
+    )
+  }, [data, selectedChains.first, selectedChains.second])
 
   const columns = useMemo(() => {
-    return getTopItemsColumns(
-      'tokens',
-      showNetMintedValueColumn,
-      selectedChains,
-    )
-  }, [showNetMintedValueColumn, selectedChains])
+    return getTopItemsColumns('tokens', showNetMintedValueColumn)
+  }, [showNetMintedValueColumn])
 
   const table = useTable<TopItemRow>({
     data: tableData,

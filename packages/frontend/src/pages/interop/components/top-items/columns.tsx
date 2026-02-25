@@ -4,14 +4,10 @@ import compact from 'lodash/compact'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
 import { EM_DASH } from '~/consts/characters'
-import type {
-  AverageDuration,
-  TokenFlowData,
-} from '~/server/features/scaling/interop/types'
+import type { AverageDuration } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import type { InteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { AvgDurationCell } from '../table/AvgDurationCell'
-import { TokenFlowsCell } from './TokenFlowsCell'
+import { type TokenFlowDisplayData, TokenFlowsCell } from './TokenFlowsCell'
 
 export type TopItem = {
   id?: string
@@ -22,7 +18,7 @@ export type TopItem = {
   avgDuration: AverageDuration | null
   avgValue: number | null
   netMintedValue?: number
-  netFlows?: TokenFlowData[]
+  netFlows?: TokenFlowDisplayData[]
 }
 export type TopItemType = 'tokens' | 'chains'
 
@@ -32,7 +28,6 @@ const columnHelper = createColumnHelper<TopItemRow>()
 export const getTopItemsColumns = (
   itemType: TopItemType,
   showNetMintedValueColumn?: boolean,
-  selectedChains?: InteropSelectedChains,
 ) =>
   compact([
     columnHelper.display({
@@ -132,12 +127,7 @@ export const getTopItemsColumns = (
             const netFlows = ctx.row.original.netFlows
             if (!netFlows || netFlows.length === 0) return EM_DASH
 
-            return (
-              <TokenFlowsCell
-                netFlows={netFlows}
-                selectedChains={selectedChains}
-              />
-            )
+            return <TokenFlowsCell netFlows={netFlows} />
           },
         },
       ),

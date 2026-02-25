@@ -1,53 +1,49 @@
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import type { TokenFlowData } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import type { InteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+
+export type TokenFlowDisplayData = {
+  srcChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  dstChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  volume: number
+}
 
 export function TokenFlowsCell({
   netFlows,
-  selectedChains,
 }: {
-  netFlows: TokenFlowData[]
-  selectedChains: InteropSelectedChains | undefined
+  netFlows: TokenFlowDisplayData[]
 }) {
-  const selectedChainsById = new Map(
-    [selectedChains?.first, selectedChains?.second]
-      .filter(
-        (chain): chain is NonNullable<InteropSelectedChains['first']> =>
-          chain !== null && chain !== undefined,
-      )
-      .map((chain) => [chain.id, chain]),
-  )
-
   return (
     <div className="flex flex-col items-end gap-1">
       {netFlows.map((flow) => {
-        const srcChain = selectedChainsById.get(flow.srcChain)
-        const dstChain = selectedChainsById.get(flow.dstChain)
-
         return (
           <div
-            key={`${flow.srcChain}-${flow.dstChain}`}
+            key={`${flow.srcChain.id}-${flow.dstChain.id}`}
             className="flex items-center gap-1"
           >
-            {srcChain ? (
+            {flow.srcChain.iconUrl ? (
               <img
-                src={srcChain.iconUrl}
-                alt={flow.srcChain}
+                src={flow.srcChain.iconUrl}
+                alt={flow.srcChain.id}
                 className="size-4"
               />
             ) : (
-              <span className="text-secondary">{flow.srcChain}</span>
+              <span className="text-secondary">{flow.srcChain.id}</span>
             )}
             <ArrowRightIcon className="size-4 min-w-4 fill-brand" />
-            {dstChain ? (
+            {flow.dstChain.iconUrl ? (
               <img
-                src={dstChain.iconUrl}
-                alt={flow.dstChain}
+                src={flow.dstChain.iconUrl}
+                alt={flow.dstChain.id}
                 className="size-4"
               />
             ) : (
-              <span className="text-secondary">{flow.dstChain}</span>
+              <span className="text-secondary">{flow.dstChain.id}</span>
             )}
             <span className="ml-0.5 font-medium text-label-value-13">
               {formatCurrency(flow.volume, 'usd')}
