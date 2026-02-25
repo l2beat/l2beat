@@ -7,7 +7,7 @@ import {
   popoverTriggerClasses,
 } from '~/components/core/Popover'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { useDevice } from '~/hooks/useDevice'
 import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
 import type { FilterableValueId } from './filterableValue'
@@ -74,44 +74,44 @@ export function TableFilter({ filter, possibleValues }: Props) {
 
 function TableFilterValuePart({ filter, possibleValues }: Props) {
   const { open, setOpen, onEscapeKeyDown } = useTableFilterInternalContext()
-  const isMobile = useIsMobile()
+  const { isDesktop } = useDevice()
 
-  if (isMobile) {
+  if (isDesktop) {
     return (
-      <>
-        <button
-          onClick={() => setOpen(true)}
-          className={cn(popoverTriggerClasses, 'h-8')}
-        >
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverAnchor className="h-full" />
+        <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-medium">
           <TableFilterValue values={filter.values} filterId={filter.id} />
-        </button>
-        <CommandDialog
-          open={open}
-          onOpenChange={setOpen}
-          title={'Filters'}
-          description={'Select filters to apply'}
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="p-0"
+          side="bottom"
+          onEscapeKeyDown={onEscapeKeyDown}
         >
           <TableFilterValueMenu filterId={filter.id} values={possibleValues} />
-        </CommandDialog>
-      </>
+        </PopoverContent>
+      </Popover>
     )
   }
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverAnchor className="h-full" />
-      <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-medium">
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className={cn(popoverTriggerClasses, 'h-8')}
+      >
         <TableFilterValue values={filter.values} filterId={filter.id} />
-      </PopoverTrigger>
-      <PopoverContent
-        align="start"
-        className="p-0"
-        side="bottom"
-        onEscapeKeyDown={onEscapeKeyDown}
+      </button>
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        title={'Filters'}
+        description={'Select filters to apply'}
       >
         <TableFilterValueMenu filterId={filter.id} values={possibleValues} />
-      </PopoverContent>
-    </Popover>
+      </CommandDialog>
+    </>
   )
 }
 

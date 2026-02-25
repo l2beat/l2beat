@@ -36,7 +36,7 @@ export function ProjectActivityChart({
 }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<ActivityMetric>('uops')
-  const [scale, setScale] = useState<ChartScale>('lin')
+  const [scale, setScale] = useState<ChartScale>('linear')
 
   const { data: chart, isLoading } = api.activity.chart.useQuery({
     range,
@@ -116,8 +116,8 @@ export function ProjectActivityChart({
           value={scale}
           onValueChange={(value) => setScale(value as ChartScale)}
         >
-          <RadioGroupItem value="log">LOG</RadioGroupItem>
-          <RadioGroupItem value="lin">LIN</RadioGroupItem>
+          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
+          <RadioGroupItem value="linear">LIN</RadioGroupItem>
         </RadioGroup>
       </div>
       <ChartStats className="mt-4 md:grid-cols-2 lg:grid-cols-4">

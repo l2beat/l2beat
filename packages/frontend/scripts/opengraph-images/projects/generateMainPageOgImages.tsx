@@ -47,6 +47,18 @@ const mainPages: MainPage[] = [
     title: 'Summary',
   },
   {
+    type: 'interop',
+    title: 'Non-minting',
+  },
+  {
+    type: 'interop',
+    title: 'Lock & Mint',
+  },
+  {
+    type: 'interop',
+    title: 'Burn & Mint',
+  },
+  {
     type: 'bridges',
     title: 'Summary',
   },
@@ -79,6 +91,9 @@ const mainPages: MainPage[] = [
   },
   {
     title: 'About Us',
+  },
+  {
+    title: 'Changelog',
   },
   {
     title: 'Donate',

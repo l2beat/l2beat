@@ -43,6 +43,7 @@ export const apechain: ScalingProject = orbitStackL3({
     chainId: 33139,
     coingeckoPlatform: 'apechain',
     sinceTimestamp: UnixTime(1724863522),
+    explorerUrl: 'https://apescan.io',
     apis: [
       {
         type: 'rpc',

@@ -1,6 +1,6 @@
 {
   "name": "soon",
-  "timestamp": 1765554035,
+  "timestamp": 1769535666,
   "configHash": "0x01f6fd21ecaccba5c489841d3323008b6a5ba32d3d18cd5e28c4c4c681c3b0a1",
   "entries": [
     {
@@ -494,7 +494,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669042",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669051",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -530,7 +530,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
       "sinceTimestamp": 1735877375,
       "sinceBlock": 21541473,
       "values": {
@@ -544,10 +544,11 @@
           ]
         ],
         "$upgradeCount": 1,
+        "challengerFromDGF": "UNRESOLVED",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 10,
+        "gameCount": 108,
         "gameImpls": [
           "eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e",
           "eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087",
@@ -560,8 +561,11 @@
         "initBondGame42": 0,
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+        "permissionedGameArgs": "EXPECT_REVERT",
         "permissionedGamesTotal": 0,
-        "version": "1.0.0"
+        "proposerFromDGF": "UNRESOLVED",
+        "version": "1.0.0",
+        "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
@@ -573,6 +577,11 @@
         "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2": "Proxy",
         "eth:0xF4Ebf91489d508Ad5330a330c2d961F9aF6FA5B5": "DisputeGameFactory"
       },
+      "usedTypes": [
+        { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -775,7 +784,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 4850000,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0xe82bDAD39AEc07a7e0f8e004bc506c2Bb13DeA13",
+        "lastResolved": "eth:0x26e50EDE134736A508EBe9410714c0D6c11d3b3d",
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
         "OUTPUT_BLOCK_SPAN": 50,
@@ -1421,16 +1430,16 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
+    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge_soon": "0xb2902b94f11fe47993a13e604f0bfcdc4648d040e0409e6e5c24d0ae9a6ebf9e",
     "opstack/OptimismPortal2_soon": "0xf6734dbe323c5dbbc774eff181ffd1ab332f7ce3315bb86db8cb6179c940026b",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
+    "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
     "risc0/KailuaTreasury_soon": "0xf44268b8e01e5036fb2fc2a573c604cad73f80450b22966e227dc0f37bb903b6"
   },
-  "usedBlockNumbers": { "ethereum": 23997492 },
+  "usedBlockNumbers": { "ethereum": 24327726 },
   "permissionsConfigHash": "0xa936f68315d80f3176f8eb05b56de1fd9c084c5a67769c770d92a8a2b7c34a35"
 }

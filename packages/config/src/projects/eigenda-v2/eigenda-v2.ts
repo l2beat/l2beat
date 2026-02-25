@@ -67,7 +67,6 @@ export const eigendaV2: BaseProject = {
 
 EigenDA V2 introduces a more efficient architecture where the L2 sequencer acts as the relayer, eliminating the need for separate permissioned relayers:
 
-### Key Improvements
 - **Sequencer as Relayer**: The sequencer acts as the relayer, eliminating the need for separate permissioned relayers
 - **Direct Certificate Verification**: Multiple DACert Verifier contracts handle different certificate versions (V2, V3). These contracts read operator/state metadata via EigenDA and EigenLayer core contracts (incl. ServiceManager components) and verify signatures and stake thresholds.
 - **Version-Specific Verification**: Each certificate version has a corresponding verifier contract that validates the specific certificate format and cryptographic proofs
@@ -85,7 +84,7 @@ EigenDA V2 supports multiple certificate formats:
 4. **Onchain Verification**: The verifier contract's checkDACert function validates the certificate against operator signatures and stake thresholds
 
 ### Secure Dispersal Flow
-Based on the [EigenDA Integration Spec](https://layr-labs.github.io/eigenda/integration/spec/5-lifecycle-phases.html#secure-dispersal):
+Based on the EigenDA integration spec:
 
 1. EigenDA Client converts raw payload bytes into a blob
 2. Client fetches the appropriate EigenDACertVerifier contract address using the router

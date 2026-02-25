@@ -16,7 +16,14 @@ export const settlus: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
   additionalBadges: [BADGES.RaaS.Alchemy],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  celestiaDa: {
+    sinceBlock: 9779673,
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs=',
+  },
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   isPartOfSuperchain: false,
   display: {
     name: 'Settlus',
@@ -30,7 +37,10 @@ export const settlus: ScalingProject = opStackL2({
       explorers: ['https://mainnet.settlus.network/'],
       documentation: ['https://docs.settlus.org/'],
       repositories: ['https://github.com/settlus'],
-      socialMedia: ['https://x.com/Settlusofficial'],
+      socialMedia: [
+        'https://x.com/Settlusofficial',
+        'https://medium.com/@settlus_official',
+      ],
     },
   },
   chainConfig: {

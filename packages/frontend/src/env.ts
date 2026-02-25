@@ -32,13 +32,17 @@ const SERVER_CONFIG = {
     .string()
     .check((v) => !!new URL(v))
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
+  TOKENS_DATABASE_URL: z
+    .string()
+    .check((v) => !!new URL(v))
+    .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
   DATABASE_LOG_ENABLED: coerceBoolean.default(false),
+  TOKENS_DATABASE_LOG_ENABLED: coerceBoolean.default(false),
   DISABLE_CACHE: coerceBoolean.default(false),
   MOCK: coerceBoolean.default(false),
   REDIS_URL: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
-
   COOLIFY_URL: z.string().optional(),
   COOLIFY_RESOURCE_UUID: z.string().optional(),
 
@@ -58,6 +62,8 @@ const SERVER_CONFIG = {
     .unknown()
     .transform((v) => Number(v))
     .optional(),
+  INTEROP_DISABLED_CHAINS: stringArray.optional(),
+  INTEROP_UPCOMING_CHAINS: stringArray.optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -100,7 +106,9 @@ function getRawEnv(): Record<
   return {
     // Server
     DATABASE_URL: process.env.DATABASE_URL,
+    TOKENS_DATABASE_URL: process.env.TOKENS_DATABASE_URL,
     DATABASE_LOG_ENABLED: process.env.DATABASE_LOG_ENABLED,
+    TOKENS_DATABASE_LOG_ENABLED: process.env.TOKENS_DATABASE_LOG_ENABLED,
     DISABLE_CACHE: process.env.DISABLE_CACHE,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
@@ -116,6 +124,8 @@ function getRawEnv(): Record<
     ES_INDEX_PREFIX: process.env.ES_INDEX_PREFIX,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
+    INTEROP_DISABLED_CHAINS: process.env.INTEROP_DISABLED_CHAINS,
+    INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,

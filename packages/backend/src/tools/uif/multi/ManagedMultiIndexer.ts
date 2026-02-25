@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { assertUniqueConfigId, assertUniqueIndexerId } from '../ids'
@@ -19,9 +20,12 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   private readonly indexerId: string
   private serializeConfiguration: (value: T) => string
 
-  constructor(readonly options: ManagedMultiIndexerOptions<T>) {
-    const logger = options.logger.tag(options.tags ?? {})
-    super(logger, options.parents, options)
+  constructor(
+    readonly options: ManagedMultiIndexerOptions<T>,
+    logger: Logger,
+  ) {
+    const taggedLogger = logger.tag(options.tags ?? {})
+    super(taggedLogger, options.parents, options)
 
     assert(
       options.configurations.length > 0,

@@ -44,7 +44,7 @@ export function BridgesProjectPage({ projectEntry, ...props }: Props) {
           <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
 
           {!isNavigationEmpty && (
-            <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
+            <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 lg:hidden">
               <MobileSectionNavigation sections={navigationSections} />
             </div>
           )}

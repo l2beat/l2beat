@@ -1,4 +1,12 @@
+/**
+ * Hyperlane Warp Route (HWR) tokens, adapters and wrappers (OFT equivalent)
+ * also tracks xERC20 that send via Hyperlane AMB
+ * examples: HypERC20, HypXERC20, HypERC20Collateral, HypNative
+ * OMNICHAIN
+ */
+
 import { Address32 } from '@l2beat/shared-pure'
+import type { TokenMap } from '../engine/match/TokenMap'
 import {
   Dispatch,
   HYPERLANE_NETWORKS,
@@ -8,6 +16,7 @@ import {
   parseProcess,
   parseProcessId,
 } from './hyperlane'
+import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import {
   createEventParser,
   createInteropEventType,
@@ -19,12 +28,6 @@ import {
   type MatchResult,
   Result,
 } from './types'
-
-/**
- * This plugin tracks Hyperlane Warp Route tokens, adapters and wrappers (OFT equivalent).
- * examples: HypERC20, HypXERC20, HypERC20Collateral, HypNative(partial)
- * TODO: native token HWR only emit at the source
- */
 
 export const parseSentTransferRemote = createEventParser(
   'event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)',
@@ -38,8 +41,11 @@ export const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
-const parseDepositForBurn = createEventParser(
+const parseDepositForBurnCCTPv1 = createEventParser(
   'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)',
+)
+const parseDepositForBurnCCTPv2 = createEventParser(
+  'event DepositForBurn(address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller, uint256 maxFee, uint32 indexed minFinalityThreshold, bytes hookData)',
 )
 
 const HwrTransferSent = createInteropEventType<{
@@ -50,6 +56,7 @@ const HwrTransferSent = createInteropEventType<{
   amount: bigint
   tokenAddress: Address32
   cctp: boolean
+  burned: boolean
 }>('hyperlane-hwr.TransferSent')
 
 const HwrTransferReceived = createInteropEventType<{
@@ -59,6 +66,7 @@ const HwrTransferReceived = createInteropEventType<{
   recipient: Address32
   amount: bigint
   tokenAddress: Address32
+  minted: boolean
 }>('hyperlane-hwr.TransferReceived')
 
 export class HyperlaneHwrPlugin implements InteropPlugin {
@@ -86,7 +94,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           const dispatchId = nextLog && parseDispatchId(nextLog, null)
           return dispatchId?.messageId
         },
-      )?.parsed
+      )
       if (!messageId) return
 
       const $dstChain = findChain(
@@ -95,36 +103,37 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(sentTransferRemote.destination),
       )
 
-      const transferMatch = findParsedAround(
-        input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== sentTransferRemote.amount) return
-          return Address32.from(log.address)
-        },
-      )
-      const srcTokenAddress = transferMatch?.parsed
-
       const depositForBurn = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => parseDepositForBurn(log, null),
+        (log, _index) => {
+          return (
+            parseDepositForBurnCCTPv1(log, null) ||
+            parseDepositForBurnCCTPv2(log, null)
+          )
+        },
       )
+      const transferMatch = findBestTransferLog(
+        input.txLogs,
+        depositForBurn?.amount ?? sentTransferRemote.amount,
+        // biome-ignore lint/style/noNonNullAssertion: It's there
+        input.log.logIndex!,
+      )
+      const amountWhenNoTransfer = input.tx.value ?? 0n
       if (depositForBurn) {
         return [
           HwrTransferSent.create(input, {
             messageId,
             $dstChain,
-            amount: depositForBurn.parsed.amount,
+            amount: depositForBurn.amount,
             destination: Number(sentTransferRemote.destination),
-            recipient: Address32.from(depositForBurn.parsed.mintRecipient),
-            tokenAddress: srcTokenAddress ?? Address32.NATIVE,
+            recipient: Address32.from(depositForBurn.mintRecipient),
+            tokenAddress:
+              transferMatch.transfer?.logAddress ??
+              Address32.from(depositForBurn.burnToken),
             cctp: true,
+            burned: true,
           }),
         ]
       }
@@ -135,9 +144,16 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           $dstChain,
           destination: Number(sentTransferRemote.destination),
           recipient: Address32.from(sentTransferRemote.recipient),
-          amount: sentTransferRemote.amount,
-          tokenAddress: srcTokenAddress ?? Address32.NATIVE,
+          amount: pickTransferAmount(
+            sentTransferRemote.amount,
+            transferMatch,
+            amountWhenNoTransfer,
+          ),
+          tokenAddress: transferMatch.transfer?.logAddress ?? Address32.NATIVE,
           cctp: false,
+          burned: transferMatch.transfer
+            ? transferMatch.transfer.to === Address32.ZERO
+            : false,
         }),
       ]
     }
@@ -160,7 +176,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           const processId = nextLog && parseProcessId(nextLog, null)
           return processId?.messageId
         },
-      )?.parsed
+      )
       if (!messageId) return
 
       const $srcChain = findChain(
@@ -169,19 +185,19 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
         Number(receivedTransferRemote.origin),
       )
 
-      const transferMatch = findParsedAround(
+      const transferMatch = findBestTransferLog(
         input.txLogs,
+        receivedTransferRemote.amount,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== receivedTransferRemote.amount) return
-          return Address32.from(log.address)
-        },
       )
-      const dstTokenAddress = transferMatch?.parsed
+      const amountWhenNoTransfer = input.tx.value ?? 0n
+      const dstTokenData = transferMatch.transfer
+        ? {
+            address: transferMatch.transfer.logAddress,
+            minted: transferMatch.transfer.from === Address32.ZERO,
+          }
+        : undefined
 
       return [
         HwrTransferReceived.create(input, {
@@ -189,15 +205,24 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
           $srcChain,
           origin: Number(receivedTransferRemote.origin),
           recipient: Address32.from(receivedTransferRemote.recipient),
-          amount: receivedTransferRemote.amount,
-          tokenAddress: dstTokenAddress ?? Address32.NATIVE,
+          amount: pickTransferAmount(
+            receivedTransferRemote.amount,
+            transferMatch,
+            amountWhenNoTransfer,
+          ),
+          tokenAddress: dstTokenData?.address ?? Address32.NATIVE,
+          minted: dstTokenData?.minted ?? false,
         }),
       ]
     }
   }
 
   matchTypes = [HwrTransferReceived]
-  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+  match(
+    event: InteropEvent,
+    db: InteropEventDb,
+    tokenMap: TokenMap,
+  ): MatchResult | undefined {
     if (!HwrTransferReceived.checkType(event)) return
 
     const hwrSent = db.find(HwrTransferSent, {
@@ -219,7 +244,7 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       return
     }
 
-    if (hwrSent.args.cctp && event.args.tokenAddress === Address32.NATIVE) {
+    if (hwrSent.args.cctp) {
       return [
         Result.Message('hyperlane.Message', {
           app: 'cctp',
@@ -230,6 +255,20 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       ]
     }
 
+    const srcTokenAddress = hwrSent.args.tokenAddress
+    const dstTokenAddress = event.args.tokenAddress
+    const srcWasBurned = hwrSent.args.burned
+    const dstWasMinted = event.args.minted
+    const bridgeType = getBridgeType({
+      srcTokenAddress,
+      dstTokenAddress,
+      srcWasBurned,
+      dstWasMinted,
+      srcChain: hwrSent.ctx.chain,
+      dstChain: event.ctx.chain,
+      tokenMap,
+    })
+
     return [
       Result.Message('hyperlane.Message', {
         app: 'hwr',
@@ -238,11 +277,14 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
       }),
       Result.Transfer('hyperlaneHwr.Transfer', {
         srcEvent: hwrSent,
-        srcTokenAddress: hwrSent.args.tokenAddress,
+        srcTokenAddress,
         srcAmount: hwrSent.args.amount,
         dstEvent: event,
-        dstTokenAddress: event.args.tokenAddress, // TODO: not necessarily the token address, can be an adapter or wrapper
+        dstTokenAddress,
         dstAmount: event.args.amount,
+        srcWasBurned,
+        dstWasMinted,
+        bridgeType,
       }),
     ]
   }
@@ -251,23 +293,94 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
 export function findParsedAround<T>(
   logs: LogToCapture['txLogs'],
   startLogIndex: number,
-  parse: (log: LogToCapture['txLogs'][number], index: number) => T | undefined,
-): { parsed: T; index: number } | undefined {
+  transform: (
+    log: LogToCapture['txLogs'][number],
+    index: number,
+  ) => T | undefined,
+): T | undefined {
   const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
   if (startPos === -1) return
 
   for (let offset = 0; offset < logs.length; offset++) {
     const forward = startPos + offset
     if (forward < logs.length) {
-      const parsed = parse(logs[forward], forward)
-      if (parsed) return { parsed, index: forward }
+      const transformed = transform(logs[forward], forward)
+      if (transformed) return transformed
     }
 
     if (offset === 0) continue
     const backward = startPos - offset
     if (backward >= 0) {
-      const parsed = parse(logs[backward], backward)
-      if (parsed) return { parsed, index: backward }
+      const transformed = transform(logs[backward], backward)
+      if (transformed) return transformed
     }
   }
+}
+
+export type ParsedTransferLog = {
+  logAddress: Address32
+  from: Address32
+  to: Address32
+  value: bigint
+}
+
+// meson has a different version of this that normalizes amounts (for unknown decimal situations)
+export function findBestTransferLog(
+  logs: LogToCapture['txLogs'],
+  targetAmount: bigint,
+  startLogIndex: number,
+): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
+  let closestMatch: ParsedTransferLog | undefined
+  let closestDelta: bigint | undefined
+  let closestDistance: number | undefined
+  let hasTransfer = false
+
+  for (const log of logs) {
+    const transfer = parseTransfer(log, null)
+    if (!transfer) continue
+
+    hasTransfer = true
+    const parsed: ParsedTransferLog = {
+      logAddress: Address32.from(log.address),
+      from: Address32.from(transfer.from),
+      to: Address32.from(transfer.to),
+      value: transfer.value,
+    }
+
+    const delta = absDiff(transfer.value, targetAmount)
+    const distance =
+      log.logIndex === null
+        ? Number.POSITIVE_INFINITY
+        : Math.abs(log.logIndex - startLogIndex)
+
+    if (
+      closestDelta === undefined ||
+      delta < closestDelta ||
+      (delta === closestDelta &&
+        (closestDistance === undefined || distance < closestDistance))
+    ) {
+      closestDelta = delta
+      closestDistance = distance
+      closestMatch = parsed
+    }
+  }
+
+  return { transfer: closestMatch, hasTransfer }
+}
+
+function absDiff(value: bigint, target: bigint): bigint {
+  return value >= target ? value - target : target - value
+}
+
+function pickTransferAmount(
+  targetAmount: bigint,
+  transferMatch: { transfer?: ParsedTransferLog; hasTransfer: boolean },
+  amountWhenNoTransfer: bigint,
+): bigint {
+  if (!transferMatch.hasTransfer) return amountWhenNoTransfer
+  const transferValue = transferMatch.transfer?.value
+  if (transferValue !== undefined && transferValue !== targetAmount) {
+    return transferValue
+  }
+  return targetAmount
 }

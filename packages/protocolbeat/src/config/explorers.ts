@@ -11,7 +11,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   base: 'https://basescan.org/address',
   zkevm: 'https://zkevm.polygonscan.com/address',
   gno: 'https://gnosisscan.io/address',
-  zksync: 'https://era.zksync.network/address',
+  zksync: 'https://explorer.zksync.io/address',
   sep: 'https://sepolia.etherscan.io/address',
   scr: 'https://scrollscan.com/address',
   mantle: 'https://explorer.mantle.xyz/address',

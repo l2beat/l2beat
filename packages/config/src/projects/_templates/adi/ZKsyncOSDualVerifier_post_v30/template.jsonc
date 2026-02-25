@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A router contract for verifiers. Routes verification requests to THE PLONK VERIFIER ONLY depending on the supplied proof version.",
+  "fields": {
+    "verificationKeyHash": {
+      "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
+    },
+    "ctmOwner": {
+      "description": "Contract owner that can add and remove verifiers.",
+      "severity": "HIGH"
+    },
+    "fflonkVerifier0": {
+      "description": "Fflonk verifier with version 0. Verifiers are read from mapping so they are not displayed in an array.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": [2, 0],
+        "returnType": "address"
+      }
+    },
+    "fflonkVerifier1": {
+      "description": "Fflonk verifier with version 1. !MUST BE ZERO, IF NON-ZERO THEN ADD fflonkVerifier2 IN CONFIG! Verifiers are read from mapping so they are not displayed in an array. This value serves as an indicator of a new verifier.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": [2, 1],
+        "returnType": "address"
+      }
+    },
+    "plonkVerifier0": {
+      "description": "Plonk verifier with version 0. Verifiers are read from mapping so they are not displayed in an array.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": [3, 0],
+        "returnType": "address"
+      }
+    },
+    "plonkVerifier1": {
+      "description": "Plonk verifier with version 1. This value serves as an indicator of a new verifier. !MUST BE ZERO, IF NON-ZERO THEN ADD plonkVerifier2 IN CONFIG! Verifiers are read from mapping so they are not displayed in an array.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": [3, 1],
+        "returnType": "address"
+      }
+    }
+  }
+}

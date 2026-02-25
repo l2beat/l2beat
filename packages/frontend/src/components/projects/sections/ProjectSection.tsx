@@ -25,7 +25,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       id={props.id}
       data-role="nav-section"
       className={cn(
-        'scroll-mt-[38px] px-4 py-8 md:mt-4 md:scroll-mt-4 md:p-6',
+        'scroll-mt-[38px] px-4 py-8 md:mt-4 md:scroll-mt-14 md:p-6 lg:scroll-mt-4',
         'max-md:border-divider max-md:border-b max-md:last:border-none',
         'md:rounded-lg',
         !props.nested &&

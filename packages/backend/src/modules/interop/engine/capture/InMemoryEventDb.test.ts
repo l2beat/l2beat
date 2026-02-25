@@ -32,6 +32,55 @@ describe(InMemoryEventDb.name, () => {
     expect(db.find(EventA, { a: 'four' })).toEqual(undefined)
   })
 
+  it('can query events at a logIndex offset in the same tx', () => {
+    const db = new InMemoryEventDb()
+    const baseCtx = { chain: 'chain-a', txHash: '0xabc', timestamp: 0 }
+    const baseEvent = {
+      ...EventA.mock({ a: 'base' }),
+      ctx: { ...baseCtx, logIndex: 10 },
+    }
+    const beforeEvent = {
+      ...EventA.mock({ a: 'before' }),
+      ctx: { ...baseCtx, logIndex: 8 },
+    }
+    const afterEvent = {
+      ...EventA.mock({ a: 'after' }),
+      ctx: { ...baseCtx, logIndex: 12 },
+    }
+    const otherTxEvent = {
+      ...EventA.mock({ a: 'other-tx' }),
+      ctx: { ...baseCtx, txHash: '0xdef', logIndex: 12 },
+    }
+    const otherChainEvent = {
+      ...EventA.mock({ a: 'other-chain' }),
+      ctx: { ...baseCtx, chain: 'chain-b', logIndex: 12 },
+    }
+
+    ;[
+      baseEvent,
+      beforeEvent,
+      afterEvent,
+      otherTxEvent,
+      otherChainEvent,
+    ].forEach((e) => db.addEvent(e))
+
+    expect(
+      db.find(EventA, {
+        sameTxAtOffset: { event: baseEvent, offset: 2 },
+      }),
+    ).toEqual(afterEvent)
+    expect(
+      db.find(EventA, {
+        sameTxAtOffset: { event: baseEvent, offset: -2 },
+      }),
+    ).toEqual(beforeEvent)
+    expect(
+      db.find(EventA, {
+        sameTxAtOffset: { event: baseEvent, offset: 1 },
+      }),
+    ).toEqual(undefined)
+  })
+
   it('can find a new event after the first query', () => {
     // This is a test to prevent a bug that occured before.
     // A dynamic index (called Lookup) was constructed during

@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Simple registry for allowed DA validators for different data availability modes. Scheme 3 is used by default RollupL1DAValidator, the commitment includes EIP-4844 blobs data. Scheme 4 is used only for ZKsyncOS, it is keccak of blob versioned hashes filled with pubdata.",
+  "category": "shared",
+  "ignoreRelatives": ["l1DAValidators"],
+  "fields": {
+    "l1DAValidators": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["l1DAValidator", "l2DACommitmentScheme", "status"],
+        "add": { "event": "DAPairUpdated", "where": ["=", "#status", true] },
+        "remove": { "event": "DAPairUpdated", "where": ["=", "#status", false] }
+      }
+    },
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+        }
+      ]
+    }
+  }
+}

@@ -2,7 +2,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '../../utils/Manifest'
 import { getEthereumConnectData } from './ethereum-connect/getEthereumConnectData'
-import { getGovernanceData } from './GetGovernanceData'
+import { getGovernanceData } from './getGovernanceData'
 
 export function createGovernanceRouter(
   manifest: Manifest,

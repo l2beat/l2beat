@@ -1771,6 +1771,25 @@
     },
     {
       "mode": "auto",
+      "id": "pulseChain-renBTC",
+      "priceId": "renbtc",
+      "symbol": "renBTC",
+      "name": "renBTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11370/large/Bitcoin.jpg?1696511287",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
+        "chain": "ethereum",
+        "escrowAddress": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+        "decimals": 8,
+        "sinceTimestamp": 1684137600
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "pulseChain-rETH",
       "priceId": "rocket-pool-eth",
       "symbol": "rETH",
@@ -1817,6 +1836,25 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
+        "chain": "ethereum",
+        "escrowAddress": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+        "decimals": 18,
+        "sinceTimestamp": 1684137600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "pulseChain-RSR",
+      "priceId": "reserve-rights-token",
+      "symbol": "RSR",
+      "name": "Reserve Rights",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8365/large/rsr.png?1696508558",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x320623b8E4fF03373931769A31Fc52A4E78B5d70",
         "chain": "ethereum",
         "escrowAddress": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
         "decimals": 18,
@@ -1916,6 +1954,25 @@
         "escrowAddress": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
         "decimals": 18,
         "sinceTimestamp": 1684137600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "pulseChain-SKY",
+      "priceId": "sky",
+      "symbol": "SKY",
+      "name": "SKY Governance Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39925/large/sky.jpg?1724827980",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x56072C95FAA701256059aa122697B133aDEd9279",
+        "chain": "ethereum",
+        "escrowAddress": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+        "decimals": 18,
+        "sinceTimestamp": 1727136000
       },
       "category": "other",
       "source": "canonical",
@@ -2070,6 +2127,25 @@
         "sinceTimestamp": 1684137600
       },
       "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "pulseChain-sUSDS",
+      "priceId": "susds",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "chain": "ethereum",
+        "escrowAddress": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+        "decimals": 18,
+        "sinceTimestamp": 1734048000
+      },
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },

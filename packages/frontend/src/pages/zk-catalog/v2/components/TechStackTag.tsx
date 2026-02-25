@@ -26,10 +26,15 @@ export function TechStackTag({
             className,
           )}
         >
-          {tag.type}: {tag.name}
+          {tag.name}
         </div>
       </TooltipTrigger>
-      <TooltipContent>{tag.description}</TooltipContent>
+      <TooltipContent>
+        <span className="font-bold text-label-value-13">
+          {tag.type}: {tag.name}
+        </span>
+        <p>{tag.description}</p>
+      </TooltipContent>
     </Tooltip>
   )
 }

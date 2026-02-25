@@ -62,7 +62,7 @@ export async function generatePlan(
         commands = await planUpdateAbstractToken(db, intent)
         break
       case 'DeleteAbstractTokenIntent':
-        commands = planDeleteAbstractToken(db, intent)
+        commands = planDeleteAbstractToken(intent)
         break
       case 'AddDeployedTokenIntent':
         commands = await planAddDeployedToken(db, intent)
@@ -145,10 +145,7 @@ async function planUpdateAbstractToken(
   ]
 }
 
-function planDeleteAbstractToken(
-  db: TokenDatabase,
-  intent: DeleteAbstractTokenIntent,
-): Command[] {
+function planDeleteAbstractToken(intent: DeleteAbstractTokenIntent): Command[] {
   return [
     {
       type: 'DeleteAbstractTokenCommand',

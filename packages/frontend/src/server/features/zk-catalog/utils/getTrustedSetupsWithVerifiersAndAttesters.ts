@@ -8,10 +8,11 @@ import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
-import { getProjectIcon } from '../../utils/getProjectIcon'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
+import { getZkCatalogLogo } from '../getZkCatalogLogo'
 import { tvsComparatorWithDaBridges } from './tvsComparatorWithDaBridges'
 
 export type TrustedSetupsByProofSystem = Record<
@@ -127,10 +128,14 @@ export function getVerifiersWithAttesters(
     attesters: uniqBy(
       verifiersForStatus.flatMap((v) => v.attesters).filter(notUndefined),
       (a) => a.id,
-    ).map((a) => ({
-      ...a,
-      icon: getProjectIcon(a.id),
-    })),
+    ).map((a) => {
+      const icon = getZkCatalogLogo(a.id)
+      return {
+        ...a,
+        icon: icon.light,
+        iconDark: icon.dark,
+      }
+    }),
   }
 }
 
@@ -162,7 +167,7 @@ export function getProjectsUsedIn(
         id: project.id,
         name: project.name,
         slug: project.slug,
-        icon: getProjectIcon(project.slug),
+        icon: manifest.getUrl(`/icons/${project.slug}.png`),
         url,
       }
     })

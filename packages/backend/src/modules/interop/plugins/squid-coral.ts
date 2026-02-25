@@ -59,11 +59,15 @@ const parseOrderFilled = createEventParser(
   'event OrderFilled(bytes32 indexed orderHash, (address fromAddress, address toAddress, address filler, address fromToken, address toToken, uint256 expiry, uint256 fromAmount, uint256 fillAmount, uint256 feeRate, uint256 fromChain, uint256 toChain, bytes32 postHookHash) order)',
 )
 
+// https://docs.squidrouter.com/additional-resources/contracts
 export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '1', chain: 'ethereum' },
   { chainId: '10', chain: 'optimism' },
   { chainId: '42161', chain: 'arbitrum' },
   { chainId: '8453', chain: 'base' },
+  { chainId: '137', chain: 'polygonpos' },
+  // no zksync2, apechain, abstract supported
+  { chainId: '56', chain: 'bsc' },
 ])
 
 export const LogOrderCreated = createInteropEventType<{
@@ -73,7 +77,7 @@ export const LogOrderCreated = createInteropEventType<{
   fromAmount: bigint
   fillAmount: bigint
   $dstChain: string
-}>('squid-coral.LogOrderCreated')
+}>('squid-coral.LogOrderCreated', { direction: 'outgoing' })
 
 export const LogOrderFilled = createInteropEventType<{
   orderHash: `0x${string}`
@@ -82,7 +86,7 @@ export const LogOrderFilled = createInteropEventType<{
   fromAmount: bigint
   fillAmount: bigint
   $srcChain: string
-}>('squid-coral.LogOrderFilled')
+}>('squid-coral.LogOrderFilled', { direction: 'incoming' })
 
 export class SquidCoralPlugin implements InteropPlugin {
   readonly name = 'squid-coral'
@@ -171,9 +175,11 @@ export class SquidCoralPlugin implements InteropPlugin {
         srcEvent: orderCreated,
         srcTokenAddress: orderCreated.args.fromToken,
         srcAmount: orderCreated.args.fromAmount,
+        srcWasBurned: false,
         dstEvent: orderFilled,
         dstTokenAddress: orderFilled.args.toToken,
         dstAmount: orderFilled.args.fillAmount,
+        dstWasMinted: false,
       }),
     ]
   }

@@ -752,6 +752,72 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-AXS",
+      "priceId": "axie-infinity",
+      "symbol": "AXS",
+      "name": "Axie Infinity Shard",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1696512817",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1623867835
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1623784100
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-BabyDoge",
+      "priceId": "baby-doge-coin",
+      "symbol": "BabyDoge",
+      "name": "Baby Doge Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16125/large/babydoge.jpg?1696515731",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 9,
+            "sinceTimestamp": 1636297637
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 9,
+            "sinceTimestamp": 1636297637
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-BADGER",
       "priceId": "badger-dao",
       "symbol": "BADGER",
@@ -1825,29 +1891,44 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DAI-2",
+      "id": "arbitrum-DAI",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
-        "decimals": 18,
-        "sinceTimestamp": 1632133470
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1623867835
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1623784100
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+            "decimals": 18,
+            "sinceTimestamp": 1632133470
           }
         ]
-      }
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -2427,6 +2508,39 @@
             "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
             "decimals": 18,
             "sinceTimestamp": 1727740800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-EKUBO",
+      "priceId": "ekubo-protocol",
+      "symbol": "EKUBO",
+      "name": "Ekubo Protocol",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37715/large/135474885.png?1715330450",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1715731200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1715731200
           }
         ]
       },
@@ -3338,6 +3452,41 @@
             "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
             "decimals": 18,
             "sinceTimestamp": 1692316800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1689552000,
+            "untilTimestamp": 1742428800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1689552000,
+            "untilTimestamp": 1742428800
           }
         ]
       },
@@ -4813,7 +4962,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LPT-1",
+      "id": "arbitrum-LPT",
       "priceId": "livepeer",
       "symbol": "LPT",
       "name": "Livepeer Token",
@@ -4837,38 +4986,20 @@
             "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
             "decimals": 18,
             "sinceTimestamp": 1623784100
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239",
+            "chain": "ethereum",
+            "escrowAddress": "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
+            "decimals": 18,
+            "sinceTimestamp": 1644777090
           }
         ]
       },
       "category": "other",
       "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-LPT-2",
-      "priceId": "livepeer",
-      "symbol": "LPT",
-      "name": "Livepeer Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/7137/large/logo-circle-green.png?1696507437",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239",
-        "chain": "ethereum",
-        "escrowAddress": "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
-        "decimals": 18,
-        "sinceTimestamp": 1644777090
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
     },
     {
       "mode": "auto",
@@ -6269,6 +6400,24 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-PGOLD",
+      "priceId": "pleasing-gold",
+      "symbol": "PGOLD",
+      "name": "Pleasing Gold",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70395/large/%E9%BB%84%E9%87%91.png?1761795141",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1761782400
+      },
+      "category": "rwaPublic",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -8085,7 +8234,7 @@
     },
     {
       "mode": "custom",
-      "id": "arbitrum-sUSDS-1",
+      "id": "arbitrum-sUSDS",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
@@ -8155,34 +8304,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-sUSDS-2",
-      "priceId": "susds",
-      "symbol": "sUSDS",
-      "name": "Savings USDS",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-        "chain": "ethereum",
-        "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
-        "decimals": 18,
-        "sinceTimestamp": 1734048000
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
     },
     {
       "mode": "auto",
@@ -8696,6 +8819,41 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1706918400,
+            "untilTimestamp": 1742169600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1706918400,
+            "untilTimestamp": 1742169600
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-TRIBE",
       "priceId": "tribe-2",
       "symbol": "TRIBE",
@@ -8791,6 +8949,26 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-UMAMI",
+      "priceId": "umami-finance",
+      "symbol": "UMAMI",
+      "name": "Umami",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21159/large/_UMAMI-200px.jpg?1696520536",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "umami-finance",
+        "decimals": 9,
+        "sinceTimestamp": 1638403200,
+        "untilTimestamp": 1731196800,
+        "address": "0x1622bF67e6e5747b81866fE0b85178a93C7F86e3",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -9103,7 +9281,7 @@
     },
     {
       "mode": "custom",
-      "id": "arbitrum-USDS-2",
+      "id": "arbitrum-USDS",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",
@@ -9173,15 +9351,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -9822,29 +9993,44 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-wstETH-2",
+      "id": "arbitrum-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
-        "decimals": 18,
-        "sinceTimestamp": 1659608791
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1633564800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1633564800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
+            "decimals": 18,
+            "sinceTimestamp": 1659608791
           }
         ]
-      }
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",

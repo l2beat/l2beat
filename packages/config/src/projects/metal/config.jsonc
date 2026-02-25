@@ -5,12 +5,10 @@
   "initialAddresses": ["eth:0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA"],
   "overrides": {
     "eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E": {
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
-    },
-    "eth:0x8d807C4030F9CE5BBADDbC5F06B1C3628A5e8671": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "fields": {
-        "proposer": { "permissions": [{ "type": "propose" }] },
-        "challenger": { "permissions": [{ "type": "challenge" }] }
+        "proposerFromDGF": { "permissions": [{ "type": "propose" }] },
+        "challengerFromDGF": { "permissions": [{ "type": "challenge" }] }
       }
     }
   }

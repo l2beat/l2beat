@@ -1,7 +1,7 @@
 import type { Project, ProjectDaTrackingConfig } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 
 export function getDaLayersInfo(
   configs: ProjectDaTrackingConfig[],
@@ -53,7 +53,7 @@ function getDaLayer(
 
   return {
     name: daLayer.name,
-    logo: getProjectIcon(daLayer.slug),
+    logo: manifest.getUrl(`/icons/${daLayer.slug}.png`),
     href: `/data-availability/projects/${daLayer.slug}/${daLayer.slug === 'ethereum' ? 'ethereum' : 'no-bridge'}`,
   }
 }

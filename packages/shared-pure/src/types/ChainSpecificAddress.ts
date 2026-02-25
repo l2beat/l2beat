@@ -13,6 +13,7 @@ import { EthereumAddress } from './EthereumAddress.js'
 // list of all chains with their short names. But currently I don't know how to achieve that.
 const SHORT_TO_LONG_CHAIN_NAMES = {
   eth: 'ethereum',
+  abstract: 'abstract',
   arb1: 'arbitrum',
   'arb-nova': 'nova',
   oeth: 'optimism',
@@ -40,6 +41,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   everclear: 'everclear',
   zircuit: 'zircuit',
   katana: 'katana',
+  forknet: 'forknet',
   taiko: 'taiko',
   facet: 'facet',
   gateway: 'gateway',
@@ -52,6 +54,8 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   soneium: 'soneium',
   wc: 'worldchain',
   'hype-evm': 'hyperevm',
+  megaeth: 'megaeth',
+  polygon: 'polygon',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(

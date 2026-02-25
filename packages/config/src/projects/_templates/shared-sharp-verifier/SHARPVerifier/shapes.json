@@ -14,5 +14,11 @@
     "address": "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066",
     "chain": "ethereum",
     "blockNumber": 23968827
+  },
+  "SHARPVerifier_2026_13": {
+    "hash": "0xb9dd070b540ba3bad7b65f9cd4ed80b62e8cf034bd4f4acdf0373e4af46068f3",
+    "address": "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe",
+    "chain": "ethereum",
+    "blockNumber": 24368772
   }
 }

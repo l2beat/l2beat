@@ -4,8 +4,8 @@ import {
   type ProjectId,
 } from '@l2beat/shared-pure'
 import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 
 export interface ContractUtils {
   getChainName(chain: string): string
@@ -86,7 +86,7 @@ async function getContractUsageMap() {
       id: project.id,
       name: project.name,
       slug: project.slug,
-      icon: getProjectIcon(project.slug),
+      icon: manifest.getUrl(`/icons/${project.slug}.png`),
       url,
     }
 

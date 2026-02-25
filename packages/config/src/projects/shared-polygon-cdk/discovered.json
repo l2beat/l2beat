@@ -1,6 +1,6 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1765280943,
+  "timestamp": 1770040275,
   "configHash": "0x934720a7c40bc5be49c63e385d21b232a3346e4be45c3c7e8f662422a67783c9",
   "entries": [
     {
@@ -406,7 +406,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 95,
+        "nonce": 96,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -460,7 +460,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0xc30da45431d7b57d7a1b49dd8f987b4affea8d1a061184afd56413e295f9feb7",
+        "getRoot": "0x74bdcea6a66d0db3562fac56518a96335b7d281fd803665dc6397cf4087133d8",
         "getWrappedTokenBridgeImplementation": "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -719,10 +719,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xcf9153c0e2d78892de71e048775120ce0d92794459f50442974cd95182efec32",
+        "getRollupExitRoot": "0x445ac3caa3f3465a474d088a40bf4328a670f01ee9048b0e6f67979bb9835ceb",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1765279847,
+        "lastAggregationTimestamp": 1770040259,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [
           14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1
@@ -1081,8 +1081,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 843619,
-        "totalVerifiedBatches": 843154,
+        "totalSequencedBatches": 855671,
+        "totalVerifiedBatches": 855199,
         "trustedAggregatorAC": [
           "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
           "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
@@ -1163,9 +1163,9 @@
         ],
         "$upgradeCount": 5,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 81615,
+        "depositCount": 87398,
         "GER_VERSION": "v1.0.0",
-        "getRoot": "0x999974da86bea185c803d6bcff7c5ce703a1855901ee61670b4a44e548bda891",
+        "getRoot": "0xa91cba2b64689c66dd9c6f0d02494cebdc73a17ee40e470f2ae8b852bfa5cc54",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "version": "v1.0.0"
       },
@@ -1176,22 +1176,12 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1237,18 +1227,16 @@
         "$members": [
           "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
           "eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
-          "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
           "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
           "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
-          "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
-          "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
+          "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6"
         ],
         "$threshold": 3,
         "domainSeparator": "0x771bc24f4d160e0eb868dd1295227792c9121e52ca89c5940d820985422c484e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 25,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2597,6 +2585,6 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23975025 },
-  "permissionsConfigHash": "0xace2d8b8f73deb05db8db2e0c8347706b0d2c0109310f061d0da28ebfb0bb785"
+  "usedBlockNumbers": { "ethereum": 24369585 },
+  "permissionsConfigHash": "0xbbc66769a0f91bba0f9f62c8a03cdf7718205e4b61a5f668b9d68d300b561f52"
 }

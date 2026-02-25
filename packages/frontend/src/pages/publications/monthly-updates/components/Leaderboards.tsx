@@ -77,7 +77,7 @@ function LeaderboardTvsItem({
         className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
         href={`/scaling/projects/${item.slug}`}
       >
-        <img src={`/icons/${item.slug}.png`} className="size-5" />
+        <img src={item.iconUrl} className="size-5" />
         <span className="font-bold text-xs">{item.name}</span>
       </a>
       <PercentChange value={item.change} textClassName="font-semibold" />
@@ -99,7 +99,7 @@ function LeaderboardActivityItem({
         className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
         href={`/scaling/projects/${item.slug}`}
       >
-        <img src={`/icons/${item.slug}.png`} className="size-5" />
+        <img src={item.iconUrl} className="size-5" />
         <span className="font-bold text-xs">{item.name}</span>
       </a>
       <PercentChange value={item.change} textClassName="font-semibold" />

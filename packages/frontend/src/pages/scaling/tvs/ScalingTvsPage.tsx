@@ -11,6 +11,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ScalingTvsTabs } from '~/pages/scaling/tvs/components/ScalingTvsTabs'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
+import { ScalingTvsTimeRangeContextProvider } from './components/ScalingTvsTimeRangeContext'
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingTvsEntry>
@@ -36,7 +37,9 @@ export function ScalingTvsPage({
                 excludeRwaRestrictedTokens: true,
               }}
             >
-              <ScalingTvsTabs {...entries} milestones={milestones} />
+              <ScalingTvsTimeRangeContextProvider>
+                <ScalingTvsTabs {...entries} milestones={milestones} />
+              </ScalingTvsTimeRangeContextProvider>
             </TvsDisplayControlsContextProvider>
           </TableFilterContextProvider>
         </SideNavLayout>

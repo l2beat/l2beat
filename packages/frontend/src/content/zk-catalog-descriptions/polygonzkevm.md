@@ -4,4 +4,4 @@ The protocol makes use of recursive proof aggregation. Extensive documentation c
 
 The final proof is wrapped into a fflonk proof. The CRS used is the powersOfTau28_hez_final that can be found [here](https://github.com/iden3/snarkjs/blob/master/README.md). The instructions to regenerate the verification keys can be found [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/verifyMainnetDeployment/verifyMainnetProofVerifier.md).
 
-The differences between the zkEVM and the EVM are listed [here](https://docs.polygon.technology/zkEVM/architecture/protocol/etrog-upgrade/?h=etrog#zkevm-is-almost-type-2). The source code of the zkEVM can be found [here](https://github.com/0xPolygonHermez/zkevm-rom).
+The differences between the zkEVM and the EVM are listed [here](https://docs.polygon.technology/tools/zkevm/architecture/protocol/etrog-upgrade/). The source code of the zkEVM can be found [here](https://github.com/0xPolygonHermez/zkevm-rom).

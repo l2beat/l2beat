@@ -23,7 +23,7 @@ describe(DaBeatPricesIndexer.name, () => {
         ],
       })
 
-      expect(() => new DaBeatPricesIndexer(deps)).toThrow(
+      expect(() => new DaBeatPricesIndexer(deps, Logger.SILENT)).toThrow(
         'This indexer should take only one configuration',
       )
     })
@@ -51,7 +51,7 @@ describe(DaBeatPricesIndexer.name, () => {
         currentPriceRepository,
       })
 
-      const indexer = new DaBeatPricesIndexer(deps)
+      const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
       const updateFn = await indexer.multiUpdate(100, 200, [configuration])
       const result = await updateFn()
@@ -87,7 +87,7 @@ describe(DaBeatPricesIndexer.name, () => {
         currentPriceRepository,
       })
 
-      const indexer = new DaBeatPricesIndexer(deps)
+      const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
       const updateFn = await indexer.multiUpdate(100, 200, [configuration])
       const result = await updateFn()
@@ -113,7 +113,7 @@ describe(DaBeatPricesIndexer.name, () => {
         priceProvider,
       })
 
-      const indexer = new DaBeatPricesIndexer(deps)
+      const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
       await expect(
         indexer.multiUpdate(100, 200, [configuration]),
@@ -133,7 +133,7 @@ describe(DaBeatPricesIndexer.name, () => {
         currentPriceRepository,
       })
 
-      const indexer = new DaBeatPricesIndexer(deps)
+      const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
       await indexer.removeData([{ id: 'config1', from: 100, to: 200 }])
 
@@ -147,7 +147,7 @@ describe(DaBeatPricesIndexer.name, () => {
         configurations: [mockConfiguration(['ethereum'])],
       })
 
-      const indexer = new DaBeatPricesIndexer(deps)
+      const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
       await expect(
         indexer.removeData([
@@ -181,7 +181,6 @@ function mockIndexerDeps(options: MockIndexerDepsOptions = {}): Omit<
         options.currentPriceRepository ??
         mockObject<Database['currentPrice']>(),
     }),
-    logger: Logger.SILENT,
     parents: [],
     indexerService: mockObject<IndexerService>(),
   }

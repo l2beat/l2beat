@@ -1,0 +1,105 @@
+import times from 'lodash/times'
+import { useMemo, useRef } from 'react'
+import { Skeleton } from '~/components/core/Skeleton'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { useResizeObserver } from '~/hooks/useResizeObserver'
+import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import type { InteropProtocolData } from '~/server/features/scaling/interop/utils/getTopProtocols'
+import { BetweenChainsInfo } from '../../BetweenChainsInfo'
+import { TopProtocolsByTransfersChart } from './TopProtocolsByTransfersChart'
+import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
+import { useProtocolColorMap } from './useProtocolColorMap'
+import { getProtocolsDataWithOthers } from './utils/getProtocolsDataWithOthers'
+
+export type DisplayProtocol = InteropProtocolData & {
+  color: string
+  othersCount?: number
+}
+
+type TopProtocolsWidgetProps = {
+  metricType: 'volume' | 'transfers'
+  heading: string
+  formatValue: (value: number) => string
+  topProtocols: InteropDashboardData['topProtocols'] | undefined
+  isLoading: boolean
+}
+
+export function TopProtocolsWidget({
+  metricType,
+  heading,
+  formatValue,
+  topProtocols,
+  isLoading,
+}: TopProtocolsWidgetProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { width } = useResizeObserver({ ref: containerRef })
+
+  const protocolColorMap = useProtocolColorMap(topProtocols)
+  const protocolsWithOthers = useMemo(
+    () =>
+      getProtocolsDataWithOthers(topProtocols, protocolColorMap, metricType),
+    [topProtocols, metricType, protocolColorMap],
+  )
+
+  return (
+    <PrimaryCard
+      className="@container flex h-full items-start justify-between"
+      ref={containerRef}
+    >
+      <div>
+        <h2 className="font-bold text-heading-16 md:text-heading-20">
+          {heading}
+        </h2>
+        <BetweenChainsInfo className="mt-0.5" />
+        <table className="mt-2 w-fit border-separate border-spacing-y-1 pr-1">
+          <tbody>
+            {isLoading || protocolsWithOthers.length === 0
+              ? times(5).map((index) => (
+                  <tr key={index}>
+                    <td colSpan={3}>
+                      <Skeleton className="h-4 w-48" />
+                    </td>
+                  </tr>
+                ))
+              : null}
+            {protocolsWithOthers.length > 0 &&
+              protocolsWithOthers.map((protocol) => (
+                <tr key={protocol.name}>
+                  <td className="flex items-center gap-1 font-medium text-2xs">
+                    <div
+                      className="size-3 min-w-3 rounded-xs"
+                      style={{ backgroundColor: protocol.color }}
+                    />
+                    <div className="leading-none">
+                      {protocol.name === 'Others'
+                        ? `Others (${protocol.othersCount ?? 0})`
+                        : protocol.name}
+                    </div>
+                  </td>
+                  <td className="@max-[373px]:hidden w-10 text-right font-medium text-2xs text-secondary">
+                    {protocol[metricType].share.toFixed(1)}%
+                  </td>
+                  <td className="w-12.5 text-right font-medium text-2xs">
+                    {formatValue(protocol[metricType].value)}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+      {metricType === 'volume' ? (
+        <TopProtocolsByVolumeChart
+          protocols={protocolsWithOthers}
+          isLoading={isLoading}
+          containerWidth={width}
+        />
+      ) : (
+        <TopProtocolsByTransfersChart
+          protocols={protocolsWithOthers}
+          isLoading={isLoading}
+          containerWidth={width}
+        />
+      )}
+    </PrimaryCard>
+  )
+}

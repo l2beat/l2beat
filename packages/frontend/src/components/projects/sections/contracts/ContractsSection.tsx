@@ -26,7 +26,10 @@ export interface ContractsSectionProps {
   risks: TechnologyRisk[]
   diagram?: DiagramParams
   isUnderReview?: boolean
-  discoUiHref?: string
+  discoUi?: {
+    href: string
+    images: { desktop: string; mobile: string }
+  }
   programHashes?: StateValidationProgramHashData[]
 }
 
@@ -62,7 +65,12 @@ export function ContractsSection(props: ContractsSectionProps) {
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
     >
-      {props.discoUiHref && <DiscoUiBanner href={props.discoUiHref} />}
+      {props.discoUi && (
+        <DiscoUiBanner
+          href={props.discoUi.href}
+          images={props.discoUi.images}
+        />
+      )}
       {hasContractsChanged && <ContractsUpdated />}
       {props.diagram && (
         <figure className="mt-4 mb-8 text-center">

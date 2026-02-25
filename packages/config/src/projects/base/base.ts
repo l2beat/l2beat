@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { DERIVATION, ESCROW } from '../../common'
+import { DERIVATION } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -50,32 +50,50 @@ export const base: ScalingProject = opStackL2({
   },
   interopConfig: {
     name: 'Base Canonical',
-    bridgeType: 'canonical',
+    durationSplit: {
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'base',
+        },
+        out: {
+          label: 'L2 -> L1',
+          from: 'base',
+          to: 'ethereum',
+        },
+      },
+    },
     plugins: [
       {
-        filterBy: 'chain',
         chain: 'base',
         plugin: 'opstack',
+        bridgeType: 'lockAndMint',
       },
       {
-        filterBy: 'chain',
         chain: 'base',
         plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
       },
       {
-        filterBy: 'chain',
         chain: 'base',
         plugin: 'beefy-bridge',
+        bridgeType: 'lockAndMint',
       },
       {
-        filterBy: 'chain',
         chain: 'base',
         plugin: 'maker-bridge',
+        bridgeType: 'lockAndMint',
       },
       {
-        filterBy: 'chain',
         chain: 'base',
         plugin: 'sorare-base',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'base',
+        plugin: 'lido-wsteth',
+        bridgeType: 'lockAndMint',
       },
     ],
   },
@@ -86,7 +104,6 @@ export const base: ScalingProject = opStackL2({
         'eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
@@ -95,7 +112,6 @@ export const base: ScalingProject = opStackL2({
         'eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3',
       ),
       tokens: ['USDS', 'sUSDS'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
     }),
@@ -220,6 +236,10 @@ export const base: ScalingProject = opStackL2({
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

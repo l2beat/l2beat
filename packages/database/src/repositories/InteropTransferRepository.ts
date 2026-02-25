@@ -1,19 +1,42 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  type InteropBridgeType,
+  InteropBridgeTypeValues,
+  type KnownInteropBridgeType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
+// Interop bridge types are stored in the database.
+// If they are modified (e.g. renamed/removed), you MUST update
+// the data already in the DB via a new migration.
+const EXPECTED_DB_INTEROP_BRIDGE_TYPES = [
+  'lockAndMint',
+  'nonMinting',
+  'burnAndMint',
+  'unknown',
+] as const
+const _interopBridgeTypesMustMatchDbContract: typeof EXPECTED_DB_INTEROP_BRIDGE_TYPES =
+  InteropBridgeTypeValues
+
+function isInteropBridgeType(value: string): value is InteropBridgeType {
+  return (InteropBridgeTypeValues as readonly string[]).includes(value)
+}
+
 export interface InteropTransferRecord {
   plugin: string
+  bridgeType: KnownInteropBridgeType | undefined
   transferId: string
   type: string
-  duration: number | undefined
+  duration: number
   timestamp: UnixTime
-  srcTime: UnixTime | undefined
-  srcChain: string | undefined
-  srcTxHash: string | undefined
-  srcLogIndex: number | undefined
-  srcEventId: string | undefined
+  srcTime: UnixTime
+  srcChain: string
+  srcTxHash: string
+  srcLogIndex: number
+  srcEventId: string
   srcTokenAddress: string | undefined
   srcRawAmount: bigint | undefined
   srcWasBurned: boolean | undefined
@@ -22,11 +45,11 @@ export interface InteropTransferRecord {
   srcAmount: number | undefined
   srcPrice: number | undefined
   srcValueUsd: number | undefined
-  dstTime: UnixTime | undefined
-  dstChain: string | undefined
-  dstTxHash: string | undefined
-  dstLogIndex: number | undefined
-  dstEventId: string | undefined
+  dstTime: UnixTime
+  dstChain: string
+  dstTxHash: string
+  dstLogIndex: number
+  dstEventId: string
   dstTokenAddress: string | undefined
   dstRawAmount: bigint | undefined
   dstWasMinted: boolean | undefined
@@ -61,17 +84,27 @@ export interface InteropMissingTokenInfo {
 export function toRecord(
   row: Selectable<InteropTransfer>,
 ): InteropTransferRecord {
+  if (row.bridgeType !== null && !isInteropBridgeType(row.bridgeType)) {
+    throw new Error(
+      `Invalid interop transfer bridge type: ${row.bridgeType} for transfer ${row.transferId}`,
+    )
+  }
+
   return {
     plugin: row.plugin,
     transferId: row.transferId,
     type: row.type,
-    duration: row.duration ?? undefined,
+    bridgeType:
+      row.bridgeType === null
+        ? undefined
+        : (row.bridgeType as KnownInteropBridgeType),
+    duration: row.duration,
     timestamp: UnixTime.fromDate(row.timestamp),
-    srcTime: row.srcTime !== null ? UnixTime.fromDate(row.srcTime) : undefined,
-    srcChain: row.srcChain ?? undefined,
-    srcTxHash: row.srcTxHash ?? undefined,
-    srcLogIndex: row.srcLogIndex ?? undefined,
-    srcEventId: row.srcEventId ?? undefined,
+    srcTime: UnixTime.fromDate(row.srcTime),
+    srcChain: row.srcChain,
+    srcTxHash: row.srcTxHash,
+    srcLogIndex: row.srcLogIndex,
+    srcEventId: row.srcEventId,
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
     srcWasBurned: row.srcWasBurned ?? undefined,
@@ -80,11 +113,11 @@ export function toRecord(
     srcAmount: row.srcAmount ?? undefined,
     srcPrice: row.srcPrice ?? undefined,
     srcValueUsd: row.srcValueUsd ?? undefined,
-    dstTime: row.dstTime !== null ? UnixTime.fromDate(row.dstTime) : undefined,
-    dstChain: row.dstChain ?? undefined,
-    dstTxHash: row.dstTxHash ?? undefined,
-    dstLogIndex: row.dstLogIndex ?? undefined,
-    dstEventId: row.dstEventId ?? undefined,
+    dstTime: UnixTime.fromDate(row.dstTime),
+    dstChain: row.dstChain,
+    dstTxHash: row.dstTxHash,
+    dstLogIndex: row.dstLogIndex,
+    dstEventId: row.dstEventId,
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
     dstWasMinted: row.dstWasMinted ?? undefined,
@@ -104,10 +137,10 @@ export function toRow(
     plugin: record.plugin,
     transferId: record.transferId,
     type: record.type,
+    bridgeType: record.bridgeType,
     duration: record.duration,
     timestamp: UnixTime.toDate(record.timestamp),
-    srcTime:
-      record.srcTime !== undefined ? UnixTime.toDate(record.srcTime) : null,
+    srcTime: UnixTime.toDate(record.srcTime),
     srcChain: record.srcChain,
     srcTxHash: record.srcTxHash?.toLowerCase(),
     srcLogIndex: record.srcLogIndex,
@@ -120,8 +153,7 @@ export function toRow(
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
     srcValueUsd: record.srcValueUsd,
-    dstTime:
-      record.dstTime !== undefined ? UnixTime.toDate(record.dstTime) : null,
+    dstTime: UnixTime.toDate(record.dstTime),
     dstChain: record.dstChain,
     dstTxHash: record.dstTxHash?.toLowerCase(),
     dstLogIndex: record.dstLogIndex,
@@ -139,6 +171,7 @@ export function toRow(
 }
 
 export interface InteropTransfersStatsRecord {
+  plugin: string
   type: string
   count: number
   avgDuration: number
@@ -147,6 +180,7 @@ export interface InteropTransfersStatsRecord {
 }
 
 export interface InteropTransfersDetailedStatsRecord {
+  plugin: string
   type: string
   srcChain: string
   dstChain: string
@@ -170,6 +204,20 @@ export class InteropTransferRepository extends BaseRepository {
   async getAll(): Promise<InteropTransferRecord[]> {
     const rows = await this.db
       .selectFrom('InteropTransfer')
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getByRange(
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<InteropTransferRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .where('timestamp', '>', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .selectAll()
       .execute()
 
@@ -223,16 +271,18 @@ export class InteropTransferRepository extends BaseRepository {
     const overallStats = await this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
+        'plugin',
         'type',
         eb.fn.countAll().as('count'),
         eb.fn.avg('duration').as('avgDuration'),
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
-      .groupBy('type')
+      .groupBy(['plugin', 'type'])
       .execute()
 
     return overallStats.map((overall) => ({
+      plugin: overall.plugin,
       type: overall.type,
       count: Number(overall.count),
       avgDuration: Number(overall.avgDuration),
@@ -245,6 +295,7 @@ export class InteropTransferRepository extends BaseRepository {
     const chainStats = await this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
+        'plugin',
         'type',
         'srcChain',
         'dstChain',
@@ -255,12 +306,13 @@ export class InteropTransferRepository extends BaseRepository {
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
-      .groupBy(['type', 'srcChain', 'dstChain'])
+      .groupBy(['plugin', 'type', 'srcChain', 'dstChain'])
       .execute()
 
     return chainStats.map((chain) => {
       assert(chain.srcChain && chain.dstChain)
       return {
+        plugin: chain.plugin,
         type: chain.type,
         srcChain: chain.srcChain,
         dstChain: chain.dstChain,

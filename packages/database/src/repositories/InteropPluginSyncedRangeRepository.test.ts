@@ -207,6 +207,67 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       expect(all).toEqual([])
     })
   })
+
+  describe(
+    InteropPluginSyncedRangeRepository.prototype.deleteNotInPluginNames.name,
+    () => {
+      it('deletes records with plugin names not in the list', async () => {
+        const a1 = range({ pluginName: 'plugin-a', chain: 'ethereum' })
+        const a2 = range({ pluginName: 'plugin-a', chain: 'arbitrum' })
+        const b1 = range({ pluginName: 'plugin-b', chain: 'ethereum' })
+        const c1 = range({ pluginName: 'plugin-c', chain: 'op' })
+        await repository.upsert(a1)
+        await repository.upsert(a2)
+        await repository.upsert(b1)
+        await repository.upsert(c1)
+
+        const deleted = await repository.deleteNotInPluginNames([
+          'plugin-a',
+          'plugin-b',
+        ])
+        expect(deleted).toEqual(1)
+
+        const all = await repository.getAll()
+        expect(all).toEqualUnsorted([a1, a2, b1])
+      })
+
+      it('returns 0 when list is empty', async () => {
+        await repository.upsert(
+          range({ pluginName: 'plugin-a', chain: 'ethereum' }),
+        )
+        await repository.upsert(
+          range({ pluginName: 'plugin-b', chain: 'arbitrum' }),
+        )
+
+        const deleted = await repository.deleteNotInPluginNames([])
+        expect(deleted).toEqual(0)
+
+        const all = await repository.getAll()
+        expect(all.length).toEqual(2)
+      })
+
+      it('returns 0 when no records exist', async () => {
+        const deleted = await repository.deleteNotInPluginNames(['plugin-a'])
+        expect(deleted).toEqual(0)
+      })
+
+      it('returns 0 when all records match the valid list', async () => {
+        const a1 = range({ pluginName: 'plugin-a', chain: 'ethereum' })
+        const b1 = range({ pluginName: 'plugin-b', chain: 'arbitrum' })
+        await repository.upsert(a1)
+        await repository.upsert(b1)
+
+        const deleted = await repository.deleteNotInPluginNames([
+          'plugin-a',
+          'plugin-b',
+        ])
+        expect(deleted).toEqual(0)
+
+        const all = await repository.getAll()
+        expect(all).toEqualUnsorted([a1, b1])
+      })
+    },
+  )
 })
 
 function range(

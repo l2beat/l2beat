@@ -7,6 +7,11 @@ export function MetricsMiddleware() {
     if (req.headers['user-agent']?.includes('Cloudflare-Healthchecks')) {
       return next()
     }
+    if (
+      req.originalUrl === '/.well-known/appspecific/com.chrome.devtools.json'
+    ) {
+      return next()
+    }
 
     logger.info('Processing request', {
       method: req.method,

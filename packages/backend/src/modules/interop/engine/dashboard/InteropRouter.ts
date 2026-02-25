@@ -4,16 +4,17 @@ import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
+import { InteropTransferClassifier } from '../aggregation/InteropTransferClassifier'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
-import type {
-  InteropTransferStream,
-  SerializableInteropTransfer,
-} from '../stream/InteropTransferStream'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
+import { renderAggregatesPage } from './AggregatesPage'
+import { renderAnomaliesPage } from './AnomaliesPage'
+import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
+import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
 
 export function createInteropRouter(
@@ -22,7 +23,6 @@ export function createInteropRouter(
   processors: InteropBlockProcessor[],
   syncersManager: InteropSyncersManager,
   logger: Logger,
-  transferStream: InteropTransferStream,
 ) {
   const router = new Router()
 
@@ -69,6 +69,56 @@ export function createInteropRouter(
     const showResyncControls = ctx.query.showResync !== undefined
 
     ctx.body = renderStatusPage({ pluginSyncStatuses, showResyncControls })
+  })
+
+  router.get('/interop/anomalies', async (ctx) => {
+    const rows = await db.aggregatedInteropTransfer.getDailySeries()
+    const explored = explore(rows)
+    if (ctx.query.raw === 'true') {
+      ctx.body = explored
+    } else {
+      ctx.body = renderAnomaliesPage({ stats: explored })
+    }
+  })
+
+  router.get('/interop/anomalies/:id', async (ctx) => {
+    const params = v.object({ id: v.string() }).validate(ctx.params)
+    const series = await db.aggregatedInteropTransfer.getDailySeriesById(
+      params.id,
+    )
+    ctx.body = renderAnomalyIdPage({ id: params.id, series })
+  })
+
+  router.get('/interop/aggregates', async (ctx) => {
+    const latestTimestamp =
+      await db.aggregatedInteropTransfer.getLatestTimestamp()
+    if (!latestTimestamp) {
+      return (ctx.body = {
+        error: 'No latest timestamp found',
+      })
+    }
+    const from = latestTimestamp - UnixTime.DAY
+    const transfers = await db.interopTransfer.getByRange(from, latestTimestamp)
+    const configs = config.aggregation ? config.aggregation.configs : []
+
+    const classifier = new InteropTransferClassifier()
+    const consumedIds = new Set<string>()
+    for (const aggConfig of configs) {
+      const classified = classifier.classifyTransfers(transfers, aggConfig)
+      for (const records of Object.values(classified)) {
+        for (const r of records) {
+          consumedIds.add(r.transferId)
+        }
+      }
+    }
+
+    const unconsumed = transfers.filter((t) => !consumedIds.has(t.transferId))
+
+    ctx.body = renderAggregatesPage({
+      transfers: unconsumed,
+      configs,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+    })
   })
 
   router.get('/interop/memory', (ctx) => {
@@ -222,36 +272,6 @@ export function createInteropRouter(
     })
   })
 
-  router.get('/interop/transfers/stream', (ctx) => {
-    ctx.set('Content-Type', 'text/event-stream')
-    ctx.set('Cache-Control', 'no-cache')
-    ctx.set('Connection', 'keep-alive')
-    ctx.set('X-Accel-Buffering', 'no')
-    ctx.status = 200
-    ctx.compress = false
-    ctx.respond = false
-
-    ctx.res.write(':\n\n')
-
-    const write = (payload: SerializableInteropTransfer[]) => {
-      ctx.res.write(`data: ${JSON.stringify(payload)}\n\n`)
-    }
-
-    const unsubscribe = transferStream.subscribe(write, { replay: 20 })
-
-    const heartbeat = setInterval(() => {
-      ctx.res.write(':\n\n')
-    }, 15_000)
-
-    const close = () => {
-      clearInterval(heartbeat)
-      unsubscribe()
-    }
-
-    ctx.req.on('close', close)
-    ctx.req.on('end', close)
-  })
-
   router.get('/interop/transfers/:type', async (ctx) => {
     const params = v.object({ type: v.string() }).validate(ctx.params)
     const query = v
@@ -295,15 +315,20 @@ async function getMessagesStats(db: Database) {
   const detailedStats = await db.interopMessage.getDetailedStats()
 
   return stats.map((overall) => ({
+    plugin: overall.plugin,
     type: overall.type,
     count: Number(overall.count),
     avgDuration: Number(overall.avgDuration),
     knownAppCount: Number(overall.knownAppCount),
     chains: detailedStats
-      .filter((chain) => chain.type === overall.type)
+      .filter(
+        (chain) =>
+          chain.plugin === overall.plugin && chain.type === overall.type,
+      )
       .map((chain) => {
         assert(chain.srcChain && chain.dstChain)
         return {
+          plugin: chain.plugin,
           type: chain.type,
           srcChain: chain.srcChain,
           dstChain: chain.dstChain,
@@ -319,11 +344,14 @@ async function getTransfersStats(db: Database) {
   const detailedStats = await db.interopTransfer.getDetailedStats()
 
   return stats.map((overall) => ({
+    plugin: overall.plugin,
     type: overall.type,
     count: overall.count,
     avgDuration: overall.avgDuration,
     srcValueSum: overall.srcValueSum,
     dstValueSum: overall.dstValueSum,
-    chains: detailedStats.filter((chain) => chain.type === overall.type),
+    chains: detailedStats.filter(
+      (chain) => chain.plugin === overall.plugin && chain.type === overall.type,
+    ),
   }))
 }

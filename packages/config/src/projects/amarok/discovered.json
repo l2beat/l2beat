@@ -1,6 +1,6 @@
 {
   "name": "amarok",
-  "timestamp": 1766407666,
+  "timestamp": 1768999088,
   "configHash": "0x54681c2e07bc927379e00d3227845fab3f49adb055e4c51ac13f87e842349dbc",
   "entries": [
     {
@@ -34,7 +34,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 981337,
+        "getLastCompletedSnapshotId": 982777,
         "getSnapshotDuration": 1800,
         "home": "eth:0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 20634538,
@@ -157,11 +157,6 @@
         "eth:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": "OptimisticGovernor"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
-    },
-    {
-      "address": "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a",
@@ -667,7 +662,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1766407655,
+        "getCurrentTime": 1768999079,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -985,6 +980,11 @@
           "role": "admin"
         }
       ]
+    },
+    {
+      "address": "eth:0x72b32C1a6A75CBAfAe36c0CA8e763946d370E766",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Relayer10",
@@ -1316,7 +1316,7 @@
         "$members": [
           "eth:0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
           "eth:0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
-          "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
+          "eth:0x72b32C1a6A75CBAfAe36c0CA8e763946d370E766",
           "eth:0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "$threshold": 2,
@@ -1324,7 +1324,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 917,
+        "nonce": 924,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2804,7 +2804,7 @@
           "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
         ],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 217,
+        "nonce": 218,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -5147,6 +5147,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uniswap/calibur7702": "0x9f03ed41f4dd7794f1a7ad4d4e55fb891cce776ed8502eaa4e7d07f8c5861bbb"
   },
-  "usedBlockNumbers": { "ethereum": 24068247 },
-  "permissionsConfigHash": "0xcf4f21a97feecf87f7b2c7eb0e027b2b3bd1f52b837806144cdd353cceb41726"
+  "usedBlockNumbers": { "ethereum": 24283212 },
+  "permissionsConfigHash": "0x3476e0aaaf509606c0ed1e8309e4cd6bc5a1511ba2a1fce754deacc22b14c65c"
 }

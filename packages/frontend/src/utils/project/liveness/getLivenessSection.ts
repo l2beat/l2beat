@@ -14,7 +14,10 @@ import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getLivenessSection(
   helpers: SsrHelpers,
-  project: Project<never, 'archivedAt' | 'trackedTxsConfig' | 'livenessConfig'>,
+  project: Project<
+    never,
+    'archivedAt' | 'trackedTxsConfig' | 'livenessConfig' | 'livenessInfo'
+  >,
   liveness: LivenessProject | undefined,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
 ): Promise<
@@ -42,10 +45,15 @@ export async function getLivenessSection(
   )
   const duplicatedData = project.livenessConfig?.duplicateData.to
 
-  const configuredSubtypes = compact([
-    ...Object.keys(configSubtypes),
-    duplicatedData,
-  ]) as TrackedTxsConfigSubtype[]
+  const configuredSubtypes = (
+    compact([
+      ...Object.keys(configSubtypes),
+      duplicatedData,
+    ]) as TrackedTxsConfigSubtype[]
+  ).filter(
+    (subtype) => project.livenessInfo?.overwrites?.[subtype] !== 'no-data', // we do not want to show disabled subtypes
+  )
+
   const range = optionToRange('max')
   const subtype = getDefaultSubtype(configuredSubtypes)
 

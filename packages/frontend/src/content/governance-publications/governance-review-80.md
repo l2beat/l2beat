@@ -97,7 +97,7 @@ You can find us to discuss everything related to ZkSync’s governance, from cur
 ## **Polygon**
 
 
-### **Polygon Staking Report. Year 2025 (By [Validator.Info](Validator.Info))**
+### **Polygon Staking Report. Year 2025 (By [Validator.Info](https://validator.info/))**
 
 Validator.Info [published](https://forum.polygon.technology/t/polygon-staking-report-year-2025-by-validator-info/21508) a Polygon staking recap for 2025, highlighting the largest validators by stake and how delegation shifted over the year. By year-end stake, the top operators were Upbit Staking (373M POL), Coinbase (301M POL), and Binance Node (255M POL), while Everstake led by delegator count with 4,118 delegators. The report also flags the biggest stake growth in 2025, led by Upbit Staking (+237M POL), and notes near-perfect checkpoint performance among several validators, with multiple operators reporting 99.9% reliability.
 

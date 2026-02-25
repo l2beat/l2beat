@@ -90,6 +90,13 @@ function resolveProjects(projectQuery: string): string[] {
     const projectMatches = predicate(query, project)
 
     if (projectMatches) {
+      const config = configReader.readConfig(project)
+      if (
+        config.archived &&
+        (isAddressPredicate || isChainSpecificAddressPredicate)
+      ) {
+        continue
+      }
       matchingProjects.push(project)
     }
   }

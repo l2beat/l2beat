@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x2e49a358ceac669737803c14c9c48c60a0ca71bc
+
+# Diff at Wed, 28 Jan 2026 12:02:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c9622efccc03e90f3e3da4283b4873ee6b8197d6 block: 1768391906
+- current timestamp: 1769601687
+
+## Description
+
+Discovery rerun after cache override.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768391906 (main branch discovery), not current.
+
+```diff
+    contract L2ToL1MessagePasser (facet:0x4200000000000000000000000000000000000016) {
+    +++ description: L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.
+      sourceHashes.0:
+-        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a"
++        "0x702c17f55cd06de3274ea8306900257e19dc09f5ffeb15cd67a6efb43a2354b6"
+    }
+```
+
 Generated with discovered.json: 0xdfede5fbc20b528757dcdbb1dee395cf6882af37
 
 # Diff at Fri, 09 Jan 2026 13:09:04 GMT:

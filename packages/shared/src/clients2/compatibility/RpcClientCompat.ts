@@ -5,6 +5,7 @@ import type {
   MulticallV3Client,
   MulticallV3Response,
 } from '../../clients/rpc/multicall/MulticallV3Client'
+import { isLimitExceededError } from '../../clients/rpc/RpcClient'
 import type {
   CallParameters,
   EVMBlock,
@@ -25,7 +26,7 @@ import {
 import { Http } from '../Http'
 import { withRetries } from '../retries'
 
-interface Receipt {
+export interface Receipt {
   logs: {
     topics: string[]
     data: string
@@ -37,6 +38,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
+  timeout?: number
 }
 
 export interface IRpcClient extends BlockClient, LogsClient {
@@ -100,6 +102,7 @@ export class RpcClientCompat implements IRpcClient {
       deps.url,
       `${RpcClientCompat.name}:${deps.chain}`,
       deps.generateId,
+      deps.timeout,
     )
     const retryOptions = toRetryOptions(deps.retryStrategy)
     const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)
@@ -192,7 +195,11 @@ export class RpcClientCompat implements IRpcClient {
       })
       return logs.map(toEVMLog)
     } catch (e) {
-      if (isLimitExceededError(e)) {
+      if (
+        e instanceof Error &&
+        e.message.startsWith('RPC call failed') &&
+        isLimitExceededError(e)
+      ) {
         const midpoint = Math.floor((from + to) / 2)
         const results = await Promise.all([
           this.getLogs(from, midpoint, addresses, topics),
@@ -266,17 +273,6 @@ function toTx(tx: RpcTransaction): EVMTransaction {
     blobVersionedHashes: tx.blobVersionedHashes ?? undefined,
     blockNumber: tx.blockNumber !== null ? Number(tx.blockNumber) : null,
   }
-}
-
-function isLimitExceededError(e: unknown) {
-  return (
-    e instanceof Error &&
-    e.message.startsWith('RPC call failed') &&
-    (e.message.includes('Log response size exceeded') ||
-      e.message.includes('query exceeds max block range 100000') ||
-      e.message.includes('eth_getLogs is limited to a 10,000 range') ||
-      e.message.includes('returned more than 10000'))
-  )
 }
 
 export function toEVMLog(log: RpcLog): EVMLog {

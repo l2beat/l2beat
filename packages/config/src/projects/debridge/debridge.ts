@@ -51,6 +51,16 @@ export const debridge: Bridge = {
       },
     ],
   },
+  // this is only the debridge messaging and token bridge
+  interopConfig: {
+    name: 'deBridge',
+    plugins: [
+      {
+        plugin: 'debridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+  },
   technology: {
     destination: ['Arbitrum', 'Avalanche', 'BNB Chain', 'Polygon'],
     principleOfOperation: {

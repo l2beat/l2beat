@@ -17,18 +17,21 @@ export interface PermissionsSectionProps extends ProjectSectionProps {
     { roles: TechnologyContract[]; actors: TechnologyContract[] }
   >
   permissionedEntities?: { name: string; href: string; key?: string }[]
-  discoUiHref?: string
+  discoUi?: {
+    href: string
+    images: { desktop: string; mobile: string }
+  }
 }
 
 export function PermissionsSection({
   permissionsByChain,
   permissionedEntities,
-  discoUiHref,
+  discoUi,
   ...sectionProps
 }: PermissionsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      {discoUiHref && <DiscoUiBanner href={discoUiHref} />}
+      {discoUi && <DiscoUiBanner href={discoUi.href} images={discoUi.images} />}
       {permissionedEntities && permissionedEntities.length > 0 && (
         <h3 className="mt-4 font-bold">
           The DA committee has the following members:

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
+import type { CustomChartTooltipProps } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -10,6 +10,7 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
@@ -17,8 +18,7 @@ import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDe
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
@@ -122,8 +122,8 @@ export function DaAbsoluteThroughputChart({
           <NoDataPatternDef />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        {getStrokeOverFillAreaComponents({
-          data: Object.keys(chartMeta).flatMap((key) => {
+        <ChartStrokeOverFillAreaComponents
+          data={Object.keys(chartMeta).flatMap((key) => {
             const actualKey = key as keyof typeof chartMeta
             const estimatedKey = `${actualKey}Estimated`
             return [
@@ -141,19 +141,19 @@ export function DaAbsoluteThroughputChart({
                 hide: !dataKeys.includes(actualKey),
               },
             ]
-          }),
-        })}
+          })}
+        />
 
-        {getCommonChartComponents({
-          data: chartData,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={chartData}
+          isLoading={isLoading}
+          yAxis={{
             domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
             unit: ` ${unit}`,
             tickCount: 3,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           filterNull={false}
           content={
@@ -171,21 +171,20 @@ export function DaAbsoluteThroughputChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   unit,
   includeScalingOnly,
   syncStatus,
   resolution,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   unit: string
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
   resolution: DaThroughputResolution
 }) {
   const { meta: config } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
+  if (!payload || typeof label !== 'number') return null
 
   const isCurrentDay = label >= UnixTime.toStartOf(UnixTime.now(), 'day')
 

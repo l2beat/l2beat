@@ -1,6 +1,17 @@
 {
   "ethereum": [
     {
+      "symbol": "AZTEC",
+      "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "coingeckoId": "aztec"
+    },
+    {
+      "symbol": "NIL",
+      "address": "0x7cf9a80db3b29ee8efe3710aadb7b95270572d47",
+      "coingeckoId": "nillion",
+      "deploymentTimestamp": 1648598273
+    },
+    {
       "symbol": "SKY",
       "address": "0x56072C95FAA701256059aa122697B133aDEd9279"
     },
@@ -2283,6 +2294,13 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "PGOLD",
+      "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic" // tradable on uniswap
+    },
     {
       "symbol": "RAIN",
       "address": "0x25118290e6A5f4139381D072181157035864099d",
@@ -7309,6 +7327,20 @@
   ],
   "abstract": [
     {
+      "symbol": "gtBTC",
+      "address": "0x0035b877C3aB50cFFA9eD52bA05282c7045f78dd",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "Polly",
       "address": "0x987CF44F3F5d854eC0703123d7fD003a8b56eBb4",
       "source": "native",
@@ -7545,6 +7577,21 @@
     }
   ],
   "morph": [
+    {
+      "symbol": "BGB",
+      "coingeckoId": "bitget-token",
+      "address": "0x389C08Bc23A7317000a1FD76c7c5B0cb0b4640b5",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDa", // avalon
       "coingeckoId": "usda-2",

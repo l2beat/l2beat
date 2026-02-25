@@ -235,7 +235,7 @@ describe(DaBeatStatsProvider.name, () => {
   describe(DaBeatStatsProvider.prototype.getCelestiaStats.name, () => {
     it('returns correct stats from single page', async () => {
       const mockCelestiaClient = mockObject<CelestiaRpcClient>({
-        getValidatorsInfo: async ({ page, perPage }: any) => ({
+        getValidatorsInfo: async () => ({
           total: 2,
           count: 2,
           validators: [{ voting_power: 1000 }, { voting_power: 2000 }],
@@ -269,7 +269,7 @@ describe(DaBeatStatsProvider.name, () => {
             return {
               total: 150, // This will require 2 pages
               count: 100,
-              validators: Array.from({ length: 100 }, (_, i) => ({
+              validators: Array.from({ length: 100 }, () => ({
                 voting_power: 100,
               })),
             }
@@ -278,7 +278,7 @@ describe(DaBeatStatsProvider.name, () => {
             return {
               total: 150,
               count: 50,
-              validators: Array.from({ length: 50 }, (_, i) => ({
+              validators: Array.from({ length: 50 }, () => ({
                 voting_power: 200,
               })),
             }
@@ -331,7 +331,7 @@ describe(DaBeatStatsProvider.name, () => {
           disconnected = true
         },
         getCurrentEra: async () => '42',
-        getStakingEraOverview: async (era: string) => ({
+        getStakingEraOverview: async () => ({
           validator1: {
             own: 1000000000000000000n,
             total: 1000000000000000000n,

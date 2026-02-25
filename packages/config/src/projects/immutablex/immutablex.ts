@@ -29,6 +29,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
+import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('immutablex')
 
@@ -57,12 +58,7 @@ const immutablexProgramHashes = []
 immutablexProgramHashes.push(
   discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-immutablexProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-immutablexProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+immutablexProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const immutablex: ScalingProject = {
   type: 'layer2',

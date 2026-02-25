@@ -1,3 +1,151 @@
+Generated with discovered.json: 0x69d76a30c2c03488ab23d607388cc37980c49b64
+
+# Diff at Mon, 23 Feb 2026 14:45:29 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@223ad9100b05447b13e88b350a283f0fcdd967a4 block: 1770994456
+- current timestamp: 1771857557
+
+## Description
+
+Emergency upgrade: ZkEvmVerifierPostFeynman replaced at index 9 of MultipleVersionRollupVerifier due to a bug in the guest prover program. Old verifier 0x4F43... deleted, new verifier 0x0dE1... created with identical source code but updated verifierDigest (verification key update).
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.9.verifier:
+-        "eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181"
++        "eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostFeynman (eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...erifierPostFeynman-eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82.sol} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+```
+
+Generated with discovered.json: 0x294b7c0fa7408abc9a6ff5f18b126c6b745ae954
+
+# Diff at Tue, 10 Feb 2026 15:13:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1766408981
+- current timestamp: 1770736063
+
+## Description
+
+EURC (Euro Coin) bridge integration: new L1USDCGateway, Euro Coin Token, and MasterMinter contracts added. L1GatewayRouter updated with new gateway entry. Scroll Multisig 3 member replaced on both L1 and L2.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      directlyReceivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2","role":"admin"}
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xfc31892C5500AbE00974280b28907BaA9190E384"
++        "eth:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      values.gateways.eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c:
++        "eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.3:
+-        "scr:0xfc31892C5500AbE00974280b28907BaA9190E384"
++        "scr:0x716f84f747e2B75aBB917ff0bCb0a71C41AA8831"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (eth:0x02398771Fd1db790Ef2b656ca3BcB3075f27A72c)
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
++   Status: CREATED
+    contract Euro Coin Token (eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1USDCGateway (eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/Euro Coin Token/FiatTokenProxy.p.sol     |  417 ++++
+ .../scroll/.flat/Euro Coin Token/FiatTokenV2_2.sol | 2357 ++++++++++++++++++++
+ .../L1USDCGateway.sol                              | 1231 ++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 ++++++
+ .../L1USDCGateway.sol                              |    0
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ ...0x02398771Fd1db790Ef2b656ca3BcB3075f27A72c.sol} |    0
+ ...:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE.sol |  454 ++++
+ 8 files changed, 5188 insertions(+)
+```
+
+Generated with discovered.json: 0xb9f5f4fc7a54444dac41f58d865e6a238ee555e5
+
+# Diff at Wed, 28 Jan 2026 08:41:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a5f975c807ad2cfd64aebc4e504f78714f81d9cf block: 1766408981
+- current timestamp: 1766408981
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1766408981 (main branch discovery), not current.
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      fieldMeta:
++        {"verifierVersions":{"description":"Each element of the array says which version of verifier is registered under this index in latestVerifier array."},"latestVerifier":{"description":"Only verifiers of version >= 7 can be used to check Scroll STF (see _commitBatchesFromV7 on Scroll contract). Versions are NOT indices of this array, they are given by verifierVersions array."}}
+    }
+```
+
 Generated with discovered.json: 0xc041eb4811dd20ed554903f04315c38a8fad6bb5
 
 # Diff at Thu, 08 Jan 2026 16:08:24 GMT:

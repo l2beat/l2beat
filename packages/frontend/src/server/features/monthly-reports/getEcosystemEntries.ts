@@ -10,6 +10,7 @@ import type { EcosystemUpdate } from '~/content/monthly-updates'
 import type { ActivityLatestUopsData } from '~/server/features/scaling/activity/getActivityLatestTps'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import {
@@ -29,12 +30,14 @@ interface BaseLeaderboard {
   slug: string
   name: string
   change: number
+  iconUrl: string
 }
 
 export interface EcosystemMonthlyUpdateEntry
   extends Omit<EcosystemUpdate, 'ecosystemId'> {
   id: string
   name: string
+  iconUrl: string
   colors: ProjectCustomColors
   projects: ProjectId[]
   bannerImg?: string
@@ -47,6 +50,7 @@ export interface EcosystemMonthlyUpdateEntry
     name: string
     stage: ProjectScalingStage
     slug: string
+    iconUrl: string
     description: string
     category: ProjectScalingCategory | undefined
     tvs?: number
@@ -165,6 +169,7 @@ function getEcosystemMonthlyUpdateEntry(
   return {
     ...ecosystemUpdateEntry,
     ...ecosystem,
+    iconUrl: manifest.getUrl(`/icons/${ecosystem.slug}.png`),
     bannerImg,
     newProjects:
       ecosystemUpdateEntry.newProjectsIds?.map((p) => {
@@ -174,6 +179,7 @@ function getEcosystemMonthlyUpdateEntry(
           id: project.id,
           name: project.name,
           slug: project.slug,
+          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           stage: project.scalingStage,
           description: project.display.description,
           category: project.scalingInfo.type,

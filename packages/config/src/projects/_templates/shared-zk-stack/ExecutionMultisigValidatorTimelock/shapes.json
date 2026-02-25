@@ -1,0 +1,8 @@
+{
+  "ExecutionMultisigValidatorTimelock": {
+    "hash": "0xd056b3b8db754c7b648079371f04dabe168c2a1706b4569572c6d11061ddcf23",
+    "address": "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7",
+    "chain": "ethereum",
+    "blockNumber": 24369439
+  }
+}

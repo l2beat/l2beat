@@ -71,6 +71,14 @@ export function renderDashboardMarkdown(
     ? groups.filter((group) => group.assignees.includes(selectedEmoji))
     : groups
 
+  // Build a map of project name to group name for quick lookup
+  const projectToGroup = new Map<string, string>()
+  for (const group of filteredGroups) {
+    for (const project of group.projects) {
+      projectToGroup.set(project.name, group.name)
+    }
+  }
+
   const allProjects = filteredGroups.flatMap((g) => g.projects)
   const projectsWithChanges = allProjects.filter(
     (p) => (p.changes.diff?.length ?? 0) > 0,
@@ -113,8 +121,9 @@ export function renderDashboardMarkdown(
       const diff = project.changes.diff ?? []
       const diffSummary =
         diff.length > 0 ? `${diff.length} change(s) detected` : 'Flagged'
+      const groupName = projectToGroup.get(project.name) ?? 'Other'
       lines.push(
-        `- [${project.name}](/status/discovery/${project.name}.html.md): ${diffSummary}`,
+        `- [${project.name}](/status/discovery/${project.name}.html.md) [${groupName}]: ${diffSummary}`,
       )
     }
     lines.push('')
@@ -132,8 +141,9 @@ export function renderDashboardMarkdown(
       const trackedTxsNote = project.changes.trackedTxsAffected
         ? ', tracked txs affected'
         : ''
+      const groupName = projectToGroup.get(project.name) ?? 'Other'
       lines.push(
-        `- [${project.name}](/status/discovery/${project.name}.html.md): ${diff.length} change(s)${trackedTxsNote}`,
+        `- [${project.name}](/status/discovery/${project.name}.html.md) [${groupName}]: ${diff.length} change(s)${trackedTxsNote}`,
       )
     }
     lines.push('')
@@ -144,8 +154,9 @@ export function renderDashboardMarkdown(
     lines.push('## Optional')
     lines.push('')
     for (const project of quietProjects) {
+      const groupName = projectToGroup.get(project.name) ?? 'Other'
       lines.push(
-        `- [${project.name}](/status/discovery/${project.name}.html.md): No changes detected`,
+        `- [${project.name}](/status/discovery/${project.name}.html.md) [${groupName}]: No changes detected`,
       )
     }
     lines.push('')

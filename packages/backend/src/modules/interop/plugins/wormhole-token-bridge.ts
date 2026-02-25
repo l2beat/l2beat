@@ -1,12 +1,17 @@
-import { Address32 } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -14,27 +19,58 @@ import {
 import { WormholeConfig } from './wormhole/wormhole.config'
 import { LogMessagePublished } from './wormhole/wormhole.plugin'
 
-const parseLogTransferRedeemed = createEventParser(
-  'event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress,uint64 indexed sequence)',
-)
+const transferRedeemedLog =
+  'event TransferRedeemed(uint16 indexed emitterChainId, bytes32 indexed emitterAddress,uint64 indexed sequence)'
 
-const parseTransfer = createEventParser(
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
+
+const parseLogTransferRedeemed = createEventParser(transferRedeemedLog)
+
+const parseTransfer = createEventParser(transferLog)
+
+const ZERO_ADDRESS = EthereumAddress(
+  '0x0000000000000000000000000000000000000000',
 )
 
 export const TransferRedeemed = createInteropEventType<{
   sequence: bigint
   $srcChain: string
   srcWormholeChainId: number
-  sender: string
-  srcTokenAddress?: Address32 | undefined
-  srcAmount?: bigint | undefined
+  sender: EthereumAddress
+  dstTokenAddress?: Address32 | undefined
+  dstAmount?: bigint | undefined
+  dstWasMinted?: boolean | undefined
 }>('wormhole.LogTransferRedeemed')
 
-export class WormholeTokenBridgePlugin implements InteropPlugin {
+export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
   readonly name = 'wormhole-token-bridge'
 
   constructor(private configs: InteropConfigStore) {}
+
+  getDataRequests(): DataRequest[] {
+    const networks = this.configs.get(WormholeConfig) ?? []
+    const tokenBridgeAddresses: ChainSpecificAddress[] = []
+    for (const network of networks) {
+      if (!network.tokenBridge) continue
+      try {
+        tokenBridgeAddresses.push(
+          ChainSpecificAddress.fromLong(network.chain, network.tokenBridge),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
+
+    return [
+      {
+        type: 'event',
+        signature: transferRedeemedLog,
+        includeTxEvents: [transferLog],
+        addresses: tokenBridgeAddresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const wormholeNetworks = this.configs.get(WormholeConfig)
@@ -48,6 +84,13 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
     )
     const transfer = nextLog && parseTransfer(nextLog, null)
 
+    const senderAddress = EthereumAddress(
+      `0x${parsed.emitterAddress.slice(-40)}`,
+    )
+    const dstWasMinted = transfer
+      ? EthereumAddress(transfer.from) === ZERO_ADDRESS
+      : undefined
+
     return [
       TransferRedeemed.create(input, {
         sequence: parsed.sequence,
@@ -56,10 +99,11 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
           (x) => x.wormholeChainId,
           parsed.emitterChainId,
         ),
-        srcTokenAddress: nextLog && Address32.from(nextLog.address),
-        srcAmount: transfer?.value,
+        dstTokenAddress: nextLog && Address32.from(nextLog.address),
+        dstAmount: transfer?.value,
         srcWormholeChainId: parsed.emitterChainId,
-        sender: parsed.emitterAddress,
+        sender: senderAddress,
+        dstWasMinted,
       }),
     ]
   }
@@ -70,10 +114,10 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
     db: InteropEventDb,
   ): MatchResult | undefined {
     if (TransferRedeemed.checkType(transferRedeemed)) {
-      // TODO: we should match by sequence + emitter/sender address (wormhole proto), not assume there is only one emitter per chain of LogMessagePublished
       const logMessagePublished = db.find(LogMessagePublished, {
         sequence: transferRedeemed.args.sequence,
         wormholeChainId: transferRedeemed.args.srcWormholeChainId,
+        sender: transferRedeemed.args.sender,
       })
       if (!logMessagePublished) {
         return
@@ -88,8 +132,15 @@ export class WormholeTokenBridgePlugin implements InteropPlugin {
         Result.Transfer('wormhole-tokenbridge.Transfer', {
           srcEvent: logMessagePublished,
           dstEvent: transferRedeemed,
-          srcTokenAddress: transferRedeemed.args.srcTokenAddress,
-          srcAmount: transferRedeemed.args.srcAmount,
+          srcTokenAddress: logMessagePublished.args.srcTokenAddress,
+          srcAmount: logMessagePublished.args.srcAmount,
+          dstTokenAddress: transferRedeemed.args.dstTokenAddress,
+          dstAmount: transferRedeemed.args.dstAmount,
+          srcWasBurned:
+            transferRedeemed.args.dstWasMinted !== undefined
+              ? !transferRedeemed.args.dstWasMinted
+              : undefined,
+          dstWasMinted: transferRedeemed.args.dstWasMinted,
         }),
       ]
     }

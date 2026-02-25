@@ -65,21 +65,23 @@ describe(OnchainAmountIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: configs,
-        chain: 'ethereum',
-        balanceProvider,
-        totalSupplyProvider,
-        starknetTotalSupplyProvider,
-        db: mockDatabase({
-          tvsAmount: tvsAmountRepository,
-          tvsBlockTimestamp: tvsBlockTimestampRepository,
-        }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: configs,
+          chain: 'ethereum',
+          balanceProvider,
+          totalSupplyProvider,
+          starknetTotalSupplyProvider,
+          db: mockDatabase({
+            tvsAmount: tvsAmountRepository,
+            tvsBlockTimestamp: tvsBlockTimestampRepository,
+          }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
@@ -172,21 +174,23 @@ describe(OnchainAmountIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: configs,
-        chain: 'starknet',
-        balanceProvider,
-        totalSupplyProvider,
-        starknetTotalSupplyProvider,
-        db: mockDatabase({
-          tvsAmount: tvsAmountRepository,
-          tvsBlockTimestamp: tvsBlockTimestampRepository,
-        }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: configs,
+          chain: 'starknet',
+          balanceProvider,
+          totalSupplyProvider,
+          starknetTotalSupplyProvider,
+          db: mockDatabase({
+            tvsAmount: tvsAmountRepository,
+            tvsBlockTimestamp: tvsBlockTimestampRepository,
+          }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
@@ -231,20 +235,22 @@ describe(OnchainAmountIndexer.name, () => {
         getTimestampToSync: mockFn().returnsOnce(timestamp),
       })
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [mockEscrowConfig],
-        chain: 'ethereum',
-        balanceProvider: mockObject<BalanceProvider>({}),
-        totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
-        starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
-          {},
-        ),
-        db: mockDatabase({}),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: [mockEscrowConfig],
+          chain: 'ethereum',
+          balanceProvider: mockObject<BalanceProvider>({}),
+          totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
+          starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
+            {},
+          ),
+          db: mockDatabase({}),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [mockEscrowConfig])
       const safeHeight = await updateFn()
@@ -274,22 +280,24 @@ describe(OnchainAmountIndexer.name, () => {
         findBlockNumberByChainAndTimestamp: mockFn().returnsOnce(null),
       })
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [mockEscrowConfig],
-        chain: 'ethereum',
-        balanceProvider: mockObject<BalanceProvider>({}),
-        totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
-        starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
-          {},
-        ),
-        db: mockDatabase({
-          tvsBlockTimestamp: tvsBlockTimestampRepository,
-        }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: [mockEscrowConfig],
+          chain: 'ethereum',
+          balanceProvider: mockObject<BalanceProvider>({}),
+          totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
+          starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
+            {},
+          ),
+          db: mockDatabase({
+            tvsBlockTimestamp: tvsBlockTimestampRepository,
+          }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       await expect(async () => {
         await indexer.multiUpdate(from, to, [mockEscrowConfig])
@@ -314,20 +322,22 @@ describe(OnchainAmountIndexer.name, () => {
         EthereumAddress.random(),
       )
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [mockEscrowConfig, mockTotalSupplyConfig],
-        chain: 'ethereum',
-        balanceProvider: mockObject<BalanceProvider>({}),
-        totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
-        starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
-          {},
-        ),
-        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: [mockEscrowConfig, mockTotalSupplyConfig],
+          chain: 'ethereum',
+          balanceProvider: mockObject<BalanceProvider>({}),
+          totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
+          starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
+            {},
+          ),
+          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+          syncOptimizer: mockObject<SyncOptimizer>({}),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const removalConfigs = [
         {

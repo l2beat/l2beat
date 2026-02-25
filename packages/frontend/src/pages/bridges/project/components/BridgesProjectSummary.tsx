@@ -15,7 +15,7 @@ export function BridgesProjectSummary({ project }: Props) {
     <section
       id="summary"
       data-role="nav-section"
-      className="w-full border-divider bg-surface-primary px-4 pt-4 max-md:border-b md:rounded-lg md:p-6"
+      className="w-full scroll-mt-[100vh] border-divider bg-surface-primary px-4 pt-4 max-md:border-b md:rounded-lg md:p-6"
     >
       <BridgesProjectStats project={project} />
 

@@ -6,6 +6,7 @@ export interface GasZipNetwork {
   gaszipId: number
   chainId: number
   solver: EthereumAddress
+  customGas?: boolean
 }
 
 export const DEPOSIT_EOA_ADDRESS = EthereumAddress(
@@ -15,6 +16,7 @@ export const DEPOSIT_CONTRACT_ADDRESS = EthereumAddress(
   '0x2a37D63EAdFe4b4682a3c28C1c2cD4F109Cc2762',
 )
 
+// https://dev.gas.zip/gas/chain-support/inbound
 export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
   {
     chain: 'ethereum',
@@ -39,6 +41,45 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     gaszipId: 55,
     chainId: 10,
     solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+  },
+  {
+    chain: 'apechain',
+    gaszipId: 296,
+    chainId: 33139,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    customGas: true,
+  },
+  {
+    chain: 'polygonpos',
+    gaszipId: 17,
+    chainId: 137,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    customGas: true,
+  },
+  {
+    chain: 'zksync2',
+    gaszipId: 51,
+    chainId: 324,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+  },
+  {
+    chain: 'abstract',
+    gaszipId: 110,
+    chainId: 2741,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+  },
+  {
+    chain: 'katana',
+    gaszipId: 485,
+    chainId: 747474,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+  },
+  {
+    chain: 'bsc',
+    gaszipId: 14,
+    chainId: 56,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    customGas: true,
   },
 ])
 

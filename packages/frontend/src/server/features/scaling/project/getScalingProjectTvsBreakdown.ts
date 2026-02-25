@@ -1,7 +1,7 @@
 import type { Milestone, Project } from '@l2beat/config'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { getProjectIcon } from '../../utils/getProjectIcon'
+import { type WithProjectIcon, withProjectIcon } from '~/utils/withProjectIcon'
 import {
   getProjectTokensEntries as getProjectTokensEntries,
   type ProjectTvsBreakdownTokenEntry,
@@ -9,13 +9,15 @@ import {
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTvsTargetTimestamp } from '../tvs/utils/getTvsTargetTimestamp'
+import { MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN } from './const'
 
 export interface ScalingProjectTvsBreakdown {
-  project: Project<
-    'tvsConfig' | 'tvsInfo',
-    'chainConfig' | 'milestones' | 'contracts' | 'archivedAt'
+  project: WithProjectIcon<
+    Project<
+      'tvsConfig' | 'tvsInfo',
+      'chainConfig' | 'milestones' | 'contracts' | 'archivedAt'
+    >
   >
-  icon: string
   dataTimestamp: number
   entries: ProjectTvsBreakdownTokenEntry[]
   project7dData: ProjectSevenDayTvsBreakdown
@@ -50,10 +52,11 @@ export async function getScalingProjectTvsBreakdown(
   }
 
   return {
-    project,
-    icon: getProjectIcon(project.slug),
+    project: withProjectIcon(project),
     dataTimestamp: getTvsTargetTimestamp(),
-    entries,
+    entries: entries.filter(
+      (entry) => entry.valueForProject >= MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN,
+    ),
     project7dData,
     milestones: project.milestones ?? [],
   }

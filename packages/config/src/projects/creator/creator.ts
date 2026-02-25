@@ -15,7 +15,10 @@ export const creator: ScalingProject = upcomingL2({
     stacks: ['ZK Stack'],
     links: {
       websites: ['https://oncreator.com/'],
-      socialMedia: ['https://x.com/oncreator_'],
+      socialMedia: [
+        'https://x.com/oncreator_',
+        'https://discord.com/invite/oncreator',
+      ],
     },
   },
   ecosystemInfo: {

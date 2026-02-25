@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb8649cd15536d565128dafc8ee692515ce5eea36
+
+# Diff at Mon, 19 Jan 2026 09:56:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fedbf0b580d39c802d10691add7e94f6a4b53464 block: 1762264403
+- current timestamp: 1768816541
+
+## Description
+
+trustedSequencer (state root signer) change.
+
+## Watched changes
+
+```diff
+    contract Validium (eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      values.trustedSequencer:
+-        "eth:0x129A94208bb3030D809c36849d43b50d13e0cACf"
++        "eth:0xA2Ce8D246889Db0F1Cb615E2E1231790cd5244A7"
+    }
+```
+
 Generated with discovered.json: 0x0c4b9219504ff4039c6df2712f1318603d305b4c
 
 # Diff at Tue, 04 Nov 2025 11:34:44 GMT:

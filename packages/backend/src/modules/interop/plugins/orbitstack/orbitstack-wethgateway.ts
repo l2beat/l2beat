@@ -310,9 +310,11 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           srcEvent: depositInitiated,
           srcAmount: depositInitiated.args.amount,
           srcTokenAddress: Address32.from(network.l1Weth),
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: Address32.from(network.l2Weth),
+          dstWasMinted: true,
         }),
       ]
     }
@@ -357,9 +359,11 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           srcEvent: withdrawalInitiated,
           srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: Address32.from(network.l2Weth),
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: Address32.from(network.l1Weth),
+          dstWasMinted: false,
         }),
       ]
     }

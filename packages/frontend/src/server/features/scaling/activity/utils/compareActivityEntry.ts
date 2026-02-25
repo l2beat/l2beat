@@ -8,13 +8,6 @@ export function compareActivityEntry(
     metric?: ActivityMetric
   },
 ) {
-  if (a.slug === 'ethereum') {
-    return -1
-  }
-  if (b.slug === 'ethereum') {
-    return 1
-  }
-
   const metric = opts?.metric ?? 'uops'
   const diff =
     (b.data?.[metric].pastDayCount.value ?? -1) -

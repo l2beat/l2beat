@@ -28,6 +28,9 @@ export function createBlockSyncModule({
   const chains = blockProcessors
     .map((x) => x.chain)
     .filter((x, i, a) => a.indexOf(x) === i)
+  const stopBlockIndexerAtTimestampMs = env.optionalInteger(
+    'STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS',
+  )
 
   const indexers: Indexer[] = []
   for (const chain of chains) {
@@ -45,18 +48,21 @@ export function createBlockSyncModule({
             config.blockSync.delayFromTipInSeconds,
           )
 
-    const blockIndexer = new BlockIndexer({
+    const blockIndexer = new BlockIndexer(
+      {
+        minHeight: 1,
+        parents: [blockNumberIndexer],
+        blockProcessors: blockProcessors.filter((x) => x.chain === chain),
+        source: chain,
+        blockProvider: providers.block.getBlockProvider(chain),
+        logsProvider: providers.logs.getLogsProvider(chain),
+        indexerService,
+        batchSize:
+          env.optionalInteger(Env.key(chain, 'BLOCKSYNC_BATCH_SIZE')) ?? 50,
+        stopBlockIndexerAtTimestampMs,
+      },
       logger,
-      minHeight: 1,
-      parents: [blockNumberIndexer],
-      blockProcessors: blockProcessors.filter((x) => x.chain === chain),
-      source: chain,
-      blockProvider: providers.block.getBlockProvider(chain),
-      logsProvider: providers.logs.getLogsProvider(chain),
-      indexerService,
-      batchSize:
-        env.optionalInteger(Env.key(chain, 'BLOCKSYNC_BATCH_SIZE')) ?? 50,
-    })
+    )
 
     indexers.push(blockNumberIndexer)
     indexers.push(blockIndexer)

@@ -1,6 +1,6 @@
 {
   "name": "nova",
-  "timestamp": 1768394418,
+  "timestamp": 1768566203,
   "configHash": "0xed5dc4fb1ef2b6f2f905af20eb4434638f0ef2d67c9aa815ae2b20f50f23fd7a",
   "entries": [
     {
@@ -183,6 +183,12 @@
         "arb-nova:0xbe04Ab2728c924D678f9FC833E379688c6eFA317": "L2WethGateway"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "JohnMorrow-Gauntlet",
+      "address": "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L2UpgradeExecutor",
@@ -515,8 +521,8 @@
         "$immutable": false,
         "$implementation": "arb-nova:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "arb-nova:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
-          "arb-nova:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
           "arb-nova:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
           "arb-nova:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
           "arb-nova:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
@@ -796,12 +802,6 @@
       }
     },
     {
-      "name": "Gauntlet",
-      "address": "arb-nova:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "bartek.eth-L2BEAT",
       "address": "eth:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
       "type": "EOA",
@@ -886,7 +886,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 310329,
+        "batchCount": 310997,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -898,9 +898,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 24232913,
+          "prevBlockNumber": 24247095,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 24232972
+          "prevSequencedBlockNumber": 24247160
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -933,7 +933,7 @@
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 556311,
+        "totalDelayedMessagesRead": 556984,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1304,6 +1304,12 @@
       }
     },
     {
+      "name": "JohnMorrow-Gauntlet",
+      "address": "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1560,7 +1566,7 @@
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 556315,
+        "delayedMessageCount": 556987,
         "inboxHistory": [
           "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -1568,8 +1574,8 @@
         "outboxHistory": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 310329,
-        "sequencerReportedSubMessageCount": 84526202
+        "sequencerMessageCount": 310997,
+        "sequencerReportedSubMessageCount": 84533642
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -4623,7 +4629,7 @@
         ],
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0x44cada97929e6c61607e9d397cae46f9e9c81993f86fa584178f9dd1c6945001",
+        "latestConfirmed": "0xcdfd1b4614b3fa1b46cfa0bfa0ba65ab487819744fb241a08f0ce8d75e5d23ab",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -4863,8 +4869,8 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
           "eth:0x875573B973F7E9Ca54eb34a59180C70eE1128208",
-          "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
           "eth:0x0cd9e52891A0a48d45b0C61A31086be8361Ef157",
           "eth:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E",
           "eth:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392",
@@ -4896,12 +4902,6 @@
           "href": "https://docs.arbitrum.foundation/security-council-members"
         }
       ]
-    },
-    {
-      "name": "Gauntlet",
-      "address": "eth:0xf8d47784EE7F3eBD40Bd83CB822e3161742B1988",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
@@ -6289,6 +6289,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 24232998, "nova": 84526206 },
-  "permissionsConfigHash": "0xae39f89ab434aea6678c375856fd24abb6a2c782b7a207bbd29cf5cb644a0c7a"
+  "usedBlockNumbers": { "ethereum": 24247264, "nova": 84533641 },
+  "permissionsConfigHash": "0x7fc9750ac01e6b395c3e6d187d8651fa8da2855d3a764129293ce040c3d8639f"
 }

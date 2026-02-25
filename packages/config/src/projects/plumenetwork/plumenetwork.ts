@@ -39,6 +39,20 @@ export const plumenetwork: ScalingProject = orbitStackL2({
       other: ['https://growthepie.com/chains/plume'],
     },
   },
+  nonTemplateTechnology: {
+    sequencing: {
+      name: 'Buffered forced transactions',
+      description:
+        'To force transactions from the host chain, users must first enqueue "delayed" messages in the "delayed" inbox of the Bridge contract. Only authorized Inboxes are allowed to enqueue delayed messages, and the so-called Inbox contract is the one used as the entry point by calling the `sendMessage` or `sendMessageFromOrigin` functions. If the centralized sequencer doesn\'t process the request within some time bound, users can call the `forceInclusion` function on the SequencerInbox contract to include the message in the canonical chain. The time bound is defined to be the minimum between 1d and the time left in the delay buffer. The delay buffer mechanism is present in the code but is effectively disabled due to buffer parameters being set to extreme values.',
+      references: [
+        {
+          title: 'Sequencer and censorship resistance - Arbitrum documentation',
+          url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer',
+        },
+      ],
+      risks: [],
+    },
+  },
   additionalPurposes: ['RWA'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -107,6 +121,14 @@ export const plumenetwork: ScalingProject = orbitStackL2({
       date: '2025-11-18T00:00:00Z',
       description:
         'Plume Network stops using Celestia and switches to ArbOS v32 with a DAC for data availability.',
+      type: 'general',
+    },
+    {
+      title: 'Plume Network migrates to BoLD',
+      url: 'https://etherscan.io/tx/0x91f946c6c2aaa8d2d87616f38d39514c8c08650703eb12010de9968db16bed4f',
+      date: '2026-02-05T00:00:00Z',
+      description:
+        'Plume Network upgrades to BoLD dispute protocol with ArbOS v51.',
       type: 'general',
     },
   ],

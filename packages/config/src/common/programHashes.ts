@@ -64,6 +64,50 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
     `,
   },
+  '0x00b37da93c30bef199e4f70190c46367ade11ab988c3cff4c661960919718afd': {
+    title: 'Aggregation program of OP Succinct FDP',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client in fault dispute proof mode.',
+    proverSystemProject: ProjectId('sp1'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v1.0.2/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.2\` . Commit hash should be  \`a8d870c320c158a2a2e4eee0303c688b15bea2c0\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+  `,
+  },
+  '0x05ca7dfb1b7ca7a103fa36750d622f81182eb7c9679b9487418968400e2b1a29': {
+    title: 'Range program of OP Succinct FDP',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks in fault dispute proof mode.',
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v1.0.2/programs/range/eigenda',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v1.0.2\` . Commit hash should be  \`a8d870c320c158a2a2e4eee0303c688b15bea2c0\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+    `,
+  },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     title: 'Aggregation program of OP Succinct',
     description:
@@ -71,7 +115,20 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/aggregation',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [op-succinct](https://github.com/succinctlabs/op-succinct) repo:  \`git checkout v2.3.1\` . Commit hash should be  \`2591527807f1da7018b57328614ca54b6bd02871\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir run: \`cargo run --bin config --release\` to compile the program from sources and output the program hash.
+  `,
   },
   '0x00afb45d8064ae10aa6a1793b8f39a24c27268efae2917b5c02950b2377fbf00': {
     title: 'Aggregation program of OP Succinct',
@@ -103,7 +160,20 @@ Verify:
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/range/ethereum',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [op-succinct](https://github.com/succinctlabs/op-succinct) repo:  \`git checkout v2.3.1\` . Commit hash should be  \`2591527807f1da7018b57328614ca54b6bd02871\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir run: \`cargo run --bin config --release\` to compile the program from sources and output the program hash.
+    `,
   },
   '0x416d710344b6b6fa2a0b1a1445f3d6ba4fdd5ab43f0e863b1c522db20f28ad9b': {
     title: 'Range program of OP Succinct',
@@ -309,8 +379,23 @@ fn main() {
     title: 'Aggregation program of OP Succinct',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.1.8/programs/aggregation',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/main) repo:  \`git checkout v2.1.8\` . Commit hash should be  \`9ec9d1a6f4b13b06a1bdbcc11dd3217337ca6d3b\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+  `,
   },
   '0x5d15e85151cc8f4b68d2721f675b0b8665a7a2752fa34ff935d5adbc3c8acab8': {
     title: 'Range program of OP Succinct',
@@ -318,6 +403,28 @@ fn main() {
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',
+  },
+  '0x05044f60230e1ea664a43fa92e27735e3bbc97736c2e7ab961a5115a732a6da5': {
+    title: 'Range program of OP Succinct (Mantle)',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks. Mantle-specific build addressing revm/geth inconsistency.',
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.1.8/programs/range/eigenda',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/main) repo:  \`git checkout v2.1.8\` . Commit hash should be  \`9ec9d1a6f4b13b06a1bdbcc11dd3217337ca6d3b\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+  `,
   },
   '0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452': {
     title: 'Aggregation program of OP Succinct',
@@ -334,18 +441,48 @@ fn main() {
     verificationStatus: 'notVerified',
   },
   '0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2': {
-    title: 'Aggregation program of OP Succinct',
+    title: 'Aggregation program of Facet v1 (OP Succinct)',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    programUrl:
+      'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/aggregation',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [zk-fault-proofs](https://github.com/0xFacet/zk-fault-proofs) repo:  \`git checkout facet\` . Commit hash should be  \`ad0ef0488e714212cb420ae04c9b242d9ef26f24\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829': {
-    title: 'Range program of OP Succinct',
+    title: 'Range program of Facet v1 (OP Succinct)',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    programUrl:
+      'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/range',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [zk-fault-proofs](https://github.com/0xFacet/zk-fault-proofs) repo:  \`git checkout facet\` . Commit hash should be  \`ad0ef0488e714212cb420ae04c9b242d9ef26f24\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605': {
     title: 'Aggregation program of OP Succinct',
@@ -456,15 +593,34 @@ Verify:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system.',
     proverSystemProject: ProjectId('risc0'),
     programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.1.8',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+    Even though the program is compiled in docker for reproducibility reasons, it gives the correct image ID only on linux OS. Steps below were done on Ubuntu 22.04 OS.
+    
+    Prepare (see [kailua prerequisites](https://github.com/boundless-xyz/kailua?tab=readme-ov-file#prerequisites)):
+    
+    1. Install rust: \`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\`, then \`. .cargo/env\`.
+    2. Install dependency libs \`sudo apt-get install build-essential libssl-dev clang\`.
+    3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+    4. Install the risc zero toolkit \`curl -L https://risczero.com/install | bash\`, then \`rzup install\`.
+    5. Install just, svm and foundry.
+    
+    Verify:
+    
+    1. Checkout the correct branch in [kailua](https://github.com/boundless-xyz/kailua) repo:  \`git checkout v1.1.8\`. Commit hash should be  \`e4b655382c5f481b61f0c4459fb3559b54c84137\`.
+    2. Make sure docker is running by running  \`docker ps\`.
+    3. Execute just script to build FPVM kona image: \`just build-fpvm-kona\`.
+    4. Execute \`just export-fpvm\`. This command should output correct ImageID in a format of array of hex values instead of a single string. Note that the array elements will have bytes in the reverse order.
+    `,
   },
   '0x951f56039ddaca6cdd588e55d7205882ec158e3afc5d048f2d723da0d8858ecf': {
     title: 'Kailua fault proof program (SOON)',
     description:
       'Program that executes OP Kona client to derive blocks and generate fault or validity proofs for SOON SVM chain, is a part of ZK non-interactive fault proof system.',
-    programUrl: 'https://github.com/soonlabs/kailua-soon',
     proverSystemProject: ProjectId('risc0'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to the SOON team, this Kailua FPVM program was compiled using a local version with some additional logging added for debugging purposes. The code is not public and thus the program hash cannot be independently verified.',
   },
   '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
     title: 'Kailua fault proof program (MegaETH)',
@@ -529,7 +685,75 @@ Verify:
 4. From the repo root dir:  \`cargo risczero build --manifest-path crates/aggregation/guest/set-builder/Cargo.toml\` to build elf binaries from sources. This command should output correct ImageID.
     `,
   },
+  '989994135429182905628199499137734285064642484443466268071170571058909750176':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2026_13)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/applicative_bootloader',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
+
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/starkware_proghash_artifacts/56407b69f3f19f69302a8623baa8c5f71f967eed/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/56407b69f3f19f69302a8623baa8c5f71f967eed/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
+    },
   '37889379279861089970868356983774360253508326951064758033885675883862334778':
+    {
+      title:
+        'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_12)',
+      description:
+        'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/56407b69f3f19f69302a8623baa8c5f71f967eed/src/starkware/cairo/bootloaders/simple_bootloader',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
+
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/starkware_proghash_artifacts/56407b69f3f19f69302a8623baa8c5f71f967eed/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/56407b69f3f19f69302a8623baa8c5f71f967eed/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
+    },
+  '3035974089339935040143966034750116008615662951603253398063766337728525196711':
     {
       title:
         'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
@@ -538,10 +762,87 @@ Verify:
       proverSystemProject: ProjectId('stwo'),
       verificationStatus: 'notVerified',
     },
-  '3480185788024326007166778030599498673382667448173974782477620863541158415714':
+  '160268921359133235574810995023520895391777547407923205700393332203861498631':
+    {
+      title:
+        'Simple bootloader Cairo program (StarkWare_GpsStatementVerifier_2024_10)',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/v0.13.5/src/starkware/cairo/bootloaders/simple_bootloader',
+      description:
+        'Cairo program that can sequentially run multiple programs to reduce the size of the public inputs, and recursively verify bootloader proofs.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
+
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout v0.13.5
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/starkware_proghash_artifacts/v0.13.5/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/v0.13.5/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
+    },
+  '3585039955034622347908243360088523999417661979601115750324841620224559981237':
     {
       title:
         'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_11)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      proverSystemProject: ProjectId('stwo'),
+      verificationStatus: 'notVerified',
+    },
+  '1104316318711847786071125527957082259001554753246760931396914052122269757907':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2024_10)',
+      description:
+        'Cairo program that verifies the correct aggregation of several proofs of a base program.',
+      proverSystemProject: ProjectId('stwo'),
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/tree/v0.13.5/src/starkware/cairo/bootloaders/applicative_bootloader',
+      verificationStatus: 'successful',
+      verificationSteps: `
+The steps below are supposed to be run on linux OS. They could also be run on macOS, but several tweaks need to be made: update from \`lru-dict==1.1.8\` to \`lru-dict==1.3.0\` in \`scripts/requirements.txt\` and update \`python_interpreter\` in \`bazel_utils/python/stub.sh\` to the correct location.
+
+1. Install [bazel](https://bazel.build) version 7.4.1 and \`gmp\` library using [brew](https://brew.sh):
+\`\`\`
+brew install bazelisk
+USE_BAZEL_VERSION=7.4.1 bazelisk version
+brew install gmp  # or sudo apt-get install libgmp-dev
+\`\`\`
+
+2. On linux, install JDK if you don't have it: \`sudo apt install openjdk-21-jre\`.
+
+3. Check out the correct commit of <https://github.com/starkware-libs/cairo-lang/tree/master> repo:
+\`\`\`
+git clone https://github.com/starkware-libs/cairo-lang.git
+cd cairo-lang
+git checkout v0.13.5
+\`\`\`
+
+4. Update \`cairo-lang/src/starkware/cairo/bootloaders/BUILD\` file by appending [this snippet](/files/starkware_proghash_artifacts/v0.13.5/BUILD_ADDITION) at the end.
+5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/v0.13.5/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
+6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
+      `,
+    },
+  '3480185788024326007166778030599498673382667448173974782477620863541158415714':
+    {
+      title:
+        'Applicative bootloader Cairo program (StarkWare_GpsStatementVerifier_2025_12)',
       description:
         'Cairo program that verifies the correct aggregation of several proofs of a base program.',
       proverSystemProject: ProjectId('stwo'),
@@ -788,6 +1089,13 @@ fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
 \`\`\`
     `,
   },
+  '0x0091609acb607118f47f756c0f4db9aad227420326cbda96f0303384e0bbf8e3': {
+    title: 'Executable of the Scroll bundle program',
+    description:
+      "Proves the correct execution of a bundle of Scroll L2 blocks, which is the unit of L2 state finalisation from L1's perspective.",
+    proverSystemProject: ProjectId('openvmprover'),
+    verificationStatus: 'notVerified',
+  },
   '0x009305f0762291e3cdd805ff6d6e81f1d135dbfdeb3ecf30ad82c3855dde7909': {
     title: 'Config of the Scroll bundle program',
     description:
@@ -901,17 +1209,45 @@ Verify:
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of the Ethscriptions L2 client.',
-    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    programUrl:
+      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/aggregation',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [ethscriptions-zk-fault-proofs](https://github.com/0xFacet/ethscriptions-zk-fault-proofs) repo:  \`git checkout ethscriptions\` . Commit hash should be  \`251c5248cf92b544a3e6b1b4c0b98b0146dab1c6\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x5a02c6f96d93f5ff1bfe8f5f2f7f158a3bc6ab7e294d3f7824507a1c67edf594': {
     title: 'Range program of Ethscriptions ZK Fault Proofs',
     description:
       'Proves correct state transition function within the Ethscriptions L2 client over a range of consecutive L2 blocks.',
-    programUrl: 'https://github.com/0xFacet/ethscriptions-zk-fault-proofs',
+    programUrl:
+      'https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/range/ethereum',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [ethscriptions-zk-fault-proofs](https://github.com/0xFacet/ethscriptions-zk-fault-proofs) repo:  \`git checkout ethscriptions\` . Commit hash should be  \`251c5248cf92b544a3e6b1b4c0b98b0146dab1c6\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
+  `,
   },
   '0x00ad538a51c761c06f5075d11f3ee64d5d00c272a741ccf098e1d9f062fee13d': {
     title: 'Morph Guest program (v0.4.9 release)',
@@ -920,6 +1256,235 @@ Verify:
     programUrl:
       'https://github.com/morph-l2/morph/tree/v0.4.9/prover/bin/client',
     proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a': {
+    title: 'ArbOS v40 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    verificationStatus: 'successful',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v40/arbos',
+    verificationSteps: `
+L2BEAT team was able to independently regenerate this program hash. However currently the following steps for hash regeneration produce an error, so the process could not be independently verified.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v40\` . Commit hash should be  \`37ae61f20f8efdbc7e2f6af7f21c309bc09086a1\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`. Currently this step fails with an error.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+      `,
+  },
+  '0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499': {
+    title: 'ArbOS v51 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    verificationStatus: 'successful',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v51/arbos',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v51\` . Commit hash should be  \`03949e76071f048c850d721c7a378a2e4b3fbd09\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
+  },
+  '0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39': {
+    title: 'ArbOS v32 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v32/arbos',
+    verificationStatus: 'notVerified',
+  },
+  '0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4': {
+    title: 'ArbOS v20 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v20/arbos',
+    verificationStatus: 'notVerified',
+  },
+  '0x58a9512cf4096461f866446387e845c6573856ef603bba4e24cb1d89630a675c': {
+    title: 'ArbOS Kinto wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    verificationStatus: 'notVerified',
+  },
+  '0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69': {
+    title: 'ArbOS v31 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v31/arbos',
+    verificationStatus: 'notVerified',
+  },
+  '0x5b82aa008989d331bf6f3cf75b85a04c9ee809447c19b85fecaf3b7d749a6576': {
+    title: 'ArbOS Apechain wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    verificationStatus: 'notVerified',
+  },
+  '0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a': {
+    title: 'ArbOS v41 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    programUrl:
+      'https://github.com/OffchainLabs/nitro/tree/consensus-v41/arbos',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v41\` . Commit hash should be  \`2a9b15285b422e83f7a1faad0722990baa779971\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+5. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
+  },
+  '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287': {
+    title: 'Celestia Nitro 3.2.1 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
+    verificationStatus: 'notVerified',
+  },
+  '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3': {
+    title: 'Celestia Nitro 3.2.2 wasmModuleRoot',
+    description:
+      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
+    verificationStatus: 'notVerified',
+  },
+  '0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa': {
+    title: 'OP Kona absolute prestate v1.2.7 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program of Kona client.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/d181d5b197665df9b5efd66e4f76f09adf5c697f/kona',
+    verificationStatus: 'successful',
+    verificationSteps: `
+1. Install [just](https://just.systems).
+2. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+3. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout d181d5b197665df9b5efd66e4f76f09adf5c697f\`.
+4. Got to kona dir \`cd kona\` and run \`just build-cannon-prestate\`. This script will regenerate kona absolute prestate and create \`kona/prestates/<hash>.bin.gz\` file, where \`<hash>\` is the resulting absolute prestate.
+    `,
+  },
+  '0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e': {
+    title: 'OP absolute prestate v1.9.0 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.9.0/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.9.0-rc.1\` . Commit hash should be  \`a0c621361db5b5a6dcb60fd8943d485672a076b0\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
+  '0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6': {
+    title: 'OP absolute prestate v1.6.0 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.6.0/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.6.0\` . Commit hash should be  \`d6fb90dd489e39efa206b55200766ccc075c1d9b\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
+  '0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b': {
+    title: 'OP absolute prestate v1.8.0-rc.4 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.8.0-rc.4/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.8.0-rc.4\` . Commit hash should be  \`94706ec5072b13030600d1b45ae10b673b660c0d\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
+  '0x03ddcb9294fef6dd477b4e911fd777fda0832fdd10aa594ac941540ea62a2aa0': {
+    title: 'OP absolute prestate Boba',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    verificationStatus: 'notVerified',
+  },
+  '0x03c7ae758795765c6664a5d39bf63841c71ff191e9189522bad8ebff5d4eca98': {
+    title: 'OP absolute prestate Cyber',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    verificationStatus: 'notVerified',
+  },
+  '0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c': {
+    title: 'OP absolute prestate v1.3.1',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-node/v1.3.1/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.3.1\` . Commit hash should be  \`e3c2f046c2d7103c765cbd47e949a284e511a47d\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
+  '0x03cb5216c8cf2902c66127db119ba03a1296205736addc39cfeafc7c14d0bd14': {
+    title: 'OP absolute prestate Lisk',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    verificationStatus: 'notVerified',
+  },
+  '0x03eb07101fbdeaf3f04d9fb76526362c1eea2824e4c6e970bdb19675b72e4fc8': {
+    title: 'OP absolute prestate v1.6.1 (cannon64)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program.',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.6.1/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-program/v1.6.1\` . Commit hash should be  \`a094d016092e3355642d00be6d7943c4529ef008\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
+  },
+  '0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609': {
+    title: 'Cartesi Honeypot v2 template hash',
+    description:
+      'The hash of the initial Cartesi machine state that is used in Dave dispute games of Cartesi Honeypot v2.',
+    programUrl:
+      'https://github.com/cartesi/honeypot/blob/699c2b12745f1f7da708cb497106e657e3a67e49/honeypot.cpp',
+    verificationStatus: 'successful',
+    verificationSteps: `
+The verification process is based on [this guide](https://github.com/cartesi/honeypot/blob/699c2b12745f1f7da708cb497106e657e3a67e49/README.md#building-and-running).
+
+1. Install all required dependencies: Docker, GNU Make, Lua 5.4, [cartesi/machine-emulator](https://github.com/cartesi/machine-emulator) 0.19.x and [cartesi/xgenext2fs](https://github.com/cartesi/genext2fs). 
+In our experience, cartesi-machine could not be installed from cartesi APT package repository because the \`dist.cartesi.io\` URL was not accessible, the homebrew installation worked successfully on an ubuntu machine.
+2. Check out the correct commit version of the [honeypot repo](https://github.com/cartesi/honeypot): \`git checkout 699c2b12745f1f7da708cb497106e657e3a67e49\`.
+3. On x86 architecture, configure docker to work with riscv64 architecture via emulation: \`docker run --privileged --rm tonistiigi/binfmt --install riscv64\`.
+4. Build the application by running: \`make HONEYPOT_CONFIG=mainnet\`. This build script will output the correct program hash on successful execution.
+    `,
+  },
+  '0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14': {
+    title: 'Cartesi Honeypot v1 template hash',
+    description:
+      'The hash of the initial Cartesi machine state that is used in Dave dispute games of Cartesi Honeypot v1.',
     verificationStatus: 'notVerified',
   },
 }

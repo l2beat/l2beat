@@ -4,6 +4,25 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "symbiosis-APE",
+      "priceId": "apecoin",
+      "symbol": "APE",
+      "name": "ApeCoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24383/large/apecoin.jpg?1696523566",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4d224452801ACEd8B2F0aebE155379bb5D594381",
+        "chain": "ethereum",
+        "escrowAddress": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
+        "decimals": 18,
+        "sinceTimestamp": 1668373200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "symbiosis-FRAX.legacy",
       "priceId": "frax",
       "symbol": "FRAX.legacy",

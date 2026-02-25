@@ -75,7 +75,7 @@ export class InteropEventStore implements InteropEventDb {
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
     approximate: InteropApproximateQuery<T>,
-  ): InteropEvent<T> | undefined {
+  ): InteropEvent<T>[] {
     return this.eventDb.findApproximate(type, query, approximate)
   }
 

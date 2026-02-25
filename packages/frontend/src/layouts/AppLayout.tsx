@@ -2,6 +2,7 @@ import { ThemeProvider } from 'next-themes'
 import { ChartLegendOnboardingProvider } from '~/components/core/chart/ChartLegendOnboardingContext'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { DevAutoReloader } from '~/components/DevAutoReloader'
+import { L2BeatDevTools } from '~/components/dev-tools/L2BeatDevTools'
 import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { SearchBarContextProvider } from '~/components/search-bar/SearchBarContext'
@@ -34,6 +35,7 @@ export function AppLayout({
         disableTransitionOnChange
       >
         <TooltipProvider delayDuration={300} disableHoverableContent>
+          {env.NODE_ENV === 'development' && <L2BeatDevTools />}
           <GlossaryContextProvider terms={terms}>
             <WhatsNewContextProvider whatsNew={whatsNew}>
               <SearchBarContextProvider

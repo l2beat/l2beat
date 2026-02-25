@@ -21,7 +21,6 @@ const common = {
   indexerService: mockObject<IndexerService>({
     getSavedConfigurations: async () => [saved('a', 100, null, null)],
   }),
-  logger: Logger.SILENT,
   serializeConfiguration: SERIALIZE,
   db: mockDatabase(),
 }
@@ -34,28 +33,34 @@ describe(ManagedMultiIndexer.name, () => {
   describe('constructor', () => {
     it('throws on empty configurations', () => {
       expect(() => {
-        new TestIndexer({ ...common, configurations: [] })
+        new TestIndexer({ ...common, configurations: [] }, Logger.SILENT)
       }).toThrow('Configurations should not be empty')
     })
 
     it('throws on duplicate indexer ids', () => {
-      new TestIndexer({ ...common, name: 'same-name' })
+      new TestIndexer({ ...common, name: 'same-name' }, Logger.SILENT)
       expect(() => {
-        new TestIndexer({ ...common, name: 'same-name' })
+        new TestIndexer({ ...common, name: 'same-name' }, Logger.SILENT)
       }).toThrow('Indexer id same-name is duplicated!')
     })
 
     it('throws on duplicate configuration ids', () => {
-      new TestIndexer({
-        ...common,
-        configurations: [mockObject<Configuration<string>>({ id: 'a' })],
-      })
-      expect(() => {
-        new TestIndexer({
+      new TestIndexer(
+        {
           ...common,
-          name: 'other-name',
           configurations: [mockObject<Configuration<string>>({ id: 'a' })],
-        })
+        },
+        Logger.SILENT,
+      )
+      expect(() => {
+        new TestIndexer(
+          {
+            ...common,
+            name: 'other-name',
+            configurations: [mockObject<Configuration<string>>({ id: 'a' })],
+          },
+          Logger.SILENT,
+        )
       }).toThrow('Configuration id a is duplicated in other-name')
     })
   })
@@ -67,11 +72,14 @@ describe(ManagedMultiIndexer.name, () => {
         insertConfigurations: async () => {},
       })
 
-      const indexer = new TestIndexer({
-        ...common,
-        indexerService,
-        configurations: [actual('a', 100, null), actual('b', 100, null)],
-      })
+      const indexer = new TestIndexer(
+        {
+          ...common,
+          indexerService,
+          configurations: [actual('a', 100, null), actual('b', 100, null)],
+        },
+        Logger.SILENT,
+      )
 
       const newHeight = await indexer.initialize()
 
@@ -97,7 +105,10 @@ describe(ManagedMultiIndexer.name, () => {
       const db = mockObject<Database>({
         transaction: async (fun) => await fun(),
       })
-      const indexer = new TestIndexer({ ...common, indexerService, db })
+      const indexer = new TestIndexer(
+        { ...common, indexerService, db },
+        Logger.SILENT,
+      )
 
       await indexer.updateSavedConfigurations({
         toAdd: [actual('a', 100, null)],
@@ -149,11 +160,14 @@ describe(ManagedMultiIndexer.name, () => {
         getSavedConfigurations: async () => [saved('a', 100, null, null)],
       })
 
-      const indexer = new TestIndexer({
-        ...common,
-        indexerService,
-        configurations: [actual('a', 100, null)],
-      })
+      const indexer = new TestIndexer(
+        {
+          ...common,
+          indexerService,
+          configurations: [actual('a', 100, null)],
+        },
+        Logger.SILENT,
+      )
       await indexer.initialize()
 
       // Configuration starts at 100, this range will be empty
@@ -176,12 +190,15 @@ describe(ManagedMultiIndexer.name, () => {
         transaction: async (fun) => await fun(),
       })
 
-      const indexer = new TestIndexer({
-        ...common,
-        db,
-        indexerService,
-        configurations: [actual('a', 100, null), actual('b', 100, null)],
-      })
+      const indexer = new TestIndexer(
+        {
+          ...common,
+          db,
+          indexerService,
+          configurations: [actual('a', 100, null), actual('b', 100, null)],
+        },
+        Logger.SILENT,
+      )
       const saveData = mockFn((targetHeight) => Promise.resolve(targetHeight))
       indexer.multiUpdate = mockFn<ManagedMultiIndexer<string>['multiUpdate']>(
         async (_, targetHeight) => () => saveData(targetHeight),
@@ -205,9 +222,7 @@ describe(ManagedMultiIndexer.name, () => {
     })
 
     it('cannot return more than currentHeight', async () => {
-      const indexer = new TestIndexer({
-        ...common,
-      })
+      const indexer = new TestIndexer({ ...common }, Logger.SILENT)
 
       await indexer.initialize()
 
@@ -230,11 +245,14 @@ describe(ManagedMultiIndexer.name, () => {
       const indexerService = mockObject<IndexerService>({
         getSavedConfigurations: async () => [saved('a', 100, 200, null)],
       })
-      indexer = new TestIndexer({
-        ...common,
-        indexerService,
-        configurations: [actual('a', 100, 200)],
-      })
+      indexer = new TestIndexer(
+        {
+          ...common,
+          indexerService,
+          configurations: [actual('a', 100, 200)],
+        },
+        Logger.SILENT,
+      )
       await indexer.initialize()
     })
 
@@ -292,7 +310,10 @@ describe(ManagedMultiIndexer.name, () => {
           updateConfigurationsCurrentHeight: async () => {},
         })
 
-        const indexer = new TestIndexer({ ...common, indexerService })
+        const indexer = new TestIndexer(
+          { ...common, indexerService },
+          Logger.SILENT,
+        )
 
         await indexer.updateConfigurationsCurrentHeight(100)
 
@@ -305,7 +326,7 @@ describe(ManagedMultiIndexer.name, () => {
 
   describe(ManagedMultiIndexer.prototype.invalidate.name, () => {
     it('returns target height', async () => {
-      const indexer = new TestIndexer({ ...common })
+      const indexer = new TestIndexer({ ...common }, Logger.SILENT)
 
       const targetHeight = await indexer.invalidate(100)
 
@@ -317,7 +338,10 @@ describe(ManagedMultiIndexer.name, () => {
     const indexerService = mockObject<IndexerService>({
       setInitialState: async () => {},
     })
-    const indexer = new TestIndexer({ ...common, indexerService })
+    const indexer = new TestIndexer(
+      { ...common, indexerService },
+      Logger.SILENT,
+    )
 
     await indexer.setInitialState(100, 'config-hash')
 
@@ -331,7 +355,10 @@ describe(ManagedMultiIndexer.name, () => {
     const indexerService = mockObject<IndexerService>({
       setSafeHeight: async () => {},
     })
-    const indexer = new TestIndexer({ ...common, indexerService })
+    const indexer = new TestIndexer(
+      { ...common, indexerService },
+      Logger.SILENT,
+    )
 
     await indexer.setSafeHeight(100)
 
@@ -592,8 +619,8 @@ describe(ManagedMultiIndexer.name, () => {
 class TestIndexer extends ManagedMultiIndexer<string> {
   override readonly options: ManagedMultiIndexerOptions<string>
 
-  constructor(options: ManagedMultiIndexerOptions<string>) {
-    super(options)
+  constructor(options: ManagedMultiIndexerOptions<string>, logger: Logger) {
+    super(options, logger)
     this.options = options
   }
 
@@ -651,14 +678,16 @@ async function initializeMockIndexer(
   if (saved.length > 0) {
     await indexerService.upsertConfigurations('indexer', saved, (v) => v)
   }
-  const indexer = new TestIndexer({
-    parents: [],
-    name: 'indexer',
-    indexerService,
-    configurations,
-    logger: Logger.SILENT,
-    serializeConfiguration: (v) => JSON.stringify(v),
-    db: database ?? mockDatabase(),
-  })
+  const indexer = new TestIndexer(
+    {
+      parents: [],
+      name: 'indexer',
+      indexerService,
+      configurations,
+      serializeConfiguration: (v) => JSON.stringify(v),
+      db: database ?? mockDatabase(),
+    },
+    Logger.SILENT,
+  )
   return indexer
 }

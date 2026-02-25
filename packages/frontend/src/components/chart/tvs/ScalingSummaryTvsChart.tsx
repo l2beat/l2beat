@@ -1,9 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -11,6 +13,7 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
@@ -25,8 +28,7 @@ import {
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -121,8 +123,8 @@ export function ScalingSummaryTvsChart({
             <YellowStrokeGradientDef id="others-stroke" />
           </defs>
           <ChartLegend content={<ChartLegendContent />} />
-          {getStrokeOverFillAreaComponents({
-            data: [
+          <ChartStrokeOverFillAreaComponents
+            data={[
               {
                 dataKey: 'rollups',
                 stroke: 'url(#rollups-stroke)',
@@ -141,17 +143,17 @@ export function ScalingSummaryTvsChart({
                 fill: 'url(#others-fill)',
                 hide: !dataKeys.includes('others'),
               },
-            ],
-          })}
-          {getCommonChartComponents({
-            data: chartData,
-            isLoading,
-            yAxis: {
+            ]}
+          />
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={{
               domain: dataKeys.length === 1 ? ['auto', 'auto'] : undefined,
               tickFormatter: (value: number) => formatCurrency(value, unit),
-            },
-            syncedUntil: data?.syncedUntil,
-          })}
+            }}
+            syncedUntil={data?.syncedUntil}
+          />
           <ChartTooltip content={<CustomTooltip />} filterNull={false} />
         </AreaChart>
       </ChartContainer>
@@ -159,12 +161,8 @@ export function ScalingSummaryTvsChart({
   )
 }
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-}: TooltipProps<number, string>) {
-  if (!active || !payload || typeof label !== 'number') return null
+function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+  if (!payload || typeof label !== 'number') return null
 
   const validPayload = payload.filter((p) => p.type !== 'none' && !p.hide)
   const total = validPayload.reduce<number | null>((acc, curr) => {

@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -165,7 +166,10 @@ export const lineaprover: BaseProject = {
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'unsuccessful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `The steps provided by the Linea team [here](https://github.com/Consensys/linea-monorepo/blob/94d0554912ab9f570b8b60e985a788ac7f78f96d/prover/prover-assets/Readme.md) do 
+        not produce the same verifier smart contract as deployed onchain. According to the Linea team, this is caused by nondeterminism in one of the optimization routine that is used for the vanishing constraints verifier of Vortex.`,
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
@@ -180,7 +184,10 @@ export const lineaprover: BaseProject = {
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'unsuccessful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `The steps provided by the Linea team [here](https://github.com/Consensys/linea-monorepo/blob/94d0554912ab9f570b8b60e985a788ac7f78f96d/prover/prover-assets/Readme.md) do 
+        not produce the same verifier smart contract as deployed onchain. According to the Linea team, this is caused by nondeterminism in one of the optimization routine that is used for the vanishing constraints verifier of Vortex.`,
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

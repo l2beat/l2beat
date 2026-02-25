@@ -3,5 +3,11 @@
     "hash": "0xe1fde883309db4a637fab1f7015e1df0c3bdd27da0b32ccbbd84846a90ff885a",
     "address": "eth:0xb476cC5ECF2472A040DC381552B7a9bd7951A470",
     "blockNumber": 23333743
+  },
+  "OPSuccinctDisputeGame_v4_0_0-rc_1": {
+    "hash": "0xcf9a1ccaca967a76ad4eb417a01efc710a29f62c3ba537768058efdcfb68541e",
+    "address": "eth:0x2c2dA5EFfAbDA3a9ffe8e3D526C5b1F3B42FEa6D",
+    "chain": "ethereum",
+    "blockNumber": 24375866
   }
 }

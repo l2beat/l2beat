@@ -12,6 +12,7 @@ import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getEcosystemsConfig } from './features/ecosystemToken'
+import { getInteropAggregationConfigs } from './features/interop'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -159,6 +160,9 @@ export async function makeConfig(
       ),
     },
     interop: flags.isEnabled('interop') && {
+      aggregation: flags.isEnabled('interop', 'aggregation')
+        ? { configs: await getInteropAggregationConfigs(ps) }
+        : false,
       capture: {
         enabled: flags.isEnabled('interop', 'capture'),
         chains: INTEROP_CHAINS.filter((c) =>
@@ -188,6 +192,10 @@ export async function makeConfig(
         chains: activeChains
           .filter((c) => c.chainId !== undefined)
           .map((c) => ({ id: c.chainId as number, name: c.name })),
+        configIntervalMs: env.integer(
+          'INTEROP_CONFIG_INTERVAL_MS',
+          12 * 60 * 1000, // 12 hours
+        ),
       },
       inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
     },

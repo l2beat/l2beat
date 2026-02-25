@@ -123,5 +123,11 @@
     "hash": "0x6ca9ce1725f28d3a737cdadeddcf98fdfee47b324e779a5cdbab51cea361d883",
     "address": "eth:0xc0b6d2f794cc787C71f2cA5ceCD57102C32379B3",
     "blockNumber": 23533560
+  },
+  "OP_Adapter_MEGAETH.sol": {
+    "hash": "0xbfd7166e5dce4fc403bfc9d03712390154e5aa737cb65ab10796605b28dc9e9e",
+    "address": "eth:0xE1f04404b74F996A311F13aE291849fC153578Ac",
+    "chain": "ethereum",
+    "blockNumber": 24268070
   }
 }

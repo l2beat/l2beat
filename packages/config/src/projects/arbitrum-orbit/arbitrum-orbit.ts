@@ -13,6 +13,7 @@ export const arbitrumOrbit: BaseProject = {
     links: {
       websites: ['https://arbitrum.io', 'https://portal.arbitrum.io/'],
       bridges: ['https://bridge.arbitrum.io/'],
+      documentation: ['https://docs.arbitrum.io/get-started/overview'],
     },
     badges: [BADGES.Stack.Orbit],
   },

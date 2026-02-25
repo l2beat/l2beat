@@ -474,6 +474,25 @@
     },
     {
       "mode": "auto",
+      "id": "omni-CLEAR",
+      "priceId": "everclear",
+      "symbol": "CLEAR",
+      "name": "Everclear",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52496/large/photo_2024-06-03_12-14-59_%281%29.png?1733450397",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8",
+        "chain": "ethereum",
+        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "decimals": 18,
+        "sinceTimestamp": 1736899200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "omni-COMP",
       "priceId": "compound-governance-token",
       "symbol": "COMP",

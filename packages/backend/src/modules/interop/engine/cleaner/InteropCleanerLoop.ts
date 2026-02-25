@@ -2,12 +2,14 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../../../tools/TimeLoop'
+import { type InteropPlugins, pluginsAsClusters } from '../../plugins'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 
 export class InteropCleanerLoop extends TimeLoop {
   constructor(
     private store: InteropEventStore,
     private db: Database,
+    private plugins: InteropPlugins,
     protected logger: Logger,
     intervalMs = 20 * 60 * 1000,
   ) {
@@ -29,11 +31,25 @@ export class InteropCleanerLoop extends TimeLoop {
       now - 7 * UnixTime.DAY,
     )
 
+    const currentPluginNames = pluginsAsClusters(this.plugins.eventPlugins).map(
+      (c) => c.name,
+    )
+    const orphanedSyncStates =
+      await this.db.interopPluginSyncState.deleteNotInPluginNames(
+        currentPluginNames,
+      )
+    const orphanedSyncedRanges =
+      await this.db.interopPluginSyncedRange.deleteNotInPluginNames(
+        currentPluginNames,
+      )
+
     this.logger.info('Cleaning finished', {
       expiredEvents,
       expiredMessages,
       expiredTransfers,
       expiredPrices,
+      orphanedSyncStates,
+      orphanedSyncedRanges,
     })
   }
 }

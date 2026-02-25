@@ -1,5 +1,11 @@
-import { Address32, assert } from '@l2beat/shared-pure'
+import {
+  Address32,
+  assert,
+  ChainSpecificAddress,
+  type KnownInteropBridgeType,
+} from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import type { TokenMap } from '../../engine/match/TokenMap'
 import { findParsedAround } from '../hyperlane-hwr'
 import {
   createEventParser,
@@ -43,7 +49,8 @@ const OFTSentPacketSent = createInteropEventType<{
   oappAddress: Address32
   srcTokenAddress?: Address32
   srcAmount?: bigint
-}>('layerzero-v2.PacketOFTSent')
+  burned?: boolean
+}>('layerzero-v2.PacketOFTSent', { direction: 'outgoing' })
 
 const OFTReceivedPacketDelivered = createInteropEventType<{
   $srcChain: string
@@ -52,7 +59,79 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
   oappAddress: Address32
   dstTokenAddress?: Address32
   dstAmount?: bigint
-}>('layerzero-v2.PacketOFTDelivered')
+  minted?: boolean
+}>('layerzero-v2.PacketOFTDelivered', { direction: 'incoming' })
+
+export function getBridgeType({
+  srcTokenAddress,
+  dstTokenAddress,
+  srcWasBurned,
+  dstWasMinted,
+  srcChain,
+  dstChain,
+  tokenMap,
+  defaultBridgeType = 'burnAndMint',
+}: {
+  srcTokenAddress: Address32 | undefined
+  dstTokenAddress: Address32 | undefined
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+  srcChain: string
+  dstChain: string
+  tokenMap: TokenMap
+  defaultBridgeType?: 'burnAndMint' | 'nonMinting' // defaults to burnAndMint, see above
+}): KnownInteropBridgeType | undefined {
+  if (
+    !srcTokenAddress ||
+    !dstTokenAddress ||
+    srcWasBurned === undefined ||
+    dstWasMinted === undefined
+  ) {
+    return
+  }
+
+  // chainspecificaddress does not support 'native' so we make do without the abstract map
+  if (
+    srcTokenAddress === Address32.NATIVE &&
+    dstTokenAddress === Address32.NATIVE
+  ) {
+    return 'nonMinting'
+  }
+  if (
+    srcTokenAddress === Address32.NATIVE ||
+    dstTokenAddress === Address32.NATIVE
+  ) {
+    return 'lockAndMint'
+  }
+
+  const srcAbstractToken = tokenMap.get(
+    ChainSpecificAddress.fromLong(
+      srcChain,
+      Address32.cropToEthereumAddress(srcTokenAddress),
+    ),
+  )
+  const dstAbstractToken = tokenMap.get(
+    ChainSpecificAddress.fromLong(
+      dstChain,
+      Address32.cropToEthereumAddress(dstTokenAddress),
+    ),
+  )
+  if (!srcAbstractToken || !dstAbstractToken) return
+
+  const followsDefaultFlow =
+    defaultBridgeType === 'nonMinting'
+      ? !srcWasBurned && !dstWasMinted
+      : srcWasBurned && dstWasMinted
+
+  if (
+    !followsDefaultFlow &&
+    srcAbstractToken.issuer !== dstAbstractToken.issuer
+  ) {
+    return 'lockAndMint'
+  }
+
+  return defaultBridgeType
+}
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   readonly name = 'layerzero-v2-ofts'
@@ -114,7 +193,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           if (!transfer) return
           // compare amount to not match a rogue Transfer event
           if (transfer.value !== normalized.amountSentLD) return
-          return Address32.from(log.address)
+          return {
+            address: Address32.from(log.address),
+            burned: Address32.from(transfer.to) === Address32.ZERO,
+          }
         },
       )
 
@@ -125,8 +207,9 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           amountSentLD: normalized.amountSentLD,
           amountReceivedLD: normalized.amountReceivedLD,
           oappAddress: Address32.from(input.log.address),
-          srcTokenAddress: matchingTransferData?.parsed,
+          srcTokenAddress: matchingTransferData?.address,
           srcAmount: normalized.amountSentLD,
+          burned: matchingTransferData?.burned,
         }),
       ]
     }
@@ -164,7 +247,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               if (!transfer) return
               // compare amount to not match a rogue Transfer event
               if (transfer.value !== oftReceived.amountReceivedLD) return
-              return Address32.from(log.address)
+              return {
+                address: Address32.from(log.address),
+                minted: Address32.from(transfer.from) === Address32.ZERO,
+              }
             },
           )
 
@@ -174,8 +260,9 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
               guid,
               amountReceivedLD: oftReceived.amountReceivedLD,
               oappAddress: Address32.from(input.log.address),
-              dstTokenAddress: matchingTransferData?.parsed,
+              dstTokenAddress: matchingTransferData?.address,
               dstAmount: oftReceived.amountReceivedLD,
+              minted: matchingTransferData?.minted,
             }),
           ]
         }
@@ -187,6 +274,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   match(
     oftReceivedPacketDelivered: InteropEvent,
     db: InteropEventDb,
+    tokenMap: TokenMap,
   ): MatchResult | undefined {
     if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
       return
@@ -202,6 +290,20 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     const packetDelivered = db.find(PacketDelivered, { guid })
     if (!packetDelivered) return
 
+    const srcTokenAddress = oftSentPacketSent.args.srcTokenAddress
+    const dstTokenAddress = oftReceivedPacketDelivered.args.dstTokenAddress
+    const srcWasBurned = oftSentPacketSent.args.burned
+    const dstWasMinted = oftReceivedPacketDelivered.args.minted
+    const bridgeType = getBridgeType({
+      srcTokenAddress,
+      dstTokenAddress,
+      srcWasBurned,
+      dstWasMinted,
+      srcChain: oftSentPacketSent.ctx.chain,
+      dstChain: packetDelivered.ctx.chain,
+      tokenMap,
+    })
+
     return [
       Result.Message('layerzero-v2.Message', {
         app: 'oftv2',
@@ -211,10 +313,13 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       Result.Transfer('oftv2.Transfer', {
         srcEvent: oftSentPacketSent,
         srcAmount: oftSentPacketSent.args.amountSentLD, // same as oftSentPacketSent.args.srcAmount
-        srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
+        srcTokenAddress,
         dstEvent: oftReceivedPacketDelivered,
         dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD, // same as oftReceivedPacketDelivered.args.dstAmount
-        dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
+        dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
+        bridgeType,
       }),
     ]
   }

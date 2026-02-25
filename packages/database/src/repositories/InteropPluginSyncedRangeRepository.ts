@@ -144,4 +144,15 @@ export class InteropPluginSyncedRangeRepository extends BaseRepository {
 
     return Number(result.numDeletedRows)
   }
+
+  async deleteNotInPluginNames(validPluginNames: string[]): Promise<number> {
+    if (validPluginNames.length === 0) {
+      return 0
+    }
+    const result = await this.db
+      .deleteFrom('InteropPluginSyncedRange')
+      .where('pluginName', 'not in', validPluginNames)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
 }

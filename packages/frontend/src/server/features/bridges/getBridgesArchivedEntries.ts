@@ -23,6 +23,7 @@ export async function getBridgesArchivedEntries(): Promise<
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
+      optional: ['contracts'],
       where: ['isBridge', 'archivedAt'],
     }),
   ])

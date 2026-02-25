@@ -167,8 +167,10 @@ function getChainDiscoveryConfig(
             }
           : {
               type: explorerApi.type,
-              url: env.string('ETHERSCAN_API_URL'),
-              apiKey: env.string('ETHERSCAN_API_KEY'),
+              url: explorerApi.customUrl ?? env.string('ETHERSCAN_API_URL'),
+              apiKey: explorerApi.customUrl
+                ? ''
+                : env.string('ETHERSCAN_API_KEY'),
               // biome-ignore lint/style/noNonNullAssertion: We assume it's there since there is no etherscan for non-evm chains
               chainId: chainConfig.chainId!,
             },

@@ -60,6 +60,35 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "dodochain-UXLINK",
+      "priceId": "uxlink",
+      "symbol": "UXLINK",
+      "name": "UXLINK Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39229/large/uxlink.jpg?1721201390",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1A6B3A62391ECcaaa992ade44cd4AFe6bEC8CfF1",
+        "chain": "arbitrum",
+        "escrowAddress": "0x6111D7AAa83fbE979301C458fF8f07F1d2E30002",
+        "decimals": 18,
+        "sinceTimestamp": 1737693204
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1737693204
+        },
+        "priceId": "uxlink"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     }
   ]
 }

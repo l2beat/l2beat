@@ -1,19 +1,26 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import type { DayActivityIndexerDeps } from './types'
 
 export class DayActivityIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: DayActivityIndexerDeps) {
-    super({
-      ...$,
-      name: 'activity_day_indexer',
-      tags: {
-        tag: $.projectId,
-        project: $.projectId,
+  constructor(
+    private readonly $: DayActivityIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: 'activity_day_indexer',
+        tags: {
+          tag: $.projectId,
+          project: $.projectId,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
 
     assert(
       this.$.batchSize > this.$.uncertaintyBuffer,

@@ -49,9 +49,11 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
     if (!currentPrice) {
       return undefined
     }
-    const economicSecurity =
-      Number((thresholdStake * BigInt(round(currentPrice * 100))) / 100n) /
-      10 ** project.daLayer.economicSecurity.token.decimals
+    const economicSecurity = round(
+      (Number(thresholdStake) * currentPrice) /
+        10 ** project.daLayer.economicSecurity.token.decimals,
+      2,
+    )
     return [project.id, economicSecurity] as const
   })
 

@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   AnomalyRecord,
   AnomalyStatsRecord,
@@ -33,8 +34,11 @@ export interface AnomaliesIndexerIndexerDeps
 
 export class AnomaliesIndexer extends ManagedChildIndexer {
   private readonly SYNC_RANGE = 30
-  constructor(private readonly $: AnomaliesIndexerIndexerDeps) {
-    super({ ...$, name: 'anomalies' })
+  constructor(
+    private readonly $: AnomaliesIndexerIndexerDeps,
+    logger: Logger,
+  ) {
+    super({ ...$, name: 'anomalies' }, logger)
   }
 
   override async update(from: number, to: number): Promise<number> {

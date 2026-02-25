@@ -1,8 +1,13 @@
 {
   "name": "espresso",
-  "timestamp": 1746205715,
+  "timestamp": 1770736062,
   "configHash": "0xbc54f4e990277e1a7e9850dc4be8d4c97975b9416b09258ad4e2a97d28b34b96",
   "entries": [
+    {
+      "address": "eth:0x1584F9D22Ba5C56AC0bB6496c447a95a721Eb709",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "EspressoMultisig",
       "address": "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
@@ -33,16 +38,18 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc",
+          "eth:0x745948f86C228f11F970d11E8e281c68837dCC55",
+          "eth:0x1584F9D22Ba5C56AC0bB6496c447a95a721Eb709",
+          "eth:0x3F3662e0B1D652cB6dDCd2dc31DFE5D762bBd3F2",
           "eth:0xf4b7676d9EC86D2011aB87855424219a97DEB40c",
-          "eth:0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E"
+          "eth:0x811caa1c5C96BFE0AB12b2EEB542994B0C368627"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x2c93ba1ddf6e5dcfb6c5bb68e3160fc24998e86c3d7b35649bbd29965be70fcd",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 1,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -51,7 +58,7 @@
       }
     },
     {
-      "address": "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc",
+      "address": "eth:0x3F3662e0B1D652cB6dDCd2dc31DFE5D762bBd3F2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -69,7 +76,12 @@
       ]
     },
     {
-      "address": "eth:0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E",
+      "address": "eth:0x745948f86C228f11F970d11E8e281c68837dCC55",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x811caa1c5C96BFE0AB12b2EEB542994B0C368627",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -111,11 +123,11 @@
           ]
         ],
         "$upgradeCount": 2,
-        "currentBlockNumber": 22397507,
+        "currentBlockNumber": 24427167,
         "finalizedState": {
-          "viewNum": 2371954,
-          "blockHeight": 2336566,
-          "blockCommRoot": "6746915104959538064063734326850219113019100602345788736699504648576388592546"
+          "viewNum": 10790125,
+          "blockHeight": 10164815,
+          "blockCommRoot": "9414599225685746422076349429315440552486122586944036736382372604242756484283"
         },
         "genesisStakeTableState": {
           "threshold": 34,
@@ -124,7 +136,7 @@
           "amountComm": "349594070000690608819508126396071528924936277306125447047023081215269308099"
         },
         "genesisState": { "viewNum": 0, "blockHeight": 0, "blockCommRoot": 0 },
-        "getStateHistoryCount": 593,
+        "getStateHistoryCount": 1167,
         "getVersion": {
           "majorVersion": 1,
           "minorVersion": 0,
@@ -133,7 +145,7 @@
         "isPermissionedProverEnabled": true,
         "owner": "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
         "permissionedProver": "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
-        "stateHistoryFirstIndex": 364,
+        "stateHistoryFirstIndex": 938,
         "stateHistoryRetentionPeriod": 864000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -335,6 +347,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22397507 },
-  "permissionsConfigHash": "0xc4ecd18d9e29b8cfde58d6ba78f8911a2261b99556772f0a6c539fa19eb328dd"
+  "usedBlockNumbers": { "ethereum": 24427167 },
+  "permissionsConfigHash": "0x806a21c36b07c1c1873b1159145b113d4c0925f129cebcef0f9ec4c3c394efc4"
 }

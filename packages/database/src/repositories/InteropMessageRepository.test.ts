@@ -86,6 +86,7 @@ describeDatabase(InteropMessageRepository.name, (database) => {
       const stats = result.find((s) => s.type === 'message')
       assert(stats)
 
+      expect(stats.plugin).toEqual('plugin')
       expect(stats.type).toEqual('message')
       expect(stats.count).toEqual(3)
       expect(stats.knownAppCount).toEqual(3)
@@ -93,6 +94,7 @@ describeDatabase(InteropMessageRepository.name, (database) => {
 
       const swapStats = result.find((s) => s.type === 'swap')
       assert(swapStats)
+      expect(swapStats.plugin).toEqual('plugin')
       expect(swapStats.type).toEqual('swap')
       expect(swapStats.count).toEqual(1)
       expect(swapStats.knownAppCount).toEqual(1)

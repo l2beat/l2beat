@@ -86,11 +86,15 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
             ? {
                 type: chainConfig.explorer.type,
                 chainId: chainConfig.chainId,
-                url: 'https://api.etherscan.io/v2/api',
-                apiKey: env.string([
-                  'ETHERSCAN_API_KEY_FOR_DISCOVERY',
-                  'ETHERSCAN_API_KEY',
-                ]),
+                url:
+                  chainConfig.explorer.customUrl ??
+                  'https://api.etherscan.io/v2/api',
+                apiKey: chainConfig.explorer.customUrl
+                  ? ''
+                  : env.string([
+                      'ETHERSCAN_API_KEY_FOR_DISCOVERY',
+                      'ETHERSCAN_API_KEY',
+                    ]),
                 unsupported: chainConfig.explorer.unsupported,
               }
             : ({

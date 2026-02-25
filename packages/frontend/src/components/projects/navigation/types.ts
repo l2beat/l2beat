@@ -13,31 +13,37 @@ export type ProjectNavigationSection = {
 export function projectDetailsToNavigationSections(
   sections: ProjectDetailsSection[],
 ): ProjectNavigationSection[] {
-  return sections
-    .map((section) => {
-      if (section.excludeFromNavigation) {
-        return undefined
-      }
+  return [
+    {
+      id: 'summary',
+      title: 'Summary',
+    },
+    ...sections
+      .map((section) => {
+        if (section.excludeFromNavigation) {
+          return undefined
+        }
 
-      return {
-        id: section.props.id,
-        title: section.sideNavTitle ?? section.props.title,
-        subsections:
-          section.type === 'Group'
-            ? section.props.items
-                .map((item) => {
-                  if (item.excludeFromNavigation) {
-                    return undefined
-                  }
+        return {
+          id: section.props.id,
+          title: section.sideNavTitle ?? section.props.title,
+          subsections:
+            section.type === 'Group'
+              ? section.props.items
+                  .map((item) => {
+                    if (item.excludeFromNavigation) {
+                      return undefined
+                    }
 
-                  return {
-                    id: item.props.id,
-                    title: item.props.title,
-                  }
-                })
-                .filter(notUndefined)
-            : undefined,
-      }
-    })
-    .filter(notUndefined)
+                    return {
+                      id: item.props.id,
+                      title: item.props.title,
+                    }
+                  })
+                  .filter(notUndefined)
+              : undefined,
+        }
+      })
+      .filter(notUndefined),
+  ]
 }

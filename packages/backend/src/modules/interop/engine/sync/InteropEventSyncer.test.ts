@@ -5,7 +5,12 @@ import type {
   InteropEventRecord,
   InteropPluginSyncedRangeRecord,
 } from '@l2beat/database'
-import type { RpcBlock, RpcLog } from '@l2beat/shared'
+import type {
+  RpcBlock,
+  RpcLog,
+  RpcReceipt,
+  RpcTransaction,
+} from '@l2beat/shared'
 import {
   type Block,
   ChainSpecificAddress,
@@ -24,7 +29,7 @@ import { toEventSelector } from '../utils'
 import { FollowingState } from './FollowingState'
 import {
   type BlockProcessorState,
-  buildLogQueryForPlugin,
+  buildLogQueryForCluster,
   InteropEventSyncer,
   type SyncerState,
   type TimeloopState,
@@ -137,20 +142,20 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe(InteropEventSyncer.prototype.captureLog.name, () => {
-    it('captures using the primary plugin when not clustered', () => {
+    it('captures using the only plugin in the cluster', () => {
       const event = makeInteropEventNoPlugin()
       const capture = mockFn().returns([event])
       const syncer = createSyncer({
-        plugin: makePlugin({ name: 'base', capture }),
-        clusterPlugins: [],
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [makePlugin({ name: 'across', capture })],
+        }),
       })
 
       const result = syncer.captureLog(mockObject<LogToCapture>({}))
 
       expect(capture).toHaveBeenCalled()
-      expect(result).toEqual([
-        { ...event, plugin: 'base' as InteropPluginName },
-      ])
+      expect(result).toEqual([{ ...event, plugin: 'across' }])
     })
 
     it('captures using first plugin in cluster that produces', () => {
@@ -159,27 +164,33 @@ describe(InteropEventSyncer.name, () => {
       const secondCapture = mockFn().returns([event])
 
       const syncer = createSyncer({
-        plugin: makePlugin({ name: 'base', capture: mockFn() }),
-        clusterPlugins: [
-          makePlugin({ name: 'first', capture: firstCapture }),
-          makePlugin({ name: 'second', capture: secondCapture }),
-        ],
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [
+            makePlugin({ name: 'across', capture: firstCapture }),
+            makePlugin({ name: 'wormhole', capture: secondCapture }),
+          ],
+        }),
       })
 
       const result = syncer.captureLog(mockObject<LogToCapture>({}))
 
       expect(firstCapture).toHaveBeenCalled()
       expect(secondCapture).toHaveBeenCalled()
-      expect(result).toEqual([
-        { ...event, plugin: 'base' as InteropPluginName },
-      ])
+      expect(result).toEqual([{ ...event, plugin: 'wormhole' }])
     })
 
     it('returns undefined when no plugin produces', () => {
       const syncer = createSyncer({
-        clusterPlugins: [
-          makePlugin({ name: 'x', capture: mockFn().returns(undefined) }),
-        ],
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [
+            makePlugin({
+              name: 'across',
+              capture: mockFn().returns(undefined),
+            }),
+          ],
+        }),
       })
 
       const result = syncer.captureLog(mockObject<LogToCapture>({}))
@@ -194,6 +205,10 @@ describe(InteropEventSyncer.name, () => {
       const upsert = mockFn().resolvesTo(undefined)
       const setLastError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [makePlugin({ name: 'across' })],
+        }),
         store: mockObject<InteropEventStore>({ saveNewEvents }),
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncedRange: mockObject<
@@ -210,18 +225,18 @@ describe(InteropEventSyncer.name, () => {
       })
 
       await syncer.saveProducedInteropEvents(
-        [makeInteropEvent()],
+        [{ ...makeInteropEvent(), plugin: 'cluster' }],
         makeSyncedRange(),
       )
 
       expect(syncer.runInTransactionCalls).toEqual(1)
       expect(saveNewEvents).toHaveBeenCalled()
       expect(upsert).toHaveBeenCalledWith({
-        pluginName: 'base',
+        pluginName: 'clusterName',
         chain: 'ethereum',
         ...makeSyncedRange(),
       })
-      expect(setLastError).toHaveBeenCalledWith('base', 'ethereum', null)
+      expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
     })
   })
 
@@ -250,6 +265,7 @@ describe(InteropEventSyncer.name, () => {
           >({
             findByPluginNameAndChain: mockFn().resolvesTo({
               resyncRequestedFrom: UnixTime(123),
+              wipeRequired: false,
             }),
           }),
         }),
@@ -261,9 +277,11 @@ describe(InteropEventSyncer.name, () => {
     })
   })
 
-  describe(buildLogQueryForPlugin.name, () => {
+  describe(buildLogQueryForCluster.name, () => {
     it('includes only addresses on the target chain and their topics', () => {
       const signature = 'event Transfer(address,address,uint256)'
+      const extraSignature = 'event Approval(address,address,uint256)'
+      const extraSignatureTwo = 'event Mint(address,uint256)'
       const ethAddress = ChainSpecificAddress.fromLong(
         'ethereum',
         EthereumAddress.random(),
@@ -277,17 +295,54 @@ describe(InteropEventSyncer.name, () => {
           {
             type: 'event',
             signature,
+            includeTxEvents: [extraSignature, extraSignatureTwo],
+            includeTx: true,
             addresses: [ethAddress, arbAddress],
           },
         ],
       })
 
-      const query = buildLogQueryForPlugin(plugin, 'ethereum')
+      const query = buildLogQueryForCluster(
+        makeCluster({ plugins: [plugin] }),
+        'ethereum',
+      )
 
+      if (query.addresses === '*') {
+        throw new Error('Expected address filter to be a set')
+      }
       expect(
         query.addresses.has(ChainSpecificAddress.address(ethAddress)),
       ).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(1)
+      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
+      expect(
+        Array.from(query.topicToTxEvents.get(toEventSelector(signature)) ?? []),
+      ).toEqual([
+        toEventSelector(extraSignature),
+        toEventSelector(extraSignatureTwo),
+      ])
+      expect(query.topic0sWithTx.has(toEventSelector(signature))).toEqual(true)
+      expect(query.isEmpty()).toEqual(false)
+    })
+
+    it('includes topics without address filter when addresses are wildcard', () => {
+      const signature = 'event Transfer(address,address,uint256)'
+      const plugin = makePlugin({
+        dataRequests: [
+          {
+            type: 'event',
+            signature,
+            addresses: '*',
+          },
+        ],
+      })
+
+      const query = buildLogQueryForCluster(
+        makeCluster({ plugins: [plugin] }),
+        'ethereum',
+      )
+
+      expect(query.addresses).toEqual('*')
       expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
       expect(query.isEmpty()).toEqual(false)
     })
@@ -308,72 +363,90 @@ describe(InteropEventSyncer.name, () => {
         ],
       })
 
-      const query = buildLogQueryForPlugin(plugin, 'ethereum')
+      const query = buildLogQueryForCluster(
+        makeCluster({ plugins: [plugin] }),
+        'ethereum',
+      )
 
+      if (query.addresses === '*') {
+        throw new Error('Expected address filter to be a set')
+      }
       expect(query.isEmpty()).toEqual(true)
       expect(Array.from(query.addresses)).toHaveLength(0)
       expect(Array.from(query.topic0s)).toHaveLength(0)
-    })
-  })
-
-  describe(InteropEventSyncer.prototype.deleteAllClusterData.name, () => {
-    it('wipes data for cluster plugins when present', async () => {
-      const deleteMessage = mockFn().resolvesTo(undefined)
-      const deleteTransfer = mockFn().resolvesTo(undefined)
-      const deleteEvents = mockFn().resolvesTo(undefined)
-      const transaction = mockFn().executes(async (cb) => await cb())
-      const syncer = createSyncer({
-        plugin: makePlugin({ name: 'base' as InteropPluginName }),
-        clusterPlugins: [makePlugin({ name: 'a' }), makePlugin({ name: 'b' })],
-        db: mockObject<InteropEventSyncer['db']>({
-          transaction,
-          interopMessage: mockObject<
-            InteropEventSyncer['db']['interopMessage']
-          >({ deleteForPlugin: deleteMessage }),
-          interopTransfer: mockObject<
-            InteropEventSyncer['db']['interopTransfer']
-          >({ deleteForPlugin: deleteTransfer }),
-        }),
-        store: mockObject<InteropEventStore>({
-          deleteAllForPlugin: deleteEvents,
-        }),
-      })
-
-      await syncer.deleteAllClusterData()
-
-      expect(transaction).toHaveBeenCalled()
-      expect(deleteMessage).toHaveBeenCalledTimes(2)
-      expect(deleteTransfer).toHaveBeenCalledTimes(2)
-      expect(deleteEvents).toHaveBeenCalledTimes(2)
+      expect(query.topicToTxEvents.size).toEqual(0)
     })
 
-    it('wipes data for the main plugin when no cluster', async () => {
-      const deleteMessage = mockFn().resolvesTo(undefined)
-      const deleteTransfer = mockFn().resolvesTo(undefined)
-      const deleteEvents = mockFn().resolvesTo(undefined)
-      const transaction = mockFn().executes(async (cb) => await cb())
-      const syncer = createSyncer({
-        plugin: makePlugin({ name: 'base' as InteropPluginName }),
-        clusterPlugins: [],
-        db: mockObject<InteropEventSyncer['db']>({
-          transaction,
-          interopMessage: mockObject<
-            InteropEventSyncer['db']['interopMessage']
-          >({ deleteForPlugin: deleteMessage }),
-          interopTransfer: mockObject<
-            InteropEventSyncer['db']['interopTransfer']
-          >({ deleteForPlugin: deleteTransfer }),
-        }),
-        store: mockObject<InteropEventStore>({
-          deleteAllForPlugin: deleteEvents,
-        }),
+    it('throws when addresses list is empty', () => {
+      const signature = 'event Transfer(address,address,uint256)'
+      const plugin = makePlugin({
+        dataRequests: [
+          {
+            type: 'event',
+            signature,
+            addresses: [],
+          },
+        ],
       })
 
-      await syncer.deleteAllClusterData()
+      expect(() =>
+        buildLogQueryForCluster(makeCluster({ plugins: [plugin] }), 'ethereum'),
+      ).toThrow(/Empty address list/)
+    })
 
-      expect(deleteMessage).toHaveBeenCalledTimes(1)
-      expect(deleteTransfer).toHaveBeenCalledTimes(1)
-      expect(deleteEvents).toHaveBeenCalledTimes(1)
+    it('merges event requests across cluster plugins', () => {
+      const signature = 'event Transfer(address,address,uint256)'
+      const extraSignatureA = 'event Approval(address,address,uint256)'
+      const extraSignatureB = 'event Burn(address,uint256)'
+      const ethAddressA = ChainSpecificAddress.fromLong(
+        'ethereum',
+        EthereumAddress.random(),
+      )
+      const ethAddressB = ChainSpecificAddress.fromLong(
+        'ethereum',
+        EthereumAddress.random(),
+      )
+
+      const pluginA = makePlugin({
+        dataRequests: [
+          {
+            type: 'event',
+            signature,
+            includeTxEvents: [extraSignatureA],
+            addresses: [ethAddressA],
+          },
+        ],
+      })
+      const pluginB = makePlugin({
+        dataRequests: [
+          {
+            type: 'event',
+            signature,
+            includeTxEvents: [extraSignatureB],
+            addresses: [ethAddressB],
+          },
+        ],
+      })
+
+      const query = buildLogQueryForCluster(
+        makeCluster({ plugins: [pluginA, pluginB] }),
+        'ethereum',
+      )
+
+      if (query.addresses === '*') {
+        throw new Error('Expected address filter to be a set')
+      }
+      expect(Array.from(query.addresses)).toEqual([
+        ChainSpecificAddress.address(ethAddressA),
+        ChainSpecificAddress.address(ethAddressB),
+      ])
+      expect(Array.from(query.topic0s)).toEqual([toEventSelector(signature)])
+      expect(
+        Array.from(query.topicToTxEvents.get(toEventSelector(signature)) ?? []),
+      ).toEqual([
+        toEventSelector(extraSignatureA),
+        toEventSelector(extraSignatureB),
+      ])
     })
   })
 
@@ -381,6 +454,7 @@ describe(InteropEventSyncer.name, () => {
     it('returns last synced range and oldest event', async () => {
       const lastRange = makeSyncedRangeRecord()
       const oldestEvent = makeInteropEventRecord()
+      const getOldestEventForPluginAndChain = mockFn().resolvesTo(oldestEvent)
       const syncer = createSyncer({
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncedRange: mockObject<
@@ -389,7 +463,7 @@ describe(InteropEventSyncer.name, () => {
             findByPluginNameAndChain: mockFn().resolvesTo(lastRange),
           }),
           interopEvent: mockObject<InteropEventSyncer['db']['interopEvent']>({
-            getOldestEventForPluginAndChain: mockFn().resolvesTo(oldestEvent),
+            getOldestEventForPluginAndChain,
           }),
         }),
       })
@@ -399,18 +473,58 @@ describe(InteropEventSyncer.name, () => {
 
       expect(resultRange).toEqual(lastRange)
       expect(resultEvent).toEqual(oldestEvent)
+      expect(getOldestEventForPluginAndChain).toHaveBeenCalledTimes(1)
+      expect(getOldestEventForPluginAndChain).toHaveBeenCalledWith(
+        ['across'],
+        'ethereum',
+      )
+    })
+
+    it('returns the oldest event for cluster plugin names', async () => {
+      const eventA = makeInteropEventRecord({ timestamp: UnixTime(5) })
+      const getOldestEventForPluginAndChain = mockFn().resolvesTo(eventA)
+
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [
+            makePlugin({ name: 'across' }),
+            makePlugin({ name: 'wormhole' }),
+          ],
+        }),
+        db: mockObject<InteropEventSyncer['db']>({
+          interopEvent: mockObject<InteropEventSyncer['db']['interopEvent']>({
+            getOldestEventForPluginAndChain,
+          }),
+        }),
+      })
+
+      const resultEvent = await syncer.getOldestEventForPluginAndChain()
+
+      expect(resultEvent).toEqual(eventA)
+      expect(getOldestEventForPluginAndChain).toHaveBeenCalledTimes(1)
+      expect(getOldestEventForPluginAndChain).toHaveBeenCalledWith(
+        ['across', 'wormhole'],
+        'ethereum',
+      )
     })
   })
 
   describe('rpc wrapper methods', () => {
-    it('passes through getBlockByNumber and getLogs', async () => {
+    it('passes through getBlockByNumber, getLogs, getTransactionReceipt, and getTransactionByHash', async () => {
       const getBlockByNumber = mockFn().resolvesTo(makeRpcBlock(5n))
       const log = makeRpcLog()
       const getLogs = mockFn().resolvesTo([log])
+      const receipt = makeRpcReceipt()
+      const getTransactionReceipt = mockFn().resolvesTo(receipt)
+      const transaction = makeRpcTransaction()
+      const getTransactionByHash = mockFn().resolvesTo(transaction)
       const syncer = createSyncer({
         rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
           getBlockByNumber,
           getLogs,
+          getTransactionReceipt,
+          getTransactionByHash,
         }),
       })
 
@@ -421,9 +535,13 @@ describe(InteropEventSyncer.name, () => {
         address: [],
         topics: [[]],
       })
+      const txReceipt = await syncer.getTransactionReceipt(ZERO_HASH)
+      const tx = await syncer.getTransactionByHash(ZERO_HASH)
 
       expect(block).toEqual(makeRpcBlock(5n))
       expect(logs).toEqual([log])
+      expect(txReceipt).toEqual(receipt)
+      expect(tx).toEqual(transaction)
     })
   })
 })
@@ -458,11 +576,10 @@ class TestSyncer extends InteropEventSyncer {
 }
 
 function createSyncer(overrides: Partial<TestSyncer> = {}) {
-  const plugin = makePlugin({ name: 'base' as InteropPluginName })
+  const plugin = makePlugin({ name: 'across' })
   const syncer = new TestSyncer(
     'ethereum',
-    plugin,
-    [],
+    makeCluster({ name: 'clusterName', plugins: [plugin] }),
     mockRpcClient(),
     mockStore(),
     mockDb(),
@@ -472,9 +589,18 @@ function createSyncer(overrides: Partial<TestSyncer> = {}) {
   return syncer
 }
 
+function makeCluster(
+  params: { name?: string; plugins?: InteropPluginResyncable[] } = {},
+): InteropEventSyncer['cluster'] {
+  return {
+    name: params.name ?? 'clusterName',
+    plugins: params.plugins ?? [makePlugin()],
+  }
+}
+
 function makePlugin(
   params: {
-    name?: string
+    name?: InteropPluginName
     dataRequests?: DataRequest[]
     capture?: (
       input: LogToCapture,
@@ -482,7 +608,7 @@ function makePlugin(
   } = {},
 ): InteropPluginResyncable {
   return {
-    name: (params.name as InteropPluginName) ?? ('plugin' as InteropPluginName),
+    name: params.name ?? 'across',
     capture: params.capture ?? mockFn().returns(undefined),
     getDataRequests: () => params.dataRequests ?? [],
   }
@@ -619,10 +745,46 @@ function makeRpcLog(): RpcLog {
   }
 }
 
+function makeRpcReceipt(): RpcReceipt {
+  return {
+    transactionHash: ZERO_HASH,
+    transactionIndex: 0n,
+    blockHash: ZERO_HASH,
+    blockNumber: 1n,
+    from: EthereumAddress.random(),
+    to: EthereumAddress.random(),
+    cumulativeGasUsed: 0n,
+    gasUsed: 0n,
+    contractAddress: null,
+    logs: [],
+    logsBloom: `0x${'00'.repeat(256)}`,
+    type: 0n,
+  }
+}
+
+function makeRpcTransaction(
+  overrides: Partial<RpcTransaction> = {},
+): RpcTransaction {
+  return {
+    blockHash: ZERO_HASH,
+    blockNumber: 1n,
+    from: EthereumAddress.random(),
+    gas: 0n,
+    hash: ZERO_HASH,
+    input: '0x',
+    to: EthereumAddress.random(),
+    transactionIndex: 0n,
+    value: 0n,
+    ...overrides,
+  }
+}
+
 function mockRpcClient(): InteropEventSyncer['rpcClient'] {
   return mockObject<InteropEventSyncer['rpcClient']>({
     getBlockByNumber: mockFn().resolvesTo(makeRpcBlock(1n)),
     getLogs: mockFn().resolvesTo([]),
+    getTransactionReceipt: mockFn().resolvesTo(null),
+    getTransactionByHash: mockFn().resolvesTo(null),
   })
 }
 

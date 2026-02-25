@@ -7,5 +7,32 @@
     ],
     "chain": "ethereum",
     "blockNumber": 23981955
+  },
+  "Lighter_Jan_2026": {
+    "hash": "0x6811045a7db4a2039e15ce02aad40f93a195abf3b68a900d217df71c7ab37294",
+    "address": [
+      "eth:0x8bdccd961Ae8b8B99dBA5FbAd0e5AA92bE8c59Fb",
+      "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 24340970
+  },
+  "Lighter_Feb_2026": {
+    "hash": "0x4a50bcb82038f6198f88207da255045d7547680f7a48c66d23055539b0481a94",
+    "address": [
+      "eth:0x803bd6a0577c083c1EDe82Da455C8e69e697c878",
+      "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 24447047
+  },
+  "Lighter_Feb17_2026": {
+    "hash": "0xb28249d5dff85a357d4365eb463ef3eb2778445cefe5c663c7966dce55b8c2a0",
+    "address": [
+      "eth:0xdC2877f6C162991B47fC5f7Cc50F85c084B9B408",
+      "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 24480000
   }
 }

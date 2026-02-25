@@ -101,7 +101,7 @@ export const L2ToL1Tx = createInteropEventType<{
   position: number
   amount?: bigint // ETH amount if callvalue > 0
   isEthOnly?: boolean // true if ETH sent with no calldata
-}>('orbitstack.L2ToL1Tx', { ttl: 14 * UnixTime.DAY })
+}>('orbitstack.L2ToL1Tx', { ttl: 30 * UnixTime.DAY })
 
 export const OutBoxTransactionExecuted = createInteropEventType<{
   chain: string
@@ -333,9 +333,11 @@ export class OrbitStackPlugin implements InteropPlugin {
             srcEvent: l2ToL1Tx,
             srcAmount: l2ToL1Tx.args.amount,
             srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: true,
             dstEvent: event,
             dstAmount: l2ToL1Tx.args.amount,
             dstTokenAddress: Address32.NATIVE,
+            dstWasMinted: false,
           }),
         )
       }
@@ -364,11 +366,13 @@ export class OrbitStackPlugin implements InteropPlugin {
         results.push(
           Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
-            srcAmount: messageDelivered.args.txValue,
+            srcAmount: event.args.ethAmount,
             srcTokenAddress: Address32.NATIVE,
+            srcWasBurned: false,
             dstEvent: event,
             dstAmount: event.args.ethAmount,
             dstTokenAddress: Address32.NATIVE,
+            dstWasMinted: true,
           }),
         )
       }

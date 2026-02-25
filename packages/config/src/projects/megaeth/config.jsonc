@@ -20,6 +20,39 @@
           }
         }
       }
-    }
+    },
+    // EigenLayer boundary contracts (prevent crawling into shared-eigenlayer)
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": {
+      "ignoreDiscovery": true
+    }, // AVSDirectory
+    "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": {
+      "ignoreDiscovery": true
+    }, // DelegationManager
+    "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111": {
+      "ignoreDiscovery": true
+    }, // EigenLayerOwningMultisig
+    "eth:0x5050389572f2d220ad927CcbeA0D406831012390": {
+      "ignoreDiscovery": true
+    }, // EigenLayerPauserMultisig
+    "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90": {
+      "ignoreDiscovery": true
+    }, // EigenLayerOperationsMultisig
+    // EigenDA infrastructure contracts (managed by eigenda project)
+    "eth:0x002721B4790d97dC140a049936aA710152Ba92D5": { "category": "spam" }, // EigenDAOperationsMultisig
+    "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D": { "category": "spam" }, // StakeRegistry
+    "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505": { "category": "spam" }, // BLSApkRegistry
+    "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": { "category": "spam" }, // RegistryCoordinator
+    "eth:0x0c431C66F4dE941d089625E5B423D00707977060": { "category": "spam" }, // PauserRegistry
+    "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E": { "category": "spam" }, // EjectionManager
+    "eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": { "category": "spam" }, // EigenLayerRewardsInitiatorMultisig
+    "eth:0x338477FfaF63c04AC06048787f910671eC914B34": { "category": "spam" }, // EigenDA Multisig
+    "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2": { "category": "spam" }, // SocketRegistry
+    "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad": { "category": "spam" }, // EigenDADisperserRegistry
+    "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99": { "category": "spam" }, // ProxyAdmin (EigenDA)
+    "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": { "category": "spam" }, // EigenDAServiceManager
+    "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05": { "category": "spam" }, // PaymentVault
+    "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030": { "category": "spam" }, // IndexRegistry
+    "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B": { "category": "spam" }, // EigenDARelayRegistry
+    "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15": { "category": "spam" } // EigenDAThresholdRegistry
   }
 }

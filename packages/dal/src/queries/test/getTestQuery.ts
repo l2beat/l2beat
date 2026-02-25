@@ -3,7 +3,7 @@ import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 // This function is only used for testing purposes
 export async function getTestQuery(
-  db: Database,
+  _: Database,
   projectIds: ProjectId[],
 ): Promise<{ projectId: ProjectId; timestamp: UnixTime; value: number }[]> {
   const now = UnixTime.toStartOf(UnixTime.now(), 'hour')

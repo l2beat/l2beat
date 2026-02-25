@@ -79,12 +79,12 @@ export const airbender: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0xa385a997a63cc78e724451dca8b044b5ef29fcdc9d8b6ced33d9f58de531faa5',
+        hash: '0x996b02b1d0420e997b4dc0d629a3a1bba93ed3185ac463f17b02ff83be139581',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
             address: EthereumAddress(
-              '0x8F870CF6621AEaF6026dFfc77f484FdAb370c4Ba',
+              '0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D',
             ),
             chain: 'ethereum',
           },
@@ -97,7 +97,7 @@ export const airbender: BaseProject = {
         knownDeployments: [
           {
             address: EthereumAddress(
-              '0x60aDfa0b7dEd57e0f1e251417769B6dbd1056208',
+              '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
             ),
             chain: 'ethereum',
           },

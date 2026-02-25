@@ -64,7 +64,7 @@ export const near: BaseProject = {
 ### Consensus
 NEAR's Nightshade consensus operates a Proof-of-Stake (PoS) system that enables parallel processing of transactions through a sharded architecture. As with any PoS system, validators are required to lock a stake to be eligible for block production and attestations.
 The main differentiator of the NEAR blockchain is that its blocks do not contain actual transactions but rather block headers of separate blockchains, known as shards.
-The ***main chain*** can contain many shards, and the current NEAR implementation supports 8 shards.
+The ***main chain*** can contain many shards, and the current NEAR implementation supports 9 shards.
 
 
 ![Near Shards](/images/da-layer-technology/near/nearShards.png#center)\n
@@ -146,24 +146,28 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       bridge: undefined,
     }),
     pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
-    // Need to remove this due to new coming soon logic
-    // throughput: [
-    //   {
-    //     size: 16777216, // 16 MiB , 4MiB per 4 shards
-    //     frequency: 1, // 16 MiB/s
-    //     sinceTimestamp: 1587513600, // 2020-04-22
-    //   },
-    //   {
-    //     size: 33554432, // 32 MiB , 4MiB per 8 shards
-    //     frequency: 1, // 32 MiB/s
-    //     sinceTimestamp: 1742342400, // 2025-03-19
-    //   },
-    //   {
-    //     size: 33554432, // 32 MiB , 4MiB per 8 shards
-    //     frequency: 0.6, // 600ms block time
-    //     sinceTimestamp: 1747141200, // 2025-05-13
-    //   },
-    // ],
+    throughput: [
+      {
+        size: 16777216, // 16 MiB , 4MiB per 4 shards
+        frequency: 1, // 16 MiB/s
+        sinceTimestamp: 1587513600, // 2020-04-22
+      },
+      {
+        size: 33554432, // 32 MiB , 4MiB per 8 shards
+        frequency: 1, // 32 MiB/s
+        sinceTimestamp: 1742342400, // 2025-03-19
+      },
+      {
+        size: 33554432, // 32 MiB , 4MiB per 8 shards
+        frequency: 0.6, // 600ms block time
+        sinceTimestamp: 1747141200, // 2025-05-13
+      },
+      {
+        size: 37748736, // 36 MiB , 4MiB per 9 shards
+        frequency: 0.6, // 600ms block time
+        sinceTimestamp: 1755561600, // 2025-08-19
+      },
+    ],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
@@ -186,6 +190,13 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       date: '2025-05-13T00:00:00Z',
       description:
         'NEAR reduces block time to 600ms, achieving finality in 1.2 seconds.',
+      type: 'general',
+    },
+    {
+      title: 'NEAR upgrades to 9 shards',
+      url: 'https://learnnear.club/near-protocol-scales-up-9-shards-now-live-with-12-5-performance-boost/',
+      date: '2025-08-19T00:00:00Z',
+      description: 'NEAR upgrades from 8 to 9 shards.',
       type: 'general',
     },
     {

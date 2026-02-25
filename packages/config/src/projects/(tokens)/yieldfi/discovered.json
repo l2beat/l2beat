@@ -1,6 +1,6 @@
 {
   "name": "yieldfi",
-  "timestamp": 1768372744,
+  "timestamp": 1769433017,
   "configHash": "0xf26f7a0e178ee7cc8b7ac3e1c0158f12cdea872504c533f8624842f0103f411c",
   "entries": [
     {
@@ -72,7 +72,10 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": []
           },
-          "MANAGER": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] },
+          "MANAGER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
           "MINTER_AND_REDEEMER": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
@@ -98,6 +101,14 @@
             "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
           },
           "ADMIN": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "0x8554e4c9634c3022983cc2156859c8a963fefd7f46d6eae4e74af237818da178": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
+          },
+          "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
           }
@@ -156,19 +167,19 @@
         "administrator": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "decimals": 18,
-        "exchangeRate": 996033,
-        "exchangeRateScaled": "996033000000000000",
+        "exchangeRate": 997821,
+        "exchangeRateScaled": "997821000000000000",
         "fee": 0,
         "gasFee": 300000,
-        "getUnvestedAmount": 6462423967,
-        "lastDistributionTimestamp": 1768369271,
+        "getUnvestedAmount": 0,
+        "lastDistributionTimestamp": 1768899035,
         "manager": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
         "name": "YieldFi yUSD",
         "symbol": "yUSD",
-        "totalAssets": 21085827116277,
-        "totalSupply": "21169823069886511039334518",
-        "totAssets": 21092289540244,
-        "vestingAmount": 6732665687,
+        "totalAssets": 10682776417423,
+        "totalSupply": "10706111579185704964364625",
+        "totAssets": 10682776417423,
+        "vestingAmount": 5237198880,
         "vestingPeriod": 86400,
         "yield": "eth:0x392017161a9507F19644E8886A237C58809212B5"
       },
@@ -249,20 +260,20 @@
         "administrator": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "decimals": 18,
-        "exchangeRate": 921252,
-        "exchangeRateScaled": "921252000000000000",
+        "exchangeRate": 922857,
+        "exchangeRateScaled": "922857000000000000",
         "fee": 0,
         "gasFee": 500000,
-        "getUnvestedAmount": 721182443,
+        "getUnvestedAmount": 0,
         "guardrailMultiplier": 2,
-        "lastDistributionTimestamp": 1768369367,
+        "lastDistributionTimestamp": 1768899083,
         "manager": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
         "name": "YieldFi vyUSD",
         "symbol": "vyUSD",
-        "totalAssets": 3007709016961,
-        "totalSupply": "3264806641865878545092750",
-        "totAssets": 3008430199404,
-        "vestingAmount": 750471686,
+        "totalAssets": 3015162950551,
+        "totalSupply": "3267206867548399181983078",
+        "totAssets": 3015162950551,
+        "vestingAmount": 754093673,
         "vestingPeriod": 86400,
         "yield": "eth:0x392017161a9507F19644E8886A237C58809212B5",
         "yToken": "eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb"
@@ -506,13 +517,13 @@
         ],
         "$upgradeCount": 1,
         "administrator": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
-        "counter": 3103,
+        "counter": 3139,
         "getApproved": [],
         "name": "YieldFi Order Receipt",
         "ownerOf": [],
         "symbol": "yOR",
         "tokenURI": [],
-        "totalSupply": 4
+        "totalSupply": 6
       },
       "implementationNames": {
         "eth:0x933B4464beBE7136bC184637792c0EE514057660": "TransparentUpgradeableProxy",
@@ -631,7 +642,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "52150201261566015",
+        "totalSupply": "50094766953411687",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -1391,6 +1402,6 @@
     "yieldfi/TimelockController": "0xf4f6d4f9669222f80d580819b71d8b2c9b243710e3af70c08a33151ed9b74d67",
     "yieldfi/yToken": "0x9b5cc48d825b194515dfb745175d1b88cfddd832dc92dc60a7ec999ac69ef274"
   },
-  "usedBlockNumbers": { "ethereum": 24231204 },
+  "usedBlockNumbers": { "ethereum": 24319213 },
   "permissionsConfigHash": "0x18458e2b07fa1858f4202f05bfa54acc492bdc77c6e46233e5a109e5388c120f"
 }

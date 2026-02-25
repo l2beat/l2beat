@@ -8,14 +8,54 @@
       "priceId": "bitget-token",
       "symbol": "BGB",
       "name": "BitgetToken",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11610/large/Bitget_logo.png?1736925727",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x389C08Bc23A7317000a1FD76c7c5B0cb0b4640b5",
+        "chain": "morph",
+        "decimals": 18,
+        "sinceTimestamp": 1767510574
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "morph-BGB-2",
+      "priceId": "bitget-token",
+      "symbol": "BGB",
+      "name": "BitgetToken",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/11610/large/icon_colour.png?1696511504",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x54D2252757e1672EEaD234D27B1270728fF90581",
-        "chain": "ethereum",
-        "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
-        "decimals": 18,
-        "sinceTimestamp": 1729307651
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x54D2252757e1672EEaD234D27B1270728fF90581",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 18,
+            "sinceTimestamp": 1729307651
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x54D2252757e1672EEaD234D27B1270728fF90581",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 18,
+            "sinceTimestamp": 1729307783
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
@@ -23,33 +63,40 @@
     },
     {
       "mode": "auto",
-      "id": "morph-DAI-2",
+      "id": "morph-DAI",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
-        "decimals": 18,
-        "sinceTimestamp": 1729307783
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 18,
+            "sinceTimestamp": 1729307651
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 18,
+            "sinceTimestamp": 1729307783
           }
         ]
-      }
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "morph-ETH-1",
+      "id": "morph-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -73,6 +120,14 @@
             "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
             "decimals": 18,
             "sinceTimestamp": 1729307651
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 18,
+            "sinceTimestamp": 1729307783
           }
         ]
       },
@@ -82,18 +137,34 @@
     },
     {
       "mode": "auto",
-      "id": "morph-GT-1",
-      "priceId": "gatechain-token",
-      "symbol": "GT",
-      "name": "GateChainToken",
-      "iconUrl": "https://assets.coingecko.com/coins/images/8183/large/gate.png?1696508395",
+      "id": "morph-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xE66747a101bFF2dBA3697199DCcE5b743b454759",
-        "chain": "ethereum",
-        "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
-        "decimals": 18,
-        "sinceTimestamp": 1729307651
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 18,
+            "sinceTimestamp": 1729307651,
+            "untilTimestamp": 1742428800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 18,
+            "sinceTimestamp": 1729307783,
+            "untilTimestamp": 1742428800
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
@@ -101,18 +172,65 @@
     },
     {
       "mode": "auto",
-      "id": "morph-HT-1",
+      "id": "morph-GT",
+      "priceId": "gatechain-token",
+      "symbol": "GT",
+      "name": "GateChainToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8183/large/gate.png?1696508395",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xE66747a101bFF2dBA3697199DCcE5b743b454759",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 18,
+            "sinceTimestamp": 1729307651
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xE66747a101bFF2dBA3697199DCcE5b743b454759",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 18,
+            "sinceTimestamp": 1729307783
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "morph-HT",
       "priceId": "huobi-token",
       "symbol": "HT",
       "name": "HuobiToken",
       "iconUrl": "https://assets.coingecko.com/coins/images/2822/large/huobi-token-logo.png?1696503584",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6f259637dcD74C767781E37Bc6133cd6A68aa161",
-        "chain": "ethereum",
-        "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
-        "decimals": 18,
-        "sinceTimestamp": 1729307651
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6f259637dcD74C767781E37Bc6133cd6A68aa161",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 18,
+            "sinceTimestamp": 1729307651
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6f259637dcD74C767781E37Bc6133cd6A68aa161",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 18,
+            "sinceTimestamp": 1729307783
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
@@ -219,6 +337,41 @@
     },
     {
       "mode": "auto",
+      "id": "morph-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 18,
+            "sinceTimestamp": 1729307651,
+            "untilTimestamp": 1742169600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 18,
+            "sinceTimestamp": 1729307783,
+            "untilTimestamp": 1742169600
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "morph-USDa",
       "priceId": "usda-2",
       "symbol": "USDa",
@@ -245,7 +398,7 @@
     },
     {
       "mode": "auto",
-      "id": "morph-USDC-2",
+      "id": "morph-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -254,6 +407,14 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 6,
+            "sinceTimestamp": 1729307651
+          },
           {
             "type": "balanceOfEscrow",
             "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -281,15 +442,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -319,18 +473,32 @@
     },
     {
       "mode": "auto",
-      "id": "morph-USDT-1",
+      "id": "morph-USDT",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
       "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "chain": "ethereum",
-        "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
-        "decimals": 6,
-        "sinceTimestamp": 1729307651
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 6,
+            "sinceTimestamp": 1729307651
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 6,
+            "sinceTimestamp": 1729307783
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -338,18 +506,32 @@
     },
     {
       "mode": "auto",
-      "id": "morph-WBTC-1",
+      "id": "morph-WBTC",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
       "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "chain": "ethereum",
-        "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
-        "decimals": 8,
-        "sinceTimestamp": 1729307651
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+            "decimals": 8,
+            "sinceTimestamp": 1729307651
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 8,
+            "sinceTimestamp": 1729307783
+          }
+        ]
       },
       "category": "btc",
       "source": "canonical",

@@ -4,22 +4,23 @@ import { UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartMeta, ChartProject } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  ChartProject,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import type { DaThroughputChartDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
@@ -172,20 +173,9 @@ export function DaThroughputByProjectChart({
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-        <ChartLegend
-          content={
-            <ChartLegendContent>
-              <div className="flex shrink-0 items-center">
-                <button
-                  className="w-11 cursor-pointer select-none text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity hover:opacity-50 [&>svg]:text-secondary"
-                  onClick={toggleAllDataKeys}
-                >
-                  {showAllSelected ? 'Hide' : 'Show'} all
-                </button>
-                <VerticalSeparator className="mx-2 h-3" />
-              </div>
-            </ChartLegendContent>
-          }
+        <ChartLegendToggleAll
+          showAllSelected={showAllSelected}
+          onToggleAll={toggleAllDataKeys}
         />
         {allProjects?.map((project) => (
           <Area
@@ -202,15 +192,15 @@ export function DaThroughputByProjectChart({
           />
         ))}
 
-        {getCommonChartComponents({
-          data: chartData,
-          isLoading,
-          yAxis: {
+        <ChartCommonComponents
+          data={chartData}
+          isLoading={isLoading}
+          yAxis={{
             unit: ` ${unit}`,
             tickCount: 4,
-          },
-          syncedUntil,
-        })}
+          }}
+          syncedUntil={syncedUntil}
+        />
         <ChartTooltip
           filterNull={false}
           content={
@@ -223,24 +213,23 @@ export function DaThroughputByProjectChart({
 }
 
 function CustomTooltip({
-  active,
   payload,
   label,
   denominator: mainDenominator,
   resolution,
-}: TooltipProps<number, string> & {
+}: CustomChartTooltipProps & {
   denominator: number
   resolution: DaThroughputResolution
 }) {
   const { meta: config } = useChart()
-  if (!active || !payload || typeof label !== 'number') return null
-  payload.sort((a, b) => {
-    if (a.name === 'Unknown') return 1
-    if (b.name === 'Unknown') return -1
-    return (b.value ?? 0) - (a.value ?? 0)
-  })
-
-  const actualPayload = payload.filter((p) => !p.hide)
+  if (!payload || typeof label !== 'number') return null
+  const actualPayload = [...payload]
+    .sort((a, b) => {
+      if (a.name === 'Unknown') return 1
+      if (b.name === 'Unknown') return -1
+      return (b.value ?? 0) - (a.value ?? 0)
+    })
+    .filter((p) => !p.hide)
 
   return (
     <ChartTooltipWrapper>

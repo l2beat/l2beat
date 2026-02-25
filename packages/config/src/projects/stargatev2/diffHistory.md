@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x86d3d5259ed8cdc9bc18f8571a657df6a018d3e8
+
+# Diff at Mon, 02 Feb 2026 14:08:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1768999360
+- current timestamp: 1770041060
+
+## Description
+
+EURC pool removed on base.
+
+## Watched changes
+
+```diff
+    contract TokenMessagingBase (base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47) {
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+      values.pools.22:
+-        "base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2"
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolEURC (base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2)
+    +++ description: None
+```
+
+```diff
+    EOA  (base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 2743 --------------------
+ .../StargatePoolEURC.sol}                          |    0
+ 2 files changed, 2743 deletions(-)
+```
+
+Generated with discovered.json: 0xe8d5c6c3975773a85616b167715001c83f9af8e8
+
+# Diff at Wed, 21 Jan 2026 12:43:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768371339
+- current timestamp: 1768999360
+
+## Description
+
+nethermind dvn signerSize +1. works like a 1/5 multisig.
+
+## Watched changes
+
+```diff
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      values.signerSize:
+-        4
++        5
+    }
+```
+
 Generated with discovered.json: 0xc5531b542687d6a4f7833fa9b5888de4138dc2be
 
 # Diff at Wed, 14 Jan 2026 06:16:53 GMT:

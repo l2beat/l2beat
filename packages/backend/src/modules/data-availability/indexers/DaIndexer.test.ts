@@ -252,26 +252,28 @@ function mockIndexer($: {
       })
     : undefined
 
-  const indexer = new DaIndexer({
-    configurations: ($.configurations ?? [config('project-a')]).map((c) => ({
-      id: c.configurationId,
-      minHeight: c.sinceBlock,
-      maxHeight: c.untilBlock ?? null,
-      properties: c,
-    })),
-    daProvider,
-    daService,
-    logger: Logger.SILENT,
-    daLayer: DA_LAYER,
-    batchSize: $.batchSize ?? 100,
-    parents: [],
-    indexerService: $.indexerService ?? mockObject<IndexerService>(),
-    db: mockDatabase({
-      dataAvailability: repository,
-      syncMetadata: syncMetadataRepository,
-    }),
-    blobService,
-  })
+  const indexer = new DaIndexer(
+    {
+      configurations: ($.configurations ?? [config('project-a')]).map((c) => ({
+        id: c.configurationId,
+        minHeight: c.sinceBlock,
+        maxHeight: c.untilBlock ?? null,
+        properties: c,
+      })),
+      daProvider,
+      daService,
+      daLayer: DA_LAYER,
+      batchSize: $.batchSize ?? 100,
+      parents: [],
+      indexerService: $.indexerService ?? mockObject<IndexerService>(),
+      db: mockDatabase({
+        dataAvailability: repository,
+        syncMetadata: syncMetadataRepository,
+      }),
+      blobService,
+    },
+    Logger.SILENT,
+  )
 
   return {
     repository,

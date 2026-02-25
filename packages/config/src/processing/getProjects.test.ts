@@ -385,7 +385,10 @@ describe('getProjects', () => {
       const contracts = chains
         .filter(
           (c) =>
-            c.name !== 'zksync2' && c.name !== 'kinto' && c.name !== 'degen',
+            c.name !== 'zksync2' &&
+            c.name !== 'kinto' &&
+            c.name !== 'degen' &&
+            c.name !== 'abstract',
         ) // we are omitting zksync2, degen and kinto as they use different addresses
         .flatMap(
           (x) => x.multicallContracts?.map((y) => [x.name, y] as const) ?? [],

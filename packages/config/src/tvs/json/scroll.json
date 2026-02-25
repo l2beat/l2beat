@@ -383,29 +383,44 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-pufETH-2",
+      "id": "scroll-pufETH",
       "priceId": "pufeth",
       "symbol": "pufETH",
       "name": "pufETH",
       "iconUrl": "https://assets.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
-        "chain": "ethereum",
-        "escrowAddress": "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
-        "decimals": 18,
-        "sinceTimestamp": 1713173507
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+            "chain": "ethereum",
+            "escrowAddress": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
+            "decimals": 18,
+            "sinceTimestamp": 1707696000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+            "chain": "ethereum",
+            "escrowAddress": "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+            "decimals": 18,
+            "sinceTimestamp": 1707696000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+            "chain": "ethereum",
+            "escrowAddress": "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a",
+            "decimals": 18,
+            "sinceTimestamp": 1713173507
           }
         ]
-      }
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -888,29 +903,44 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-wstETH-2",
+      "id": "scroll-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x6625C6332c9F91F2D27c304E729B86db87A3f504",
-        "decimals": 18,
-        "sinceTimestamp": 1696920503
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
+            "decimals": 18,
+            "sinceTimestamp": 1696782323
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
+            "decimals": 18,
+            "sinceTimestamp": 1696782323
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x6625C6332c9F91F2D27c304E729B86db87A3f504",
+            "decimals": 18,
+            "sinceTimestamp": 1696920503
           }
         ]
-      }
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     }
   ]
 }

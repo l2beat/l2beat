@@ -2,6 +2,7 @@ import { AboutUsPage } from './about/AboutUsPage'
 import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
 import { BridgesProjectPage } from './bridges/project/BridgesProjectPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
+import { ChangelogPage } from './changelog/ChangelogPage'
 import { DaRiskFrameworkPage } from './da-risk-framework/DaRiskFrameworkPage'
 import { DataAvailabilityArchivedPage } from './data-availability/archived/DataAvailabilityArchivedPage'
 import { DataAvailabilityLivenessPage } from './data-availability/liveness/DataAvailabilityLivenessPage'
@@ -15,6 +16,9 @@ import { FaqPage } from './faq/FaqPage'
 import { GlossaryPage } from './glossary/GlossaryPage'
 import { EthereumConnectPage } from './governance/ethereum-connect/EthereumConnectPage'
 import { GovernancePage } from './governance/GovernancePage'
+import { InteropBurnAndMintPage } from './interop/burn-and-mint/InteropBurnAndMintPage'
+import { InteropLockAndMintPage } from './interop/lock-and-mint/InteropLockAndMintPage'
+import { InteropNonMintingPage } from './interop/non-minting/InteropNonMintingPage'
 import { InteropSummaryPage } from './interop/summary/InteropSummaryPage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
@@ -66,6 +70,9 @@ const pages = {
   ScalingRiskStateValidationPage,
   // Interop
   InteropSummaryPage,
+  InteropNonMintingPage,
+  InteropLockAndMintPage,
+  InteropBurnAndMintPage,
   // Bridges
   BridgesSummaryPage,
   BridgesArchivedPage,
@@ -92,6 +99,7 @@ const pages = {
   FaqPage,
   GlossaryPage,
   AboutUsPage,
+  ChangelogPage,
   DonatePage,
   DaRiskFrameworkPage,
   MultisigReportPage,

@@ -195,7 +195,7 @@ The Governance Contribution Reward Working Group [created a post](https://forum.
 
 ### **Public Forum to Wallet Link Verification**
 
-Curia [created a post](https://forum.scroll.io/t/public-forum-to-wallet-link-verification/1094) that outlines a public forum and wallet verification tool. Delegates can link their forum handle to their voting wallet via [verify.curiahub.xyz/forum](verify.curiahub.xyz/forum) by connecting the wallet, entering the forum name, signing a message, posting the generated signature in the thread, then returning to finalize. It’s an open utility anyone can adopt to tie on-chain governance to forum activity better.
+Curia [created a post](https://forum.scroll.io/t/public-forum-to-wallet-link-verification/1094) that outlines a public forum and wallet verification tool. Delegates can link their forum handle to their voting wallet via [verify.curiahub.xyz/forum](https://verify.curiahub.xyz/forum) by connecting the wallet, entering the forum name, signing a message, posting the generated signature in the thread, then returning to finalize. It’s an open utility anyone can adopt to tie on-chain governance to forum activity better.
 
 **Discuss with L2BEAT**
 

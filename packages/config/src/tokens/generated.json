@@ -577,6 +577,20 @@
       "supply": "zero"
     },
     {
+      "name": "AZTEC",
+      "coingeckoId": "aztec",
+      "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "symbol": "AZTEC",
+      "decimals": 18,
+      "deploymentTimestamp": 1751359739,
+      "coingeckoListingTimestamp": 1770854400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70681/large/aztec.png?1763091883",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Baby Doge Coin",
       "coingeckoId": "baby-doge-coin",
       "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",
@@ -3876,6 +3890,20 @@
       "coingeckoListingTimestamp": 1632441600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/18578/large/nftrade.png?1696518055",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Nillion",
+      "coingeckoId": "nillion",
+      "address": "0x7Cf9a80db3B29eE8efE3710AadB7b95270572d47",
+      "symbol": "NIL",
+      "decimals": 6,
+      "deploymentTimestamp": 1648598273,
+      "coingeckoListingTimestamp": 1742774400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39082/large/nillion.jpg?1723033507",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -10131,6 +10159,28 @@
       }
     },
     {
+      "name": "Gate Wrapped BTC",
+      "coingeckoId": "gate-wrapped-btc",
+      "address": "0x0035b877C3aB50cFFA9eD52bA05282c7045f78dd",
+      "symbol": "gtBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1765353322,
+      "coingeckoListingTimestamp": 1755907200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68496/large/17557587474808c2d3f7d34aaa2709dc3e07c62305.png?1755935255",
+      "chainId": 2741,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Noot Noot",
       "coingeckoId": "noot-noot",
       "address": "0x85Ca16Fd0e81659e0b8Be337294149E722528731",
@@ -10198,6 +10248,28 @@
           {
             "name": "Stargate v2",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BitgetToken",
+      "coingeckoId": "bitget-token",
+      "address": "0x389C08Bc23A7317000a1FD76c7c5B0cb0b4640b5",
+      "symbol": "BGB",
+      "decimals": 18,
+      "deploymentTimestamp": 1767510574,
+      "coingeckoListingTimestamp": 1591747200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11610/large/Bitget_logo.png?1736925727",
+      "chainId": 2818,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }
@@ -13211,6 +13283,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Pleasing Gold",
+      "coingeckoId": "pleasing-gold",
+      "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
+      "symbol": "PGOLD",
+      "decimals": 18,
+      "deploymentTimestamp": 1760426055,
+      "coingeckoListingTimestamp": 1761782400,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70395/large/%E9%BB%84%E9%87%91.png?1761795141",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Polkamon",

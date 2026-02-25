@@ -23,19 +23,21 @@ export function createEcosystemsModule({
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
-  const ecosystemTokenIndexer = new EcosystemTokenIndexer({
-    db,
+  const ecosystemTokenIndexer = new EcosystemTokenIndexer(
+    {
+      db,
+      indexerService: new IndexerService(db),
+      parents: [hourlyIndexer],
+      configurations: ecosystemsConfig.tokens.map((token) => ({
+        id: token.configurationId,
+        minHeight: 0,
+        maxHeight: null,
+        properties: token,
+      })),
+      coingeckoClient: providers.clients.coingecko,
+    },
     logger,
-    indexerService: new IndexerService(db),
-    parents: [hourlyIndexer],
-    configurations: ecosystemsConfig.tokens.map((token) => ({
-      id: token.configurationId,
-      minHeight: 0,
-      maxHeight: null,
-      properties: token,
-    })),
-    coingeckoClient: providers.clients.coingecko,
-  })
+  )
 
   const start = async () => {
     logger = logger.for('EcosystemsModule')

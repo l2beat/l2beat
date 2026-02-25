@@ -299,12 +299,13 @@ describe(InteropFinancialsLoop.name, () => {
         },
       } as any)
 
-      const logger = mockObject<Logger>({
+      const forLogger = mockObject<Logger>({
         info: mockFn().returns(undefined),
         warn: mockFn().returns(undefined),
       })
-      //@ts-ignore
-      logger.for = () => logger
+      const logger = mockObject<Logger>({
+        for: mockFn().returns(forLogger),
+      })
 
       const service = new InteropFinancialsLoop(
         [

@@ -44,6 +44,9 @@ export async function getPublicationsData(
       props: {
         ...appLayoutProps,
         publications,
+        newsletterBgUrl: manifest.getUrl(
+          '/images/publications/newsletter-box.png',
+        ),
       },
     },
   }

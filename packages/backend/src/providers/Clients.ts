@@ -115,6 +115,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                 retryStrategy: blockApi.retryStrategy,
                 logger,
                 multicallClient,
+                timeout: blockApi.timeout,
               })
             : new RpcClient({
                 chain: chain.name,
@@ -124,6 +125,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                 retryStrategy: blockApi.retryStrategy,
                 logger,
                 multicallClient,
+                timeout: blockApi.timeout,
               })
           blockClients.push(rpcClient)
           logsClients.push(rpcClient)

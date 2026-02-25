@@ -19,6 +19,7 @@ export async function getScalingCostsEntries(helpers: SsrHelpers) {
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
+      optional: ['contracts'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -43,7 +44,10 @@ export interface ScalingCostsEntry extends CommonScalingEntry {
 }
 
 function getScalingCostEntry(
-  project: Project<'statuses' | 'scalingInfo' | 'costsInfo' | 'display'>,
+  project: Project<
+    'statuses' | 'scalingInfo' | 'costsInfo' | 'display',
+    'contracts'
+  >,
   changes: ProjectChanges,
   costs: CostsTableData[string] | undefined,
 ): ScalingCostsEntry {

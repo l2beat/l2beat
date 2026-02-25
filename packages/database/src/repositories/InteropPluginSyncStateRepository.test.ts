@@ -21,6 +21,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         chain: 'ethereum',
         lastError: 'Some RPC error',
         resyncRequestedFrom,
+        wipeRequired: true,
       })
 
       await repository.upsert(record)
@@ -39,6 +40,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         chain: 'ethereum',
         lastError: 'Some RPC error',
         resyncRequestedFrom: firstResyncRequestedFrom,
+        wipeRequired: true,
       })
       await repository.upsert(record)
 
@@ -50,6 +52,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         chain: 'ethereum',
         lastError: 'fixed',
         resyncRequestedFrom: secondResyncRequestedFrom,
+        wipeRequired: true,
       })
       await repository.upsert(updated)
 
@@ -82,6 +85,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         chain: 'ethereum',
         lastError: 'Initial error',
         resyncRequestedFrom,
+        wipeRequired: true,
       })
       await repository.upsert(record)
 
@@ -103,7 +107,6 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
     () => {
       it('inserts a new record when missing', async () => {
         const resyncRequestedFrom = UnixTime.fromDate(new Date('2023-01-01'))
-
         await repository.setResyncRequestedFrom(
           'plugin-a',
           'ethereum',
@@ -119,11 +122,12 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
             pluginName: 'plugin-a',
             chain: 'ethereum',
             resyncRequestedFrom,
+            wipeRequired: true,
           }),
         )
       })
 
-      it('updates resyncRequestedFrom without touching other fields', async () => {
+      it('updates resyncRequestedFrom and marks wipeRequired', async () => {
         const initialResyncRequestedFrom = UnixTime.fromDate(
           new Date('2023-01-01'),
         )
@@ -151,7 +155,82 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         expect(stored).toEqual({
           ...record,
           resyncRequestedFrom: updatedResyncRequestedFrom,
+          wipeRequired: true,
         })
+      })
+    },
+  )
+
+  describe(
+    InteropPluginSyncStateRepository.prototype
+      .clearResyncRequestUnlessWipePending.name,
+    () => {
+      it('clears resyncRequestedFrom only when wipeRequired is false', async () => {
+        const record = state({
+          pluginName: 'plugin-a',
+          chain: 'ethereum',
+          lastError: 'Initial error',
+          resyncRequestedFrom: UnixTime.fromDate(new Date('2023-01-01')),
+          wipeRequired: true,
+        })
+        await repository.upsert(record)
+        await repository.updateByPluginNameAndChain(
+          record.pluginName,
+          record.chain,
+          {
+            wipeRequired: false,
+          },
+        )
+
+        const updated = await repository.clearResyncRequestUnlessWipePending(
+          record.pluginName,
+          record.chain,
+        )
+
+        expect(updated).toEqual(1)
+
+        const stored = await repository.findByPluginNameAndChain(
+          record.pluginName,
+          record.chain,
+        )
+        expect(stored).toEqual({
+          ...record,
+          resyncRequestedFrom: null,
+          wipeRequired: false,
+        })
+      })
+
+      it('does not clear resyncRequestedFrom when wipeRequired is true', async () => {
+        const resyncRequestedFrom = UnixTime.fromDate(new Date('2023-01-01'))
+        const record = state({
+          pluginName: 'plugin-a',
+          chain: 'ethereum',
+          resyncRequestedFrom,
+          wipeRequired: true,
+        })
+
+        await repository.upsert(record)
+
+        const updated = await repository.clearResyncRequestUnlessWipePending(
+          record.pluginName,
+          record.chain,
+        )
+
+        expect(updated).toEqual(0)
+
+        const stored = await repository.findByPluginNameAndChain(
+          record.pluginName,
+          record.chain,
+        )
+        expect(stored).toEqual(record)
+      })
+
+      it('returns 0 when no matching record exists', async () => {
+        const updated = await repository.clearResyncRequestUnlessWipePending(
+          'plugin-a',
+          'ethereum',
+        )
+        expect(updated).toEqual(0)
       })
     },
   )
@@ -168,6 +247,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           chain: 'ethereum',
           lastError: 'Some RPC error',
           resyncRequestedFrom: firstResyncRequestedFrom,
+          wipeRequired: true,
         })
         await repository.upsert(record)
 
@@ -180,6 +260,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           {
             lastError: null,
             resyncRequestedFrom: secondResyncRequestedFrom,
+            wipeRequired: false,
           },
         )
 
@@ -193,6 +274,7 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
           ...record,
           lastError: null,
           resyncRequestedFrom: secondResyncRequestedFrom,
+          wipeRequired: false,
         })
       })
 
@@ -206,6 +288,34 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         )
 
         expect(updated).toEqual(0)
+      })
+    },
+  )
+
+  describe(
+    InteropPluginSyncStateRepository.prototype.updateByPluginName.name,
+    () => {
+      it('updates records for the plugin name', async () => {
+        const a1 = state({ pluginName: 'plugin-a', chain: 'ethereum' })
+        const a2 = state({ pluginName: 'plugin-a', chain: 'arbitrum' })
+        const b1 = state({ pluginName: 'plugin-b', chain: 'ethereum' })
+        await repository.upsert(a1)
+        await repository.upsert(a2)
+        await repository.upsert(b1)
+
+        const updated = await repository.updateByPluginName('plugin-a', {
+          wipeRequired: true,
+        })
+
+        expect(updated).toEqual(2)
+
+        const pluginA = await repository.findByPluginName('plugin-a')
+        expect(pluginA).toEqualUnsorted([
+          { ...a1, wipeRequired: true },
+          { ...a2, wipeRequired: true },
+        ])
+        const pluginB = await repository.findByPluginName('plugin-b')
+        expect(pluginB).toEqual([b1])
       })
     },
   )
@@ -297,6 +407,67 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
       expect(all).toEqual([])
     })
   })
+
+  describe(
+    InteropPluginSyncStateRepository.prototype.deleteNotInPluginNames.name,
+    () => {
+      it('deletes records with plugin names not in the list', async () => {
+        const a1 = state({ pluginName: 'plugin-a', chain: 'ethereum' })
+        const a2 = state({ pluginName: 'plugin-a', chain: 'arbitrum' })
+        const b1 = state({ pluginName: 'plugin-b', chain: 'ethereum' })
+        const c1 = state({ pluginName: 'plugin-c', chain: 'op' })
+        await repository.upsert(a1)
+        await repository.upsert(a2)
+        await repository.upsert(b1)
+        await repository.upsert(c1)
+
+        const deleted = await repository.deleteNotInPluginNames([
+          'plugin-a',
+          'plugin-b',
+        ])
+        expect(deleted).toEqual(1)
+
+        const all = await repository.getAll()
+        expect(all).toEqualUnsorted([a1, a2, b1])
+      })
+
+      it('does not delete any records when list is empty', async () => {
+        await repository.upsert(
+          state({ pluginName: 'plugin-a', chain: 'ethereum' }),
+        )
+        await repository.upsert(
+          state({ pluginName: 'plugin-b', chain: 'arbitrum' }),
+        )
+
+        const deleted = await repository.deleteNotInPluginNames([])
+        expect(deleted).toEqual(0)
+
+        const all = await repository.getAll()
+        expect(all.length).toEqual(2)
+      })
+
+      it('returns 0 when no records exist', async () => {
+        const deleted = await repository.deleteNotInPluginNames(['plugin-a'])
+        expect(deleted).toEqual(0)
+      })
+
+      it('returns 0 when all records match the valid list', async () => {
+        const a1 = state({ pluginName: 'plugin-a', chain: 'ethereum' })
+        const b1 = state({ pluginName: 'plugin-b', chain: 'arbitrum' })
+        await repository.upsert(a1)
+        await repository.upsert(b1)
+
+        const deleted = await repository.deleteNotInPluginNames([
+          'plugin-a',
+          'plugin-b',
+        ])
+        expect(deleted).toEqual(0)
+
+        const all = await repository.getAll()
+        expect(all).toEqualUnsorted([a1, b1])
+      })
+    },
+  )
 })
 
 function state(
@@ -310,5 +481,6 @@ function state(
     chain: overrides.chain,
     lastError: overrides.lastError ?? null,
     resyncRequestedFrom: overrides.resyncRequestedFrom ?? null,
+    wipeRequired: overrides.wipeRequired ?? false,
   }
 }

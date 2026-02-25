@@ -50,8 +50,9 @@ export class AcrossConfigPlugin
     private store: InteropConfigStore,
     protected logger: Logger,
     private ethereumRpc: IRpcClient,
+    intervalMs: number,
   ) {
-    super({ intervalMs: 20 * 60 * 1000 })
+    super({ intervalMs })
     this.logger = logger.for(this).tag({ tag: AcrossConfig.key })
   }
 

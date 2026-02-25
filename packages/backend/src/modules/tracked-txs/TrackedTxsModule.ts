@@ -79,22 +79,24 @@ export function createTrackedTxsModule(
 
   const minTimestamp = config.trackedTxsConfig.minTimestamp
 
-  const trackedTxsIndexer = new TrackedTxsIndexer({
+  const trackedTxsIndexer = new TrackedTxsIndexer(
+    {
+      parents: [hourlyIndexer],
+      indexerService,
+      trackedTxsClient,
+      configurations: runtimeConfigurations.map((c) => ({
+        properties: c,
+        minHeight:
+          c.sinceTimestamp < minTimestamp ? minTimestamp : c.sinceTimestamp,
+        maxHeight: c.untilTimestamp ?? null,
+        id: c.id,
+      })),
+      updaters,
+      db,
+      projects: config.trackedTxsConfig.projects,
+    },
     logger,
-    parents: [hourlyIndexer],
-    indexerService,
-    trackedTxsClient,
-    configurations: runtimeConfigurations.map((c) => ({
-      properties: c,
-      minHeight:
-        c.sinceTimestamp < minTimestamp ? minTimestamp : c.sinceTimestamp,
-      maxHeight: c.untilTimestamp ?? null,
-      id: c.id,
-    })),
-    updaters,
-    db,
-    projects: config.trackedTxsConfig.projects,
-  })
+  )
 
   let l2CostPricesIndexer: L2CostsPricesIndexer | undefined
   let l2CostsAggregatorIndexer: L2CostsAggregatorIndexer | undefined
@@ -109,46 +111,54 @@ export function createTrackedTxsModule(
       logger.tag({ tag: 'trackedTxs' }),
     )
 
-    l2CostPricesIndexer = new L2CostsPricesIndexer({
-      coingeckoQueryService,
-      db,
-      parents: [hourlyIndexer],
-      indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp,
-      logger: logger.tag({ feature: 'costs' }),
-    })
+    l2CostPricesIndexer = new L2CostsPricesIndexer(
+      {
+        coingeckoQueryService,
+        db,
+        parents: [hourlyIndexer],
+        indexerService,
+        minHeight: config.trackedTxsConfig.minTimestamp,
+      },
+      logger.tag({ feature: 'costs' }),
+    )
 
-    l2CostsAggregatorIndexer = new L2CostsAggregatorIndexer({
-      db,
-      parents: [trackedTxsIndexer, l2CostPricesIndexer],
-      indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp,
-      logger: logger.tag({ feature: 'costs' }),
-      projects: config.trackedTxsConfig.projects,
-    })
+    l2CostsAggregatorIndexer = new L2CostsAggregatorIndexer(
+      {
+        db,
+        parents: [trackedTxsIndexer, l2CostPricesIndexer],
+        indexerService,
+        minHeight: config.trackedTxsConfig.minTimestamp,
+        projects: config.trackedTxsConfig.projects,
+      },
+      logger.tag({ feature: 'costs' }),
+    )
   }
 
   let livenessAggregatingIndexer: LivenessAggregatingIndexer | undefined
   let anomaliesIndexer: AnomaliesIndexer | undefined
 
   if (config.trackedTxsConfig.uses.liveness) {
-    livenessAggregatingIndexer = new LivenessAggregatingIndexer({
-      db,
-      projects: config.trackedTxsConfig.projects,
-      parents: [trackedTxsIndexer],
-      indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp,
-      logger: logger.tag({ feature: 'liveness' }),
-    })
+    livenessAggregatingIndexer = new LivenessAggregatingIndexer(
+      {
+        db,
+        projects: config.trackedTxsConfig.projects,
+        parents: [trackedTxsIndexer],
+        indexerService,
+        minHeight: config.trackedTxsConfig.minTimestamp,
+      },
+      logger.tag({ feature: 'liveness' }),
+    )
 
-    anomaliesIndexer = new AnomaliesIndexer({
-      db,
-      projects: config.trackedTxsConfig.projects,
-      parents: [trackedTxsIndexer],
-      indexerService,
-      minHeight: config.trackedTxsConfig.minTimestamp,
-      logger: logger.tag({ feature: 'liveness' }),
-    })
+    anomaliesIndexer = new AnomaliesIndexer(
+      {
+        db,
+        projects: config.trackedTxsConfig.projects,
+        parents: [trackedTxsIndexer],
+        indexerService,
+        minHeight: config.trackedTxsConfig.minTimestamp,
+      },
+      logger.tag({ feature: 'liveness' }),
+    )
   }
 
   const start = async () => {

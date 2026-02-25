@@ -29,7 +29,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: false
-          file: Dockerfile.backend
+          file: packages/backend/Dockerfile
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
@@ -174,7 +174,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: false
-          file: Dockerfile.token-backend
+          file: packages/token-backend/Dockerfile
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
@@ -316,6 +316,7 @@ jobs:
             out=$(yq -r '
               (.jobs // {})
               | to_entries[]
+              | select(.value | has("uses") | not)
               | select(.value | has("timeout-minutes") | not)
               | .key
             ' "$file")

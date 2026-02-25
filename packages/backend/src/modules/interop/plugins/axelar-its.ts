@@ -1,18 +1,10 @@
-/* axelar Interchain Transfer Service (ITS) plugin
-
-This plugin handles all ITS tokens
-SRC:
-- InterchainTransfer event
-- ContractCall event
-DST APPROVE:
-- ContractCallApproved event
-DST EXECUTE:
-- Gateway.ContractCallExecuted event
-- InterchainTransferReceived event
-
-*/
+/**
+ * Axelar Interchain Token Service
+ * OMNICHAIN token standard
+ */
 
 import { Address32 } from '@l2beat/shared-pure'
+import type { TokenMap } from '../engine/match/TokenMap'
 import {
   AXELAR_NETWORKS,
   ContractCall,
@@ -20,6 +12,7 @@ import {
   ContractCallExecuted,
 } from './axelar'
 import { findParsedAround } from './hyperlane-hwr'
+import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import {
   createEventParser,
   createInteropEventType,
@@ -48,16 +41,18 @@ export const InterchainTransfer = createInteropEventType<{
   matchId: string
   amount: bigint
   tokenAddress?: Address32
+  srcWasBurned?: boolean
   $dstChain: string
-}>('axelar-its.InterchainTransfer')
+}>('axelar-its.InterchainTransfer', { direction: 'outgoing' })
 
 export const InterchainTransferReceived = createInteropEventType<{
   matchId: string
   commandId: `0x${string}`
   amount: bigint
   tokenAddress?: Address32
+  dstWasMinted?: boolean
   $srcChain: string
-}>('axelar-its.InterchainTransferReceived')
+}>('axelar-its.InterchainTransferReceived', { direction: 'incoming' })
 
 export class AxelarITSPlugin implements InteropPlugin {
   readonly name = 'axelar-its'
@@ -65,7 +60,7 @@ export class AxelarITSPlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const interchainTransfer = parseInterchainTransfer(input.log, null)
     if (interchainTransfer) {
-      const tokenAddress = findParsedAround(
+      const transferInfo = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
@@ -74,22 +69,33 @@ export class AxelarITSPlugin implements InteropPlugin {
           if (!transfer) return
           // compare amount to not match a rogue Transfer event
           if (transfer.value !== interchainTransfer.amount) return
-          return Address32.from(log.address)
+          return {
+            address: Address32.from(log.address),
+            burned: Address32.from(transfer.to) === Address32.ZERO,
+          }
         },
-      )?.parsed
+      )
 
       const $dstChain = findChain(
         AXELAR_NETWORKS,
         (x) => x.axelarChainName,
         interchainTransfer.destinationChain,
       )
-      const matchId = `${input.chain}-${$dstChain}-${interchainTransfer.sourceAddress.toLowerCase()}-${interchainTransfer.destinationAddress.toLowerCase()}-${interchainTransfer.amount.toString()}-${interchainTransfer.dataHash}`
+      const matchId = axelarSynthMatchId(
+        input.chain,
+        $dstChain,
+        interchainTransfer.sourceAddress,
+        interchainTransfer.destinationAddress,
+        interchainTransfer.amount,
+        interchainTransfer.dataHash,
+      )
 
       return [
         InterchainTransfer.create(input, {
           matchId,
           amount: interchainTransfer.amount,
-          tokenAddress: tokenAddress,
+          tokenAddress: transferInfo?.address,
+          srcWasBurned: transferInfo?.burned,
           $dstChain,
         }),
       ]
@@ -100,7 +106,7 @@ export class AxelarITSPlugin implements InteropPlugin {
       null,
     )
     if (interchainTransferReceived) {
-      const tokenAddress = findParsedAround(
+      const transferInfo = findParsedAround(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
@@ -109,39 +115,50 @@ export class AxelarITSPlugin implements InteropPlugin {
           if (!transfer) return
           // compare amount to not match a rogue Transfer event
           if (transfer.value !== interchainTransferReceived.amount) return
-          return Address32.from(log.address)
+          return {
+            address: Address32.from(log.address),
+            minted: Address32.from(transfer.from) === Address32.ZERO,
+          }
         },
-      )?.parsed
+      )
 
       const $srcChain = findChain(
         AXELAR_NETWORKS,
         (x) => x.axelarChainName,
         interchainTransferReceived.sourceChain,
       )
-      const matchId = `${$srcChain}-${input.chain}-${interchainTransferReceived.sourceAddress.toLowerCase()}-${interchainTransferReceived.destinationAddress.toLowerCase()}-${interchainTransferReceived.amount.toString()}-${interchainTransferReceived.dataHash}`
-
+      const matchId = axelarSynthMatchId(
+        $srcChain,
+        input.chain,
+        interchainTransferReceived.sourceAddress,
+        interchainTransferReceived.destinationAddress,
+        interchainTransferReceived.amount,
+        interchainTransferReceived.dataHash,
+      )
       return [
         InterchainTransferReceived.create(input, {
           matchId,
           commandId: interchainTransferReceived.commandId,
           amount: interchainTransferReceived.amount,
-          tokenAddress: tokenAddress,
+          tokenAddress: transferInfo?.address,
+          dstWasMinted: transferInfo?.minted,
           $srcChain,
         }),
       ]
     }
   }
 
-  matchTypes = [InterchainTransferReceived]
+  matchTypes = [ContractCallExecuted] // same entry as axelar.ts to prevent it stealing events
   match(
-    interchainTransferReceived: InteropEvent,
+    contractCallExecuted: InteropEvent,
     db: InteropEventDb,
+    tokenMap: TokenMap,
   ): MatchResult | undefined {
-    if (InterchainTransferReceived.checkType(interchainTransferReceived)) {
-      const contractCallExecuted = db.find(ContractCallExecuted, {
-        commandId: interchainTransferReceived.args.commandId,
+    if (ContractCallExecuted.checkType(contractCallExecuted)) {
+      const interchainTransferReceived = db.find(InterchainTransferReceived, {
+        commandId: contractCallExecuted.args.commandId,
       })
-      if (!contractCallExecuted) return
+      if (!interchainTransferReceived) return
       const contractCallApproved = db.find(ContractCallApproved, {
         commandId: interchainTransferReceived.args.commandId,
       })
@@ -156,8 +173,23 @@ export class AxelarITSPlugin implements InteropPlugin {
         sameTxAfter: interchainTransfer,
       })
       if (!contractCall) return
+
+      const srcTokenAddress = interchainTransfer.args.tokenAddress
+      const dstTokenAddress = interchainTransferReceived.args.tokenAddress
+      const srcWasBurned = interchainTransfer.args.srcWasBurned
+      const dstWasMinted = interchainTransferReceived.args.dstWasMinted
+      const bridgeType = getBridgeType({
+        srcTokenAddress,
+        dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
+        srcChain: interchainTransfer.ctx.chain,
+        dstChain: interchainTransferReceived.ctx.chain,
+        tokenMap,
+      })
+
       return [
-        Result.Message('axelar.ContractCallMessage', {
+        Result.Message('axelar.Message', {
           app: 'axelar-its',
           srcEvent: contractCall,
           dstEvent: contractCallApproved,
@@ -166,12 +198,26 @@ export class AxelarITSPlugin implements InteropPlugin {
         Result.Transfer('axelar-its.Transfer', {
           srcEvent: interchainTransfer,
           srcAmount: interchainTransfer.args.amount,
-          srcTokenAddress: interchainTransfer.args.tokenAddress,
+          srcTokenAddress,
+          srcWasBurned,
           dstEvent: interchainTransferReceived,
           dstAmount: interchainTransferReceived.args.amount,
-          dstTokenAddress: interchainTransferReceived.args.tokenAddress,
+          dstTokenAddress,
+          dstWasMinted,
+          bridgeType,
         }),
       ]
     }
   }
+}
+
+export function axelarSynthMatchId(
+  srcChain: string,
+  dstChain: string,
+  srcAddress: string,
+  dstAddress: string,
+  amount: bigint,
+  dataHash: `0x${string}`,
+): string {
+  return `${srcChain}-${dstChain}-${srcAddress.toLowerCase()}-${dstAddress.toLowerCase()}-${amount.toString()}-${dataHash.toLowerCase()}`
 }

@@ -11,11 +11,15 @@ interface Dependencies {
   projectId: ProjectId
   uopsAnalyzer?: UopsAnalyzer
   assessCount: (count: number, blockNumber: number) => number
-  logger: Logger
 }
 
 export class BlockTxsCountService {
-  constructor(private readonly $: Dependencies) {}
+  constructor(
+    private readonly $: Dependencies,
+    private readonly logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async getTxsCount(
     from: number,
@@ -31,7 +35,7 @@ export class BlockTxsCountService {
       let txsCount = this.$.assessCount(txs, blockNumber)
 
       if (txsCount < 0) {
-        this.$.logger.warn('txsCount is negative', {
+        this.logger.warn('txsCount is negative', {
           projectId: this.$.projectId,
           blockNumber,
           txsCount,
@@ -44,7 +48,7 @@ export class BlockTxsCountService {
         const uops = this.$.uopsAnalyzer.calculateUops(block)
         uopsCount = this.$.assessCount(uops, blockNumber)
         if (uopsCount < 0) {
-          this.$.logger.warn('uopsCount is negative', {
+          this.logger.warn('uopsCount is negative', {
             projectId: this.$.projectId,
             blockNumber,
             uopsCount,

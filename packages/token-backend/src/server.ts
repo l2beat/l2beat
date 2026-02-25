@@ -14,7 +14,7 @@ function main() {
   const config = getConfig()
   const db = getDb(config)
 
-  app.use(express.json())
+  app.use(express.json({ limit: `${config.jsonBodyLimitMb}mb` }))
 
   const coingeckoClient = new CoingeckoClient({
     apiKey: config.coingeckoApiKey,

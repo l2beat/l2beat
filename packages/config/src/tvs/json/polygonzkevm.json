@@ -1372,6 +1372,24 @@
     },
     {
       "mode": "auto",
+      "id": "polygonzkevm-SOL",
+      "priceId": "sol-wormhole",
+      "symbol": "SOL",
+      "name": "Wrapped SOL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22876/large/SOL_wh_small.png?1696522175",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x99bD591703721D7C4E0413c91902BC2418E4e598",
+        "chain": "polygonzkevm",
+        "decimals": 9,
+        "sinceTimestamp": 1679679015
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygonzkevm-SUPER",
       "priceId": "superfarm",
       "symbol": "SUPER",
@@ -1567,6 +1585,24 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-USDS",
+      "priceId": "usds",
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xBfE55a77Cb773229610830226b6c54bDCf36761E",
+        "chain": "polygonzkevm",
+        "decimals": 18,
+        "sinceTimestamp": 1727136000
       }
     },
     {
