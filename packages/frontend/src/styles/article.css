@@ -1,10 +1,10 @@
 @reference "tailwindcss";
 
-.article > * {
+.article:not(.changelog) > * {
   @apply mb-4;
 }
 
-.article > *:last-child {
+.article:not(.changelog) > *:last-child {
   @apply mb-8;
 }
 
