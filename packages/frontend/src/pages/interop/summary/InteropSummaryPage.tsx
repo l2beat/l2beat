@@ -16,11 +16,10 @@ import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProt
 import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtocolsByVolume'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import {
-  type InteropMode,
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
-import type { InteropSelection } from '../utils/types'
+import type { InteropMode, InteropSelection } from '../utils/types'
 import { InteropEmptyState } from './components/InteropEmptyState'
 import { TransferSizeChartCard } from './components/TransferSizeChartCard'
 import { BurnAndMintCard } from './components/table-widgets/BurnAndMintCard'

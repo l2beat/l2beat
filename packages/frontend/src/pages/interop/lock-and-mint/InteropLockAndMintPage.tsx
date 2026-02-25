@@ -18,11 +18,10 @@ import { TopProtocolsByVolume } from '../components/widgets/protocols/TopProtoco
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
-  type InteropMode,
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
-import type { InteropSelection } from '../utils/types'
+import type { InteropMode, InteropSelection } from '../utils/types'
 import { HeaderWithDescription } from './components/HeaderWithDescription'
 
 interface Props extends AppLayoutProps {

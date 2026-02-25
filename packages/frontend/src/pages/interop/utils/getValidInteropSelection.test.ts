@@ -1,11 +1,11 @@
 import { expect } from 'earl'
-import { normalizeInteropSelection } from './normalizeInteropSelection'
+import { getValidInteropSelection } from './getValidInteropSelection'
 
 const CHAINS = ['ethereum', 'arbitrum', 'base']
 
-describe(normalizeInteropSelection.name, () => {
+describe(getValidInteropSelection.name, () => {
   it('filters unknown ids and dedupes by chain order', () => {
-    const result = normalizeInteropSelection(
+    const result = getValidInteropSelection(
       {
         from: ['base', 'ethereum', 'base', 'unknown'],
         to: ['arbitrum', '', 'arbitrum', 'unknown'],

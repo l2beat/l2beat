@@ -12,12 +12,10 @@ import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
-import { normalizeInteropSelection } from './normalizeInteropSelection'
+import { getValidInteropSelection } from './getValidInteropSelection'
 import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
 import { toInteropApiSelection } from './toInteropApiSelection'
 import type { InteropMode, InteropSelection } from './types'
-
-export type { InteropMode } from './types'
 
 interface InteropSelectedChainsContextType {
   mode: InteropMode
@@ -77,7 +75,7 @@ export function InteropSelectedChainsProvider({
   )
 
   const normalizedInitialSelection = useMemo(
-    () => normalizeInteropSelection(initialSelection, allChainIds),
+    () => getValidInteropSelection(initialSelection, allChainIds),
     [initialSelection, allChainIds],
   )
 
@@ -142,7 +140,7 @@ export function InteropSelectedChainsProvider({
       mode,
     })
 
-    setSelection(normalizeInteropSelection(parsedSelection, allChainIds))
+    setSelection(getValidInteropSelection(parsedSelection, allChainIds))
   })
 
   const selectChain = useCallback(

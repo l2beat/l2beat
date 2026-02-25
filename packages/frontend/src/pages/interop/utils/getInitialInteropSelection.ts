@@ -1,3 +1,4 @@
+import { getValidInteropChains } from './getValidInteropChains'
 import type { InteropMode, InteropSelection } from './types'
 
 export interface InteropSelectionQuery {
