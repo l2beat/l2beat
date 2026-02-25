@@ -56,15 +56,15 @@ export function getAggregatedTransfer(
 
     totalDurationSum += transfer.duration
     if (srcValueUsd === undefined) {
-      srcValueUsd = transferValueUsd
+      srcValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
     } else {
-      srcValueUsd += transferValueUsd ?? 0
+      srcValueUsd += transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
     }
 
     if (dstValueUsd === undefined) {
-      dstValueUsd = transferValueUsd
+      dstValueUsd = transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
     } else {
-      dstValueUsd += transferValueUsd ?? 0
+      dstValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
     }
 
     if (transferValueUsd !== undefined) {
