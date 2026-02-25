@@ -9,8 +9,6 @@ export function getInteropChains(): InteropChainWithUpcoming[] {
   const disabledSet = new Set(env.INTEROP_DISABLED_CHAINS)
   const upcomingSet = new Set(env.INTEROP_UPCOMING_CHAINS)
 
-  console.log(INTEROP_CHAINS.filter((chain) => !disabledSet.has(chain.id)))
-
   return INTEROP_CHAINS.filter((chain) => !disabledSet.has(chain.id)).map(
     (chain) => ({
       ...chain,
