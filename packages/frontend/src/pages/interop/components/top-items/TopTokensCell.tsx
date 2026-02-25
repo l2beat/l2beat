@@ -154,7 +154,7 @@ function TopTokensContent({
               <span>{protocol.name}</span>
             </DrawerTitle>
           </DrawerHeader>
-          <div className="max-h-[60vh] overflow-auto">
+          <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
             <BasicTable
               skeletonCount={6}
               table={table}

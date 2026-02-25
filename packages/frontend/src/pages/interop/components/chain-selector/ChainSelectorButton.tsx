@@ -28,25 +28,6 @@ export function ChainSelectorButton({
   const selectedTo =
     selectedChains.to.length === 1 ? selectedChains.to[0] : undefined
 
-  const toggleMobileChain = (chainId: string) => {
-    if (selectedFrom === chainId || selectedTo === chainId) {
-      return
-    }
-
-    if (!selectedFrom) {
-      selectChain('from', chainId)
-      return
-    }
-
-    if (!selectedTo) {
-      selectChain('to', chainId)
-      return
-    }
-
-    selectChain('to', chainId)
-    selectChain('from', selectedTo)
-  }
-
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
     name,
@@ -87,13 +68,31 @@ export function ChainSelectorButton({
               Select two chains
             </DrawerDescription>
           </DrawerHeader>
+          <div className="mb-2 font-semibold text-xs leading-none">
+            First chain
+          </div>
           <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected.from || chain.isSelected.to}
-                toggleSelected={toggleMobileChain}
+                isSelected={chain.isSelected.from}
+                toggleSelected={(chainId) => selectChain('from', chainId)}
+                disabled={chain.isSelected.to}
+              />
+            ))}
+          </div>
+          <div className="mt-3 mb-2 font-semibold text-xs leading-none">
+            Second chain
+          </div>
+          <div className="flex flex-wrap gap-1">
+            {chainsWithDetails.map((chain) => (
+              <ChainSelectorChainToggle
+                key={chain.id}
+                chain={chain}
+                isSelected={chain.isSelected.to}
+                toggleSelected={(chainId) => selectChain('to', chainId)}
+                disabled={chain.isSelected.from}
               />
             ))}
           </div>

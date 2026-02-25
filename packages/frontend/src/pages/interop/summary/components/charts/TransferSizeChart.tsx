@@ -64,14 +64,14 @@ export function TransferSizeChart({ data, isLoading }: Props) {
   const isClient = useIsClient()
 
   if (isLoading || !isClient) {
-    return <Skeleton className="mt-5 h-full w-full" />
+    return <Skeleton className="mt-5 h-full min-h-[250px] w-full" />
   }
 
   return (
     <div className="relative size-full">
       <SimpleChartContainer
         meta={chartMeta}
-        className="size-full max-md:min-h-[200px] md:aspect-auto [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-bold [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-subtitle-11"
+        className="size-full min-h-[250px] md:aspect-auto [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-bold [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-subtitle-11"
       >
         <BarChart
           accessibilityLayer

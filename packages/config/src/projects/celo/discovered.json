@@ -1,7 +1,7 @@
 {
   "name": "celo",
-  "timestamp": 1771496067,
-  "configHash": "0x3c01874246b9753da6cb1a7875cd6d75b8a871b5b86760be492921f66f9dc27e",
+  "timestamp": 1771936675,
+  "configHash": "0x5f6a42276cf8f372c3a6eef5a1675fdb096f62c32011d6406f791d8d919ed61b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -238,7 +238,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620984",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621000",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1626,7 +1626,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "Celo Multisig 2",
+      "name": "Celo cLabs Multisig",
       "address": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1689,11 +1689,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0xD526F4727154A76b72eE25B615c0b419d872DD79",
+        "anchorGame": "eth:0xc32d82270f095E7bD3d5c2368EA8D7D447383F51",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "getAnchorRoot": [
-          "0x43af61399a7ff75fc29cfcc68171744df8edf777449aaa6415301793b6b46d1d",
-          58988229
+          "0x6da64e515d34e735e523dcdd2da6f0d581734273063690961f497f7bdba99cab",
+          59429229
         ],
         "portal": "eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC",
         "respectedGameType": 42,
@@ -1893,7 +1893,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Celo Multisig 1",
+      "name": "Celo Security Council",
       "address": "eth:0xC03172263409584f7860C25B6eB4985f0f6F4636",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1929,7 +1929,13 @@
       "implementationNames": {
         "eth:0xC03172263409584f7860C25B6eB4985f0f6F4636": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "references": [
+        {
+          "text": "Security Council members - Celo Docs",
+          "href": "https://docs.celo.org/home/protocol/security-council"
+        }
+      ]
     },
     {
       "name": "Optimism Security Council",
@@ -2106,8 +2112,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 517494,
-          "prevBlockNum": 24485664
+          "prevBoughtGas": 463628,
+          "prevBlockNum": 24526257
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2421,7 +2427,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1771495019,
+        "getLastProposalTimestamp": 1771936619,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
         "proposers": [
@@ -2477,7 +2483,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xc5bd131ceAEb72F15C66418bc2668332AB99DE37",
-        "gameCount": 28975,
+        "gameCount": 29220,
         "gameImpls": [
           "eth:0xcc744008aD3306a716fED303b0A6eA5b5d0690a5",
           "eth:0x25c2e07A24a74F9FA54f7CA5ddAfedB2264a5d02",
@@ -3776,6 +3782,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24490224 },
-  "permissionsConfigHash": "0x5abd322cc8462af2441234b6bc11bf7143129143880bfd3af1c62ae1910a5145"
+  "usedBlockNumbers": { "ethereum": 24526807 },
+  "permissionsConfigHash": "0xe08b6068bbf040c864b2f21f575b848038660bbadd4c02d1f77e4a23762597d9"
 }

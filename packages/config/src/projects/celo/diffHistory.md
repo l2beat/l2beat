@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xd0ca5c02d378cf54d0fe5f3de4ca2c63e22c800c
+
+# Diff at Tue, 24 Feb 2026 12:39:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6b636e64e387bed6b106ab3fb3c740f41fdb72fe block: 1771496067
+- current timestamp: 1771936675
+
+## Description
+
+Rename Celo Multisig 1 to Celo Security Council (6/8, community members from L2Beat, Hyperlane, Valora, Mento and others) and Celo Multisig 2 to Celo cLabs Multisig. Add reference to Celo Security Council docs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771496067 (main branch discovery), not current.
+
+```diff
+    contract Celo cLabs Multisig (eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d) {
+    +++ description: None
+      name:
+-        "Celo Multisig 2"
++        "Celo cLabs Multisig"
+    }
+```
+
+```diff
+    contract Celo Security Council (eth:0xC03172263409584f7860C25B6eB4985f0f6F4636) {
+    +++ description: None
+      name:
+-        "Celo Multisig 1"
++        "Celo Security Council"
+      references:
++        [{"text":"Security Council members - Celo Docs","href":"https://docs.celo.org/home/protocol/security-council"}]
+    }
+```
+
 Generated with discovered.json: 0x689b6a7fcf56e61f67e987e4f558aaf57133e4a5
 
 # Diff at Thu, 19 Feb 2026 10:15:36 GMT:

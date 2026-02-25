@@ -23,6 +23,25 @@
     },
     {
       "mode": "auto",
+      "id": "lighter-AZTEC",
+      "priceId": "aztec",
+      "symbol": "AZTEC",
+      "name": "AZTEC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70681/large/aztec.png?1763091883",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+        "decimals": 18,
+        "sinceTimestamp": 1770854400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "lighter-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
