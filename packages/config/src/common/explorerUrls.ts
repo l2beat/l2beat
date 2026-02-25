@@ -38,4 +38,8 @@ export const EXPLORER_URLS: Record<string, string> = {
   metis: 'https://andromeda-explorer.metis.io',
   ethereal: 'https://explorer.ethereal.trade',
   sepolia: 'https://sepolia.etherscan.io',
+
+  avalanche: 'https://sepolia.etherscan.io',
+  bsc: 'https://sepolia.etherscan.io',
+  polygonpos: 'https://sepolia.etherscan.io',
 }
