@@ -1,7 +1,15 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EmptyStateIcon } from '~/icons/EmptyState'
 
-export function InteropEmptyState() {
+interface Props {
+  showResetButton?: boolean
+  onResetButtonClick?: () => void
+}
+
+export function InteropEmptyState({
+  showResetButton,
+  onResetButtonClick,
+}: Props) {
   return (
     <PrimaryCard className="mt-5 flex w-full grow items-center justify-center">
       <div className="flex flex-col items-center justify-center text-center">
@@ -13,6 +21,14 @@ export function InteropEmptyState() {
           We couldn&apos;t find data for this path. Select another route or
           adjust your filters.
         </span>
+        {showResetButton && onResetButtonClick && (
+          <button
+            className="h-12 w-full max-w-[340px] rounded bg-brand font-semibold text-label-value-16 text-white"
+            onClick={onResetButtonClick}
+          >
+            Reset selection to default
+          </button>
+        )}
       </div>
     </PrimaryCard>
   )

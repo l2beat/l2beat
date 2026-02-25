@@ -42,7 +42,7 @@ export function TopTokensCell({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const utils = api.useUtils()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectionForApi } = useInteropSelectedChains()
 
   return (
     <>
@@ -62,10 +62,7 @@ export function TopTokensCell({
         }}
         onMouseEnter={() =>
           utils.interop.tokens.prefetch({
-            selectedChainsIds: [
-              selectedChains.first?.id ?? null,
-              selectedChains.second?.id ?? null,
-            ],
+            ...selectionForApi,
             id: protocol.id,
             type,
           })
@@ -97,13 +94,10 @@ function TopTokensContent({
   showNetMintedValueColumn?: boolean
 }) {
   const breakpoint = useBreakpoint()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectionForApi } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokens.useQuery(
     {
-      selectedChainsIds: [
-        selectedChains.first?.id ?? null,
-        selectedChains.second?.id ?? null,
-      ],
+      ...selectionForApi,
       id: protocol.id,
       type,
     },

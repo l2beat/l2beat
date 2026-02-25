@@ -2,19 +2,14 @@ import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type {
   AggregatedInteropTransferWithTokens,
-  SelectedChainsIds,
+  InteropSelectionInput,
 } from '../types'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
-  selectedChains: SelectedChainsIds,
+  selection: InteropSelectionInput,
   type?: KnownInteropBridgeType,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
   const db = getDb()
-
-  const [firstChain, secondChain] = selectedChains
-  if (!firstChain || !secondChain) {
-    return []
-  }
 
   const latestTimestamp =
     await db.aggregatedInteropTransfer.getLatestTimestamp()
@@ -25,17 +20,19 @@ export async function getLatestAggregatedInteropTransferWithTokens(
   const [transfers, tokens] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsAndTimestamp(
       latestTimestamp,
-      [firstChain, secondChain],
+      selection.from,
+      selection.to,
       type,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
       latestTimestamp,
-      [firstChain, secondChain],
+      selection.from,
+      selection.to,
       type,
     ),
   ])
 
-  const records = transfers.map((transfer) => ({
+  return transfers.map((transfer) => ({
     ...transfer,
     tokens: tokens
       .filter(
@@ -54,6 +51,4 @@ export async function getLatestAggregatedInteropTransferWithTokens(
         burnedValueUsd: token.burnedValueUsd,
       })),
   }))
-
-  return records
 }
