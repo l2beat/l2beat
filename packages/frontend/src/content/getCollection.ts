@@ -141,12 +141,8 @@ function getContentCollectionEntry(
   const parsedFile = matter(file.toString())
 
   const data = contentEntry.schema.parse(parsedFile.data)
-  let excerpt: string | undefined = undefined
-  try {
-    excerpt = getExcerpt(parsedFile.content)
-  } catch (_) {
-    // ignore
-  }
+  const excerpt = getExcerpt(parsedFile.content)
+
   const readTimeInMinutes = getReadTimeInMinutes(parsedFile.content)
 
   return {
@@ -162,7 +158,7 @@ function getExcerpt(content: string) {
   const lines = content.split('\n')
   const line = lines.find((line) => startsWithLetterOrNumber(line))
   if (!line) {
-    throw new Error('No paragraph found')
+    return undefined
   }
   return line
 }
