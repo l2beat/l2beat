@@ -23,6 +23,7 @@ import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { usePanelStore } from '../store/panel-store'
 import {
+  formatDelay,
   formatUsdValue,
   getAdminTypeColor,
   isZeroAddress,
@@ -30,6 +31,7 @@ import {
 import { useContractTags } from './hooks/useContractTags'
 import { IconCheckFalse } from './IconCheckFalse'
 import { IconCheckTrue } from './IconCheckTrue'
+import { IconClock } from './IconClock'
 import { IconDependency } from './IconDependency'
 import { IconKey } from './IconKey'
 import { IconLockClosed } from './IconLockClosed'
@@ -283,7 +285,7 @@ interface FunctionFolderProps {
   onDelayUpdate: (
     contractAddress: string,
     functionName: string,
-    delay?: { contractAddress: string; fieldName: string },
+    delay: { contractAddress: string; fieldName: string } | null,
   ) => void
   onDependenciesUpdate: (
     contractAddress: string,
@@ -843,7 +845,7 @@ export function FunctionFolder({
   }
 
   const handleClearDelay = () => {
-    onDelayUpdate(contractAddress, functionName, undefined)
+    onDelayUpdate(contractAddress, functionName, null)
   }
 
   const isAddFormValid = () => {
@@ -1014,17 +1016,29 @@ export function FunctionFolder({
           </button>
 
           {/* Delay Indicator Icon */}
-          {currentFunction?.delay && resolvedDelay?.isResolved && (
-            <span
-              className="inline-block text-xs"
-              style={{
-                color: '#3b82f6', // blue-500
-              }}
-              title={`Delay: ${resolvedDelay.seconds} seconds`}
-            >
-              ⏱️
-            </span>
-          )}
+          {(() => {
+            const hasDelay = currentFunction?.delay && resolvedDelay?.isResolved
+            const seconds = resolvedDelay?.seconds ?? 0
+            const delayColor = !hasDelay
+              ? '#9ca3af' // gray-400 (no delay)
+              : seconds >= 7 * 86400
+                ? '#22c55e' // green-500 (>= 7 days)
+                : seconds >= 86400
+                  ? '#eab308' // yellow-500 (>= 1 day)
+                  : '#ef4444' // red-500 (< 1 day)
+            const delayTitle = hasDelay
+              ? `Delay: ${formatDelay(seconds)}`
+              : 'No delay set'
+            return (
+              <span
+                className="inline-block"
+                style={{ color: delayColor }}
+                title={delayTitle}
+              >
+                <IconClock />
+              </span>
+            )
+          })()}
         </div>
 
         {/* Function signature */}
@@ -2188,7 +2202,7 @@ export function FunctionFolder({
                   </div>
                   {resolvedDelay?.isResolved && (
                     <div className="font-bold text-aux-green text-sm">
-                      Delay: {resolvedDelay.seconds} seconds
+                      Delay: {formatDelay(resolvedDelay.seconds)}
                     </div>
                   )}
                   {resolvedDelay && !resolvedDelay.isResolved && (

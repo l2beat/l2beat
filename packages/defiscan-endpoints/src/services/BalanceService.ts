@@ -30,18 +30,30 @@ export class BalanceService {
     if (!forceRefresh) {
       const cached = this.cache.get(cacheKey)
       if (cached) {
-        this.logger.info('CACHE HIT - Returning cached balances', { contractAddress, chain, timestamp: cached.timestamp })
+        this.logger.info('CACHE HIT - Returning cached balances', {
+          contractAddress,
+          chain,
+          timestamp: cached.timestamp,
+        })
         return { data: cached, cached: true }
       }
     } else {
-      this.logger.info('FORCE REFRESH - Bypassing cache', { contractAddress, chain })
+      this.logger.info('FORCE REFRESH - Bypassing cache', {
+        contractAddress,
+        chain,
+      })
     }
 
-    this.logger.info('FETCHING - Getting balances from DeBank', { contractAddress, chain })
+    this.logger.info('FETCHING - Getting balances from DeBank', {
+      contractAddress,
+      chain,
+    })
 
     // Fetch from DeBank
-    const debankBalances =
-      await this.debankClient.getTokenBalances(contractAddress, chain)
+    const debankBalances = await this.debankClient.getTokenBalances(
+      contractAddress,
+      chain,
+    )
 
     // Filter by asset addresses if provided
     const filteredBalances = assetAddresses

@@ -21,7 +21,8 @@
     "@l2beat/validate": "workspace:*",
     "express": "^4.21.1",
     "dotenv": "^17.2.3",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "ethers": "^5.7.2"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

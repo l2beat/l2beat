@@ -21,8 +21,7 @@ export function tokenRouter(
         if (!chain_id || typeof chain_id !== 'string') {
           return res.status(400).json({
             error: 'Invalid chain_id parameter',
-            message:
-              'chain_id is required (e.g. "eth", "bsc", "matic")',
+            message: 'chain_id is required (e.g. "eth", "bsc", "matic")',
           })
         }
 

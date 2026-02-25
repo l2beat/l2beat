@@ -15,10 +15,7 @@ export class TokenService {
     private readonly logger: Logger,
   ) {}
 
-  async getTokenInfo(
-    chainId: string,
-    tokenId: string,
-  ): Promise<TokenResult> {
+  async getTokenInfo(chainId: string, tokenId: string): Promise<TokenResult> {
     const cacheKey = `token:${chainId}:${tokenId.toLowerCase()}`
 
     const cached = this.cache.get(cacheKey)

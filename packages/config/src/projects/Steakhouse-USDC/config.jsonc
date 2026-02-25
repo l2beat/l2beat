@@ -1,0 +1,88 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "Steakhouse-USDC",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB"],
+  "maxAddresses": 100,
+  "overrides": {
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xCA06411bd7a7296d7dbdd0050DFc846E95fEBEB7": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xe5A5F138005E19A3E6D0FE68b039397EeEf2322b": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB": {
+      "ignoreMethods": [
+        "convertToShares",
+        "convertToAssets",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "withdrawQueue"
+      ],
+      "fields": {
+        "supplyQueue": {
+          "handler": {
+            "type": "array",
+            "method": "supplyQueue",
+            "length": "{{ supplyQueueLength }}"
+          }
+        },
+        "marketParams": {
+          "handler": {
+            "type": "morphoMarkets",
+            "morphoAddressField": "MORPHO",
+            "ignoreRelative": true
+          }
+        },
+        "allocators": {
+          "handler": {
+            "type": "event",
+            "select": "allocator",
+            "add": {
+              "event": "SetIsAllocator",
+              "where": ["=", "#isAllocator", true]
+            },
+            "remove": {
+              "event": "SetIsAllocator",
+              "where": ["!=", "#isAllocator", true]
+            }
+          }
+        },
+        "marketOracles": {
+          "handler": {
+            "type": "morphoMarkets",
+            "extractField": "oracle",
+            "sourceField": "marketParams"
+          }
+        }
+      }
+    },
+    "eth:0x4a3411ac2948B33c69666B35cc6d055B27Ea84f1": {
+      "ignoreMethods": ["getTransmitters"]
+    },
+    "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": {
+      "ignoreRelatives": ["aggregator"],
+      "ignoreMethods": ["aggregator"]
+    },
+    "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": {
+      "ignoreMethods": ["aggregator"],
+      "ignoreRelatives": ["aggregator"]
+    },
+    "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": {
+      "ignoreMethods": ["aggregator"],
+      "ignoreRelatives": ["aggregator"]
+    },
+    "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD": {
+      "ignoreMethods": ["aggregator"],
+      "ignoreRelatives": ["aggregator"]
+    }
+  }
+}

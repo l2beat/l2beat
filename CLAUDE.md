@@ -103,7 +103,7 @@ git fetch upstream && git merge upstream/main
 
 - **UI**: Select contract + numeric field to specify delay reference
 - **Backend**: Resolves delay value from discovered.json in real-time
-- **Display**: Shows resolved delay in seconds, indicator icon (⏱️) in collapsed view
+- **Display**: Clock icon (`IconClock.tsx`) always visible in collapsed view, color-coded: green (>= 7d), yellow (>= 1d), red (< 1d), gray (no delay). Uses `formatDelay()` from `scoringShared.tsx` for human-readable units (e.g., `7d`, `2h`, `45s`)
 - **Storage**: Delay reference stored in `permission-overrides.json` as `{ contractAddress, fieldName }`
 
 ### Permissions Report Generation ✅
@@ -268,7 +268,22 @@ cd ~/defidisco/packages/l2b && ./scripts/start-with-funds.sh
 ```bash
 DEBANK_API_KEY=your-debank-api-key
 PORT=3001
+ETHEREUM_RPC_URL_FOR_DISCOVERY=https://your-rpc-url  # Optional: enables Morpho vault onchain positions
 ```
+
+**Morpho Vault Onchain Positions**:
+
+When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho vaults and fetches their positions directly onchain instead of from DeBank. This provides more accurate per-market breakdowns.
+
+- **Detection**: Checks two MetaMorpho Factory contracts (`0x1897...`, `0xA9c3...`) via `isMetaMorpho(address)`. Results cached for 24h (immutable once deployed)
+- **Position Fetching**: Reads vault's supply queue from onchain, then for each market queries Morpho Blue (`0xBBBB...`) for position/market data. Computes `suppliedAssets = supplyShares * totalSupplyAssets / totalSupplyShares`
+- **Pricing**: Uses existing `BalanceService` to get Morpho Blue singleton's DeBank balances — standard cache applies, no extra API calls per vault
+- **Output**: Formatted as `DebankComplexProtocol[]` for downstream compatibility. One portfolio_item per market with non-zero supply
+- **Fallback**: On any RPC error, falls back to DeBank with a warning log. If RPC URL is not configured, logs a warning at startup and uses DeBank for everything
+- **Files**:
+  - `packages/defiscan-endpoints/src/clients/MorphoRpcClient.ts` — Ethers.js v5 RPC client for vault detection and position fetching
+  - `packages/defiscan-endpoints/src/services/MorphoVaultService.ts` — Orchestrates detection, onchain fetch, pricing, and formatting
+  - `packages/defiscan-endpoints/src/services/PositionService.ts` — Routes Morpho vaults (eth chain) to onchain path with try/catch fallback
 
 **API Endpoints**:
 
@@ -365,7 +380,7 @@ PORT=3001
 
 **Shared Module (`scoringShared.tsx`)** — DO NOT duplicate code from this file:
 
-- **Utility Functions**: `formatUsdValue`, `hasCapitalData`, `hasTokenValueData`, `isZeroAddress`, `getAdminTypeColor`, `getImpactColor`, `computeDeduplicatedCapital`
+- **Utility Functions**: `formatUsdValue`, `formatDelay`, `hasCapitalData`, `hasTokenValueData`, `isZeroAddress`, `getAdminTypeColor`, `getImpactColor`, `computeDeduplicatedCapital`
 - **Display Components**: `TreeNode`, `FundsDisplay`, `TokenValueDisplay`, `FunctionCapitalBreakdown` — tree-structured capital breakdown
 - **`OwnerSection`**: Shared component used by **both** Owners and Dependencies sections to render an owner/admin with admin type badges, proxy type tags, capital-at-risk, and expandable function list with capital breakdown trees
 

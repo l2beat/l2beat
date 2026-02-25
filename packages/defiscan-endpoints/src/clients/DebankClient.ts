@@ -1,12 +1,12 @@
 import { ClientCore, type ClientCoreDependencies } from '@l2beat/shared'
-import { type EthereumAddress, type json } from '@l2beat/shared-pure'
+import type { EthereumAddress, json } from '@l2beat/shared-pure'
 import {
-  DebankComplexProtocolListResponse,
-  DebankTokenBalanceListResponse,
-  DebankTokenInfoResponse,
   type DebankComplexProtocol,
+  DebankComplexProtocolListResponse,
   type DebankTokenBalance,
+  DebankTokenBalanceListResponse,
   type DebankTokenInfo,
+  DebankTokenInfoResponse,
 } from '../types/debank'
 
 // DeBank API documentation: https://docs.open.debank.com/
@@ -42,12 +42,15 @@ export class DebankClient extends ClientCore {
       params.append('chain_id', chainId)
     }
 
-    const data = await this.fetch(`${this.baseUrl}/v1/user/token_list?${params}`, {
-      timeout: 15_000,
-      headers: {
-        AccessKey: this.apiKey,
+    const data = await this.fetch(
+      `${this.baseUrl}/v1/user/token_list?${params}`,
+      {
+        timeout: 15_000,
+        headers: {
+          AccessKey: this.apiKey,
+        },
       },
-    })
+    )
 
     return DebankTokenBalanceListResponse.parse(data)
   }
@@ -95,15 +98,12 @@ export class DebankClient extends ClientCore {
       id: tokenId.toLowerCase(),
     })
 
-    const data = await this.fetch(
-      `${this.baseUrl}/v1/token?${params}`,
-      {
-        timeout: 15_000,
-        headers: {
-          AccessKey: this.apiKey,
-        },
+    const data = await this.fetch(`${this.baseUrl}/v1/token?${params}`, {
+      timeout: 15_000,
+      headers: {
+        AccessKey: this.apiKey,
       },
-    )
+    })
 
     return DebankTokenInfoResponse.parse(data)
   }

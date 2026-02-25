@@ -4,12 +4,14 @@ import cors from 'cors'
 import { config as dotenv } from 'dotenv'
 import express, { type Request, type Response } from 'express'
 import { DebankClient } from './clients/DebankClient'
+import { MorphoRpcClient } from './clients/MorphoRpcClient'
 import { getConfig } from './config'
 import { balancesRouter } from './routes/balances'
 import { healthRouter } from './routes/health'
 import { positionsRouter } from './routes/positions'
 import { tokenRouter } from './routes/token'
 import { BalanceService } from './services/BalanceService'
+import { MorphoVaultService } from './services/MorphoVaultService'
 import { PositionService } from './services/PositionService'
 import { TokenService } from './services/TokenService'
 import type {
@@ -26,12 +28,7 @@ async function main() {
   const env = getEnv()
 
   const logger = new Logger({
-    level: config.logLevel as
-      | 'DEBUG'
-      | 'INFO'
-      | 'WARN'
-      | 'ERROR'
-      | 'CRITICAL',
+    level: config.logLevel as 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'CRITICAL',
   })
 
   logger.info('Starting DeFiScan Endpoints Service', { port: config.port })
@@ -61,10 +58,34 @@ async function main() {
     balanceCache,
     logger.for('BalanceService'),
   )
+
+  // Conditionally initialize Morpho vault service when RPC is configured
+  let morphoVaultService: MorphoVaultService | undefined
+  if (config.rpc.url) {
+    const morphoClient = new MorphoRpcClient(
+      config.rpc.url,
+      logger.for('MorphoRpcClient'),
+    )
+    const vaultDetectionCache = new Cache<boolean>(86400) // 24h TTL
+    morphoVaultService = new MorphoVaultService(
+      morphoClient,
+      balanceService,
+      positionCache,
+      vaultDetectionCache,
+      logger.for('MorphoVaultService'),
+    )
+    logger.info('Morpho vault onchain positions enabled')
+  } else {
+    logger.warn(
+      'Morpho vault onchain positions disabled: ETHEREUM_RPC_URL_FOR_DISCOVERY not set',
+    )
+  }
+
   const positionService = new PositionService(
     debankClient,
     positionCache,
     logger.for('PositionService'),
+    morphoVaultService,
   )
   const tokenService = new TokenService(
     debankClient,

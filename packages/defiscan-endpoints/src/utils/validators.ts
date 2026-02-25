@@ -14,9 +14,7 @@ export function parseCommaSeparatedAddresses(
   addressString: string,
 ): EthereumAddress[] | null {
   try {
-    return addressString
-      .split(',')
-      .map((addr) => EthereumAddress(addr.trim()))
+    return addressString.split(',').map((addr) => EthereumAddress(addr.trim()))
   } catch {
     return null
   }

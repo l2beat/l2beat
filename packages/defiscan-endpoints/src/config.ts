@@ -13,6 +13,9 @@ export interface DefiscanEndpointsConfig {
     balancesTTL: number // seconds
     positionsTTL: number // seconds
   }
+  rpc: {
+    url: string // Ethereum RPC URL — reuses ETHEREUM_RPC_URL from discovery config
+  }
 }
 
 export function getConfig(): DefiscanEndpointsConfig {
@@ -23,16 +26,19 @@ export function getConfig(): DefiscanEndpointsConfig {
     logLevel: env.string('LOG_LEVEL', 'INFO'),
     debank: {
       apiKey: env.string('DEBANK_API_KEY'),
-      baseUrl: env.string(
-        'DEBANK_BASE_URL',
-        'https://pro-openapi.debank.com',
-      ),
+      baseUrl: env.string('DEBANK_BASE_URL', 'https://pro-openapi.debank.com'),
       callsPerMinute: env.integer('DEBANK_RATE_LIMIT', 60),
       enabled: env.boolean('DEBANK_ENABLED', true),
     },
     cache: {
       balancesTTL: env.integer('CACHE_BALANCES_TTL', 3600), // 60 minutes default
       positionsTTL: env.integer('CACHE_POSITIONS_TTL', 3600), // 60 minutes default
+    },
+    rpc: {
+      url:
+        env.optionalString('ETHEREUM_RPC_URL_FOR_DISCOVERY') ??
+        env.optionalString('ETHEREUM_RPC_URL') ??
+        '',
     },
   }
 }

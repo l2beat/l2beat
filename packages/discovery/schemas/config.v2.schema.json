@@ -654,6 +654,30 @@
                     {
                       "type": "object",
                       "properties": {
+                        "type": { "const": "lidoACL" },
+                        "roleNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "ignoreRelative": { "type": "boolean" },
+                        "ignoreRelatives": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "app": { "type": "string" },
+                              "role": { "type": "string" }
+                            },
+                            "required": ["app", "role"]
+                          }
+                        }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
                         "type": { "const": "crossChainAccessControl" },
                         "roleNames": {
                           "type": "object",
@@ -667,6 +691,19 @@
                         },
                         "pickRoleMembers": { "type": "string" },
                         "pickChainAddress": { "type": "string" },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "morphoMarkets" },
+                        "morphoAddressField": { "type": "string" },
+                        "morphoAddress": { "type": "string" },
+                        "queueField": { "type": "string" },
+                        "extractField": { "type": "string" },
+                        "sourceField": { "type": "string" },
                         "ignoreRelative": { "type": "boolean" }
                       },
                       "required": ["type"]
@@ -754,6 +791,20 @@
           },
           "description": { "type": "string" },
           "severity": { "enum": ["HIGH", "LOW"] }
+        }
+      }
+    },
+    "defidisco": {
+      "type": "object",
+      "properties": {
+        "scanPermissions": { "type": "boolean" },
+        "permissionLimits": {
+          "type": "object",
+          "properties": {
+            "maxWriteFunctions": { "type": "number" },
+            "maxSourceSize": { "type": "number" },
+            "maxSourceFiles": { "type": "number" }
+          }
         }
       }
     },

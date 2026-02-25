@@ -174,7 +174,7 @@ export function updateFunction(
       updateRequest.ownerDefinitions ?? existingFunction?.ownerDefinitions,
     delay:
       updateRequest.delay !== undefined
-        ? updateRequest.delay
+        ? (updateRequest.delay ?? undefined)
         : existingFunction?.delay,
     // Handle dependencies: if provided and non-empty, use it; if provided and empty, set undefined to remove from JSON
     dependencies:

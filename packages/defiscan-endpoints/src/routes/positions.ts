@@ -9,45 +9,58 @@ export function positionsRouter(
 ): Router {
   const router: Router = express.Router()
 
-  router.get('/', async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    try {
-      const { address, chain_id, force_refresh } = req.query
-
-      // Validate address
-      if (!address || typeof address !== 'string') {
-        return res.status(400).json({
-          error: 'Invalid address parameter',
-          message: 'address is required and must be a valid Ethereum address',
-        })
-      }
-
-      let addr: EthereumAddress
+  router.get(
+    '/',
+    async (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction,
+    ) => {
       try {
-        addr = EthereumAddress(address)
+        const { address, chain_id, force_refresh } = req.query
+
+        // Validate address
+        if (!address || typeof address !== 'string') {
+          return res.status(400).json({
+            error: 'Invalid address parameter',
+            message: 'address is required and must be a valid Ethereum address',
+          })
+        }
+
+        let addr: EthereumAddress
+        try {
+          addr = EthereumAddress(address)
+        } catch (error) {
+          return res.status(400).json({
+            error: 'Invalid address parameter',
+            message: 'address must be a valid Ethereum address',
+          })
+        }
+
+        // Parse optional chain_id
+        const chainId =
+          chain_id && typeof chain_id === 'string' ? chain_id : undefined
+
+        // Parse optional force_refresh
+        const forceRefresh = force_refresh === 'true'
+
+        // Fetch positions
+        const result = await positionService.getPositions(
+          addr,
+          chainId,
+          forceRefresh,
+        )
+
+        // Return array with source and cached flags in response headers
+        res.setHeader('X-Cached', result.cached.toString())
+        res.setHeader('X-Source', result.source)
+        res.json(result.data)
       } catch (error) {
-        return res.status(400).json({
-          error: 'Invalid address parameter',
-          message: 'address must be a valid Ethereum address',
-        })
+        logger.error('Error fetching positions', error)
+        next(error)
       }
-
-      // Parse optional chain_id
-      const chainId = chain_id && typeof chain_id === 'string' ? chain_id : undefined
-
-      // Parse optional force_refresh
-      const forceRefresh = force_refresh === 'true'
-
-      // Fetch positions
-      const result = await positionService.getPositions(addr, chainId, forceRefresh)
-
-      // Return array with cached flag in response header
-      res.setHeader('X-Cached', result.cached.toString())
-      res.json(result.data)
-    } catch (error) {
-      logger.error('Error fetching positions', error)
-      next(error)
-    }
-  })
+    },
+  )
 
   return router
 }

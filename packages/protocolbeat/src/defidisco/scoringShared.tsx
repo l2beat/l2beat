@@ -29,6 +29,24 @@ export function formatUsdValue(value: number): string {
   return ''
 }
 
+export function formatDelay(seconds: number): string {
+  if (seconds >= 86400) {
+    const days = seconds / 86400
+    return days === Math.floor(days) ? `${days}d` : `${days.toFixed(1)}d`
+  }
+  if (seconds >= 3600) {
+    const hours = seconds / 3600
+    return hours === Math.floor(hours) ? `${hours}h` : `${hours.toFixed(1)}h`
+  }
+  if (seconds >= 60) {
+    const minutes = seconds / 60
+    return minutes === Math.floor(minutes)
+      ? `${minutes}m`
+      : `${minutes.toFixed(1)}m`
+  }
+  return `${seconds}s`
+}
+
 export function hasCapitalData(admin: any): admin is AdminDetailWithCapital {
   return (
     'totalReachableCapital' in admin &&

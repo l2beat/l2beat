@@ -203,7 +203,7 @@ export function PermissionsDisplay({
   const handleDelayUpdate = async (
     contractAddress: string,
     functionName: string,
-    delay?: { contractAddress: string; fieldName: string },
+    delay: { contractAddress: string; fieldName: string } | null,
   ) => {
     if (!project) return
 
@@ -341,7 +341,9 @@ export function PermissionsDisplay({
       ownerDefinitions:
         updates.ownerDefinitions ?? currentFunction?.ownerDefinitions,
       delay:
-        updates.delay !== undefined ? updates.delay : currentFunction?.delay,
+        'delay' in updates
+          ? (updates.delay ?? undefined)
+          : currentFunction?.delay,
       dependencies:
         updates.dependencies !== undefined
           ? updates.dependencies
@@ -506,7 +508,7 @@ function PermissionsCode({
   onDelayUpdate: (
     contractAddress: string,
     functionName: string,
-    delay?: { contractAddress: string; fieldName: string },
+    delay: { contractAddress: string; fieldName: string } | null,
   ) => void
   onDependenciesUpdate: (
     contractAddress: string,
@@ -612,7 +614,7 @@ function WritePermissionsCodeEntries({
   onDelayUpdate: (
     contractAddress: string,
     functionName: string,
-    delay?: { contractAddress: string; fieldName: string },
+    delay: { contractAddress: string; fieldName: string } | null,
   ) => void
   onDependenciesUpdate: (
     contractAddress: string,

@@ -375,7 +375,7 @@ export interface ApiFunctionsUpdateRequest {
   delay?: {
     contractAddress: string
     fieldName: string
-  }
+  } | null
   dependencies?: {
     contractAddress: string
   }[]

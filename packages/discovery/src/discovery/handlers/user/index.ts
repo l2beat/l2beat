@@ -114,6 +114,10 @@ import {
   LidoACLHandler,
   LidoACLHandlerDefinition,
 } from '../defidisco/LidoACLHandler'
+import {
+  MorphoMarketsHandler,
+  MorphoMarketsHandlerDefinition,
+} from '../defidisco/MorphoMarketsHandler'
 
 export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = v.union([
@@ -149,6 +153,7 @@ export const UserHandlerDefinition = v.union([
   EventTraceHandlerDefinition,
   LidoACLHandlerDefinition,
   CrossChainAccessControlHandlerDefinition,
+  MorphoMarketsHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -221,5 +226,7 @@ export function getUserHandler(
       return new LidoACLHandler(field, definition, abi)
     case 'crossChainAccessControl':
       return new CrossChainAccessControlHandler(field, definition, abi)
+    case 'morphoMarkets':
+      return new MorphoMarketsHandler(field, definition, abi)
   }
 }

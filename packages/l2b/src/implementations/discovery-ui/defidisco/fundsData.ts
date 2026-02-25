@@ -191,8 +191,10 @@ export async function fetchFundsForContract(
       const positionsUrl = `${DEFISCAN_ENDPOINTS_URL}/positions?address=${cleanAddress}&chain_id=eth${forceRefreshParam}`
       const positionsResponse = await fetch(positionsUrl)
 
-      // Get cached status from header
+      // Get cached status and source from headers
       positionsCached = positionsResponse.headers.get('X-Cached') === 'true'
+      const positionsSource =
+        positionsResponse.headers.get('X-Source') ?? 'debank'
 
       if (!positionsResponse.ok) {
         throw new Error(
@@ -265,7 +267,7 @@ export async function fetchFundsForContract(
         protocols,
         totalUsdValue: totalPositionsUsd,
         timestamp: new Date().toISOString(),
-        source: 'debank',
+        source: positionsSource,
       }
     }
 

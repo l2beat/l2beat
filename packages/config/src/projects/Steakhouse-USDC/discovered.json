@@ -1,0 +1,1832 @@
+{
+  "name": "Steakhouse-USDC",
+  "timestamp": 1771947004,
+  "configHash": "0xb7ba564fe1bd1ef92b46fe01f18b9097887237c688a955649e680c8cefd53da7",
+  "entries": [
+    {
+      "name": "Safe",
+      "address": "eth:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1717149815,
+      "sinceBlock": 19989096,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120",
+          "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b",
+          "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6",
+          "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+          "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344",
+          "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x06811b244aa09ac864be5351c83c23a068353e051fcb5a355c6c0aaca2ab23a5",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 6 (17%)",
+        "nonce": 483,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8": "GnosisSafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1724692463,
+      "sinceBlock": 20614190,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b",
+          "eth:0xd2B8Dd0Fd51d80bF939047A9AAa55919112838E8",
+          "eth:0xd8bAA2606c4f0d121d4a08b0D83acF0Dee9dCA77",
+          "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f",
+          "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120",
+          "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+          "eth:0x2afc096981c2CFe3501bE4054160048718F6C0C8",
+          "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0x2a54c075aeed96de72f468fd531eccdc331f64339203679122a80fbb9f7e40a6",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 8 (63%)",
+        "nonce": 104,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD": "GnosisSafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "MorphoChainlinkOracleV2",
+      "address": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6c540760ca3541be0adea9ccd74bb96e621286f2f25c24538260e302c5b661a2"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1770032231,
+      "sinceBlock": 24368919,
+      "values": {
+        "$immutable": true,
+        "BASE_FEED_1": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+        "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
+        "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
+        "BASE_VAULT_CONVERSION_SAMPLE": 1,
+        "price": "1849013062000000000000000000",
+        "QUOTE_FEED_1": "eth:0x0000000000000000000000000000000000000000",
+        "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
+        "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
+        "QUOTE_VAULT_CONVERSION_SAMPLE": 1,
+        "SCALE_FACTOR": "10000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580": "MorphoChainlinkOracleV2"
+      }
+    },
+    {
+      "address": "eth:0x13cA8756E9470b71B8e998352c8741706217f963",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1603266672,
+      "sinceBlock": 11098253,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "$members": [
+          "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
+          "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",
+          "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
+          "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
+          "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
+          "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
+          "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
+          "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
+          "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0xd1762de5ed4ca058936e50abe6269afdebb65650fe4d14f406c321a5be38e3c8",
+        "getModules": ["eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b"],
+        "GnosisSafe_modules": [
+          "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b"
+        ],
+        "multisigThreshold": "4 of 9 (44%)",
+        "NAME": "Gnosis Safe",
+        "nonce": 2063,
+        "VERSION": "1.1.1"
+      },
+      "implementationNames": {
+        "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": "Proxy",
+        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1704281795,
+      "sinceBlock": 18926572,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xd8bAA2606c4f0d121d4a08b0D83acF0Dee9dCA77",
+          "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+          "eth:0x2afc096981c2CFe3501bE4054160048718F6C0C8",
+          "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x539ed8200d260e4b6a5c692b12336cc1e15e01c9d7cb084a2acc2121988f4803",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 174,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x255c7705e8BB334DfCae438197f7C4297988085a": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x264c86DBbD2E4165FbBf0C35b0ddf0e00AEc6b31",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2afc096981c2CFe3501bE4054160048718F6C0C8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ConfirmedTransactionModule",
+      "address": "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3c9ed9082dc3030e40991223d0644d2e7f61036e500c90e6d7f1c118ca79c377"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
+      "sinceTimestamp": 1603267019,
+      "sinceBlock": 11098283,
+      "values": {
+        "$immutable": true,
+        "manager": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "NAME": "Confirmed Transaction Module",
+        "VERSION": "0.1.0"
+      },
+      "implementationNames": {
+        "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": "ConfirmedTransactionModule"
+      }
+    },
+    {
+      "address": "eth:0x30E7c016fC702cDe9A50720a469d418490b7b652",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ChainlinkOracle",
+      "address": "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x237c913a314bfa16d9468aa4abb3491591a7a545e397647ff950ddcbccb66195"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1703870003,
+      "sinceBlock": 18892643,
+      "values": {
+        "$immutable": true,
+        "BASE_FEED_1": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
+        "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
+        "price": "2260297429454135673412364657",
+        "QUOTE_FEED_1": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+        "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
+        "SCALE_FACTOR": "10000000000000000000000000000000000",
+        "VAULT": "eth:0x0000000000000000000000000000000000000000",
+        "VAULT_CONVERSION_SAMPLE": 1
+      },
+      "implementationNames": {
+        "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2": "ChainlinkOracle"
+      }
+    },
+    {
+      "name": "WstETHPriceFeed",
+      "address": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfad0f9bc092dea06f472b77a6603718299ac98ef926d8220cb5de2cfe8f687cf"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1673646755,
+      "sinceBlock": 16400681,
+      "values": {
+        "$immutable": true,
+        "decimals": 8,
+        "description": "Custom price feed for wstETH / ETH",
+        "latestRoundData": {
+          "roundId": "36893488147419103921",
+          "answer": 122635675,
+          "startedAt": 1771874471,
+          "updatedAt": 1771874507,
+          "answeredInRound": "36893488147419103921"
+        },
+        "stETHtoETHPriceFeed": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+        "stETHToETHPriceFeedDecimals": 18,
+        "version": 1,
+        "wstETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "wstETHScale": "1000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79": "WstETHPriceFeed"
+      }
+    },
+    {
+      "address": "eth:0x69FcEFDe2B48503d675181448B3D4272128bca9c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Katana Steakhouse Financial / Morpho Multisig",
+      "address": "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1741081103,
+      "sinceBlock": 21972679,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b",
+          "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+          "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f",
+          "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344",
+          "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfbb159689ec7fd867986ea91ca0b87e0b127fb4e819eb33b3bec6755cc129ebc",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 113,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0x84D3E4EE550DD5F99e76a548aC59a6BE1C8dCf79",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1629829204,
+      "sinceBlock": 13089660,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "decimals": 18,
+        "description": "STETH / ETH",
+        "getAnswer": [0, 0, 0, 0, 0],
+        "getTimestamp": [0, 0, 0, 0, 0],
+        "latestAnswer": "998819160000000000",
+        "latestRound": "36893488147419103921",
+        "latestRoundData": {
+          "roundId": "36893488147419103921",
+          "answer": "998819160000000000",
+          "startedAt": 1771874471,
+          "updatedAt": 1771874507,
+          "answeredInRound": "36893488147419103921"
+        },
+        "latestTimestamp": 1771874507,
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 2,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "errors": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": "EACAggregatorProxy"
+      }
+    },
+    {
+      "address": "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x8f02b4a44Eacd9b8eE7739aa0BA58833DD45d002",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1613498678,
+      "sinceBlock": 11869355,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "decimals": 8,
+        "description": "USDC / USD",
+        "getAnswer": [0, 0, 0, 0, 0],
+        "getTimestamp": [0, 0, 0, 0, 0],
+        "latestAnswer": 99992000,
+        "latestRound": "55340232221128655636",
+        "latestRoundData": {
+          "roundId": "55340232221128655636",
+          "answer": 99992000,
+          "startedAt": 1771920034,
+          "updatedAt": 1771920047,
+          "answeredInRound": "55340232221128655636"
+        },
+        "latestTimestamp": 1771920047,
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 3,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "errors": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": "EACAggregatorProxy"
+      }
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+      "type": "Contract",
+      "template": "Steakhouse-USDC/EACAggregatorProxy",
+      "sourceHashes": [
+        "0x6817c1bb5c0e498f52adbdf85688dd550e05aefc265a30f95ee83a2185ac8b8f"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1596720685,
+      "sinceBlock": 10606503,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0x26ae9b951F84e6c28f58a92133C30e312D42e0Fe",
+        "decimals": 18,
+        "description": "USDC / ETH",
+        "getAnswer": [0, 0, 0, 0, 0],
+        "getTimestamp": [0, 0, 0, 0, 0],
+        "latestAnswer": 542564325393303,
+        "latestRound": "92233720368547764057",
+        "latestRoundData": {
+          "roundId": "92233720368547764057",
+          "answer": 542564325393303,
+          "startedAt": 1771944760,
+          "updatedAt": 1771944779,
+          "answeredInRound": "92233720368547764057"
+        },
+        "latestTimestamp": 1771944779,
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 5,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "errors": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4": "EACAggregatorProxy"
+      }
+    },
+    {
+      "name": "MorphoHelper",
+      "address": "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x5404271138b0a8eeb253b0a8b01434566bac9455ab63a4d849fa8f1831dcf644",
+        "0x2092990497ba6f5841d2d3068518c9a798dec459350cd57093da7fe87a26c0fd"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1743671579,
+      "sinceBlock": 22187416,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0xb4c284A418a066D73bcadd50DCD8bcE63AA9913f",
+        "$pastUpgrades": [
+          [
+            "2025-04-03T09:12:59.000Z",
+            "0x33445fbe4682a734b51f5edd18ae1aac47186bca55236a4e9f252b0097a7a1d7",
+            ["eth:0x814e110ae1abDde38548718152E00e4Aff6d1bcb"]
+          ],
+          [
+            "2025-04-28T07:33:11.000Z",
+            "0x111c19e080f269a8629dbdb70e92e1954970638ebe66e1c1997e653ba35143dc",
+            ["eth:0x0DfcC04AA52b758C7A3B7Ee0217e3d8B8f3d9329"]
+          ],
+          [
+            "2025-04-28T16:22:47.000Z",
+            "0x9a1fe757efabdbf9014f2fbc43fcfbf8c5e37f3612c4732824994975fd7e727b",
+            ["eth:0xb4c284A418a066D73bcadd50DCD8bcE63AA9913f"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "morpho": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+        "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
+        "public_allocator": "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "implementationNames": {
+        "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1": "MorphoHelperProxy",
+        "eth:0xb4c284A418a066D73bcadd50DCD8bcE63AA9913f": "MorphoHelper"
+      }
+    },
+    {
+      "name": "MorphoChainlinkOracleV2",
+      "address": "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6c540760ca3541be0adea9ccd74bb96e621286f2f25c24538260e302c5b661a2"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1725471923,
+      "sinceBlock": 20678797,
+      "values": {
+        "$immutable": true,
+        "BASE_FEED_1": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+        "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
+        "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
+        "BASE_VAULT_CONVERSION_SAMPLE": 1,
+        "price": "637393284447800000000000000000000000000",
+        "QUOTE_FEED_1": "eth:0x0000000000000000000000000000000000000000",
+        "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
+        "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
+        "QUOTE_VAULT_CONVERSION_SAMPLE": 1,
+        "SCALE_FACTOR": "100000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a": "MorphoChainlinkOracleV2"
+      }
+    },
+    {
+      "name": "DAO",
+      "address": "eth:0xaa0500198B4425DfC4E272FbE42C8E64E21fc03d",
+      "type": "Contract",
+      "template": "taiko/DAO",
+      "sourceHashes": [
+        "0x5813b4364023f4b0049743347095f3b700e4229cbf14e0cec0178cf7acb1a8e7",
+        "0x0567fe67ea1d2872edb3f9420706c18e62259987f7e28a61ab4bdf9c44348e57"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.",
+      "sinceTimestamp": 1708767599,
+      "sinceBlock": 19296609,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a",
+        "$pastUpgrades": [
+          [
+            "2024-02-24T09:39:59.000Z",
+            "0xb49d5ea6f6247cc4d7f3a1a98346a882872e28f3d769149a60ac84214c411df7",
+            ["eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "daoURI": "",
+        "EXECUTE_PERMISSION_ID": "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
+        "getTrustedForwarder": "eth:0x0000000000000000000000000000000000000000",
+        "protocolVersion": [1, 3, 0],
+        "REGISTER_STANDARD_CALLBACK_PERMISSION_ID": "0xfaf505be9907aa6951c2ebe5b0312f4980e14f21912ed355372103cc8bd683bc",
+        "ROOT_PERMISSION_ID": "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
+        "SET_METADATA_PERMISSION_ID": "0x4707e94b25cfce1a7c363508fbb838c35864388ad77284b248282b9746982b9b",
+        "SET_SIGNATURE_VALIDATOR_PERMISSION_ID": "0x0dcbfb19b09fb8ff4e9af583d4b8e9c8127cc1b26529b4d96dd3b7e778088372",
+        "SET_TRUSTED_FORWARDER_PERMISSION_ID": "0x06d294bc8cbad2e393408b20dd019a772661f60b8d633e56761157cb1ec85f8c",
+        "signatureValidator": "eth:0x0000000000000000000000000000000000000000",
+        "UPGRADE_DAO_PERMISSION_ID": "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc"
+      },
+      "implementationNames": {
+        "eth:0xaa0500198B4425DfC4E272FbE42C8E64E21fc03d": "ERC1967Proxy",
+        "eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a": "DAO"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Morpho",
+      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "type": "Contract",
+      "template": "morpho/Morpho",
+      "sourceHashes": [
+        "0x1d120eccc3dc1c34b44ae7f18a2b7639cb5a5a412646ab5a53dfc894b01f60c8"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1703754563,
+      "sinceBlock": 18883124,
+      "values": {
+        "$immutable": true,
+        "DOMAIN_SEPARATOR": "0xec6ac4ec6469375712b671d38548b711c7a4a17b4db99be41e0eb9f28cafdd2d",
+        "feeRecipient": "eth:0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa"
+      },
+      "implementationNames": {
+        "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": "Morpho"
+      }
+    },
+    {
+      "name": "MetaMorpho",
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x5a200a736c2ff00631db8db2d38de06efb719776ab601509667365e31999367a"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1704302495,
+      "sinceBlock": 18928285,
+      "values": {
+        "$immutable": true,
+        "allocators": [
+          "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
+          "eth:0xfeed46c11F57B7126a773EeC6ae9cA7aE1C03C9a",
+          "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1",
+          "eth:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8"
+        ],
+        "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "curator": "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB",
+        "decimals": 18,
+        "DECIMALS_OFFSET": 12,
+        "DOMAIN_SEPARATOR": "0xfd8d0cdba671ad2f8535e667b1c9f20e075e3f9d59981c1d4905da8328226019",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Steakhouse USDC",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "fee": 0,
+        "feeRecipient": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
+        "guardian": "eth:0xaa0500198B4425DfC4E272FbE42C8E64E21fc03d",
+        "lastTotalAssets": 291613599440949,
+        "marketOracles": [
+          "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
+          "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83",
+          "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2",
+          "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+          "eth:0x0000000000000000000000000000000000000000"
+        ],
+        "marketParams": [
+          {
+            "marketId": "0x64d65c9a2d91c36d56fbc42d69e979335320169b3df63bf92789e2c8883fcc64",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "oracle": "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
+            "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+            "lltv": "860000000000000000"
+          },
+          {
+            "marketId": "0x3a85e619751152991742810df6ec69ce473daef99e28a64ab2340d7b7ccfee49",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "oracle": "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83",
+            "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+            "lltv": "860000000000000000"
+          },
+          {
+            "marketId": "0xb323495f7e4148be5643a4ea4a8221eef163e4bccfdedc2a6f4696baacbc86cc",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "oracle": "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2",
+            "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+            "lltv": "860000000000000000"
+          },
+          {
+            "marketId": "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "oracle": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+            "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+            "lltv": "860000000000000000"
+          },
+          {
+            "marketId": "0x54efdee08e272e929034a8f26f7ca34b1ebe364b275391169b28c6d7db24dbc8",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0x0000000000000000000000000000000000000000",
+            "oracle": "eth:0x0000000000000000000000000000000000000000",
+            "irm": "eth:0x0000000000000000000000000000000000000000",
+            "lltv": 0
+          }
+        ],
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+        "name": "Steakhouse USDC",
+        "owner": "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
+        "pendingGuardian": {
+          "value": "eth:0x0000000000000000000000000000000000000000",
+          "validAt": 0
+        },
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingTimelock": { "value": 0, "validAt": 0 },
+        "skimRecipient": "eth:0x0000000000000000000000000000000000000000",
+        "supplyQueue": [
+          "0x64d65c9a2d91c36d56fbc42d69e979335320169b3df63bf92789e2c8883fcc64",
+          "0x3a85e619751152991742810df6ec69ce473daef99e28a64ab2340d7b7ccfee49",
+          "0xb323495f7e4148be5643a4ea4a8221eef163e4bccfdedc2a6f4696baacbc86cc",
+          "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd",
+          "0x54efdee08e272e929034a8f26f7ca34b1ebe364b275391169b28c6d7db24dbc8"
+        ],
+        "supplyQueueLength": 5,
+        "symbol": "steakUSDC",
+        "timelock": 604800,
+        "totalAssets": 291613623828656,
+        "totalSupply": "260690210761601986288805746",
+        "withdrawQueueLength": 5
+      },
+      "implementationNames": {
+        "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB": "MetaMorpho"
+      }
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1754069387,
+      "sinceBlock": 23047730,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "decimals": 8,
+        "description": "ETH / USD",
+        "getAnswer": [0, 0, 0, 0, 0],
+        "getTimestamp": [0, 0, 0, 0, 0],
+        "latestAnswer": 184901306200,
+        "latestRound": "36893488147419113132",
+        "latestRoundData": {
+          "roundId": "36893488147419113132",
+          "answer": 184901306200,
+          "startedAt": 1771946671,
+          "updatedAt": 1771946687,
+          "answeredInRound": "36893488147419113132"
+        },
+        "latestTimestamp": 1771946687,
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 2,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "errors": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD": "EACAggregatorProxy"
+      }
+    },
+    {
+      "address": "eth:0xC100c251bdD297A66795112f04356E6BA5f89D80",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1646586617,
+      "sinceBlock": 14334589,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xe0aeb6811d33Df42A09066857CDaFca16b506086",
+          "eth:0x84D3E4EE550DD5F99e76a548aC59a6BE1C8dCf79",
+          "eth:0xC100c251bdD297A66795112f04356E6BA5f89D80",
+          "eth:0x264c86DBbD2E4165FbBf0C35b0ddf0e00AEc6b31",
+          "eth:0x30E7c016fC702cDe9A50720a469d418490b7b652",
+          "eth:0x8f02b4a44Eacd9b8eE7739aa0BA58833DD45d002",
+          "eth:0xCF263cEe139763114fAaFC5F52865135412F50Ec",
+          "eth:0x69FcEFDe2B48503d675181448B3D4272128bca9c",
+          "eth:0x13cA8756E9470b71B8e998352c8741706217f963"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0xb5159d60f60933c0d8fbd0ca8bef1e90bdc6d80dbc43c0c749059d3793addb89",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 9 (56%)",
+        "nonce": 276,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xCF263cEe139763114fAaFC5F52865135412F50Ec",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xd2B8Dd0Fd51d80bF939047A9AAa55919112838E8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xd8bAA2606c4f0d121d4a08b0D83acF0Dee9dCA77",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ChainlinkOracle",
+      "address": "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x237c913a314bfa16d9468aa4abb3491591a7a545e397647ff950ddcbccb66195"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1705337555,
+      "sinceBlock": 19013595,
+      "values": {
+        "$immutable": true,
+        "BASE_FEED_1": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+        "BASE_FEED_2": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+        "price": "635688267611010614843187454996399711976",
+        "QUOTE_FEED_1": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+        "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
+        "SCALE_FACTOR": "100000000000000000000000000",
+        "VAULT": "eth:0x0000000000000000000000000000000000000000",
+        "VAULT_CONVERSION_SAMPLE": 1
+      },
+      "implementationNames": {
+        "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83": "ChainlinkOracle"
+      }
+    },
+    {
+      "address": "eth:0xe0aeb6811d33Df42A09066857CDaFca16b506086",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "type": "Contract",
+      "template": "Steakhouse-USDC/EACAggregatorProxy",
+      "sourceHashes": [
+        "0x6817c1bb5c0e498f52adbdf85688dd550e05aefc265a30f95ee83a2185ac8b8f"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1596720671,
+      "sinceBlock": 10606501,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0x4a3411ac2948B33c69666B35cc6d055B27Ea84f1",
+        "decimals": 8,
+        "description": "BTC / USD",
+        "getAnswer": [0, 0, 0, 0, 0],
+        "getTimestamp": [0, 0, 0, 0, 0],
+        "latestAnswer": 6373932844478,
+        "latestRound": "129127208515966879231",
+        "latestRoundData": {
+          "roundId": "129127208515966879231",
+          "answer": 6373932844478,
+          "startedAt": 1771946194,
+          "updatedAt": 1771946219,
+          "answeredInRound": "129127208515966879231"
+        },
+        "latestTimestamp": 1771946219,
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 7,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "errors": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c": "EACAggregatorProxy"
+      }
+    },
+    {
+      "address": "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PublicAllocator",
+      "address": "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x45f11230e944cc1ea0f3fa846750f3206f1be92b9da488344a8de47a2821a01d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1709715671,
+      "sinceBlock": 19375099,
+      "values": {
+        "$immutable": true,
+        "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb"
+      },
+      "implementationNames": {
+        "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D": "PublicAllocator"
+      }
+    },
+    {
+      "address": "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1648573769,
+      "sinceBlock": 14482355,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "decimals": 8,
+        "description": "WBTC / BTC",
+        "getAnswer": [0, 0, 0, 0, 0],
+        "getTimestamp": [0, 0, 0, 0, 0],
+        "latestAnswer": 99724523,
+        "latestRound": "36893488147419103828",
+        "latestRoundData": {
+          "roundId": "36893488147419103828",
+          "answer": 99724523,
+          "startedAt": 1771874462,
+          "updatedAt": 1771874507,
+          "answeredInRound": "36893488147419103828"
+        },
+        "latestTimestamp": 1771874507,
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 2,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "errors": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": "EACAggregatorProxy"
+      }
+    },
+    {
+      "address": "eth:0xfeed46c11F57B7126a773EeC6ae9cA7aE1C03C9a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "eth:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580": [
+      "constructor(address baseVault, uint256 baseVaultConversionSample, address baseFeed1, address baseFeed2, uint256 baseTokenDecimals, address quoteVault, uint256 quoteVaultConversionSample, address quoteFeed1, address quoteFeed2, uint256 quoteTokenDecimals)",
+      "error MathOverflowedMulDiv()",
+      "function BASE_FEED_1() view returns (address)",
+      "function BASE_FEED_2() view returns (address)",
+      "function BASE_VAULT() view returns (address)",
+      "function BASE_VAULT_CONVERSION_SAMPLE() view returns (uint256)",
+      "function QUOTE_FEED_1() view returns (address)",
+      "function QUOTE_FEED_2() view returns (address)",
+      "function QUOTE_VAULT() view returns (address)",
+      "function QUOTE_VAULT_CONVERSION_SAMPLE() view returns (uint256)",
+      "function SCALE_FACTOR() view returns (uint256)",
+      "function price() view returns (uint256)"
+    ],
+    "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": [
+      "constructor(address _masterCopy)"
+    ],
+    "eth:0x255c7705e8BB334DfCae438197f7C4297988085a": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": [
+      "event ChangedMasterCopy(address masterCopy)",
+      "event Confirmed(bytes32 indexed transactionHash, address indexed manager)",
+      "event Executed(bytes32 indexed transactionHash, address indexed executor)",
+      "event ExecutorUpdated(address indexed executor, bool allowed)",
+      "event Revoked(bytes32 indexed transactionHash, address indexed manager)",
+      "function NAME() view returns (string)",
+      "function VERSION() view returns (string)",
+      "function changeMasterCopy(address _masterCopy)",
+      "function confirmTransaction(bytes32 transactionHash)",
+      "function executeTransaction(address to, uint256 value, bytes data, uint8 operation, bytes32 witness)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, bytes32 witness) pure returns (bytes32)",
+      "function getTransactionStatus(bytes32 transactionHash) view returns (bool confirmed, bool executed)",
+      "function isExecutor(address) view returns (bool)",
+      "function manager() view returns (address)",
+      "function revokeTransaction(bytes32 transactionHash)",
+      "function setExecutor(address executor, bool allowed)",
+      "function setup()"
+    ],
+    "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedMasterCopy(address masterCopy)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function NAME() view returns (string)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeMasterCopy(address _masterCopy)",
+      "function changeThreshold(uint256 _threshold)",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getMessageHash(bytes message) view returns (bytes32)",
+      "function getModules() view returns (address[])",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isOwner(address owner) view returns (bool)",
+      "function isValidSignature(bytes _data, bytes _signature) returns (bytes4)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signMessage(bytes _data)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2": [
+      "constructor(address vault, address baseFeed1, address baseFeed2, address quoteFeed1, address quoteFeed2, uint256 vaultConversionSample, uint256 baseTokenDecimals, uint256 quoteTokenDecimals)",
+      "error MathOverflowedMulDiv()",
+      "function BASE_FEED_1() view returns (address)",
+      "function BASE_FEED_2() view returns (address)",
+      "function QUOTE_FEED_1() view returns (address)",
+      "function QUOTE_FEED_2() view returns (address)",
+      "function SCALE_FACTOR() view returns (uint256)",
+      "function VAULT() view returns (address)",
+      "function VAULT_CONVERSION_SAMPLE() view returns (uint256)",
+      "function price() view returns (uint256)"
+    ],
+    "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79": [
+      "constructor(address stETHtoETHPriceFeed_, address wstETH_, uint8 decimals_)",
+      "error BadDecimals()",
+      "error InvalidInt256()",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function stETHToETHPriceFeedDecimals() view returns (uint256)",
+      "function stETHtoETHPriceFeed() view returns (address)",
+      "function version() view returns (uint256)",
+      "function wstETH() view returns (address)",
+      "function wstETHScale() view returns (int256)"
+    ],
+    "eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a": [
+      "constructor()",
+      "error ActionFailed(uint256 index)",
+      "error AnyAddressDisallowedForWhoAndWhere()",
+      "error ConditionInterfacNotSupported(address condition)",
+      "error ConditionNotAContract(address condition)",
+      "error GrantWithConditionNotSupported()",
+      "error InsufficientGas()",
+      "error NativeTokenDepositAmountMismatch(uint256 expected, uint256 actual)",
+      "error PermissionAlreadyGrantedForDifferentCondition(address where, address who, bytes32 permissionId, address currentCondition, address newCondition)",
+      "error PermissionsForAnyAddressDisallowed()",
+      "error ProtocolVersionUpgradeNotSupported(uint8[3] protocolVersion)",
+      "error ReentrantCall()",
+      "error TooManyActions()",
+      "error Unauthorized(address where, address who, bytes32 permissionId)",
+      "error UnkownCallback(bytes4 callbackSelector, bytes4 magicNumber)",
+      "error ZeroAmount()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event CallbackReceived(address sender, bytes4 indexed sig, bytes data)",
+      "event Deposited(address indexed sender, address indexed token, uint256 amount, string _reference)",
+      "event Executed(address indexed actor, bytes32 callId, tuple(address to, uint256 value, bytes data)[] actions, uint256 allowFailureMap, uint256 failureMap, bytes[] execResults)",
+      "event Granted(bytes32 indexed permissionId, address indexed here, address where, address indexed who, address condition)",
+      "event Initialized(uint8 version)",
+      "event MetadataSet(bytes metadata)",
+      "event NativeTokenDeposited(address sender, uint256 amount)",
+      "event NewURI(string daoURI)",
+      "event Revoked(bytes32 indexed permissionId, address indexed here, address where, address indexed who)",
+      "event SignatureValidatorSet(address signatureValidator)",
+      "event StandardCallbackRegistered(bytes4 interfaceId, bytes4 callbackSelector, bytes4 magicNumber)",
+      "event TrustedForwarderSet(address forwarder)",
+      "event Upgraded(address indexed implementation)",
+      "function EXECUTE_PERMISSION_ID() view returns (bytes32)",
+      "function REGISTER_STANDARD_CALLBACK_PERMISSION_ID() view returns (bytes32)",
+      "function ROOT_PERMISSION_ID() view returns (bytes32)",
+      "function SET_METADATA_PERMISSION_ID() view returns (bytes32)",
+      "function SET_SIGNATURE_VALIDATOR_PERMISSION_ID() view returns (bytes32)",
+      "function SET_TRUSTED_FORWARDER_PERMISSION_ID() view returns (bytes32)",
+      "function UPGRADE_DAO_PERMISSION_ID() view returns (bytes32)",
+      "function applyMultiTargetPermissions(tuple(uint8 operation, address where, address who, address condition, bytes32 permissionId)[] _items)",
+      "function applySingleTargetPermissions(address _where, tuple(uint8 operation, address who, bytes32 permissionId)[] items)",
+      "function daoURI() view returns (string)",
+      "function deposit(address _token, uint256 _amount, string _reference) payable",
+      "function execute(bytes32 _callId, tuple(address to, uint256 value, bytes data)[] _actions, uint256 _allowFailureMap) returns (bytes[] execResults, uint256 failureMap)",
+      "function getTrustedForwarder() view returns (address)",
+      "function grant(address _where, address _who, bytes32 _permissionId)",
+      "function grantWithCondition(address _where, address _who, bytes32 _permissionId, address _condition)",
+      "function hasPermission(address _where, address _who, bytes32 _permissionId, bytes _data) view returns (bool)",
+      "function initialize(bytes _metadata, address _initialOwner, address _trustedForwarder, string daoURI_)",
+      "function initializeFrom(uint8[3] _previousProtocolVersion, bytes _initData)",
+      "function isGranted(address _where, address _who, bytes32 _permissionId, bytes _data) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4)",
+      "function protocolVersion() pure returns (uint8[3])",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerStandardCallback(bytes4 _interfaceId, bytes4 _callbackSelector, bytes4 _magicNumber)",
+      "function revoke(address _where, address _who, bytes32 _permissionId)",
+      "function setDaoURI(string newDaoURI)",
+      "function setMetadata(bytes _metadata)",
+      "function setSignatureValidator(address _signatureValidator)",
+      "function setTrustedForwarder(address _newTrustedForwarder)",
+      "function signatureValidator() view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
+    ],
+    "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
+    ],
+    "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
+    ],
+    "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1": [
+      "constructor(address implementation, address initialAdmin)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a": [
+      "constructor(address baseVault, uint256 baseVaultConversionSample, address baseFeed1, address baseFeed2, uint256 baseTokenDecimals, address quoteVault, uint256 quoteVaultConversionSample, address quoteFeed1, address quoteFeed2, uint256 quoteTokenDecimals)",
+      "error MathOverflowedMulDiv()",
+      "function BASE_FEED_1() view returns (address)",
+      "function BASE_FEED_2() view returns (address)",
+      "function BASE_VAULT() view returns (address)",
+      "function BASE_VAULT_CONVERSION_SAMPLE() view returns (uint256)",
+      "function QUOTE_FEED_1() view returns (address)",
+      "function QUOTE_FEED_2() view returns (address)",
+      "function QUOTE_VAULT() view returns (address)",
+      "function QUOTE_VAULT_CONVERSION_SAMPLE() view returns (uint256)",
+      "function SCALE_FACTOR() view returns (uint256)",
+      "function price() view returns (uint256)"
+    ],
+    "eth:0xaa0500198B4425DfC4E272FbE42C8E64E21fc03d": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xb4c284A418a066D73bcadd50DCD8bcE63AA9913f": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Initialized(uint64 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function OPERATOR_ROLE() view returns (bytes32)",
+      "function UPGRADER_ROLE() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function getMarketData(bytes32 id) view returns (tuple(uint256 totalSupplyAssets, uint256 totalSupplyShares, uint256 totalBorrowAssets, uint256 totalBorrowShares, uint256 fee, uint256 utilization, uint256 supplyRate, uint256 borrowRate) marketData)",
+      "function getPosition(bytes32 id, address user) view returns (tuple(uint256 suppliedShares, uint256 suppliedAssets, uint256 borrowedShares, uint256 borrowedAssets, uint256 collateral, uint256 collateralValue, uint256 ltv, uint256 healthFactor) position)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address initialAdmin)",
+      "function marketParamsToId(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams) pure returns (bytes32)",
+      "function morpho() view returns (address)",
+      "function move(address vault, tuple(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) market, int256 amount)[] withdrawals, tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) destinationMarket)",
+      "function move(address vault, bytes32 sourceMarketId, bytes32 destinationMarketId, int256 amount)",
+      "function move(address vault, tuple(bytes32 marketId, int256 amount)[] withdrawals, bytes32 destinationMarketId)",
+      "function move(address vault, tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) sourceMarket, tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) destinationMarket, int256 amount)",
+      "function pa_setAdmin(address vault, address newAdmin)",
+      "function pa_setFee(address vault, uint256 newFee)",
+      "function pa_setFlowCaps(address vault, tuple(bytes32 id, tuple(uint128 maxIn, uint128 maxOut) caps)[] flowCaps)",
+      "function pa_transferFee(address vault, address feeRecipient)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function public_allocator() view returns (address)",
+      "function reallocate(address vault, tuple(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets)[] allocations)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setMorpho(address morpho_)",
+      "function setOperatorRole(address operator, bool grant)",
+      "function setPublicAllocator(address publicAllocator_)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function vaultPosition(address vault, tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) market) view returns (uint256)",
+      "function vault_setSupplyQueue(address vault, bytes32[] newSupplyQueue)",
+      "function vault_updateWithdrawQueue(address vault, uint256[] indexes)"
+    ],
+    "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": [
+      "constructor(address newOwner)",
+      "event AccrueInterest(bytes32 indexed id, uint256 prevBorrowRate, uint256 interest, uint256 feeShares)",
+      "event Borrow(bytes32 indexed id, address caller, address indexed onBehalf, address indexed receiver, uint256 assets, uint256 shares)",
+      "event CreateMarket(bytes32 indexed id, tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams)",
+      "event EnableIrm(address indexed irm)",
+      "event EnableLltv(uint256 lltv)",
+      "event FlashLoan(address indexed caller, address indexed token, uint256 assets)",
+      "event IncrementNonce(address indexed caller, address indexed authorizer, uint256 usedNonce)",
+      "event Liquidate(bytes32 indexed id, address indexed caller, address indexed borrower, uint256 repaidAssets, uint256 repaidShares, uint256 seizedAssets, uint256 badDebtAssets, uint256 badDebtShares)",
+      "event Repay(bytes32 indexed id, address indexed caller, address indexed onBehalf, uint256 assets, uint256 shares)",
+      "event SetAuthorization(address indexed caller, address indexed authorizer, address indexed authorized, bool newIsAuthorized)",
+      "event SetFee(bytes32 indexed id, uint256 newFee)",
+      "event SetFeeRecipient(address indexed newFeeRecipient)",
+      "event SetOwner(address indexed newOwner)",
+      "event Supply(bytes32 indexed id, address indexed caller, address indexed onBehalf, uint256 assets, uint256 shares)",
+      "event SupplyCollateral(bytes32 indexed id, address indexed caller, address indexed onBehalf, uint256 assets)",
+      "event Withdraw(bytes32 indexed id, address caller, address indexed onBehalf, address indexed receiver, uint256 assets, uint256 shares)",
+      "event WithdrawCollateral(bytes32 indexed id, address caller, address indexed onBehalf, address indexed receiver, uint256 assets)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function accrueInterest(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams)",
+      "function borrow(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, address onBehalf, address receiver) returns (uint256, uint256)",
+      "function createMarket(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams)",
+      "function enableIrm(address irm)",
+      "function enableLltv(uint256 lltv)",
+      "function extSloads(bytes32[] slots) view returns (bytes32[] res)",
+      "function feeRecipient() view returns (address)",
+      "function flashLoan(address token, uint256 assets, bytes data)",
+      "function idToMarketParams(bytes32) view returns (address loanToken, address collateralToken, address oracle, address irm, uint256 lltv)",
+      "function isAuthorized(address, address) view returns (bool)",
+      "function isIrmEnabled(address) view returns (bool)",
+      "function isLltvEnabled(uint256) view returns (bool)",
+      "function liquidate(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, address borrower, uint256 seizedAssets, uint256 repaidShares, bytes data) returns (uint256, uint256)",
+      "function market(bytes32) view returns (uint128 totalSupplyAssets, uint128 totalSupplyShares, uint128 totalBorrowAssets, uint128 totalBorrowShares, uint128 lastUpdate, uint128 fee)",
+      "function nonce(address) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function position(bytes32, address) view returns (uint256 supplyShares, uint128 borrowShares, uint128 collateral)",
+      "function repay(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, address onBehalf, bytes data) returns (uint256, uint256)",
+      "function setAuthorization(address authorized, bool newIsAuthorized)",
+      "function setAuthorizationWithSig(tuple(address authorizer, address authorized, bool isAuthorized, uint256 nonce, uint256 deadline) authorization, tuple(uint8 v, bytes32 r, bytes32 s) signature)",
+      "function setFee(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 newFee)",
+      "function setFeeRecipient(address newFeeRecipient)",
+      "function setOwner(address newOwner)",
+      "function supply(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, address onBehalf, bytes data) returns (uint256, uint256)",
+      "function supplyCollateral(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, address onBehalf, bytes data)",
+      "function withdraw(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, address onBehalf, address receiver) returns (uint256, uint256)",
+      "function withdrawCollateral(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, address onBehalf, address receiver)"
+    ],
+    "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB": [
+      "constructor(address owner, address morpho, uint256 initialTimelock, address _asset, string _name, string _symbol)",
+      "error AboveMaxTimelock()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error AllCapsReached()",
+      "error AlreadyPending()",
+      "error AlreadySet()",
+      "error BelowMinTimelock()",
+      "error DuplicateMarket(bytes32 id)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC2612ExpiredSignature(uint256 deadline)",
+      "error ERC2612InvalidSigner(address signer, address owner)",
+      "error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)",
+      "error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)",
+      "error FailedInnerCall()",
+      "error InconsistentAsset(bytes32 id)",
+      "error InconsistentReallocation()",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidMarketRemovalNonZeroCap(bytes32 id)",
+      "error InvalidMarketRemovalNonZeroSupply(bytes32 id)",
+      "error InvalidMarketRemovalTimelockNotElapsed(bytes32 id)",
+      "error InvalidShortString()",
+      "error MarketNotCreated()",
+      "error MarketNotEnabled(bytes32 id)",
+      "error MathOverflowedMulDiv()",
+      "error MaxFeeExceeded()",
+      "error MaxQueueLengthExceeded()",
+      "error NoPendingValue()",
+      "error NonZeroCap()",
+      "error NotAllocatorRole()",
+      "error NotCuratorNorGuardianRole()",
+      "error NotCuratorRole()",
+      "error NotEnoughLiquidity()",
+      "error NotGuardianRole()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PendingCap(bytes32 id)",
+      "error PendingRemoval()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "error StringTooLong(string str)",
+      "error SupplyCapExceeded(bytes32 id)",
+      "error TimelockNotElapsed()",
+      "error UnauthorizedMarket(bytes32 id)",
+      "error ZeroAddress()",
+      "error ZeroFeeRecipient()",
+      "event AccrueInterest(uint256 newTotalAssets, uint256 feeShares)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event EIP712DomainChanged()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReallocateSupply(address indexed caller, bytes32 indexed id, uint256 suppliedAssets, uint256 suppliedShares)",
+      "event ReallocateWithdraw(address indexed caller, bytes32 indexed id, uint256 withdrawnAssets, uint256 withdrawnShares)",
+      "event RevokePendingCap(address indexed caller, bytes32 indexed id)",
+      "event RevokePendingGuardian(address indexed caller)",
+      "event RevokePendingMarketRemoval(address indexed caller, bytes32 indexed id)",
+      "event RevokePendingTimelock(address indexed caller)",
+      "event SetCap(address indexed caller, bytes32 indexed id, uint256 cap)",
+      "event SetCurator(address indexed newCurator)",
+      "event SetFee(address indexed caller, uint256 newFee)",
+      "event SetFeeRecipient(address indexed newFeeRecipient)",
+      "event SetGuardian(address indexed caller, address indexed guardian)",
+      "event SetIsAllocator(address indexed allocator, bool isAllocator)",
+      "event SetSkimRecipient(address indexed newSkimRecipient)",
+      "event SetSupplyQueue(address indexed caller, bytes32[] newSupplyQueue)",
+      "event SetTimelock(address indexed caller, uint256 newTimelock)",
+      "event SetWithdrawQueue(address indexed caller, bytes32[] newWithdrawQueue)",
+      "event Skim(address indexed caller, address indexed token, uint256 amount)",
+      "event SubmitCap(address indexed caller, bytes32 indexed id, uint256 cap)",
+      "event SubmitGuardian(address indexed newGuardian)",
+      "event SubmitMarketRemoval(address indexed caller, bytes32 indexed id)",
+      "event SubmitTimelock(uint256 newTimelock)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event UpdateLastTotalAssets(uint256 updatedTotalAssets)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "function DECIMALS_OFFSET() view returns (uint8)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function MORPHO() view returns (address)",
+      "function acceptCap(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams)",
+      "function acceptGuardian()",
+      "function acceptOwnership()",
+      "function acceptTimelock()",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function asset() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function config(bytes32) view returns (uint184 cap, bool enabled, uint64 removableAt)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function curator() view returns (address)",
+      "function decimals() view returns (uint8)",
+      "function deposit(uint256 assets, address receiver) returns (uint256 shares)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function fee() view returns (uint96)",
+      "function feeRecipient() view returns (address)",
+      "function guardian() view returns (address)",
+      "function isAllocator(address) view returns (bool)",
+      "function lastTotalAssets() view returns (uint256)",
+      "function maxDeposit(address) view returns (uint256)",
+      "function maxMint(address) view returns (uint256)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256 assets)",
+      "function mint(uint256 shares, address receiver) returns (uint256 assets)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingCap(bytes32) view returns (uint192 value, uint64 validAt)",
+      "function pendingGuardian() view returns (address value, uint64 validAt)",
+      "function pendingOwner() view returns (address)",
+      "function pendingTimelock() view returns (uint192 value, uint64 validAt)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function reallocate(tuple(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets)[] allocations)",
+      "function redeem(uint256 shares, address receiver, address owner) returns (uint256 assets)",
+      "function renounceOwnership()",
+      "function revokePendingCap(bytes32 id)",
+      "function revokePendingGuardian()",
+      "function revokePendingMarketRemoval(bytes32 id)",
+      "function revokePendingTimelock()",
+      "function setCurator(address newCurator)",
+      "function setFee(uint256 newFee)",
+      "function setFeeRecipient(address newFeeRecipient)",
+      "function setIsAllocator(address newAllocator, bool newIsAllocator)",
+      "function setSkimRecipient(address newSkimRecipient)",
+      "function setSupplyQueue(bytes32[] newSupplyQueue)",
+      "function skim(address token)",
+      "function skimRecipient() view returns (address)",
+      "function submitCap(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 newSupplyCap)",
+      "function submitGuardian(address newGuardian)",
+      "function submitMarketRemoval(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams)",
+      "function submitTimelock(uint256 newTimelock)",
+      "function supplyQueue(uint256) view returns (bytes32)",
+      "function supplyQueueLength() view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function timelock() view returns (uint256)",
+      "function totalAssets() view returns (uint256 assets)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function updateWithdrawQueue(uint256[] indexes)",
+      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256 shares)",
+      "function withdrawQueue(uint256) view returns (bytes32)",
+      "function withdrawQueueLength() view returns (uint256)"
+    ],
+    "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
+    ],
+    "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83": [
+      "constructor(address vault, address baseFeed1, address baseFeed2, address quoteFeed1, address quoteFeed2, uint256 vaultConversionSample, uint256 baseTokenDecimals, uint256 quoteTokenDecimals)",
+      "error MathOverflowedMulDiv()",
+      "function BASE_FEED_1() view returns (address)",
+      "function BASE_FEED_2() view returns (address)",
+      "function QUOTE_FEED_1() view returns (address)",
+      "function QUOTE_FEED_2() view returns (address)",
+      "function SCALE_FACTOR() view returns (uint256)",
+      "function VAULT() view returns (address)",
+      "function VAULT_CONVERSION_SAMPLE() view returns (uint256)",
+      "function price() view returns (uint256)"
+    ],
+    "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
+    ],
+    "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D": [
+      "constructor(address morpho)",
+      "error AlreadySet()",
+      "error DepositMarketInWithdrawals()",
+      "error EmptyWithdrawals()",
+      "error InconsistentWithdrawals()",
+      "error IncorrectFee()",
+      "error MarketNotEnabled(bytes32 id)",
+      "error MaxInflowExceeded(bytes32 id)",
+      "error MaxOutflowExceeded(bytes32 id)",
+      "error MaxSettableFlowCapExceeded()",
+      "error NotAdminNorVaultOwner()",
+      "error NotEnoughSupply(bytes32 id)",
+      "error WithdrawZero(bytes32 id)",
+      "event PublicReallocateTo(address indexed sender, address indexed vault, bytes32 indexed supplyMarketId, uint256 suppliedAssets)",
+      "event PublicWithdrawal(address indexed sender, address indexed vault, bytes32 indexed id, uint256 withdrawnAssets)",
+      "event SetAdmin(address indexed sender, address indexed vault, address admin)",
+      "event SetFee(address indexed sender, address indexed vault, uint256 fee)",
+      "event SetFlowCaps(address indexed sender, address indexed vault, tuple(bytes32 id, tuple(uint128 maxIn, uint128 maxOut) caps)[] config)",
+      "event TransferFee(address indexed sender, address indexed vault, uint256 amount, address indexed feeRecipient)",
+      "function MORPHO() view returns (address)",
+      "function accruedFee(address) view returns (uint256)",
+      "function admin(address) view returns (address)",
+      "function fee(address) view returns (uint256)",
+      "function flowCaps(address, bytes32) view returns (uint128 maxIn, uint128 maxOut)",
+      "function reallocateTo(address vault, tuple(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint128 amount)[] withdrawals, tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) supplyMarketParams) payable",
+      "function setAdmin(address vault, address newAdmin)",
+      "function setFee(address vault, uint256 newFee)",
+      "function setFlowCaps(address vault, tuple(bytes32 id, tuple(uint128 maxIn, uint128 maxOut) caps)[] config)",
+      "function transferFee(address vault, address feeRecipient)"
+    ],
+    "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682",
+    "Steakhouse-USDC/EACAggregatorProxy": "0x0fad245964397030054e75ef253b2a8b949621a64216059a9930e224f87d6812",
+    "taiko/DAO": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
+  },
+  "usedBlockNumbers": { "ethereum": 24527666 },
+  "permissionsConfigHash": "0xf061b25f0ca6647e53a04b25a630a6ce93fa9d02c1bb2dd3734453207e8f51df"
+}
