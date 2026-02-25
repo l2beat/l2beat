@@ -1,5 +1,5 @@
 import type { InteropDurationSplit } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, getInteropTransferValue } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
@@ -83,7 +83,7 @@ export function getProtocolsDataMapByBridgeType(
         bridgeTypeMap.lockAndMint = {
           volume:
             (bridgeTypeMap.lockAndMint?.volume ?? 0) +
-            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+            (getInteropTransferValue(record) ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.lockAndMint?.tokens,
             record.tokens,
@@ -132,7 +132,7 @@ export function getProtocolsDataMapByBridgeType(
         bridgeTypeMap.nonMinting = {
           volume:
             (bridgeTypeMap.nonMinting?.volume ?? 0) +
-            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+            (getInteropTransferValue(record) ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.nonMinting?.tokens,
             record.tokens,
@@ -169,7 +169,7 @@ export function getProtocolsDataMapByBridgeType(
         bridgeTypeMap.burnAndMint = {
           volume:
             (bridgeTypeMap.burnAndMint?.volume ?? 0) +
-            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+            (getInteropTransferValue(record) ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.burnAndMint?.tokens,
             record.tokens,
@@ -231,7 +231,7 @@ export function getProtocolsDataMap(
     const direction = getDirection(record, durationSplit, transfersTimeMode)
 
     protocolsDataMap.set(record.id, {
-      volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+      volume: current.volume + (getInteropTransferValue(record) ?? 0),
       tokens: mergeTokensData(current.tokens, record.tokens, direction),
       chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),

@@ -3,7 +3,12 @@ import type {
   AggregatedInteropTransferRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
-import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  assertUnreachable,
+  getInteropTransferValue,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 type Bucket =
   | 'under100'
@@ -47,12 +52,7 @@ export function getAggregatedTransfer(
   let maxTransferValueUsd: number | undefined = undefined
 
   for (const transfer of group) {
-    const transferValueUsd =
-      transfer.srcValueUsd === undefined
-        ? transfer.dstValueUsd
-        : transfer.dstValueUsd === undefined
-          ? transfer.srcValueUsd
-          : Math.max(transfer.srcValueUsd, transfer.dstValueUsd)
+    const transferValueUsd = getInteropTransferValue(transfer)
 
     totalDurationSum += transfer.duration
     if (srcValueUsd === undefined) {
@@ -67,10 +67,7 @@ export function getAggregatedTransfer(
       dstValueUsd += transferValueUsd ?? 0
     }
 
-    if (
-      transfer.srcValueUsd !== undefined ||
-      transfer.dstValueUsd !== undefined
-    ) {
+    if (transferValueUsd !== undefined) {
       identifiedCount++
     }
 
