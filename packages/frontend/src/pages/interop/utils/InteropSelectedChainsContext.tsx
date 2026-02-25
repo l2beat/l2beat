@@ -82,10 +82,6 @@ export function InteropSelectedChainsProvider({
     const currentUrl = window.location.pathname + window.location.search
 
     if (newUrl !== currentUrl) {
-      if (window.location.search === '') {
-        window.history.replaceState({}, '', newUrl)
-        return
-      }
       window.history.pushState({}, '', newUrl)
     }
   }, [debouncedChains])
@@ -93,12 +89,12 @@ export function InteropSelectedChainsProvider({
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true
     const params = new URLSearchParams(window.location.search)
-    setSelectedChains((current) =>
+    setSelectedChains(
       parseSelectedChainsQuery(
         params.get('selectedChains') ?? undefined,
         allChainIds,
         interopChains,
-        current,
+        defaultSelectedChains,
       ),
     )
   })
