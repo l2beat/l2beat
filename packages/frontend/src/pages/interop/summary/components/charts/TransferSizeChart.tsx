@@ -195,14 +195,17 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
         {label}
       </div>
 
-      <HorizontalSeparator className="my-1" />
-      <div className="flex items-center justify-between gap-x-6">
-        <span className="font-medium text-label-value-14">Total transfers</span>
-        <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatInteger(totalTransfers)} transfers
-        </span>
-      </div>
-      <div className="mt-2 flex flex-col gap-2">
+      <HorizontalSeparator className="my-1.5" />
+
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">
+            Total transfers
+          </span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatInteger(totalTransfers)} transfers
+          </span>
+        </div>
         {reversedPayload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
           if (!configEntry || entry.hide) return null
@@ -238,24 +241,26 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
           )
         })}
       </div>
-      <HorizontalSeparator className="my-1" />
-      <div className="flex items-center justify-between gap-x-6">
-        <span className="font-medium text-label-value-14">Min size</span>
-        <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatTransferSize(data.minTransferValueUsd)}
-        </span>
-      </div>
-      <div className="flex items-center justify-between gap-x-6">
-        <span className="font-medium text-label-value-14">Average size</span>
-        <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatTransferSize(data.averageTransferSizeUsd)}
-        </span>
-      </div>
-      <div className="flex items-center justify-between gap-x-6">
-        <span className="font-medium text-label-value-14">Max size</span>
-        <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatTransferSize(data.maxTransferValueUsd)}
-        </span>
+      <HorizontalSeparator className="my-1.5" />
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Min size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(data.minTransferValueUsd)}
+          </span>
+        </div>
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Average size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(data.averageTransferSizeUsd)}
+          </span>
+        </div>
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Max size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(data.maxTransferValueUsd)}
+          </span>
+        </div>
       </div>
     </ChartTooltipWrapper>
   )

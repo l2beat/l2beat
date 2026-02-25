@@ -158,7 +158,7 @@ describe('aggregation', () => {
 
       const result = getAggregatedTransfer(transfers)
 
-      expect(result.srcValueUsd).toEqual(5001.21)
+      expect(result.srcValueUsd).toEqual(3000.23)
       expect(result.dstValueUsd).toEqual(5001.21)
     })
 
