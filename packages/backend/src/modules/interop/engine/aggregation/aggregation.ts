@@ -21,14 +21,6 @@ function getBucket(valueUsd: number | undefined): Bucket {
   return 'over100k'
 }
 
-function getTransferValueUsd(
-  transfer: Pick<InteropTransferRecord, 'srcValueUsd' | 'dstValueUsd'>,
-): number | undefined {
-  if (transfer.srcValueUsd === undefined) return transfer.dstValueUsd
-  if (transfer.dstValueUsd === undefined) return transfer.srcValueUsd
-  return Math.max(transfer.srcValueUsd, transfer.dstValueUsd)
-}
-
 export function getAggregatedTransfer(
   group: InteropTransferRecord[],
   options?: {
@@ -55,7 +47,12 @@ export function getAggregatedTransfer(
   let maxTransferValueUsd: number | undefined = undefined
 
   for (const transfer of group) {
-    const transferValueUsd = getTransferValueUsd(transfer)
+    const transferValueUsd =
+      transfer.srcValueUsd === undefined
+        ? transfer.dstValueUsd
+        : transfer.dstValueUsd === undefined
+          ? transfer.srcValueUsd
+          : Math.max(transfer.srcValueUsd, transfer.dstValueUsd)
 
     totalDurationSum += transfer.duration
     if (srcValueUsd === undefined) {

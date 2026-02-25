@@ -3,7 +3,6 @@ import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { manifest } from '~/utils/Manifest'
-import { getTransferValueUsd } from './getTransferValueUsd'
 
 export type TransferSizeDataPoint = {
   name: string
@@ -73,8 +72,13 @@ export function getTransferSizeChartData(
           ? Math.max(current.maxTransferValueUsd, record.maxTransferValueUsd)
           : record.maxTransferValueUsd
         : current.maxTransferValueUsd
-    const totalValueUsd =
-      current.totalValueUsd + (getTransferValueUsd(record) ?? 0)
+    const transferValueUsd =
+      record.srcValueUsd === undefined
+        ? record.dstValueUsd
+        : record.dstValueUsd === undefined
+          ? record.srcValueUsd
+          : Math.max(record.srcValueUsd, record.dstValueUsd)
+    const totalValueUsd = current.totalValueUsd + (transferValueUsd ?? 0)
     const identifiedCount = current.identifiedCount + record.identifiedCount
 
     const total =

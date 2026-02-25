@@ -8,7 +8,6 @@ import type {
 import { accumulateChains, accumulateTokens } from './accumulate'
 import type { TransfersTimeModeMap } from './buildTransfersTimeModeMap'
 import { computeDurationSplits } from './computeDurationSplits'
-import { getTransferValueUsd } from './getTransferValueUsd'
 
 export interface ProtocolDataByBridgeType {
   lockAndMint?: ProtocolDataByBridgeTypeCommon & CommonInteropData
@@ -78,7 +77,12 @@ export function getProtocolsDataMapByBridgeType(
       ?.get(record.bridgeType)
     const transfersTimeMode = transfersTimeModeMap.get(record.id)
     const direction = getDirection(record, durationSplit, transfersTimeMode)
-    const transferValueUsd = getTransferValueUsd(record)
+    const transferValueUsd =
+      record.srcValueUsd === undefined
+        ? record.dstValueUsd
+        : record.dstValueUsd === undefined
+          ? record.srcValueUsd
+          : Math.max(record.srcValueUsd, record.dstValueUsd)
 
     switch (record.bridgeType) {
       case 'lockAndMint':
@@ -228,7 +232,12 @@ export function getProtocolsDataMap(
         ? durationSplitMap?.get(record.id)?.get(record.bridgeType)
         : undefined
     const direction = getDirection(record, durationSplit, transfersTimeMode)
-    const transferValueUsd = getTransferValueUsd(record)
+    const transferValueUsd =
+      record.srcValueUsd === undefined
+        ? record.dstValueUsd
+        : record.dstValueUsd === undefined
+          ? record.srcValueUsd
+          : Math.max(record.srcValueUsd, record.dstValueUsd)
 
     protocolsDataMap.set(record.id, {
       volume: current.volume + (transferValueUsd ?? 0),
