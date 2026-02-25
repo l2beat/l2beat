@@ -27,7 +27,7 @@ export async function getChangelogData(
           'Track product and content updates shipped on L2BEAT in one place.',
         openGraph: {
           url,
-          image: '/meta-images/publications/opengraph-image.png',
+          image: '/meta-images/changelog/opengraph-image.png',
         },
       }),
     },
