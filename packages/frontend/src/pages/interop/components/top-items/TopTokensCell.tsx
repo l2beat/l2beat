@@ -162,7 +162,7 @@ function TopTokensContent({
             </DrawerTitle>
             <BetweenChainsInfo />
           </DrawerHeader>
-          <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
+          <div className="max-h-[60vh] overflow-y-auto">
             <BasicTable
               skeletonCount={6}
               table={table}
