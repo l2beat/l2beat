@@ -450,12 +450,16 @@ function ratioDrop(values: number[], threshold = 0.1 /* 90% sudden drop */) {
 }
 
 function ratioSpike(values: number[], threshold = 1.9 /* +90% */) {
-  if (values.length <= 2) return false
+  if (values.length <= 2) {
+    return false
+  }
   const prev = values.slice(0, -1)
   const current = values.at(-1)
   assert(current !== undefined, 'Current value must be defined')
   const base = median(prev)
-  if (base === 0) return false
+  if (base === 0) {
+    return false
+  }
   return current / base > threshold
 }
 
