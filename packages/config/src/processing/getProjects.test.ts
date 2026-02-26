@@ -249,9 +249,6 @@ describe('getProjects', () => {
         const usedInVerifiersSet = new Set(usedInVerifiers)
 
         for (const usedIn of usedInVerifiers) {
-          // const usedInProject = projectsById.get(usedIn)
-          // if (usedInProject?.daBridge) continue
-
           it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
             expect(liveTvsProjects.has(usedIn)).toEqual(true)
           })
