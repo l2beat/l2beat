@@ -1249,6 +1249,7 @@ export type InteropPluginName =
   | 'wormhole-token-bridge'
   | 'zkstack'
   | 'zklink-nova'
+  | 'linea'
 
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
