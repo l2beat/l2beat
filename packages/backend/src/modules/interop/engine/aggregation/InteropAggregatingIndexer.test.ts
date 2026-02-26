@@ -39,6 +39,7 @@ describe(InteropAggregatingIndexer.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -164,6 +165,7 @@ describe(InteropAggregatingIndexer.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 
