@@ -19,7 +19,7 @@ export function TokenFlowsCell({
   netFlows: TokenFlowDisplayData[]
 }) {
   return (
-    <div className="flex flex-col items-end gap-1">
+    <div className="flex min-w-[120px] flex-col items-start gap-1">
       {netFlows.map((flow) => {
         return (
           <div
