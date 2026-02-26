@@ -24,6 +24,7 @@ export const intuition: ScalingProject = upcomingL3({
       socialMedia: [
         'https://linkedin.com/company/0xintuition',
         'https://twitter.com/0xintuition',
+        'https://t.me/intuitionsystems',
         'https://youtube.com/@0xIntuition',
         'https://discord.gg/0xintuition',
       ],

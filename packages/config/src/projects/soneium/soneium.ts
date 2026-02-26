@@ -35,7 +35,7 @@ export const soneium = opStackL2({
       socialMedia: [
         'https://x.com/soneium',
         'https://t.me/SoneiumOfficial',
-        'https://discord.gg/rWWPBHug9w',
+        'https://discord.com/invite/soneium',
       ],
       other: [
         'https://rollup.codes/soneium',

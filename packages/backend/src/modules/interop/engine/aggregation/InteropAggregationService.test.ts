@@ -37,6 +37,7 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -117,6 +118,7 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -151,6 +153,7 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'nonMinting' }],
+          type: 'other',
         },
       ]
 
@@ -192,10 +195,12 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
         {
           id: 'config2',
           plugins: [{ plugin: 'stargate', bridgeType: 'burnAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -216,6 +221,7 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 

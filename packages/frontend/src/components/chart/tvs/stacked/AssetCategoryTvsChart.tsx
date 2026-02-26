@@ -37,7 +37,6 @@ interface Props {
   unit: ChartUnit
   isLoading: boolean
   tickCount?: number
-  className?: string
   project?: ChartProject
   excludeRwaRestrictedTokens: boolean
 }
@@ -81,7 +80,6 @@ export function AssetCategoryTvsChart({
   milestones,
   unit,
   isLoading,
-  className,
   tickCount,
   dataKeys,
   toggleDataKey,
@@ -102,9 +100,8 @@ export function AssetCategoryTvsChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
-      className={className}
     >
-      <AreaChart data={data} margin={{ top: 20 }}>
+      <AreaChart responsive data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="rwaPublic"

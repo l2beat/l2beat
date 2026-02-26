@@ -53,16 +53,16 @@ export function ProtocolsPieChart({
 
   return (
     <div className={chartWrapperClassName}>
-      <SimpleChartContainer
-        height={showSmallerChart ? 128 : 164}
-        width="100%"
-        meta={chartMeta}
-        className={cn(
-          'aspect-square h-41 min-h-41',
-          showSmallerChart && 'h-[128px] min-h-[128px]',
-        )}
-      >
-        <PieChart>
+      <SimpleChartContainer meta={chartMeta}>
+        <PieChart
+          responsive
+          height={showSmallerChart ? 128 : 164}
+          width="100%"
+          className={cn(
+            'aspect-square! h-41 min-h-41',
+            showSmallerChart && 'h-[128px] min-h-[128px]',
+          )}
+        >
           <ChartTooltip cursor={false} content={<CustomTooltip />} />
           <Pie
             data={chartData}

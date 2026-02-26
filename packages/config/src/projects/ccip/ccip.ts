@@ -18,6 +18,7 @@ export const ccip: BaseProject = {
         bridgeType: 'burnAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

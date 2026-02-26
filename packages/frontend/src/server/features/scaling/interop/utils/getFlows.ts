@@ -34,4 +34,5 @@ export function getFlows(
 
       return { srcChain, dstChain, volume }
     })
+    .slice(0, 2)
 }

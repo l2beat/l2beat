@@ -18,6 +18,7 @@ export const hyperlaneHwr: BaseProject = {
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

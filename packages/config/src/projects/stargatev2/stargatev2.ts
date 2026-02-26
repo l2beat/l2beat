@@ -95,6 +95,7 @@ export const stargatev2: Bridge = {
       },
       // TODO: needs bus/taxi duration split
     ],
+    type: 'intent',
   },
   technology: {
     destination: [

@@ -6,6 +6,7 @@ import { underReviewL2 } from '../../templates/underReview'
 export const reddiozkvm: ScalingProject = underReviewL2({
   id: ProjectId('reddiozkvm'),
   addedAt: UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  archivedAt: UnixTime(1772017837), // 2026-02-25T11:10:37Z
   capability: 'universal',
   display: {
     name: 'Reddio',

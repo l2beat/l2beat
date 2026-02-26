@@ -92,11 +92,11 @@ export function EcosystemTvsByTokenType({
             })}
           </tbody>
         </table>
-        <SimpleChartContainer
-          meta={chartMeta}
-          className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
-        >
-          <PieChart>
+        <SimpleChartContainer meta={chartMeta}>
+          <PieChart
+            responsive
+            className="aspect-square! h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
+          >
             <ChartTooltip
               cursor={false}
               content={<CustomTooltip />}

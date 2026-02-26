@@ -54,17 +54,18 @@ export function ProjectBridgeTypeTvsChart({
   )
 
   return (
-    <BridgeTypeTvsChart
-      data={chartData}
-      milestones={milestones}
-      unit={unit}
-      isLoading={isLoading}
-      tickCount={4}
-      className="mt-4 mb-3"
-      syncedUntil={data?.syncedUntil}
-      dataKeys={dataKeys}
-      toggleDataKey={toggleDataKey}
-      project={project}
-    />
+    <div className="mt-4 mb-3">
+      <BridgeTypeTvsChart
+        data={chartData}
+        milestones={milestones}
+        unit={unit}
+        isLoading={isLoading}
+        tickCount={4}
+        syncedUntil={data?.syncedUntil}
+        dataKeys={dataKeys}
+        toggleDataKey={toggleDataKey}
+        project={project}
+      />
+    </div>
   )
 }

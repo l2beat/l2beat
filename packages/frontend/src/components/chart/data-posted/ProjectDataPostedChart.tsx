@@ -52,16 +52,17 @@ export function ProjectDataPostedChart({
         <ProjectChartTimeRange timeRange={timeRange} />
         <DataPostedRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
-      <DataPostedChart
-        milestones={milestones}
-        resolution={rangeToResolution(range)}
-        data={chartData}
-        syncedUntil={data?.syncedUntil}
-        isLoading={isLoading}
-        className="mt-4"
-        tickCount={4}
-        project={project}
-      />
+      <div className="mt-4">
+        <DataPostedChart
+          milestones={milestones}
+          resolution={rangeToResolution(range)}
+          data={chartData}
+          syncedUntil={data?.syncedUntil}
+          isLoading={isLoading}
+          tickCount={4}
+          project={project}
+        />
+      </div>
       <HorizontalSeparator className="my-4" />
       <ProjectDataPostedChartStats data={data?.stats} isLoading={isLoading} />
     </div>

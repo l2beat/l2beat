@@ -1,4 +1,5 @@
 import { authorsCollection } from './authors'
+import { changelogCollection } from './changelog'
 import { delegatedProjectsCollection } from './delegated-projects'
 import { eventsCollection } from './events'
 import { externalPublicationsCollection } from './external-publications'
@@ -15,6 +16,7 @@ export const collections = {
   events: eventsCollection,
   authors: authorsCollection,
   glossary: glossaryCollection,
+  changelog: changelogCollection,
   'zk-catalog-descriptions': zkCatalogDescriptionsCollection,
   pages: pagesCollection,
   partners: partnersCollection,
