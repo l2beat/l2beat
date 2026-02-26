@@ -27,11 +27,11 @@ type RenderResult = {
 
 type RenderFn = (data: RenderData, url: string) => RenderResult
 
-export async function createServer(logger: Logger) {
+export function createServer(logger: Logger) {
   return createHttpServer(logger, 'production')
 }
 
-export async function createDevServer(logger: Logger) {
+export function createDevServer(logger: Logger) {
   return createHttpServer(logger, 'development')
 }
 
