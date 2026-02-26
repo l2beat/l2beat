@@ -25,7 +25,7 @@ interface ContentCollectionEntry<T extends CollectionKey> {
   id: string
   data: v.infer<Collection[T]['schema']>
   content: string
-  excerpt: string
+  excerpt: string | undefined
   readTimeInMinutes: number
 }
 export type CollectionEntry<T extends CollectionKey> =
@@ -142,6 +142,7 @@ function getContentCollectionEntry(
 
   const data = contentEntry.schema.parse(parsedFile.data)
   const excerpt = getExcerpt(parsedFile.content)
+
   const readTimeInMinutes = getReadTimeInMinutes(parsedFile.content)
 
   return {
@@ -157,7 +158,7 @@ function getExcerpt(content: string) {
   const lines = content.split('\n')
   const line = lines.find((line) => startsWithLetterOrNumber(line))
   if (!line) {
-    throw new Error('No paragraph found')
+    return undefined
   }
   return line
 }

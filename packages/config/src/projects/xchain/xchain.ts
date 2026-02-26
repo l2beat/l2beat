@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('xchain')
 
 export const xchain: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1725235200), // 2024-09-02T00:00:00Z
+  archivedAt: UnixTime(1771582624),
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -38,6 +39,7 @@ export const xchain: ScalingProject = orbitStackL2({
     explorerUrl: 'https://xchain-explorer.idex.io',
     multicallContracts: [],
     sinceTimestamp: UnixTime.fromDate(new Date('2024-08-21T00:00:00Z')),
+    untilTimestamp: UnixTime(1771563600),
     apis: [
       { type: 'rpc', url: 'https://xchain-rpc.idex.io/', callsPerMinute: 300 },
       { type: 'blockscout', url: 'https://xchain-explorer.idex.io/api' },

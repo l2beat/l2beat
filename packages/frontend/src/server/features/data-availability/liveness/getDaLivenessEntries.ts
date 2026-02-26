@@ -15,7 +15,7 @@ import type {
 } from '../../scaling/liveness/types'
 import { getHasTrackedContractChanged } from '../../scaling/liveness/utils/getHasTrackedContractChanged'
 import { getLivenessSyncWarning } from '../../scaling/liveness/utils/isLivenessSynced'
-import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
@@ -30,7 +30,7 @@ export async function getDaLivenessEntries(): Promise<
     }),
     ps.getProjects({
       select: ['daBridge', 'statuses', 'trackedTxsConfig'],
-      optional: ['livenessInfo'],
+      optional: ['livenessInfo', 'contracts'],
     }),
   ])
 
@@ -83,7 +83,7 @@ function getDaLivenessEntry(
   layer: Project<'daLayer' | 'statuses'>,
   bridges: Project<
     'daBridge' | 'statuses' | 'trackedTxsConfig',
-    'livenessInfo'
+    'livenessInfo' | 'contracts'
   >[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   projectsChangeReport: ProjectsChangeReport,
@@ -108,8 +108,8 @@ function getDaLivenessEntry(
         slug: b.slug,
         href: `/data-availability/projects/${layer.slug}/${b.slug}#da-bridge-liveness`,
         statuses: {
-          verificationWarning: !getIsProjectVerified(
-            b.statuses.unverifiedContracts,
+          verificationWarnings: getProjectVerificationWarnings(
+            b,
             projectsChangeReport.getChanges(b.id),
           ),
           underReview:

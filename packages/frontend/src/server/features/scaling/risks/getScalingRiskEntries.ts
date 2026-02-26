@@ -23,7 +23,7 @@ export async function getScalingRiskEntries() {
         'display',
         'scalingTechnology',
       ],
-      optional: ['customDa', 'scalingDa'],
+      optional: ['customDa', 'scalingDa', 'contracts'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -60,7 +60,7 @@ function getScalingRiskEntry(
     | 'display'
     | 'scalingTechnology',
     // optional
-    'customDa' | 'scalingDa'
+    'customDa' | 'scalingDa' | 'contracts'
   >,
   changes: ProjectChanges,
   tvs: number | undefined,

@@ -28,5 +28,7 @@ export function BurnAndMintTable({
     },
   })
 
-  return <BasicTable table={table} tableWrapperClassName="pb-0" />
+  return (
+    <BasicTable table={table} tableWrapperClassName="pb-0 md:min-h-[210px]" />
+  )
 }

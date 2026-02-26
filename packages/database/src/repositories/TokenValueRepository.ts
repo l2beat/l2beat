@@ -32,6 +32,21 @@ interface SummedByTimestampTokenValueRecord {
   other: number
 }
 
+interface SummedByTimestampTokenValuePerProjectRecord {
+  projectId: string
+  timestamp: UnixTime
+  value: number
+  canonical: number
+  external: number
+  native: number
+  ether: number
+  stablecoin: number
+  btc: number
+  rwaRestricted: number
+  rwaPublic: number
+  other: number
+}
+
 export function toRecord(row: Selectable<TokenValue>): TokenValueRecord {
   return {
     ...row,
@@ -277,7 +292,7 @@ export class TokenValueRepository extends BaseRepository {
     }))
   }
 
-  async getSummedByTimestampWithProjectsRanges(
+  async getSummedByTimestampWithProjectsRangesPerProject(
     projectsWithRanges: {
       projectId: string
       sinceTimestamp: UnixTime
@@ -290,7 +305,7 @@ export class TokenValueRepository extends BaseRepository {
       excludeAssociated: boolean
       excludeRwaRestrictedTokens: boolean
     },
-  ): Promise<SummedByTimestampTokenValueRecord[]> {
+  ): Promise<SummedByTimestampTokenValuePerProjectRecord[]> {
     if (projectsWithRanges.length === 0) {
       return []
     }
@@ -301,6 +316,7 @@ export class TokenValueRepository extends BaseRepository {
       .selectFrom('TokenValue')
       .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
       .select((eb) => [
+        'TokenValue.projectId',
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
@@ -331,7 +347,7 @@ export class TokenValueRepository extends BaseRepository {
           }),
         ),
       )
-      .groupBy('TokenValue.timestamp')
+      .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
 
     if (fromInclusive) {
       query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
@@ -352,6 +368,7 @@ export class TokenValueRepository extends BaseRepository {
     const rows = await query.execute()
 
     return rows.map((row) => ({
+      projectId: row.projectId,
       timestamp: UnixTime.fromDate(row.timestamp),
       value: Number(row.value),
       canonical: Number(row.canonical),

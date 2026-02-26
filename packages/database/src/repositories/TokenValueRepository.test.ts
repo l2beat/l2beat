@@ -934,12 +934,12 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
 
     describe(
-      TokenValueRepository.prototype.getSummedByTimestampWithProjectsRanges
-        .name,
+      TokenValueRepository.prototype
+        .getSummedByTimestampWithProjectsRangesPerProject.name,
       () => {
         it('sums values by timestamp respecting each project time range', async () => {
           const result =
-            await repository.getSummedByTimestampWithProjectsRanges(
+            await repository.getSummedByTimestampWithProjectsRangesPerProject(
               [
                 {
                   projectId: 'ethereum',
@@ -963,6 +963,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
           expect(result).toEqualUnsorted([
             {
+              projectId: 'ethereum',
               timestamp: UnixTime(100),
               // Only ethereum tokens at timestamp 100
               value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25,
@@ -977,13 +978,27 @@ describeDatabase(TokenValueRepository.name, (db) => {
               other: 2400.5,
             },
             {
+              projectId: 'ethereum',
               timestamp: UnixTime(200),
-              // Ethereum (last included timestamp) + arbitrum (first included timestamp)
-              value: 16000.25 + 8000.5 + 6400.5,
+              value: 16000.25,
               canonical: 16000.25,
+              external: 0,
+              native: 0,
+              ether: 16000.25,
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 0,
+            },
+            {
+              projectId: 'arbitrum',
+              timestamp: UnixTime(200),
+              value: 8000.5 + 6400.5,
+              canonical: 0,
               external: 8000.5,
               native: 6400.5,
-              ether: 16000.25,
+              ether: 0,
               stablecoin: 0,
               btc: 0,
               rwaRestricted: 8000.5,
@@ -991,6 +1006,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               other: 0,
             },
             {
+              projectId: 'arbitrum',
               timestamp: UnixTime(300),
               // Only arbitrum tokens at timestamp 300 (ethereum range ended at 200)
               value: 20000.25,
@@ -1009,7 +1025,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         it('respects project ranges with no untilTimestamp', async () => {
           const result =
-            await repository.getSummedByTimestampWithProjectsRanges(
+            await repository.getSummedByTimestampWithProjectsRangesPerProject(
               [
                 {
                   projectId: 'ethereum',
@@ -1033,6 +1049,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
           expect(result).toEqualUnsorted([
             {
+              projectId: 'arbitrum',
               timestamp: UnixTime(100),
               // Only arbitrum at timestamp 100
               value: 12000.25,
@@ -1047,6 +1064,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               other: 0,
             },
             {
+              projectId: 'ethereum',
               timestamp: UnixTime(200),
               // Only ethereum at timestamp 200 (arbitrum range ended at 100)
               value: 16000.25,
@@ -1061,6 +1079,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               other: 0,
             },
             {
+              projectId: 'ethereum',
               timestamp: UnixTime(300),
               // Only ethereum (no untilTimestamp)
               value: 24000.25,
@@ -1079,7 +1098,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         it('filters by global time range with fromInclusive', async () => {
           const result =
-            await repository.getSummedByTimestampWithProjectsRanges(
+            await repository.getSummedByTimestampWithProjectsRangesPerProject(
               [
                 {
                   projectId: 'ethereum',
@@ -1101,12 +1120,27 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
           expect(result).toEqualUnsorted([
             {
+              projectId: 'ethereum',
               timestamp: UnixTime(200),
-              value: 16000.25 + 8000.5 + 6400.5,
+              value: 16000.25,
               canonical: 16000.25,
+              external: 0,
+              native: 0,
+              ether: 16000.25,
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 0,
+            },
+            {
+              projectId: 'arbitrum',
+              timestamp: UnixTime(200),
+              value: 8000.5 + 6400.5,
+              canonical: 0,
               external: 8000.5,
               native: 6400.5,
-              ether: 16000.25,
+              ether: 0,
               stablecoin: 0,
               btc: 0,
               rwaRestricted: 8000.5,
@@ -1114,12 +1148,27 @@ describeDatabase(TokenValueRepository.name, (db) => {
               other: 0,
             },
             {
+              projectId: 'ethereum',
               timestamp: UnixTime(300),
-              value: 24000.25 + 20000.25,
-              canonical: 24000.25 + 20000.25,
+              value: 24000.25,
+              canonical: 24000.25,
               external: 0,
               native: 0,
-              ether: 24000.25 + 20000.25,
+              ether: 24000.25,
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 0,
+            },
+            {
+              projectId: 'arbitrum',
+              timestamp: UnixTime(300),
+              value: 20000.25,
+              canonical: 20000.25,
+              external: 0,
+              native: 0,
+              ether: 20000.25,
               stablecoin: 0,
               btc: 0,
               rwaRestricted: 0,
@@ -1131,7 +1180,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         it('handles non-overlapping project ranges', async () => {
           const result =
-            await repository.getSummedByTimestampWithProjectsRanges(
+            await repository.getSummedByTimestampWithProjectsRangesPerProject(
               [
                 {
                   projectId: 'ethereum',
@@ -1155,6 +1204,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
           expect(result).toEqualUnsorted([
             {
+              projectId: 'ethereum',
               timestamp: UnixTime(100),
               // Only ethereum
               value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25,
@@ -1169,6 +1219,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               other: 2400.5,
             },
             {
+              projectId: 'arbitrum',
               timestamp: UnixTime(300),
               // Only arbitrum
               value: 20000.25,
@@ -1187,7 +1238,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         it('uses valueForSummary when forSummary is true', async () => {
           const result =
-            await repository.getSummedByTimestampWithProjectsRanges(
+            await repository.getSummedByTimestampWithProjectsRangesPerProject(
               [
                 {
                   projectId: 'ethereum',
@@ -1206,6 +1257,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
           expect(result).toEqualUnsorted([
             {
+              projectId: 'ethereum',
               timestamp: UnixTime(100),
               value: 5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5,
               canonical: 5000.25 + 10000.5 + 500.5,
@@ -1223,7 +1275,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         it('returns empty array when given empty projects array', async () => {
           const result =
-            await repository.getSummedByTimestampWithProjectsRanges(
+            await repository.getSummedByTimestampWithProjectsRangesPerProject(
               [],
               null,
               null,
@@ -1239,7 +1291,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         it('returns empty array when project ranges do not match any data', async () => {
           const result =
-            await repository.getSummedByTimestampWithProjectsRanges(
+            await repository.getSummedByTimestampWithProjectsRangesPerProject(
               [
                 {
                   projectId: 'ethereum',
@@ -1261,7 +1313,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
         it('excludes associated tokens when excludeAssociated is true', async () => {
           const result =
-            await repository.getSummedByTimestampWithProjectsRanges(
+            await repository.getSummedByTimestampWithProjectsRangesPerProject(
               [
                 {
                   projectId: 'ethereum',
@@ -1280,6 +1332,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
           expect(result).toEqualUnsorted([
             {
+              projectId: 'ethereum',
               timestamp: UnixTime(100),
               // Excludes token 'e' (associated token with valueForProject 800.25)
               value: 8000.5 + 16000.25 + 4000.75 + 2400.5, // a + b + c + d

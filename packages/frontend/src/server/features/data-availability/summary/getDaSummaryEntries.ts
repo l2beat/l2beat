@@ -21,7 +21,7 @@ import {
 } from '../../projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
 import type { LivenessResponse } from '../../scaling/liveness/types'
-import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
   getCommonDacDaEntry,
@@ -40,7 +40,10 @@ export async function getDaSummaryEntries(): Promise<
       select: ['daLayer', 'statuses'],
       whereNot: ['archivedAt'],
     }),
-    ps.getProjects({ select: ['daBridge', 'statuses'] }),
+    ps.getProjects({
+      select: ['daBridge', 'statuses'],
+      optional: ['contracts'],
+    }),
     ps.getProjects({
       select: ['customDa', 'statuses'],
       whereNot: ['archivedAt'],
@@ -114,7 +117,7 @@ export interface DaBridgeSummaryEntry
 
 function getDaSummaryEntry(
   layer: Project<'daLayer' | 'statuses'>,
-  bridges: Project<'daBridge' | 'statuses'>[],
+  bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
@@ -130,8 +133,8 @@ function getDaSummaryEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarning: !getIsProjectVerified(
-          b.statuses.unverifiedContracts,
+        verificationWarnings: getProjectVerificationWarnings(
+          b,
           projectsChangeReport.getChanges(b.id),
         ),
         underReview:

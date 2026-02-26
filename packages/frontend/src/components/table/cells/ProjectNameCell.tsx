@@ -69,16 +69,24 @@ export function ProjectNameCell({
             </TooltipContent>
           </Tooltip>
         )}
-        {project.statuses?.verificationWarning === true && (
-          <Tooltip>
-            <TooltipTrigger>
-              <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
-            </TooltipTrigger>
-            <TooltipContent>
-              This project contains unverified contracts.
-            </TooltipContent>
-          </Tooltip>
-        )}
+        {project.statuses?.verificationWarnings &&
+          Object.values(project.statuses.verificationWarnings).some(
+            (value) => value !== undefined,
+          ) && (
+            <Tooltip>
+              <TooltipTrigger>
+                <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
+              </TooltipTrigger>
+              <TooltipContent>
+                {project.statuses.verificationWarnings.contracts && (
+                  <p>{project.statuses.verificationWarnings.contracts}</p>
+                )}
+                {project.statuses.verificationWarnings.programHashes && (
+                  <p>{project.statuses.verificationWarnings.programHashes}</p>
+                )}
+              </TooltipContent>
+            </Tooltip>
+          )}
         {project.statuses?.redWarning && (
           <Tooltip>
             <TooltipTrigger>

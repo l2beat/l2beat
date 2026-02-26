@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
-import { formatNumber } from '~/utils/number-format/formatNumber'
+import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ProtocolsPieChart } from './ProtocolsPieChart'
 import type { DisplayProtocol } from './TopProtocolsWidget'
 
@@ -49,7 +49,7 @@ export function TopProtocolsByTransfersChart({
       containerWidth={containerWidth}
       center={{
         label: 'Transfers',
-        value: formatNumber(totalTransfers),
+        value: formatInteger(totalTransfers),
       }}
     />
   )

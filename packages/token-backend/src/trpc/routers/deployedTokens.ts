@@ -1,18 +1,29 @@
 import type { TokenDatabase } from '@l2beat/database'
+import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import fuzzysort from 'fuzzysort'
 import { Chain } from '../../chains/Chain'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
+import type { AbstractTokenRecord } from '../../schemas/AbstractToken'
 import { readOnlyProcedure } from '../procedures'
 import { router } from '../trpc'
 
 export interface DeployedTokensRouterDeps {
   coingeckoClient: CoingeckoClient
   etherscanApiKey: string | undefined
+  createChain?: (chainRecord: ChainRecord) => Chain
 }
 
 export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
-  const { coingeckoClient, etherscanApiKey } = deps
+  const {
+    coingeckoClient,
+    etherscanApiKey,
+    createChain = (chainRecord) =>
+      new Chain(chainRecord, {
+        etherscanApiKey,
+      }),
+  } = deps
 
   async function getCoinByChainAndAddress(
     db: TokenDatabase,
@@ -146,29 +157,22 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         const chainRecord = await ctx.db.chain.findByName(input.chain)
         assert(chainRecord, 'Chain not found')
 
-        const chain = new Chain(chainRecord, {
-          etherscanApiKey,
-        })
+        const chain = createChain(chainRecord)
 
         let decimals: number | undefined
+        let symbol: string | undefined
+        let symbolSource: 'rpc' | undefined
         if (chain.rpc) {
           try {
-            decimals = await chain.rpc.getDecimals(input.address)
+            const [rpcDecimals, rpcSymbol] = await Promise.all([
+              chain.rpc.getDecimals(input.address),
+              chain.rpc.getSymbol(input.address),
+            ])
+            decimals = rpcDecimals
+            symbol = rpcSymbol
+            symbolSource = 'rpc'
           } catch (error) {
             console.error(error)
-            return {
-              error: {
-                type: 'not-found-on-chain' as const,
-                message: 'Token not found on chain',
-              },
-              data: {
-                symbol: undefined,
-                otherChains: undefined,
-                decimals: undefined,
-                deploymentTimestamp: undefined,
-                abstractTokenId: undefined,
-              },
-            }
           }
         }
 
@@ -203,18 +207,30 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
           input.address,
         )
         if (coin === null) {
+          let abstractTokenSuggestions: AbstractTokenSuggestion[] | undefined
+          if (symbol) {
+            const allAbstractTokens = await ctx.db.abstractToken.getAll()
+            abstractTokenSuggestions = findSimilarAbstractTokens(
+              symbol,
+              allAbstractTokens,
+              5,
+            )
+          }
+
           return {
             error: {
               type: 'not-found-on-coingecko' as const,
               message: 'Coin not found on Coingecko',
             },
             data: {
-              symbol: undefined,
+              symbol,
+              symbolSource,
               suggestions: undefined,
               decimals,
               deploymentTimestamp,
               abstractTokenId: undefined,
               coingeckoId: undefined,
+              abstractTokenSuggestions,
             },
           }
         }
@@ -226,12 +242,14 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         return {
           error: undefined,
           data: {
-            symbol: coin.symbol,
+            symbol: symbol ?? coin.symbol,
+            symbolSource: symbolSource ?? 'coingecko',
             decimals,
             deploymentTimestamp,
             abstractTokenId: abstractToken?.id,
             suggestions: coin.suggestions,
             coingeckoId: coin.id,
+            abstractTokenSuggestions: undefined,
           },
         }
       }),
@@ -294,4 +312,62 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         return suggestions
       }),
   })
+}
+
+type AbstractTokenSuggestion = Pick<
+  AbstractTokenRecord,
+  'id' | 'symbol' | 'issuer'
+>
+
+function findSimilarAbstractTokens(
+  deployedSymbol: string,
+  abstractTokens: AbstractTokenRecord[],
+  limit: number,
+): AbstractTokenSuggestion[] {
+  // Forward: deployed symbol as query against abstract token symbols
+  // Handles exact matches and when deployed symbol is shorter
+  const forward = fuzzysort.go(deployedSymbol, abstractTokens, {
+    key: (e) => e.symbol,
+    limit,
+  })
+
+  // Reverse: each abstract symbol as query against deployed symbol
+  // Handles cases like USDC.e -> USDC where deployed symbol has a suffix
+  // or WETH -> ETH where deployed symbol has a prefix
+  const reverse = abstractTokens
+    .map((t) => {
+      const result = fuzzysort.single(t.symbol, deployedSymbol)
+      if (result === null) return undefined
+      return {
+        token: t,
+        result,
+      }
+    })
+    .filter((x) => x !== undefined)
+    .sort((a, b) => b.result.score - a.result.score)
+    .slice(0, limit)
+
+  // Merge and deduplicate, preferring higher scores
+  const seen = new Map<
+    string,
+    { token: (typeof abstractTokens)[number]; score: number }
+  >()
+  for (const r of forward) {
+    seen.set(r.obj.id, { token: r.obj, score: r.score })
+  }
+  for (const r of reverse) {
+    const existing = seen.get(r.token.id)
+    if (!existing || r.result.score > existing.score) {
+      seen.set(r.token.id, { token: r.token, score: r.result.score })
+    }
+  }
+
+  return [...seen.values()]
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((r) => ({
+      id: r.token.id,
+      symbol: r.token.symbol,
+      issuer: r.token.issuer,
+    }))
 }

@@ -123,6 +123,8 @@ export interface ZkStackConfigCommon {
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   interopConfig?: InteropConfig
+  // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
+  zkVerifierContractsReproducible?: boolean
 }
 
 export type Upgradeability = {
@@ -399,10 +401,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
                 securityCouncilProperlySetUp: true,
-                noRedTrustedSetups: null,
-                programHashesReproducible: null,
-                proverSourcePublished: null,
-                verifierContractsReproducible: null,
+                noRedTrustedSetups: true,
+                programHashesReproducible:
+                  programHashesReproducible(l2BootloaderHash),
+                proverSourcePublished: true,
+                verifierContractsReproducible:
+                  templateVars.zkVerifierContractsReproducible ?? null,
               },
               stage2: {
                 proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -715,4 +719,11 @@ function getDaTracking(
   }
 
   return undefined
+}
+
+function programHashesReproducible(l2BootloaderHash: string): boolean | null {
+  const vStatus = PROGRAM_HASHES(l2BootloaderHash).verificationStatus
+  if (vStatus === 'unsuccessful') return false
+  if (vStatus === 'successful') return true
+  return null
 }

@@ -28,6 +28,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
   {
     id: 'optimism',
     name: 'OP Mainnet',
+    iconSlug: 'op-mainnet',
     type: 'evm',
     display: 'OP',
   },
@@ -66,10 +67,52 @@ export const INTEROP_CHAINS: InteropChain[] = [
   },
   {
     id: 'bsc',
-    iconSlug: 'bsc',
     name: 'BNB Smart Chain',
     type: 'evm',
     display: 'BSC',
+  },
+  {
+    id: 'solana',
+    name: 'Solana',
+    type: 'evm',
+    display: 'SOL',
+  },
+  {
+    id: 'starknet',
+    name: 'Starknet',
+    type: 'evm',
+    display: 'STRK',
+  },
+  {
+    id: 'ink',
+    name: 'Ink',
+    type: 'evm',
+    display: 'INK',
+  },
+  {
+    id: 'megaeth',
+    name: 'MegaETH',
+    type: 'evm',
+    display: 'MEGA',
+  },
+  {
+    id: 'worldchain',
+    iconSlug: 'world',
+    name: 'World Chain',
+    type: 'evm',
+    display: 'WORLD',
+  },
+  {
+    id: 'celo',
+    name: 'Celo',
+    type: 'evm',
+    display: 'CELO',
+  },
+  {
+    id: 'unichain',
+    name: 'Unichain',
+    type: 'evm',
+    display: 'UNI',
   },
   {
     id: 'forknet',

@@ -1187,6 +1187,26 @@
     },
     {
       "mode": "auto",
+      "id": "base-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1689552000,
+        "untilTimestamp": 1742428800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-FORT",
       "priceId": "forta",
       "symbol": "FORT",
@@ -2784,41 +2804,8 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
-      "id": "base-sUSDS",
-      "priceId": "susds",
-      "symbol": "sUSDS",
-      "name": "Savings USDS",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
-      "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-            "chain": "ethereum",
-            "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-            "decimals": 18,
-            "sinceTimestamp": 1734048000
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-            "chain": "ethereum",
-            "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
-            "decimals": 18,
-            "sinceTimestamp": 1734048000
-          }
-        ]
-      },
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
       "mode": "custom",
-      "id": "base-sUSDS-2",
+      "id": "base-sUSDS",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
@@ -3095,6 +3082,26 @@
     },
     {
       "mode": "auto",
+      "id": "base-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1706918400,
+        "untilTimestamp": 1742169600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-TYBG",
       "priceId": "base-god",
       "symbol": "TYBG",
@@ -3262,41 +3269,8 @@
       }
     },
     {
-      "mode": "auto",
-      "id": "base-USDS",
-      "priceId": "usds",
-      "symbol": "USDS",
-      "name": "USDS Stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
-      "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-            "chain": "ethereum",
-            "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-            "decimals": 18,
-            "sinceTimestamp": 1727136000
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-            "chain": "ethereum",
-            "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
-            "decimals": 18,
-            "sinceTimestamp": 1728571115
-          }
-        ]
-      },
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
       "mode": "custom",
-      "id": "base-USDS-2",
+      "id": "base-USDS",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",

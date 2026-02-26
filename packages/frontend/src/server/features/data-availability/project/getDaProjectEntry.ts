@@ -17,7 +17,8 @@ import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
-import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
+import type { ProjectVerificationWarnings } from '../../utils/getCommonProjectEntry'
+import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaProjectEconomicSecurity } from './utils/getDaProjectEconomicSecurity'
@@ -51,7 +52,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
   bridges: {
     name: string
     slug: string
-    verificationWarning?: boolean
+    verificationWarnings?: ProjectVerificationWarnings
     impactfulChangeWarning?: boolean
     isNoBridge: boolean
     grissiniValues: RosetteValue[]
@@ -194,8 +195,8 @@ export async function getDaProjectEntry(
     bridges: bridges.map((bridge) => ({
       name: bridge.daBridge.name,
       slug: bridge.slug,
-      verificationWarning: !getIsProjectVerified(
-        bridge.statuses.unverifiedContracts,
+      verificationWarnings: getProjectVerificationWarnings(
+        bridge,
         projectsChangeReport.getChanges(bridge.id),
       ),
       impactfulChangeWarning: projectsChangeReport.getChanges(bridge.id)
@@ -256,7 +257,7 @@ export async function getDaProjectEntry(
     result.bridges.unshift({
       slug: 'no-bridge',
       isNoBridge: true,
-      verificationWarning: false,
+      verificationWarnings: undefined,
       grissiniValues: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       name: 'No DA Bridge',
       tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)).latest,

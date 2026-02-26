@@ -19,16 +19,12 @@ import { getTokensData } from './utils/getTokensData'
 
 export async function getInteropProtocolTokens({
   id,
-  selectedChainsIds: selectedChains,
+  from,
+  to,
   type,
 }: InteropProtocolTokensParams): Promise<TokenData[]> {
   const logger = getLogger().for('getProtocolTokens')
   const db = getDb()
-
-  const [firstChain, secondChain] = selectedChains
-  if (!firstChain || !secondChain) {
-    return []
-  }
 
   const interopProject = await ps.getProject({
     id,
@@ -44,20 +40,33 @@ export async function getInteropProtocolTokens({
     return []
   }
 
-  const [counts, tokens] = await Promise.all([
-    await db.aggregatedInteropTransfer.getSummedTransferCountsByChainsIdAndTimestamp(
+  const [transfers, tokens] = await Promise.all([
+    db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      [firstChain, secondChain],
+      from,
+      to,
       type,
     ),
     db.aggregatedInteropToken.getByChainsIdAndTimestamp(
       latestTimestamp,
       id,
-      [firstChain, secondChain],
+      from,
+      to,
       type,
     ),
   ])
+
+  const counts = {
+    transferCount: transfers.reduce(
+      (acc, transfer) => acc + transfer.transferCount,
+      0,
+    ),
+    identifiedCount: transfers.reduce(
+      (acc, transfer) => acc + transfer.identifiedCount,
+      0,
+    ),
+  }
 
   const abstractTokenIds = unique(tokens.map((token) => token.abstractTokenId))
   const transfersTimeModeMap = buildTransfersTimeModeMap([interopProject])

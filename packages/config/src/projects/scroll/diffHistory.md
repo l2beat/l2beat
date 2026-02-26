@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x69d76a30c2c03488ab23d607388cc37980c49b64
+
+# Diff at Mon, 23 Feb 2026 14:45:29 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@223ad9100b05447b13e88b350a283f0fcdd967a4 block: 1770994456
+- current timestamp: 1771857557
+
+## Description
+
+Emergency upgrade: ZkEvmVerifierPostFeynman replaced at index 9 of MultipleVersionRollupVerifier due to a bug in the guest prover program. Old verifier 0x4F43... deleted, new verifier 0x0dE1... created with identical source code but updated verifierDigest (verification key update).
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.9.verifier:
+-        "eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181"
++        "eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostFeynman (eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...erifierPostFeynman-eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82.sol} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+```
+
 Generated with discovered.json: 0x294b7c0fa7408abc9a6ff5f18b126c6b745ae954
 
 # Diff at Tue, 10 Feb 2026 15:13:37 GMT:

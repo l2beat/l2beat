@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xd3e68d4b47dead09f4ad60d2ddaefe329eed3aa0
+
+# Diff at Mon, 23 Feb 2026 14:40:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@223ad9100b05447b13e88b350a283f0fcdd967a4 block: 1771495900
+- current timestamp: 1771857552
+
+## Description
+
+Caldera signer rotation: one member removed from Caldera Multisig 2 and threshold increased from 2 to 3, changing from "2 of 7 (29%)" to "3 of 6 (50%)".
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.4:
+-        "base:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 7 (29%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xdb474c11fb5b60f86be269a879a790ab615773b4
+
+# Diff at Thu, 19 Feb 2026 10:12:45 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2b96f087639b90912cc82e06e34e7b0beefda5ab block: 1770993136
+- current timestamp: 1771495900
+
+## Description
+
+One member removed from the Caldera Multisig 2, reducing signers from 8 to 7. Threshold remains at 2.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      values.$members.4:
+-        "base:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675"
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "2 of 7 (29%)"
+    }
+```
+
 Generated with discovered.json: 0x8eb1c71fc5229c00dda64e88f61ae6496d961ef9
 
 # Diff at Fri, 13 Feb 2026 14:33:22 GMT:

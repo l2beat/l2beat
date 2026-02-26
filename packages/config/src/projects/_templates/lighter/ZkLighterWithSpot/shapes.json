@@ -25,5 +25,14 @@
     ],
     "chain": "ethereum",
     "blockNumber": 24447047
+  },
+  "Lighter_Feb17_2026": {
+    "hash": "0xb28249d5dff85a357d4365eb463ef3eb2778445cefe5c663c7966dce55b8c2a0",
+    "address": [
+      "eth:0xdC2877f6C162991B47fC5f7Cc50F85c084B9B408",
+      "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 24480000
   }
 }

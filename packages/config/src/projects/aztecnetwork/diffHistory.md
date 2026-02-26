@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x66b1aa14ba13d1e6d8f56a79f297a6bf0dc329cf
+
+# Diff at Fri, 20 Feb 2026 20:44:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@3edf2b3bacf84cf46a7d5d7c744851af89730742 block: 1771254730
+- current timestamp: 1771254730
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771254730 (main branch discovery), not current.
+
+```diff
+    contract AZTEC Token (eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2) {
+    +++ description: AZTEC token contract
+      name:
+-        "Aztec"
++        "AZTEC Token"
+    }
+```
+
 Generated with discovered.json: 0xd11bc141182aa6d49b30900edad6f62b44bda83c
 
 # Diff at Mon, 16 Feb 2026 15:13:21 GMT:

@@ -1,4 +1,56 @@
-Generated with discovered.json: 0x6c462e0a412c212e829379018116cad1f54d410d
+Generated with discovered.json: 0x4f9e21a0a476eba6ffde6572aa2a08a9b6cb1b2b
+
+# Diff at Wed, 25 Feb 2026 16:55:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@402347c3c0dd537c0ffd73d6a66e4df81d45dc08 block: 1771583051
+- current timestamp: 1772038465
+
+## Description
+
+Scheduled proposals for execution: https://www.tally.xyz/gov/zksync/proposal/8950122199701470735770347707974232219581467243459743675708682806836533533051?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746, https://www.tally.xyz/gov/zksync/proposal/52899273737246738438218414127099712652047337592218084212368843786372445167418?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746, https://www.tally.xyz/gov/zksync/proposal/11346651454708934944378630759545485178332596023788781976003544088664832214798?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        12
++        15
+    }
+```
+
+Generated with discovered.json: 0x11e63b7ec0a1cd9c4fae6e9d2d5ea64321fae956
+
+# Diff at Fri, 20 Feb 2026 10:25:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@21902f5765b5386e38d868a47fc71a5d69793f8f block: 1771493033
+- current timestamp: 1771583051
+
+## Description
+
+Config-related changes changed code hash for one zksync contract. Template changed, here is the code diff between two contracts from these templates: https://disco.l2beat.com/diff/zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC/eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d.
+
+No real change onchain.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771493033 (main branch discovery), not current.
+
+```diff
+    contract ZkTokenProxyAdmin (zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
++        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+    }
+```
+
+Generated with discovered.json: 0xfc0df7de78ccec90060622d5ff203bd7fb8bb5b6
 
 # Diff at Mon, 16 Feb 2026 14:22:19 GMT:
 

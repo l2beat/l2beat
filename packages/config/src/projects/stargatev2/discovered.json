@@ -1,6 +1,6 @@
 {
   "name": "stargatev2",
-  "timestamp": 1770041060,
+  "timestamp": 1772088067,
   "configHash": "0x0bc67cdd491c4acb119bb91559b0252489da90e9045bbf48eb509458d0840599",
   "entries": [
     {
@@ -91,15 +91,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150",
         "planner": "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "18773978988154252",
-        "poolBalance": "2689314980000000000000",
+        "plannerFee": "196365435371516071",
+        "poolBalance": "3875959489000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "arb1:0x0000000000000000000000000000000000000000",
         "treasurer": "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
-        "treasuryFee": 92162801,
-        "tvl": "68457144000000000000"
+        "treasuryFee": 103489253,
+        "tvl": "61266598000000000000"
       },
       "implementationNames": {
         "arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F": "StargatePoolNative"
@@ -145,15 +145,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150",
         "planner": "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "33191758388827902",
-        "poolBalance": 48590176826,
+        "plannerFee": "51235561069715229",
+        "poolBalance": 98175359474,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "arb1:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
         "treasurer": "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
-        "treasuryFee": 103514428650,
-        "tvl": 43968631642
+        "treasuryFee": 103883543705,
+        "tvl": 43948511004
       },
       "implementationNames": {
         "arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": "StargatePoolMigratable"
@@ -223,15 +223,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "arb1:0x184257d5b9e25A12D1dCafB697bFAaFE0F5CA150",
         "planner": "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "99514972852282465",
-        "poolBalance": 6863601118496,
+        "plannerFee": "180828474320199910",
+        "poolBalance": 4934124101754,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "treasurer": "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
-        "treasuryFee": 393724022580,
-        "tvl": 117295997725
+        "treasuryFee": 398019271242,
+        "tvl": 116380774654
       },
       "implementationNames": {
         "arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": "StargatePoolUSDC"
@@ -276,15 +276,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D",
         "planner": "base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "660107941804130829",
-        "poolBalance": 4657301771332,
+        "plannerFee": "790664997292001350",
+        "poolBalance": 7364635892661,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
         "treasurer": "base:0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7",
-        "treasuryFee": 330338362426,
-        "tvl": 72479071659
+        "treasuryFee": 334774475055,
+        "tvl": 55634720804
       },
       "implementationNames": {
         "base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26": "StargatePoolUSDC"
@@ -388,15 +388,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "base:0x7c20d58Cb9f3F3CF73b79a3fBDA3fFf412D7D82D",
         "planner": "base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "697440399423341041",
-        "poolBalance": "2066329547000000000000",
+        "plannerFee": "118049694008451509",
+        "poolBalance": "1970231741000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "base:0x0000000000000000000000000000000000000000",
         "treasurer": "base:0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7",
-        "treasuryFee": 108185804,
-        "tvl": "168143112000000000000"
+        "treasuryFee": 110022200,
+        "tvl": "167541562000000000000"
       },
       "implementationNames": {
         "base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7": "StargatePoolNative"
@@ -490,7 +490,11 @@
       "name": "LayerZero Executor",
       "address": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
       "type": "Contract",
-      "unverified": true,
+      "template": "layerzero/LayerZeroExecutor",
+      "sourceHashes": [
+        "0x4a43bdaa7c21f911802bc9e3457cf5fef469f43b372ea6944d53823caf2f53f2",
+        "0x6e8f82f43688d48f99f42fc176fd1250c7e5b217d551c5482e0dd168744017bf"
+      ],
       "proxyType": "EIP1967 proxy",
       "description": "Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint.",
       "receivedPermissions": [
@@ -523,11 +527,20 @@
             ["eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"]
           ]
         ],
-        "$upgradeCount": 3
+        "$upgradeCount": 3,
+        "allowlistSize": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultMultiplierBps": 12000,
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "localEidV2": 30101,
+        "paused": false,
+        "priceFeed": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+        "receiveUln301": "eth:0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC",
+        "workerFeeLib": "eth:0x4e9C57FD2Bd0f47C43F2D62642C1b05894fb9ed0"
       },
       "implementationNames": {
         "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": "OptimizedTransparentUpgradeableProxy",
-        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805": ""
+        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805": "Executor"
       }
     },
     {
@@ -646,7 +659,7 @@
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": "22656146114358113",
-        "poolBalance": "526306914000000000000",
+        "poolBalance": "467050255000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
@@ -901,15 +914,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "67529807577669512",
-        "poolBalance": "3735428379000000000000",
+        "plannerFee": "101383324278899290",
+        "poolBalance": "1974334852000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0x0000000000000000000000000000000000000000",
         "treasurer": "eth:0x1041D127b2d4BC700F0F563883bC689502606918",
-        "treasuryFee": 39988281,
-        "tvl": "221536711000000000000"
+        "treasuryFee": 41277356,
+        "tvl": "216395111000000000000"
       },
       "implementationNames": {
         "eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": "StargatePoolNative"
@@ -956,7 +969,7 @@
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "plannerFee": 0,
-        "poolBalance": 0,
+        "poolBalance": 11004300000,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
@@ -1019,14 +1032,14 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "196931971827241172",
-        "poolBalance": 1771983632761,
+        "plannerFee": "201267578179069176",
+        "poolBalance": 1885230062991,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "treasurer": "eth:0x1041D127b2d4BC700F0F563883bC689502606918",
-        "treasuryFee": 103328711198,
+        "treasuryFee": 122513532655,
         "tvl": 19664969878
       },
       "implementationNames": {
@@ -1338,7 +1351,7 @@
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 38,
+        "nonce": 59,
         "ONE_SIG_ID": 30101,
         "seed": "0x7fc77f9996dcec5457f6b2911fdeffc01f0fbc4e9ee1a4100979d004ea0709e6",
         "totalExecutors": 1,
@@ -1393,14 +1406,14 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "eth:0xBE634B030FEAaB661300667EaF82510a3a025413",
         "planner": "eth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "936184242341689904",
-        "poolBalance": 12483428679471,
+        "plannerFee": "947838777530853451",
+        "poolBalance": 6389633297361,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "treasurer": "eth:0x1041D127b2d4BC700F0F563883bC689502606918",
-        "treasuryFee": 70961729100,
+        "treasuryFee": 84995514891,
         "tvl": 11344561438105
       },
       "implementationNames": {
@@ -1649,15 +1662,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "linea:0xD37bA986553f7ac25BdF9867A60b10ebf182E51e",
         "planner": "linea:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "891663295937257576",
-        "poolBalance": "1488266172000000000000",
+        "plannerFee": "932027130939759628",
+        "poolBalance": "651745902000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "linea:0x0000000000000000000000000000000000000000",
         "treasurer": "linea:0xf5F74d2508e97A3a7CCA2ccb75c8325D66b46152",
-        "treasuryFee": 48790115,
-        "tvl": "116910340000000000000"
+        "treasuryFee": 48948316,
+        "tvl": "113025450000000000000"
       },
       "implementationNames": {
         "linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075": "StargatePoolNative"
@@ -1721,15 +1734,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "oeth:0xec230013182261343F235B8c92b443f90A8A3c86",
         "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "860776152556242423",
-        "poolBalance": 577129520540,
+        "plannerFee": "864322955896431813",
+        "poolBalance": 434105614076,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "oeth:0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
         "treasurer": "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9",
-        "treasuryFee": 26444494222,
-        "tvl": 15497424873
+        "treasuryFee": 26492298370,
+        "tvl": 8073667474
       },
       "implementationNames": {
         "oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD": "StargatePoolMigratable"
@@ -1774,15 +1787,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "oeth:0xec230013182261343F235B8c92b443f90A8A3c86",
         "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "453723931297392475",
-        "poolBalance": 4847103149606,
+        "plannerFee": "461399556588980710",
+        "poolBalance": 4897916701316,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "oeth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
         "treasurer": "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9",
-        "treasuryFee": 61322448037,
-        "tvl": 1387615911117
+        "treasuryFee": 61543607465,
+        "tvl": 1387513925739
       },
       "implementationNames": {
         "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": "StargatePoolUSDC"
@@ -1851,15 +1864,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "oeth:0xec230013182261343F235B8c92b443f90A8A3c86",
         "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "715106969744124027",
-        "poolBalance": "3030964267000000000000",
+        "plannerFee": "753186632095296578",
+        "poolBalance": "2656683865000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "oeth:0x0000000000000000000000000000000000000000",
         "treasurer": "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9",
-        "treasuryFee": 48084421,
-        "tvl": "870670845000000000000"
+        "treasuryFee": 50397734,
+        "tvl": "867225769000000000000"
       },
       "implementationNames": {
         "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": "StargatePoolNative"
@@ -1959,14 +1972,14 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "scr:0xe46B47Be62785C20C6f3cb89f7043Ea045e6f88E",
         "planner": "scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "781010518988141416",
-        "poolBalance": 14883418081020,
+        "plannerFee": "759863189355340251",
+        "poolBalance": 11106669863178,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
         "treasurer": "scr:0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
-        "treasuryFee": 94774710968,
+        "treasuryFee": 116420160075,
         "tvl": 18151707012
       },
       "implementationNames": {
@@ -2061,15 +2074,15 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "scr:0xe46B47Be62785C20C6f3cb89f7043Ea045e6f88E",
         "planner": "scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-        "plannerFee": "245745194784900431",
-        "poolBalance": "432467899000000000000",
+        "plannerFee": "257081190991678348",
+        "poolBalance": "172572508000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "scr:0x0000000000000000000000000000000000000000",
         "treasurer": "scr:0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
-        "treasuryFee": 32991515,
-        "tvl": "17579761000000000000"
+        "treasuryFee": 33012985,
+        "tvl": "17508499000000000000"
       },
       "implementationNames": {
         "scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583": "StargatePoolNative"
@@ -3970,6 +3983,64 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
+    "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805": [
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "error Worker_NotAllowed()",
+      "error Worker_OnlyMessageLib()",
+      "error Worker_RoleRenouncingDisabled()",
+      "event DstConfigSet(tuple(uint32 dstEid, uint64 lzReceiveBaseGas, uint64 lzComposeBaseGas, uint16 multiplierBps, uint128 floorMarginUSD, uint128 nativeCap)[] params)",
+      "event Initialized(uint8 version)",
+      "event NativeDropApplied(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, uint32 dstEid, address oapp, tuple(address receiver, uint256 amount)[] params, bool[] success)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetDefaultMultiplierBps(uint16 multiplierBps)",
+      "event SetPriceFeed(address priceFeed)",
+      "event SetSupportedOptionTypes(uint32 dstEid, uint8[] optionTypes)",
+      "event SetWorkerLib(address workerLib)",
+      "event Unpaused(address account)",
+      "event Withdraw(address lib, address to, uint256 amount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function allowlistSize() view returns (uint64)",
+      "function assignJob(uint32 _dstEid, address _sender, uint256 _calldataSize, bytes _options) returns (uint256 fee)",
+      "function assignJob(address _sender, bytes _options) returns (uint256 fee)",
+      "function compose302(address _from, address _to, bytes32 _guid, uint16 _index, bytes _message, bytes _extraData, uint256 _gasLimit) payable",
+      "function defaultMultiplierBps() view returns (uint16)",
+      "function dstConfig(uint32 dstEid) view returns (uint64 lzReceiveBaseGas, uint16 multiplierBps, uint128 floorMarginUSD, uint128 nativeCap, uint64 lzComposeBaseGas)",
+      "function endpoint() view returns (address)",
+      "function execute301(bytes _packet, uint256 _gasLimit)",
+      "function execute302(tuple(address receiver, tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, bytes32 guid, bytes message, bytes extraData, uint256 gasLimit) _executionParams) payable",
+      "function getFee(uint32 _dstEid, address _sender, uint256 _calldataSize, bytes _options) view returns (uint256 fee)",
+      "function getFee(address _sender, bytes _options) view returns (uint256 fee)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getSupportedOptionTypes(uint32 _eid) view returns (uint8[])",
+      "function grantRole(bytes32 role, address account)",
+      "function hasAcl(address _sender) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _endpoint, address _receiveUln301, address[] _messageLibs, address _priceFeed, address _roleAdmin, address[] _admins)",
+      "function localEidV2() view returns (uint32)",
+      "function nativeDrop(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, uint32 _dstEid, address _oapp, tuple(address receiver, uint256 amount)[] _nativeDropParams, uint256 _nativeDropGasLimit) payable",
+      "function nativeDropAndExecute301(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, tuple(address receiver, uint256 amount)[] _nativeDropParams, uint256 _nativeDropGasLimit, bytes _packet, uint256 _gasLimit) payable",
+      "function nativeDropAndExecute302(tuple(address receiver, uint256 amount)[] _nativeDropParams, uint256 _nativeDropGasLimit, tuple(address receiver, tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, bytes32 guid, bytes message, bytes extraData, uint256 gasLimit) _executionParams) payable",
+      "function onUpgrade(address _receiveUln301)",
+      "function paused() view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function receiveUln301() view returns (address)",
+      "function renounceRole(bytes32, address) pure",
+      "function revokeRole(bytes32 role, address account)",
+      "function setDefaultMultiplierBps(uint16 _multiplierBps)",
+      "function setDstConfig(tuple(uint32 dstEid, uint64 lzReceiveBaseGas, uint64 lzComposeBaseGas, uint16 multiplierBps, uint128 floorMarginUSD, uint128 nativeCap)[] _params)",
+      "function setPaused(bool _paused)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setSupportedOptionTypes(uint32 _eid, uint8[] _optionTypes)",
+      "function setWorkerFeeLib(address _workerFeeLib)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function withdrawFee(address _lib, address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)",
+      "function workerFeeLib() view returns (address)"
+    ],
     "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD": [
       "constructor(address _endpoint, address _owner, uint16 _queueCapacity)",
       "error BusCodec_InvalidBusBytesLength()",
@@ -4770,6 +4841,7 @@
     "layerzero/BlockedMessageLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "layerzero/DVN": "0x7e32d155099463e0fda9ec88f537f011145ca152add753ebb469484a9c01c391",
     "layerzero/EndpointV2": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "layerzero/LayerZeroExecutor": "0x4c43c18e37be06b94b24a05a820a5fb26dbf23cce63bf20d4217cf905b5ad81b",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861",
     "layerzero/ReadLib1002": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
@@ -4783,12 +4855,12 @@
     "stargate/Treasurer": "0x893e4b5c910be84ccc45d870bef75de4b3fc748040df291137faab3705c83c24"
   },
   "usedBlockNumbers": {
-    "arbitrum": 427865208,
-    "base": 41625856,
-    "ethereum": 24369650,
-    "linea": 28556394,
-    "optimism": 147221141,
-    "scroll": 29295887
+    "arbitrum": 436082231,
+    "base": 42649360,
+    "ethereum": 24539360,
+    "linea": 29195708,
+    "optimism": 148244645,
+    "scroll": 30826100
   },
   "permissionsConfigHash": "0x0593d5ba00e06e9461f377a9c2441bfa6272b65ccb7985d5dc38cdfd784825f6"
 }

@@ -1,8 +1,9 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { interopDescriptions } from '~/pages/interop/descriptions'
 
 export function HeaderWithDescription() {
   return (
-    <MainPageHeader description="One-sided risk. If user bridge back, the original tokens are unlocked and the bridge risk is removed.">
+    <MainPageHeader description={interopDescriptions.lockAndMint}>
       Lock & Mint Protocols
     </MainPageHeader>
   )

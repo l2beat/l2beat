@@ -1,18 +1,22 @@
-import type { InteropSelectedChains } from './InteropSelectedChainsContext'
+import type { InteropMode, InteropSelection } from './types'
 
 export function buildInteropUrl(
   path: string,
-  selectedChains?: InteropSelectedChains,
+  selection: InteropSelection,
+  mode: InteropMode,
 ): string {
-  if (!selectedChains || !selectedChains.first || !selectedChains.second) {
-    return path
-  }
-
   const params = new URLSearchParams()
-  params.set(
-    'selectedChains',
-    [selectedChains.first.id, selectedChains.second.id].join(','),
-  )
+
+  if (mode === 'public') {
+    if (selection.from.length !== 1 || selection.to.length !== 1) {
+      return path
+    }
+
+    params.set('selectedChains', [selection.from[0], selection.to[0]].join(','))
+  } else {
+    params.set('from', selection.from.join(','))
+    params.set('to', selection.to.join(','))
+  }
 
   return params.size > 0 ? `${path}?${params.toString()}` : path
 }

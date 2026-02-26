@@ -6,11 +6,12 @@ import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLin
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
+import { FilledArrowIcon } from '~/icons/FilledArrow'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TechStackCell } from '../../../components/TechStackCell'
-import { TrustedSetupCellTooltip } from '../../../components/TrustedSetupCell'
+import { TrustedSetupCell } from '../../../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../../../components/VerifiedCountWithDetails'
 
 interface Props {
@@ -71,10 +72,7 @@ export function TrustedSetupsByProofSystemSection({
 
             return (
               <div key={key} className="flex flex-col gap-3">
-                <TrustedSetupCellTooltip
-                  trustedSetups={trustedSetups}
-                  dotSize="lg"
-                />
+                <TrustedSetupCell trustedSetups={trustedSetups} dotSize="lg" />
                 <div className="grid grid-cols-[200px_1fr] gap-1">
                   {projectsUsedIn && (
                     <div className="flex flex-col gap-2">
@@ -111,7 +109,7 @@ export function TrustedSetupsByProofSystemSection({
                 return (
                   <tr key={key} className="h-8 align-middle">
                     <td>
-                      <TrustedSetupCellTooltip
+                      <TrustedSetupCell
                         trustedSetups={trustedSetups}
                         dotSize="lg"
                       />
@@ -153,16 +151,40 @@ function TechStackSection({
 }: {
   techStack: ProjectZkCatalogInfo['techStack']
 }) {
+  const { finalWrap, zkVM, snark } = techStack
+
+  const leftSideEmpty = !(zkVM?.length || snark?.length)
+  const rightSideEmpty = !finalWrap?.length
+
   return (
     <div className="mt-3 flex flex-col gap-2">
       <h2 className="font-semibold text-subtitle-12 uppercase">Tech Stack</h2>
-      <div className="rounded-sm border-divider md:border md:p-4">
-        <TechStackCell
-          techStack={techStack}
-          className="flex flex-row flex-wrap py-0 max-md:flex-col md:gap-6"
-          labelClassName="text-2xs mb-1.5"
-          tagWrapperClassName="flex-wrap"
-        />
+      <div className="flex gap-2 rounded-sm border-divider max-md:flex-col md:items-end md:border md:p-4">
+        {!leftSideEmpty && (
+          <div className="flex flex-col">
+            <span className="font-medium text-label-value-12 text-secondary">
+              zkVM
+            </span>
+            <TechStackCell
+              tags={[...(techStack.zkVM ?? []), ...(techStack.snark ?? [])]}
+              className="flex-wrap md:min-w-fit"
+            />
+          </div>
+        )}
+        {!leftSideEmpty && !rightSideEmpty && (
+          <FilledArrowIcon className="mb-2.5 fill-secondary max-md:hidden" />
+        )}
+        {!rightSideEmpty && (
+          <div className="flex flex-col">
+            <span className="font-medium text-label-value-12 text-secondary">
+              Final wrap
+            </span>
+            <TechStackCell
+              tags={techStack.finalWrap ?? []}
+              className="flex-wrap"
+            />
+          </div>
+        )}
       </div>
     </div>
   )

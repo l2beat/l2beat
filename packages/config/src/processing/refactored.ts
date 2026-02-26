@@ -27,6 +27,7 @@ import { layerzero } from '../projects/layerzero/layerzero'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
+import { mayan } from '../projects/mayan/mayan'
 import { memo } from '../projects/memo/memo'
 import { near } from '../projects/near/near-da'
 import { nebraupa } from '../projects/nebraupa/nebraupa'
@@ -111,4 +112,5 @@ export const refactored: BaseProject[] = [
   circlegateway,
   wormholeWtt,
   wormholeNtt,
+  mayan,
 ]

@@ -45,6 +45,7 @@ export const optimism: ScalingProject = opStackL2({
         'https://optimism.mirror.xyz/',
         'https://twitter.com/OPLabsPBC',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
+        'https://linkedin.com/company/optimism-foundation',
         'https://twitch.tv/optimismpbc',
         'https://discord.gg/optimism',
       ],
@@ -94,6 +95,11 @@ export const optimism: ScalingProject = opStackL2({
       {
         chain: 'optimism',
         plugin: 'sorare-base',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'optimism',
+        plugin: 'lido-wsteth',
         bridgeType: 'lockAndMint',
       },
     ],

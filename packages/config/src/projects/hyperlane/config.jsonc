@@ -104,7 +104,7 @@
       }
     },
     "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7": {
-      "description": "Escrow for USDC that is bridged from Ethereum to Eclipse."
+      "description": "Escrow for USDC that is bridged from Ethereum to Eclipse. Also escrows USDC for other destinations."
     },
     "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c": {
       "description": "Escrow for apxETH that is bridged from Ethereum to Eclipse."

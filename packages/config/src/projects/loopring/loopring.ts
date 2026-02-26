@@ -217,7 +217,7 @@ export const loopring: ScalingProject = {
         securityCouncilProperlySetUp: null,
         noRedTrustedSetups: false,
         programHashesReproducible: null,
-        proverSourcePublished: null,
+        proverSourcePublished: true,
         verifierContractsReproducible: null,
       },
       stage2: {

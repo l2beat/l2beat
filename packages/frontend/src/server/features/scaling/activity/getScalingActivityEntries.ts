@@ -19,6 +19,7 @@ import { getActivitySyncWarning } from './utils/syncStatus'
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'activityConfig', 'display'],
+    optional: ['contracts'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })
@@ -77,7 +78,7 @@ interface ActivityData {
 }
 
 function getScalingProjectActivityEntry(
-  project: Project<'statuses' | 'scalingInfo' | 'display'>,
+  project: Project<'statuses' | 'scalingInfo' | 'display', 'contracts'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry | undefined {

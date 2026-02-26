@@ -32,11 +32,7 @@ export function TrustedSetupSection({
                   {trustedSetup.name}
                 </h3>
                 <div className="flex items-center gap-2">
-                  {trustedSetup.risk === 'N/A' ? (
-                    <span className="text-2xl leading-none">🤩</span>
-                  ) : (
-                    <TrustedSetupRiskDot risk={trustedSetup.risk} size="lg" />
-                  )}
+                  <TrustedSetupRiskDot risk={trustedSetup.risk} size="lg" />
                   <div className="flex gap-1">
                     {trustedSetup.proofSystems.map((proofSystem) => (
                       <TechStackTag

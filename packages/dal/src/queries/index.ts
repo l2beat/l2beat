@@ -1,5 +1,6 @@
 import { getTestQuery } from './test/getTestQuery'
 import { getAtTimestampsPerProjectQuery } from './tvl/getAtTimestampsPerProjectQuery'
+import { getSummedByTimestampTvsValuesPerProjectQuery } from './tvl/getSummedByTimestampTvsValuesPerProjectQuery'
 import { getSummedByTimestampTvsValuesQuery } from './tvl/getSummedByTimestampTvsValuesQuery'
 import type { DropFirst } from './types'
 
@@ -9,6 +10,7 @@ export const queries = {
   getTestQuery,
   // tvl queries
   getSummedByTimestampTvsValuesQuery,
+  getSummedByTimestampTvsValuesPerProjectQuery,
   getAtTimestampsPerProjectQuery,
 }
 

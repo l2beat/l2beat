@@ -36,7 +36,6 @@ interface Props {
   dataKeys: (keyof typeof bridgeTypeTvsChartMeta)[]
   toggleDataKey: (dataKey: string) => void
   tickCount?: number
-  className?: string
   project?: ChartProject
 }
 
@@ -64,7 +63,6 @@ export function BridgeTypeTvsChart({
   milestones,
   unit,
   isLoading,
-  className,
   tickCount,
   dataKeys,
   toggleDataKey,
@@ -83,10 +81,9 @@ export function BridgeTypeTvsChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
-      className={className}
       project={project}
     >
-      <AreaChart data={data} responsive={true} margin={{ top: 20 }}>
+      <AreaChart responsive data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <ChartCommonComponents
           data={data}

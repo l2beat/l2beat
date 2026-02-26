@@ -85,7 +85,17 @@ export const lighter: ScalingProject = {
         address: ChainSpecificAddress(
           'eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7',
         ),
-        tokens: ['USDC', 'ETH', 'LIT', 'LINK', 'AAVE', 'UNI', 'SKY', 'LDO'],
+        tokens: [
+          'USDC',
+          'ETH',
+          'LIT',
+          'LINK',
+          'AAVE',
+          'UNI',
+          'SKY',
+          'LDO',
+          'AZTEC',
+        ],
       }),
     ],
     daTracking: [
@@ -273,7 +283,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0xC5d17b2ae295F81209410B00a791720660efc706#code#F1#L54',
+            url: 'https://etherscan.io/address/0xa271df8660a318f155a31e64d0529ed85c2d1616#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
