@@ -37,7 +37,6 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   token: ProjectToken
-  className?: string
 }
 
 export function TokenChart({
@@ -47,7 +46,6 @@ export function TokenChart({
   milestones,
   token,
   syncedUntil,
-  className,
 }: Props) {
   const chartMeta = useMemo(
     () => ({
@@ -64,14 +62,13 @@ export function TokenChart({
 
   return (
     <ChartContainer
-      className={className}
       meta={chartMeta}
       data={data}
       isLoading={isLoading}
       milestones={milestones}
       project={project}
     >
-      <AreaChart data={data} margin={{ top: 20 }}>
+      <AreaChart responsive data={data} margin={{ top: 20 }}>
         <defs>
           <PinkFillGradientDef id="fill" />
           <PinkStrokeGradientDef id="stroke" />

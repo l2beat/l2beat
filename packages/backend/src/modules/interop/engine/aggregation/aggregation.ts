@@ -3,7 +3,12 @@ import type {
   AggregatedInteropTransferRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
-import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  assertUnreachable,
+  getInteropTransferValue,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 type Bucket =
   | 'under100'
@@ -43,6 +48,8 @@ export function getAggregatedTransfer(
   let count1KTo10K = 0
   let count10KTo100K = 0
   let countOver100K = 0
+  let minTransferValueUsd: number | undefined = undefined
+  let maxTransferValueUsd: number | undefined = undefined
 
   for (const transfer of group) {
     totalDurationSum += transfer.duration
@@ -58,15 +65,23 @@ export function getAggregatedTransfer(
       dstValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
     }
 
-    if (
-      transfer.srcValueUsd !== undefined ||
-      transfer.dstValueUsd !== undefined
-    ) {
+    const transferValueUsd = getInteropTransferValue(transfer)
+    if (transferValueUsd !== undefined) {
       identifiedCount++
     }
 
-    // Count transfers by bucket based on srcValueUsd
-    const bucket = getBucket(transfer.srcValueUsd ?? transfer.dstValueUsd)
+    if (transferValueUsd !== undefined) {
+      minTransferValueUsd =
+        minTransferValueUsd === undefined
+          ? transferValueUsd
+          : Math.min(minTransferValueUsd, transferValueUsd)
+      maxTransferValueUsd =
+        maxTransferValueUsd === undefined
+          ? transferValueUsd
+          : Math.max(maxTransferValueUsd, transferValueUsd)
+    }
+
+    const bucket = getBucket(transferValueUsd)
     switch (bucket) {
       case 'under100':
         countUnder100++
@@ -91,8 +106,7 @@ export function getAggregatedTransfer(
 
     if (options?.calculateValueInFlight) {
       valueInFlight =
-        (valueInFlight ?? 0) +
-        (transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0) * transfer.duration
+        (valueInFlight ?? 0) + (transferValueUsd ?? 0) * transfer.duration
     }
 
     if (options?.calculateNetMinted) {
@@ -112,6 +126,14 @@ export function getAggregatedTransfer(
     totalDurationSum,
     srcValueUsd: srcValueUsd ? Math.round(srcValueUsd * 100) / 100 : undefined,
     dstValueUsd: dstValueUsd ? Math.round(dstValueUsd * 100) / 100 : undefined,
+    minTransferValueUsd:
+      minTransferValueUsd !== undefined
+        ? Math.round(minTransferValueUsd * 100) / 100
+        : undefined,
+    maxTransferValueUsd:
+      maxTransferValueUsd !== undefined
+        ? Math.round(maxTransferValueUsd * 100) / 100
+        : undefined,
     avgValueInFlight: valueInFlight
       ? Math.round((valueInFlight / UnixTime.DAY) * 100) / 100
       : undefined,
@@ -144,6 +166,8 @@ export function getAggregatedTokens(
       transferCount: number
       totalDurationSum: number
       volume: number
+      minTransferValueUsd: number | undefined
+      maxTransferValueUsd: number | undefined
       mintedValueUsd: number | undefined
       burnedValueUsd: number | undefined
     }
@@ -152,6 +176,7 @@ export function getAggregatedTokens(
   for (const transfer of group) {
     const isSameToken =
       transfer.srcAbstractTokenId === transfer.dstAbstractTokenId
+
     const isBurn =
       transfer.srcWasBurned === true && transfer.dstWasMinted === false
     const isMint =
@@ -160,20 +185,35 @@ export function getAggregatedTokens(
     const burnValue = transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
 
     if (transfer.srcAbstractTokenId) {
+      const srcTokenTransferValueUsd =
+        transfer.srcValueUsd ?? transfer.dstValueUsd
+      const currentSrcToken = tokens[transfer.srcAbstractTokenId]
       tokens[transfer.srcAbstractTokenId] = {
-        transferCount:
-          (tokens[transfer.srcAbstractTokenId]?.transferCount ?? 0) + 1,
+        transferCount: (currentSrcToken?.transferCount ?? 0) + 1,
         totalDurationSum:
-          (tokens[transfer.srcAbstractTokenId]?.totalDurationSum ?? 0) +
-          transfer.duration,
-        volume:
-          (tokens[transfer.srcAbstractTokenId]?.volume ?? 0) +
-          (transfer.srcValueUsd ?? 0),
+          (currentSrcToken?.totalDurationSum ?? 0) + transfer.duration,
+        volume: (currentSrcToken?.volume ?? 0) + (transfer.srcValueUsd ?? 0),
+        minTransferValueUsd:
+          srcTokenTransferValueUsd !== undefined
+            ? Math.min(
+                currentSrcToken?.minTransferValueUsd ??
+                  Number.POSITIVE_INFINITY,
+                srcTokenTransferValueUsd,
+              )
+            : currentSrcToken?.minTransferValueUsd,
+        maxTransferValueUsd:
+          srcTokenTransferValueUsd !== undefined
+            ? Math.max(
+                currentSrcToken?.maxTransferValueUsd ??
+                  Number.NEGATIVE_INFINITY,
+                srcTokenTransferValueUsd,
+              )
+            : currentSrcToken?.maxTransferValueUsd,
         mintedValueUsd: options?.calculateNetMinted
-          ? (tokens[transfer.srcAbstractTokenId]?.mintedValueUsd ?? 0)
+          ? (currentSrcToken?.mintedValueUsd ?? 0)
           : undefined,
         burnedValueUsd: options?.calculateNetMinted
-          ? (tokens[transfer.srcAbstractTokenId]?.burnedValueUsd ?? 0)
+          ? (currentSrcToken?.burnedValueUsd ?? 0)
           : undefined,
       }
 
@@ -193,20 +233,35 @@ export function getAggregatedTokens(
     }
 
     if (transfer.dstAbstractTokenId && !isSameToken) {
+      const dstTokenTransferValueUsd =
+        transfer.dstValueUsd ?? transfer.srcValueUsd
+      const currentDstToken = tokens[transfer.dstAbstractTokenId]
       tokens[transfer.dstAbstractTokenId] = {
-        transferCount:
-          (tokens[transfer.dstAbstractTokenId]?.transferCount ?? 0) + 1,
+        transferCount: (currentDstToken?.transferCount ?? 0) + 1,
         totalDurationSum:
-          (tokens[transfer.dstAbstractTokenId]?.totalDurationSum ?? 0) +
-          transfer.duration,
-        volume:
-          (tokens[transfer.dstAbstractTokenId]?.volume ?? 0) +
-          (transfer.dstValueUsd ?? 0),
+          (currentDstToken?.totalDurationSum ?? 0) + transfer.duration,
+        volume: (currentDstToken?.volume ?? 0) + (transfer.dstValueUsd ?? 0),
+        minTransferValueUsd:
+          dstTokenTransferValueUsd !== undefined
+            ? Math.min(
+                currentDstToken?.minTransferValueUsd ??
+                  Number.POSITIVE_INFINITY,
+                dstTokenTransferValueUsd,
+              )
+            : currentDstToken?.minTransferValueUsd,
+        maxTransferValueUsd:
+          dstTokenTransferValueUsd !== undefined
+            ? Math.max(
+                currentDstToken?.maxTransferValueUsd ??
+                  Number.NEGATIVE_INFINITY,
+                dstTokenTransferValueUsd,
+              )
+            : currentDstToken?.maxTransferValueUsd,
         mintedValueUsd: options?.calculateNetMinted
-          ? (tokens[transfer.dstAbstractTokenId]?.mintedValueUsd ?? 0)
+          ? (currentDstToken?.mintedValueUsd ?? 0)
           : undefined,
         burnedValueUsd: options?.calculateNetMinted
-          ? (tokens[transfer.dstAbstractTokenId]?.burnedValueUsd ?? 0)
+          ? (currentDstToken?.burnedValueUsd ?? 0)
           : undefined,
       }
 
@@ -233,6 +288,14 @@ export function getAggregatedTokens(
     transferCount: data.transferCount,
     totalDurationSum: data.totalDurationSum,
     volume: data.volume,
+    minTransferValueUsd:
+      data.minTransferValueUsd !== undefined
+        ? Math.round(data.minTransferValueUsd * 100) / 100
+        : undefined,
+    maxTransferValueUsd:
+      data.maxTransferValueUsd !== undefined
+        ? Math.round(data.maxTransferValueUsd * 100) / 100
+        : undefined,
     mintedValueUsd: data.mintedValueUsd,
     burnedValueUsd: data.burnedValueUsd,
   }))

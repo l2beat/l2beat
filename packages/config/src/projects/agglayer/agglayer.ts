@@ -45,6 +45,7 @@ export const agglayer: BaseProject = {
         bridgeType: 'burnAndMint',
       },
     ],
+    type: 'canonical',
   },
   milestones: [
     {

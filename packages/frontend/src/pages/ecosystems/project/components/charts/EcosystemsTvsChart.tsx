@@ -108,10 +108,14 @@ export function EcosystemsTvsChart({
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
-        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
-        <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
+        <AreaChart
+          responsive
+          data={chartData}
+          className="h-44! min-h-44!"
+          margin={{ top: 20 }}
+        >
           <defs>
             <CustomFillGradientDef
               id="fill"

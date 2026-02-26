@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x277aedbd059b010753afe2c61aec75c2a8bec71b
+
+# Diff at Thu, 26 Feb 2026 06:48:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1771493664
+- current timestamp: 1772088241
+
+## Description
+
+new tokenpools.
+
+## Watched changes
+
+```diff
+    contract HybridLockReleaseUSDCTokenPool (eth:0x03D19033AdA17750D5BC2d8E325337D0748F9FEF) {
+    +++ description: A token pool for USDC which uses CCTP for supported chains and Lock/Release for all others
+      values.getSupportedChains.12:
++        "7801139999541420232"
+    }
+```
+
+```diff
+    contract SourceTokenPool (eth:0x44e77d8C6Bb9999B036a6F084005E48928d18C74) {
+    +++ description: None
+      values.getRebalancer:
+-        "eth:0x7B39B6b869869134b18d1fFA97bfbE4FE7fc701B"
++        "eth:0x6056350f57C3Ec3adfe558bfc4B32eB349DFc4f9"
+      values.owner:
+-        "eth:0x8a181d6964EF1CA02e6975e0FdB7A7F7b7220009"
++        "eth:0x6056350f57C3Ec3adfe558bfc4B32eB349DFc4f9"
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x7B39B6b869869134b18d1fFA97bfbE4FE7fc701B)
+    +++ description: None
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.96:
++        {"sourceChainSelector":"6325494908023253251","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.offRamps.97:
++        {"sourceChainSelector":"4059281736450291836","offRamp":"eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"}
+      values.onRamps.6325494908023253251:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+      values.onRamps.4059281736450291836:
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) {
+    +++ description: None
+      values.pools.351:
++        "eth:0x152120Eb3143184334f1e2B6aaC525c1B08D1bA1"
+      values.pools.352:
++        "eth:0xd32DB284Ecc433BC3074F0040E6a1d56Cc9A877e"
+      values.pools.353:
++        "eth:0x0C7AEea43F560189Bf7c9C53c09230d99B658968"
+      values.pools.354:
++        "eth:0x6A3C219C4FF76AEC7449Cfb59dD8E5436E85C579"
+      values.pools.355:
++        "eth:0x4F7Afc4389efd4e4084Ac4c4af74323AF735EfdB"
+      values.poolsMap.eth:0x1a634Dc460231b235507Dd00B6494Aded7AB1138:
++        "eth:0x152120Eb3143184334f1e2B6aaC525c1B08D1bA1"
+      values.poolsMap.eth:0x90fDE4c4FA32EABa81b89dE59850F8e7090b70a2:
++        "eth:0xd32DB284Ecc433BC3074F0040E6a1d56Cc9A877e"
+      values.poolsMap.eth:0xcE15Be1866A48097a118F952D8eEd0b5a123ae79:
++        "eth:0x0C7AEea43F560189Bf7c9C53c09230d99B658968"
+      values.poolsMap.eth:0x47105473533B3E8C8A96E9728a53d4F7807Ff54f:
++        "eth:0x6A3C219C4FF76AEC7449Cfb59dD8E5436E85C579"
+      values.poolsMap.eth:0x48479843d3eBb3b46e0e9F85Fe75512b25Bf6729:
++        "eth:0x4F7Afc4389efd4e4084Ac4c4af74323AF735EfdB"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x0C7AEea43F560189Bf7c9C53c09230d99B658968)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (eth:0x152120Eb3143184334f1e2B6aaC525c1B08D1bA1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x4F7Afc4389efd4e4084Ac4c4af74323AF735EfdB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0x6A3C219C4FF76AEC7449Cfb59dD8E5436E85C579)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (eth:0xd32DB284Ecc433BC3074F0040E6a1d56Cc9A877e)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0x152120Eb3143184334f1e2B6aaC525c1B08D1bA1.sol | 1374 +++++++++++++++
+ ...:0x0C7AEea43F560189Bf7c9C53c09230d99B658968.sol | 1766 ++++++++++++++++++++
+ ...:0x4F7Afc4389efd4e4084Ac4c4af74323AF735EfdB.sol | 1766 ++++++++++++++++++++
+ ...:0x6A3C219C4FF76AEC7449Cfb59dD8E5436E85C579.sol | 1766 ++++++++++++++++++++
+ ...:0xd32DB284Ecc433BC3074F0040E6a1d56Cc9A877e.sol | 1766 ++++++++++++++++++++
+ 5 files changed, 8438 insertions(+)
+```
+
 Generated with discovered.json: 0x87a7ba4e053b34fcf0f8ab77a143c6bbd17bc219
 
 # Diff at Thu, 19 Feb 2026 09:39:22 GMT:

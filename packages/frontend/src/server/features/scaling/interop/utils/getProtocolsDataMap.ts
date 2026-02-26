@@ -1,5 +1,5 @@
 import type { InteropDurationSplit } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, getInteropTransferValue } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
@@ -22,12 +22,16 @@ type ProtocolDataByBridgeTypeCommon = {
   tokens: Map<string, CommonInteropData>
   transferCount: number
   identifiedTransferCount: number
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
 }
 
 export interface ProtocolData extends CommonInteropData {
   volume: number
   tokens: Map<string, CommonInteropData>
   chains: Map<string, CommonInteropData>
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   averageValueInFlight: number | undefined
   identifiedTransferCount: number
   mintedValueUsd: number | undefined
@@ -42,6 +46,8 @@ export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
   inDurationSum: 0,
   outTransferCount: 0,
   outDurationSum: 0,
+  minTransferValueUsd: undefined,
+  maxTransferValueUsd: undefined,
   mintedValueUsd: undefined,
   burnedValueUsd: undefined,
 }
@@ -77,7 +83,7 @@ export function getProtocolsDataMapByBridgeType(
         bridgeTypeMap.lockAndMint = {
           volume:
             (bridgeTypeMap.lockAndMint?.volume ?? 0) +
-            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+            (getInteropTransferValue(record) ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.lockAndMint?.tokens,
             record.tokens,
@@ -92,6 +98,22 @@ export function getProtocolsDataMapByBridgeType(
           totalDurationSum:
             (bridgeTypeMap.lockAndMint?.totalDurationSum ?? 0) +
             (record.totalDurationSum ?? 0),
+          minTransferValueUsd:
+            record.minTransferValueUsd !== undefined
+              ? Math.min(
+                  bridgeTypeMap.lockAndMint?.minTransferValueUsd ??
+                    Number.POSITIVE_INFINITY,
+                  record.minTransferValueUsd,
+                )
+              : bridgeTypeMap.lockAndMint?.minTransferValueUsd,
+          maxTransferValueUsd:
+            record.maxTransferValueUsd !== undefined
+              ? Math.max(
+                  bridgeTypeMap.lockAndMint?.maxTransferValueUsd ??
+                    Number.NEGATIVE_INFINITY,
+                  record.maxTransferValueUsd,
+                )
+              : bridgeTypeMap.lockAndMint?.maxTransferValueUsd,
 
           mintedValueUsd:
             (bridgeTypeMap.lockAndMint?.mintedValueUsd ?? 0) +
@@ -110,7 +132,7 @@ export function getProtocolsDataMapByBridgeType(
         bridgeTypeMap.nonMinting = {
           volume:
             (bridgeTypeMap.nonMinting?.volume ?? 0) +
-            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+            (getInteropTransferValue(record) ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.nonMinting?.tokens,
             record.tokens,
@@ -122,6 +144,22 @@ export function getProtocolsDataMapByBridgeType(
           identifiedTransferCount:
             (bridgeTypeMap.nonMinting?.identifiedTransferCount ?? 0) +
             record.identifiedCount,
+          minTransferValueUsd:
+            record.minTransferValueUsd !== undefined
+              ? Math.min(
+                  bridgeTypeMap.nonMinting?.minTransferValueUsd ??
+                    Number.POSITIVE_INFINITY,
+                  record.minTransferValueUsd,
+                )
+              : bridgeTypeMap.nonMinting?.minTransferValueUsd,
+          maxTransferValueUsd:
+            record.maxTransferValueUsd !== undefined
+              ? Math.max(
+                  bridgeTypeMap.nonMinting?.maxTransferValueUsd ??
+                    Number.NEGATIVE_INFINITY,
+                  record.maxTransferValueUsd,
+                )
+              : bridgeTypeMap.nonMinting?.maxTransferValueUsd,
           averageValueInFlight:
             (bridgeTypeMap.nonMinting?.averageValueInFlight ?? 0) +
             (record.avgValueInFlight ?? 0),
@@ -131,7 +169,7 @@ export function getProtocolsDataMapByBridgeType(
         bridgeTypeMap.burnAndMint = {
           volume:
             (bridgeTypeMap.burnAndMint?.volume ?? 0) +
-            (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+            (getInteropTransferValue(record) ?? 0),
           tokens: mergeTokensData(
             bridgeTypeMap.burnAndMint?.tokens,
             record.tokens,
@@ -143,6 +181,22 @@ export function getProtocolsDataMapByBridgeType(
           identifiedTransferCount:
             (bridgeTypeMap.burnAndMint?.identifiedTransferCount ?? 0) +
             record.identifiedCount,
+          minTransferValueUsd:
+            record.minTransferValueUsd !== undefined
+              ? Math.min(
+                  bridgeTypeMap.burnAndMint?.minTransferValueUsd ??
+                    Number.POSITIVE_INFINITY,
+                  record.minTransferValueUsd,
+                )
+              : bridgeTypeMap.burnAndMint?.minTransferValueUsd,
+          maxTransferValueUsd:
+            record.maxTransferValueUsd !== undefined
+              ? Math.max(
+                  bridgeTypeMap.burnAndMint?.maxTransferValueUsd ??
+                    Number.NEGATIVE_INFINITY,
+                  record.maxTransferValueUsd,
+                )
+              : bridgeTypeMap.burnAndMint?.maxTransferValueUsd,
         }
         break
       default:
@@ -177,13 +231,25 @@ export function getProtocolsDataMap(
     const direction = getDirection(record, durationSplit, transfersTimeMode)
 
     protocolsDataMap.set(record.id, {
-      volume: current.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+      volume: current.volume + (getInteropTransferValue(record) ?? 0),
       tokens: mergeTokensData(current.tokens, record.tokens, direction),
       chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),
       ...computeDurationSplits(current, direction, record),
+      minTransferValueUsd:
+        record.minTransferValueUsd !== undefined
+          ? current.minTransferValueUsd !== undefined
+            ? Math.min(current.minTransferValueUsd, record.minTransferValueUsd)
+            : record.minTransferValueUsd
+          : current.minTransferValueUsd,
+      maxTransferValueUsd:
+        record.maxTransferValueUsd !== undefined
+          ? current.maxTransferValueUsd !== undefined
+            ? Math.max(current.maxTransferValueUsd, record.maxTransferValueUsd)
+            : record.maxTransferValueUsd
+          : current.maxTransferValueUsd,
       averageValueInFlight:
         record.avgValueInFlight !== undefined
           ? (current.averageValueInFlight ?? 0) + record.avgValueInFlight
@@ -215,6 +281,8 @@ function createInitialProtocolData(): ProtocolData {
     inDurationSum: 0,
     outTransferCount: 0,
     outDurationSum: 0,
+    minTransferValueUsd: undefined,
+    maxTransferValueUsd: undefined,
     averageValueInFlight: undefined,
     identifiedTransferCount: 0,
     mintedValueUsd: undefined,

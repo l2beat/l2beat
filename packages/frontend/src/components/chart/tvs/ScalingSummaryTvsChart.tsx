@@ -111,6 +111,7 @@ export function ScalingSummaryTvsChart({
         }}
       >
         <AreaChart
+          responsive
           data={chartData}
           margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
         >

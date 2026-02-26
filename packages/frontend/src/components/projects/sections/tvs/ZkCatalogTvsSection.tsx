@@ -60,11 +60,13 @@ export function ZkCatalogTvsSection({
       <ScalingRwaRestrictedTokensContextProvider>
         <TvsChartControlsContextProvider defaultRange={defaultRange}>
           <ChartControls projectsForTvs={projectsForTvs} />
-          <ZkCatalogProjectsTvsChart
-            project={project}
-            milestones={milestones}
-            projectsForTvs={projectsForTvs}
-          />
+          <div className="mt-4 mb-3">
+            <ZkCatalogProjectsTvsChart
+              project={project}
+              milestones={milestones}
+              projectsForTvs={projectsForTvs}
+            />
+          </div>
           <div className="flex justify-end">
             <ExcludeRwaRestrictedTokensCheckbox />
           </div>

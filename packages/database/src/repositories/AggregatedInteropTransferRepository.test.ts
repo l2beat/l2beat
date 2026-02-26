@@ -1187,6 +1187,8 @@ function record({
   bridgeType = 'unknown',
   srcValueUsd,
   dstValueUsd,
+  minTransferValueUsd,
+  maxTransferValueUsd,
   avgValueInFlight,
   mintedValueUsd,
   burnedValueUsd,
@@ -1206,6 +1208,8 @@ function record({
   bridgeType?: InteropBridgeType
   srcValueUsd?: number
   dstValueUsd?: number
+  minTransferValueUsd?: number
+  maxTransferValueUsd?: number
   avgValueInFlight?: number
   mintedValueUsd?: number
   burnedValueUsd?: number
@@ -1225,6 +1229,8 @@ function record({
     totalDurationSum,
     srcValueUsd,
     dstValueUsd,
+    minTransferValueUsd,
+    maxTransferValueUsd,
     avgValueInFlight,
     mintedValueUsd,
     burnedValueUsd,

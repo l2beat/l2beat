@@ -1,4 +1,5 @@
 import type { InteropTransferRecord } from '@l2beat/database'
+import { getInteropTransferValue } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
@@ -27,7 +28,7 @@ function buildByPlugin(transfers: InteropTransferRecord[]): ByPluginRow[] {
     const bridgeType =
       t.bridgeType ?? InteropTransferClassifier.inferBridgeType(t)
     const key = `${t.plugin}:${bridgeType}`
-    const valueUsd = t.srcValueUsd ?? t.dstValueUsd ?? 0
+    const valueUsd = getInteropTransferValue(t) ?? 0
 
     const existing = grouped.get(key)
     if (existing) {

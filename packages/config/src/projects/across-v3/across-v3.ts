@@ -154,6 +154,7 @@ export const acrossV3: Bridge = {
         bridgeType: 'nonMinting',
       },
     ],
+    type: 'intent',
   },
   riskView: {
     validatedBy: {
