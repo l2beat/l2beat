@@ -1250,7 +1250,7 @@ export type InteropPluginName =
   | 'zkstack'
   | 'zklink-nova'
 
-export type InteropType = 'multichain' | 'intent' | 'tokenBridge'
+export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
 export interface InteropConfig {
   name?: string
