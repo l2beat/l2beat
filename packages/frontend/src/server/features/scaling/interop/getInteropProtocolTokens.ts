@@ -100,10 +100,7 @@ export async function getInteropProtocolTokens({
     const flowKey = `${token.srcChain}::${token.dstChain}`
     const currentFlow = current.flows.get(flowKey)
     if (currentFlow) {
-      current.flows.set(flowKey, {
-        ...currentFlow,
-        volume: currentFlow.volume + token.volume,
-      })
+      currentFlow.volume += token.volume
     } else {
       current.flows.set(flowKey, {
         srcChain: token.srcChain,
