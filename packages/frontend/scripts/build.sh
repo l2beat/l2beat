@@ -11,11 +11,17 @@ esbuild \
   --bundle \
   --minify \
   --outfile=static/index.js &
+esbuild_pid=$!
+
 tailwindcss \
   -i src/styles/globals.css \
   -o ./static/index.css \
   --minify &
-wait
+tailwind_pid=$!
+
+wait "$esbuild_pid"
+wait "$tailwind_pid"
+
 node -r esbuild-register ./scripts/hashFiles.ts
 
 esbuild \

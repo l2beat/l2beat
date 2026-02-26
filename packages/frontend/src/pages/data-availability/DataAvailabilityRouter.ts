@@ -31,7 +31,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilitySummaryData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -44,7 +44,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilityRiskData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -57,7 +57,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -70,7 +70,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilityLivenessData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -83,7 +83,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilityArchivedData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -111,7 +111,7 @@ export function createDataAvailabilityRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )

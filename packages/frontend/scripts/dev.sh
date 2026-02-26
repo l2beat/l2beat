@@ -29,35 +29,23 @@ trap cleanup SIGINT SIGTERM
 
 rm -rf dist
 
-# Start processes and capture their PIDs
+# Only bundle the server (Express + data fetching + routers).
+# Vite handles client JS and CSS with HMR in dev mode.
 esbuild \
-  src/ssr/ClientEntry.tsx \
-  --bundle \
-  --watch=forever \
-  --outfile=static/index.js < /dev/tty &
-pids+=($!)
-
-tailwindcss \
-  -i src/styles/globals.css \
-  -o ./static/index.css \
-  --watch < /dev/tty &
-pids+=($!)
-
-esbuild \
-  src/index.ts \
+  src/index.dev.ts \
   --bundle \
   --platform=node \
   --packages=external \
   --jsx=automatic \
   --watch=forever \
-  --outfile=dist/server/index.js < /dev/tty &
+  --outfile=dist/server/index.js &
 pids+=($!)
 
 while [ ! -f dist/server/index.js ]; do
   sleep 0.1
 done
 
-node --watch dist/server/index.js
+node --watch-path=dist/server dist/server/index.js
 pids+=($!)
 
 echo "All processes started. Press Ctrl+C to exit."

@@ -45,7 +45,7 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropSummaryData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -57,7 +57,7 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropNonMintingData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -69,7 +69,7 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropLockAndMintData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -81,7 +81,7 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropBurnAndMintData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -95,7 +95,7 @@ export function createInteropRouter(
       const data = await getInteropSummaryData(req, manifest, cache, {
         mode: 'internal',
       })
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -109,7 +109,7 @@ export function createInteropRouter(
       const data = await getInteropNonMintingData(req, manifest, cache, {
         mode: 'internal',
       })
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -123,7 +123,7 @@ export function createInteropRouter(
       const data = await getInteropLockAndMintData(req, manifest, cache, {
         mode: 'internal',
       })
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -137,7 +137,7 @@ export function createInteropRouter(
       const data = await getInteropBurnAndMintData(req, manifest, cache, {
         mode: 'internal',
       })
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )

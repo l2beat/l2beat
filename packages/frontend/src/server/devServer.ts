@@ -1,15 +1,12 @@
 import { readFileSync } from 'node:fs'
 import type { Logger } from '@l2beat/backend-tools'
-import compression from 'compression'
 import timeout from 'connect-timeout'
 import express from 'express'
-import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
 import { rawEnv } from '~/env'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import type { RenderData } from '../ssr/types'
-import { type Manifest, manifest } from '../utils/Manifest'
-import { ErrorHandler } from './middlewares/ErrorHandler'
+import { manifest } from '../utils/Manifest'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
@@ -17,8 +14,8 @@ import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
 
-const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT ?? 3000
+const template = readFileSync('index.html', 'utf-8')
 
 type RenderResult = {
   html: string
@@ -28,27 +25,16 @@ type RenderResult = {
 type RenderFn = (data: RenderData, url: string) => RenderResult
 
 let vite: ViteDevServer | undefined
-let productionRender: RenderFn | undefined
-const template = getTemplate(manifest)
 
-export async function createServer(logger: Logger) {
+export async function createDevServer(logger: Logger) {
   logger = logger.for('HTTP Server')
 
   const app = express()
-  if (isProduction) {
-    app.use(compression())
-    app.use(
-      '/static',
-      sirv('./dist/static', { maxAge: 31536000, immutable: true }),
-    )
-    // This is done to delay moving markdown to server side
-    app.use('/', sirv('./static', { maxAge: 3600 }))
-  } else {
-    const { createDevMiddleware } = await import('./createDevMiddleware')
-    vite = await createDevMiddleware(app)
-    // Serve static assets (fonts, icons, images) that Vite doesn't handle
-    app.use('/', express.static('./static'))
-  }
+  const { createDevMiddleware } = await import('./createDevMiddleware')
+  vite = await createDevMiddleware(app)
+
+  // Serve static assets (fonts, icons, images) that Vite doesn't handle.
+  app.use('/', express.static('./static'))
 
   app.use(timeout('25s'))
   app.use(SafeSendHandler)
@@ -64,18 +50,10 @@ export async function createServer(logger: Logger) {
     res.status(200).send('OK')
   })
 
-  if (isProduction) {
-    app.use(ErrorHandler())
-  }
-
   const server = app.listen(port, () => {
-    const url = isProduction
-      ? `Server running on port ${port}`
-      : `http://localhost:${port}`
-
     logger.info('Started', {
       port,
-      url,
+      url: `http://localhost:${port}`,
     })
   })
 
@@ -91,22 +69,11 @@ export async function createServer(logger: Logger) {
 }
 
 async function renderToHtml(data: RenderData, url: string) {
-  let renderFn: RenderFn
-  if (isProduction) {
-    if (!productionRender) {
-      const mod = await import('../ssr/ServerEntry')
-      productionRender = mod.render
-    }
-    renderFn = productionRender
-  } else {
-    if (!vite) {
-      throw new Error('Vite dev server is not initialized')
-    }
-    const mod = await vite.ssrLoadModule('/src/ssr/ServerEntry.tsx')
-    renderFn = mod.render as RenderFn
-  }
-
+  const viteServer = getVite()
+  const mod = await viteServer.ssrLoadModule('/src/ssr/ServerEntry.tsx')
+  const renderFn = mod.render as RenderFn
   const rendered = renderFn(data, url)
+
   const envData = Object.fromEntries(
     Object.entries(rawEnv)
       .map(([key, value]) => {
@@ -122,18 +89,15 @@ async function renderToHtml(data: RenderData, url: string) {
       .filter((x) => x !== undefined),
   )
 
-  let head = rendered.head
-  if (vite) {
-    // In dev, the tailwind CLI isn't running so /index.css doesn't exist.
-    // Use Vite's direct CSS request so the browser receives real CSS instead
-    // of the JS proxy module that "/src/styles/globals.css" returns.
-    head = head.replace(
-      /<link rel="stylesheet" href="\/index\.css"\s*\/?>/,
-      '<link rel="stylesheet" href="/src/styles/globals.css?direct">',
-    )
-  }
+  // In dev, the tailwind CLI isn't running so /index.css doesn't exist.
+  // Use Vite's direct CSS request so the browser receives real CSS instead
+  // of the JS proxy module that "/src/styles/globals.css" returns.
+  const head = rendered.head.replace(
+    /<link rel="stylesheet" href="\/index\.css"\s*\/?>/,
+    '<link rel="stylesheet" href="/src/styles/globals.css?direct">',
+  )
 
-  let html = template
+  const html = template
     .replace('<!--app-head-->', head)
     .replace('<!--app-html-->', rendered.html)
     .replace(
@@ -142,20 +106,12 @@ async function renderToHtml(data: RenderData, url: string) {
     )
     .replace('<!--env-data-->', `window.__ENV__=${JSON.stringify(envData)}`)
 
-  if (vite) {
-    html = await vite.transformIndexHtml(url, html)
-  }
-
-  return html
+  return await viteServer.transformIndexHtml(url, html)
 }
 
-function getTemplate(manifest: Manifest) {
-  let template = readFileSync('index.html', 'utf-8')
-  if (isProduction) {
-    template = template.replace(
-      '/src/ssr/ClientEntry.tsx',
-      manifest.getUrl('/index.js'),
-    )
+function getVite() {
+  if (!vite) {
+    throw new Error('Vite dev server is not initialized')
   }
-  return template
+  return vite
 }

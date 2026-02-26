@@ -18,7 +18,7 @@ export function createZkCatalogRouter(
 
   router.get('/zk-catalog', async (req, res) => {
     const data = await getZkCatalogData(manifest, req.originalUrl, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -27,7 +27,7 @@ export function createZkCatalogRouter(
       { key: ['zk-catalog', 'v1'], ttl: 5 * 60, staleWhileRevalidate: 25 * 60 },
       () => getZkCatalogV1Data(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -50,7 +50,7 @@ export function createZkCatalogRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -74,7 +74,7 @@ export function createZkCatalogRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )

@@ -1,7 +1,6 @@
 import { ThemeProvider } from 'next-themes'
 import { ChartLegendOnboardingProvider } from '~/components/core/chart/ChartLegendOnboardingContext'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
-import { DevAutoReloader } from '~/components/DevAutoReloader'
 import { L2BeatDevTools } from '~/components/dev-tools/L2BeatDevTools'
 import type { GlossaryTerm } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
@@ -28,7 +27,6 @@ export function AppLayout({
 }) {
   return (
     <TRPCReactProvider>
-      {env.NODE_ENV !== 'production' && <DevAutoReloader />}
       <ThemeProvider
         attribute="class"
         storageKey="l2beat-theme"

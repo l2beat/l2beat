@@ -96,9 +96,12 @@
     "postcss": "^8.4.38",
     "postcss-load-config": "^6.0.1",
     "tailwindcss": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.11",
+    "@vitejs/plugin-react-swc": "^4.2.3",
     "tailwindcss-animate": "^1.0.7",
     "tinify": "^1.7.1",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "vite": "^6.3.5"
   },
   "overrides": {
     "react-is": "19.0.0",
