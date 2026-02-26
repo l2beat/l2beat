@@ -22,7 +22,6 @@ import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import { getTopItemsColumns, type TopItemRow } from './columns'
-import type { TokenFlowDisplayData } from './TokenFlowsCell'
 import { InteropTopItems } from './TopItems'
 
 export function TopTokensCell({
@@ -117,19 +116,17 @@ function TopTokensContent({
         avgDuration: token.avgDuration,
         avgValue: token.avgValue,
         netMintedValue: token.netMintedValue,
-        netFlows: token.netFlows.map(
-          (flow): TokenFlowDisplayData => ({
-            srcChain: {
-              id: flow.srcChain,
-              iconUrl: getChainById(flow.srcChain)?.iconUrl,
-            },
-            dstChain: {
-              id: flow.dstChain,
-              iconUrl: getChainById(flow.dstChain)?.iconUrl,
-            },
-            volume: flow.volume,
-          }),
-        ),
+        netFlows: token.netFlows.map((flow) => ({
+          srcChain: {
+            id: flow.srcChain,
+            iconUrl: getChainById(flow.srcChain)?.iconUrl,
+          },
+          dstChain: {
+            id: flow.dstChain,
+            iconUrl: getChainById(flow.dstChain)?.iconUrl,
+          },
+          volume: flow.volume,
+        })),
       })) ?? [],
     [data, getChainById],
   )
