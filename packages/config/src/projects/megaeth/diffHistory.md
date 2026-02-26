@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xbb00c55819585f961d3ee733beb81fab25aad383
+
+# Diff at Thu, 26 Feb 2026 15:07:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770803234
+- current timestamp: 1772118387
+
+## Description
+
+EigenLayerRewardsInitiatorMultisig: one member removed (0xf20eD26be), reducing signers from 5 to 4. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/4 (75%).
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x9bb8dbe254646e18788dca7d180bc3df1b5297ca
 
 # Diff at Fri, 13 Feb 2026 11:33:14 GMT:
