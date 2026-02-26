@@ -261,7 +261,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where(
         sql`date_trunc('day', timestamp)`,
         '=',
-        sql`date_trunc('day', ${UnixTime.toDate(timestamp)})`,
+        sql`date_trunc('day', ${UnixTime.toDate(timestamp)}::timestamp)`,
       )
       .executeTakeFirst()
 
