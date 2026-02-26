@@ -14,6 +14,7 @@ export const relay: BaseProject = {
         bridgeType: 'nonMinting',
       },
     ],
+    type: 'intent',
   },
   isInteropProtocol: true,
 }

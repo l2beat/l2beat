@@ -14,6 +14,7 @@ export const fusionplus: BaseProject = {
         bridgeType: 'nonMinting',
       },
     ],
+    type: 'intent',
   },
   isInteropProtocol: true,
 }
