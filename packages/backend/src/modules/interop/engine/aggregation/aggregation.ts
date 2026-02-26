@@ -52,21 +52,20 @@ export function getAggregatedTransfer(
   let maxTransferValueUsd: number | undefined = undefined
 
   for (const transfer of group) {
-    const transferValueUsd = getInteropTransferValue(transfer)
-
     totalDurationSum += transfer.duration
     if (srcValueUsd === undefined) {
-      srcValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
+      srcValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd
     } else {
       srcValueUsd += transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
     }
 
     if (dstValueUsd === undefined) {
-      dstValueUsd = transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
+      dstValueUsd = transfer.dstValueUsd ?? transfer.srcValueUsd
     } else {
       dstValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
     }
 
+    const transferValueUsd = getInteropTransferValue(transfer)
     if (transferValueUsd !== undefined) {
       identifiedCount++
     }
