@@ -56,7 +56,7 @@ export const getTopItemsColumns = (
           </TwoRowCell.First>
           {ctx.row.original.issuer && (
             <TwoRowCell.Second>
-              Issue by{' '}
+              Issued by{' '}
               <span className="capitalize">{ctx.row.original.issuer}</span>
             </TwoRowCell.Second>
           )}
