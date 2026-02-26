@@ -13,6 +13,7 @@ import {
   Result,
 } from './types'
 
+// https://docs.superform.xyz/integrate-superform/deployment-addresses
 const SUPERFORM_NETWORKS = defineNetworks('superform', [
   {
     chainId: 1,
@@ -36,6 +37,18 @@ const SUPERFORM_NETWORKS = defineNetworks('superform', [
     chainId: 10,
     eid: 30111,
     chain: 'optimism',
+    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
+  },
+  {
+    chainId: 137,
+    eid: 30109,
+    chain: 'polygonpos',
+    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
+  },
+  {
+    chainId: 56,
+    eid: 30102,
+    chain: 'bsc',
     address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
 ])
