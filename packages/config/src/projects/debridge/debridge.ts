@@ -60,6 +60,7 @@ export const debridge: Bridge = {
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'other',
   },
   technology: {
     destination: ['Arbitrum', 'Avalanche', 'BNB Chain', 'Polygon'],

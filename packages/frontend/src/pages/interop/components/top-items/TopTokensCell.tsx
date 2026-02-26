@@ -20,6 +20,7 @@ import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import { getTopItemsColumns, type TopItemRow } from './columns'
 import { InteropTopItems } from './TopItems'
 
@@ -40,7 +41,7 @@ export function TopTokensCell({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const utils = api.useUtils()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectionForApi } = useInteropSelectedChains()
 
   return (
     <>
@@ -60,10 +61,7 @@ export function TopTokensCell({
         }}
         onMouseEnter={() =>
           utils.interop.tokens.prefetch({
-            selectedChainsIds: [
-              selectedChains.first?.id ?? null,
-              selectedChains.second?.id ?? null,
-            ],
+            ...selectionForApi,
             id: protocol.id,
             type,
           })
@@ -95,13 +93,10 @@ function TopTokensContent({
   showNetMintedValueColumn?: boolean
 }) {
   const breakpoint = useBreakpoint()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectionForApi } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokens.useQuery(
     {
-      selectedChainsIds: [
-        selectedChains.first?.id ?? null,
-        selectedChains.second?.id ?? null,
-      ],
+      ...selectionForApi,
       id: protocol.id,
       type,
     },
@@ -149,8 +144,8 @@ function TopTokensContent({
     return (
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle className="text-xl">
+          <DrawerHeader className="mb-2">
+            <DrawerTitle className="mb-0 text-xl">
               <span>Top tokens by volume for </span>
               <img
                 src={protocol.iconUrl}
@@ -159,6 +154,7 @@ function TopTokensContent({
               />
               <span>{protocol.name}</span>
             </DrawerTitle>
+            <BetweenChainsInfo />
           </DrawerHeader>
           <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
             <BasicTable
@@ -186,6 +182,7 @@ function TopTokensContent({
             />
             <span>{protocol.name}</span>
           </DialogTitle>
+          <BetweenChainsInfo className="mt-1" />
         </DialogHeader>
         <div className="overflow-x-auto">
           <div className="mx-6">

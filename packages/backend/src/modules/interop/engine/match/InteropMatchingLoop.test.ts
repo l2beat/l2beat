@@ -73,7 +73,6 @@ describe(InteropMatchingLoop.name, () => {
         [],
         [],
         Logger.SILENT,
-        mockObject({} as any),
       )
 
       await expect(async () => await loop.run()).toBeRejectedWith(

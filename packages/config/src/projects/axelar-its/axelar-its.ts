@@ -18,6 +18,7 @@ export const axelarits: BaseProject = {
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

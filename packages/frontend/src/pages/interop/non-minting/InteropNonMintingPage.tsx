@@ -3,14 +3,12 @@ import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type {
-  ProtocolDisplayable,
-  SelectedChainsIds,
-} from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import type { WithProjectIcon } from '~/utils/withProjectIcon'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
+import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InitialChainSelector } from '../components/InitialChainSelector'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
@@ -23,21 +21,24 @@ import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
+import type { InteropMode, InteropSelection } from '../utils/types'
 import { HeaderWithDescription } from './components/HeaderWithDescription'
 
 interface Props extends AppLayoutProps {
+  mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   onboardingInteropChains: InteropChainWithIcon[]
   protocols: WithProjectIcon<Project<'interopConfig'>>[]
-  initialSelectedChains: SelectedChainsIds
+  initialSelection: InteropSelection
 }
 
 export function InteropNonMintingPage({
+  mode,
   interopChains,
   onboardingInteropChains,
   queryState,
-  initialSelectedChains,
+  initialSelection,
   protocols,
   ...props
 }: Props) {
@@ -45,11 +46,13 @@ export function InteropNonMintingPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <InteropSelectedChainsProvider
+          mode={mode}
           interopChains={interopChains}
-          initialSelectedChains={initialSelectedChains}
+          initialSelection={initialSelection}
         >
           <SideNavLayout maxWidth="wide">
             <Content
+              mode={mode}
               interopChains={interopChains}
               onboardingInteropChains={onboardingInteropChains}
               protocols={protocols}
@@ -62,17 +65,22 @@ export function InteropNonMintingPage({
 }
 
 function Content({
+  mode,
   interopChains,
   onboardingInteropChains,
   protocols,
 }: {
+  mode: InteropMode
   interopChains: InteropChainWithIcon[]
   onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
-  if (!selectedChains.first || !selectedChains.second) {
+  if (
+    mode === 'public' &&
+    (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
+  ) {
     return (
       <>
         <div className="max-md:hidden">
@@ -93,7 +101,11 @@ function Content({
       <div className="max-md:hidden">
         <HeaderWithDescription />
       </div>
-      <ChainSelector chains={interopChains} protocols={protocols} />
+      {mode === 'public' ? (
+        <ChainSelector chains={interopChains} protocols={protocols} />
+      ) : (
+        <MultiChainSelector chains={interopChains} />
+      )}
       <div className="max-md:bg-surface-primary md:hidden">
         <HeaderWithDescription />
       </div>
@@ -103,12 +115,9 @@ function Content({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectionForApi, mode, isDirty, reset } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChainsIds: [
-      selectedChains.first?.id ?? null,
-      selectedChains.second?.id ?? null,
-    ],
+    ...selectionForApi,
     type: 'nonMinting',
   })
 
@@ -117,7 +126,12 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     data.flows.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState />
+    return (
+      <InteropEmptyState
+        showResetButton={mode === 'internal' && isDirty}
+        onResetButtonClick={reset}
+      />
+    )
   }
 
   return (

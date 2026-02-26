@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xf102a38e9646ae30251e102695a91c8d1423625f
+
+# Diff at Thu, 26 Feb 2026 06:51:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1771493932
+- current timestamp: 1772088580
+
+## Description
+
+rotate operators.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
+      values.operatorCount:
+-        4
++        3
+    }
+```
+
 Generated with discovered.json: 0xad8cfdfed0f1c72747e46fbbd13e65f5889114dd
 
 # Diff at Thu, 19 Feb 2026 09:46:59 GMT:

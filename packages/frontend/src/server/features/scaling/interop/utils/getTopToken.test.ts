@@ -212,6 +212,7 @@ function project({
     name,
     slug,
     interopConfig: {
+      type: 'intent',
       bridgeType: 'nonMinting',
       isAggregate: false,
     },

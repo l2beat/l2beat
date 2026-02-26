@@ -133,6 +133,13 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
+    throughput: [
+      {
+        size: 1000000, // 1 MB max_block_size (from genesis config)
+        frequency: 2, // ~2s calculated average block time (HotShot has no fixed block time)
+        sinceTimestamp: 1731283200, // 2024-11-11
+      },
+    ],
     validators: {
       type: 'static',
       count: 100,

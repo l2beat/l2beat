@@ -6,13 +6,8 @@
     "getFastLaneMembers",
     "getFrameConfig",
     "getMembers",
-    "getReportVariants"
+    "getReportVariants",
+    "getInitialRefSlot"
   ],
-  "fields": {
-    "accessControl": {
-      "handler": {
-        "type": "accessControl"
-      }
-    }
-  }
+  "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
 }

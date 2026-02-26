@@ -68,6 +68,7 @@ const SERVER_CONFIG = {
     .string()
     .transform((v) => UnixTime(Number(v)))
     .optional(),
+  INTEROP_UPCOMING_CHAINS: stringArray.optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -131,6 +132,7 @@ function getRawEnv(): Record<
     INTEROP_DISABLED_CHAINS: process.env.INTEROP_DISABLED_CHAINS,
     INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE:
       process.env.INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE,
+    INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,

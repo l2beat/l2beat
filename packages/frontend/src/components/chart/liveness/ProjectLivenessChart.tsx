@@ -94,18 +94,19 @@ export function ProjectLivenessChart({
           <LivenessChartRangeControls range={range} setRange={setRange} />
         </ChartControlsWrapper>
       </div>
-      <LivenessChart
-        data={chartData}
-        isLoading={isLoading}
-        project={project}
-        subtype={subtype}
-        milestones={milestones}
-        lastValidTimestamp={lastValidTimestamp}
-        anyAnomalyLive={anyAnomalyLive}
-        resolution={rangeToResolution(range)}
-        tickCount={4}
-        className="mt-4 mb-3"
-      />
+      <div className="mt-4 mb-3">
+        <LivenessChart
+          data={chartData}
+          isLoading={isLoading}
+          project={project}
+          subtype={subtype}
+          milestones={milestones}
+          lastValidTimestamp={lastValidTimestamp}
+          anyAnomalyLive={anyAnomalyLive}
+          resolution={rangeToResolution(range)}
+          tickCount={4}
+        />
+      </div>
       <LivenessChartStats
         isLoading={isLoading}
         stats={chart?.stats}

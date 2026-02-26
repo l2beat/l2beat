@@ -3,7 +3,6 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import { interopDescriptions } from '~/pages/interop/descriptions'
-import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
@@ -17,8 +16,8 @@ export function BurnAndMintCard({
   entries: BurnAndMintProtocolEntry[] | undefined
   isLoading: boolean
 }) {
-  const { selectedChains } = useInteropSelectedChains()
-  const viewAllUrl = buildInteropUrl('/interop/burn-and-mint', selectedChains)
+  const { buildUrl } = useInteropSelectedChains()
+  const viewAllUrl = buildUrl('/interop/burn-and-mint')
 
   return (
     <PrimaryCard className="flex flex-col border-t-teal-500 max-md:border-b max-md:border-b-divider md:border-t-4">
