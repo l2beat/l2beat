@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getDSService", "getWalletAt", "proxiableUUID", "validateIssuanceTime"],
+  "fields": {
+    "services": {
+      "handler": {
+        "type": "event",
+        "select": "serviceAddress",
+        "groupBy": "serviceId",
+        "set": {
+          "event": "DSServiceSet"
+        }
+      },
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+        ["from_entries"]
+      ]
+    }
+  }
+}

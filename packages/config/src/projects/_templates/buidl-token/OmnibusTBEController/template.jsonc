@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "services": {
+      "handler": {
+        "type": "event",
+        "select": "serviceAddress",
+        "groupBy": "serviceId",
+        "set": {
+          "event": "DSServiceSet"
+        }
+      },
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["map", ["set", 0, ["format", "ServiceNameMapping"]]],
+        ["from_entries"]
+      ]
+    }
+  },
+  "ignoreMethods": [
+    "getDSService",
+    "getWalletAt",
+    "TRUST_SERVICE",
+    "DS_TOKEN",
+    "REGISTRY_SERVICE",
+    "COMPLIANCE_SERVICE",
+    "UNUSED_1",
+    "WALLET_MANAGER",
+    "LOCK_MANAGER",
+    "PARTITIONS_MANAGER",
+    "COMPLIANCE_CONFIGURATION_SERVICE",
+    "TOKEN_ISSUER",
+    "WALLET_REGISTRAR",
+    "OMNIBUS_TBE_CONTROLLER",
+    "TRANSACTION_RELAYER",
+    "TOKEN_REALLOCATOR",
+    "BULK_OPERATOR",
+    "ISSUER_MULTICALL",
+    "TA_MULTICALL",
+    "SECURITIZE_SWAP",
+    "proxiableUUID"
+  ]
+}

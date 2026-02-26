@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["proxiableUUID"],
+  "types": {
+    "RoleIdToName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "NONE",
+        "1": "MASTER",
+        "2": "ISSUER",
+        "4": "EXCHANGE",
+        "8": "TRANSFER_AGENT"
+      }
+    }
+  },
+  "fields": {
+    "masterRole": {
+      "handler": {
+        "type": "event",
+        "select": "targetAddress",
+        "groupBy": "role",
+        "add": { "event": "DSTrustServiceRoleAdded" },
+        "remove": { "event": "DSTrustServiceRoleRemoved" }
+      },
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["map", ["set", 0, ["format", "RoleIdToName"]]],
+        ["from_entries"],
+        ["get", "MASTER"]
+      ],
+      "permissions": [
+        { "type": "interact", "description": "Do anything, is all powerful." }
+      ]
+    },
+    "issuerRole": {
+      "handler": {
+        "type": "event",
+        "select": "targetAddress",
+        "groupBy": "role",
+        "add": { "event": "DSTrustServiceRoleAdded" },
+        "remove": { "event": "DSTrustServiceRoleRemoved" }
+      },
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["map", ["set", 0, ["format", "RoleIdToName"]]],
+        ["from_entries"],
+        ["get", "ISSUER"]
+      ],
+      "permissions": [
+        { "type": "interact", "description": "Issue new tokens." }
+      ]
+    },
+    "transferAgentRole": {
+      "handler": {
+        "type": "event",
+        "select": "targetAddress",
+        "groupBy": "role",
+        "add": { "event": "DSTrustServiceRoleAdded" },
+        "remove": { "event": "DSTrustServiceRoleRemoved" }
+      },
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["map", ["set", 0, ["format", "RoleIdToName"]]],
+        ["from_entries"],
+        ["get", "TRANSFER_AGENT"]
+      ],
+      "permissions": [{ "type": "interact", "description": "Seize tokens." }]
+    }
+  }
+}

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x85f4cac12c213b09c0e10029c48e7f0b321404cf
+Generated with discovered.json: 0x381f6cf9a9abdac63f68ab9fea1a7a860da40a27
 
-# Diff at Mon, 15 Dec 2025 19:27:05 GMT:
+# Diff at Thu, 26 Feb 2026 09:36:57 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
@@ -523,6 +523,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract WormholeRelayer (matic:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract DSToken (matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99)
     +++ description: None
 ```
@@ -553,6 +559,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract DeliveryProviderImplementation (matic:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract  (matic:0x84903f46c93EC6EA14b4beCF2336429c29972743)
     +++ description: None
 ```
@@ -578,6 +590,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract  (matic:0xBcC23bB9875AE6f9b4488855E3ACd42Ee91743Da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SecuritizeBridge (matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E)
     +++ description: None
 ```
 
