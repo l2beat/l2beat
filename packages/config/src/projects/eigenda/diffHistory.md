@@ -8,7 +8,7 @@ Generated with discovered.json: 0xebbed40e0f32279fcd1ca78b68ee9858b0ff4623
 
 ## Description
 
-EigenLayerRewardsInitiatorMultisig: one member removed (0xf20eD26be), reducing signers from 5 to 4. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/4 (75%). Same multisig change as megaeth.
+EigenLayerRewardsInitiatorMultisig: one member removed (0xf20eD26be), reducing signers from 5 to 4. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/4 (75%).
 
 ## Watched changes
 
