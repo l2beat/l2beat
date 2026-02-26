@@ -8,6 +8,9 @@ import {
   VALUE_DIFF_ALERT_THRESHOLD_PERCENT,
 } from './stats'
 
+const SPARKLINE_WIDTH = 140
+const SPARKLINE_HEIGHT = 26
+
 function formatCount(value: number) {
   return Math.round(value).toLocaleString()
 }
@@ -122,6 +125,131 @@ function PercentBySourceCell(props: {
   )
 }
 
+type SparklineDomain = {
+  min: number
+  max: number
+}
+
+function maxOrZero(values: number[]) {
+  if (values.length === 0) {
+    return 0
+  }
+
+  return Math.max(...values)
+}
+
+function toSparklinePoints(
+  values: number[],
+  width: number,
+  height: number,
+  domain?: SparklineDomain,
+) {
+  if (values.length === 0) {
+    return ''
+  }
+
+  const chartMin = domain?.min ?? Math.min(...values, 0)
+  const chartMax = domain?.max ?? Math.max(...values, 0)
+  const minMaxEqual = chartMax === chartMin
+  const constantNormalized = chartMax === 0 ? 0 : 1
+  const range = Math.max(chartMax - chartMin, 1)
+  const xDenominator = Math.max(values.length - 1, 1)
+
+  return values
+    .map((value, index) => {
+      const normalized = minMaxEqual
+        ? constantNormalized
+        : (value - chartMin) / range
+      const x = (index / xDenominator) * (width - 1)
+      const y = (1 - normalized) * (height - 1)
+      return `${x.toFixed(1)},${y.toFixed(1)}`
+    })
+    .join(' ')
+}
+
+function Sparkline(props: {
+  values: number[]
+  color: string
+  width?: number
+  height?: number
+  domain?: SparklineDomain
+}) {
+  const width = props.width ?? SPARKLINE_WIDTH
+  const height = props.height ?? SPARKLINE_HEIGHT
+  const points = toSparklinePoints(props.values, width, height, props.domain)
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      role="img"
+      aria-hidden="true"
+      style={{ display: 'block' }}
+    >
+      <polyline
+        points={points}
+        fill="none"
+        stroke={props.color}
+        strokeWidth={1.75}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function MiniChartsCell(props: { row: DataRowResult }) {
+  const seriesPoints =
+    props.row.rawDataPoints.length > 0
+      ? props.row.rawDataPoints
+      : props.row.dataPoints
+  const countValues = seriesPoints.map((point) => point.transferCount)
+  const srcVolumeValues = seriesPoints.map((point) => point.totalSrcValueUsd)
+  const dstVolumeValues = seriesPoints.map((point) => point.totalDstValueUsd)
+  const countDomain = {
+    min: 0,
+    max: maxOrZero(countValues),
+  }
+  const volumeDomain = {
+    min: 0,
+    max: maxOrZero([...srcVolumeValues, ...dstVolumeValues]),
+  }
+
+  return (
+    <div style={{ minWidth: `${SPARKLINE_WIDTH}px` }}>
+      <MetricLine>
+        Count
+        <span style={{ color: '#2563eb', fontWeight: 600 }}> ●</span>
+      </MetricLine>
+      <div style={{ background: '#f8fafc', borderRadius: 4 }}>
+        <Sparkline values={countValues} color="#2563eb" domain={countDomain} />
+      </div>
+      <MetricLine>
+        Vol
+        <span style={{ color: '#7c3aed', fontWeight: 600 }}> S</span> /
+        <span style={{ color: '#f97316', fontWeight: 600 }}> D</span>
+      </MetricLine>
+      <div style={{ background: '#f8fafc', borderRadius: 4 }}>
+        <div style={{ position: 'relative' }}>
+          <Sparkline
+            values={srcVolumeValues}
+            color="#7c3aed"
+            domain={volumeDomain}
+          />
+          <div style={{ position: 'absolute', inset: 0 }}>
+            <Sparkline
+              values={dstVolumeValues}
+              color="#f97316"
+              domain={volumeDomain}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function AnomaliesTable(props: { stats: DataRowResult[] }) {
   return (
     <table id="anomalies" className="display">
@@ -136,6 +264,7 @@ function AnomaliesTable(props: { stats: DataRowResult[] }) {
           <th>Src/Dst diff %</th>
           <th>Avg vol/tx</th>
           <th>Avg vol/tx Δ%</th>
+          <th>Mini charts</th>
           <th>Interpretation</th>
         </tr>
       </thead>
@@ -263,6 +392,9 @@ function AnomaliesTable(props: { stats: DataRowResult[] }) {
                   dstPct7d={dstAvgVolumeSummary.pctDiff7d}
                 />
               </td>
+              <td>
+                <MiniChartsCell row={row} />
+              </td>
               <td>{interpretation || '-'}</td>
             </tr>
           )
@@ -297,7 +429,7 @@ function AnomaliesPageLayout(props: { stats: DataRowResult[] }) {
                 type: 'num',
               },
               {
-                targets: [3, 5, 8, 9],
+                targets: [3, 5, 8, 9, 10],
                 orderable: false,
               },
             ],

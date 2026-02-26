@@ -68,6 +68,12 @@ export type DataRowResult = {
   srcVolume: VolumeStats
   dstVolume: VolumeStats
   srcDstDiff: SrcDstDiffStats
+  rawDataPoints: {
+    day: string
+    transferCount: number
+    totalSrcValueUsd: number
+    totalDstValueUsd: number
+  }[]
   dataPoints: {
     day: string
     transferCount: number
@@ -116,6 +122,7 @@ export function explore(rows: DataRow[]) {
 
   for (const id in byId) {
     const series = byId[id]
+    const rawDataPoints = [...series].sort(byDay)
     const dataPoints = prepare(series)
     const periodPoints = getPeriodPoints(dataPoints)
     const { last: lastDp } = periodPoints
@@ -143,6 +150,12 @@ export function explore(rows: DataRow[]) {
       srcVolume: srcVolumeStats,
       dstVolume: dstVolumeStats,
       srcDstDiff: srcDstDiffStats,
+      rawDataPoints: rawDataPoints.map((dp) => ({
+        day: UnixTime.toYYYYMMDD(dp.day),
+        transferCount: dp.transferCount,
+        totalSrcValueUsd: dp.totalSrcValueUsd,
+        totalDstValueUsd: dp.totalDstValueUsd,
+      })),
       dataPoints: dataPoints.map((dp) => ({
         day: UnixTime.toYYYYMMDD(dp.day),
         transferCount: dp.transferCount,
