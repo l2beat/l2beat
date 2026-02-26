@@ -29,6 +29,7 @@ import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
 import { mayan } from '../projects/mayan/mayan'
 import { memo } from '../projects/memo/memo'
+import { meson } from '../projects/meson/meson'
 import { near } from '../projects/near/near-da'
 import { nebraupa } from '../projects/nebraupa/nebraupa'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
@@ -113,4 +114,5 @@ export const refactored: BaseProject[] = [
   wormholeWtt,
   wormholeNtt,
   mayan,
+  meson,
 ]
