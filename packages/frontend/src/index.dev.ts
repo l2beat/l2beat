@@ -1,10 +1,14 @@
 // DO NOT MOVE ANYTHING ABOVE THIS LINE BELOW
 import './dotenv'
 
-import { startServer } from './startServer'
+import { createDevServer } from './server/devServer'
+import { getLogger } from './server/utils/logger'
 
 async function main() {
-  await startServer({ mode: 'development' })
+  const logger = getLogger()
+
+  logger.info('Starting frontend...')
+  await createDevServer(logger)
 }
 
 main()

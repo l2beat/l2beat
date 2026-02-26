@@ -8,6 +8,10 @@ export interface RenderData {
 
 export type RenderFunction = (data: RenderData, url: string) => Promise<string>
 
+export interface RenderOptions {
+  stylesheetUrl?: string
+}
+
 export interface RenderResult {
   html: string
   head: string

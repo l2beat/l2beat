@@ -5,24 +5,15 @@ export PATH="$(pwd)/node_modules/.bin:$PATH"
 export PATH="$(pwd)/../../node_modules/.bin:$PATH"
 
 rm -rf dist
-
-esbuild \
-  src/ssr/ClientEntry.tsx \
-  --bundle \
-  --minify \
-  --outfile=static/index.js &
-esbuild_pid=$!
+rm -f static/index.js
 
 tailwindcss \
   -i src/styles/globals.css \
   -o ./static/index.css \
-  --minify &
-tailwind_pid=$!
-
-wait "$esbuild_pid"
-wait "$tailwind_pid"
+  --minify
 
 node -r esbuild-register ./scripts/hashFiles.ts
+vite build --mode production
 
 esbuild \
   src/index.ts \

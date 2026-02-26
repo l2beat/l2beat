@@ -1,10 +1,21 @@
 // DO NOT MOVE ANYTHING ABOVE THIS LINE BELOW
 import './dotenv'
 
-import { startServer } from './startServer'
+import { env } from './env'
+import { createCacheWarmer } from './server/cacheWarmer'
+import { createServer } from './server/server'
+import { getLogger } from './server/utils/logger'
 
-async function main() {
-  await startServer({ mode: 'production' })
+function main() {
+  const logger = getLogger()
+
+  logger.info('Starting frontend...')
+
+  createServer(logger)
+
+  if (env.REDIS_URL && env.DEPLOYMENT_ENV === 'production') {
+    createCacheWarmer(logger)
+  }
 }
 
 main()

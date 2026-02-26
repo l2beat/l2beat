@@ -7,6 +7,7 @@ import type { Metadata } from './getMetadata'
 export interface HeadProps {
   manifest: Manifest
   metadata: Metadata
+  stylesheetUrl?: string
 }
 
 const size = {
@@ -14,7 +15,9 @@ const size = {
   height: 630,
 }
 
-export function Head({ manifest, metadata }: HeadProps) {
+export function Head({ manifest, metadata, stylesheetUrl }: HeadProps) {
+  const resolvedStylesheetUrl = stylesheetUrl ?? manifest.getUrl('/index.css')
+
   return (
     <>
       <meta charSet="UTF-8" />
@@ -31,7 +34,7 @@ export function Head({ manifest, metadata }: HeadProps) {
         type="image/png"
         sizes="180x180"
       />
-      <link rel="stylesheet" href={manifest.getUrl('/index.css')} />
+      <link rel="stylesheet" href={resolvedStylesheetUrl} />
 
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />

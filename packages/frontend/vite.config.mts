@@ -4,24 +4,36 @@ import path from 'path'
 import { defineConfig } from 'vite'
 
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      '~': path.resolve(__dirname, './src'),
+export default defineConfig(({ command }) => {
+  const isBuild = command === 'build'
+
+  return {
+    base: isBuild ? '/static/' : '/',
+    plugins: [react(), tailwindcss()],
+    resolve: {
+      alias: {
+        '~': path.resolve(__dirname, './src'),
+      },
     },
-  },
-  ssr: {
-    // Externalize workspace packages (CJS) so they're loaded via require()
-    // instead of being processed through Vite's ESM pipeline
-    external: [
-      '@l2beat/config',
-      '@l2beat/shared-pure',
-      '@l2beat/shared',
-      '@l2beat/backend-tools',
-      '@l2beat/database',
-      '@l2beat/dal',
-      '@l2beat/validate',
-    ],
-  },
+    build: {
+      outDir: 'dist/static',
+      emptyOutDir: false,
+      manifest: true,
+      rollupOptions: {
+        input: path.resolve(__dirname, './src/ssr/ClientEntry.tsx'),
+        output: {
+          manualChunks(id) {
+            if (id.includes('/node_modules/')) {
+              return 'vendor'
+            }
+          },
+        },
+      },
+    },
+    ssr: {
+      // Externalize all dependencies (including linked workspace packages)
+      // so CommonJS workspace builds are loaded via Node require().
+      external: true,
+    },
+  }
 })

@@ -1,15 +1,12 @@
 import { readFileSync } from 'node:fs'
 import type { Logger } from '@l2beat/backend-tools'
-import compression from 'compression'
 import timeout from 'connect-timeout'
+import type { NextFunction, Request, Response } from 'express'
 import express from 'express'
-import sirv from 'sirv'
+import type { ViteDevServer } from 'vite'
 import { rawEnv } from '~/env'
-import { createServerPageRouter } from '../pages/ServerPageRouter'
-import { render } from '../ssr/ServerEntry'
 import type { RenderData, RenderOptions, RenderResult } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
-import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
@@ -25,25 +22,23 @@ type RenderFn = (
   options?: RenderOptions,
 ) => RenderResult
 
-export function createServer(baseLogger: Logger) {
+export async function createDevServer(baseLogger: Logger) {
   const logger = baseLogger.for('HTTP Server')
   const app = express()
-  const template = getTemplate(manifest)
 
-  app.use(compression())
-  app.use(
-    '/static',
-    sirv('./dist/static', { maxAge: 31536000, immutable: true }),
-  )
-  // This is done to delay moving markdown to server side
-  app.use('/', sirv('./static', { maxAge: 3600 }))
+  const { createDevMiddleware } = await import('./createDevMiddleware')
+  const vite = await createDevMiddleware(app)
+  // Serve static assets (fonts, icons, images) that Vite doesn't handle
+  app.use('/', express.static('./static'))
 
-  const renderToHtml = (data: RenderData, url: string) => {
-    const renderFn: RenderFn = render
+  const renderToHtml = async (data: RenderData, url: string) => {
+    const mod = await vite.ssrLoadModule('/src/ssr/ServerEntry.tsx')
+    const renderFn = mod.render as RenderFn
     const rendered = renderFn(data, url, {
-      stylesheetUrl: manifest.getUrl('/index.css'),
+      stylesheetUrl: '/src/styles/globals.css?direct',
     })
 
+    const template = readFileSync('index.html', 'utf-8')
     const html = template
       .replace('<!--app-head-->', rendered.head)
       .replace('<!--app-html-->', rendered.html)
@@ -56,7 +51,7 @@ export function createServer(baseLogger: Logger) {
         `window.__ENV__=${JSON.stringify(getClientEnvData())}`,
       )
 
-    return Promise.resolve(html)
+    return transformHtmlWithVite(vite, url, html)
   }
 
   app.use(timeout('25s'))
@@ -66,19 +61,17 @@ export function createServer(baseLogger: Logger) {
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
-  app.use('/', createServerPageRouter(manifest, renderToHtml))
+  app.use('/', createDevPageRouterMiddleware(vite, manifest, renderToHtml))
   app.use('/', createApiRouter())
 
   app.get('/health', (_, res) => {
     res.status(200).send('OK')
   })
 
-  app.use(ErrorHandler())
-
   const server = app.listen(port, () => {
     logger.info('Started', {
       port,
-      url: `Server running on port ${port}`,
+      url: `http://localhost:${port}`,
     })
   })
 
@@ -93,12 +86,8 @@ export function createServer(baseLogger: Logger) {
   })
 }
 
-function getTemplate(manifest: Manifest) {
-  const template = readFileSync('index.html', 'utf-8')
-  return template.replace(
-    '/src/ssr/ClientEntry.tsx',
-    manifest.getUrl('/index.js'),
-  )
+function transformHtmlWithVite(vite: ViteDevServer, url: string, html: string) {
+  return vite.transformIndexHtml(url, html)
 }
 
 function getClientEnvData() {
@@ -117,4 +106,22 @@ function getClientEnvData() {
       })
       .filter((x) => x !== undefined),
   )
+}
+
+function createDevPageRouterMiddleware(
+  vite: ViteDevServer,
+  manifest: Manifest,
+  renderToHtml: (data: RenderData, url: string) => Promise<string>,
+) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const mod = await vite.ssrLoadModule('/src/pages/ServerPageRouter.ts')
+      const createServerPageRouter =
+        mod.createServerPageRouter as typeof import('../pages/ServerPageRouter').createServerPageRouter
+      const router = createServerPageRouter(manifest, renderToHtml)
+      return router(req, res, next)
+    } catch (error) {
+      return next(error)
+    }
+  }
 }
