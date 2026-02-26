@@ -110,17 +110,8 @@ function TopTokensContent({
   const tableData = useMemo(
     () =>
       data?.map((token) => ({
-        id: token.id,
+        ...token,
         displayName: token.symbol,
-        iconUrl: token.iconUrl,
-        volume: token.volume,
-        transferCount: token.transferCount,
-        avgDuration: token.avgDuration,
-        minTransferValueUsd: token.minTransferValueUsd,
-        maxTransferValueUsd: token.maxTransferValueUsd,
-        avgValue: token.avgValue,
-        netMintedValue: token.netMintedValue,
-        flows: token.flows,
       })) ?? [],
     [data],
   )
