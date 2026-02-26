@@ -104,6 +104,7 @@ export type CommonInteropData = {
 export type TokenData = {
   id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number | null
   transferCount: number

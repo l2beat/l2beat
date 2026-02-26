@@ -111,6 +111,7 @@ function TopTokensContent({
         id: chain.id,
         displayName: chain.symbol,
         iconUrl: chain.iconUrl,
+        issuer: chain.issuer,
         volume: chain.volume,
         transferCount: chain.transferCount,
         avgDuration: chain.avgDuration,

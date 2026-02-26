@@ -6,6 +6,7 @@ export type TokensDetailsMap = Map<string, TokensDetails>
 export interface TokensDetails {
   symbol: string
   iconUrl: string
+  issuer: string | null
 }
 
 export async function buildTokensDetailsMap(abstractTokenIds: string[]) {
