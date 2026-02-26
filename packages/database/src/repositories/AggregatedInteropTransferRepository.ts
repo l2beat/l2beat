@@ -30,6 +30,8 @@ export interface AggregatedInteropTransferSeriesRecord {
   day: UnixTime
   id: string
   transferCount: number
+  totalSrcValueUsd: number
+  totalDstValueUsd: number
 }
 
 export interface AggregatedInteropTransferIdSeriesRecord {
@@ -151,6 +153,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<Date>`"latest_per_day"."day"`.as('day'),
         sql<string>`"latest_per_day"."id"`.as('id'),
         eb.fn.sum('transferCount').as('transfer_count'),
+        eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
+        eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
       ])
       .groupBy(['latest_per_day.day', 'latest_per_day.id'])
       .orderBy('latest_per_day.id', 'asc')
@@ -161,6 +165,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       day: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
+      totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
+      totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),
     }))
   }
 

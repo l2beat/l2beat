@@ -8,25 +8,72 @@ export const Z_ROBUST_THRESHOLD = {
   drop: -6,
   spike: 6,
 }
+export const VALUE_DIFF_ALERT_THRESHOLD_PERCENT = 5
 
 const FLAT_LINE_WINDOW_DAYS = 3
 const RATIO_WINDOW_DAYS = 14
+const MIN_NON_ZERO_HISTORY_POINTS = 3
+const Z_WINDOW_DAYS = 14
 
 export type DataRow = AggregatedInteropTransferSeriesRecord
-export type DataRowResult = {
-  id: string
-  timestamp: string
-  lastCount: number
-  prevDayCount: number | null
-  prev7dCount: number | null
-  z: {
-    robust: number | null
-    classic: number | null
-  }
+
+type PeriodPoints = {
+  last: DataRow
+  prevDay: DataRow | undefined
+  prev7d: DataRow | undefined
+}
+
+type ZScore = {
+  robust: number | null
+  classic: number | null
+}
+
+type CountStats = {
+  last: number
+  prevDay: number | null
+  prev7d: number | null
+  z: ZScore
   isFlatLine: boolean
   isRatioDrop: boolean
   isRatioSpike: boolean
-  dataPoints: { day: string; transferCount: number }[]
+}
+
+type VolumeStats = {
+  valueUsd: {
+    last: number
+    prevDay: number | null
+    prev7d: number | null
+  }
+  avgValuePerTransfer: {
+    last: number | null
+    prevDay: number | null
+    prev7d: number | null
+  }
+  z: ZScore
+  isRatioDrop: boolean
+  isRatioSpike: boolean
+}
+
+type SrcDstDiffStats = {
+  lastPercent: number | null
+  prevDayPercent: number | null
+  prev7dPercent: number | null
+  isHigh: boolean
+}
+
+export type DataRowResult = {
+  id: string
+  timestamp: string
+  counts: CountStats
+  srcVolume: VolumeStats
+  dstVolume: VolumeStats
+  srcDstDiff: SrcDstDiffStats
+  dataPoints: {
+    day: string
+    transferCount: number
+    totalSrcValueUsd: number
+    totalDstValueUsd: number
+  }[]
 }
 
 export function prepare(rows: DataRow[]) {
@@ -50,7 +97,13 @@ export function prepare(rows: DataRow[]) {
     if (dayRow) {
       dataPoints.push(dayRow)
     } else {
-      dataPoints.push({ day, id, transferCount: 0 })
+      dataPoints.push({
+        day,
+        id,
+        transferCount: 0,
+        totalSrcValueUsd: 0,
+        totalDstValueUsd: 0,
+      })
     }
   }
 
@@ -64,49 +117,37 @@ export function explore(rows: DataRow[]) {
   for (const id in byId) {
     const series = byId[id]
     const dataPoints = prepare(series)
-    const log1PlusDataPoints = dataPoints.map((dp) => ({
-      ...dp,
-      transferCount: log1Plus(dp.transferCount),
-    }))
+    const periodPoints = getPeriodPoints(dataPoints)
+    const { last: lastDp } = periodPoints
     const counts = dataPoints.map((dp) => dp.transferCount)
-    const lastDp = dataPoints.at(-1)
-    assert(lastDp, 'Last data point must be defined')
-    const prevDayCount = dataPoints.at(-2)?.transferCount ?? null
-    const prev7dCount = dataPoints.at(-8)?.transferCount ?? null
+    const srcValues = dataPoints.map((dp) => dp.totalSrcValueUsd)
+    const dstValues = dataPoints.map((dp) => dp.totalDstValueUsd)
 
-    const zWindow = pick.lastNDays(
-      log1PlusDataPoints.map((dp) => dp.transferCount),
-      14,
+    const countsStats = buildCountStats(periodPoints, counts)
+    const srcVolumeStats = buildVolumeStats(
+      periodPoints,
+      srcValues,
+      (dp) => dp.totalSrcValueUsd,
     )
-
-    const zR = zRobust(zWindow)
-    const zC = zClassic(zWindow)
-
-    const ratioWindow = pick.lastNDays(counts, RATIO_WINDOW_DAYS)
-    const flatLineWindow = pick.lastNDays(counts, FLAT_LINE_WINDOW_DAYS)
-
-    const isFlatLine =
-      flatLineWindow.length >= FLAT_LINE_WINDOW_DAYS &&
-      detect.flatLine(flatLineWindow)
-    const isRatioDrop = detect.ratioDrop(ratioWindow)
-    const isRatioSpike = detect.ratioSpike(ratioWindow)
+    const dstVolumeStats = buildVolumeStats(
+      periodPoints,
+      dstValues,
+      (dp) => dp.totalDstValueUsd,
+    )
+    const srcDstDiffStats = buildSrcDstDiffStats(periodPoints)
 
     results.push({
       id,
       timestamp: UnixTime.toYYYYMMDD(lastDp.day),
-      lastCount: lastDp.transferCount,
-      prevDayCount,
-      prev7dCount,
-      z: {
-        robust: zR,
-        classic: zC,
-      },
-      isFlatLine,
-      isRatioDrop,
-      isRatioSpike,
+      counts: countsStats,
+      srcVolume: srcVolumeStats,
+      dstVolume: dstVolumeStats,
+      srcDstDiff: srcDstDiffStats,
       dataPoints: dataPoints.map((dp) => ({
         day: UnixTime.toYYYYMMDD(dp.day),
         transferCount: dp.transferCount,
+        totalSrcValueUsd: dp.totalSrcValueUsd,
+        totalDstValueUsd: dp.totalDstValueUsd,
       })),
     })
   }
@@ -117,53 +158,206 @@ export function explore(rows: DataRow[]) {
 export function interpret(result: DataRowResult) {
   const outputs: string[] = []
 
-  if (result.isFlatLine) {
+  if (result.counts.isFlatLine) {
     outputs.push('Flat line')
   }
 
-  if (result.isRatioDrop) {
-    outputs.push('Ratio drop')
+  appendRatioLabels(outputs, result.counts, {
+    drop: 'Ratio drop',
+    spike: 'Ratio spike',
+  })
+  appendRatioLabels(outputs, result.srcVolume, {
+    drop: 'Src volume ratio drop',
+    spike: 'Src volume ratio spike',
+  })
+  appendRatioLabels(outputs, result.dstVolume, {
+    drop: 'Dst volume ratio drop',
+    spike: 'Dst volume ratio spike',
+  })
+
+  if (result.srcDstDiff.isHigh) {
+    outputs.push(
+      `Src/Dst value mismatch > ${VALUE_DIFF_ALERT_THRESHOLD_PERCENT}%`,
+    )
   }
 
-  if (result.isRatioSpike) {
-    outputs.push('Ratio spike')
-  }
-
-  if (
-    result.z.classic !== null &&
-    Math.abs(result.z.classic) > Z_CLASSIC_THRESHOLD
-  ) {
-    outputs.push('Z-classic: spike/drop')
-  }
-
-  if (result.z.robust !== null) {
-    const zRobustInterpreted = interpretZRobust(result.z.robust)
-    if (zRobustInterpreted) {
-      outputs.push(zRobustInterpreted)
-    }
-  }
+  appendZLabels(outputs, result.counts.z, {
+    classic: 'Z-classic: spike/drop',
+  })
+  appendZLabels(outputs, result.srcVolume.z, {
+    classic: 'Src volume Z-classic: spike/drop',
+    robustPrefix: 'Src volume ',
+  })
+  appendZLabels(outputs, result.dstVolume.z, {
+    classic: 'Dst volume Z-classic: spike/drop',
+    robustPrefix: 'Dst volume ',
+  })
 
   return outputs.join(', ')
 }
 
 export function interpretZRobust(value: number) {
-  const abs = Math.abs(value)
-
   if (value > Z_ROBUST_THRESHOLD.spike) {
     return 'Z-robust - big spike'
+  }
+
+  if (value > Z_ROBUST_THRESHOLD.warn) {
+    return 'Z-robust - moderate spike'
   }
 
   if (value < Z_ROBUST_THRESHOLD.drop) {
     return 'Z-robust - big drop'
   }
 
-  if (abs > Z_ROBUST_THRESHOLD.warn) {
-    return 'Z-robust - moderate spike/drop'
+  if (value < -Z_ROBUST_THRESHOLD.warn) {
+    return 'Z-robust - moderate drop'
   }
 }
 
 function log1Plus(x: number) {
   return Math.log(1 + x)
+}
+
+function avgVolumePerTransfer(volume: number, transferCount: number) {
+  if (transferCount <= 0) {
+    return null
+  }
+
+  return volume / transferCount
+}
+
+function relativePercentDifference(left: number, right: number) {
+  const base = Math.max(Math.abs(left), Math.abs(right))
+  if (base === 0) {
+    return null
+  }
+
+  return (Math.abs(left - right) / base) * 100
+}
+
+function buildCountStats(points: PeriodPoints, counts: number[]): CountStats {
+  const period = mapPeriodPoints(points, (dp) => dp.transferCount)
+  const ratioWindow = pick.lastNDays(counts, RATIO_WINDOW_DAYS)
+  const zWindow = pick.lastNDays(counts.map(log1Plus), Z_WINDOW_DAYS)
+  const flatLineWindow = pick.lastNDays(counts, FLAT_LINE_WINDOW_DAYS)
+  const hasSignal = hasEnoughNonZeroHistory(
+    ratioWindow,
+    MIN_NON_ZERO_HISTORY_POINTS,
+  )
+
+  return {
+    ...period,
+    z: getZScore(zWindow, hasSignal),
+    isFlatLine:
+      flatLineWindow.length >= FLAT_LINE_WINDOW_DAYS &&
+      detect.flatLine(flatLineWindow),
+    isRatioDrop: hasSignal && detect.ratioDrop(ratioWindow),
+    isRatioSpike: hasSignal && detect.ratioSpike(ratioWindow),
+  }
+}
+
+function buildVolumeStats(
+  points: PeriodPoints,
+  values: number[],
+  getValueUsd: (dp: DataRow) => number,
+): VolumeStats {
+  const valueUsd = mapPeriodPoints(points, getValueUsd)
+  const avgValuePerTransfer = mapPeriodPoints(points, (dp) =>
+    avgVolumePerTransfer(getValueUsd(dp), dp.transferCount),
+  )
+  const ratioWindow = pick.lastNDays(values, RATIO_WINDOW_DAYS)
+  const zWindow = pick.lastNDays(values.map(log1Plus), Z_WINDOW_DAYS)
+  const hasSignal = hasEnoughNonZeroHistory(
+    ratioWindow,
+    MIN_NON_ZERO_HISTORY_POINTS,
+  )
+
+  return {
+    valueUsd,
+    avgValuePerTransfer,
+    z: getZScore(zWindow, hasSignal),
+    isRatioDrop: hasSignal && detect.ratioDrop(ratioWindow),
+    isRatioSpike:
+      hasSignal && detect.ratioSpike(ratioWindow, 10 /* 10x sudden spike */),
+  }
+}
+
+function buildSrcDstDiffStats(points: PeriodPoints): SrcDstDiffStats {
+  const period = mapPeriodPoints(points, (dp) =>
+    relativePercentDifference(dp.totalSrcValueUsd, dp.totalDstValueUsd),
+  )
+
+  return {
+    lastPercent: period.last,
+    prevDayPercent: period.prevDay,
+    prev7dPercent: period.prev7d,
+    isHigh:
+      period.last !== null && period.last > VALUE_DIFF_ALERT_THRESHOLD_PERCENT,
+  }
+}
+
+function getZScore(values: number[], hasSignal: boolean): ZScore {
+  if (!hasSignal) {
+    return { robust: null, classic: null }
+  }
+
+  return {
+    robust: zRobust(values),
+    classic: zClassic(values),
+  }
+}
+
+function appendRatioLabels(
+  outputs: string[],
+  ratioStats: { isRatioDrop: boolean; isRatioSpike: boolean },
+  labels: { drop: string; spike: string },
+) {
+  if (ratioStats.isRatioDrop) {
+    outputs.push(labels.drop)
+  }
+
+  if (ratioStats.isRatioSpike) {
+    outputs.push(labels.spike)
+  }
+}
+
+function appendZLabels(
+  outputs: string[],
+  z: ZScore,
+  labels: { classic: string; robustPrefix?: string },
+) {
+  if (z.classic !== null && Math.abs(z.classic) > Z_CLASSIC_THRESHOLD) {
+    outputs.push(labels.classic)
+  }
+
+  if (z.robust !== null) {
+    const zRobustInterpreted = interpretZRobust(z.robust)
+    if (zRobustInterpreted) {
+      outputs.push(`${labels.robustPrefix ?? ''}${zRobustInterpreted}`)
+    }
+  }
+}
+
+function getPeriodPoints(dataPoints: DataRow[]): PeriodPoints {
+  const last = dataPoints.at(-1)
+  assert(last, 'Last data point must be defined')
+
+  return {
+    last,
+    prevDay: dataPoints.at(-2),
+    prev7d: dataPoints.at(-8),
+  }
+}
+
+function mapPeriodPoints<T>(
+  points: PeriodPoints,
+  transform: (dataPoint: DataRow) => T,
+) {
+  return {
+    last: transform(points.last),
+    prevDay: points.prevDay === undefined ? null : transform(points.prevDay),
+    prev7d: points.prev7d === undefined ? null : transform(points.prev7d),
+  }
 }
 
 function byDay(a: DataRow, b: DataRow) {
@@ -203,7 +397,7 @@ export function zRobust(values: number[]) {
   assert(current !== undefined, 'Current value must be defined')
   const med = median(prev)
   const mad = MAD(prev)
-  if (mad === 0) return current === med ? 0 : Number.POSITIVE_INFINITY
+  if (mad === 0) return current === med ? 0 : null
   return (current - med) / (1.4826 * mad)
 }
 
@@ -248,14 +442,21 @@ function ratioSpike(values: number[], threshold = 1.9 /* +90% */) {
   const current = values.at(-1)
   assert(current !== undefined, 'Current value must be defined')
   const base = median(prev)
-  if (base === 0) return current > 0 // or handle separately
+  if (base === 0) return false
   return current / base > threshold
 }
 
-function lastNDays(values: number[], n: number) {
-  if (values.length < n) {
-    return values
+function hasEnoughNonZeroHistory(values: number[], minNonZeroPoints: number) {
+  if (values.length <= 2) {
+    return false
   }
+
+  const prev = values.slice(0, -1)
+  const nonZeroPoints = prev.filter((value) => value > 0).length
+  return nonZeroPoints >= minNonZeroPoints
+}
+
+function lastNDays(values: number[], n: number) {
   return values.slice(-n)
 }
 
@@ -271,6 +472,9 @@ export const detect = {
 
 export const funcs = {
   log1Plus,
+  avgVolumePerTransfer,
+  relativePercentDifference,
+  hasEnoughNonZeroHistory,
   median,
   MAD,
   zRobust,
