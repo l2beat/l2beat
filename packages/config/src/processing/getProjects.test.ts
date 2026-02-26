@@ -226,7 +226,7 @@ describe('getProjects', () => {
     }
   })
 
-  describe.only('zk catalog', async () => {
+  describe('zk catalog', async () => {
     const usageMap = getUsageMap(projects)
 
     for (const project of projects) {
