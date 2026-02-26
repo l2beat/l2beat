@@ -23,9 +23,7 @@ export function WhatsNewWidgetCloseable({
 
   if (
     isClosed ||
-    whatsNew.mobileDisabledOnMatches?.some((match) =>
-      pathname.startsWith(match),
-    )
+    whatsNew.disabledOnMatches?.some((match) => pathname.startsWith(match))
   )
     return null
 

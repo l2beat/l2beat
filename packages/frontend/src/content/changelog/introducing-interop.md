@@ -6,7 +6,7 @@ whatsNew:
   image: "/meta-images/publications/interoperability-page.png"
   alt: "Introducing Interop - Explore cross-chain flows and protocols"
   href: "/interop/summary"
-  mobileDisabledOnMatches: ['/interop']
+  disabledOnMatches: ['/interop']
   expiresAt: "2026-03-31T23:59:59.000Z"
 ---
 
