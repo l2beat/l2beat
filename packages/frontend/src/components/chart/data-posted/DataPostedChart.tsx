@@ -65,7 +65,6 @@ interface Props {
   resolution: DaThroughputResolution
   isLoading: boolean
   syncedUntil: number | undefined
-  className?: string
   tickCount?: number
   milestones: Milestone[]
 }
@@ -76,7 +75,6 @@ export function DataPostedChart({
   resolution,
   isLoading,
   syncedUntil,
-  className,
   tickCount,
   milestones,
 }: Props) {
@@ -95,7 +93,6 @@ export function DataPostedChart({
   return (
     <ChartContainer
       data={data}
-      className={className}
       meta={filteredChartMeta}
       isLoading={isLoading}
       milestones={milestones}
@@ -105,7 +102,7 @@ export function DataPostedChart({
         onItemClick: toggleDataKey,
       }}
     >
-      <AreaChart data={data} margin={{ top: 20 }}>
+      <AreaChart responsive data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <ChartStrokeOverFillAreaComponents
           data={Object.keys(filteredChartMeta).flatMap((key) => ({
