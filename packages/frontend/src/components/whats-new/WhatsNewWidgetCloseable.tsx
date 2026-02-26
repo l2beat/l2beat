@@ -29,11 +29,11 @@ export function WhatsNewWidgetCloseable({
 
   return (
     <div
-      className="fixed right-4 bottom-4 z-[999] max-w-[260px] empty:hidden"
+      className="fixed right-4 bottom-4 z-[999] max-w-[260px] empty:hidden md:right-8 md:max-w-[320px]"
       onClick={() => setIsClosed(true)}
     >
       <button
-        className="absolute top-2 right-2 p-1"
+        className="absolute top-1 right-1 bg-primary-invert p-1 shadow-lg"
         onClick={() => {
           track('whatsNewClicked', {
             props: {
@@ -43,7 +43,7 @@ export function WhatsNewWidgetCloseable({
           })
         }}
       >
-        <CloseIcon className="size-4 fill-primary-invert" />
+        <CloseIcon className="size-4 fill-primary" />
       </button>
       <WhatsNewWidget whatsNew={whatsNew} />
     </div>
