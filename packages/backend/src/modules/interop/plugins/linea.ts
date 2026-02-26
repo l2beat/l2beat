@@ -43,18 +43,23 @@ const parseMessageClaimed = createEventParser(messageClaimedLog)
 const parseBridgingInitiatedV2 = createEventParser(bridgingInitiatedV2Log)
 const parseBridgingFinalizedV2 = createEventParser(bridgingFinalizedV2Log)
 
+type CounterpartyChain = 'ethereum' | 'linea'
+
 const MessageSent = createInteropEventType<{
   messageHash: `0x${string}`
   value: bigint
+  $dstChain: CounterpartyChain
 }>('linea.MessageSent', { direction: 'outgoing', ttl: 30 * UnixTime.DAY })
 
 const MessageClaimed = createInteropEventType<{
   messageHash: `0x${string}`
+  $srcChain: CounterpartyChain
 }>('linea.MessageClaimed', { direction: 'incoming', ttl: 30 * UnixTime.DAY })
 
 const BridgingInitiatedV2 = createInteropEventType<{
   token: Address32
   amount: bigint
+  $dstChain: CounterpartyChain
 }>('linea.BridgingInitiatedV2', {
   direction: 'outgoing',
   ttl: 30 * UnixTime.DAY,
@@ -64,6 +69,7 @@ const BridgingFinalizedV2 = createInteropEventType<{
   nativeToken: Address32
   bridgedToken: Address32
   amount: bigint
+  $srcChain: CounterpartyChain
 }>('linea.BridgingFinalizedV2', {
   direction: 'incoming',
   ttl: 30 * UnixTime.DAY,
@@ -112,12 +118,16 @@ export class LineaPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
+    const counterparty = getCounterpartyChain(input.chain)
+    if (!counterparty) return
+
     const messageSent = parseMessageSent(input.log, MESSAGE_SERVICE_ADDRESSES)
     if (messageSent) {
       return [
         MessageSent.create(input, {
           messageHash: messageSent._messageHash,
           value: messageSent._value,
+          $dstChain: counterparty,
         }),
       ]
     }
@@ -130,6 +140,7 @@ export class LineaPlugin implements InteropPluginResyncable {
       return [
         MessageClaimed.create(input, {
           messageHash: messageClaimed._messageHash,
+          $srcChain: counterparty,
         }),
       ]
     }
@@ -143,6 +154,7 @@ export class LineaPlugin implements InteropPluginResyncable {
         BridgingInitiatedV2.create(input, {
           token: Address32.from(EthereumAddress(bridgingInitiated.token)),
           amount: bridgingInitiated.amount,
+          $dstChain: counterparty,
         }),
       ]
     }
@@ -161,6 +173,7 @@ export class LineaPlugin implements InteropPluginResyncable {
             EthereumAddress(bridgingFinalized.bridgedToken),
           ),
           amount: bridgingFinalized.amount,
+          $srcChain: counterparty,
         }),
       ]
     }
@@ -180,67 +193,61 @@ export class LineaPlugin implements InteropPluginResyncable {
     })
     if (!messageSent) return
 
-    const results: MatchResult = [
-      Result.Message('linea.Message', {
-        app: 'linea',
-        srcEvent: messageSent,
-        dstEvent: event,
-      }),
-    ]
-
     const bridgingFinalized = db.find(BridgingFinalizedV2, {
       sameTxBefore: event,
     })
+    let messageApp = 'unknown'
+    let transfer: ReturnType<typeof Result.Transfer> | undefined
 
     // ETH is lock/release on L1 and burn/mint on L2 (well acshually not on L2 but that is standard L2 preminting)
     const ethSrcWasBurned = srcChain === 'linea'
     const ethDstWasMinted = srcChain === 'ethereum'
 
     if (messageSent.args.value > 0n) {
-      results.push(
-        Result.Transfer('linea.Transfer', {
-          srcEvent: messageSent,
-          srcTokenAddress: Address32.NATIVE,
-          srcAmount: messageSent.args.value,
-          srcWasBurned: ethSrcWasBurned,
-          dstEvent: event,
-          dstTokenAddress: Address32.NATIVE,
-          dstAmount: messageSent.args.value,
-          dstWasMinted: ethDstWasMinted,
-        }),
-      )
-      return results
+      messageApp = 'canonical-eth'
+      transfer = Result.Transfer('linea.Transfer', {
+        srcEvent: messageSent,
+        srcTokenAddress: Address32.NATIVE,
+        srcAmount: messageSent.args.value,
+        srcWasBurned: ethSrcWasBurned,
+        dstEvent: event,
+        dstTokenAddress: Address32.NATIVE,
+        dstAmount: messageSent.args.value,
+        dstWasMinted: ethDstWasMinted,
+      })
+    } else if (messageSent.args.value === 0n && bridgingFinalized) {
+      const bridgingInitiated = db.find(BridgingInitiatedV2, {
+        sameTxAfter: messageSent,
+      })
+      if (bridgingInitiated) {
+        const tokenDstWasMinted =
+          bridgingFinalized.args.nativeToken ===
+          bridgingFinalized.args.bridgedToken
+        const tokenSrcWasBurned = !tokenDstWasMinted
+
+        messageApp = 'canonical-token'
+        transfer = Result.Transfer('linea.Transfer', {
+          srcEvent: bridgingInitiated,
+          srcTokenAddress: bridgingInitiated.args.token,
+          srcAmount: bridgingInitiated.args.amount,
+          srcWasBurned: tokenSrcWasBurned,
+          dstEvent: bridgingFinalized,
+          dstTokenAddress: bridgingFinalized.args.nativeToken,
+          dstAmount: bridgingFinalized.args.amount,
+          dstWasMinted: tokenDstWasMinted,
+        })
+      }
     }
 
-    if (messageSent.args.value !== 0n || !bridgingFinalized) {
-      return results
-    }
-
-    const bridgingInitiated = db.find(BridgingInitiatedV2, {
-      sameTxAfter: messageSent,
+    const message = Result.Message('linea.Message', {
+      app: messageApp,
+      srcEvent: messageSent,
+      dstEvent: event,
     })
-    if (!bridgingInitiated) {
-      return results
+
+    if (transfer) {
+      return [message, transfer]
     }
-
-    const tokenDstWasMinted =
-      bridgingFinalized.args.nativeToken === bridgingFinalized.args.bridgedToken
-    const tokenSrcWasBurned = !tokenDstWasMinted
-
-    results.push(
-      Result.Transfer('linea.Transfer', {
-        srcEvent: bridgingInitiated,
-        srcTokenAddress: bridgingInitiated.args.token,
-        srcAmount: bridgingInitiated.args.amount,
-        srcWasBurned: tokenSrcWasBurned,
-        dstEvent: bridgingFinalized,
-        dstTokenAddress: bridgingFinalized.args.nativeToken,
-        dstAmount: bridgingFinalized.args.amount,
-        dstWasMinted: tokenDstWasMinted,
-        extraEvents: [messageSent, event],
-      }),
-    )
-
-    return results
+    return [message]
   }
 }
