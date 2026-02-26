@@ -15,7 +15,7 @@ export type TokenFlowDisplayData = {
 
 export function TokenFlowsCell({ flows }: { flows: TokenFlowDisplayData[] }) {
   return (
-    <div className="flex min-w-[120px] flex-col items-start gap-1">
+    <div className="flex min-w-[120px] flex-col items-start gap-1 max-md:py-1">
       {flows.map((flow) => {
         return (
           <div
