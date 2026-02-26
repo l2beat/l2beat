@@ -19,7 +19,7 @@ import {
 import { getTokensData } from './utils/getTokensData'
 
 type TokenInteropData = CommonInteropData & {
-  netFlows: Map<string, TokenFlowData>
+  flows: Map<string, TokenFlowData>
 }
 
 export async function getInteropProtocolTokens({
@@ -82,7 +82,7 @@ export async function getInteropProtocolTokens({
   for (const token of tokens) {
     const current = result.get(token.abstractTokenId) ?? {
       ...INITIAL_COMMON_INTEROP_DATA,
-      netFlows: new Map<string, TokenFlowData>(),
+      flows: new Map<string, TokenFlowData>(),
     }
 
     const transfersTimeMode = transfersTimeModeMap.get(interopProject.id)
@@ -94,18 +94,18 @@ export async function getInteropProtocolTokens({
 
     result.set(token.abstractTokenId, {
       ...accumulateTokens(current, token, direction),
-      netFlows: current.netFlows,
+      flows: current.flows,
     })
 
     const flowKey = `${token.srcChain}::${token.dstChain}`
-    const currentFlow = current.netFlows.get(flowKey)
+    const currentFlow = current.flows.get(flowKey)
     if (currentFlow) {
-      current.netFlows.set(flowKey, {
+      current.flows.set(flowKey, {
         ...currentFlow,
         volume: currentFlow.volume + token.volume,
       })
     } else {
-      current.netFlows.set(flowKey, {
+      current.flows.set(flowKey, {
         srcChain: token.srcChain,
         dstChain: token.dstChain,
         volume: token.volume,

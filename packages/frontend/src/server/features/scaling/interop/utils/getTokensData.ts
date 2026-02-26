@@ -14,7 +14,7 @@ type Params = {
   bridgeType: KnownInteropBridgeType | undefined
   tokens: Map<
     string,
-    CommonInteropData & { netFlows?: Map<string, TokenFlowData> }
+    CommonInteropData & { flows?: Map<string, TokenFlowData> }
   >
   tokensDetailsMap: Map<
     string,
@@ -69,8 +69,8 @@ export function getTokensData({
           token.burnedValueUsd !== undefined
             ? token.mintedValueUsd - token.burnedValueUsd
             : undefined,
-        netFlows: token.netFlows
-          ? Array.from(token.netFlows.values()).toSorted(
+        flows: token.flows
+          ? Array.from(token.flows.values()).toSorted(
               (a, b) => b.volume - a.volume,
             )
           : [],
@@ -89,7 +89,7 @@ export function getTokensData({
       avgValue: null,
       volume: null,
       netMintedValue: undefined,
-      netFlows: [],
+      flows: [],
     })
   }
 

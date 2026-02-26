@@ -116,7 +116,7 @@ export type TokenData = {
   avgDuration: AverageDuration | null
   avgValue: number | null
   netMintedValue: number | undefined
-  netFlows: TokenFlowData[]
+  flows: TokenFlowData[]
 }
 
 export type ChainData = {

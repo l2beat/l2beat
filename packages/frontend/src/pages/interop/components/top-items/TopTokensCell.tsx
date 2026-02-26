@@ -116,7 +116,7 @@ function TopTokensContent({
         avgDuration: token.avgDuration,
         avgValue: token.avgValue,
         netMintedValue: token.netMintedValue,
-        netFlows: token.netFlows.map((flow) => ({
+        flows: token.flows.map((flow) => ({
           srcChain: {
             id: flow.srcChain,
             iconUrl: getChainById(flow.srcChain)?.iconUrl,

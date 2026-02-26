@@ -13,14 +13,10 @@ export type TokenFlowDisplayData = {
   volume: number
 }
 
-export function TokenFlowsCell({
-  netFlows,
-}: {
-  netFlows: TokenFlowDisplayData[]
-}) {
+export function TokenFlowsCell({ flows }: { flows: TokenFlowDisplayData[] }) {
   return (
     <div className="flex min-w-[120px] flex-col items-start gap-1">
-      {netFlows.map((flow) => {
+      {flows.map((flow) => {
         return (
           <div
             key={`${flow.srcChain.id}-${flow.dstChain.id}`}

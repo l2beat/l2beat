@@ -18,7 +18,7 @@ export type TopItem = {
   avgDuration: AverageDuration | null
   avgValue: number | null
   netMintedValue?: number
-  netFlows?: TokenFlowDisplayData[]
+  flows?: TokenFlowDisplayData[]
 }
 export type TopItemType = 'tokens' | 'chains'
 
@@ -119,15 +119,15 @@ export const getTopItemsColumns = (
     }),
     itemType === 'tokens' &&
       columnHelper.accessor(
-        (row) => row.netFlows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
+        (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
         {
-          id: 'netFlows',
-          header: 'Net flows',
+          id: 'flows',
+          header: 'Flows',
           cell: (ctx) => {
-            const netFlows = ctx.row.original.netFlows
-            if (!netFlows || netFlows.length === 0) return EM_DASH
+            const flows = ctx.row.original.flows
+            if (!flows || flows.length === 0) return EM_DASH
 
-            return <TokenFlowsCell netFlows={netFlows} />
+            return <TokenFlowsCell flows={flows} />
           },
         },
       ),
