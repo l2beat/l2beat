@@ -862,6 +862,8 @@ function record({
   totalDurationSum = 0,
   bridgeType = 'unknown',
   volume = 1000,
+  minTransferValueUsd,
+  maxTransferValueUsd,
   mintedValueUsd,
   burnedValueUsd,
 }: {
@@ -874,6 +876,8 @@ function record({
   totalDurationSum?: number
   bridgeType?: InteropBridgeType
   volume?: number
+  minTransferValueUsd?: number
+  maxTransferValueUsd?: number
   mintedValueUsd?: number
   burnedValueUsd?: number
 }): AggregatedInteropTokenRecord {
@@ -887,6 +891,8 @@ function record({
     transferCount,
     totalDurationSum,
     volume,
+    minTransferValueUsd,
+    maxTransferValueUsd,
     mintedValueUsd,
     burnedValueUsd,
   }

@@ -7,6 +7,7 @@ import type {
   InteropProtocolTokensParams,
 } from './types'
 import { accumulateChains } from './utils/accumulate'
+import { getAggregatedInteropTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
 import { getChainsData } from './utils/getChainsData'
 import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
@@ -28,8 +29,7 @@ export async function getInteropProtocolChains({
     return []
   }
 
-  const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
+  const latestTimestamp = await getAggregatedInteropTimestamp()
   if (!latestTimestamp) {
     return []
   }

@@ -13,6 +13,8 @@ export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
   inDurationSum: 0,
   outTransferCount: 0,
   outDurationSum: 0,
+  minTransferValueUsd: undefined,
+  maxTransferValueUsd: undefined,
   mintedValueUsd: undefined,
   burnedValueUsd: undefined,
 }
@@ -36,6 +38,8 @@ export function accumulateChains(
       volume: source === 'src' ? record.srcValueUsd : record.dstValueUsd,
       transferCount: record.transferCount,
       totalDurationSum: record.totalDurationSum,
+      minTransferValueUsd: record.minTransferValueUsd,
+      maxTransferValueUsd: record.maxTransferValueUsd,
       mintedValueUsd: record.mintedValueUsd,
       burnedValueUsd: record.burnedValueUsd,
     },
@@ -49,6 +53,8 @@ function accumulate(
     volume: number | undefined
     transferCount: number | undefined
     totalDurationSum: number | undefined
+    minTransferValueUsd: number | undefined
+    maxTransferValueUsd: number | undefined
     mintedValueUsd: number | undefined
     burnedValueUsd: number | undefined
   },
@@ -61,6 +67,18 @@ function accumulate(
     volume: current.volume + (record.volume ?? 0),
     transferCount: current.transferCount + transferCount,
     totalDurationSum: current.totalDurationSum + durationSum,
+    minTransferValueUsd:
+      record.minTransferValueUsd !== undefined
+        ? current.minTransferValueUsd !== undefined
+          ? Math.min(current.minTransferValueUsd, record.minTransferValueUsd)
+          : record.minTransferValueUsd
+        : current.minTransferValueUsd,
+    maxTransferValueUsd:
+      record.maxTransferValueUsd !== undefined
+        ? current.maxTransferValueUsd !== undefined
+          ? Math.max(current.maxTransferValueUsd, record.maxTransferValueUsd)
+          : record.maxTransferValueUsd
+        : current.maxTransferValueUsd,
     mintedValueUsd:
       current.mintedValueUsd !== undefined
         ? current.mintedValueUsd + (record.mintedValueUsd ?? 0)

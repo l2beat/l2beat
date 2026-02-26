@@ -22,9 +22,11 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { Logo } from '~/components/Logo'
+import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/useIsClient'
 import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
@@ -191,8 +193,18 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
       <div className="font-medium text-label-value-14 text-secondary">
         {label}
       </div>
-      <HorizontalSeparator className="my-1" />
-      <div className="flex flex-col gap-2">
+
+      <HorizontalSeparator className="my-1.5" />
+
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">
+            Total transfers
+          </span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatInteger(totalTransfers)} transfers
+          </span>
+        </div>
         {reversedPayload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
           if (!configEntry || entry.hide) return null
@@ -228,13 +240,31 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
           )
         })}
       </div>
-      <HorizontalSeparator className="my-1" />
-      <div className="flex items-center justify-between gap-x-6">
-        <span className="font-medium text-label-value-14">Total transfers</span>
-        <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatInteger(totalTransfers)} transfers
-        </span>
+      <HorizontalSeparator className="my-1.5" />
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Min size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(data.minTransferValueUsd)}
+          </span>
+        </div>
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Average size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(data.averageTransferSizeUsd)}
+          </span>
+        </div>
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Max size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(data.maxTransferValueUsd)}
+          </span>
+        </div>
       </div>
     </ChartTooltipWrapper>
   )
+}
+
+function formatTransferSize(value: number | undefined) {
+  return value !== undefined ? formatCurrency(value, 'usd') : EM_DASH
 }

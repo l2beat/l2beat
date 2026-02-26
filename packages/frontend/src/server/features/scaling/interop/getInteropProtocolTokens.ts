@@ -10,6 +10,7 @@ import type {
 import { accumulateTokens } from './utils/accumulate'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { buildTransfersTimeModeMap } from './utils/buildTransfersTimeModeMap'
+import { getAggregatedInteropTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
 import {
   getDirection,
@@ -34,8 +35,7 @@ export async function getInteropProtocolTokens({
     return []
   }
 
-  const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
+  const latestTimestamp = await getAggregatedInteropTimestamp()
   if (!latestTimestamp) {
     return []
   }

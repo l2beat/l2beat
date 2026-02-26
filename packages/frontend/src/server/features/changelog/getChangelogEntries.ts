@@ -13,7 +13,7 @@ export interface ChangelogEntry {
         image: string
         alt: string
         href?: string
-        mobileDisabledOnMatches?: string[]
+        disabledOnMatches?: string[]
         expiresAt: Date
       }
     | undefined
@@ -47,7 +47,7 @@ export function selectActiveChangelogWhatsNewWidget(
         id: `changelog-${entry.id}`,
         href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
         image: entry.whatsNew.image,
-        mobileDisabledOnMatches: entry.whatsNew.mobileDisabledOnMatches,
+        disabledOnMatches: entry.whatsNew.disabledOnMatches,
         alt: entry.whatsNew.alt,
       }
     }

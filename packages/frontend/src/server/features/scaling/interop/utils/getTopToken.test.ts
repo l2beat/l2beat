@@ -233,6 +233,8 @@ function record({
       transferCount: token.transferCount,
       totalDurationSum: 0,
       volume: token.volume,
+      minTransferValueUsd: undefined,
+      maxTransferValueUsd: undefined,
       mintedValueUsd: undefined,
       burnedValueUsd: undefined,
     })),
