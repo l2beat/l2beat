@@ -102,8 +102,14 @@ export type CommonInteropData = {
 }
 
 export type TokenFlowData = {
-  srcChain: string
-  dstChain: string
+  srcChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  dstChain: {
+    id: string
+    iconUrl: string | undefined
+  }
   volume: number
 }
 

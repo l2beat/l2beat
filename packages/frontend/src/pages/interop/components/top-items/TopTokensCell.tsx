@@ -93,7 +93,7 @@ function TopTokensContent({
   showNetMintedValueColumn?: boolean
 }) {
   const breakpoint = useBreakpoint()
-  const { selectionForApi, getChainById } = useInteropSelectedChains()
+  const { selectionForApi } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokens.useQuery(
     {
       ...selectionForApi,
@@ -116,19 +116,9 @@ function TopTokensContent({
         avgDuration: token.avgDuration,
         avgValue: token.avgValue,
         netMintedValue: token.netMintedValue,
-        flows: token.flows.map((flow) => ({
-          srcChain: {
-            id: flow.srcChain,
-            iconUrl: getChainById(flow.srcChain)?.iconUrl,
-          },
-          dstChain: {
-            id: flow.dstChain,
-            iconUrl: getChainById(flow.dstChain)?.iconUrl,
-          },
-          volume: flow.volume,
-        })),
+        flows: token.flows,
       })) ?? [],
-    [data, getChainById],
+    [data],
   )
 
   const columns = useMemo(() => {
