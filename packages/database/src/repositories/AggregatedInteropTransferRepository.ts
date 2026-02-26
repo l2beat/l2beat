@@ -260,6 +260,22 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       : undefined
   }
 
+  async getEarliestTimestampForDay(timestamp: UnixTime) {
+    const result = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => eb.fn.min('timestamp').as('min_timestamp'))
+      .where(
+        sql`date_trunc('day', timestamp)`,
+        '=',
+        sql`date_trunc('day', ${UnixTime.toDate(timestamp)}::timestamp)`,
+      )
+      .executeTakeFirst()
+
+    return result?.min_timestamp
+      ? UnixTime.fromDate(result.min_timestamp)
+      : undefined
+  }
+
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
     sourceChains: string[],

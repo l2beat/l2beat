@@ -4,6 +4,7 @@ import type {
   AggregatedInteropTransferWithTokens,
   InteropSelectionInput,
 } from '../types'
+import { getAggregatedInteropTimestamp } from './getAggregatedInteropTimestamp'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
   selection: InteropSelectionInput,
@@ -11,8 +12,12 @@ export async function getLatestAggregatedInteropTransferWithTokens(
 ): Promise<AggregatedInteropTransferWithTokens[]> {
   const db = getDb()
 
-  const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
+  const { from, to } = selection
+  if (from.length === 0 || to.length === 0) {
+    return []
+  }
+
+  const latestTimestamp = await getAggregatedInteropTimestamp()
   if (!latestTimestamp) {
     return []
   }
