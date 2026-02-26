@@ -1,3 +1,211 @@
+Generated with discovered.json: 0xb597cd1ae40f40ba92e57956dcf271ca52039ec4
+
+# Diff at Thu, 26 Feb 2026 06:39:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1770040676
+- current timestamp: 1772087831
+
+## Description
+
+New safe nominated as vault owner.
+
+## Watched changes
+
+```diff
+    contract eBTC Vault (Derive) (eth:0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract USDe Vault (Derive) (eth:0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract rsETH Vault (Derive) (eth:0x35d4D9bc79B0a543934b1769304B90d752691caD) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract SolvBTC Vault (Derive) (eth:0x383a4EdB30E896b8d2d044Be87079D45c0EA7065) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract WBTC Vault (Derive) (eth:0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract OLAS Vault (Derive) (eth:0x412Ac6044401cDf1e9833B7056c14C74AA593D37) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract AAVE Vault (Derive) (eth:0x4421461239aE746127C13a19177656124433dC60) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract rswETH Vault (Derive) (eth:0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract USDT Vault (Derive) (eth:0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract cbBTC Vault (Derive) (eth:0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract sDAI Vault (Derive) (eth:0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract USDC Vault (Derive) (eth:0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d) {
+    +++ description: None
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract LBTC Vault (Derive) (eth:0x76624ff43D610F64177Bb9c194A2503642e9B803) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract SNX Vault (Derive) (eth:0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract DAI Vault (Derive) (eth:0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract weETH Vault (Derive) (eth:0x8180EcCC825b692ef65FF099a0A387743788bf78) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract xSolvBTC Vault (Derive) (eth:0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract WETH Vault (Derive) (eth:0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract sUSDe Vault (Derive) (eth:0xE3E96892D30E0ee1a8131BAf87c891201F7137bf) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
+    contract wstETH Vault (Derive) (eth:0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3) {
+    +++ description: None
+      values.nominee:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x169a99B9958386a5D91E732Ed08B344946A92391"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x169a99B9958386a5D91E732Ed08B344946A92391)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/socket/.flat/Safe/Safe.sol        | 1088 ++++++++++++++++++++
+ .../src/projects/socket/.flat/Safe/SafeProxy.p.sol |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0x60e3294962695fd39c762774de16372af2538fab
 
 # Diff at Mon, 02 Feb 2026 14:04:03 GMT:

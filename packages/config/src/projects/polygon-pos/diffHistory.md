@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x27a26cc6be659c310b85e352f35491bd3b759afc
+
+# Diff at Thu, 26 Feb 2026 06:55:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1771253818
+- current timestamp: 1772088852
+
+## Description
+
+vali added, rewards decrease by 6.5%.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.CHECKPOINT_REWARD:
+-        "37108000000000000000000"
++        "34695980000000000000000"
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
 Generated with discovered.json: 0x4dc9df3263a452e24a10a45eb06938203767238b
 
 # Diff at Mon, 16 Feb 2026 14:58:30 GMT:

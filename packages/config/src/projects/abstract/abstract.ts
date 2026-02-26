@@ -43,6 +43,7 @@ export const abstract: ScalingProject = zkStackL2({
       other: ['https://rollup.codes/abstract'],
     },
   },
+  // zkVerifierContractsReproducible: true, uncomment when verified
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xbb42d8d79c66e97b41c1a2e1097dbbd32ab6934a
+
+# Diff at Thu, 26 Feb 2026 06:01:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1771493145
+- current timestamp: 1772085585
+
+## Description
+
+ms change.
+
+## Watched changes
+
+```diff
+    contract Across Multisig (eth:0xB524735356985D2f267FA010D681f061DfF03715) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
++        "eth:0x72b32C1a6A75CBAfAe36c0CA8e763946d370E766"
+    }
+```
+
 Generated with discovered.json: 0x34c3c1a487f50a38473976f1163f3edc0ad84312
 
 # Diff at Thu, 19 Feb 2026 09:33:04 GMT:

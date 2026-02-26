@@ -1372,6 +1372,10 @@ function computedStage(
     return { stage: 'NotApplicable' }
   }
 
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
   return getStage(
     {
       stage0: {
@@ -1389,7 +1393,7 @@ function computedStage(
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: false,
         noRedTrustedSetups: null,
-        programHashesReproducible: null,
+        programHashesReproducible: programHashesReproducible(wasmModuleRoot),
         proverSourcePublished: null,
         verifierContractsReproducible: null,
       },
@@ -1496,4 +1500,11 @@ function BoLDStateValidation(
       },
     ],
   }
+}
+
+function programHashesReproducible(wasmModuleRoot: string): boolean | null {
+  const vStatus = PROGRAM_HASHES(wasmModuleRoot).verificationStatus
+  if (vStatus === 'unsuccessful') return false
+  if (vStatus === 'successful') return true
+  return null
 }

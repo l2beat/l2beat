@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xd2cb94bd5680e09ec7e227102ca1950be2e384d9
+
+# Diff at Thu, 26 Feb 2026 06:43:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1770041060
+- current timestamp: 1772088067
+
+## Description
+
+Executor source verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770041060 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint.
+      unverified:
+-        true
+      values.allowlistSize:
++        0
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.defaultMultiplierBps:
++        12000
+      values.endpoint:
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.localEidV2:
++        30101
+      values.paused:
++        false
+      values.priceFeed:
++        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.receiveUln301:
++        "eth:0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC"
+      values.workerFeeLib:
++        "eth:0x4e9C57FD2Bd0f47C43F2D62642C1b05894fb9ed0"
+      implementationNames.eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805:
+-        ""
++        "Executor"
+      template:
++        "layerzero/LayerZeroExecutor"
+      sourceHashes:
++        ["0x4a43bdaa7c21f911802bc9e3457cf5fef469f43b372ea6944d53823caf2f53f2","0x6e8f82f43688d48f99f42fc176fd1250c7e5b217d551c5482e0dd168744017bf"]
+    }
+```
+
 Generated with discovered.json: 0x86d3d5259ed8cdc9bc18f8571a657df6a018d3e8
 
 # Diff at Mon, 02 Feb 2026 14:08:18 GMT:

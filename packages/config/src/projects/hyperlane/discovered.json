@@ -1,6 +1,6 @@
 {
   "name": "hyperlane",
-  "timestamp": 1770118520,
+  "timestamp": 1772086223,
   "configHash": "0xa5cbc225cf96257b228c222c5843b8f14b20b2f6f33061d2b052541a8a942ab6",
   "entries": [
     {
@@ -201,7 +201,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 77,
+        "nonce": 81,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -702,7 +702,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 2092,
+        "nonce": 2094,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -903,7 +903,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 274,
+        "nonce": 282,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -970,7 +970,7 @@
         "0x2e9655c34acdb3e5d0827ddfa907ee72f19d0561b1755941969a5761f9e86260"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Escrow for USDC that is bridged from Ethereum to Eclipse.",
+      "description": "Escrow for USDC that is bridged from Ethereum to Eclipse. Also escrows USDC for other destinations.",
       "ignoreInWatchMode": ["totalAssets", "totalSupply"],
       "sinceTimestamp": 1726761887,
       "sinceBlock": 20785718,
@@ -1000,7 +1000,10 @@
         ],
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "decimals": 0,
-        "domains": [1408864445, 1399811149, 10, 130, 137, 8453, 42161],
+        "domains": [
+          1408864445, 1399811149, 10, 130, 137, 8453, 42161, 143, 480, 999,
+          43114, 57073, 59144
+        ],
         "feeRecipient": "eth:0xcf4ecA86606372B975FaF04a97e8eE3AfeA5a02D",
         "hook": "eth:0x0000000000000000000000000000000000000000",
         "interchainSecurityModule": "eth:0x0000000000000000000000000000000000000000",
@@ -1643,6 +1646,6 @@
     "hyperlane/Mailbox": "0xe22d3d5e3098b17b9c38a147e885155b739913b845a7ce90bdb7c76debbf8674",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "usedBlockNumbers": { "ethereum": 24376064 },
+  "usedBlockNumbers": { "ethereum": 24539207 },
   "permissionsConfigHash": "0xb3c923f9509c1bcaa98ecafb41f0500c69728c31ae247f3f44f6a2ed2a55c370"
 }
