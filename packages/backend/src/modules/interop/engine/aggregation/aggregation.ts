@@ -177,8 +177,7 @@ export function getAggregatedTokens(
   for (const transfer of group) {
     const isSameToken =
       transfer.srcAbstractTokenId === transfer.dstAbstractTokenId
-    const srcTokenValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd
-    const dstTokenValueUsd = transfer.dstValueUsd ?? transfer.srcValueUsd
+    const transferValueUsd = getInteropTransferValue(transfer)
     const isBurn =
       transfer.srcWasBurned === true && transfer.dstWasMinted === false
     const isMint =
@@ -192,21 +191,21 @@ export function getAggregatedTokens(
         transferCount: (currentSrcToken?.transferCount ?? 0) + 1,
         totalDurationSum:
           (currentSrcToken?.totalDurationSum ?? 0) + transfer.duration,
-        volume: (currentSrcToken?.volume ?? 0) + (srcTokenValueUsd ?? 0),
+        volume: (currentSrcToken?.volume ?? 0) + (transfer.srcValueUsd ?? 0),
         minTransferValueUsd:
-          srcTokenValueUsd !== undefined
+          transferValueUsd !== undefined
             ? Math.min(
                 currentSrcToken?.minTransferValueUsd ??
                   Number.POSITIVE_INFINITY,
-                srcTokenValueUsd,
+                transferValueUsd,
               )
             : currentSrcToken?.minTransferValueUsd,
         maxTransferValueUsd:
-          srcTokenValueUsd !== undefined
+          transferValueUsd !== undefined
             ? Math.max(
                 currentSrcToken?.maxTransferValueUsd ??
                   Number.NEGATIVE_INFINITY,
-                srcTokenValueUsd,
+                transferValueUsd,
               )
             : currentSrcToken?.maxTransferValueUsd,
         mintedValueUsd: options?.calculateNetMinted
@@ -238,21 +237,21 @@ export function getAggregatedTokens(
         transferCount: (currentDstToken?.transferCount ?? 0) + 1,
         totalDurationSum:
           (currentDstToken?.totalDurationSum ?? 0) + transfer.duration,
-        volume: (currentDstToken?.volume ?? 0) + (dstTokenValueUsd ?? 0),
+        volume: (currentDstToken?.volume ?? 0) + (transfer.dstValueUsd ?? 0),
         minTransferValueUsd:
-          dstTokenValueUsd !== undefined
+          transferValueUsd !== undefined
             ? Math.min(
                 currentDstToken?.minTransferValueUsd ??
                   Number.POSITIVE_INFINITY,
-                dstTokenValueUsd,
+                transferValueUsd,
               )
             : currentDstToken?.minTransferValueUsd,
         maxTransferValueUsd:
-          dstTokenValueUsd !== undefined
+          transferValueUsd !== undefined
             ? Math.max(
                 currentDstToken?.maxTransferValueUsd ??
                   Number.NEGATIVE_INFINITY,
-                dstTokenValueUsd,
+                transferValueUsd,
               )
             : currentDstToken?.maxTransferValueUsd,
         mintedValueUsd: options?.calculateNetMinted
