@@ -95,12 +95,6 @@ export class InteropFinancialsLoop extends TimeLoop {
   }
 
   async run() {
-    const hasAnyPrices = await this.db.interopRecentPrices.hasAnyPrices()
-    if (!hasAnyPrices) {
-      this.logger.info('Skipping run. No prices found.')
-      return
-    }
-
     const rawTransfersToProcess =
       await this.db.interopTransfer.getWithEitherRawAmount()
 

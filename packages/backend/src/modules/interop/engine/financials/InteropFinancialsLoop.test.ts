@@ -8,10 +8,10 @@ import { InteropFinancialsLoop } from './InteropFinancialsLoop'
 
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {
-    it('skips when hasAnyPrices === false', async () => {
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(false),
-      })
+    it('skips when there are no transfers to process', async () => {
+      const interopRecentPrices = mockObject<Database['interopRecentPrices']>(
+        {},
+      )
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getWithEitherRawAmount: mockFn().resolvesTo([]),
       })
@@ -21,8 +21,7 @@ describe(InteropFinancialsLoop.name, () => {
 
       await service.run()
 
-      expect(interopRecentPrices.hasAnyPrices).toHaveBeenCalledTimes(1)
-      expect(interopTransfer.getWithEitherRawAmount).not.toHaveBeenCalled()
+      expect(interopTransfer.getWithEitherRawAmount).toHaveBeenCalledTimes(1)
     })
 
     it('clears side financials when token info is missing', async () => {
@@ -52,7 +51,6 @@ describe(InteropFinancialsLoop.name, () => {
       ]
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
         getClosestPricesForQueries: mockFn().resolvesTo(new Map()),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
@@ -118,7 +116,6 @@ describe(InteropFinancialsLoop.name, () => {
       ]
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
         getClosestPricesForQueries: mockFn().resolvesTo(
           new Map<string, number | undefined>([['msg1:src', 3000]]),
         ),
@@ -198,7 +195,6 @@ describe(InteropFinancialsLoop.name, () => {
       ]
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
         getClosestPricesForQueries: mockFn().resolvesTo(
           new Map<string, number | undefined>([
             ['msg1:src', 3000],
@@ -324,7 +320,6 @@ describe(InteropFinancialsLoop.name, () => {
       ]
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
         getClosestPricesForQueries: mockFn().resolvesTo(
           new Map<string, number | undefined>([['msg1:src', 3000]]),
         ),
@@ -413,7 +408,6 @@ describe(InteropFinancialsLoop.name, () => {
       ]
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
         getClosestPricesForQueries: mockFn().resolvesTo(new Map()),
       })
       const interopTransfer = mockObject<Database['interopTransfer']>({
@@ -491,7 +485,6 @@ describe(InteropFinancialsLoop.name, () => {
       ]
 
       const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
-        hasAnyPrices: mockFn().resolvesTo(true),
         getClosestPricesForQueries: mockFn().resolvesTo(
           new Map<string, number | undefined>([
             ['msg1:src', 3000],

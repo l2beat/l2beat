@@ -47,15 +47,6 @@ export class InteropRecentPricesRepository extends BaseRepository {
     return rows.length
   }
 
-  async hasAnyPrices(): Promise<boolean> {
-    const row = await this.db
-      .selectFrom('InteropRecentPrices')
-      .selectAll()
-      .limit(1)
-      .executeTakeFirst()
-    return row !== undefined
-  }
-
   async getClosestPricesForQueries<TKey extends string>(
     queryTuples: InteropClosestPriceQuery<TKey>[],
     errorMargin: UnixTime,

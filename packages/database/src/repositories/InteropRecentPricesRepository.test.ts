@@ -46,20 +46,6 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
     })
   })
 
-  describe(InteropRecentPricesRepository.prototype.hasAnyPrices.name, () => {
-    it('returns true when prices exist', async () => {
-      await repository.insertMany([mock('bitcoin', UnixTime(100))])
-
-      const result = await repository.hasAnyPrices()
-      expect(result).toEqual(true)
-    })
-
-    it('returns false when no prices exist', async () => {
-      const result = await repository.hasAnyPrices()
-      expect(result).toEqual(false)
-    })
-  })
-
   describe(
     InteropRecentPricesRepository.prototype.getClosestPricesForQueries.name,
     () => {
