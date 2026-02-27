@@ -119,7 +119,7 @@ export function createInteropModule({
   )
 
   const financialsService = new InteropFinancialsLoop(
-    config.interop.capture.chains,
+    config.interop.financials.chains,
     db,
     tokenDbClient,
     logger,

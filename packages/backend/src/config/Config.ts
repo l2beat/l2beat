@@ -230,6 +230,10 @@ export interface InteropFeatureConfig {
     enabled: boolean
   }
   financials: {
+    chains: {
+      id: string
+      type: 'evm'
+    }[]
     enabled: boolean
     tokenDbApiUrl: string
     tokenDbAuthToken?: string

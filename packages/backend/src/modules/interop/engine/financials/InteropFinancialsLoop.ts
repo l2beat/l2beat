@@ -191,9 +191,9 @@ export class InteropFinancialsLoop extends TimeLoop {
 
     this.logger.info('Interop financials run finished', {
       transfersLoaded: rawTransfersToProcess.length,
-      sidesProcessed: sideDecisions.length,
+      sideDecisions: sideDecisions.length,
       sidesCleared: clearedSides,
-      sidesNeedingPrice: sidesToProcess.length,
+      sidesUpdated: sidesToProcess.length,
       sidesMissingPrice: missingPriceSides,
       updatedTransfers: processedTransfers,
       failedTransfers,
