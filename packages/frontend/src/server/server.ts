@@ -97,7 +97,7 @@ function getTemplate(manifest: Manifest) {
   const template = readFileSync('index.html', 'utf-8')
   return template.replace(
     '/src/ssr/ClientEntry.tsx',
-    manifest.getUrl('/index.js'),
+    manifest.getUrl('/src/ssr/ClientEntry.tsx'),
   )
 }
 
