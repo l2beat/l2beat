@@ -62,16 +62,16 @@ export interface InteropTransferRecord {
 }
 
 export interface InteropTransferUpdate {
-  srcAbstractTokenId?: string
-  srcSymbol?: string
-  srcPrice?: number
-  srcAmount?: number
-  srcValueUsd?: number
-  dstAbstractTokenId?: string
-  dstSymbol?: string
-  dstPrice?: number
-  dstAmount?: number
-  dstValueUsd?: number
+  srcAbstractTokenId?: string | null
+  srcSymbol?: string | null
+  srcPrice?: number | null
+  srcAmount?: number | null
+  srcValueUsd?: number | null
+  dstAbstractTokenId?: string | null
+  dstSymbol?: string | null
+  dstPrice?: number | null
+  dstAmount?: number | null
+  dstValueUsd?: number | null
 }
 
 export interface InteropMissingTokenInfo {
@@ -256,19 +256,13 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getWithMissingFinancials() {
+  async getWithEitherRawAmount() {
     const rows = await this.db
       .selectFrom('InteropTransfer')
       .where((eb) =>
         eb.or([
-          eb.and([
-            eb('srcValueUsd', 'is', null),
-            eb('srcRawAmount', 'is not', null),
-          ]),
-          eb.and([
-            eb('dstValueUsd', 'is', null),
-            eb('dstRawAmount', 'is not', null),
-          ]),
+          eb('srcRawAmount', 'is not', null),
+          eb('dstRawAmount', 'is not', null),
         ]),
       )
       .orderBy('timestamp', 'asc')

@@ -382,88 +382,87 @@ describeDatabase(InteropTransferRepository.name, (db) => {
   })
 
   describe(
-    InteropTransferRepository.prototype.getWithMissingFinancials.name,
+    InteropTransferRepository.prototype.getWithEitherRawAmount.name,
     () => {
-      it('returns only transfers with at least one side missing USD and having raw amount', async () => {
-        const missingSrcWithRaw = transfer(
+      it('returns only transfers with raw amount on at least one side', async () => {
+        const withBothRawAmounts = transfer(
           'plugin1',
           'msg1',
           'deposit',
           UnixTime(100),
         )
-        missingSrcWithRaw.srcValueUsd = undefined
 
-        const missingDstWithRaw = transfer(
+        const withOnlySrcRawAmount = transfer(
           'plugin1',
           'msg2',
           'deposit',
           UnixTime(200),
         )
-        missingDstWithRaw.dstValueUsd = undefined
+        withOnlySrcRawAmount.dstRawAmount = undefined
 
-        const missingSrcWithoutRaw = transfer(
+        const withOnlyDstRawAmount = transfer(
           'plugin1',
           'msg3',
           'deposit',
           UnixTime(300),
         )
-        missingSrcWithoutRaw.srcValueUsd = undefined
-        missingSrcWithoutRaw.srcRawAmount = undefined
+        withOnlyDstRawAmount.srcRawAmount = undefined
 
-        const missingDstWithoutRaw = transfer(
+        const withNoRawAmounts = transfer(
           'plugin1',
           'msg4',
           'deposit',
           UnixTime(400),
         )
-        missingDstWithoutRaw.dstValueUsd = undefined
-        missingDstWithoutRaw.dstRawAmount = undefined
-
-        const completeRecord = transfer(
-          'plugin1',
-          'msg5',
-          'deposit',
-          UnixTime(500),
-        )
+        withNoRawAmounts.srcRawAmount = undefined
+        withNoRawAmounts.dstRawAmount = undefined
 
         await repository.insertMany([
-          missingDstWithoutRaw,
-          completeRecord,
-          missingSrcWithRaw,
-          missingSrcWithoutRaw,
-          missingDstWithRaw,
+          withNoRawAmounts,
+          withOnlyDstRawAmount,
+          withBothRawAmounts,
+          withOnlySrcRawAmount,
         ])
 
-        const result = await repository.getWithMissingFinancials()
+        const result = await repository.getWithEitherRawAmount()
 
-        expect(result.map((r) => r.transferId)).toEqual(['msg1', 'msg2'])
+        expect(result.map((r) => r.transferId)).toEqual([
+          'msg1',
+          'msg2',
+          'msg3',
+        ])
       })
 
-      it('returns transfer when both sides are missing usd values', async () => {
-        const missingBothSides = transfer(
+      it('returns transfer when only dst raw amount is set', async () => {
+        const withOnlyDstRawAmount = transfer(
           'plugin1',
           'msg1',
           'deposit',
           UnixTime(100),
         )
-        missingBothSides.srcValueUsd = undefined
-        missingBothSides.dstValueUsd = undefined
+        withOnlyDstRawAmount.srcRawAmount = undefined
 
-        await repository.insertMany([missingBothSides])
+        await repository.insertMany([withOnlyDstRawAmount])
 
-        const result = await repository.getWithMissingFinancials()
+        const result = await repository.getWithEitherRawAmount()
 
         expect(result).toHaveLength(1)
         expect(result[0]?.transferId).toEqual('msg1')
       })
 
-      it('returns empty array when all sides are financially complete', async () => {
-        await repository.insertMany([
-          transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
-          transfer('plugin1', 'msg2', 'withdraw', UnixTime(200)),
-        ])
+      it('returns empty array when no raw amount is set on either side', async () => {
+        const noRawAmounts = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+        )
+        noRawAmounts.srcRawAmount = undefined
+        noRawAmounts.dstRawAmount = undefined
 
-        const result = await repository.getWithMissingFinancials()
+        await repository.insertMany([noRawAmounts])
+
+        const result = await repository.getWithEitherRawAmount()
 
         expect(result).toEqual([])
       })
@@ -547,6 +546,35 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(updatedRecord?.dstSymbol).toEqual('USDT-updated')
       expect(updatedRecord?.dstPrice).toEqual(1001.0)
       expect(updatedRecord?.dstAmount).toEqual(1.5)
+      expect(updatedRecord?.isProcessed).toEqual(true)
+    })
+
+    it('clears fields when update contains null values', async () => {
+      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      record.srcAbstractTokenId = 'ethereum'
+      record.srcSymbol = 'ETH'
+      record.srcPrice = 2000.0
+      record.srcAmount = 1.5
+      record.srcValueUsd = 3000.0
+
+      await repository.insertMany([record])
+
+      await repository.updateFinancials('msg1', {
+        srcAbstractTokenId: null,
+        srcSymbol: null,
+        srcPrice: null,
+        srcAmount: null,
+        srcValueUsd: null,
+      })
+
+      const result = await repository.getAll()
+      const updatedRecord = result[0]
+
+      expect(updatedRecord?.srcAbstractTokenId).toEqual(undefined)
+      expect(updatedRecord?.srcSymbol).toEqual(undefined)
+      expect(updatedRecord?.srcPrice).toEqual(undefined)
+      expect(updatedRecord?.srcAmount).toEqual(undefined)
+      expect(updatedRecord?.srcValueUsd).toEqual(undefined)
       expect(updatedRecord?.isProcessed).toEqual(true)
     })
 

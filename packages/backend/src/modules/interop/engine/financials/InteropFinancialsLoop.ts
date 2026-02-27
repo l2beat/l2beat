@@ -53,6 +53,32 @@ type SideToProcess = {
   symbol: string
 }
 
+interface SideState {
+  transferId: string
+  side: SidePrefix
+  timestamp: UnixTime
+  rawAmount: bigint | undefined
+  abstractTokenId: string | undefined
+  symbol: string | undefined
+  price: number | undefined
+  amount: number | undefined
+  valueUsd: number | undefined
+}
+
+type SideDecision =
+  | {
+      type: 'skip'
+    }
+  | {
+      type: 'delete'
+      transferId: string
+      side: SidePrefix
+    }
+  | {
+      type: 'update'
+      sideToProcess: SideToProcess
+    }
+
 type SidePriceKey = string & { readonly __brand: 'SidePriceKey' }
 type PriceMap = Map<SidePriceKey, number | undefined>
 
@@ -76,7 +102,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     }
 
     const rawTransfersToProcess =
-      await this.db.interopTransfer.getWithMissingFinancials()
+      await this.db.interopTransfer.getWithEitherRawAmount()
 
     if (rawTransfersToProcess.length === 0) {
       this.logger.info('Skipping run, no transfers to process.')
@@ -93,36 +119,63 @@ export class InteropFinancialsLoop extends TimeLoop {
       this.logger,
     )
 
-    const sidesToProcess = prepareTransferSides(
+    const sideDecisions = prepareSideDecisions(
       transfersWithTokenIds,
       tokenInfos,
     )
 
-    if (sidesToProcess.length === 0) {
+    if (sideDecisions.length === 0) {
       this.logger.info('Skipping run, no processable transfer sides.')
       return
     }
 
-    const prices = await this.getPrices(sidesToProcess)
-    let missingPriceSides = 0
     const updatesByTransfer = new Map<string, InteropTransferUpdate>()
+    let clearedSides = 0
 
-    for (const side of sidesToProcess) {
-      const price = prices.get(side.priceKey)
-      if (price === undefined) {
-        missingPriceSides++
-        continue
+    const sidesToProcess: SideToProcess[] = []
+    for (const decision of sideDecisions) {
+      switch (decision.type) {
+        case 'delete':
+          mergeTransferUpdate(
+            updatesByTransfer,
+            decision.transferId,
+            toTransferSideClearUpdate(decision.side),
+          )
+          clearedSides++
+          break
+        case 'update':
+          sidesToProcess.push(decision.sideToProcess)
+          break
+        case 'skip':
+          break
+        default:
+          assertUnreachable(decision)
       }
+    }
 
-      const sideUpdate = generateSideUpdate(side, price)
-      const transferUpdate = toTransferSideUpdate(side.side, sideUpdate)
-      const existingUpdate = updatesByTransfer.get(side.transferId)
+    let missingPriceSides = 0
+    if (sidesToProcess.length > 0) {
+      const prices = await this.getPrices(sidesToProcess)
 
-      if (existingUpdate) {
-        Object.assign(existingUpdate, transferUpdate)
-      } else {
-        updatesByTransfer.set(side.transferId, transferUpdate)
+      for (const side of sidesToProcess) {
+        const price = prices.get(side.priceKey)
+
+        if (price === undefined) {
+          missingPriceSides++
+          continue
+        }
+
+        const sideUpdate = generateSideUpdate(side, price)
+        const transferUpdate = toTransferSideUpdate(side.side, sideUpdate)
+        mergeTransferUpdate(updatesByTransfer, side.transferId, transferUpdate)
       }
+    }
+
+    if (updatesByTransfer.size === 0) {
+      this.logger.info('Skipping run, no transfer updates to apply.', {
+        sidesMissingPrice: missingPriceSides,
+      })
+      return
     }
 
     let processedTransfers = 0
@@ -144,7 +197,9 @@ export class InteropFinancialsLoop extends TimeLoop {
 
     this.logger.info('Interop financials run finished', {
       transfersLoaded: rawTransfersToProcess.length,
-      sidesProcessed: sidesToProcess.length,
+      sidesProcessed: sideDecisions.length,
+      sidesCleared: clearedSides,
+      sidesNeedingPrice: sidesToProcess.length,
       sidesMissingPrice: missingPriceSides,
       updatedTransfers: processedTransfers,
       failedTransfers,
@@ -161,8 +216,8 @@ export class InteropFinancialsLoop extends TimeLoop {
     for (const side of sidesToProcess) {
       queryTuples.push({
         key: side.priceKey,
-        coingeckoId: side.coingeckoId,
         timestamp: side.timestamp,
+        coingeckoId: side.coingeckoId,
       })
     }
 
@@ -220,8 +275,8 @@ export async function getTokenInfos(
     result.set(d, {
       abstractId: abstractToken.id,
       symbol: deployedToken.symbol,
-      coingeckoId: abstractToken.coingeckoId,
       decimals: deployedToken.decimals,
+      coingeckoId: abstractToken.coingeckoId,
     })
   }
 
@@ -251,21 +306,41 @@ function getUniqueTokenIds(
 function toTransferSideUpdate(prefix: SidePrefix, tokenUpdate: TokenUpdate) {
   if (prefix === 'src') {
     return {
-      srcAbstractTokenId: tokenUpdate.abstractTokenId,
-      srcSymbol: tokenUpdate.symbol,
       srcPrice: tokenUpdate.price,
       srcAmount: tokenUpdate.amount,
+      srcSymbol: tokenUpdate.symbol,
       srcValueUsd: tokenUpdate.valueUsd,
+      srcAbstractTokenId: tokenUpdate.abstractTokenId,
     } satisfies InteropTransferUpdate
   }
 
   return {
-    dstAbstractTokenId: tokenUpdate.abstractTokenId,
-    dstSymbol: tokenUpdate.symbol,
     dstPrice: tokenUpdate.price,
     dstAmount: tokenUpdate.amount,
+    dstSymbol: tokenUpdate.symbol,
     dstValueUsd: tokenUpdate.valueUsd,
+    dstAbstractTokenId: tokenUpdate.abstractTokenId,
   } satisfies InteropTransferUpdate
+}
+
+function toTransferSideClearUpdate(prefix: SidePrefix): InteropTransferUpdate {
+  if (prefix === 'src') {
+    return {
+      srcPrice: null,
+      srcAmount: null,
+      srcSymbol: null,
+      srcValueUsd: null,
+      srcAbstractTokenId: null,
+    }
+  }
+
+  return {
+    dstPrice: null,
+    dstAmount: null,
+    dstSymbol: null,
+    dstValueUsd: null,
+    dstAbstractTokenId: null,
+  }
 }
 
 function toSidePriceKey(transferId: string, prefix: SidePrefix): SidePriceKey {
@@ -303,62 +378,128 @@ export function toDeployedId(
   }
 }
 
-function prepareTransferSides(
+function prepareSideDecisions(
   transfers: TransferWithResolvedIds[],
   tokenInfos: TokenInfos,
-): SideToProcess[] {
-  const result: SideToProcess[] = []
+): SideDecision[] {
+  const decisions: SideDecision[] = []
 
   for (const { transfer, srcId, dstId } of transfers) {
-    if (
-      transfer.srcValueUsd === undefined &&
-      transfer.srcRawAmount !== undefined &&
-      srcId
-    ) {
-      const tokenInfo = tokenInfos.get(srcId)
+    const srcTokenInfo = srcId ? tokenInfos.get(srcId) : undefined
+    decisions.push(decideSideAction(toSideState(transfer, 'src'), srcTokenInfo))
 
-      if (tokenInfo) {
-        const side = 'src' as const
+    const dstTokenInfo = dstId ? tokenInfos.get(dstId) : undefined
+    decisions.push(decideSideAction(toSideState(transfer, 'dst'), dstTokenInfo))
+  }
 
-        result.push({
-          transferId: transfer.transferId,
-          side,
-          timestamp: transfer.srcTime,
-          rawAmount: transfer.srcRawAmount,
-          symbol: tokenInfo.symbol,
-          decimals: tokenInfo.decimals,
-          coingeckoId: tokenInfo.coingeckoId,
-          abstractTokenId: tokenInfo.abstractId,
-          priceKey: toSidePriceKey(transfer.transferId, side),
-        })
+  return decisions.filter((decision) => decision.type !== 'skip')
+}
+
+function decideSideAction(
+  side: SideState,
+  tokenInfo: TokenInfo | undefined,
+): SideDecision {
+  // No token info - token deleted?
+  if (tokenInfo === undefined) {
+    // has some side info - clear it
+    if (hasAnySideInfo(side)) {
+      return {
+        type: 'delete',
+        transferId: side.transferId,
+        side: side.side,
       }
     }
 
-    if (
-      transfer.dstValueUsd === undefined &&
-      transfer.dstRawAmount !== undefined &&
-      dstId
-    ) {
-      const tokenInfo = tokenInfos.get(dstId)
+    // otherwise skip
+    return { type: 'skip' }
+  }
 
-      if (tokenInfo) {
-        const side = 'dst' as const
-        result.push({
-          transferId: transfer.transferId,
-          side,
-          timestamp: transfer.dstTime,
-          rawAmount: transfer.dstRawAmount,
-          symbol: tokenInfo.symbol,
-          decimals: tokenInfo.decimals,
-          coingeckoId: tokenInfo.coingeckoId,
-          abstractTokenId: tokenInfo.abstractId,
-          priceKey: toSidePriceKey(transfer.transferId, side),
-        })
-      }
+  // Can't do much
+  if (side.rawAmount === undefined) {
+    return { type: 'skip' }
+  }
+
+  // No usd value or token has been updated in the token-db since last processing - needs update
+  if (side.valueUsd === undefined || hasTokenInfoMismatch(side, tokenInfo)) {
+    return {
+      type: 'update',
+      sideToProcess: {
+        side: side.side,
+        symbol: tokenInfo.symbol,
+        timestamp: side.timestamp,
+        rawAmount: side.rawAmount,
+        transferId: side.transferId,
+        decimals: tokenInfo.decimals,
+        coingeckoId: tokenInfo.coingeckoId,
+        abstractTokenId: tokenInfo.abstractId,
+        priceKey: toSidePriceKey(side.transferId, side.side),
+      },
     }
   }
 
-  return result
+  return { type: 'skip' }
+}
+
+function hasAnySideInfo(side: SideState): boolean {
+  return (
+    side.abstractTokenId !== undefined ||
+    side.symbol !== undefined ||
+    side.price !== undefined ||
+    side.amount !== undefined ||
+    side.valueUsd !== undefined
+  )
+}
+
+function hasTokenInfoMismatch(side: SideState, tokenInfo: TokenInfo): boolean {
+  return (
+    // Coingecko id
+    side.symbol !== tokenInfo.symbol ||
+    side.abstractTokenId !== tokenInfo.abstractId
+  )
+}
+
+function toSideState(
+  transfer: InteropTransferRecord,
+  side: SidePrefix,
+): SideState {
+  if (side === 'src') {
+    return {
+      side,
+      price: transfer.srcPrice,
+      symbol: transfer.srcSymbol,
+      amount: transfer.srcAmount,
+      timestamp: transfer.srcTime,
+      valueUsd: transfer.srcValueUsd,
+      transferId: transfer.transferId,
+      rawAmount: transfer.srcRawAmount,
+      abstractTokenId: transfer.srcAbstractTokenId,
+    }
+  }
+
+  return {
+    side,
+    price: transfer.dstPrice,
+    symbol: transfer.dstSymbol,
+    amount: transfer.dstAmount,
+    timestamp: transfer.dstTime,
+    rawAmount: transfer.dstRawAmount,
+    valueUsd: transfer.dstValueUsd,
+    transferId: transfer.transferId,
+    abstractTokenId: transfer.dstAbstractTokenId,
+  }
+}
+
+function mergeTransferUpdate(
+  updatesByTransfer: Map<string, InteropTransferUpdate>,
+  transferId: string,
+  update: InteropTransferUpdate,
+) {
+  const existingUpdate = updatesByTransfer.get(transferId)
+  if (existingUpdate) {
+    Object.assign(existingUpdate, update)
+  } else {
+    updatesByTransfer.set(transferId, update)
+  }
 }
 
 function generateSideUpdate(side: SideToProcess, price: number): TokenUpdate {
@@ -367,10 +508,10 @@ function generateSideUpdate(side: SideToProcess, price: number): TokenUpdate {
     1_000_000
 
   return {
-    abstractTokenId: side.abstractTokenId,
-    symbol: side.symbol,
     price,
     amount,
+    symbol: side.symbol,
     valueUsd: price * amount,
+    abstractTokenId: side.abstractTokenId,
   }
 }
