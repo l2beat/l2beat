@@ -1,6 +1,6 @@
 {
   "name": "settlus",
-  "timestamp": 1770993147,
+  "timestamp": 1772198390,
   "configHash": "0xc6c48fee5a0b564121f058f9c72a1ee4933d893ab5a1bbb27ce8c62a8e047eb1",
   "entries": [
     {
@@ -51,11 +51,6 @@
       "implementationNames": {
         "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
       }
-    },
-    {
-      "address": "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Optimism Guardian Multisig",
@@ -203,11 +198,6 @@
         "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310",
@@ -472,13 +462,18 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 32,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "address": "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "MIPS",
@@ -619,7 +614,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 51,
+        "nonce": 52,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1113,9 +1108,9 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073",
+          "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE",
           "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
-          "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
+          "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81",
           "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
           "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
           "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
@@ -1134,7 +1129,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 52,
+        "nonce": 55,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1327,7 +1322,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 5698,
+        "gameCount": 5921,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294",
@@ -1341,7 +1336,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 5698,
+        "permissionedGamesTotal": 5921,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.0",
         "wethFromDGF": "UNRESOLVED"
@@ -1362,6 +1357,11 @@
         { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xE7c264af5bdF997A78105A6e0FF32C126Eda66D9",
@@ -2438,6 +2438,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24448477 },
-  "permissionsConfigHash": "0x6c6e888e83065d46f21d701f0526e7ab1048ee8b6cc45e11fd688f5f67c733aa"
+  "usedBlockNumbers": { "ethereum": 24548521 },
+  "permissionsConfigHash": "0x5e1c731844c2502000ee0bf1bf80de4432d7c355ebd4c27828c75971157c6f5c"
 }
