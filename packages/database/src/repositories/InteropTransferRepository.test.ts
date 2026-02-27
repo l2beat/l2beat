@@ -597,6 +597,300 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.getProjectTransfersPage.name,
+    () => {
+      const snapshotTimestamp = UnixTime(1_000_000)
+
+      it('matches transfers using plugin OR logic and plugin-level AND logic', async () => {
+        await repository.insertMany([
+          {
+            ...transfer(
+              'plugin1',
+              'msg1',
+              'deposit',
+              snapshotTimestamp - 10,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            bridgeType: 'lockAndMint',
+            srcWasBurned: false,
+            dstWasMinted: true,
+            srcAbstractTokenId: 'eth',
+            dstAbstractTokenId: 'eth',
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg2',
+              'withdraw',
+              snapshotTimestamp - 9,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            bridgeType: 'lockAndMint',
+            srcWasBurned: false,
+            dstWasMinted: true,
+            srcAbstractTokenId: 'eth',
+            dstAbstractTokenId: 'eth',
+          },
+          {
+            ...transfer(
+              'plugin2',
+              'msg3',
+              'deposit',
+              snapshotTimestamp - 8,
+              'optimism',
+              'base',
+              10,
+            ),
+            bridgeType: 'nonMinting',
+            srcWasBurned: false,
+            dstWasMinted: false,
+            srcAbstractTokenId: 'eth',
+            dstAbstractTokenId: 'eth',
+          },
+          {
+            ...transfer(
+              'plugin2',
+              'msg4',
+              'deposit',
+              snapshotTimestamp - 7,
+              'optimism',
+              'base',
+              10,
+            ),
+            bridgeType: 'nonMinting',
+            srcWasBurned: false,
+            dstWasMinted: false,
+            srcAbstractTokenId: 'usdc',
+            dstAbstractTokenId: 'usdc',
+          },
+        ])
+
+        const result = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum', 'optimism'],
+          destinationChains: ['arbitrum', 'base'],
+          limit: 50,
+          plugins: [
+            {
+              plugin: 'plugin1',
+              bridgeType: 'lockAndMint',
+              chain: 'ethereum',
+              transferType: 'deposit',
+            },
+            {
+              plugin: 'plugin2',
+              bridgeType: 'nonMinting',
+              abstractTokenId: 'eth',
+            },
+          ],
+        })
+
+        expect(result.items.map((x) => x.transferId)).toEqual(['msg3', 'msg1'])
+        expect(result.nextCursor).toEqual(undefined)
+      })
+
+      it('matches explicit bridge types and applies type filter', async () => {
+        await repository.insertMany([
+          {
+            ...transfer(
+              'plugin1',
+              'msg1',
+              'deposit',
+              snapshotTimestamp - 10,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            bridgeType: 'lockAndMint',
+            srcWasBurned: false,
+            dstWasMinted: true,
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg2',
+              'deposit',
+              snapshotTimestamp - 9,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            bridgeType: 'lockAndMint',
+            srcWasBurned: undefined,
+            dstWasMinted: undefined,
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg3',
+              'deposit',
+              snapshotTimestamp - 8,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            bridgeType: 'nonMinting',
+            srcWasBurned: false,
+            dstWasMinted: false,
+          },
+        ])
+
+        const result = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum'],
+          limit: 50,
+          type: 'lockAndMint',
+          plugins: [
+            {
+              plugin: 'plugin1',
+              bridgeType: 'lockAndMint',
+            },
+            {
+              plugin: 'plugin1',
+              bridgeType: 'nonMinting',
+            },
+          ],
+        })
+
+        expect(result.items.map((x) => x.transferId)).toEqual(['msg2', 'msg1'])
+        expect(result.nextCursor).toEqual(undefined)
+      })
+
+      it('excludes same-chain transfers and handles cursor pagination', async () => {
+        await repository.insertMany([
+          {
+            ...transfer(
+              'plugin1',
+              'msg1',
+              'deposit',
+              snapshotTimestamp - 10,
+              'ethereum',
+              'arbitrum',
+              10,
+            ),
+            bridgeType: 'nonMinting',
+            srcWasBurned: false,
+            dstWasMinted: false,
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg2',
+              'deposit',
+              snapshotTimestamp - 10,
+              'ethereum',
+              'optimism',
+              10,
+            ),
+            bridgeType: 'nonMinting',
+            srcWasBurned: false,
+            dstWasMinted: false,
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg3',
+              'deposit',
+              snapshotTimestamp - 11,
+              'ethereum',
+              'base',
+              10,
+            ),
+            bridgeType: 'nonMinting',
+            srcWasBurned: false,
+            dstWasMinted: false,
+          },
+          {
+            ...transfer(
+              'plugin1',
+              'msg4',
+              'deposit',
+              snapshotTimestamp - 12,
+              'ethereum',
+              'ethereum',
+              10,
+            ),
+            bridgeType: 'nonMinting',
+            srcWasBurned: false,
+            dstWasMinted: false,
+          },
+        ])
+
+        const firstPage = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum', 'optimism', 'base', 'ethereum'],
+          limit: 2,
+          plugins: [
+            {
+              plugin: 'plugin1',
+              bridgeType: 'nonMinting',
+            },
+          ],
+        })
+
+        expect(firstPage.items.map((x) => x.transferId)).toEqual([
+          'msg2',
+          'msg1',
+        ])
+        expect(firstPage.nextCursor).toEqual({
+          timestamp: snapshotTimestamp - 10,
+          transferId: 'msg1',
+        })
+
+        const secondPage = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum', 'optimism', 'base', 'ethereum'],
+          limit: 2,
+          cursor: firstPage.nextCursor,
+          plugins: [
+            {
+              plugin: 'plugin1',
+              bridgeType: 'nonMinting',
+            },
+          ],
+        })
+
+        expect(secondPage.items.map((x) => x.transferId)).toEqual(['msg3'])
+        expect(secondPage.nextCursor).toEqual(undefined)
+      })
+
+      it('returns empty result when plugins or chains are empty', async () => {
+        const emptyPlugins = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum'],
+          limit: 10,
+          plugins: [],
+        })
+
+        const emptyChains = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: [],
+          destinationChains: ['arbitrum'],
+          limit: 10,
+          plugins: [{ plugin: 'plugin1', bridgeType: 'nonMinting' }],
+        })
+
+        expect(emptyPlugins).toEqual({
+          items: [],
+          nextCursor: undefined,
+        })
+        expect(emptyChains).toEqual({
+          items: [],
+          nextCursor: undefined,
+        })
+      })
+    },
+  )
+
   afterEach(async () => {
     await repository.deleteAll()
   })

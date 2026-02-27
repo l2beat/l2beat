@@ -1,6 +1,5 @@
 import {
   assert,
-  type InteropBridgeType,
   InteropBridgeTypeValues,
   type KnownInteropBridgeType,
   UnixTime,
@@ -21,7 +20,7 @@ const EXPECTED_DB_INTEROP_BRIDGE_TYPES = [
 const _interopBridgeTypesMustMatchDbContract: typeof EXPECTED_DB_INTEROP_BRIDGE_TYPES =
   InteropBridgeTypeValues
 
-function isInteropBridgeType(value: string): value is InteropBridgeType {
+function isInteropBridgeType(value: string): value is KnownInteropBridgeType {
   return (InteropBridgeTypeValues as readonly string[]).includes(value)
 }
 
@@ -79,6 +78,24 @@ export interface InteropMissingTokenInfo {
   tokenAddress: string
   count: number
   plugins: string[]
+}
+
+export interface InteropTransferPluginMatcher {
+  plugin: string
+  bridgeType: KnownInteropBridgeType
+  chain?: string
+  abstractTokenId?: string
+  transferType?: string
+}
+
+export interface InteropTransferPageCursor {
+  timestamp: UnixTime
+  transferId: string
+}
+
+export interface InteropTransferPage {
+  items: InteropTransferRecord[]
+  nextCursor: InteropTransferPageCursor | undefined
 }
 
 export function toRecord(
@@ -244,6 +261,114 @@ export class InteropTransferRepository extends BaseRepository {
     const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
+  }
+
+  async getProjectTransfersPage(options: {
+    plugins: InteropTransferPluginMatcher[]
+    snapshotTimestamp: UnixTime
+    sourceChains: string[]
+    destinationChains: string[]
+    type?: KnownInteropBridgeType
+    cursor?: InteropTransferPageCursor
+    limit: number
+  }): Promise<InteropTransferPage> {
+    if (
+      options.plugins.length === 0 ||
+      options.sourceChains.length === 0 ||
+      options.destinationChains.length === 0
+    ) {
+      return { items: [], nextCursor: undefined }
+    }
+
+    const from = options.snapshotTimestamp - UnixTime.DAY
+    const pluginMatchers = options.type
+      ? options.plugins.filter((plugin) => plugin.bridgeType === options.type)
+      : options.plugins
+
+    if (pluginMatchers.length === 0) {
+      return { items: [], nextCursor: undefined }
+    }
+
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('timestamp', '>', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(options.snapshotTimestamp))
+      .where('srcChain', 'in', options.sourceChains)
+      .where('dstChain', 'in', options.destinationChains)
+      .whereRef('srcChain', '!=', 'dstChain')
+      .where((eb) =>
+        eb.or(
+          pluginMatchers.map((plugin) => {
+            const conditions = [
+              eb('plugin', '=', plugin.plugin),
+              eb('bridgeType', '=', plugin.bridgeType),
+            ]
+
+            if (plugin.chain) {
+              conditions.push(
+                eb.or([
+                  eb('srcChain', '=', plugin.chain),
+                  eb('dstChain', '=', plugin.chain),
+                ]),
+              )
+            }
+
+            if (plugin.abstractTokenId) {
+              conditions.push(
+                eb.or([
+                  eb('srcAbstractTokenId', '=', plugin.abstractTokenId),
+                  eb('dstAbstractTokenId', '=', plugin.abstractTokenId),
+                ]),
+              )
+            }
+
+            if (plugin.transferType) {
+              conditions.push(eb('type', '=', plugin.transferType))
+            }
+
+            return eb.and(conditions)
+          }),
+        ),
+      )
+
+    if (options.type) {
+      query = query.where('bridgeType', '=', options.type)
+    }
+
+    if (options.cursor) {
+      const cursor = options.cursor
+      query = query.where((eb) =>
+        eb.or([
+          eb('timestamp', '<', UnixTime.toDate(cursor.timestamp)),
+          eb.and([
+            eb('timestamp', '=', UnixTime.toDate(cursor.timestamp)),
+            eb('transferId', '<', cursor.transferId),
+          ]),
+        ]),
+      )
+    }
+
+    const rows = await query
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .limit(options.limit + 1)
+      .execute()
+
+    const pageRows = rows.slice(0, options.limit)
+    const items = pageRows.map(toRecord)
+    const last = items[items.length - 1]
+
+    return {
+      items,
+      nextCursor:
+        rows.length > options.limit && last
+          ? {
+              timestamp: last.timestamp,
+              transferId: last.transferId,
+            }
+          : undefined,
+    }
   }
 
   async getUnprocessed() {

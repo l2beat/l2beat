@@ -17,6 +17,7 @@ import { TopTokensCell } from '../top-items/TopTokensCell'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
 import { SubgroupTooltip } from './SubgroupTooltip'
+import { TransferCountCell } from './TransferCountCell'
 
 export type ProtocolRow = ProtocolEntry & BasicTableRow
 
@@ -141,9 +142,15 @@ export function getAllProtocolsColumns(
     columnHelper.accessor((row) => row.transferCount, {
       header: 'Last 24h\ntransfer count',
       cell: (ctx) => (
-        <div className="font-medium text-label-value-15">
-          {ctx.row.original.transferCount}
-        </div>
+        <TransferCountCell
+          transferCount={ctx.row.original.transferCount}
+          type={type}
+          protocol={{
+            id: ctx.row.original.id,
+            name: ctx.row.original.name,
+            iconUrl: ctx.row.original.iconUrl,
+          }}
+        />
       ),
       meta: {
         align: 'right',
