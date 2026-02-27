@@ -144,6 +144,8 @@ export function getAllProtocolsColumns(
       cell: (ctx) => (
         <TransferCountCell
           transferCount={ctx.row.original.transferCount}
+          expectedTransferCount={ctx.row.original.transferCount}
+          expectedVolume={ctx.row.original.volume}
           type={type}
           protocol={{
             id: ctx.row.original.id,

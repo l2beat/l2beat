@@ -1,10 +1,7 @@
 import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  toInteropProtocolTransferDetailsItem,
-  toResponseCursor,
-} from './getInteropProtocolTransfers'
+import { toInteropProtocolTransferDetailsItem } from './getInteropProtocolTransfers'
 
 describe(toInteropProtocolTransferDetailsItem.name, () => {
   it('maps transfer details with source and destination token amounts', () => {
@@ -33,30 +30,6 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       dstChain: 'arbitrum',
       dstTxHash: '0xdst',
     })
-  })
-})
-
-describe(toResponseCursor.name, () => {
-  it('adds snapshot timestamp to the next cursor', () => {
-    const result = toResponseCursor(
-      {
-        timestamp: UnixTime(100),
-        transferId: 'cursor-transfer',
-      },
-      UnixTime(999),
-    )
-
-    expect(result).toEqual({
-      timestamp: 100,
-      transferId: 'cursor-transfer',
-      snapshotTimestamp: 999,
-    })
-  })
-
-  it('returns undefined when cursor is undefined', () => {
-    const result = toResponseCursor(undefined, UnixTime(999))
-
-    expect(result).toEqual(undefined)
   })
 })
 

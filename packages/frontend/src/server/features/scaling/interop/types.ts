@@ -83,15 +83,6 @@ export const InteropProtocolTokensParams = v.object({
   type: KnownInteropBridgeType.optional(),
 })
 
-export type InteropProtocolTransfersCursor = v.infer<
-  typeof InteropProtocolTransfersCursor
->
-export const InteropProtocolTransfersCursor = v.object({
-  timestamp: v.number(),
-  transferId: v.string(),
-  snapshotTimestamp: v.number(),
-})
-
 export type InteropProtocolTransfersParams = v.infer<
   typeof InteropProtocolTransfersParams
 >
@@ -99,11 +90,6 @@ export const InteropProtocolTransfersParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
-  limit: v
-    .number()
-    .check((value) => Number.isInteger(value) && value > 0 && value <= 100)
-    .optional(),
-  cursor: InteropProtocolTransfersCursor.optional(),
 })
 
 export type InteropProtocolTransferDetailsItem = {
@@ -121,9 +107,14 @@ export type InteropProtocolTransferDetailsItem = {
   dstTxHash: string
 }
 
+export type InteropProtocolTransferStats = {
+  transferCount: number
+  volume: number
+}
+
 export type InteropProtocolTransfersResponse = {
   items: InteropProtocolTransferDetailsItem[]
-  nextCursor: InteropProtocolTransfersCursor | undefined
+  transferStats: InteropProtocolTransferStats | undefined
 }
 
 export type AggregatedInteropTransferWithTokens =
