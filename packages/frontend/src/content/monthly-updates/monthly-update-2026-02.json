@@ -1,0 +1,256 @@
+{
+  "title": "Monthly Updates - February 2026",
+  "startDate": "2026-02-01",
+  "endDate": "2026-02-28",
+  "publishedOn": "2026-03-01",
+  "description": "Explore the most important February developments across major ecosystems — from OP Stack upgrades and enterprise infrastructure to ZK governance security funding, agent identity standards, and verifiable compute milestones.",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "Move Language Support Lands on Arbitrum via Stylus",
+          "content": "Arbitrum [announced](https://x.com/arbitrum/status/2019468063104487734) that Move is now supported via Stylus, joining Rust, C, and C++ as available languages for smart contract development. This expansion allows teams to build new on-chain primitives using familiar programming environments beyond Solidity.\n\nThe integration, achieved in collaboration with Rather Labs, further reinforces Arbitrum’s positioning as a flexible execution environment with fewer constraints for advanced applications."
+        },
+        {
+          "title": "Robinhood Chain Testnet Goes Live on Arbitrum",
+          "content": "Arbitrum [announced](https://x.com/arbitrum/status/2021404436300726562) that Robinhood Chain testnet is now live, marking the first phase of its transition to a dedicated Layer 2 built on the Arbitrum platform. The testnet focuses on developer onboarding, infrastructure and UX testing, contract deployment, bridging, explorer visibility, and simulated tokenized asset flows using testnet gas and Stock Tokens.\n\nEU users already have access to 2,000+ tokenized U.S. stocks and ETPs on Arbitrum One, and this phase moves Robinhood from shared infrastructure toward a purpose-built L2 with custom gas token support and greater control over fees, throughput, and permissions. Robinhood is also sponsoring Arbitrum’s Open House program to onboard developers into the new ecosystem."
+        },
+        {
+          "title": "ERC-8004 Enabled on Arbitrum",
+          "content": "Arbitrum [announced](https://x.com/arbitrum/status/2019425576759730514) that ERC-8004 is now live on the network, enabling AI agents to operate with on-chain identity, verifiable reputation, and cross-platform discovery. The standard introduces core infrastructure for trustless agent coordination across ecosystems.\n\nCombined with Arbitrum’s deep liquidity and credibly neutral infrastructure, the integration positions the network as a foundation for building and scaling autonomous AI agents within an emerging open agent economy."
+        },
+        {
+          "title": "Arbitrum DAO Advances DVP-Based Quorum Framework",
+          "content": "Arbitrum Governance [announced](https://x.com/arbitrumdao_gov/status/2027028379858256147) that the DVP Quorum upgrade is moving to an on-chain vote following strong support during the temperature check phase. The proposal replaces the current circulating-supply-based quorum model with one based on Delegated Voting Power (DVP), tying quorum requirements directly to actively delegated ARB rather than total token supply.\n\nThe new framework introduces minimum and maximum quorum guardrails and enables on-chain proposal cancellation, allowing proposers to withdraw their own proposals during the three-day pending period before voting begins — improving governance UX and flexibility.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "WalletConnect Pay Enables Crypto Payments on Arbitrum",
+          "content": "WalletConnect Pay [announced](https://x.com/WalletConnect/status/2021881193869004814) native support for Arbitrum, enabling payment service providers and merchants to accept crypto and stablecoin payments through existing PSP infrastructure with a single integration. The solution allows wallet-based payments on Arbitrum without requiring new routing logic, reconciliation systems, or crypto-specific operational changes.\n\nWith billions of lifetime transactions, over $19B in TVL, and deep stablecoin liquidity, Arbitrum is positioned as production-grade payment infrastructure rather than experimental rails. The integration enables low-cost, fast, wallet-agnostic payments while maintaining predictable settlement and compliance-ready flows."
+        },
+        {
+          "title": "Arbitrum Launches 8-Week Mentorship Program for Early-Stage Teams",
+          "content": "Arbitrum [introduced](https://x.com/arbitrum/status/2026363897587142971) the Arbitrum Mentorship Program, an eight-week accelerator starting April 13 aimed at early-stage teams building on the Arbitrum platform. The program will select 15 MVP, pre-seed, or seed-stage teams, offering infrastructure guidance, ecosystem support, distribution channels, and hands-on mentorship from leading ecosystem builders, including Robinhood Chain, GMX, Pendle, and others.\n\nParticipating founders will receive curated access to venture firms including Pantera Capital, Electric Capital, and Lightspeed. The program concludes with a Demo Day, where the top three teams will share $100K in non-dilutive awards."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "Matter Labs Releases Q4 2025 Report",
+          "content": "Matter Labs [published](https://forum.zknation.io/t/matter-labs-q4-2025-deliverables-report/910) its Q4 2025 deliverables report, highlighting ZKsync’s shift from protocol readiness to production-scale deployment. Key milestones included the Atlas upgrade, activation of L1 interoperability, ~1-second proving with Airbender, and the execution of ZKnomics Part II introducing staking and burn mechanics.\n\nThe quarter also saw the launch of Managed Services for enterprise chains, MiCA-aligned regulatory positioning, and mainnet deployments like Dawn and ADI Chain — signaling ZKsync’s push toward institutional, interoperable, and economically aligned ZK infrastructure."
+        },
+        {
+          "title": "ZKsync and Phylax Introduce the “Bank Stack of Ethereum”",
+          "content": "ZKsync and Phylax [unveiled](https://x.com/zksync/status/2024553591433023610) the Bank Stack, a full-stack institutional architecture anchored on Ethereum and powered by Prividium for private execution. The framework is designed to support tokenized deposits, stablecoins, and real-world assets with built-in compliance, identity controls, and deterministic safety mechanisms.\n\nEthereum serves as the settlement layer, Prividium provides confidential execution with ZK proofs posted to L1, and Phylax adds execution-time guardrails such as circuit breakers and invariant enforcement. The initiative positions ZKsync as infrastructure for regulated, instant-settlement financial systems and institutional-grade on-chain deployment."
+        },
+        {
+          "title": "ZKsync DAO Approves 2026 Immunefi Bug Bounty Program",
+          "content": "The ZKsync DAO [approved](https://vote.zknation.io/dao/proposal/52899273737246738438218414127099712652047337592218084212368843786372445167418?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) the Immunefi Bug Bounty Program 2026, authorizing 100M ZK in capped minting authority to fund protocol security. The allocation includes 80M ZK for 2026 bug bounties and 20M ZK to reimburse Matter Labs for verified payouts made in 2025.\n\nOversight will be managed by the ZKsync Security Council, formalizing governance-controlled funding for core security infrastructure across protocol contracts, ZK Stack components, and critical tooling.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "ZKsync DAO Approves ZARP v2 for 2026 Security Funding",
+          "content": "The ZKsync DAO [approved](https://vote.zknation.io/dao/proposal/8950122199701470735770347707974232219581467243459743675708682806836533533051?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) ZARP v2 (ZKsync Audit Reimbursement Program 2026), authorizing 205M ZK (≈$4.1M at $0.02) in capped minting authority to fund security audits. The allocation includes 150M ZK for 2026 audit reimbursements and 55M ZK to reconcile eligible 2025 security costs not claimed under ZARP v1.\n\nZARP v2 expands eligibility beyond ZIP-specific audits to cover broader protocol-critical infrastructure, including Atlas, Prividium, ZKsync OS, and core system components. Oversight remains with the ZKsync Security Council.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "ZKsync DAO Approves Donation to ZKsync Association",
+          "content": "The ZKsync DAO [approved](https://vote.zknation.io/dao/proposal/11346651454708934944378630759545485178332596023788781976003544088664832214798?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) a donation of 73M ZK (≈$1.6M at $0.022) to the ZKsync Association, structured through a capped minter valid through the end of 2026.\n\nThe ZKsync Association, a non-profit under Austrian law, maintains the governance portal, token contracts, MiCA-aligned documentation, and broader governance infrastructure. The donation formalizes DAO-backed operational funding to sustain governance coordination, regulatory alignment, and ecosystem development.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "ZKnomics Staking Pilot Program Launches Season 1",
+          "content": "ZKsync [launched](https://x.com/zksync/status/2018353082594480461) Season 1 of the ZKnomics Staking Pilot Program on February 9, enabling $ZK holders to stake through Tally’s interface while delegating to active governance participants. The pilot is designed to test staking infrastructure ahead of a future decentralized sequencer and to increase active voting power through a delegate-to-stake mechanism.\n\nSeason 1 runs for three months with a reward cap of 10M ZK and a governance target of +200M in active voting power. Rewards are variable, with a target 3% APR scaling up to 10% depending on participation, and no lockup period."
+        },
+        {
+          "title": "UAE Dirham Stablecoin Goes Live on ADI Chain",
+          "content": "The UAE Dirham-backed DDSC stablecoin is [now live](https://x.com/ADIChain_/status/2021812203138298016) on ADI Chain, approved by the Central Bank of the UAE and backed 1:1 by fiat reserves. The initiative is supported by International Holding Company and First Abu Dhabi Bank, positioning DDSC for high-value payments, treasury operations, and cross-border trade.\n\nADI Chain runs on ZKsync’s Atlas-based infrastructure, making this one of the first sovereign-grade stablecoin deployments on the Elastic Network and reinforcing ZKsync’s strategy around compliance-ready, institutional blockchain infrastructure."
+        },
+        {
+          "title": "Edena Selects ZKsync for Sovereign Asset Tokenization",
+          "content": "ZKsync [announced](https://x.com/zksync/status/2024246969582178401) that Edena will use its infrastructure to bring a $20B+ pipeline of sovereign assets on-chain. The integration will leverage ZKsync’s confidential settlement capabilities to provide proof of compliance, ownership, and solvency without exposing sensitive data.\n\nThe move positions ZKsync as infrastructure for institutional and sovereign-grade deployments, combining privacy-preserving execution with verifiable transparency."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Optimism Launches OP Enterprise for Production-Grade Managed Chains",
+          "content": "Optimism [introduced](https://x.com/Optimism/status/2016910101572165750) OP Enterprise, a managed blockchain infrastructure offering designed for enterprises seeking greater control over economics and operations. The model allows companies to own their chain, manage sequencing and fee structures, and capture the revenue generated within their ecosystem.\n\nOP Enterprise offers three deployment tiers:\n\n- Start on OP Mainnet\n- Transition to a self-managed chain\n- Opt for a fully managed setup operated by Optimism\n\nProduction timelines are expected to range between 8 and 12 weeks. Optimism also highlighted standardized vendor integrations across 50+ chains, aiming to reduce onboarding friction and accelerate enterprise deployment on the Superchain."
+        },
+        {
+          "title": "Upgrade 18 Goes Live on Superchain Mainnet",
+          "content": "Upgrade 18 [went live](https://x.com/Optimism/status/2023034570870767834) on February 9, delivering a set of improvements designed to make the OP Stack faster, more flexible, and more operationally efficient. The release introduces CANNON_KONA, a Rust-based fault dispute game that strengthens fault-proof redundancy.\n\nIt also ships Custom Gas Token v2, enabling OP Stack chains to use any asset as their native gas token, and a Creator Pattern Dispute Game Refactor that simplifies deployments through a clone-with-immutable-arguments architecture. Together, these upgrades reduce operational overhead while expanding customization and long-term scalability across the Superchain."
+        },
+        {
+          "title": "OP-Reth Crates Move Fully Under OP Labs Stewardship",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2019093628841590965) that the OP-Reth–specific crates are now fully under OP Labs ownership, consolidating stewardship of one of the Superchain’s core execution components. OP-Reth, originally co-built by OP Labs and Paradigm engineers using the Reth SDK, serves as a primary high-performance execution client across the Superchain."
+        },
+        {
+          "title": "Optimism Supports Ronin’s Migration Toward Ethereum Mainnet",
+          "content": "Optimism [highlighted](https://x.com/Optimism/status/2019806105271238699) its collaboration with Ronin Network and Conduit as Ronin completed its testnet migration back to Ethereum, moving one step closer to mainnet. The migration was architected by Conduit while operating the chain infrastructure, with direct engineering support from Optimism.\n\nThe upcoming mainnet launch is expected to be the largest state migration to Ethereum to date, underscoring the OP Stack’s role as foundational infrastructure within the broader Superchain ecosystem."
+        },
+        {
+          "title": "ERC-8004 Goes Live on OP Mainnet to Power AI Agent Identity",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2020915535731712173) that ERC-8004 is now live on OP Mainnet, introducing a standard for identity, reputation, and verifiable work history for AI agents. The standard includes an Identity Registry, Reputation Registry, and Validation Registry, enabling agents across organizations to interact with shared trust infrastructure.\n\nWith over 10,000 agents registered on testnet and contributors including MetaMask and the Ethereum Foundation AI team, ERC-8004 positions OP Mainnet as a foundational layer for agent-based economies."
+        },
+        {
+          "title": "Optimism Introduces Multisig Liveness Module to Prevent Key Loss Failures",
+          "content": "Optimism [unveiled](https://x.com/Optimism/status/2021660549768262084) an open-source multisig liveness module designed to mitigate key loss risk in treasury management. The module enables a trusted fallback (typically another more secure multisig) to challenge the primary wallet’s operational status.\n\nIf the multisig cannot execute due to lost or inactive keys, the fallback mechanism restores control. Audited by Spearbit and already in use by Optimism, the module strengthens operational resilience across protocol treasuries."
+        },
+        {
+          "title": "Optimism Partners with Succinct to Bring Canonical ZK Proofs to the OP Stack",
+          "content": "Optimism [announced](https://www.optimism.io/blog/optimism-partners-with-succinct-as-preferred-provider-to-accelerate-zk-proving-on-the-superchain) a strategic partnership with Succinct Labs as its first preferred zero-knowledge proving provider, aimed at making validity proofs canonical on the OP Stack. The collaboration targets removing the traditional optimistic challenge period, enabling near-instant withdrawals from L2 to L1.\n\nBy integrating ZK proofs through “OP Succinct,” the Superchain moves closer to real-time capital mobility within a broader multi-proof architecture, allowing OP Stack chains to eventually choose preferred proving networks while maintaining cryptographic security and low-cost scaling."
+        },
+        {
+          "title": "ether.fi Cash Migrates to OP Mainnet",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2024156226662133940) that Ether.fi Cash is migrating to OP Mainnet, bringing over 70,000 active cards, 300,000 accounts, and $200M in TVL into the Superchain ecosystem.\n\nDesigned to let users spend crypto without selling their assets, Ether.fi Cash represents a large consumer-facing deployment. Optimism positioned the migration as further validation of OP Mainnet as production-ready infrastructure for global on-chain payments and real-world financial applications."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Polygon Joins the Enterprise Ethereum Alliance",
+          "content": "Polygon has [officially](https://x.com/0xPolygon/status/2021259998911922641) joined the Enterprise Ethereum Alliance (EEA), reinforcing its push to position the Open Money Stack as institutional-grade payment infrastructure. Alongside members such as Nethermind and Ethena, Polygon will collaborate with global enterprises on settlement standards, merchant access, and compliant on-chain rails."
+        },
+        {
+          "title": "ERC-8004 Goes Live on Polygon",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2018365944884785424) that ERC-8004 is now live on the network, enabling portable identity and reputation for autonomous agents across L2s and organizations. The standard removes walled-garden constraints, allowing agents to interact trustlessly across ecosystems.\n\nBy supporting ERC-8004, Polygon positions itself as infrastructure for a scalable, permissionless agent economy aligned with interoperable on-chain identity."
+        },
+        {
+          "title": "Polygon Acquires Trails, Launches Universal Intents Platform",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2018727852124848614) that Trails, the universal intents platform for 1-click crypto transactions, is now live for public access following its acquisition. Trails enables users to execute transactions across any token, chain, or wallet through a single API integration, abstracting cross-chain complexity.\n\nWith Trails, Polygon doubles down on intent-based UX where users define outcomes and the system handles routing, bridging, and execution — reinforcing Polygon’s interoperability strategy."
+        },
+        {
+          "title": "Billon Launches Asia’s First Leveraged Vault for Tokenized Assets on Polygon",
+          "content": "Polygon Labs [announced](https://x.com/0xPolygon/status/2019063040717590793) the launch of Billon, an on-chain lending protocol built exclusively for tokenized assets, in collaboration with AlloyX Group and the Axion Foundation. The launch powers Asia’s first leveraged vault for tokenized RWAs, positioning Polygon as infrastructure for institutional-grade DeFi."
+        },
+        {
+          "title": "Polygon Powered Stablecoin Tax Refunds During the 2026 Winter Olympics",
+          "content": "During the 2026 Winter Olympics, Polygon [powered](https://x.com/0xPolygon/status/2021960042787090784) instant USDC tax refunds for international travelers at Milan, Rome, and Venice airports. Enabled with Global Blue and Shift4, the initiative delivered refunds directly in stablecoins instead of traditional cross-border reimbursement flows."
+        },
+        {
+          "title": "Brazil’s Largest FX Bank Expands BRL Stablecoin to Polygon",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2026676597525266728) that Brazil’s largest foreign exchange bank is expanding BBRL, its Brazilian real stablecoin, to Polygon. The move enables near-instant transfers and low-fee transactions while connecting BRL-denominated value to one of the most active stablecoin ecosystems.\n\nFor Grupo Braza, the expansion bridges the Brazilian real to global on-chain markets, supporting international payments, cross-border commerce, and investment flows."
+        },
+        {
+          "title": "JPYC Scales Real-World Payments on Polygon",
+          "content": "JPYC, Japan’s first yen-denominated stablecoin, is consolidating the majority of its on-chain activity [on Polygon](https://polygon.technology/blog/onchain-yen-used-for-real-payments-jpyc-is-scaling-on-polygon), with higher volume than all other chains combined. Users are topping up cards, converting assets, and sending yen-denominated payments through wallets like HashPort and Myna.\n\nPolygon is positioning itself as Japan’s stablecoin settlement layer, with the expansion of JPYC lending markets on Morpho reinforcing both payment flows and productive yen-denominated liquidity within the Open Money Stack framework."
+        },
+        {
+          "title": "PIP-82 Proposes $1M Gas Recycling Program for Agentic Commerce",
+          "content": "Polygon has posted PIP-82, which [introduces](https://x.com/0xPolygonFdn/status/2021983395908399220) the Agentic Commerce Gas Program and proposes recycling up to $1M in EIP-1559 base fees to subsidize transactions related to agent-to-agent commerce under the x402 standard.\n\nThe proposal modifies the EIP-1559 burn recipient and leverages the existing PIP-65 fee distribution system to periodically recycle eligible base fees, while any non-recycled POL continues to be burned. The program would run until the $1M cap is reached or December 31, 2026, and would require a Bor hard fork if approved.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "id": "eigenlayer",
+      "daLayerId": "eigenda",
+      "name": "EigenLayer",
+      "news": [
+        {
+          "title": "Sovra Launches as First Sovereign Agent Company Powered by EigenCloud",
+          "content": "Gajesh Naik [introduced](https://blog.eigencloud.xyz/sovra-the-first-agent-media-company/) Sovra, described as the first “agent media company” designed to operate as a sovereign, investable AI agent. Sovra runs within a Trusted Execution Environment (TEE) on EigenCloud, generating cryptographic attestations that prove the exact code it executes.\n\nIts architecture combines TEE-based private execution with on-chain smart contracts on Base and Solana that control funds, identity, and permissions. The agent earns stablecoins through auctions for custom content, manages its own credentials, and is designed to operate without human key control."
+        },
+        {
+          "title": "EigenCloud Outlines Vision for Verifiable Agent Infrastructure",
+          "content": "JT Rose, Chief Growth Officer at EigenCloud, [published](https://x.com/jt_rose/status/2023856777260134441) an article outlining a vision for a “verifiable cloud” built for the agentic era. The piece argues that as agents begin handling financial transactions and critical operations, infrastructure must prioritize cryptographic proof and accountability over raw performance.\n\nRose highlights EigenLayer’s slashing mechanism, alongside EigenDA, EigenCompute, and EigenAI, as primitives enabling verifiable compute and enforceable agent behavior."
+        },
+        {
+          "title": "EigenCloud CTO Highlights Verifiability Thesis Following Google DeepMind Paper",
+          "content": "Vishnu Patankar, CTO of EigenCloud, [published](https://x.com/vishnu_patankar/status/2024594955168338005) an article arguing that research on intelligent AI delegation reinforces EigenCloud’s thesis: agent systems require verifiable execution and cryptoeconomic enforcement to operate safely at scale.\n\nThe piece emphasizes two requirements for the agentic web: verifiable execution that produces cryptographic proof of computation, and enforcement mechanisms (including slashing) that align incentives and punish misbehavior."
+        },
+        {
+          "title": "EigenCloud Updates Website with Agentic-Era Focus",
+          "content": "EigenCloud [unveiled](https://x.com/eigencloud/status/2026360976187261284) a refreshed website emphasizing its positioning as infrastructure for the agentic economy — focused on verifiable cloud primitives for agents that observe, decide, transact, and execute tasks involving real economic value."
+        },
+        {
+          "title": "$EIGEN/USDC Market Goes Live on Morpho",
+          "content": "The Eigen Foundation [announced](https://x.com/eigenfoundation/status/2018348569640722595) that $EIGEN is now available on Morpho on Ethereum mainnet, launching with the first $EIGEN/USDC lending market. The deployment expands liquidity access for EIGEN holders and integrates the token into Ethereum’s on-chain lending infrastructure."
+        },
+        {
+          "title": "CloutCards Showcases Verifiable Poker on EigenCompute",
+          "content": "EigenCloud [showcased](https://x.com/eigencloud/status/2018443301515575760) CloutCards, a live crypto poker demo built on EigenCompute featuring gasless gameplay, private execution, and verifiably fair mechanics with auditable Sepolia payouts. The demo illustrates how applications can integrate trustless payments and verifiable execution with cryptographic guarantees around fairness, privacy, and settlement."
+        },
+        {
+          "title": "EigenCloud Publishes Deterministic Inference Whitepaper",
+          "content": "EigenCloud, led by CTO Vishnu Patankar, [published](https://x.com/vishnu_patankar/status/2018827284464177507) a whitepaper outlining a framework for deterministic LLM inference to make agent decisions reproducible and auditable in high-stakes environments.\n\nThe approach combines Trusted Execution Environments (TEEs), threshold decryption keys, and bit-exact execution so inference results can be re-executed identically, enabling byte-level verification and making deviations detectable."
+        },
+        {
+          "title": "Eigen Foundation Awards Grant to Puffer’s UniFi AVS",
+          "content": "The Eigen Foundation [announced](https://x.com/eigenfoundation/status/2021609856088838428) grant support for Puffer Finance and UniFi AVS, backing rollup preconfirmations designed to improve UX without compromising Ethereum’s credible neutrality.\n\nUniFi AVS targets near-instant rollup interactions via economically enforced preconfirmations secured through Ethereum’s restaking framework rather than centralized trust assumptions."
+        },
+        {
+          "title": "MoltCourt Launches on EigenCloud with Verifiable AI Debates",
+          "content": "EigenCloud [introduced](https://x.com/eigencloud/status/2021707457324609615) MoltCourt, an experimental AI debate arena where agents engage in structured multi-round arguments evaluated by an AI jury. Each verdict is issued with cryptographic proof powered by EigenCompute, showcasing verifiable compute anchoring agent-to-agent interactions in provable execution."
+        },
+        {
+          "title": "EigenCloud Joins ETHGas Open Gas Initiative",
+          "content": "EigenCloud [announced](https://x.com/eigencloud/status/2022324526860918868) it has joined ETHGas’ Open Gas Initiative (OG Cohort) to advance gas abstraction and reduce transaction friction. Through the initiative, EigenCloud will sponsor gas for users and support gasless interactions to improve onboarding for agent-native and crypto applications."
+        },
+        {
+          "title": "Eigen Positions Itself for the Agent-Driven Economy",
+          "content": "Eigen Labs founder Sreeram Kannan [shared](https://x.com/sreeramkannan/status/2027383624396571028) a strategic update on how Eigen is aligning around the rapid rise of autonomous AI agents. He framed EigenCloud as the integration of EigenLayer, EigenDA, EigenCompute, and EigenAI into a full-stack system for agent-native companies and digital institutions.\n\nFor 2026, Eigen plans to accelerate network revenue, strengthen value capture for EIGEN, and begin launching consumer-facing agent applications directly. Kannan also reaffirmed long-term conviction around EIGEN, stating he has not sold any and does not plan to ahead of the 2027 unlock."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Nethermind Joins the Enterprise Ethereum Alliance",
+          "content": "Nethermind [has joined](https://x.com/Nethermind/status/2021258948066578455) the Enterprise Ethereum Alliance (EEA), alongside Polygon and Ethena, strengthening its institutional footprint within the Ethereum ecosystem.\n\nThrough the EEA, Nethermind will contribute execution-layer infrastructure, protocol engineering expertise, and privacy-focused research to support enterprise coordination and blockchain adoption."
+        },
+        {
+          "title": "Nethermind Ships Log Index to Improve eth_getLogs Performance",
+          "content": "Nethermind [released](https://x.com/Nethermind/status/2024408117123969270) Log Index, a new database layer designed to significantly reduce latency for large-range `eth_getLogs` queries. Instead of scanning every block across wide ranges, the client maps addresses and topics to relevant block numbers, narrowing the search scope.\n\nAccording to published benchmarks, median query latency dropped from 32 seconds to 219 milliseconds, with some queries reduced from 15 minutes to roughly one second. The feature is opt-in, requires ~30 GB of additional storage on mainnet, and runs indexing in the background — particularly useful for wallets, explorers, and infrastructure teams."
+        },
+        {
+          "title": "Nethermind Security Formally Verifies SP1 Hypercube Opcodes",
+          "content": "Nethermind Security announced the formal verification of all 62 core RISC-V opcodes powering SP1 Hypercube, a zk system securing billions in TVL. In collaboration with Succinct Labs and supported by the Ethereum Foundation, the team verified the opcodes against the official RISC-V Sail specification using Lean — applying formal methods rather than relying solely on testing.\n\nThe milestone strengthens security assurances for production-grade zk infrastructure as SP1 progresses toward mainnet."
+        },
+        {
+          "title": "Nethermind Resolves Aztec Staking Reward Routing Issue",
+          "content": "Nethermind [disclosed](https://x.com/Nethermind/status/2021569915338027124) that on February 7 it identified an isolated issue within its Aztec staking infrastructure that caused some block proposal rewards to be routed incorrectly. The issue was resolved the same day.\n\nThe team confirmed that all affected delegators will receive the full amount owed, no funds will need to be returned, and no action is required from users. Additional validation and monitoring measures have been implemented to prevent recurrence."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Rollup Contracts 2.2.0 Published",
+          "content": "Cartesi [released](https://github.com/cartesi/rollups-contracts/releases/tag/v2.2.0) Rollups Contracts v2.2.0, introducing a new `getNumberOfSubmittedClaims` view function in the `IConsensus` interface. This enables the Rollups node to query the total number of claims directly, facilitating a fast-sync mechanism that reduces the time required for a node to catch up with current network state."
+        },
+        {
+          "title": "Fraud-Proof System Enhanced with Faster Dispute Tracking",
+          "content": "The v2.1.0 [release](https://github.com/cartesi/dave/releases/tag/v2.1.0) of the Dave fraud-proof system improves dispute tracking and verification. It upgrades rollups-contracts from 2.1.1 to 2.2.0 and introduces new event counters in Tournament smart contracts, allowing nodes to synchronize tournament state without replaying the entire historical action log.\n\nThe release also simplifies architecture by unifying tournament types into a single framework and includes an updated Honeypot test suite to strengthen reliability for permissionless rollups."
+        },
+        {
+          "title": "Cartesi CLI Alpha Adds --fork-url and PRT Enhancements Continue",
+          "content": "The latest [Cartesi CLI](https://github.com/cartesi/cli/releases/tag/%40cartesi%2Fcli%402.0.0-alpha.29) alpha adds a major workflow improvement via `--fork-url`, allowing developers to copy live networks (e.g., Ethereum mainnet) into local test environments and interact with real-world contracts outside the Cartesi system.\n\nIt also improves transaction sending speed and automation reliability. In parallel, an in-progress Rollups node [pull request](https://github.com/cartesi/rollups-node/pull/737) adds CLI support for reading PRT dispute entities (tournaments, commitments, matches, `match_advances`) to align with the JSON-RPC API, while refactoring read commands and tightening repository/JSON-RPC layers by upgrading filter field types from strings to proper address types."
+        },
+        {
+          "title": "New Educational Series on DeFi Execution Environments",
+          "content": "Cartesi published an educational piece arguing that DeFi is still constrained by onchain execution limits, forcing simplifications in math, stateful systems, and tooling. The [blog post](https://cartesi.io/contributor-hub/DeFi-needs-better-execution-environment/) and accompanying [video series](https://www.youtube.com/@Cartesiproject/shorts) position Cartesi’s Linux-based execution environment as a path to more expressive, verifiable DeFi — enabling developers to use mature programming languages and libraries and run sophisticated models without reinventing core financial logic."
+        }
+      ]
+    }
+  ]
+}
