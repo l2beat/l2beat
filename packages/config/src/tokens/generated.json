@@ -13263,6 +13263,28 @@
       }
     },
     {
+      "name": "PayPal USD",
+      "coingeckoId": "paypal-usd",
+      "address": "0x46850aD61C2B7d64d08c9C754F45254596696984",
+      "symbol": "PYUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1746547905,
+      "coingeckoListingTimestamp": 1692144000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31212/large/PYUSD_Token_Logo_2x.png?1765987788",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Pepe",
       "coingeckoId": "pepe",
       "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",

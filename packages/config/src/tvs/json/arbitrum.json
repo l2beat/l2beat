@@ -6818,6 +6818,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-PYUSD",
+      "priceId": "paypal-usd",
+      "symbol": "PYUSD",
+      "name": "PayPal USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31212/large/PYUSD_Token_Logo_2x.png?1765987788",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x46850aD61C2B7d64d08c9C754F45254596696984",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1746547905
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-QNT",
       "priceId": "quant-network",
       "symbol": "QNT",

@@ -2295,6 +2295,20 @@
   ],
   "arbitrum": [
     {
+      "symbol": "PYUSD",
+      "address": "0x46850aD61C2B7d64d08c9C754F45254596696984",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "PGOLD",
       "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
       "source": "native",
