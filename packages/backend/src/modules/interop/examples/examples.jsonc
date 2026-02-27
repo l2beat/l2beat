@@ -3025,6 +3025,180 @@
       { "type": "opstack.L1ToL2Message", "app": "zklink-nova" }
     ]
   },
+  "linea": {
+    "tags": ["linea"],
+    "txs": [
+      // Ethereum -> Linea (LINEA token)
+      {
+        "chain": "ethereum",
+        "tx": "0x621358c0e38e9493bd296101f37a7f0a5c9405af200abfdf9b6a776a67fea32b"
+      },
+      {
+        "chain": "linea",
+        "tx": "0x2ce2f62f8b446193a9beec723bfe13e9a9f8d50e6c46e8e82dc68ebeebc5f467"
+      },
+      // Linea -> Ethereum (USDT token)
+      {
+        "chain": "linea",
+        "tx": "0x9693ef1f7bdfbd92844f03cdf11c35fa0e4f9e12fedbd32960ebeb3d8ac6aafd"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x33c836c1c72e061f17d55a4f62315acaadc4ffdebd7ffb44380933906338806f"
+      },
+      // Ethereum -> Linea (ETH native)
+      {
+        "chain": "ethereum",
+        "tx": "0x046c05100cb6f81ba2574c149b3a23cc8de47c9fa5eb59855b138150e8f6c1a5"
+      },
+      {
+        "chain": "linea",
+        "tx": "0xe015890f538ec4fe20930cd26064ff9c09625000e6f4435cfe025f3b0b938497"
+      },
+      // Linea -> Ethereum (ETH native)
+      {
+        "chain": "linea",
+        "tx": "0x7e69817428ddf53c97dcf4ef1ffd78abfd4eabc066da69cd14ca2a28244f37b4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xab86e5828737ad2ed7033c0c7cbc1ccab8040884ce011dc7ccd22d0d2b24543b"
+      },
+      // Ethereum -> Linea (DYSN token, burned on L1)
+      {
+        "chain": "ethereum",
+        "tx": "0x267febf6de33009d58e4c77c9a94b597a7460b262782358dfa2de74f9b38dba4"
+      },
+      {
+        "chain": "linea",
+        "tx": "0x6ab0b7042dce65957fd377ae6eda1fa2e90dab85b2c9a005d0cd04f5bd3be295"
+      }
+    ],
+    "expects": {
+      "events": [
+        "linea.MessageSent",
+        "linea.MessageSent",
+        "linea.MessageSent",
+        "linea.MessageSent",
+        "linea.MessageSent",
+        "linea.MessageClaimed",
+        "linea.MessageClaimed",
+        "linea.MessageClaimed",
+        "linea.MessageClaimed",
+        "linea.MessageClaimed",
+        "linea.BridgingInitiatedV2",
+        "linea.BridgingInitiatedV2",
+        "linea.BridgingInitiatedV2",
+        "linea.BridgingFinalizedV2",
+        "linea.BridgingFinalizedV2",
+        "linea.BridgingFinalizedV2"
+      ],
+      "messages": [
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "linea" } }
+        },
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "linea" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "linea" } }
+        },
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "linea" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "linea" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "linea.Transfer",
+          "src": {
+            "event": {
+              "type": "linea.BridgingInitiatedV2",
+              "ctx": { "chain": "ethereum" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.BridgingFinalizedV2",
+              "ctx": { "chain": "linea" }
+            }
+          }
+        },
+        {
+          "type": "linea.Transfer",
+          "src": {
+            "event": {
+              "type": "linea.BridgingInitiatedV2",
+              "ctx": { "chain": "linea" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.BridgingFinalizedV2",
+              "ctx": { "chain": "ethereum" }
+            }
+          }
+        },
+        {
+          "type": "linea.Transfer",
+          "src": {
+            "event": {
+              "type": "linea.MessageSent",
+              "ctx": { "chain": "ethereum" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.MessageClaimed",
+              "ctx": { "chain": "linea" }
+            }
+          }
+        },
+        {
+          "type": "linea.Transfer",
+          "src": {
+            "event": {
+              "type": "linea.MessageSent",
+              "ctx": { "chain": "linea" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.MessageClaimed",
+              "ctx": { "chain": "ethereum" }
+            }
+          }
+        },
+        {
+          "type": "linea.Transfer",
+          "src": {
+            "event": {
+              "type": "linea.BridgingInitiatedV2",
+              "ctx": { "chain": "ethereum" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.BridgingFinalizedV2",
+              "ctx": { "chain": "linea" }
+            }
+          }
+        }
+      ]
+    }
+  },
   "maker-bridge": {
     "txs": [
       // L1 -> L2 deposit

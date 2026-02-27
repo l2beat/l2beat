@@ -2,21 +2,28 @@ import { unique } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
+import { manifest } from '~/utils/Manifest'
 import type {
   CommonInteropData,
   InteropProtocolTokensParams,
   TokenData,
+  TokenFlowData,
 } from './types'
 import { accumulateTokens } from './utils/accumulate'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { buildTransfersTimeModeMap } from './utils/buildTransfersTimeModeMap'
 import { getAggregatedInteropTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
+import { getInteropChains } from './utils/getInteropChains'
 import {
   getDirection,
   INITIAL_COMMON_INTEROP_DATA,
 } from './utils/getProtocolsDataMap'
 import { getTokensData } from './utils/getTokensData'
+
+type TokenInteropData = CommonInteropData & {
+  flows: Map<string, TokenFlowData>
+}
 
 export async function getInteropProtocolTokens({
   id,
@@ -72,11 +79,19 @@ export async function getInteropProtocolTokens({
   const transfersTimeModeMap = buildTransfersTimeModeMap([interopProject])
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
   const durationSplitMap = buildDurationSplitMap([interopProject])
+  const chainIconMap = new Map(
+    getInteropChains().map((chain) => [
+      chain.id,
+      manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+    ]),
+  )
 
-  const result: Map<string, CommonInteropData> = new Map()
+  const result: Map<string, TokenInteropData> = new Map()
   for (const token of tokens) {
-    const current =
-      result.get(token.abstractTokenId) ?? INITIAL_COMMON_INTEROP_DATA
+    const current = result.get(token.abstractTokenId) ?? {
+      ...INITIAL_COMMON_INTEROP_DATA,
+      flows: new Map<string, TokenFlowData>(),
+    }
 
     const transfersTimeMode = transfersTimeModeMap.get(interopProject.id)
     const durationSplit =
@@ -85,10 +100,28 @@ export async function getInteropProtocolTokens({
         : undefined
     const direction = getDirection(token, durationSplit, transfersTimeMode)
 
-    result.set(
-      token.abstractTokenId,
-      accumulateTokens(current, token, direction),
-    )
+    result.set(token.abstractTokenId, {
+      ...accumulateTokens(current, token, direction),
+      flows: current.flows,
+    })
+
+    const flowKey = `${token.srcChain}::${token.dstChain}`
+    const currentFlow = current.flows.get(flowKey)
+    if (currentFlow) {
+      currentFlow.volume += token.volume
+    } else {
+      current.flows.set(flowKey, {
+        srcChain: {
+          id: token.srcChain,
+          iconUrl: chainIconMap.get(token.srcChain),
+        },
+        dstChain: {
+          id: token.dstChain,
+          iconUrl: chainIconMap.get(token.dstChain),
+        },
+        volume: token.volume,
+      })
+    }
   }
 
   return getTokensData({

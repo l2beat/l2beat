@@ -1,6 +1,8 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   FailedRelayedMessage,
+  OPSTACK_NETWORKS,
+  parseSentMessage,
   RelayedMessage,
   SentMessage,
 } from './opstack/opstack'
@@ -29,7 +31,14 @@ const MessageRelayedOP = createInteropEventType<object>(
   'across-settlement.MessageRelayedOP',
 )
 
+const sentMessageLog =
+  'event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)'
+
 const parseMessageRelayed = createEventParser(messageRelayedLog)
+
+const L1_CROSS_DOMAIN_MESSENGERS = OPSTACK_NETWORKS.map((n) =>
+  ChainSpecificAddress.address(n.l1CrossDomainMessenger),
+)
 
 export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
   readonly name = 'across-settlement-op'
@@ -39,6 +48,7 @@ export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: messageRelayedLog,
+        includeTxEvents: [sentMessageLog],
         addresses: [HUB_POOL],
       },
     ]
@@ -50,6 +60,15 @@ export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
         ChainSpecificAddress.address(HUB_POOL),
       ])
       if (messageRelayed) {
+        // Only capture if there's an OpStack SentMessage at offset -2
+        // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → MessageRelayed (N+2)
+        const currentLogIndex = input.log.logIndex ?? -1
+        const prevLog = input.txLogs.find(
+          (log) => log.logIndex === currentLogIndex - 2,
+        )
+        if (!prevLog) return
+        if (!parseSentMessage(prevLog, L1_CROSS_DOMAIN_MESSENGERS)) return
+
         return [MessageRelayedOP.create(input, {})]
       }
     }

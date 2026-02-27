@@ -105,9 +105,22 @@ export type CommonInteropData = {
   burnedValueUsd: number | undefined
 }
 
+export type TokenFlowData = {
+  srcChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  dstChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  volume: number
+}
+
 export type TokenData = {
   id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number | null
   transferCount: number
@@ -116,6 +129,7 @@ export type TokenData = {
   minTransferValueUsd: number | undefined
   maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
+  flows: TokenFlowData[]
 }
 
 export type ChainData = {

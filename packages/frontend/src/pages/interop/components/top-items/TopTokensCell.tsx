@@ -109,17 +109,9 @@ function TopTokensContent({
 
   const tableData = useMemo(
     () =>
-      data?.map((chain) => ({
-        id: chain.id,
-        displayName: chain.symbol,
-        iconUrl: chain.iconUrl,
-        volume: chain.volume,
-        transferCount: chain.transferCount,
-        avgDuration: chain.avgDuration,
-        avgValue: chain.avgValue,
-        minTransferValueUsd: chain.minTransferValueUsd,
-        maxTransferValueUsd: chain.maxTransferValueUsd,
-        netMintedValue: chain.netMintedValue,
+      data?.map((token) => ({
+        ...token,
+        displayName: token.symbol,
       })) ?? [],
     [data],
   )
@@ -175,7 +167,7 @@ function TopTokensContent({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[450px] w-[800px] max-w-[calc(100%-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
+      <DialogContent className="max-h-[450px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
             <span>Top tokens by volume for </span>
