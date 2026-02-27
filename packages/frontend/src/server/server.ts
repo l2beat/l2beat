@@ -23,7 +23,7 @@ const port = process.env.PORT ?? 3000
 type RenderFn = (
   data: RenderData,
   url: string,
-  options?: RenderOptions,
+  options: RenderOptions,
 ) => RenderResult
 
 type ServerOptions =

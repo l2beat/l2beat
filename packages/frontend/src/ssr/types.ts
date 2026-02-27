@@ -9,7 +9,7 @@ export interface RenderData {
 export type RenderFunction = (data: RenderData, url: string) => Promise<string>
 
 export interface RenderOptions {
-  stylesheetUrl?: string
+  stylesheetUrl: string
 }
 
 export interface RenderResult {

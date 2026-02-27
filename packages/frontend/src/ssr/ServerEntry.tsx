@@ -7,7 +7,7 @@ import type { RenderData, RenderOptions, RenderResult } from './types'
 export function render(
   data: RenderData,
   url: string,
-  options?: RenderOptions,
+  options: RenderOptions,
 ): RenderResult {
   globalThis.__FIX_SSR_URL__ = url
   const html = renderToString(
@@ -17,7 +17,7 @@ export function render(
   )
   const head = renderToStaticMarkup(
     <StrictMode>
-      <Head {...data.head} stylesheetUrl={options?.stylesheetUrl} />
+      <Head {...data.head} stylesheetUrl={options.stylesheetUrl} />
     </StrictMode>,
   )
   return { html, head }
