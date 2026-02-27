@@ -344,8 +344,8 @@ function SupportChartsPageLayout(props: {
                 payload = JSON.parse(payloadElement.textContent);
               }
 
-              for (var i = 0; i < payload.length; i++) {
-                var chart = payload[i];
+              for (let i = 0; i < payload.length; i++) {
+                const chart = payload[i];
                 var canvas = document.getElementById('pie-' + chart.id);
                 if (!canvas) continue;
                 var context = canvas.getContext('2d');
@@ -372,10 +372,9 @@ function SupportChartsPageLayout(props: {
                       tooltip: {
                         callbacks: {
                           label: function (ctx) {
-                            var label = chart.labels[ctx.dataIndex];
                             var value = chart.values[ctx.dataIndex];
                             var pct = chart.percentages[ctx.dataIndex];
-                            return label + ': ' + value.toLocaleString('en-US') + ' (' + pct.toFixed(2) + '%)';
+                            return value.toLocaleString('en-US') + ' (' + pct.toFixed(2) + '%)';
                           },
                         },
                       },
