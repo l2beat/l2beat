@@ -376,6 +376,46 @@ describeDatabase(InteropEventRepository.name, (db) => {
     })
   })
 
+  describe(InteropEventRepository.prototype.updateFinancials.name, () => {
+    beforeEach(async () => {
+      await repository.insertMany([
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200)),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250)),
+      ])
+    })
+
+    it('updates financials and marks event as processed', async () => {
+      await repository.updateFinancials('event1', {
+        abstractTokenId: 'token-1',
+        symbol: 'ETH',
+        price: 3000,
+        amount: 1,
+        valueUsd: 3000,
+      })
+
+      const events = await repository.getAll()
+      const event1 = events.find((e) => e.eventId === 'event1')
+      const event2 = events.find((e) => e.eventId === 'event2')
+
+      expect(event1?.abstractTokenId).toEqual('token-1')
+      expect(event1?.symbol).toEqual('ETH')
+      expect(event1?.price).toEqual(3000)
+      expect(event1?.amount).toEqual(1)
+      expect(event1?.valueUsd).toEqual(3000)
+      expect(event1?.isProcessed).toEqual(true)
+      expect(event2?.isProcessed).toEqual(false)
+    })
+
+    it('marks event as processed with empty update', async () => {
+      await repository.updateFinancials('event1', {})
+
+      const events = await repository.getAll()
+      const event1 = events.find((e) => e.eventId === 'event1')
+
+      expect(event1?.isProcessed).toEqual(true)
+    })
+  })
+
   describe(InteropEventRepository.prototype.deleteExpired.name, () => {
     it('deletes events that have expired', async () => {
       await repository.insertMany([
@@ -506,6 +546,12 @@ function event(
     timestamp,
     matched: false,
     unsupported: false,
+    abstractTokenId: undefined,
+    symbol: undefined,
+    amount: undefined,
+    price: undefined,
+    valueUsd: undefined,
+    isProcessed: false,
     args: { amount: '1000000000000000000' },
     ctx: { chain: 'chain' } as InteropEventContext,
     chain: 'chain',

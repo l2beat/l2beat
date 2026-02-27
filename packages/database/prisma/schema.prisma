@@ -341,6 +341,14 @@ model InteropEvent {
   unsupported Boolean
   direction   String?
 
+  abstractTokenId String? @db.VarChar(66)
+  symbol          String? @db.VarChar(66)
+  amount          Float?  @db.Real
+  price           Float?  @db.Real
+  valueUsd        Float?  @db.Real
+
+  isProcessed Boolean @default(false)
+
   @@id([eventId])
   @@index([timestamp, plugin, chain])
   @@index([type, matched, unsupported, timestamp])
