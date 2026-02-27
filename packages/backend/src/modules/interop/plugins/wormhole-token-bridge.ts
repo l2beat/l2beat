@@ -76,7 +76,14 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
     const wormholeNetworks = this.configs.get(WormholeConfig)
     if (!wormholeNetworks) return
 
-    const parsed = parseLogTransferRedeemed(input.log, null)
+    // Only capture from known tokenBridge addresses.
+    // Portal Token Bridge Relayer contracts also emit TransferRedeemed with
+    // the same (emitterChainId, emitterAddress, sequence), causing duplicates.
+    const network = wormholeNetworks.find((n) => n.chain === input.chain)
+    const tokenBridgeAddresses = network?.tokenBridge
+      ? [network.tokenBridge]
+      : null
+    const parsed = parseLogTransferRedeemed(input.log, tokenBridgeAddresses)
     if (!parsed) return
     const nextLog = input.txLogs.find(
       // biome-ignore lint/style/noNonNullAssertion: It's there

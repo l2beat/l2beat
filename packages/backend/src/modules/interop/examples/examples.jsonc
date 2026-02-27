@@ -525,6 +525,30 @@
       "transfers": ["wormhole-tokenbridge.Transfer"]
     }
   },
+  // This tx goes through a Portal Token Bridge Relayer contract, which emits
+  // a second TransferRedeemed with the same (emitterChainId, emitterAddress, sequence).
+  // Only the one from the known tokenBridge should be captured.
+  "wormhole-tokenbridge-relayer": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x6880788cb979136c5c57fbf4ac2b584426cb30e14677d93234d6ea0b40e4243c"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x8dd26c010032079f62029edfb6bfc9323041c6306af60cd1589838d39e9c69c0"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message"],
+      "transfers": ["wormhole-tokenbridge.Transfer"]
+    }
+  },
   "mayan-mctp": {
     "loadConfigs": ["wormhole", "cctp-v2", "cctp-v1"],
     "txs": [
