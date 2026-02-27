@@ -28,7 +28,7 @@ export class InteropCleanerLoop extends TimeLoop {
       now - 1 * UnixTime.DAY,
     )
     const expiredPrices = await this.db.interopRecentPrices.deleteBefore(
-      now - 7 * UnixTime.DAY,
+      now - 14 * UnixTime.DAY,
     )
 
     const currentPluginNames = pluginsAsClusters(this.plugins.eventPlugins).map(
