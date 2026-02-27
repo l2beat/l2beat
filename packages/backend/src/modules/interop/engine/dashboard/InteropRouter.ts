@@ -272,6 +272,12 @@ export function createInteropRouter(
     }
   })
 
+  router.post('/interop/refresh-financials', async (ctx) => {
+    const updatedTransfers = await db.interopTransfer.markAllAsUnprocessed()
+
+    ctx.body = { updatedTransfers }
+  })
+
   router.get('/interop/events/:kind/:type', async (ctx) => {
     const params = Params.validate(ctx.params)
     const status = getProcessorsStatus(processors)
