@@ -302,6 +302,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
       )
       if (!srcChainEntry) return
 
+      // state 2 = SUCCESS — only capture successful executions.
+      // Return [] to claim the log (prevent other plugins from capturing it) but produce no events.
+      if (executionStateChanged.state !== 2) return []
+
       // Collect token release/mint events from TokenPools in the same transaction
       const dstTokens = this.collectDestTokenInfo(input)
 
@@ -524,10 +528,6 @@ export class CCIPPlugin implements InteropPluginResyncable {
       })
 
       if (ccipSendRequests.length === 0) return
-      if (delivery.args.state !== 2) {
-        // Only match successful executions
-        return [Result.Ignore([delivery])]
-      }
 
       const result: MatchResult = []
       const dstTokens = delivery.args.dstTokens ?? []

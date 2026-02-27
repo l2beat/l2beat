@@ -93,6 +93,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     {
       id: 'eth001',
       symbol: 'ETH',
+      issuer: 'ethereum',
       iconUrl:
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       volume: 10_000_000,
@@ -102,10 +103,12 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       minTransferValueUsd: 8_500,
       maxTransferValueUsd: 12_000,
       netMintedValue: undefined,
+      flows: [],
     },
     {
       id: 'usdc01',
       symbol: 'USDC',
+      issuer: 'circle',
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
       volume: 5_000_000,
@@ -115,6 +118,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       minTransferValueUsd: 9_500,
       maxTransferValueUsd: 10_500,
       netMintedValue: undefined,
+      flows: [],
     },
   ]
 

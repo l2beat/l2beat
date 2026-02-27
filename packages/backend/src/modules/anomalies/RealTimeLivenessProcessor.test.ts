@@ -546,6 +546,68 @@ describe(RealTimeLivenessProcessor.name, () => {
       expect(mockNotifier.anomalyRecovered).toHaveBeenCalled()
     })
 
+    it('should remove ongoing anomalies for missing configurations', async () => {
+      const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
+        getLatestStats: mockFn().resolvesTo([] as AnomalyStatsRecord[]),
+      })
+
+      const realTimeLivenessRepository = mockObject<
+        Database['realTimeLiveness']
+      >({
+        getLatestRecords: mockFn().resolvesTo([]),
+      })
+
+      const realTimeAnomaliesRepository = mockObject<
+        Database['realTimeAnomalies']
+      >({
+        getOngoingAnomalies: mockFn().resolvesTo([
+          {
+            start: UnixTime.now(),
+            projectId: 'some-project-id',
+            subtype: 'stateUpdates',
+            status: 'ongoing',
+            isApproved: false,
+          },
+        ]),
+        deleteOngoingByProjectIdAndSubtype: mockFn().resolvesTo(undefined),
+        upsertMany: mockFn().resolvesTo(undefined),
+      })
+
+      const configurations: TrackedTxConfigEntry[] = []
+
+      const config = createMockTrackedTxsConfig(
+        ProjectId('some-project-id'),
+        configurations,
+      )
+
+      const mockNotifier = mockObject<AnomalyNotifier>({
+        anomalyRecovered: mockFn().resolvesTo(undefined),
+      })
+
+      const processor = new RealTimeLivenessProcessor(
+        config,
+        Logger.SILENT,
+        mockDatabase({
+          anomalyStats: anomalyStatsRepository,
+          realTimeLiveness: realTimeLivenessRepository,
+          realTimeAnomalies: realTimeAnomaliesRepository,
+        }),
+        mockNotifier,
+      )
+
+      const block = mockObject<Block>({
+        number: 123,
+        timestamp: UnixTime.now(),
+        transactions: [],
+      })
+
+      await processor.checkForAnomalies(block)
+
+      expect(
+        realTimeAnomaliesRepository.deleteOngoingByProjectIdAndSubtype,
+      ).toHaveBeenCalledWith('some-project-id', 'stateUpdates')
+    })
+
     it('should skip when anomaly stats are outdated', async () => {
       const projectId = ProjectId('project-id')
       const configurationId = 'tracked-tx-1'

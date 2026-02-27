@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x878cfdfa2daa383c1557f6cffa2e5fd2d70b3072
+
+# Diff at Thu, 26 Feb 2026 15:12:41 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1756118260
+- current timestamp: 1772118697
+
+## Description
+
+An EOA (0xB65540bB) used in educhain's discovery was upgraded to an EIP-7702 EOA with a GelatoDelegation smart account implementation (0x5aF42746). This enables ERC-4337 account abstraction features (validator management, user operations) via Gelato's delegation framework. The entryPoint is set to 0x4337084D (ERC-4337 EntryPoint).
+
+## Watched changes
+
+```diff
+    EOA  (arb1:0xB65540bBA534E88EB4a5062D0E6519C07063b259) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0xa02612e698cdf0f165e76377b7aefb72b855bf88be73017b1ec214669fc409cf"]
+      values:
++        {"$implementation":"arb1:0x5aF42746a8Af42d8a4708dF238C53F1F71abF0E0","eip712Domain":{"fields":"0x0f","name":"GelatoDelegation","version":"0.0.1","chainId":42161,"verifyingContract":"arb1:0xB65540bBA534E88EB4a5062D0E6519C07063b259","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"arb1:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108"}
+    }
+```
+
 Generated with discovered.json: 0x38538752237e291d3edd558ffa4938a30f07528a
 
 # Diff at Mon, 05 Jan 2026 17:44:14 GMT:

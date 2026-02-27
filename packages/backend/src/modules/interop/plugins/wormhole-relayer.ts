@@ -83,6 +83,10 @@ export class WormholeRelayerPlugin implements InteropPluginResyncable {
 
     const parsed = parseDelivery(input.log, null)
     if (parsed) {
+      // status 1 = RECEIVER_FAILURE — the relay failed on the destination chain.
+      // Return [] to claim the log (prevent other plugins from capturing it) but produce no events.
+      if (parsed.status === 1) return []
+
       return [
         Delivery.create(input, {
           recipientContract: parsed.recipientContract,

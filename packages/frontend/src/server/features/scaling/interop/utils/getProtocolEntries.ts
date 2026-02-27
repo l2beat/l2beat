@@ -14,6 +14,7 @@ import type {
   DurationSplitMap,
   ProtocolEntry,
 } from '../types'
+import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { buildTransfersTimeModeMap } from './buildTransfersTimeModeMap'
 import { buildDurationSplitMap, getAverageDuration } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
@@ -30,7 +31,7 @@ const logger = getLogger().for('getAllProtocolEntries')
 
 export function getProtocolEntries(
   records: AggregatedInteropTransferWithTokens[],
-  tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
+  tokensDetailsMap: TokensDetailsMap,
   interopProjects: Project<'interopConfig'>[],
   type: KnownInteropBridgeType | undefined,
 ): {
@@ -160,7 +161,7 @@ export function getProtocolEntries(
 function getByBridgeTypeData(
   projectId: ProjectId,
   protocolsDataByBridgeTypeMap: Map<string, ProtocolDataByBridgeType>,
-  tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
+  tokensDetailsMap: TokensDetailsMap,
   durationSplitMap: DurationSplitMap | undefined,
   logger: Logger,
 ): ByBridgeTypeData | undefined {

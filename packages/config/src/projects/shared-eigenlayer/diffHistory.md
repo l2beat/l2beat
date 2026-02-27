@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x9119b38acf40dbc6c454da6326c3b774a747944f
+
+# Diff at Thu, 26 Feb 2026 15:12:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770994184
+- current timestamp: 1772118708
+
+## Description
+
+EigenLayerOperationsMultisig: one new member added (0x9B0098A3), increasing signers from 5 to 6. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/6 (50%).
+
+## Watched changes
+
+```diff
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x17a5c41c8061c8d4466c5c830a1c111ec6e8fb87
 
 # Diff at Fri, 13 Feb 2026 14:50:55 GMT:

@@ -121,4 +121,10 @@ export const INTEROP_CHAINS: InteropChain[] = [
     type: 'evm',
     display: 'FORK',
   },
+  {
+    id: 'linea',
+    name: 'Linea',
+    type: 'evm',
+    display: 'LINEA',
+  },
 ]

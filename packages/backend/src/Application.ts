@@ -10,7 +10,6 @@ import { initDataAvailabilityModule } from './modules/data-availability/DataAvai
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
-import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
@@ -54,7 +53,6 @@ export class Application {
       initDataAvailabilityModule(deps),
       createUpdateMonitorModule(deps),
       createFlatSourcesModule(deps),
-      createTrackedTxsModule(deps),
       initTvsModule(deps),
       createVerifiersModule(deps),
       createDaBeatModule(deps),

@@ -17,6 +17,10 @@ export const ccip: BaseProject = {
         plugin: 'ccip',
         bridgeType: 'burnAndMint',
       },
+      {
+        plugin: 'ccip',
+        bridgeType: 'nonMinting',
+      },
     ],
     type: 'multichain',
   },
