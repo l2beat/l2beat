@@ -26,6 +26,7 @@ export function createInteropRouter(
   logger: Logger,
 ) {
   const router = new Router()
+  let coveragePiesCache: string | undefined
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
@@ -122,7 +123,7 @@ export function createInteropRouter(
     })
   })
 
-  const renderCoveragePies = async (ctx: Router.RouterContext) => {
+  const buildCoveragePiesPage = async () => {
     const chartConfigs = [
       {
         id: 'layerzero-packet-oft-sent',
@@ -163,7 +164,7 @@ export function createInteropRouter(
       ),
     )
 
-    ctx.body = renderSupportChartsPage({
+    return renderSupportChartsPage({
       charts: chartConfigs.map((chart, i) => ({
         id: chart.id,
         title: chart.title,
@@ -171,6 +172,28 @@ export function createInteropRouter(
         rows: rows[i] ?? [],
       })),
     })
+  }
+
+  const isRefreshRequested = (value: unknown): boolean => {
+    if (Array.isArray(value)) {
+      return value.includes('1') || value.includes('true')
+    }
+    return value === '1' || value === 'true'
+  }
+
+  const renderCoveragePies = async (ctx: Router.RouterContext) => {
+    const refresh = isRefreshRequested(ctx.query.refresh)
+
+    if (refresh) {
+      coveragePiesCache = await buildCoveragePiesPage()
+      return ctx.redirect('/interop/coverage-pies')
+    }
+
+    if (coveragePiesCache === undefined) {
+      coveragePiesCache = await buildCoveragePiesPage()
+    }
+
+    ctx.body = coveragePiesCache
   }
 
   router.get('/interop/coverage-pies', renderCoveragePies)

@@ -332,7 +332,9 @@ function SupportChartsPageLayout(props: {
               var button = document.getElementById('refreshButton');
               if (button) {
                 button.addEventListener('click', function () {
-                  window.location.reload();
+                  var refreshUrl = new URL(window.location.href);
+                  refreshUrl.searchParams.set('refresh', '1');
+                  window.location.assign(refreshUrl.toString());
                 });
               }
 
