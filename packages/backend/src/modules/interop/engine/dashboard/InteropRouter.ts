@@ -14,6 +14,7 @@ import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
+import { renderSupportChartsPage } from './SupportChartsPage'
 import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
 
@@ -120,6 +121,60 @@ export function createInteropRouter(
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })
+
+  const renderCoveragePies = async (ctx: Router.RouterContext) => {
+    const chartConfigs = [
+      {
+        id: 'layerzero-packet-oft-sent',
+        title: 'layerzero-v2.PacketOFTSent destination chains',
+        centerLabel: 'PacketOFTSent events',
+        type: 'layerzero-v2.PacketOFTSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'layerzero-packet-oft-delivered',
+        title: 'layerzero-v2.PacketOFTDelivered source chains',
+        centerLabel: 'PacketOFTDelivered events',
+        type: 'layerzero-v2.PacketOFTDelivered',
+        chainArg: '$srcChain' as const,
+      },
+      {
+        id: 'relay-token-sent',
+        title: 'relay.TokenSent destination chains',
+        centerLabel: 'relay.TokenSent events',
+        type: 'relay.TokenSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'relay-token-received',
+        title: 'relay.TokenReceived source chains',
+        centerLabel: 'relay.TokenReceived events',
+        type: 'relay.TokenReceived',
+        chainArg: '$srcChain' as const,
+      },
+    ]
+
+    const rows = await Promise.all(
+      chartConfigs.map((chart) =>
+        db.interopEvent.getSupportBreakdownByChainArg(
+          chart.type,
+          chart.chainArg,
+        ),
+      ),
+    )
+
+    ctx.body = renderSupportChartsPage({
+      charts: chartConfigs.map((chart, i) => ({
+        id: chart.id,
+        title: chart.title,
+        centerLabel: chart.centerLabel,
+        rows: rows[i] ?? [],
+      })),
+    })
+  }
+
+  router.get('/interop/coverage-pies', renderCoveragePies)
+  router.get('/interop/support-charts', renderCoveragePies)
 
   router.get('/interop/memory', (ctx) => {
     const memoryUsage = process.memoryUsage()
