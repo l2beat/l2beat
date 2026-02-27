@@ -51,6 +51,11 @@ import { calculateV2Score } from './defidisco/v2Scoring'
 import { resolveEnhancedTraversal } from './defidisco/enhancedTraversal'
 import { computeFunctionAnalysis } from './defidisco/functionAnalysis'
 import {
+  getReviewConfig,
+  updateReviewConfig,
+  updateEntityDescription,
+} from './defidisco/reviewConfig'
+import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
@@ -580,6 +585,68 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error updating contract tags:', error)
       res.status(500).json({ error: 'Failed to update contract tags' })
+    }
+  })
+
+  // Review config endpoints
+  app.get('/api/projects/:project/review-config', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const response = getReviewConfig(paths, project)
+      res.json(response)
+    } catch (error) {
+      console.error('Error loading review config:', error)
+      res.status(500).json({ error: 'Failed to load review config' })
+    }
+  })
+
+  app.put('/api/projects/:project/review-config', (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      updateReviewConfig(paths, project, req.body)
+      res.json({ success: true })
+    } catch (error) {
+      console.error('Error updating review config:', error)
+      res.status(500).json({ error: 'Failed to update review config' })
+    }
+  })
+
+  app.put('/api/projects/:project/review-config/entity', (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      updateEntityDescription(paths, project, req.body)
+      res.json({ success: true })
+    } catch (error) {
+      console.error('Error updating entity description:', error)
+      res.status(500).json({ error: 'Failed to update entity description' })
     }
   })
 

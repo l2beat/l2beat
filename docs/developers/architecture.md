@@ -45,3 +45,17 @@ In addition to detecting permissions, the AI resolves the permission owner where
 ### Contract Tags
 
 Contract tags are specified by the reviewer/researcher and can only be changed manually. They improve the review by specifying which contract is external to the project, and whether or note we should fetch funds/positions data for the contracts. This is stored in `contracts-tag.json` for each project.
+
+### Review Builder
+
+The Review Builder stores all review configuration in a single `review-config.json` file per project. This includes protocol metadata (name, slug, chain, project type), entity descriptions for admins/dependencies/fund-holding contracts, and section content (e.g., Code & Audits).
+
+**Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/reviewConfig.ts` handles CRUD operations. Three API endpoints are registered in `main.ts`:
+
+- `GET /api/projects/:project/review-config` — returns the full config plus available templates
+- `PUT /api/projects/:project/review-config` — saves the full config
+- `PUT /api/projects/:project/review-config/entity` — partial update for a single admin/dependency/funds entry
+
+**Frontend**: The `ReviewBuilderPanel.tsx` component provides the editor UI, with `ReviewDescriptionsEditor.tsx` for entity descriptions and `ReviewSectionEditor.tsx` for section tabs. Data source definitions in `reviewDataSources.ts` power the data table blocks.
+
+**AI Generation**: The `/generate-review` Claude Code skill fetches pre-processed data from the l2b API, analyzes the protocol structure, and writes generated descriptions directly to `review-config.json`.

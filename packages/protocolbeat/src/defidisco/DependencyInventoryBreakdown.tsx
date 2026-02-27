@@ -2,7 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
-import type { AdminModuleScore, DependencyModuleScore } from '../api/types'
+import type {
+  AdminModuleScore,
+  DependencyDetail,
+  DependencyModuleScore,
+} from '../api/types'
 import { useContractTags } from '../apps/discovery/defidisco/hooks/useContractTags'
 import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
@@ -83,6 +87,46 @@ function DependencySection({ dependency }: { dependency: any }) {
 }
 
 /**
+ * Entity group component - collapsible group of dependencies sharing the same entity
+ */
+function EntityGroup({
+  entity,
+  deps,
+}: {
+  entity: string
+  deps: DependencyDetail[]
+}) {
+  const [isExpanded, setIsExpanded] = useState(true)
+
+  const totalFunctions = deps.reduce(
+    (sum, dep) => sum + dep.functions.length,
+    0,
+  )
+
+  return (
+    <div className="mb-2 ml-2">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="flex w-full items-center gap-2 rounded px-2 py-1 text-left transition-colors hover:bg-coffee-800/30"
+      >
+        <span className="text-coffee-400 text-xs">
+          {isExpanded ? '▼' : '▶'}
+        </span>
+        <span className="font-medium text-aux-orange text-sm">{entity}</span>
+        <span className="text-coffee-500 text-xs">
+          ({deps.length} contract{deps.length !== 1 ? 's' : ''},{' '}
+          {totalFunctions} fn{totalFunctions !== 1 ? 's' : ''})
+        </span>
+      </button>
+      {isExpanded &&
+        deps.map((dep) => (
+          <DependencySection key={dep.dependencyAddress} dependency={dep} />
+        ))}
+    </div>
+  )
+}
+
+/**
  * Dependency Inventory Breakdown Component
  * Displays breakdown of dependencies by external contract,
  * including external owners from the admin breakdown.
@@ -143,6 +187,28 @@ export function DependencyInventoryBreakdown({
 
   // Regular dependencies (from call graph / function dependencies)
   const regularDeps = score.breakdown || []
+
+  // Group regular deps by entity
+  const { entityGroups, ungroupedDeps, sortedEntities } = useMemo(() => {
+    const groups = new Map<string, DependencyDetail[]>()
+    const noEntity: DependencyDetail[] = []
+
+    for (const dep of regularDeps) {
+      if (dep.entity) {
+        const list = groups.get(dep.entity) || []
+        list.push(dep)
+        groups.set(dep.entity, list)
+      } else {
+        noEntity.push(dep)
+      }
+    }
+
+    return {
+      entityGroups: groups,
+      ungroupedDeps: noEntity,
+      sortedEntities: [...groups.keys()].sort(),
+    }
+  }, [regularDeps])
 
   // Count functions across regular dependencies
   const depFunctionCount = regularDeps.reduce(
@@ -217,8 +283,15 @@ export function DependencyInventoryBreakdown({
               {totalContractCount !== 1 ? 's' : ''}
             </p>
 
-            {/* Regular dependencies */}
-            {regularDeps.map((dep) => (
+            {/* Regular dependencies grouped by entity */}
+            {sortedEntities.map((entity) => (
+              <EntityGroup
+                key={entity}
+                entity={entity}
+                deps={entityGroups.get(entity) || []}
+              />
+            ))}
+            {ungroupedDeps.map((dep) => (
               <DependencySection key={dep.dependencyAddress} dependency={dep} />
             ))}
 

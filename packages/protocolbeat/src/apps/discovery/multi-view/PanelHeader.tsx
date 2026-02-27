@@ -9,6 +9,7 @@ import { IconFullscreen } from '../../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../../icons/IconFullscreenExit'
 import { findSelected } from '../../../utils/findSelected'
 import { usePanelStore } from '../store/panel-store'
+import { confirmPanelLeave } from '../defidisco/panelDirtyState'
 import { PANEL_IDS, type PanelId, useMultiViewStore } from './store'
 
 export function PanelHeader(props: { id: PanelId }) {
@@ -36,7 +37,10 @@ export function PanelHeader(props: { id: PanelId }) {
           isActive ? 'border-coffee-200' : 'border-coffee-800',
         )}
         value={props.id}
-        onChange={(e) => changePanel(props.id, e.target.value as PanelId)}
+        onChange={(e) => {
+          if (!confirmPanelLeave(props.id)) return
+          changePanel(props.id, e.target.value as PanelId)
+        }}
       >
         {availablePanels.map((id) => (
           <option key={id} value={id}>
@@ -63,7 +67,10 @@ export function PanelHeader(props: { id: PanelId }) {
         <button className="w-4" onClick={() => toggleFullScreen(props.id)}>
           {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
         </button>
-        <button className="w-4" onClick={() => removePanel(props.id)}>
+        <button className="w-4" onClick={() => {
+          if (!confirmPanelLeave(props.id)) return
+          removePanel(props.id)
+        }}>
           <IconClose />
         </button>
       </div>

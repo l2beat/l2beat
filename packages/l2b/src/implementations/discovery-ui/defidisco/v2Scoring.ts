@@ -4,7 +4,15 @@ import type {
   TemplateService,
 } from '@l2beat/discovery'
 import { getProject } from '../getProject'
-import { getCallGraphData } from './callGraph'
+import {
+  buildExternalAddressSet,
+  buildTagsByAddress,
+  findTag,
+  getCallGraphContractName,
+  getCallGraphData,
+  isExternalAddress,
+  traverseWithPaths,
+} from './callGraph'
 import { CapitalAnalysisCalculator } from './capitalAnalysis'
 import { getContractTags } from './contractTags'
 import {
@@ -17,6 +25,7 @@ import type {
   AdminDetail,
   AdminDetailWithCapital,
   ApiAddressType,
+  ApiCallGraphResponse,
   DependencyDetail,
   FunctionDetail,
   Impact,
@@ -62,6 +71,7 @@ interface ScoringData {
   functions: any
   paths: DiscoveryPaths
   projectName: string
+  callGraphData: ApiCallGraphResponse
 }
 
 // ============================================================================
@@ -140,8 +150,8 @@ class FunctionInventoryModule {
   private getContractName(projectData: any, contractAddress: string): string {
     if (!projectData?.entries) return contractAddress
 
-    // Normalize address for comparison (remove eth: prefix if present)
-    const normalizedAddress = contractAddress.replace('eth:', '')
+    // Normalize address for comparison (remove eth: prefix, lowercase for case-insensitive match)
+    const normalizedAddress = contractAddress.replace('eth:', '').toLowerCase()
 
     for (const entry of projectData.entries) {
       // Check both initialContracts and discoveredContracts
@@ -151,7 +161,7 @@ class FunctionInventoryModule {
       ]
 
       for (const contract of contracts) {
-        const entryAddress = contract.address.replace('eth:', '')
+        const entryAddress = contract.address.replace('eth:', '').toLowerCase()
         if (entryAddress === normalizedAddress) {
           return contract.name || contractAddress
         }
@@ -164,20 +174,14 @@ class FunctionInventoryModule {
 
 /**
  * Dependency Inventory Module
- * Analyzes functions that depend on external contracts
+ * Analyzes functions that depend on external contracts using call graph BFS
+ * and manual dependencies from functions.json.
  */
 class DependencyInventoryModule {
   name = 'dependencies'
 
-  /**
-   * Check if a function has a score (any non-unscored value = critical)
-   */
-  private isScored(score?: string): boolean {
-    return !!score && score !== 'unscored'
-  }
-
   calculate(data: ScoringData): DependencyModuleScore {
-    // Build contract name lookup map
+    // Build contract name lookup map (lowercase keys for case-insensitive lookup)
     const contractNameMap = new Map<string, string>()
     data.projectData.entries?.forEach((entry: any) => {
       const allContracts = [
@@ -186,11 +190,16 @@ class DependencyInventoryModule {
       ]
       allContracts.forEach((contract: any) => {
         contractNameMap.set(
-          contract.address,
+          contract.address.toLowerCase(),
           contract.name || 'Unknown Contract',
         )
       })
     })
+
+    // Build external address set and tag lookup from contract tags
+    const tags = data.contractTags?.tags ?? []
+    const externalAddresses = buildExternalAddressSet(tags)
+    const tagsByAddress = buildTagsByAddress(tags)
 
     // Process dependencies: group by external contract
     const dependenciesMap = new Map<string, DependencyDetail>()
@@ -199,47 +208,48 @@ class DependencyInventoryModule {
       Object.entries(data.functions.contracts).forEach(
         ([contractAddress, contractData]: [string, any]) => {
           contractData.functions.forEach((func: any) => {
-            // Only process scored functions that have dependencies
-            if (
-              func.dependencies &&
-              func.dependencies.length > 0 &&
-              this.isScored(func.score)
-            ) {
-              func.dependencies.forEach((dep: { contractAddress: string }) => {
+            // Process all functions for dependency detection (not just scored ones)
+            // Dependencies are structural — they exist regardless of score status
+
+            // Run BFS traversal from this function through the call graph
+            const traversalResult = traverseWithPaths(
+              data.callGraphData,
+              contractAddress,
+              func.functionName,
+            )
+
+            // 1. Auto-detected: external contracts reachable via call graph
+            for (const [addr] of traversalResult.reachableContracts) {
+              if (addr.toLowerCase() === contractAddress.toLowerCase()) continue
+              if (!isExternalAddress(addr, externalAddresses)) continue
+
+              this.addDependency(
+                dependenciesMap,
+                addr,
+                contractNameMap,
+                tagsByAddress,
+                data.callGraphData,
+                contractAddress,
+                func.functionName,
+              )
+            }
+
+            // 2. Manual dependencies from functions.json
+            if (func.dependencies && func.dependencies.length > 0) {
+              for (const dep of func.dependencies) {
                 const depAddress = dep.contractAddress
+                if (!isExternalAddress(depAddress, externalAddresses)) continue
 
-                // Get tag from contract tags
-                const normalizedDepAddress = depAddress.toLowerCase()
-                const tag = data.contractTags?.tags?.find(
-                  (tag: any) =>
-                    tag.contractAddress.toLowerCase() === normalizedDepAddress,
-                )
-
-                // Skip if not external
-                if (!tag?.isExternal) {
-                  return
-                }
-
-                // Get or create dependency entry
-                if (!dependenciesMap.has(depAddress)) {
-                  dependenciesMap.set(depAddress, {
-                    dependencyAddress: depAddress,
-                    dependencyName:
-                      contractNameMap.get(depAddress) || 'Unknown Contract',
-                    functions: [],
-                  })
-                }
-
-                // Add function to dependency
-                const depData = dependenciesMap.get(depAddress)!
-                depData.functions.push({
+                this.addDependency(
+                  dependenciesMap,
+                  depAddress,
+                  contractNameMap,
+                  tagsByAddress,
+                  data.callGraphData,
                   contractAddress,
-                  contractName:
-                    contractNameMap.get(contractAddress) || 'Unknown Contract',
-                  functionName: func.functionName,
-                  impact: 'critical' as Impact,
-                })
-              })
+                  func.functionName,
+                )
+              }
             }
           })
         },
@@ -253,6 +263,50 @@ class DependencyInventoryModule {
       breakdown,
     }
   }
+
+  private addDependency(
+    dependenciesMap: Map<string, DependencyDetail>,
+    depAddress: string,
+    contractNameMap: Map<string, string>,
+    tagsByAddress: Map<string, import('./types').ContractTag>,
+    callGraphData: ApiCallGraphResponse,
+    callerContractAddress: string,
+    callerFunctionName: string,
+  ) {
+    const normalizedDep = depAddress.toLowerCase()
+
+    // Get or create dependency entry
+    if (!dependenciesMap.has(normalizedDep)) {
+      const tag = findTag(tagsByAddress, depAddress)
+      dependenciesMap.set(normalizedDep, {
+        dependencyAddress: depAddress,
+        dependencyName:
+          contractNameMap.get(normalizedDep) ||
+          getCallGraphContractName(callGraphData, depAddress) ||
+          'Unknown Contract',
+        entity: tag?.entity,
+        functions: [],
+      })
+    }
+
+    // Add function to dependency (avoid duplicates)
+    const depData = dependenciesMap.get(normalizedDep)!
+    const alreadyAdded = depData.functions.some(
+      (f) =>
+        f.contractAddress === callerContractAddress &&
+        f.functionName === callerFunctionName,
+    )
+    if (!alreadyAdded) {
+      depData.functions.push({
+        contractAddress: callerContractAddress,
+        contractName:
+          contractNameMap.get(callerContractAddress.toLowerCase()) ||
+          'Unknown Contract',
+        functionName: callerFunctionName,
+        impact: 'critical' as Impact,
+      })
+    }
+  }
 }
 
 /**
@@ -264,7 +318,7 @@ class AdminInventoryModule {
   name = 'admins'
 
   calculate(data: ScoringData): AdminModuleScore {
-    // Build contract name and type lookup maps
+    // Build contract name and type lookup maps (lowercase keys for case-insensitive lookup)
     const contractNameMap = new Map<string, string>()
     const contractTypeMap = new Map<string, ApiAddressType>()
 
@@ -275,16 +329,22 @@ class AdminInventoryModule {
       ]
       allContracts.forEach((contract: any) => {
         contractNameMap.set(
-          contract.address,
+          contract.address.toLowerCase(),
           contract.name || 'Unknown Contract',
         )
-        contractTypeMap.set(contract.address, contract.type || 'Contract')
+        contractTypeMap.set(
+          contract.address.toLowerCase(),
+          contract.type || 'Contract',
+        )
       })
 
       // Also add EOAs
       entry.eoas?.forEach((eoa: any) => {
-        contractNameMap.set(eoa.address, eoa.name || 'Unknown EOA')
-        contractTypeMap.set(eoa.address, eoa.type || 'EOA')
+        contractNameMap.set(
+          eoa.address.toLowerCase(),
+          eoa.name || 'Unknown EOA',
+        )
+        contractTypeMap.set(eoa.address.toLowerCase(), eoa.type || 'EOA')
       })
     })
 
@@ -328,12 +388,13 @@ class AdminInventoryModule {
 
             // Process each admin address
             adminAddresses.forEach((adminAddr: string) => {
+              const normalizedAdmin = adminAddr.toLowerCase()
               // Get or create admin entry
               if (!adminsMap.has(adminAddr)) {
                 adminsMap.set(adminAddr, {
                   adminAddress: adminAddr,
-                  adminName: contractNameMap.get(adminAddr) || adminAddr,
-                  adminType: contractTypeMap.get(adminAddr) || 'Unknown',
+                  adminName: contractNameMap.get(normalizedAdmin) || adminAddr,
+                  adminType: contractTypeMap.get(normalizedAdmin) || 'Unknown',
                   functions: [],
                 })
               }
@@ -344,7 +405,8 @@ class AdminInventoryModule {
               admin.functions.push({
                 contractAddress,
                 contractName:
-                  contractNameMap.get(contractAddress) || 'Unknown Contract',
+                  contractNameMap.get(contractAddress.toLowerCase()) ||
+                  'Unknown Contract',
                 functionName: func.functionName,
                 impact: 'critical' as Impact,
               })
@@ -357,19 +419,18 @@ class AdminInventoryModule {
     // =========================================================================
     // Capital Analysis Integration
     // =========================================================================
-    // Load call graph and funds data for capital analysis
-    const callGraphData = getCallGraphData(data.paths, data.projectName)
     const fundsData = getFundsData(data.paths, data.projectName)
 
     // Check if we have data for capital analysis
-    const hasCallGraphData = Object.keys(callGraphData.contracts).length > 0
+    const hasCallGraphData =
+      Object.keys(data.callGraphData.contracts).length > 0
     const hasFundsData = Object.keys(fundsData?.contracts ?? {}).length > 0
 
     if (hasCallGraphData && hasFundsData) {
       // Perform capital analysis for each admin
       // Pass functions data so we can check impact scores of called functions
       const capitalCalculator = new CapitalAnalysisCalculator(
-        callGraphData,
+        data.callGraphData,
         fundsData,
         data.functions,
       )
@@ -474,6 +535,7 @@ export class ScoreCalculator {
     const permissionOverrides = getFunctions(this.paths, projectName)
     const contractTags = getContractTags(this.paths, projectName)
     const functions = getFunctions(this.paths, projectName)
+    const callGraphData = getCallGraphData(this.paths, projectName)
 
     const data: ScoringData = {
       projectData,
@@ -482,6 +544,7 @@ export class ScoreCalculator {
       functions,
       paths: this.paths,
       projectName,
+      callGraphData,
     }
 
     // Calculate each module score

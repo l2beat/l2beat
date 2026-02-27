@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-02-19T12:01:26.721Z",
+  "protocol": {
+    "type": "Stablecoin",
+    "description": "",
+    "lastModified": "2026-02-19T12:01:26.721Z"
+  },
+  "admins": {},
+  "dependencies": {}
+}

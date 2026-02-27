@@ -554,7 +554,7 @@ export function FunctionFolder({
     return []
   }
 
-  // Get external contracts with their centralization attributes
+  // Get external contracts with their entity attributes
   const getExternalContracts = React.useMemo(() => {
     if (!projectData?.entries || !contractTags?.tags) return []
 
@@ -562,7 +562,7 @@ export function FunctionFolder({
     const contracts: Array<{
       address: string
       name: string
-      centralization?: 'high' | 'medium' | 'low' | 'immutable'
+      entity?: string
     }> = []
 
     externalTags.forEach((tag) => {
@@ -570,13 +570,15 @@ export function FunctionFolder({
       // Address normalization is now handled in the backend when saving
       const contract = projectData.entries
         .flatMap((e) => [...e.initialContracts, ...e.discoveredContracts])
-        .find((c) => c.address === tag.contractAddress)
+        .find(
+          (c) => c.address.toLowerCase() === tag.contractAddress.toLowerCase(),
+        )
 
       if (contract) {
         contracts.push({
           address: tag.contractAddress,
           name: contract.name || 'Unknown Contract',
-          centralization: tag.centralization,
+          entity: tag.entity,
         })
       }
     })
@@ -584,7 +586,7 @@ export function FunctionFolder({
     return contracts
   }, [projectData, contractTags])
 
-  // Helper to get dependency info (name, centralization)
+  // Helper to get dependency info (name, entity)
   const getDependencyInfo = (address: string) => {
     return getExternalContracts.find((c) => c.address === address)
   }
@@ -606,24 +608,6 @@ export function FunctionFolder({
     // Always pass the array, even if empty - backend will handle it
     // Empty array will be omitted from JSON when serialized
     onDependenciesUpdate(contractAddress, functionName, newDependencies)
-  }
-
-  // Helper to get centralization color
-  const getCentralizationColor = (
-    centralization?: 'high' | 'medium' | 'low' | 'immutable',
-  ) => {
-    switch (centralization) {
-      case 'high':
-        return '#f87171' // red-400
-      case 'medium':
-        return '#fb923c' // orange-400
-      case 'low':
-        return '#fbbf24' // amber-400
-      case 'immutable':
-        return '#10b981' // green-500
-      default:
-        return '#9ca3af' // gray-400
-    }
   }
 
   const isPermissioned = currentFunction?.isPermissioned || false
@@ -1984,20 +1968,11 @@ export function FunctionFolder({
                                 calls: {dep.calledFunctions.join(', ')}
                               </div>
                             )}
-                            {dep.centralization && (
+                            {dep.entity && (
                               <div className="mt-1 flex items-center gap-1 text-xs">
-                                <span className="text-coffee-400">
-                                  Centralization:
-                                </span>
-                                <span
-                                  style={{
-                                    color: getCentralizationColor(
-                                      dep.centralization,
-                                    ),
-                                  }}
-                                  className="font-semibold"
-                                >
-                                  {dep.centralization}
+                                <span className="text-coffee-400">Entity:</span>
+                                <span className="font-semibold text-coffee-200">
+                                  {dep.entity}
                                 </span>
                               </div>
                             )}
@@ -2063,25 +2038,12 @@ export function FunctionFolder({
                             </button>
                           </div>
 
-                          {depInfo && depInfo.centralization && (
-                            <div className="mt-1 flex items-center gap-3 text-xs">
-                              {depInfo.centralization && (
-                                <div className="flex items-center gap-1">
-                                  <span className="text-coffee-400">
-                                    Centralization:
-                                  </span>
-                                  <span
-                                    style={{
-                                      color: getCentralizationColor(
-                                        depInfo.centralization,
-                                      ),
-                                    }}
-                                    className="font-semibold"
-                                  >
-                                    {depInfo.centralization}
-                                  </span>
-                                </div>
-                              )}
+                          {depInfo?.entity && (
+                            <div className="mt-1 flex items-center gap-1 text-xs">
+                              <span className="text-coffee-400">Entity:</span>
+                              <span className="font-semibold text-coffee-200">
+                                {depInfo.entity}
+                              </span>
                             </div>
                           )}
                         </div>
@@ -2136,24 +2098,10 @@ export function FunctionFolder({
                             </div>
                           </div>
                           <div className="ml-2 flex items-center gap-2">
-                            {contract.centralization && (
-                              <div className="flex items-center gap-1">
-                                <span className="text-coffee-400 text-xs">
-                                  C:
-                                </span>
-                                <span
-                                  style={{
-                                    color: getCentralizationColor(
-                                      contract.centralization,
-                                    ),
-                                  }}
-                                  className="font-semibold text-xs"
-                                >
-                                  {contract.centralization
-                                    .charAt(0)
-                                    .toUpperCase()}
-                                </span>
-                              </div>
+                            {contract.entity && (
+                              <span className="rounded bg-coffee-600 px-1.5 py-0.5 text-coffee-300 text-xs">
+                                {contract.entity}
+                              </span>
                             )}
                           </div>
                         </div>

@@ -1,5 +1,13 @@
 import type { DiscoveryPaths } from '@l2beat/discovery'
-import { getCallGraphData } from './callGraph'
+import {
+  buildExternalAddressSet,
+  buildTagsByAddress,
+  findTag,
+  getCallGraphContractName,
+  getCallGraphData,
+  isExternalAddress,
+  traverseWithPaths,
+} from './callGraph'
 import { getContractTags } from './contractTags'
 import { getFunctions } from './functions'
 import { getFundsData } from './fundsData'
@@ -8,9 +16,7 @@ import type {
   ApiFunctionAnalysisResponse,
   ApiFunctionsResponse,
   ApiFundsDataResponse,
-  CallPathStep,
   ContractTag,
-  ExternalCall,
   FunctionAnalysis,
   FunctionDependencyEntry,
   FunctionImpactEntry,
@@ -98,152 +104,12 @@ export function computeFunctionAnalysis(
 }
 
 // ============================================================================
-// BFS with Path Tracking
-// ============================================================================
-
-interface TraversalEntry {
-  contractName?: string
-  viewOnlyPath: boolean
-  calledFunctions: Set<string>
-  /** Shortest path from the start to this contract (BFS guarantees shortest) */
-  shortestPath: CallPathStep[]
-}
-
-interface TraversalWithPathsResult {
-  reachableContracts: Map<string, TraversalEntry>
-  unresolvedCalls: {
-    storageVariable: string
-    interfaceType: string
-    calledFunction: string
-  }[]
-}
-
-/**
- * BFS traversal that tracks the shortest path to each reachable contract.
- * Similar to CallGraphTraverser but also records parent pointers for path reconstruction.
- */
-function traverseWithPaths(
-  callGraphData: ApiCallGraphResponse,
-  startContract: string,
-  startFunction: string,
-): TraversalWithPathsResult {
-  const visited = new Set<string>()
-  const reachableContracts = new Map<string, TraversalEntry>()
-  const unresolvedCalls: TraversalWithPathsResult['unresolvedCalls'] = []
-
-  const queue: Array<{
-    contract: string
-    function: string
-    pathIsViewOnly: boolean
-    /** Path taken to reach this (contract, function) pair */
-    path: CallPathStep[]
-  }> = [
-    {
-      contract: startContract,
-      function: startFunction,
-      pathIsViewOnly: true,
-      path: [],
-    },
-  ]
-
-  while (queue.length > 0) {
-    const { contract, function: func, pathIsViewOnly, path } = queue.shift()!
-
-    const visitKey = `${contract.toLowerCase()}:${func}`
-    if (visited.has(visitKey)) continue
-    visited.add(visitKey)
-
-    // Find call graph for this contract
-    const contractGraph = findContractGraph(callGraphData, contract)
-    if (!contractGraph) continue
-
-    // Filter calls by caller function
-    const functionCalls = contractGraph.externalCalls.filter(
-      (call) => call.callerFunction === func,
-    )
-
-    for (const call of functionCalls) {
-      const isViewCall = call.isViewCall === true || call.callerIsView === true
-
-      if (!call.resolvedAddress) {
-        const alreadyTracked = unresolvedCalls.some(
-          (u) =>
-            u.storageVariable === call.storageVariable &&
-            u.calledFunction === call.calledFunction,
-        )
-        if (!alreadyTracked) {
-          unresolvedCalls.push({
-            storageVariable: call.storageVariable,
-            interfaceType: call.interfaceType,
-            calledFunction: call.calledFunction,
-          })
-        }
-        continue
-      }
-
-      const newPathIsViewOnly = pathIsViewOnly && isViewCall
-
-      // Build the path to this call's target
-      const newPath: CallPathStep[] = [
-        ...path,
-        {
-          contractAddress: contract,
-          contractName: contractGraph.name ?? 'Unknown',
-          functionName: func,
-          isViewCall,
-        },
-      ]
-
-      // Update reachable contracts
-      const existingEntry = reachableContracts.get(call.resolvedAddress)
-      if (existingEntry) {
-        if (!newPathIsViewOnly) {
-          existingEntry.viewOnlyPath = false
-        }
-        existingEntry.calledFunctions.add(call.calledFunction)
-        // Keep shortest path (BFS guarantees first visit is shortest)
-      } else {
-        reachableContracts.set(call.resolvedAddress, {
-          contractName: call.resolvedContractName,
-          viewOnlyPath: newPathIsViewOnly,
-          calledFunctions: new Set([call.calledFunction]),
-          shortestPath: newPath,
-        })
-      }
-
-      // Queue the called function for further traversal
-      queue.push({
-        contract: call.resolvedAddress,
-        function: call.calledFunction,
-        pathIsViewOnly: newPathIsViewOnly,
-        path: newPath,
-      })
-    }
-  }
-
-  return { reachableContracts, unresolvedCalls }
-}
-
-/** Find contract graph with case-insensitive lookup */
-function findContractGraph(
-  callGraphData: ApiCallGraphResponse,
-  contract: string,
-) {
-  const direct = callGraphData.contracts[contract]
-  if (direct) return direct
-  const entry = Object.entries(callGraphData.contracts).find(
-    ([addr]) => addr.toLowerCase() === contract.toLowerCase(),
-  )
-  return entry ? entry[1] : undefined
-}
-
-// ============================================================================
 // Impact Computation
 // ============================================================================
 
 function computeImpact(
   startContractAddress: string,
-  traversalResult: TraversalWithPathsResult,
+  traversalResult: ReturnType<typeof traverseWithPaths>,
   fundsData: ApiFundsDataResponse,
   functionsData: ApiFunctionsResponse,
 ): FunctionAnalysis['impact'] {
@@ -309,7 +175,7 @@ function computeImpact(
 function computeDependencies(
   manualDeps: { contractAddress: string }[] | undefined,
   startContractAddress: string,
-  traversalResult: TraversalWithPathsResult,
+  traversalResult: ReturnType<typeof traverseWithPaths>,
   externalAddresses: Set<string>,
   tagsByAddress: Map<string, ContractTag>,
   callGraphData: ApiCallGraphResponse,
@@ -341,7 +207,7 @@ function computeDependencies(
       isAutoDetected: true,
       viewOnlyPath: data.viewOnlyPath,
       calledFunctions: Array.from(data.calledFunctions),
-      centralization: tag?.centralization,
+      entity: tag?.entity,
       mitigations: undefined,
       callPath: data.shortestPath,
     })
@@ -364,7 +230,7 @@ function computeDependencies(
         isAutoDetected: false,
         viewOnlyPath: false,
         calledFunctions: [],
-        centralization: tag?.centralization,
+        entity: tag?.entity,
         mitigations: undefined,
         callPath: [], // No path info for manual deps
       })
@@ -375,49 +241,8 @@ function computeDependencies(
 }
 
 // ============================================================================
-// Helpers
+// Helpers (specific to function analysis)
 // ============================================================================
-
-function buildExternalAddressSet(tags: ContractTag[]): Set<string> {
-  const set = new Set<string>()
-  for (const tag of tags) {
-    if (tag.isExternal) {
-      set.add(tag.contractAddress.toLowerCase())
-    }
-  }
-  return set
-}
-
-function buildTagsByAddress(tags: ContractTag[]): Map<string, ContractTag> {
-  const map = new Map<string, ContractTag>()
-  for (const tag of tags) {
-    map.set(tag.contractAddress.toLowerCase(), tag)
-  }
-  return map
-}
-
-function isExternalAddress(
-  address: string,
-  externalAddresses: Set<string>,
-): boolean {
-  const normalized = address.toLowerCase()
-  if (externalAddresses.has(normalized)) return true
-  if (externalAddresses.has(normalized.replace('eth:', ''))) return true
-  if (externalAddresses.has(`eth:${normalized}`)) return true
-  return false
-}
-
-function findTag(
-  tagsByAddress: Map<string, ContractTag>,
-  address: string,
-): ContractTag | undefined {
-  const normalized = address.toLowerCase()
-  return (
-    tagsByAddress.get(normalized) ??
-    tagsByAddress.get(normalized.replace('eth:', '')) ??
-    tagsByAddress.get(`eth:${normalized}`)
-  )
-}
 
 function getContractFunds(
   fundsData: ApiFundsDataResponse,
@@ -463,15 +288,4 @@ function isFunctionPermissioned(
     (f) => f.functionName === functionName,
   )
   return func?.isPermissioned === true
-}
-
-function getCallGraphContractName(
-  callGraphData: ApiCallGraphResponse,
-  address: string,
-): string | undefined {
-  const normalizedAddress = address.toLowerCase()
-  const entry = Object.entries(callGraphData.contracts).find(
-    ([key]) => key.toLowerCase() === normalizedAddress,
-  )
-  return entry?.[1]?.name
 }

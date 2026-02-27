@@ -112,28 +112,27 @@ export function updateFunction(
     }
   }
 
-  const contractAddress = updateRequest.contractAddress.toLowerCase()
+  const contractAddress = updateRequest.contractAddress
   const functionName = updateRequest.functionName
 
-  // Get or create contract entry (case-insensitive key migration)
+  // Get or create contract entry (case-insensitive key lookup, preserve original case)
   const existingKey = Object.keys(userContracts).find(
-    (k) => k.toLowerCase() === contractAddress,
+    (k) => k.toLowerCase() === contractAddress.toLowerCase(),
   )
-  if (existingKey && existingKey !== contractAddress) {
-    // Migrate existing entry to lowercase key
-    userContracts[contractAddress] = userContracts[existingKey]
-    delete userContracts[existingKey]
-  } else if (!existingKey) {
+  if (!existingKey) {
     userContracts[contractAddress] = { functions: [] }
   }
 
+  // Use existing key if found (preserves original case), otherwise use new address
+  const contractKey = existingKey ?? contractAddress
+
   // Find existing function entry for the same function
-  const existingFunctionIndex = userContracts[
-    contractAddress
-  ].functions.findIndex((func) => func.functionName === functionName)
+  const existingFunctionIndex = userContracts[contractKey].functions.findIndex(
+    (func) => func.functionName === functionName,
+  )
   const existingFunction =
     existingFunctionIndex >= 0
-      ? userContracts[contractAddress].functions[existingFunctionIndex]
+      ? userContracts[contractKey].functions[existingFunctionIndex]
       : undefined
 
   // Attribution: stamp author on every update
@@ -195,21 +194,20 @@ export function updateFunction(
   if (shouldCleanup) {
     // Remove the function entry entirely
     if (existingFunctionIndex >= 0) {
-      userContracts[contractAddress].functions.splice(existingFunctionIndex, 1)
+      userContracts[contractKey].functions.splice(existingFunctionIndex, 1)
     }
     // Don't add if it was a new function that would be empty
 
     // If contract has no functions left, remove contract entry
-    if (userContracts[contractAddress].functions.length === 0) {
-      delete userContracts[contractAddress]
+    if (userContracts[contractKey].functions.length === 0) {
+      delete userContracts[contractKey]
     }
   } else {
     // Update or add the function entry
     if (existingFunctionIndex >= 0) {
-      userContracts[contractAddress].functions[existingFunctionIndex] =
-        newFunction
+      userContracts[contractKey].functions[existingFunctionIndex] = newFunction
     } else {
-      userContracts[contractAddress].functions.push(newFunction)
+      userContracts[contractKey].functions.push(newFunction)
     }
   }
 

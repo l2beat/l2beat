@@ -17,6 +17,7 @@ export interface FunctionDetail {
 export interface DependencyDetail {
   dependencyAddress: string
   dependencyName: string
+  entity?: string
   functions: {
     contractAddress: string
     contractName: string
@@ -468,7 +469,7 @@ export interface ContractTag {
   contractAddress: string
   isExternal: boolean
   isGovernance?: boolean
-  centralization?: 'high' | 'medium' | 'low' | 'immutable'
+  entity?: string
   fetchBalances?: boolean
   fetchPositions?: boolean
   isToken?: boolean
@@ -479,7 +480,7 @@ export interface ApiContractTagsUpdateRequest {
   contractAddress: string
   isExternal?: boolean
   isGovernance?: boolean
-  centralization?: 'high' | 'medium' | 'low' | 'immutable'
+  entity?: string | null
   fetchBalances?: boolean
   fetchPositions?: boolean
   isToken?: boolean
@@ -644,6 +645,165 @@ export interface ApiAIModelsResponse {
 }
 
 // ============================================================================
+// Review Config Types (Review Builder panel)
+// ============================================================================
+
+export type ReviewProjectType =
+  | 'stablecoin'
+  | 'lending'
+  | 'dex'
+  | 'bridge'
+  | 'derivatives'
+  | 'yield'
+  | 'liquid-staking'
+  | 'cdp'
+  | 'other'
+
+export type ReviewMetricFormat = 'usd' | 'percent' | 'number' | 'string'
+
+export interface ReviewTextBlock {
+  type: 'text'
+  content: string
+}
+
+export interface ReviewTableColorScale {
+  columns: number[]
+  referenceMetric: string
+  valueMetrics: string[][]
+}
+
+export interface ReviewTableBadgeColumn {
+  column: number
+  colorMap: Record<string, string>
+}
+
+export interface ReviewTableBlock {
+  type: 'table'
+  headers: string[]
+  rows: string[][]
+  colorScale?: ReviewTableColorScale
+  badgeColumns?: ReviewTableBadgeColumn[]
+}
+
+export interface ReviewExpandableTableRow {
+  cells: string[]
+  expandedContent?: {
+    functions?: {
+      name: string
+      callers: string[]
+    }[]
+  }
+}
+
+export interface ReviewExpandableTableBlock {
+  type: 'expandableTable'
+  headers: string[]
+  rows: ReviewExpandableTableRow[]
+  badgeColumns?: ReviewTableBadgeColumn[]
+  externalCallers?: string[]
+}
+
+export interface ReviewDropdownBlock {
+  type: 'dropdown'
+  label: string
+  content: ReviewContentBlock[]
+}
+
+export interface ReviewLinkBlock {
+  type: 'link'
+  text: string
+  href: string
+  external: boolean
+}
+
+export interface ReviewMetricBlock {
+  type: 'metric'
+  label: string
+  dataKey: string
+  format: ReviewMetricFormat
+}
+
+// Data-bound block types (dynamically rendered from live API data)
+export type DataColumnFormat = 'text' | 'address' | 'usd' | 'number' | 'percent' | 'badge'
+
+export interface DataTableColumn {
+  field: string
+  header: string
+  format?: DataColumnFormat
+}
+
+export interface ReviewDataTableBlock {
+  type: 'dataTable'
+  dataSource: string
+  columns: DataTableColumn[]
+  filters?: Record<string, boolean>
+}
+
+export interface ReviewDataMetricBlock {
+  type: 'dataMetric'
+  dataSource: string
+  field: string
+  label: string
+  format: DataColumnFormat
+}
+
+export type ReviewContentBlock =
+  | ReviewTextBlock
+  | ReviewTableBlock
+  | ReviewExpandableTableBlock
+  | ReviewDropdownBlock
+  | ReviewLinkBlock
+  | ReviewMetricBlock
+  | ReviewDataTableBlock
+  | ReviewDataMetricBlock
+
+export interface ReviewSubSection {
+  title: string
+  content: ReviewContentBlock[]
+}
+
+export interface ReviewSection {
+  title: string
+  description?: string
+  subsections: ReviewSubSection[]
+}
+
+export interface EntityDescription {
+  name?: string
+  description: string
+}
+
+export interface ReviewConfig {
+  version: string
+  lastModified: string
+  protocolSlug: string
+  protocolName: string
+  tokenName: string
+  chain: string
+  projectType: ReviewProjectType
+  description: string
+  admins: Record<string, EntityDescription>
+  dependencies: Record<string, EntityDescription>
+  funds: Record<string, EntityDescription>
+  sections: {
+    codeAndAudits: ReviewSection
+  }
+  dataKeys: Record<string, string>
+}
+
+export interface ApiReviewConfigResponse {
+  config: ReviewConfig | null
+  availableTemplates: ReviewProjectType[]
+}
+
+export interface ApiUpdateEntityDescriptionRequest {
+  section: 'admins' | 'dependencies' | 'funds'
+  address: string
+  name?: string
+  description: string
+}
+
+// ============================================================================
 // Ultimate Owners Types (Reverse ownership chain resolution)
 // ============================================================================
 
@@ -739,8 +899,8 @@ export interface FunctionDependencyEntry {
   viewOnlyPath: boolean
   /** Functions called on this dependency (empty for manual) */
   calledFunctions: string[]
-  /** Centralization attribute from contract-tags */
-  centralization?: string
+  /** Entity name from contract-tags */
+  entity?: string
   /** Mitigations attribute from contract-tags */
   mitigations?: string
   /** Shortest call path from the starting function to this dependency */

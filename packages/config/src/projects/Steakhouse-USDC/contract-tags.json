@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-02-25T09:27:03.821Z",
+  "lastModified": "2026-02-26T12:23:18.810Z",
   "tags": [
     {
       "contractAddress": "eth:0xaa0500198b4425dfc4e272fbe42c8e64e21fc03d",
@@ -11,12 +11,14 @@
     {
       "contractAddress": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
       "isExternal": true,
-      "timestamp": "2026-02-25T09:27:03.821Z"
+      "entity": "Morpho",
+      "timestamp": "2026-02-26T12:23:18.810Z"
     },
     {
       "contractAddress": "eth:0xcba28b38103307ec8da98377fff9816c164f9afa",
       "isExternal": true,
-      "timestamp": "2026-02-24T12:08:12.670Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T09:25:40.006Z"
     },
     {
       "contractAddress": "eth:0x13ca8756e9470b71b8e998352c8741706217f963",
@@ -66,12 +68,14 @@
     {
       "contractAddress": "eth:0x21f73d42eb58ba49ddb685dc29d3bf5c0f0373ca",
       "isExternal": true,
-      "timestamp": "2026-02-24T15:21:41.936Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T09:25:44.481Z"
     },
     {
       "contractAddress": "eth:0x2e1b5a40edc922bce489668b11749b8eabd67f6b",
       "isExternal": true,
-      "timestamp": "2026-02-24T15:21:41.943Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T12:22:51.617Z"
     },
     {
       "contractAddress": "eth:0x7052cb84079905400ea52b635cab6a275fda8823",
@@ -96,7 +100,8 @@
     {
       "contractAddress": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812",
       "isExternal": true,
-      "timestamp": "2026-02-24T15:21:41.952Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T09:25:35.697Z"
     },
     {
       "contractAddress": "eth:0xfde996f00e42b33bde7c640786333623acc3f298",
@@ -126,39 +131,45 @@
     {
       "contractAddress": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
       "isExternal": true,
-      "timestamp": "2026-02-24T15:21:49.208Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T09:25:11.084Z"
     },
     {
       "contractAddress": "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad",
       "isExternal": true,
-      "timestamp": "2026-02-24T15:21:49.216Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T09:25:11.090Z"
     },
     {
       "contractAddress": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
       "isExternal": true,
-      "timestamp": "2026-02-24T15:21:55.002Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T09:24:46.913Z"
     },
     {
       "contractAddress": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
       "isExternal": true,
-      "timestamp": "2026-02-24T15:21:55.008Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T09:24:33.830Z"
     },
     {
       "contractAddress": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
       "isExternal": true,
-      "timestamp": "2026-02-24T15:21:55.012Z"
-    },
-    {
-      "contractAddress": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
-      "isExternal": true,
-      "timestamp": "2026-02-24T15:22:02.155Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T09:24:42.946Z"
     },
     {
       "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
       "isExternal": false,
       "fetchBalances": true,
       "fetchPositions": true,
-      "timestamp": "2026-02-24T15:22:27.031Z"
+      "timestamp": "2026-02-26T09:01:58.769Z"
+    },
+    {
+      "contractAddress": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T09:25:27.526Z"
     }
   ]
 }

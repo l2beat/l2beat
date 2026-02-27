@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ControlButton } from '../panel-nodes/controls/ControlButton'
 import { useStore } from '../panel-nodes/store/store'
 import { DependencyPropagationDialog } from './DependencyPropagationDialog'
-import { useContractTags, useUpdateContractTag } from './hooks/useContractTags'
+import { EntitySelector } from './EntitySelector'
+import {
+  useContractTags,
+  useProjectEntities,
+  useUpdateContractTag,
+} from './hooks/useContractTags'
 import { useExternalToggle } from './hooks/useExternalToggle'
 
 export function ExternalButton() {
@@ -17,7 +22,6 @@ export function ExternalButton() {
 
   const selected = useStore((state) => state.selected)
   const nodes = useStore((state) => state.nodes)
-  const updateContractTag = useUpdateContractTag(project)
   const { data: contractTags } = useContractTags(project)
 
   const selectedNodes = nodes.filter((node) => selected.includes(node.id))
@@ -59,29 +63,6 @@ export function ExternalButton() {
     }
   }, [ref, open, setOpen])
 
-  const handleSetAttributes = async (
-    centralization: 'high' | 'medium' | 'low' | 'immutable',
-  ) => {
-    const promises = selectedNodes.map((node) => {
-      const normalizedNodeAddress = node.address
-        .toLowerCase()
-        .replace('eth:', '')
-      const tag = contractTags?.tags.find(
-        (tag) =>
-          tag.contractAddress.toLowerCase().replace('eth:', '') ===
-          normalizedNodeAddress,
-      )
-      return updateContractTag.mutateAsync({
-        contractAddress: node.address, // Backend will normalize to ensure eth: prefix
-        isExternal: tag?.isExternal ?? true,
-        centralization,
-      })
-    })
-
-    await Promise.all(promises)
-    setOpen(false)
-  }
-
   return (
     <>
       <ControlButton disabled={!selectionExists} onClick={() => setOpen(true)}>
@@ -94,10 +75,10 @@ export function ExternalButton() {
         >
           <AttributePicker
             onToggleExternal={handleToggleExternal}
-            onSetAttributes={handleSetAttributes}
             hasExternalContract={hasExternalContract}
             selectedNodes={selectedNodes}
             contractTags={contractTags}
+            project={project}
           />
         </div>
       )}
@@ -109,6 +90,8 @@ export function ExternalButton() {
           onConfirm={propagationDialogProps.onConfirm}
           onCancel={propagationDialogProps.onCancel}
           onSkip={propagationDialogProps.onSkip}
+          existingEntities={propagationDialogProps.existingEntities}
+          initialEntity={propagationDialogProps.initialEntity}
         />
       )}
     </>
@@ -117,33 +100,31 @@ export function ExternalButton() {
 
 interface AttributePickerProps {
   onToggleExternal: () => void | Promise<void>
-  onSetAttributes: (
-    centralization: 'high' | 'medium' | 'low' | 'immutable',
-  ) => Promise<void>
   hasExternalContract: boolean
   selectedNodes: Array<{ id: string; address: string }>
   contractTags:
     | {
         tags: Array<{
           contractAddress: string
-          centralization?: 'high' | 'medium' | 'low' | 'immutable'
+          entity?: string
         }>
       }
     | undefined
+  project: string
 }
 
 function AttributePicker({
   onToggleExternal,
-  onSetAttributes,
   hasExternalContract,
   selectedNodes,
   contractTags,
+  project,
 }: AttributePickerProps) {
-  const centralizationOptions: Array<'high' | 'medium' | 'low' | 'immutable'> =
-    ['high', 'medium', 'low', 'immutable']
+  const existingEntities = useProjectEntities(project)
+  const updateContractTag = useUpdateContractTag(project)
 
-  // Get current attributes from first selected node
-  const getCurrentAttributes = () => {
+  // Get current entity from first selected node's tag
+  const currentEntity = useMemo(() => {
     if (selectedNodes.length > 0 && selectedNodes[0]) {
       const normalizedNodeAddress = selectedNodes[0].address
         .toLowerCase()
@@ -153,17 +134,24 @@ function AttributePicker({
           tag.contractAddress.toLowerCase().replace('eth:', '') ===
           normalizedNodeAddress,
       )
-      return {
-        centralization: tag?.centralization || 'high',
-      }
+      return tag?.entity
     }
-    return { centralization: 'high' as const }
-  }
+    return undefined
+  }, [selectedNodes, contractTags])
 
-  const currentAttrs = getCurrentAttributes()
-  const [selectedCentralization, setSelectedCentralization] = useState<
-    'high' | 'medium' | 'low' | 'immutable'
-  >(currentAttrs.centralization)
+  const [entity, setEntity] = useState<string | undefined>(currentEntity)
+
+  const handleEntityChange = async (newEntity: string | undefined) => {
+    setEntity(newEntity)
+    await Promise.all(
+      selectedNodes.map((node) =>
+        updateContractTag.mutateAsync({
+          contractAddress: node.address,
+          entity: newEntity ?? null,
+        }),
+      ),
+    )
+  }
 
   return (
     <div className="flex flex-col gap-3 rounded border border-coffee-600 bg-coffee-800 p-3 shadow-xl">
@@ -175,38 +163,18 @@ function AttributePicker({
         {hasExternalContract ? 'Mark Internal' : 'Mark External'}
       </button>
 
-      {/* Centralization Column */}
+      {/* Entity selector (only when external) */}
       {hasExternalContract && (
-        <>
-          <div className="flex gap-3">
-            <div className="flex flex-col gap-2">
-              <div className="font-semibold text-coffee-300 text-xs">
-                Centralization
-              </div>
-              {centralizationOptions.map((cent) => (
-                <button
-                  key={cent}
-                  className={`rounded border border-coffee-600 px-3 py-2 text-xs capitalize ${
-                    selectedCentralization === cent
-                      ? 'bg-coffee-600'
-                      : 'bg-coffee-700 hover:bg-coffee-600'
-                  }`}
-                  onClick={() => setSelectedCentralization(cent)}
-                >
-                  {cent}
-                </button>
-              ))}
-            </div>
+        <div>
+          <div className="mb-2 font-semibold text-coffee-300 text-xs">
+            Entity
           </div>
-
-          {/* Apply Button */}
-          <button
-            className="w-full rounded border border-coffee-600 bg-coffee-700 px-3 py-2 text-xs hover:bg-coffee-600"
-            onClick={() => onSetAttributes(selectedCentralization)}
-          >
-            Apply
-          </button>
-        </>
+          <EntitySelector
+            value={entity}
+            onChange={handleEntityChange}
+            existingEntities={existingEntities}
+          />
+        </div>
       )}
     </div>
   )

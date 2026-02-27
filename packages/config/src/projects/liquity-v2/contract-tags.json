@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-02-23T13:08:40.500Z",
+  "lastModified": "2026-02-26T10:11:36.992Z",
   "tags": [
     {
       "contractAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
@@ -91,11 +91,6 @@
       "contractAddress": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
       "isExternal": true,
       "timestamp": "2025-12-08T01:21:55.277Z"
-    },
-    {
-      "contractAddress": "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
-      "isExternal": false,
-      "timestamp": "2025-12-08T01:24:28.129Z"
     },
     {
       "contractAddress": "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6",
@@ -189,9 +184,10 @@
       "timestamp": "2025-12-22T08:04:27.192Z"
     },
     {
-      "contractAddress": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "contractAddress": "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
       "isExternal": true,
-      "timestamp": "2025-12-15T13:07:53.974Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-02-26T10:11:19.795Z"
     },
     {
       "contractAddress": "eth:0x0000000000000000000000000000000000000000",

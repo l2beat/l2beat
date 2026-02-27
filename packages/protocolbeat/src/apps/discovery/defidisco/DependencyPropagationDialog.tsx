@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { EntitySelector } from './EntitySelector'
 
 export interface AffectedFunction {
   contractAddress: string
@@ -16,9 +17,14 @@ interface DependencyPropagationDialogProps {
   mode: 'add' | 'remove'
   externalContracts: ExternalContract[]
   affectedFunctions: AffectedFunction[]
-  onConfirm: (selectedFunctions: AffectedFunction[]) => Promise<void>
+  onConfirm: (
+    selectedFunctions: AffectedFunction[],
+    entity?: string,
+  ) => Promise<void>
   onCancel: () => void
-  onSkip: () => void
+  onSkip: (entity?: string) => void
+  existingEntities: string[]
+  initialEntity?: string
 }
 
 interface GroupedFunctions {
@@ -35,6 +41,8 @@ export function DependencyPropagationDialog({
   onConfirm,
   onCancel,
   onSkip,
+  existingEntities,
+  initialEntity,
 }: DependencyPropagationDialogProps) {
   const [selectedFunctions, setSelectedFunctions] = useState<Set<string>>(
     new Set(),
@@ -43,6 +51,11 @@ export function DependencyPropagationDialog({
     new Set(),
   )
   const [isLoading, setIsLoading] = useState(false)
+  const [selectedEntity, setSelectedEntity] = useState<string | undefined>(
+    initialEntity,
+  )
+
+  const hasFunctions = affectedFunctions.length > 0
 
   // Group functions by contract
   const groupedFunctions: GroupedFunctions = affectedFunctions.reduce(
@@ -123,7 +136,7 @@ export function DependencyPropagationDialog({
       const functionsToUpdate = affectedFunctions.filter((func) =>
         selectedFunctions.has(`${func.contractAddress}:${func.functionName}`),
       )
-      await onConfirm(functionsToUpdate)
+      await onConfirm(functionsToUpdate, selectedEntity)
     } finally {
       setIsLoading(false)
     }
@@ -156,7 +169,9 @@ export function DependencyPropagationDialog({
         <div className="border-coffee-600 border-b p-4">
           <h2 className="font-semibold text-lg">
             {mode === 'add'
-              ? 'Add Dependencies to Connected Functions?'
+              ? hasFunctions
+                ? 'Mark External & Add Dependencies'
+                : 'Mark as External'
               : 'Remove Dependencies from Functions?'}
           </h2>
         </div>
@@ -177,115 +192,148 @@ export function DependencyPropagationDialog({
             </ul>
           </div>
 
-          {/* Description */}
-          <div className="mb-3 text-coffee-300 text-sm">
-            {mode === 'add'
-              ? `This will add dependencies to ${affectedFunctions.length} function${affectedFunctions.length !== 1 ? 's' : ''}:`
-              : `This will remove dependencies from ${affectedFunctions.length} function${affectedFunctions.length !== 1 ? 's' : ''}:`}
-          </div>
+          {/* Entity selector (add mode only) */}
+          {mode === 'add' && (
+            <div className="mb-4">
+              <div className="mb-2 font-medium text-coffee-300 text-sm">
+                Entity:
+              </div>
+              <EntitySelector
+                value={selectedEntity}
+                onChange={setSelectedEntity}
+                existingEntities={existingEntities}
+                disabled={isLoading}
+              />
+            </div>
+          )}
 
-          {/* Select/Deselect All */}
-          <div className="mb-3 flex gap-2">
-            <button
-              className="rounded border border-coffee-600 bg-coffee-700 px-3 py-1 text-xs hover:bg-coffee-600 disabled:opacity-50"
-              onClick={handleSelectAll}
-              disabled={isLoading}
-            >
-              Select All
-            </button>
-            <button
-              className="rounded border border-coffee-600 bg-coffee-700 px-3 py-1 text-xs hover:bg-coffee-600 disabled:opacity-50"
-              onClick={handleDeselectAll}
-              disabled={isLoading}
-            >
-              Deselect All
-            </button>
-          </div>
+          {/* Functions section */}
+          {hasFunctions ? (
+            <>
+              {/* Description */}
+              <div className="mb-3 text-coffee-300 text-sm">
+                {mode === 'add'
+                  ? `This will add dependencies to ${affectedFunctions.length} function${affectedFunctions.length !== 1 ? 's' : ''}:`
+                  : `This will remove dependencies from ${affectedFunctions.length} function${affectedFunctions.length !== 1 ? 's' : ''}:`}
+              </div>
 
-          {/* Grouped functions list */}
-          <div className="space-y-2">
-            {Object.entries(groupedFunctions).map(
-              ([contractAddress, { contractName, functions }]) => {
-                const isExpanded = expandedContracts.has(contractAddress)
-                const isFullySelected = isContractFullySelected(contractAddress)
-                const isPartiallySelected =
-                  isContractPartiallySelected(contractAddress)
+              {/* Select/Deselect All */}
+              <div className="mb-3 flex gap-2">
+                <button
+                  className="rounded border border-coffee-600 bg-coffee-700 px-3 py-1 text-xs hover:bg-coffee-600 disabled:opacity-50"
+                  onClick={handleSelectAll}
+                  disabled={isLoading}
+                >
+                  Select All
+                </button>
+                <button
+                  className="rounded border border-coffee-600 bg-coffee-700 px-3 py-1 text-xs hover:bg-coffee-600 disabled:opacity-50"
+                  onClick={handleDeselectAll}
+                  disabled={isLoading}
+                >
+                  Deselect All
+                </button>
+              </div>
 
-                return (
-                  <div
-                    key={contractAddress}
-                    className="rounded border border-coffee-600 bg-coffee-700"
-                  >
-                    {/* Contract header */}
-                    <div className="flex items-center gap-2 p-2">
-                      <input
-                        type="checkbox"
-                        checked={isFullySelected}
-                        ref={(input) => {
-                          if (input) {
-                            input.indeterminate = isPartiallySelected
-                          }
-                        }}
-                        onChange={() => handleToggleContract(contractAddress)}
-                        disabled={isLoading}
-                        className="cursor-pointer"
-                      />
-                      <button
-                        className="flex flex-1 items-center gap-2 text-left font-medium text-sm hover:text-coffee-200"
-                        onClick={() => handleToggleExpanded(contractAddress)}
-                        disabled={isLoading}
+              {/* Grouped functions list */}
+              <div className="space-y-2">
+                {Object.entries(groupedFunctions).map(
+                  ([contractAddress, { contractName, functions }]) => {
+                    const isExpanded = expandedContracts.has(contractAddress)
+                    const isFullySelected =
+                      isContractFullySelected(contractAddress)
+                    const isPartiallySelected =
+                      isContractPartiallySelected(contractAddress)
+
+                    return (
+                      <div
+                        key={contractAddress}
+                        className="rounded border border-coffee-600 bg-coffee-700"
                       >
-                        <span className="text-xs">
-                          {isExpanded ? '▼' : '▶'}
-                        </span>
-                        <span>
-                          {contractName} ({functions.length} function
-                          {functions.length !== 1 ? 's' : ''})
-                        </span>
-                      </button>
-                    </div>
+                        {/* Contract header */}
+                        <div className="flex items-center gap-2 p-2">
+                          <input
+                            type="checkbox"
+                            checked={isFullySelected}
+                            ref={(input) => {
+                              if (input) {
+                                input.indeterminate = isPartiallySelected
+                              }
+                            }}
+                            onChange={() =>
+                              handleToggleContract(contractAddress)
+                            }
+                            disabled={isLoading}
+                            className="cursor-pointer"
+                          />
+                          <button
+                            className="flex flex-1 items-center gap-2 text-left font-medium text-sm hover:text-coffee-200"
+                            onClick={() =>
+                              handleToggleExpanded(contractAddress)
+                            }
+                            disabled={isLoading}
+                          >
+                            <span className="text-xs">
+                              {isExpanded ? '▼' : '▶'}
+                            </span>
+                            <span>
+                              {contractName} ({functions.length} function
+                              {functions.length !== 1 ? 's' : ''})
+                            </span>
+                          </button>
+                        </div>
 
-                    {/* Functions list */}
-                    {isExpanded && (
-                      <div className="border-coffee-600 border-t p-2">
-                        {functions.map((func) => {
-                          const key = `${func.contractAddress}:${func.functionName}`
-                          const isSelected = selectedFunctions.has(key)
+                        {/* Functions list */}
+                        {isExpanded && (
+                          <div className="border-coffee-600 border-t p-2">
+                            {functions.map((func) => {
+                              const key = `${func.contractAddress}:${func.functionName}`
+                              const isSelected = selectedFunctions.has(key)
 
-                          return (
-                            <label
-                              key={key}
-                              className="flex cursor-pointer items-center gap-2 py-1 pl-4 hover:bg-coffee-600"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={isSelected}
-                                onChange={() => handleToggleFunction(func)}
-                                disabled={isLoading}
-                                className="cursor-pointer"
-                              />
-                              <span className="font-mono text-sm">
-                                {func.functionName}()
-                              </span>
-                            </label>
-                          )
-                        })}
+                              return (
+                                <label
+                                  key={key}
+                                  className="flex cursor-pointer items-center gap-2 py-1 pl-4 hover:bg-coffee-600"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={isSelected}
+                                    onChange={() => handleToggleFunction(func)}
+                                    disabled={isLoading}
+                                    className="cursor-pointer"
+                                  />
+                                  <span className="font-mono text-sm">
+                                    {func.functionName}()
+                                  </span>
+                                </label>
+                              )
+                            })}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                )
-              },
-            )}
-          </div>
+                    )
+                  },
+                )}
+              </div>
+            </>
+          ) : (
+            mode === 'add' && (
+              <div className="text-coffee-400 text-sm">
+                No functions reference these contracts.
+              </div>
+            )
+          )}
         </div>
 
         {/* Footer */}
         <div className="border-coffee-600 border-t p-4">
-          <div className="mb-3 text-coffee-300 text-sm">
-            {selectedCount > 0
-              ? `${selectedCount} function${selectedCount !== 1 ? 's' : ''} selected`
-              : 'No functions selected'}
-          </div>
+          {hasFunctions && (
+            <div className="mb-3 text-coffee-300 text-sm">
+              {selectedCount > 0
+                ? `${selectedCount} function${selectedCount !== 1 ? 's' : ''} selected`
+                : 'No functions selected'}
+            </div>
+          )}
           <div className="flex justify-end gap-2">
             <button
               className="rounded border border-coffee-600 bg-coffee-700 px-4 py-2 text-sm hover:bg-coffee-600 disabled:opacity-50"
@@ -294,23 +342,27 @@ export function DependencyPropagationDialog({
             >
               Cancel
             </button>
-            <button
-              className="rounded border border-coffee-600 bg-coffee-700 px-4 py-2 text-sm hover:bg-coffee-600 disabled:opacity-50"
-              onClick={onSkip}
-              disabled={isLoading}
-            >
-              Skip
-            </button>
+            {hasFunctions && (
+              <button
+                className="rounded border border-coffee-600 bg-coffee-700 px-4 py-2 text-sm hover:bg-coffee-600 disabled:opacity-50"
+                onClick={() => onSkip(selectedEntity)}
+                disabled={isLoading}
+              >
+                Skip
+              </button>
+            )}
             <button
               className="rounded border border-autumn-600 bg-autumn-700 px-4 py-2 text-sm hover:bg-autumn-600 disabled:opacity-50"
               onClick={handleConfirm}
-              disabled={isLoading || selectedCount === 0}
+              disabled={isLoading || (hasFunctions && selectedCount === 0)}
             >
               {isLoading
                 ? 'Processing...'
-                : mode === 'add'
-                  ? 'Add Dependencies'
-                  : 'Remove Dependencies'}
+                : !hasFunctions
+                  ? 'Confirm'
+                  : mode === 'add'
+                    ? 'Add Dependencies'
+                    : 'Remove Dependencies'}
             </button>
           </div>
         </div>

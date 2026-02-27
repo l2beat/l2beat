@@ -39,12 +39,11 @@ export function updateContractTag(
 ): void {
   const tagsPath = getContractTagsPath(paths, project)
 
-  // Normalize contract address: always include eth: prefix, always lowercase
-  const normalizedAddress = (
-    updateRequest.contractAddress.startsWith('eth:')
-      ? updateRequest.contractAddress
-      : `eth:${updateRequest.contractAddress}`
-  ).toLowerCase()
+  // Ensure eth: prefix, preserve original case
+  const addressWithPrefix = updateRequest.contractAddress.startsWith('eth:')
+    ? updateRequest.contractAddress
+    : `eth:${updateRequest.contractAddress}`
+  const normalizedForLookup = addressWithPrefix.toLowerCase()
 
   // Load existing contract tags
   let contractTags: ContractTag[] = []
@@ -65,7 +64,7 @@ export function updateContractTag(
         ? tag.contractAddress
         : `eth:${tag.contractAddress}`
     ).toLowerCase()
-    return existingNormalized === normalizedAddress
+    return existingNormalized === normalizedForLookup
   })
 
   // Determine the new values for all tag fields
@@ -80,10 +79,12 @@ export function updateContractTag(
   const newIsToken = updateRequest.isToken ?? existingTag?.isToken ?? false
   const newIsGovernance =
     updateRequest.isGovernance ?? existingTag?.isGovernance ?? false
-  const newCentralization =
-    updateRequest.centralization !== undefined
-      ? updateRequest.centralization
-      : existingTag?.centralization
+  const newEntity =
+    updateRequest.entity !== undefined
+      ? updateRequest.entity === null
+        ? undefined
+        : updateRequest.entity
+      : existingTag?.entity
 
   // Check if any meaningful tag data exists
   const hasAnyTagData =
@@ -96,10 +97,10 @@ export function updateContractTag(
   if (hasAnyTagData) {
     // Create or update tag entry
     const newTag: ContractTag = {
-      contractAddress: normalizedAddress,
+      contractAddress: existingTag?.contractAddress ?? addressWithPrefix,
       isExternal: newIsExternal,
       isGovernance: newIsGovernance || undefined, // Only store if true
-      centralization: newCentralization,
+      entity: newEntity || undefined,
       fetchBalances: newFetchBalances || undefined, // Only store if true
       fetchPositions: newFetchPositions || undefined, // Only store if true
       isToken: newIsToken || undefined, // Only store if true

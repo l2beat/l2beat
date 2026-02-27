@@ -321,6 +321,29 @@ In the **Nodes** panel, select a contract and click the **Funds** button in the 
 
 After running discovery, scanning permissions, and fetching funds, open the DeFiScan panel to see the scoring dashboard. This panel combines all collected data into a structured breakdown.
 
+## Review Builder
+
+The **Review Builder** panel lets you compose the final review document for a protocol. It stores all review configuration — protocol metadata, entity descriptions, and section content — in a single `review-config.json` file per project.
+
+### Using the Review Builder
+
+1. Open the **Review Builder** panel from the panel selector
+2. Fill in **protocol metadata** (name, slug, chain, project type, token name)
+3. Use the **Descriptions** tab to write human-readable descriptions for admins, dependencies, and fund-holding contracts
+4. Use the **Code & Audits** tab to configure data tables and audit information
+
+### AI-Powered Review Generation
+
+You can use Claude Code to auto-generate review content from your analysis data:
+
+1. Make sure the l2b UI server is running (`cd packages/config && l2b ui`)
+2. In Claude Code, run `/generate-review <project-name>`
+3. The agent fetches scoring, traversal, funds, and contract data from the API
+4. It generates descriptions for all admins, dependencies, and fund-holding contracts
+5. Results are written directly to `review-config.json`
+
+Every run generates fresh content, fully replacing the previous review. You can then refine the generated text in the Review Builder UI.
+
 ## Flow Chart
 
 ```mermaid

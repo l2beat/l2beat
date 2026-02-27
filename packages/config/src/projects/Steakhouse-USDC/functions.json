@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-02-25T09:05:22.766Z",
+  "lastModified": "2026-02-26T14:34:04.609Z",
   "contracts": {
     "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
       "functions": [
@@ -284,6 +284,42 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-02-24T11:54:31.479Z"
+          }
+        }
+      ]
+    },
+    "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb": {
+      "functions": [
+        {
+          "functionName": "liquidate",
+          "isPermissioned": false,
+          "dependencies": [
+            {
+              "contractAddress": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812"
+            },
+            {
+              "contractAddress": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4"
+            },
+            {
+              "contractAddress": "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad"
+            },
+            {
+              "contractAddress": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6"
+            },
+            {
+              "contractAddress": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c"
+            },
+            {
+              "contractAddress": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23"
+            },
+            {
+              "contractAddress": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79"
+            }
+          ],
+          "timestamp": "2026-02-26T14:34:04.609Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-02-26T14:34:04.609Z"
           }
         }
       ]

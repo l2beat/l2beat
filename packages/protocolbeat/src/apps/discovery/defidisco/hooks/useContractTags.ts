@@ -71,6 +71,17 @@ export function useIsContractGovernance(
   return tag?.isGovernance ?? false
 }
 
+/** Returns sorted list of unique entity names from project's contract tags. */
+export function useProjectEntities(project: string): string[] {
+  const { data: contractTags } = useContractTags(project)
+  if (!contractTags?.tags) return []
+  const entities = new Set<string>()
+  for (const tag of contractTags.tags) {
+    if (tag.entity) entities.add(tag.entity)
+  }
+  return Array.from(entities).sort()
+}
+
 /** Returns an OKLCH color override for node rendering based on contract tags. */
 export function useContractTagColor(
   project: string,

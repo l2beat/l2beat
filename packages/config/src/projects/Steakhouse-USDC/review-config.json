@@ -1,0 +1,126 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-02-26T14:54:01.179Z",
+  "protocolSlug": "Steakhouse-USDC",
+  "protocolName": "Steakhouse USDC",
+  "tokenName": "steakUSDC",
+  "chain": "Ethereum",
+  "projectType": "yield",
+  "description": "Steakhouse USDC is a Morpho MetaMorpho vault that allocates USDC deposits across multiple lending markets on Morpho Blue to generate yield for depositors. The vault is managed by Steakhouse Financial in partnership with Morpho, with governance controls exercised through a combination of multisig wallets and a timelock-protected DAO. All vault operations depend on Morpho Blue for capital deployment and multiple Chainlink price feeds for collateral valuation across the underlying markets.",
+  "admins": {
+    "eth:0x0a0e559bc3b0950a7e448f0d4894db195b9cf8dd": {
+      "name": "Steakhouse 5/8 Multisig",
+      "description": "Primary vault owner multisig (5-of-8 threshold, 63% approval required). Controls all critical vault parameters including curator and allocator designation (setCurator, setIsAllocator), fee configuration (setFee, setFeeRecipient), skim recipient management (setSkimRecipient), and initiation of timelock-protected governance changes (submitTimelock, submitGuardian). Can manage market caps and removals (submitCap, submitMarketRemoval), configure supply and withdrawal queues (setSupplyQueue, updateWithdrawQueue), execute fund reallocations (reallocate), and revoke pending governance proposals (revokePendingTimelock, revokePendingGuardian, revokePendingCap, revokePendingMarketRemoval)."
+    },
+    "eth:0x827e86072b06674a077f592a531dce4590adecdb": {
+      "name": "Steakhouse/Morpho 2/5 Curator Multisig",
+      "description": "Designated curator multisig (2-of-5 threshold, 40% approval required) operated jointly by Steakhouse Financial and Morpho. Controls market cap submissions (submitCap) and market removal requests (submitMarketRemoval), both subject to timelock delays. Manages supply and withdrawal queue configuration (setSupplyQueue, updateWithdrawQueue) and can execute fund reallocations between markets (reallocate). Can revoke pending cap changes and market removals (revokePendingCap, revokePendingMarketRemoval)."
+    },
+    "eth:0xfd32fa2ca22c76dd6e550706ad913fc6ce91c75d": {
+      "name": "PublicAllocator",
+      "description": "Morpho protocol contract that enables permissionless reallocation of vault funds between markets based on predetermined rules. Can update withdrawal queues (updateWithdrawQueue) and execute reallocations (reallocate) without requiring multisig approval, allowing for automated optimization of capital deployment. This is an internal protocol mechanism that operates within constraints set by vault governance."
+    },
+    "eth:0xfeed46c11f57b7126a773eec6ae9ca7ae1c03c9a": {
+      "name": "EOA (0xfeed...c9a)",
+      "description": "Designated allocator address with permissions to manage supply queues and execute reallocations. Can update withdrawal queues and execute reallocations within the vault's configured parameters. This EOA operates as part of the vault's allocator system."
+    },
+    "eth:0x9e9110cfd24cd851ea5bc73a27975b33e308f9e1": {
+      "name": "MorphoHelper",
+      "description": "Morpho protocol helper contract with allocator permissions. Can update withdrawal queues and execute reallocations as part of the vault's automated management system. This is an internal protocol contract that facilitates automated capital deployment."
+    },
+    "eth:0x0000aeb716a0df7a9a1aad119b772644bc089da8": {
+      "name": "Guardian 1/6 Multisig",
+      "description": "Low-threshold guardian multisig (1-of-6, 17% approval required) with emergency powers to revoke pending governance changes. Can revoke pending timelock updates (revokePendingTimelock), guardian changes (revokePendingGuardian), cap modifications (revokePendingCap), and market removals (revokePendingMarketRemoval). This provides a rapid response mechanism to cancel potentially harmful governance proposals during their timelock period."
+    },
+    "eth:0xaa0500198b4425dfc4e272fbe42c8e64e21fc03d": {
+      "name": "Governance DAO",
+      "description": "Designated guardian contract in the vault's governance structure. Can revoke pending governance changes including timelock updates and market parameter modifications. This governance contract provides an additional layer of oversight for timelock-protected changes."
+    }
+  },
+  "dependencies": {
+    "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb": {
+      "name": "Morpho Blue",
+      "description": "Core lending protocol where all vault deposits are allocated. The vault supplies USDC to various lending markets on Morpho Blue, making it the fundamental dependency for capital deployment, yield generation, and withdrawal operations. All vault positions and reallocations interact directly with Morpho Blue."
+    },
+    "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812": {
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data. Used by Morpho Blue markets where the vault deploys capital to determine collateral valuations and health ratios. The vault's exposure to markets relying on this feed makes it a critical dependency for accurate position accounting."
+    },
+    "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4": {
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Used to value collateral and determine borrowing capacity in markets where vault capital is deployed."
+    },
+    "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad": {
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Supports collateral valuation in lending markets where the vault maintains positions."
+    },
+    "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6": {
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Enables accurate pricing of collateral in markets where vault funds are allocated."
+    },
+    "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c": {
+      "name": "Chainlink BTC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing BTC/USD price data for Morpho Blue markets with BTC-denominated collateral. Used to value Bitcoin collateral in markets where the vault deploys USDC."
+    },
+    "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23": {
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Supports collateral and debt valuation in lending markets receiving vault capital."
+    },
+    "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79": {
+      "name": "Chainlink wstETH Price Feed",
+      "description": "Custom Chainlink price feed for wstETH (wrapped staked ETH). Provides pricing for wstETH collateral in Morpho Blue markets where the vault maintains USDC lending positions. Critical for accurate valuation of liquid staking derivative collateral."
+    }
+  },
+  "funds": {
+    "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
+      "name": "MetaMorpho Vault (steakUSDC)",
+      "description": "Main vault contract holding all depositor assets. Contains USDC positions across four Morpho Blue lending markets, generating yield through optimized capital allocation. The vault implements a MetaMorpho architecture with timelock-protected governance and curator-managed market selection."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {}
+}

@@ -127,16 +127,15 @@ git fetch upstream && git merge upstream/main
 
 ### External Contract Attributes ✅
 
-**Contract Tagging Enhancement**: Extended contract tags with centralization/mitigation attributes
+**Contract Tagging Enhancement**: Extended contract tags with entity grouping
 
-- **Data Structure**: `contract-tags.json` stores `centralization` (high/medium/low) and `mitigations` (complete/partial/none)
-- **UI Component**: `/defidisco/ExternalButton.tsx` with dropdown picker (ColorButton pattern)
+- **Data Structure**: `contract-tags.json` stores `entity` (string, e.g. "Chainlink", "Uniswap") to group external contracts by provider
+- **UI Component**: `/defidisco/ExternalButton.tsx` with entity selector popup; `/defidisco/EntitySelector.tsx` (shared reusable component)
 - **Features**:
   - Mark contracts as external/internal
-  - Two-column attribute selector (Centralization | Mitigations)
-  - Reads current values from tags and displays them in picker
-  - Async mutations with proper cache invalidation
-- **Backend**: `/defidisco/contractTags.ts` preserves attributes across updates
+  - Entity selector (dropdown of existing entities + "+" to create new) — spelling-safe
+- **Hook**: `useProjectEntities(project)` in `useContractTags.ts` extracts unique entity names from project tags
+- **Backend**: `/defidisco/contractTags.ts` preserves attributes across updates; entity accepts `null` to clear
 - **Address Format**: Normalizes `eth:0x...` → `0x...` when comparing with tags
 
 ### Governance Contract Tag ✅
@@ -348,6 +347,14 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 }
 ```
 
+**Shared Traversal Helpers** (exported from `callGraph.ts`, used by `functionAnalysis.ts` and `v2Scoring.ts`):
+
+- `traverseWithPaths(callGraphData, startContract, startFunction)` — BFS traversal with path tracking, returns reachable contracts + shortest paths
+- `findContractGraph(callGraphData, contract)` — case-insensitive contract graph lookup
+- `buildExternalAddressSet(tags)` / `buildTagsByAddress(tags)` — build lookup structures from contract tags
+- `isExternalAddress(address, externalAddresses)` / `findTag(tagsByAddress, address)` — address matching with `eth:` prefix normalization
+- `getCallGraphContractName(callGraphData, address)` — resolve contract name from call graph data
+
 ### Enhanced Traversal & Function Analysis ✅
 
 **Owner chain traversal and per-function impact/dependency analysis using call graph + permission data**
@@ -411,6 +418,95 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - Both computed in `capitalAnalysis.ts` via `getContractFunds()` and `getContractTokenValue()`
 - Token market cap is pre-computed during funds fetching (stored in `funds-data.json` under `tokenInfo.tokenValue`)
 - Header totals in Owners/Dependencies use `computeDeduplicatedCapital()` to avoid double-counting the same contract across multiple admins
+
+### Review Builder ✅
+
+**Unified review configuration**: Protocol metadata, descriptions, entity annotations, and section-based layout all stored in a single `review-config.json` file per project.
+
+- **File**: `review-config.json` per project in `packages/config/src/projects/{project}/`
+- **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/reviewConfig.ts`
+- **Templates**: `packages/protocolbeat/src/apps/discovery/defidisco/reviewBuilderTemplates.ts`
+- **UI**: `ReviewBuilderPanel.tsx` (main panel), `ReviewDescriptionsEditor.tsx` (Descriptions tab), `ReviewSectionEditor.tsx` (section tabs)
+- **Frontend API**: `getReviewConfig()`, `updateReviewConfig()`, `updateReviewConfigEntity()` in `api.ts`
+
+**Data Structure** (`review-config.json`):
+
+```json
+{
+  "version": "1.0",
+  "lastModified": "2026-02-18T10:30:00.000Z",
+  "protocolSlug": "liquity-v2",
+  "protocolName": "Liquity V2",
+  "tokenName": "BOLD",
+  "chain": "Ethereum",
+  "projectType": "lending",
+  "description": "Liquity V2 is an immutable borrowing protocol...",
+  "admins": {
+    "eth:0x1234...": {
+      "name": "Core Team Multisig",
+      "description": "A 3-of-5 Gnosis Safe multisig..."
+    }
+  },
+  "dependencies": {
+    "eth:0x5678...": {
+      "name": "Chainlink ETH/USD Feed",
+      "description": "Price feed used for collateral valuation."
+    }
+  },
+  "funds": {
+    "eth:0x9abc...": {
+      "name": "Treasury",
+      "description": "Main protocol treasury holding reserves."
+    }
+  },
+  "sections": {
+    "codeAndAudits": { "title": "Code & Audits", "subsections": [] }
+  },
+  "dataKeys": {}
+}
+```
+
+**Key Types**:
+- `ReviewProjectType`: `'stablecoin' | 'lending' | 'dex' | 'bridge' | 'derivatives' | 'yield' | 'liquid-staking' | 'cdp' | 'other'`
+- `EntityDescription`: `{ name?, description }` — used for admins, dependencies, and funds
+- `ApiUpdateEntityDescriptionRequest`: `{ section: 'admins' | 'dependencies' | 'funds', address, name?, description }`
+- `ReviewConfig`: Full config including metadata, descriptions, sections, and dataKeys
+
+**API Endpoints**:
+- `GET /api/projects/:project/review-config` — full config (returns `{ config, availableTemplates }`)
+- `PUT /api/projects/:project/review-config` — full config save
+- `PUT /api/projects/:project/review-config/entity` — partial update for a single admin/dependency/funds entry
+
+**Design Decisions**:
+- Single unified file (protocol metadata + descriptions + sections + data keys)
+- Three curated entity description records: `admins`, `dependencies`, `funds` — each keyed by address
+- Only `codeAndAudits` in sections (collaterals/dependencies/actors data comes from DeFiScan panel)
+- `name` field overrides auto-resolved discovery names for display
+- Templates provide starting configs per project type 
+- Complements V2 scoring data — frontend joins on address to show descriptions alongside scoring/capital data
+
+### Review Generation Agent ✅
+
+**AI-powered review writer**: Claude Code skill that generates professional review text from pre-processed analysis data.
+
+- **Skill**: `/generate-review <project-name>`
+- **File**: `.claude/skills/generate-review/SKILL.md`
+- **Prerequisites**: l2b UI server running at `localhost:2021` (`cd packages/config && l2b ui`)
+- **Behavior**: Always replaces the entire review — every run generates fresh content
+
+**How It Works**:
+1. Fetches pre-processed data from l2b API endpoints (v2-score, enhanced-traversal, funds-data, contract-tags, functions, project data)
+2. Preprocesses large responses into compact summaries (python3 scripts)
+3. Analyzes protocol structure, admin hierarchy, dependencies, and fund distribution
+4. Generates professional descriptions following built-in writing guidelines (neutral tone, data-driven, no marketing copy, no hardcoded USD values)
+5. Writes result directly to `packages/config/src/projects/{project}/review-config.json`
+
+**What It Generates**:
+- `description`: Protocol overview (2-4 sentences)
+- `admins`: Per-admin human-readable name (e.g., "Team 3/5 Multisig") + description of what they control
+- `dependencies`: Per-dependency name + description of how it's used
+- `funds`: Per-fund-holding contract name + description of what tokens it holds
+- `sections.codeAndAudits`: Contract listing (dataTable block) + audits placeholder
 
 ---
 
@@ -483,15 +579,18 @@ packages/
 │   ├── AdminsInventoryBreakdown.tsx  # Owners section (imports from scoringShared)
 │   ├── DependencyInventoryBreakdown.tsx  # Dependencies section (imports from scoringShared)
 │   ├── FunctionBreakdown.tsx         # Functions section
+│   ├── ReviewDescriptionsEditor.tsx  # Review descriptions editor (Descriptions tab)
 │   └── icons/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts
 │   ├── contractTags.ts
+│   ├── reviewConfig.ts              # Review config CRUD
 │   ├── generatePermissionsReport.ts
 │   ├── enhancedTraversal.ts          # Backward BFS governance chains
 │   └── functionAnalysis.ts           # Forward BFS impact & dependencies
 └── config/src/projects/compound-v3/
-    └── permission-overrides.json
+    ├── permission-overrides.json
+    └── review-config.json            # Per-project review config
 ```
 
 ### Data Access Patterns
@@ -519,8 +618,7 @@ packages/
       "contractAddress": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "isExternal": true,
       "isGovernance": true,
-      "centralization": "high",
-      "mitigations": "complete",
+      "entity": "Chainlink",
       "timestamp": "2025-09-30T19:47:42.278Z"
     }
   ]
@@ -528,7 +626,7 @@ packages/
 ```
 
 - **File Location**: `packages/config/src/projects/{project}/contract-tags.json`
-- **Fields**: `isExternal` (boolean), `isGovernance` (boolean), `centralization` (high/medium/low), `mitigations` (complete/partial/none)
+- **Fields**: `isExternal` (boolean), `isGovernance` (boolean), `entity` (string, groups external contracts by provider)
 - **Update Pattern**: Backend preserves existing attributes when updating individual fields
 - **Cleanup**: When all boolean tag fields (`isExternal`, `isGovernance`, `fetchBalances`, `fetchPositions`, `isToken`) are false, the entry is removed from the file
 

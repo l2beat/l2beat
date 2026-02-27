@@ -18,9 +18,11 @@ export interface PropagationDialogProps {
   mode: 'add' | 'remove'
   externalContracts: ExternalContract[]
   affectedFunctions: AffectedFunction[]
-  onConfirm: (selected: AffectedFunction[]) => Promise<void>
+  onConfirm: (selected: AffectedFunction[], entity?: string) => Promise<void>
   onCancel: () => Promise<void>
-  onSkip: () => Promise<void>
+  onSkip: (entity?: string) => Promise<void>
+  existingEntities: string[]
+  initialEntity?: string
 }
 
 export function useExternalToggle(
@@ -316,23 +318,9 @@ export function useExternalToggle(
   const markTargets = async (isExternal: boolean) => {
     await Promise.all(
       targets.map((target) => {
-        const normalizedAddress = target.address
-          .toLowerCase()
-          .replace('eth:', '')
-        const tag = contractTags?.tags.find(
-          (tag) =>
-            tag.contractAddress.toLowerCase().replace('eth:', '') ===
-            normalizedAddress,
-        )
         return updateContractTag.mutateAsync({
           contractAddress: target.address,
           isExternal,
-          // Preserve existing attributes if any
-          ...(isExternal && tag
-            ? {
-                centralization: tag.centralization,
-              }
-            : {}),
         })
       }),
     )
@@ -360,18 +348,21 @@ export function useExternalToggle(
         ? await analyzeAddDependencyImpact()
         : await analyzeRemoveDependencyImpact()
 
-      if (impact.affectedFunctions.length > 0) {
-        // Show dialog for user to select functions
+      if (newExternalStatus) {
+        // Always show dialog when marking external (for entity selection)
         setExternalContracts(impact.externalContracts)
         setAffectedFunctions(impact.affectedFunctions)
-        setPropagationMode(newExternalStatus ? 'add' : 'remove')
+        setPropagationMode('add')
+        setShowPropagationDialog(true)
+      } else if (impact.affectedFunctions.length > 0) {
+        // Show dialog for user to select functions to remove deps from
+        setExternalContracts(impact.externalContracts)
+        setAffectedFunctions(impact.affectedFunctions)
+        setPropagationMode('remove')
         setShowPropagationDialog(true)
       } else {
-        // No affected functions
-        if (!newExternalStatus) {
-          // If marking as internal, do it now (external marking already done above)
-          await markTargets(false)
-        }
+        // No affected functions when marking internal
+        await markTargets(false)
         onComplete?.()
       }
     } catch (error) {
@@ -442,32 +433,56 @@ export function useExternalToggle(
     })
   }
 
+  // Helper to save entity to contract tags for all targets
+  const saveEntityToTargets = async (entity?: string) => {
+    if (entity !== undefined) {
+      await Promise.all(
+        targets.map((target) =>
+          updateContractTag.mutateAsync({
+            contractAddress: target.address,
+            entity: entity || null,
+          }),
+        ),
+      )
+    }
+  }
+
   // Dialog callback handlers
   const handleConfirmPropagation = async (
     selectedFunctions: AffectedFunction[],
+    entity?: string,
   ) => {
     try {
-      // Execute bulk dependency updates for selected functions
-      const results = await Promise.allSettled(
-        selectedFunctions.map((func) => {
-          if (propagationMode === 'add') {
-            return addDependencyToFunction(func)
-          }
-          return removeDependencyFromFunction(func)
-        }),
-      )
-
-      // Count successes and failures
-      const succeeded = results.filter((r) => r.status === 'fulfilled').length
-      const failed = results.filter((r) => r.status === 'rejected').length
-
-      // Log results
-      if (failed > 0) {
-        console.error(`Updated ${succeeded} functions, ${failed} failed`)
+      // Save entity to contract tags if provided (add mode)
+      if (propagationMode === 'add') {
+        await saveEntityToTargets(entity)
       }
 
-      // Invalidate queries to refresh UI
-      await queryClient.invalidateQueries({ queryKey: ['functions', project] })
+      // Execute bulk dependency updates for selected functions
+      if (selectedFunctions.length > 0) {
+        const results = await Promise.allSettled(
+          selectedFunctions.map((func) => {
+            if (propagationMode === 'add') {
+              return addDependencyToFunction(func)
+            }
+            return removeDependencyFromFunction(func)
+          }),
+        )
+
+        // Count successes and failures
+        const succeeded = results.filter((r) => r.status === 'fulfilled').length
+        const failed = results.filter((r) => r.status === 'rejected').length
+
+        // Log results
+        if (failed > 0) {
+          console.error(`Updated ${succeeded} functions, ${failed} failed`)
+        }
+
+        // Invalidate queries to refresh UI
+        await queryClient.invalidateQueries({
+          queryKey: ['functions', project],
+        })
+      }
     } finally {
       // Complete the operation
       if (propagationMode === 'remove') {
@@ -480,7 +495,12 @@ export function useExternalToggle(
     }
   }
 
-  const handleSkipPropagation = async () => {
+  const handleSkipPropagation = async (entity?: string) => {
+    // Save entity even when skipping dependency updates (add mode)
+    if (propagationMode === 'add') {
+      await saveEntityToTargets(entity)
+    }
+
     // User wants to skip dependency updates
     if (propagationMode === 'remove') {
       // Still need to mark as internal
@@ -502,6 +522,30 @@ export function useExternalToggle(
     onComplete?.()
   }
 
+  // Extract existing entities from contract tags
+  const existingEntities = (() => {
+    if (!contractTags?.tags) return []
+    const entities = new Set<string>()
+    for (const tag of contractTags.tags) {
+      if (tag.entity) entities.add(tag.entity)
+    }
+    return Array.from(entities).sort()
+  })()
+
+  // Get initial entity from first target's tag
+  const initialEntity = (() => {
+    if (targets.length === 0) return undefined
+    const normalizedAddress = targets[0].address
+      .toLowerCase()
+      .replace('eth:', '')
+    const tag = contractTags?.tags.find(
+      (tag) =>
+        tag.contractAddress.toLowerCase().replace('eth:', '') ===
+        normalizedAddress,
+    )
+    return tag?.entity
+  })()
+
   const propagationDialogProps: PropagationDialogProps = {
     show: showPropagationDialog,
     mode: propagationMode,
@@ -510,6 +554,8 @@ export function useExternalToggle(
     onConfirm: handleConfirmPropagation,
     onCancel: handleCancelPropagation,
     onSkip: handleSkipPropagation,
+    existingEntities,
+    initialEntity,
   }
 
   return {

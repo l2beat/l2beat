@@ -13,6 +13,7 @@ import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useContractTags } from '../defidisco/hooks/useContractTags'
+import { ListItemExternalDeps } from '../defidisco/ListItemExternalDeps'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
 
@@ -108,12 +109,11 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
               entries={discoveredNonExternal}
               chain={chain}
             />
-            <ListItemContracts
-              title="External Dependencies"
-              onFocus={onFocus}
+            <ListItemExternalDeps
               entries={externalContracts}
               chain={chain}
-              titleClassName="text-aux-orange"
+              contractTags={contractTags}
+              onFocus={onFocus}
             />
             <ListItemContracts
               startClosed
