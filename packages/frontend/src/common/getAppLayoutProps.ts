@@ -1,3 +1,4 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import { getCollection } from '~/content/getCollection'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { getActiveChangelogWhatsNewWidget } from '~/server/features/changelog/getChangelogEntries'
@@ -14,5 +15,6 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
     })),
     recentlyAddedProjects,
     whatsNew,
+    countdowns: PROJECT_COUNTDOWNS,
   }
 }

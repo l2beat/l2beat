@@ -1,4 +1,6 @@
+import type { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import { ThemeProvider } from 'next-themes'
+import { CountdownsContextProvider } from '~/components/CountdownsContext'
 import { ChartLegendOnboardingProvider } from '~/components/core/chart/ChartLegendOnboardingContext'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { L2BeatDevTools } from '~/components/dev-tools/L2BeatDevTools'
@@ -15,6 +17,7 @@ export interface AppLayoutProps {
   terms: GlossaryTerm[]
   recentlyAddedProjects: SearchBarProject[]
   whatsNew: WhatsNewWidget | undefined
+  countdowns: typeof PROJECT_COUNTDOWNS
 }
 
 export function AppLayout({
@@ -22,6 +25,7 @@ export function AppLayout({
   terms,
   recentlyAddedProjects,
   whatsNew,
+  countdowns,
 }: AppLayoutProps & {
   children: React.ReactNode
 }) {
@@ -34,17 +38,19 @@ export function AppLayout({
       >
         <TooltipProvider delayDuration={300} disableHoverableContent>
           {env.NODE_ENV === 'development' && <L2BeatDevTools />}
-          <GlossaryContextProvider terms={terms}>
-            <WhatsNewContextProvider whatsNew={whatsNew}>
-              <SearchBarContextProvider
-                recentlyAddedProjects={recentlyAddedProjects}
-              >
-                <ChartLegendOnboardingProvider>
-                  {children}
-                </ChartLegendOnboardingProvider>
-              </SearchBarContextProvider>
-            </WhatsNewContextProvider>
-          </GlossaryContextProvider>
+          <CountdownsContextProvider countdowns={countdowns}>
+            <GlossaryContextProvider terms={terms}>
+              <WhatsNewContextProvider whatsNew={whatsNew}>
+                <SearchBarContextProvider
+                  recentlyAddedProjects={recentlyAddedProjects}
+                >
+                  <ChartLegendOnboardingProvider>
+                    {children}
+                  </ChartLegendOnboardingProvider>
+                </SearchBarContextProvider>
+              </WhatsNewContextProvider>
+            </GlossaryContextProvider>
+          </CountdownsContextProvider>
         </TooltipProvider>
       </ThemeProvider>
     </TRPCReactProvider>
