@@ -7,6 +7,8 @@ import type {
   TokenData,
   TokenFlowData,
 } from '../types'
+import type { TokensDetailsMap } from './buildTokensDetailsMap'
+
 import { getAverageDuration } from './getAverageDuration'
 
 type Params = {
@@ -16,13 +18,7 @@ type Params = {
     string,
     CommonInteropData & { flows?: Map<string, TokenFlowData> }
   >
-  tokensDetailsMap: Map<
-    string,
-    {
-      symbol: string
-      iconUrl: string | null
-    }
-  >
+  tokensDetailsMap: TokensDetailsMap
   durationSplitMap: DurationSplitMap | undefined
   unknownTransfersCount: number
   logger: Logger
@@ -56,6 +52,7 @@ export function getTokensData({
       return {
         id: tokenId,
         symbol: tokenDetails.symbol,
+        issuer: tokenDetails.issuer,
         iconUrl:
           tokenDetails.iconUrl ??
           manifest.getUrl('/images/token-placeholder.png'),
@@ -85,6 +82,7 @@ export function getTokensData({
     tokensData.push({
       id: 'unknown',
       symbol: 'Unknown',
+      issuer: null,
       iconUrl: manifest.getUrl('/images/token-placeholder.png'),
       transferCount: unknownTransfersCount,
       avgDuration: null,

@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
-import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
 import type { AverageDuration } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -19,6 +19,7 @@ import { type TokenFlowDisplayData, TokenFlowsCell } from './TokenFlowsCell'
 export type TopItem = {
   id?: string
   displayName: string
+  issuer?: string | null
   iconUrl: string
   volume: number | null
   transferCount: number
@@ -60,9 +61,17 @@ export const getTopItemsColumns = (
     columnHelper.accessor('displayName', {
       header: itemTypeToHeader(itemType),
       cell: (ctx) => (
-        <PrimaryValueCell className="font-bold leading-none!">
-          {ctx.row.original.displayName}
-        </PrimaryValueCell>
+        <TwoRowCell>
+          <TwoRowCell.First className="font-bold leading-none!">
+            {ctx.row.original.displayName}
+          </TwoRowCell.First>
+          {ctx.row.original.issuer && (
+            <TwoRowCell.Second>
+              Issued by{' '}
+              <span className="capitalize">{ctx.row.original.issuer}</span>
+            </TwoRowCell.Second>
+          )}
+        </TwoRowCell>
       ),
     }),
     columnHelper.accessor('volume', {
