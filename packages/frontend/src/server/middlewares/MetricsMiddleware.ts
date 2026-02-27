@@ -59,7 +59,5 @@ function shouldSkipDevRequest(url: string) {
     return true
   }
 
-  return /\.(css|js|map|png|jpg|jpeg|gif|svg|woff|woff2|ico)(\?.*)?$/i.test(
-    url,
-  )
+  return /\.(css|js|map|png|jpg|jpeg|gif|svg|woff|woff2|ico)(\?.*)?$/i.test(url)
 }
