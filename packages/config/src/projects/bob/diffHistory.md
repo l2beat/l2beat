@@ -14,6 +14,10 @@ The new KailuaTreasury (0xE99AF5F4) retains the 0.5 ETH participation bond but h
 
 The FPVM image ID also updated (0xf176eb82 → 0x4aca4abd), indicating a new ZK verification image for the RISC Zero prover.
 
+KailuaGame diff: https://disco.l2beat.com/diff/eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b/eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a
+
+KailuaTreasury diff: https://disco.l2beat.com/diff/eth:0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420/eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895
+
 ## Watched changes
 
 ```diff
