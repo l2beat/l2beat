@@ -452,7 +452,7 @@ function hasAnySideInfo(side: SideState): boolean {
 
 function hasTokenInfoMismatch(side: SideState, tokenInfo: TokenInfo): boolean {
   return (
-    // Coingecko id
+    // We should compar coingeckoIds but it is impossible with current data model
     side.symbol !== tokenInfo.symbol ||
     side.abstractTokenId !== tokenInfo.abstractId
   )
