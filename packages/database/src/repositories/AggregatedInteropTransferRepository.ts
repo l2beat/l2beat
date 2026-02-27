@@ -14,6 +14,8 @@ export interface AggregatedInteropTransferRecord {
   totalDurationSum: number
   srcValueUsd: number | undefined
   dstValueUsd: number | undefined
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   avgValueInFlight: number | undefined
   mintedValueUsd: number | undefined
   burnedValueUsd: number | undefined
@@ -53,6 +55,8 @@ export function toRecord(
     totalDurationSum: row.totalDurationSum,
     srcValueUsd: row.srcValueUsd ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
+    minTransferValueUsd: row.minTransferValueUsd ?? undefined,
+    maxTransferValueUsd: row.maxTransferValueUsd ?? undefined,
     avgValueInFlight: row.avgValueInFlight ?? undefined,
     mintedValueUsd: row.mintedValueUsd ?? undefined,
     burnedValueUsd: row.burnedValueUsd ?? undefined,
@@ -78,6 +82,8 @@ export function toRow(
     totalDurationSum: record.totalDurationSum,
     srcValueUsd: record.srcValueUsd,
     dstValueUsd: record.dstValueUsd,
+    minTransferValueUsd: record.minTransferValueUsd,
+    maxTransferValueUsd: record.maxTransferValueUsd,
     avgValueInFlight: record.avgValueInFlight,
     mintedValueUsd: record.mintedValueUsd,
     burnedValueUsd: record.burnedValueUsd,
@@ -251,6 +257,22 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .executeTakeFirst()
     return result?.max_timestamp
       ? UnixTime.fromDate(result.max_timestamp)
+      : undefined
+  }
+
+  async getEarliestTimestampForDay(timestamp: UnixTime) {
+    const result = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => eb.fn.min('timestamp').as('min_timestamp'))
+      .where(
+        sql`date_trunc('day', timestamp)`,
+        '=',
+        sql`date_trunc('day', ${UnixTime.toDate(timestamp)}::timestamp)`,
+      )
+      .executeTakeFirst()
+
+    return result?.min_timestamp
+      ? UnixTime.fromDate(result.min_timestamp)
       : undefined
   }
 

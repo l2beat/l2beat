@@ -1,6 +1,6 @@
 {
   "name": "layerzerov2oft",
-  "timestamp": 1761550307,
+  "timestamp": 1772086776,
   "configHash": "0xe78a3b5c89ec83758a8c58ac6ca0ac7992e3c0e555e4cf4affcf8e4fa1ac870e",
   "entries": [
     {
@@ -57,8 +57,13 @@
       "name": "LayerZero Executor",
       "address": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
       "type": "Contract",
-      "unverified": true,
+      "template": "layerzero/LayerZeroExecutor",
+      "sourceHashes": [
+        "0x4a43bdaa7c21f911802bc9e3457cf5fef469f43b372ea6944d53823caf2f53f2",
+        "0x6e8f82f43688d48f99f42fc176fd1250c7e5b217d551c5482e0dd168744017bf"
+      ],
       "proxyType": "EIP1967 proxy",
+      "description": "Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control.",
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
@@ -81,11 +86,20 @@
             ["eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"]
           ]
         ],
-        "$upgradeCount": 3
+        "$upgradeCount": 3,
+        "allowlistSize": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultMultiplierBps": 12000,
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "localEidV2": 30101,
+        "paused": false,
+        "priceFeed": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+        "receiveUln301": "eth:0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC",
+        "workerFeeLib": "eth:0x4e9C57FD2Bd0f47C43F2D62642C1b05894fb9ed0"
       },
       "implementationNames": {
         "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": "OptimizedTransparentUpgradeableProxy",
-        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805": ""
+        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805": "Executor"
       }
     },
     {
@@ -591,7 +605,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 98,
+        "nonce": 127,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1039,7 +1053,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 55,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1222,7 +1236,7 @@
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 17,
+        "nonce": 205,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
@@ -3751,6 +3765,64 @@
       "function sharedDecimals() pure returns (uint8)",
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805": [
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "error Worker_NotAllowed()",
+      "error Worker_OnlyMessageLib()",
+      "error Worker_RoleRenouncingDisabled()",
+      "event DstConfigSet(tuple(uint32 dstEid, uint64 lzReceiveBaseGas, uint64 lzComposeBaseGas, uint16 multiplierBps, uint128 floorMarginUSD, uint128 nativeCap)[] params)",
+      "event Initialized(uint8 version)",
+      "event NativeDropApplied(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, uint32 dstEid, address oapp, tuple(address receiver, uint256 amount)[] params, bool[] success)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetDefaultMultiplierBps(uint16 multiplierBps)",
+      "event SetPriceFeed(address priceFeed)",
+      "event SetSupportedOptionTypes(uint32 dstEid, uint8[] optionTypes)",
+      "event SetWorkerLib(address workerLib)",
+      "event Unpaused(address account)",
+      "event Withdraw(address lib, address to, uint256 amount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function allowlistSize() view returns (uint64)",
+      "function assignJob(uint32 _dstEid, address _sender, uint256 _calldataSize, bytes _options) returns (uint256 fee)",
+      "function assignJob(address _sender, bytes _options) returns (uint256 fee)",
+      "function compose302(address _from, address _to, bytes32 _guid, uint16 _index, bytes _message, bytes _extraData, uint256 _gasLimit) payable",
+      "function defaultMultiplierBps() view returns (uint16)",
+      "function dstConfig(uint32 dstEid) view returns (uint64 lzReceiveBaseGas, uint16 multiplierBps, uint128 floorMarginUSD, uint128 nativeCap, uint64 lzComposeBaseGas)",
+      "function endpoint() view returns (address)",
+      "function execute301(bytes _packet, uint256 _gasLimit)",
+      "function execute302(tuple(address receiver, tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, bytes32 guid, bytes message, bytes extraData, uint256 gasLimit) _executionParams) payable",
+      "function getFee(uint32 _dstEid, address _sender, uint256 _calldataSize, bytes _options) view returns (uint256 fee)",
+      "function getFee(address _sender, bytes _options) view returns (uint256 fee)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getSupportedOptionTypes(uint32 _eid) view returns (uint8[])",
+      "function grantRole(bytes32 role, address account)",
+      "function hasAcl(address _sender) view returns (bool)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _endpoint, address _receiveUln301, address[] _messageLibs, address _priceFeed, address _roleAdmin, address[] _admins)",
+      "function localEidV2() view returns (uint32)",
+      "function nativeDrop(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, uint32 _dstEid, address _oapp, tuple(address receiver, uint256 amount)[] _nativeDropParams, uint256 _nativeDropGasLimit) payable",
+      "function nativeDropAndExecute301(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, tuple(address receiver, uint256 amount)[] _nativeDropParams, uint256 _nativeDropGasLimit, bytes _packet, uint256 _gasLimit) payable",
+      "function nativeDropAndExecute302(tuple(address receiver, uint256 amount)[] _nativeDropParams, uint256 _nativeDropGasLimit, tuple(address receiver, tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, bytes32 guid, bytes message, bytes extraData, uint256 gasLimit) _executionParams) payable",
+      "function onUpgrade(address _receiveUln301)",
+      "function paused() view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function receiveUln301() view returns (address)",
+      "function renounceRole(bytes32, address) pure",
+      "function revokeRole(bytes32 role, address account)",
+      "function setDefaultMultiplierBps(uint16 _multiplierBps)",
+      "function setDstConfig(tuple(uint32 dstEid, uint64 lzReceiveBaseGas, uint64 lzComposeBaseGas, uint16 multiplierBps, uint128 floorMarginUSD, uint128 nativeCap)[] _params)",
+      "function setPaused(bool _paused)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setSupportedOptionTypes(uint32 _eid, uint8[] _optionTypes)",
+      "function setWorkerFeeLib(address _workerFeeLib)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function withdrawFee(address _lib, address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)",
+      "function workerFeeLib() view returns (address)"
     ]
   },
   "usedTemplates": {
@@ -3759,11 +3831,12 @@
     "layerzero/BlockedMessageLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "layerzero/DVN": "0x7e32d155099463e0fda9ec88f537f011145ca152add753ebb469484a9c01c391",
     "layerzero/EndpointV2": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "layerzero/LayerZeroExecutor": "0x4c43c18e37be06b94b24a05a820a5fb26dbf23cce63bf20d4217cf905b5ad81b",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861",
     "layerzero/ReadLib1002": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/SendUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23667311 },
+  "usedBlockNumbers": { "ethereum": 24539253 },
   "permissionsConfigHash": "0xe5da03ef3084bf1f00883b82c5087b7aeab3838ce06736d4c7be7e83831d61a5"
 }

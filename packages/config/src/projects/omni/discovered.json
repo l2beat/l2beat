@@ -1,6 +1,6 @@
 {
   "name": "omni",
-  "timestamp": 1765784028,
+  "timestamp": 1772087746,
   "configHash": "0xb0cecff361c8581b10450273ab50d2679a66d06adecf86f7fa7fba9d0bc70008",
   "entries": [
     {
@@ -249,10 +249,10 @@
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49",
         "isInitialized": true,
-        "maxAvailablePerTx": "9965144198388967823648210",
+        "maxAvailablePerTx": "9912478655376876885459134",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 3442,
+        "nonce": 4502,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -1152,11 +1152,6 @@
       }
     },
     {
-      "address": "gno:0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "gno:0x5fFDAB6A4907E9e65B342d9b2929960b0989a246",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1368,7 +1363,7 @@
         "$members": [
           "gno:0x1B0C638616Ed79dB430Edbf549ad9512FF4a8ed1",
           "gno:0x5fFDAB6A4907E9e65B342d9b2929960b0989a246",
-          "gno:0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC",
+          "gno:0xbaB04858C4eBBb226DD12B38639e59450820536F",
           "gno:0xa3a3456BC0c8ce4e0a0415B619803ee96509Ce30",
           "gno:0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe",
           "gno:0x65E5017A384B2774374812DC766fC4E026BB23e5",
@@ -1384,7 +1379,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 12 (25%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1662,6 +1657,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "gno:0xbaB04858C4eBBb226DD12B38639e59450820536F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Yaho",
       "address": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
       "type": "Contract",
@@ -1884,7 +1884,7 @@
         "gasLimitManager": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20437,
+        "getCurrentDay": 20510,
         "implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "gno:0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -3023,6 +3023,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24016538, "gnosis": 43656925 },
-  "permissionsConfigHash": "0x78ec196e91a8307bf6453749ba01de1466b49ee4a1c2bf52cb15f0a758308b47"
+  "usedBlockNumbers": { "ethereum": 24539333, "gnosis": 44873376 },
+  "permissionsConfigHash": "0x14b07439b368067d1b61aa035d69e9301687510c7e61bd631933f458aa55c8cf"
 }

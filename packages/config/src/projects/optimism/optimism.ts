@@ -103,6 +103,7 @@ export const optimism: ScalingProject = opStackL2({
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'canonical',
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['OP'],

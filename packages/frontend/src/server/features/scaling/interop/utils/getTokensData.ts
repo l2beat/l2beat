@@ -1,20 +1,24 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { type KnownInteropBridgeType, notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
-import type { CommonInteropData, DurationSplitMap, TokenData } from '../types'
+import type {
+  CommonInteropData,
+  DurationSplitMap,
+  TokenData,
+  TokenFlowData,
+} from '../types'
+import type { TokensDetailsMap } from './buildTokensDetailsMap'
+
 import { getAverageDuration } from './getAverageDuration'
 
 type Params = {
   projectId: string
   bridgeType: KnownInteropBridgeType | undefined
-  tokens: Map<string, CommonInteropData>
-  tokensDetailsMap: Map<
+  tokens: Map<
     string,
-    {
-      symbol: string
-      iconUrl: string | null
-    }
+    CommonInteropData & { flows?: Map<string, TokenFlowData> }
   >
+  tokensDetailsMap: TokensDetailsMap
   durationSplitMap: DurationSplitMap | undefined
   unknownTransfersCount: number
   logger: Logger
@@ -48,6 +52,7 @@ export function getTokensData({
       return {
         id: tokenId,
         symbol: tokenDetails.symbol,
+        issuer: tokenDetails.issuer,
         iconUrl:
           tokenDetails.iconUrl ??
           manifest.getUrl('/images/token-placeholder.png'),
@@ -56,11 +61,18 @@ export function getTokensData({
         avgDuration: avgDuration,
         avgValue:
           token.transferCount > 0 ? token.volume / token.transferCount : null,
+        minTransferValueUsd: token.minTransferValueUsd,
+        maxTransferValueUsd: token.maxTransferValueUsd,
         netMintedValue:
           token.mintedValueUsd !== undefined &&
           token.burnedValueUsd !== undefined
             ? token.mintedValueUsd - token.burnedValueUsd
             : undefined,
+        flows: token.flows
+          ? Array.from(token.flows.values()).toSorted(
+              (a, b) => b.volume - a.volume,
+            )
+          : [],
       }
     })
     .filter(notUndefined)
@@ -70,12 +82,16 @@ export function getTokensData({
     tokensData.push({
       id: 'unknown',
       symbol: 'Unknown',
+      issuer: null,
       iconUrl: manifest.getUrl('/images/token-placeholder.png'),
       transferCount: unknownTransfersCount,
       avgDuration: null,
       avgValue: null,
       volume: null,
+      minTransferValueUsd: undefined,
+      maxTransferValueUsd: undefined,
       netMintedValue: undefined,
+      flows: [],
     })
   }
 

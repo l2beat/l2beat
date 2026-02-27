@@ -14,6 +14,7 @@ export const wormholeWtt: BaseProject = {
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'other',
   },
   isInteropProtocol: true,
 }

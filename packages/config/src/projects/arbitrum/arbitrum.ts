@@ -200,6 +200,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'canonical',
   },
   chainConfig: {
     name: 'arbitrum',

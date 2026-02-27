@@ -28,15 +28,9 @@ interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
-  className?: string
 }
 
-export function ActivityRatioChart({
-  data,
-  isLoading,
-  syncedUntil,
-  className,
-}: Props) {
+export function ActivityRatioChart({ data, isLoading, syncedUntil }: Props) {
   const chartMeta = {
     ratio: {
       label: 'UOPS/TPS Ratio',
@@ -49,13 +43,12 @@ export function ActivityRatioChart({
   return (
     <ChartContainer
       data={data}
-      className={className}
       meta={chartMeta}
       isLoading={isLoading}
       milestones={undefined}
       size="small"
     >
-      <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
+      <AreaChart responsive data={data} margin={{ top: 20 }}>
         <Area
           dataKey="ratio"
           fillOpacity={1}

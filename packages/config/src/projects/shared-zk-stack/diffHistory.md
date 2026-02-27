@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4f9e21a0a476eba6ffde6572aa2a08a9b6cb1b2b
+
+# Diff at Wed, 25 Feb 2026 16:55:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@402347c3c0dd537c0ffd73d6a66e4df81d45dc08 block: 1771583051
+- current timestamp: 1772038465
+
+## Description
+
+Scheduled proposals for execution: https://www.tally.xyz/gov/zksync/proposal/8950122199701470735770347707974232219581467243459743675708682806836533533051?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746, https://www.tally.xyz/gov/zksync/proposal/52899273737246738438218414127099712652047337592218084212368843786372445167418?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746, https://www.tally.xyz/gov/zksync/proposal/11346651454708934944378630759545485178332596023788781976003544088664832214798?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        12
++        15
+    }
+```
+
 Generated with discovered.json: 0x11e63b7ec0a1cd9c4fae6e9d2d5ea64321fae956
 
 # Diff at Fri, 20 Feb 2026 10:25:18 GMT:

@@ -150,11 +150,13 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
           id: 'TK0001',
           symbol: 'ETH',
           iconUrl: 'https://example.com/eth.png',
+          issuer: 'ethereum',
         },
         {
           id: 'TK0003',
           symbol: 'DAI',
           iconUrl: null,
+          issuer: null,
         },
       ])
     })

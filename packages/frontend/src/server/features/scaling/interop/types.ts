@@ -25,6 +25,8 @@ export type ProtocolEntry = {
   chains: TopItems<ChainData>
   transferCount: number
   averageValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   averageDuration: AverageDuration | null
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
@@ -97,19 +99,37 @@ export type CommonInteropData = {
   inDurationSum: number
   outTransferCount: number
   outDurationSum: number
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   mintedValueUsd: number | undefined
   burnedValueUsd: number | undefined
+}
+
+export type TokenFlowData = {
+  srcChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  dstChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  volume: number
 }
 
 export type TokenData = {
   id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
+  flows: TokenFlowData[]
 }
 
 export type ChainData = {
@@ -120,6 +140,8 @@ export type ChainData = {
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
 }
 

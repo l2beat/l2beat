@@ -66,12 +66,13 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
           onItemClick: toggleDataKey,
         }}
       />
-      <ActivityRatioChart
-        data={ratioData}
-        isLoading={isLoading}
-        syncedUntil={data?.syncedUntil}
-        className="mb-2"
-      />
+      <div className="mb-2">
+        <ActivityRatioChart
+          data={ratioData}
+          isLoading={isLoading}
+          syncedUntil={data?.syncedUntil}
+        />
+      </div>
       <Controls
         scale={scale}
         setScale={setScale}

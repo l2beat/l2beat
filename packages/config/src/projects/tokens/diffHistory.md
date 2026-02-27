@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x0f3d0e9780d6434a08cfdc11ee9c199c0d01ece8
+
+# Diff at Thu, 26 Feb 2026 06:54:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1771253897
+- current timestamp: 1772088729
+
+## Description
+
+lido offset phase executed.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "base:0x362DBD4Ff662b2E2b05b9cEDC91da2Dd2c655b26"
++        "base:0xe3B3b4Fc77505EcfAACf6dD21619a8Cc12fcc501"
+    }
+```
+
+```diff
+    contract TwoPhaseFrameConfigUpdate (eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1) {
+    +++ description: None
+      values.isReadyForOffsetPhase:
+-        true
++        false
+      values.offsetPhase.executed:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x18f54f29431bd8be37f4ca9516cca28ad566ece9
 
 # Diff at Mon, 16 Feb 2026 15:01:54 GMT:

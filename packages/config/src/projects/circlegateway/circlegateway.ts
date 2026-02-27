@@ -15,6 +15,7 @@ export const circlegateway: BaseProject = {
         bridgeType: 'burnAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

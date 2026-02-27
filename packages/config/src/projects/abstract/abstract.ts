@@ -88,6 +88,7 @@ export const abstract: ScalingProject = zkStackL2({
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'canonical',
   },
   discovery,
   nonTemplateEscrows: [

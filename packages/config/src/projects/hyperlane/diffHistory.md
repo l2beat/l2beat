@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x81b022e36cb21b9a80e5459fbdb53d0521fa090c
+
+# Diff at Thu, 26 Feb 2026 06:14:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1770118520
+- current timestamp: 1772086223
+
+## Description
+
+Multi-destination USDC escrow now supports more destinations.
+
+## Watched changes
+
+```diff
+    contract HypERC20Collateral (eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7) {
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse. Also escrows USDC for other destinations.
+      values.domains.7:
++        143
+      values.domains.8:
++        480
+      values.domains.9:
++        999
+      values.domains.10:
++        43114
+      values.domains.11:
++        57073
+      values.domains.12:
++        59144
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770118520 (main branch discovery), not current.
+
+```diff
+    contract HypERC20Collateral (eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7) {
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse. Also escrows USDC for other destinations.
+      description:
+-        "Escrow for USDC that is bridged from Ethereum to Eclipse."
++        "Escrow for USDC that is bridged from Ethereum to Eclipse. Also escrows USDC for other destinations."
+    }
+```
+
 Generated with discovered.json: 0x30f6a812a3cf736f2f657dc128e5fa2feb4a9b1b
 
 # Diff at Mon, 02 Feb 2026 13:58:17 GMT:

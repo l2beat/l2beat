@@ -42,6 +42,7 @@ describe(InteropTransferClassifier.name, () => {
           { plugin: 'across', bridgeType: 'lockAndMint' },
           { plugin: 'stargate', bridgeType: 'nonMinting' },
         ],
+        type: 'other',
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -92,6 +93,7 @@ describe(InteropTransferClassifier.name, () => {
             abstractTokenId: 'eth',
           },
         ],
+        type: 'other',
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -170,6 +172,7 @@ describe(InteropTransferClassifier.name, () => {
           { plugin: 'across', bridgeType: 'burnAndMint' },
           { plugin: 'across', bridgeType: 'nonMinting' },
         ],
+        type: 'other',
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -200,6 +203,7 @@ describe(InteropTransferClassifier.name, () => {
       const config: InteropAggregationConfig = {
         id: 'config1',
         plugins: [{ plugin: 'stargate', bridgeType: 'lockAndMint' }],
+        type: 'other',
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -216,6 +220,7 @@ describe(InteropTransferClassifier.name, () => {
       const config: InteropAggregationConfig = {
         id: 'config1',
         plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+        type: 'other',
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -249,6 +254,7 @@ describe(InteropTransferClassifier.name, () => {
       const config: InteropAggregationConfig = {
         id: 'config1',
         plugins: [{ plugin: 'across', bridgeType: 'burnAndMint' }],
+        type: 'other',
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -287,6 +293,7 @@ describe(InteropTransferClassifier.name, () => {
             transferType: 'withdrawal',
           },
         ],
+        type: 'other',
       }
 
       const result = classifier.classifyTransfers(transfers, config)
@@ -342,6 +349,7 @@ describe(InteropTransferClassifier.name, () => {
           { plugin: 'across', bridgeType: 'burnAndMint' },
           { plugin: 'across', bridgeType: 'nonMinting' },
         ],
+        type: 'other',
       }
 
       const result = classifier.classifyTransfers(transfers, config)

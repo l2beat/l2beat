@@ -86,24 +86,26 @@ export function ProjectActivityChart({
         <ProjectChartTimeRange timeRange={timeRange} />
         <ActivityChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
-      <ActivityChart
-        data={chartData}
-        milestones={milestones}
-        scale={scale}
-        metric={metric}
-        isLoading={isLoading}
-        syncedUntil={chart?.syncedUntil}
-        className="mt-4 mb-3"
-        type={type}
-        project={project}
-        tickCount={4}
-      />
-      <ActivityRatioChart
-        data={ratioData}
-        syncedUntil={chart?.syncedUntil}
-        isLoading={isLoading}
-        className="mb-2"
-      />
+      <div className="mt-4 mb-3">
+        <ActivityChart
+          data={chartData}
+          milestones={milestones}
+          scale={scale}
+          metric={metric}
+          isLoading={isLoading}
+          syncedUntil={chart?.syncedUntil}
+          type={type}
+          project={project}
+          tickCount={4}
+        />
+      </div>
+      <div className="mb-2">
+        <ActivityRatioChart
+          data={ratioData}
+          syncedUntil={chart?.syncedUntil}
+          isLoading={isLoading}
+        />
+      </div>
 
       <div className="flex justify-between gap-4">
         <ActivityMetricControls

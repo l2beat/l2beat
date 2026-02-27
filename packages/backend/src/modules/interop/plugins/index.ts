@@ -39,6 +39,7 @@ import { LayerZeroV1Plugin } from './layerzero/layerzero-v1.plugin'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
 import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
 import { LidoWstethPlugin } from './lido-wsteth'
+import { LineaPlugin } from './linea'
 import { MakerBridgePlugin } from './maker-bridge'
 import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
@@ -189,6 +190,7 @@ export function createInteropPlugins(
         ],
       },
       new AllbridgePlugIn(),
+      new LineaPlugin(),
       {
         name: 'axelar',
         plugins: [

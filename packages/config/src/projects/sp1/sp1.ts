@@ -124,6 +124,7 @@ export const sp1: BaseProject = {
       {
         projectId: ProjectId('plumenetwork'),
         sinceTimestamp: UnixTime(1746735060),
+        untilTimestamp: UnixTime(1763420400),
       },
       {
         projectId: ProjectId('galxegravity'),
@@ -192,10 +193,6 @@ export const sp1: BaseProject = {
       {
         projectId: ProjectId('zircuit'),
         sinceTimestamp: UnixTime(1756072800),
-      },
-      {
-        projectId: ProjectId('omni'),
-        sinceTimestamp: UnixTime(1748856160),
       },
       {
         projectId: ProjectId('morph'),
@@ -420,12 +417,6 @@ The last step will take several hours to complete.
           //   ),
           //   chain: 'arbitrum',
           // },
-          {
-            address: EthereumAddress(
-              '0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
-            ),
-            chain: 'gnosis',
-          },
         ],
         verificationStatus: 'unsuccessful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
