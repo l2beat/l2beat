@@ -1,9 +1,9 @@
 import type { InteropTransferRecord } from '@l2beat/database'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import { InteropAggregationService } from './InteropAggregationService'
-import { InteropTransferClassifier } from './InteropTransferClassifier'
 
 describe(InteropAggregationService.name, () => {
   describe(InteropAggregationService.prototype.aggregate.name, () => {

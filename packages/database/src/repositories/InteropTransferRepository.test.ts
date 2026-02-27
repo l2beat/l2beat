@@ -602,7 +602,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     () => {
       const snapshotTimestamp = UnixTime(1_000_000)
 
-      it('matches transfers using plugin OR logic and plugin-level AND logic', async () => {
+      it('returns transfers for selected plugins in stable descending order', async () => {
         await repository.insertMany([
           {
             ...transfer(
@@ -614,11 +614,6 @@ describeDatabase(InteropTransferRepository.name, (db) => {
               'arbitrum',
               10,
             ),
-            bridgeType: 'lockAndMint',
-            srcWasBurned: false,
-            dstWasMinted: true,
-            srcAbstractTokenId: 'eth',
-            dstAbstractTokenId: 'eth',
           },
           {
             ...transfer(
@@ -630,11 +625,6 @@ describeDatabase(InteropTransferRepository.name, (db) => {
               'arbitrum',
               10,
             ),
-            bridgeType: 'lockAndMint',
-            srcWasBurned: false,
-            dstWasMinted: true,
-            srcAbstractTokenId: 'eth',
-            dstAbstractTokenId: 'eth',
           },
           {
             ...transfer(
@@ -646,11 +636,6 @@ describeDatabase(InteropTransferRepository.name, (db) => {
               'base',
               10,
             ),
-            bridgeType: 'nonMinting',
-            srcWasBurned: false,
-            dstWasMinted: false,
-            srcAbstractTokenId: 'eth',
-            dstAbstractTokenId: 'eth',
           },
           {
             ...transfer(
@@ -662,11 +647,17 @@ describeDatabase(InteropTransferRepository.name, (db) => {
               'base',
               10,
             ),
-            bridgeType: 'nonMinting',
-            srcWasBurned: false,
-            dstWasMinted: false,
-            srcAbstractTokenId: 'usdc',
-            dstAbstractTokenId: 'usdc',
+          },
+          {
+            ...transfer(
+              'plugin3',
+              'msg5',
+              'deposit',
+              snapshotTimestamp - 6,
+              'optimism',
+              'base',
+              10,
+            ),
           },
         ])
 
@@ -675,90 +666,15 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           sourceChains: ['ethereum', 'optimism'],
           destinationChains: ['arbitrum', 'base'],
           limit: 50,
-          plugins: [
-            {
-              plugin: 'plugin1',
-              bridgeType: 'lockAndMint',
-              chain: 'ethereum',
-              transferType: 'deposit',
-            },
-            {
-              plugin: 'plugin2',
-              bridgeType: 'nonMinting',
-              abstractTokenId: 'eth',
-            },
-          ],
+          plugins: ['plugin1', 'plugin2'],
         })
 
-        expect(result.items.map((x) => x.transferId)).toEqual(['msg3', 'msg1'])
-        expect(result.nextCursor).toEqual(undefined)
-      })
-
-      it('matches explicit bridge types and applies type filter', async () => {
-        await repository.insertMany([
-          {
-            ...transfer(
-              'plugin1',
-              'msg1',
-              'deposit',
-              snapshotTimestamp - 10,
-              'ethereum',
-              'arbitrum',
-              10,
-            ),
-            bridgeType: 'lockAndMint',
-            srcWasBurned: false,
-            dstWasMinted: true,
-          },
-          {
-            ...transfer(
-              'plugin1',
-              'msg2',
-              'deposit',
-              snapshotTimestamp - 9,
-              'ethereum',
-              'arbitrum',
-              10,
-            ),
-            bridgeType: 'lockAndMint',
-            srcWasBurned: undefined,
-            dstWasMinted: undefined,
-          },
-          {
-            ...transfer(
-              'plugin1',
-              'msg3',
-              'deposit',
-              snapshotTimestamp - 8,
-              'ethereum',
-              'arbitrum',
-              10,
-            ),
-            bridgeType: 'nonMinting',
-            srcWasBurned: false,
-            dstWasMinted: false,
-          },
+        expect(result.items.map((x) => x.transferId)).toEqual([
+          'msg4',
+          'msg3',
+          'msg2',
+          'msg1',
         ])
-
-        const result = await repository.getProjectTransfersPage({
-          snapshotTimestamp,
-          sourceChains: ['ethereum'],
-          destinationChains: ['arbitrum'],
-          limit: 50,
-          type: 'lockAndMint',
-          plugins: [
-            {
-              plugin: 'plugin1',
-              bridgeType: 'lockAndMint',
-            },
-            {
-              plugin: 'plugin1',
-              bridgeType: 'nonMinting',
-            },
-          ],
-        })
-
-        expect(result.items.map((x) => x.transferId)).toEqual(['msg2', 'msg1'])
         expect(result.nextCursor).toEqual(undefined)
       })
 
@@ -827,12 +743,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           sourceChains: ['ethereum'],
           destinationChains: ['arbitrum', 'optimism', 'base', 'ethereum'],
           limit: 2,
-          plugins: [
-            {
-              plugin: 'plugin1',
-              bridgeType: 'nonMinting',
-            },
-          ],
+          plugins: ['plugin1'],
         })
 
         expect(firstPage.items.map((x) => x.transferId)).toEqual([
@@ -850,12 +761,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           destinationChains: ['arbitrum', 'optimism', 'base', 'ethereum'],
           limit: 2,
           cursor: firstPage.nextCursor,
-          plugins: [
-            {
-              plugin: 'plugin1',
-              bridgeType: 'nonMinting',
-            },
-          ],
+          plugins: ['plugin1'],
         })
 
         expect(secondPage.items.map((x) => x.transferId)).toEqual(['msg3'])
@@ -876,7 +782,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           sourceChains: [],
           destinationChains: ['arbitrum'],
           limit: 10,
-          plugins: [{ plugin: 'plugin1', bridgeType: 'nonMinting' }],
+          plugins: ['plugin1'],
         })
 
         expect(emptyPlugins).toEqual({

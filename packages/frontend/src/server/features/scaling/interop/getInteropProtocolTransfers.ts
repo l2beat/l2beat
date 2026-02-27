@@ -1,4 +1,5 @@
 import type { InteropTransferRecord } from '@l2beat/database'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
@@ -11,6 +12,18 @@ import type {
 import { getAggregatedInteropTimestamp } from './utils/getAggregatedInteropTimestamp'
 
 const DEFAULT_PAGE_SIZE = 50
+const RAW_PAGE_LIMIT_MULTIPLIER = 3
+const MAX_RAW_PAGE_LIMIT = 300
+
+interface TransferPageCursor {
+  timestamp: UnixTime
+  transferId: string
+}
+
+interface TransferPage {
+  items: InteropTransferRecord[]
+  nextCursor: TransferPageCursor | undefined
+}
 
 export async function getInteropProtocolTransfers({
   id,
@@ -31,7 +44,19 @@ export async function getInteropProtocolTransfers({
     id,
     select: ['interopConfig'],
   })
-  if (!interopProject) {
+  if (!interopProject?.interopConfig) {
+    return {
+      items: [],
+      nextCursor: undefined,
+    }
+  }
+
+  const plugins = type
+    ? interopProject.interopConfig.plugins.filter(
+        (plugin) => plugin.bridgeType === type,
+      )
+    : interopProject.interopConfig.plugins
+  if (plugins.length === 0) {
     return {
       items: [],
       nextCursor: undefined,
@@ -48,14 +73,21 @@ export async function getInteropProtocolTransfers({
     }
   }
 
-  const db = getDb()
-  const page = await db.interopTransfer.getProjectTransfersPage({
-    plugins: interopProject.interopConfig.plugins,
+  const classifier = new InteropTransferClassifier()
+  const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)
+  const pluginIds = [...new Set(plugins.map((plugin) => plugin.plugin))]
+  const rawLimit = Math.min(
+    Math.max(limit, DEFAULT_PAGE_SIZE) * RAW_PAGE_LIMIT_MULTIPLIER,
+    MAX_RAW_PAGE_LIMIT,
+  )
+  const page = await getFilteredProjectTransfersPage({
     snapshotTimestamp,
     sourceChains: from,
     destinationChains: to,
-    type,
+    pluginIds,
     limit,
+    rawLimit,
+    matcher,
     cursor: cursor
       ? {
           timestamp: UnixTime(cursor.timestamp),
@@ -67,6 +99,79 @@ export async function getInteropProtocolTransfers({
   return {
     items: page.items.map(toInteropProtocolTransferDetailsItem),
     nextCursor: toResponseCursor(page.nextCursor, snapshotTimestamp),
+  }
+}
+
+async function getFilteredProjectTransfersPage({
+  snapshotTimestamp,
+  sourceChains,
+  destinationChains,
+  pluginIds,
+  limit,
+  rawLimit,
+  matcher,
+  cursor,
+}: {
+  snapshotTimestamp: UnixTime
+  sourceChains: string[]
+  destinationChains: string[]
+  pluginIds: string[]
+  limit: number
+  rawLimit: number
+  matcher: (transfer: InteropTransferRecord) => boolean
+  cursor: TransferPageCursor | undefined
+}): Promise<TransferPage> {
+  const db = getDb()
+
+  const items: InteropTransferRecord[] = []
+  let currentCursor = cursor
+
+  while (items.length < limit) {
+    const page = await db.interopTransfer.getProjectTransfersPage({
+      plugins: pluginIds,
+      snapshotTimestamp,
+      sourceChains,
+      destinationChains,
+      cursor: currentCursor,
+      limit: rawLimit,
+    })
+
+    if (page.items.length === 0) {
+      return { items, nextCursor: undefined }
+    }
+
+    for (const [index, transfer] of page.items.entries()) {
+      currentCursor = {
+        timestamp: transfer.timestamp,
+        transferId: transfer.transferId,
+      }
+
+      if (!matcher(transfer)) {
+        continue
+      }
+
+      items.push(transfer)
+
+      if (items.length === limit) {
+        const hasMore =
+          index < page.items.length - 1 || page.nextCursor !== undefined
+        return {
+          items,
+          nextCursor: hasMore ? currentCursor : undefined,
+        }
+      }
+    }
+
+    if (!page.nextCursor) {
+      return { items, nextCursor: undefined }
+    }
+
+    currentCursor = page.nextCursor
+  }
+
+  return {
+    items,
+    nextCursor: currentCursor,
   }
 }
 

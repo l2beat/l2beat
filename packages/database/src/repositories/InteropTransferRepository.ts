@@ -80,14 +80,6 @@ export interface InteropMissingTokenInfo {
   plugins: string[]
 }
 
-export interface InteropTransferPluginMatcher {
-  plugin: string
-  bridgeType: KnownInteropBridgeType
-  chain?: string
-  abstractTokenId?: string
-  transferType?: string
-}
-
 export interface InteropTransferPageCursor {
   timestamp: UnixTime
   transferId: string
@@ -264,11 +256,10 @@ export class InteropTransferRepository extends BaseRepository {
   }
 
   async getProjectTransfersPage(options: {
-    plugins: InteropTransferPluginMatcher[]
+    plugins: string[]
     snapshotTimestamp: UnixTime
     sourceChains: string[]
     destinationChains: string[]
-    type?: KnownInteropBridgeType
     cursor?: InteropTransferPageCursor
     limit: number
   }): Promise<InteropTransferPage> {
@@ -281,60 +272,16 @@ export class InteropTransferRepository extends BaseRepository {
     }
 
     const from = options.snapshotTimestamp - UnixTime.DAY
-    const pluginMatchers = options.type
-      ? options.plugins.filter((plugin) => plugin.bridgeType === options.type)
-      : options.plugins
-
-    if (pluginMatchers.length === 0) {
-      return { items: [], nextCursor: undefined }
-    }
 
     let query = this.db
       .selectFrom('InteropTransfer')
       .selectAll()
       .where('timestamp', '>', UnixTime.toDate(from))
       .where('timestamp', '<=', UnixTime.toDate(options.snapshotTimestamp))
+      .where('plugin', 'in', options.plugins)
       .where('srcChain', 'in', options.sourceChains)
       .where('dstChain', 'in', options.destinationChains)
       .whereRef('srcChain', '!=', 'dstChain')
-      .where((eb) =>
-        eb.or(
-          pluginMatchers.map((plugin) => {
-            const conditions = [
-              eb('plugin', '=', plugin.plugin),
-              eb('bridgeType', '=', plugin.bridgeType),
-            ]
-
-            if (plugin.chain) {
-              conditions.push(
-                eb.or([
-                  eb('srcChain', '=', plugin.chain),
-                  eb('dstChain', '=', plugin.chain),
-                ]),
-              )
-            }
-
-            if (plugin.abstractTokenId) {
-              conditions.push(
-                eb.or([
-                  eb('srcAbstractTokenId', '=', plugin.abstractTokenId),
-                  eb('dstAbstractTokenId', '=', plugin.abstractTokenId),
-                ]),
-              )
-            }
-
-            if (plugin.transferType) {
-              conditions.push(eb('type', '=', plugin.transferType))
-            }
-
-            return eb.and(conditions)
-          }),
-        ),
-      )
-
-    if (options.type) {
-      query = query.where('bridgeType', '=', options.type)
-    }
 
     if (options.cursor) {
       const cursor = options.cursor
