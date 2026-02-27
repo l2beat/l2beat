@@ -3,7 +3,6 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import { interopDescriptions } from '~/pages/interop/descriptions'
-import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
@@ -17,8 +16,8 @@ export function LockAndMintCard({
   entries: LockAndMintProtocolEntry[] | undefined
   isLoading: boolean
 }) {
-  const { selectedChains } = useInteropSelectedChains()
-  const viewAllUrl = buildInteropUrl('/interop/lock-and-mint', selectedChains)
+  const { buildUrl } = useInteropSelectedChains()
+  const viewAllUrl = buildUrl('/interop/lock-and-mint')
 
   return (
     <PrimaryCard className="flex flex-col max-md:border-b max-md:border-b-divider md:border-t-4 md:border-t-yellow-700">

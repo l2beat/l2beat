@@ -202,7 +202,7 @@ export const cartesiprthoneypotv2: ScalingProject = {
         usersCanExitWithoutCooperation: null,
         securityCouncilProperlySetUp: null,
         noRedTrustedSetups: null,
-        programHashesReproducible: null,
+        programHashesReproducible: true,
         proverSourcePublished: null,
         verifierContractsReproducible: null,
       },

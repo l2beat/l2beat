@@ -548,16 +548,18 @@ model AggregatedInteropTransfer {
   transferCount    Int
   identifiedCount  Int      @default(0)
   totalDurationSum Int
-  srcValueUsd      Float?   @db.Real
-  dstValueUsd      Float?   @db.Real
-  avgValueInFlight Float?   @db.Real
-  mintedValueUsd   Float?   @db.Real
-  burnedValueUsd   Float?   @db.Real
-  countUnder100    Int      @default(0)
-  count100To1K     Int      @default(0)
-  count1KTo10K     Int      @default(0)
-  count10KTo100K   Int      @default(0)
-  countOver100K    Int      @default(0)
+  srcValueUsd        Float? @db.Real
+  dstValueUsd        Float? @db.Real
+  minTransferValueUsd Float? @db.Real
+  maxTransferValueUsd Float? @db.Real
+  avgValueInFlight   Float? @db.Real
+  mintedValueUsd     Float? @db.Real
+  burnedValueUsd     Float? @db.Real
+  countUnder100      Int    @default(0)
+  count100To1K       Int    @default(0)
+  count1KTo10K       Int    @default(0)
+  count10KTo100K     Int    @default(0)
+  countOver100K      Int    @default(0)
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
@@ -575,6 +577,8 @@ model AggregatedInteropToken {
   transferCount    Int
   totalDurationSum Int
   volume           Float    @db.Real
+  minTransferValueUsd      Float?   @db.Real
+  maxTransferValueUsd      Float?   @db.Real
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id, abstractTokenId])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])

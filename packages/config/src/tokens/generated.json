@@ -577,6 +577,20 @@
       "supply": "zero"
     },
     {
+      "name": "AZTEC",
+      "coingeckoId": "aztec",
+      "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "symbol": "AZTEC",
+      "decimals": 18,
+      "deploymentTimestamp": 1751359739,
+      "coingeckoListingTimestamp": 1770854400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70681/large/aztec.png?1763091883",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Baby Doge Coin",
       "coingeckoId": "baby-doge-coin",
       "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",
@@ -13236,6 +13250,28 @@
       "coingeckoListingTimestamp": 1601337600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1696512440",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PayPal USD",
+      "coingeckoId": "paypal-usd",
+      "address": "0x46850aD61C2B7d64d08c9C754F45254596696984",
+      "symbol": "PYUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1746547905,
+      "coingeckoListingTimestamp": 1692144000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31212/large/PYUSD_Token_Logo_2x.png?1765987788",
       "chainId": 42161,
       "source": "external",
       "supply": "totalSupply",

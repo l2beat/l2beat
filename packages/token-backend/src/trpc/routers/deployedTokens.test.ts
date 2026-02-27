@@ -315,11 +315,13 @@ describe('deployedTokensRouter', () => {
         error: undefined,
         data: {
           symbol: 'RPC-TKN',
+          symbolSource: 'rpc',
           suggestions: [],
           decimals: 18,
           deploymentTimestamp: undefined,
           abstractTokenId: undefined,
           coingeckoId: 'token-id',
+          abstractTokenSuggestions: undefined,
         },
       })
       expect(mockCreateChain).toHaveBeenCalledWith(chainRecord)
@@ -351,6 +353,9 @@ describe('deployedTokensRouter', () => {
           findByName: mockFn().resolvesTo(chainRecord),
           getAll: mockFn().resolvesTo([chainRecord]),
         }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo([]),
+        }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
         getCoinList: mockFn().resolvesTo([]),
@@ -371,11 +376,13 @@ describe('deployedTokensRouter', () => {
         },
         data: {
           symbol: 'USDC-RPC',
+          symbolSource: 'rpc',
           suggestions: undefined,
           decimals: 6,
           deploymentTimestamp: undefined,
           abstractTokenId: undefined,
           coingeckoId: undefined,
+          abstractTokenSuggestions: [],
         },
       })
       expect(mockCreateChain).toHaveBeenCalledWith(chainRecord)
@@ -425,13 +432,241 @@ describe('deployedTokensRouter', () => {
         },
         data: {
           symbol: undefined,
+          symbolSource: undefined,
           suggestions: undefined,
           decimals: undefined,
           deploymentTimestamp: undefined,
           abstractTokenId: undefined,
           coingeckoId: undefined,
+          abstractTokenSuggestions: undefined,
         },
       })
+    })
+
+    it('suggests abstract tokens with exact symbol match when not found on coingecko', async () => {
+      const chainRecord = {
+        id: 1,
+        name: 'ethereum',
+        chainId: 1,
+        aliases: [],
+        apis: [],
+      }
+      const mockCreateChain = mockFn().returns({
+        rpc: {
+          getDecimals: mockFn().resolvesTo(18),
+          getSymbol: mockFn().resolvesTo('USDC'),
+        },
+      })
+      const mockDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+        }),
+        chain: mockObject<ChainRepository>({
+          findByName: mockFn().resolvesTo(chainRecord),
+          getAll: mockFn().resolvesTo([chainRecord]),
+        }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo([
+            {
+              id: 'abc123',
+              symbol: 'USDC',
+              issuer: 'circle',
+              category: 'stablecoin',
+              iconUrl: null,
+              coingeckoId: 'usd-coin',
+              coingeckoListingTimestamp: null,
+              comment: null,
+              reviewed: true,
+            },
+            {
+              id: 'def456',
+              symbol: 'ETH',
+              issuer: null,
+              category: 'ether',
+              iconUrl: null,
+              coingeckoId: 'ethereum',
+              coingeckoListingTimestamp: null,
+              comment: null,
+              reviewed: true,
+            },
+          ]),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([]),
+      })
+
+      const caller = createRouter(mockDb, mockCoingeckoClient, {
+        createChain: mockCreateChain,
+      })
+      const result = await caller.checks({
+        chain: 'ethereum',
+        address: '0x123',
+      })
+
+      expect(result.data?.abstractTokenSuggestions).toEqual([
+        {
+          id: 'abc123',
+          symbol: 'USDC',
+          issuer: 'circle',
+        },
+      ])
+    })
+
+    it('suggests abstract tokens with fuzzy symbol match (e.g. USDC.e matches USDC)', async () => {
+      const chainRecord = {
+        id: 1,
+        name: 'ethereum',
+        chainId: 1,
+        aliases: [],
+        apis: [],
+      }
+      const mockCreateChain = mockFn().returns({
+        rpc: {
+          getDecimals: mockFn().resolvesTo(18),
+          getSymbol: mockFn().resolvesTo('USDC.e'),
+        },
+      })
+      const mockDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+        }),
+        chain: mockObject<ChainRepository>({
+          findByName: mockFn().resolvesTo(chainRecord),
+          getAll: mockFn().resolvesTo([chainRecord]),
+        }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo([
+            {
+              id: 'abc123',
+              symbol: 'USDC',
+              issuer: 'circle',
+              category: 'stablecoin',
+              iconUrl: null,
+              coingeckoId: 'usd-coin',
+              coingeckoListingTimestamp: null,
+              comment: null,
+              reviewed: true,
+            },
+            {
+              id: 'def456',
+              symbol: 'WETH',
+              issuer: null,
+              category: 'ether',
+              iconUrl: null,
+              coingeckoId: 'weth',
+              coingeckoListingTimestamp: null,
+              comment: null,
+              reviewed: true,
+            },
+          ]),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([]),
+      })
+
+      const caller = createRouter(mockDb, mockCoingeckoClient, {
+        createChain: mockCreateChain,
+      })
+      const result = await caller.checks({
+        chain: 'ethereum',
+        address: '0x123',
+      })
+
+      expect(result.data?.abstractTokenSuggestions?.[0]).toEqual({
+        id: 'abc123',
+        symbol: 'USDC',
+        issuer: 'circle',
+      })
+    })
+
+    it('does not suggest abstract tokens when no symbol is available', async () => {
+      const chainRecord = {
+        id: 1,
+        name: 'ethereum',
+        chainId: 1,
+        aliases: [],
+        apis: [],
+      }
+      const mockGetAll = mockFn().resolvesTo([])
+      const mockDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+        }),
+        chain: mockObject<ChainRepository>({
+          findByName: mockFn().resolvesTo(chainRecord),
+          getAll: mockFn().resolvesTo([chainRecord]),
+        }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockGetAll,
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([]),
+      })
+
+      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const result = await caller.checks({
+        chain: 'ethereum',
+        address: '0x123',
+      })
+
+      expect(result.data?.abstractTokenSuggestions).toEqual(undefined)
+      expect(mockGetAll).toHaveBeenCalledTimes(0)
+    })
+
+    it('limits abstract token suggestions to 5 results', async () => {
+      const chainRecord = {
+        id: 1,
+        name: 'ethereum',
+        chainId: 1,
+        aliases: [],
+        apis: [],
+      }
+      const mockCreateChain = mockFn().returns({
+        rpc: {
+          getDecimals: mockFn().resolvesTo(18),
+          getSymbol: mockFn().resolvesTo('TOKEN'),
+        },
+      })
+      const abstractTokens = Array.from({ length: 10 }, (_, i) => ({
+        id: `id${i.toString().padStart(4, '0')}`,
+        symbol: `TOKEN${i}`,
+        issuer: null,
+        category: 'other' as const,
+        iconUrl: null,
+        coingeckoId: null,
+        coingeckoListingTimestamp: null,
+        comment: null,
+        reviewed: true,
+      }))
+      const mockDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+        }),
+        chain: mockObject<ChainRepository>({
+          findByName: mockFn().resolvesTo(chainRecord),
+          getAll: mockFn().resolvesTo([chainRecord]),
+        }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo(abstractTokens),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([]),
+      })
+
+      const caller = createRouter(mockDb, mockCoingeckoClient, {
+        createChain: mockCreateChain,
+      })
+      const result = await caller.checks({
+        chain: 'ethereum',
+        address: '0x123',
+      })
+
+      const suggestions = result.data?.abstractTokenSuggestions ?? []
+      expect(suggestions.length).toBeLessThanOrEqual(5)
     })
 
     it('returns success with token data when all checks pass', async () => {
@@ -493,11 +728,13 @@ describe('deployedTokensRouter', () => {
       expect(result.error).toEqual(undefined)
       expect(result.data).toEqual({
         symbol: 'USDC',
+        symbolSource: 'coingecko',
         decimals: undefined,
         deploymentTimestamp: undefined,
         abstractTokenId: '1',
         suggestions: [],
         coingeckoId: 'usd-coin',
+        abstractTokenSuggestions: undefined,
       })
     })
 

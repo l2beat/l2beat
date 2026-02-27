@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "AZTEC",
+      "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "coingeckoId": "aztec"
+    },
+    {
       "symbol": "NIL",
       "address": "0x7cf9a80db3b29ee8efe3710aadb7b95270572d47",
       "coingeckoId": "nillion",
@@ -2289,6 +2294,20 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "PYUSD",
+      "address": "0x46850aD61C2B7d64d08c9C754F45254596696984",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "PGOLD",
       "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",

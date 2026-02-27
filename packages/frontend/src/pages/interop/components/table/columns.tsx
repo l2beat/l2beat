@@ -1,6 +1,12 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
@@ -183,13 +189,56 @@ export function getAllProtocolsColumns(
         tooltip:
           'The average USD value per token transfer completed in the past 24 hours.',
       },
-      cell: (ctx) => (
-        <span className="font-medium text-label-value-15">
-          {ctx.row.original.averageValue
-            ? formatCurrency(ctx.row.original.averageValue, 'usd')
-            : EM_DASH}
-        </span>
-      ),
+      cell: (ctx) => {
+        if (!ctx.row.original.averageValue) return EM_DASH
+
+        const averageValue = formatCurrency(
+          ctx.row.original.averageValue,
+          'usd',
+        )
+        const minTransferSize =
+          ctx.row.original.minTransferValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.minTransferValueUsd, 'usd')
+            : EM_DASH
+        const maxTransferSize =
+          ctx.row.original.maxTransferValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.maxTransferValueUsd, 'usd')
+            : EM_DASH
+
+        return (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="font-medium text-label-value-15 text-primary">
+                {averageValue}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent className="min-w-[200px]">
+              <div className="font-medium text-label-value-14 text-secondary">
+                Transfer value
+              </div>
+              <HorizontalSeparator className="my-1" />
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Minimum</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {minTransferSize}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Average</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {averageValue}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Maximum</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {maxTransferSize}
+                </span>
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        )
+      },
     }),
     showAverageInFlightValueColumn && averageInFlightValueColumn,
     showNetMintedValueColumn &&

@@ -155,7 +155,7 @@ export const zircuit: ScalingProject = {
         securityCouncilProperlySetUp: false,
         noRedTrustedSetups: false,
         programHashesReproducible: null,
-        proverSourcePublished: null,
+        proverSourcePublished: true,
         verifierContractsReproducible: false,
       },
       stage2: {

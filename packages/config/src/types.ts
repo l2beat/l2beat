@@ -1249,10 +1249,14 @@ export type InteropPluginName =
   | 'wormhole-token-bridge'
   | 'zkstack'
   | 'zklink-nova'
+  | 'linea'
+
+export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
 export interface InteropConfig {
   name?: string
   shortName?: string
+  type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured

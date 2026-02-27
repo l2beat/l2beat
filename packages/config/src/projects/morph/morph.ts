@@ -99,9 +99,9 @@ export const morph: ScalingProject = {
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
-        noRedTrustedSetups: null,
+        noRedTrustedSetups: true,
         programHashesReproducible: null,
-        proverSourcePublished: null,
+        proverSourcePublished: true,
         verifierContractsReproducible: null,
       },
       stage2: {

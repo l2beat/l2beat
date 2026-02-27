@@ -90,7 +90,7 @@ You can find us to discuss everything related to Polygon’s governance, from cu
 
 ## **Active Votes**
 
-[Bitcoin Staking on Starknet Vote](https://governance.starknet.io/voting-proposals/10) - ends on August 21 at 08:00 UTC.
+[Bitcoin Staking on Starknet Vote](https://governance.starknet.io/#/proposal/10) - ends on August 21 at 08:00 UTC.
 
 Starknet’s governance hasn’t seen any new developments over the last week. If you believe we might have missed something, please let us know.
 

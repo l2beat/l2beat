@@ -150,10 +150,9 @@ export function ZkCatalogProjectsTvsChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
-      className="mt-4 mb-3"
       project={project}
     >
-      <AreaChart data={chartData} margin={{ top: 20 }}>
+      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}

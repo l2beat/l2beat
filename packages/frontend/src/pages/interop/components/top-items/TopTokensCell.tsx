@@ -20,6 +20,7 @@ import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import { getTopItemsColumns, type TopItemRow } from './columns'
 import { InteropTopItems } from './TopItems'
 
@@ -40,7 +41,7 @@ export function TopTokensCell({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const utils = api.useUtils()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectionForApi } = useInteropSelectedChains()
 
   return (
     <>
@@ -54,16 +55,15 @@ export function TopTokensCell({
             transferCount: token.transferCount,
             avgDuration: token.avgDuration,
             avgValue: token.avgValue,
+            minTransferValueUsd: token.minTransferValueUsd,
+            maxTransferValueUsd: token.maxTransferValueUsd,
             netMintedValue: token.netMintedValue,
           })),
           remainingCount: topItems.remainingCount,
         }}
         onMouseEnter={() =>
           utils.interop.tokens.prefetch({
-            selectedChainsIds: [
-              selectedChains.first?.id ?? null,
-              selectedChains.second?.id ?? null,
-            ],
+            ...selectionForApi,
             id: protocol.id,
             type,
           })
@@ -95,13 +95,10 @@ function TopTokensContent({
   showNetMintedValueColumn?: boolean
 }) {
   const breakpoint = useBreakpoint()
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectionForApi } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokens.useQuery(
     {
-      selectedChainsIds: [
-        selectedChains.first?.id ?? null,
-        selectedChains.second?.id ?? null,
-      ],
+      ...selectionForApi,
       id: protocol.id,
       type,
     },
@@ -112,15 +109,9 @@ function TopTokensContent({
 
   const tableData = useMemo(
     () =>
-      data?.map((chain) => ({
-        id: chain.id,
-        displayName: chain.symbol,
-        iconUrl: chain.iconUrl,
-        volume: chain.volume,
-        transferCount: chain.transferCount,
-        avgDuration: chain.avgDuration,
-        avgValue: chain.avgValue,
-        netMintedValue: chain.netMintedValue,
+      data?.map((token) => ({
+        ...token,
+        displayName: token.symbol,
       })) ?? [],
     [data],
   )
@@ -149,8 +140,8 @@ function TopTokensContent({
     return (
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle className="text-xl">
+          <DrawerHeader className="mb-2">
+            <DrawerTitle className="mb-0 text-xl">
               <span>Top tokens by volume for </span>
               <img
                 src={protocol.iconUrl}
@@ -159,8 +150,9 @@ function TopTokensContent({
               />
               <span>{protocol.name}</span>
             </DrawerTitle>
+            <BetweenChainsInfo />
           </DrawerHeader>
-          <div className="max-h-[60vh] overflow-auto">
+          <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
             <BasicTable
               skeletonCount={6}
               table={table}
@@ -175,7 +167,7 @@ function TopTokensContent({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[450px] w-[800px] max-w-[calc(100%-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
+      <DialogContent className="max-h-[450px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
             <span>Top tokens by volume for </span>
@@ -186,6 +178,7 @@ function TopTokensContent({
             />
             <span>{protocol.name}</span>
           </DialogTitle>
+          <BetweenChainsInfo className="mt-1" />
         </DialogHeader>
         <div className="overflow-x-auto">
           <div className="mx-6">

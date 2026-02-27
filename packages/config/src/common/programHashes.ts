@@ -115,7 +115,20 @@ Verify:
     proverSystemProject: ProjectId('sp1'),
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/aggregation',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [op-succinct](https://github.com/succinctlabs/op-succinct) repo:  \`git checkout v2.3.1\` . Commit hash should be  \`2591527807f1da7018b57328614ca54b6bd02871\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir run: \`cargo run --bin config --release\` to compile the program from sources and output the program hash.
+  `,
   },
   '0x00afb45d8064ae10aa6a1793b8f39a24c27268efae2917b5c02950b2377fbf00': {
     title: 'Aggregation program of OP Succinct',
@@ -147,7 +160,20 @@ Verify:
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/range/ethereum',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [op-succinct](https://github.com/succinctlabs/op-succinct) repo:  \`git checkout v2.3.1\` . Commit hash should be  \`2591527807f1da7018b57328614ca54b6bd02871\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the root dir run: \`cargo run --bin config --release\` to compile the program from sources and output the program hash.
+    `,
   },
   '0x416d710344b6b6fa2a0b1a1445f3d6ba4fdd5ab43f0e863b1c522db20f28ad9b': {
     title: 'Range program of OP Succinct',
@@ -353,8 +379,23 @@ fn main() {
     title: 'Aggregation program of OP Succinct',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.1.8/programs/aggregation',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/main) repo:  \`git checkout v2.1.8\` . Commit hash should be  \`9ec9d1a6f4b13b06a1bdbcc11dd3217337ca6d3b\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+  `,
   },
   '0x5d15e85151cc8f4b68d2721f675b0b8665a7a2752fa34ff935d5adbc3c8acab8': {
     title: 'Range program of OP Succinct',
@@ -367,8 +408,23 @@ fn main() {
     title: 'Range program of OP Succinct (Mantle)',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks. Mantle-specific build addressing revm/geth inconsistency.',
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.1.8/programs/range/eigenda',
     proverSystemProject: ProjectId('sp1'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/main) repo:  \`git checkout v2.1.8\` . Commit hash should be  \`9ec9d1a6f4b13b06a1bdbcc11dd3217337ca6d3b\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+  `,
   },
   '0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452': {
     title: 'Aggregation program of OP Succinct',
@@ -1010,6 +1066,44 @@ The steps below work only for a Linux OS (e.g. Ubuntu).
 1. On a Linux machine, install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running \`docker ps\`.
 2. Checkout the correct branch in [zkvm-prover](https://github.com/scroll-tech/zkvm-prover/tree/master) repo: \`git checkout 0.7.1\` Commit hash should be \`85dc6bc56728b8eef22281fdb215c136d7b5bbda\`.
 3. Build the guest programs from the root repo dir: \`make build-guest\`. It will regenerate \`circuits/bundle-circuit/bundle_leaf_commit.rs\`. 
+4. Run \`compress_commitment\` function from [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174) on the \`COMMIT\` array from the previous step to generate \`digest_2\` value. A sample rust implementation is: 
+    \`\`\`
+use openvm_stark_sdk::p3_baby_bear::BabyBear;
+use openvm_stark_sdk::p3_bn254_fr::Bn254Fr;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::FieldAlgebra;
+use openvm_stark_sdk::openvm_stark_backend::p3_field::PrimeField32;
+
+fn compress_commitment(commitment: &[u32; 8]) -> Bn254Fr {
+    let order = Bn254Fr::from_canonical_u64(BabyBear::ORDER_U32 as u64);
+
+    let mut base = Bn254Fr::ONE;      // from PrimeCharacteristicRing
+    let mut compressed = Bn254Fr::ZERO; // from PrimeCharacteristicRing
+
+    for val in commitment {
+        compressed += Bn254Fr::from_canonical_u64(*val as u64) * base;
+        base *= order;
+    }
+
+    compressed
+} 
+\`\`\`
+    `,
+  },
+  '0x0091609acb607118f47f756c0f4db9aad227420326cbda96f0303384e0bbf8e3': {
+    title: 'Executable of the Scroll bundle program',
+    description:
+      "Proves the correct execution of a bundle of Scroll L2 blocks, which is the unit of L2 state finalisation from L1's perspective.",
+    programUrl:
+      'https://github.com/scroll-tech/zkvm-prover/tree/v0.7.2/crates/circuits/bundle-circuit',
+    proverSystemProject: ProjectId('openvmprover'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps due to the guide here: [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174). Although the guide below uses docker for reproducable builds, we failed to obtain the correct program hash on a MacOS machine. 
+The steps below work only for a Linux OS (e.g. Ubuntu).
+
+1. On a Linux machine, install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running \`docker ps\`.
+2. Checkout the correct branch in [zkvm-prover](https://github.com/scroll-tech/zkvm-prover/tree/master) repo: \`git checkout 0.7.2\` Commit hash should be \`3d7f13148dc99a84333c0ddc5cbcb16379ab9fb1\`.
+3. Build the guest programs from the root repo dir: \`make build-guest\`. It will regenerate \`circuits/bundle-circuit/bundle_exe_commit.rs\`.
 4. Run \`compress_commitment\` function from [https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174](https://scrollzkp.notion.site/Prover-Architecture-Post-Euclid-1de7792d22af80e3a8ecdd03b5f02174) on the \`COMMIT\` array from the previous step to generate \`digest_2\` value. A sample rust implementation is: 
     \`\`\`
 use openvm_stark_sdk::p3_baby_bear::BabyBear;

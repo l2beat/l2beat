@@ -50,6 +50,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
     },
   },
+  // zkVerifierContractsReproducible: true,   uncomment when verifier regenerated
   interopConfig: {
     durationSplit: {
       lockAndMint: {
@@ -72,6 +73,7 @@ export const zksync2: ScalingProject = zkStackL2({
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'canonical',
   },
   chainConfig: {
     name: 'zksync2',

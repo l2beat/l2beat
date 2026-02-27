@@ -1,6 +1,6 @@
 {
   "name": "polygon-pos",
-  "timestamp": 1771253818,
+  "timestamp": 1772088852,
   "configHash": "0x6e415e01070626095a4349f2876188545236a3cfb8ecf78a8c17f1e8d4a41f84",
   "entries": [
     {
@@ -141,7 +141,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3142737,
+        "counter": 3145581,
         "isOwner": false,
         "owner": "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -669,16 +669,16 @@
         ],
         "$upgradeCount": 9,
         "auctionPeriod": 20,
-        "CHECKPOINT_REWARD": "37108000000000000000000",
+        "CHECKPOINT_REWARD": "34695980000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 97673,
-        "currentValidatorSetSize": 104,
-        "currentValidatorSetTotalStake": "3298097927803226254096287364",
+        "currentEpoch": 98306,
+        "currentValidatorSetSize": 105,
+        "currentValidatorSetTotalStake": "3330867152243846250892479138",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 97673,
+        "epoch": 98306,
         "eventsHub": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -692,7 +692,7 @@
         "minDeposit": "100000000000000000000000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
-        "NFTCounter": 195,
+        "NFTCounter": 196,
         "owner": "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [
           "eth:0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
@@ -706,20 +706,20 @@
         "registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "3397789305599164091872248",
+        "rewardPerStake": "3405645591252038027769042",
         "rootChain": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "12057939209428901681108",
+        "totalHeimdallFee": "12107939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "154772653503989160618022635",
-        "totalStaked": "12334333225601243022991203",
+        "totalRewardsLiquidated": "155385281761356294530687805",
+        "totalStaked": "12358084427197679765810973",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3298097927803226254096287364",
-          "stakerCount": 104
+          "amount": "3330867152243846250892479138",
+          "stakerCount": 105
         },
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
@@ -921,7 +921,7 @@
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
-        "_nextHeaderBlock": 976730000,
+        "_nextHeaderBlock": 983060000,
         "$immutable": false,
         "$implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -930,8 +930,8 @@
           "_registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 976720000,
-        "getLastChildBlock": 83064997,
+        "currentHeaderBlock": 983050000,
+        "getLastChildBlock": 83483301,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -1115,7 +1115,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 33,
+        "nonce": 37,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4453,7 +4453,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 231,
+        "nonce": 232,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -5676,6 +5676,6 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24470121 },
+  "usedBlockNumbers": { "ethereum": 24539426 },
   "permissionsConfigHash": "0x87b8c98e411bf9d28f35b21b8ad61e30ab5d972910c3cf4e782b0e2e57cc66b5"
 }

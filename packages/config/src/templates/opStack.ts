@@ -251,6 +251,8 @@ interface OpStackConfigCommon {
    * but still are a part of superchain config due to offchain agreements
    */
   isPartOfSuperchain?: boolean
+  // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
+  zkVerifierContractsReproducible?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -700,6 +702,19 @@ function getProgramHashes(
       return opSuccinctProgramHashes.map((el) => PROGRAM_HASHES(el))
     }
   }
+}
+
+function programHashesReproducible(
+  templateVars: OpStackConfigCommon,
+): boolean | null {
+  const programHashes =
+    templateVars.nonTemplateProgramHashes ?? getProgramHashes(templateVars)
+  if (programHashes.length === 0) return null
+  if (programHashes.some((h) => h.verificationStatus === 'unsuccessful'))
+    return false
+  if (programHashes.every((h) => h.verificationStatus === 'successful'))
+    return true
+  return null
 }
 
 function getStateValidation(
@@ -1438,10 +1453,20 @@ function computedStage(
           fraudProofType === 'KailuaSoon',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
-        noRedTrustedSetups: null,
-        programHashesReproducible: null,
-        proverSourcePublished: null,
-        verifierContractsReproducible: null,
+        noRedTrustedSetups:
+          fraudProofType === 'Kailua' || fraudProofType === 'KailuaSoon'
+            ? true
+            : null,
+        programHashesReproducible: programHashesReproducible(templateVars),
+        proverSourcePublished:
+          fraudProofType === 'Kailua' ||
+          fraudProofType === 'KailuaSoon' ||
+          fraudProofType === 'OpSuccinct' ||
+          fraudProofType === 'OpSuccinctFDP'
+            ? true
+            : null,
+        verifierContractsReproducible:
+          templateVars.zkVerifierContractsReproducible ?? null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug:

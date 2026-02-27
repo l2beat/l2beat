@@ -25,6 +25,8 @@ export type ProtocolEntry = {
   chains: TopItems<ChainData>
   transferCount: number
   averageValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   averageDuration: AverageDuration | null
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
@@ -59,15 +61,16 @@ export type BurnAndMintProtocolData = {
   tokens: TopItems<TokenData>
 }
 
-const SelectedChainsIds = v.tuple([
-  v.union([v.string(), v.null()]),
-  v.union([v.string(), v.null()]),
-])
-export type SelectedChainsIds = v.infer<typeof SelectedChainsIds>
+export type InteropSelectionInput = v.infer<typeof InteropSelectionInput>
+const InteropSelectionInputShape = {
+  from: v.array(v.string().check((value) => value.length > 0)),
+  to: v.array(v.string().check((value) => value.length > 0)),
+}
+export const InteropSelectionInput = v.object(InteropSelectionInputShape)
 
 export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
-  selectedChainsIds: SelectedChainsIds,
+  ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
 })
 
@@ -76,7 +79,7 @@ export type InteropProtocolTokensParams = v.infer<
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
-  selectedChainsIds: SelectedChainsIds,
+  ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
 })
 
@@ -96,19 +99,37 @@ export type CommonInteropData = {
   inDurationSum: number
   outTransferCount: number
   outDurationSum: number
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   mintedValueUsd: number | undefined
   burnedValueUsd: number | undefined
+}
+
+export type TokenFlowData = {
+  srcChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  dstChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  volume: number
 }
 
 export type TokenData = {
   id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
+  flows: TokenFlowData[]
 }
 
 export type ChainData = {
@@ -119,6 +140,8 @@ export type ChainData = {
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
 }
 
