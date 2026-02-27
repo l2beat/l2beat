@@ -6,12 +6,12 @@ import { createCacheWarmer } from './server/cacheWarmer'
 import { createServer } from './server/server'
 import { getLogger } from './server/utils/logger'
 
-function main() {
+async function main() {
   const logger = getLogger()
 
   logger.info('Starting frontend...')
 
-  createServer(logger)
+  await createServer(logger, { dev: false })
 
   if (env.REDIS_URL && env.DEPLOYMENT_ENV === 'production') {
     createCacheWarmer(logger)
