@@ -76,8 +76,10 @@ export function toInteropProtocolTransferDetailsItem(
   return {
     transferId: transfer.transferId,
     timestamp: transfer.timestamp,
-    amount: transfer.srcAmount ?? transfer.dstAmount,
-    symbol: transfer.srcSymbol ?? transfer.dstSymbol,
+    srcAmount: transfer.srcAmount,
+    srcSymbol: transfer.srcSymbol,
+    dstAmount: transfer.dstAmount,
+    dstSymbol: transfer.dstSymbol,
     valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
     duration: transfer.duration,
     srcChain: transfer.srcChain,

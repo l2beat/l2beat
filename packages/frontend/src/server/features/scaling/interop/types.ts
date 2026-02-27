@@ -109,8 +109,10 @@ export const InteropProtocolTransfersParams = v.object({
 export type InteropProtocolTransferDetailsItem = {
   transferId: string
   timestamp: number
-  amount: number | undefined
-  symbol: string | undefined
+  srcAmount: number | undefined
+  srcSymbol: string | undefined
+  dstAmount: number | undefined
+  dstSymbol: string | undefined
   valueUsd: number | undefined
   duration: number
   srcChain: string

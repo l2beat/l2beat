@@ -52,18 +52,24 @@ const columns = [
       headClassName: 'text-2xs',
     },
   }),
-  columnHelper.accessor('amount', {
-    header: 'Amount',
+  columnHelper.accessor('srcAmount', {
+    header: 'Source token',
     enableSorting: false,
     cell: (ctx) => {
-      const { amount, symbol } = ctx.row.original
-      if (amount === undefined) return EM_DASH
-      const formattedAmount = formatNumberWithCommas(amount, 4)
-      return (
-        <span className="font-medium text-label-value-14 text-primary">
-          {symbol ? `${formattedAmount} ${symbol}` : formattedAmount}
-        </span>
-      )
+      const { srcAmount, srcSymbol } = ctx.row.original
+      return <TokenAmount amount={srcAmount} symbol={srcSymbol} />
+    },
+    meta: {
+      headClassName: 'text-2xs',
+      align: 'right',
+    },
+  }),
+  columnHelper.accessor('dstAmount', {
+    header: 'Destination token',
+    enableSorting: false,
+    cell: (ctx) => {
+      const { dstAmount, dstSymbol } = ctx.row.original
+      return <TokenAmount amount={dstAmount} symbol={dstSymbol} />
     },
     meta: {
       headClassName: 'text-2xs',
@@ -345,4 +351,20 @@ function TransferDetailsDialog({
 function shortenHash(hash: string): string {
   if (hash.length <= 12) return hash
   return `${hash.slice(0, 6)}...${hash.slice(-4)}`
+}
+
+function TokenAmount({
+  amount,
+  symbol,
+}: {
+  amount: number | undefined
+  symbol: string | undefined
+}) {
+  if (amount === undefined) return EM_DASH
+  const formattedAmount = formatNumberWithCommas(amount, 4)
+  return (
+    <span className="font-medium text-label-value-14 text-primary">
+      {symbol ? `${formattedAmount} ${symbol}` : formattedAmount}
+    </span>
+  )
 }

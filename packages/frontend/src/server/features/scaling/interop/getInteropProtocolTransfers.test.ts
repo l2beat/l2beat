@@ -7,7 +7,7 @@ import {
 } from './getInteropProtocolTransfers'
 
 describe(toInteropProtocolTransferDetailsItem.name, () => {
-  it('maps transfer details and falls back to destination values', () => {
+  it('maps transfer details with source and destination token amounts', () => {
     const result = toInteropProtocolTransferDetailsItem(
       transfer({
         srcAmount: undefined,
@@ -22,8 +22,10 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
     expect(result).toEqual({
       transferId: 'transfer-id',
       timestamp: 123,
-      amount: 12.34,
-      symbol: 'USDC',
+      srcAmount: undefined,
+      srcSymbol: undefined,
+      dstAmount: 12.34,
+      dstSymbol: 'USDC',
       valueUsd: 12.34,
       duration: 60,
       srcChain: 'ethereum',
