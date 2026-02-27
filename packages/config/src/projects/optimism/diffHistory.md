@@ -8,7 +8,7 @@ Generated with discovered.json: 0x561e6f520ebc73930dc04203bfff3d3cc197932e
 
 ## Description
 
-Optimism Security Council member rotation: members 0 and 2 replaced.
+Optimism Security Council: 2 members replaced.
 
 ## Watched changes
 
@@ -14783,7 +14783,7 @@ Generated with discovered.json: 0xa1d57f190fbdfb73f7171e0322ccf7bddd4a21c9
 
 ## Description
 
-Optimism Security Council member rotation: members 0 and 2 replaced.
+Optimism Security Council: 2 members replaced.
 
 ## Initial discovery
 
@@ -14930,7 +14930,7 @@ Generated with discovered.json: 0x2e96b99a18a238b80113eef0b15038b22f19a9eb
 
 ## Description
 
-Optimism Security Council member rotation: members 0 and 2 replaced.
+Optimism Security Council: 2 members replaced.
 
 ## Config/verification related changes
 

@@ -8,7 +8,7 @@ Generated with discovered.json: 0x99bc05a34034b85bf55816c233df3da49516af96
 
 ## Description
 
-SP1MockVerifierWithHash (a no-op verifier that accepts all proofs) was added to the SP1VerifierGateway with selector 0xffffffff. This means the permissioned proposer can bypass ZK proof verification by submitting proofs with this selector. The mock verifier's `verifyProof` function has an empty body with comment `// accept everything`.
+SP1MockVerifierWithHash (a no-op verifier that accepts all proofs) was added to the SP1VerifierGateway with selector 0xffffffff. Proof verification can be bypassed by the proposer via this selector; safety then depends on challenger intervention before finalization. The mock verifier's `verifyProof` function has an empty body with comment `// accept everything`. Diff with a real verifier: https://disco.l2beat.com/diff/eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5/eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739
 
 ## Watched changes
 
