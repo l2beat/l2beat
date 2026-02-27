@@ -14,6 +14,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -107,6 +108,7 @@ export const zircuit: ScalingProject = {
   id: ProjectId('zircuit'),
   addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.Stack.OPStack],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   capability: 'universal',
   type: 'layer2',
   display: {
