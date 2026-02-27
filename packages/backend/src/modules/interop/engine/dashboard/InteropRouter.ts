@@ -174,7 +174,6 @@ export function createInteropRouter(
   }
 
   router.get('/interop/coverage-pies', renderCoveragePies)
-  router.get('/interop/support-charts', renderCoveragePies)
 
   router.get('/interop/memory', (ctx) => {
     const memoryUsage = process.memoryUsage()
