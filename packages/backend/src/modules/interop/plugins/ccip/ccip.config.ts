@@ -67,24 +67,22 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   'soneium-mainnet': 'soneium',
 }
 
-function toL2BeatChainName(chainlinkName: string): string | undefined {
-  return CHAINLINK_TO_L2BEAT[chainlinkName]
-}
+// Maps a Chainlink chain name to an L2Beat chain name, or derives a readable
+// "Unknown_<name>" fallback from the Chainlink naming convention.
+// e.g. "ethereum-mainnet-base-1" → "base", "solana-mainnet" → "Unknown_solana"
+function toChainName(chainlinkName: string): string {
+  const l2beat = CHAINLINK_TO_L2BEAT[chainlinkName]
+  if (l2beat) return l2beat
 
-// Derive a human-readable chain name from Chainlink's naming convention.
-// e.g. "solana-mainnet" → "solana", "ethereum-mainnet-ronin-1" → "ronin", "sonic-mainnet" → "sonic"
-function toReadableChainName(chainlinkName: string): string {
   // Pattern: "<host>-mainnet-<chain>-<N>" → extract <chain>
   const subchainMatch = chainlinkName.match(/^.+-mainnet-(.+?)-\d+$/)
-  if (subchainMatch) {
-    return subchainMatch[1]
-  }
+  if (subchainMatch) return `Unknown_${subchainMatch[1]}`
+
   // Pattern: "<chain>-mainnet" or "<chain>-testnet" → extract <chain>
   const mainnetMatch = chainlinkName.match(/^(.+?)-(mainnet|testnet)$/)
-  if (mainnetMatch) {
-    return mainnetMatch[1]
-  }
-  return chainlinkName
+  if (mainnetMatch) return `Unknown_${mainnetMatch[1]}`
+
+  return `Unknown_${chainlinkName}`
 }
 
 interface ChainConfig {
@@ -157,9 +155,7 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     // Build selector → readable name map for ALL chains (including untracked)
     const selectorNames: Record<string, string> = {}
     for (const [chainlinkChain, chainConfig] of Object.entries(chainsJson)) {
-      const l2beat = toL2BeatChainName(chainlinkChain)
-      const name = l2beat ?? `Unknown_${toReadableChainName(chainlinkChain)}`
-      selectorNames[chainConfig.chainSelector] = name
+      selectorNames[chainConfig.chainSelector] = toChainName(chainlinkChain)
     }
 
     // Only include chains that l2beat tracks
@@ -168,7 +164,7 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const networks: CCIPNetwork[] = []
 
     for (const [chainlinkChain, chainConfig] of Object.entries(chainsJson)) {
-      const l2beatChain = toL2BeatChainName(chainlinkChain)
+      const l2beatChain = CHAINLINK_TO_L2BEAT[chainlinkChain]
       if (!l2beatChain) continue
       if (!trackedChainNames.has(l2beatChain)) continue
 
@@ -185,10 +181,7 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
         for (const [otherChainlink, laneConfig] of Object.entries(
           thisChainLanes,
         )) {
-          const otherL2beat = toL2BeatChainName(otherChainlink)
-          // For unsupported chains, derive a readable name from Chainlink's naming
-          const chainName =
-            otherL2beat ?? `Unknown_${toReadableChainName(otherChainlink)}`
+          const chainName = toChainName(otherChainlink)
 
           // Outbound: this chain -> other chain (onRamp)
           if (laneConfig.onRamp?.address) {
