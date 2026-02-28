@@ -70,23 +70,19 @@ function toL2BeatChainName(chainlinkName: string): string | undefined {
 }
 
 // Derive a human-readable chain name from Chainlink's naming convention.
-// e.g. "solana-mainnet" → "Solana", "ethereum-mainnet-ronin-1" → "Ronin", "sonic-mainnet" → "Sonic"
+// e.g. "solana-mainnet" → "solana", "ethereum-mainnet-ronin-1" → "ronin", "sonic-mainnet" → "sonic"
 function toReadableChainName(chainlinkName: string): string {
   // Pattern: "<host>-mainnet-<chain>-<N>" → extract <chain>
   const subchainMatch = chainlinkName.match(/^.+-mainnet-(.+?)-\d+$/)
   if (subchainMatch) {
-    return capitalize(subchainMatch[1])
+    return subchainMatch[1]
   }
   // Pattern: "<chain>-mainnet" or "<chain>-testnet" → extract <chain>
   const mainnetMatch = chainlinkName.match(/^(.+?)-(mainnet|testnet)$/)
   if (mainnetMatch) {
-    return capitalize(mainnetMatch[1])
+    return mainnetMatch[1]
   }
   return chainlinkName
-}
-
-function capitalize(s: string): string {
-  return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 interface ChainConfig {
