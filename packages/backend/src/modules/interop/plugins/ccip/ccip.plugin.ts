@@ -251,7 +251,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
   capture(input: LogToCapture) {
     const config = this.configs.get(CCIPConfig)
     if (!config) return
-    const { networks, selectorNames } = config
+    const { networks, chainSelectorToName } = config
 
     const network = networks.find((x) => x.chain === input.chain)
     if (!network) return
@@ -298,7 +298,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
         return
 
       const selector = messageSent.destChainSelector.toString()
-      const dstChain = selectorNames[selector] ?? `Unknown_${selector}`
+      const dstChain = chainSelectorToName[selector] ?? `Unknown_${selector}`
 
       return this.captureSend(input, {
         messageId: messageSent.message.header.messageId,
@@ -320,7 +320,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
         return
 
       const srcSelector = execChangedV16.sourceChainSelector.toString()
-      const srcChain = selectorNames[srcSelector] ?? `Unknown_${srcSelector}`
+      const srcChain = chainSelectorToName[srcSelector] ?? `Unknown_${srcSelector}`
 
       return this.captureExecution(input, {
         messageId: execChangedV16.messageId,

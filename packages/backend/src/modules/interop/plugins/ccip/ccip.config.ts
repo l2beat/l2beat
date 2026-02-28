@@ -25,8 +25,8 @@ export interface CCIPNetwork {
 
 export interface CCIPConfigData {
   networks: CCIPNetwork[]
-  // Maps chain selectors to readable names for all chains (including untracked)
-  selectorNames: Record<string, string>
+  // Maps CCIP chain selectors (uint64) to readable chain names for all chains (including untracked)
+  chainSelectorToName: Record<string, string>
 }
 
 export const CCIPConfig = defineConfig<CCIPConfigData>('ccip')
@@ -135,14 +135,14 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
       })
       this.store.set(CCIPConfig, {
         networks: reconciled.updated,
-        selectorNames: latest.selectorNames,
+        chainSelectorToName: latest.chainSelectorToName,
       })
     }
   }
 
   async getLatestNetworks(): Promise<{
     networks: CCIPNetwork[]
-    selectorNames: Record<string, string>
+    chainSelectorToName: Record<string, string>
   }> {
     const [chainsResponse, lanesResponse] = await Promise.all([
       this.http.fetchRaw(CHAINS_URL, { timeout: 10_000 }),
@@ -153,9 +153,9 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const lanes: LanesJson = await lanesResponse.json()
 
     // Build selector → readable name map for ALL chains (including untracked)
-    const selectorNames: Record<string, string> = {}
+    const chainSelectorToName: Record<string, string> = {}
     for (const [chainlinkChain, chainConfig] of Object.entries(chainsJson)) {
-      selectorNames[chainConfig.chainSelector] = toChainName(chainlinkChain)
+      chainSelectorToName[chainConfig.chainSelector] = toChainName(chainlinkChain)
     }
 
     // Only include chains that l2beat tracks
@@ -236,6 +236,6 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
       }
     }
 
-    return { networks, selectorNames }
+    return { networks, chainSelectorToName }
   }
 }
