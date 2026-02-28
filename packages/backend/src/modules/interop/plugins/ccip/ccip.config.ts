@@ -23,11 +23,13 @@ export interface CCIPNetwork {
   offRamp?: EthereumAddress
 }
 
-export const CCIPConfig = defineConfig<CCIPNetwork[]>('ccip')
-// Maps chain selectors to readable names for chains not tracked by L2Beat
-export const CCIPSelectorNames = defineConfig<Record<string, string>>(
-  'ccip-selector-names',
-)
+export interface CCIPConfigData {
+  networks: CCIPNetwork[]
+  // Maps chain selectors to readable names for all chains (including untracked)
+  selectorNames: Record<string, string>
+}
+
+export const CCIPConfig = defineConfig<CCIPConfigData>('ccip')
 
 const CHAINS_URL =
   'https://raw.githubusercontent.com/smartcontractkit/documentation/main/src/config/data/ccip/v1_2_0/mainnet/chains.json'
@@ -102,7 +104,7 @@ type ChainsJson = Record<string, ChainConfig>
 type LanesJson = Record<string, Record<string, LaneConfig>>
 
 export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
-  provides = [CCIPConfig, CCIPSelectorNames]
+  provides = [CCIPConfig]
 
   constructor(
     private chains: { name: string }[],
@@ -118,7 +120,7 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
   async run() {
     const latest = await this.getLatestNetworks()
 
-    const previous = this.store.get(CCIPConfig)
+    const previous = this.store.get(CCIPConfig)?.networks
     const reconciled = reconcileNetworks(previous, latest.networks)
 
     if (reconciled.removed.length > 0) {
@@ -128,15 +130,16 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
       })
     }
 
-    if (reconciled.updated.length > 0) {
+    if (reconciled.updated.length > 0 || !previous) {
       this.logger.info('Networks updated', {
         plugin: CCIPConfig.key,
         count: reconciled.updated.length,
       })
-      this.store.set(CCIPConfig, reconciled.updated)
+      this.store.set(CCIPConfig, {
+        networks: reconciled.updated,
+        selectorNames: latest.selectorNames,
+      })
     }
-
-    this.store.set(CCIPSelectorNames, latest.selectorNames)
   }
 
   async getLatestNetworks(): Promise<{

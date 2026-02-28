@@ -23,7 +23,7 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-import { CCIPConfig, CCIPSelectorNames } from './ccip.config'
+import { CCIPConfig } from './ccip.config'
 
 /*
  CCIP v1.0-v1.5 events (per-lane EVM2EVMOnRamp/EVM2EVMOffRamp):
@@ -213,7 +213,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
   constructor(private configs: InteropConfigStore) {}
 
   getDataRequests(): DataRequest[] {
-    const networks = this.configs.get(CCIPConfig) ?? []
+    const networks = this.configs.get(CCIPConfig)?.networks ?? []
 
     const outboundAddresses: ChainSpecificAddress[] = []
     const inboundAddresses: ChainSpecificAddress[] = []
@@ -298,8 +298,9 @@ export class CCIPPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
-    const networks = this.configs.get(CCIPConfig)
-    if (!networks) return
+    const config = this.configs.get(CCIPConfig)
+    if (!config) return
+    const { networks, selectorNames } = config
 
     const network = networks.find((x) => x.chain === input.chain)
     if (!network) return
@@ -370,8 +371,6 @@ export class CCIPPlugin implements InteropPluginResyncable {
     }
 
     // --- CCIP v1.6+ per-chain contracts ---
-
-    const selectorNames = this.configs.get(CCIPSelectorNames) ?? {}
 
     const ccipMessageSent = parseCCIPMessageSent(input.log, null)
     if (ccipMessageSent) {
