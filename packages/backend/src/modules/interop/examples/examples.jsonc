@@ -275,57 +275,57 @@
     ],
     "expects": {
       "transfers": [
-        // Batch 1: vsn + fluid (arbitrum → ethereum)
+        // Batch 1: VSN + FLUID (arbitrum → ethereum)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "vsn" } },
-          "dst": { "financials": { "symbol": "vsn" } }
+          "src": { "financials": { "symbol": "VSN" } },
+          "dst": { "financials": { "symbol": "VSN" } }
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "fluid" } },
-          "dst": { "financials": { "symbol": "fluid" } }
+          "src": { "financials": { "symbol": "FLUID" } },
+          "dst": { "financials": { "symbol": "FLUID" } }
         },
-        // Batch 2: wmtx + chex (ethereum → base)
+        // Batch 2: WMTX + CHEX (ethereum → base)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "wmtx" } },
+          "src": { "financials": { "symbol": "WMTX" } },
           "dst": { "financials": { "symbol": "WMTX" } }
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "chex" } },
-          "dst": { "financials": { "symbol": "chex" } }
+          "src": { "financials": { "symbol": "CHEX" } },
+          "dst": { "financials": { "symbol": "CHEX" } }
         },
-        // Batch 3: wmtx + zchf (ethereum → base)
+        // Batch 3: WMTX + ZCHF (ethereum → base)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "wmtx" } },
+          "src": { "financials": { "symbol": "WMTX" } },
           "dst": { "financials": { "symbol": "WMTX" } }
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "zchf" } },
-          "dst": { "financials": { "symbol": "zchf" } }
+          "src": { "financials": { "symbol": "ZCHF" } },
+          "dst": { "financials": { "symbol": "ZCHF" } }
         },
-        // Batch 4: syrupusdc + zchf (base → ethereum)
+        // Batch 4: syrupUSDC + ZCHF (base → ethereum)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "syrupusdc" } },
-          "dst": { "financials": { "symbol": "syrupusdc" } }
+          "src": { "financials": { "symbol": "syrupUSDC" } },
+          "dst": { "financials": { "symbol": "syrupUSDC" } }
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "zchf" } },
-          "dst": { "financials": { "symbol": "zchf" } }
+          "src": { "financials": { "symbol": "ZCHF" } },
+          "dst": { "financials": { "symbol": "ZCHF" } }
         },
-        // Batch 5: syrupusdc (ethereum → base, single transfer)
+        // Batch 5: syrupUSDC (ethereum → base, single transfer)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "syrupusdc" } },
-          "dst": { "financials": { "symbol": "syrupusdc" } }
+          "src": { "financials": { "symbol": "syrupUSDC" } },
+          "dst": { "financials": { "symbol": "syrupUSDC" } }
         },
-        // Batch 6: LBTC + dextf (base → ethereum)
+        // Batch 6: LBTC + DEXTF (base → ethereum)
         {
           "type": "ccip.Transfer",
           "src": { "financials": { "symbol": "LBTC" } },
@@ -333,24 +333,24 @@
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "dextf" } },
+          "src": { "financials": { "symbol": "DEXTF" } },
           "dst": { "financials": { "symbol": "DEXTF" } }
         },
-        // Batch 7: paal + DEXTF + DEXTF (ethereum → base, 3-message batch)
+        // Batch 7: $PAAL + DEXTF + DEXTF (ethereum → base, 3-message batch)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "paal" } },
-          "dst": { "financials": { "symbol": "paal" } }
+          "src": { "financials": { "symbol": "$PAAL" } },
+          "dst": { "financials": { "symbol": "$PAAL" } }
         },
         {
           "type": "ccip.Transfer",
           "src": { "financials": { "symbol": "DEXTF" } },
-          "dst": { "financials": { "symbol": "dextf" } }
+          "dst": { "financials": { "symbol": "DEXTF" } }
         },
         {
           "type": "ccip.Transfer",
           "src": { "financials": { "symbol": "DEXTF" } },
-          "dst": { "financials": { "symbol": "dextf" } }
+          "dst": { "financials": { "symbol": "DEXTF" } }
         }
       ]
     }
@@ -388,6 +388,39 @@
     ],
     "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
     "messages": [{ "type": "ccip.Message", "app": "unknown" }],
+    "transfers": []
+  },
+  "ccip-unsupported-chain": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Base → Sonic (Sonic is unsupported, only source side captured)
+      {
+        "chain": "base",
+        "tx": "0xd98e73cb566950d3311117ccad12dc84dfd22d2c82ecae013fe2c751573f9322"
+      },
+      // Sonic → Base (inbound from unsupported chain, only dst side captured)
+      {
+        "chain": "base",
+        "tx": "0xc5721df4bb21ab7511d9c995e6b843fe4b0f1ae2530d53d30bac18e6b6d5f245"
+      },
+      // Base → Bittensor (v1.6 CCIPMessageSent, Bittensor is unsupported)
+      {
+        "chain": "base",
+        "tx": "0x4064cbfb507412b8fc2b457975408f7f06860af15b99a3f01c868839140e56c1"
+      },
+      // Bittensor → Base (v1.6 ExecutionStateChanged inbound)
+      {
+        "chain": "base",
+        "tx": "0x3caad21891ceb20380b2b77ef2b87e7a3eb8a854b93c39cece65dac2d66b067d"
+      }
+    ],
+    "events": [
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged"
+    ],
+    "messages": [],
     "transfers": []
   },
   "celer": {
