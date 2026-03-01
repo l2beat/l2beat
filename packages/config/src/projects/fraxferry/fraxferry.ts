@@ -29,6 +29,7 @@ export const fraxferry: Bridge = {
       websites: ['https://frax.com/'],
       documentation: ['https://docs.frax.com/'],
       bridges: ['https://mainnet.frax.com/tools/bridge/'],
+      documentation: ['https://docs.frax.com/'],
       repositories: ['https://github.com/FraxFinance/frax-solidity'],
       socialMedia: [
         'https://twitter.com/fraxfinance',
