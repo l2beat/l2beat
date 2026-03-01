@@ -155,7 +155,8 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     // Build selector → readable name map for ALL chains (including untracked)
     const chainSelectorToName: Record<string, string> = {}
     for (const [chainlinkChain, chainConfig] of Object.entries(chainsJson)) {
-      chainSelectorToName[chainConfig.chainSelector] = toChainName(chainlinkChain)
+      chainSelectorToName[chainConfig.chainSelector] =
+        toChainName(chainlinkChain)
     }
 
     // Only include chains that l2beat tracks

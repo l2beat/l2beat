@@ -320,7 +320,8 @@ export class CCIPPlugin implements InteropPluginResyncable {
         return
 
       const srcSelector = execChangedV16.sourceChainSelector.toString()
-      const srcChain = chainSelectorToName[srcSelector] ?? `Unknown_${srcSelector}`
+      const srcChain =
+        chainSelectorToName[srcSelector] ?? `Unknown_${srcSelector}`
 
       return this.captureExecution(input, {
         messageId: execChangedV16.messageId,
