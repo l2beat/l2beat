@@ -415,6 +415,8 @@ function MainPageLayout(props: {
       </a>
       {' | '}
       <a href="/interop/aggregates">Aggregates dashboard</a>
+      {' | '}
+      <a href="/interop/coverage-pies">Coverage pies</a>
       <DataTablePage
         showHome={false}
         tables={[

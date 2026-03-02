@@ -79,7 +79,17 @@ export function TransfersTable(props: {
                 {e.duration && formatSeconds(e.duration)}
               </td>
               <td>
-                {e.srcAmount} {e.srcSymbol}
+                {e.srcSymbol ? (
+                  <>
+                    {e.srcAmount} {e.srcSymbol}
+                  </>
+                ) : (
+                  <AddTokenLink
+                    address={e.srcTokenAddress}
+                    chain={e.srcChain}
+                    otherSideAbstractTokenId={e.dstAbstractTokenId}
+                  />
+                )}
               </td>
               <td data-order={e.srcValueUsd} data-sort={e.srcValueUsd}>
                 {formatDollars(e.srcValueUsd)}
@@ -92,7 +102,17 @@ export function TransfersTable(props: {
                 />
               </td>
               <td>
-                {e.dstAmount} {e.dstSymbol}
+                {e.dstSymbol ? (
+                  <>
+                    {e.dstAmount} {e.dstSymbol}
+                  </>
+                ) : (
+                  <AddTokenLink
+                    address={e.dstTokenAddress}
+                    chain={e.dstChain}
+                    otherSideAbstractTokenId={e.srcAbstractTokenId}
+                  />
+                )}
               </td>
               <td data-order={e.dstValueUsd} data-sort={e.dstValueUsd}>
                 {formatDollars(e.dstValueUsd)}
@@ -173,6 +193,41 @@ function TokenAddress({
   return (
     <a target="_blank" href={`${explorerUrl}/address/${ethAddress}`}>
       <ShortenedHash hash={ethAddress} />
+    </a>
+  )
+}
+
+function AddTokenLink({
+  address,
+  chain,
+  otherSideAbstractTokenId,
+}: {
+  address: string | undefined
+  chain: string | undefined
+  otherSideAbstractTokenId: string | undefined
+}) {
+  if (!address || !chain) {
+    return null
+  }
+  if (address === Address32.NATIVE || address === Address32.ZERO) {
+    return null
+  }
+  const ethAddress = Address32.cropToEthereumAddress(Address32(address))
+  const params = new URLSearchParams({
+    tab: 'deployed',
+    chain,
+    address: ethAddress,
+  })
+  if (otherSideAbstractTokenId) {
+    params.set('abstractTokenId', otherSideAbstractTokenId)
+  }
+  return (
+    <a
+      target="_blank"
+      href={`https://tokens.l2beat.com/tokens/new?${params.toString()}`}
+      className="add-token-link"
+    >
+      {otherSideAbstractTokenId ? 'add (same abstract)' : 'add token'}
     </a>
   )
 }

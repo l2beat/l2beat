@@ -24,6 +24,7 @@ const MAYAN_SWAP2 = EthereumAddress(
 )
 
 // Chains where Mayan contracts are deployed
+// https://docs.mayan.finance/integration/forwarder-contract
 const MAYAN_EVM_CHAINS = [
   'ethereum',
   'arbitrum',
@@ -32,11 +33,13 @@ const MAYAN_EVM_CHAINS = [
   'polygonpos',
   'bsc',
   'avalanche',
+  // no celo
 ] as const
 
 export const MAYAN_SWIFT_CHAINS = [...MAYAN_EVM_CHAINS]
 export const MAYAN_FORWARDER_CHAINS = [...MAYAN_EVM_CHAINS]
 
+// Fast MCTP and Circle contracts are not deployed on bsc or avalanche
 export const MAYAN_FAST_MCTP_CHAINS = [
   'ethereum',
   'arbitrum',
@@ -78,6 +81,11 @@ const MAYAN_PROTOCOLS_BY_CHAIN: Record<
     mayanSwift: MAYAN_SWIFT,
     fastMCTP: MAYAN_FAST_MCTP,
     mayanCircle: MAYAN_CIRCLE,
+    mayanSwap2: MAYAN_SWAP2,
+  },
+  bsc: {
+    mayanSwift: MAYAN_SWIFT,
+    mayanSwap: MAYAN_SWAP,
     mayanSwap2: MAYAN_SWAP2,
   },
 }

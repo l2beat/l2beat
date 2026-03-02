@@ -140,4 +140,10 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'FORK',
     txExplorerUrl: 'https://forkscan.org/tx/',
   },
+  {
+    id: 'linea',
+    name: 'Linea',
+    type: 'evm',
+    display: 'LINEA',
+  },
 ]
