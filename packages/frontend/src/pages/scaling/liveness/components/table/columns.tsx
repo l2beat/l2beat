@@ -81,16 +81,14 @@ export function getScalingLivenessColumns(hideProofSystem?: boolean) {
       header: '30-day\nanomalies',
       cell: (ctx) => {
         const entry = ctx.row.original
-        const showComingSoon = !entry.data?.isSynced
 
-        if (env.CLIENT_SIDE_TRACKED_TXS_OUTAGE) {
+        if (env.CLIENT_SIDE_TRACKED_TXS_OUTAGE || !entry.data?.isSynced) {
           return <NoDataBadge />
         }
 
         return (
           <AnomalyIndicator
             anomalies={entry.anomalies}
-            showComingSoon={showComingSoon}
             hasTrackedContractsChanged={entry.hasTrackedContractsChanged}
           />
         )
