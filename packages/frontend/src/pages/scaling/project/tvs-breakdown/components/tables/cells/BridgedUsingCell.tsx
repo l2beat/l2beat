@@ -5,7 +5,6 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { EllipsisText } from '~/components/EllipsisText'
-import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 
 interface Props {
@@ -45,25 +44,6 @@ function SingleBridge({
 }: {
   bridge: NonNullable<TvsToken['bridgedUsing']>['bridges'][number]
 }) {
-  if (bridge.slug) {
-    return (
-      <a
-        className="flex items-center justify-start gap-1"
-        href={`/bridges/projects/${bridge.slug}`}
-      >
-        <EllipsisText
-          className="text-link underline"
-          accessoryRight={
-            <ArrowRightIcon className="inline-block fill-current" />
-          }
-        >
-          {bridge.name}
-        </EllipsisText>
-        <ArrowRightIcon className="inline-block fill-link" />
-      </a>
-    )
-  }
-
   return <EllipsisText>{bridge.name}</EllipsisText>
 }
 

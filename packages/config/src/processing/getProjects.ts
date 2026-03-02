@@ -297,7 +297,6 @@ function bridgeToProject(p: Bridge): BaseProject {
     interopConfig: p.interopConfig,
     milestones: p.milestones,
     // tags
-    isBridge: true,
     isInteropProtocol: p.interopConfig ? true : undefined,
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,

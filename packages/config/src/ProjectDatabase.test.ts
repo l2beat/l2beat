@@ -53,7 +53,7 @@ describe(ProjectDatabase.name, () => {
       name: 'a',
       shortName: undefined,
       addedAt: 0,
-      isBridge: true,
+      isZkCatalog: true,
     }
     const projectB: BaseProject = {
       id: ProjectId('b'),
@@ -61,8 +61,8 @@ describe(ProjectDatabase.name, () => {
       name: 'b',
       shortName: undefined,
       addedAt: 0,
-      isBridge: true,
       isScaling: true,
+      isZkCatalog: true,
     }
     const projectC: BaseProject = {
       id: ProjectId('c'),
@@ -77,8 +77,8 @@ describe(ProjectDatabase.name, () => {
     await db.saveProject(projectC)
 
     const result = await db.getProjects({
-      select: ['isBridge', 'isScaling'],
-      whereNotNull: ['isBridge'],
+      select: ['isZkCatalog', 'isScaling'],
+      whereNotNull: ['isZkCatalog'],
       whereNull: [],
     })
 

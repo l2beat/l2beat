@@ -2,9 +2,6 @@ export const searchBarCategories = {
   scaling: {
     name: 'Scaling',
   },
-  bridges: {
-    name: 'Bridges',
-  },
   da: {
     name: 'Data Availability',
   },

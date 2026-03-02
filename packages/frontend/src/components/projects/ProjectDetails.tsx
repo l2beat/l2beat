@@ -1,6 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { ActivitySection } from './sections/ActivitySection'
-import { BridgesTvsSection } from './sections/BridgesTvsSection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
@@ -49,14 +48,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'ScalingTvsSection':
             return (
               <ScalingTvsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'BridgesTvsSection':
-            return (
-              <BridgesTvsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
