@@ -1,3 +1,72 @@
+Generated with discovered.json: 0xc7ea00eb51feb434a81e6fd8722a6188c6f8e406
+
+# Diff at Mon, 02 Mar 2026 22:17:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2d549d484aa00d29aa19b6414f93749d79b100c4 block: 1770736062
+- current timestamp: 1772489763
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract HotShotLightClient (eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      sourceHashes.1:
+-        "0x6c8c2f6bb51ae2ffefb868f088dc9db0c6c7b920bc8fe97de669ee0d91e43090"
++        "0x40a6e4b3d7ad267eb7f657fa35a983e445fe17019f66297d20a469d80f50cb15"
+      values.$implementation:
+-        "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B"
++        "eth:0x4DF3515bB525787e9eae08B8f9647C30F6FA7d93"
+      values.$libraries.1:
+-        "eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f"
++        "eth:0x0D654ce674D952B4944f6A2e410aBdaA824a417D"
+      values.$pastUpgrades.2:
++        ["2026-03-02T20:35:59.000Z","0x6add50bc3075d1f66a1c9f57a5c38792140f5c757978ffce813da4c193ab2232",["eth:0x4DF3515bB525787e9eae08B8f9647C30F6FA7d93"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.getVersion.majorVersion:
+-        1
++        2
+      values.blocksPerEpoch:
++        40000
+      values.currentEpoch:
++        274
+      values.epochStartBlock:
++        10960201
+      values.votingStakeTableState:
++        {"threshold":34,"blsKeyComm":"1561632536195555148145050274009949812309785157828896392838981322602622136791","schnorrKeyComm":"20147560324529416943341534119711171689827441694011856532375917186049770295574","amountComm":"349594070000690608819508126396071528924936277306125447047023081215269308099"}
+      implementationNames.eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B:
+-        "LightClient"
+      implementationNames.eth:0x4DF3515bB525787e9eae08B8f9647C30F6FA7d93:
++        "LightClientV2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifier (eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV2 (eth:0x0D654ce674D952B4944f6A2e410aBdaA824a417D)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../HotShotLightClient/LightClientV2.sol}          | 2767 +++++++++++++++-----
+ .../PlonkVerifierV2.sol}                           |  286 +-
+ 2 files changed, 2204 insertions(+), 849 deletions(-)
+```
+
 Generated with discovered.json: 0x6202db0da8eb637b2b2664590eeb7903347d70a3
 
 # Diff at Tue, 10 Feb 2026 15:08:45 GMT:

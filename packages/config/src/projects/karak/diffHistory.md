@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6eb7a5ce3d46f9aa3fe7a2bb7e2c521756d3f62d
+
+# Diff at Mon, 02 Mar 2026 22:17:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2d549d484aa00d29aa19b6414f93749d79b100c4 block: 1765535115
+- current timestamp: 1772489756
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingCelestia:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x2e8b0f29859755baf465cd715600b95938365ca6
 
 # Diff at Fri, 12 Dec 2025 10:26:42 GMT:

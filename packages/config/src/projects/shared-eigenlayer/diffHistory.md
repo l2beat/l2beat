@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x27d904a20ad8100bff5932e1e11ee8360fcf31bf
+
+# Diff at Mon, 02 Mar 2026 22:17:16 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2d549d484aa00d29aa19b6414f93749d79b100c4 block: 1772118708
+- current timestamp: 1772489766
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract EigenPod (eth:0x53cC2D82E08370Fe1e44a96f69CEc7d5b54ae868) {
+    +++ description: None
+      values.getConsolidationRequestFee:
+-        1
++        18
+    }
+```
+
 Generated with discovered.json: 0x9119b38acf40dbc6c454da6326c3b774a747944f
 
 # Diff at Thu, 26 Feb 2026 15:12:59 GMT:
