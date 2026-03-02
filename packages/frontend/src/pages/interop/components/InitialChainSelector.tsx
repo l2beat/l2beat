@@ -2,16 +2,14 @@ import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import type { InteropSelectedChains } from '../utils/InteropSelectedChainsContext'
+import { toInteropApiSelection } from '../utils/toInteropApiSelection'
+import type { InteropSelection } from '../utils/types'
 import type { InteropChainWithIcon } from './chain-selector/types'
 
 interface Props {
-  selectedChains: InteropSelectedChains
+  selectedChains: InteropSelection
   interopChains: InteropChainWithIcon[]
-  selectChain: (
-    index: keyof InteropSelectedChains,
-    chainId: string | null,
-  ) => void
+  selectChain: (type: 'from' | 'to', chainId: string | null) => void
   type: KnownInteropBridgeType | undefined
 }
 
@@ -22,6 +20,10 @@ export function InitialChainSelector({
   type,
 }: Props) {
   const utils = api.useUtils()
+  const firstSelectedChainId =
+    selectedChains.from.length === 1 ? selectedChains.from[0] : undefined
+  const secondSelectedChainId =
+    selectedChains.to.length === 1 ? selectedChains.to[0] : undefined
 
   const [activeChains, upcomingChains] = partition(
     interopChains,
@@ -29,18 +31,18 @@ export function InitialChainSelector({
   )
 
   function toggleChain(chainId: string) {
-    if (selectedChains.first === null) {
-      selectChain('first', chainId)
+    if (!firstSelectedChainId) {
+      selectChain('from', chainId)
       return
     }
 
-    if (selectedChains.first?.id === chainId) {
-      selectChain('first', null)
+    if (firstSelectedChainId === chainId) {
+      selectChain('from', null)
       return
     }
 
-    if (selectedChains.second === null) {
-      selectChain('second', chainId)
+    if (!secondSelectedChainId) {
+      selectChain('to', chainId)
       return
     }
   }
@@ -55,17 +57,23 @@ export function InitialChainSelector({
             key={chain.id}
             chain={chain}
             selected={
-              selectedChains.first?.id === chain.id ||
-              selectedChains.second?.id === chain.id
+              firstSelectedChainId === chain.id ||
+              secondSelectedChainId === chain.id
             }
             onClick={() => toggleChain(chain.id)}
             onMouseEnter={() => {
-              if (!selectedChains.first) {
+              if (!firstSelectedChainId) {
                 return
               }
 
               utils.interop.dashboard.prefetch({
-                selectedChainsIds: [selectedChains.first.id, chain.id],
+                ...toInteropApiSelection(
+                  {
+                    from: [firstSelectedChainId],
+                    to: [chain.id],
+                  },
+                  'public',
+                ),
                 type,
               })
             }}

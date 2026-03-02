@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x50450a5d458cf24a773603ab88692b9cbaf3a4b7
+
+# Diff at Thu, 26 Feb 2026 06:52:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1762265216
+- current timestamp: 1772088696
+
+## Description
+
+wallet added.
+
+## Watched changes
+
+```diff
+    contract BlackRock USD Institutional Digital Liquidity Fund Token (arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) {
+    +++ description: None
+      values.walletCount:
+-        4
++        3
+    }
+```
+
 Generated with discovered.json: 0xb5de113979ba8d7e0db52e7b0d3550c582bc9965
 
 # Diff at Wed, 05 Nov 2025 12:48:31 GMT:

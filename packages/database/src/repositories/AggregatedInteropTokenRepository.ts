@@ -13,6 +13,8 @@ export interface AggregatedInteropTokenRecord {
   transferCount: number
   totalDurationSum: number
   volume: number
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   mintedValueUsd: number | undefined
   burnedValueUsd: number | undefined
 }
@@ -30,6 +32,8 @@ export function toRecord(
     transferCount: row.transferCount,
     totalDurationSum: row.totalDurationSum,
     volume: row.volume,
+    minTransferValueUsd: row.minTransferValueUsd ?? undefined,
+    maxTransferValueUsd: row.maxTransferValueUsd ?? undefined,
     mintedValueUsd: row.mintedValueUsd ?? undefined,
     burnedValueUsd: row.burnedValueUsd ?? undefined,
   }
@@ -48,6 +52,8 @@ export function toRow(
     transferCount: record.transferCount,
     totalDurationSum: record.totalDurationSum,
     volume: record.volume,
+    minTransferValueUsd: record.minTransferValueUsd,
+    maxTransferValueUsd: record.maxTransferValueUsd,
     mintedValueUsd: record.mintedValueUsd,
     burnedValueUsd: record.burnedValueUsd,
   }
@@ -75,18 +81,23 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
 
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    selectedChains: [string, string],
+    sourceChains: string[],
+    destinationChains: string[],
     type?: InteropBridgeType,
     options?: {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTokenRecord[]> {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return []
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropToken')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', selectedChains)
-      .where('dstChain', 'in', selectedChains)
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
 
     if (!options?.includeSameChainTransfers) {
       query = query.whereRef('srcChain', '!=', 'dstChain')
@@ -103,18 +114,23 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    selectedChains: [string, string],
+    sourceChains: string[],
+    destinationChains: string[],
     type?: InteropBridgeType,
     options?: {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTokenRecord[]> {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return []
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropToken')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', selectedChains)
-      .where('dstChain', 'in', selectedChains)
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
       .where('id', '=', id)
 
     if (!options?.includeSameChainTransfers) {

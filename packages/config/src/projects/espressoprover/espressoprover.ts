@@ -51,6 +51,12 @@ export const espressoprover: BaseProject = {
         ...TRUSTED_SETUPS.AztecIgnition,
       },
     ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('espresso'),
+        sinceTimestamp: UnixTime(1730830799),
+      },
+    ],
     verifierHashes: [
       {
         hash: '0x6f11ed19e494a0f332db714c267d743fe96eaf335405c82f24b6b40ba61a0d9e',

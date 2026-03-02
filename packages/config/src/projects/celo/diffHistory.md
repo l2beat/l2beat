@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x8060d3967c6e27d2c5369c984c8e871489bc255c
+
+# Diff at Fri, 27 Feb 2026 13:21:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1771936675
+- current timestamp: 1772198382
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
+Generated with discovered.json: 0xd0ca5c02d378cf54d0fe5f3de4ca2c63e22c800c
+
+# Diff at Tue, 24 Feb 2026 12:39:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6b636e64e387bed6b106ab3fb3c740f41fdb72fe block: 1771496067
+- current timestamp: 1771936675
+
+## Description
+
+Rename Celo Multisig 1 to Celo Security Council (6/8, community members from L2Beat, Hyperlane, Valora, Mento and others) and Celo Multisig 2 to Celo cLabs Multisig. Add reference to Celo Security Council docs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771496067 (main branch discovery), not current.
+
+```diff
+    contract Celo cLabs Multisig (eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d) {
+    +++ description: None
+      name:
+-        "Celo Multisig 2"
++        "Celo cLabs Multisig"
+    }
+```
+
+```diff
+    contract Celo Security Council (eth:0xC03172263409584f7860C25B6eB4985f0f6F4636) {
+    +++ description: None
+      name:
+-        "Celo Multisig 1"
++        "Celo Security Council"
+      references:
++        [{"text":"Security Council members - Celo Docs","href":"https://docs.celo.org/home/protocol/security-council"}]
+    }
+```
+
 Generated with discovered.json: 0x689b6a7fcf56e61f67e987e4f558aaf57133e4a5
 
 # Diff at Thu, 19 Feb 2026 10:15:36 GMT:

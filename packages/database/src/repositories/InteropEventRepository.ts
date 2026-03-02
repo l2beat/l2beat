@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropEvent } from '../kysely/generated/types'
 
@@ -73,6 +74,12 @@ export interface InteropEventStatsRecord {
   unmatched: number
   oldUnmatched: number
   unsupported: number
+}
+
+export interface InteropEventSupportBreakdownRecord {
+  chain: string
+  isSupported: boolean
+  count: number
 }
 
 export class InteropEventRepository extends BaseRepository {
@@ -188,6 +195,37 @@ export class InteropEventRepository extends BaseRepository {
       unmatched: Number(x.unmatched),
       oldUnmatched: Number(x.oldUnmatched),
       unsupported: Number(x.unsupported),
+    }))
+  }
+
+  async getSupportBreakdownByChainArg(
+    type: string,
+    chainArg: '$dstChain' | '$srcChain',
+  ): Promise<InteropEventSupportBreakdownRecord[]> {
+    const chainExpression = sql<string>`COALESCE(NULLIF(args ->> ${chainArg}, ''), '(unknown)')`
+
+    const source = this.db
+      .selectFrom('InteropEvent')
+      .where('type', '=', type)
+      .select([chainExpression.as('chain'), 'unsupported'])
+      .as('source')
+
+    const rows = await this.db
+      .selectFrom(source)
+      .select((eb) => [
+        'chain',
+        eb.fn.countAll().as('count'),
+        sql<boolean>`NOT BOOL_OR(unsupported)`.as('isSupported'),
+      ])
+      .groupBy('chain')
+      .orderBy('count', 'desc')
+      .orderBy('chain', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      chain: row.chain,
+      isSupported: Boolean(row.isSupported),
+      count: Number(row.count),
     }))
   }
 

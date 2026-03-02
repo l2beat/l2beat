@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x18bea0317b154ad683a315ae02c3baca070098e7
+
+# Diff at Fri, 27 Feb 2026 13:25:41 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770912809
+- current timestamp: 1772198388
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
 Generated with discovered.json: 0x99bf9cb8ea6a0fa6f842c6fcafd6012361d448b4
 
 # Diff at Fri, 13 Feb 2026 11:46:39 GMT:
@@ -4771,7 +4797,7 @@ Generated with discovered.json: 0x3fa389203f1030d3878621c9cf401f1659a5a685
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Optimism Security Council: 2 members replaced.
 
 ## Watched changes
 

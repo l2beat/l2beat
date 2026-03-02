@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -78,31 +79,52 @@ export const airbender: BaseProject = {
       },
     ],
     verifierHashes: [
+      // {
+      //   hash: '0x996b02b1d0420e997b4dc0d629a3a1bba93ed3185ac463f17b02ff83be139581',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      // },
+      // {
+      //   hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+      //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      // },
       {
-        hash: '0x996b02b1d0420e997b4dc0d629a3a1bba93ed3185ac463f17b02ff83be139581',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'notVerified',
-      },
-      {
-        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+        // Is a dummy to show adi as using airbender proof system. Verifier
+        // contract sources are unknown, so the actual hash cannot be computed.
+        // Fix once the sources are on etherscan.
+        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
+            // Based on standard DualVerifier architecture, this contract should be
+            // a verifier router that points to an actual verifier. But it's unverified, so idk
             address: EthereumAddress(
-              '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
+              '0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE',
             ),
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'unsuccessful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        description:
+          'Verifier smart contract sources are not available on Etherscan, hash value is set to 0x0 to indicate that it is not known.',
       },
     ],
   },

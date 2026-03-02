@@ -3,13 +3,11 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type {
-  ProtocolDisplayable,
-  SelectedChainsIds,
-} from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
+import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InitialChainSelector } from '../components/InitialChainSelector'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
@@ -21,6 +19,7 @@ import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
+import type { InteropMode, InteropSelection } from '../utils/types'
 import { InteropEmptyState } from './components/InteropEmptyState'
 import { TransferSizeChartCard } from './components/TransferSizeChartCard'
 import { BurnAndMintCard } from './components/table-widgets/BurnAndMintCard'
@@ -29,18 +28,20 @@ import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridgeTypeEntries'
 
 interface Props extends AppLayoutProps {
+  mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
   onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
-  initialSelectedChains: SelectedChainsIds
+  initialSelection: InteropSelection
 }
 
 export function InteropSummaryPage({
+  mode,
   interopChains,
   onboardingInteropChains,
   queryState,
-  initialSelectedChains,
+  initialSelection,
   protocols,
   ...props
 }: Props) {
@@ -48,12 +49,14 @@ export function InteropSummaryPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <InteropSelectedChainsProvider
+          mode={mode}
           interopChains={interopChains}
-          initialSelectedChains={initialSelectedChains}
+          initialSelection={initialSelection}
         >
           <SideNavLayout maxWidth="wide">
             <MainPageHeader>Interoperability</MainPageHeader>
             <Content
+              mode={mode}
               interopChains={interopChains}
               onboardingInteropChains={onboardingInteropChains}
               protocols={protocols}
@@ -66,17 +69,22 @@ export function InteropSummaryPage({
 }
 
 function Content({
+  mode,
   interopChains,
   onboardingInteropChains,
   protocols,
 }: {
+  mode: InteropMode
   interopChains: InteropChainWithIcon[]
   onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
-  if (!selectedChains.first || !selectedChains.second) {
+  if (
+    mode === 'public' &&
+    (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
+  ) {
     return (
       <InitialChainSelector
         interopChains={onboardingInteropChains}
@@ -89,27 +97,31 @@ function Content({
 
   return (
     <>
-      <ChainSelector chains={interopChains} protocols={protocols} />
+      {mode === 'public' ? (
+        <ChainSelector chains={interopChains} protocols={protocols} />
+      ) : (
+        <MultiChainSelector chains={interopChains} />
+      )}
       <Widgets interopChains={interopChains} />
     </>
   )
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChainsIds: [
-      selectedChains.first?.id ?? null,
-      selectedChains.second?.id ?? null,
-    ],
-  })
+  const { selectionForApi, mode, isDirty, reset } = useInteropSelectedChains()
+  const { data, isLoading } = api.interop.dashboard.useQuery(selectionForApi)
 
   if (
     data?.entries.length === 0 &&
     data.flows.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState />
+    return (
+      <InteropEmptyState
+        showResetButton={mode === 'internal' && isDirty}
+        onResetButtonClick={reset}
+      />
+    )
   }
 
   const { lockAndMint, nonMinting, burnAndMint } = getBridgeTypeEntries(

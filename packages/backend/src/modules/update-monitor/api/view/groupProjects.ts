@@ -13,14 +13,13 @@ export interface Group {
 
 export function groupProjects(
   projects: DashboardProject[],
-  projectConfigs: Project<never, 'scalingInfo' | 'isBridge' | 'isDaLayer'>[],
+  projectConfigs: Project<never, 'scalingInfo' | 'isDaLayer'>[],
 ): Group[] {
   const projectMap = new Map(
     projectConfigs.map((c) => [
       c.id.toString(),
       {
         stacks: c.scalingInfo?.stacks ?? [],
-        isBridge: c.isBridge ?? false,
         isDaLayer: c.isDaLayer ?? false,
       },
     ]),
@@ -86,11 +85,6 @@ export function groupProjects(
         p.name === 'blobstream' ||
         p.name === 'vector' ||
         p.name === 'shared-eigenlayer',
-    },
-    {
-      name: 'Bridge Projects',
-      assignees: ['🐻', '🐿'],
-      predicate: (p) => projectMap.get(p.name)?.isBridge ?? false,
     },
     // Finally individual projects so they can show inline labels
     {

@@ -1,6 +1,6 @@
 {
   "name": "optimism",
-  "timestamp": 1770912106,
+  "timestamp": 1772198389,
   "configHash": "0x728c1ee94170d1da3bf04ddc0f06ceb5e57c493187319024fc37e93185268f31",
   "entries": [
     {
@@ -44,11 +44,6 @@
       "implementationNames": {
         "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
       }
-    },
-    {
-      "address": "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Optimism Guardian Multisig",
@@ -122,11 +117,6 @@
       "implementationNames": {
         "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge"
       }
-    },
-    {
-      "address": "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "PreimageOracle",
@@ -376,14 +366,14 @@
           ]
         ],
         "$upgradeCount": 3,
-        "absolutePrestateFromGame": "0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b",
-        "anchorGame": "eth:0x4a8E1aEA8c4491c2B15c2aD86917bBf91E5F322A",
+        "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
+        "anchorGame": "eth:0xF4c18ed1DAd918E5c2008F14F60ccA321A7B7EAD",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x96aa5abf29160de57596b791377b9966db02f7d9fe33f39fc104b0a40147eaa8",
-          147353301
+          "0xbf09e34fcd41cb014dd534dfac929c333ec7efae2f507834bcb2c1f5f5ba658e",
+          147995921
         ],
         "getStartingAnchorRoot": {
           "root": "0xfce6d556d11e1662f316ed1408782a3227b1c1dcd8f643c1f563043298822e62",
@@ -443,7 +433,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "2d 18h",
+        "timeSinceLastL2beatInteraction": "18h 39m",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -555,7 +545,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292834763",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292836853",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1067,7 +1057,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 32,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1174,6 +1164,11 @@
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "oeth" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SynthetixBridgeEscrow",
@@ -1605,7 +1600,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 51,
+        "nonce": 52,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1950,8 +1945,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1326609,
-          "prevBlockNum": 24441668
+          "prevBoughtGas": 515958,
+          "prevBlockNum": 24548478
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2024,9 +2019,9 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073",
+          "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE",
           "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
-          "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
+          "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81",
           "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
           "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
           "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
@@ -2046,7 +2041,7 @@
         ],
         "isL2beatStillAnOwner": true,
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 52,
+        "nonce": 55,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2226,7 +2221,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 14702,
+        "gameCount": 15059,
         "gameImpls": [
           "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -2262,6 +2257,11 @@
         { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
@@ -2378,7 +2378,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "oeth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651387",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651640",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2436,7 +2436,7 @@
         "$upgradeCount": 4,
         "baseFee": 0,
         "baseFeeScalar": 5227,
-        "blobBaseFee": 16136778,
+        "blobBaseFee": 8246336,
         "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
@@ -2445,7 +2445,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 323448692,
+        "l1BaseFee": 139921403,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -2640,10 +2640,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 323448692,
+        "basefee": 139921403,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 16136778,
+        "blobBaseFee": 8246336,
         "blobBaseFeeScalar": 1014213,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "oeth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -2653,15 +2653,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x7f2291e3a3866f3dda437421db55cebc55a390db250f135a64045258f3f5e081",
+        "hash": "0x54153caeb83261cbbd6f9464cc18804a05a70cfe3e70adf04d8cdad841495d9e",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 24441752,
+        "number": 24548515,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 5,
-        "timestamp": 1770912023,
+        "sequenceNumber": 2,
+        "timestamp": 1772198315,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -5103,6 +5103,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24441758, "optimism": 147656664 },
-  "permissionsConfigHash": "0x9c884e62c3719753eec9395924507a41cb69fff4e0620be6ba4c40f1e33ce6af"
+  "usedBlockNumbers": { "ethereum": 24548521, "optimism": 148299806 },
+  "permissionsConfigHash": "0x27bc8c4b0de94dbc114477fe55bf97cd20ed39e9234649ced33db2749349b895"
 }

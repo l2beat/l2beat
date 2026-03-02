@@ -90,7 +90,18 @@ export const base: ScalingProject = opStackL2({
         plugin: 'sorare-base',
         bridgeType: 'lockAndMint',
       },
+      {
+        chain: 'base',
+        plugin: 'lido-wsteth',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'base',
+        plugin: 'sky-bridge',
+        bridgeType: 'lockAndMint',
+      },
     ],
+    type: 'canonical',
   },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [

@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react'
-import { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -33,10 +32,9 @@ interface Props {
   groups: NavGroup[]
   logoLink: string
   sideLinks: NavLink[]
-  whatsNew: WhatsNewWidget | undefined
 }
 
-export function NavSidebar({ groups, logoLink, sideLinks, whatsNew }: Props) {
+export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   const pathname = usePathname()
   return (
     <Sidebar>
@@ -91,7 +89,6 @@ export function NavSidebar({ groups, logoLink, sideLinks, whatsNew }: Props) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        {whatsNew && <WhatsNewWidget whatsNew={whatsNew} />}
         <div className="flex gap-2 lg:justify-between">
           <SocialLinks variant="gray" />
         </div>

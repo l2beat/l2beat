@@ -14,6 +14,7 @@ export const gaszip: BaseProject = {
         bridgeType: 'nonMinting',
       },
     ],
+    type: 'intent',
   },
   isInteropProtocol: true,
 }

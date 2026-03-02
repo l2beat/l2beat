@@ -28,6 +28,8 @@ describe('aggregation', () => {
         totalDurationSum: 5000,
         srcValueUsd: 2000,
         dstValueUsd: 2000,
+        minTransferValueUsd: 2000,
+        maxTransferValueUsd: 2000,
         avgValueInFlight: undefined,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
@@ -77,6 +79,8 @@ describe('aggregation', () => {
         totalDurationSum: 15000,
         srcValueUsd: 6500.5,
         dstValueUsd: 6500.5,
+        minTransferValueUsd: 1500.5,
+        maxTransferValueUsd: 3000,
         avgValueInFlight: undefined,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
@@ -118,6 +122,8 @@ describe('aggregation', () => {
         totalDurationSum: 11000,
         srcValueUsd: 3000,
         dstValueUsd: 3000,
+        minTransferValueUsd: 3000,
+        maxTransferValueUsd: 3000,
         avgValueInFlight: undefined,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
@@ -217,6 +223,8 @@ describe('aggregation', () => {
         totalDurationSum: 20000,
         srcValueUsd: 255550,
         dstValueUsd: 255550,
+        minTransferValueUsd: 50,
+        maxTransferValueUsd: 200000,
         avgValueInFlight: undefined,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
@@ -469,6 +477,8 @@ describe('aggregation', () => {
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
         },
@@ -500,6 +510,8 @@ describe('aggregation', () => {
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
         },
@@ -510,6 +522,8 @@ describe('aggregation', () => {
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 1500,
+          minTransferValueUsd: 1500,
+          maxTransferValueUsd: 1500,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
         },
@@ -561,6 +575,8 @@ describe('aggregation', () => {
           transferCount: 2,
           totalDurationSum: 11000,
           volume: 5000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 3000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
         },
@@ -571,6 +587,8 @@ describe('aggregation', () => {
           transferCount: 1,
           totalDurationSum: 4000,
           volume: 1000,
+          minTransferValueUsd: 1000,
+          maxTransferValueUsd: 1000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
         },
@@ -611,6 +629,8 @@ describe('aggregation', () => {
         transferCount: 1,
         totalDurationSum: 6000,
         volume: 3000,
+        minTransferValueUsd: 3000,
+        maxTransferValueUsd: 3000,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
       })
@@ -650,6 +670,8 @@ describe('aggregation', () => {
           transferCount: 2,
           totalDurationSum: 11000,
           volume: 3000,
+          minTransferValueUsd: 3000,
+          maxTransferValueUsd: 3000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
         },
@@ -790,6 +812,50 @@ describe('aggregation', () => {
         const ethToken = result.find((t) => t.abstractTokenId === 'eth')
         expect(ethToken?.burnedValueUsd).toEqual(1500) // uses dstValueUsd fallback
         expect(ethToken?.mintedValueUsd).toEqual(2000) // uses srcValueUsd fallback
+      })
+
+      it('attributes net minted values to known token when opposite token is missing', () => {
+        const transfers: InteropTransferRecord[] = [
+          // Minted transfer with missing destination token ID.
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: 'axs',
+            dstAbstractTokenId: undefined,
+            duration: 4000,
+            srcValueUsd: 35.43,
+            dstValueUsd: undefined,
+            srcWasBurned: false,
+            dstWasMinted: true,
+          }),
+          // Burned transfer with missing source token ID.
+          createTransfer({
+            timestamp,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            srcAbstractTokenId: undefined,
+            dstAbstractTokenId: 'usdc',
+            duration: 5000,
+            srcValueUsd: undefined,
+            dstValueUsd: 12.5,
+            srcWasBurned: true,
+            dstWasMinted: false,
+          }),
+        ]
+
+        const result = getAggregatedTokens(transfers, {
+          calculateNetMinted: true,
+        })
+
+        const axsToken = result.find((t) => t.abstractTokenId === 'axs')
+        const usdcToken = result.find((t) => t.abstractTokenId === 'usdc')
+
+        expect(axsToken?.mintedValueUsd).toEqual(35.43)
+        expect(axsToken?.burnedValueUsd).toEqual(0)
+
+        expect(usdcToken?.burnedValueUsd).toEqual(12.5)
+        expect(usdcToken?.mintedValueUsd).toEqual(0)
       })
     })
   })

@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x677f5c2e6329b3aaef42e4e44f9666a76d2b75c4
+
+# Diff at Mon, 02 Mar 2026 11:29:24 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8b908d97fec97b337bc2c1fba3217619af1f515e block: 1772038465
+- current timestamp: 1772450897
+
+## Description
+
+Executed proposals https://www.tally.xyz/gov/zksync/proposal/8950122199701470735770347707974232219581467243459743675708682806836533533051?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746, https://www.tally.xyz/gov/zksync/proposal/52899273737246738438218414127099712652047337592218084212368843786372445167418?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746, https://www.tally.xyz/gov/zksync/proposal/11346651454708934944378630759545485178332596023788781976003544088664832214798?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746 that added 5 capped minters to ZK token. 
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.17:
++        "zksync:0xB98d007E603d5d05249cF1b704e55FDfD930978c"
+      values.accessControl.MINTER_ROLE.members.18:
++        "zksync:0xCDB07B2FAd916d8caddea74ac40901Ed43767A6C"
+      values.accessControl.MINTER_ROLE.members.19:
++        "zksync:0x773d5BB83b3AEa5A72D8b87e744e90f3b788C50b"
+      values.accessControl.MINTER_ROLE.members.20:
++        "zksync:0xc98b9FD0D62514E30c54857A58cc12c94495679D"
+      values.accessControl.MINTER_ROLE.members.21:
++        "zksync:0x724C33f00eE832c2A4216a6F6986d9C4029849d4"
+    }
+```
+
+Generated with discovered.json: 0x4f9e21a0a476eba6ffde6572aa2a08a9b6cb1b2b
+
+# Diff at Wed, 25 Feb 2026 16:55:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@402347c3c0dd537c0ffd73d6a66e4df81d45dc08 block: 1771583051
+- current timestamp: 1772038465
+
+## Description
+
+Scheduled proposals for execution: https://www.tally.xyz/gov/zksync/proposal/8950122199701470735770347707974232219581467243459743675708682806836533533051?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746, https://www.tally.xyz/gov/zksync/proposal/52899273737246738438218414127099712652047337592218084212368843786372445167418?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746, https://www.tally.xyz/gov/zksync/proposal/11346651454708934944378630759545485178332596023788781976003544088664832214798?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        12
++        15
+    }
+```
+
 Generated with discovered.json: 0x11e63b7ec0a1cd9c4fae6e9d2d5ea64321fae956
 
 # Diff at Fri, 20 Feb 2026 10:25:18 GMT:

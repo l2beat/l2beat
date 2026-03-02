@@ -100,6 +100,7 @@ export const polygonpos: ScalingProject = {
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'canonical',
   },
   config: {
     associatedTokens: ['POL', 'MATIC'],

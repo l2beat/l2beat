@@ -501,6 +501,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(100),
           ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -552,19 +553,21 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
-          'ethereum',
-          'arbitrum',
-        ])
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+        )
 
         expect(result).toEqualUnsorted([record1, record2, record3, record4])
       })
 
       it('returns empty array when no records exist', async () => {
-        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
-          'ethereum',
-          'arbitrum',
-        ])
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+        )
 
         expect(result).toEqual([])
       })
@@ -610,6 +613,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(100),
           ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -643,10 +647,11 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
-          'ethereum',
-          'arbitrum',
-        ])
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+        )
 
         expect(result).toEqualUnsorted([record1, record2])
       })
@@ -674,10 +679,11 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         })
         await repository.insertMany([crossChain, sameChain])
 
-        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
-          'ethereum',
-          'arbitrum',
-        ])
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+        )
 
         expect(result).toEqual([crossChain])
       })
@@ -707,6 +713,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(100),
+          ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
           undefined,
           { includeSameChainTransfers: true },
@@ -762,6 +769,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           UnixTime(100),
           'protocol1',
           ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -796,6 +804,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         const result = await repository.getByChainsIdAndTimestamp(
           UnixTime(100),
           'protocol1',
+          ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
@@ -832,6 +841,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           UnixTime(100),
           'protocol1',
           ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
           { includeSameChainTransfers: true },
         )
@@ -852,6 +862,8 @@ function record({
   totalDurationSum = 0,
   bridgeType = 'unknown',
   volume = 1000,
+  minTransferValueUsd,
+  maxTransferValueUsd,
   mintedValueUsd,
   burnedValueUsd,
 }: {
@@ -864,6 +876,8 @@ function record({
   totalDurationSum?: number
   bridgeType?: InteropBridgeType
   volume?: number
+  minTransferValueUsd?: number
+  maxTransferValueUsd?: number
   mintedValueUsd?: number
   burnedValueUsd?: number
 }): AggregatedInteropTokenRecord {
@@ -877,6 +891,8 @@ function record({
     transferCount,
     totalDurationSum,
     volume,
+    minTransferValueUsd,
+    maxTransferValueUsd,
     mintedValueUsd,
     burnedValueUsd,
   }

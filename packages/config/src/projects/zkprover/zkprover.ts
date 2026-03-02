@@ -83,6 +83,7 @@ export const zkprover: BaseProject = {
       {
         projectId: ProjectId('polygonzkevm'),
         sinceTimestamp: UnixTime(1679868000),
+        untilTimestamp: UnixTime(1764716400),
       },
       {
         projectId: ProjectId('silicon'),

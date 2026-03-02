@@ -110,7 +110,6 @@ export function EcosystemsActivityChart({
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
-        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
         interactiveLegend={{
           dataKeys,
@@ -118,7 +117,12 @@ export function EcosystemsActivityChart({
           disableOnboarding: true,
         }}
       >
-        <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+        <AreaChart
+          responsive
+          data={chartData}
+          className="h-44! min-h-44!"
+          margin={{ top: 20 }}
+        >
           <ChartLegend content={<ChartLegendContent />} />
           <ChartStrokeOverFillAreaComponents
             data={[

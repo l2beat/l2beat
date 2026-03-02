@@ -6,10 +6,6 @@ import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import { InteropTransferClassifier } from '../aggregation/InteropTransferClassifier'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
-import type {
-  InteropTransferStream,
-  SerializableInteropTransfer,
-} from '../stream/InteropTransferStream'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { renderAggregatesPage } from './AggregatesPage'
 import { renderAnomaliesPage } from './AnomaliesPage'
@@ -18,6 +14,7 @@ import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
+import { renderSupportChartsPage } from './SupportChartsPage'
 import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
 
@@ -27,9 +24,9 @@ export function createInteropRouter(
   processors: InteropBlockProcessor[],
   syncersManager: InteropSyncersManager,
   logger: Logger,
-  transferStream: InteropTransferStream,
 ) {
   const router = new Router()
+  let coveragePiesCache: string | undefined
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
@@ -125,6 +122,95 @@ export function createInteropRouter(
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })
+
+  const buildCoveragePiesPage = async () => {
+    const chartConfigs = [
+      {
+        id: 'layerzero-packet-oft-sent',
+        title: 'layerzero-v2.PacketOFTSent destination chains',
+        centerLabel: 'PacketOFTSent events',
+        type: 'layerzero-v2.PacketOFTSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'layerzero-packet-oft-delivered',
+        title: 'layerzero-v2.PacketOFTDelivered source chains',
+        centerLabel: 'PacketOFTDelivered events',
+        type: 'layerzero-v2.PacketOFTDelivered',
+        chainArg: '$srcChain' as const,
+      },
+      {
+        id: 'relay-token-sent',
+        title: 'relay.TokenSent destination chains',
+        centerLabel: 'relay.TokenSent events',
+        type: 'relay.TokenSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'relay-token-received',
+        title: 'relay.TokenReceived source chains',
+        centerLabel: 'relay.TokenReceived events',
+        type: 'relay.TokenReceived',
+        chainArg: '$srcChain' as const,
+      },
+      {
+        id: 'ccip-send-requested',
+        title: 'ccip.CCIPSendRequested destination chains',
+        centerLabel: 'CCIPSendRequested events',
+        type: 'ccip.CCIPSendRequested',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'ccip-execution-state-changed',
+        title: 'ccip.ExecutionStateChanged source chains',
+        centerLabel: 'ExecutionStateChanged events',
+        type: 'ccip.ExecutionStateChanged',
+        chainArg: '$srcChain' as const,
+      },
+    ]
+
+    const rows = await Promise.all(
+      chartConfigs.map((chart) =>
+        db.interopEvent.getSupportBreakdownByChainArg(
+          chart.type,
+          chart.chainArg,
+        ),
+      ),
+    )
+
+    return renderSupportChartsPage({
+      charts: chartConfigs.map((chart, i) => ({
+        id: chart.id,
+        title: chart.title,
+        centerLabel: chart.centerLabel,
+        rows: rows[i] ?? [],
+      })),
+    })
+  }
+
+  const isRefreshRequested = (value: unknown): boolean => {
+    if (Array.isArray(value)) {
+      return value.includes('1') || value.includes('true')
+    }
+    return value === '1' || value === 'true'
+  }
+
+  const renderCoveragePies = async (ctx: Router.RouterContext) => {
+    const refresh = isRefreshRequested(ctx.query.refresh)
+
+    if (refresh) {
+      coveragePiesCache = await buildCoveragePiesPage()
+      return ctx.redirect('/interop/coverage-pies')
+    }
+
+    if (coveragePiesCache === undefined) {
+      coveragePiesCache = await buildCoveragePiesPage()
+    }
+
+    ctx.body = coveragePiesCache
+  }
+
+  router.get('/interop/coverage-pies', renderCoveragePies)
 
   router.get('/interop/memory', (ctx) => {
     const memoryUsage = process.memoryUsage()
@@ -275,36 +361,6 @@ export function createInteropRouter(
       getExplorerUrl: config.dashboard.getExplorerUrl,
       status,
     })
-  })
-
-  router.get('/interop/transfers/stream', (ctx) => {
-    ctx.set('Content-Type', 'text/event-stream')
-    ctx.set('Cache-Control', 'no-cache')
-    ctx.set('Connection', 'keep-alive')
-    ctx.set('X-Accel-Buffering', 'no')
-    ctx.status = 200
-    ctx.compress = false
-    ctx.respond = false
-
-    ctx.res.write(':\n\n')
-
-    const write = (payload: SerializableInteropTransfer[]) => {
-      ctx.res.write(`data: ${JSON.stringify(payload)}\n\n`)
-    }
-
-    const unsubscribe = transferStream.subscribe(write, { replay: 20 })
-
-    const heartbeat = setInterval(() => {
-      ctx.res.write(':\n\n')
-    }, 15_000)
-
-    const close = () => {
-      clearInterval(heartbeat)
-      unsubscribe()
-    }
-
-    ctx.req.on('close', close)
-    ctx.req.on('end', close)
   })
 
   router.get('/interop/transfers/:type', async (ctx) => {

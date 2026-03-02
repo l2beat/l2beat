@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1770993167,
+  "timestamp": 1772198396,
   "configHash": "0xbbaa2e1b1eff42339e8e3910b0893c986677f882ef068e50241182eed41c6640",
   "entries": [
     {
@@ -100,7 +100,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 312784,
-          "prevBlockNum": 24446310
+          "prevBlockNum": 24547888
         },
         "paused": false,
         "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
@@ -147,7 +147,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640573",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640701",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -730,12 +730,12 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 25525600,
-        "latestOutputIndex": 37187,
+        "latestBlockNumber": 26129036,
+        "latestOutputIndex": 37537,
         "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 37187,
-        "nextBlockNumber": 25525601,
-        "nextOutputIndex": 37188,
+        "latestOutputProposedV3": 37537,
+        "nextBlockNumber": 26129037,
+        "nextOutputIndex": 37538,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
@@ -831,6 +831,24 @@
           "role": ".batcherHash"
         }
       ]
+    },
+    {
+      "name": "SP1MockVerifierWithHash",
+      "address": "eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6468d264f5226536d6876122920a8d3475edee370a5b860ed193b9798ac111e1"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1770134483,
+      "sinceBlock": 24377389,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "implementationNames": {
+        "eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739": "SP1MockVerifierWithHash"
+      }
     },
     {
       "name": "Zircuit Multisig 1",
@@ -960,7 +978,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 23,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1035,6 +1053,10 @@
           {
             "selector": "0xd4e8ecd2",
             "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xffffffff",
+            "verifier": "eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739"
           }
         ],
         "allVerifiers": [
@@ -1045,6 +1067,10 @@
           {
             "selector": "0xd4e8ecd2",
             "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xffffffff",
+            "verifier": "eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739"
           }
         ],
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
@@ -1112,21 +1138,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 94275379,
+        "basefee": 133333530,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
-        "blobBaseFee": 5600206,
+        "blobBaseFee": 7371304,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0xb17d928240b7e7ff923291df6f231f40826463791512b9b142dfb832700ef8b8",
+        "hash": "0x959905e83f448d6ef5555a5171b955a6699127e8e55f640f7189531bd249c913",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 24448477,
+        "number": 24548519,
         "operatorFeeConstant": 360000000000,
         "operatorFeeScalar": 4200000000,
-        "sequenceNumber": 2,
-        "timestamp": 1770993143,
+        "sequenceNumber": 5,
+        "timestamp": 1772198363,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -1738,6 +1764,10 @@
       "function unsafeBlockSigner() view returns (address addr_)",
       "function version() view returns (string)"
     ],
+    "eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739": [
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function verifyProof(bytes32, bytes, bytes proofBytes) pure"
+    ],
     "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38": [
       "constructor(address _singleton)"
     ],
@@ -1993,6 +2023,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24448479, "zircuit": 25528476 },
-  "permissionsConfigHash": "0x0d50621c7b881da4970c87fa7258bc9b943e87d5304afcf5183a0c1f45301d07"
+  "usedBlockNumbers": { "ethereum": 24548521, "zircuit": 26131090 },
+  "permissionsConfigHash": "0xe89730010d77ccd6b678d3897fa9abf678f723e91b6f997dbf149c7f47a2db22"
 }

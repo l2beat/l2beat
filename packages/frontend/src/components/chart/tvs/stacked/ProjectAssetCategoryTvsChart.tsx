@@ -82,18 +82,19 @@ export function ProjectAssetCategoryTvsChart({
   )
 
   return (
-    <AssetCategoryTvsChart
-      data={chartData}
-      milestones={milestones}
-      unit={unit}
-      isLoading={isLoading}
-      tickCount={4}
-      className="mt-4 mb-3"
-      syncedUntil={data?.syncedUntil}
-      dataKeys={dataKeys}
-      toggleDataKey={toggleDataKey}
-      project={project}
-      excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
-    />
+    <div className="mt-4 mb-3">
+      <AssetCategoryTvsChart
+        data={chartData}
+        milestones={milestones}
+        unit={unit}
+        isLoading={isLoading}
+        tickCount={4}
+        syncedUntil={data?.syncedUntil}
+        dataKeys={dataKeys}
+        toggleDataKey={toggleDataKey}
+        project={project}
+        excludeRwaRestrictedTokens={excludeRwaRestrictedTokens}
+      />
+    </div>
   )
 }

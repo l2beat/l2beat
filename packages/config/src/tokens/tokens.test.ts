@@ -1,7 +1,6 @@
 import { assert, ChainConverter } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { readFileSync } from 'fs'
-import { bridges } from '../processing/bridges'
 import { chains } from '../processing/chains'
 import { generateTokenNames, getTokenNamesFilePath } from './generateTokenNames'
 import {
@@ -48,21 +47,22 @@ describe('tokens', () => {
         .map((token) => token.symbol)
       expect(externalTokens).toHaveLength(0)
     })
-    it('every bridge slug in bridgedUsing property is valid', () => {
-      const tokenSlugs = tokenList
-        .filter(
-          (token) =>
-            token.source === 'external' &&
-            token.bridgedUsing?.bridges.some((b) => b.slug),
-        )
-        .flatMap((token) => token.bridgedUsing?.bridges.map((b) => b.slug))
-      const bridgesSlugs = bridges.map((bridge) => bridge.display.slug)
-      const invalidSlugs = tokenSlugs.filter(
-        (slug) => !bridgesSlugs.includes(slug!),
-      )
+    // TODO: Add back when we have interop project pages
+    // it('every bridge slug in bridgedUsing property is valid', () => {
+    //   const tokenSlugs = tokenList
+    //     .filter(
+    //       (token) =>
+    //         token.source === 'external' &&
+    //         token.bridgedUsing?.bridges.some((b) => b.slug),
+    //     )
+    //     .flatMap((token) => token.bridgedUsing?.bridges.map((b) => b.slug))
+    //   const bridgesSlugs = bridges.map((bridge) => bridge.display.slug)
+    //   const invalidSlugs = tokenSlugs.filter(
+    //     (slug) => !bridgesSlugs.includes(slug!),
+    //   )
 
-      expect(invalidSlugs).toHaveLength(0)
-    })
+    //   expect(invalidSlugs).toHaveLength(0)
+    // })
   })
 
   describe('tokens sources – no duplicates between generated.json and discovery', () => {

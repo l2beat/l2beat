@@ -1,22 +1,34 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
-import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
 import type { AverageDuration } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from '../table/AvgDurationCell'
+import { type TokenFlowDisplayData, TokenFlowsCell } from './TokenFlowsCell'
 
 export type TopItem = {
   id?: string
   displayName: string
+  issuer?: string | null
   iconUrl: string
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number | null
+  minTransferValueUsd?: number
+  maxTransferValueUsd?: number
   netMintedValue?: number
+  flows?: TokenFlowDisplayData[]
 }
 export type TopItemType = 'tokens' | 'chains'
 
@@ -40,8 +52,7 @@ export const getTopItemsColumns = (
         />
       ),
       meta: {
-        headClassName: 'w-[32px] pr-0!',
-        cellClassName: 'pr-0!',
+        headClassName: 'w-[32px]',
       },
       size: 28,
       enableHiding: false,
@@ -49,10 +60,22 @@ export const getTopItemsColumns = (
     columnHelper.accessor('displayName', {
       header: itemTypeToHeader(itemType),
       cell: (ctx) => (
-        <PrimaryValueCell className="font-bold leading-none!">
-          {ctx.row.original.displayName}
-        </PrimaryValueCell>
+        <TwoRowCell>
+          <TwoRowCell.First className="font-bold leading-none!">
+            {ctx.row.original.displayName}
+          </TwoRowCell.First>
+          {ctx.row.original.issuer && (
+            <TwoRowCell.Second>
+              Issued by{' '}
+              <span className="capitalize">{ctx.row.original.issuer}</span>
+            </TwoRowCell.Second>
+          )}
+        </TwoRowCell>
       ),
+      meta: {
+        headClassName: 'pl-0!',
+        cellClassName: 'pl-0!',
+      },
     }),
     columnHelper.accessor('volume', {
       header: 'Last 24h\nVolume',
@@ -108,13 +131,74 @@ export const getTopItemsColumns = (
       header: 'Last 24h avg.\ntransfer value',
       cell: (ctx) => {
         if (ctx.row.original.avgValue === null) return EM_DASH
+
+        const averageValue = formatCurrency(ctx.row.original.avgValue, 'usd')
+        const minValue =
+          ctx.row.original.minTransferValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.minTransferValueUsd, 'usd')
+            : EM_DASH
+        const maxValue =
+          ctx.row.original.maxTransferValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.maxTransferValueUsd, 'usd')
+            : EM_DASH
+
         return (
-          <span className="font-medium text-label-value-15">
-            {formatCurrency(ctx.row.original.avgValue, 'usd')}
-          </span>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="font-medium text-label-value-15 text-primary">
+                {averageValue}
+              </span>
+            </TooltipTrigger>
+            <TooltipPortal>
+              <TooltipContent className="z-[1000] min-w-[200px]">
+                <div className="font-medium text-label-value-14 text-secondary">
+                  Transfer value
+                </div>
+                <HorizontalSeparator className="my-1" />
+                <div className="flex items-center justify-between gap-x-6">
+                  <span className="font-medium text-label-value-14">
+                    Minimum
+                  </span>
+                  <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                    {minValue}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-x-6">
+                  <span className="font-medium text-label-value-14">
+                    Average
+                  </span>
+                  <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                    {averageValue}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-x-6">
+                  <span className="font-medium text-label-value-14">
+                    Maximum
+                  </span>
+                  <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                    {maxValue}
+                  </span>
+                </div>
+              </TooltipContent>
+            </TooltipPortal>
+          </Tooltip>
         )
       },
     }),
+    itemType === 'tokens' &&
+      columnHelper.accessor(
+        (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
+        {
+          id: 'flows',
+          header: 'Flows',
+          cell: (ctx) => {
+            const flows = ctx.row.original.flows
+            if (!flows || flows.length === 0) return EM_DASH
+
+            return <TokenFlowsCell flows={flows} />
+          },
+        },
+      ),
     showNetMintedValueColumn &&
       columnHelper.accessor('netMintedValue', {
         header: 'Last 24h net\nminted value',

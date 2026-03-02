@@ -12,13 +12,11 @@ import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCl
 import { externalLinks } from '~/consts/externalLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
-import { useDevice } from '~/hooks/useDevice'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
-import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
@@ -37,7 +35,6 @@ export function SideNavLayout({
   maxWidth = 'default',
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
-  const isMobile = useDevice()
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
@@ -98,7 +95,7 @@ export function SideNavLayout({
             },
           ],
         },
-        env.CLIENT_SIDE_INTEROP_ENABLED && {
+        {
           type: 'multiple',
           title: 'Interop',
           match: 'interop',
@@ -108,51 +105,27 @@ export function SideNavLayout({
           links: [
             {
               title: 'Summary',
-              href: buildInteropUrl(
+              href:
+                selectedChainsContext?.buildUrl('/interop/summary') ??
                 '/interop/summary',
-                selectedChainsContext?.selectedChains,
-              ),
             },
             {
               title: 'Non-minting protocols',
-              href: buildInteropUrl(
+              href:
+                selectedChainsContext?.buildUrl('/interop/non-minting') ??
                 '/interop/non-minting',
-                selectedChainsContext?.selectedChains,
-              ),
             },
             {
               title: 'Lock & Mint protocols',
-              href: buildInteropUrl(
+              href:
+                selectedChainsContext?.buildUrl('/interop/lock-and-mint') ??
                 '/interop/lock-and-mint',
-                selectedChainsContext?.selectedChains,
-              ),
             },
             {
               title: 'Burn & Mint protocols',
-              href: buildInteropUrl(
+              href:
+                selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
                 '/interop/burn-and-mint',
-                selectedChainsContext?.selectedChains,
-              ),
-            },
-          ],
-        },
-        !env.CLIENT_SIDE_INTEROP_ENABLED && {
-          type: 'multiple',
-          title: 'Bridges',
-          match: 'bridges',
-          icon: (
-            <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-          ),
-          links: [
-            {
-              title: 'Summary',
-              href: '/bridges/summary',
-            },
-          ],
-          secondaryLinks: [
-            {
-              title: 'Archived',
-              href: '/bridges/archived',
             },
           ],
         },
@@ -234,7 +207,7 @@ export function SideNavLayout({
             })),
         },
       ]),
-    [selectedChainsContext?.selectedChains],
+    [selectedChainsContext],
   )
 
   return (
@@ -250,7 +223,6 @@ export function SideNavLayout({
           logoLink={LOGO_LINK}
           groups={groups}
           sideLinks={sideLinks}
-          whatsNew={whatsNew}
         />
         <div
           className={cn(
@@ -272,9 +244,7 @@ export function SideNavLayout({
             )}
           >
             {children}
-            {whatsNew && isMobile && (
-              <WhatsNewWidgetCloseable whatsNew={whatsNew} />
-            )}
+            {whatsNew && <WhatsNewWidgetCloseable whatsNew={whatsNew} />}
           </div>
           <Footer
             className="md:px-12 md:pt-8 lg:pr-9 lg:pl-6"
@@ -294,6 +264,10 @@ const sideLinks = compact([
   {
     title: 'Publications',
     href: '/publications',
+  },
+  {
+    title: 'Changelog',
+    href: '/changelog',
   },
   {
     title: 'Forum',
