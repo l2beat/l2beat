@@ -461,7 +461,10 @@ function TokenAmount({
   symbol: string | undefined
 }) {
   if (amount === undefined) return EM_DASH
-  const formattedAmount = formatNumberWithCommas(amount, 4)
+  const formattedAmount = formatNumberWithCommas(amount, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 5,
+  })
   return (
     <span className="font-medium text-label-value-14 text-primary">
       {symbol ? `${formattedAmount} ${symbol}` : formattedAmount}

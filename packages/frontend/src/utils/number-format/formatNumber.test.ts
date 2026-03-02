@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { formatNumber } from './formatNumber'
+import { formatNumber, formatNumberWithCommas } from './formatNumber'
 
 describe(formatNumber.name, () => {
   describe('default decimals', () => {
@@ -114,5 +114,37 @@ describe(formatNumber.name, () => {
         })
       }
     })
+  })
+})
+
+describe(formatNumberWithCommas.name, () => {
+  it('keeps fixed precision when minimum and maximum match', () => {
+    expect(
+      formatNumberWithCommas(1234.5, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+    ).toEqual('1,234.50')
+  })
+
+  it('supports variable decimals with maximumFractionDigits', () => {
+    expect(formatNumberWithCommas(1234.567891, { maximumFractionDigits: 5 })).toEqual(
+      '1,234.56789',
+    )
+    expect(formatNumberWithCommas(1234.5, { maximumFractionDigits: 5 })).toEqual(
+      '1,234.5',
+    )
+    expect(formatNumberWithCommas(1234, { maximumFractionDigits: 5 })).toEqual(
+      '1,234',
+    )
+  })
+
+  it('throws when minimumFractionDigits is greater than maximumFractionDigits', () => {
+    expect(() =>
+      formatNumberWithCommas(1.23, {
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 2,
+      }),
+    ).toThrow('minimumFractionDigits cannot be greater than maximumFractionDigits')
   })
 })
