@@ -1336,9 +1336,26 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v32/arbos',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v32\` . Commit hash should be  \`ce7d035d21a74c080c31eeb35f6e8c1089332f85\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. To fix build errors, add this to \`contracts/foundry.toml\`: 
+\`\`\`
+[profile.yul.lint]
+lint_on_build = false
+\`\`\`
+Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindgen --version "=0.26.0"\` and line 46 with \`RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.75.0 --target x86_64-unknown-linux-gnu --target wasm32-unknown-unknown --target wasm32-wasi\`.
+
+5. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+6. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
   },
   '0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4': {
+    // only used by archived projects
     title: 'ArbOS v20 wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
@@ -1347,12 +1364,14 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
     verificationStatus: 'notVerified',
   },
   '0x58a9512cf4096461f866446387e845c6573856ef603bba4e24cb1d89630a675c': {
+    // only used by archived projects
     title: 'ArbOS Kinto wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
     verificationStatus: 'notVerified',
   },
   '0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69': {
+    // only used by archived projects
     title: 'ArbOS v31 wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
@@ -1387,13 +1406,48 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
     title: 'Celestia Nitro 3.2.1 wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
-    verificationStatus: 'notVerified',
+    programUrl: 'https://github.com/celestiaorg/nitro/tree/v3.2.1-rc.1/arbos',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [celestiaorg/nitro](https://github.com/celestiaorg/nitro/tree/v3.2.1-rc.1) repo:  \`git checkout v3.2.1-rc.1\` . Commit hash should be  \`9e6fa83f56d3d4d46226c5f0687c949476e08917\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. To fix build errors, add this to \`contracts/foundry.toml\`: 
+\`\`\`
+[profile.yul.lint]
+lint_on_build = false
+\`\`\`
+Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindgen --version "=0.26.0"\` and line 46 with \`RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.75.0 --target x86_64-unknown-linux-gnu --target wasm32-unknown-unknown --target wasm32-wasi\`.
+
+5. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+6. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
   },
   '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3': {
-    title: 'Celestia Nitro 3.2.2 wasmModuleRoot',
+    title: 'Celestia Nitro 3.3.2 wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/celestiaorg/nitro/tree/celestia-v3.3.2/arbos',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [celestiaorg/nitro](https://github.com/celestiaorg/nitro/tree/celestia-v3.3.2) repo:  \`git checkout celestia-v3.3.2\` . Commit hash should be  \`7c9d688a256cc60f2b8db9dbe9ac40511d0d1f2e\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. To fix build errors, add this to \`contracts/foundry.toml\`: 
+\`\`\`
+[profile.yul.lint]
+lint_on_build = false
+\`\`\`
+Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindgen --version "=0.26.0"\` and line 46 with \`RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.75.0 --target x86_64-unknown-linux-gnu --target wasm32-unknown-unknown --target wasm32-wasi\`.
+
+5. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+6. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
   },
   '0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa': {
     title: 'OP Kona absolute prestate v1.2.7 (cannon64)',

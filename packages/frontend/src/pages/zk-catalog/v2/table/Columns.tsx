@@ -129,7 +129,7 @@ export const zkCatalogColumns = [
   }),
   columnHelper.display({
     id: 'zkevm-tech-stack',
-    header: 'zkEVM tech stack',
+    header: 'Main prover tech stack',
     cell: (ctx) => {
       return (
         <TechStackCell
