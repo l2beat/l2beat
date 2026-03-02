@@ -1,5 +1,5 @@
 /*
-Custom gateway plugin — handles ERC20 deposits/withdrawals through
+Custom gateway plugin. Handles ERC20 deposits/withdrawals through
 project-specific gateways (e.g. DAI, LPT, GRT, wstETH on Arbitrum).
 Each gateway is identified by a `key` used in the app name for matching.
 */
@@ -98,7 +98,6 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
   readonly name = 'orbitstack-customgateway'
 
   capture(input: LogToCapture) {
-    // Check if this chain is a parent chain for any network
     const isParentChain = ORBITSTACK_NETWORKS.some(
       (n) => n.parentChain === input.chain,
     )
@@ -180,7 +179,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
       }
     }
 
-    // Also check if this chain is a child chain (a chain can be both parent and child, e.g. Arbitrum)
+    // A chain can be both parent and child (e.g. Arbitrum is parent for ApeChain)
     const childNetwork = ORBITSTACK_NETWORKS.find(
       (n) => n.chain === input.chain,
     )

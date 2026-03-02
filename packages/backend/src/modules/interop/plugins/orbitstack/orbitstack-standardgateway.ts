@@ -1,5 +1,5 @@
 /*
-Standard gateway plugin — handles ERC20 deposits/withdrawals through
+Standard gateway plugin. Handles ERC20 deposits/withdrawals through
 the default L1/L2 standard gateway pair (lock on L1, mint on L2).
 */
 
@@ -34,7 +34,6 @@ const addr = ChainSpecificAddress.address
 
 // --- L1→L2 ERC20 deposits ---
 
-// L1 initiation of L1->L2 ERC20 deposit
 const DepositInitiatedMessageDelivered = createInteropEventType<{
   chain: string
   messageNum: string
@@ -46,7 +45,6 @@ const parseDepositInitiated = createEventParser(
   'event DepositInitiated(address _l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)',
 )
 
-// L2 finalization of L1->L2 ERC20 deposit (Type 0x68 transaction)
 const DepositFinalized = createInteropEventType<{
   chain: string
   l1Token: Address32
@@ -64,7 +62,6 @@ const parseTransfer = createEventParser(
 
 // --- L2→L1 ERC20 withdrawals ---
 
-// L2 initiation of L2->L1 ERC20 withdrawal
 const WithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
@@ -79,7 +76,6 @@ const parseWithdrawalInitiated = createEventParser(
   'event WithdrawalInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _l2ToL1Id, uint256 _exitNum, uint256 _amount)',
 )
 
-// L1 finalization of L2->L1 ERC20 withdrawal
 const WithdrawalFinalizedOutBoxTransactionExecuted = createInteropEventType<{
   chain: string
   position: number
@@ -95,12 +91,10 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
   readonly name = 'orbitstack-standardgateway'
 
   capture(input: LogToCapture) {
-    // Check if this chain is a parent chain for any network
     const isParentChain = ORBITSTACK_NETWORKS.some(
       (n) => n.parentChain === input.chain,
     )
     if (isParentChain) {
-      // L1 -> L2 ERC20 deposit initiated
       const logAddress = EthereumAddress(input.log.address)
       const network = ORBITSTACK_NETWORKS.find(
         (n) =>
@@ -114,10 +108,9 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           addr(l1StandardGateway),
         ])
         if (depositInitiated) {
-          // Find MessageDelivered in the same transaction
+          // sequenceNumber in DepositInitiated == messageIndex in MessageDelivered
           const messageDeliveredLog = input.txLogs.find((log) => {
             const parsed = parseMessageDelivered(log, [addr(network.bridge)])
-            // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
             return (
               parsed !== undefined &&
               parsed.messageIndex === depositInitiated._sequenceNumber
@@ -142,12 +135,10 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
           }
         }
 
-        // L1 finalization of L2->L1 ERC20 withdrawal
         const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
           addr(l1StandardGateway),
         ])
         if (withdrawalFinalized) {
-          // Find OutBoxTransactionExecuted in the same transaction
           const outBoxTxLog = input.txLogs.find((log) => {
             const parsed = parseOutBoxTransactionExecuted(log, [
               addr(network.outbox),
@@ -174,13 +165,12 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       }
     }
 
-    // Also check if this chain is a child chain (a chain can be both parent and child, e.g. Arbitrum)
+    // A chain can be both parent and child (e.g. Arbitrum is parent for ApeChain)
     const childNetwork = ORBITSTACK_NETWORKS.find(
       (n) => n.chain === input.chain,
     )
     if (!childNetwork) return
 
-    // Check if this is from the L2 standard gateway
     if (
       !childNetwork.l2StandardGateway ||
       EthereumAddress(input.log.address) !==
@@ -188,13 +178,11 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
     )
       return
 
-    // L2 finalization of L1->L2 ERC20 deposit (Type 0x68 transaction)
     const depositFinalized = parseDepositFinalized(input.log, null)
     if (depositFinalized) {
-      // Find the Transfer event (minting) in the same transaction to get L2 token address
+      // Find mint Transfer to get L2 token address
       const transferLog = input.txLogs.find((log) => {
         const parsed = parseTransfer(log, null)
-        // Look for mint (from == 0x0) to the recipient
         return (
           parsed !== undefined &&
           parsed.from === '0x0000000000000000000000000000000000000000' &&
@@ -217,13 +205,11 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       }
     }
 
-    // L2 -> L1 ERC20 withdrawal initiated
     const withdrawalInitiated = parseWithdrawalInitiated(input.log, null)
     if (withdrawalInitiated) {
-      // Find the L2ToL1Tx event in the same transaction to get position
+      // _l2ToL1Id in WithdrawalInitiated == position in L2ToL1Tx
       const l2ToL1TxLog = input.txLogs.find((log) => {
         const parsed = parseL2ToL1Tx(log, [addr(childNetwork.arbsys)])
-        // The _l2ToL1Id in WithdrawalInitiated equals the position in L2ToL1Tx
         return (
           parsed !== undefined &&
           Number(parsed.position) === Number(withdrawalInitiated._l2ToL1Id)
@@ -233,10 +219,9 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       if (l2ToL1TxLog) {
         const l2ToL1Tx = parseL2ToL1Tx(l2ToL1TxLog, [addr(childNetwork.arbsys)])
         if (l2ToL1Tx) {
-          // Find the Transfer event (burning) to get L2 token address
+          // Find burn Transfer to get L2 token address
           const transferLog = input.txLogs.find((log) => {
             const parsed = parseTransfer(log, null)
-            // Look for burn (to == 0x0) from the sender
             return (
               parsed !== undefined &&
               parsed.to === '0x0000000000000000000000000000000000000000' &&
@@ -264,7 +249,6 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
   matchTypes = [DepositFinalized, WithdrawalFinalizedOutBoxTransactionExecuted]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    // Match L2->L1 ERC20 withdrawals
     if (WithdrawalFinalizedOutBoxTransactionExecuted.checkType(event)) {
       const withdrawalInitiated = db.find(WithdrawalInitiatedL2ToL1Tx, {
         position: event.args.position,
@@ -303,11 +287,8 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       ]
     }
 
-    // Match L1->L2 ERC20 deposits
     if (DepositFinalized.checkType(event)) {
-      // Find RedeemScheduled that references this transaction via retryTxHash
-      // RedeemScheduled is in Type 0x69 tx, DepositFinalized is in Type 0x68 tx
-      // RedeemScheduled.retryTxHash points to DepositFinalized's txHash
+      // RedeemScheduled (Type 0x69 tx) references DepositFinalized (Type 0x68 tx) via retryTxHash
       const redeemScheduled = db.find(RedeemScheduled, {
         retryTxHash: event.ctx.txHash,
         chain: event.ctx.chain,
@@ -320,7 +301,6 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       })
       if (!messageDelivered) return
 
-      // Find the L1 DepositInitiated event with token details
       const depositInitiated = db.find(DepositInitiatedMessageDelivered, {
         messageNum: redeemScheduled.args.messageNum,
         chain: event.ctx.chain,

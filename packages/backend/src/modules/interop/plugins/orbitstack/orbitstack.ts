@@ -1,5 +1,5 @@
 /*
-Orbit Stack core plugin — handles native bridge messaging and ETH transfers.
+Orbit Stack core plugin. Handles native bridge messaging and ETH transfers.
 
 Tracks two flows:
 - L2→L1 withdrawals: L2ToL1Tx (child) → OutBoxTransactionExecuted (parent)
@@ -93,7 +93,7 @@ function getIsEthOnlyFromInbox(
     const parsed = parseInboxMessageDelivered(log, [addr(inboxAddress)])
     if (parsed?.messageNum !== messageDelivered.messageIndex) continue
 
-    // Found it - extract data.length from packed retryable ticket params
+    // Extract data.length from packed retryable ticket params
     const packedData = parsed.data
     assert(
       typeof packedData === 'string' && packedData.startsWith('0x'),
@@ -298,7 +298,7 @@ export class OrbitStackPlugin implements InteropPlugin {
           addr(networkForBridge.bridge),
         ])
         if (messageDelivered) {
-          // Filter out SequencerInbox batch submissions - these are batch metadata, not user messages
+          // SequencerInbox batch submissions are batch metadata, not user messages
           if (
             EthereumAddress(messageDelivered.inbox) ===
             addr(networkForBridge.sequencerInbox)
@@ -306,7 +306,6 @@ export class OrbitStackPlugin implements InteropPlugin {
             return
           }
 
-          // Check if this is an ETH-only deposit by parsing InboxMessageDelivered event
           const isEthOnly = getIsEthOnlyFromInbox(
             input.txLogs,
             networkForBridge.inbox,
@@ -325,12 +324,11 @@ export class OrbitStackPlugin implements InteropPlugin {
       }
     }
 
-    // Also check if this chain is a child chain (a chain can be both parent and child, e.g. Arbitrum)
+    // A chain can be both parent and child (e.g. Arbitrum is parent for ApeChain)
     const childNetwork = ORBITSTACK_NETWORKS.find(
       (n) => n.chain === input.chain,
     )
     if (childNetwork) {
-      // L2 -> L1 (Withdrawal initiation on L2)
       const l2ToL1Tx = parseL2ToL1Tx(input.log, [addr(childNetwork.arbsys)])
       if (l2ToL1Tx) {
         const hasEth = l2ToL1Tx.callvalue > 0n
@@ -345,7 +343,6 @@ export class OrbitStackPlugin implements InteropPlugin {
         ]
       }
 
-      // L1 -> L2 (Message processing on L2)
       const redeemScheduled = parseRedeemScheduled(input.log, [
         addr(childNetwork.arbRetryableTx),
       ])
@@ -378,7 +375,6 @@ export class OrbitStackPlugin implements InteropPlugin {
 
   matchTypes = [OutBoxTransactionExecuted, RedeemScheduled]
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    // L2 -> L1 (Withdrawal) matching
     if (OutBoxTransactionExecuted.checkType(event)) {
       const l2ToL1Tx = db.find(L2ToL1Tx, {
         chain: event.args.chain,
@@ -401,7 +397,6 @@ export class OrbitStackPlugin implements InteropPlugin {
         }),
       ]
 
-      // If native token was sent, create a Transfer
       if (l2ToL1Tx.args.amount) {
         results.push(
           Result.Transfer('orbitstack.L2ToL1Transfer', {
@@ -420,7 +415,6 @@ export class OrbitStackPlugin implements InteropPlugin {
       return results
     }
 
-    // L1 -> L2 message matching
     if (RedeemScheduled.checkType(event)) {
       const messageDelivered = db.find(MessageDelivered, {
         chain: event.args.chain,
@@ -443,7 +437,6 @@ export class OrbitStackPlugin implements InteropPlugin {
         }),
       ]
 
-      // If native token was sent, always create a Transfer (regardless of calldata)
       if (event.args.ethAmount && event.args.ethAmount > 0n) {
         results.push(
           Result.Transfer('orbitstack.L1ToL2Transfer', {
