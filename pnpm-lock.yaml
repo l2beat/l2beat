@@ -72,6 +72,9 @@ importers:
       '@l2beat/database':
         specifier: workspace:*
         version: link:../database
+      '@l2beat/defiscan-endpoints':
+        specifier: workspace:*
+        version: link:../defiscan-endpoints
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery

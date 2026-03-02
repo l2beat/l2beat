@@ -3,9 +3,10 @@ import { HttpClient } from '@l2beat/shared'
 import cors from 'cors'
 import { config as dotenv } from 'dotenv'
 import express, { type Request, type Response } from 'express'
+import type { Server } from 'http'
 import { DebankClient } from './clients/DebankClient'
 import { MorphoRpcClient } from './clients/MorphoRpcClient'
-import { getConfig } from './config'
+import { type DefiscanEndpointsConfig, getConfig } from './config'
 import { balancesRouter } from './routes/balances'
 import { healthRouter } from './routes/health'
 import { positionsRouter } from './routes/positions'
@@ -21,18 +22,20 @@ import type {
 } from './types/api'
 import { Cache } from './utils/cache'
 
-dotenv()
+export interface DefiscanServer {
+  app: express.Express
+  start: () => Promise<Server>
+  stop: () => Promise<void>
+}
 
-async function main() {
-  const config = getConfig()
-  const env = getEnv()
-
-  const logger = new Logger({
-    level: config.logLevel as 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'CRITICAL',
-  })
-
-  logger.info('Starting DeFiScan Endpoints Service', { port: config.port })
-
+/**
+ * Creates a defiscan-endpoints Express server without starting it.
+ * Can be used in-process by the monitor or standalone via main().
+ */
+export function createDefiscanServer(
+  config: DefiscanEndpointsConfig,
+  logger: Logger,
+): DefiscanServer {
   // Initialize HTTP client
   const httpClient = new HttpClient()
 
@@ -132,31 +135,74 @@ async function main() {
     })
   })
 
-  // Start server
-  const server = app.listen(config.port, () => {
-    logger.info(`DeFiScan Endpoints listening on port ${config.port}`)
-  })
+  let server: Server | undefined
 
-  // Graceful shutdown
-  function shutdown(signal: NodeJS.Signals) {
-    logger.info(`Received ${signal}, shutting down gracefully...`)
-    server.close(() => {
-      logger.info('Server closed')
-      process.exit(0)
-    })
-
-    // Force close after 10 seconds
-    setTimeout(() => {
-      logger.error('Forcing shutdown after timeout')
-      process.exit(1)
-    }, 10_000)
+  return {
+    app,
+    start: () =>
+      new Promise<Server>((resolve) => {
+        server = app.listen(config.port, () => {
+          logger.info(
+            `DeFiScan Endpoints listening on port ${config.port}`,
+          )
+          resolve(server!)
+        })
+      }),
+    stop: () =>
+      new Promise<void>((resolve, reject) => {
+        if (!server) {
+          resolve()
+          return
+        }
+        server.close((err) => {
+          if (err) {
+            reject(err)
+          } else {
+            logger.info('DeFiScan Endpoints server closed')
+            resolve()
+          }
+        })
+      }),
   }
-
-  process.on('SIGINT', () => shutdown('SIGINT'))
-  process.on('SIGTERM', () => shutdown('SIGTERM'))
 }
 
-main().catch((error) => {
-  console.error('Fatal error:', error)
-  process.exit(1)
-})
+// Standalone entry point — only runs when this file is executed directly
+if (require.main === module) {
+  dotenv()
+
+  async function main() {
+    const config = getConfig()
+
+    const logger = new Logger({
+      level: config.logLevel as 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'CRITICAL',
+    })
+
+    logger.info('Starting DeFiScan Endpoints Service', { port: config.port })
+
+    const { start } = createDefiscanServer(config, logger)
+    const server = await start()
+
+    // Graceful shutdown
+    function shutdown(signal: NodeJS.Signals) {
+      logger.info(`Received ${signal}, shutting down gracefully...`)
+      server.close(() => {
+        logger.info('Server closed')
+        process.exit(0)
+      })
+
+      // Force close after 10 seconds
+      setTimeout(() => {
+        logger.error('Forcing shutdown after timeout')
+        process.exit(1)
+      }, 10_000)
+    }
+
+    process.on('SIGINT', () => shutdown('SIGINT'))
+    process.on('SIGTERM', () => shutdown('SIGTERM'))
+  }
+
+  main().catch((error) => {
+    console.error('Fatal error:', error)
+    process.exit(1)
+  })
+}

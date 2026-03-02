@@ -508,6 +508,65 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - `funds`: Per-fund-holding contract name + description of what tokens it holds
 - `sections.codeAndAudits`: Contract listing (dataTable block) + audits placeholder
 
+### Continuous Monitoring Service ✅
+
+**Automated change detection, funds refresh, and review compilation**: Runs daily at 8:00 CET via GitHub Actions cron.
+
+- **Entry Point**: `packages/backend/src/defidisco-monitor.ts` — standalone process (not the full L2Beat backend)
+- **Orchestrator**: `packages/backend/src/modules/defi-update-monitor/defidisco/DefidiscoMonitorApplication.ts`
+- **Config**: `packages/backend/src/modules/defi-update-monitor/defidisco/monitorConfig.ts` — standalone config from env vars (does NOT use full `makeConfig()`)
+- **Documentation**: `packages/backend/src/modules/defi-update-monitor/defidisco/README.md`
+- **Scheduling**: GitHub Actions cron (`.github/workflows/monitor.yml`) — daily at 7:00 UTC / 8:00 CET + manual trigger
+- **Dockerfile**: `Dockerfile.monitor` — multi-stage build, run in GH Actions with Docker layer caching
+- **Database**: Neon free tier PostgreSQL (temporary)
+- **Run Mode**: `RUN_ONCE=true` env var → `app.runOnce()` — single cycle then clean exit
+
+**Monitoring Loop** (for each project in `defidisco-config.json`):
+1. **Discovery**: `runner.run()` — contract analysis via Etherscan V2 API
+2. **Diff**: `diffDiscovery(sanitize(prev), sanitize(curr))` — detect changes
+3. **Notify**: Discord message if changes detected (via `UpdateNotifier`)
+4. **Store**: Upsert discovery snapshot to PostgreSQL
+5. **Funds Refresh**: `fetchAllFundsForProject()` via in-process defiscan-endpoints
+6. **Compile**: `ReviewCompiler.compile()` — writes `compiled-review.json`
+7. **Cycle Summary**: Discord message after all projects (project count, duration, change count)
+
+**Key Files**:
+
+| File | Purpose |
+|------|---------|
+| `defidisco-monitor.ts` | Process entry point |
+| `monitorConfig.ts` | Standalone config from env vars |
+| `DefidiscoMonitorApplication.ts` | Orchestrator — wires Clock, DiscoveryRunner, UpdateNotifier, FundsRefresher, ReviewCompiler |
+| `FundsRefresher.ts` | Wraps `fetchAllFundsForProject` from l2b |
+| `ReviewCompiler.ts` | Reads data files, computes V2 score, resolves templates, writes compiled JSON |
+
+**Pre-Compilation Guards**: Before compiling, checks for required data files. If missing, skips silently (log only, no Discord noise):
+- No `review-config.json` → skipped
+- No `call-graph-data.json` → skipped
+- Discovery + diff + funds refresh still run regardless
+
+**Compiled Review** (`compiled-review.json`):
+- Self-contained JSON per project — exact data a frontend needs to render a review page
+- Joins V2 scoring data (contracts, functions, admins, dependencies, capital analysis) with descriptions from `review-config.json`
+- Template variables (`{{variableName}}`) resolved at compile time via `dataKeys` map
+- See `ReviewCompiler.ts` for TypeScript interfaces: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
+
+**Adding/Removing Projects**: Edit `packages/config/src/defidisco-config.json` and redeploy. The monitor reads the explicit list, not the `config.jsonc` `defidisco.scanPermissions` flag.
+
+**What It Does NOT Do** (researcher actions):
+- Re-run call graph analysis (Slither)
+- Re-run permission detection (AI or manual)
+- Modify permission overrides, function scores, or review descriptions
+- Push compiled reviews to D1 (deferred to future task)
+
+**Database**: Currently using **Neon free tier** PostgreSQL (temporary). The database stores discovery cache, update monitor snapshots, and diff history. No user credentials or sensitive data. See README.md for security considerations and migration recommendations.
+
+**Environment Variables**: See `README.md` for full table. Key vars: `DATABASE_URL`, `DISCORD_TOKEN`, `DISCORD_CHANNEL_ID`, `ETHEREUM_RPC_URL_FOR_DISCOVERY`, `ETHERSCAN_API_KEY`, `DEBANK_API_KEY`.
+
+**Import Paths**: The monitor runs compiled JS, so imports use build output paths (not TypeScript source paths):
+- `@l2beat/defiscan-endpoints/build/...` (not `src/`)
+- `@l2beat/l2b/dist/...` (not `src/`)
+
 ---
 
 ## Development Guidelines
@@ -588,9 +647,16 @@ packages/
 │   ├── generatePermissionsReport.ts
 │   ├── enhancedTraversal.ts          # Backward BFS governance chains
 │   └── functionAnalysis.ts           # Forward BFS impact & dependencies
+├── backend/src/modules/defi-update-monitor/defidisco/
+│   ├── DefidiscoMonitorApplication.ts  # Monitor orchestrator
+│   ├── monitorConfig.ts                # Standalone config
+│   ├── FundsRefresher.ts               # Funds refresh wrapper
+│   ├── ReviewCompiler.ts               # Compiled review builder
+│   └── README.md                       # Monitor documentation
 └── config/src/projects/compound-v3/
     ├── permission-overrides.json
-    └── review-config.json            # Per-project review config
+    ├── review-config.json            # Per-project review config
+    └── compiled-review.json          # Monitor output (auto-generated)
 ```
 
 ### Data Access Patterns

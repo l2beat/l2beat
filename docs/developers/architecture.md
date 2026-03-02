@@ -59,3 +59,30 @@ The Review Builder stores all review configuration in a single `review-config.js
 **Frontend**: The `ReviewBuilderPanel.tsx` component provides the editor UI, with `ReviewDescriptionsEditor.tsx` for entity descriptions and `ReviewSectionEditor.tsx` for section tabs. Data source definitions in `reviewDataSources.ts` power the data table blocks.
 
 **AI Generation**: The `/generate-review` Claude Code skill fetches pre-processed data from the l2b API, analyzes the protocol structure, and writes generated descriptions directly to `review-config.json`.
+
+### Continuous Monitoring Service
+
+The monitoring service is a standalone background process that continuously watches DeFi protocols for smart contract changes, refreshes live financial data, and compiles publishable review artifacts. It runs as a **GitHub Actions cron job** (daily at 8:00 CET), not as a long-running server.
+
+**Entry point**: `packages/backend/src/defidisco-monitor.ts` — creates the config, application, and handles `RUN_ONCE` mode (used by GitHub Actions) vs long-running mode (Clock-based scheduling).
+
+**Orchestrator**: `packages/backend/src/modules/defi-update-monitor/defidisco/DefidiscoMonitorApplication.ts` — wires all components and runs the monitoring loop. For each project listed in `packages/config/src/defidisco-config.json`:
+
+1. **Discovery** — runs the L2Beat discovery engine (`DiscoveryRunner`)
+2. **Diffing** — compares against the previous discovery snapshot stored in PostgreSQL
+3. **Notification** — sends Discord messages when contract changes are detected
+4. **Funds Refresh** — fetches live token balances and DeFi positions via DeBank API
+5. **Review Compilation** — produces a self-contained `compiled-review.json` per project
+
+After all projects are processed, a cycle summary is posted to Discord with project count, duration, and change count.
+
+**Review Compilation**: `ReviewCompiler.ts` reads all project data files (discovery, permissions, call graph, funds, contract tags, review config), runs V2 scoring, resolves template variables in descriptions, and writes a single `compiled-review.json` that contains everything a frontend needs to render a protocol review page — no client-side data joining required. Compilation is gated on `review-config.json` and `call-graph-data.json` existing; if either is missing, the step is skipped (log only).
+
+**Scheduling & Deployment**: The monitor runs via `.github/workflows/monitor.yml`:
+
+1. Builds the Docker image (`Dockerfile.monitor`) with GHA layer caching
+2. Runs Prisma migrations (separate step for clear error reporting)
+3. Runs the monitor with `RUN_ONCE=true` — single cycle, then clean exit
+4. Commits any updated `compiled-review.json` and `funds-data.json` files back to the repository
+
+**Database**: PostgreSQL (Neon free tier) stores discovery cache (RPC response caching across ephemeral containers) and update monitor snapshots (for diffing against previous discoveries). The connection string is stored as a GitHub Actions secret.
