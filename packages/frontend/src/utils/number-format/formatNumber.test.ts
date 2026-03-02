@@ -128,12 +128,12 @@ describe(formatNumberWithCommas.name, () => {
   })
 
   it('supports variable decimals with maximumFractionDigits', () => {
-    expect(formatNumberWithCommas(1234.567891, { maximumFractionDigits: 5 })).toEqual(
-      '1,234.56789',
-    )
-    expect(formatNumberWithCommas(1234.5, { maximumFractionDigits: 5 })).toEqual(
-      '1,234.5',
-    )
+    expect(
+      formatNumberWithCommas(1234.567891, { maximumFractionDigits: 5 }),
+    ).toEqual('1,234.56789')
+    expect(
+      formatNumberWithCommas(1234.5, { maximumFractionDigits: 5 }),
+    ).toEqual('1,234.5')
     expect(formatNumberWithCommas(1234, { maximumFractionDigits: 5 })).toEqual(
       '1,234',
     )
@@ -145,6 +145,8 @@ describe(formatNumberWithCommas.name, () => {
         minimumFractionDigits: 3,
         maximumFractionDigits: 2,
       }),
-    ).toThrow('minimumFractionDigits cannot be greater than maximumFractionDigits')
+    ).toThrow(
+      'minimumFractionDigits cannot be greater than maximumFractionDigits',
+    )
   })
 })
