@@ -255,69 +255,6 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getProjectTransfersPage(options: {
-    plugins: string[]
-    snapshotTimestamp: UnixTime
-    sourceChains: string[]
-    destinationChains: string[]
-    cursor?: InteropTransferPageCursor
-    limit: number
-  }): Promise<InteropTransferPage> {
-    if (
-      options.plugins.length === 0 ||
-      options.sourceChains.length === 0 ||
-      options.destinationChains.length === 0
-    ) {
-      return { items: [], nextCursor: undefined }
-    }
-
-    const from = options.snapshotTimestamp - UnixTime.DAY
-
-    let query = this.db
-      .selectFrom('InteropTransfer')
-      .selectAll()
-      .where('timestamp', '>', UnixTime.toDate(from))
-      .where('timestamp', '<=', UnixTime.toDate(options.snapshotTimestamp))
-      .where('plugin', 'in', options.plugins)
-      .where('srcChain', 'in', options.sourceChains)
-      .where('dstChain', 'in', options.destinationChains)
-      .whereRef('srcChain', '!=', 'dstChain')
-
-    if (options.cursor) {
-      const cursor = options.cursor
-      query = query.where((eb) =>
-        eb.or([
-          eb('timestamp', '<', UnixTime.toDate(cursor.timestamp)),
-          eb.and([
-            eb('timestamp', '=', UnixTime.toDate(cursor.timestamp)),
-            eb('transferId', '<', cursor.transferId),
-          ]),
-        ]),
-      )
-    }
-
-    const rows = await query
-      .orderBy('timestamp', 'desc')
-      .orderBy('transferId', 'desc')
-      .limit(options.limit + 1)
-      .execute()
-
-    const pageRows = rows.slice(0, options.limit)
-    const items = pageRows.map(toRecord)
-    const last = items[items.length - 1]
-
-    return {
-      items,
-      nextCursor:
-        rows.length > options.limit && last
-          ? {
-              timestamp: last.timestamp,
-              transferId: last.transferId,
-            }
-          : undefined,
-    }
-  }
-
   async getProjectTransfers(options: {
     plugins: string[]
     snapshotTimestamp: UnixTime
