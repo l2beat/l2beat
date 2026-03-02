@@ -54,7 +54,7 @@ export function formatNumberWithCommas(
   value: number,
   options?: FormatNumberWithCommasOptions,
 ): string {
-  const minimumFractionDigits = options?.minimumFractionDigits ?? 2
+  const minimumFractionDigits = options?.minimumFractionDigits ?? 0
   const maximumFractionDigits = options?.maximumFractionDigits ?? 2
 
   assert(
