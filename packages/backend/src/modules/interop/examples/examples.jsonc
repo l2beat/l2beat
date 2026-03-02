@@ -48,7 +48,7 @@
   "ccip": {
     "loadConfigs": ["ccip"],
     "txs": [
-      // Arbitrum → Base (old Minted event format)
+      // 1. v1.5 Burned + Minted (burn & mint): Arbitrum → Base
       {
         "chain": "arbitrum",
         "tx": "0x89f4d3325105dadaddd73e67843739547337688ad75969a31145f80127681429"
@@ -57,7 +57,7 @@
         "chain": "base",
         "tx": "0x05e94651d51f379b1b5c56756b1908431b19d72e9dc05fef801d96c434866109"
       },
-      // Arbitrum → Ethereum (old Minted event format)
+      // 2. v1.5 Burned + Minted (burn & mint): Arbitrum → Ethereum
       {
         "chain": "arbitrum",
         "tx": "0x9e6ea796ee5b851f57643669dd24fe68948b752d7369ebce6cbd1901c2e19349"
@@ -66,7 +66,7 @@
         "chain": "ethereum",
         "tx": "0x7c86a861a08dde62ac6a9de69467fcdb32db8f502caab15ea91b41f4d83da1fa"
       },
-      // Base → Ethereum (has Released event)
+      // 3. v1.5 Burned + Released (burn & unlock): Base → Ethereum
       {
         "chain": "base",
         "tx": "0xf678216cf093c1517c81359c73d86ed3351c2ef07ef7d22056cd940fd9fb881b"
@@ -75,7 +75,7 @@
         "chain": "ethereum",
         "tx": "0xf977ea203a1100a4c84cbcd494c7e9ada4e84326f46b1e648693248c091b544f"
       },
-      // Base → Ethereum (has ReleasedOrMinted event - USDC)
+      // 4. v1.6.1+ LockedOrBurned + ReleasedOrMinted, USDC via CCTP (isCctpBacked): Base → Ethereum
       {
         "chain": "base",
         "tx": "0x9c99b5b0bb81356c643da3eabcba8e76d70c1434509b239f6619dfb0165dde46"
@@ -84,7 +84,7 @@
         "chain": "ethereum",
         "tx": "0xa8e64ce873efd60fa103e29733a089f8960063d4c1c20b7507d3d838dd6faa90"
       },
-      // Ethereum → Base (USDC transfer)
+      // 5. USDC via CCTP (isCctpBacked — transfer handled by CCTP plugin): Ethereum → Base
       {
         "chain": "ethereum",
         "tx": "0x995d6705856238e85b293eb190f3a3b7c8dd61fb6579f3e14d04412f384714ef"
@@ -93,7 +93,7 @@
         "chain": "base",
         "tx": "0xb12cbb7d5252086155c63dcc9496e35c1f1bf09cf69deb65a8886242edccd6c3"
       },
-      // Base → Arbitrum (USDC transfer)
+      // 6. USDC via CCTP (isCctpBacked — transfer handled by CCTP plugin): Base → Arbitrum
       {
         "chain": "base",
         "tx": "0x677f39f89080c3659d126f203d32a5d66da6049118e2e6fac8fa530f2407d81a"
@@ -102,7 +102,7 @@
         "chain": "arbitrum",
         "tx": "0x389ab7037904f0709e847c098f6a66c01c01093f20b391cfaa3f6ce17d4e1c22"
       },
-      // Ethereum → Base BATCHED (2 source txs, 1 dst tx with 2 ExecutionStateChanged events)
+      // 7. Batched delivery (2 source txs → 1 dest tx with 2 ExecutionStateChanged): Ethereum → Base
       {
         "chain": "ethereum",
         "tx": "0x0c4597c5a788e5700dfff0583a8da5e16ba3f2ef56acca8629f18dcb08920d02"
@@ -115,7 +115,7 @@
         "chain": "base",
         "tx": "0x5cb327c65ab86ddc22bc81fb310c3a2d80c7ca44a690f8de0f3c2a7c7abfbbbf"
       },
-      // Base → Ethereum LINK token (tests Released event parsing)
+      // 8. v1.5 Burned + Released (LINK burn & unlock): Base → Ethereum
       {
         "chain": "base",
         "tx": "0xadbfe87e982ec948b7825b5c48f7284957a2dfe06012858fe0d37309e290a385"
@@ -124,7 +124,7 @@
         "chain": "ethereum",
         "tx": "0x1cfdefda87414b4dc7c5bc04fcc264260a4231f50e15a91a839a718948a33989"
       },
-      // Ethereum → Arbitrum WETH token
+      // 9. v1.5 Locked + Released (WETH lock & unlock): Ethereum → Arbitrum
       {
         "chain": "ethereum",
         "tx": "0x57ffa562517040e73b538e0762c7a1131cef66a0676a57d447fa252f34954935"
@@ -134,49 +134,22 @@
         "tx": "0x142313291f839043b3f56627b5022ab4dc5cb6f1dffe15a3985f7093a2bc96b1"
       }
     ],
-    "events": [
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged"
-    ],
-    "messages": [
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" }
-    ],
-    "transfers": [
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer"
-    ]
+    "expects": {
+      "transfers": [
+        // 1-3: v1.5 token pool events produce ccip.Transfer
+        { "type": "ccip.Transfer" },
+        { "type": "ccip.Transfer" },
+        { "type": "ccip.Transfer" },
+        // 4-6: USDC via CCTP — no ccip.Transfer (handled by CCTP plugin)
+        // 7: batched delivery — 2 transfers
+        { "type": "ccip.Transfer" },
+        { "type": "ccip.Transfer" },
+        // 8: LINK burn & unlock
+        { "type": "ccip.Transfer" },
+        // 9: WETH lock & mint
+        { "type": "ccip.Transfer" }
+      ]
+    }
   },
   "ccip-batched": {
     "loadConfigs": ["ccip"],
@@ -275,57 +248,57 @@
     ],
     "expects": {
       "transfers": [
-        // Batch 1: vsn + fluid (arbitrum → ethereum)
+        // Batch 1: VSN + FLUID (arbitrum → ethereum)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "vsn" } },
-          "dst": { "financials": { "symbol": "vsn" } }
+          "src": { "financials": { "symbol": "VSN" } },
+          "dst": { "financials": { "symbol": "VSN" } }
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "fluid" } },
-          "dst": { "financials": { "symbol": "fluid" } }
+          "src": { "financials": { "symbol": "FLUID" } },
+          "dst": { "financials": { "symbol": "FLUID" } }
         },
-        // Batch 2: wmtx + chex (ethereum → base)
+        // Batch 2: WMTX + CHEX (ethereum → base)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "wmtx" } },
+          "src": { "financials": { "symbol": "WMTX" } },
           "dst": { "financials": { "symbol": "WMTX" } }
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "chex" } },
-          "dst": { "financials": { "symbol": "chex" } }
+          "src": { "financials": { "symbol": "CHEX" } },
+          "dst": { "financials": { "symbol": "CHEX" } }
         },
-        // Batch 3: wmtx + zchf (ethereum → base)
+        // Batch 3: WMTX + ZCHF (ethereum → base)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "wmtx" } },
+          "src": { "financials": { "symbol": "WMTX" } },
           "dst": { "financials": { "symbol": "WMTX" } }
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "zchf" } },
-          "dst": { "financials": { "symbol": "zchf" } }
+          "src": { "financials": { "symbol": "ZCHF" } },
+          "dst": { "financials": { "symbol": "ZCHF" } }
         },
-        // Batch 4: syrupusdc + zchf (base → ethereum)
+        // Batch 4: syrupUSDC + ZCHF (base → ethereum)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "syrupusdc" } },
-          "dst": { "financials": { "symbol": "syrupusdc" } }
+          "src": { "financials": { "symbol": "syrupUSDC" } },
+          "dst": { "financials": { "symbol": "syrupUSDC" } }
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "zchf" } },
-          "dst": { "financials": { "symbol": "zchf" } }
+          "src": { "financials": { "symbol": "ZCHF" } },
+          "dst": { "financials": { "symbol": "ZCHF" } }
         },
-        // Batch 5: syrupusdc (ethereum → base, single transfer)
+        // Batch 5: syrupUSDC (ethereum → base, single transfer)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "syrupusdc" } },
-          "dst": { "financials": { "symbol": "syrupusdc" } }
+          "src": { "financials": { "symbol": "syrupUSDC" } },
+          "dst": { "financials": { "symbol": "syrupUSDC" } }
         },
-        // Batch 6: LBTC + dextf (base → ethereum)
+        // Batch 6: LBTC + DEXTF (base → ethereum)
         {
           "type": "ccip.Transfer",
           "src": { "financials": { "symbol": "LBTC" } },
@@ -333,24 +306,24 @@
         },
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "dextf" } },
+          "src": { "financials": { "symbol": "DEXTF" } },
           "dst": { "financials": { "symbol": "DEXTF" } }
         },
-        // Batch 7: paal + DEXTF + DEXTF (ethereum → base, 3-message batch)
+        // Batch 7: $PAAL + DEXTF + DEXTF (ethereum → base, 3-message batch)
         {
           "type": "ccip.Transfer",
-          "src": { "financials": { "symbol": "paal" } },
-          "dst": { "financials": { "symbol": "paal" } }
+          "src": { "financials": { "symbol": "$PAAL" } },
+          "dst": { "financials": { "symbol": "$PAAL" } }
         },
         {
           "type": "ccip.Transfer",
           "src": { "financials": { "symbol": "DEXTF" } },
-          "dst": { "financials": { "symbol": "dextf" } }
+          "dst": { "financials": { "symbol": "DEXTF" } }
         },
         {
           "type": "ccip.Transfer",
           "src": { "financials": { "symbol": "DEXTF" } },
-          "dst": { "financials": { "symbol": "dextf" } }
+          "dst": { "financials": { "symbol": "DEXTF" } }
         }
       ]
     }
@@ -388,6 +361,39 @@
     ],
     "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
     "messages": [{ "type": "ccip.Message", "app": "unknown" }],
+    "transfers": []
+  },
+  "ccip-unsupported-chain": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Base → Sonic (Sonic is unsupported, only source side captured)
+      {
+        "chain": "base",
+        "tx": "0xd98e73cb566950d3311117ccad12dc84dfd22d2c82ecae013fe2c751573f9322"
+      },
+      // Sonic → Base (inbound from unsupported chain, only dst side captured)
+      {
+        "chain": "base",
+        "tx": "0xc5721df4bb21ab7511d9c995e6b843fe4b0f1ae2530d53d30bac18e6b6d5f245"
+      },
+      // Base → Bittensor (v1.6 CCIPMessageSent, Bittensor is unsupported)
+      {
+        "chain": "base",
+        "tx": "0x4064cbfb507412b8fc2b457975408f7f06860af15b99a3f01c868839140e56c1"
+      },
+      // Bittensor → Base (v1.6 ExecutionStateChanged inbound)
+      {
+        "chain": "base",
+        "tx": "0x3caad21891ceb20380b2b77ef2b87e7a3eb8a854b93c39cece65dac2d66b067d"
+      }
+    ],
+    "events": [
+      "ccip.CCIPSendRequested",
+      "ccip.CCIPSendRequested",
+      "ccip.ExecutionStateChanged",
+      "ccip.ExecutionStateChanged"
+    ],
+    "messages": [],
     "transfers": []
   },
   "celer": {
