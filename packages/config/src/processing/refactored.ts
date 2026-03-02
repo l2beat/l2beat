@@ -1,3 +1,4 @@
+import { across } from '../projects/across/across'
 import { airbender } from '../projects/airbender/airbender'
 import { avail } from '../projects/avail/avail'
 import { axelar } from '../projects/axelar/axelar'
@@ -115,4 +116,5 @@ export const refactored: BaseProject[] = [
   wormholeNtt,
   mayan,
   meson,
+  across,
 ]
