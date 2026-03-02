@@ -308,6 +308,13 @@ fn main() {
 \`\`\`
     `,
   },
+  '0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70': {
+    title: 'Aggchain program of agglayer',
+    description:
+      'Usually used for state validation of Aggchains. The source of this program hash was not found and is currently not verifiable.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
   '0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53': {
     title: 'Aggchain program of agglayer',
     description:
