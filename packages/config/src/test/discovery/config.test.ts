@@ -13,7 +13,6 @@ import {
 import { assert, ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isDeepStrictEqual } from 'util'
-import { bridges } from '../../processing/bridges'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'
 
@@ -50,7 +49,6 @@ describe('discovery config.jsonc', () => {
 
   const projectIds = layer2s
     .map((p) => p.id.toString())
-    .concat(bridges.map((p) => p.id.toString()))
     .concat(layer3s.map((p) => p.id.toString()))
     .concat(onChainProjects)
 
