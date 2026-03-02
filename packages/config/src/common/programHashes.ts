@@ -622,6 +622,13 @@ Verify:
     verificationSteps:
       'According to the SOON team, this Kailua FPVM program was compiled using a local version with some additional logging added for debugging purposes. The code is not public and thus the program hash cannot be independently verified.',
   },
+  '0x4aca4abde3db9c42152b4d9eb359e6030111c34ba68f7c68160fce93ed5b7b25': {
+    title: 'Kailua fault proof program (BOB, op-contracts v5 compat)',
+    description:
+      'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system. This version adds op-contracts v5 compatibility.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
+  },
   '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
     title: 'Kailua fault proof program (MegaETH)',
     description:
