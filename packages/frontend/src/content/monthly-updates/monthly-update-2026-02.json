@@ -124,6 +124,10 @@
           "content": "Polygon has [officially](https://x.com/0xPolygon/status/2021259998911922641) joined the Enterprise Ethereum Alliance (EEA), reinforcing its push to position the Open Money Stack as institutional-grade payment infrastructure. Alongside members such as Nethermind and Ethena, Polygon will collaborate with global enterprises on settlement standards, merchant access, and compliant on-chain rails."
         },
         {
+          "title": "Polygon Activates Lisovo Hardfork on Mainnet",
+          "content": "Polygon [will activate](https://x.com/0xPolygonFdn/status/2027528440770175190) the Lisovo hardfork on mainnet before block 83756500, expected around March 4 at 14:00 UTC.\n\nThe upgrade activates PIP-82 to subsidize agent-to-agent gas costs for payments, improves smart contract compatibility for the Count Leading Zeros (CLZ) opcode, enhances support for passkey-based wallets, and introduces flexible fee tuning alongside reliability and validation improvements.\n\nNode operators must upgrade Bor to v2.6.0 or Erigon to v3.4.0."
+        },
+        {
           "title": "ERC-8004 Goes Live on Polygon",
           "content": "Polygon [announced](https://x.com/0xPolygon/status/2018365944884785424) that ERC-8004 is now live on the network, enabling portable identity and reputation for autonomous agents across L2s and organizations. The standard removes walled-garden constraints, allowing agents to interact trustlessly across ecosystems.\n\nBy supporting ERC-8004, Polygon positions itself as infrastructure for a scalable, permissionless agent economy aligned with interoperable on-chain identity."
         },
