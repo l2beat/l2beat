@@ -1,0 +1,50 @@
+name: DeFiDisco Monitor
+
+on:
+  schedule:
+    - cron: '0 7 * * *' # 7:00 UTC = 8:00 CET daily
+  workflow_dispatch: # Manual trigger for testing
+
+jobs:
+  monitor:
+    name: Run Monitor Cycle
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.monitor
+          load: true
+          tags: defidisco-monitor:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Prisma migrations
+        run: |
+          docker run --rm \
+            -e PRISMA_DB_URL="${{ secrets.DATABASE_URL }}" \
+            defidisco-monitor:latest \
+            sh -c "cd packages/database && npx prisma migrate deploy"
+
+      - name: Run monitor cycle
+        run: |
+          docker run --rm \
+            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            -e RUN_ONCE=true \
+            -e DISCORD_TOKEN="${{ secrets.DISCORD_TOKEN }}" \
+            -e DISCORD_CHANNEL_ID="${{ secrets.DISCORD_CHANNEL_ID }}" \
+            -e ETHEREUM_RPC_URL_FOR_DISCOVERY="${{ secrets.ETHEREUM_RPC_URL_FOR_DISCOVERY }}" \
+            -e ETHEREUM_RPC_URL="${{ secrets.ETHEREUM_RPC_URL }}" \
+            -e ETHERSCAN_API_KEY="${{ secrets.ETHERSCAN_API_KEY }}" \
+            -e DEBANK_API_KEY="${{ secrets.DEBANK_API_KEY }}" \
+            -e LOG_LEVEL=INFO \
+            defidisco-monitor:latest \
+            node packages/backend/build/src/defidisco-monitor.js
