@@ -91,7 +91,6 @@ function TransferDetailsDialog({
   const [scrollContainer, setScrollContainer] = useState<HTMLDivElement | null>(
     null,
   )
-  const [visibleCount, setVisibleCount] = useState(INITIAL_RENDERED_ROWS)
 
   const { data, isLoading } = api.interop.transfers.useQuery(
     {
@@ -105,6 +104,10 @@ function TransferDetailsDialog({
   )
 
   const transferRows = data?.items ?? []
+  const [visibleCount, setVisibleCount] = useState(
+    Math.min(INITIAL_RENDERED_ROWS, transferRows.length),
+  )
+
   const hasIntegrityMismatch = hasTransferStatsMismatch(
     data?.transferStats,
     expectedTransferCount,
@@ -119,9 +122,8 @@ function TransferDetailsDialog({
   }, [transferRows.length])
 
   const maybeLoadMoreRows = useCallback(() => {
-    const element = scrollContainer
     if (
-      !element ||
+      !scrollContainer ||
       !hasMoreRows ||
       hasIntegrityMismatch ||
       isLoading ||
@@ -131,7 +133,9 @@ function TransferDetailsDialog({
     }
 
     const distanceToBottom =
-      element.scrollHeight - element.scrollTop - element.clientHeight
+      scrollContainer.scrollHeight -
+      scrollContainer.scrollTop -
+      scrollContainer.clientHeight
     if (distanceToBottom <= SCROLL_LOAD_THRESHOLD_PX) {
       loadMoreRows()
     }
@@ -145,17 +149,9 @@ function TransferDetailsDialog({
   ])
 
   useEffect(() => {
-    if (!isOpen) {
-      return
-    }
-    setVisibleCount(Math.min(INITIAL_RENDERED_ROWS, transferRows.length))
-  }, [isOpen, transferRows.length])
-
-  useEffect(() => {
-    const element = scrollContainer
     if (
       !isOpen ||
-      !element ||
+      !scrollContainer ||
       !hasMoreRows ||
       hasIntegrityMismatch ||
       isLoading
@@ -163,7 +159,7 @@ function TransferDetailsDialog({
       return
     }
 
-    if (element.scrollHeight <= element.clientHeight + 1) {
+    if (scrollContainer.scrollHeight <= scrollContainer.clientHeight + 1) {
       loadMoreRows()
     }
   }, [
@@ -175,23 +171,13 @@ function TransferDetailsDialog({
     scrollContainer,
   ])
 
-  const shouldRenderRows = isOpen || scrollContainer !== null
   const visibleRows = useMemo(
-    () => (shouldRenderRows ? transferRows.slice(0, visibleCount) : []),
-    [shouldRenderRows, transferRows, visibleCount],
-  )
-
-  const tableData = useMemo(
-    () =>
-      visibleRows.map((row) => ({
-        ...row,
-        slug: `${row.transferId}-${row.timestamp}`,
-      })),
-    [visibleRows],
+    () => (isOpen ? transferRows.slice(0, visibleCount) : []),
+    [transferRows, visibleCount, isOpen],
   )
 
   const table = useTable<TransferRow>({
-    data: tableData,
+    data: visibleRows,
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualFiltering: true,
