@@ -1,7 +1,7 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import type { BasicTableRow } from '~/components/table/BasicTable'
-import { EM_DASH } from '~/consts/characters'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -53,7 +53,7 @@ export const columns = [
     enableSorting: false,
     cell: (ctx) => {
       const { valueUsd } = ctx.row.original
-      if (valueUsd === undefined) return EM_DASH
+      if (valueUsd === undefined) return <NoDataBadge />
       return (
         <span className="font-medium text-label-value-14 text-primary">
           {formatCurrency(valueUsd, 'usd')}
@@ -137,7 +137,8 @@ function TokenAmount({
   amount: number | undefined
   symbol: string | undefined
 }) {
-  if (amount === undefined) return EM_DASH
+  if (amount === undefined) return <NoDataBadge />
+
   const formattedAmount = formatNumberWithCommas(amount, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 5,
