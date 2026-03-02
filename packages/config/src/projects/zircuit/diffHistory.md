@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x99bc05a34034b85bf55816c233df3da49516af96
+
+# Diff at Fri, 27 Feb 2026 14:17:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770993167
+- current timestamp: 1772198396
+
+## Description
+
+SP1MockVerifierWithHash (a no-op verifier that accepts all proofs) was added to the SP1VerifierGateway with selector 0xffffffff. Proof verification can be bypassed by the proposer via this selector; safety then depends on challenger intervention before finalization. The mock verifier's `verifyProof` function has an empty body with comment `// accept everything`. Diff with a real verifier: https://disco.l2beat.com/diff/eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5/eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.2:
++        {"selector":"0xffffffff","verifier":"eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.2:
++        {"selector":"0xffffffff","verifier":"eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1MockVerifierWithHash (eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../zircuit/.flat/SP1MockVerifierWithHash.sol      | 33 ++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+```
+
 Generated with discovered.json: 0x855aa2ce97914efd8c549ddee879ed7c81603872
 
 # Diff at Fri, 13 Feb 2026 15:26:02 GMT:
