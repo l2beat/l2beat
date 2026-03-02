@@ -1,9 +1,5 @@
-import {
-  formatSeconds,
-  type KnownInteropBridgeType,
-  type ProjectId,
-} from '@l2beat/shared-pure'
-import { createColumnHelper, getCoreRowModel } from '@tanstack/react-table'
+import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
+import { getCoreRowModel } from '@tanstack/react-table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   Dialog,
@@ -17,149 +13,20 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '~/components/core/Drawer'
-import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
-import { EM_DASH } from '~/consts/characters'
+import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
-import type {
-  InteropProtocolTransferDetailsItem,
-  InteropProtocolTransferStats,
-} from '~/server/features/scaling/interop/types'
+import type { InteropProtocolTransferStats } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumberWithCommas } from '~/utils/number-format/formatNumber'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import { BetweenChainsInfo } from '../BetweenChainsInfo'
+import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
+import { BetweenChainsInfo } from '../../BetweenChainsInfo'
+import { columns, type TransferRow } from './columns'
 
 const VALUE_TOLERANCE_RATIO = 0.01
 const MIN_VALUE_TOLERANCE = 0.01
 const INITIAL_RENDERED_ROWS = 100
 const RENDERED_ROWS_STEP = 100
 const SCROLL_LOAD_THRESHOLD_PX = 120
-
-type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
-
-const columnHelper = createColumnHelper<TransferRow>()
-
-const columns = [
-  columnHelper.accessor('timestamp', {
-    header: 'Timestamp',
-    enableSorting: false,
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-14 text-primary">
-        {formatTimestamp(ctx.row.original.timestamp, { mode: 'datetime' })}
-      </span>
-    ),
-    meta: {
-      headClassName: 'text-2xs',
-    },
-  }),
-  columnHelper.accessor('srcAmount', {
-    header: 'Source token',
-    enableSorting: false,
-    cell: (ctx) => {
-      const { srcAmount, srcSymbol } = ctx.row.original
-      return <TokenAmount amount={srcAmount} symbol={srcSymbol} />
-    },
-    meta: {
-      headClassName: 'text-2xs',
-      align: 'right',
-    },
-  }),
-  columnHelper.accessor('dstAmount', {
-    header: 'Destination token',
-    enableSorting: false,
-    cell: (ctx) => {
-      const { dstAmount, dstSymbol } = ctx.row.original
-      return <TokenAmount amount={dstAmount} symbol={dstSymbol} />
-    },
-    meta: {
-      headClassName: 'text-2xs',
-      align: 'right',
-    },
-  }),
-  columnHelper.accessor('valueUsd', {
-    header: 'Value',
-    enableSorting: false,
-    cell: (ctx) => {
-      const { valueUsd } = ctx.row.original
-      if (valueUsd === undefined) return EM_DASH
-      return (
-        <span className="font-medium text-label-value-14 text-primary">
-          {formatCurrency(valueUsd, 'usd')}
-        </span>
-      )
-    },
-    meta: {
-      headClassName: 'text-2xs',
-      align: 'right',
-    },
-  }),
-  columnHelper.accessor('duration', {
-    header: 'Transfer time',
-    enableSorting: false,
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-14 text-primary">
-        {formatSeconds(ctx.row.original.duration)}
-      </span>
-    ),
-    meta: {
-      headClassName: 'text-2xs',
-      align: 'right',
-    },
-  }),
-  columnHelper.accessor('srcChain', {
-    header: 'Source chain',
-    enableSorting: false,
-    cell: (ctx) => (
-      <div className="font-medium text-label-value-14 capitalize">
-        {ctx.row.original.srcChain}
-      </div>
-    ),
-    meta: {
-      headClassName: 'text-2xs',
-    },
-  }),
-  columnHelper.accessor('srcTxHash', {
-    header: 'Source tx hash',
-    enableSorting: false,
-    cell: (ctx) => (
-      <TxHashCell
-        hash={ctx.row.original.srcTxHash}
-        href={ctx.row.original.srcTxHashHref}
-      />
-    ),
-    meta: {
-      headClassName: 'text-2xs',
-    },
-  }),
-  columnHelper.accessor('dstChain', {
-    header: 'Destination chain',
-    enableSorting: false,
-    cell: (ctx) => (
-      <div className="font-medium text-label-value-14 capitalize">
-        {ctx.row.original.dstChain}
-      </div>
-    ),
-    meta: {
-      headClassName: 'text-2xs',
-    },
-  }),
-  columnHelper.accessor('dstTxHash', {
-    header: 'Destination tx hash',
-    enableSorting: false,
-    cell: (ctx) => (
-      <TxHashCell
-        hash={ctx.row.original.dstTxHash}
-        href={ctx.row.original.dstTxHashHref}
-      />
-    ),
-    meta: {
-      headClassName: 'text-2xs',
-    },
-  }),
-]
 
 export function TransferCountCell({
   transferCount,
@@ -432,42 +299,4 @@ function hasTransferStatsMismatch(
     MIN_VALUE_TOLERANCE,
   )
   return difference > tolerance
-}
-
-function shortenHash(hash: string): string {
-  if (hash.length <= 12) return hash
-  return `${hash.slice(0, 6)}...${hash.slice(-4)}`
-}
-
-function TxHashCell({ hash, href }: { hash: string; href: string }) {
-  const content = shortenHash(hash)
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer noopener"
-      className="font-medium text-label-value-14 text-link hover:underline"
-    >
-      {content}
-    </a>
-  )
-}
-
-function TokenAmount({
-  amount,
-  symbol,
-}: {
-  amount: number | undefined
-  symbol: string | undefined
-}) {
-  if (amount === undefined) return EM_DASH
-  const formattedAmount = formatNumberWithCommas(amount, {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 5,
-  })
-  return (
-    <span className="font-medium text-label-value-14 text-primary">
-      {symbol ? `${formattedAmount} ${symbol}` : formattedAmount}
-    </span>
-  )
 }

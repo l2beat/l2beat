@@ -17,7 +17,7 @@ import { TopTokensCell } from '../top-items/TopTokensCell'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
 import { SubgroupTooltip } from './SubgroupTooltip'
-import { TransferCountCell } from './TransferCountCell'
+import { TransferCountCell } from './transfer-count-cell/TransferCountCell'
 
 export type ProtocolRow = ProtocolEntry & BasicTableRow
 
