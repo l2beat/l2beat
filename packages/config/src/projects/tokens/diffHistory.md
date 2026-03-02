@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x498c344e9c867f9c5a77a312b4c507a0ab7c7d76
+
+# Diff at Mon, 02 Mar 2026 14:39:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1772088729
+- current timestamp: 1772462270
+
+## Description
+
+new staking vault.
+
+## Watched changes
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      values.vaultByIndex.0:
+-        "eth:0x576BBdA8b747d39BF16a2723AC6bB6BB3582dDF8"
++        "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x576BBdA8b747d39BF16a2723AC6bB6BB3582dDF8","role":"admin"}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StakingVault (eth:0x576BBdA8b747d39BF16a2723AC6bB6BB3582dDF8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingVault (eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe-eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1}/Safe.sol         | 0
+ .../Safe-eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1}/SafeProxy.p.sol  | 0
+ .../PinnedBeaconProxy.p.sol                                               | 0
+ .../StakingVault.sol                                                      | 0
+ 4 files changed, 0 insertions(+), 0 deletions(-)
+```
+
 Generated with discovered.json: 0x0f3d0e9780d6434a08cfdc11ee9c199c0d01ece8
 
 # Diff at Thu, 26 Feb 2026 06:54:34 GMT:
