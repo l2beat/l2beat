@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../types'
 
-const _discovery = new ProjectDiscovery('stargatev2')
+const _discovery = new ProjectDiscovery('stargate')
 
 export const stargate: BaseProject = {
   id: ProjectId('stargate'),

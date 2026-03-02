@@ -12,5 +12,6 @@ export const everclearbridge: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1742199959),
   // TODO: add interop plugin
+  // TODO!: when added, remove it from filter in config.test.ts
   // isInteropProtocol: true,
 }

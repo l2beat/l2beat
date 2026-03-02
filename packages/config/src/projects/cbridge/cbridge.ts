@@ -11,6 +11,7 @@ export const cbridge: BaseProject = {
   shortName: 'cBridge',
   addedAt: UnixTime(1662628329),
   // TODO: add to FE
+  // TODO!: when added, remove it from filter in config.test.ts
   // interopConfig: {
   //   plugins: [
   //     {

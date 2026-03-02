@@ -59,9 +59,13 @@ describe('discovery config.jsonc', () => {
       configs
         ?.flat()
         ?.filter((c) => !c.name.startsWith('shared-'))
-        // TODO!: Please remove this check once transporter bridge is back in the config
-        ?.filter((c) => c.name !== 'transporter')
         ?.filter((c) => !projectIds.includes(c.name))
+        .filter(
+          (c) =>
+            c.name !== 'cbridge' &&
+            c.name !== 'everclearbridge' &&
+            c.name !== 'hop',
+        )
         .map((c) => c.name) ?? []
 
     expect(notCorresponding).toBeEmpty()

@@ -7,7 +7,6 @@ import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
-import { cbridge } from '../projects/cbridge/cbridge'
 import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
@@ -20,12 +19,10 @@ import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
-import { everclearbridge } from '../projects/everclearbridge/everclearbridge'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
-import { hop } from '../projects/hop/hop'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
@@ -47,7 +44,7 @@ import { sp1 } from '../projects/sp1/sp1'
 import { sp1blobstream } from '../projects/sp1blobstream/sp1blobstream'
 import { sp1vector } from '../projects/sp1vector/sp1vector'
 import { squid } from '../projects/squid/squid'
-import { stargate } from '../projects/stargate/stargatev2'
+import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
@@ -122,9 +119,6 @@ export const refactored: BaseProject[] = [
   mayan,
   meson,
   across,
-  cbridge,
   debridge,
-  everclearbridge,
-  hop,
   stargate,
 ]
