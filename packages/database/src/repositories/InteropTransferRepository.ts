@@ -1,5 +1,6 @@
 import {
   assert,
+  type InteropBridgeType,
   InteropBridgeTypeValues,
   type KnownInteropBridgeType,
   UnixTime,
@@ -20,7 +21,7 @@ const EXPECTED_DB_INTEROP_BRIDGE_TYPES = [
 const _interopBridgeTypesMustMatchDbContract: typeof EXPECTED_DB_INTEROP_BRIDGE_TYPES =
   InteropBridgeTypeValues
 
-function isInteropBridgeType(value: string): value is KnownInteropBridgeType {
+function isInteropBridgeType(value: string): value is InteropBridgeType {
   return (InteropBridgeTypeValues as readonly string[]).includes(value)
 }
 
@@ -78,16 +79,6 @@ export interface InteropMissingTokenInfo {
   tokenAddress: string
   count: number
   plugins: string[]
-}
-
-export interface InteropTransferPageCursor {
-  timestamp: UnixTime
-  transferId: string
-}
-
-export interface InteropTransferPage {
-  items: InteropTransferRecord[]
-  nextCursor: InteropTransferPageCursor | undefined
 }
 
 export function toRecord(
