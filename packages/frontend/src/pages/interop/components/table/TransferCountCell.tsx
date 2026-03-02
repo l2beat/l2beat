@@ -32,7 +32,8 @@ import { formatNumberWithCommas } from '~/utils/number-format/formatNumber'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
 
-const VOLUME_TOLERANCE = 0.01
+const VALUE_TOLERANCE_RATIO = 0.01
+const MIN_VALUE_TOLERANCE = 0.01
 const INITIAL_RENDERED_ROWS = 100
 const RENDERED_ROWS_STEP = 100
 const SCROLL_LOAD_THRESHOLD_PX = 120
@@ -404,7 +405,15 @@ function hasTransferStatsMismatch(
     return true
   }
 
-  return Math.abs(transferStats.volume - expectedVolume) > VOLUME_TOLERANCE
+  // Note: We are not summing transfers in exactly the same way as the backend aggregates do.
+  // To avoid duplicating all aggregation logic here, we use a simplified calculation on the frontend
+  // and add this 1% difference check to allow for minor discrepancies between methods.
+  const difference = Math.abs(transferStats.volume - expectedVolume)
+  const tolerance = Math.max(
+    Math.abs(expectedVolume) * VALUE_TOLERANCE_RATIO,
+    MIN_VALUE_TOLERANCE,
+  )
+  return difference > tolerance
 }
 
 function shortenHash(hash: string): string {
