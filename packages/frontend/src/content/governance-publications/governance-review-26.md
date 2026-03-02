@@ -292,7 +292,7 @@ The first-ever vote on Starknet mainnet is all the rage this week.
 
 ### **Active Votes**
 
-[Staking on Starknet](https://governance.starknet.io/voting-proposals/5) – ends on 13 September at 09:00 UTC.
+[Staking on Starknet](https://governance.starknet.io/#/proposal/5) – ends on 13 September at 09:00 UTC.
 
 
 ### **Vote starting announcement**
@@ -388,4 +388,5 @@ If you’re holding $LSK and want to delegate your voting power, you must stake 
 **Discuss with L2BEAT**
 
 We’re fairly new to Lisk’s governance, and we’d love to meet other delegates and stakeholders so we can better understand the ecosystem's dynamics and needs. If you’re interested in chatting, please [shoot us a message](https://t.me/sinkas5).
+
 
