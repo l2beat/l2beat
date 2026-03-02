@@ -105,9 +105,8 @@ function TransferDetailsDialog({
   )
 
   const transferRows = data?.items ?? []
-  const transferStats = data?.transferStats
   const hasIntegrityMismatch = hasTransferStatsMismatch(
-    transferStats,
+    data?.transferStats,
     expectedTransferCount,
     expectedVolume,
   )
