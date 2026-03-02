@@ -132,6 +132,9 @@ function TopTokensContent({
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
     initialState: {
+      columnPinning: {
+        left: ['icon'],
+      },
       sorting: [
         {
           id: 'volume',
