@@ -112,7 +112,11 @@ const columns = [
   columnHelper.accessor('srcChain', {
     header: 'Source chain',
     enableSorting: false,
-    cell: (ctx) => ctx.row.original.srcChain,
+    cell: (ctx) => (
+      <div className="font-medium text-label-value-14 capitalize">
+        {ctx.row.original.srcChain}
+      </div>
+    ),
     meta: {
       headClassName: 'text-2xs',
     },
@@ -120,7 +124,12 @@ const columns = [
   columnHelper.accessor('srcTxHash', {
     header: 'Source tx hash',
     enableSorting: false,
-    cell: (ctx) => shortenHash(ctx.row.original.srcTxHash),
+    cell: (ctx) => (
+      <TxHashCell
+        hash={ctx.row.original.srcTxHash}
+        href={ctx.row.original.srcTxHashHref}
+      />
+    ),
     meta: {
       headClassName: 'text-2xs',
     },
@@ -128,7 +137,11 @@ const columns = [
   columnHelper.accessor('dstChain', {
     header: 'Destination chain',
     enableSorting: false,
-    cell: (ctx) => ctx.row.original.dstChain,
+    cell: (ctx) => (
+      <div className="font-medium text-label-value-14 capitalize">
+        {ctx.row.original.dstChain}
+      </div>
+    ),
     meta: {
       headClassName: 'text-2xs',
     },
@@ -136,7 +149,12 @@ const columns = [
   columnHelper.accessor('dstTxHash', {
     header: 'Destination tx hash',
     enableSorting: false,
-    cell: (ctx) => shortenHash(ctx.row.original.dstTxHash),
+    cell: (ctx) => (
+      <TxHashCell
+        hash={ctx.row.original.dstTxHash}
+        href={ctx.row.original.dstTxHashHref}
+      />
+    ),
     meta: {
       headClassName: 'text-2xs',
     },
@@ -419,6 +437,20 @@ function hasTransferStatsMismatch(
 function shortenHash(hash: string): string {
   if (hash.length <= 12) return hash
   return `${hash.slice(0, 6)}...${hash.slice(-4)}`
+}
+
+function TxHashCell({ hash, href }: { hash: string; href: string }) {
+  const content = shortenHash(hash)
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="font-medium text-label-value-14 text-link hover:underline"
+    >
+      {content}
+    </a>
+  )
 }
 
 function TokenAmount({

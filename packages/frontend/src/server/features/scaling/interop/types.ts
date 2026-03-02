@@ -103,8 +103,10 @@ export type InteropProtocolTransferDetailsItem = {
   duration: number
   srcChain: string
   srcTxHash: string
+  srcTxHashHref: string
   dstChain: string
   dstTxHash: string
+  dstTxHashHref: string
 }
 
 export type InteropProtocolTransferStats = {

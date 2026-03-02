@@ -17,6 +17,10 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         srcValueUsd: undefined,
         dstValueUsd: 12.34,
       }),
+      new Map([
+        ['ethereum', 'https://etherscan.io/tx/'],
+        ['arbitrum', 'https://arbiscan.io/tx/'],
+      ]),
     )
 
     expect(result).toEqual({
@@ -30,9 +34,24 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       duration: 60,
       srcChain: 'ethereum',
       srcTxHash: '0xsrc',
+      srcTxHashHref: 'https://etherscan.io/tx/0xsrc',
       dstChain: 'arbitrum',
       dstTxHash: '0xdst',
+      dstTxHashHref: 'https://arbiscan.io/tx/0xdst',
     })
+  })
+
+  it('adds explorer tx hash links when explorer urls are available', () => {
+    const result = toInteropProtocolTransferDetailsItem(
+      transfer(),
+      new Map([
+        ['ethereum', 'https://etherscan.io/tx/'],
+        ['arbitrum', 'https://arbiscan.io/tx/'],
+      ]),
+    )
+
+    expect(result.srcTxHashHref).toEqual('https://etherscan.io/tx/0xsrc')
+    expect(result.dstTxHashHref).toEqual('https://arbiscan.io/tx/0xdst')
   })
 })
 

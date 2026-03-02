@@ -1,6 +1,11 @@
+import { INTEROP_CHAINS } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
-import { getInteropTransferValue, type UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  getInteropTransferValue,
+  type UnixTime,
+} from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import type {
@@ -15,6 +20,10 @@ interface TransfersWithStats {
   items: InteropTransferRecord[]
   transferStats: InteropProtocolTransferStats
 }
+
+const INTEROP_CHAIN_TX_EXPLORER_URLS = new Map(
+  INTEROP_CHAINS.map((chain) => [chain.id, chain.txExplorerUrl]),
+)
 
 export async function getInteropProtocolTransfers({
   id,
@@ -71,7 +80,12 @@ export async function getInteropProtocolTransfers({
     matcher,
   })
   return {
-    items: result.items.map(toInteropProtocolTransferDetailsItem),
+    items: result.items.map((transfer) =>
+      toInteropProtocolTransferDetailsItem(
+        transfer,
+        INTEROP_CHAIN_TX_EXPLORER_URLS,
+      ),
+    ),
     transferStats: result.transferStats,
   }
 }
@@ -130,7 +144,19 @@ export function collectMatchedTransfersWithStats(
 
 export function toInteropProtocolTransferDetailsItem(
   transfer: InteropTransferRecord,
+  chainExplorerUrlsById: Map<string, string>,
 ): InteropProtocolTransferDetailsItem {
+  const srcTxHashHref = getTxHashHref(
+    chainExplorerUrlsById,
+    transfer.srcChain,
+    transfer.srcTxHash,
+  )
+  const dstTxHashHref = getTxHashHref(
+    chainExplorerUrlsById,
+    transfer.dstChain,
+    transfer.dstTxHash,
+  )
+
   return {
     transferId: transfer.transferId,
     timestamp: transfer.timestamp,
@@ -142,7 +168,20 @@ export function toInteropProtocolTransferDetailsItem(
     duration: transfer.duration,
     srcChain: transfer.srcChain,
     srcTxHash: transfer.srcTxHash,
+    srcTxHashHref,
     dstChain: transfer.dstChain,
     dstTxHash: transfer.dstTxHash,
+    dstTxHashHref,
   }
+}
+
+function getTxHashHref(
+  chainExplorerUrlsById: Map<string, string>,
+  chainId: string,
+  txHash: string,
+): string {
+  const txExplorerUrl = chainExplorerUrlsById.get(chainId)
+  assert(txExplorerUrl, `Missing tx explorer URL for chain: ${chainId}`)
+
+  return `${txExplorerUrl}${txHash}`
 }
