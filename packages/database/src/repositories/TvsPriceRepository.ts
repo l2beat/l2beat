@@ -121,24 +121,22 @@ export class TvsPriceRepository extends BaseRepository {
     if (configs.length === 0) return 0
 
     let totalDeleted = 0
-    await this.transaction(async () => {
-      await this.batch(configs, 100, async (batch) => {
-        const result = await this.db
-          .deleteFrom('TvsPrice')
-          .where((eb) =>
-            eb.or(
-              batch.map((c) =>
-                eb.and([
-                  eb('configurationId', '=', c.configurationId),
-                  eb('timestamp', '>=', UnixTime.toDate(c.fromInclusive)),
-                  eb('timestamp', '<=', UnixTime.toDate(c.toInclusive)),
-                ]),
-              ),
+    await this.batch(configs, 100, async (batch) => {
+      const result = await this.db
+        .deleteFrom('TvsPrice')
+        .where((eb) =>
+          eb.or(
+            batch.map((c) =>
+              eb.and([
+                eb('configurationId', '=', c.configurationId),
+                eb('timestamp', '>=', UnixTime.toDate(c.fromInclusive)),
+                eb('timestamp', '<=', UnixTime.toDate(c.toInclusive)),
+              ]),
             ),
-          )
-          .executeTakeFirst()
-        totalDeleted += Number(result.numDeletedRows)
-      })
+          ),
+        )
+        .executeTakeFirst()
+      totalDeleted += Number(result.numDeletedRows)
     })
     return totalDeleted
   }
