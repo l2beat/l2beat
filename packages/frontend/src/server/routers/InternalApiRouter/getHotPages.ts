@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { groupByBridgeTabs } from '~/pages/bridges/utils/groupByBridgeTabs'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { getScalingTab } from '~/server/features/scaling/getCommonScalingEntry'
 import {
@@ -9,16 +8,13 @@ import {
 import { ps } from '~/server/projects'
 
 export async function getHotPages() {
-  const [scaling, bridges, daLayers, daBridges, ecosystems, latestValues] =
+  const [scaling, daLayers, daBridges, ecosystems, latestValues] =
     await Promise.all([
       ps.getProjects({
         select: ['scalingInfo', 'statuses'],
         where: ['isScaling'],
       }),
-      ps.getProjects({
-        select: ['bridgeInfo'],
-        where: ['isBridge'],
-      }),
+
       ps.getProjects({
         where: ['isDaLayer'],
       }),
@@ -43,21 +39,6 @@ export async function getHotPages() {
     scalingPaths.push(...result)
   }
 
-  const groupedBridges = groupByBridgeTabs(
-    bridges.map((bridge) => ({
-      ...bridge,
-      category: bridge.bridgeInfo.category,
-    })),
-  )
-  const bridgePaths: string[] = []
-  for (const [_, projects] of Object.entries(groupedBridges)) {
-    const result = projects
-      .sort(sortByTvs(latestValues))
-      .slice(0, 10)
-      .map((s) => `/bridges/projects/${s.slug}`)
-    bridgePaths.push(...result)
-  }
-
   const daPaths = daLayers.map((d) => {
     const bridge = daBridges.find((b) => b.daBridge.daLayer === d.id)
     return `/data-availability/projects/${d.slug}/${bridge?.slug ?? 'no-bridge'}`
@@ -75,13 +56,10 @@ export async function getHotPages() {
     '/scaling/costs',
     '/scaling/upcoming',
     '/scaling/archived',
-    '/bridges/summary',
-    '/bridges/archived',
     '/data-availability/summary',
     '/data-availability/risk',
     '/data-availability/throughput',
     ...scalingPaths,
-    ...bridgePaths,
     ...daPaths,
     ...ecosystemPaths,
   ]
