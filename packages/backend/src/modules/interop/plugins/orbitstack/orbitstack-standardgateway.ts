@@ -1,4 +1,14 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+/*
+Standard gateway plugin — handles ERC20 deposits/withdrawals through
+the default L1/L2 standard gateway pair (lock on L1, mint on L2).
+*/
+
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
@@ -20,7 +30,9 @@ import {
   RedeemScheduled,
 } from './orbitstack'
 
-// == L1 -> L2 ERC20 deposits ==
+const addr = ChainSpecificAddress.address
+
+// --- L1→L2 ERC20 deposits ---
 
 // L1 initiation of L1->L2 ERC20 deposit
 const DepositInitiatedMessageDelivered = createInteropEventType<{
@@ -50,7 +62,7 @@ const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
-// == L2 -> L1 ERC20 withdrawals ==
+// --- L2→L1 ERC20 withdrawals ---
 
 // L2 initiation of L2->L1 ERC20 withdrawal
 const WithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
@@ -83,148 +95,166 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
   readonly name = 'orbitstack-standardgateway'
 
   capture(input: LogToCapture) {
-    if (input.chain === 'ethereum') {
+    // Check if this chain is a parent chain for any network
+    const isParentChain = ORBITSTACK_NETWORKS.some(
+      (n) => n.parentChain === input.chain,
+    )
+    if (isParentChain) {
       // L1 -> L2 ERC20 deposit initiated
+      const logAddress = EthereumAddress(input.log.address)
       const network = ORBITSTACK_NETWORKS.find(
-        (n) => EthereumAddress(input.log.address) === n.l1StandardGateway,
+        (n) =>
+          n.parentChain === input.chain &&
+          n.l1StandardGateway &&
+          logAddress === addr(n.l1StandardGateway),
       )
-      if (!network) return
+      const l1StandardGateway = network?.l1StandardGateway
+      if (network && l1StandardGateway) {
+        const depositInitiated = parseDepositInitiated(input.log, [
+          addr(l1StandardGateway),
+        ])
+        if (depositInitiated) {
+          // Find MessageDelivered in the same transaction
+          const messageDeliveredLog = input.txLogs.find((log) => {
+            const parsed = parseMessageDelivered(log, [addr(network.bridge)])
+            // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
+            return (
+              parsed !== undefined &&
+              parsed.messageIndex === depositInitiated._sequenceNumber
+            )
+          })
 
-      const depositInitiated = parseDepositInitiated(input.log, [
-        network.l1StandardGateway,
-      ])
-      if (depositInitiated) {
-        // Find MessageDelivered in the same transaction
-        const messageDeliveredLog = input.txLogs.find((log) => {
-          const parsed = parseMessageDelivered(log, [network.bridge])
-          // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
-          return (
-            parsed !== undefined &&
-            parsed.messageIndex === depositInitiated._sequenceNumber
-          )
-        })
-
-        if (messageDeliveredLog) {
-          const messageDelivered = parseMessageDelivered(messageDeliveredLog, [
-            network.bridge,
-          ])
-          if (messageDelivered) {
-            return [
-              DepositInitiatedMessageDelivered.create(input, {
-                chain: network.chain,
-                messageNum: messageDelivered.messageIndex.toString(),
-                l1Token: Address32.from(depositInitiated._l1Token),
-                amount: depositInitiated._amount,
-              }),
-            ]
-          }
-        }
-      }
-
-      // L1 finalization of L2->L1 ERC20 withdrawal
-      const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
-        network.l1StandardGateway,
-      ])
-      if (withdrawalFinalized) {
-        // Find OutBoxTransactionExecuted in the same transaction
-        const outBoxTxLog = input.txLogs.find((log) => {
-          const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
-          return parsed !== undefined
-        })
-
-        if (outBoxTxLog) {
-          const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-            network.outbox,
-          ])
-          if (outBoxTx) {
-            return [
-              WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
-                chain: network.chain,
-                position: Number(outBoxTx.transactionIndex),
-                l1Token: Address32.from(withdrawalFinalized.l1Token),
-                amount: withdrawalFinalized._amount,
-              }),
-            ]
-          }
-        }
-      }
-    } else {
-      // L2 operations
-      const network = ORBITSTACK_NETWORKS.find((n) => n.chain === input.chain)
-      if (!network) return
-
-      // Check if this is from the L2 standard gateway
-      if (EthereumAddress(input.log.address) !== network.l2StandardGateway)
-        return
-
-      // L2 finalization of L1->L2 ERC20 deposit (Type 0x68 transaction)
-      const depositFinalized = parseDepositFinalized(input.log, null)
-      if (depositFinalized) {
-        // Find the Transfer event (minting) in the same transaction to get L2 token address
-        const transferLog = input.txLogs.find((log) => {
-          const parsed = parseTransfer(log, null)
-          // Look for mint (from == 0x0) to the recipient
-          return (
-            parsed !== undefined &&
-            parsed.from === '0x0000000000000000000000000000000000000000' &&
-            parsed.to.toLowerCase() === depositFinalized.to.toLowerCase()
-          )
-        })
-
-        if (transferLog) {
-          const transfer = parseTransfer(transferLog, null)
-          if (transfer) {
-            return [
-              DepositFinalized.create(input, {
-                chain: network.chain,
-                l1Token: Address32.from(depositFinalized.l1Token),
-                l2Token: Address32.from(transferLog.address),
-                amount: depositFinalized.amount,
-              }),
-            ]
-          }
-        }
-      }
-
-      // L2 -> L1 ERC20 withdrawal initiated
-      const withdrawalInitiated = parseWithdrawalInitiated(input.log, null)
-      if (withdrawalInitiated) {
-        // Find the L2ToL1Tx event in the same transaction to get position
-        const l2ToL1TxLog = input.txLogs.find((log) => {
-          const parsed = parseL2ToL1Tx(log, [network.arbsys])
-          // The _l2ToL1Id in WithdrawalInitiated equals the position in L2ToL1Tx
-          return (
-            parsed !== undefined &&
-            Number(parsed.position) === Number(withdrawalInitiated._l2ToL1Id)
-          )
-        })
-
-        if (l2ToL1TxLog) {
-          const l2ToL1Tx = parseL2ToL1Tx(l2ToL1TxLog, [network.arbsys])
-          if (l2ToL1Tx) {
-            // Find the Transfer event (burning) to get L2 token address
-            const transferLog = input.txLogs.find((log) => {
-              const parsed = parseTransfer(log, null)
-              // Look for burn (to == 0x0) from the sender
-              return (
-                parsed !== undefined &&
-                parsed.to === '0x0000000000000000000000000000000000000000' &&
-                parsed.from.toLowerCase() ===
-                  withdrawalInitiated._from.toLowerCase()
-              )
-            })
-
-            if (transferLog) {
+          if (messageDeliveredLog) {
+            const messageDelivered = parseMessageDelivered(
+              messageDeliveredLog,
+              [addr(network.bridge)],
+            )
+            if (messageDelivered) {
               return [
-                WithdrawalInitiatedL2ToL1Tx.create(input, {
+                DepositInitiatedMessageDelivered.create(input, {
                   chain: network.chain,
-                  position: Number(l2ToL1Tx.position),
-                  l1Token: Address32.from(withdrawalInitiated.l1Token),
-                  l2Token: Address32.from(transferLog.address),
-                  amount: withdrawalInitiated._amount,
+                  messageNum: messageDelivered.messageIndex.toString(),
+                  l1Token: Address32.from(depositInitiated._l1Token),
+                  amount: depositInitiated._amount,
                 }),
               ]
             }
+          }
+        }
+
+        // L1 finalization of L2->L1 ERC20 withdrawal
+        const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
+          addr(l1StandardGateway),
+        ])
+        if (withdrawalFinalized) {
+          // Find OutBoxTransactionExecuted in the same transaction
+          const outBoxTxLog = input.txLogs.find((log) => {
+            const parsed = parseOutBoxTransactionExecuted(log, [
+              addr(network.outbox),
+            ])
+            return parsed !== undefined
+          })
+
+          if (outBoxTxLog) {
+            const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
+              addr(network.outbox),
+            ])
+            if (outBoxTx) {
+              return [
+                WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
+                  chain: network.chain,
+                  position: Number(outBoxTx.transactionIndex),
+                  l1Token: Address32.from(withdrawalFinalized.l1Token),
+                  amount: withdrawalFinalized._amount,
+                }),
+              ]
+            }
+          }
+        }
+      }
+    }
+
+    // Also check if this chain is a child chain (a chain can be both parent and child, e.g. Arbitrum)
+    const childNetwork = ORBITSTACK_NETWORKS.find(
+      (n) => n.chain === input.chain,
+    )
+    if (!childNetwork) return
+
+    // Check if this is from the L2 standard gateway
+    if (
+      !childNetwork.l2StandardGateway ||
+      EthereumAddress(input.log.address) !==
+        addr(childNetwork.l2StandardGateway)
+    )
+      return
+
+    // L2 finalization of L1->L2 ERC20 deposit (Type 0x68 transaction)
+    const depositFinalized = parseDepositFinalized(input.log, null)
+    if (depositFinalized) {
+      // Find the Transfer event (minting) in the same transaction to get L2 token address
+      const transferLog = input.txLogs.find((log) => {
+        const parsed = parseTransfer(log, null)
+        // Look for mint (from == 0x0) to the recipient
+        return (
+          parsed !== undefined &&
+          parsed.from === '0x0000000000000000000000000000000000000000' &&
+          parsed.to.toLowerCase() === depositFinalized.to.toLowerCase()
+        )
+      })
+
+      if (transferLog) {
+        const transfer = parseTransfer(transferLog, null)
+        if (transfer) {
+          return [
+            DepositFinalized.create(input, {
+              chain: childNetwork.chain,
+              l1Token: Address32.from(depositFinalized.l1Token),
+              l2Token: Address32.from(transferLog.address),
+              amount: depositFinalized.amount,
+            }),
+          ]
+        }
+      }
+    }
+
+    // L2 -> L1 ERC20 withdrawal initiated
+    const withdrawalInitiated = parseWithdrawalInitiated(input.log, null)
+    if (withdrawalInitiated) {
+      // Find the L2ToL1Tx event in the same transaction to get position
+      const l2ToL1TxLog = input.txLogs.find((log) => {
+        const parsed = parseL2ToL1Tx(log, [addr(childNetwork.arbsys)])
+        // The _l2ToL1Id in WithdrawalInitiated equals the position in L2ToL1Tx
+        return (
+          parsed !== undefined &&
+          Number(parsed.position) === Number(withdrawalInitiated._l2ToL1Id)
+        )
+      })
+
+      if (l2ToL1TxLog) {
+        const l2ToL1Tx = parseL2ToL1Tx(l2ToL1TxLog, [addr(childNetwork.arbsys)])
+        if (l2ToL1Tx) {
+          // Find the Transfer event (burning) to get L2 token address
+          const transferLog = input.txLogs.find((log) => {
+            const parsed = parseTransfer(log, null)
+            // Look for burn (to == 0x0) from the sender
+            return (
+              parsed !== undefined &&
+              parsed.to === '0x0000000000000000000000000000000000000000' &&
+              parsed.from.toLowerCase() ===
+                withdrawalInitiated._from.toLowerCase()
+            )
+          })
+
+          if (transferLog) {
+            return [
+              WithdrawalInitiatedL2ToL1Tx.create(input, {
+                chain: childNetwork.chain,
+                position: Number(l2ToL1Tx.position),
+                l1Token: Address32.from(withdrawalInitiated.l1Token),
+                l2Token: Address32.from(transferLog.address),
+                amount: withdrawalInitiated._amount,
+              }),
+            ]
           }
         }
       }
