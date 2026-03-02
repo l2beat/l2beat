@@ -9,8 +9,9 @@ import type {
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import partition from 'lodash/partition'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -227,21 +228,36 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
-    if (configurations.length === 0) return
+    const [configsWithRange, configsWithoutRange] = partition(
+      configurations,
+      (c) => c.type === 'trim',
+    )
 
-    const configs = configurations.map((c) => ({
-      configurationId: c.id,
-      fromInclusive: UnixTime(c.from),
-      toInclusive: UnixTime(c.to),
-    }))
+    if (configsWithoutRange.length > 0) {
+      const deletedRecords = await this.$.db.tvsAmount.deleteByConfigIds(
+        configsWithoutRange.map((c) => c.id),
+      )
+      if (deletedRecords > 0) {
+        this.logger.info('Wiped records for configurations', {
+          configurations: configsWithoutRange.length,
+          deletedRecords,
+        })
+      }
+    }
 
-    const deletedRecords = await this.$.db.tvsAmount.deleteByConfigs(configs)
-
-    if (deletedRecords > 0) {
-      this.logger.info('Deleted records for configurations', {
-        configurations: configurations.length,
-        deletedRecords,
-      })
+    if (configsWithRange.length > 0) {
+      const configs = configsWithRange.map((c) => ({
+        configurationId: c.id,
+        fromInclusive: c.range[0],
+        toInclusive: c.range[1],
+      }))
+      const deletedRecords = await this.$.db.tvsAmount.deleteByConfigs(configs)
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed records for configurations', {
+          configurations: configsWithRange.length,
+          deletedRecords,
+        })
+      }
     }
   }
 }

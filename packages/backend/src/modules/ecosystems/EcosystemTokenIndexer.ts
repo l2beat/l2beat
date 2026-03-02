@@ -95,12 +95,15 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
   override async removeData(
     configurations: RemovalConfiguration[],
   ): Promise<void> {
-    for (const c of configurations) {
-      const deletedRecords =
-        await this.$.db.ecosystemToken.deleteByConfigurationId(c.id)
+    if (configurations.length === 0) return
 
-      this.logger.info('Wiped ecosystem token records for configuration', {
-        id: c.id,
+    const deletedRecords = await this.$.db.ecosystemToken.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
+
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped ecosystem token records for configurations', {
+        configurations: configurations.length,
         deletedRecords,
       })
     }

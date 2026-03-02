@@ -16,12 +16,20 @@ export interface SavedConfiguration<T> extends Configuration<T> {
   currentHeight: number | null
 }
 
-export interface RemovalConfiguration {
+export type RemovalConfiguration =
+  | TrimRemovalConfiguration
+  | WipeRemovalConfiguration
+
+export type TrimRemovalConfiguration = {
+  type: 'trim'
   id: string
-  /** Inclusive */
-  from: number
-  /** Inclusive */
-  to: number
+  /** Inclusive range */
+  range: [number, number]
+}
+
+export type WipeRemovalConfiguration = {
+  type: 'wipe'
+  id: string
 }
 
 export interface ConfigurationRange<T> {

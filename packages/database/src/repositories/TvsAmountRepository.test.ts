@@ -161,6 +161,47 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
   })
 
+  describe(TvsAmountRepository.prototype.deleteByConfigIds.name, () => {
+    it('deletes all rows for given configuration ids', async () => {
+      await repository.upsertMany([
+        tvsAmount('a', UnixTime(1), 1n),
+        tvsAmount('a', UnixTime(2), 2n),
+        tvsAmount('b', UnixTime(1), 3n),
+        tvsAmount('c', UnixTime(1), 4n),
+      ])
+
+      const deleted = await repository.deleteByConfigIds([
+        'a'.repeat(12),
+        'b'.repeat(12),
+      ])
+
+      expect(deleted).toEqual(3)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([tvsAmount('c', UnixTime(1), 4n)])
+    })
+
+    it('returns 0 for empty ids', async () => {
+      await repository.upsertMany([tvsAmount('a', UnixTime(1), 1n)])
+
+      const deleted = await repository.deleteByConfigIds([])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([tvsAmount('a', UnixTime(1), 1n)])
+    })
+
+    it('returns 0 when no matching config found', async () => {
+      await repository.upsertMany([tvsAmount('a', UnixTime(1), 1n)])
+
+      const deleted = await repository.deleteByConfigIds(['b'.repeat(12)])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([tvsAmount('a', UnixTime(1), 1n)])
+    })
+  })
+
   describe(TvsAmountRepository.prototype.deleteByConfigs.name, () => {
     it('deletes data in range for matching configs', async () => {
       await repository.upsertMany([

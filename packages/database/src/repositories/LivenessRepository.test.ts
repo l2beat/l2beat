@@ -221,6 +221,36 @@ describeDatabase(LivenessRepository.name, (db) => {
     })
   })
 
+  describe(LivenessRepository.prototype.deleteByConfigIds.name, () => {
+    it('deletes all rows for given configuration ids', async () => {
+      const deleted = await repository.deleteByConfigIds([
+        txIdA.toString(),
+        txIdB.toString(),
+      ])
+
+      expect(deleted).toEqual(3)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([DATA[3]!])
+    })
+
+    it('returns 0 for empty ids', async () => {
+      const deleted = await repository.deleteByConfigIds([])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted(DATA)
+    })
+
+    it('returns 0 when no matching config found', async () => {
+      const deleted = await repository.deleteByConfigIds(['non-existent-id'])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted(DATA)
+    })
+  })
+
   describe(LivenessRepository.prototype.deleteFromById.name, () => {
     it('should delete rows inserted after certain timestamp for given configuration id inclusively', async () => {
       await repository.deleteAll()

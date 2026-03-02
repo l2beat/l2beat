@@ -1,17 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
-import {
-  CoingeckoId,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import partition from 'lodash/partition'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
+  RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
@@ -128,21 +126,36 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
-    if (configurations.length === 0) return
+    const [configsWithRange, configsWithoutRange] = partition(
+      configurations,
+      (c) => c.type === 'trim',
+    )
 
-    const configs = configurations.map((c) => ({
-      configurationId: c.id,
-      fromInclusive: UnixTime(c.from),
-      toInclusive: UnixTime(c.to),
-    }))
+    if (configsWithoutRange.length > 0) {
+      const deletedRecords = await this.$.db.tvsPrice.deleteByConfigIds(
+        configsWithoutRange.map((c) => c.id),
+      )
+      if (deletedRecords > 0) {
+        this.logger.info('Wiped records for configurations', {
+          configurations: configsWithoutRange.length,
+          deletedRecords,
+        })
+      }
+    }
 
-    const deletedRecords = await this.$.db.tvsPrice.deleteByConfigs(configs)
-
-    if (deletedRecords > 0) {
-      this.logger.info('Deleted records for configurations', {
-        configurations: configurations.length,
-        deletedRecords,
-      })
+    if (configsWithRange.length > 0) {
+      const configs = configsWithRange.map((c) => ({
+        configurationId: c.id,
+        fromInclusive: c.range[0],
+        toInclusive: c.range[1],
+      }))
+      const deletedRecords = await this.$.db.tvsPrice.deleteByConfigs(configs)
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed records for configurations', {
+          configurations: configsWithRange.length,
+          deletedRecords,
+        })
+      }
     }
   }
 }

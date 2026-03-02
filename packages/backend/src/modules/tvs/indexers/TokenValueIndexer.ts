@@ -1,8 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import partition from 'lodash/partition'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -120,19 +121,37 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
-    for (const configuration of configurations) {
+    const [configsWithRange, configsWithoutRange] = partition(
+      configurations,
+      (c) => c.type === 'trim',
+    )
+
+    if (configsWithoutRange.length > 0) {
+      const deletedRecords = await this.$.db.tvsTokenValue.deleteByConfigIds(
+        configsWithoutRange.map((c) => c.id),
+      )
+      if (deletedRecords > 0) {
+        this.logger.info('Wiped records for configurations', {
+          configurations: configsWithoutRange.length,
+          deletedRecords,
+        })
+      }
+    }
+
+    for (const configuration of configsWithRange) {
+      const [from, to] = configuration.range
       const deletedRecords =
         await this.$.db.tvsTokenValue.deleteByConfigInTimeRange(
           configuration.id,
-          UnixTime(configuration.from),
-          UnixTime(configuration.to),
+          from,
+          to,
         )
 
       if (deletedRecords > 0) {
-        this.logger.info('Deleted records for configuration', {
+        this.logger.info('Trimmed records for configuration', {
           id: configuration.id,
-          from: configuration.from,
-          to: configuration.to,
+          from,
+          to,
           deletedRecords,
         })
       }

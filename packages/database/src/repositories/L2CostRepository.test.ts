@@ -169,6 +169,36 @@ describeDatabase(L2CostRepository.name, (db) => {
     })
   })
 
+  describe(L2CostRepository.prototype.deleteByConfigIds.name, () => {
+    it('deletes all rows for given configuration ids', async () => {
+      const deleted = await repository.deleteByConfigIds([
+        txIdA.toString(),
+        txIdC.toString(),
+      ])
+
+      expect(deleted).toEqual(2)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([DATA[1]!])
+    })
+
+    it('returns 0 for empty ids', async () => {
+      const deleted = await repository.deleteByConfigIds([])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted(DATA)
+    })
+
+    it('returns 0 when no matching config found', async () => {
+      const deleted = await repository.deleteByConfigIds(['non-existent-id'])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted(DATA)
+    })
+  })
+
   describe(L2CostRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()

@@ -152,14 +152,14 @@ describe(BlockTimestampIndexer.name, () => {
 
       const removalConfigs = [
         {
+          type: 'trim' as const,
           id: 'config-1',
-          from: 100,
-          to: 200,
+          range: [100, 200] as [number, number],
         },
         {
+          type: 'trim' as const,
           id: 'config-2',
-          from: 300,
-          to: 400,
+          range: [300, 400] as [number, number],
         },
       ]
 
@@ -170,8 +170,8 @@ describe(BlockTimestampIndexer.name, () => {
       ).toHaveBeenNthCalledWith(
         1,
         removalConfigs[0].id,
-        UnixTime(removalConfigs[0].from),
-        UnixTime(removalConfigs[0].to),
+        UnixTime(removalConfigs[0].range[0]),
+        UnixTime(removalConfigs[0].range[1]),
       )
 
       expect(
@@ -179,8 +179,8 @@ describe(BlockTimestampIndexer.name, () => {
       ).toHaveBeenNthCalledWith(
         2,
         removalConfigs[1].id,
-        UnixTime(removalConfigs[1].from),
-        UnixTime(removalConfigs[1].to),
+        UnixTime(removalConfigs[1].range[0]),
+        UnixTime(removalConfigs[1].range[1]),
       )
     })
   })

@@ -183,19 +183,14 @@ describe(DaIndexer.name, () => {
       })
 
       await indexer.removeData([
-        { id: createId('project-a'), from: -1, to: -1 }, // from & to are ignored
-        { id: createId('project-b'), from: -1, to: -1 }, // from & to are ignored
+        { type: 'wipe' as const, id: createId('project-a') },
+        { type: 'wipe' as const, id: createId('project-b') },
       ])
 
-      expect(repository.deleteByConfigurationId).toHaveBeenNthCalledWith(
-        1,
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
         createId('project-a'),
-      )
-
-      expect(repository.deleteByConfigurationId).toHaveBeenNthCalledWith(
-        2,
         createId('project-b'),
-      )
+      ])
     })
   })
 
@@ -225,6 +220,7 @@ function mockIndexer($: {
   useBlobService?: boolean
 }) {
   const repository = mockObject<Database['dataAvailability']>({
+    deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo({}),
     upsertMany: mockFn().resolvesTo(undefined),
     getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),

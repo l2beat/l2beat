@@ -4,11 +4,13 @@ import {
   assert,
   type CoingeckoId,
   type Configuration,
-  type RemovalConfiguration,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
-import type { ManagedMultiIndexerOptions } from '../../tools/uif/multi/types'
+import type {
+  ManagedMultiIndexerOptions,
+  RemovalConfiguration,
+} from '../../tools/uif/multi/types'
 
 interface DaBeatPricesConfig {
   coingeckoIds: string[]
