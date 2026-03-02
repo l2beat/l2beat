@@ -145,5 +145,6 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Linea',
     type: 'evm',
     display: 'LINEA',
+    txExplorerUrl: 'https://lineascan.build/tx/',
   },
 ]
