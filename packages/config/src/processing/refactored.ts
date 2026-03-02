@@ -1,6 +1,7 @@
 import { across } from '../projects/across/across'
 import { airbender } from '../projects/airbender/airbender'
 import { avail } from '../projects/avail/avail'
+import { avalanche } from '../projects/avalanche/avalanche'
 import { axelar } from '../projects/axelar/axelar'
 import { axelarits } from '../projects/axelar-its/axelar-its'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
@@ -100,6 +101,7 @@ export const refactored: BaseProject[] = [
   bsc,
   gnosis,
   gateway,
+  avalanche,
   // interop protocols
   debridgeDln,
   hyperlaneHwr,

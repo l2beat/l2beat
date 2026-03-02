@@ -7,6 +7,18 @@ export const avalanche: BaseProject = {
   name: 'Avalanche',
   shortName: undefined,
   addedAt: UnixTime(1662628329),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
+  display: {
+    description: '',
+    links: {},
+    badges: [],
+  },
   chainConfig: {
     name: 'avalanche',
     chainId: 43114,
