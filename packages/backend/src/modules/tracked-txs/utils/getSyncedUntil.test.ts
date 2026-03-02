@@ -1,6 +1,7 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import { type SavedConfiguration, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import type { SavedConfiguration } from '../../../tools/uif/multi/types'
 import { getSyncedUntil } from './getSyncedUntil'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))

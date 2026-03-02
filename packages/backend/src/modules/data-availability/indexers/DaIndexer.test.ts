@@ -1,12 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
-import {
-  type Configuration,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { expect, mockFn, mockObject } from 'earl'
 import type {
@@ -16,6 +11,7 @@ import type {
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import type { Configuration } from '../../../tools/uif/multi/types'
 import type { BlobService } from '../services/BlobService'
 import type { DaService } from '../services/DaService'
 import { DaIndexer } from './DaIndexer'

@@ -8,8 +8,9 @@ import { ManagedMultiIndexer } from './ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
   SavedConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from './types'
 
 const INDEXER_ID = 'indexer'
@@ -668,11 +669,11 @@ function trimRemovalWithId(
   id: string,
   from: number,
   to: number,
-): RemovalConfiguration {
+): TrimRemovalConfiguration {
   return { type: 'trim', id: id.repeat(12), range: [from, to] }
 }
 
-function wipeRemovalWithId(id: string): RemovalConfiguration {
+function wipeRemovalWithId(id: string): WipeRemovalConfiguration {
   return { type: 'wipe', id: id.repeat(12) }
 }
 

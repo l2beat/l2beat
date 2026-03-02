@@ -1,11 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
-import { assert, type Configuration, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
+  Configuration,
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
