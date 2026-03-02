@@ -36,12 +36,17 @@ export function TopTokensCell({
     id: ProjectId
     name: string
     iconUrl: string
+    bridgeTypes?: KnownInteropBridgeType[]
   }
   showNetMintedValueColumn?: boolean
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const utils = api.useUtils()
   const { selectionForApi } = useInteropSelectedChains()
+
+  const resolvedType =
+    type ??
+    (protocol.bridgeTypes?.length === 1 ? protocol.bridgeTypes[0] : undefined)
 
   return (
     <>
@@ -65,13 +70,13 @@ export function TopTokensCell({
           utils.interop.tokens.prefetch({
             ...selectionForApi,
             id: protocol.id,
-            type,
+            type: resolvedType,
           })
         }
         setIsOpen={setIsOpen}
       />
       <TopTokensContent
-        type={type}
+        type={resolvedType}
         protocol={protocol}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -127,6 +132,9 @@ function TopTokensContent({
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
     initialState: {
+      columnPinning: {
+        left: ['icon'],
+      },
       sorting: [
         {
           id: 'volume',

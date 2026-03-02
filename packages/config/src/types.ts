@@ -125,7 +125,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isBridge?: true
   isScaling?: true
   isZkCatalog?: true
   isInteropProtocol?: true

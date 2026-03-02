@@ -5,7 +5,6 @@ import { BADGES, badgesCompareFn } from '../common/badges'
 import type { Bridge, ScalingProject } from '../internalTypes'
 import { mergeBadges } from '../templates/utils'
 import type { BaseProject, ChainConfig } from '../types'
-import { bridges } from './bridges'
 import { adjustDiscoveryInfo } from './getProjects'
 import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
@@ -28,7 +27,7 @@ export function runConfigAdjustments() {
   if (once) return
   once = true
 
-  const chains = [...layer2s, ...layer3s, ...bridges, ...refactored]
+  const chains = [...layer2s, ...layer3s, ...refactored]
     .map((x) => x.chainConfig)
     .filter((x) => x !== undefined)
 
@@ -37,7 +36,6 @@ export function runConfigAdjustments() {
     adjustBadges(p, layer3s)
   })
   layer3s.forEach((p) => adjustLegacy(p, chains))
-  bridges.forEach((p) => adjustLegacy(p, chains))
   refactored.forEach((p) => adjustRefactored(p, chains))
 }
 

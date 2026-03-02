@@ -8,13 +8,7 @@ import { getOpengraphProjectTypes } from './projects/generateProjectOgImages'
 describe('opengraph images', () => {
   it('should contain project page opengraph images for all projects', async () => {
     const projects = await ps.getProjects({
-      optional: [
-        'isScaling',
-        'isBridge',
-        'isZkCatalog',
-        'isDaLayer',
-        'zkCatalogInfo',
-      ],
+      optional: ['isScaling', 'isZkCatalog', 'isDaLayer', 'zkCatalogInfo'],
     })
 
     const missingProjects = projects
