@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "stargatev2",
+  "name": "stargate",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",

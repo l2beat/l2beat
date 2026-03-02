@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "portal",
+  "name": "wormhole-wtt",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",

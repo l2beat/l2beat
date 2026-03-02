@@ -1,7 +1,7 @@
 {
-  "name": "satellite",
-  "timestamp": 1717494911,
-  "configHash": "0x014212262e66b0744751cc733e7684429638c21cc1f29e5b9d91435538e5ca4c",
+  "name": "axelar",
+  "timestamp": 1772444704,
+  "configHash": "0x56f6a504100e019feb04f475626f6b191ad4125164e6d3a3c1d7f6b2aaf0624b",
   "entries": [
     {
       "address": "eth:0x027c1882B975E2cd771AE068b0389FA38B9dda73",
@@ -228,7 +228,7 @@
       "sinceBlock": 18389964,
       "values": {
         "$immutable": true,
-        "currentEpoch": 225,
+        "currentEpoch": 852,
         "owner": "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
@@ -544,6 +544,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 20017695 },
+  "usedBlockNumbers": { "ethereum": 24568948 },
   "permissionsConfigHash": "0x13d82660e46feb12e8665e4fb0187c743cb200746aa9e7c548e36b0c7f198ec8"
 }
