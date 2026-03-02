@@ -1,10 +1,7 @@
 import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  collectMatchedTransfersWithStats,
-  toInteropProtocolTransferDetailsItem,
-} from './getInteropProtocolTransfers'
+import { toInteropProtocolTransferDetailsItem } from './getInteropProtocolTransfers'
 
 describe(toInteropProtocolTransferDetailsItem.name, () => {
   it('maps transfer details with source and destination token amounts', () => {
@@ -52,60 +49,6 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
 
     expect(result.srcTxHashHref).toEqual('https://etherscan.io/tx/0xsrc')
     expect(result.dstTxHashHref).toEqual('https://arbiscan.io/tx/0xdst')
-  })
-})
-
-describe(collectMatchedTransfersWithStats.name, () => {
-  it('matches and sums in a single pass', () => {
-    const result = collectMatchedTransfersWithStats(
-      [
-        transfer({
-          transferId: 't0',
-          plugin: 'skip',
-          srcValueUsd: 5,
-          dstValueUsd: 5,
-        }),
-        transfer({
-          transferId: 't1',
-          plugin: 'keep',
-          srcValueUsd: 100,
-          dstValueUsd: 10,
-        }),
-        transfer({
-          transferId: 't2',
-          plugin: 'keep',
-          srcValueUsd: 10,
-          dstValueUsd: 100,
-        }),
-      ],
-      (transfer) => transfer.plugin === 'keep',
-    )
-
-    expect(result.items.map((x) => x.transferId)).toEqual(['t1', 't2'])
-    expect(result.transferStats).toEqual({
-      transferCount: 2,
-      volume: 200,
-    })
-  })
-
-  it('returns empty stats for no matches', () => {
-    const result = collectMatchedTransfersWithStats(
-      [
-        transfer({
-          transferId: 't1',
-          plugin: 'skip',
-          srcValueUsd: 100,
-          dstValueUsd: 10,
-        }),
-      ],
-      (transfer) => transfer.plugin === 'keep',
-    )
-
-    expect(result.items).toEqual([])
-    expect(result.transferStats).toEqual({
-      transferCount: 0,
-      volume: 0,
-    })
   })
 })
 
