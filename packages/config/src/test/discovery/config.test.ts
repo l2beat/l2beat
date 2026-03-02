@@ -15,6 +15,7 @@ import { expect } from 'earl'
 import { isDeepStrictEqual } from 'util'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'
+import { refactored } from '../../processing/refactored'
 
 const paths = getDiscoveryPaths()
 const configReader = new ConfigReader(paths.discovery)
@@ -50,6 +51,7 @@ describe('discovery config.jsonc', () => {
   const projectIds = layer2s
     .map((p) => p.id.toString())
     .concat(layer3s.map((p) => p.id.toString()))
+    .concat(refactored.map((p) => p.id.toString()))
     .concat(onChainProjects)
 
   it('every config name corresponds to ProjectId', () => {
