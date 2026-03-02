@@ -111,19 +111,11 @@ async function getFilteredTransfersWithStats({
     sourceChains,
     destinationChains,
   })
-  return collectMatchedTransfersWithStats(allTransfers, matcher)
-}
-
-// This is not the actual way we sum transfers in aggregates, but we don't want to duplicate all the logic. Therefore, we simplify it here and perform a 1% comparison check on the frontend.
-export function collectMatchedTransfersWithStats(
-  transfers: InteropTransferRecord[],
-  matcher: (transfer: InteropTransferRecord) => boolean,
-): TransfersWithStats {
   const items: InteropTransferRecord[] = []
   let transferCount = 0
   let volume = 0
 
-  for (const transfer of transfers) {
+  for (const transfer of allTransfers) {
     if (!matcher(transfer)) {
       continue
     }
