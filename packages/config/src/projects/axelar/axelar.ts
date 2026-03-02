@@ -1,5 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../types'
+
+const _discovery = new ProjectDiscovery('axelar')
 
 export const axelar: BaseProject = {
   id: ProjectId('axelar'),

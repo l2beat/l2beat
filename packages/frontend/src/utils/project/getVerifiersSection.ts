@@ -12,10 +12,7 @@ import type { ContractUtils } from './contracts-and-permissions/getContractUtils
 export async function getVerifiersSection(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
   tvs: SevenDayTvsBreakdown,
 ): Promise<Omit<VerifiersSectionProps, keyof ProjectSectionProps>> {
   const projects = await ps.getProjects({

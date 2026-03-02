@@ -2,413 +2,279 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "stargate",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98"],
+  "initialAddresses": [
+    "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
+    "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
+    "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD",
+    "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD",
+    "base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
+    "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+    "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
+    "eth:0x1041D127b2d4BC700F0F563883bC689502606918"
+  ],
   "names": {
-    "eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98": "Router",
-    "eth:0x06D538690AF257Da524f25D0CD52fD85b1c2173E": "Factory",
-    "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F": "StarGateFeeLibrary7",
-    "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705": "StarGate Multisig",
-    "eth:0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
-    "eth:0x5a54fe5234E811466D5366846283323c954310B2": "TSS Oracle",
-    "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "Google Cloud Oracle",
-    "eth:0x902F09715B6303d4173037652FA7377e5b98089E": "LayerZero Relayer",
-    "eth:0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56": "USDC Pool",
-    "eth:0x38EA452219524Bb87e18dE1C24D3bB59510BD783": "USDT Pool",
-    "eth:0x692953e758c3669290cb1677180c64183cEe374e": "USDD Pool",
-    "eth:0x101816545F6bd2b1076434B54383a1E633390A2E": "SG-ETH Pool",
-    "eth:0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d": "DAI Pool",
-    "eth:0xfA0F307783AC21C39E939ACFF795e27b650F6e68": "Frax Pool",
-    "eth:0x590d4f8A68583639f215f675F3a259Ed84790580": "sUSD Pool",
-    "eth:0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2": "LUSD Pool",
-    "eth:0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8": "MAI Pool",
-    "eth:0xd8772edBF88bBa2667ed011542343b0eDDaCDa47": "METIS Pool",
-    "eth:0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d": "USDT Pool2",
-    "eth:0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09": "WOO Pool",
-    "eth:0xA572d137666DCbAdFA47C3fC41F15e90134C618c": "mETH Pool",
+    "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6": "TokenMessagingOptimism",
+    "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": "TokenMessagingScroll",
+    "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD": "TokenMessagingArbitrum",
+    "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD": "TokenMessagingLinea",
+    "base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47": "TokenMessagingBase",
+    "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705": "Stargate Multisig",
+    "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d": "CreditMessaging",
+    "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980": "TokenMessagingEthereum",
+    "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": "StargateMultiRewarder",
+    "eth:0x1041D127b2d4BC700F0F563883bC689502606918": "Treasurer",
+    "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": "SendUln302",
+    "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302",
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2",
+    "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": "LayerZero Executor",
+    "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18": "Stargate DVN",
+    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": "Nethermind DVN",
+    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b": "LayerZero DVN",
     "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed"
   },
   "overrides": {
-    "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": {
-      "ignoreDiscovery": true
+    "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": {
+      "description": "Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint."
     },
-    "eth:0x06D538690AF257Da524f25D0CD52fD85b1c2173E": {
-      "ignoreMethods": ["getPool"],
+    "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6": {
+      "ignoreRelatives": ["endpoint", "oApp", "owner"],
       "fields": {
-        "allPools": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        },
+        "pools": {
           "handler": {
             "type": "array",
-            "method": "allPools",
-            "length": "{{ allPoolsLength }}"
+            "method": "stargateImpls",
+            "startIndex": 1,
+            "length": "{{ maxAssetId }}"
           }
         }
       }
     },
-    "eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F": {
-      "ignoreMethods": [
-        "poolIdToLpId",
-        "poolIdToPriceFeed",
-        "poolIdToPriceSD",
-        "stargatePoolIdToLPStaking"
+    "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
       ]
     },
-    "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "eth:0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "eth:0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": {
+    "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": {
+      "ignoreRelatives": ["endpoint", "oApp", "owner"],
       "fields": {
-        "stargateOracles": {
-          "handler": {
-            "type": "event",
-            "select": "newConfig",
-            "add": {
-              "event": "AppConfigUpdated",
-              "where": [
-                "and",
-                [
-                  "=",
-                  "#userApplication",
-                  "eth:0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
-                ],
-                ["=", "#configType", 6]
-              ]
-            }
-          }
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
         },
-        "stargateRelayers": {
+        "pools": {
           "handler": {
-            "type": "event",
-            "select": "newConfig",
-            "add": {
-              "event": "AppConfigUpdated",
-              "where": [
-                "and",
-                [
-                  "=",
-                  "#userApplication",
-                  "eth:0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
-                ],
-                ["=", "#configType", 3]
-              ]
-            }
+            "type": "array",
+            "method": "stargateImpls",
+            "startIndex": 1,
+            "length": "{{ maxAssetId }}"
           }
+        }
+      }
+    },
+    "scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    },
+    "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD": {
+      "ignoreRelatives": ["endpoint", "oApp", "owner"],
+      "fields": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
         },
-        "stargateScrollConfig": {
+        "pools": {
+          "handler": {
+            "type": "array",
+            "method": "stargateImpls",
+            "startIndex": 1,
+            "length": "{{ maxAssetId }}"
+          }
+        }
+      }
+    },
+    "arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    },
+    "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD": {
+      "ignoreRelatives": ["endpoint", "oApp", "owner"],
+      "fields": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        },
+        "pools": {
+          "handler": {
+            "type": "array",
+            "method": "stargateImpls",
+            "startIndex": 1,
+            "length": "{{ maxAssetId }}"
+          }
+        }
+      }
+    },
+    "linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    },
+    "base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47": {
+      "ignoreRelatives": ["endpoint", "oApp", "owner"],
+      "fields": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        },
+        "pools": {
+          "handler": {
+            "type": "array",
+            "method": "stargateImpls",
+            "startIndex": 1,
+            "length": "{{ maxAssetId }}"
+          }
+        }
+      }
+    },
+    "base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    },
+    "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": {
+      "ignoreRelatives": ["rewardTokens", "staking"]
+    },
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": {
+      "description": "A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification (MessageLib) and execution settings here.",
+      "fields": {
+        "getRegisteredLibraries": {
+          "description": "MessageLibs registered for this Endpoint, enforcing the OApp owner's custom security stack.",
+          "severity": "HIGH"
+        },
+        "getSendLibrary": {
           "handler": {
             "type": "call",
-            "method": "getAppConfig",
-            "args": ["214", "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"]
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
           }
         },
-        "stargateArbConfig": {
+        "getReceiveLibrary": {
           "handler": {
             "type": "call",
-            "method": "getAppConfig",
-            "args": ["110", "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"]
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
+          }
+        },
+        "delegatesTokenMessaging": {
+          "handler": {
+            "method": "delegates",
+            "type": "call",
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980"]
+          }
+        },
+        "delegatesCreditMessaging": {
+          "handler": {
+            "method": "delegates",
+            "type": "call",
+            "args": ["0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"]
           }
         }
       }
     },
-    "eth:0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
+    "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": {
       "fields": {
-        "chainPaths": {
+        "getUlnConfig": {
+          "description": "The verification config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])",
           "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
+            "type": "call",
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "verify Stargate messages sent via LayerZero."
+            }
+          ]
         }
       }
     },
-    "eth:0x38EA452219524Bb87e18dE1C24D3bB59510BD783": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
+    "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": {
       "fields": {
-        "chainPaths": {
+        "getExecutorConfig": {
+          "description": "The executor config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [maxMessageSize, Executor])",
           "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
+            "type": "call",
+            "args": ["0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881", 30110]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute Stargate messages sent via LayerZero at the destination."
+            }
+          ]
         }
       }
     },
-    "eth:0x692953e758c3669290cb1677180c64183cEe374e": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
+    "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18": {
+      "description": "One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.",
+      "ignoreRelatives": ["workerFeeLib", "priceFeed"]
     },
-    "eth:0x101816545F6bd2b1076434B54383a1E633390A2E": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
-    },
-    "eth:0xfA0F307783AC21C39E939ACFF795e27b650F6e68": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
-    },
-    "eth:0x590d4f8A68583639f215f675F3a259Ed84790580": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
-    },
-    "eth:0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
-    },
-    "eth:0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
-    },
-    "eth:0xd8772edBF88bBa2667ed011542343b0eDDaCDa47": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
-    },
-    "eth:0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
-    },
-    "eth:0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
-    },
-    "eth:0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
-    },
-    "eth:0xA572d137666DCbAdFA47C3fC41F15e90134C618c": {
-      "ignoreRelatives": ["token"],
-      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
-      "ignoreInWatchMode": [
-        "deltaCredit",
-        "eqFeePool",
-        "protocolFeeBalance",
-        "totalLiquidity",
-        "totalSupply",
-        "chainPaths",
-        "getChainPathsLength",
-        "totalWeight"
-      ],
-      "fields": {
-        "chainPaths": {
-          "handler": {
-            "type": "array",
-            "method": "chainPaths",
-            "length": "{{ getChainPathsLength }}"
-          }
-        }
-      }
+    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": {
+      "description": "One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.",
+      "ignoreRelatives": ["workerFeeLib", "priceFeed"]
     }
   }
 }

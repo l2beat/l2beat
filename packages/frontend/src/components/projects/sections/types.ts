@@ -1,5 +1,4 @@
 import type { ActivitySectionProps } from './ActivitySection'
-import type { BridgesTvsSectionProps } from './BridgesTvsSection'
 import type { ContractsSectionProps } from './contracts/ContractsSection'
 import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
@@ -84,11 +83,6 @@ interface ProjectDetailsThroughputSection {
 interface ProjectDetailsScalingTvsSection {
   type: 'ScalingTvsSection'
   props: ProjectDetailsProps<ScalingTvsSectionProps>
-}
-
-interface ProjectDetailsBridgesTvsSection {
-  type: 'BridgesTvsSection'
-  props: ProjectDetailsProps<BridgesTvsSectionProps>
 }
 
 interface ProjectDetailsActivitySection {
@@ -232,7 +226,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
   | ProjectDetailsScalingTvsSection
-  | ProjectDetailsBridgesTvsSection
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection
   | ProjectDetailsVerifiersSection

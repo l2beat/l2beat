@@ -1,7 +1,4 @@
 import { AboutUsPage } from './about/AboutUsPage'
-import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
-import { BridgesProjectPage } from './bridges/project/BridgesProjectPage'
-import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
 import { ChangelogPage } from './changelog/ChangelogPage'
 import { DaRiskFrameworkPage } from './da-risk-framework/DaRiskFrameworkPage'
 import { DataAvailabilityArchivedPage } from './data-availability/archived/DataAvailabilityArchivedPage'
@@ -73,10 +70,6 @@ const pages = {
   InteropNonMintingPage,
   InteropLockAndMintPage,
   InteropBurnAndMintPage,
-  // Bridges
-  BridgesSummaryPage,
-  BridgesArchivedPage,
-  BridgesProjectPage,
   // Data Availability
   DataAvailabilitySummaryPage,
   DataAvailabilityRiskPage,
