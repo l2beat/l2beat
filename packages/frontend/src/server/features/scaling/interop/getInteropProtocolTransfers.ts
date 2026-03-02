@@ -6,6 +6,7 @@ import {
   getInteropTransferValue,
   type UnixTime,
 } from '@l2beat/shared-pure'
+import { InMemoryCache } from '~/server/cache/InMemoryCache'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import type {
@@ -21,20 +22,26 @@ interface TransfersWithStats {
   transferStats: InteropProtocolTransferStats
 }
 
+const VALUE_TOLERANCE_RATIO = 0.01
+const MIN_VALUE_TOLERANCE = 0.01
+
 const INTEROP_CHAIN_TX_EXPLORER_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [chain.id, chain.txExplorerUrl]),
 )
+const interopTransfersCache = new InMemoryCache()
 
 export async function getInteropProtocolTransfers({
   id,
   from,
   to,
   type,
+  expectedTransferCount,
+  expectedVolume,
 }: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
   if (from.length === 0 || to.length === 0) {
     return {
       items: [],
-      transferStats: undefined,
+      hasIntegrityMismatch: false,
     }
   }
 
@@ -45,7 +52,7 @@ export async function getInteropProtocolTransfers({
   if (!interopProject?.interopConfig) {
     return {
       items: [],
-      transferStats: undefined,
+      hasIntegrityMismatch: false,
     }
   }
 
@@ -57,7 +64,7 @@ export async function getInteropProtocolTransfers({
   if (plugins.length === 0) {
     return {
       items: [],
-      transferStats: undefined,
+      hasIntegrityMismatch: false,
     }
   }
 
@@ -65,20 +72,37 @@ export async function getInteropProtocolTransfers({
   if (!snapshotTimestamp) {
     return {
       items: [],
-      transferStats: undefined,
+      hasIntegrityMismatch: false,
     }
   }
 
   const classifier = new InteropTransferClassifier()
   const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)
   const pluginIds = [...new Set(plugins.map((plugin) => plugin.plugin))]
-  const result = await getFilteredTransfersWithStats({
-    snapshotTimestamp,
-    sourceChains: from,
-    destinationChains: to,
-    pluginIds,
-    matcher,
-  })
+  const result = await interopTransfersCache.get(
+    {
+      key: [
+        'interop-transfers',
+        id.toString(),
+        type ?? 'all',
+        snapshotTimestamp.toString(),
+        [...from].sort().join(','),
+        [...to].sort().join(','),
+        toPluginMatcherCacheKey(plugins),
+      ],
+      ttl: 60 * 10,
+      staleWhileRevalidate: 60 * 15,
+    },
+    () =>
+      getFilteredTransfersWithStats({
+        snapshotTimestamp,
+        sourceChains: from,
+        destinationChains: to,
+        pluginIds,
+        matcher,
+      }),
+  )
+
   return {
     items: result.items.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
@@ -86,7 +110,11 @@ export async function getInteropProtocolTransfers({
         INTEROP_CHAIN_TX_EXPLORER_URLS,
       ),
     ),
-    transferStats: result.transferStats,
+    hasIntegrityMismatch: hasTransferStatsMismatch(
+      result.transferStats,
+      expectedTransferCount,
+      expectedVolume,
+    ),
   }
 }
 
@@ -176,4 +204,43 @@ function getTxHashHref(
   assert(txExplorerUrl, `Missing tx explorer URL for chain: ${chainId}`)
 
   return `${txExplorerUrl}${txHash}`
+}
+
+function toPluginMatcherCacheKey(
+  plugins: {
+    plugin: string
+    bridgeType: string
+    chain?: string
+    abstractTokenId?: string
+    transferType?: string
+  }[],
+): string {
+  return plugins
+    .map(
+      (plugin) =>
+        `${plugin.plugin}:${plugin.bridgeType}:${plugin.chain ?? ''}:${plugin.abstractTokenId ?? ''}:${plugin.transferType ?? ''}`,
+    )
+    .sort()
+    .join('|')
+}
+
+// Note: We are not summing transfers in exactly the same way as the backend aggregates do.
+// To avoid duplicating all aggregation logic here, we use a simplified calculation on the frontend
+// and add this 1% difference check to allow for minor discrepancies between methods.
+function hasTransferStatsMismatch(
+  transferStats: InteropProtocolTransferStats,
+  expectedTransferCount: number,
+  expectedVolume: number,
+): boolean {
+  if (transferStats.transferCount !== expectedTransferCount) {
+    return true
+  }
+
+  const difference = Math.abs(transferStats.volume - expectedVolume)
+  const tolerance = Math.max(
+    Math.abs(expectedVolume) * VALUE_TOLERANCE_RATIO,
+    MIN_VALUE_TOLERANCE,
+  )
+
+  return difference > tolerance
 }
