@@ -1,7 +1,7 @@
 {
   "name": "lido",
   "timestamp": 1759786119,
-  "configHash": "0xff704a6370d2e65d1815cbba95c1253f0cf873d5d1f18094eed6e818283cba8c",
+  "configHash": "0xaa505f39e5ae94b0b48010d8d3c4127dfaa146b0860b9f00ae2c367455a7785b",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -107,11 +107,18 @@
       "name": "ValidatorsExitBusOracle",
       "address": "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
       "type": "Contract",
+      "template": "tokens/Lido/ValidatorsExitBusOracle",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
         "0xe4c526720601a291e152819a6b6a28a60b7aa74dfc163dcdda0848713449d95d"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "getConsensusReport",
+        "getProcessingState",
+        "getResumeSinceTimestamp",
+        "getTotalRequestsProcessed"
+      ],
       "sinceTimestamp": 1683024035,
       "sinceBlock": 17172556,
       "values": {
@@ -156,7 +163,6 @@
           "prevExitRequestsLimit": 11200,
           "currentExitRequestsLimit": 11200
         },
-        "getLastProcessingRefSlot": 12746399,
         "getMaxValidatorsPerReport": 600,
         "getProcessingState": {
           "currentFrameRefSlot": 12746399,
@@ -277,25 +283,12 @@
         "getProposalAt": [],
         "getProposalsLength": 0,
         "getQuorum": 2,
-        "getScheduleProposalState": [
-          [0, 2, 0, false],
-          [0, 2, 0, false],
-          [0, 2, 0, false],
-          [0, 2, 0, false],
-          [0, 2, 0, false]
-        ],
         "getTimelockDuration": 2592000,
         "owner": "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"
       },
-      "errors": { "getScheduleProposalState": "Processing error occurred." },
       "implementationNames": {
         "eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0": "TiebreakerCoreCommittee"
       }
-    },
-    {
-      "address": "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x237Cddf3aA765260cf6b60E064065Da7c3Aa1559",
@@ -576,22 +569,12 @@
       }
     },
     {
-      "address": "eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -720,11 +703,13 @@
       "name": "CSFeeOracle",
       "address": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
       "type": "Contract",
+      "template": "tokens/Lido/CSFeeOracle",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
         "0xe9044668de5a790902b6bfed112ac2d764965db11a13b730c985ceff09edff4d"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["getLastProcessingRefSlot"],
       "sinceTimestamp": 1728566339,
       "sinceBlock": 20935462,
       "values": {
@@ -747,15 +732,8 @@
         "FEE_DISTRIBUTOR": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
-        "getConsensusReport": {
-          "hash": "0x742312ede76447c95b1a1f9ddfdabc1c02a7fd0fcd2a332c1dcd8221d89cc16c",
-          "refSlot": 12672479,
-          "processingDeadlineTime": 1761312971,
-          "processingStarted": true
-        },
         "getConsensusVersion": 3,
         "getContractVersion": 2,
-        "getLastProcessingRefSlot": 12672479,
         "getResumeSinceTimestamp": 0,
         "isPaused": false,
         "MANAGE_CONSENSUS_CONTRACT_ROLE": "0x04a0afbbd09d5ad397fc858789da4f8edd59f5ca5098d70faa490babee945c3b",
@@ -843,13 +821,6 @@
         "FEE_DISTRIBUTOR": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
         "feeDistributor": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
         "getBondLockPeriod": 4838400,
-        "getClaimableBondShares": [
-          "66178992839831405",
-          "762266248774283740",
-          "12730249351435661",
-          "42374328016759949",
-          "359848336885088086"
-        ],
         "getCurvesCount": 3,
         "getInitializedVersion": 2,
         "getResumeSinceTimestamp": 0,
@@ -874,16 +845,10 @@
         "WITHDRAWAL_QUEUE": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
-      "errors": { "getClaimableBondShares": "Processing error occurred." },
       "implementationNames": {
         "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da": "OssifiableProxy",
         "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449": "CSAccounting"
       }
-    },
-    {
-      "address": "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "TimelockedGovernance",
@@ -897,19 +862,12 @@
       "sinceBlock": 22538009,
       "values": {
         "$immutable": true,
-        "canScheduleProposal": [false, false, false, false, false],
         "GOVERNANCE": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
         "TIMELOCK": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316"
       },
-      "errors": { "canScheduleProposal": "Processing error occurred." },
       "implementationNames": {
         "eth:0x553337946F2FAb8911774b20025fa776B76a7CcE": "TimelockedGovernance"
       }
-    },
-    {
-      "address": "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Lido DAO Token",
@@ -1028,7 +986,8 @@
         "getFastLaneMembers",
         "getFrameConfig",
         "getMembers",
-        "getReportVariants"
+        "getReportVariants",
+        "getInitialRefSlot"
       ],
       "sinceTimestamp": 1728566351,
       "sinceBlock": 20935463,
@@ -1188,7 +1147,8 @@
         "getFastLaneMembers",
         "getFrameConfig",
         "getMembers",
-        "getReportVariants"
+        "getReportVariants",
+        "getInitialRefSlot"
       ],
       "sinceTimestamp": 1683024059,
       "sinceBlock": 17172558,
@@ -1400,11 +1360,6 @@
         "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A": "AppProxyPinned",
         "eth:0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb": "EVMScriptRegistry"
       }
-    },
-    {
-      "address": "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "WithdrawalQueueERC721",
@@ -1726,6 +1681,7 @@
       "name": "CSParametersRegistry",
       "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
       "type": "Contract",
+      "template": "tokens/Lido/CSParametersRegistry",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
         "0xc1deebfbd111e2f8e2157336320630099bc5658e2dac19d1ff99e0c76d95e5fd"
@@ -1761,98 +1717,12 @@
         "defaultQueueConfig": { "priority": 5, "maxDeposits": 4294967295 },
         "defaultRewardShare": 5834,
         "defaultStrikesParams": { "lifetime": 6, "threshold": 3 },
-        "getAllowedExitDelay": [345600, 345600, 432000, 345600, 345600],
-        "getBadPerformancePenalty": [
-          "258000000000000000",
-          "258000000000000000",
-          "172000000000000000",
-          "258000000000000000",
-          "258000000000000000"
-        ],
-        "getElRewardsStealingAdditionalFine": [
-          "100000000000000000",
-          "100000000000000000",
-          "50000000000000000",
-          "100000000000000000",
-          "100000000000000000"
-        ],
-        "getExitDelayPenalty": [
-          "100000000000000000",
-          "100000000000000000",
-          "50000000000000000",
-          "100000000000000000",
-          "100000000000000000"
-        ],
         "getInitializedVersion": 1,
-        "getKeyRemovalCharge": [
-          "20000000000000000",
-          "20000000000000000",
-          "10000000000000000",
-          "20000000000000000",
-          "20000000000000000"
-        ],
-        "getKeysLimit": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "452312848583266388373324160190187140051835877600158453279131187530910662655",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "getMaxWithdrawalRequestFee": [
-          "100000000000000000",
-          "100000000000000000",
-          "100000000000000000",
-          "100000000000000000",
-          "100000000000000000"
-        ],
-        "getPerformanceCoefficients": [
-          [54, 8, 2],
-          [54, 8, 2],
-          [54, 4, 2],
-          [54, 8, 2],
-          [54, 8, 2]
-        ],
-        "getPerformanceLeewayData": [
-          [[1, 300]],
-          [[1, 300]],
-          [[1, 500], [151, 300]],
-          [[1, 300]],
-          [[1, 300]]
-        ],
-        "getQueueConfig": [
-          [5, 4294967295],
-          [5, 4294967295],
-          [0, 10],
-          [5, 4294967295],
-          [5, 4294967295]
-        ],
-        "getRewardShareData": [
-          [[1, 5834]],
-          [[1, 5834]],
-          [[1, 10000], [17, 5834]],
-          [[1, 5834]],
-          [[1, 5834]]
-        ],
-        "getStrikesParams": [[6, 3], [6, 3], [6, 4], [6, 3], [6, 3]],
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "proxy__getImplementation": "eth:0x25fdC3BE9977CD4da679dF72A64C8B6Bd5216A78",
         "proxy__getIsOssified": false,
         "QUEUE_LEGACY_PRIORITY": 4,
         "QUEUE_LOWEST_PRIORITY": 5
-      },
-      "errors": {
-        "getAllowedExitDelay": "Processing error occurred.",
-        "getBadPerformancePenalty": "Processing error occurred.",
-        "getElRewardsStealingAdditionalFine": "Processing error occurred.",
-        "getExitDelayPenalty": "Processing error occurred.",
-        "getKeyRemovalCharge": "Processing error occurred.",
-        "getKeysLimit": "Processing error occurred.",
-        "getMaxWithdrawalRequestFee": "Processing error occurred.",
-        "getPerformanceCoefficients": "Processing error occurred.",
-        "getPerformanceLeewayData": "Processing error occurred.",
-        "getQueueConfig": "Processing error occurred.",
-        "getRewardShareData": "Processing error occurred.",
-        "getStrikesParams": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428": "OssifiableProxy",
@@ -1921,6 +1791,7 @@
         "0x9020cdc98d338b8634d3047f5de037fa3eef00fa83fcf3c3a70931f03a4914fe"
       ],
       "proxyType": "EIP1167 proxy",
+      "ignoreInWatchMode": ["getRageQuitSupport", "getSignallingEscrowDetails"],
       "sinceTimestamp": 1747910987,
       "sinceBlock": 22537924,
       "values": {
@@ -1959,11 +1830,13 @@
       "name": "CSStrikes",
       "address": "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f",
       "type": "Contract",
+      "template": "tokens/Lido/CSStrikes",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
         "0x85df3ccf87b902aa07f9bfedaabda68d3ac37ad2524de995d9caa2cd8aa41086"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["treeCid", "treeRoot"],
       "sinceTimestamp": 1758112631,
       "sinceBlock": 23382847,
       "values": {
@@ -2020,7 +1893,10 @@
         "getStakeLimitFullInfo",
         "getTotalPooledEther",
         "getTotalShares",
-        "getCurrentStakeLimit"
+        "getCurrentStakeLimit",
+        "getExternalEther",
+        "getExternalShares",
+        "getMaxMintableExternalShares"
       ],
       "sinceTimestamp": 1608242396,
       "sinceBlock": 11473216,
@@ -2231,6 +2107,7 @@
         "0x79c0482c98e90ac27211d4389c4cbff1ab6353a3813cd331290e7a92134e2994"
       ],
       "proxyType": "EIP897 proxy",
+      "ignoreInWatchMode": ["currentPeriodId", "transactionsNextIndex"],
       "sinceTimestamp": 1608242396,
       "sinceBlock": 11473216,
       "values": {
@@ -2247,48 +2124,6 @@
         "getPayment": [],
         "getPeriodDuration": 2592000,
         "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
-        "getTransaction": [
-          [
-            0,
-            366437150,
-            0,
-            0,
-            "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-            "eth:0xAc1e7D530B8ECd81537B01F3337A5c05ea01130C",
-            true,
-            1608246706
-          ],
-          [
-            0,
-            "50000000000000000",
-            0,
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0xc5BC3579F6b3A0a160b6B8C855aC69dbD65F306a",
-            true,
-            1608250345
-          ],
-          [
-            0,
-            "3999999999999997473694078",
-            0,
-            0,
-            "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
-            "eth:0x4b3EDb22952Fb4A70140E39FB1adD05A6B49622B",
-            false,
-            1609870524
-          ],
-          [
-            0,
-            "5000000000000000000000000",
-            0,
-            0,
-            "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
-            "eth:0x753D5167C31fBEB5b49624314d74A957Eb271709",
-            false,
-            1610542958
-          ]
-        ],
         "hasInitialized": true,
         "implementation": "eth:0x836835289A2E81B66AE5d95b7c8dBC0480dCf9da",
         "isDepositable": false,
@@ -2748,8 +2583,6 @@
       "sinceBlock": 22537921,
       "values": {
         "$immutable": true,
-        "canExecute": [false, false, false, false, false],
-        "canSchedule": [false, false, false, false, false],
         "getAdminExecutor": "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021",
         "getAfterScheduleDelay": 86400,
         "getAfterSubmitDelay": 259200,
@@ -3199,10 +3032,6 @@
         "MAX_EMERGENCY_PROTECTION_DURATION": 94608000,
         "MIN_EXECUTION_DELAY": 259200
       },
-      "errors": {
-        "canExecute": "Processing error occurred.",
-        "canSchedule": "Processing error occurred."
-      },
       "implementationNames": {
         "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316": "EmergencyProtectedTimelock"
       }
@@ -3310,7 +3139,8 @@
         "getFastLaneMembers",
         "getFrameConfig",
         "getMembers",
-        "getReportVariants"
+        "getReportVariants",
+        "getInitialRefSlot"
       ],
       "sinceTimestamp": 1683024023,
       "sinceBlock": 17172555,
@@ -3398,11 +3228,18 @@
       "name": "CSFeeDistributor",
       "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
       "type": "Contract",
+      "template": "tokens/Lido/CSFeeDistributor",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
         "0x881e365358bb714cd1d4c59279039f33010f934835d0bd8406443a9bb43c5b9f"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "distributedShares",
+        "pendingSharesToDistribute",
+        "totalClaimableShares",
+        "distributionDataHistoryCount"
+      ],
       "sinceTimestamp": 1728566351,
       "sinceBlock": 20935463,
       "values": {
@@ -3431,50 +3268,7 @@
           0
         ],
         "distributionDataHistoryCount": 0,
-        "getHistoricalDistributionData": [
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "",
-            "",
-            0,
-            0
-          ],
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "",
-            "",
-            0,
-            0
-          ],
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "",
-            "",
-            0,
-            0
-          ],
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "",
-            "",
-            0,
-            0
-          ],
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "",
-            "",
-            0,
-            0
-          ]
-        ],
         "getInitializedVersion": 2,
-        "logCid": "QmPPFkydgtnwMBDF6nZZaU5nnqy3csbKts3UfRRgWXreEu",
         "ORACLE": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
         "pendingSharesToDistribute": "9541314967166830003",
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -3484,13 +3278,9 @@
         "RECOVERER_ROLE": "0xb3e25b5404b87e5a838579cb5d7481d61ad96ee284d38ec1e97c07ba64e7f6fc",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "totalClaimableShares": "66472196352763833428",
-        "treeCid": "QmQMPFA42KXn115k1c2qC9AyXKV45JKcaB1svMGQ7ZvCqz",
         "treeRoot": "0x531df80dfcaecb6fa4c1b29b5e0d1a2d339804b586ee59cdfd7fad8f0f10852c"
       },
-      "errors": {
-        "distributedShares": "Processing error occurred.",
-        "getHistoricalDistributionData": "Processing error occurred."
-      },
+      "errors": { "distributedShares": "Processing error occurred." },
       "implementationNames": {
         "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0": "OssifiableProxy",
         "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1": "CSFeeDistributor"
@@ -3500,11 +3290,18 @@
       "name": "CSModule",
       "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
       "type": "Contract",
+      "template": "tokens/Lido/CSModule",
       "sourceHashes": [
         "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
         "0xde753d771c3a4dc27e58e529b2dfd70871547d49e71ecd3478353ec02e995aa8"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "getActiveNodeOperatorsCount",
+        "getNodeOperatorsCount",
+        "getNonce",
+        "getStakingModuleSummary"
+      ],
       "sinceTimestamp": 1728566339,
       "sinceBlock": 20935462,
       "values": {
@@ -3528,149 +3325,11 @@
         "CREATE_NODE_OPERATOR_ROLE": "0xc72a21b38830f4d6418a239e17db78b945cc7cfee674bac97fd596eaf0438478",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_SIZE": "32000000000000000000",
-        "depositQueuePointers": [[0, 15], [0, 0], [0, 0], [0, 0], [911, 1042]],
         "EXIT_PENALTIES": "eth:0x06cd61045f958A209a0f8D746e103eCc625f4193",
-        "exitDeadlineThreshold": [432000, 432000, 432000, 345600, 345600],
         "FEE_DISTRIBUTOR": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
         "getActiveNodeOperatorsCount": 467,
         "getInitializedVersion": 2,
-        "getNodeOperator": [
-          [
-            10,
-            0,
-            6,
-            10,
-            0,
-            4,
-            0,
-            0,
-            0,
-            8,
-            "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-            "eth:0x0000000000000000000000000000000000000000",
-            false,
-            true
-          ],
-          [
-            19,
-            0,
-            19,
-            19,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-            "eth:0x0000000000000000000000000000000000000000",
-            false,
-            false
-          ],
-          [
-            6,
-            0,
-            5,
-            6,
-            0,
-            1,
-            0,
-            0,
-            0,
-            2,
-            "eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B",
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-            "eth:0x0000000000000000000000000000000000000000",
-            false,
-            true
-          ],
-          [
-            2,
-            0,
-            2,
-            2,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-            "eth:0x0000000000000000000000000000000000000000",
-            false,
-            false
-          ],
-          [
-            12,
-            0,
-            12,
-            12,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-            "eth:0x0000000000000000000000000000000000000000",
-            false,
-            false
-          ]
-        ],
-        "getNodeOperatorIsActive": [true, true, true, true, true],
-        "getNodeOperatorManagementProperties": [
-          [
-            "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-            "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-            false
-          ],
-          [
-            "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-            "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-            false
-          ],
-          [
-            "eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B",
-            "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-            false
-          ],
-          [
-            "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-            "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-            false
-          ],
-          [
-            "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-            "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-            false
-          ]
-        ],
-        "getNodeOperatorNonWithdrawnKeys": [10, 19, 6, 2, 12],
-        "getNodeOperatorOwner": [
-          "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-          "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-          "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-          "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-          "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B"
-        ],
         "getNodeOperatorsCount": 467,
-        "getNodeOperatorSummary": [
-          [0, 0, 0, 0, 0, 0, 6, 4],
-          [0, 0, 0, 0, 0, 0, 19, 0],
-          [0, 0, 0, 0, 0, 0, 5, 1],
-          [0, 0, 0, 0, 0, 0, 2, 0],
-          [0, 0, 0, 0, 0, 0, 12, 0]
-        ],
-        "getNodeOperatorTotalDepositedKeys": [6, 19, 5, 2, 12],
         "getNonce": 1583,
         "getResumeSinceTimestamp": 1729872203,
         "getStakingModuleSummary": {
@@ -3697,17 +3356,6 @@
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "VERIFIER_ROLE": "0x0ce23c3e399818cfee81a7ab0880f714e53d7672b08df0fa62f2843416e1ea09"
       },
-      "errors": {
-        "depositQueuePointers": "Processing error occurred.",
-        "exitDeadlineThreshold": "Processing error occurred.",
-        "getNodeOperator": "Processing error occurred.",
-        "getNodeOperatorIsActive": "Processing error occurred.",
-        "getNodeOperatorManagementProperties": "Processing error occurred.",
-        "getNodeOperatorNonWithdrawnKeys": "Processing error occurred.",
-        "getNodeOperatorOwner": "Processing error occurred.",
-        "getNodeOperatorSummary": "Processing error occurred.",
-        "getNodeOperatorTotalDepositedKeys": "Processing error occurred."
-      },
       "implementationNames": {
         "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F": "OssifiableProxy",
         "eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665": "CSModule"
@@ -3722,10 +3370,12 @@
       "name": "TriggerableWithdrawalsGateway",
       "address": "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B",
       "type": "Contract",
+      "template": "tokens/Lido/TriggerableWithdrawalsGateway",
       "sourceHashes": [
         "0x6e0f1e9ab2993ef59e29bff788073adafb044d30f822762a9085b18062c36002"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["getExitRequestLimitFullInfo"],
       "sinceTimestamp": 1757671211,
       "sinceBlock": 23346245,
       "values": {
@@ -3870,17 +3520,9 @@
         "getProposalAt": [],
         "getProposalsLength": 0,
         "getQuorum": 2,
-        "getScheduleProposalState": [
-          [0, 2, 0, false],
-          [0, 2, 0, false],
-          [0, 2, 0, false],
-          [0, 2, 0, false],
-          [0, 2, 0, false]
-        ],
         "getTimelockDuration": 2592000,
         "owner": "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"
       },
-      "errors": { "getScheduleProposalState": "Processing error occurred." },
       "implementationNames": {
         "eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5": "TiebreakerCoreCommittee"
       }
@@ -8290,21 +7932,28 @@
     "lido/ACL": "0xfa8534df69be8b9f2462c84781a8187bf5ab378c47b5a4d3646fb6c2a8c8efca",
     "tokens/Lido/AccountingOracle": "0x6fbe250d2288a02d83f29c0f9777e5634257139dbb618c7b0307bcf4fe70a1dd",
     "tokens/Lido/Burner": "0xf6c8cf6cb60ea799f5de86286c9080914905458749bb49c535b87e53b5a0247d",
-    "tokens/Lido/CSAccounting": "0x49227d921430f52c5602441f0c462300bbb3861d59e8227068e928c34c9d4836",
+    "tokens/Lido/CSAccounting": "0xa902714201d786a6f73d2f11b03161c36872249966031ae38c7054cda7e39c28",
+    "tokens/Lido/CSFeeDistributor": "0x3f1b3bd32eecdc5e06f096707cdaf5c632ebd76b61694578b0ce674d86434104",
+    "tokens/Lido/CSFeeOracle": "0xedff44ab6d2a997500f30983e462cdc2403bbe006060357d49a5265cb8a42c28",
+    "tokens/Lido/CSModule": "0x3007e979e9cecb06e067045796138b3abed917424ee0f65b36a33385089cd3a6",
+    "tokens/Lido/CSParametersRegistry": "0x91abf839c7ba95f0c664ed3c10d7670f06b49a0edebb70ef23bdbf2ff7dc9dcb",
+    "tokens/Lido/CSStrikes": "0x9b007d8eb33f322cfbc8f52042217ab96ee6d232168141cca5d16460abc9de8c",
     "tokens/Lido/DepositSecurityModule": "0x99ae4ecad8b09875ad720b21d7a45c1e420639eb19bb5cb3311f71c2c9e872c8",
     "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",
-    "tokens/Lido/HashConsensus": "0x714206285494e40177e6727e5d9af271f182e4d67f965befb1fa9a53329f9a00",
+    "tokens/Lido/HashConsensus": "0x6eca9c2f29c0c6143851b340df63f7ef9b1054d55e02c4d6f8a7382132b1df35",
     "tokens/Lido/LegacyOracle": "0xd4c2b7792d1aa8bda3a9e6605109fdfd535626c0735212849251027e9c9678f9",
     "tokens/Lido/LidoDaoAgent": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500",
     "tokens/Lido/OpStackTokenRatePusher": "0x0803b1e88c67bebc35eefc187ea1d4d767067c1b9a88db89e2a7ca732f48acca",
     "tokens/Lido/OracleReportSanityChecker": "0x47a07f409203f7440bed7b0a0d5dcb73848ade84630ed647b710648354fc6728",
     "tokens/Lido/StakingRouter": "0x2861410254db05c174e6624757e7277520697a80a1d9c4a5f17b7cab13f9fdd3",
-    "tokens/Lido/stETH": "0x37a7c6753d191d9570683970648eab69b28b5e19257ea6b82872f52ad9c5f0e1",
+    "tokens/Lido/stETH": "0x2080eca52531b41fd56005cb8fbff2e333d17fc420f97e956a799da2a041baf6",
+    "tokens/Lido/TriggerableWithdrawalsGateway": "0x43bb1049d79437979475f3a6978307abd2341b2f72488ce38b32aaf0a9ea5559",
+    "tokens/Lido/ValidatorsExitBusOracle": "0x11365707f780cd17f5f0f1cc48c59745a28a1f5725b533c928cdaac71c9e3938",
     "tokens/Lido/Voting": "0xfe60c9f930249cf52507a6861a5f27ba4d2b0e05965376084669ce656fa4565f",
     "tokens/Lido/WithdrawalQueueERC721": "0xa1e1aabda76d31acb0074e52508c9fe4f357b9c4fc00e5cae52840093116c816",
     "tokens/Lido/wstETH": "0x9b708a05879c062566a96f737bd9998af0ceda3a51a54456a93cd24fd4c4dfdf"
   },
   "usedBlockNumbers": { "ethereum": 23521409 },
-  "permissionsConfigHash": "0x896046571eee2f775986cfd30b7e5f84380b417d425232c341be239030077b97"
+  "permissionsConfigHash": "0xd09d7d6fd9ea593ff1f89e976a720e106500baabb636325987b93248c8bd8d58"
 }

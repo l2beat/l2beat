@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x98c6913a9334db8f786c96853815a916ccebfa57
+
+# Diff at Tue, 03 Mar 2026 14:55:25 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@3047506b735612eed63f88825acf567786fab433 block: 1772533129
+- current timestamp: 1772533129
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772533129 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DSProxyCache (eth:0x271293c67E2D3140a0E9381EfF1F9b01E07B0795)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DSGuard (eth:0x3421ffcB20E26382A383B90f729B902403638b9d)
+    +++ description: None
+```
+
+```diff
+    contract SortedTroves (eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6) {
+    +++ description: None
+      values.data:
+-        {"head":"eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c","tail":"eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687","maxSize":"115792089237316195423570985008687907853269984665640564039457584007913129639935","size":105}
+      values.getFirst:
+-        "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c"
+      values.getLast:
+-        "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DSProxy (eth:0xA1CbA1fCEf2CD7379f74fEec9a7d8B17d430cc6f)
+    +++ description: None
+```
+
+```diff
+    contract TroveManager (eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2) {
+    +++ description: None
+      values.getTroveFromTroveOwnersArray:
+-        ["eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE","eth:0xf309Ac4c07Be9c93d7a14b5B74e94F7aC29E8eCE","eth:0x98d87F3BF35B8D5685e1eDfAeb8BA2F7d0a7fB11","eth:0xE1137eE95345037529eA444985F7634Bd05a3C8C","eth:0xA1CbA1fCEf2CD7379f74fEec9a7d8B17d430cc6f"]
+      values.TroveOwners:
+-        ["eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE","eth:0xf309Ac4c07Be9c93d7a14b5B74e94F7aC29E8eCE","eth:0x98d87F3BF35B8D5685e1eDfAeb8BA2F7d0a7fB11","eth:0xE1137eE95345037529eA444985F7634Bd05a3C8C","eth:0xA1CbA1fCEf2CD7379f74fEec9a7d8B17d430cc6f"]
+      errors.getTroveFromTroveOwnersArray:
+-        "Processing error occurred."
+      errors.TroveOwners:
+-        "Processing error occurred."
+    }
+```
+
+```diff
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      template:
++        "tokens"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DSProxy (eth:0xf309Ac4c07Be9c93d7a14b5B74e94F7aC29E8eCE)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x6f43e5d6e198976a6964addbba40827aa5ffff07
 
 # Diff at Tue, 03 Mar 2026 10:33:42 GMT:

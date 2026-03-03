@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x3876cf93ab01ed262637f1eb2b7ff1b9e48034ca
+
+# Diff at Tue, 03 Mar 2026 15:20:25 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@3047506b735612eed63f88825acf567786fab433 block: 1758729268
+- current timestamp: 1758729268
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758729268 (main branch discovery), not current.
+
+```diff
+    contract CompoundGovernor (eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0) {
+    +++ description: None
+      values.clock:
+-        23433920
+      values.proposalEta:
+-        [0,0,0,0,0]
+      values.proposalNeedsQueuing:
+-        [true,true,true,true,true]
+      values.proposalProposer:
+-        ["eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]
+      values.proposalSnapshot:
+-        [0,0,0,0,0]
+      values.proposalVotes:
+-        [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+      values.quorum:
+-        [0,0,0,0,0]
+      errors.proposalEta:
+-        "Processing error occurred."
+      errors.proposalNeedsQueuing:
+-        "Processing error occurred."
+      errors.proposalProposer:
+-        "Processing error occurred."
+      errors.proposalSnapshot:
+-        "Processing error occurred."
+      errors.proposalVotes:
+-        "Processing error occurred."
+      errors.quorum:
+-        "Processing error occurred."
+    }
+```
+
+```diff
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      template:
++        "tokens"
+    }
+```
+
 Generated with discovered.json: 0x21635452ae1899df8a8656e808966b032b1f31a3
 
 # Diff at Tue, 03 Mar 2026 10:36:23 GMT:

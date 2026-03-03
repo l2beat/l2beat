@@ -1,3 +1,195 @@
+Generated with discovered.json: 0x133b9e2c8bafce2e16b61e4d24c16029b1d92bf5
+
+# Diff at Tue, 03 Mar 2026 15:22:32 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@3047506b735612eed63f88825acf567786fab433 block: 1759786119
+- current timestamp: 1759786119
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759786119 (main branch discovery), not current.
+
+```diff
+    contract ValidatorsExitBusOracle (eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) {
+    +++ description: None
+      values.getLastProcessingRefSlot:
+-        12746399
+      template:
++        "tokens/Lido/ValidatorsExitBusOracle"
+    }
+```
+
+```diff
+    contract TiebreakerCoreCommittee (eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0) {
+    +++ description: None
+      values.getScheduleProposalState:
+-        [[0,2,0,false],[0,2,0,false],[0,2,0,false],[0,2,0,false],[0,2,0,false]]
+      errors:
+-        {"getScheduleProposalState":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract CSFeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) {
+    +++ description: None
+      values.getConsensusReport:
+-        {"hash":"0x742312ede76447c95b1a1f9ddfdabc1c02a7fd0fcd2a332c1dcd8221d89cc16c","refSlot":12672479,"processingDeadlineTime":1761312971,"processingStarted":true}
+      template:
++        "tokens/Lido/CSFeeOracle"
+    }
+```
+
+```diff
+    contract CSAccounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      values.getClaimableBondShares:
+-        ["66178992839831405","762266248774283740","12730249351435661","42374328016759949","359848336885088086"]
+      errors:
+-        {"getClaimableBondShares":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract TimelockedGovernance (eth:0x553337946F2FAb8911774b20025fa776B76a7CcE) {
+    +++ description: None
+      values.canScheduleProposal:
+-        [false,false,false,false,false]
+      errors:
+-        {"canScheduleProposal":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract CSParametersRegistry (eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428) {
+    +++ description: None
+      values.getAllowedExitDelay:
+-        [345600,345600,432000,345600,345600]
+      values.getBadPerformancePenalty:
+-        ["258000000000000000","258000000000000000","172000000000000000","258000000000000000","258000000000000000"]
+      values.getElRewardsStealingAdditionalFine:
+-        ["100000000000000000","100000000000000000","50000000000000000","100000000000000000","100000000000000000"]
+      values.getExitDelayPenalty:
+-        ["100000000000000000","100000000000000000","50000000000000000","100000000000000000","100000000000000000"]
+      values.getKeyRemovalCharge:
+-        ["20000000000000000","20000000000000000","10000000000000000","20000000000000000","20000000000000000"]
+      values.getKeysLimit:
+-        ["115792089237316195423570985008687907853269984665640564039457584007913129639935","115792089237316195423570985008687907853269984665640564039457584007913129639935","452312848583266388373324160190187140051835877600158453279131187530910662655","115792089237316195423570985008687907853269984665640564039457584007913129639935","115792089237316195423570985008687907853269984665640564039457584007913129639935"]
+      values.getMaxWithdrawalRequestFee:
+-        ["100000000000000000","100000000000000000","100000000000000000","100000000000000000","100000000000000000"]
+      values.getPerformanceCoefficients:
+-        [[54,8,2],[54,8,2],[54,4,2],[54,8,2],[54,8,2]]
+      values.getPerformanceLeewayData:
+-        [[[1,300]],[[1,300]],[[1,500],[151,300]],[[1,300]],[[1,300]]]
+      values.getQueueConfig:
+-        [[5,4294967295],[5,4294967295],[0,10],[5,4294967295],[5,4294967295]]
+      values.getRewardShareData:
+-        [[[1,5834]],[[1,5834]],[[1,10000],[17,5834]],[[1,5834]],[[1,5834]]]
+      values.getStrikesParams:
+-        [[6,3],[6,3],[6,4],[6,3],[6,3]]
+      errors:
+-        {"getAllowedExitDelay":"Processing error occurred.","getBadPerformancePenalty":"Processing error occurred.","getElRewardsStealingAdditionalFine":"Processing error occurred.","getExitDelayPenalty":"Processing error occurred.","getKeyRemovalCharge":"Processing error occurred.","getKeysLimit":"Processing error occurred.","getMaxWithdrawalRequestFee":"Processing error occurred.","getPerformanceCoefficients":"Processing error occurred.","getPerformanceLeewayData":"Processing error occurred.","getQueueConfig":"Processing error occurred.","getRewardShareData":"Processing error occurred.","getStrikesParams":"Processing error occurred."}
+      template:
++        "tokens/Lido/CSParametersRegistry"
+    }
+```
+
+```diff
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) {
+    +++ description: None
+      template:
++        "tokens/Lido/CSStrikes"
+    }
+```
+
+```diff
+    contract Finance (eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86) {
+    +++ description: None
+      values.getTransaction:
+-        [[0,366437150,0,0,"eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","eth:0xAc1e7D530B8ECd81537B01F3337A5c05ea01130C",true,1608246706],[0,"50000000000000000",0,0,"eth:0x0000000000000000000000000000000000000000","eth:0xc5BC3579F6b3A0a160b6B8C855aC69dbD65F306a",true,1608250345],[0,"3999999999999997473694078",0,0,"eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32","eth:0x4b3EDb22952Fb4A70140E39FB1adD05A6B49622B",false,1609870524],[0,"5000000000000000000000000",0,0,"eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32","eth:0x753D5167C31fBEB5b49624314d74A957Eb271709",false,1610542958]]
+    }
+```
+
+```diff
+    contract EmergencyProtectedTimelock (eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316) {
+    +++ description: None
+      values.canExecute:
+-        [false,false,false,false,false]
+      values.canSchedule:
+-        [false,false,false,false,false]
+      errors:
+-        {"canExecute":"Processing error occurred.","canSchedule":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract CSFeeDistributor (eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) {
+    +++ description: None
+      values.getHistoricalDistributionData:
+-        [[0,"0x0000000000000000000000000000000000000000000000000000000000000000","","",0,0],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","","",0,0],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","","",0,0],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","","",0,0],[0,"0x0000000000000000000000000000000000000000000000000000000000000000","","",0,0]]
+      values.logCid:
+-        "QmPPFkydgtnwMBDF6nZZaU5nnqy3csbKts3UfRRgWXreEu"
+      values.treeCid:
+-        "QmQMPFA42KXn115k1c2qC9AyXKV45JKcaB1svMGQ7ZvCqz"
+      errors.getHistoricalDistributionData:
+-        "Processing error occurred."
+      template:
++        "tokens/Lido/CSFeeDistributor"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      values.depositQueuePointers:
+-        [[0,15],[0,0],[0,0],[0,0],[911,1042]]
+      values.exitDeadlineThreshold:
+-        [432000,432000,432000,345600,345600]
+      values.getNodeOperator:
+-        [[10,0,6,10,0,4,0,0,0,8,"eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x0000000000000000000000000000000000000000","eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x0000000000000000000000000000000000000000",false,true],[19,0,19,19,0,0,0,0,0,0,"eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x0000000000000000000000000000000000000000","eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x0000000000000000000000000000000000000000",false,false],[6,0,5,6,0,1,0,0,0,2,"eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B","eth:0x0000000000000000000000000000000000000000","eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e","eth:0x0000000000000000000000000000000000000000",false,true],[2,0,2,2,0,0,0,0,0,0,"eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x0000000000000000000000000000000000000000","eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x0000000000000000000000000000000000000000",false,false],[12,0,12,12,0,0,0,0,0,0,"eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B","eth:0x0000000000000000000000000000000000000000","eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B","eth:0x0000000000000000000000000000000000000000",false,false]]
+      values.getNodeOperatorIsActive:
+-        [true,true,true,true,true]
+      values.getNodeOperatorManagementProperties:
+-        [["eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",false],["eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",false],["eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B","eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",false],["eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",false],["eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B","eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",false]]
+      values.getNodeOperatorNonWithdrawnKeys:
+-        [10,19,6,2,12]
+      values.getNodeOperatorOwner:
+-        ["eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8","eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b","eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e","eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c","eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B"]
+      values.getNodeOperatorSummary:
+-        [[0,0,0,0,0,0,6,4],[0,0,0,0,0,0,19,0],[0,0,0,0,0,0,5,1],[0,0,0,0,0,0,2,0],[0,0,0,0,0,0,12,0]]
+      values.getNodeOperatorTotalDepositedKeys:
+-        [6,19,5,2,12]
+      errors:
+-        {"depositQueuePointers":"Processing error occurred.","exitDeadlineThreshold":"Processing error occurred.","getNodeOperator":"Processing error occurred.","getNodeOperatorIsActive":"Processing error occurred.","getNodeOperatorManagementProperties":"Processing error occurred.","getNodeOperatorNonWithdrawnKeys":"Processing error occurred.","getNodeOperatorOwner":"Processing error occurred.","getNodeOperatorSummary":"Processing error occurred.","getNodeOperatorTotalDepositedKeys":"Processing error occurred."}
+      template:
++        "tokens/Lido/CSModule"
+    }
+```
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) {
+    +++ description: None
+      template:
++        "tokens/Lido/TriggerableWithdrawalsGateway"
+    }
+```
+
+```diff
+    contract TiebreakerCoreCommittee (eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5) {
+    +++ description: None
+      values.getScheduleProposalState:
+-        [[0,2,0,false],[0,2,0,false],[0,2,0,false],[0,2,0,false],[0,2,0,false]]
+      errors:
+-        {"getScheduleProposalState":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x358d290d00e1fbd5370fe1f7e869e43134636110
 
 # Diff at Mon, 13 Oct 2025 18:38:47 GMT:

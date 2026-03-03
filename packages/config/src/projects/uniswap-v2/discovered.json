@@ -1,7 +1,7 @@
 {
   "name": "uniswap-v2",
   "timestamp": 1758824267,
-  "configHash": "0x1db850eda441ecb3b4b164e07b53883446b5f046e7b4e5c4a2981af2c1eb453e",
+  "configHash": "0xa63274cb448d7e7b7074ae1b69dbe6042e835ee0b64035df1b109e0b5891f4db",
   "entries": [
     {
       "name": "UniswapV2Pair",
@@ -14,7 +14,8 @@
       "ignoreInWatchMode": [
         "price1CumulativeLast",
         "totalSupply",
-        "getReserves"
+        "getReserves",
+        "price0CumulativeLast"
       ],
       "sinceTimestamp": 1608363808,
       "sinceBlock": 11482353,
@@ -122,13 +123,6 @@
         "admin": "eth:0x0000000000000000000000000000000000000000",
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
-        "getActions": [
-          [[], [], [], []],
-          [[], [], [], []],
-          [[], [], [], []],
-          [[], [], [], []],
-          [[], [], [], []]
-        ],
         "implementation": "eth:0x0000000000000000000000000000000000000000",
         "initialProposalId": 0,
         "MAX_PROPOSAL_THRESHOLD": "10000000000000000000000000",
@@ -149,7 +143,6 @@
         "votingDelay": 0,
         "votingPeriod": 0
       },
-      "errors": { "getActions": "Processing error occurred." },
       "implementationNames": {
         "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": "GovernorBravoDelegate"
       }

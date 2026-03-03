@@ -31,13 +31,14 @@
         "proposalProposer",
         "proposalSnapshot",
         "proposalVotes",
-        "quorum"
+        "quorum",
+        "proposalDetails",
+        "proposalDeadline"
       ],
       "ignoreInWatchMode": [
         "getNextProposalId",
         "lateQuorumVoteExtension",
-        "proposalCount",
-        "proposalDeadline"
+        "proposalCount"
       ]
     },
     "eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB": {

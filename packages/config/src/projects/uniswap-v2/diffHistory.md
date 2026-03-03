@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x8eb14c501639f8fb5890d5586de6e658f942a2e5
+
+# Diff at Tue, 03 Mar 2026 15:27:02 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@3047506b735612eed63f88825acf567786fab433 block: 1758824267
+- current timestamp: 1758824267
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758824267 (main branch discovery), not current.
+
+```diff
+    contract GovernorBravoDelegate (eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026) {
+    +++ description: None
+      values.getActions:
+-        [[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]]
+      errors:
+-        {"getActions":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x0cbebf703d619e7b0a43d41c743b1fef09878fdd
 
 # Diff at Tue, 03 Mar 2026 14:36:11 GMT:

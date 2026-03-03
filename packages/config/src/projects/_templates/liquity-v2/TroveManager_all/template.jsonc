@@ -4,7 +4,9 @@
     "getBorrowingFee",
     "getBorrowingFeeWithDecay",
     "getTCR",
-    "getRedemptionFeeWithDecay"
+    "getRedemptionFeeWithDecay",
+    "getTroveFromTroveOwnersArray",
+    "TroveOwners"
   ],
   "ignoreInWatchMode": [
     "getBorrowingRate",

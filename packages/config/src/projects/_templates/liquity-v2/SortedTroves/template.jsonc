@@ -8,5 +8,5 @@
     "getPrev",
     "nodes"
   ],
-  "ignoreInWatchMode": ["size"]
+  "ignoreInWatchMode": ["size", "getSize"]
 }

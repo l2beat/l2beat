@@ -1,7 +1,7 @@
 {
   "name": "compound-v3",
   "timestamp": 1758729268,
-  "configHash": "0xa4da621dd4e621523ff5b1c2bafa50044e47fc98aa393c3f5353c3a36177cbea",
+  "configHash": "0x838b2f6cbd2daad550d23735e6dac09eaedd394cf4e6e4b2f33ecc741cbe8c79",
   "entries": [
     {
       "address": "eth:0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8",
@@ -350,6 +350,12 @@
         "0xae31ddd514866281994bdb1cdbd48c797763f6045c7b85e7807542c76a49df07"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "getNextProposalId",
+        "lateQuorumVoteExtension",
+        "proposalCount",
+        "proposalDeadline"
+      ],
       "sinceTimestamp": 1737653243,
       "sinceBlock": 21688680,
       "values": {
@@ -364,7 +370,6 @@
         ],
         "$upgradeCount": 1,
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
-        "clock": 23433920,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo,fractional&quorum=for&params=fractional",
         "eip712Domain": {
@@ -383,29 +388,11 @@
         "proposalCount": 481,
         "proposalDeadline": [0, 0, 0, 0, 0],
         "proposalDetails": [],
-        "proposalEta": [0, 0, 0, 0, 0],
         "proposalGuardian": {
           "account": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
           "expiration": 1789229978
         },
-        "proposalNeedsQueuing": [true, true, true, true, true],
-        "proposalProposer": [
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000"
-        ],
-        "proposalSnapshot": [0, 0, 0, 0, 0],
         "proposalThreshold": "25000000000000000000000",
-        "proposalVotes": [
-          [0, 0, 0],
-          [0, 0, 0],
-          [0, 0, 0],
-          [0, 0, 0],
-          [0, 0, 0]
-        ],
-        "quorum": [0, 0, 0, 0, 0],
         "state": [],
         "timelock": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "token": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
@@ -414,15 +401,7 @@
         "votingPeriod": 19710,
         "whitelistGuardian": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c"
       },
-      "errors": {
-        "proposalDeadline": "Processing error occurred.",
-        "proposalEta": "Processing error occurred.",
-        "proposalNeedsQueuing": "Processing error occurred.",
-        "proposalProposer": "Processing error occurred.",
-        "proposalSnapshot": "Processing error occurred.",
-        "proposalVotes": "Processing error occurred.",
-        "quorum": "Processing error occurred."
-      },
+      "errors": { "proposalDeadline": "Processing error occurred." },
       "implementationNames": {
         "eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0": "TransparentUpgradeableProxy",
         "eth:0x501Eb63A2120418C581B3bD31CF190b0a0616752": "CompoundGovernor"
@@ -1002,6 +981,21 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Compound v3 USDT market - lending pool for USDT",
+      "ignoreInWatchMode": [
+        "baseTrackingBorrowSpeed",
+        "baseTrackingSupplySpeed",
+        "borrowPerSecondInterestRateSlopeHigh",
+        "borrowPerSecondInterestRateBase",
+        "borrowPerSecondInterestRateSlopeLow",
+        "getBorrowRate",
+        "getReserves",
+        "getUtilization",
+        "getSupplyRate",
+        "supplyPerSecondInterestRateSlopeHigh",
+        "supplyPerSecondInterestRateSlopeLow",
+        "totalBorrow",
+        "totalSupply"
+      ],
       "sinceTimestamp": 1673647103,
       "sinceBlock": 16400710,
       "values": {
@@ -1497,10 +1491,12 @@
       "name": "Wrapped Ether Token",
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "type": "Contract",
+      "template": "tokens",
       "sourceHashes": [
         "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1513077455,
       "sinceBlock": 4719568,
       "values": {
@@ -1540,6 +1536,21 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Compound v3 USDC market - main lending pool for USDC with enhanced capital efficiency",
+      "ignoreInWatchMode": [
+        "baseTrackingBorrowSpeed",
+        "baseTrackingSupplySpeed",
+        "borrowPerSecondInterestRateSlopeHigh",
+        "borrowPerSecondInterestRateBase",
+        "borrowPerSecondInterestRateSlopeLow",
+        "getBorrowRate",
+        "getReserves",
+        "getUtilization",
+        "getSupplyRate",
+        "supplyPerSecondInterestRateSlopeHigh",
+        "supplyPerSecondInterestRateSlopeLow",
+        "totalBorrow",
+        "totalSupply"
+      ],
       "sinceTimestamp": 1660368917,
       "sinceBlock": 15331586,
       "values": {
@@ -1918,6 +1929,7 @@
         "0xe0ebd56a4fcc50471b3995432d3ecc178ea35b9d1d560b6ff41d324d0720e4b8"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["latestRoundData"],
       "sinceTimestamp": 1673646779,
       "sinceBlock": 16400683,
       "values": {
@@ -3485,10 +3497,11 @@
     ]
   },
   "usedTemplates": {
-    "compound-v3/cUSDCv3": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "compound-v3/cUSDCv3": "0x21c0b79aa57ea8b248e2eb6c1f21a529f600c3ce00a8f6f8ec59c8d955817abf",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921",
+    "tokens": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "tokens/circle/GatewayMinter": "0x132f1365a912b7680f913f03edba0fc5615bfd87f89912cfa7d5e1d96c2fdc9e",
     "tokens/circle/GatewayWallet": "0xf973d2d1856384390e32857a4be7369220cb341bdf173fb037559d5fe132cd16",
     "tokens/circle/MessageTransmitter": "0xa08ec2ee361f024f79836400aba320fcc928f9e5c224c65eb670f8ec23548cd6",
