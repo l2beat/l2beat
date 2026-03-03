@@ -58,6 +58,7 @@ import {
   updateReviewConfig,
   updateEntityDescription,
 } from './defidisco/reviewConfig'
+import { ReviewCompiler } from './defidisco/reviewCompiler'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
@@ -646,6 +647,29 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error updating entity description:', error)
       res.status(500).json({ error: 'Failed to update entity description' })
+    }
+  })
+
+  // Compile review endpoint
+  app.post('/api/projects/:project/compile-review', (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const compiler = new ReviewCompiler(paths)
+      const result = compiler.compile(project)
+      res.json(result)
+    } catch (error) {
+      console.error('Error compiling review:', error)
+      res.status(500).json({ error: 'Failed to compile review' })
     }
   })
 

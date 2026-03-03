@@ -309,6 +309,40 @@ class DependencyInventoryModule {
   }
 }
 
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
+/**
+ * Maps raw admin types to user-facing types based on proxy information.
+ * - Zero address → 'Revoked'
+ * - Untemplatized/Unknown + immutable proxyType → 'Immutable'
+ * - Untemplatized/Unknown + proxy proxyType → 'Upgradeable'
+ */
+function mapAdminType(
+  rawType: ApiAddressType,
+  normalizedAddress: string,
+  proxyTypeMap: Map<string, string>,
+): ApiAddressType {
+  // Strip eth: prefix for zero address comparison
+  const bareAddress = normalizedAddress.replace(/^eth:/i, '')
+  if (bareAddress === ZERO_ADDRESS) {
+    return 'Revoked'
+  }
+
+  if (rawType === 'Untemplatized' || rawType === 'Unknown') {
+    const proxyType = proxyTypeMap.get(normalizedAddress)
+    if (proxyType === 'immutable') {
+      return 'Immutable'
+    }
+    if (proxyType !== undefined) {
+      return 'Upgradeable'
+    }
+    // No proxy info available — keep original type
+    return rawType
+  }
+
+  return rawType
+}
+
 /**
  * Admin Inventory Module
  *
@@ -318,9 +352,10 @@ class AdminInventoryModule {
   name = 'admins'
 
   calculate(data: ScoringData): AdminModuleScore {
-    // Build contract name and type lookup maps (lowercase keys for case-insensitive lookup)
+    // Build contract name, type, and proxy type lookup maps (lowercase keys for case-insensitive lookup)
     const contractNameMap = new Map<string, string>()
     const contractTypeMap = new Map<string, ApiAddressType>()
+    const proxyTypeMap = new Map<string, string>()
 
     data.projectData.entries?.forEach((entry: any) => {
       const allContracts = [
@@ -328,14 +363,12 @@ class AdminInventoryModule {
         ...(entry.discoveredContracts || []),
       ]
       allContracts.forEach((contract: any) => {
-        contractNameMap.set(
-          contract.address.toLowerCase(),
-          contract.name || 'Unknown Contract',
-        )
-        contractTypeMap.set(
-          contract.address.toLowerCase(),
-          contract.type || 'Contract',
-        )
+        const addr = contract.address.toLowerCase()
+        contractNameMap.set(addr, contract.name || 'Unknown Contract')
+        contractTypeMap.set(addr, contract.type || 'Contract')
+        if (contract.proxyType) {
+          proxyTypeMap.set(addr, contract.proxyType)
+        }
       })
 
       // Also add EOAs
@@ -391,10 +424,17 @@ class AdminInventoryModule {
               const normalizedAdmin = adminAddr.toLowerCase()
               // Get or create admin entry
               if (!adminsMap.has(adminAddr)) {
+                const rawType =
+                  contractTypeMap.get(normalizedAdmin) || 'Unknown'
+                const adminType = mapAdminType(
+                  rawType,
+                  normalizedAdmin,
+                  proxyTypeMap,
+                )
                 adminsMap.set(adminAddr, {
                   adminAddress: adminAddr,
                   adminName: contractNameMap.get(normalizedAdmin) || adminAddr,
-                  adminType: contractTypeMap.get(normalizedAdmin) || 'Unknown',
+                  adminType,
                   functions: [],
                 })
               }

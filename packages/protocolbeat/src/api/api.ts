@@ -420,6 +420,18 @@ export async function getV2Score(project: string): Promise<ApiV2ScoreResponse> {
   return data as ApiV2ScoreResponse
 }
 
+export async function compileReview(
+  project: string,
+): Promise<{ status: string; path?: string; reason?: string; error?: string }> {
+  const res = await fetch(`/api/projects/${project}/compile-review`, {
+    method: 'POST',
+  })
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return await res.json()
+}
+
 export async function getFundsData(project: string): Promise<ApiFundsDataResponse> {
   const res = await fetch(`/api/projects/${project}/funds-data`)
   if (!res.ok) {

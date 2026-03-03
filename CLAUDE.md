@@ -384,6 +384,11 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 
 - **Inventory Sections**: Contracts, Functions, Dependencies, Owners — each with inventory count and breakdown
 - **Shared Scoring Module**: `/defidisco/scoringShared.tsx` — **single source of truth** for all scoring UI utilities and components
+- **Admin Type Mapping** (`mapAdminType` in `v2Scoring.ts`): Maps raw types to user-facing types based on proxy info:
+  - Zero address → `Revoked`
+  - `Untemplatized`/`Unknown` + `immutable` proxyType → `Immutable`
+  - `Untemplatized`/`Unknown` + non-immutable proxyType → `Upgradeable`
+  - `Untemplatized`/`Unknown` + no proxy info → keeps original type
 
 **Shared Module (`scoringShared.tsx`)** — DO NOT duplicate code from this file:
 
@@ -508,6 +513,28 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - `funds`: Per-fund-holding contract name + description of what tokens it holds
 - `sections.codeAndAudits`: Contract listing (dataTable block) + audits placeholder
 
+### DeFiScan Frontend ✅
+
+**Standalone public review website**: React app that renders compiled reviews for end users.
+
+- **Package**: `packages/defiscan-frontend/` (Vite + React + TailwindCSS + Recharts)
+- **Data Model**: Static JSON — reads pre-compiled `compiled-review.json` from `public/data/<slug>/`
+- **Build Script**: `scripts/compile-data.ts` — aggregates compiled reviews into `public/data/index.json` with global stats and dependency aggregation
+- **Pages**: Landing (protocol table + stats), Review (3 views: Report, Explorer, Dashboard), Compare (side-by-side charts)
+- **Commands**: `pnpm dev` (dev server), `pnpm build` (production build, runs compile-data first)
+- **Detailed Docs**: See `packages/defiscan-frontend/README.md`
+
+### Review Compiler ✅
+
+**Compiles all project data into a self-contained review JSON**: Shared between l2b UI and the monitor.
+
+- **Location**: `packages/l2b/src/implementations/discovery-ui/defidisco/reviewCompiler.ts`
+- **API Endpoint**: `POST /api/projects/:project/compile-review` (in `main.ts`)
+- **UI Button**: "Compile Review" in `TerminalExtensions.tsx`
+- **Frontend API**: `compileReview()` in `api.ts`
+- **Output**: `compiled-review.json` per project
+- **Guard Conditions**: Requires `review-config.json` and `call-graph-data.json`; skips if either is missing
+
 ### Continuous Monitoring Service ✅
 
 **Automated change detection, funds refresh, and review compilation**: Runs daily at 8:00 CET via GitHub Actions cron.
@@ -538,7 +565,7 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 | `monitorConfig.ts` | Standalone config from env vars |
 | `DefidiscoMonitorApplication.ts` | Orchestrator — wires Clock, DiscoveryRunner, UpdateNotifier, FundsRefresher, ReviewCompiler |
 | `FundsRefresher.ts` | Wraps `fetchAllFundsForProject` from l2b |
-| `ReviewCompiler.ts` | Reads data files, computes V2 score, resolves templates, writes compiled JSON |
+| `ReviewCompiler` | Imported from `@l2beat/l2b` (see Review Compiler section above) |
 
 **Pre-Compilation Guards**: Before compiling, checks for required data files. If missing, skips silently (log only, no Discord noise):
 - No `review-config.json` → skipped
@@ -549,7 +576,7 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - Self-contained JSON per project — exact data a frontend needs to render a review page
 - Joins V2 scoring data (contracts, functions, admins, dependencies, capital analysis) with descriptions from `review-config.json`
 - Template variables (`{{variableName}}`) resolved at compile time via `dataKeys` map
-- See `ReviewCompiler.ts` for TypeScript interfaces: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
+- See `reviewCompiler.ts` in `packages/l2b/` for TypeScript interfaces: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
 
 **Adding/Removing Projects**: Edit `packages/config/src/defidisco-config.json` and redeploy. The monitor reads the explicit list, not the `config.jsonc` `defidisco.scanPermissions` flag.
 
@@ -644,14 +671,17 @@ packages/
 │   ├── permissionOverrides.ts
 │   ├── contractTags.ts
 │   ├── reviewConfig.ts              # Review config CRUD
+│   ├── reviewCompiler.ts            # Compiled review builder (shared with monitor)
 │   ├── generatePermissionsReport.ts
 │   ├── enhancedTraversal.ts          # Backward BFS governance chains
 │   └── functionAnalysis.ts           # Forward BFS impact & dependencies
+├── defiscan-frontend/                # Standalone public review website
+│   ├── scripts/compile-data.ts       # Build-time data aggregation
+│   └── src/                          # React app (see README.md for structure)
 ├── backend/src/modules/defi-update-monitor/defidisco/
 │   ├── DefidiscoMonitorApplication.ts  # Monitor orchestrator
 │   ├── monitorConfig.ts                # Standalone config
 │   ├── FundsRefresher.ts               # Funds refresh wrapper
-│   ├── ReviewCompiler.ts               # Compiled review builder
 │   └── README.md                       # Monitor documentation
 └── config/src/projects/compound-v3/
     ├── permission-overrides.json

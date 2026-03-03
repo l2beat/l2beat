@@ -57,6 +57,9 @@ export type ApiAddressType =
   | 'Untemplatized'
   | 'Contract'
   | 'Unknown'
+  | 'Immutable'
+  | 'Upgradeable'
+  | 'Revoked'
 
 export interface ApiAddressEntry {
   name?: string

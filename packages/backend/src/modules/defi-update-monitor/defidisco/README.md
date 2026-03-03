@@ -38,7 +38,7 @@ It runs as a Digital Ocean App Platform **worker** (no HTTP port), backed by Pos
 | `defidisco/monitorConfig.ts` | Standalone config from env vars (does not use full `makeConfig()`) |
 | `defidisco/DefidiscoMonitorApplication.ts` | Main orchestrator — wires everything, runs the hourly loop |
 | `defidisco/FundsRefresher.ts` | Wraps existing `fetchAllFundsForProject` from l2b |
-| `defidisco/ReviewCompiler.ts` | Reads all project data files, computes v2 score, resolves templates, writes JSON |
+| `ReviewCompiler` (from `@l2beat/l2b`) | Reads all project data files, computes v2 score, resolves templates, writes JSON. Imported from `@l2beat/l2b/dist/implementations/discovery-ui/defidisco/reviewCompiler` |
 
 ### Reused Infrastructure
 
@@ -122,7 +122,7 @@ The compiled review contains **fully resolved text** — no template variables r
 
 ### Output Structure
 
-See `ReviewCompiler.ts` for the full TypeScript interface definitions:
+See `packages/l2b/src/implementations/discovery-ui/defidisco/reviewCompiler.ts` for the full TypeScript interface definitions:
 
 - `CompiledReview` — top-level structure
 - `CompiledAdmin` — admin with functions, capital, description
@@ -137,7 +137,7 @@ See `ReviewCompiler.ts` for the full TypeScript interface definitions:
 
 To extend the compiled review with new data (e.g., historical TVL, gas costs):
 
-1. **Add a new top-level key** to the `CompiledReview` interface in `ReviewCompiler.ts`
+1. **Add a new top-level key** to the `CompiledReview` interface in `packages/l2b/.../reviewCompiler.ts`
 2. **Add data fetching** to the monitoring loop in `DefidiscoMonitorApplication.updateProject()` (alongside funds refresh)
 3. **Add compilation logic** to `ReviewCompiler.buildCompiledReview()`
 4. **The frontend reads the new key** from `compiled-review.json` — no schema migration needed

@@ -400,7 +400,40 @@ flowchart TD
     %% Track Funds
     K --> N[Identify Funds<br/>Under Control]
 
+    %% Compile and View
+    N --> O[Compile Review]
+    O --> P[View in DeFiScan Frontend]
+
     %% Troubleshooting
     E -.->|Project not visible| T[Troubleshooting:<br/>pnpm l2bup<br/>Restart UI]
 
 ```
+
+## Step 8: Compile and View the Review
+
+Once all analysis steps are complete (discovery, permissions, call graph, funds, review config), you can compile and preview the review.
+
+### Compile the Review
+
+In protocolbeat's Terminal panel, click **"Compile Review"**. This produces a `compiled-review.json` file in the project folder containing all review data in a single self-contained JSON.
+
+### View in the DeFiScan Frontend
+
+To preview the compiled review in the standalone frontend:
+
+```bash
+# Copy the compiled review to the frontend's data directory
+cp packages/config/src/projects/<project>/compiled-review.json \
+   packages/defiscan-frontend/public/data/<slug>/
+
+# Optionally copy funds data for live balance patching
+cp packages/config/src/projects/<project>/funds-data.json \
+   packages/defiscan-frontend/public/data/<slug>/
+
+# Start the frontend dev server
+cd packages/defiscan-frontend
+pnpm dev
+# Open http://localhost:5173
+```
+
+The frontend provides three views for each protocol: **Report** (narrative), **Explorer** (data tables), and **Dashboard** (visual risk overview). You can also compare protocols side-by-side on the Compare page.

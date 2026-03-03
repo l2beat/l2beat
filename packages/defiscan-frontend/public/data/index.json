@@ -1,0 +1,152 @@
+{
+  "totalDefiTvl": 100000000000,
+  "protocols": [
+    {
+      "slug": "Steakhouse-USDC",
+      "name": "Steakhouse USDC",
+      "chain": "Ethereum",
+      "projectType": "yield",
+      "tokenName": "steakUSDC",
+      "totals": {
+        "contractCount": 23,
+        "permissionedFunctionCount": 16,
+        "scoredFunctionCount": 0,
+        "adminCount": 7,
+        "dependencyCount": 8,
+        "totalCapitalAtRisk": 295269592.067359,
+        "totalTokenValueAtRisk": 0
+      }
+    },
+    {
+      "slug": "liquity-v2",
+      "name": "Liquity V2",
+      "chain": "Ethereum",
+      "projectType": "cdp",
+      "tokenName": "BOLD",
+      "totals": {
+        "contractCount": 66,
+        "permissionedFunctionCount": 115,
+        "scoredFunctionCount": 17,
+        "adminCount": 8,
+        "dependencyCount": 1,
+        "totalCapitalAtRisk": 116279675.88946289,
+        "totalTokenValueAtRisk": 39361299.43375648
+      }
+    }
+  ],
+  "globalTotals": {
+    "totalCapitalAtRisk": 411549267.95682186,
+    "totalTokenValueAtRisk": 39361299.43375648,
+    "protocolsReviewed": 2
+  },
+  "dependencies": [
+    {
+      "address": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+      "name": "Morpho Blue",
+      "entity": "Morpho",
+      "totalFundsAtRisk": 295269592.067359,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812",
+      "name": "Chainlink USDC/USD Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 295269592.067359,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
+      "name": "Chainlink USDC/USD Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 295269592.067359,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad",
+      "name": "Chainlink USDC/USD Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 295269592.067359,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
+      "name": "Chainlink USDC/USD Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 295269592.067359,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
+      "name": "Chainlink BTC/USD Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 295269592.067359,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
+      "name": "Chainlink USDC/USD Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 295269592.067359,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
+      "name": "Chainlink wstETH Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 295269592.067359,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+      "name": "Chainlink ETH/USD Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 116279675.88946289,
+      "protocols": [
+        {
+          "slug": "liquity-v2",
+          "name": "Liquity V2"
+        }
+      ]
+    }
+  ]
+}

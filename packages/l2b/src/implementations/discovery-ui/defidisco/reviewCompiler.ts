@@ -1,19 +1,20 @@
-import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type DiscoveryPaths,
   TemplateService,
 } from '@l2beat/discovery'
-import {
-  calculateV2Score,
-  type V2ScoreResult,
-} from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/v2Scoring'
+import { calculateV2Score, type V2ScoreResult } from './v2Scoring'
 import type {
   AdminDetailWithCapital,
-  ApiAddressType,
-} from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/types'
-import { getFundsData } from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/fundsData'
-import { getContractTags } from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/contractTags'
+  ApiContractTagsResponse,
+  ContractFundsData,
+  ApiFunctionAnalysisResponse,
+  ApiFundsDataResponse,
+  ReviewConfig,
+} from './types'
+import { computeFunctionAnalysis } from './functionAnalysis'
+import { getFundsData } from './fundsData'
+import { getContractTags } from './contractTags'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -93,10 +94,13 @@ export interface CompiledDependency {
   description: string
   entity: string | null
   isAutoDetected: boolean
+  viewOnlyPath: boolean
+  calledFunctions: string[]
   functions: {
     contractAddress: string
     contractName: string
     functionName: string
+    viewOnlyPath: boolean
   }[]
 }
 
@@ -140,25 +144,6 @@ export type CompileResult =
   | { status: 'error'; error: string }
 
 // ============================================================================
-// Review Config (subset of the full type — only what we need to read)
-// ============================================================================
-
-interface ReviewConfig {
-  version: string
-  protocolSlug: string
-  protocolName: string
-  tokenName: string
-  chain: string
-  projectType: string
-  description: string
-  admins: Record<string, { name?: string; description: string }>
-  dependencies: Record<string, { name?: string; description: string }>
-  funds: Record<string, { name?: string; description: string }>
-  sections: Record<string, unknown>
-  dataKeys: Record<string, string>
-}
-
-// ============================================================================
 // ReviewCompiler
 // ============================================================================
 
@@ -179,10 +164,8 @@ interface ReviewConfig {
 export class ReviewCompiler {
   constructor(
     private readonly paths: DiscoveryPaths,
-    private readonly logger: Logger,
-  ) {
-    this.logger = this.logger.for(this)
-  }
+    private readonly log: (msg: string) => void = console.log,
+  ) {}
 
   compile(project: string): CompileResult {
     const projectDir = path.join(this.paths.discovery, project)
@@ -190,14 +173,14 @@ export class ReviewCompiler {
     // Guard: review-config.json must exist
     const reviewConfigPath = path.join(projectDir, 'review-config.json')
     if (!fs.existsSync(reviewConfigPath)) {
-      this.logger.warn('No review-config.json found', { project })
+      this.log(`No review-config.json found for ${project}`)
       return { status: 'skipped', reason: 'no-review-config' }
     }
 
     // Guard: call-graph-data.json must exist
     const callGraphPath = path.join(projectDir, 'call-graph-data.json')
     if (!fs.existsSync(callGraphPath)) {
-      this.logger.warn('No call-graph-data.json found', { project })
+      this.log(`No call-graph-data.json found for ${project}`)
       return { status: 'skipped', reason: 'no-call-graph' }
     }
 
@@ -223,35 +206,36 @@ export class ReviewCompiler {
       // 4. Read contract tags
       const contractTags = getContractTags(this.paths, project)
 
-      // 5. Build the compiled review
+      // 5. Compute function analysis (rich dependency data with viewOnlyPath)
+      const functionAnalysis = computeFunctionAnalysis(this.paths, project)
+
+      // 6. Build the compiled review
       const compiled = this.buildCompiledReview(
         project,
         reviewConfig,
         v2Score,
         fundsData,
         contractTags,
+        functionAnalysis,
       )
 
-      // 6. Resolve template variables in all description fields
+      // 7. Resolve template variables in all description fields
       this.resolveTemplateVariables(compiled, reviewConfig.dataKeys, {
         v2Score,
         fundsData,
       })
 
-      // 7. Write compiled-review.json
+      // 8. Write compiled-review.json
       const outputPath = path.join(projectDir, 'compiled-review.json')
       fs.writeFileSync(outputPath, JSON.stringify(compiled, null, 2))
 
-      this.logger.info('Review compiled successfully', {
-        project,
-        outputPath,
-      })
+      this.log(`Review compiled successfully: ${outputPath}`)
 
       return { status: 'success', path: outputPath }
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error)
-      this.logger.error({ project }, error as Error)
+      this.log(`Review compilation error for ${project}: ${errorMessage}`)
       return { status: 'error', error: errorMessage }
     }
   }
@@ -260,12 +244,22 @@ export class ReviewCompiler {
     project: string,
     reviewConfig: ReviewConfig,
     v2Score: V2ScoreResult,
-    fundsData: any,
-    contractTags: any,
+    fundsData: ApiFundsDataResponse,
+    contractTags: ApiContractTagsResponse,
+    functionAnalysis: ApiFunctionAnalysisResponse,
   ): CompiledReview {
-    const tagsByAddress = new Map<string, any>()
+    const tagsByAddress = new Map<
+      string,
+      ApiContractTagsResponse['tags'][number]
+    >()
     for (const tag of contractTags.tags ?? []) {
       tagsByAddress.set(tag.contractAddress.toLowerCase(), tag)
+    }
+
+    // Case-insensitive lookup for funds data with eth: prefix normalization
+    const fundsLookup = new Map<string, ContractFundsData>()
+    for (const [addr, data] of Object.entries(fundsData.contracts ?? {})) {
+      fundsLookup.set(addr.replace(/^eth:/i, '').toLowerCase(), data)
     }
 
     // Build admins from v2 scoring breakdown
@@ -315,9 +309,7 @@ export class ReviewCompiler {
                 directTokenValueUsd: 0,
                 reachableContracts: [],
               })),
-          totalDirectCapital: hasCapital
-            ? withCapital.totalDirectCapital
-            : 0,
+          totalDirectCapital: hasCapital ? withCapital.totalDirectCapital : 0,
           totalDirectTokenValue: hasCapital
             ? withCapital.totalDirectTokenValue
             : 0,
@@ -331,33 +323,104 @@ export class ReviewCompiler {
       }
     }
 
-    // Build dependencies from v2 scoring breakdown
-    const dependencies: CompiledDependency[] = []
-    if (v2Score.inventory.dependencies.breakdown) {
-      for (const dep of v2Score.inventory.dependencies.breakdown) {
-        const desc =
-          reviewConfig.dependencies[dep.dependencyAddress] ??
-          reviewConfig.dependencies[dep.dependencyAddress.toLowerCase()]
-
-        dependencies.push({
-          address: dep.dependencyAddress,
-          name: desc?.name ?? dep.dependencyName,
-          description: desc?.description ?? '',
-          entity: dep.entity ?? null,
-          isAutoDetected: true,
-          functions: dep.functions.map((f) => ({
-            contractAddress: f.contractAddress,
-            contractName: f.contractName,
-            functionName: f.functionName,
-          })),
-        })
+    // Build contract name lookup from v2Score admin functions
+    const contractNameMap = new Map<string, string>()
+    if (v2Score.inventory.admins.breakdown) {
+      for (const admin of v2Score.inventory.admins.breakdown) {
+        for (const fn of admin.functions) {
+          contractNameMap.set(fn.contractAddress.toLowerCase(), fn.contractName)
+        }
       }
+    }
+
+    // Build dependencies from function analysis (richer data than v2Score)
+    const depMap = new Map<
+      string,
+      {
+        address: string
+        name: string
+        entity: string | undefined
+        isAutoDetected: boolean
+        calledFunctions: Set<string>
+        functions: {
+          contractAddress: string
+          contractName: string
+          functionName: string
+          viewOnlyPath: boolean
+        }[]
+      }
+    >()
+
+    for (const [contractAddr, contractFuncs] of Object.entries(
+      functionAnalysis.contracts,
+    )) {
+      for (const [funcName, analysis] of Object.entries(contractFuncs)) {
+        for (const dep of analysis.dependencies.entries) {
+          const key = dep.contractAddress.toLowerCase()
+          let existing = depMap.get(key)
+          if (!existing) {
+            existing = {
+              address: dep.contractAddress,
+              name: dep.contractName,
+              entity: dep.entity,
+              isAutoDetected: dep.isAutoDetected,
+              calledFunctions: new Set(dep.calledFunctions),
+              functions: [],
+            }
+            depMap.set(key, existing)
+          }
+          // Merge: auto-detected if ANY path is auto
+          if (dep.isAutoDetected) existing.isAutoDetected = true
+          // Keep entity if first entry was undefined but a later one has a value
+          if (!existing.entity && dep.entity) existing.entity = dep.entity
+          for (const cf of dep.calledFunctions) existing.calledFunctions.add(cf)
+          // Add caller function (deduplicate)
+          const alreadyAdded = existing.functions.some(
+            (f) =>
+              f.contractAddress.toLowerCase() === contractAddr.toLowerCase() &&
+              f.functionName === funcName,
+          )
+          if (!alreadyAdded) {
+            existing.functions.push({
+              contractAddress: contractAddr,
+              contractName:
+                contractNameMap.get(contractAddr.toLowerCase()) ??
+                'Unknown Contract',
+              functionName: funcName,
+              viewOnlyPath: dep.viewOnlyPath,
+            })
+          }
+        }
+      }
+    }
+
+    // Build final CompiledDependency[] with review-config descriptions
+    const dependencies: CompiledDependency[] = []
+    for (const dep of depMap.values()) {
+      const desc =
+        reviewConfig.dependencies[dep.address] ??
+        reviewConfig.dependencies[dep.address.toLowerCase()]
+
+      dependencies.push({
+        address: dep.address,
+        name: desc?.name ?? dep.name,
+        description: desc?.description ?? '',
+        entity: dep.entity ?? null,
+        isAutoDetected: dep.isAutoDetected,
+        viewOnlyPath:
+          dep.functions.length > 0 &&
+          dep.functions.every((f) => f.viewOnlyPath),
+        calledFunctions: Array.from(dep.calledFunctions),
+        functions: dep.functions,
+      })
     }
 
     // Build fund holders from funds data + review config descriptions
     const funds: CompiledFundHolder[] = []
     for (const [address, desc] of Object.entries(reviewConfig.funds ?? {})) {
-      const contractFunds = fundsData.contracts?.[address]
+      const contractFunds = fundsLookup.get(
+        address.replace(/^eth:/i, '').toLowerCase(),
+      )
 
       funds.push({
         address,
@@ -423,12 +486,10 @@ export class ReviewCompiler {
       totals: {
         contractCount: v2Score.inventory.contracts.inventory,
         permissionedFunctionCount: v2Score.inventory.functions.inventory,
-        scoredFunctionCount:
-          v2Score.inventory.functions.breakdown?.length ?? 0,
+        scoredFunctionCount: v2Score.inventory.functions.breakdown?.length ?? 0,
         adminCount: v2Score.inventory.admins.inventory,
         dependencyCount: v2Score.inventory.dependencies.inventory,
-        totalCapitalAtRisk:
-          v2Score.inventory.admins.totalCapitalAtRisk ?? 0,
+        totalCapitalAtRisk: v2Score.inventory.admins.totalCapitalAtRisk ?? 0,
         totalTokenValueAtRisk:
           v2Score.inventory.admins.totalTokenValueAtRisk ?? 0,
       },
@@ -452,7 +513,7 @@ export class ReviewCompiler {
   private resolveTemplateVariables(
     compiled: CompiledReview,
     dataKeys: Record<string, string>,
-    sources: { v2Score: V2ScoreResult; fundsData: any },
+    sources: { v2Score: V2ScoreResult; fundsData: ApiFundsDataResponse },
   ): void {
     if (!dataKeys || Object.keys(dataKeys).length === 0) return
 
@@ -471,10 +532,7 @@ export class ReviewCompiler {
 
     // Replace in admin descriptions
     for (const admin of compiled.admins) {
-      admin.description = this.replaceTemplateVars(
-        admin.description,
-        resolved,
-      )
+      admin.description = this.replaceTemplateVars(admin.description, resolved)
     }
 
     // Replace in dependency descriptions
@@ -503,7 +561,7 @@ export class ReviewCompiler {
    */
   private resolveDataPath(
     dataPath: string,
-    sources: { v2Score: V2ScoreResult; fundsData: any },
+    sources: { v2Score: V2ScoreResult; fundsData: ApiFundsDataResponse },
   ): number | null {
     try {
       let root: any
@@ -531,9 +589,9 @@ export class ReviewCompiler {
     }
   }
 
-  private resolveBreakdownPath(root: any, path: string): number | null {
+  private resolveBreakdownPath(root: any, pathStr: string): number | null {
     // Parse: inventory.admins.breakdown["eth:0x..."].totalDirectCapital
-    const match = path.match(
+    const match = pathStr.match(
       /inventory\.admins\.breakdown\["([^"]+)"\]\.(\w+)/,
     )
     if (!match) return null
@@ -551,14 +609,14 @@ export class ReviewCompiler {
     return typeof value === 'number' ? value : null
   }
 
-  private navigatePath(obj: any, path: string): number | null {
+  private navigatePath(obj: any, pathStr: string): number | null {
     // Handle bracket notation: contracts["eth:0x..."].balances.totalUsdValue
     const parts: string[] = []
     let current = ''
     let inBracket = false
 
-    for (let i = 0; i < path.length; i++) {
-      const char = path[i]
+    for (let i = 0; i < pathStr.length; i++) {
+      const char = pathStr[i]
       if (char === '[' && !inBracket) {
         if (current) parts.push(current)
         current = ''

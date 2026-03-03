@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
+import { compileReview } from '../../../api/api'
 import { useTerminalStore } from '../panel-terminal/store'
 import { AIPermissionsScanDialog } from './AIPermissionsScanDialog'
 
@@ -11,6 +12,7 @@ export function TerminalExtensions({ project }: Props) {
   const queryClient = useQueryClient()
   const { fetchFunds, generateCallGraph, command } = useTerminalStore()
   const [showScanDialog, setShowScanDialog] = useState(false)
+  const [compiling, setCompiling] = useState(false)
 
   return (
     <>
@@ -42,6 +44,29 @@ export function TerminalExtensions({ project }: Props) {
         className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
       >
         Generate Call Graph
+      </button>
+      <button
+        onClick={() => {
+          setCompiling(true)
+          compileReview(project)
+            .then((result) => {
+              if (result.status === 'success') {
+                alert(`Review compiled: ${result.path}`)
+              } else if (result.status === 'skipped') {
+                alert(`Skipped: ${result.reason}`)
+              } else {
+                alert(`Error: ${result.error}`)
+              }
+            })
+            .catch((err) => {
+              alert(`Failed to compile: ${err.message}`)
+            })
+            .finally(() => setCompiling(false))
+        }}
+        disabled={command.inFlight || compiling}
+        className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
+      >
+        {compiling ? 'Compiling...' : 'Compile Review'}
       </button>
 
       {showScanDialog && (

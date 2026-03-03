@@ -168,8 +168,12 @@ export type ApiAddressType =
   | 'Multisig'
   | 'Diamond'
   | 'Timelock'
+  | 'Untemplatized'
   | 'Contract'
   | 'Unknown'
+  | 'Immutable'
+  | 'Upgradeable'
+  | 'Revoked'
 
 export interface ApiAddressEntry {
   name?: string

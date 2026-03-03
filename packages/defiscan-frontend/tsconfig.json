@@ -1,0 +1,8 @@
+{
+  "extends": "@l2beat/typescript-config/react",
+  "compilerOptions": {
+    "outDir": "build",
+    "skipLibCheck": true
+  },
+  "include": ["src", "scripts"]
+}

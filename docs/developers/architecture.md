@@ -86,3 +86,18 @@ After all projects are processed, a cycle summary is posted to Discord with proj
 4. Commits any updated `compiled-review.json` and `funds-data.json` files back to the repository
 
 **Database**: PostgreSQL (Neon free tier) stores discovery cache (RPC response caching across ephemeral containers) and update monitor snapshots (for diffing against previous discoveries). The connection string is stored as a GitHub Actions secret.
+
+**ReviewCompiler location**: The `ReviewCompiler` class lives in `packages/l2b/src/implementations/discovery-ui/defidisco/reviewCompiler.ts` and is shared between the l2b API (interactive compile endpoint) and the monitor (automated compilation). The monitor imports it via `@l2beat/l2b/dist/...`.
+
+### DeFiScan Frontend
+
+The public-facing review website is a separate package at `packages/defiscan-frontend/`. It is a static React application (Vite + TailwindCSS + Recharts) that renders compiled reviews — it does not connect to the l2b API at runtime.
+
+**Data pipeline**:
+1. `ReviewCompiler` produces `compiled-review.json` per project (triggered by "Compile Review" button in protocolbeat, or automatically by the monitor)
+2. Compiled reviews are placed in `packages/defiscan-frontend/public/data/<slug>/`
+3. At build time, `scripts/compile-data.ts` aggregates all compiled reviews into `public/data/index.json` with global stats and cross-protocol dependency data
+
+**Pages**: Landing (protocol table + global stats), Review (Report / Explorer / Dashboard views), Compare (side-by-side protocol comparison with charts).
+
+See `packages/defiscan-frontend/README.md` for detailed documentation.
