@@ -222,6 +222,7 @@ export class BlipRuntime {
         )
         const result: Record<string, ContractValue> = {}
         for (const [key, val] of Object.entries(v)) {
+          assert(val !== undefined, 'Value is undefined')
           result[key] = this.executeBlip(val, fn)
         }
         return result
@@ -239,6 +240,7 @@ export class BlipRuntime {
             typeof newKey === 'string',
             'map_keys filter must return a string',
           )
+          assert(val !== undefined, 'Value is undefined')
           result[newKey] = val
         }
         return result
