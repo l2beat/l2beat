@@ -1072,6 +1072,94 @@ describe(executeBlip.name, () => {
     })
   })
 
+  describe('map_values operations', () => {
+    it('applies filter to each value of an object', () => {
+      const input = { a: 1, b: 2, c: 3 }
+      expect(executeBlip(input, ['map_values', ['=', 2]])).toEqual({
+        a: false,
+        b: true,
+        c: false,
+      })
+    })
+
+    it('works with complex filters', () => {
+      const input = { x: { n: 1 }, y: { n: 2 } }
+      expect(executeBlip(input, ['map_values', ['get', 'n']])).toEqual({
+        x: 1,
+        y: 2,
+      })
+    })
+
+    it('works with empty objects', () => {
+      expect(executeBlip({}, ['map_values', ['=', 1]])).toEqual({})
+    })
+
+    it('throws on non-object input', () => {
+      expect(() => executeBlip([1, 2], ['map_values', ['=', 1]])).toThrow(
+        'map_values requires an object input',
+      )
+      expect(() => executeBlip('string', ['map_values', ['=', 1]])).toThrow(
+        'map_values requires an object input',
+      )
+    })
+
+    it('can be used in pipe operations', () => {
+      const input = { a: 10, b: 20 }
+      expect(
+        executeBlip(input, ['pipe', ['map_values', ['=', 10]], ['pick', 'a']]),
+      ).toEqual({ a: true })
+    })
+  })
+
+  describe('map_keys operations', () => {
+    it('applies filter to each key of an object', () => {
+      const input = { a: 1, b: 2 }
+      expect(
+        executeBlip(input, ['map_keys', ['if', ['=', 'a'], 'first', 'second']]),
+      ).toEqual({ first: 1, second: 2 })
+    })
+
+    it('works with format-like string transformations', () => {
+      const input = { a: 1, b: 2 }
+      expect(
+        executeBlip(input, ['map_keys', ['if', ['=', 'a'], 'x', 'y']]),
+      ).toEqual({
+        x: 1,
+        y: 2,
+      })
+    })
+
+    it('works with empty objects', () => {
+      expect(executeBlip({}, ['map_keys', 'newkey'])).toEqual({})
+    })
+
+    it('throws on non-object input', () => {
+      expect(() => executeBlip([1, 2], ['map_keys', 'key'])).toThrow(
+        'map_keys requires an object input',
+      )
+      expect(() => executeBlip('string', ['map_keys', 'key'])).toThrow(
+        'map_keys requires an object input',
+      )
+    })
+
+    it('throws when filter does not return a string', () => {
+      expect(() => executeBlip({ a: 1 }, ['map_keys', 123])).toThrow(
+        'map_keys filter must return a string',
+      )
+    })
+
+    it('can be used in pipe operations', () => {
+      const input = { old: 42 }
+      expect(
+        executeBlip(input, [
+          'pipe',
+          ['map_keys', ['if', ['=', 'old'], 'new', 'other']],
+          ['get', 'new'],
+        ]),
+      ).toEqual(42)
+    })
+  })
+
   describe('length operations', () => {
     it('returns length of arrays', () => {
       expect(executeBlip([1, 2, 3], ['length'])).toEqual(3)
