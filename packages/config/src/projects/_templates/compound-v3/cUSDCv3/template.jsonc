@@ -1,1 +1,18 @@
-{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json" }
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": [
+    "baseTrackingBorrowSpeed",
+    "baseTrackingSupplySpeed",
+    "borrowPerSecondInterestRateSlopeHigh",
+    "borrowPerSecondInterestRateBase",
+    "borrowPerSecondInterestRateSlopeLow",
+    "getBorrowRate",
+    "getReserves",
+    "getUtilization",
+    "getSupplyRate",
+    "supplyPerSecondInterestRateSlopeHigh",
+    "supplyPerSecondInterestRateSlopeLow",
+    "totalBorrow",
+    "totalSupply"
+  ]
+}

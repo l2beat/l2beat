@@ -1,7 +1,7 @@
 {
   "name": "Steakhouse-USDC",
   "timestamp": 1771947004,
-  "configHash": "0xb7ba564fe1bd1ef92b46fe01f18b9097887237c688a955649e680c8cefd53da7",
+  "configHash": "0x9295488c7787db6f7fb31bcbea064b54e03d2e8e7d0245f76fec5a79ed46b73b",
   "entries": [
     {
       "name": "Safe",
@@ -377,6 +377,7 @@
       "name": "EACAggregatorProxy",
       "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
       "type": "Contract",
+      "template": "Steakhouse-USDC/EACAggregatorProxy",
       "sourceHashes": [
         "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
       ],
@@ -389,27 +390,12 @@
         "decimals": 18,
         "description": "STETH / ETH",
         "getAnswer": [0, 0, 0, 0, 0],
-        "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": "998819160000000000",
-        "latestRound": "36893488147419103921",
-        "latestRoundData": {
-          "roundId": "36893488147419103921",
-          "answer": "998819160000000000",
-          "startedAt": 1771874471,
-          "updatedAt": 1771874507,
-          "answeredInRound": "36893488147419103921"
-        },
-        "latestTimestamp": 1771874507,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 2,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
       },
-      "errors": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
-      },
+      "errors": { "getAnswer": "Processing error occurred." },
       "implementationNames": {
         "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": "EACAggregatorProxy"
       }
@@ -428,6 +414,7 @@
       "name": "EACAggregatorProxy",
       "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "type": "Contract",
+      "template": "Steakhouse-USDC/EACAggregatorProxy",
       "sourceHashes": [
         "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
       ],
@@ -440,27 +427,12 @@
         "decimals": 8,
         "description": "USDC / USD",
         "getAnswer": [0, 0, 0, 0, 0],
-        "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 99992000,
-        "latestRound": "55340232221128655636",
-        "latestRoundData": {
-          "roundId": "55340232221128655636",
-          "answer": 99992000,
-          "startedAt": 1771920034,
-          "updatedAt": 1771920047,
-          "answeredInRound": "55340232221128655636"
-        },
-        "latestTimestamp": 1771920047,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 3,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
       },
-      "errors": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
-      },
+      "errors": { "getAnswer": "Processing error occurred." },
       "implementationNames": {
         "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": "EACAggregatorProxy"
       }
@@ -482,27 +454,10 @@
         "aggregator": "eth:0x26ae9b951F84e6c28f58a92133C30e312D42e0Fe",
         "decimals": 18,
         "description": "USDC / ETH",
-        "getAnswer": [0, 0, 0, 0, 0],
-        "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 542564325393303,
-        "latestRound": "92233720368547764057",
-        "latestRoundData": {
-          "roundId": "92233720368547764057",
-          "answer": 542564325393303,
-          "startedAt": 1771944760,
-          "updatedAt": 1771944779,
-          "answeredInRound": "92233720368547764057"
-        },
-        "latestTimestamp": 1771944779,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 5,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
-      },
-      "errors": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4": "EACAggregatorProxy"
@@ -770,6 +725,7 @@
       "name": "EACAggregatorProxy",
       "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
       "type": "Contract",
+      "template": "Steakhouse-USDC/EACAggregatorProxy",
       "sourceHashes": [
         "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
       ],
@@ -782,27 +738,12 @@
         "decimals": 8,
         "description": "ETH / USD",
         "getAnswer": [0, 0, 0, 0, 0],
-        "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 184901306200,
-        "latestRound": "36893488147419113132",
-        "latestRoundData": {
-          "roundId": "36893488147419113132",
-          "answer": 184901306200,
-          "startedAt": 1771946671,
-          "updatedAt": 1771946687,
-          "answeredInRound": "36893488147419113132"
-        },
-        "latestTimestamp": 1771946687,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 2,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
       },
-      "errors": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
-      },
+      "errors": { "getAnswer": "Processing error occurred." },
       "implementationNames": {
         "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD": "EACAggregatorProxy"
       }
@@ -924,27 +865,10 @@
         "aggregator": "eth:0x4a3411ac2948B33c69666B35cc6d055B27Ea84f1",
         "decimals": 8,
         "description": "BTC / USD",
-        "getAnswer": [0, 0, 0, 0, 0],
-        "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 6373932844478,
-        "latestRound": "129127208515966879231",
-        "latestRoundData": {
-          "roundId": "129127208515966879231",
-          "answer": 6373932844478,
-          "startedAt": 1771946194,
-          "updatedAt": 1771946219,
-          "answeredInRound": "129127208515966879231"
-        },
-        "latestTimestamp": 1771946219,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 7,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
-      },
-      "errors": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c": "EACAggregatorProxy"
@@ -982,6 +906,7 @@
       "name": "EACAggregatorProxy",
       "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
       "type": "Contract",
+      "template": "Steakhouse-USDC/EACAggregatorProxy",
       "sourceHashes": [
         "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
       ],
@@ -994,27 +919,11 @@
         "decimals": 8,
         "description": "WBTC / BTC",
         "getAnswer": [0, 0, 0, 0, 0],
-        "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 99724523,
-        "latestRound": "36893488147419103828",
-        "latestRoundData": {
-          "roundId": "36893488147419103828",
-          "answer": 99724523,
-          "startedAt": 1771874462,
-          "updatedAt": 1771874507,
-          "answeredInRound": "36893488147419103828"
-        },
-        "latestTimestamp": 1771874507,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 2,
-        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
       },
-      "errors": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
-      },
+      "errors": { "getAnswer": "Processing error occurred." },
       "implementationNames": {
         "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": "EACAggregatorProxy"
       }
@@ -1824,7 +1733,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682",
-    "Steakhouse-USDC/EACAggregatorProxy": "0x0fad245964397030054e75ef253b2a8b949621a64216059a9930e224f87d6812",
+    "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921",
     "taiko/DAO": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
   "usedBlockNumbers": { "ethereum": 24527666 },

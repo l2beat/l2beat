@@ -6,9 +6,7 @@
     "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d",
     "eth:0xf949982b91c8c61e952b3ba942cbbfaef5386684"
   ],
-  "defidisco": {
-    "scanPermissions": false
-  },
+  "defidisco": { "scanPermissions": false },
   "names": {
     "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH",
     "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": "RocketTokenRETH"
@@ -35,6 +33,64 @@
           "handler": { "type": "storage", "slot": 1, "returnType": "address" }
         }
       }
+    },
+    "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De": {
+      "ignoreInWatchMode": ["lastGoodPrice"]
+    },
+    "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684": {
+      "ignoreInWatchMode": [
+        "baseRate",
+        "getRedemptionRateForRedeemedAmount",
+        "getRedemptionRate",
+        "getRedemptionFeeWithDecay",
+        "getRedemptionRateWithDecay",
+        "lastFeeOperationTime"
+      ]
+    },
+    "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F": {
+      "ignoreInWatchMode": ["getETH", "getLUSDDebt"]
+    },
+    "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1": {
+      "ignoreInWatchMode": [
+        "boldAccrued",
+        "epoch",
+        "EPOCH_VOTING_CUTOFF",
+        "getLatestVotingThreshold",
+        "getTotalVotesAndState",
+        "globalState",
+        "secondsWithinEpoch",
+        "UNREGISTRATION_AFTER_EPOCHS",
+        "votesSnapshot"
+      ]
+    },
+    "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d": {
+      "ignoreInWatchMode": ["F_ETH", "F_LUSD", "totalLQTYStaked"]
+    },
+    "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb": {
+      "ignoreMethods": ["getEntireSystemColl", "getEntireSystemDebt"],
+      "ignoreInWatchMode": [
+        "getETH",
+        "getTotalLUSDDeposits",
+        "lastETHError_Offset",
+        "lastLQTYError",
+        "lastLUSDLossError_Offset",
+        "P"
+      ]
+    },
+    "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0": {
+      "ignoreMethods": [
+        "disputesById",
+        "getLastNewValueById",
+        "getNewValueCountbyRequestId",
+        "newValueTimestamps"
+      ],
+      "ignoreInWatchMode": ["totalSupply", "verify"]
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreInWatchMode": ["totalSupply"]
     }
   }
 }

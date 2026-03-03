@@ -1,7 +1,7 @@
 {
   "name": "morpho",
   "timestamp": 1764700344,
-  "configHash": "0x673148c312473323b1431f02af604e75b82819bd644ad777435e7f1798418547",
+  "configHash": "0xd6a9b5722fa55bffaeff8d4f16a975ea88758dbd8d26de5c6debdf0d6577f257",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -91,6 +91,7 @@
       "name": "EthereumBundlerV2",
       "address": "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077",
       "type": "Contract",
+      "template": "morpho/EthereumBundlerV2",
       "sourceHashes": [
         "0xf04c4a910326e94784e3872e8f82271f08abfb81599f32e01119e0a7856c9131"
       ],
@@ -823,6 +824,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "morpho/EthereumBundlerV2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682"
   },
   "usedBlockNumbers": { "ethereum": 23927583 },

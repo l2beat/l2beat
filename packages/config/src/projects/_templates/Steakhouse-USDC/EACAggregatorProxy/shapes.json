@@ -4,5 +4,11 @@
     "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
     "chain": "ethereum",
     "blockNumber": 24527516
+  },
+  "EACAggregatorProxy_v2.sol": {
+    "hash": "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984",
+    "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+    "chain": "ethereum",
+    "blockNumber": 24527666
   }
 }

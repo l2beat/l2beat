@@ -1,3 +1,13 @@
-{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-
-"ignoreRelatives": ["aggregator"]}
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["aggregator"],
+  "ignoreMethods": [
+    "getAnswer",
+    "getTimestamp",
+    "latestAnswer",
+    "latestRound",
+    "latestRoundData",
+    "latestTimestamp",
+    "proposedLatestRoundData"
+  ]
+}

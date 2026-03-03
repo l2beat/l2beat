@@ -1,3 +1,151 @@
+Generated with discovered.json: 0x37694947a180be33fde0f56e644e8b89c8fc063b
+
+# Diff at Tue, 03 Mar 2026 09:58:04 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@55155f296ca2a5300f99eb2f8aa264ed51893f2d block: 1771947004
+- current timestamp: 1771947004
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771947004 (main branch discovery), not current.
+
+```diff
+    contract EACAggregatorProxy (eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812) {
+    +++ description: None
+      values.getTimestamp:
+-        [0,0,0,0,0]
+      values.latestAnswer:
+-        "998819160000000000"
+      values.latestRound:
+-        "36893488147419103921"
+      values.latestRoundData:
+-        {"roundId":"36893488147419103921","answer":"998819160000000000","startedAt":1771874471,"updatedAt":1771874507,"answeredInRound":"36893488147419103921"}
+      values.latestTimestamp:
+-        1771874507
+      errors.getTimestamp:
+-        "Processing error occurred."
+      errors.proposedLatestRoundData:
+-        "Processing error occurred."
+      template:
++        "Steakhouse-USDC/EACAggregatorProxy"
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6) {
+    +++ description: None
+      values.getTimestamp:
+-        [0,0,0,0,0]
+      values.latestAnswer:
+-        99992000
+      values.latestRound:
+-        "55340232221128655636"
+      values.latestRoundData:
+-        {"roundId":"55340232221128655636","answer":99992000,"startedAt":1771920034,"updatedAt":1771920047,"answeredInRound":"55340232221128655636"}
+      values.latestTimestamp:
+-        1771920047
+      errors.getTimestamp:
+-        "Processing error occurred."
+      errors.proposedLatestRoundData:
+-        "Processing error occurred."
+      template:
++        "Steakhouse-USDC/EACAggregatorProxy"
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4) {
+    +++ description: None
+      values.getAnswer:
+-        [0,0,0,0,0]
+      values.getTimestamp:
+-        [0,0,0,0,0]
+      values.latestAnswer:
+-        542564325393303
+      values.latestRound:
+-        "92233720368547764057"
+      values.latestRoundData:
+-        {"roundId":"92233720368547764057","answer":542564325393303,"startedAt":1771944760,"updatedAt":1771944779,"answeredInRound":"92233720368547764057"}
+      values.latestTimestamp:
+-        1771944779
+      errors:
+-        {"getAnswer":"Processing error occurred.","getTimestamp":"Processing error occurred.","proposedLatestRoundData":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD) {
+    +++ description: None
+      values.getTimestamp:
+-        [0,0,0,0,0]
+      values.latestAnswer:
+-        184901306200
+      values.latestRound:
+-        "36893488147419113132"
+      values.latestRoundData:
+-        {"roundId":"36893488147419113132","answer":184901306200,"startedAt":1771946671,"updatedAt":1771946687,"answeredInRound":"36893488147419113132"}
+      values.latestTimestamp:
+-        1771946687
+      errors.getTimestamp:
+-        "Processing error occurred."
+      errors.proposedLatestRoundData:
+-        "Processing error occurred."
+      template:
++        "Steakhouse-USDC/EACAggregatorProxy"
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c) {
+    +++ description: None
+      values.getAnswer:
+-        [0,0,0,0,0]
+      values.getTimestamp:
+-        [0,0,0,0,0]
+      values.latestAnswer:
+-        6373932844478
+      values.latestRound:
+-        "129127208515966879231"
+      values.latestRoundData:
+-        {"roundId":"129127208515966879231","answer":6373932844478,"startedAt":1771946194,"updatedAt":1771946219,"answeredInRound":"129127208515966879231"}
+      values.latestTimestamp:
+-        1771946219
+      errors:
+-        {"getAnswer":"Processing error occurred.","getTimestamp":"Processing error occurred.","proposedLatestRoundData":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23) {
+    +++ description: None
+      values.getTimestamp:
+-        [0,0,0,0,0]
+      values.latestAnswer:
+-        99724523
+      values.latestRound:
+-        "36893488147419103828"
+      values.latestRoundData:
+-        {"roundId":"36893488147419103828","answer":99724523,"startedAt":1771874462,"updatedAt":1771874507,"answeredInRound":"36893488147419103828"}
+      values.latestTimestamp:
+-        1771874507
+      values.proposedAggregator:
+-        "eth:0x0000000000000000000000000000000000000000"
+      errors.getTimestamp:
+-        "Processing error occurred."
+      errors.proposedLatestRoundData:
+-        "Processing error occurred."
+      template:
++        "Steakhouse-USDC/EACAggregatorProxy"
+    }
+```
+
 Generated with discovered.json: 0xbe19f251a6e55dd3294c2bfac3bd2f3873d42ed1
 
 # Diff at Tue, 24 Feb 2026 15:31:46 GMT:

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc3fcfefc1d17cce1fb8ada8fbe4c9290f86bc42f
+
+# Diff at Tue, 03 Mar 2026 10:03:01 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@55155f296ca2a5300f99eb2f8aa264ed51893f2d block: 1764700344
+- current timestamp: 1764700344
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764700344 (main branch discovery), not current.
+
+```diff
+    contract EthereumBundlerV2 (eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077) {
+    +++ description: None
+      template:
++        "morpho/EthereumBundlerV2"
+    }
+```
+
 Generated with discovered.json: 0xc16d96bacfc646970cd0406f89fe95ae318391af
 
 # Diff at Tue, 02 Dec 2025 18:33:39 GMT:

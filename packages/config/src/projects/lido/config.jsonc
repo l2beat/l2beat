@@ -9,16 +9,10 @@
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
     "eth:0x2e59A20f205bB85a89C53f1936454680651E618e"
   ],
-  "defidisco": {
-    "scanPermissions": false
-  },
+  "defidisco": { "scanPermissions": false },
   "overrides": {
     "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3": {
-      "fields": {
-        "accessControl": {
-          "handler": {"type": "accessControl"}
-        }
-      }
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
     },
     "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
       "fields": {
@@ -68,6 +62,72 @@
     },
     "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5": {
       "ignoreDiscovery": true
+    },
+    "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0": {
+      "ignoreInWatchMode": [
+        "distributedShares",
+        "pendingSharesToDistribute",
+        "totalClaimableShares"
+      ],
+      "ignoreMethods": ["getHistoricalDistributionData"]
+    },
+    "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB": {
+      "ignoreInWatchMode": ["getLastProcessingRefSlot"],
+      "ignoreMethods": ["getConsensusReport"]
+    },
+    "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F": {
+      "ignoreMethods": [
+        "depositQueuePointers",
+        "exitDeadlineThreshold",
+        "getNodeOperator",
+        "getNodeOperatorIsActive",
+        "getNodeOperatorManagementProperties",
+        "getNodeOperatorNonWithdrawnKeys",
+        "getNodeOperatorOwner",
+        "getNodeOperatorSummary",
+        "getNodeOperatorTotalDepositedKeys"
+      ],
+      "ignoreInWatchMode": [
+        "getActiveNodeOperatorsCount",
+        "getNodeOperatorsCount",
+        "getNonce",
+        "getStakingModuleSummary"
+      ]
+    },
+    "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428": {
+      "ignoreMethods": [
+        "getBadPerformancePenalty",
+        "getAllowedExitDelay",
+        "getElRewardsStealingAdditionalFine",
+        "getExitDelayPenalty",
+        "getKeyRemovalCharge",
+        "getKeysLimit",
+        "getMaxWithdrawalRequestFee",
+        "getPerformanceCoefficients",
+        "getPerformanceLeewayData",
+        "getQueueConfig",
+        "getRewardShareData",
+        "getStrikesParams"
+      ]
+    },
+    "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316": {
+      "ignoreMethods": ["canSchedule", "canExecute"]
+    },
+    "eth:0xA8F14D033f377779274Ae016584a05bF14Dccaf8": {
+      "ignoreInWatchMode": ["getRageQuitSupport", "getSignallingEscrowDetails"]
+    },
+    "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86": {
+      "ignoreInWatchMode": ["currentPeriodId", "transactionsNextIndex"],
+      "ignoreMethods": ["getTransaction"]
+    },
+    "eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0": {
+      "ignoreMethods": ["getScheduleProposalState"]
+    },
+    "eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5": {
+      "ignoreMethods": ["getScheduleProposalState"]
+    },
+    "eth:0x553337946F2FAb8911774b20025fa776B76a7CcE": {
+      "ignoreMethods": ["canScheduleProposal"]
     }
   }
 }

@@ -1,10 +1,15 @@
 {
   "name": "compound-v3",
   "timestamp": 1758729268,
-  "configHash": "0x07bb8b632db69ff0ca2c929a0329c7fa93506dced23b376222924528620485a1",
+  "configHash": "0xa4da621dd4e621523ff5b1c2bafa50044e47fc98aa393c3f5353c3a36177cbea",
   "entries": [
     {
       "address": "eth:0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x070B2a0c255C148ae7b98B4BB9560Ff147C36f2A",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -20,6 +25,42 @@
           "role": ".blacklister"
         }
       ]
+    },
+    {
+      "name": "MessageTransmitter",
+      "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+      "type": "Contract",
+      "template": "tokens/circle/MessageTransmitter",
+      "sourceHashes": [
+        "0x0a6be4fecca4861686e0a31878557d698e444ce7024f01190aabc908e17087e3"
+      ],
+      "proxyType": "immutable",
+      "description": "Part of CCTP",
+      "ignoreInWatchMode": ["nextAvailableNonce"],
+      "sinceTimestamp": 1677628247,
+      "sinceBlock": 16730025,
+      "values": {
+        "$immutable": true,
+        "attesterManager": "eth:0x358a85e032aA9507a1303683b2B6A1d1cac3c252",
+        "getEnabledAttester": [
+          "eth:0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
+          "eth:0xE2fEfe09E74b921CbbFF229E7cD40009231501CA"
+        ],
+        "getNumEnabledAttesters": 2,
+        "localDomain": 0,
+        "maxMessageBodySize": 8192,
+        "nextAvailableNonce": 339084,
+        "owner": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
+        "paused": false,
+        "pauser": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "rescuer": "eth:0x6Fa60A88b42AFb0aEe6488826A58864B192442ad",
+        "signatureThreshold": 2,
+        "version": 0
+      },
+      "implementationNames": {
+        "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81": "MessageTransmitter"
+      }
     },
     {
       "name": "CometExtAssetList",
@@ -51,10 +92,7 @@
           "lastAccrualTime": 0,
           "pauseFlags": 0
         },
-        "version": "0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 7 }
-        ]
+        "version": "0"
       },
       "implementationNames": {
         "eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3": "CometExtAssetList"
@@ -94,10 +132,7 @@
       "sinceBlock": 15331582,
       "values": {
         "$immutable": true,
-        "owner": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 12 }
-        ]
+        "owner": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925"
       },
       "implementationNames": {
         "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779": "CometProxyAdmin"
@@ -139,10 +174,7 @@
         "multisigThreshold": "4 of 9 (44%)",
         "NAME": "Gnosis Safe",
         "nonce": 1913,
-        "VERSION": "1.1.1",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 16 }
-        ]
+        "VERSION": "1.1.1"
       },
       "implementationNames": {
         "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": "Proxy",
@@ -187,10 +219,7 @@
         "paused": false,
         "pauser": "eth:0x6fa314D4Dce1d49233c329a60fDBd96a6BCbe6Fb",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 16 }
-        ]
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
         "attestationSigners": {
@@ -204,6 +233,11 @@
     },
     {
       "address": "eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2329BAF15f86023e5B0f5592e230D02a51116CD5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -246,10 +280,7 @@
         "messageBodyVersion": 1,
         "owner": "eth:0x2329BAF15f86023e5B0f5592e230D02a51116CD5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "rescuer": "eth:0x070B2a0c255C148ae7b98B4BB9560Ff147C36f2A",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 20 }
-        ]
+        "rescuer": "eth:0x070B2a0c255C148ae7b98B4BB9560Ff147C36f2A"
       },
       "implementationNames": {
         "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": "AdminUpgradableProxy",
@@ -299,62 +330,7 @@
         "$immutable": true,
         "manager": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "NAME": "Confirmed Transaction Module",
-        "VERSION": "0.1.0",
-        "writeFunctionPermissions": [
-          {
-            "function": "changeMasterCopy",
-            "signature": "function changeMasterCopy(address _masterCopy)",
-            "file": "ConfirmedTransactionModule.sol",
-            "permissionType": "none",
-            "category": "administrative",
-            "requireStatementCount": 1
-          },
-          {
-            "function": "confirmTransaction",
-            "signature": "function confirmTransaction(bytes32 transactionHash)",
-            "file": "ConfirmedTransactionModule.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 4
-          },
-          {
-            "function": "executeTransaction",
-            "signature": "function executeTransaction(\r\n        address to,\r\n        uint256 value,\r\n        bytes memory data,\r\n        Enum.Operation operation,\r\n        bytes32 witness\r\n    )",
-            "file": "ConfirmedTransactionModule.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "revokeTransaction",
-            "signature": "function revokeTransaction(bytes32 transactionHash)",
-            "file": "ConfirmedTransactionModule.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 3
-          },
-          {
-            "function": "setExecutor",
-            "signature": "function setExecutor(address executor, bool allowed)",
-            "file": "ConfirmedTransactionModule.sol",
-            "permissionType": "msgSender",
-            "category": "administrative",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 3
-          },
-          {
-            "function": "setup",
-            "signature": "function setup()",
-            "file": "ConfirmedTransactionModule.sol",
-            "permissionType": "msgSender",
-            "category": "administrative",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          }
-        ]
+        "VERSION": "0.1.0"
       },
       "implementationNames": {
         "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": "ConfirmedTransactionModule"
@@ -436,10 +412,7 @@
         "version": "1",
         "votingDelay": 13140,
         "votingPeriod": 19710,
-        "whitelistGuardian": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 29 }
-        ]
+        "whitelistGuardian": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c"
       },
       "errors": {
         "proposalDeadline": "Processing error occurred.",
@@ -484,10 +457,7 @@
         ],
         "$upgradeCount": 1,
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
-        "version": 1,
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 35 }
-        ]
+        "version": 1
       },
       "implementationNames": {
         "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3": "ConfiguratorProxy",
@@ -495,31 +465,14 @@
       }
     },
     {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715097119,
-      "sinceBlock": 19819200,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0x7BFb89db2d7217c57C3Ad3d4B55826eFD17dC2e9",
-          "eth:0x89cCce50c9631A4ED7831f07b21982Ef97c91e56"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0x1e349fd9A1Cd5402043F3aa90D5A396844769eE8",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF": "AuthorizedForwarder"
-      }
+      "address": "eth:0x358a85e032aA9507a1303683b2B6A1d1cac3c252",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x383048265851aA10035bb32b2055632eC4FBB6eB",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3c54FFa14d01EF3A555106007A4fED6E8964aAB6",
@@ -532,33 +485,6 @@
           "role": "admin"
         }
       ]
-    },
-    {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715095523,
-      "sinceBlock": 19819069,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0xa938d77590aF1d98BaB7dc4a0bde594fC3F9c403",
-          "eth:0x72B11A384a0f1E2C1DA33c4b0B259cAA80192aA8"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0x424d82696c35F35a3E88Cb39E3a2A512A2060AC8",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624": "AuthorizedForwarder"
-      }
     },
     {
       "address": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
@@ -575,43 +501,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1738089347,
       "sinceBlock": 21724850,
-      "values": {
-        "$immutable": true,
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 9 }
-        ]
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E": "AssetListFactory"
-      }
-    },
-    {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715095475,
-      "sinceBlock": 19819065,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0x5565b5362FF9f468bA2f144f38b87187C9a010A8",
-          "eth:0x72953C118F4869dC3D97d81BcA2BfE1E6a4f7C8f",
-          "eth:0x81E9efAE9A55E9Af3170B8b433be9a9013044c98",
-          "eth:0xD8AAb30827AC30Bf7f61DF23B62F8190169B7699"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0x416017F5D40E8d7c63c2B058c0fc245fC55b51b3",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93": "AuthorizedForwarder"
       }
     },
     {
@@ -643,31 +535,9 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715095163,
-      "sinceBlock": 19819039,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0x64c735D72EAB90C04da523B6b9895773ACb60F5D",
-          "eth:0x6b591DcB3cBb761c3F1a50C458a29815F32b7e6F"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0xa9022d873b30b6c9D47ad291551189bddD60FaB3",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085": "AuthorizedForwarder"
-      }
+      "address": "eth:0x4aA5bF962852DcC59695F600d346D3F751B0D920",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4E898CEe7c5809A63de0eF745177A9BB82FeAC69",
@@ -675,59 +545,14 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ChainLink Token",
-      "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xda2d44696c77410a167e5a09506d4676c9cdad2f923e01c8139c7a7814912af1"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1505597189,
-      "sinceBlock": 4281611,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "name": "ChainLink Token",
-        "symbol": "LINK",
-        "totalSupply": "1000000000000000000000000000",
-        "writeFunctionPermissions": [
-          {
-            "function": "approve",
-            "signature": "function approve(address spender, uint256 value)",
-            "file": "LinkToken.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "transfer",
-            "signature": "function transfer(address to, uint256 value)",
-            "file": "LinkToken.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "transferAndCall",
-            "signature": "function transferAndCall(address to, uint value, bytes data)",
-            "file": "LinkToken.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "transferFrom",
-            "signature": "function transferFrom(address from, address to, uint256 value)",
-            "file": "LinkToken.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true
-          }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": "LinkToken"
-      }
+      "address": "eth:0x52Ed4cBff8DcE6A19748043F3240ec03c834bCeF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x53D81DF780baed54FdCa7020618aD6e1c4AC1D84",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x54A37d93E57c5DA659F508069Cf65A381b61E189",
@@ -740,252 +565,19 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715094083,
-      "sinceBlock": 19818952,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0x413e725094c7810669F91856cc58e73eA3fbc400",
-          "eth:0xF065f5f043e6c6D0995f40Ad670e03aA42e3E083"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0xa27fF069B7A530c43e001a638D306057b8b7463F",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca": "AuthorizedForwarder"
-      }
-    },
-    {
       "address": "eth:0x5B6122C109B78C6755486966148C1D70a50A47D7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715097167,
-      "sinceBlock": 19819204,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0xFa0E4F48a369BB3eCBCEe0B5119379EA8D1bcF29",
-          "eth:0x5ba3e046a54DAF92e13b80a5c9E1722E24e6Da65"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0xDf3E505a317282ea416407A47588A82593254b07",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d": "AuthorizedForwarder"
-      }
+      "address": "eth:0x65cBcdbE95567A8F9519242f9C52F65E8067021B",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715097947,
-      "sinceBlock": 19819268,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0xDdE59ceeC7A2cC8B2bD78199877BA22018966813",
-          "eth:0x240B3317c6F2AbE0cA649c745e556BF578a7af6B"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0x2f52f6bdaC885801A720a53E126C4ADA780C74d5",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77": "AuthorizedForwarder"
-      }
-    },
-    {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715096627,
-      "sinceBlock": 19819160,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0x9cFAb1513FFA293E7023159B3C7A4C984B6a3480",
-          "eth:0x58029Cc80BA5E1A4F749d1F09854E89f26283d5F"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0xA19bEB99AA920dC9A8f9971FbB6c6f40860ed5Fc",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988": "AuthorizedForwarder"
-      }
-    },
-    {
-      "name": "SimpleWriteAccessController",
-      "address": "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x750ad9105ec5613ec9985b9d5d26452470adefa7bce8c1bb8e58738d9ea96d02"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1611152981,
-      "sinceBlock": 11692841,
-      "values": {
-        "$immutable": true,
-        "checkEnabled": true,
-        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-        "writeFunctionPermissions": [
-          {
-            "function": "acceptOwnership",
-            "signature": "function acceptOwnership()",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "addAccess",
-            "signature": "function addAccess(address _user)",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "disableAccessCheck",
-            "signature": "function disableAccessCheck()",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "enableAccessCheck",
-            "signature": "function enableAccessCheck()",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "removeAccess",
-            "signature": "function removeAccess(address _user)",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "transferOwnership",
-            "signature": "function transferOwnership(address _to)",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "financial",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6": "SimpleWriteAccessController"
-      }
-    },
-    {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715096927,
-      "sinceBlock": 19819184,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0xf34aC04a28F7CB5324A167C96B24ADE9c742B44f",
-          "eth:0x83ec03653783b0d5E83c87b5926699C2af339f8C"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0x536e21c8193c09492599Bb95a4B01b269C4bA06e",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A": "AuthorizedForwarder"
-      }
-    },
-    {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715094395,
-      "sinceBlock": 19818976,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0x7663C5790E1eBf04197245d541279D13f3c2f362",
-          "eth:0x4B2f95d9952AEd5D7Db733EF58eEdE069979f64c"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0xD58dd13774d6150Bc51027e3A2B46Ad5059b0EA7",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5": "AuthorizedForwarder"
-      }
+      "address": "eth:0x6b0b72E63764101Fc4d5BD914B107987041578C4",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Timelock",
@@ -1021,63 +613,7 @@
         "GRACE_PERIOD": 1209600,
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 172800,
-        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "writeFunctionPermissions": [
-          {
-            "function": "acceptAdmin",
-            "signature": "function acceptAdmin()",
-            "file": "Timelock.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 8
-          },
-          {
-            "function": "cancelTransaction",
-            "signature": "function cancelTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
-            "file": "Timelock.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 6
-          },
-          {
-            "function": "executeTransaction",
-            "signature": "function executeTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
-            "file": "Timelock.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 5
-          },
-          {
-            "function": "queueTransaction",
-            "signature": "function queueTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
-            "file": "Timelock.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 7
-          },
-          {
-            "function": "setDelay",
-            "signature": "function setDelay(uint delay_)",
-            "file": "Timelock.sol",
-            "permissionType": "msgSender",
-            "category": "administrative",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 8
-          },
-          {
-            "function": "setPendingAdmin",
-            "signature": "function setPendingAdmin(address pendingAdmin_)",
-            "file": "Timelock.sol",
-            "permissionType": "msgSender",
-            "category": "administrative",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 8
-          }
-        ]
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": "Timelock"
@@ -1089,7 +625,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x6Fa60A88b42AFb0aEe6488826A58864B192442ad",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x725b06F73ff761eF5390e39315e2BfbF60d33F96",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1114,10 +660,7 @@
       "values": {
         "$immutable": true,
         "owner": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 12 }
-        ]
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
         "eth:0x725ED7F44F0888aeC1b7630AB1ACdced91E0591A": "ProxyAdmin"
@@ -1184,10 +727,7 @@
         "pauser": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
-        "withdrawalDelay": 50400,
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 27 }
-        ]
+        "withdrawalDelay": 50400
       },
       "fieldMeta": {
         "attestationSigners": {
@@ -1197,60 +737,6 @@
       "implementationNames": {
         "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE": "ERC1967Proxy",
         "eth:0x899a4f5f5422cC5E8183280182e7096Fb923C762": "GatewayWallet"
-      }
-    },
-    {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715095571,
-      "sinceBlock": 19819072,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0x218B5a7861dBf368D09A84E0dBfF6C6DDbf99DB8",
-          "eth:0xA949696594a015766150f4d135b2A8F2120E6be1"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0x3e8F6B0aAA3f46d6BeBeD76f35C810498E13B169",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B": "AuthorizedForwarder"
-      }
-    },
-    {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715095379,
-      "sinceBlock": 19819057,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0xb976d01275B809333E3EfD76D1d31fE9264466D0",
-          "eth:0x15e97177a17F7Ec6B6d432500DA7428B89AeA2D1"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0xBfC401F8abEb0dE1bC6bcFb753851808473905E4",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8": "AuthorizedForwarder"
       }
     },
     {
@@ -1291,6 +777,56 @@
       "proxyType": "EOA"
     },
     {
+      "name": "MessageTransmitterV2",
+      "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+      "type": "Contract",
+      "template": "tokens/circle/MessageTransmitter",
+      "sourceHashes": [
+        "0x0f6567e3f3b76997d73df085a97533bc460aeb5a6a5dcd00a17aeb1dd95c5816",
+        "0x84e99328c6ecdcc29a4322f0758efcb0a5886faaa900a1764ba815e6c8a2036a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Part of CCTP",
+      "ignoreInWatchMode": ["nextAvailableNonce"],
+      "sinceTimestamp": 1739234063,
+      "sinceBlock": 21819729,
+      "values": {
+        "$admin": "eth:0xB7569E9eB64eaEd5C4166E510b4F6fF54ef42258",
+        "$implementation": "eth:0xa30C41865729C248067704d4DB9F38385Cbe1186",
+        "$pastUpgrades": [
+          [
+            "2025-02-11T00:34:23.000Z",
+            "0x5ffaa1582fac9975d8fb0aee75cc0d5bb67c3c2878c33321b84136eda12db0a1",
+            ["eth:0xa30C41865729C248067704d4DB9F38385Cbe1186"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "admin": "eth:0xB7569E9eB64eaEd5C4166E510b4F6fF54ef42258",
+        "attesterManager": "eth:0xc16b03F84563C1467017C9F7216F8ad6098dc95a",
+        "getEnabledAttester": [
+          "eth:0x725b06F73ff761eF5390e39315e2BfbF60d33F96",
+          "eth:0x52Ed4cBff8DcE6A19748043F3240ec03c834bCeF"
+        ],
+        "getNumEnabledAttesters": 2,
+        "implementation": "eth:0xa30C41865729C248067704d4DB9F38385Cbe1186",
+        "initializedVersion": 1,
+        "localDomain": 0,
+        "maxMessageBodySize": 8192,
+        "NONCE_USED": 1,
+        "owner": "eth:0xB43aA882f497c0Ecb395A5a54f8fa29d12289F65",
+        "paused": false,
+        "pauser": "eth:0x383048265851aA10035bb32b2055632eC4FBB6eB",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "rescuer": "eth:0x53D81DF780baed54FdCa7020618aD6e1c4AC1D84",
+        "signatureThreshold": 2,
+        "version": 1
+      },
+      "implementationNames": {
+        "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64": "AdminUpgradableProxy",
+        "eth:0xa30C41865729C248067704d4DB9F38385Cbe1186": "MessageTransmitterV2"
+      }
+    },
+    {
       "address": "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1306,36 +842,10 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715095667,
-      "sinceBlock": 19819080,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0x2a4a7afA40a9D03B425752fb4cFd5f0FF5b3964C",
-          "eth:0xD7518fD011334dc0346C0fC48Bad01b85bB75656"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0x7872d2FdA921447887b816262Cee5208AFE353C7",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E": "AuthorizedForwarder"
-      }
-    },
-    {
       "name": "EACAggregatorProxy",
       "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "type": "Contract",
+      "template": "Steakhouse-USDC/EACAggregatorProxy",
       "sourceHashes": [
         "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
       ],
@@ -1348,75 +858,10 @@
         "aggregator": "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7",
         "decimals": 8,
         "description": "USDC / USD",
-        "getAnswer": [0, 0, 0, 0, 0],
-        "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 99976329,
-        "latestRound": "55340232221128655354",
-        "latestRoundData": {
-          "roundId": "55340232221128655354",
-          "answer": 99976329,
-          "startedAt": 1758700834,
-          "updatedAt": 1758700847,
-          "answeredInRound": "55340232221128655354"
-        },
-        "latestTimestamp": 1758700847,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 3,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
-        "version": 6,
-        "writeFunctionPermissions": [
-          {
-            "function": "acceptOwnership",
-            "signature": "function acceptOwnership()",
-            "file": "EACAggregatorProxy.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "confirmAggregator",
-            "signature": "function confirmAggregator(address _aggregator)",
-            "file": "EACAggregatorProxy.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 2
-          },
-          {
-            "function": "proposeAggregator",
-            "signature": "function proposeAggregator(address _aggregator)",
-            "file": "EACAggregatorProxy.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 2
-          },
-          {
-            "function": "setController",
-            "signature": "function setController(address _accessController)",
-            "file": "EACAggregatorProxy.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner"]
-          },
-          {
-            "function": "transferOwnership",
-            "signature": "function transferOwnership(address _to)",
-            "file": "EACAggregatorProxy.sol",
-            "permissionType": "modifier",
-            "category": "financial",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          }
-        ]
-      },
-      "errors": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
+        "version": 6
       },
       "implementationNames": {
         "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": "EACAggregatorProxy"
@@ -1453,117 +898,14 @@
       }
     },
     {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715096783,
-      "sinceBlock": 19819172,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0xB5b90F596341127dE460465dEA9b28b8a6Bd1984",
-          "eth:0xba7ECe0a6Cf48A4A2Ece0a7DEDC90327417f8C6a"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0xFCeFBa8fA91958955303d9c5dE163Fb93929cE54",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D": "AuthorizedForwarder"
-      }
-    },
-    {
       "address": "eth:0x9A73D57BB1fB280C5672A13f655675De25F13b70",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "SimpleWriteAccessController",
-      "address": "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x750ad9105ec5613ec9985b9d5d26452470adefa7bce8c1bb8e58738d9ea96d02"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1607096084,
-      "sinceBlock": 11386989,
-      "values": {
-        "$immutable": true,
-        "checkEnabled": true,
-        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-        "writeFunctionPermissions": [
-          {
-            "function": "acceptOwnership",
-            "signature": "function acceptOwnership()",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "addAccess",
-            "signature": "function addAccess(address _user)",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "disableAccessCheck",
-            "signature": "function disableAccessCheck()",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "enableAccessCheck",
-            "signature": "function enableAccessCheck()",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "removeAccess",
-            "signature": "function removeAccess(address _user)",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 1
-          },
-          {
-            "function": "transferOwnership",
-            "signature": "function transferOwnership(address _to)",
-            "file": "SimpleWriteAccessController.sol",
-            "permissionType": "modifier",
-            "category": "financial",
-            "modifiers": ["onlyOwner"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          }
-        ]
-      },
-      "implementationNames": {
-        "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9": "SimpleWriteAccessController"
-      }
+      "address": "eth:0x9E2665d09297d2D6E803D3D66E12d43DfBc8B112",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "USD Coin Token",
@@ -1633,10 +975,7 @@
         "symbol": "USDC",
         "totalSupply": "49537593525166025",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
-        "version": "2",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 34 }
-        ]
+        "version": "2"
       },
       "errors": {
         "admin": "Processing error occurred.",
@@ -1656,6 +995,7 @@
       "name": "cUSDTv3",
       "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
       "type": "Contract",
+      "template": "compound-v3/cUSDCv3",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x95dd0d75b004e0f491bbcf6a46d5458e2836219a92face2631bd939af4c2a5f1"
@@ -1931,12 +1271,10 @@
         "targetReserves": "5000000000000000000000",
         "totalBorrow": "63352284344799084529754",
         "totalSupply": "76054268781347716351068",
-        "trackingIndexScale": 1000000000000000,
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 22 }
-        ]
+        "trackingIndexScale": 1000000000000000
       },
       "errors": {
+        "@template": "Processing error occurred.",
         "getBorrowRate": "Processing error occurred.",
         "getSupplyRate": "Processing error occurred."
       },
@@ -1980,17 +1318,36 @@
           "lastAccrualTime": 0,
           "pauseFlags": 0
         },
-        "version": "0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 7 }
-        ]
+        "version": "0"
       },
       "implementationNames": {
         "eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC": "CometExtAssetList"
       }
     },
     {
+      "address": "eth:0xa820A620F638114F3Eb45df87382383322dDBC49",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
+          "role": "admin"
+        }
+      ]
+    },
+    {
       "address": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB43aA882f497c0Ecb395A5a54f8fa29d12289F65",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2003,6 +1360,18 @@
       "address": "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB7569E9eB64eaEd5C4166E510b4F6fF54ef42258",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "AssetList",
@@ -2059,10 +1428,7 @@
         "multisigThreshold": "5 of 10 (50%)",
         "NAME": "Gnosis Safe",
         "nonce": 67,
-        "VERSION": "1.1.1",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 16 }
-        ]
+        "VERSION": "1.1.1"
       },
       "implementationNames": {
         "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c": "Proxy",
@@ -2088,10 +1454,7 @@
         "messageBodyVersion": 0,
         "owner": "eth:0x6b0b72E63764101Fc4d5BD914B107987041578C4",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "rescuer": "eth:0x65cBcdbE95567A8F9519242f9C52F65E8067021B",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 12 }
-        ]
+        "rescuer": "eth:0x65cBcdbE95567A8F9519242f9C52F65E8067021B"
       },
       "implementationNames": {
         "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155": "TokenMessenger"
@@ -2099,6 +1462,11 @@
     },
     {
       "address": "eth:0xBE1d294FD9B71Ae2F6831Eb80777fF73fb73c953",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xBED4b046f7d185d730E9930b2bcddc86Eb3cfbc9",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2119,51 +1487,7 @@
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
         "name": "Compound",
         "symbol": "COMP",
-        "totalSupply": "10000000000000000000000000",
-        "writeFunctionPermissions": [
-          {
-            "function": "approve",
-            "signature": "function approve(address spender, uint rawAmount)",
-            "file": "Comp.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "delegate",
-            "signature": "function delegate(address delegatee)",
-            "file": "Comp.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 3
-          },
-          {
-            "function": "delegateBySig",
-            "signature": "function delegateBySig(address delegatee, uint nonce, uint expiry, uint8 v, bytes32 r, bytes32 s)",
-            "file": "Comp.sol",
-            "permissionType": "none",
-            "category": "other",
-            "requireStatementCount": 4
-          },
-          {
-            "function": "transfer",
-            "signature": "function transfer(address dst, uint rawAmount)",
-            "file": "Comp.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true
-          },
-          {
-            "function": "transferFrom",
-            "signature": "function transferFrom(address src, address dst, uint rawAmount)",
-            "file": "Comp.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 3
-          }
-        ]
+        "totalSupply": "10000000000000000000000000"
       },
       "implementationNames": {
         "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888": "Comp"
@@ -2184,58 +1508,16 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2448010930808430994381110",
-        "writeFunctionPermissions": [
-          {
-            "function": "approve",
-            "signature": "function approve(address guy, uint wad)",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "other",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "deposit",
-            "signature": "function deposit()",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 3
-          },
-          {
-            "function": "transfer",
-            "signature": "function transfer(address dst, uint wad)",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "transferFrom",
-            "signature": "function transferFrom(address src, address dst, uint wad)",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "withdraw",
-            "signature": "function withdraw(uint wad)",
-            "file": "WETH9.sol",
-            "permissionType": "msgSender",
-            "category": "financial",
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 3
-          }
-        ]
+        "totalSupply": "2448010930808430994381110"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
       }
+    },
+    {
+      "address": "eth:0xc16b03F84563C1467017C9F7216F8ad6098dc95a",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
@@ -2251,6 +1533,7 @@
       "name": "cUSDCv3",
       "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "type": "Contract",
+      "template": "compound-v3/cUSDCv3",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x95dd0d75b004e0f491bbcf6a46d5458e2836219a92face2631bd939af4c2a5f1"
@@ -2546,12 +1829,10 @@
         "targetReserves": 20000000000000,
         "totalBorrow": 485801002419654,
         "totalSupply": 538106298650642,
-        "trackingIndexScale": 1000000000000000,
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 22 }
-        ]
+        "trackingIndexScale": 1000000000000000
       },
       "errors": {
+        "@template": "Processing error occurred.",
         "getBorrowRate": "Processing error occurred.",
         "getSupplyRate": "Processing error occurred."
       },
@@ -2580,94 +1861,16 @@
         "pauser": "eth:0x817ae4109dC0f21E437b94c899962690514Ba09f",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rescuer": "eth:0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
-        "tokenController": "eth:0x8a9A13A106cB89E15410B2AB4488135155032169",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 15 }
-        ]
+        "tokenController": "eth:0x8a9A13A106cB89E15410B2AB4488135155032169"
       },
       "implementationNames": {
         "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907": "TokenMinter"
       }
     },
     {
-      "name": "AccessControlledOCR2Aggregator",
-      "address": "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x527ff55749f8d9bd4042b4f38001f870e0e6ea4601728579e11d5538d616c006"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1719521483,
-      "sinceBlock": 20185527,
-      "values": {
-        "$immutable": true,
-        "checkEnabled": true,
-        "decimals": 8,
-        "getAnswer": [],
-        "getBilling": {
-          "maximumGasPriceGwei": 3000,
-          "reasonableGasPriceGwei": 60,
-          "observationPaymentGjuels": 17170803,
-          "transmissionPaymentGjuels": 103024272,
-          "accountingGas": 6035
-        },
-        "getBillingAccessController": "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
-        "getLinkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "getRequesterAccessController": "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6",
-        "getTimestamp": [],
-        "getTransmitters": [
-          "eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B",
-          "eth:0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085",
-          "eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF",
-          "eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93",
-          "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1",
-          "eth:0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624",
-          "eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E",
-          "eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77",
-          "eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D",
-          "eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8",
-          "eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5",
-          "eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A",
-          "eth:0xF38326579519377178725A741C35999E8051e907",
-          "eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d",
-          "eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988",
-          "eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca"
-        ],
-        "getValidatorConfig": {
-          "validator": "eth:0x0000000000000000000000000000000000000000",
-          "gasLimit": 0
-        },
-        "latestConfigDetails": {
-          "configCount": 2,
-          "blockNumber": 23092235,
-          "configDigest": "0x0001443752cf7d628a5102894fe0b426dbcc109c226e4b37bdf93ab33506cca4"
-        },
-        "latestConfigDigestAndEpoch": {
-          "scanLogs": false,
-          "configDigest": "0x0001443752cf7d628a5102894fe0b426dbcc109c226e4b37bdf93ab33506cca4",
-          "epoch": 22744
-        },
-        "linkAvailableForPayment": "49028875702783133634",
-        "maxAnswer": "95780971304118053647396689196894323976171195136475135",
-        "minAnswer": 1,
-        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-        "typeAndVersion": "AccessControlledOCR2Aggregator 1.0.0",
-        "version": 6,
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 19 }
-        ]
-      },
-      "errors": {
-        "description": "Processing error occurred.",
-        "latestAnswer": "Processing error occurred.",
-        "latestRound": "Processing error occurred.",
-        "latestRoundData": "Processing error occurred.",
-        "latestTimestamp": "Processing error occurred.",
-        "latestTransmissionDetails": "Processing error occurred."
-      },
-      "implementationNames": {
-        "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7": "AccessControlledOCR2Aggregator"
-      }
+      "address": "eth:0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Safe",
@@ -2695,10 +1898,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
         "nonce": 6,
-        "VERSION": "1.4.1",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 14 }
-        ]
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2": "SafeProxy",
@@ -2754,6 +1954,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xE2fEfe09E74b921CbbFF229E7cD40009231501CA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2779,110 +1984,10 @@
       "values": {
         "$immutable": true,
         "getMinterManager": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
-        "writeFunctionPermissions": [
-          {
-            "function": "configureController",
-            "signature": "function configureController(\r\n        address _controller,\r\n        address _worker\r\n    )",
-            "file": "MasterMinter.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 4
-          },
-          {
-            "function": "configureMinter",
-            "signature": "function configureMinter(\r\n        address _minter,\r\n        uint256 _minterAllowedAmount\r\n    )",
-            "file": "MasterMinter.sol",
-            "permissionType": "none",
-            "category": "administrative"
-          },
-          {
-            "function": "decrementMinterAllowance",
-            "signature": "function decrementMinterAllowance(\r\n        uint256 _allowanceDecrement\r\n    )",
-            "file": "MasterMinter.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyController"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "incrementMinterAllowance",
-            "signature": "function incrementMinterAllowance(\r\n        uint256 _allowanceIncrement\r\n    )",
-            "file": "MasterMinter.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyController"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 4
-          },
-          {
-            "function": "removeController",
-            "signature": "function removeController(\r\n        address _controller\r\n    )",
-            "file": "MasterMinter.sol",
-            "permissionType": "modifier",
-            "category": "other",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 2
-          },
-          {
-            "function": "removeMinter",
-            "signature": "function removeMinter(address _minter)",
-            "file": "MasterMinter.sol",
-            "permissionType": "none",
-            "category": "other"
-          },
-          {
-            "function": "setMinterManager",
-            "signature": "function setMinterManager(\r\n        address _newMinterManager\r\n    )",
-            "file": "MasterMinter.sol",
-            "permissionType": "modifier",
-            "category": "administrative",
-            "modifiers": ["onlyOwner", "onlyController"],
-            "hasMsgSenderCheck": true,
-            "requireStatementCount": 2
-          },
-          {
-            "function": "transferOwnership",
-            "signature": "function transferOwnership(address newOwner)",
-            "file": "MasterMinter.sol",
-            "permissionType": "modifier",
-            "category": "financial",
-            "modifiers": ["onlyOwner"],
-            "requireStatementCount": 1
-          }
-        ]
+        "owner": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
       },
       "implementationNames": {
         "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17": "MasterMinter"
-      }
-    },
-    {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715096003,
-      "sinceBlock": 19819108,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0x3C4ad65F5b4884397e1F09596c7ac7F8F95b3fF3",
-          "eth:0xca38FE96DF5446fdC971CA25A3612f2EC39bE5D6"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0x79f92d0B553b917aAfcCBE433677C483AA2D7892",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1": "AuthorizedForwarder"
       }
     },
     {
@@ -2895,41 +2000,9 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1738909343,
       "sinceBlock": 21792814,
-      "values": {
-        "$immutable": true,
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 9 }
-        ]
-      },
+      "values": { "$immutable": true },
       "implementationNames": {
         "eth:0xEA2a6E7B41505d62d404F927F991Edc9E45883c2": "AssetListFactory"
-      }
-    },
-    {
-      "name": "AuthorizedForwarder",
-      "address": "eth:0xF38326579519377178725A741C35999E8051e907",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe6248f5b487ea7e03b0248994dbcf50f0e1488420396bec7219ae6569c213b53"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1715095859,
-      "sinceBlock": 19819096,
-      "values": {
-        "$immutable": true,
-        "getAuthorizedSenders": [
-          "eth:0xDbfea8D5822141c13f92CaA06EB94d0F3d67C243",
-          "eth:0x0f0F6eb7Ef922EC2f3bd929Ba05B9E8DBa024b42"
-        ],
-        "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
-        "owner": "eth:0x31509607cb6556eDfdc536F899F176b5d557A9cf",
-        "typeAndVersion": "AuthorizedForwarder 1.1.0",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManySourceFiles", "fileCount": 6 }
-        ]
-      },
-      "implementationNames": {
-        "eth:0xF38326579519377178725A741C35999E8051e907": "AuthorizedForwarder"
       }
     },
     {
@@ -2970,10 +2043,7 @@
         "pauser": "eth:0x4E898CEe7c5809A63de0eF745177A9BB82FeAC69",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rescuer": "eth:0xE206be2331d6aAa4495887755BaBE892aecE704A",
-        "tokenController": "eth:0x740F494cD63f87547FEc1591646720e5cC285846",
-        "writeFunctionPermissions": [
-          { "skipped": true, "reason": "tooManyWriteFunctions", "count": 16 }
-        ]
+        "tokenController": "eth:0x740F494cD63f87547FEc1591646720e5cC285846"
       },
       "implementationNames": {
         "eth:0xfd78EE919681417d192449715b2594ab58f5D002": "TokenMinterV2"
@@ -2986,6 +2056,53 @@
     }
   ],
   "abis": {
+    "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81": [
+      "constructor(uint32 _localDomain, address _attester, uint32 _maxMessageBodySize, uint32 _version)",
+      "event AttesterDisabled(address indexed attester)",
+      "event AttesterEnabled(address indexed attester)",
+      "event AttesterManagerUpdated(address indexed previousAttesterManager, address indexed newAttesterManager)",
+      "event MaxMessageBodySizeUpdated(uint256 newMaxMessageBodySize)",
+      "event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)",
+      "event MessageSent(bytes message)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause()",
+      "event PauserChanged(address indexed newAddress)",
+      "event RescuerChanged(address indexed newRescuer)",
+      "event SignatureThresholdUpdated(uint256 oldSignatureThreshold, uint256 newSignatureThreshold)",
+      "event Unpause()",
+      "function acceptOwnership()",
+      "function attesterManager() view returns (address)",
+      "function disableAttester(address attester)",
+      "function enableAttester(address newAttester)",
+      "function getEnabledAttester(uint256 index) view returns (address)",
+      "function getNumEnabledAttesters() view returns (uint256)",
+      "function isEnabledAttester(address attester) view returns (bool)",
+      "function localDomain() view returns (uint32)",
+      "function maxMessageBodySize() view returns (uint256)",
+      "function nextAvailableNonce() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function receiveMessage(bytes message, bytes attestation) returns (bool success)",
+      "function replaceMessage(bytes originalMessage, bytes originalAttestation, bytes newMessageBody, bytes32 newDestinationCaller)",
+      "function rescueERC20(address tokenContract, address to, uint256 amount)",
+      "function rescuer() view returns (address)",
+      "function sendMessage(uint32 destinationDomain, bytes32 recipient, bytes messageBody) returns (uint64)",
+      "function sendMessageWithCaller(uint32 destinationDomain, bytes32 recipient, bytes32 destinationCaller, bytes messageBody) returns (uint64)",
+      "function setMaxMessageBodySize(uint256 newMaxMessageBodySize)",
+      "function setSignatureThreshold(uint256 newSignatureThreshold)",
+      "function signatureThreshold() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateAttesterManager(address newAttesterManager)",
+      "function updatePauser(address _newPauser)",
+      "function updateRescuer(address newRescuer)",
+      "function usedNonces(bytes32) view returns (uint256)",
+      "function version() view returns (uint32)"
+    ],
     "eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3": [
       "constructor(tuple(bytes32 name32, bytes32 symbol32) config, address assetListFactoryAddress)",
       "error BadAmount()",
@@ -3257,44 +2374,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
-    "eth:0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
     "eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E": [
       "event AssetListCreated(address indexed assetList, tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs)",
       "function createAssetList(tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs) returns (address assetList)"
@@ -3346,25 +2425,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
     ],
     "eth:0x43506849D7C04F9138D1A2050bbF3A0c054402dd": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -3439,25 +2499,6 @@
       "function updatePauser(address _newPauser)",
       "function updateRescuer(address newRescuer)",
       "function version() pure returns (string)"
-    ],
-    "eth:0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
     ],
     "eth:0x501Eb63A2120418C581B3bD31CF190b0a0616752": [
       "constructor()",
@@ -3572,23 +2613,6 @@
       "function whitelistAccountExpirations(address account) view returns (uint256 timestamp)",
       "function whitelistGuardian() view returns (address)"
     ],
-    "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": [
-      "function name() view returns (string)",
-      "function approve(address _spender, uint256 _value) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
-      "function decimals() view returns (uint8)",
-      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool success)",
-      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool success)",
-      "function balanceOf(address _owner) view returns (uint256 balance)",
-      "function symbol() view returns (string)",
-      "function transfer(address _to, uint256 _value) returns (bool success)",
-      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool success)",
-      "function allowance(address _owner, address _spender) view returns (uint256 remaining)",
-      "constructor()",
-      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)"
-    ],
     "eth:0x555E272506C06e7E559d57418563742AFE363ec8": [
       "constructor(address _messageTransmitter, uint32 _messageBodyVersion)",
       "event Denylisted(address indexed account)",
@@ -3634,138 +2658,6 @@
       "function updateDenylister(address newDenylister)",
       "function updateRescuer(address newRescuer)"
     ],
-    "eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
-    "eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
-    "eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
-    "eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
-    "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6": [
-      "constructor()",
-      "event AddedAccess(address user)",
-      "event CheckAccessDisabled()",
-      "event CheckAccessEnabled()",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "event RemovedAccess(address user)",
-      "function acceptOwnership()",
-      "function addAccess(address _user)",
-      "function checkEnabled() view returns (bool)",
-      "function disableAccessCheck()",
-      "function enableAccessCheck()",
-      "function hasAccess(address _user, bytes) view returns (bool)",
-      "function owner() view returns (address)",
-      "function removeAccess(address _user)",
-      "function transferOwnership(address _to)"
-    ],
-    "eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
-    "eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
     "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": [
       "function executeTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) payable returns (bytes)",
       "function acceptAdmin()",
@@ -3807,43 +2699,15 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
-    "eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
+    "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() view returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() view returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0x899a4f5f5422cC5E8183280182e7096Fb923C762": [
       "constructor()",
@@ -3981,25 +2845,6 @@
       "function withdrawalDelay() view returns (uint256)",
       "function withdrawingBalance(address token, address depositor) view returns (uint256)"
     ],
-    "eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
     "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": [
       "constructor(address _aggregator, address _accessController)",
       "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
@@ -4039,43 +2884,6 @@
       "function getAssetInfo(uint8 i) view returns (tuple(uint8 offset, address asset, address priceFeed, uint64 scale, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap))",
       "function numAssets() view returns (uint8)"
     ],
-    "eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
-    "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9": [
-      "constructor()",
-      "event AddedAccess(address user)",
-      "event CheckAccessDisabled()",
-      "event CheckAccessEnabled()",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "event RemovedAccess(address user)",
-      "function acceptOwnership()",
-      "function addAccess(address _user)",
-      "function checkEnabled() view returns (bool)",
-      "function disableAccessCheck()",
-      "function enableAccessCheck()",
-      "function hasAccess(address _user, bytes) view returns (bool)",
-      "function owner() view returns (address)",
-      "function removeAccess(address _user)",
-      "function transferOwnership(address _to)"
-    ],
     "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": [
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
@@ -4096,6 +2904,54 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xa30C41865729C248067704d4DB9F38385Cbe1186": [
+      "constructor(uint32 _localDomain, uint32 _version)",
+      "event AttesterDisabled(address indexed attester)",
+      "event AttesterEnabled(address indexed attester)",
+      "event AttesterManagerUpdated(address indexed previousAttesterManager, address indexed newAttesterManager)",
+      "event Initialized(uint64 version)",
+      "event MaxMessageBodySizeUpdated(uint256 newMaxMessageBodySize)",
+      "event MessageReceived(address indexed caller, uint32 sourceDomain, bytes32 indexed nonce, bytes32 sender, uint32 indexed finalityThresholdExecuted, bytes messageBody)",
+      "event MessageSent(bytes message)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause()",
+      "event PauserChanged(address indexed newAddress)",
+      "event RescuerChanged(address indexed newRescuer)",
+      "event SignatureThresholdUpdated(uint256 oldSignatureThreshold, uint256 newSignatureThreshold)",
+      "event Unpause()",
+      "function NONCE_USED() view returns (uint256)",
+      "function acceptOwnership()",
+      "function attesterManager() view returns (address)",
+      "function disableAttester(address attester)",
+      "function enableAttester(address newAttester)",
+      "function getEnabledAttester(uint256 index) view returns (address)",
+      "function getNumEnabledAttesters() view returns (uint256)",
+      "function initialize(address owner_, address pauser_, address rescuer_, address attesterManager_, address[] attesters_, uint256 signatureThreshold_, uint256 maxMessageBodySize_)",
+      "function initializedVersion() view returns (uint64)",
+      "function isEnabledAttester(address attester) view returns (bool)",
+      "function localDomain() view returns (uint32)",
+      "function maxMessageBodySize() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function receiveMessage(bytes message, bytes attestation) returns (bool success)",
+      "function rescueERC20(address tokenContract, address to, uint256 amount)",
+      "function rescuer() view returns (address)",
+      "function sendMessage(uint32 destinationDomain, bytes32 recipient, bytes32 destinationCaller, uint32 minFinalityThreshold, bytes messageBody)",
+      "function setMaxMessageBodySize(uint256 newMaxMessageBodySize)",
+      "function setSignatureThreshold(uint256 newSignatureThreshold)",
+      "function signatureThreshold() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateAttesterManager(address newAttesterManager)",
+      "function updatePauser(address _newPauser)",
+      "function updateRescuer(address newRescuer)",
+      "function usedNonces(bytes32) view returns (uint256)",
+      "function version() view returns (uint32)"
     ],
     "eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC": [
       "constructor(tuple(bytes32 name32, bytes32 symbol32) config, address assetListFactoryAddress)",
@@ -4477,76 +3333,6 @@
       "function updatePauser(address _newPauser)",
       "function updateRescuer(address newRescuer)"
     ],
-    "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7": [
-      "constructor(address _link, int192 _minAnswer, int192 _maxAnswer, address _billingAccessController, address _requesterAccessController, uint8 _decimals, string description)",
-      "event AddedAccess(address user)",
-      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
-      "event BillingAccessControllerSet(address old, address current)",
-      "event BillingSet(uint32 maximumGasPriceGwei, uint32 reasonableGasPriceGwei, uint32 observationPaymentGjuels, uint32 transmissionPaymentGjuels, uint24 accountingGas)",
-      "event CheckAccessDisabled()",
-      "event CheckAccessEnabled()",
-      "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)",
-      "event LinkTokenSet(address indexed oldLinkToken, address indexed newLinkToken)",
-      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
-      "event NewTransmission(uint32 indexed aggregatorRoundId, int192 answer, address transmitter, uint32 observationsTimestamp, int192[] observations, bytes observers, int192 juelsPerFeeCoin, bytes32 configDigest, uint40 epochAndRound)",
-      "event OraclePaid(address indexed transmitter, address indexed payee, uint256 amount, address indexed linkToken)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "event PayeeshipTransferRequested(address indexed transmitter, address indexed current, address indexed proposed)",
-      "event PayeeshipTransferred(address indexed transmitter, address indexed previous, address indexed current)",
-      "event RemovedAccess(address user)",
-      "event RequesterAccessControllerSet(address old, address current)",
-      "event RoundRequested(address indexed requester, bytes32 configDigest, uint32 epoch, uint8 round)",
-      "event Transmitted(bytes32 configDigest, uint32 epoch)",
-      "event ValidatorConfigSet(address indexed previousValidator, uint32 previousGasLimit, address indexed currentValidator, uint32 currentGasLimit)",
-      "function acceptOwnership()",
-      "function acceptPayeeship(address transmitter)",
-      "function addAccess(address _user)",
-      "function checkEnabled() view returns (bool)",
-      "function decimals() view returns (uint8)",
-      "function description() view returns (string)",
-      "function disableAccessCheck()",
-      "function enableAccessCheck()",
-      "function getAnswer(uint256 _roundId) view returns (int256)",
-      "function getBilling() view returns (uint32 maximumGasPriceGwei, uint32 reasonableGasPriceGwei, uint32 observationPaymentGjuels, uint32 transmissionPaymentGjuels, uint24 accountingGas)",
-      "function getBillingAccessController() view returns (address)",
-      "function getLinkToken() view returns (address linkToken)",
-      "function getRequesterAccessController() view returns (address)",
-      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
-      "function getTimestamp(uint256 _roundId) view returns (uint256)",
-      "function getTransmitters() view returns (address[])",
-      "function getValidatorConfig() view returns (address validator, uint32 gasLimit)",
-      "function hasAccess(address _user, bytes _calldata) view returns (bool)",
-      "function latestAnswer() view returns (int256)",
-      "function latestConfigDetails() view returns (uint32 configCount, uint32 blockNumber, bytes32 configDigest)",
-      "function latestConfigDigestAndEpoch() view returns (bool scanLogs, bytes32 configDigest, uint32 epoch)",
-      "function latestRound() view returns (uint256)",
-      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
-      "function latestTimestamp() view returns (uint256)",
-      "function latestTransmissionDetails() view returns (bytes32 configDigest, uint32 epoch, uint8 round, int192 latestAnswer_, uint64 latestTimestamp_)",
-      "function linkAvailableForPayment() view returns (int256 availableBalance)",
-      "function maxAnswer() view returns (int192)",
-      "function minAnswer() view returns (int192)",
-      "function oracleObservationCount(address transmitterAddress) view returns (uint32)",
-      "function owedPayment(address transmitterAddress) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function removeAccess(address _user)",
-      "function requestNewRound() returns (uint80)",
-      "function setBilling(uint32 maximumGasPriceGwei, uint32 reasonableGasPriceGwei, uint32 observationPaymentGjuels, uint32 transmissionPaymentGjuels, uint24 accountingGas)",
-      "function setBillingAccessController(address _billingAccessController)",
-      "function setConfig(address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)",
-      "function setLinkToken(address linkToken, address recipient)",
-      "function setPayees(address[] transmitters, address[] payees)",
-      "function setRequesterAccessController(address requesterAccessController)",
-      "function setValidatorConfig(address newValidator, uint32 newGasLimit)",
-      "function transferOwnership(address to)",
-      "function transferPayeeship(address transmitter, address proposed)",
-      "function transmit(bytes32[3] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32 rawVs)",
-      "function typeAndVersion() pure returns (string)",
-      "function version() view returns (uint256)",
-      "function withdrawFunds(address recipient, uint256 amount)",
-      "function withdrawPayment(address transmitter)"
-    ],
     "eth:0xcFC1fA6b7ca982176529899D99af6473aD80DF4F": [
       "constructor()",
       "error AlreadyInitialized()",
@@ -4652,47 +3438,9 @@
       "event ControllerRemoved(address indexed _controller)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
-    "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
-    ],
     "eth:0xEA2a6E7B41505d62d404F927F991Edc9E45883c2": [
       "event AssetListCreated(address indexed assetList, tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs)",
       "function createAssetList(tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs) returns (address assetList)"
-    ],
-    "eth:0xF38326579519377178725A741C35999E8051e907": [
-      "constructor(address link, address owner, address recipient, bytes message)",
-      "event AuthorizedSendersChanged(address[] senders, address changedBy)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferRequestedWithMessage(address indexed from, address indexed to, bytes message)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function forward(address to, bytes data)",
-      "function getAuthorizedSenders() view returns (address[])",
-      "function isAuthorizedSender(address sender) view returns (bool)",
-      "function linkToken() view returns (address)",
-      "function multiForward(address[] tos, bytes[] datas)",
-      "function owner() view returns (address)",
-      "function ownerForward(address to, bytes data)",
-      "function setAuthorizedSenders(address[] senders)",
-      "function transferOwnership(address to)",
-      "function transferOwnershipWithMessage(address to, bytes message)",
-      "function typeAndVersion() view returns (string)"
     ],
     "eth:0xfd78EE919681417d192449715b2594ab58f5D002": [
       "constructor(address _tokenController)",
@@ -4737,14 +3485,17 @@
     ]
   },
   "usedTemplates": {
+    "compound-v3/cUSDCv3": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921",
     "tokens/circle/GatewayMinter": "0x132f1365a912b7680f913f03edba0fc5615bfd87f89912cfa7d5e1d96c2fdc9e",
     "tokens/circle/GatewayWallet": "0xf973d2d1856384390e32857a4be7369220cb341bdf173fb037559d5fe132cd16",
+    "tokens/circle/MessageTransmitter": "0xa08ec2ee361f024f79836400aba320fcc928f9e5c224c65eb670f8ec23548cd6",
     "tokens/circle/TokenMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/TokenMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97"
   },
   "usedBlockNumbers": { "ethereum": 23433920 },
-  "permissionsConfigHash": "0xdbd4fa77d8252be91ef5d081565235a5039747717c513aa9ded6727f3c3bec2c"
+  "permissionsConfigHash": "0x60eb9e03de3329f1a901b8a61f5849a07cad98f02b148ce913106512dc600985"
 }

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": [
+    "aggRecordedDebt",
+    "aggBatchManagementFees",
+    "aggWeightedDebtSum",
+    "calcPendingAggBatchManagementFee",
+    "calcPendingAggInterest",
+    "calcPendingSPYield",
+    "getBoldDebt",
+    "getCollBalance",
+    "lastAggBatchManagementFeesUpdateTime",
+    "lastAggUpdateTime"
+  ]
+}

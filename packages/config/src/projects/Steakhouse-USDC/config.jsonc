@@ -63,26 +63,33 @@
             "sourceField": "marketParams"
           }
         }
-      }
+      },
+      "ignoreInWatchMode": ["totalAssets", "totalSupply"]
     },
     "eth:0x4a3411ac2948B33c69666B35cc6d055B27Ea84f1": {
       "ignoreMethods": ["getTransmitters"]
     },
     "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": {
-      "ignoreRelatives": ["aggregator"],
-      "ignoreMethods": ["aggregator"]
+      "ignoreRelatives": ["aggregator"]
     },
     "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": {
-      "ignoreMethods": ["aggregator"],
+      "ignoreMethods": ["proposedAggregator"],
       "ignoreRelatives": ["aggregator"]
     },
     "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": {
-      "ignoreMethods": ["aggregator"],
       "ignoreRelatives": ["aggregator"]
     },
     "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD": {
-      "ignoreMethods": ["aggregator"],
       "ignoreRelatives": ["aggregator"]
+    },
+    "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a": {
+      "ignoreMethods": ["price"]
+    },
+    "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580": {
+      "ignoreMethods": ["price"]
+    },
+    "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79": {
+      "ignoreMethods": ["latestRoundData"]
     }
   }
 }

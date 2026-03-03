@@ -1,3 +1,649 @@
+Generated with discovered.json: 0x6f43e5d6e198976a6964addbba40827aa5ffff07
+
+# Diff at Tue, 03 Mar 2026 10:33:42 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@5bef08035955f2dbf42d8e4bf50097f187cd57d3 block: 1768493880
+- current timestamp: 1772533129
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract SortedTroves (eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386) {
+    +++ description: None
+      values.getSize:
+-        26
++        23
+    }
+```
+
+```diff
+    contract Safe (eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x2458aA42720A32fd6986f963774bCf3471F59660"
+      values.$members.2:
+-        "eth:0x711cd20bF6b436ced327A8C65A14491aA04c2ca1"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 1 (100%)"
+    }
+```
+
+```diff
+    contract ActivePool (eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0) {
+    +++ description: None
+      values.aggWeightedBatchManagementFeeSum:
+-        "23363193019159989040377678000000000000000"
++        "15224465054459121365746676000000000000000"
+    }
+```
+
+```diff
+    contract BoldToken (eth:0x6440f144b7e50D6a8439336510312d2F54beB01D) {
+    +++ description: None
+      values.totalSupply:
+-        "39350436766585040845192275"
++        "30728770193970129332264404"
+    }
+```
+
+```diff
+    contract TroveManager (eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A) {
+    +++ description: None
+      values.getEntireBranchColl:
+-        "5548286765080221190186"
++        "6006781966669596358390"
+      values.getEntireBranchDebt:
+-        "9305276814578577947312259"
++        "6512522368737798442903949"
+    }
+```
+
+```diff
+    contract SortedTroves (eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1) {
+    +++ description: None
+      values.getSize:
+-        61
++        44
+    }
+```
+
+```diff
+    contract Tellor Tributes Token (eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0) {
+    +++ description: None
+      values.getNewCurrentVariables._c:
+-        "0x78f55b957fe44a588f0d9a939e201e07c32b47da9e39363311fd9bd129500281"
++        "0x1321d205ba3a0e2e076c1a7f124f00504fbcd9223f411f3d3d02415c048cdb76"
+    }
+```
+
+```diff
+    contract SortedTroves (eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6) {
+    +++ description: None
+      values.data.tail:
+-        "eth:0x3e4488729874be67Bf4826B543Bf083b8139817E"
++        "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687"
+      values.data.size:
+-        115
++        105
+      values.getLast:
+-        "eth:0x3e4488729874be67Bf4826B543Bf083b8139817E"
++        "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687"
+      values.getSize:
+-        115
++        105
+    }
+```
+
+```diff
+    contract ActivePool (eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F) {
+    +++ description: None
+      values.aggWeightedBatchManagementFeeSum:
+-        "12531727142111607084436137750000000000000"
++        "14593442887722890197289245500000000000000"
+    }
+```
+
+```diff
+    contract SortedTroves (eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4) {
+    +++ description: None
+      values.getSize:
+-        91
++        78
+    }
+```
+
+```diff
+    contract TroveManager (eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22) {
+    +++ description: None
+      values.getEntireBranchColl:
+-        "25378183572677775054848"
++        "25058960887966770823495"
+      values.getEntireBranchDebt:
+-        "24782173071635911269296930"
++        "18420011139147674562088369"
+    }
+```
+
+```diff
+    contract TroveManager (eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2) {
+    +++ description: None
+      values.baseRate:
+-        8276483257307213
++        3327826668194
+      values.getTroveFromTroveOwnersArray.0:
+-        "eth:0xa850535D3628CD4dFEB528dC85cfA93051Ff2984"
++        "eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE"
+      values.getTroveOwnersCount:
+-        115
++        105
+      values.lastFeeOperationTime:
+-        1768344071
++        1772405579
+      values.totalCollateralSnapshot:
+-        "80381242490914790439503"
++        "77898061772842602270572"
+      values.totalStakes:
+-        "77898061772842602270572"
++        "77459866898405683285253"
+      values.totalStakesSnapshot:
+-        "80381242490914790439503"
++        "77898061772842602270572"
+      values.TroveOwners.0:
+-        "eth:0xa850535D3628CD4dFEB528dC85cfA93051Ff2984"
++        "eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE"
+    }
+```
+
+```diff
+    contract TellorCaller (eth:0xAd430500ECDa11E38C9bCB08a702274b94641112) {
+    +++ description: None
+      values.getTellorCurrentValue.0.2:
+-        1768492955
++        1772532167
+      values.getTellorCurrentValue.0.1:
+-        3321153749
++        1948617091
+    }
+```
+
+```diff
+    contract TroveManager (eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e) {
+    +++ description: None
+      values.getEntireBranchColl:
+-        "4352125544647987218794"
++        "5945688136045064762180"
+      values.getEntireBranchDebt:
+-        "5263421861463096170578474"
++        "5796683547432390825758138"
+    }
+```
+
+```diff
+    contract CommunityIssuance (eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816) {
+    +++ description: None
+      values.totalLQTYIssued:
+-        "30838809219285572256000000"
++        "30937394161462134272000000"
+    }
+```
+
+```diff
+    contract ActivePool (eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE) {
+    +++ description: None
+      values.aggWeightedBatchManagementFeeSum:
+-        "eth:0x9545014622235086093391841500000000000000"
++        "eth:0x4123855519570108964282467500000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol                                 | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768493880 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x13cE2ABB82D2484F7aC55a02dd0f5c5e4dd6B5Fa)
+    +++ description: None
+```
+
+```diff
+    contract SortedTroves (eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386) {
+    +++ description: None
+      values.contains:
+-        [false,false,false,false,false]
+      values.getFirst:
+-        "65442879047640197239116255022690315588228715314739475407834266948492716039383"
+      values.getLast:
+-        "15819037836432619065432019909407415740867073754834407017193922594371690360030"
+      values.getNext:
+-        ["65442879047640197239116255022690315588228715314739475407834266948492716039383",0,0,0,0]
+      values.getPrev:
+-        ["15819037836432619065432019909407415740867073754834407017193922594371690360030",0,0,0,0]
+      values.nodes:
+-        [["65442879047640197239116255022690315588228715314739475407834266948492716039383","15819037836432619065432019909407415740867073754834407017193922594371690360030","eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false]]
+      errors.contains:
+-        "Processing error occurred."
+      errors.getNext:
+-        "Processing error occurred."
+      errors.getPrev:
+-        "Processing error occurred."
+      errors.nodes:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/SortedTroves"
+    }
+```
+
+```diff
+    contract BorrowerOperations (eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007) {
+    +++ description: None
+      values.getCompositeDebt:
+-        ["200000000000000000000","200000000000000000001","200000000000000000002","200000000000000000003","200000000000000000004"]
+      values.getEntireSystemColl:
+-        "77898061772842602270572"
+      values.getEntireSystemDebt:
+-        "34544154161539642862528277"
+      errors:
+-        {"getCompositeDebt":"Processing error occurred."}
+      template:
++        "liquity-v2/BorrowerOperations"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BolderCashProxy (eth:0x25BC01FD5a01B1864A7dBADDb05BfEd642340dA2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x260260c3B1AFF1ED9E45e355Ff4D05BEEdD5efeb)
+    +++ description: None
+```
+
+```diff
+    contract BorrowerOperations (eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65) {
+    +++ description: None
+      values.getEntireBranchColl:
+-        "5548286765080221190186"
+      values.getEntireBranchDebt:
+-        "9305276814578577947312259"
+      values.getInterestIndividualDelegateOf:
+-        [["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0]]
+      errors.getInterestIndividualDelegateOf:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/BorrowerOperations_branch"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BolderCashProxy (eth:0x50Bc019abdb9951602BC4fE92947d3c15d5e45Df)
+    +++ description: None
+```
+
+```diff
+    contract ActivePool (eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0) {
+    +++ description: None
+      template:
++        "liquity-v2/ActivePool"
+    }
+```
+
+```diff
+    contract StabilityPool (eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF) {
+    +++ description: None
+      template:
++        "liquity-v2/StabilityPool"
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419) {
+    +++ description: None
+      values.getAnswer:
+-        [0,0,0,0,0]
+      values.getTimestamp:
+-        [0,0,0,0,0]
+      values.latestAnswer:
+-        331000550000
+      values.latestRound:
+-        "129127208515966884791"
+      values.latestRoundData:
+-        {"roundId":"129127208515966884791","answer":331000550000,"startedAt":1768493226,"updatedAt":1768493243,"answeredInRound":"129127208515966884791"}
+      values.latestTimestamp:
+-        1768493243
+      errors:
+-        {"getAnswer":"Processing error occurred.","getTimestamp":"Processing error occurred.","proposedLatestRoundData":"Processing error occurred."}
+      template:
++        "Steakhouse-USDC/EACAggregatorProxy"
+    }
+```
+
+```diff
+    contract StabilityPool (eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb) {
+    +++ description: None
+      errors:
+-        {"getEntireSystemColl":"Processing error occurred.","getEntireSystemDebt":"Processing error occurred."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BolderCashProxy (eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552)
+    +++ description: None
+```
+
+```diff
+    contract TroveManager (eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A) {
+    +++ description: None
+      values.batchIds:
+-        ["eth:0x00000000001991cEE928c561E37725816cBF73ba","eth:0x25BC01FD5a01B1864A7dBADDb05BfEd642340dA2","eth:0x50Bc019abdb9951602BC4fE92947d3c15d5e45Df","eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552","eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695"]
+      values.getLatestTroveData:
+-        [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]
+      values.getTroveFromTroveIdsArray:
+-        ["55731833138114342268386280255155815271905312138367051625070818765050332620809","77612571269156022689161594097310745651225474039037620215296829419000244586697","59036207657186387247875037590648447738341785594429824639219033130191337765680","102247037494986730506041632222868001124387697185626929998095238518734059870154","74281559837511991545039363478026157965600536673409982010149646900490664937910"]
+      values.getTroveStatus:
+-        [0,0,0,0,0]
+      values.Troves:
+-        [[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0]]
+      errors.batchIds:
+-        "Processing error occurred."
+      errors.getLatestTroveData:
+-        "Processing error occurred."
+      errors.getTroveFromTroveIdsArray:
+-        "Processing error occurred."
+      errors.getTroveStatus:
+-        "Processing error occurred."
+      errors.Troves:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/TroveManager"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AccessControlledOCR2Aggregator (eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5)
+    +++ description: None
+```
+
+```diff
+    contract SortedTroves (eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1) {
+    +++ description: None
+      values.contains:
+-        [false,false,false,false,false]
+      values.getFirst:
+-        "69406497372752790287095306925191155570756713621942550424621261184562556006609"
+      values.getLast:
+-        "48155643574682199246965747600986830151117553149983828519323299836183986087031"
+      values.getNext:
+-        ["69406497372752790287095306925191155570756713621942550424621261184562556006609",0,0,0,0]
+      values.getPrev:
+-        ["48155643574682199246965747600986830151117553149983828519323299836183986087031",0,0,0,0]
+      values.nodes:
+-        [["69406497372752790287095306925191155570756713621942550424621261184562556006609","48155643574682199246965747600986830151117553149983828519323299836183986087031","eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false]]
+      errors.contains:
+-        "Processing error occurred."
+      errors.getNext:
+-        "Processing error occurred."
+      errors.getPrev:
+-        "Processing error occurred."
+      errors.nodes:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/SortedTroves"
+    }
+```
+
+```diff
+    contract Tellor Tributes Token (eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0) {
+    +++ description: None
+      values.disputesById:
+-        [["0x0000000000000000000000000000000000000000000000000000000000000000",0,false,false,false,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"],["0xcefd7c5b8e9e7401f0aa17d25979f52b885b690dae9372240d25d045df1c3952","-78981907738017321593073",true,false,false,"eth:0x260260c3B1AFF1ED9E45e355Ff4D05BEEdD5efeb","eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E","eth:0x0000000000000000000000000000000000000000"],["0xedcb1355296870fb613b2d82f80268a7d1c720bd3a05095fe8883588019ae199","78981907738017321593073",true,true,false,"eth:0x13cE2ABB82D2484F7aC55a02dd0f5c5e4dd6B5Fa","eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E","eth:0x0000000000000000000000000000000000000000"],["0xe605304535a755840e17560f3fb8f2d8dc2bd22664b792bbdccadbba7abf125b","78983199404683988259739",true,true,false,"eth:0x90cdBBb44143b87883287589c29Eb869FC906E91","eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E","eth:0x0000000000000000000000000000000000000000"],["0x28cd3cec79a427f834edcc3466bdc28f654475265491df388580dc5d1e32f301","-78983199404683988259739",true,false,false,"eth:0x7034E17f11b382545FFd618620Ca72e271AEa5F6","eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E","eth:0x0000000000000000000000000000000000000000"]]
+      values.getLastNewValueById:
+-        [[0,false],[3321153749,true],[0,false],[0,false],[0,false]]
+      values.getNewValueCountbyRequestId:
+-        [0,229213,0,0,0]
+      values.newValueTimestamps:
+-        [1614021064,1614031551,1614098551,1614118070,1614119565]
+      errors.disputesById:
+-        "Processing error occurred."
+      errors.getLastNewValueById:
+-        "Processing error occurred."
+      errors.getNewValueCountbyRequestId:
+-        "Processing error occurred."
+      errors.newValueTimestamps:
+-        "Processing error occurred."
+    }
+```
+
+```diff
+    contract SortedTroves (eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6) {
+    +++ description: None
+      template:
++        "liquity-v2/SortedTroves_all"
+    }
+```
+
+```diff
+    contract ActivePool (eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F) {
+    +++ description: None
+      template:
++        "liquity-v2/ActivePool"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x90cdBBb44143b87883287589c29Eb869FC906E91)
+    +++ description: None
+```
+
+```diff
+    contract StabilityPool (eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B) {
+    +++ description: None
+      template:
++        "liquity-v2/StabilityPool"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SimpleWriteAccessController (eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9)
+    +++ description: None
+```
+
+```diff
+    contract SortedTroves (eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4) {
+    +++ description: None
+      values.contains:
+-        [false,false,false,false,false]
+      values.getFirst:
+-        "492270872291668257851957123016844884821368762214878526512702964905114187127"
+      values.getLast:
+-        "78159833196847958977227438648061945847752731113647277737301785676172235902251"
+      values.getNext:
+-        ["492270872291668257851957123016844884821368762214878526512702964905114187127",0,0,0,0]
+      values.getPrev:
+-        ["78159833196847958977227438648061945847752731113647277737301785676172235902251",0,0,0,0]
+      values.nodes:
+-        [["492270872291668257851957123016844884821368762214878526512702964905114187127","78159833196847958977227438648061945847752731113647277737301785676172235902251","eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false],[0,0,"eth:0x0000000000000000000000000000000000000000",false]]
+      errors.contains:
+-        "Processing error occurred."
+      errors.getNext:
+-        "Processing error occurred."
+      errors.getPrev:
+-        "Processing error occurred."
+      errors.nodes:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/SortedTroves"
+    }
+```
+
+```diff
+    contract TroveManager (eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22) {
+    +++ description: None
+      values.batchIds:
+-        ["eth:0x000000000017d2a7B863e9EBBe6F9ab7255EB7c5","eth:0x25BC01FD5a01B1864A7dBADDb05BfEd642340dA2","eth:0x50Bc019abdb9951602BC4fE92947d3c15d5e45Df","eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552","eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695"]
+      values.getLatestTroveData:
+-        [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]
+      values.getTroveFromTroveIdsArray:
+-        ["98138812059725758564609263565551065956967041398216672951730221074607548507060","11159957542815582420488026697672994934488227070340527458817474573810738877248","102570399347334904848277730749855536164897158539639787290331273088032008072627","85095847953002077866710073802039317139485368761476694904929322343692967211708","64132792319957114575712214153971317118152919325790102544335049443954963054513"]
+      values.getTroveStatus:
+-        [0,0,0,0,0]
+      values.Troves:
+-        [[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0]]
+      errors.batchIds:
+-        "Processing error occurred."
+      errors.getLatestTroveData:
+-        "Processing error occurred."
+      errors.getTroveFromTroveIdsArray:
+-        "Processing error occurred."
+      errors.getTroveStatus:
+-        "Processing error occurred."
+      errors.Troves:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/TroveManager"
+    }
+```
+
+```diff
+    contract TroveManager (eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2) {
+    +++ description: None
+      values.getBorrowingFee:
+-        [0,0,0,0,0]
+      values.getBorrowingFeeWithDecay:
+-        [0,0,0,0,0]
+      values.getRedemptionFeeWithDecay:
+-        [0,0,0,0]
+      values.getTCR:
+-        [0,0,0,0,0]
+      errors.getBorrowingFee:
+-        "Processing error occurred."
+      errors.getBorrowingFeeWithDecay:
+-        "Processing error occurred."
+      errors.getTCR:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/TroveManager_all"
+    }
+```
+
+```diff
+    contract BorrowerOperations (eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3) {
+    +++ description: None
+      values.getEntireBranchColl:
+-        "25378183572677775054848"
+      values.getEntireBranchDebt:
+-        "24782173071635911269296930"
+      values.getInterestIndividualDelegateOf:
+-        [["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0]]
+      errors.getInterestIndividualDelegateOf:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/BorrowerOperations_branch"
+    }
+```
+
+```diff
+    contract TroveManager (eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e) {
+    +++ description: None
+      values.batchIds:
+-        ["eth:0x0000000000704F94cE2Fe636dAB92677a9745dc3","eth:0x25BC01FD5a01B1864A7dBADDb05BfEd642340dA2","eth:0x50Bc019abdb9951602BC4fE92947d3c15d5e45Df","eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552","eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695"]
+      values.getLatestTroveData:
+-        [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]
+      values.getTroveFromTroveIdsArray:
+-        ["106873998366981569039790505813951933126451796971830147810042067253718945086787","101318353602513319362042961451262258831981010153947727694444000866271403819447","83845240547137395277226418449036602745406400480297056842384331352740810936932","20327589420428593697524321351157856858342940161367227164292209048850566785776","75612223830594747844811694143670180236762873742227582769905911215507573448955"]
+      values.getTroveStatus:
+-        [0,0,0,0,0]
+      values.Troves:
+-        [[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0],[0,0,0,0,0,0,0,0,"eth:0x0000000000000000000000000000000000000000",0]]
+      errors.batchIds:
+-        "Processing error occurred."
+      errors.getLatestTroveData:
+-        "Processing error occurred."
+      errors.getTroveFromTroveIdsArray:
+-        "Processing error occurred."
+      errors.getTroveStatus:
+-        "Processing error occurred."
+      errors.Troves:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/TroveManager"
+    }
+```
+
+```diff
+    contract StabilityPool (eth:0xd442E41019B7F5C4dD78F50dc03726C446148695) {
+    +++ description: None
+      template:
++        "liquity-v2/StabilityPool"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BatchManagerProxy (eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695)
+    +++ description: None
+```
+
+```diff
+    contract BorrowerOperations (eth:0xe8119fC02953B27a1b48D2573855738485A17329) {
+    +++ description: None
+      values.getEntireBranchColl:
+-        "4352125544647987218794"
+      values.getEntireBranchDebt:
+-        "5263421861463096170578474"
+      values.getInterestIndividualDelegateOf:
+-        [["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0],["eth:0x0000000000000000000000000000000000000000",0,0,0]]
+      errors.getInterestIndividualDelegateOf:
+-        "Processing error occurred."
+      template:
++        "liquity-v2/BorrowerOperations_branch"
+    }
+```
+
+```diff
+    contract ActivePool (eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE) {
+    +++ description: None
+      template:
++        "liquity-v2/ActivePool"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ConfirmedTransactionModule (eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x3b727589b92dc3e6ef7eee1aa8da2df2beab23bb
 
 # Diff at Thu, 15 Jan 2026 16:21:32 GMT:

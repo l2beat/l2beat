@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "batchIds",
+    "Troves",
+    "getLatestTroveData",
+    "getTroveFromTroveIdsArray",
+    "getTroveStatus"
+  ],
+  "ignoreInWatchMode": [
+    "getTroveIdsCount",
+    "lastZombieTroveId",
+    "rewardSnapshots"
+  ]
+}

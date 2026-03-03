@@ -1,3 +1,385 @@
+Generated with discovered.json: 0x21635452ae1899df8a8656e808966b032b1f31a3
+
+# Diff at Tue, 03 Mar 2026 10:36:23 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@5bef08035955f2dbf42d8e4bf50097f187cd57d3 block: 1758729268
+- current timestamp: 1758729268
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758729268 (main branch discovery), not current.
+
+```diff
+    contract CometExtAssetList (eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManySourceFiles","fileCount":7}]
+    }
+```
+
+```diff
+    contract CometProxyAdmin (eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManySourceFiles","fileCount":12}]
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":16}]
+    }
+```
+
+```diff
+    contract GatewayMinter (eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205) {
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":16}]
+    }
+```
+
+```diff
+    contract TokenMessengerV2 (eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) {
+    +++ description: Part of CCTP
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":20}]
+    }
+```
+
+```diff
+    contract ConfirmedTransactionModule (eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"function":"changeMasterCopy","signature":"function changeMasterCopy(address _masterCopy)","file":"ConfirmedTransactionModule.sol","permissionType":"none","category":"administrative","requireStatementCount":1},{"function":"confirmTransaction","signature":"function confirmTransaction(bytes32 transactionHash)","file":"ConfirmedTransactionModule.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true,"requireStatementCount":4},{"function":"executeTransaction","signature":"function executeTransaction(\r\n        address to,\r\n        uint256 value,\r\n        bytes memory data,\r\n        Enum.Operation operation,\r\n        bytes32 witness\r\n    )","file":"ConfirmedTransactionModule.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true,"requireStatementCount":2},{"function":"revokeTransaction","signature":"function revokeTransaction(bytes32 transactionHash)","file":"ConfirmedTransactionModule.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true,"requireStatementCount":3},{"function":"setExecutor","signature":"function setExecutor(address executor, bool allowed)","file":"ConfirmedTransactionModule.sol","permissionType":"msgSender","category":"administrative","hasMsgSenderCheck":true,"requireStatementCount":3},{"function":"setup","signature":"function setup()","file":"ConfirmedTransactionModule.sol","permissionType":"msgSender","category":"administrative","hasMsgSenderCheck":true,"requireStatementCount":2}]
+    }
+```
+
+```diff
+    contract CompoundGovernor (eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":29}]
+    }
+```
+
+```diff
+    contract cWETHv3 (eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3) {
+    +++ description: Compound v3 WETH market - lending pool for WETH
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":35}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624)
+    +++ description: None
+```
+
+```diff
+    contract AssetListFactory (eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManySourceFiles","fileCount":9}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChainLink Token (eth:0x514910771AF9Ca656af840dff83E8264EcF986CA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SimpleWriteAccessController (eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5)
+    +++ description: None
+```
+
+```diff
+    contract Timelock (eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"function":"acceptAdmin","signature":"function acceptAdmin()","file":"Timelock.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true,"requireStatementCount":8},{"function":"cancelTransaction","signature":"function cancelTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)","file":"Timelock.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true,"requireStatementCount":6},{"function":"executeTransaction","signature":"function executeTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)","file":"Timelock.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true,"requireStatementCount":5},{"function":"queueTransaction","signature":"function queueTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)","file":"Timelock.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true,"requireStatementCount":7},{"function":"setDelay","signature":"function setDelay(uint delay_)","file":"Timelock.sol","permissionType":"msgSender","category":"administrative","hasMsgSenderCheck":true,"requireStatementCount":8},{"function":"setPendingAdmin","signature":"function setPendingAdmin(address pendingAdmin_)","file":"Timelock.sol","permissionType":"msgSender","category":"administrative","hasMsgSenderCheck":true,"requireStatementCount":8}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x725ED7F44F0888aeC1b7630AB1ACdced91E0591A) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManySourceFiles","fileCount":12}]
+    }
+```
+
+```diff
+    contract GatewayWallet (eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) {
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":27}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E)
+    +++ description: None
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6) {
+    +++ description: None
+      values.getAnswer:
+-        [0,0,0,0,0]
+      values.getTimestamp:
+-        [0,0,0,0,0]
+      values.latestAnswer:
+-        99976329
+      values.latestRound:
+-        "55340232221128655354"
+      values.latestRoundData:
+-        {"roundId":"55340232221128655354","answer":99976329,"startedAt":1758700834,"updatedAt":1758700847,"answeredInRound":"55340232221128655354"}
+      values.latestTimestamp:
+-        1758700847
+      values.writeFunctionPermissions:
+-        [{"function":"acceptOwnership","signature":"function acceptOwnership()","file":"EACAggregatorProxy.sol","permissionType":"modifier","category":"other","modifiers":["onlyOwner"],"hasMsgSenderCheck":true,"requireStatementCount":2},{"function":"confirmAggregator","signature":"function confirmAggregator(address _aggregator)","file":"EACAggregatorProxy.sol","permissionType":"modifier","category":"other","modifiers":["onlyOwner"],"requireStatementCount":2},{"function":"proposeAggregator","signature":"function proposeAggregator(address _aggregator)","file":"EACAggregatorProxy.sol","permissionType":"modifier","category":"other","modifiers":["onlyOwner"],"requireStatementCount":2},{"function":"setController","signature":"function setController(address _accessController)","file":"EACAggregatorProxy.sol","permissionType":"modifier","category":"administrative","modifiers":["onlyOwner"]},{"function":"transferOwnership","signature":"function transferOwnership(address _to)","file":"EACAggregatorProxy.sol","permissionType":"modifier","category":"financial","modifiers":["onlyOwner"],"hasMsgSenderCheck":true,"requireStatementCount":2}]
+      errors:
+-        {"getAnswer":"Processing error occurred.","getTimestamp":"Processing error occurred.","proposedLatestRoundData":"Processing error occurred."}
+      template:
++        "Steakhouse-USDC/EACAggregatorProxy"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SimpleWriteAccessController (eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9)
+    +++ description: None
+```
+
+```diff
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":34}]
+    }
+```
+
+```diff
+    contract cUSDTv3 (eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94) {
+    +++ description: Compound v3 USDT market - lending pool for USDT
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":22}]
+      errors.@template:
++        "Processing error occurred."
+      template:
++        "compound-v3/cUSDCv3"
+    }
+```
+
+```diff
+    contract CometExtAssetList (eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManySourceFiles","fileCount":7}]
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":16}]
+    }
+```
+
+```diff
+    contract TokenMessenger (eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155) {
+    +++ description: Part of CCTP
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":12}]
+    }
+```
+
+```diff
+    contract Compound Token (eth:0xc00e94Cb662C3520282E6f5717214004A7f26888) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"function":"approve","signature":"function approve(address spender, uint rawAmount)","file":"Comp.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true},{"function":"delegate","signature":"function delegate(address delegatee)","file":"Comp.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true,"requireStatementCount":3},{"function":"delegateBySig","signature":"function delegateBySig(address delegatee, uint nonce, uint expiry, uint8 v, bytes32 r, bytes32 s)","file":"Comp.sol","permissionType":"none","category":"other","requireStatementCount":4},{"function":"transfer","signature":"function transfer(address dst, uint rawAmount)","file":"Comp.sol","permissionType":"msgSender","category":"financial","hasMsgSenderCheck":true},{"function":"transferFrom","signature":"function transferFrom(address src, address dst, uint rawAmount)","file":"Comp.sol","permissionType":"msgSender","category":"financial","hasMsgSenderCheck":true,"requireStatementCount":3}]
+    }
+```
+
+```diff
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"function":"approve","signature":"function approve(address guy, uint wad)","file":"WETH9.sol","permissionType":"msgSender","category":"other","hasMsgSenderCheck":true,"requireStatementCount":2},{"function":"deposit","signature":"function deposit()","file":"WETH9.sol","permissionType":"msgSender","category":"financial","hasMsgSenderCheck":true,"requireStatementCount":3},{"function":"transfer","signature":"function transfer(address dst, uint wad)","file":"WETH9.sol","permissionType":"msgSender","category":"financial","hasMsgSenderCheck":true,"requireStatementCount":2},{"function":"transferFrom","signature":"function transferFrom(address src, address dst, uint wad)","file":"WETH9.sol","permissionType":"msgSender","category":"financial","hasMsgSenderCheck":true,"requireStatementCount":2},{"function":"withdraw","signature":"function withdraw(uint wad)","file":"WETH9.sol","permissionType":"msgSender","category":"financial","hasMsgSenderCheck":true,"requireStatementCount":3}]
+    }
+```
+
+```diff
+    contract cUSDCv3 (eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3) {
+    +++ description: Compound v3 USDC market - main lending pool for USDC with enhanced capital efficiency
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":22}]
+      errors.@template:
++        "Processing error occurred."
+      template:
++        "compound-v3/cUSDCv3"
+    }
+```
+
+```diff
+    contract TokenMinter (eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907) {
+    +++ description: Part of CCTP: Used for automated access control for minting.
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":15}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AccessControlledOCR2Aggregator (eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7)
+    +++ description: None
+```
+
+```diff
+    contract Safe (eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":14}]
+    }
+```
+
+```diff
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"function":"configureController","signature":"function configureController(\r\n        address _controller,\r\n        address _worker\r\n    )","file":"MasterMinter.sol","permissionType":"modifier","category":"administrative","modifiers":["onlyOwner"],"requireStatementCount":4},{"function":"configureMinter","signature":"function configureMinter(\r\n        address _minter,\r\n        uint256 _minterAllowedAmount\r\n    )","file":"MasterMinter.sol","permissionType":"none","category":"administrative"},{"function":"decrementMinterAllowance","signature":"function decrementMinterAllowance(\r\n        uint256 _allowanceDecrement\r\n    )","file":"MasterMinter.sol","permissionType":"modifier","category":"other","modifiers":["onlyController"],"hasMsgSenderCheck":true,"requireStatementCount":2},{"function":"incrementMinterAllowance","signature":"function incrementMinterAllowance(\r\n        uint256 _allowanceIncrement\r\n    )","file":"MasterMinter.sol","permissionType":"modifier","category":"other","modifiers":["onlyController"],"hasMsgSenderCheck":true,"requireStatementCount":4},{"function":"removeController","signature":"function removeController(\r\n        address _controller\r\n    )","file":"MasterMinter.sol","permissionType":"modifier","category":"other","modifiers":["onlyOwner"],"requireStatementCount":2},{"function":"removeMinter","signature":"function removeMinter(address _minter)","file":"MasterMinter.sol","permissionType":"none","category":"other"},{"function":"setMinterManager","signature":"function setMinterManager(\r\n        address _newMinterManager\r\n    )","file":"MasterMinter.sol","permissionType":"modifier","category":"administrative","modifiers":["onlyOwner","onlyController"],"hasMsgSenderCheck":true,"requireStatementCount":2},{"function":"transferOwnership","signature":"function transferOwnership(address newOwner)","file":"MasterMinter.sol","permissionType":"modifier","category":"financial","modifiers":["onlyOwner"],"requireStatementCount":1}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1)
+    +++ description: None
+```
+
+```diff
+    contract AssetListFactory (eth:0xEA2a6E7B41505d62d404F927F991Edc9E45883c2) {
+    +++ description: None
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManySourceFiles","fileCount":9}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AuthorizedForwarder (eth:0xF38326579519377178725A741C35999E8051e907)
+    +++ description: None
+```
+
+```diff
+    contract TokenMinterV2 (eth:0xfd78EE919681417d192449715b2594ab58f5D002) {
+    +++ description: Part of CCTP: Used for automated access control for minting.
+      values.writeFunctionPermissions:
+-        [{"skipped":true,"reason":"tooManyWriteFunctions","count":16}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitter (eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitterV2 (eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64)
+    +++ description: Part of CCTP
+```
+
 Generated with discovered.json: 0x3bc56a3d754c857ed1e09cd791b5c0b09df47c15
 
 # Diff at Wed, 24 Sep 2025 15:56:14 GMT:
