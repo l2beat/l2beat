@@ -16,8 +16,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Issue new tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -88,8 +88,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Issue new tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -103,8 +103,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Issue new tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -277,8 +277,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Issue new tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -308,8 +308,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Issue new tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -484,8 +484,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Issue new tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -816,8 +816,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Seize tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ]
@@ -835,8 +835,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Seize tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ],
@@ -882,8 +882,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Issue new tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -1065,8 +1065,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Issue new tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -1196,8 +1196,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Do anything, is all powerful.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
           "role": ".masterRole"
         },
         {
@@ -1375,8 +1375,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
-          "description": "Issue new tokens.",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -1544,8 +1544,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Issue new tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -1563,8 +1563,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Issue new tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -1656,8 +1656,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Issue new tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -1701,8 +1701,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Issue new tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -1734,8 +1734,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Seize tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ],
@@ -1767,8 +1767,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Issue new tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -2030,8 +2030,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Issue new tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -2332,8 +2332,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Seize tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ]
@@ -2347,8 +2347,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Issue new tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -2384,8 +2384,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Issue new tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -2472,8 +2472,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Issue new tokens.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -2504,8 +2504,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
-          "description": "Do anything, is all powerful.",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
           "role": ".masterRole"
         },
         {
@@ -2688,8 +2688,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -2736,8 +2736,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -3010,8 +3010,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -3297,8 +3297,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -3328,8 +3328,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -3494,8 +3494,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -3525,8 +3525,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Seize tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ]
@@ -3544,8 +3544,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -3636,8 +3636,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -3845,8 +3845,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Do anything, is all powerful.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
           "role": ".masterRole"
         },
         {
@@ -3939,8 +3939,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -4034,8 +4034,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Issue new tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -4131,8 +4131,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
-          "description": "Seize tokens.",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ],
@@ -4612,8 +4612,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -4848,8 +4848,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -5017,8 +5017,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -5237,8 +5237,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -5256,8 +5256,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -5416,8 +5416,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -5631,8 +5631,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -5804,8 +5804,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Seize tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ],
@@ -5901,8 +5901,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Seize tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ]
@@ -6173,8 +6173,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -6270,8 +6270,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -6343,8 +6343,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Do anything, is all powerful.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
           "role": ".masterRole"
         },
         {
@@ -6667,8 +6667,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -6715,8 +6715,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
-          "description": "Issue new tokens.",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -7487,8 +7487,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Issue new tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -7518,8 +7518,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Issue new tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -7533,8 +7533,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Issue new tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -7570,8 +7570,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Issue new tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -7800,8 +7800,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Issue new tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -7892,8 +7892,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Issue new tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -8093,8 +8093,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Issue new tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ]
@@ -8298,8 +8298,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Seize tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ]
@@ -8317,8 +8317,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Issue new tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -8510,8 +8510,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Issue new tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint new tokens and burn existing tokens.",
           "role": ".issuerRole"
         }
       ],
@@ -8671,8 +8671,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Seize tokens.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
           "role": ".transferAgentRole"
         }
       ],
@@ -8713,8 +8713,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
-          "description": "Do anything, is all powerful.",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
           "role": ".masterRole"
         },
         {
@@ -15977,5 +15977,5 @@
     "optimism": 144853013,
     "polygonpos": 80099855
   },
-  "permissionsConfigHash": "0xb98f717a8f6a4fd7328cfd90f12edec90a0851458de4bebda32751469c413128"
+  "permissionsConfigHash": "0x7fee7635e5fd9e5b2483a7b379d0856c6a765742665d867d9f10e39cfd79d5bc"
 }

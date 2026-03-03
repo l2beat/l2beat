@@ -29,9 +29,6 @@
         ["from_entries"],
         ["get", "MASTER"]
       ],
-      "permissions": [
-        { "type": "interact", "description": "Do anything, is all powerful." }
-      ]
     },
     "issuerRole": {
       "handler": {
@@ -47,9 +44,6 @@
         ["map", ["set", 0, ["format", "RoleIdToName"]]],
         ["from_entries"],
         ["get", "ISSUER"]
-      ],
-      "permissions": [
-        { "type": "interact", "description": "Issue new tokens." }
       ]
     },
     "transferAgentRole": {
@@ -66,8 +60,7 @@
         ["map", ["set", 0, ["format", "RoleIdToName"]]],
         ["from_entries"],
         ["get", "TRANSFER_AGENT"]
-      ],
-      "permissions": [{ "type": "interact", "description": "Seize tokens." }]
+      ]
     }
   }
 }

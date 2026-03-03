@@ -31,7 +31,7 @@ export function getTokenList(chains: ChainConfig[]): LegacyToken[] {
   tokens.push(...getGeneratedTokenList(chains))
   tokens.push(...getDiscoveryTokenList(chains))
 
-  return tokens
+  return uniqBy(tokens, (t) => t.id)
 }
 
 export function getGeneratedTokenList(chains: ChainConfig[]): LegacyToken[] {

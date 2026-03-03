@@ -1,5 +1,5 @@
 import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
-import { type ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import { UltimatePermissionToPrefix } from './descriptions'
@@ -96,7 +96,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     const groupedByGiver = groupBy(interactPermissions, (p) => p.from)
 
     return Object.entries(groupedByGiver).map(([from, permissions]) => {
-      const name = this.projectDiscovery.getContract(from).name
+      const name = this.projectDiscovery.getEntryByAddress(ChainSpecificAddress(from))?.name
       const permissionsString = Object.entries(
         groupBy(permissions, (p) => p.description),
       )
