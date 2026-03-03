@@ -12,7 +12,7 @@ import type {
 import { accumulateTokens } from './utils/accumulate'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { buildTransfersTimeModeMap } from './utils/buildTransfersTimeModeMap'
-import { getAggregatedInteropTimestamp } from './utils/getAggregatedInteropTimestamp'
+import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
 import {
@@ -42,7 +42,7 @@ export async function getInteropProtocolTokens({
     return []
   }
 
-  const snapshotTimestamp = await getAggregatedInteropTimestamp()
+  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp) {
     return []
   }

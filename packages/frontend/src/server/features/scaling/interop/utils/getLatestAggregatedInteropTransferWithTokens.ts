@@ -4,7 +4,7 @@ import type {
   AggregatedInteropTransferWithTokens,
   InteropSelectionInput,
 } from '../types'
-import { getAggregatedInteropTimestamp } from './getAggregatedInteropTimestamp'
+import { getAggregatedInteropSnapshotTimestamp } from './getAggregatedInteropTimestamp'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
   selection: InteropSelectionInput,
@@ -17,7 +17,7 @@ export async function getLatestAggregatedInteropTransferWithTokens(
     return []
   }
 
-  const snapshotTimestamp = await getAggregatedInteropTimestamp()
+  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp) {
     return []
   }
