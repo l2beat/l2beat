@@ -7,12 +7,9 @@ import {
   diffDiscovery,
   generateStructureHash,
 } from '@l2beat/discovery'
-import { HttpClient } from '@l2beat/shared'
+import { DiscordClient, HttpClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { createDefiscanServer } from '@l2beat/defiscan-endpoints/build/server'
-import type { DiscordClient } from '../../../peripherals/discord/DiscordClient'
-import { DiscordClient as DiscordClientClass } from '../../../peripherals/discord/DiscordClient'
-import { Peripherals } from '../../../peripherals/Peripherals'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { createDiscoveryRunner } from '../../update-monitor/createDiscoveryRunner'
@@ -79,14 +76,11 @@ export class DefidiscoMonitorApplication {
     // HTTP client
     const http = new HttpClient()
 
-    // Peripherals (wraps DB + HTTP for createDiscoveryRunner)
-    const peripherals = new Peripherals(this.db, http, logger)
-
     // Discovery runner
     this.runner = createDiscoveryRunner(
       config.discovery.paths,
       http,
-      peripherals,
+      this.db,
       logger,
       config.discovery.chains,
       config.discovery.cacheEnabled,
@@ -95,10 +89,7 @@ export class DefidiscoMonitorApplication {
 
     // Discord
     if (config.discord) {
-      this.discordClient = DiscordClientClass.create(
-        { httpClient: http },
-        config.discord,
-      )
+      this.discordClient = new DiscordClient(http, config.discord)
     }
 
     const updateMessagesService = new UpdateMessagesService(this.db, 30)
