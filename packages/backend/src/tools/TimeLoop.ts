@@ -3,6 +3,7 @@ import type { Logger } from '@l2beat/backend-tools'
 export abstract class TimeLoop {
   private running = false
   private started = false
+  private intervalHandle: ReturnType<typeof setInterval> | undefined
 
   protected abstract logger: Logger
 
@@ -15,8 +16,24 @@ export abstract class TimeLoop {
     this.started = true
     this.logger.info('Started', { intervalMs: this.options.intervalMs })
 
-    this.loopBody()
-    return setInterval(() => this.loopBody(), this.options.intervalMs)
+    return this.startLoop()
+  }
+
+  pause() {
+    if (!this.intervalHandle) {
+      return
+    }
+    clearInterval(this.intervalHandle)
+    this.intervalHandle = undefined
+    this.logger.info('Paused')
+  }
+
+  unpause() {
+    if (!this.started || this.intervalHandle) {
+      return
+    }
+    this.logger.info('Unpaused')
+    return this.startLoop()
   }
 
   protected async loopBody() {
@@ -34,6 +51,15 @@ export abstract class TimeLoop {
     const durationMs = Date.now() - runStartTime
     this.logger.info('Run ended', { durationMs })
     this.running = false
+  }
+
+  private startLoop() {
+    void this.loopBody()
+    this.intervalHandle = setInterval(
+      () => this.loopBody(),
+      this.options.intervalMs,
+    )
+    return this.intervalHandle
   }
 
   abstract run(): Promise<void>

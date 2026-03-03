@@ -65,21 +65,23 @@ describe(OnchainAmountIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: configs,
-        chain: 'ethereum',
-        balanceProvider,
-        totalSupplyProvider,
-        starknetTotalSupplyProvider,
-        db: mockDatabase({
-          tvsAmount: tvsAmountRepository,
-          tvsBlockTimestamp: tvsBlockTimestampRepository,
-        }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: configs,
+          chain: 'ethereum',
+          balanceProvider,
+          totalSupplyProvider,
+          starknetTotalSupplyProvider,
+          db: mockDatabase({
+            tvsAmount: tvsAmountRepository,
+            tvsBlockTimestamp: tvsBlockTimestampRepository,
+          }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
@@ -172,21 +174,23 @@ describe(OnchainAmountIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: configs,
-        chain: 'starknet',
-        balanceProvider,
-        totalSupplyProvider,
-        starknetTotalSupplyProvider,
-        db: mockDatabase({
-          tvsAmount: tvsAmountRepository,
-          tvsBlockTimestamp: tvsBlockTimestampRepository,
-        }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: configs,
+          chain: 'starknet',
+          balanceProvider,
+          totalSupplyProvider,
+          starknetTotalSupplyProvider,
+          db: mockDatabase({
+            tvsAmount: tvsAmountRepository,
+            tvsBlockTimestamp: tvsBlockTimestampRepository,
+          }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
@@ -231,20 +235,22 @@ describe(OnchainAmountIndexer.name, () => {
         getTimestampToSync: mockFn().returnsOnce(timestamp),
       })
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [mockEscrowConfig],
-        chain: 'ethereum',
-        balanceProvider: mockObject<BalanceProvider>({}),
-        totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
-        starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
-          {},
-        ),
-        db: mockDatabase({}),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: [mockEscrowConfig],
+          chain: 'ethereum',
+          balanceProvider: mockObject<BalanceProvider>({}),
+          totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
+          starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
+            {},
+          ),
+          db: mockDatabase({}),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [mockEscrowConfig])
       const safeHeight = await updateFn()
@@ -274,22 +280,24 @@ describe(OnchainAmountIndexer.name, () => {
         findBlockNumberByChainAndTimestamp: mockFn().returnsOnce(null),
       })
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [mockEscrowConfig],
-        chain: 'ethereum',
-        balanceProvider: mockObject<BalanceProvider>({}),
-        totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
-        starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
-          {},
-        ),
-        db: mockDatabase({
-          tvsBlockTimestamp: tvsBlockTimestampRepository,
-        }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: [mockEscrowConfig],
+          chain: 'ethereum',
+          balanceProvider: mockObject<BalanceProvider>({}),
+          totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
+          starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
+            {},
+          ),
+          db: mockDatabase({
+            tvsBlockTimestamp: tvsBlockTimestampRepository,
+          }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       await expect(async () => {
         await indexer.multiUpdate(from, to, [mockEscrowConfig])
@@ -298,9 +306,9 @@ describe(OnchainAmountIndexer.name, () => {
   })
 
   describe(OnchainAmountIndexer.prototype.removeData.name, () => {
-    it('deletes records for configuration in time range', async () => {
+    it('deletes records for configurations in time range', async () => {
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(2),
+        deleteByConfigs: mockFn().returns(5),
       })
 
       const mockEscrowConfig = escrow(
@@ -314,53 +322,42 @@ describe(OnchainAmountIndexer.name, () => {
         EthereumAddress.random(),
       )
 
-      const indexer = new OnchainAmountIndexer({
-        logger: Logger.SILENT,
-        configurations: [mockEscrowConfig, mockTotalSupplyConfig],
-        chain: 'ethereum',
-        balanceProvider: mockObject<BalanceProvider>({}),
-        totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
-        starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
-          {},
-        ),
-        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new OnchainAmountIndexer(
+        {
+          configurations: [mockEscrowConfig, mockTotalSupplyConfig],
+          chain: 'ethereum',
+          balanceProvider: mockObject<BalanceProvider>({}),
+          totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
+          starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
+            {},
+          ),
+          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+          syncOptimizer: mockObject<SyncOptimizer>({}),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const removalConfigs = [
-        {
-          id: 'escrow-config-1',
-          from: 100,
-          to: 200,
-        },
-        {
-          id: 'supply-config-1',
-          from: 300,
-          to: 400,
-        },
+        { id: 'escrow-config-1', from: 100, to: 200 },
+        { id: 'supply-config-1', from: 300, to: 400 },
       ]
 
       await indexer.removeData(removalConfigs)
 
-      expect(
-        tvsAmountRepository.deleteByConfigInTimeRange,
-      ).toHaveBeenNthCalledWith(
-        1,
-        removalConfigs[0].id,
-        UnixTime(removalConfigs[0].from),
-        UnixTime(removalConfigs[0].to),
-      )
-
-      expect(
-        tvsAmountRepository.deleteByConfigInTimeRange,
-      ).toHaveBeenNthCalledWith(
-        2,
-        removalConfigs[1].id,
-        UnixTime(removalConfigs[1].from),
-        UnixTime(removalConfigs[1].to),
-      )
+      expect(tvsAmountRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
+        {
+          configurationId: 'escrow-config-1',
+          fromInclusive: UnixTime(100),
+          toInclusive: UnixTime(200),
+        },
+        {
+          configurationId: 'supply-config-1',
+          fromInclusive: UnixTime(300),
+          toInclusive: UnixTime(400),
+        },
+      ])
     })
   })
 

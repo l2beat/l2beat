@@ -25,14 +25,14 @@ export const TokenSent = createInteropEventType<{
   amount?: string
   token?: Address32
   $dstChain: string
-}>('relay.TokenSent')
+}>('relay.TokenSent', { direction: 'outgoing' })
 
 export const TokenReceived = createInteropEventType<{
   id: string
   amount?: string
   token?: Address32
   $srcChain: string
-}>('relay.TokenReceived')
+}>('relay.TokenReceived', { direction: 'incoming' })
 
 export class RelayIndexer extends ManagedChildIndexer {
   private sentIds = new Set<string>()
@@ -48,14 +48,16 @@ export class RelayIndexer extends ManagedChildIndexer {
     indexerService: IndexerService,
     logger: Logger,
   ) {
-    super({
-      parents: [parent],
-      indexerService,
-      minHeight: 1,
+    super(
+      {
+        parents: [parent],
+        indexerService,
+        minHeight: 1,
+        name: 'relay_indexer',
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+      },
       logger,
-      name: 'relay_indexer',
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+    )
   }
 
   override async start(): Promise<void> {

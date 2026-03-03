@@ -1,0 +1,24 @@
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { BaseProject } from '../../types'
+
+export const axelarits: BaseProject = {
+  id: ProjectId('axelar-its'),
+  slug: 'axelar-its',
+  name: 'Axelar ITS',
+  shortName: undefined,
+  addedAt: UnixTime(1769520298),
+  interopConfig: {
+    plugins: [
+      {
+        plugin: 'axelar-its',
+        bridgeType: 'burnAndMint',
+      },
+      {
+        plugin: 'axelar-its',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'multichain',
+  },
+  isInteropProtocol: true,
+}

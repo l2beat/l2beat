@@ -38,6 +38,10 @@ export class FieldConfigModel {
     })
   }
 
+  setHandler(handler: FieldConfigSchema['handler']) {
+    return this.patch({ handler })
+  }
+
   hasDefinition(key: string) {
     return this.config[key as keyof FieldConfigSchema] !== undefined
   }
@@ -54,5 +58,9 @@ export class FieldConfigModel {
 
   get description() {
     return this.config.description
+  }
+
+  get handler() {
+    return this.config.handler
   }
 }

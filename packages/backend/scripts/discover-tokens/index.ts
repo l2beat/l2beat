@@ -343,9 +343,14 @@ async function main() {
   )
 }
 
-main().then(() => {
-  console.log('done')
-})
+main()
+  .then(() => {
+    console.log('done')
+  })
+  .catch((error) => {
+    console.error('Error:', error)
+    process.exit(1)
+  })
 
 function getProvider(chain: string, chains: ChainConfig[]) {
   const env = getEnv()

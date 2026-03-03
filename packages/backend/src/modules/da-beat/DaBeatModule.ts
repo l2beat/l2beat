@@ -9,9 +9,9 @@ import { DaBeatStatsIndexer } from './DaBeatStatsIndexer'
 export function createDaBeatModule({
   config,
   logger,
-  peripherals,
   providers,
   clock,
+  db,
 }: ModuleDependencies): ApplicationModule | undefined {
   const daBeatConfig = config.daBeat
   if (!daBeatConfig) {
@@ -25,37 +25,41 @@ export function createDaBeatModule({
   })
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
-  const indexerService = new IndexerService(peripherals.database)
+  const indexerService = new IndexerService(db)
   const statsIndexers: DaBeatStatsIndexer[] = []
 
   for (const projectId of daBeatConfig.projectsForDaBeatStats) {
-    const indexer = new DaBeatStatsIndexer({
-      db: peripherals.database,
-      projectId: projectId as ProjectId,
+    const indexer = new DaBeatStatsIndexer(
+      {
+        db,
+        projectId: projectId as ProjectId,
+        indexerService,
+        minHeight: 0,
+        parents: [hourlyIndexer],
+        statsProvider: providers.daBeatStats,
+      },
       logger,
-      indexerService,
-      minHeight: 0,
-      parents: [hourlyIndexer],
-      statsProvider: providers.daBeatStats,
-    })
+    )
     statsIndexers.push(indexer)
   }
 
-  const pricesIndexer = new DaBeatPricesIndexer({
-    priceProvider: providers.price,
-    db: peripherals.database,
+  const pricesIndexer = new DaBeatPricesIndexer(
+    {
+      priceProvider: providers.price,
+      db,
+      indexerService,
+      parents: [hourlyIndexer],
+      configurations: [
+        {
+          id: generateConfigurationId(daBeatConfig.coingeckoIds),
+          minHeight: 0,
+          maxHeight: null,
+          properties: { coingeckoIds: daBeatConfig.coingeckoIds },
+        },
+      ],
+    },
     logger,
-    indexerService,
-    parents: [hourlyIndexer],
-    configurations: [
-      {
-        id: generateConfigurationId(daBeatConfig.coingeckoIds),
-        minHeight: 0,
-        maxHeight: null,
-        properties: { coingeckoIds: daBeatConfig.coingeckoIds },
-      },
-    ],
-  })
+  )
 
   const start = async () => {
     logger = logger.for('DaBeatModule')

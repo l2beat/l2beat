@@ -11,7 +11,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
@@ -19,8 +18,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -100,6 +99,10 @@ export const morph: ScalingProject = {
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: true,
+        programHashesReproducible: null,
+        proverSourcePublished: true,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -133,21 +136,18 @@ export const morph: ScalingProject = {
         address: EthereumAddress('0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1'),
         sinceTimestamp: UnixTime(1729307783),
         tokens: '*',
-        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535'),
         sinceTimestamp: UnixTime(1729308239),
         tokens: ['USDC'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289'),
         sinceTimestamp: UnixTime(1729308239),
         tokens: ['USDC'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         chain: 'ethereum',
       },
     ],
@@ -294,12 +294,22 @@ export const morph: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkProgramHashes: [
-      ZK_PROGRAM_HASHES(
-        discovery.getContractValue('ZkEvmVerifierV1', 'programVkey'),
-      ),
-    ],
+    programHashes: getMorphVKeys().map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getMorphVKeys(): string[] {
+  const vkeys: string[] = []
+  const latestVerifier = discovery.getContractValue<
+    { startBatchIndex: number; verifier: string }[]
+  >('MultipleVersionRollupVerifier', 'latestVerifier')
+
+  for (const { verifier } of latestVerifier) {
+    const vkey = discovery.getContractValue<string>(verifier, 'programVkey')
+    vkeys.push(vkey)
+  }
+
+  return vkeys
 }

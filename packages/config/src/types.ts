@@ -4,6 +4,7 @@ import {
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
+  type KnownInteropBridgeType,
   type ProjectId,
   type StringWithAutocomplete,
   TokenId,
@@ -102,6 +103,9 @@ export interface BaseProject {
   // zk catalog data
   proofVerification?: ProjectProofVerification
 
+  // interop data
+  interopConfig?: InteropConfig
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -121,9 +125,9 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isBridge?: true
   isScaling?: true
   isZkCatalog?: true
+  isInteropProtocol?: true
   isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
@@ -291,6 +295,7 @@ export interface EtherscanApi {
   type: 'etherscan'
   chainId: number
   contractCreationUnsupported?: boolean
+  customUrl?: string
 }
 
 export interface SourcifyApi {
@@ -462,7 +467,7 @@ export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
 
 export interface StageDowngrade {
   expiresAt: number
-  reason: string
+  reasons: string[]
   toStage: Stage
 }
 
@@ -488,6 +493,7 @@ export interface StageSummary {
   requirements: {
     satisfied: boolean | 'UnderReview'
     description: string
+    upcoming?: boolean
   }[]
 }
 
@@ -581,7 +587,7 @@ export interface ProjectScalingStateValidationCategory {
   isIncomplete?: boolean
 }
 
-export interface ProjectScalingContractsZkProgramHash {
+export interface ProjectScalingContractsProgramHash {
   hash: string
   proverSystemProject?: ProjectId
   title: string
@@ -928,6 +934,8 @@ export interface DayActivityConfig {
   batchSize?: number
 }
 
+export type LivenessOverwriteMode = 'no-data'
+
 export interface ProjectLivenessInfo {
   explanation?: string
   warnings?: {
@@ -935,6 +943,10 @@ export interface ProjectLivenessInfo {
     batchSubmissions?: string
     proofSubmissions?: string
   }
+  /**
+   * Overwrites the displayed value given liveness subtype.
+   */
+  overwrites?: Partial<Record<TrackedTxsConfigSubtype, LivenessOverwriteMode>>
 }
 
 export interface ProjectLivenessConfig {
@@ -1077,7 +1089,7 @@ export interface ProjectContracts {
   /** List of risks associated with the contracts */
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
-  zkProgramHashes?: ProjectScalingContractsZkProgramHash[]
+  programHashes?: ProjectScalingContractsProgramHash[]
 }
 
 export interface ProjectContract {
@@ -1178,6 +1190,112 @@ export interface ProjectDiscoveryInfo {
   baseTimestamp: number | undefined
   hasDiscoUi: boolean
 }
+
+export type InteropPluginName =
+  | 'across'
+  | 'across-settlement'
+  | 'across-settlement-op'
+  | 'across-settlement-orbit'
+  | 'agglayer'
+  | 'allbridge'
+  | 'aori'
+  | 'axelar'
+  | 'axelar-its'
+  | 'beefy-bridge'
+  | 'ccip'
+  | 'cctp-v1'
+  | 'cctp-v2'
+  | 'celer'
+  | 'centrifuge'
+  | 'circle-gateway'
+  | 'debridge'
+  | 'debridge-dln'
+  | 'gaszip'
+  | 'hyperlane'
+  | 'hyperlane-eco'
+  | 'hyperlane-hwr'
+  | 'hyperlane-merkly-tokenbridge'
+  | 'hyperlane-simple-apps'
+  | 'layerzero-v1'
+  | 'layerzero-v2'
+  | 'layerzero-v2-ofts'
+  | 'lido-wsteth'
+  | 'maker-bridge'
+  | 'mayan-forwarder'
+  | 'mayan-mctp'
+  | 'mayan-mctp-fast'
+  | 'mayan-swift'
+  | 'mayan-swift-settlement'
+  | 'meson'
+  | 'oneinch-fusion-plus'
+  | 'opstack'
+  | 'opstack-standardbridge'
+  | 'orbitstack'
+  | 'orbitstack-customgateway'
+  | 'orbitstack-standardgateway'
+  | 'orbitstack-wethgateway'
+  | 'polygon'
+  | 'relay'
+  | 'sky-bridge'
+  | 'sorare-base'
+  | 'squid-coral'
+  | 'stargate'
+  | 'superform'
+  | 'world-id'
+  | 'wormhole'
+  | 'wormhole-ntt'
+  | 'wormhole-relayer'
+  | 'wormhole-token-bridge'
+  | 'zkstack'
+  | 'zklink-nova'
+  | 'linea'
+
+export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
+
+export interface InteropConfig {
+  name?: string
+  shortName?: string
+  type: InteropType
+  /** If set to `unknown` we show `Unknown` for transfers time. */
+  transfersTimeMode?: 'unknown'
+  /** If true we show `Aggregated` as second line in table under project name. Should be configured
+   * for projects that include multiple projects (e.g. layerzero which aggregates all tokens + USDT0
+   * which is a separate project)
+   */
+  isAggregate?: boolean
+  /** Should be configured for projects that are part of other project (e.g. USDT0 is part of LayerZero,
+   * so layerzero id should be configured in usdt0 config)
+   */
+  subgroupId?: ProjectId
+  plugins: InteropPlugin[]
+  /** If configured avg. duration it able will be split into two parts, depending on the config.
+   Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
+  durationSplit?: Partial<Record<KnownInteropBridgeType, InteropDurationSplit>>
+}
+
+export type InteropPlugin = {
+  plugin: InteropPluginName
+  bridgeType: KnownInteropBridgeType
+  chain?: string
+  abstractTokenId?: string
+  transferType?: string
+}
+
+export type InteropDurationSplit = {
+  in: {
+    /** Custom label to be shown in the UI */
+    label: string
+    from: string
+    to: string
+  }
+  out: {
+    /** Custom label to be shown in the UI */
+    label: string
+    from: string
+    to: string
+  }
+}
+
 // #endregion
 
 // #region TVS

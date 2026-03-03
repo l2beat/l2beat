@@ -34,7 +34,6 @@ import {
   arePermissionsDiscoveryDriven,
 } from '../utils/discoveryDriven'
 import { runConfigAdjustments } from './adjustments'
-import { bridges } from './bridges'
 import { ecosystems } from './ecosystems'
 import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
@@ -53,7 +52,6 @@ export function getProjects(): BaseProject[] {
   return refactored
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
-    .concat(bridges.map(bridgeToProject))
     .concat(ecosystems)
 }
 
@@ -159,8 +157,10 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
     ecosystemInfo: p.ecosystemInfo,
+    interopConfig: p.interopConfig,
     // tags
     isScaling: true,
+    isInteropProtocol: p.interopConfig ? true : undefined,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
@@ -242,62 +242,6 @@ function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
     return {
       warning: p.display.costsWarning,
     }
-  }
-}
-
-function bridgeToProject(p: Bridge): BaseProject {
-  const tvsConfig = getTvsConfig(p)
-  const associatedTokens = p.config.associatedTokens?.map((associated) => ({
-    symbol: associated,
-    icon: tvsConfig?.find((t) => t.symbol === associated)?.iconUrl,
-  }))
-
-  return {
-    id: p.id,
-    name: p.display.name,
-    shortName: p.display.shortName,
-    slug: p.display.slug,
-    addedAt: p.addedAt,
-    // data
-    statuses: {
-      yellowWarning: p.display.warning,
-      redWarning: undefined,
-      emergencyWarning: undefined,
-      reviewStatus: p.reviewStatus,
-      unverifiedContracts: getProjectUnverifiedContracts(p),
-    },
-    colors: p.colors,
-    display: {
-      description: p.display.description,
-      links: p.display.links,
-      badges: [],
-    },
-    bridgeInfo: {
-      category: p.display.category,
-      destination: p.technology.destination,
-    },
-    bridgeTechnology: {
-      ...p.technology,
-      detailedDescription: p.display.detailedDescription,
-      upgradesAndGovernance: p.upgradesAndGovernance,
-      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
-    },
-    contracts: p.contracts,
-    permissions: p.permissions,
-    discoveryInfo: adjustDiscoveryInfo(p),
-    bridgeRisks: p.riskView,
-    tvsInfo: {
-      associatedTokens: associatedTokens ?? [],
-      warnings: [],
-    },
-    tvsConfig,
-    chainConfig: p.chainConfig,
-    milestones: p.milestones,
-    // tags
-    isBridge: true,
-    archivedAt: p.archivedAt,
-    isUpcoming: p.isUpcoming ? true : undefined,
-    escrows: p.config.escrows,
   }
 }
 

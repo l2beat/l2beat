@@ -4,32 +4,40 @@ import type {
   InteropMessageRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   generateId,
+  type InteropApproximateQuery,
   type InteropEvent,
   type InteropEventDb,
+  type InteropEventQuery,
+  type InteropEventType,
   type InteropMessage,
   type InteropPlugin,
   type InteropTransfer,
   type MatchResult,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import { buildTokenMap, type TokenMap } from './TokenMap'
 
 export class InteropMatchingLoop extends TimeLoop {
   constructor(
     private store: InteropEventStore,
     private db: Database,
+    private tokenDbClient: TokenDbClient,
     private plugins: InteropPlugin[],
     private supportedChains: string[],
     protected logger: Logger,
-    intervalMs = 10_000,
+    private readonly intervalMs = 10_000,
   ) {
     super({ intervalMs })
     this.logger = logger.for(this)
   }
 
   async run() {
+    const tokenMap = await buildTokenMap(this.tokenDbClient)
+
     const result = await match(
       this.store,
       (type) => this.store.getEvents(type),
@@ -38,7 +46,11 @@ export class InteropMatchingLoop extends TimeLoop {
       this.plugins,
       this.supportedChains,
       this.logger,
+      tokenMap,
     )
+
+    const messageRecords = result.messages.map(toMessageRecord)
+    const transferRecords = result.transfers.map(toTransferRecord)
 
     await this.db.transaction(async () => {
       if (result.matched.length > 0 || result.unsupported.length > 0) {
@@ -47,12 +59,9 @@ export class InteropMatchingLoop extends TimeLoop {
           unsupported: result.unsupported,
         })
       }
-      const messages = await this.db.interopMessage.insertMany(
-        result.messages.map(toMessageRecord),
-      )
-      const transfers = await this.db.interopTransfer.insertMany(
-        result.transfers.map(toTransferRecord),
-      )
+      const messages = await this.db.interopMessage.insertMany(messageRecords)
+      const transfers =
+        await this.db.interopTransfer.insertMany(transferRecords)
 
       this.logger.info('Matching results saved', {
         messages,
@@ -70,6 +79,7 @@ export async function match(
   plugins: InteropPlugin[],
   supportedChains: string[],
   logger: Logger,
+  tokenMap: TokenMap,
 ) {
   const start = Date.now()
   logger.info('Matching started', {
@@ -82,6 +92,9 @@ export async function match(
   const unsupported = new Set<InteropEvent>()
   const allMessages: InteropMessage[] = []
   const allTransfers: InteropTransfer[] = []
+  const isExcluded = (event: InteropEvent) =>
+    matched.has(event) || unsupported.has(event)
+  const filteredDb = createFilteredDb(db, isExcluded)
 
   for (const plugin of plugins) {
     if (!plugin.matchTypes || !plugin.match) {
@@ -101,12 +114,12 @@ export async function match(
       const events = getEvents(type.type)
       stats.events += events.length
       for (const event of events) {
-        if (matched.has(event)) {
+        if (matched.has(event) || unsupported.has(event)) {
           continue
         }
         let result: MatchResult | undefined
         try {
-          result = await plugin.match?.(event, db)
+          result = await plugin.match?.(event, filteredDb, tokenMap)
         } catch (e) {
           logger.error('Matching failed', e, {
             plugin: plugin.name,
@@ -195,6 +208,30 @@ export async function match(
   }
 }
 
+function createFilteredDb(
+  db: InteropEventDb,
+  isExcluded: (event: InteropEvent) => boolean,
+): InteropEventDb {
+  const filterEvents = <T>(events: InteropEvent<T>[]) =>
+    events.filter((event) => !isExcluded(event))
+
+  return {
+    find<T>(type: InteropEventType<T>, query: InteropEventQuery<T>) {
+      return filterEvents(db.findAll(type, query))[0]
+    },
+    findAll<T>(type: InteropEventType<T>, query: InteropEventQuery<T>) {
+      return filterEvents(db.findAll(type, query))
+    },
+    findApproximate<T>(
+      type: InteropEventType<T>,
+      query: InteropEventQuery<T>,
+      approximate: InteropApproximateQuery<T>,
+    ) {
+      return filterEvents(db.findApproximate(type, query, approximate))
+    },
+  }
+}
+
 function toMessageRecord(message: InteropMessage): InteropMessageRecord {
   return {
     plugin: message.plugin,
@@ -226,6 +263,7 @@ function toTransferRecord(transfer: InteropTransfer): InteropTransferRecord {
     plugin: transfer.plugin,
     transferId: generateId('T'),
     type: transfer.type,
+    bridgeType: transfer.bridgeType,
     duration: Math.max(
       transfer.dst.event.ctx.timestamp - transfer.src.event.ctx.timestamp,
       0,

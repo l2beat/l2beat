@@ -278,4 +278,139 @@ contract R1 {
 }`,
     )
   })
+
+  describe('leading comments preservation', () => {
+    it('does NOT include leading comments without includeAll (default)', () => {
+      const file: FileContent = {
+        path: 'Root.sol',
+        content: String.raw`/// @title Base contract
+/// @notice This is the base
+contract Base { }
+
+/// @title Main contract
+/// @notice This is the main contract
+contract Main is Base {
+    function f() public {}
+}
+`,
+      }
+
+      const flattened = flattenStartingFrom('Main', [file], [])
+
+      // Should NOT include comments in default mode
+      expect(flattened).not.toInclude('/// @title')
+      expect(flattened).not.toInclude('/// @notice')
+      expect(flattened).toEqual(
+        String.raw`contract Base { }
+
+contract Main is Base {
+    function f() public {}
+}`,
+      )
+    })
+
+    it('includes leading NatSpec comments with includeAll', () => {
+      const file: FileContent = {
+        path: 'Root.sol',
+        content: String.raw`/// @title Base contract
+/// @notice This is the base
+contract Base { }
+
+/// @title Main contract
+/// @notice This is the main contract
+contract Main is Base {
+    function f() public {}
+}
+`,
+      }
+
+      const flattened = flattenStartingFrom('Main', [file], [], {
+        includeAll: true,
+      })
+
+      // Should include NatSpec comments
+      expect(flattened).toInclude('/// @title Base contract')
+      expect(flattened).toInclude('/// @title Main contract')
+    })
+
+    it('includes leading block comments with includeAll', () => {
+      const file: FileContent = {
+        path: 'Root.sol',
+        content: String.raw`/**
+ * @title MyContract
+ * @dev Implementation of something
+ */
+contract MyContract {
+    function f() public {}
+}
+`,
+      }
+
+      const flattened = flattenStartingFrom('MyContract', [file], [], {
+        includeAll: true,
+      })
+
+      // Should include block comment
+      expect(flattened).toInclude('/**')
+      expect(flattened).toInclude('@title MyContract')
+      expect(flattened).toInclude('*/')
+    })
+
+    it('preserves comments across multiple files with includeAll', () => {
+      const baseFile: FileContent = {
+        path: 'Base.sol',
+        content: String.raw`/// @title IBase interface
+/// @notice Base functionality
+interface IBase {
+    function baseFunc() external;
+}
+`,
+      }
+
+      const mainFile: FileContent = {
+        path: 'Main.sol',
+        content: String.raw`import "./Base.sol";
+
+/// @title Main contract implementation
+/// @dev Implements IBase
+contract Main is IBase {
+    function baseFunc() external {}
+}
+`,
+      }
+
+      const flattened = flattenStartingFrom('Main', [mainFile, baseFile], [], {
+        includeAll: true,
+      })
+
+      // Should include comments from both files
+      expect(flattened).toInclude('/// @title IBase interface')
+      expect(flattened).toInclude('/// @title Main contract implementation')
+    })
+
+    it('Aztec-style: preserves multi-line NatSpec with custom tags', () => {
+      const file: FileContent = {
+        path: 'Rollup.sol',
+        content: String.raw`/// @title Rollup
+/// @author Aztec Labs
+/// @notice This is the rollup contract.
+/// @custom:security-contact security@aztec.network
+contract Rollup {
+    function process() public {}
+}
+`,
+      }
+
+      const flattened = flattenStartingFrom('Rollup', [file], [], {
+        includeAll: true,
+      })
+
+      expect(flattened).toInclude('/// @title Rollup')
+      expect(flattened).toInclude('/// @author Aztec Labs')
+      expect(flattened).toInclude('/// @notice This is the rollup contract.')
+      expect(flattened).toInclude(
+        '/// @custom:security-contact security@aztec.network',
+      )
+    })
+  })
 })

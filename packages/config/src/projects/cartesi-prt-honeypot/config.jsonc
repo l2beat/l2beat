@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "cartesi-prt-honeypot",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",

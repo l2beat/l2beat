@@ -1,7 +1,13 @@
 import { DiscoUiIcon } from '~/icons/DiscoUi'
 import { CustomLinkIcon } from '~/icons/Outlink'
 
-export function DiscoUiBanner({ href }: { href: string }) {
+export function DiscoUiBanner({
+  href,
+  images,
+}: {
+  href: string
+  images: { desktop: string; mobile: string }
+}) {
   return (
     <>
       {/* Desktop */}
@@ -27,7 +33,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
           </div>
           <div className="relative w-1/2">
             <img
-              src={'/images/disco-ui-desktop.png'}
+              src={images.desktop}
               alt="Disco UI Banner"
               className="absolute inset-0 h-full w-full object-cover object-top"
             />
@@ -37,7 +43,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
       {/* Mobile */}
       <div className="relative max-h-40 overflow-hidden rounded md:hidden">
         <img
-          src={'/images/disco-ui-mobile.png'}
+          src={images.mobile}
           alt="Disco UI Banner"
           className="size-full object-cover object-top"
           width={423}

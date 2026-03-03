@@ -1,11 +1,11 @@
-import type { ProjectScalingContractsZkProgramHash } from '@l2beat/config'
+import type { ProjectScalingContractsProgramHash } from '@l2beat/config'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
-import { ZkProgramHashesTable } from './table/ZkProgramHashesTable'
+import { ProgramHashesTable } from './table/ProgramHashesTable'
 
-export type StateValidationZkProgramHashData = Omit<
-  ProjectScalingContractsZkProgramHash,
+export type StateValidationProgramHashData = Omit<
+  ProjectScalingContractsProgramHash,
   'proverSystemProject'
 > & {
   zkCatalogProject?: {
@@ -17,11 +17,11 @@ export type StateValidationZkProgramHashData = Omit<
 }
 
 export interface ProgramHashesSectionProps extends ProjectSectionProps {
-  zkProgramHashes: StateValidationZkProgramHashData[]
+  programHashes: StateValidationProgramHashData[]
 }
 
 export function ProgramHashesSection({
-  zkProgramHashes,
+  programHashes,
   ...sectionProps
 }: ProgramHashesSectionProps) {
   return (
@@ -31,7 +31,7 @@ export function ProgramHashesSection({
         represents a piece of offchain execution that is verified onchain. The
         program hash serves as the program's unique identifier.
       </p>
-      <ZkProgramHashesTable entries={zkProgramHashes} />
+      <ProgramHashesTable entries={programHashes} />
     </ProjectSection>
   )
 }

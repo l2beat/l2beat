@@ -1,3 +1,383 @@
+Generated with discovered.json: 0xf102a38e9646ae30251e102695a91c8d1423625f
+
+# Diff at Thu, 26 Feb 2026 06:51:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1771493932
+- current timestamp: 1772088580
+
+## Description
+
+rotate operators.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
+      values.operatorCount:
+-        4
++        3
+    }
+```
+
+Generated with discovered.json: 0xad8cfdfed0f1c72747e46fbbd13e65f5889114dd
+
+# Diff at Thu, 19 Feb 2026 09:46:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@31cbacb6d899b700558dd36eccfd1161fc0b3b74 block: 1770815650
+- current timestamp: 1771493932
+
+## Description
+
+operator rotation.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+    }
+```
+
+Generated with discovered.json: 0x1a913d0e78b423ab3630bb703c99ed33f8652adb
+
+# Diff at Wed, 11 Feb 2026 13:18:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@141974a80471f8dbed910bc3deae728f2ae1bec7 block: 1770041480
+- current timestamp: 1770815650
+
+## Description
+
+fee proposal executed: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/24
+
+voting period proposal moves to optimistic phase: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/25
+
+TaikoAnchor fee changes: https://disco.l2beat.com/diff/taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0/taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        25
++        26
+      values.proposalIds.25:
++        "602381146540321106777275740158610369409831665689"
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+      values.$threshold:
+-        5
++        4
+      values.multisigThreshold:
+-        "5 of 7 (71%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        16
++        17
+    }
+```
+
+```diff
+    contract TaikoAnchor (taiko:0x1670000000000000000000000000000000010001) {
+    +++ description: Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication.
+      sourceHashes.1:
+-        "0x94dfc8c1aa6a1ce9447da9bf865b6e827ffe8c9cb0b08e4d7c7589b8c4193134"
++        "0x3b17f3b24c2a1ab8b2cc942628d831d030a6c4a03ae0c5fb548b7142843c4e6d"
+      values.$implementation:
+-        "taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0"
++        "taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"
+      values.$pastUpgrades.4:
++        ["2026-02-11T02:45:07.000Z","0xd044da28e6a74c63e79bcf8ac14fec397dae61afc9166ca7754af5e0b6e5c7fb",["taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.BASEFEE_MIN_VALUE:
+-        25000000
++        10000000
+      values.impl:
+-        "taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0"
++        "taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"
+      implementationNames.taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0:
+-        "TaikoAnchor"
+      implementationNames.taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9:
++        "TaikoAnchor"
+    }
+```
+
+## Source code changes
+
+```diff
+.../taiko/{.flat@1770041480 => .flat}/TaikoAnchor/TaikoAnchor.sol       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0x800770a71240bb75ae6629bb71b398830b2a3e8a
+
+# Diff at Mon, 02 Feb 2026 14:13:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0848453811f47d862414d125666784260c12d17b block: 1769432500
+- current timestamp: 1770041480
+
+## Description
+
+operator rotation.
+
+## Watched changes
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
++        "eth:0xCf76A87E24FE2054DCF02a5f65eAc0F24A34c439"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
+      values.operatorCount:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x6f94a9ee932957b95b0b9da57bcde8e9f10ee03c
+
+# Diff at Mon, 26 Jan 2026 13:03:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daff52088f9d57f8a71e0b6d63dada6f9cf51d36 block: 1768999626
+- current timestamp: 1769432500
+
+## Description
+
+Operator removed, our event-based count shows 1 operator less.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered.
+      values.operatorCount:
+-        4
++        3
+    }
+```
+
+Generated with discovered.json: 0xd3e142c02681a453d6962f4c40d6ba4ceefbc467
+
+# Diff at Wed, 21 Jan 2026 12:55:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768372024
+- current timestamp: 1768999626
+
+## Description
+
+gattaca added to SC: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/23 .
+
+## Watched changes
+
+```diff
+    contract SignerList (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) {
+    +++ description: A signer list for registering agents, similar to a Multisig.
+      values.addresslistLength:
+-        8
++        9
+      values.getEncryptionAgents.0:
++        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
+      values.getEncryptionAgents.7:
+-        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
++        "eth:0xc4414B079bC4A013916B3dc241555F6f505c1619"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      values.lastMultisigSettingsChange:
+-        22574240
++        24269141
+      values.multisigSettings.minApprovals:
+-        6
++        7
+    }
+```
+
+```diff
+    contract EncryptionRegistry (eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1) {
+    +++ description: A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.
+      values.accountList.0:
+-        "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
++        "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+      values.accountList.8:
+-        "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+      values.accountList.9:
+-        "eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
++        "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E"
+      values.getRegisteredAccounts.0:
+-        "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
++        "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+      values.getRegisteredAccounts.8:
+-        "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+      values.getRegisteredAccounts.9:
+-        "eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
++        "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487)
+    +++ description: None
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Gattaca (eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+./src/projects/taiko/{.flat@1768372024/Safe => .flat/Gattaca}/Safe.sol    | 0
+ .../taiko/{.flat@1768372024/Safe => .flat/Gattaca}/SafeProxy.p.sol        | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768372024 (main branch discovery), not current.
+
+```diff
+    EOA Gustavo Gonzalez Agent (eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163) {
+    +++ description: None
+      name:
++        "Gustavo Gonzalez Agent"
+    }
+```
+
+```diff
+    contract Gustavo Gonzalez Taiko (eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) {
+    +++ description: None
+      name:
+-        "Daniel Wang"
++        "Gustavo Gonzalez Taiko"
+    }
+```
+
+Generated with discovered.json: 0xce654aee2f74b7c08f314aaae5808c1f7c9401e3
+
+# Diff at Wed, 14 Jan 2026 06:28:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1767795947
+- current timestamp: 1768372024
+
+## Description
+
+New standard proposal: lower hardcoded basefee by 2.5x: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/24 .
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        24
++        25
+      values.proposalIds.24:
++        "601724541768498866969402779460601617583941091352"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        15
++        16
+    }
+```
+
+Generated with discovered.json: 0xdf5ac5c47f1fe13609c81d625be6f43eb5e0a972
+
+# Diff at Wed, 07 Jan 2026 14:29:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1766409056
+- current timestamp: 1767795947
+
+## Description
+
+agent of one SC member updated. new proposal up targeting the gas config.
+
+## Watched changes
+
+```diff
+    contract SignerList (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) {
+    +++ description: A signer list for registering agents, similar to a Multisig.
+      values.getEncryptionAgents.7:
+-        "eth:0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55"
++        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        14
++        15
+    }
+```
+
 Generated with discovered.json: 0x582a656024746d3b7ede216c73d218c0d437e05a
 
 # Diff at Mon, 22 Dec 2025 13:12:17 GMT:

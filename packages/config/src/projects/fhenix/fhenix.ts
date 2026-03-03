@@ -22,6 +22,7 @@ export const fhenix: ScalingProject = upcomingL2({
       socialMedia: [
         'https://x.com/FhenixIO',
         'https://discord.com/invite/FuVgxrvJMY',
+        'https://t.me/+OEO4CItQYh8xYzNh',
       ],
     },
   },

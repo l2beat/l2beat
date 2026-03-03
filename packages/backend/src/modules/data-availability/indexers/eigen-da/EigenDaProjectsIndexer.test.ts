@@ -407,17 +407,19 @@ function mockIndexer($: {
     syncMetadata: syncMetadataRepository,
   })
 
-  const indexer = new EigenDaProjectsIndexer({
-    daLayer: $.daLayer,
-    eigenClient,
-    configurations: $.configurations,
-    logger: Logger.SILENT,
-    parents: [],
-    indexerService,
-    db,
-    configurationsTrimmingDisabled: $.configurationsTrimmingDisabled,
-    dataWipingAfterDeleteDisabled: false,
-  })
+  const indexer = new EigenDaProjectsIndexer(
+    {
+      daLayer: $.daLayer,
+      eigenClient,
+      configurations: $.configurations,
+      parents: [],
+      indexerService,
+      db,
+      configurationsTrimmingDisabled: $.configurationsTrimmingDisabled,
+      dataWipingAfterDeleteDisabled: false,
+    },
+    Logger.SILENT,
+  )
 
   return {
     indexer,

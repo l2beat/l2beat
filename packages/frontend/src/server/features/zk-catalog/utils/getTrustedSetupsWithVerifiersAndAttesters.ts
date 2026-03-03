@@ -8,10 +8,11 @@ import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
-import { getProjectIcon } from '../../utils/getProjectIcon'
 import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
+import { getZkCatalogLogo } from '../getZkCatalogLogo'
 import { tvsComparatorWithDaBridges } from './tvsComparatorWithDaBridges'
 
 export type TrustedSetupsByProofSystem = Record<
@@ -33,10 +34,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
   projectId?: ProjectId, // target project id for which we want to get verifiers, used only in this project
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
@@ -98,10 +96,7 @@ function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
   contractUtils: ContractUtils,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
@@ -127,19 +122,20 @@ export function getVerifiersWithAttesters(
     attesters: uniqBy(
       verifiersForStatus.flatMap((v) => v.attesters).filter(notUndefined),
       (a) => a.id,
-    ).map((a) => ({
-      ...a,
-      icon: getProjectIcon(a.id),
-    })),
+    ).map((a) => {
+      const icon = getZkCatalogLogo(a.id)
+      return {
+        ...a,
+        icon: icon.light,
+        iconDark: icon.dark,
+      }
+    }),
   }
 }
 
 export function getProjectsUsedIn(
   projectIds: ProjectId[],
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
 ): UsedInProjectWithIcon[] {
   return projectIds
     .map((projectId) => {
@@ -147,9 +143,7 @@ export function getProjectsUsedIn(
       if (!project) return undefined
 
       let url = `/scaling/projects/${project.slug}`
-      if (project.isBridge) {
-        url = `/bridges/projects/${project.slug}`
-      } else if (project.daBridge) {
+      if (project.daBridge) {
         const layer = allProjects
           .filter((x) => x.isDaLayer)
           .find((x) => x.id === project.daBridge?.daLayer)
@@ -162,7 +156,7 @@ export function getProjectsUsedIn(
         id: project.id,
         name: project.name,
         slug: project.slug,
-        icon: getProjectIcon(project.slug),
+        icon: manifest.getUrl(`/icons/${project.slug}.png`),
         url,
       }
     })

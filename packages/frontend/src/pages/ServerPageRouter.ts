@@ -4,7 +4,7 @@ import { InMemoryCache } from '../server/cache/InMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
-import { createBridgesRouter } from './bridges/BridgesRouter'
+import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
 import { createDataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
 import { createDonateRouter } from './donate/DonateRouter'
@@ -12,6 +12,7 @@ import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
+import { createInteropRouter } from './interop/InteropRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
@@ -45,13 +46,14 @@ export function createServerPageRouter(
 
   const routers = [
     createScalingRouter,
-    createBridgesRouter,
+    createInteropRouter,
     createDataAvailabilityRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,
     createGovernanceRouter,
     createFaqRouter,
     createAboutUsRouter,
+    createChangelogRouter,
     createDonateRouter,
     createGlossaryRouter,
     createDaRiskFrameworkRouter,

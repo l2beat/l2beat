@@ -3,7 +3,6 @@ import { getScalingSummaryData } from '~/pages/scaling/summary/getScalingSummary
 import '../../src/dotenv'
 
 import type { Request } from 'express'
-import { getBridgesSummaryData } from '~/pages/bridges/summary/getBridgesSummaryData'
 import { getScalingTvsData } from '~/pages/scaling/tvs/getScalingTvsData'
 import type { ICache } from '~/server/cache/ICache'
 import { manifest } from '~/utils/Manifest'
@@ -11,7 +10,7 @@ import { manifest } from '~/utils/Manifest'
 class FakeCache implements ICache {
   get: <T>(
     options: {
-      key: (string | undefined)[]
+      key: (string | null | undefined)[]
       ttl: number
       staleWhileRevalidate?: number
     },
@@ -51,5 +50,4 @@ export const hotCacheFns: Record<string, () => Promise<unknown>> = {
       manifest,
       cache,
     ),
-  bridgesSummary: () => getBridgesSummaryData(manifest, '/bridges/summary'),
 }

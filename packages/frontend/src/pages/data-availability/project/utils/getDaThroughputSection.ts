@@ -1,10 +1,10 @@
 import type { Project } from '@l2beat/config'
-import { getChartProject } from '~/components/core/chart/utils/getChartProject'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { optionToRange } from '~/utils/range/range'
+import { withProjectIcon } from '~/utils/withProjectIcon'
 
 export async function getDaThroughputSection(
   helpers: SsrHelpers,
@@ -34,7 +34,7 @@ export async function getDaThroughputSection(
   })
 
   return {
-    project: getChartProject(project),
+    project: withProjectIcon(project),
     throughput: project.daLayer.throughput ?? [],
     syncStatus: {
       warning: syncWarning,

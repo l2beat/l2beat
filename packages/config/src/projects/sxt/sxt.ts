@@ -2,7 +2,6 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -14,11 +13,11 @@ import { zkStackL2 } from '../../templates/zkStack'
 const genesisTimestamp = UnixTime(1744071776) // 2025-04-07T19:22:56Z
 const chainId = 1217
 const discovery = new ProjectDiscovery('sxt')
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const sxt: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
-  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.Avail],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.AvailVector],
   display: {
     name: 'Space and Time',
     slug: 'sxt',
@@ -46,9 +45,17 @@ export const sxt: ScalingProject = zkStackL2({
   },
   daProvider: {
     layer: DA_LAYERS.AVAIL,
-    riskView: RISK_VIEW.DATA_AVAIL(false),
-    technology: TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
-    bridge: DA_BRIDGES.NONE,
+    riskView: RISK_VIEW.DATA_AVAIL(true),
+    technology: {
+      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(true),
+      references: [
+        {
+          title: 'AvailL1DAValidator - checkDA() function',
+          url: 'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code#F1#L16',
+        },
+      ],
+    },
+    bridge: DA_BRIDGES.VECTOR,
   },
   availDa: {
     appIds: ['34'],
@@ -112,6 +119,25 @@ export const sxt: ScalingProject = zkStackL2({
       },
     ],
   },
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: bridge.address,
+      tokens: ['ETH'], // ran the generate script with '*' and it only found ETH, which looks correct
+      description:
+        'Shared bridge for depositing tokens to various ZK stack chains.',
+      sharedEscrow: {
+        type: 'ElasticChain',
+        // their explorer shows this as EOA but i took 1h to get it from tenderly traces on L1
+        // and it is the only address that works so far for a post-gateway deployed chain
+        l2BridgeAddress: EthereumAddress(
+          '0x0000000000000000000000000000000000010003',
+        ),
+        l2EtherAddress: EthereumAddress(
+          '0x000000000000000000000000000000000000800A',
+        ),
+      },
+    }),
+  ],
   discovery,
   milestones: [
     {

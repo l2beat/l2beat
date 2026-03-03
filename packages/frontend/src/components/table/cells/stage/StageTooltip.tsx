@@ -7,7 +7,6 @@ import { Callout } from '~/components/Callout'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { StageOneRequirementsChangeTooltipContent } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeTooltipContent'
 import { WarningBar } from '~/components/WarningBar'
-import { featureFlags } from '~/consts/featureFlags'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { InfoIcon } from '~/icons/Info'
 import { MissingIcon } from '~/icons/Missing'
@@ -33,8 +32,7 @@ export function StageTooltip({
   if (stageConfig.stage === 'NotApplicable') return null
   const missing =
     stageConfig.stage !== 'UnderReview'
-      ? stageConfig.missing?.principle &&
-        featureFlags.stageOneRequirementsChanged()
+      ? stageConfig.missing?.principle
         ? [stageConfig.missing.principle]
         : stageConfig.missing?.requirements
       : undefined
@@ -72,7 +70,13 @@ export function StageTooltip({
       {walkAway === 'passed' && (
         <Callout
           color="green"
-          body="Users can exit in the presence of malicious operators even if the Security Council disappears."
+          body={
+            <>
+              <strong>The project passes the walkaway test</strong>: users can
+              exit in the presence of malicious operators even if the Security
+              Council disappears.
+            </>
+          }
           icon={<WalkAwayPassedIcon className="size-4 fill-positive" />}
           className={cn('mb-3 gap-2! px-3 py-2')}
         />
@@ -80,7 +84,13 @@ export function StageTooltip({
       {walkAway === 'not-passed' && (
         <Callout
           color="red"
-          body="Users are not able to exit in the presence of malicious operators if the Security Council disappears."
+          body={
+            <>
+              <strong>The project does not pass the walkaway test</strong>:{' '}
+              users are not able to exit in the presence of malicious operators
+              if the Security Council disappears.
+            </>
+          }
           icon={<WalkAwayNotPassedIcon className="size-4 fill-negative" />}
           className={cn('mb-3 gap-2! px-3 py-2')}
         />
@@ -147,7 +157,7 @@ export function StageTooltip({
       <Callout
         color="blue"
         body="Please mind, stages do not reflect rollup security"
-        icon={<InfoIcon className="size-4 fill-blue-600" />}
+        icon={<InfoIcon className="mt-px size-4 fill-blue-600" />}
         className={cn(
           'gap-1! px-3 py-2',
           stageConfig.stage !== 'Stage 2' && 'mt-3',

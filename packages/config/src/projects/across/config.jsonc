@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "across",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda", // hubpool
+    "eth:0x3B03509645713718B78951126E0A6de6f10043f5" // acrossconfigstore
+  ],
+  "names": {
+    "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af": "Alephzero_Adapter",
+    "eth:0x545E43B6eC2f9a44CAa531298699Ff05958670B5": "Ink_Adapter",
+    "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2": "Soneium_Adapter",
+    "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b": "Lisk_Adapter",
+    "eth:0xC29a3Ba0fBf477F16Fd53d2C438Eade024FD8452": "Monad_Adapter"
+  },
+  "overrides": {
+    "eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B": {
+      "description": "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+    },
+    "eth:0x6f1C9d3bcDF51316E7b515a62C02F601500b084b": {
+      "description": "This adapter can be used to send messages / root bundles to Binance Smart Chain. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+    },
+    "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363": {
+      "description": "This adapter can be used to send messages / root bundles to Plasma Mainnet. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
+    },
+    "eth:0xA0Ae6609447e57a42c51B50EAe921D701823FFAe": {
+      // unused optimistic oracle v2
+      "ignoreDiscovery": true
+    },
+    "eth:0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6": {
+      // unused optimistic oracle v1
+      "ignoreDiscovery": true
+    },
+    "eth:0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A": {
+      // unused FinancialContractsAdmin
+      "ignoreDiscovery": true
+    }
+  }
+}

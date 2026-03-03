@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.",
+  "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
   "ignoreMethods": [
     "getProposal",
     "gameOver",
@@ -51,7 +51,12 @@
           "where": ["=", "#allowed", false]
         }
       },
-      "permissions": [{ "type": "propose" }]
+      "permissions": [
+        {
+          "type": "propose",
+          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout."
+        }
+      ]
     }
   },
   "category": "core"

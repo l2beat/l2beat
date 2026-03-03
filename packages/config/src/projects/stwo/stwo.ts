@@ -98,7 +98,9 @@ Stwo is a STARK (transparent SNARK) that does not perform a wrap in a SNARK, so 
             overrideUsedIn: [ProjectId('starknet'), ProjectId('paradex')],
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        verificationSteps:
+          'Onchain stwo verifier smart contracts contain code that directly checks proofs of correct Cairo program execution. Unlike SNARK final wraps, it does not contain any additional cryptographic components that need to be independently regenerated because it introduces no new zk circuits. The sources are verified on etherscan and can be examined directly to check the correct implementation of STARK verification protocol.',
         description:
           "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
       },

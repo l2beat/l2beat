@@ -37,7 +37,6 @@ import { creatorchain } from '../projects/creatorchain/creatorchain'
 import { cronoszkevm } from '../projects/cronoszkevm/cronoszkevm'
 import { cyber } from '../projects/cyber/cyber'
 import { dbk } from '../projects/dbk/dbk'
-import { dcamonster } from '../projects/dcamonster/dcamonster'
 import { degate } from '../projects/degate/degate'
 import { degate2 } from '../projects/degate2/degate2'
 import { degate3 } from '../projects/degate3/degate3'
@@ -49,6 +48,7 @@ import { eclipse } from '../projects/eclipse/eclipse'
 import { edgeless } from '../projects/edgeless/edgeless'
 import { edgex } from '../projects/edgex/edgex'
 import { ethernity } from '../projects/ethernity/ethernity'
+import { ethscriptions } from '../projects/ethscriptions/ethscriptions'
 import { everclear } from '../projects/everclear/everclear'
 import { facet } from '../projects/facet/facet'
 import { fhenix } from '../projects/fhenix/fhenix'
@@ -127,6 +127,7 @@ import { myshell } from '../projects/myshell/myshell'
 import { nal } from '../projects/nal/nal'
 import { namechain } from '../projects/namechain/namechain'
 import { nil } from '../projects/nil/nil'
+import { nillion } from '../projects/nillion/nillion'
 import { nova } from '../projects/nova/nova'
 import { oevnetwork } from '../projects/oevnetwork/oevnetwork'
 import { okto } from '../projects/okto/okto'
@@ -167,6 +168,7 @@ import { redstone } from '../projects/redstone/redstone'
 import { reya } from '../projects/reya/reya'
 import { rise } from '../projects/rise/rise'
 import { river } from '../projects/river/river'
+import { robinhood } from '../projects/robinhood/robinhood'
 import { roninNetwork } from '../projects/ronin-network/ronin-network'
 import { rss3 } from '../projects/rss3/rss3'
 import { rufus } from '../projects/rufus/rufus'
@@ -272,7 +274,6 @@ export const layer2s: ScalingProject[] = [
   cronoszkevm,
   cyber,
   dbk,
-  dcamonster,
   degate,
   degate2,
   degate3,
@@ -283,6 +284,7 @@ export const layer2s: ScalingProject[] = [
   edgeless,
   edgex,
   ethernity,
+  ethscriptions,
   everclear,
   facet,
   fhenix,
@@ -361,6 +363,7 @@ export const layer2s: ScalingProject[] = [
   nal,
   namechain,
   nil,
+  nillion,
   nova,
   oevnetwork,
   okto,
@@ -396,6 +399,7 @@ export const layer2s: ScalingProject[] = [
   real,
   reddioex,
   roninNetwork,
+  robinhood,
   reddiozkvm,
   redstone,
   reya,

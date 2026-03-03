@@ -3,6 +3,7 @@ import { Button } from '../../../../components/Button'
 import { TextArea } from '../../../../components/TextArea'
 import { IconClose } from '../../../../icons/IconClose'
 import { IconTick } from '../../../../icons/IconTick'
+import { useModelUtils } from '../../hooks/useModelUtils'
 
 type Props = {
   content: string | undefined
@@ -10,10 +11,11 @@ type Props = {
 }
 
 export function DescriptionEditor(props: Props) {
+  const { interpolateDescription } = useModelUtils()
   const [description, setDescription] = useState(props.content ?? '')
 
   const isDirty = useMemo(() => {
-    return props.content !== description
+    return (props.content ?? '') !== description
   }, [props.content, description])
 
   useEffect(() => {
@@ -25,8 +27,13 @@ export function DescriptionEditor(props: Props) {
       <TextArea
         value={description ?? ''}
         onChange={(e) => setDescription(e.target.value ?? undefined)}
-        className="text-xs"
         placeholder="No description"
+      />
+      <TextArea
+        value={interpolateDescription(description)}
+        placeholder="Preview"
+        className="bg-coffee-700/50 selection:bg-coffee-600"
+        readOnly
       />
       <div className="flex w-full justify-end">
         <Button

@@ -786,6 +786,25 @@
     },
     {
       "mode": "auto",
+      "id": "loopring-PAXG",
+      "priceId": "pax-gold",
+      "symbol": "PAXG",
+      "name": "Paxos Gold",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9519/large/paxgold.png?1696509604",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
+        "chain": "ethereum",
+        "escrowAddress": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+        "decimals": 18,
+        "sinceTimestamp": 1603949642
+      },
+      "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "loopring-PEPE",
       "priceId": "pepe",
       "symbol": "PEPE",

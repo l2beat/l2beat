@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x2b9a70122f56c68ede7ae17282779707269a48b1
+
+# Diff at Wed, 07 Jan 2026 14:38:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1759830990
+- current timestamp: 1767796662
+
+## Description
+
+l1cdm reference changed in L2CrossDomainMessenger predeploy.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759830990 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (metis-andromeda:0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      values.l1CrossDomainMessenger:
+-        "metis-andromeda:0xEeeeffFfFffFFFfFFFFFFFffffffFffFFfFfEEeF"
++        "metis-andromeda:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+    }
+```
+
 Generated with discovered.json: 0xa8b55e6620fca504e40109c36556c5f5203f6c2f
 
 # Diff at Mon, 05 Jan 2026 17:44:41 GMT:

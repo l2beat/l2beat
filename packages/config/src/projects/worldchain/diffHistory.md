@@ -1,3 +1,198 @@
+Generated with discovered.json: 0x6fe3ae36eb7b367e5718fb9b9247becc951a3e55
+
+# Diff at Fri, 27 Feb 2026 13:25:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1771495907
+- current timestamp: 1772198395
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
+Generated with discovered.json: 0xcdae0cdb8a868f85a1ff5a0caf56d9d6937be38e
+
+# Diff at Thu, 19 Feb 2026 10:12:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2b96f087639b90912cc82e06e34e7b0beefda5ab block: 1770736053
+- current timestamp: 1771495907
+
+## Description
+
+L2 gas limit increased from 175M to 200M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        175000000
++        200000000
+    }
+```
+
+Generated with discovered.json: 0x28f1f37af4d7a78e0c914122b7ddc4cbca682680
+
+# Diff at Fri, 13 Feb 2026 11:33:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1770736053
+- current timestamp: 1770736053
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770736053 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "EXPECT_REVERT"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
+Generated with discovered.json: 0x0ffe508bb9d4d39ef829d59a2d84419dab3e5f2d
+
+# Diff at Tue, 10 Feb 2026 15:08:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1770329871
+- current timestamp: 1770736053
+
+## Description
+
+SystemConfig gas limit increased from 150M to 175M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        150000000
++        175000000
+    }
+```
+
+Generated with discovered.json: 0x62d0bf51dd2da5da51dd992ffa7460cbba9c4427
+
+# Diff at Thu, 05 Feb 2026 22:18:57 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@79ed122ff93f3ecacc6642a02e5352d633b2da3b block: 1769513822
+- current timestamp: 1770329871
+
+## Description
+
+SystemConfig gas limit increase from 130M to 150M (+15%), raising the maximum gas available per L2 block.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        130000000
++        150000000
+    }
+```
+
+Generated with discovered.json: 0xb1d7780019c7ad102561ede8aa41a920c8bda071
+
+# Diff at Tue, 27 Jan 2026 11:38:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1769272413
+- current timestamp: 1769513822
+
+## Description
+
+Gas limit increased from 100M to 130M on L2.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        100000000
++        130000000
+    }
+```
+
+Generated with discovered.json: 0xea5f902802b2e63bd2098f0e85ed2ed6ee505c42
+
+# Diff at Mon, 26 Jan 2026 09:08:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766048460
+- current timestamp: 1769272413
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe. Timelock delays currently 0.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/worldchain/.flat/SaferSafes.sol   | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
 Generated with discovered.json: 0xc1a658593bbdf29374d6c193e445d5cf482ecf75
 
 # Diff at Thu, 18 Dec 2025 09:02:23 GMT:

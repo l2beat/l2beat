@@ -33,6 +33,7 @@ export class EthRpcClient {
     private url: string,
     private metricsLabel: string,
     private nextId: () => string | number = randomId,
+    private timeout?: number,
   ) {}
 
   async getChainId(): Promise<bigint> {
@@ -225,6 +226,7 @@ export class EthRpcClient {
         params,
       }),
       headers: { 'Content-Type': 'application/json' },
+      timeout: this.timeout,
     })
     let data: unknown
     let jsonSuccess = true
@@ -459,6 +461,8 @@ const RpcLog = v.passthroughObject({
   data: vData(),
   topics: v.array(vData(32)),
   // non-standard optimisation, number in sonic
+  // although this is included in reth, geth and Nethermind since late 2025
+  // see: https://github.com/ethereum/execution-apis/issues/295
   blockTimestamp: v.union([vQuantity, v.number()]).transform(BigInt).optional(),
 })
 

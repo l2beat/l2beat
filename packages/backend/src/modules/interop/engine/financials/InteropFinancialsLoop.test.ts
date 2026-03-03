@@ -179,9 +179,9 @@ describe(InteropFinancialsLoop.name, () => {
 
       const service = new InteropFinancialsLoop(
         [
-          { name: 'ethereum', type: 'evm' as const },
-          { name: 'arbitrum', type: 'evm' as const },
-          { name: 'base', type: 'evm' as const },
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
+          { id: 'base', type: 'evm' as const },
         ],
         db,
         tokenDb,
@@ -299,17 +299,18 @@ describe(InteropFinancialsLoop.name, () => {
         },
       } as any)
 
-      const logger = mockObject<Logger>({
+      const forLogger = mockObject<Logger>({
         info: mockFn().returns(undefined),
         warn: mockFn().returns(undefined),
       })
-      //@ts-ignore
-      logger.for = () => logger
+      const logger = mockObject<Logger>({
+        for: mockFn().returns(forLogger),
+      })
 
       const service = new InteropFinancialsLoop(
         [
-          { name: 'ethereum', type: 'evm' as const },
-          { name: 'arbitrum', type: 'evm' as const },
+          { id: 'ethereum', type: 'evm' as const },
+          { id: 'arbitrum', type: 'evm' as const },
         ],
         db,
         tokenDb,

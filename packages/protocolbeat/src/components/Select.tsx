@@ -2,6 +2,7 @@ import * as RadixSelect from '@radix-ui/react-select'
 import clsx from 'clsx'
 import { IconChecked } from '../icons/IconChcked'
 import { IconChevronDown } from '../icons/IconChevronDown'
+import { cn } from '../utils/cn'
 import { Button } from './Button'
 
 export const Select = {
@@ -53,19 +54,30 @@ function SelectContent({
   return (
     <RadixSelect.Portal>
       <RadixSelect.Content
-        className={clsx(
-          'z-[1000] border border-coffee-400 bg-coffee-600',
+        className={cn(
+          'z-[1000] max-h-[50vh] border border-coffee-400 bg-coffee-600',
           className,
         )}
         position="popper"
+        style={{ width: 'var(--radix-select-trigger-width)' }}
         {...props}
       >
-        <RadixSelect.ScrollUpButton className="flex h-[15px] cursor-default items-center justify-center text-coffee-900">
-          <IconChevronDown className="rotate-180" />
+        <RadixSelect.ScrollUpButton className="flex cursor-pointer items-center justify-center py-1">
+          <div className="absolute top-0 left-0 mt-3 flex h-0 w-full items-center justify-center">
+            <div className="-mt-1.5 absolute h-5 w-[calc(100%-2px)] bg-gradient-to-t from-transparent to-coffee-400" />
+            <IconChevronDown className="rotate-180" />
+          </div>
         </RadixSelect.ScrollUpButton>
-        <RadixSelect.Viewport className="p-1">{children}</RadixSelect.Viewport>
-        <RadixSelect.ScrollDownButton className="flex h-[15px] cursor-default items-center justify-center text-coffee-900">
-          <IconChevronDown />
+
+        <RadixSelect.Viewport className="max-h-[400px] p-1">
+          {children}
+        </RadixSelect.Viewport>
+
+        <RadixSelect.ScrollDownButton className="flex h-0 cursor-pointer items-center justify-center py-1">
+          <div className="absolute bottom-0 left-0 mb-2 flex h-0 w-full items-center justify-center">
+            <div className="absolute h-5 w-[calc(100%-2px)] bg-gradient-to-b from-transparent to-coffee-400" />
+            <IconChevronDown />
+          </div>
         </RadixSelect.ScrollDownButton>
       </RadixSelect.Content>
     </RadixSelect.Portal>
@@ -107,7 +119,7 @@ function SelectItem({
   return (
     <RadixSelect.Item
       className={clsx(
-        'group relative flex cursor-pointer select-none items-center border-coffee-400 py-1 pr-8 pl-6 text-xs leading-none hover:underline hover:outline-none focus:outline-none active:outline-none',
+        'group relative flex max-w-fit cursor-pointer select-none items-center border-coffee-400 py-1 pr-8 pl-6 text-xs leading-none hover:underline hover:outline-none focus:outline-none active:outline-none',
         className,
       )}
       {...props}

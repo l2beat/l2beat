@@ -10,17 +10,17 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
@@ -49,8 +49,12 @@ const ZIRCUIT_FINALIZATION_PERIOD_SECONDS: number =
 const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
   title: 'Validity proofs',
   description:
-    'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
+    'ZK proof verification contracts are deployed, but a mock verifier (SP1MockVerifierWithHash) is registered in the SP1VerifierGateway with selector 0xffffffff. This mock verifier accepts all proofs without verification, allowing the permissioned proposer to bypass ZK proof checks. Safety relies on the challenger deleting invalid outputs before finalization.',
   risks: [
+    {
+      category: 'Funds can be stolen if',
+      text: 'the proposer submits an invalid state root using the mock verifier and the challenger fails to intervene before finalization.',
+    },
     {
       category: 'Funds can be stolen if',
       text: 'the validity proof cryptography is broken or implemented incorrectly.',
@@ -104,6 +108,7 @@ export const zircuit: ScalingProject = {
   id: ProjectId('zircuit'),
   addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.Stack.OPStack],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   capability: 'universal',
   type: 'layer2',
   display: {
@@ -146,7 +151,7 @@ export const zircuit: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
-        stateVerificationOnL1: true,
+        stateVerificationOnL1: false,
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
@@ -154,6 +159,10 @@ export const zircuit: ScalingProject = {
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: false,
+        programHashesReproducible: null,
+        proverSourcePublished: true,
+        verifierContractsReproducible: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -167,7 +176,7 @@ export const zircuit: ScalingProject = {
   ),
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+      ...RISK_VIEW.STATE_NONE,
       executionDelay: ZIRCUIT_FINALIZATION_PERIOD_SECONDS,
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
@@ -304,7 +313,6 @@ export const zircuit: ScalingProject = {
           'eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79',
         ),
         tokens: ['wstETH'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
       }),
@@ -362,7 +370,7 @@ export const zircuit: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkProgramHashes: zircuitProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: zircuitProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   technology: {

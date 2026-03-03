@@ -1,3 +1,419 @@
+Generated with discovered.json: 0x18bea0317b154ad683a315ae02c3baca070098e7
+
+# Diff at Fri, 27 Feb 2026 13:25:41 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770912809
+- current timestamp: 1772198388
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
+Generated with discovered.json: 0x99bf9cb8ea6a0fa6f842c6fcafd6012361d448b4
+
+# Diff at Fri, 13 Feb 2026 11:46:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769513534
+- current timestamp: 1770912809
+
+## Description
+
+OP Contracts Upgrade 18 (op-contracts/v6.0.0).
+
+OptimismPortal2 v5.1.1→v5.2.0: adds Custom Gas Token safety guards preventing ETH value operations in CGT mode. ([diff](https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B))
+
+AnchorStateRegistry v3.5.0→v3.7.0: adds safe re-initialization guard for retirementTimestamp and a new getStartingAnchorRoot() getter. ([diff](https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5))
+
+SystemConfig v3.11.0→v3.13.1: adds DelayedWETH storage slot, setBatcherHash(address) convenience setter, and isCustomGasToken() legacy getter. ([diff](https://disco.l2beat.com/diff/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2))
+
+DisputeGameFactory v1.3.0→v1.4.0: cloning logic now embeds gameType in clone bytecode when gameArgs are present. ([diff](https://disco.l2beat.com/diff/eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50/eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c))
+
+New PermissionedDisputeGameV2 moves game parameters (VM, WETH, anchor registry, etc.) from constructor immutables into clone bytecode, allowing the factory to configure per-clone without separate implementations.
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x0a47A44f1B2bb753474f8c830322554A96C9934D) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$pastUpgrades.10:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"]]
+      values.$upgradeCount:
+-        10
++        11
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x120EB40F5FC6D2B47c67960bDb696a9e317C84b0) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0x1601463fd2e47d8994c28a90b556c6933f38e8685214f702dc41a5ae08d9787c"
++        "0xa1c629e3a86e4cba49482956c04d921b52551c4ee9833ddda7e44ca155bc6cab"
+      values.$implementation:
+-        "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E"
++        "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"
+      values.$pastUpgrades.1:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "3.5.0"
++        "3.7.0"
+      values.getStartingAnchorRoot:
++        {"root":"0x3841871029034867cc6585e1f0c75de0dc0e14ed593b5fb5a854197a6a7c7cb1","l2SequenceNumber":24079743}
+      implementationNames.eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5:
++        "AnchorStateRegistry"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$pastUpgrades.6:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"]]
+      values.$upgradeCount:
+-        6
++        7
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0xec3fef2865ee3bd465fea37851bfc490f143eba36d1e45d220832d39770aa8f2"
++        "0x3410684a7a8c16c4f87db990b834ce7c3be33136857c103791b132b824bfd951"
+      values.$implementation:
+-        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
++        "eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"
+      values.$pastUpgrades.9:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.version:
+-        "5.1.1"
++        "5.2.0"
+      implementationNames.eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202:
+-        "OptimismPortal2"
+      implementationNames.eth:0x97cEbbf8959e2A5476fbe9B98A21806Ec234609B:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x50D700e97967F9115e3f999bDB263d69F6704680) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$pastUpgrades.9:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"]]
+      values.$upgradeCount:
+-        9
++        10
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x09e12b8c0307a4da75a8b84ed7c88ced81e386ec09025ec5b36873b4f69614d0"
++        "0x86dc9ef5cbf4cc436d50678ad7b2abbf9cc1905641ebbeccddbf1adf9b724403"
+      values.$implementation:
+-        "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"
++        "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"
+      values.$pastUpgrades.11:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.getAddresses.delayedWETH:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.version:
+-        "3.11.0"
++        "3.13.1"
+      values.DELAYED_WETH_SLOT:
++        "0x51547f31a231e1007dca33017faa3da20d959b95087c588a7768bfb922fd58ff"
+      values.delayedWETH:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.isCustomGasToken:
++        false
+      implementationNames.eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED:
+-        "SystemConfig"
+      implementationNames.eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x19f3f7c7ee3977705261bfb86f826d5f97b885796f2246be7cc3e815c3e95dca"
++        "0x0fdb3ea7873ad716dd0f5f9d2fdbab989f3b308066977be182ddc31d150e12f5"
+      values.$implementation:
+-        "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50"
++        "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"
+      values.$pastUpgrades.4:
++        ["2026-02-09T20:10:59.000Z","0x8808cd53114e4cf07bfde30daf24f2984d4a40ab09c5ca67bd171ac29d6dbf37",["eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.challengerFromDGF:
+-        "UNRESOLVED"
++        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0x8d807C4030F9CE5BBADDbC5F06B1C3628A5e8671"
++        "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A"
+      values.permissionedGameArgs:
+-        "0x"
++        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb908120eb40f5fc6d2b47c67960bdb696a9e317c84b03daa8afa6e7f6cdd3be5f2ea610a0e795b76bb1f00000000000000000000000000000000000000000000000000000000000006d6c8187d40ad440328104a52bbed2d8efc5ab1f1f69ba6e03d8b90de867373db8cf1a58d2f7f006b3a"
+      values.proposerFromDGF:
+-        "UNRESOLVED"
++        "eth:0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6"
+      values.version:
+-        "1.3.0"
++        "1.4.0"
+      values.wethFromDGF:
+-        "UNRESOLVED"
++        "eth:0x3dAa8aFA6e7f6CDD3be5f2Ea610a0e795B76BB1f"
+      implementationNames.eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50:
+-        "DisputeGameFactory"
+      implementationNames.eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x8d807C4030F9CE5BBADDbC5F06B1C3628A5e8671)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E","role":".challengerFromDGF"}]
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E","role":".challengerFromDGF","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}]}
+    }
+```
+
+```diff
+    EOA  (eth:0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E","role":".proposerFromDGF"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  24 +-
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  56 ++--
+ .../OptimismPortal2/OptimismPortal2.sol            |  44 ++-
+ .../PermissionedDisputeGame.sol                    | 340 +++++++++++----------
+ .../SystemConfig/SystemConfig.sol                  |  40 ++-
+ 5 files changed, 321 insertions(+), 183 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769513534 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "0x"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"eth:0x8d807C4030F9CE5BBADDbC5F06B1C3628A5e8671","role":".challenger"}]
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x8d807C4030F9CE5BBADDbC5F06B1C3628A5e8671","role":".challenger","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}]}
+    }
+```
+
+```diff
+    EOA  (eth:0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x8d807C4030F9CE5BBADDbC5F06B1C3628A5e8671","role":".proposer"}]
+    }
+```
+
+Generated with discovered.json: 0xdf9c4ea507f07705d51b0162d90a61469ad19e1f
+
+# Diff at Tue, 27 Jan 2026 11:33:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@01c924f177b66fde012756076e94adb03520b757 block: 1769272363
+- current timestamp: 1769513534
+
+## Description
+
+New member added to Conduit Multisig 1, increasing from 4 of 12 to 4 of 13 threshold.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 13 (31%)"
+    }
+```
+
+Generated with discovered.json: 0x506f01e3953b2598fbc1e554086469ab96138ab4
+
+# Diff at Mon, 26 Jan 2026 09:08:12 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1768989976
+- current timestamp: 1769272363
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe and OpFoundationOperationsSafe. Timelock delays currently 0.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/metal/.flat/SaferSafes.sol        | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
+Generated with discovered.json: 0x9e080e55e234d59b7da225d3744254a136e6f9f3
+
+# Diff at Wed, 21 Jan 2026 10:07:45 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@a72aa7d50f1dddc0c7a6eae7f60679fc94e4eabf block: 1768563850
+- current timestamp: 1768989976
+
+## Description
+
+New member added to Conduit Multisig 1 (now 4/12, previously 4/11).
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 12 (33%)"
+    }
+```
+
+Generated with discovered.json: 0xdd0ed8e4bf9f62162a48ffb424422f4e1cb905e7
+
+# Diff at Fri, 16 Jan 2026 12:02:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5858fbf220b5dda1ab2a19f029fdd9eb700ca7fa block: 1766048218
+- current timestamp: 1768563850
+
+## Description
+
+Conduit Multisig 1 added a new signer, increasing members from 10 to 11 (threshold remains 4).
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
 Generated with discovered.json: 0xa22148deca814bd8267a261a3f9b66446cd3f08e
 
 # Diff at Thu, 18 Dec 2025 08:58:22 GMT:
@@ -4381,7 +4797,7 @@ Generated with discovered.json: 0x3fa389203f1030d3878621c9cf401f1659a5a685
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Optimism Security Council: 2 members replaced.
 
 ## Watched changes
 

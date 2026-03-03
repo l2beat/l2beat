@@ -631,29 +631,36 @@
     },
     {
       "mode": "auto",
-      "id": "bob-wstETH-2",
+      "id": "bob-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x091dF5E1284E49fA682407096aD34cfD42B95B72",
-        "decimals": 18,
-        "sinceTimestamp": 1713786239
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Custom escrow"
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+            "decimals": 18,
+            "sinceTimestamp": 1712862107
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x091dF5E1284E49fA682407096aD34cfD42B95B72",
+            "decimals": 18,
+            "sinceTimestamp": 1713786239
           }
         ]
-      }
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     }
   ]
 }

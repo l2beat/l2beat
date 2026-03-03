@@ -43,16 +43,20 @@ const mainPages: MainPage[] = [
     title: 'Archived',
   },
   {
-    type: 'bridges',
+    type: 'interop',
     title: 'Summary',
   },
   {
-    type: 'bridges',
-    title: 'Risk Analysis',
+    type: 'interop',
+    title: 'Non-minting',
   },
   {
-    type: 'bridges',
-    title: 'Archived',
+    type: 'interop',
+    title: 'Lock & Mint',
+  },
+  {
+    type: 'interop',
+    title: 'Burn & Mint',
   },
   {
     type: 'data-availability',
@@ -75,6 +79,9 @@ const mainPages: MainPage[] = [
   },
   {
     title: 'About Us',
+  },
+  {
+    title: 'Changelog',
   },
   {
     title: 'Donate',

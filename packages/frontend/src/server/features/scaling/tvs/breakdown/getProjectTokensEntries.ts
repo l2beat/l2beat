@@ -19,6 +19,7 @@ import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/component
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { formatTimestamp } from '~/utils/dates'
+import { manifest } from '~/utils/Manifest'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 import {
   type Address,
@@ -50,7 +51,6 @@ export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
   bridgedUsing?: {
     bridges: {
       name: string
-      slug?: string
     }[]
     warning?: string
   }
@@ -118,7 +118,8 @@ function getEntries(
         chains,
         project.contracts?.addresses,
       ),
-      iconUrl: token.iconUrl ?? '',
+      iconUrl:
+        token.iconUrl ?? manifest.getUrl('/images/token-placeholder.png'),
       priceUsd: tokenValue.priceUsd,
       valueForProject: tokenValue.valueForProject,
       value: tokenValue.value,

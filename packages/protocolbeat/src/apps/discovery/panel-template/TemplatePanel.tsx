@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { ErrorState } from '../../../components/ErrorState'
+import type { EditorSaveCallback } from '../../../components/editor/code/editor'
 import type { EditorFile } from '../../../components/editor/store'
 import { EditorView } from '../../../components/editor/views/EditorView'
 import { LoadingState } from '../../../components/LoadingState'
-import { formatJson } from '../../../utils/formatJson'
-import { removeJSONTrailingCommas } from '../../../utils/removeJSONTrailingCommas'
+import { IS_READONLY } from '../../../config/readonly'
 import { type ConfigModels, useConfigModels } from '../hooks/useConfigModels'
 import { useProjectData } from '../hooks/useProjectData'
 
@@ -13,15 +13,10 @@ export function TemplatePanel() {
   const { selectedAddress } = useProjectData()
   const configModels = useConfigModels()
 
-  // TODO: move this to backend/editor or replace with gui
-  const onSaveCallback = (content: string): string => {
-    try {
-      content = formatJson(JSON.parse(removeJSONTrailingCommas(content)))
-    } catch {}
-
+  const onSaveCallback: EditorSaveCallback = (content: string) => {
     configModels.templateModel.save(content)
-
-    return content
+    // No validation for now, we save either way
+    return true
   }
 
   const files = useMemo(
@@ -69,7 +64,7 @@ function getTemplateFiles(
     name: 'template.jsonc',
     content: templateModel.files.template,
     language: 'json',
-    readOnly: false,
+    readOnly: IS_READONLY,
   })
 
   if (templateModel.files.shapes) {

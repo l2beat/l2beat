@@ -2,5 +2,19 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "shared-sharp-verifier",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"]
+  "initialAddresses": ["eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"],
+  "names": {
+    "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": "SHARPVerifier_2024_10",
+    "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934": "SHARPVerifier_2025_11",
+    "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066": "SHARPVerifier_2025_12",
+    "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917": "CairoBootloaderProgram_2025_12",
+    "eth:0x192292817680196A0215a50B07d1C5E7Ab8A8636": "CairoBootloaderProgram_2025_11",
+    "eth:0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515": "CairoBootloaderProgram_2024_10",
+    "eth:0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40": "CairoBootloaderProgram_2023_9"
+  },
+  "overrides": {
+    "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": { "category": "spam" },
+    "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934": { "category": "spam" },
+    "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066": { "category": "spam" }
+  }
 }

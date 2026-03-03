@@ -1,0 +1,24 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "sxt",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "sxt-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x000000000000000000000000000000000000800A",
+        "chain": "sxt",
+        "decimals": 18,
+        "sinceTimestamp": 1744071776
+      },
+      "isAssociated": false
+    }
+  ]
+}

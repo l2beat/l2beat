@@ -18,6 +18,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -33,6 +34,11 @@ const minChallengePeriodBlocks = discovery.getContractValue<number>(
   'minChallengePeriodBlocks',
 )
 const minChallengePeriodSeconds = minChallengePeriodBlocks * 12
+
+const cartesiProgramHash = discovery.getContractValue<string>(
+  'Application',
+  'getTemplateHash',
+)
 
 export const cartesiprthoneypot: ScalingProject = {
   type: 'layer2',
@@ -193,6 +199,10 @@ export const cartesiprthoneypot: ScalingProject = {
         usersHave7DaysToExit: null,
         usersCanExitWithoutCooperation: null,
         securityCouncilProperlySetUp: null,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -282,6 +292,7 @@ export const cartesiprthoneypot: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    programHashes: [PROGRAM_HASHES(cartesiProgramHash)],
   },
   milestones: [
     {

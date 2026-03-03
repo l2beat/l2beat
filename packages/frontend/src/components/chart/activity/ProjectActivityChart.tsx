@@ -36,7 +36,7 @@ export function ProjectActivityChart({
 }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<ActivityMetric>('uops')
-  const [scale, setScale] = useState<ChartScale>('lin')
+  const [scale, setScale] = useState<ChartScale>('linear')
 
   const { data: chart, isLoading } = api.activity.chart.useQuery({
     range,
@@ -86,24 +86,26 @@ export function ProjectActivityChart({
         <ProjectChartTimeRange timeRange={timeRange} />
         <ActivityChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
-      <ActivityChart
-        data={chartData}
-        milestones={milestones}
-        scale={scale}
-        metric={metric}
-        isLoading={isLoading}
-        syncedUntil={chart?.syncedUntil}
-        className="mt-4 mb-3"
-        type={type}
-        project={project}
-        tickCount={4}
-      />
-      <ActivityRatioChart
-        data={ratioData}
-        syncedUntil={chart?.syncedUntil}
-        isLoading={isLoading}
-        className="mb-2"
-      />
+      <div className="mt-4 mb-3">
+        <ActivityChart
+          data={chartData}
+          milestones={milestones}
+          scale={scale}
+          metric={metric}
+          isLoading={isLoading}
+          syncedUntil={chart?.syncedUntil}
+          type={type}
+          project={project}
+          tickCount={4}
+        />
+      </div>
+      <div className="mb-2">
+        <ActivityRatioChart
+          data={ratioData}
+          syncedUntil={chart?.syncedUntil}
+          isLoading={isLoading}
+        />
+      </div>
 
       <div className="flex justify-between gap-4">
         <ActivityMetricControls
@@ -116,8 +118,8 @@ export function ProjectActivityChart({
           value={scale}
           onValueChange={(value) => setScale(value as ChartScale)}
         >
-          <RadioGroupItem value="log">LOG</RadioGroupItem>
-          <RadioGroupItem value="lin">LIN</RadioGroupItem>
+          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
+          <RadioGroupItem value="linear">LIN</RadioGroupItem>
         </RadioGroup>
       </div>
       <ChartStats className="mt-4 md:grid-cols-2 lg:grid-cols-4">

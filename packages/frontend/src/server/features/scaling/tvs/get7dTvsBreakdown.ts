@@ -45,7 +45,6 @@ export const TvsBreakdownProjectFilter = v.union([
     type: v.enum([
       'all',
       'layer2',
-      'bridge',
       'rollups',
       'validiumsAndOptimiums',
       'others',
@@ -189,7 +188,7 @@ export async function get7dTvsBreakdown(
 
 function createTvsBreakdownProjectFilter(
   filter: TvsBreakdownProjectFilter,
-): (project: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean {
+): (project: Project<'statuses', 'scalingInfo'>) => boolean {
   switch (filter.type) {
     case 'projects':
       return (project) => filter.projectIds.includes(project.id)
@@ -217,8 +216,6 @@ function createTvsBreakdownProjectFilter(
         !!project.scalingInfo &&
         project.scalingInfo.type === 'Other' &&
         !(project.statuses.reviewStatus === 'initialReview')
-    case 'bridge':
-      return (project) => !!project.isBridge
   }
 }
 

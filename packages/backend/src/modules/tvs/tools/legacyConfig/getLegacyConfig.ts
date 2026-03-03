@@ -27,6 +27,7 @@ function toLegacyEscrow(
   return {
     address: escrow.address,
     sinceTimestamp: escrow.sinceTimestamp,
+    untilTimestamp: escrow.untilTimestamp,
     chain: escrow.chain,
     includeInTotal: escrow.includeInTotal,
     source: escrow.source,

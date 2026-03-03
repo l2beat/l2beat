@@ -10,9 +10,9 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
@@ -78,13 +78,13 @@ export function MonthlyUpdateTvsChart({
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header timeRange={timeRange} stats={stats} unit={'usd'} />
-      <ChartContainer
-        meta={chartMeta}
-        data={chartData}
-        isLoading={isLoading}
-        className="h-44! min-h-44!"
-      >
-        <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
+      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
+        <AreaChart
+          responsive
+          data={chartData}
+          className="h-44! min-h-44!"
+          margin={{ top: 20 }}
+        >
           <defs>
             <CustomFillGradientDef
               id={id}
@@ -102,14 +102,14 @@ export function MonthlyUpdateTvsChart({
             strokeWidth={2}
             isAnimationActive={false}
           />
-          {getCommonChartComponents({
-            data: chartData,
-            isLoading,
-            yAxis: {
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={{
               tickFormatter: (value: number) => formatCurrency(value, 'usd'),
-            },
-            syncedUntil: data?.syncedUntil,
-          })}
+            }}
+            syncedUntil={data?.syncedUntil}
+          />
           <ChartTooltip
             filterNull={false}
             content={<TvsCustomTooltip unit="usd" />}

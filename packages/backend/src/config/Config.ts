@@ -12,15 +12,16 @@ import type {
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
   BlockTimestampConfig,
   PriceConfig,
   ProjectTvsConfig,
 } from '../modules/tvs/types'
-import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ChainApi } from './chain/ChainApi'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
+import type { InteropAggregationConfig } from './features/interop'
 
 export interface Config {
   readonly name: string
@@ -218,10 +219,15 @@ export interface AnomaliesConfig {
 }
 
 export interface InteropFeatureConfig {
+  aggregation:
+    | {
+        configs: InteropAggregationConfig[]
+      }
+    | false
   capture: {
     enabled: boolean
     chains: {
-      name: string
+      id: string
       type: 'evm'
     }[]
   }
@@ -242,6 +248,7 @@ export interface InteropFeatureConfig {
   config: {
     enabled: boolean
     chains: { id: number; name: string }[]
+    configIntervalMs: number
   }
   inMemoryEventCap: number
 }

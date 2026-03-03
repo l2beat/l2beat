@@ -1,6 +1,7 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import Koa from 'koa'
+import bodyParser from 'koa-bodyparser'
 import compress from 'koa-compress'
 import conditional from 'koa-conditional-get'
 import etag from 'koa-etag'
@@ -25,6 +26,7 @@ export class ApiServer {
 
     this.app.use(conditional())
     this.app.use(etag())
+    this.app.use(bodyParser({ enableTypes: ['json'] }))
 
     const router = new Router()
 

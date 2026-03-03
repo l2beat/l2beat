@@ -409,7 +409,7 @@ Following [a vote that failed to reach quorum](https://www.tally.xyz/gov/lisk/pr
 
 **Discuss with L2BEAT:**
 
-We’re interested in discussing with other Lisk delegates or stakeholders and learning more about the areas in which we could be involved. Although we do not have dedicated Office Hours for Lisk yet, we encourage you to [message us](t.me/sinkas), and we’ll find time to chat.
+We’re interested in discussing with other Lisk delegates or stakeholders and learning more about the areas in which we could be involved. Although we do not have dedicated Office Hours for Lisk yet, we encourage you to [message us](https://t.me/sinkas5), and we’ll find time to chat.
 
 
 ## **ZkSync**
@@ -491,5 +491,6 @@ There are many things we’re keen to discuss with other delegates and relevant 
 **Upcoming Events (Times in UTC)**
 
 [#10 - Proposal Co-Design](https://meet.google.com/kbx-ivub-zhs) on 27.11 at 12:30
+
 
 [#11 - Proposal Co-Design](https://meet.google.com/zty-msoz-goo) on 27.11 at 18:00

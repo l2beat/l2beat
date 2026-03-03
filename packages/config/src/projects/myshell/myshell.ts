@@ -16,6 +16,7 @@ export const myshell: ScalingProject = upcomingL2({
     links: {
       websites: ['https://myshell.ai/'],
       documentation: ['https://docs.myshell.ai/'],
+      repositories: ['https://github.com/myshell-ai'],
       socialMedia: [
         'https://twitter.com/myshell_ai',
         'https://discord.com/invite/myshell',

@@ -1,3 +1,98 @@
+Generated with discovered.json: 0x16907752b65fe7ae452a6255066d9045afb41b4c
+
+# Diff at Fri, 27 Feb 2026 13:25:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1769272346
+- current timestamp: 1772198386
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
+Generated with discovered.json: 0x96caad6a7c80d4307b14b9e61d3d62aee179ce94
+
+# Diff at Fri, 13 Feb 2026 11:33:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272346
+- current timestamp: 1769272346
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769272346 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "EXPECT_REVERT"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
+Generated with discovered.json: 0xc69a24671c4625d0074c82e46fb590763ffc130b
+
+# Diff at Mon, 26 Jan 2026 09:08:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766048190
+- current timestamp: 1769272346
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe. Timelock delays currently 0.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/lisk/.flat/SaferSafes.sol         | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
 Generated with discovered.json: 0x8654624b8b34c59ad30457a4bf988dfb78b570ce
 
 # Diff at Thu, 18 Dec 2025 08:57:58 GMT:

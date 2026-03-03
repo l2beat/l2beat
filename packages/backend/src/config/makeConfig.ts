@@ -1,5 +1,9 @@
 import type { Env } from '@l2beat/backend-tools'
-import { type ChainConfig, ProjectService } from '@l2beat/config'
+import {
+  type ChainConfig,
+  INTEROP_CHAINS,
+  ProjectService,
+} from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { Config } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
@@ -9,6 +13,7 @@ import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getDefiUpdateMonitorConfig } from './features/defiUpdateMonitor'
 import { getEcosystemsConfig } from './features/ecosystemToken'
+import { getInteropAggregationConfigs } from './features/interop'
 import { getPermissionMonitorConfig } from './features/permissionMonitor'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
@@ -161,10 +166,13 @@ export async function makeConfig(
       ),
     },
     interop: flags.isEnabled('interop') && {
+      aggregation: flags.isEnabled('interop', 'aggregation')
+        ? { configs: await getInteropAggregationConfigs(ps) }
+        : false,
       capture: {
         enabled: flags.isEnabled('interop', 'capture'),
-        chains: getInteropChains().filter((c) =>
-          flags.isEnabled('interop', 'capture', c.name),
+        chains: INTEROP_CHAINS.filter((c) =>
+          flags.isEnabled('interop', 'capture', c.id),
         ),
       },
       matching: flags.isEnabled('interop', 'matching'),
@@ -190,6 +198,10 @@ export async function makeConfig(
         chains: activeChains
           .filter((c) => c.chainId !== undefined)
           .map((c) => ({ id: c.chainId as number, name: c.name })),
+        configIntervalMs: env.integer(
+          'INTEROP_CONFIG_INTERVAL_MS',
+          12 * 60 * 1000, // 12 hours
+        ),
       },
       inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
     },
@@ -197,19 +209,6 @@ export async function makeConfig(
     // Must be last
     flags: flags.getResolved(),
   }
-}
-
-export function getInteropChains() {
-  return [
-    { name: 'ethereum', type: 'evm' as const, display: 'ETH' },
-    { name: 'arbitrum', type: 'evm' as const, display: 'ARB' },
-    { name: 'base', type: 'evm' as const, display: 'BASE' },
-    { name: 'optimism', type: 'evm' as const, display: 'OP' },
-    { name: 'apechain', type: 'evm' as const, display: 'APE' },
-    { name: 'polygonpos', type: 'evm' as const, display: 'POL' },
-    { name: 'zksync2', type: 'evm' as const, display: 'ZK' },
-    { name: 'abstract', type: 'evm' as const, display: 'ABS' },
-  ]
 }
 
 function getEthereumMinTimestamp(chains: ChainConfig[]) {

@@ -924,7 +924,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -1180,6 +1180,26 @@
         "decimals": 18,
         "sinceTimestamp": 1692316800,
         "untilTimestamp": 1756821600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1689552000,
+        "untilTimestamp": 1742428800
       },
       "category": "other",
       "source": "canonical",
@@ -2076,6 +2096,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-PNK",
+      "priceId": "kleros",
+      "symbol": "PNK",
+      "name": "Pinakion",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3833/large/kleros.png?1696504500",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1686793895
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-POKT",
       "priceId": "pocket-network",
       "symbol": "POKT",
@@ -2562,6 +2601,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-SKL",
+      "priceId": "skale",
+      "symbol": "SKL",
+      "name": "SKALE",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13245/large/SKALE_token_300x300.png?1696513021",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1686793895
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-SNT",
       "priceId": "status",
       "symbol": "SNT",
@@ -2721,7 +2779,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2747,7 +2805,7 @@
     },
     {
       "mode": "custom",
-      "id": "base-sUSDS-2",
+      "id": "base-sUSDS",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
@@ -2803,15 +2861,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -3031,6 +3082,26 @@
     },
     {
       "mode": "auto",
+      "id": "base-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1706918400,
+        "untilTimestamp": 1742169600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-TYBG",
       "priceId": "base-god",
       "symbol": "TYBG",
@@ -3192,14 +3263,14 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
     },
     {
       "mode": "custom",
-      "id": "base-USDS-2",
+      "id": "base-USDS",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",
@@ -3255,15 +3326,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -3305,7 +3369,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3612,48 +3676,36 @@
     },
     {
       "mode": "auto",
-      "id": "base-wstETH-1",
+      "id": "base-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-        "decimals": 18,
-        "sinceTimestamp": 1686793895
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+            "decimals": 18,
+            "sinceTimestamp": 1686793895
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72",
+            "decimals": 18,
+            "sinceTimestamp": 1695935315
+          }
+        ]
       },
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "base-wstETH-2",
-      "priceId": "wrapped-steth",
-      "symbol": "wstETH",
-      "name": "Wrapped liquid staked Ether 2.0",
-      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72",
-        "decimals": 18,
-        "sinceTimestamp": 1695935315
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
     },
     {
       "mode": "auto",

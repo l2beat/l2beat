@@ -221,5 +221,47 @@
     "address": "eth:0x32b48530f8a2c5CbE79d6b43823bfC9D9584Dbd5",
     "chain": "ethereum",
     "blockNumber": 23883577
+  },
+  "LockReleaseDextfPool.sol": {
+    "hash": "0xd8a4f556ce780d4d3c96a55a244b54a3dbe15d8e7bf7dc977e8b118d40941b2d",
+    "address": "eth:0x40fa6991CDbd66e91a25a2875d4d6fb1aF88cD91",
+    "chain": "ethereum",
+    "blockNumber": 24183337
+  },
+  "LockReleaseTokenPoolV8.sol": {
+    "hash": "0x25127d73459fbc32a9cc86cb39ca30db3ac7c8c1558611948b88c3713cfc5359",
+    "address": "eth:0x22B8B1ea06AEE07880436a90dA396594350D4f19",
+    "chain": "ethereum",
+    "blockNumber": 24183337
+  },
+  "TokenTransferorPool.sol": {
+    "hash": "0x96c99f2a4b7d1bf8de83e0efbc50ffb250cfd2322cf5c6f9ed82b51a4556f217",
+    "address": "eth:0xEB322952C9Ba0E204a1ab341Fc18832A9700D54a",
+    "chain": "ethereum",
+    "blockNumber": 24183337
+  },
+  "LockReleaseTokenPoolV9.sol": {
+    "hash": "0x379e8f0151a796ddf784dabde1f3a32bae484f8298066fda7ac19843ef16030a",
+    "address": "eth:0x267aE721c7b9BB409847C324A06259A7d96a644A",
+    "chain": "ethereum",
+    "blockNumber": 24183337
+  },
+  "ArbiPool.sol": {
+    "hash": "0xa52bfc1e9813d8b3037f594627c702f56923644fff98918b2f65040f21973011",
+    "address": "eth:0x1e955af2CB2345a9e7aa8B99219bE76Ab704f94C",
+    "chain": "ethereum",
+    "blockNumber": 24268139
+  },
+  "FUSDBurnMintTokenPool.sol": {
+    "hash": "0x61546bbdeae7c6d79dfd90b79ad661d74684e467a88d2f0bd5e69caa3b99c6ed",
+    "address": "eth:0x91FEbCFB698CC2e653f7e053205a347957F325D1",
+    "chain": "ethereum",
+    "blockNumber": 24433713
+  },
+  "FUSDLPBurnMintTokenPool.sol": {
+    "hash": "0xe598f6571ea31f03a429581af0857af627fea619a898b80f465a8f9cd23167f9",
+    "address": "eth:0x42a07B1BcA0fbD02c684D3Aae29CA4d7A17C0773",
+    "chain": "ethereum",
+    "blockNumber": 24433713
   }
 }

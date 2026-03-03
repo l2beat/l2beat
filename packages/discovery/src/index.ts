@@ -22,6 +22,10 @@ export {
   TemplateService,
 } from './discovery/analysis/TemplateService'
 export { colorize } from './discovery/colorize/colorize'
+export {
+  ConfigHealthService,
+  type HealthHint,
+} from './discovery/config/ConfigHealthService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
 export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
@@ -48,6 +52,7 @@ export {
 export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
 export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
+export { UserHandlers } from './discovery/handlers/user'
 export {
   type ClingoFact,
   type ClingoValue,
@@ -115,6 +120,7 @@ export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { getReachableEntries } from './discovery/utils/reachable'
 export { readJsonc } from './discovery/utils/readJsonc'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
+export { findLeadingCommentStart } from './flatten/commentUtilities'
 export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
 export { ParsedFilesManager } from './flatten/ParsedFilesManager'

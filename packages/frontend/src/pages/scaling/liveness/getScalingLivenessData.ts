@@ -9,6 +9,7 @@ import {
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { manifest } from '~/utils/Manifest'
 import type { TabbedScalingEntries } from '../utils/groupByScalingTabs'
 
 export async function getScalingLivenessData(
@@ -73,6 +74,7 @@ function getProjectsWithAnomalies(
       return {
         name: entry.name,
         slug: entry.slug,
+        iconUrl: manifest.getUrl(`/icons/${entry.slug}.png`),
         recentAnomalies,
       }
     })

@@ -25,15 +25,11 @@ type EditorViewProps = {
 
 export function EditorView(props: EditorViewProps) {
   const { features = { lineSelection: false, rangeHighlight: true } } = props
-  const [dirtyFiles, setDirtyFiles] = useState<Record<string, boolean>>({})
   const [activeFileIndex, setActiveFileIndex] = useState(0)
 
   const editor = useCodeStore((store) => store.editors[props.editorId])
+  const { setDirtyFile, getIsDirtyFile } = useCodeStore()
   const { resetRange, initialSelection, setSelection } = useCodeSettings()
-
-  const setDirtyFile = (fileId: string, dirty: boolean) => {
-    setDirtyFiles((prev) => ({ ...prev, [fileId]: dirty }))
-  }
 
   editor?.onLoad(() => {
     const plugin = editor.getPlugin(LineSelector)
@@ -55,15 +51,20 @@ export function EditorView(props: EditorViewProps) {
       if (activeFile) {
         if (!activeFile.readOnly) {
           editor.onSave((content) => {
-            const result = props.callbacks?.onSave?.(content)
-            setDirtyFile(activeFile.id, false)
-            activeFile.content = result ?? content
+            const isNewContentOk = props.callbacks?.onSave?.(content)
+            if (isNewContentOk) {
+              setDirtyFile(props.editorId, activeFile.id, false)
+            }
             return activeFile.content
           })
 
           editor.onChange((content) => {
             props.callbacks?.onChange?.(content)
-            setDirtyFile(activeFile.id, content !== activeFile.content)
+            setDirtyFile(
+              props.editorId,
+              activeFile.id,
+              content !== activeFile.content,
+            )
           })
         }
 
@@ -115,7 +116,7 @@ export function EditorView(props: EditorViewProps) {
         <EditorFileTabs
           files={props.files.map((file, index) => ({
             ...file,
-            isDirty: dirtyFiles[file.id] ?? false,
+            isDirty: getIsDirtyFile(props.editorId, file.id),
             isActive: index === activeFileIndex,
             onClick: () => setActiveFileIndex(index),
           }))}

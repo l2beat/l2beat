@@ -17,8 +17,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -202,6 +202,10 @@ export const katana: ScalingProject = {
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: false,
+      noRedTrustedSetups: true,
+      programHashesReproducible: false,
+      proverSourcePublished: true,
+      verifierContractsReproducible: true,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -328,7 +332,7 @@ export const katana: ScalingProject = {
         references: [
           {
             title: 'Pessimistic Proof - Polygon Knowledge Layer',
-            url: 'https://docs.polygon.technology/learn/agglayer/pessimistic_proof',
+            url: 'https://docs.agglayer.dev/agglayer/core-concepts/pessimistic-proof/',
           },
           {
             title:
@@ -355,7 +359,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
         text: 'the contracts or their dependencies (e.g. AggLayerGateway) receive a malicious code upgrade. There is no delay on upgrades.',
       },
     ],
-    zkProgramHashes: katanaVKeys.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: katanaVKeys.map((el) => PROGRAM_HASHES(el)),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [

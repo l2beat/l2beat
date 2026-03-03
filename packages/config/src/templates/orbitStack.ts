@@ -30,6 +30,7 @@ import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -42,6 +43,7 @@ import type {
 import type {
   Badge,
   ChainConfig,
+  InteropConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectCustomDa,
@@ -183,6 +185,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   upgradesAndGovernance?: string
+  interopConfig?: InteropConfig
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
@@ -528,6 +531,7 @@ function orbitStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
+      programHashes: [PROGRAM_HASHES(wasmModuleRoot)],
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
@@ -821,6 +825,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
     },
+    interopConfig: templateVars.interopConfig,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
@@ -1032,6 +1037,11 @@ function getRiskView(
         const totalDelay = isPostBoLD
           ? validatorAfkTimeSeconds
           : challengePeriodSeconds + validatorAfkTimeSeconds // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
+
+        const ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
+        if (totalDelay > ONE_YEAR_IN_SECONDS) {
+          return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+        }
 
         return {
           ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(totalDelay),
@@ -1362,6 +1372,10 @@ function computedStage(
     return { stage: 'NotApplicable' }
   }
 
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
   return getStage(
     {
       stage0: {
@@ -1378,6 +1392,10 @@ function computedStage(
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: null,
+        programHashesReproducible: programHashesReproducible(wasmModuleRoot),
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -1482,4 +1500,11 @@ function BoLDStateValidation(
       },
     ],
   }
+}
+
+function programHashesReproducible(wasmModuleRoot: string): boolean | null {
+  const vStatus = PROGRAM_HASHES(wasmModuleRoot).verificationStatus
+  if (vStatus === 'unsuccessful') return false
+  if (vStatus === 'successful') return true
+  return null
 }

@@ -4,8 +4,8 @@ import {
   type LoggerOptions,
   type LoggerTransport,
 } from '@l2beat/backend-tools'
+import type { ElasticSearchTransportOptions } from '@l2beat/backend-tools/elastic-search'
 import { env } from '~/env'
-import type { ElasticSearchTransportOptions } from '~/utils/elastic-search/ElasticSearchTransport'
 
 let logger: Logger | undefined
 
@@ -33,7 +33,7 @@ export function getLogger(): Logger {
 
     const {
       ElasticSearchTransport,
-    } = require('~/utils/elastic-search/ElasticSearchTransport')
+    } = require('@l2beat/backend-tools/elastic-search')
     const options: ElasticSearchTransportOptions = {
       node: env.ES_NODE,
       apiKey: env.ES_API_KEY,

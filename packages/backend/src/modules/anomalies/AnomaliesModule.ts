@@ -1,6 +1,6 @@
-import { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { AnomalyNotifier } from './AnomalyNotifier'
+import { DiscordWebhookClient } from './clients/DiscordWebhookClient'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
 
 export function createAnomaliesModule({
@@ -16,15 +16,17 @@ export function createAnomaliesModule({
   }
   logger = logger.tag({ feature: 'anomalies', module: 'anomalies' })
 
-  const anomaliesNotifier = config.anomalies.anomaliesWebhookUrl
-    ? new AnomalyNotifier(
-        logger,
-        clock,
-        new DiscordWebhookClient(config.anomalies.anomaliesWebhookUrl),
-        db,
-        config.anomalies.anomaliesMinDuration,
-      )
-    : undefined
+  const anomaliesNotifier =
+    config.anomalies.anomaliesWebhookUrl && config.trackedTxsConfig
+      ? new AnomalyNotifier(
+          logger,
+          clock,
+          new DiscordWebhookClient(config.anomalies.anomaliesWebhookUrl),
+          db,
+          config.anomalies.anomaliesMinDuration,
+          config.trackedTxsConfig,
+        )
+      : undefined
 
   const realTimeLivenessProcessor = config.trackedTxsConfig
     ? new RealTimeLivenessProcessor(

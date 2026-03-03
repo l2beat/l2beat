@@ -98,8 +98,9 @@ export class LayerZeroConfigPlugin
     private store: InteropConfigStore,
     protected logger: Logger,
     private http: HttpClient,
+    intervalMs: number,
   ) {
-    super({ intervalMs: 20 * 60 * 1000 })
+    super({ intervalMs })
     this.logger = logger.for(this)
   }
 

@@ -1,3 +1,281 @@
+Generated with discovered.json: 0xab33e41c784444f8e1f52531be06e35aece10c0f
+
+# Diff at Mon, 16 Feb 2026 22:15:37 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@86c312c16a9d1b19cdc00db282a75e0517b172d4 block: 1770724065
+- current timestamp: 1771280072
+
+## Description
+
+Upgraded Liquidity to LiquidityV2 and deployed a new Exit contract, introducing a timelocked exit mechanism.
+
+LiquidityV2 extends the original Liquidity contract with a new `exitTransfer` function gated by an `EXIT_ROLE`, which can transfer any token type (ETH, ERC20, ERC721, ERC1155) from the contract: https://disco.l2beat.com/diff/eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9/eth:0x890662DF84603CcF62b940292252BDd3aa0b5382
+
+New Exit contract (eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B) holds the EXIT_ROLE and implements a timelocked withdrawal flow:
+- SUBMITTER_ROLE (backend) submits withdrawal requests with recipient, token, and amount
+- 24-hour timelock before execution
+- After timelock, anyone can execute permissionlessly via `executeRequest()`
+- GUARDIAN_ROLE can cancel requests during timelock and pause the contract
+- Execution calls `LIQUIDITY.exitTransfer()` to transfer tokens from LiquidityV2
+
+Note: LiquidityV2 remains paused (from Feb 10 update), so deposits/relaying are still disabled, but the Exit contract is active and processing withdrawal requests.
+
+## Watched changes
+
+```diff
+    contract LiquidityV2 (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.
+      name:
+-        "Liquidity"
++        "LiquidityV2"
+      sourceHashes.1:
+-        "0xf23a0f0c4af93cdcb226ce3de63c8ed56ce4267448a659414e5a459b4e5b94db"
++        "0xbfcd0c18579ccd70e1bdf498b14c4f017af16483f44f45015752901149ef0668"
+      values.$implementation:
+-        "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9"
++        "eth:0x890662DF84603CcF62b940292252BDd3aa0b5382"
+      values.$pastUpgrades.4:
++        ["2026-02-15T09:41:11.000Z","0x7ae0a3b4f0284d10ee582d9f28124a5798fb68f4f5ecdeddcd915d77abf30799",["eth:0x890662DF84603CcF62b940292252BDd3aa0b5382"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.accessControl.EXIT:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B"]}
+      values.EXIT_ROLE:
++        "0xa5e2908dfcbbc823d163e6a6cb40ec3285fe62c08afd9b92045ead9eed2f77db"
+      implementationNames.eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9:
+-        "Liquidity"
+      implementationNames.eth:0x890662DF84603CcF62b940292252BDd3aa0b5382:
++        "LiquidityV2"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Exit (eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B)
+    +++ description: Timelocked exit mechanism. SUBMITTER_ROLE queues withdrawal requests with a 24-hour timelock, after which anyone can execute them permissionlessly. GUARDIAN_ROLE can cancel pending requests and pause the contract.
+```
+
+## Source code changes
+
+```diff
+.../projects/intmax/.flat/Exit/ERC1967Proxy.p.sol  |  522 +++
+ .../src/projects/intmax/.flat/Exit/Exit.sol        | 1677 +++++++++
+ .../LiquidityV2}/ERC1967Proxy.p.sol                |    0
+ .../LiquidityV2/LiquidityV2.sol}                   | 3778 ++++++++++----------
+ 4 files changed, 4110 insertions(+), 1867 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770724065 (main branch discovery), not current.
+
+```diff
+    contract Liquidity (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.
+      description:
+-        "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check."
++        "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract."
+    }
+```
+
+Generated with discovered.json: 0x9cb15096d408e317666645a07de63de38e3bb9a4
+
+# Diff at Tue, 10 Feb 2026 12:15:54 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a071ede88cd58345921a58b8c0087cb337d915e6 block: 1768216753
+- current timestamp: 1770724065
+
+## Description
+
+Paused the operation of Intmax L3. In particular:
+
+- Added functionality to pause withdrawals for the main contract on Ethereum: https://disco.l2beat.com/diff/eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA/eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9. 
+- Also added functionality to pause block posting on the rollup contract on scroll: https://disco.l2beat.com/diff/scr:0xF34299210fB8505232649e9BEa14a84DD75e746b/scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820. 
+- Updated circuitDigest on withdrawal contract, which prevents submission of withdrawal validity proofs.
+
+- Paused Liquidity contract (no deposits/withdrawals possible now)
+- Paused Rollup contract (no blocks could be posted)
+
+## Watched changes
+
+```diff
+    contract Liquidity (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check.
+      sourceHashes.1:
+-        "0xe050f1745884847699cff3db5506410a82629972bb6fd8a52199442b01351485"
++        "0xf23a0f0c4af93cdcb226ce3de63c8ed56ce4267448a659414e5a459b4e5b94db"
+      values.$implementation:
+-        "eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA"
++        "eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9"
+      values.$pastUpgrades.3:
++        ["2026-02-07T14:29:35.000Z","0x95073b3d48f892101baf0c2e857a0b0b8f72dd6ae5fdfecd49c0814dfec4cd69",["eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.accessControl.WITHDRAWAL.members.0:
+-        "eth:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449"
+      values.accessControl.WITHDRAWAL.members.1:
+-        "eth:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5"
+      values.paused:
+-        false
++        true
+      implementationNames.eth:0xD31F61281A4b262aEa79cbBE09A436975a8b63EA:
+-        "Liquidity"
+      implementationNames.eth:0xd12FF9c1542F0826DB4c7cAe8BcC4fbeF3d3B6c9:
++        "Liquidity"
+    }
+```
+
+```diff
+    contract Rollup (scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e) {
+    +++ description: Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.
+      sourceHashes.1:
+-        "0xfbb7d02542bc666f4b049d5138aced4257fcc21b784009966f830eae7b197643"
++        "0x210e1b4c7ca45694431b4a558e68cf0fc6e9c0f1444fe91538af462e050f3604"
+      values.$implementation:
+-        "scr:0xF34299210fB8505232649e9BEa14a84DD75e746b"
++        "scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820"
+      values.$pastUpgrades.1:
++        ["2026-02-10T09:51:40.000Z","0xbd41e060791e0e158dc07aafdfb52c0e26c76ea9193852ab9d4d5c8eb9e9fe70",["scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.paused:
++        true
+      implementationNames.scr:0xF34299210fB8505232649e9BEa14a84DD75e746b:
+-        "Rollup"
+      implementationNames.scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820:
++        "Rollup"
+    }
+```
+
+```diff
+    contract Withdrawal (scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449) {
+    +++ description: Contract handling withdrawal requests, which require a validity proof of sufficient balance. It tracks amount of funds already withdrawn to prevent double withdrawals.
+      values.circuitDigest:
+-        "10639849666975086414110868463771120369189468607622759510754735453420311446140"
++        0
+    }
+```
+
+## Source code changes
+
+```diff
+.../Liquidity/Liquidity.sol                        |   2 +-
+ .../{.flat@1768216753 => .flat}/Rollup/Rollup.sol  | 172 ++++++++++++++++++++-
+ 2 files changed, 167 insertions(+), 7 deletions(-)
+```
+
+Generated with discovered.json: 0x5a5e21d1f702b4a978de82815108776870ac993a
+
+# Diff at Mon, 12 Jan 2026 11:20:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@c2812ac033718c9db96c3996581a53eda6b78cb0 block: 1767783841
+- current timestamp: 1768216753
+
+## Description
+
+PredicateServiceManager aggregator EOA (`0x38f6001e8ac11240f903CBa56aFF72A1425ae371`) revoked its EIP7702 delegation, returning to a standard EOA. Ownership of the PredicateServiceManager transferred back to a 4/4 multisig (`0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE`) from the previous EOA owner (3 new EOAs added).
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371) {
+    +++ description: None
+      unverified:
+-        true
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x933779eeC34310cc14b268C025AD4D0baf6D26De"}
+    }
+```
+
+```diff
+    contract PredicateServiceManager (eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2) {
+    +++ description: None
+      values.owner:
+-        "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c"
++        "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE"
+    }
+```
+
+```diff
+    EOA  (eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","description":"can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.","role":".owner"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../intmax/.flat/GnosisSafe/GnosisSafe.sol         | 953 +++++++++++++++++++++
+ .../intmax/.flat/GnosisSafe/GnosisSafeProxy.p.sol  |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
+Generated with discovered.json: 0xc8eaab8ca41d4a8d5ae89e50b5c0e6192aac7354
+
+# Diff at Wed, 07 Jan 2026 11:05:12 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@06616d58f9233a17d6fc6d6798b38e1aba76513e block: 1767717509
+- current timestamp: 1767783841
+
+## Description
+
+PredicateServiceManager aggregator 7702-delegated to unverified smart contract.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371) {
+    +++ description: None
+      sourceHashes:
+-        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values.$implementation:
+-        "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"
++        "eth:0x933779eeC34310cc14b268C025AD4D0baf6D26De"
+      values.delegationManager:
+-        "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3"
+      values.DOMAIN_VERSION:
+-        "1"
+      values.eip712Domain:
+-        {"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
+      values.entryPoint:
+-        "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+      values.getDeposit:
+-        0
+      values.getDomainHash:
+-        "0x7cf15dd1293c71ee6a4c120c19c7a2943ac93931c9c12066915c2efedf0f9e1c"
+      values.getNonce:
+-        0
+      values.NAME:
+-        "EIP7702StatelessDeleGator"
+      values.PACKED_USER_OP_TYPEHASH:
+-        "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18"
+      values.VERSION:
+-        "1.3.0"
+      unverified:
++        true
+    }
+```
+
 Generated with discovered.json: 0x62b02cf18c12df0a3ac7a2044ca2ae08c9f4ccd2
 
 # Diff at Tue, 06 Jan 2026 16:39:34 GMT:

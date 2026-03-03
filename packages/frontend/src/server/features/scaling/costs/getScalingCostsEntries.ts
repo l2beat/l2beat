@@ -13,12 +13,14 @@ import {
 } from '../getCommonScalingEntry'
 import type { CostsTableData } from './getCostsTableData'
 import { compareCosts } from './utils/compareCosts'
+import { getCostsSyncWarning } from './utils/isCostsSynced'
 
 export async function getScalingCostsEntries(helpers: SsrHelpers) {
   const [projectsChangeReport, projects, costs] = await Promise.all([
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
+      optional: ['contracts'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -43,7 +45,10 @@ export interface ScalingCostsEntry extends CommonScalingEntry {
 }
 
 function getScalingCostEntry(
-  project: Project<'statuses' | 'scalingInfo' | 'costsInfo' | 'display'>,
+  project: Project<
+    'statuses' | 'scalingInfo' | 'costsInfo' | 'display',
+    'contracts'
+  >,
   changes: ProjectChanges,
   costs: CostsTableData[string] | undefined,
 ): ScalingCostsEntry {
@@ -53,7 +58,11 @@ function getScalingCostEntry(
       : Number.POSITIVE_INFINITY
 
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({
+      project,
+      syncWarning: getCostsSyncWarning(costs?.syncedUntil),
+      changes,
+    }),
     costsWarning: project.costsInfo.warning,
     costOrder: costPerUop,
   }

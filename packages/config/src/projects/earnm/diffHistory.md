@@ -1,3 +1,68 @@
+Generated with discovered.json: 0x95afca38de1bef98fa2e27b1c756532ffbda25cc
+
+# Diff at Wed, 07 Jan 2026 16:10:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b319218f320edec871f10dbd490519684995e58e block: 1761914121
+- current timestamp: 1767802188
+
+## Description
+
+Inbox and SequencerInbox upgrade:
+- 7702 adjustments
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0x38d41Ac2fbc3f13FcA7838F6638D8FbDb189e807) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "arb1:0x3De02cf69192f4805edE47d7fA5efa614c5A6593"
++        "arb1:0x7be08B013de2b23a6329De51C4994f841dcE1a10"
+      values.$pastUpgrades.1:
++        ["2026-01-06T14:31:59.000Z","0x6ba75dc2936bc08617505e2a1abc4d117e98fc03707dbce6a598331ae6e21e7c",["arb1:0x7be08B013de2b23a6329De51C4994f841dcE1a10"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.arb1:0x3De02cf69192f4805edE47d7fA5efa614c5A6593:
+-        "SequencerInbox"
+      implementationNames.arb1:0x7be08B013de2b23a6329De51C4994f841dcE1a10:
++        "SequencerInbox"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x446626827f14F89B38D5bA1ab152B484cd7912fD) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0xb2c117c2e00734a82fe4ab27d5fe91a6e152c06bbcdbf83db021ad32b6be3e60"
++        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
+      values.$implementation:
+-        "arb1:0x0f728dd0217E26120A304B3Fa554C3Ba2b2aF535"
++        "arb1:0xD87f160f8c414d834cBDd9477c3D8c3ad1802255"
+      values.$pastUpgrades.1:
++        ["2026-01-06T14:31:59.000Z","0x6ba75dc2936bc08617505e2a1abc4d117e98fc03707dbce6a598331ae6e21e7c",["arb1:0xD87f160f8c414d834cBDd9477c3D8c3ad1802255"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.arb1:0x0f728dd0217E26120A304B3Fa554C3Ba2b2aF535:
+-        "ERC20Inbox"
+      implementationNames.arb1:0xD87f160f8c414d834cBDd9477c3D8c3ad1802255:
++        "ERC20Inbox"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Inbox/ERC20Inbox.sol                           | 16 +++++++++++++--
+ .../SequencerInbox/SequencerInbox.sol              | 24 +++++++++++++++-------
+ 2 files changed, 31 insertions(+), 9 deletions(-)
+```
+
 Generated with discovered.json: 0xa5fc21cc15e92c13dcd4fb27c46c67ac71f02400
 
 # Diff at Mon, 05 Jan 2026 17:44:13 GMT:

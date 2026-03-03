@@ -207,3 +207,33 @@ export interface ApiContractTagsUpdateRequest {
   centralization?: 'high' | 'medium' | 'low' | 'immutable'
   likelihood?: 'high' | 'medium' | 'low' | 'mitigated'
 }
+
+// Config health report types
+export type ApiConfigHealthResponse = {
+  healthHints: ApiHealthHint[]
+  length: number
+}
+
+type ApiHealthHintBase = {
+  excess: {
+    ignoreInWatchMode?: string[]
+    ignoreMethods?: string[]
+    ignoreRelatives?: string[]
+  }
+}
+
+export type ApiHealthHint =
+  | (ApiHealthHintBase & {
+      source: 'config'
+      target: {
+        project: string
+        address: string
+        name?: string
+      }
+    })
+  | (ApiHealthHintBase & {
+      source: 'template'
+      target: {
+        templateId: string
+      }
+    })

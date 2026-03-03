@@ -2,7 +2,6 @@ import {
   assert,
   assertUnreachable,
   ChainSpecificAddress,
-  EthereumAddress,
   notUndefined,
   ProjectId,
   UnixTime,
@@ -528,9 +527,3 @@ describe('layer2s', () => {
     }
   })
 })
-
-export function getReferencedAddresses(addresses: string[] = []) {
-  return [...addresses.join(';').matchAll(/0x[a-fA-F0-9]{40}/g)].map((e) =>
-    EthereumAddress(e[0]),
-  )
-}

@@ -121,12 +121,14 @@ function mockIndexer(
   repository?: Database['interopRecentPrices'],
   priceProvider?: PriceProvider,
 ) {
-  return new InteropRecentPricesIndexer({
-    db: mockObject<Database>({ interopRecentPrices: repository }),
-    priceProvider: priceProvider ?? mockObject<PriceProvider>({}),
-    parents: [],
-    minHeight: 1,
-    indexerService: mockObject<IndexerService>({}),
-    logger: Logger.SILENT,
-  })
+  return new InteropRecentPricesIndexer(
+    {
+      db: mockObject<Database>({ interopRecentPrices: repository }),
+      priceProvider: priceProvider ?? mockObject<PriceProvider>({}),
+      parents: [],
+      minHeight: 1,
+      indexerService: mockObject<IndexerService>({}),
+    },
+    Logger.SILENT,
+  )
 }

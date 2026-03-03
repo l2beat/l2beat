@@ -51,6 +51,8 @@ const schema = {
   proofVerification: 'TEXT',
   zkCatalogInfo: 'TEXT',
 
+  interopConfig: 'TEXT',
+
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
   activityConfig: 'TEXT',
@@ -66,10 +68,10 @@ const schema = {
   contracts: 'TEXT',
   discoveryInfo: 'TEXT',
 
-  isBridge: 'BOOLEAN',
   isScaling: 'BOOLEAN',
   isZkCatalog: 'BOOLEAN',
   isDaLayer: 'BOOLEAN',
+  isInteropProtocol: 'BOOLEAN',
   isUpcoming: 'BOOLEAN',
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',

@@ -27,6 +27,7 @@ export function DataTablePage(props: DataTablePageProps) {
         'pageLength',
         'csv',
       ],
+      fixedHeader: true, // Enable fixed header
       ...globalDataTableOptions,
       ...tableOptions,
     }
@@ -56,6 +57,13 @@ export function DataTablePage(props: DataTablePageProps) {
         />
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" />
 
+        {/* DataTables FixedHeader Extension */}
+        <link
+          rel="stylesheet"
+          href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css"
+        />
+        <script src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js" />
+
         {/* DataTables Buttons Extension */}
         <link
           rel="stylesheet"
@@ -64,6 +72,7 @@ export function DataTablePage(props: DataTablePageProps) {
         <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js" />
         <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js" />
         <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" />
 
         <style>{`
           body {
@@ -72,6 +81,14 @@ export function DataTablePage(props: DataTablePageProps) {
           }
           table {
             margin: 20px 0;
+          }
+          .center {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
           }
         `}</style>
       </head>

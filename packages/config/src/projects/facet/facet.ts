@@ -16,8 +16,8 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -91,6 +91,10 @@ export const facet: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
+        noRedTrustedSetups: false,
+        programHashesReproducible: true,
+        proverSourcePublished: true,
+        verifierContractsReproducible: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -355,7 +359,7 @@ export const facet: ScalingProject = {
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
-    zkProgramHashes: facetProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: facetProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

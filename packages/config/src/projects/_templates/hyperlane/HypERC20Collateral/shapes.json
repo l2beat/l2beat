@@ -13,5 +13,11 @@
     "hash": "0x2f6c18a7a1399d67a6fd7eb044c8a8586f33dc0e246c50fe34b158098244d959",
     "address": "eth:0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7",
     "blockNumber": 22823856
+  },
+  "HypERC20Collateral.sol": {
+    "hash": "0x2e9655c34acdb3e5d0827ddfa907ee72f19d0561b1755941969a5761f9e86260",
+    "address": "eth:0x81622Ed0711b6a3800eae7005a22cdc9e0d7b454",
+    "chain": "ethereum",
+    "blockNumber": 24183227
   }
 }

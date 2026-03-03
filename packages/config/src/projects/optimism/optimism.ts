@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { DERIVATION, ESCROW, SOA } from '../../common'
+import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -45,6 +45,7 @@ export const optimism: ScalingProject = opStackL2({
         'https://optimism.mirror.xyz/',
         'https://twitter.com/OPLabsPBC',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
+        'https://linkedin.com/company/optimism-foundation',
         'https://twitch.tv/optimismpbc',
         'https://discord.gg/optimism',
       ],
@@ -53,6 +54,56 @@ export const optimism: ScalingProject = opStackL2({
         'https://growthepie.com/chains/optimism',
       ],
     },
+  },
+  interopConfig: {
+    name: 'OP Canonical',
+    durationSplit: {
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'optimism',
+        },
+        out: {
+          label: 'L2 -> L1',
+          from: 'optimism',
+          to: 'ethereum',
+        },
+      },
+    },
+    plugins: [
+      {
+        chain: 'optimism',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'optimism',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'optimism',
+        plugin: 'beefy-bridge',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'optimism',
+        plugin: 'maker-bridge',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'optimism',
+        plugin: 'sorare-base',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'optimism',
+        plugin: 'lido-wsteth',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['OP'],
@@ -63,7 +114,6 @@ export const optimism: ScalingProject = opStackL2({
         'eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
       ),
       sinceTimestamp: UnixTime(1625675779),
-      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: ['DAI', 'USDS', 'sUSDS'],
       description:
         'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
@@ -75,7 +125,6 @@ export const optimism: ScalingProject = opStackL2({
       ),
       sinceTimestamp: UnixTime(1620680982),
       tokens: ['SNX'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description: 'SNX Vault for custom SNX Gateway managed by Synthetix.',
     }),
     {
@@ -83,7 +132,6 @@ export const optimism: ScalingProject = opStackL2({
       address: EthereumAddress('0x045e507925d2e05D114534D0810a1abD94aca8d6'),
       sinceTimestamp: UnixTime(1610668212),
       tokens: ['SNX'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       isHistorical: true,
       chain: 'ethereum',
     },
@@ -92,7 +140,6 @@ export const optimism: ScalingProject = opStackL2({
       address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
       sinceTimestamp: UnixTime(1620680934),
       tokens: ['SNX'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       isHistorical: true,
       chain: 'ethereum',
     },
@@ -101,7 +148,6 @@ export const optimism: ScalingProject = opStackL2({
         'eth:0x76943C0D61395d8F2edF9060e1533529cAe05dE6',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
@@ -237,6 +283,14 @@ export const optimism: ScalingProject = opStackL2({
   upgradesAndGovernance:
     'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that limits the Optimism Foundation to act through it to stop withdrawals in the whole Superchain or specific individual chains. Each pause automatically expires after 3 months if not extended or unpaused by the Security Council. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
+    {
+      title: 'Upgrade 17 - Jovian Hardfork and Fusaka Readiness',
+      url: 'https://vote.optimism.io/proposals/3118571676657709551286937570456546163542507117143005939043790253732885172699',
+      date: '2025-11-25T00:00:00Z',
+      description:
+        'A protocol upgrade improving fee mechanisms and preparing the OP Stack for the Fusaka hardfork.',
+      type: 'general',
+    },
     {
       title: 'Upgrade #16 Interop Contracts + Upgrades to Cannon',
       url: 'https://vote.optimism.io/proposals/42233809968417684816035432917226202543057967150073565253597304573923844823222',

@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Onchain EigenDA certificate verification inbox. Receives batch data, strips 4-byte prefix, RLP-decodes EigenDACertV3 and calls the EigenDACertVerifier to validate the certificate. Used as the batch inbox for EigenDA-based data availability."
+}

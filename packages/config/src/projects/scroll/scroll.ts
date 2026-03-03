@@ -11,7 +11,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -22,9 +21,9 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -137,6 +136,10 @@ export const scroll: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
+        noRedTrustedSetups: true,
+        programHashesReproducible: true,
+        proverSourcePublished: true,
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -214,18 +217,16 @@ export const scroll: ScalingProject = {
           'eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504',
         ),
         tokens: ['wstETH'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         description:
-          'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
+          'Custom token escrow governed by Lido, using the canonical bridge for messaging.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a',
         ),
         tokens: ['pufETH'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         description:
-          'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
+          'Custom token escrow governed by puffer.fi, using the canonical bridge for messaging.',
       }),
     ],
     activityConfig: {
@@ -636,13 +637,29 @@ export const scroll: ScalingProject = {
       ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkProgramHashes: getScrollVKeys().map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: getScrollVKeys().map((el) => PROGRAM_HASHES(el)),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
   },
   upgradesAndGovernance: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the Security Council through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the \`TimelockSCSlow\`) and upgrading the affected contracts. The Security Council can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the \`updateMessageQueueParameters\` and \`updateEnforcedBatchParameters\` functions or by pausing the \`EnforcedTXGateway\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the Security Council minority can unpause, while the Security Council majority is authorized to update and reset the cooldown period. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.`,
   milestones: [
+    {
+      title: 'Emergency verifier upgrade',
+      url: 'https://etherscan.io/tx/0x74e5de74ff014b78b3bfcde9e3bf3c83f60ce10345ec10148ea918abeb2a9799',
+      date: '2026-02-23T00:00:00Z',
+      description:
+        'Emergency verifier replacement due to a bug in the guest prover program.',
+      type: 'incident',
+    },
+    {
+      title: 'Proposal: Galileo Upgrade',
+      url: 'https://gov.scroll.io/proposals/72907322044331380548190357610154468026012921395152333929550231764240959817459',
+      date: '2025-12-04T00:00:00Z',
+      description:
+        'A core protocol upgrade improving sequencer efficiency, prover performance, and rollup fee accuracy.',
+      type: 'general',
+    },
     {
       title: 'Scroll Feynman upgrade',
       url: 'https://forum.scroll.io/t/proposal-feynman-upgrade/957',
@@ -745,7 +762,9 @@ function getScrollVKeys(): string[] {
   const verifiers = discovery.getContractValue<
     { startBatchIndex: number; verifier: string }[]
   >('MultipleVersionRollupVerifier', 'latestVerifier')
-  for (const verifier of verifiers) {
+  // Verifiers of version before 7 can not be used by scroll
+  // Confusingly enough, version 7 is at index 6 because version 5 is skipped
+  for (const verifier of verifiers.slice(6)) {
     for (const digestType of [
       'verifierDigest',
       'verifierDigest1',

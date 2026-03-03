@@ -40,15 +40,17 @@ describe(TvsPriceIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TvsPriceIndexer({
-        logger: Logger.SILENT,
-        configurations: configs,
-        priceProvider,
-        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: configs,
+          priceProvider,
+          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
@@ -102,15 +104,17 @@ describe(TvsPriceIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TvsPriceIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum')],
-        priceProvider,
-        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          priceProvider,
+          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [
         config('config-1', 'ethereum'),
@@ -140,15 +144,17 @@ describe(TvsPriceIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce([]),
       })
 
-      const indexer = new TvsPriceIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum')],
-        priceProvider,
-        db: mockDatabase({ tvsPrice: mockObject() }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          priceProvider,
+          db: mockDatabase({ tvsPrice: mockObject() }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [
         config('config-1', 'ethereum'),
@@ -184,15 +190,17 @@ describe(TvsPriceIndexer.name, () => {
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TvsPriceIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum')],
-        priceProvider,
-        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          priceProvider,
+          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const updateFn = await indexer.multiUpdate(from, to, [
         config('config-1', 'ethereum'),
@@ -225,15 +233,17 @@ describe(TvsPriceIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
       })
 
-      const indexer = new TvsPriceIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum')],
-        priceProvider,
-        db: mockDatabase({ tvsPrice: mockObject() }),
-        syncOptimizer,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          priceProvider,
+          db: mockDatabase({ tvsPrice: mockObject() }),
+          syncOptimizer,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       await expect(async () => {
         await indexer.multiUpdate(from, to, [config('config-1', 'ethereum')])
@@ -242,53 +252,42 @@ describe(TvsPriceIndexer.name, () => {
   })
 
   describe(TvsPriceIndexer.prototype.removeData.name, () => {
-    it('deletes records for configuration in time range', async () => {
+    it('deletes records for configurations in time range', async () => {
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
-        deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(2),
+        deleteByConfigs: mockFn().returns(5),
       })
 
-      const indexer = new TvsPriceIndexer({
-        logger: Logger.SILENT,
-        configurations: [config('config-1', 'ethereum')],
-        priceProvider: mockObject<PriceProvider>({}),
-        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      })
+      const indexer = new TvsPriceIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          priceProvider: mockObject<PriceProvider>({}),
+          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          syncOptimizer: mockObject<SyncOptimizer>({}),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
 
       const removalConfigs = [
-        {
-          id: 'config-1',
-          from: 100,
-          to: 200,
-        },
-        {
-          id: 'config-2',
-          from: 300,
-          to: 400,
-        },
+        { id: 'config-1', from: 100, to: 200 },
+        { id: 'config-2', from: 300, to: 400 },
       ]
 
       await indexer.removeData(removalConfigs)
 
-      expect(
-        tvsPriceRepository.deleteByConfigInTimeRange,
-      ).toHaveBeenNthCalledWith(
-        1,
-        removalConfigs[0].id,
-        UnixTime(removalConfigs[0].from),
-        UnixTime(removalConfigs[0].to),
-      )
-
-      expect(
-        tvsPriceRepository.deleteByConfigInTimeRange,
-      ).toHaveBeenNthCalledWith(
-        2,
-        removalConfigs[1].id,
-        UnixTime(removalConfigs[1].from),
-        UnixTime(removalConfigs[1].to),
-      )
+      expect(tvsPriceRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
+        {
+          configurationId: 'config-1',
+          fromInclusive: UnixTime(100),
+          toInclusive: UnixTime(200),
+        },
+        {
+          configurationId: 'config-2',
+          fromInclusive: UnixTime(300),
+          toInclusive: UnixTime(400),
+        },
+      ])
     })
   })
 

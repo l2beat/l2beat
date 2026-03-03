@@ -4,19 +4,29 @@ import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
+import { InteropTransferClassifier } from '../aggregation/InteropTransferClassifier'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
+import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
+import { renderAggregatesPage } from './AggregatesPage'
+import { renderAnomaliesPage } from './AnomaliesPage'
+import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
+import { renderStatusPage } from './StatusPage'
+import { renderSupportChartsPage } from './SupportChartsPage'
+import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
 
 export function createInteropRouter(
   db: Database,
   config: InteropFeatureConfig,
   processors: InteropBlockProcessor[],
+  syncersManager: InteropSyncersManager,
   logger: Logger,
 ) {
   const router = new Router()
+  let coveragePiesCache: string | undefined
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
@@ -28,6 +38,8 @@ export function createInteropRouter(
         getTransfersStats(db),
         db.interopTransfer.getMissingTokensInfo(),
         db.interopMessage.getUniqueAppsPerPlugin(),
+        db.interopPluginSyncedRange.getAll(),
+        db.interopPluginSyncState.getAll(),
       ])
 
     const routerDuration = performance.now() - routerStart
@@ -43,6 +55,7 @@ export function createInteropRouter(
       status: getProcessorsStatus(processors),
       missingTokens,
       uniqueApps,
+      pluginSyncStatuses: await syncersManager.getPluginSyncStatuses(),
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })
@@ -52,6 +65,152 @@ export function createInteropRouter(
 
     ctx.body = configs
   })
+
+  router.get('/interop/status', async (ctx) => {
+    const pluginSyncStatuses = await syncersManager.getPluginSyncStatuses()
+    const showResyncControls = ctx.query.showResync !== undefined
+
+    ctx.body = renderStatusPage({ pluginSyncStatuses, showResyncControls })
+  })
+
+  router.get('/interop/anomalies', async (ctx) => {
+    const rows = await db.aggregatedInteropTransfer.getDailySeries()
+    const explored = explore(rows)
+    if (ctx.query.raw === 'true') {
+      ctx.body = explored
+    } else {
+      ctx.body = renderAnomaliesPage({ stats: explored })
+    }
+  })
+
+  router.get('/interop/anomalies/:id', async (ctx) => {
+    const params = v.object({ id: v.string() }).validate(ctx.params)
+    const series = await db.aggregatedInteropTransfer.getDailySeriesById(
+      params.id,
+    )
+    ctx.body = renderAnomalyIdPage({ id: params.id, series })
+  })
+
+  router.get('/interop/aggregates', async (ctx) => {
+    const latestTimestamp =
+      await db.aggregatedInteropTransfer.getLatestTimestamp()
+    if (!latestTimestamp) {
+      return (ctx.body = {
+        error: 'No latest timestamp found',
+      })
+    }
+    const from = latestTimestamp - UnixTime.DAY
+    const transfers = await db.interopTransfer.getByRange(from, latestTimestamp)
+    const configs = config.aggregation ? config.aggregation.configs : []
+
+    const classifier = new InteropTransferClassifier()
+    const consumedIds = new Set<string>()
+    for (const aggConfig of configs) {
+      const classified = classifier.classifyTransfers(transfers, aggConfig)
+      for (const records of Object.values(classified)) {
+        for (const r of records) {
+          consumedIds.add(r.transferId)
+        }
+      }
+    }
+
+    const unconsumed = transfers.filter((t) => !consumedIds.has(t.transferId))
+
+    ctx.body = renderAggregatesPage({
+      transfers: unconsumed,
+      configs,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+    })
+  })
+
+  const buildCoveragePiesPage = async () => {
+    const chartConfigs = [
+      {
+        id: 'layerzero-packet-oft-sent',
+        title: 'layerzero-v2.PacketOFTSent destination chains',
+        centerLabel: 'PacketOFTSent events',
+        type: 'layerzero-v2.PacketOFTSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'layerzero-packet-oft-delivered',
+        title: 'layerzero-v2.PacketOFTDelivered source chains',
+        centerLabel: 'PacketOFTDelivered events',
+        type: 'layerzero-v2.PacketOFTDelivered',
+        chainArg: '$srcChain' as const,
+      },
+      {
+        id: 'relay-token-sent',
+        title: 'relay.TokenSent destination chains',
+        centerLabel: 'relay.TokenSent events',
+        type: 'relay.TokenSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'relay-token-received',
+        title: 'relay.TokenReceived source chains',
+        centerLabel: 'relay.TokenReceived events',
+        type: 'relay.TokenReceived',
+        chainArg: '$srcChain' as const,
+      },
+      {
+        id: 'ccip-send-requested',
+        title: 'ccip.CCIPSendRequested destination chains',
+        centerLabel: 'CCIPSendRequested events',
+        type: 'ccip.CCIPSendRequested',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'ccip-execution-state-changed',
+        title: 'ccip.ExecutionStateChanged source chains',
+        centerLabel: 'ExecutionStateChanged events',
+        type: 'ccip.ExecutionStateChanged',
+        chainArg: '$srcChain' as const,
+      },
+    ]
+
+    const rows = await Promise.all(
+      chartConfigs.map((chart) =>
+        db.interopEvent.getSupportBreakdownByChainArg(
+          chart.type,
+          chart.chainArg,
+        ),
+      ),
+    )
+
+    return renderSupportChartsPage({
+      charts: chartConfigs.map((chart, i) => ({
+        id: chart.id,
+        title: chart.title,
+        centerLabel: chart.centerLabel,
+        rows: rows[i] ?? [],
+      })),
+    })
+  }
+
+  const isRefreshRequested = (value: unknown): boolean => {
+    if (Array.isArray(value)) {
+      return value.includes('1') || value.includes('true')
+    }
+    return value === '1' || value === 'true'
+  }
+
+  const renderCoveragePies = async (ctx: Router.RouterContext) => {
+    const refresh = isRefreshRequested(ctx.query.refresh)
+
+    if (refresh) {
+      coveragePiesCache = await buildCoveragePiesPage()
+      return ctx.redirect('/interop/coverage-pies')
+    }
+
+    if (coveragePiesCache === undefined) {
+      coveragePiesCache = await buildCoveragePiesPage()
+    }
+
+    ctx.body = coveragePiesCache
+  }
+
+  router.get('/interop/coverage-pies', renderCoveragePies)
 
   router.get('/interop/memory', (ctx) => {
     const memoryUsage = process.memoryUsage()
@@ -81,6 +240,50 @@ export function createInteropRouter(
       'old-unmatched',
     ]),
     type: v.string(),
+  })
+
+  const ResyncRequest = v.object({
+    pluginName: v.string(),
+    resyncRequestedFrom: v.record(
+      v.string(),
+      v.number().check((value) => {
+        try {
+          UnixTime(value)
+          return true
+        } catch (error) {
+          return error instanceof Error ? error.message : 'Invalid timestamp'
+        }
+      }),
+    ),
+  })
+
+  router.post('/interop/resync', async (ctx) => {
+    const payload = ResyncRequest.validate(ctx.request.body)
+    const { pluginName, resyncRequestedFrom } = payload
+
+    const defaultFrom = resyncRequestedFrom['*']
+    const existingChains = (
+      await db.interopPluginSyncState.findByPluginName(pluginName)
+    ).map((r) => r.chain)
+
+    const updatedChains = new Set<string>()
+    await db.transaction(async () => {
+      for (const chain of existingChains) {
+        const resyncFrom = resyncRequestedFrom[chain] ?? defaultFrom
+        if (resyncFrom) {
+          await db.interopPluginSyncState.setResyncRequestedFrom(
+            pluginName,
+            chain,
+            resyncFrom,
+          )
+          updatedChains.add(chain)
+        }
+      }
+    })
+
+    ctx.body = {
+      updatedChains: Array.from(updatedChains),
+    }
   })
 
   router.get('/interop/events/:kind/:type', async (ctx) => {
@@ -203,15 +406,20 @@ async function getMessagesStats(db: Database) {
   const detailedStats = await db.interopMessage.getDetailedStats()
 
   return stats.map((overall) => ({
+    plugin: overall.plugin,
     type: overall.type,
     count: Number(overall.count),
     avgDuration: Number(overall.avgDuration),
     knownAppCount: Number(overall.knownAppCount),
     chains: detailedStats
-      .filter((chain) => chain.type === overall.type)
+      .filter(
+        (chain) =>
+          chain.plugin === overall.plugin && chain.type === overall.type,
+      )
       .map((chain) => {
         assert(chain.srcChain && chain.dstChain)
         return {
+          plugin: chain.plugin,
           type: chain.type,
           srcChain: chain.srcChain,
           dstChain: chain.dstChain,
@@ -227,11 +435,14 @@ async function getTransfersStats(db: Database) {
   const detailedStats = await db.interopTransfer.getDetailedStats()
 
   return stats.map((overall) => ({
+    plugin: overall.plugin,
     type: overall.type,
     count: overall.count,
     avgDuration: overall.avgDuration,
     srcValueSum: overall.srcValueSum,
     dstValueSum: overall.dstValueSum,
-    chains: detailedStats.filter((chain) => chain.type === overall.type),
+    chains: detailedStats.filter(
+      (chain) => chain.plugin === overall.plugin && chain.type === overall.type,
+    ),
   }))
 }

@@ -13,14 +13,13 @@ export interface Group {
 
 export function groupProjects(
   projects: DashboardProject[],
-  projectConfigs: Project<never, 'scalingInfo' | 'isBridge' | 'isDaLayer'>[],
+  projectConfigs: Project<never, 'scalingInfo' | 'isDaLayer'>[],
 ): Group[] {
   const projectMap = new Map(
     projectConfigs.map((c) => [
       c.id.toString(),
       {
         stacks: c.scalingInfo?.stacks ?? [],
-        isBridge: c.isBridge ?? false,
         isDaLayer: c.isDaLayer ?? false,
       },
     ]),
@@ -31,6 +30,11 @@ export function groupProjects(
       .get(name)
       ?.stacks.some((projectStack) => stacks.includes(projectStack)) ?? false
 
+  const getFirstStack = (name: string): ProjectScalingStack | undefined => {
+    const stacks = projectMap.get(name)?.stacks
+    return stacks && stacks.length > 0 ? stacks[0] : undefined
+  }
+
   type GroupConfig = {
     name: string
     assignees: readonly string[]
@@ -39,31 +43,38 @@ export function groupProjects(
   }
 
   const groupConfigs: GroupConfig[] = [
-    // Stacks first
+    // Stacks first - use first stack in array
     {
       name: 'OP Stack',
       assignees: ['🐱', '🐿'],
-      predicate: (p) => isStack(p.name, 'OP Stack'),
+      predicate: (p) => getFirstStack(p.name) === 'OP Stack',
     },
     {
       name: 'Orbit/Arbitrum Stack',
       assignees: ['🐿', '🐱'],
-      predicate: (p) => isStack(p.name, 'Arbitrum'),
+      predicate: (p) => getFirstStack(p.name) === 'Arbitrum',
     },
     {
       name: 'Polygon Stack',
       assignees: ['🐻', '🐝'],
-      predicate: (p) => isStack(p.name, 'Agglayer CDK'),
+      predicate: (p) =>
+        getFirstStack(p.name) === 'Agglayer CDK' ||
+        p.name === 'shared-polygon-cdk',
     },
     {
       name: 'ZK Stack',
       assignees: ['🐝', '🐻'],
-      predicate: (p) => isStack(p.name, 'ZK Stack') || p.name === 'gateway',
+      predicate: (p) =>
+        getFirstStack(p.name) === 'ZK Stack' ||
+        p.name === 'gateway' ||
+        p.name === 'shared-zk-stack',
     },
     {
       name: 'Starknet & Starkexes',
       assignees: ['🐝', '🐻'],
-      predicate: (p) => isStack(p.name, 'StarkEx', 'SN Stack'),
+      predicate: (p) =>
+        isStack(p.name, 'StarkEx', 'SN Stack') ||
+        p.name === 'shared-sharp-verifier',
     },
     // Then the broader categories
     {
@@ -72,12 +83,8 @@ export function groupProjects(
       predicate: (p) =>
         projectMap.get(p.name)?.isDaLayer ||
         p.name === 'blobstream' ||
-        p.name === 'vector',
-    },
-    {
-      name: 'Bridge Projects',
-      assignees: ['🐻', '🐿'],
-      predicate: (p) => projectMap.get(p.name)?.isBridge ?? false,
+        p.name === 'vector' ||
+        p.name === 'shared-eigenlayer',
     },
     // Finally individual projects so they can show inline labels
     {

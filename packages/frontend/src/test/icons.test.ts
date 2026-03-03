@@ -1,4 +1,4 @@
-import { ProjectService } from '@l2beat/config'
+import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
 import { expect } from 'earl'
 import { readdirSync, readFileSync } from 'fs'
 import path from 'path'
@@ -84,6 +84,15 @@ describe('icons', () => {
         const darkIconDimensions = getImageDimensions(darkIconBuffer)
         expect(lightIconDimensions?.height).toEqual(darkIconDimensions?.height)
         expect(lightIconDimensions?.width).toEqual(darkIconDimensions?.width)
+      }
+    })
+  })
+
+  describe('interop', () => {
+    it('every interop chain has an icon', async () => {
+      const icons = getIcons('../../static/icons')
+      for (const chain of INTEROP_CHAINS) {
+        expect(icons).toInclude(chain.iconSlug ?? chain.id)
       }
     })
   })

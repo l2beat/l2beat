@@ -402,12 +402,13 @@ Emjlin [published a post](https://forum.scroll.io/t/growing-scrolls-founder-ecos
 * Build soft skills needed to launch apps, find users, and get funding
 * Fly to Malaysia and work directly with like-minded builders and the Scroll team
 
-You can find more information at [open.scroll.io](open.scroll.io).
+You can find more information at [open.scroll.io](https://open.scroll.io/).
 
 **Discuss with L2BEAT**
 
 We’re interested in discussing the active proposal and getting other delegates’ view of it, but we’re also happy to discuss anything else relevant to Scroll.
 
 **When/where to catch us:**
+
 
 You can find us to discuss all the above and more during our [L2BEAT Governance Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.

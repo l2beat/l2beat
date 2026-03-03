@@ -7,7 +7,6 @@ import {
 import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
-  ESCROW,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   SOA,
@@ -143,6 +142,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
         'https://youtube.com/@Arbitrum',
+        'https://linkedin.com/company/arbitrum',
         'https://t.me/arbitrum',
       ],
 
@@ -161,6 +161,46 @@ export const arbitrum: ScalingProject = orbitStackL2({
         challengeWindow * assumedBlockTime,
       )} after it has been posted.`,
     },
+  },
+  interopConfig: {
+    name: 'Arbitrum Canonical',
+    durationSplit: {
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'arbitrum',
+        },
+        out: {
+          label: 'L2 -> L1',
+          from: 'arbitrum',
+          to: 'ethereum',
+        },
+      },
+    },
+    plugins: [
+      {
+        chain: 'arbitrum',
+        plugin: 'orbitstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'arbitrum',
+        plugin: 'orbitstack-standardgateway',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'arbitrum',
+        plugin: 'orbitstack-wethgateway',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'arbitrum',
+        plugin: 'orbitstack-customgateway',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
   },
   chainConfig: {
     name: 'arbitrum',
@@ -238,7 +278,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0xA10c7CE4b876998858b1a9E12b10092229539400',
       ),
       tokens: ['DAI', 'USDS', 'sUSDS'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
     }),
@@ -247,7 +286,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
@@ -257,7 +295,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A',
       ),
       tokens: ['LPT'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description: 'LPT Vault for custom Livepeer Token Gateway.',
     }),
     {
@@ -314,6 +351,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -349,6 +390,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Activate ArbOS 51 (Dia) and Gas Pricing Updates',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/53154361738756237993090798888616593723057470462495169047773178676976253908001?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
+      date: '2026-01-05T00:00:00Z',
+      description:
+        'Arbitrum One upgraded to ArbOS 51 with Fusaka EVM support and new gas pricing.',
+      type: 'incident',
+    },
     {
       title: 'ArbOS 40, Callisto Upgrade',
       url: 'https://www.tally.xyz/gov/arbitrum/proposal/13108804573775967668959825241666341617107666532012387058509418598838035461528?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',

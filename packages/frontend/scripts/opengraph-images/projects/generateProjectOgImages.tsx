@@ -14,13 +14,7 @@ export async function generateProjectOgImages(
   },
 ) {
   const projects = await ps.getProjects({
-    optional: [
-      'isScaling',
-      'isBridge',
-      'isZkCatalog',
-      'isDaLayer',
-      'zkCatalogInfo',
-    ],
+    optional: ['isScaling', 'isZkCatalog', 'isDaLayer', 'zkCatalogInfo'],
   })
 
   for (const project of projects) {
@@ -54,7 +48,7 @@ export async function generateProjectOgImages(
 
 async function generateProjectOgImage(
   project: Project,
-  type: 'scaling' | 'bridges' | 'zk-catalog' | 'data-availability',
+  type: 'scaling' | 'zk-catalog' | 'data-availability',
   size: { width: number; height: number },
   fonts: {
     robotoMedium: Buffer
@@ -95,16 +89,12 @@ async function generateProjectOgImage(
 export function getOpengraphProjectTypes(
   project: Project<
     never,
-    'isScaling' | 'isBridge' | 'isZkCatalog' | 'isDaLayer' | 'zkCatalogInfo'
+    'isScaling' | 'isZkCatalog' | 'isDaLayer' | 'zkCatalogInfo'
   >,
 ) {
-  const types: ('scaling' | 'bridges' | 'zk-catalog' | 'data-availability')[] =
-    []
+  const types: ('scaling' | 'zk-catalog' | 'data-availability')[] = []
   if (project.isScaling) {
     types.push('scaling')
-  }
-  if (project.isBridge) {
-    types.push('bridges')
   }
   if (project.isZkCatalog || project.zkCatalogInfo) {
     types.push('zk-catalog')

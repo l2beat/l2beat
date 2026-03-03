@@ -192,8 +192,11 @@ export class LocalExecutor {
             new RateLimiter({ callsPerMinute: 120 }),
             {
               type: etherscanApi.type,
-              url: this.env.string('ETHERSCAN_API_URL'),
-              apiKey: this.env.string('ETHERSCAN_API_KEY'),
+              url:
+                etherscanApi.customUrl ?? this.env.string('ETHERSCAN_API_URL'),
+              apiKey: etherscanApi.customUrl
+                ? ''
+                : this.env.string('ETHERSCAN_API_KEY'),
               chain: chainConfig.name,
               chainId: etherscanApi.chainId,
             },

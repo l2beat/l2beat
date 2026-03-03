@@ -1,8 +1,11 @@
-import type { InteropEventContext } from '@l2beat/database'
+import type { InteropPluginName } from '@l2beat/config'
+import type { AbstractTokenRecord, InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
   type Block,
+  type ChainSpecificAddress,
   EthereumAddress,
+  type KnownInteropBridgeType,
   type Transaction,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -16,6 +19,7 @@ import {
   type ParseAbiItem,
   parseAbi,
 } from 'viem'
+import type { TokenMap } from '../engine/match/TokenMap'
 
 export interface InteropEvent<T = unknown> {
   plugin: string
@@ -49,6 +53,7 @@ export interface InteropTransfer {
   kind: 'InteropTransfer'
   plugin: string
   type: string
+  bridgeType?: KnownInteropBridgeType
   events: InteropEvent[]
   src: TransferSide
   dst: TransferSide
@@ -173,10 +178,16 @@ export type MatchResult = (
   | InteropIgnore
 )[]
 
+export interface SameTxAtOffsetQuery {
+  event: InteropEvent
+  offset: number
+}
+
 export type InteropEventQuery<T> = Partial<T> & {
   ctx?: Partial<InteropEventContext>
   sameTxBefore?: InteropEvent
   sameTxAfter?: InteropEvent
+  sameTxAtOffset?: SameTxAtOffsetQuery
 }
 
 export interface InteropApproximateQuery<T> {
@@ -199,18 +210,45 @@ export interface InteropEventDb {
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
     approximate: InteropApproximateQuery<T>,
-  ): InteropEvent<T> | undefined
+  ): InteropEvent<T>[]
 }
 
+export type DataRequest = EventDataRequest
+
+interface EventDataRequest {
+  type: 'event'
+  signature: string
+  includeTxEvents?: string[]
+  includeTx?: boolean
+  addresses: ChainSpecificAddress[] | '*'
+}
+
+export type DeployedToAbstractMap = Map<
+  ChainSpecificAddress,
+  AbstractTokenRecord
+>
+
 export interface InteropPlugin {
-  name: string
+  readonly name: InteropPluginName
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]
   match?: (
     event: InteropEvent,
     db: InteropEventDb,
+    deployedToAbstractMap: TokenMap,
   ) => MatchResult | undefined | Promise<MatchResult | undefined>
+}
+
+export interface InteropPluginResyncable extends InteropPlugin {
+  getDataRequests: () => DataRequest[]
+  capture: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
+}
+
+export function isPluginResyncable(
+  plugin: InteropPlugin,
+): plugin is InteropPluginResyncable {
+  return 'getDataRequests' in plugin
 }
 
 export type ParsedEvent<T extends Abi[number]> = DecodeEventLogReturnType<
@@ -308,6 +346,7 @@ export interface InteropTransferOptions {
   dstAmount?: bigint
   dstWasMinted?: boolean
 
+  bridgeType?: KnownInteropBridgeType
   extraEvents?: InteropEvent[]
 }
 
@@ -323,6 +362,7 @@ function Transfer(
   return {
     kind: 'InteropTransfer',
     type,
+    bridgeType: options.bridgeType,
     events: [
       options.srcEvent,
       options.dstEvent,

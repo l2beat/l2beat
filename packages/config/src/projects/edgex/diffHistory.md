@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x789ff3acc9ff98947c1e59bed247a529e9d56d19
+
+# Diff at Thu, 29 Jan 2026 14:00:02 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8ab8b3539ad858470e2faf1383cbd783a9c5cdc5 block: 1767004364
+- current timestamp: 1769695138
+
+## Description
+
+Rotated multisig member. 
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863"
++        "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8"
+    }
+```
+
 Generated with discovered.json: 0x033da85424f2c681bd7eb2564d0f2ee810f4432d
 
 # Diff at Mon, 29 Dec 2025 10:33:47 GMT:

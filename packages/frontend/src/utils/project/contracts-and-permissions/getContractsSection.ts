@@ -10,13 +10,14 @@ import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import type { TechnologyContract } from '../../../components/projects/sections/ContractEntry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/ContractsSection'
 import { toTechnologyRisk } from '../risk-summary/toTechnologyRisk'
 import type { ContractUtils } from './getContractUtils'
 import { getPastUpgradesData } from './getPastUpgradesData'
-import { getZkProgramHashes } from './getZkProgramHashes'
+import { getProgramHashes } from './getProgramHashes'
 import { toVerificationStatus } from './toVerificationStatus'
 
 type ProjectParams = {
@@ -39,6 +40,7 @@ export function getContractsSection(
   projectsChangeReport: ProjectsChangeReport,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   allProjects: Project<'contracts'>[],
+  tvs: SevenDayTvsBreakdown,
 ): ContractsSection | undefined {
   if (!projectParams.contracts) {
     return undefined
@@ -97,10 +99,11 @@ export function getContractsSection(
       projectParams.architectureImage ?? projectParams.slug,
     ),
     isUnderReview: projectParams.isUnderReview,
-    zkProgramHashes: getZkProgramHashes(
-      projectParams.contracts.zkProgramHashes,
+    programHashes: getProgramHashes(
+      projectParams.contracts.programHashes,
       zkCatalogProjects,
       allProjects,
+      tvs,
     ),
   }
 }

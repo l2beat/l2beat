@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -27,6 +27,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
+import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('brine')
 
@@ -50,12 +51,7 @@ const tanxProgramHashes = []
 tanxProgramHashes.push(
   discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-tanxProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-tanxProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+tanxProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const brine: ScalingProject = {
   type: 'layer2',
@@ -162,7 +158,7 @@ export const brine: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: tanxProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: tanxProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

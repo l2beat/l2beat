@@ -19,10 +19,16 @@ export const StarknetGetBlockResponse = v.object({
 })
 
 export type StarknetTransaction = v.infer<typeof StarknetTransaction>
+/**
+ * Starknet transaction schema with optional fields to handle Paradex bug.
+ * Paradex returns empty/malformed transactions with missing transaction_hash
+ * and empty string fields. These are filtered out in StarknetClient.
+ */
 const StarknetTransaction = v.object({
   type: v.string(),
   calldata: v.array(v.string()).optional(),
-  transaction_hash: v.string(),
+  /** Optional to allow parsing Paradex empty transactions (filtered later) */
+  transaction_hash: v.string().optional(),
   sender_address: v.string().optional(),
 })
 

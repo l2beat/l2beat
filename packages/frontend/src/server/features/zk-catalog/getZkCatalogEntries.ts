@@ -7,8 +7,8 @@ import {
   type SevenDayTvsBreakdown,
 } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import {
   type ContractUtils,
   getContractUtils,
@@ -21,7 +21,7 @@ import { getZkCatalogProjectTvs } from './utils/getZkCatalogProjectTvs'
 
 export type TrustedSetupVerifierData = {
   count: number
-  attesters: (ZkCatalogAttester & { icon: string })[]
+  attesters: (ZkCatalogAttester & { icon: string; iconDark?: string })[]
 }
 
 export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
@@ -43,7 +43,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
         select: ['zkCatalogInfo', 'display', 'statuses'],
       }),
       ps.getProjects({
-        optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
+        optional: ['daBridge', 'isScaling', 'isDaLayer'],
       }),
       get7dTvsBreakdown({ type: 'all' }),
       getContractUtils(),
@@ -58,10 +58,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
 
 function getZkCatalogEntry(
   project: Project<'zkCatalogInfo' | 'display' | 'statuses'>,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
   tvs: SevenDayTvsBreakdown,
   contractUtils: ContractUtils,
 ): ZkCatalogEntry {
@@ -83,7 +80,7 @@ function getZkCatalogEntry(
     backgroundColor: undefined,
     statuses: project.statuses,
     name: project.name,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     creator: project.zkCatalogInfo.creator,
     tvs: {
       value: tvsForProject,

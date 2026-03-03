@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropEvent } from '../kysely/generated/types'
 
@@ -75,6 +76,12 @@ export interface InteropEventStatsRecord {
   unsupported: number
 }
 
+export interface InteropEventSupportBreakdownRecord {
+  chain: string
+  isSupported: boolean
+  count: number
+}
+
 export class InteropEventRepository extends BaseRepository {
   async insertMany(records: InteropEventRecord[]): Promise<number> {
     if (records.length === 0) return 0
@@ -101,6 +108,25 @@ export class InteropEventRepository extends BaseRepository {
     const rows = await this.db.selectFrom('InteropEvent').selectAll().execute()
 
     return rows.map(toRecord)
+  }
+
+  async getOldestEventForPluginAndChain(
+    plugins: string[],
+    chain: string,
+  ): Promise<InteropEventRecord | undefined> {
+    if (plugins.length === 0) {
+      return undefined
+    }
+    const row = await this.db
+      .selectFrom('InteropEvent')
+      .where('plugin', 'in', plugins)
+      .where('chain', '=', chain)
+      .selectAll()
+      .orderBy('timestamp', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
   }
 
   async getByType(
@@ -172,6 +198,37 @@ export class InteropEventRepository extends BaseRepository {
     }))
   }
 
+  async getSupportBreakdownByChainArg(
+    type: string,
+    chainArg: '$dstChain' | '$srcChain',
+  ): Promise<InteropEventSupportBreakdownRecord[]> {
+    const chainExpression = sql<string>`COALESCE(NULLIF(args ->> ${chainArg}, ''), '(unknown)')`
+
+    const source = this.db
+      .selectFrom('InteropEvent')
+      .where('type', '=', type)
+      .select([chainExpression.as('chain'), 'unsupported'])
+      .as('source')
+
+    const rows = await this.db
+      .selectFrom(source)
+      .select((eb) => [
+        'chain',
+        eb.fn.countAll().as('count'),
+        sql<boolean>`NOT BOOL_OR(unsupported)`.as('isSupported'),
+      ])
+      .groupBy('chain')
+      .orderBy('count', 'desc')
+      .orderBy('chain', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      chain: row.chain,
+      isSupported: Boolean(row.isSupported),
+      count: Number(row.count),
+    }))
+  }
+
   async getExpired(currentTime: UnixTime): Promise<InteropEventRecord[]> {
     const rows = await this.db
       .selectFrom('InteropEvent')
@@ -208,6 +265,14 @@ export class InteropEventRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('InteropEvent')
       .where('expiresAt', '<=', UnixTime.toDate(currentTime))
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteAllForPlugin(plugin: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('InteropEvent')
+      .where('plugin', '=', plugin)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

@@ -122,9 +122,8 @@ function createIndexer(
     statsProvider: mockObject<DaBeatStatsProvider>(),
     parents: [],
     indexerService: mockObject<IndexerService>(),
-    logger: Logger.SILENT,
     minHeight: 0,
   }
 
-  return new DaBeatStatsIndexer({ ...defaults, ...overrides })
+  return new DaBeatStatsIndexer({ ...defaults, ...overrides }, Logger.SILENT)
 }

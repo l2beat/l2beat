@@ -22,7 +22,7 @@ import {
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
-import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
@@ -177,7 +177,7 @@ interface VariantSections {
   customDa?: ProjectCustomDa
   badges: Badge[]
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  zkProgramHashes?: ReturnType<typeof ZK_PROGRAM_HASHES>[]
+  programHashes?: ReturnType<typeof PROGRAM_HASHES>[]
   architectureImage?: string
 }
 
@@ -314,8 +314,8 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     contracts: {
       addresses: generateDiscoveryDrivenContracts([config.discovery]),
       risks: variantSections.contractsRisks,
-      ...(variantSections.zkProgramHashes?.length
-        ? { zkProgramHashes: variantSections.zkProgramHashes }
+      ...(variantSections.programHashes?.length
+        ? { programHashes: variantSections.programHashes }
         : {}),
     },
     upgradesAndGovernance,
@@ -435,7 +435,7 @@ function buildValidiumSections(
   context: SharedContext,
 ): VariantSections {
   const dacInfo = getDacInfo(config.discovery)
-  const provider = resolveValidiumDaProvider(config, context, dacInfo)
+  const provider = resolveValidiumDaProvider(config, dacInfo)
 
   const customDa =
     config.customDa ??
@@ -491,7 +491,7 @@ function buildValidiumSections(
       genesisState:
         'The genesis state, whose corresponding root is accessible as Batch 0 root in the `_legacyBatchNumToStateRoot` variable of AgglayerManager, is available [here](https://github.com/agglayer/agglayer-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
       dataFormat:
-        'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/). Only /signed hashes of batches are posted to the Validium contract.',
+        'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/tools/zkevm/architecture/protocol/transaction-life-cycle/transaction-batching/). Only /signed hashes of batches are posted to the Validium contract.',
     } satisfies ProjectScalingStateDerivation)
 
   const stateValidation =
@@ -617,7 +617,7 @@ function buildPessimisticSections(
 
   const contractsRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
   const zkProgramHashes = getPessimisticVKeys(config.discovery).map((el) =>
-    ZK_PROGRAM_HASHES(el),
+    PROGRAM_HASHES(el),
   )
 
   const badges = mergeBadges(
@@ -640,7 +640,7 @@ function buildPessimisticSections(
       REASON_FOR_BEING_OTHER.NO_PROOFS,
       ...(config.reasonsForBeingOther ?? []),
     ],
-    zkProgramHashes,
+    programHashes: zkProgramHashes,
     architectureImage: config.architectureImage ?? 'agglayer-pessimistic',
   }
 }
@@ -695,7 +695,7 @@ function buildOpstackClosedSections(
 
   const contractsRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
   const zkProgramHashes = getPessimisticVKeys(config.discovery).map((el) =>
-    ZK_PROGRAM_HASHES(el),
+    PROGRAM_HASHES(el),
   )
 
   const badges = mergeBadges(
@@ -721,14 +721,13 @@ function buildOpstackClosedSections(
       REASON_FOR_BEING_OTHER.NO_PROOFS,
       ...(config.reasonsForBeingOther ?? []),
     ],
-    zkProgramHashes,
+    programHashes: zkProgramHashes,
     architectureImage: config.architectureImage ?? 'agglayer-opstack_closed',
   }
 }
 
 function resolveValidiumDaProvider(
   config: AgglayerCdkErigonValidiumConfig,
-  context: SharedContext,
   dacInfo?: DacInfo,
 ): DAProvider {
   if (config.daProvider !== undefined) {

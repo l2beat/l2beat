@@ -164,7 +164,7 @@ You can find us to discuss all of the above and more during our [Arbitrum Office
 * [ADPC Call](https://meet.google.com/bju-dnib-sif) on 13.6 at 2:00 pm
 * [Social Media Fellowship](https://meet.google.com/ybo-huqw-jnr) on 13.6 at 5:00 pm
 * [Arbitrum DAO Onboarding](https://meet.google.com/mrq-sitk-mfu) on 13.6 at 10:00 pm
-* [Arbitrum’s Fees and Sequencer Revenue - Discussion](eet.google.com/fug-dcmu-sfm) on 14.6 at 1:00 pm
+* [Arbitrum’s Fees and Sequencer Revenue - Discussion](https://meet.google.com/fug-dcmu-sfm) on 14.6 at 1:00 pm
 
 
 
@@ -268,5 +268,6 @@ Arjun, the founder of Everclear, attended the delegate call on Friday, June 7th,
 Connext becoming Everclear is more than a simple rebranding; it introduces fundamentally new concepts with new possibilities. We’d like to discuss these changes with delegates to better understand them.
 
 **When/where to catch us:**
+
 
 You can find us to discuss the above and more during our [Everclear Office Hours](https://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.

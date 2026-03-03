@@ -2,6 +2,14 @@
 
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
+export type json =
+  | string
+  | number
+  | boolean
+  | null
+  | json[]
+  | { [key: string]: json }
+
 // Scoring type aliases
 export type Impact = 'critical'
 
@@ -226,6 +234,15 @@ export type ApiCreateConfigFileResponse =
       error: string
     }
 
+export interface ApiHandlersResponse {
+  handlers: {
+    type: string
+    schema: json
+    docs: string
+    examples: string[]
+  }[]
+}
+
 export type ApiAddressType =
   | 'EOA'
   | 'EOAPermissioned'
@@ -256,8 +273,6 @@ export interface ApiAddressReference extends AddressFieldValue {
 export interface Field {
   name: string
   value: FieldValue
-  handler?: { type: string } & Record<string, unknown>
-  description?: string
 }
 
 export type FieldValue =
@@ -929,3 +944,33 @@ export interface ApiFunctionAnalysisResponse {
   /** Map of contractAddress -> functionName -> FunctionAnalysis */
   contracts: Record<string, Record<string, FunctionAnalysis>>
 }
+
+// Config health report types
+export type ApiConfigHealthResponse = {
+  healthHints: ApiHealthHint[]
+  length: number
+}
+
+type ApiHealthHintBase = {
+  excess: {
+    ignoreInWatchMode?: string[]
+    ignoreMethods?: string[]
+    ignoreRelatives?: string[]
+  }
+}
+
+export type ApiHealthHint =
+  | (ApiHealthHintBase & {
+      source: 'config'
+      target: {
+        project: string
+        address: string
+        name?: string
+      }
+    })
+  | (ApiHealthHintBase & {
+      source: 'template'
+      target: {
+        templateId: string
+      }
+    })

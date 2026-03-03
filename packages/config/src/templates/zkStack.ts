@@ -22,9 +22,9 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
+import { PROGRAM_HASHES } from '../common/programHashes'
 import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import { ZK_PROGRAM_HASHES } from '../common/zkProgramHashes'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -36,6 +36,7 @@ import type {
 import type {
   Badge,
   ChainConfig,
+  InteropConfig,
   Milestone,
   ProjectActivityConfig,
   ProjectContract,
@@ -121,6 +122,9 @@ export interface ZkStackConfigCommon {
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
+  interopConfig?: InteropConfig
+  // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
+  zkVerifierContractsReproducible?: boolean
 }
 
 export type Upgradeability = {
@@ -355,6 +359,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.STATE_DIFFS_COMPRESSED,
     },
+    interopConfig: templateVars.interopConfig,
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
@@ -396,6 +401,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
                 securityCouncilProperlySetUp: true,
+                noRedTrustedSetups: true,
+                programHashesReproducible:
+                  programHashesReproducible(l2BootloaderHash),
+                proverSourcePublished: true,
+                verifierContractsReproducible:
+                  templateVars.zkVerifierContractsReproducible ?? null,
               },
               stage2: {
                 proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -549,7 +560,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
           'EmergencyUpgradeBoard',
         ),
       ],
-      zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],
+      programHashes: [PROGRAM_HASHES(l2BootloaderHash)],
     },
     stateDerivation:
       daProvider !== undefined
@@ -708,4 +719,11 @@ function getDaTracking(
   }
 
   return undefined
+}
+
+function programHashesReproducible(l2BootloaderHash: string): boolean | null {
+  const vStatus = PROGRAM_HASHES(l2BootloaderHash).verificationStatus
+  if (vStatus === 'unsuccessful') return false
+  if (vStatus === 'successful') return true
+  return null
 }

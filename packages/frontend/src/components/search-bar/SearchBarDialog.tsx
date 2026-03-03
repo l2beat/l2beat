@@ -100,7 +100,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   return (
     <CommandDialog
       title="Search"
-      description="Search for projects by name"
+      description="Search for projects by name or address"
       open={open}
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
@@ -109,7 +109,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
       <Command shouldFilter={false} className="rounded-none">
         <CommandInput
           ref={inputRef}
-          placeholder="Search for projects"
+          placeholder="Search for projects by name or address"
           value={value}
           onValueChange={setValue}
         >
@@ -279,8 +279,6 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'Layer 2'
     case 'layer3':
       return 'Layer 3'
-    case 'bridge':
-      return 'Bridge'
     case 'da':
       return 'DA Layer'
     case 'zkCatalog':

@@ -3,6 +3,7 @@ import {
   AllProviders,
   asStructured,
   codeIsEOA,
+  findLeadingCommentStart,
   flattenStartingFrom,
   getChainConfigs,
   getChainFullName,
@@ -129,17 +130,33 @@ function decodeConstructorArguments(source: ContractSource): string {
       return 'Constructor arguments present but no constructor found in ABI'
     }
 
-    const rawResult = toReadable(
+    const decoded = toReadable(
       utils.defaultAbiCoder.decode(
         fragment.inputs,
         '0x' + source.constructorArguments,
       ),
     )
+    const rawResult = normalizeDecodedConstructorArguments(
+      decoded,
+      fragment.inputs.length,
+    )
 
-    return formatJson(asStructured(rawResult, fragment.inputs)).trim()
+    const structured = asStructured(rawResult, fragment.inputs)
+
+    return formatJson(structured).trim()
   } catch {
     return 'Error during decoding constructor arguments'
   }
+}
+
+function normalizeDecodedConstructorArguments(
+  decoded: Readable,
+  inputLength: number,
+): Readable {
+  if (inputLength !== 1 || !Array.isArray(decoded)) {
+    return decoded
+  }
+  return decoded[0] ?? decoded
 }
 
 function splitFlatSolidity(flat: string): Record<string, string> {
@@ -152,7 +169,8 @@ function splitFlatSolidity(flat: string): Record<string, string> {
     assert(childName !== undefined)
     assert(child.range !== undefined)
 
-    const childContent = flat.substring(child.range[0], child.range[1] + 1)
+    const left = findLeadingCommentStart(flat, child.range[0])
+    const childContent = flat.substring(left, child.range[1] + 1)
     result[childName] = childContent
   }
 

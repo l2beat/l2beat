@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "snaxchain",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x936D881b4760D5e9b6D55b774f65c509236b4743"],
   "overrides": {

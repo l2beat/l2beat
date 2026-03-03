@@ -19,6 +19,10 @@ describe(getStage.name, () => {
           usersHave7DaysToExit: true,
           usersCanExitWithoutCooperation: true,
           securityCouncilProperlySetUp: true,
+          noRedTrustedSetups: true,
+          proverSourcePublished: true,
+          verifierContractsReproducible: true,
+          programHashesReproducible: true,
         },
         stage2: {
           proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -103,6 +107,29 @@ describe(getStage.name, () => {
               description: 'The Security Council is properly set up.',
               satisfied: true,
             },
+            {
+              description:
+                'The proof system meets the minimum trusted setup requirements defined in the L2BEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
+              satisfied: true,
+              upcoming: true,
+            },
+            {
+              description: 'Prover source code is published.',
+              satisfied: true,
+              upcoming: true,
+            },
+            {
+              description:
+                "Onchain verifiers' smart contracts can be independently regenerated from the verifier source code.",
+              satisfied: true,
+              upcoming: true,
+            },
+            {
+              description:
+                'The sources of all programs used are public and program hashes can be independently regenerated.',
+              satisfied: true,
+              upcoming: true,
+            },
           ],
           stage: 'Stage 1',
           principle: {
@@ -152,6 +179,10 @@ describe(getStage.name, () => {
           usersHave7DaysToExit: true,
           usersCanExitWithoutCooperation: true,
           securityCouncilProperlySetUp: true,
+          noRedTrustedSetups: true,
+          proverSourcePublished: true,
+          verifierContractsReproducible: true,
+          programHashesReproducible: true,
         },
         stage2: {
           proofSystemOverriddenOnlyInCaseOfABug: false,

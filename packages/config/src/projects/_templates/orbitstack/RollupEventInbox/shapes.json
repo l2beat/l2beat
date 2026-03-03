@@ -23,5 +23,10 @@
     "hash": "0xcd37abd5bdcc8c37cbf37dcfa4889d5b238388344d913b3a48914f659e0d627b",
     "address": "eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494",
     "blockNumber": 22188285
+  },
+  "ERC20RollupEventInbox_BoLD": {
+    "hash": "0x089ac3cec821c0f014f284ec4ec1039ef6bc50b6ad3ee47c82e20af65cc30c33",
+    "address": "eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe",
+    "blockNumber": 24398013
   }
 }

@@ -6,6 +6,7 @@ export interface Config {
   readonly coingeckoApiKey: string | undefined
   readonly etherscanApiKey: string | undefined
   readonly readOnlyAuthToken?: string
+  readonly jsonBodyLimitMb: number
 }
 
 export interface DatabaseConfig {

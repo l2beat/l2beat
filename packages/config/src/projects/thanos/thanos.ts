@@ -19,6 +19,7 @@ export const thanos: ScalingProject = upcomingL2({
       documentation: ['https://docs.tokamak.network/'],
       explorers: ['https://explorer.thanos-sepolia.tokamak.network/'],
       repositories: ['https://github.com/tokamak-network/tokamak-thanos'],
+      bridges: ['https://trh-op-bridge.vercel.app/bridge'],
       socialMedia: [
         'https://t.me/tokamak_network',
         'https://discord.gg/FuwksZQQ7r',

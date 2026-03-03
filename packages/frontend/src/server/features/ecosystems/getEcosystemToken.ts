@@ -2,7 +2,7 @@ import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getStaticAsset } from '../utils/getProjectIcon'
+import { manifest } from '~/utils/Manifest'
 
 export interface EcosystemToken {
   logo: string
@@ -52,7 +52,7 @@ const getCachedEcosystemToken = async (
   assert(ecosystemToken, 'No ecosystem token found')
 
   return {
-    logo: token.iconUrl ?? getStaticAsset('/images/token-placeholder.png'),
+    logo: token.iconUrl ?? manifest.getUrl('/images/token-placeholder.png'),
     name: token.name,
     symbol: token.symbol,
     description: ecosystem.ecosystemConfig.token.description,
@@ -77,7 +77,7 @@ function getMockEcosystemToken(
   ecosystem: Project<'ecosystemConfig'>,
 ): EcosystemToken {
   return {
-    logo: getStaticAsset('/images/token-placeholder.png'),
+    logo: manifest.getUrl('/images/token-placeholder.png'),
     name: 'Mock Token',
     symbol: 'MOCK',
     description: ecosystem.ecosystemConfig.token.description,

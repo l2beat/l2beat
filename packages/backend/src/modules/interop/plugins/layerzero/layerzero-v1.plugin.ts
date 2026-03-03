@@ -37,7 +37,7 @@ export const PacketDelivered = createInteropEventType<{
 }>('layerzero-v1.PacketDelivered')
 
 export class LayerZeroV1Plugin implements InteropPlugin {
-  name = 'layerzero-v1'
+  readonly name = 'layerzero-v1'
 
   constructor(private configs: InteropConfigStore) {}
 

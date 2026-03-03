@@ -1,7 +1,7 @@
 import { v } from '@l2beat/validate'
 import type { Column, FetchProjects, FetchResult } from './FetchInterface'
 
-const receiverMapping: Record<string, string> = {
+export const receiverMapping: Record<string, string> = {
   '0x06a9ab27c7e2255df1815e6cc0168d7755feb19a': 'taiko',
   '0x68d30f47f19c07bccef4ac7fae2dc12fca3e0dc9': 'taiko',
   '0x9b17fda35ed7eb7bb11a73ab69d0462045364514': 'taiko',

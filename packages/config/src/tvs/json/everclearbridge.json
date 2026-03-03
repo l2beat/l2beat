@@ -83,6 +83,25 @@
     },
     {
       "mode": "auto",
+      "id": "everclearbridge-mETH-1",
+      "priceId": "mantle-staked-ether",
+      "symbol": "mETH",
+      "name": "mETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+        "chain": "ethereum",
+        "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+        "decimals": 18,
+        "sinceTimestamp": 1726462859
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "everclearbridge-pufETH",
       "priceId": "pufeth",
       "symbol": "pufETH",

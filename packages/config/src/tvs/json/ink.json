@@ -100,6 +100,25 @@
     },
     {
       "mode": "auto",
+      "id": "ink-rETH",
+      "priceId": "rocket-pool-eth",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1696520159",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "chain": "ethereum",
+        "escrowAddress": "0x88FF1e5b602916615391F55854588EFcBB7663f0",
+        "decimals": 18,
+        "sinceTimestamp": 1733498411
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "ink-USD₮0",
       "priceId": "usdt0",
       "symbol": "USD₮0",

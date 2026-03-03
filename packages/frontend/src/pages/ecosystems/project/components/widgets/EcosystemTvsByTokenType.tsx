@@ -1,8 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import { assetCategoryTvsChartMeta } from '~/components/chart/tvs/stacked/AssetCategoryTvsChart'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartTooltip,
   ChartTooltipWrapper,
@@ -10,72 +13,50 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
+import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { TvsByTokenType } from '~/server/features/ecosystems/getTvsByTokenType'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './EcosystemWidget'
 
-const chartMeta = {
-  ether: {
-    label: 'ETH & LSTs',
-    color: 'var(--ecosystem-primary)',
-    indicatorType: {
-      shape: 'square',
-    },
-  },
-  stablecoins: {
-    label: 'Stablecoins',
-    color: 'var(--ecosystem-primary-50)',
-    indicatorType: {
-      shape: 'square',
-    },
-  },
-  other: {
-    label: 'Other',
-    color: 'var(--ecosystem-primary-25)',
-    indicatorType: {
-      shape: 'square',
-    },
-  },
-} satisfies ChartMeta
-
-const tokenTypeLabels: Record<keyof TvsByTokenType, string> = {
-  ether: 'ETH & LSTs',
-  stablecoins: 'Stablecoins',
-  other: 'Other',
-}
+const chartMeta = assetCategoryTvsChartMeta satisfies ChartMeta
+const tokenTypeOrder: (keyof TvsByTokenType)[] = [
+  'ether',
+  'stablecoin',
+  'btc',
+  'other',
+  'rwaPublic',
+  'rwaRestricted',
+]
 
 export function EcosystemTvsByTokenType({
-  tvsByTokenType,
+  tvsByTokenTypeData: { withRwaRestricted, withoutRwaRestricted },
   className,
 }: {
-  tvsByTokenType: TvsByTokenType
+  tvsByTokenTypeData: EcosystemEntry['tvsByTokenType']
   className?: string
 }) {
   const breakpoint = useBreakpoint()
+  const {
+    display: { excludeRwaRestrictedTokens },
+  } = useEcosystemDisplayControlsContext()
+  const tvsByTokenType = excludeRwaRestrictedTokens
+    ? withoutRwaRestricted
+    : withRwaRestricted
+
   const chartData = useMemo(() => {
-    return [
-      {
-        tokenType: 'ether' as const,
-        tvs: tvsByTokenType.ether,
-        fill: 'var(--ecosystem-primary)',
-      },
-      {
-        tokenType: 'stablecoins' as const,
-        tvs: tvsByTokenType.stablecoins,
-        fill: 'var(--ecosystem-primary-50)',
-      },
-      {
-        tokenType: 'other' as const,
-        tvs: tvsByTokenType.other,
-        fill: 'var(--ecosystem-primary-25)',
-      },
-    ]
+    return tokenTypeOrder
+      .map((tokenType) => ({
+        tokenType,
+        tvs: tvsByTokenType[tokenType],
+        fill: chartMeta[tokenType].color,
+      }))
+      .filter((data) => data.tvs > 0)
   }, [tvsByTokenType])
 
-  const totalTvs =
-    tvsByTokenType.ether + tvsByTokenType.stablecoins + tvsByTokenType.other
+  const totalTvs = chartData.reduce((acc, curr) => acc + curr.tvs, 0)
 
   return (
     <EcosystemWidget className={className}>
@@ -99,7 +80,7 @@ export function EcosystemTvsByTokenType({
                         type={{ shape: 'square' }}
                       />
                       <div className="font-medium text-xs">
-                        {tokenTypeLabels[data.tokenType]}
+                        {chartMeta[data.tokenType].label}
                       </div>
                     </div>
                   </td>
@@ -111,11 +92,11 @@ export function EcosystemTvsByTokenType({
             })}
           </tbody>
         </table>
-        <SimpleChartContainer
-          meta={chartMeta}
-          className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
-        >
-          <PieChart>
+        <SimpleChartContainer meta={chartMeta}>
+          <PieChart
+            responsive
+            className="aspect-square! h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
+          >
             <ChartTooltip
               cursor={false}
               content={<CustomTooltip />}
@@ -161,12 +142,12 @@ export function EcosystemTvsByTokenType({
   )
 }
 
-function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
+function CustomTooltip({ payload }: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload) return null
+  if (!payload) return null
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-36 flex-col gap-1">
+      <div className="flex flex-col gap-1">
         {payload.map((entry) => {
           if (
             entry.name === undefined ||

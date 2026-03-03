@@ -6,9 +6,9 @@ import type {
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { getProjectIcon } from '../../utils/getProjectIcon'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import type { ActivityProjectTableData } from './getActivityTableData'
@@ -19,6 +19,7 @@ import { getActivitySyncWarning } from './utils/syncStatus'
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'activityConfig', 'display'],
+    optional: ['contracts'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })
@@ -77,7 +78,7 @@ interface ActivityData {
 }
 
 function getScalingProjectActivityEntry(
-  project: Project<'statuses' | 'scalingInfo' | 'display'>,
+  project: Project<'statuses' | 'scalingInfo' | 'display', 'contracts'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry | undefined {
@@ -106,7 +107,7 @@ function getEthereumEntry(
     id: ProjectId.ETHEREUM,
     name: 'Ethereum',
     shortName: undefined,
-    icon: getProjectIcon('ethereum'),
+    icon: manifest.getUrl('/icons/ethereum.png'),
     isLayer3: false,
     slug: 'ethereum',
     tab: 'rollups',

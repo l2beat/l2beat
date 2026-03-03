@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xebbed40e0f32279fcd1ca78b68ee9858b0ff4623
+
+# Diff at Thu, 26 Feb 2026 15:12:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770908185
+- current timestamp: 1772118702
+
+## Description
+
+EigenLayerRewardsInitiatorMultisig: one member removed (0xf20eD26be), reducing signers from 5 to 4. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/4 (75%).
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
+Generated with discovered.json: 0x850cec99c0efc6f451d5ab61c031eda3f4e44561
+
+# Diff at Thu, 12 Feb 2026 14:57:30 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@632144c808f959f8e2164511b7a59e409831ae61 block: 1769597655
+- current timestamp: 1770908185
+
+## Description
+
+One signer was removed from the EigenDAOperationsMultisig, reducing it from 6 to 5 members. The threshold remains at 3, changing the ratio from 50% to 60%.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0xb27f3cbef3e17b1f122a68a3fdf06a3347836e95
+
+# Diff at Wed, 28 Jan 2026 10:55:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f3a771bee255d769c9ede9d03ff728859c8fd040 block: 1763633846
+- current timestamp: 1769597655
+
+## Description
+
+Member rotation.
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB"
++        "eth:0x5dc74815C14E2D4223B79D2dE94C4ccD5f5f7DA7"
+    }
+```
+
 Generated with discovered.json: 0x163911d60403c096ab776b414b18720e50876b2b
 
 # Diff at Thu, 20 Nov 2025 10:18:33 GMT:

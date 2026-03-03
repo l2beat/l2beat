@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -27,6 +27,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
+import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('myria')
 
@@ -50,12 +51,7 @@ const myriaProgramHashes = []
 myriaProgramHashes.push(
   discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-myriaProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-myriaProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+myriaProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const myria: ScalingProject = {
   type: 'layer2',
@@ -164,7 +160,7 @@ export const myria: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: myriaProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: myriaProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

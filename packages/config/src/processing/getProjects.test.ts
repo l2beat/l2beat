@@ -28,6 +28,7 @@ import { layer3s } from './layer3s'
 
 describe('getProjects', () => {
   const projects = getProjects()
+  const projectsById = new Map(projects.map((p) => [p.id, p]))
 
   describe('every project has a unique and valid id and slug', () => {
     const ids = new Set<ProjectId>()
@@ -54,9 +55,12 @@ describe('getProjects', () => {
     }
   })
 
-  describe('every non-ecosystem project has statuses and display', () => {
+  describe('every project has statuses and display (except ecosystems and interop protocols)', () => {
     for (const project of projects) {
-      if (project.ecosystemConfig) {
+      if (
+        (project.ecosystemConfig || project.interopConfig) &&
+        (!project.statuses || !project.display)
+      ) {
         continue
       }
       it(project.name, () => {
@@ -242,10 +246,30 @@ describe('getProjects', () => {
             ),
           ),
         ).filter((p) => p !== undefined)
+        const usedInVerifiersSet = new Set(usedInVerifiers)
 
         for (const usedIn of usedInVerifiers) {
           it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
             expect(liveTvsProjects.has(usedIn)).toEqual(true)
+          })
+        }
+
+        const currentProjectsForTvsSection = new Set(
+          [...liveTvsProjects].flatMap((tvsProject) => {
+            const tvsProjectConfig = projectsById.get(tvsProject)
+            if (!tvsProjectConfig || tvsProjectConfig.archivedAt) {
+              return []
+            }
+
+            if (tvsProjectConfig.daBridge) return []
+
+            return [tvsProject]
+          }),
+        )
+
+        for (const tvsProject of currentProjectsForTvsSection) {
+          it(`TVS project ${tvsProject} is detected in verifier usage`, () => {
+            expect(usedInVerifiersSet.has(tvsProject)).toEqual(true)
           })
         }
       })
@@ -382,7 +406,10 @@ describe('getProjects', () => {
       const contracts = chains
         .filter(
           (c) =>
-            c.name !== 'zksync2' && c.name !== 'kinto' && c.name !== 'degen',
+            c.name !== 'zksync2' &&
+            c.name !== 'kinto' &&
+            c.name !== 'degen' &&
+            c.name !== 'abstract',
         ) // we are omitting zksync2, degen and kinto as they use different addresses
         .flatMap(
           (x) => x.multicallContracts?.map((y) => [x.name, y] as const) ?? [],
@@ -732,7 +759,7 @@ function getUsageMap(projects: BaseProject[]) {
   }
 
   for (const project of projects) {
-    if (!project.isScaling || !project.contracts) continue
+    if (!(project.isScaling || project.daBridge) || !project.contracts) continue
 
     for (const [chain, contracts] of Object.entries(
       project.contracts.addresses,

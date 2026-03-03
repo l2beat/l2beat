@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { DERIVATION, ESCROW, SOA } from '../../common'
+import { DERIVATION, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -65,7 +65,6 @@ export const unichain: ScalingProject = opStackL2({
         'eth:0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
@@ -74,7 +73,6 @@ export const unichain: ScalingProject = opStackL2({
         'eth:0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A',
       ),
       tokens: ['USDS', 'sUSDS'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
     }),
@@ -104,11 +102,27 @@ export const unichain: ScalingProject = opStackL2({
   },
   milestones: [
     {
+      title: 'UNIfication proposal executed',
+      url: 'https://www.tally.xyz/gov/uniswap/proposal/93',
+      description:
+        'Uniswap governance enabled protocol fees, burned 100M UNI, and routed Unichain fees to UNI burn.',
+      date: '2025-12-27T00:00:00Z',
+      type: 'general',
+    },
+    {
       title: 'Unichain flashblocks are live',
       url: 'https://blog.uniswap.org/flashblocks-are-live',
       description:
         'Unichain hits 200ms sub-blocks inside Trusted Execution Environments.',
       date: '2025-08-14T00:00:00Z',
+      type: 'general',
+    },
+    {
+      title: 'TEE-based block building & fair ordering',
+      url: 'https://blog.uniswap.org/rollup-boost-is-live-on-unichain',
+      description:
+        'Unichain implements block building in TEE with MEV protection and fair ordering.',
+      date: '2025-05-01T00:00:00Z',
       type: 'general',
     },
     {

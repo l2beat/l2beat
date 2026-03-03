@@ -89,20 +89,19 @@ export class SvmRpcClient extends ClientCore {
     let timestamp: number | null = null
 
     while (timestamp === null) {
-      const response = await this.query(method, [slot])
+      const response = await this.query(method, [currentSlot])
+      currentSlot -= 1
 
       const parsedResponse = SvmRpcGetBlockTimeResponse.safeParse(response)
-
       if (!parsedResponse.success) {
         this.$.logger.warn('Invalid response', {
           method,
           currentSlot,
           response: JSON.stringify(response),
         })
-        throw new Error('getBlockTime: Error during parsing')
+        continue
       }
 
-      currentSlot -= 1
       timestamp = parsedResponse.data.result
     }
 

@@ -39,7 +39,10 @@ export const intmax: ScalingProject = {
         'https://medium.com/intmax/the-deep-dive-into-statelessness-intmax2-algorithm-was-published-be7a306048ff',
       ],
       repositories: ['https://github.com/InternetMaximalism'],
-      socialMedia: ['https://twitter.com/intmaxIO'],
+      socialMedia: [
+        'https://twitter.com/intmaxIO',
+        'https://discord.com/invite/TGMctchPR6',
+      ],
       bridges: ['https://app.intmax.io/bridge'],
     },
   },
@@ -85,7 +88,7 @@ export const intmax: ScalingProject = {
       references: [
         {
           title: 'INTMAX Block Builder - INTMAX docs',
-          url: 'https://intmax-wallet.gitbook.io/intmax-developers-hub/intmax-block-builder',
+          url: 'https://docs.network.intmax.io/developers-hub/intmax-block-builder',
         },
       ],
     },
@@ -185,6 +188,10 @@ export const intmax: ScalingProject = {
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: true,
+        programHashesReproducible: null,
+        proverSourcePublished: true,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

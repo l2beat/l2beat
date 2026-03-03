@@ -1,4 +1,3 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -30,7 +29,6 @@ export function ScalingActivityTable({ entries, notReviewed }: Props) {
   const columns = useMemo(
     () =>
       getScalingActivityColumns(metric, {
-        activity: true,
         ignoreUnderReviewIcon: notReviewed,
       }),
     [metric, notReviewed],
@@ -55,18 +53,7 @@ export function ScalingActivityTable({ entries, notReviewed }: Props) {
   return (
     <>
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable
-        table={table}
-        rowSortingFn={(a, b) => {
-          if (a.original.id === ProjectId.ETHEREUM) {
-            return -1
-          }
-          if (b.original.id === ProjectId.ETHEREUM) {
-            return 1
-          }
-          return 0
-        }}
-      />
+      <BasicTable table={table} />
     </>
   )
 }

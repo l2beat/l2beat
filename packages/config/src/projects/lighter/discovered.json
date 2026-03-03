@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1767691305,
+  "timestamp": 1771850198,
   "configHash": "0xb38099a89f4a1650c4592eb5b206aa3dfb12f4b33ad639c81fcfc9928be4e4d5",
   "entries": [
     {
@@ -38,7 +38,7 @@
       "template": "lighter/ZkLighterWithSpot",
       "sourceHashes": [
         "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
-        "0x016ec5f80bfe1e98a099c8e237105be90b1da112de262adc17dcec715a4ee173"
+        "0xb28249d5dff85a357d4365eb463ef3eb2778445cefe5c663c7966dce55b8c2a0"
       ],
       "proxyType": "zkLighter proxy",
       "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
@@ -65,10 +65,10 @@
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "$implementation": [
-          "eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142",
-          "eth:0x9307350AF47B0C0e7f8cA5ED2D57993aF3a6df1d"
+          "eth:0xdC2877f6C162991B47fC5f7Cc50F85c084B9B408",
+          "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9"
         ],
-        "additionalZkLighter": "eth:0x9307350AF47B0C0e7f8cA5ED2D57993aF3a6df1d",
+        "additionalZkLighter": "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9",
         "assetConfigETH": {
           "tokenAddress": "eth:0x0000000000000000000000000000000000000000",
           "withdrawalsEnabled": 1,
@@ -85,14 +85,48 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 114892,
-        "committedPriorityRequestCount": 1713080,
+        "committedBatchesCount": 139166,
+        "committedPriorityRequestCount": 1794822,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
           "XLM",
           "LIT/USDC",
-          "LIT"
+          "LIT",
+          "CRCL",
+          "MSTR",
+          "BMNR",
+          "LINK/USDC",
+          "UNI/USDC",
+          "AAVE/USDC",
+          "SKY/USDC",
+          "LDO/USDC",
+          "FOGO",
+          "DUSK",
+          "RIVER",
+          "DASH",
+          "SPY",
+          "QQQ",
+          "SKR",
+          "AXS",
+          "ARC",
+          "BIRB",
+          "PIPPIN",
+          "JTO",
+          "XCU",
+          "INTC",
+          "AMD",
+          "SNDK",
+          "SAMSUNG",
+          "HYUNDAI",
+          "KRCOMP",
+          "SKHYNIX",
+          "AZTEC",
+          "AZTEC/USDC",
+          "WTI",
+          "XPD",
+          "XPT",
+          "HANMI"
         ],
         "createdMarketsPreSpot": [
           "USELESS",
@@ -150,21 +184,27 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0xd4460475F00307845082d3a146f36661354FBc67",
-        "executedBatchesCount": 114876,
-        "executedOnChainBatchesCount": 83007,
-        "executedPriorityRequestCount": 1712613,
+        "executedBatchesCount": 139157,
+        "executedOnChainBatchesCount": 101101,
+        "executedPriorityRequestCount": 1794778,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142",
+        "getTarget": "eth:0xdC2877f6C162991B47fC5f7Cc50F85c084B9B408",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
         "l2AssetConfigUpdates": [[2, 1, 100000000, 0]],
         "l2AssetRegistrations": [
-          "0x4c49540000000000000000000000000000000000000000000000000000000000"
+          "0x4c49540000000000000000000000000000000000000000000000000000000000",
+          "0x4c494e4b00000000000000000000000000000000000000000000000000000000",
+          "0x554e490000000000000000000000000000000000000000000000000000000000",
+          "0x4141564500000000000000000000000000000000000000000000000000000000",
+          "0x534b590000000000000000000000000000000000000000000000000000000000",
+          "0x4c444f0000000000000000000000000000000000000000000000000000000000",
+          "0x415a544543000000000000000000000000000000000000000000000000000000"
         ],
-        "lastAccountIndex": 701155,
-        "lastVerifiedEndBlockNumber": 142965709,
-        "lastVerifiedStateRoot": "0xa85209f2880067e8c3efa867e85b91202bd061c9b9f615801ca1c9be5b429e04",
-        "lastVerifiedValidiumRoot": "0x813704709d915b50f4a33dd0a235d86a8496623fc5560bd244e7c46912a544aa",
+        "lastAccountIndex": 715674,
+        "lastVerifiedEndBlockNumber": 181782403,
+        "lastVerifiedStateRoot": "0xe88275fae8809b8e3f47ab5b9e0bd80f294976aef16d7757a326a8c07391c7d0",
+        "lastVerifiedValidiumRoot": "0x589b2be82404d604e306619eaab6f1a0dcf87fc13a66d5f90bc37b64521f515d",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -177,17 +217,19 @@
         "MAX_PERPS_MARKET_INDEX": 254,
         "MAX_POOL_SHARES_TO_MINT_OR_BURN": "1152921504606846975",
         "MAX_SPOT_MARKET_INDEX": 4094,
+        "MAX_STAKING_SHARES_TO_MINT_OR_BURN": "1152921504606846975",
         "MAX_TICK_SIZE": "340282366920938463463374607431768211455",
         "MIN_ASSET_INDEX": 1,
         "MIN_ORDER_BASE_AMOUNT": 1,
         "MIN_ORDER_PRICE": 1,
         "MIN_POOL_SHARES_TO_MINT_OR_BURN": 1,
         "MIN_SPOT_MARKET_INDEX": 2048,
+        "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_ORDER_BASE_AMOUNT": 0,
-        "openPriorityRequestCount": 535,
-        "pendingOnChainBatchesCount": 16,
+        "openPriorityRequestCount": 60,
+        "pendingOnChainBatchesCount": 5,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -201,15 +243,39 @@
           {
             "assetIndex": 2,
             "tokenAddress": "eth:0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2"
+          },
+          {
+            "assetIndex": 5,
+            "tokenAddress": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA"
+          },
+          {
+            "assetIndex": 6,
+            "tokenAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+          },
+          {
+            "assetIndex": 7,
+            "tokenAddress": "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
+          },
+          {
+            "assetIndex": 8,
+            "tokenAddress": "eth:0x56072C95FAA701256059aa122697B133aDEd9279"
+          },
+          {
+            "assetIndex": 9,
+            "tokenAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
+          },
+          {
+            "assetIndex": 10,
+            "tokenAddress": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2"
           }
         ],
-        "stateRoot": "0x823711c0f0c2d4729cf4f89c99d3de7b12609990894ee8b996fbbc9746052c87",
+        "stateRoot": "0x6ef1d1d0f4e7c751d8e16861122dc1e85cb404518e3b4ad97e4bcfff7b71c404",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0xd1d11e8a8cfa38d9150570d83ff310485c4589397a70ff6a8f21f3fedfe4d235",
-        "verifiedBatchesCount": 114877,
-        "verifiedPriorityRequestCount": 1712717,
+        "validiumRoot": "0x5ffb9cb353e087cb5b2b8b7fb2932ee4697ff36da5518ac82ad7a6939b82fbc3",
+        "verifiedBatchesCount": 139158,
+        "verifiedPriorityRequestCount": 1794784,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -219,8 +285,8 @@
       },
       "implementationNames": {
         "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": "Proxy",
-        "eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142": "ZkLighter",
-        "eth:0x9307350AF47B0C0e7f8cA5ED2D57993aF3a6df1d": "AdditionalZkLighter"
+        "eth:0xdC2877f6C162991B47fC5f7Cc50F85c084B9B408": "ZkLighter",
+        "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9": "AdditionalZkLighter"
       }
     },
     {
@@ -268,6 +334,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x67d6c2569AB98A1F535E36b3BaB1FBD825fa536E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x6d340Dd53b89b1f0bD94b473227612427125Bc8D",
       "type": "EOA",
       "proxyType": "EOA"
@@ -289,6 +360,11 @@
           "role": ".validators"
         }
       ]
+    },
+    {
+      "address": "eth:0x89f550Fce5c191b34AF95671c28bCF6CCDF1203a",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8B0190046D7b366642D4ff091C100d84ec4AB6f6",
@@ -337,7 +413,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 47,
+        "nonce": 53,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -389,7 +465,7 @@
         "securityCouncilAddress": "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 37,
+        "versionId": 43,
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
@@ -468,16 +544,18 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x67d6c2569AB98A1F535E36b3BaB1FBD825fa536E",
+          "eth:0x89f550Fce5c191b34AF95671c28bCF6CCDF1203a",
           "eth:0x6d340Dd53b89b1f0bD94b473227612427125Bc8D",
           "eth:0x6FEe6cdD595D12Ec6cD1803474B3615f1D2fb9ed",
           "eth:0xF65F409d8f3fa3635287783256394D7eB7aD7835"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x82a99693c24b4f1e92f83904e0d75d68ca8bcf7654ae5ad10db6a8f7e2c8959c",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 23,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 59,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -513,7 +591,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -576,7 +654,7 @@
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
         "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
-        "0x9fb19e3d933b1d83369c32b6e1ec0333c42f0f814ee9e9ec8e5e1efea520d374"
+        "0x70c219a599bf68fee16b4e1d51e5613de77271898f7debaf4775315e10517ee4"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
@@ -584,15 +662,15 @@
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0x05F8176860955D94F974dB0CE8BB4F160AE425a2",
+        "$implementation": "eth:0xa271Df8660A318F155A31e64d0529ed85C2d1616",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0x05F8176860955D94F974dB0CE8BB4F160AE425a2"
+        "getTarget": "eth:0xa271Df8660A318F155A31e64d0529ed85C2d1616"
       },
       "implementationNames": {
         "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": "Proxy",
-        "eth:0x05F8176860955D94F974dB0CE8BB4F160AE425a2": "ZkLighterVerifier"
+        "eth:0xa271Df8660A318F155A31e64d0529ed85C2d1616": "ZkLighterVerifier"
       }
     },
     {
@@ -657,11 +735,6 @@
     }
   ],
   "abis": {
-    "eth:0x05F8176860955D94F974dB0CE8BB4F160AE425a2": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
-    ],
     "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
@@ -759,125 +832,6 @@
     "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045": [
       "constructor(address _singleton)"
     ],
-    "eth:0x9307350AF47B0C0e7f8cA5ED2D57993aF3a6df1d": [
-      "error AdditionalZkLighter_AccountIsNotRegistered()",
-      "error AdditionalZkLighter_InvalidAccountIndex()",
-      "error AdditionalZkLighter_InvalidApiKeyIndex()",
-      "error AdditionalZkLighter_InvalidAssetIndex()",
-      "error AdditionalZkLighter_InvalidCreateOrderParameters()",
-      "error AdditionalZkLighter_InvalidDepositAmount()",
-      "error AdditionalZkLighter_InvalidDepositBatchLength()",
-      "error AdditionalZkLighter_InvalidExtensionMultiplier()",
-      "error AdditionalZkLighter_InvalidFeeAmount()",
-      "error AdditionalZkLighter_InvalidFundingClamps()",
-      "error AdditionalZkLighter_InvalidInterestRate()",
-      "error AdditionalZkLighter_InvalidMarginFraction()",
-      "error AdditionalZkLighter_InvalidMarginMode()",
-      "error AdditionalZkLighter_InvalidMarketAssets()",
-      "error AdditionalZkLighter_InvalidMarketDecimals()",
-      "error AdditionalZkLighter_InvalidMarketIndex()",
-      "error AdditionalZkLighter_InvalidMarketStatus()",
-      "error AdditionalZkLighter_InvalidMarketType()",
-      "error AdditionalZkLighter_InvalidMinAmounts()",
-      "error AdditionalZkLighter_InvalidMinL2TransferAmount()",
-      "error AdditionalZkLighter_InvalidMinL2WithdrawalAmount()",
-      "error AdditionalZkLighter_InvalidOpenInterestLimit()",
-      "error AdditionalZkLighter_InvalidOrderQuoteLimit()",
-      "error AdditionalZkLighter_InvalidPubKey()",
-      "error AdditionalZkLighter_InvalidQuoteMultiplier()",
-      "error AdditionalZkLighter_InvalidShareAmount()",
-      "error AdditionalZkLighter_InvalidWithdrawAmount()",
-      "error AdditionalZkLighter_PendingVerifiedRequestExecution()",
-      "error AdditionalZkLighter_RecipientAddressInvalid()",
-      "error AdditionalZkLighter_StateRootUpgradeVerifierFailed()",
-      "error AdditionalZkLighter_StateRootUpgradeVerifierNotFound()",
-      "error AdditionalZkLighter_StoredBatchInfoMismatch()",
-      "error AdditionalZkLighter_TooManyRegisteredAccounts()",
-      "error AdditionalZkLighter_WithdrawalsAreNotEnabledForTheAsset()",
-      "error ZkLighter_DesertModeActive()",
-      "event BatchCommit(uint64 batchNumber, uint32 batchSize, uint64 endBlockNumber)",
-      "event BatchVerification(uint64 batchNumber, uint32 batchSize, uint64 endBlockNumber)",
-      "event BatchesExecuted(uint64 batchNumber, uint64 endBlockNumber)",
-      "event BatchesRevert(uint64 newTotalBlocksCommitted)",
-      "event BurnShares(tuple(uint48 accountIndex, uint48 masterAccountIndex, uint48 publicPoolIndex, uint64 sharesAmount) params)",
-      "event CancelAllOrders(uint48 accountIndex)",
-      "event ChangePubKey(uint48 accountIndex, uint8 apiKeyIndex, bytes pubKey)",
-      "event CreateMarket(tuple(uint16 marketIndex, uint8 marketType, bytes marketData) params, uint8 sizeDecimals, uint8 priceDecimals, bytes32 symbol)",
-      "event CreateOrder(tuple(uint48 accountIndex, uint48 masterAccountIndex, uint16 marketIndex, uint48 baseAmount, uint32 price, uint8 isAsk, uint8 orderType) params)",
-      "event Deposit(uint48 toAccountIndex, address toAddress, uint16 assetIndex, uint8 routeType, uint128 baseAmount)",
-      "event DesertMode()",
-      "event Initialized(uint8 version)",
-      "event InsuranceFundOperatorUpdate(address newInsuranceFundOperator)",
-      "event NewPriorityRequest(address sender, uint64 serialId, uint8 pubdataType, bytes pubData, uint64 expirationTimestamp)",
-      "event RegisterAsset(tuple(uint16 assetIndex, uint56 extensionMultiplier, uint64 minL2TransferAmount, uint64 minL2WithdrawalAmount, uint8 marginMode) params, uint8 l1Decimals, uint8 decimals, bytes32 symbol)",
-      "event RegisterAssetConfig(uint16 assetIndex, address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
-      "event StateRootUpdate(uint64 batchNumber, bytes32 oldStateRoot, bytes32 newStateRoot)",
-      "event TreasuryUpdate(address newTreasury)",
-      "event UpdateAsset(tuple(uint16 assetIndex, uint64 minL2TransferAmount, uint64 minL2WithdrawalAmount, uint8 marginMode) params)",
-      "event UpdateAssetConfig(uint16 assetIndex, uint8 withdrawalsEnabled, uint64 depositCapTicks, uint64 minDepositTicks)",
-      "event UpdateMarket(tuple(uint16 marketIndex, uint8 marketType, bytes marketData) params)",
-      "event Withdraw(uint48 accountIndex, uint16 assetIndex, uint8 routeType, uint64 baseAmount)",
-      "event WithdrawPending(address indexed owner, uint16 assetIndex, uint128 baseAmount)",
-      "function MAX_ACCOUNT_INDEX() view returns (uint48)",
-      "function MAX_API_KEY_INDEX() view returns (uint8)",
-      "function MAX_ASSET_INDEX() view returns (uint16)",
-      "function MAX_BATCH_DEPOSIT_LENGTH() view returns (uint64)",
-      "function MAX_DEPOSIT_CAP_TICKS() view returns (uint64)",
-      "function MAX_MASTER_ACCOUNT_INDEX() view returns (uint48)",
-      "function MAX_ORDER_BASE_AMOUNT() view returns (uint48)",
-      "function MAX_ORDER_PRICE() view returns (uint32)",
-      "function MAX_ORDER_QUOTE_AMOUNT() view returns (uint48)",
-      "function MAX_PERPS_MARKET_INDEX() view returns (uint16)",
-      "function MAX_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
-      "function MAX_SPOT_MARKET_INDEX() view returns (uint16)",
-      "function MAX_TICK_SIZE() view returns (uint128)",
-      "function MIN_ASSET_INDEX() view returns (uint16)",
-      "function MIN_ORDER_BASE_AMOUNT() view returns (uint48)",
-      "function MIN_ORDER_PRICE() view returns (uint32)",
-      "function MIN_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
-      "function MIN_SPOT_MARKET_INDEX() view returns (uint16)",
-      "function NATIVE_ASSET_INDEX() view returns (uint16)",
-      "function NIL_ACCOUNT_INDEX() view returns (uint48)",
-      "function NIL_ORDER_BASE_AMOUNT() view returns (uint48)",
-      "function PRIORITY_EXPIRATION() view returns (uint256)",
-      "function USDC_ASSET_INDEX() view returns (uint16)",
-      "function __DEPRECATED_stateRootUpdates(uint64) view returns (bytes32)",
-      "function addressToAccountIndex(address) view returns (uint48)",
-      "function assetConfigs(uint16) view returns (address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
-      "function burnShares(uint48 _accountIndex, uint48 _publicPoolIndex, uint64 _shareAmount)",
-      "function cancelAllOrders(uint48 _accountIndex)",
-      "function changePubKey(uint48 _accountIndex, uint8 _apiKeyIndex, bytes _pubKey)",
-      "function committedBatchesCount() view returns (uint64)",
-      "function committedPriorityRequestCount() view returns (uint64)",
-      "function createMarket(uint8 _size_decimals, uint8 _price_decimals, bytes32 _symbol, tuple(uint16 marketIndex, uint8 marketType, bytes marketData) _params)",
-      "function createOrder(uint48 _accountIndex, uint16 _marketIndex, uint48 _baseAmount, uint32 _price, uint8 _isAsk, uint8 _orderType)",
-      "function deposit(address _to, uint16 _assetIndex, uint8 _routeType, uint256 _amount) payable",
-      "function depositBatch(uint64[] _amount, address[] _to, uint48[] _accountIndex)",
-      "function desertMode() view returns (bool)",
-      "function executedBatchesCount() view returns (uint64)",
-      "function executedOnChainBatchesCount() view returns (uint64)",
-      "function executedPriorityRequestCount() view returns (uint64)",
-      "function insuranceFundOperator() view returns (address)",
-      "function lastAccountIndex() view returns (uint48)",
-      "function lastVerifiedEndBlockNumber() view returns (uint64)",
-      "function lastVerifiedStateRoot() view returns (bytes32)",
-      "function lastVerifiedValidiumRoot() view returns (bytes32)",
-      "function openPriorityRequestCount() view returns (uint64)",
-      "function pendingOnChainBatchesCount() view returns (uint64)",
-      "function registerAsset(uint8 _l1Decimals, uint8 _decimals, bytes32 _symbol, tuple(uint16 assetIndex, uint56 extensionMultiplier, uint64 minL2TransferAmount, uint64 minL2WithdrawalAmount, uint8 marginMode) _params)",
-      "function stateRoot() view returns (bytes32)",
-      "function stateRootUpdates(uint64) view returns (bytes32)",
-      "function storedBatchHashes(uint64) view returns (bytes32)",
-      "function tokenToAssetIndex(address) view returns (uint16)",
-      "function treasury() view returns (address)",
-      "function updateAsset(tuple(uint16 assetIndex, uint64 minL2TransferAmount, uint64 minL2WithdrawalAmount, uint8 marginMode) _params)",
-      "function updateMarket(tuple(uint16 marketIndex, uint8 marketType, bytes marketData) _params)",
-      "function updateStateRoot(tuple(uint64 batchNumber, uint64 endBlockNumber, uint32 batchSize, uint64 startTimestamp, uint64 endTimestamp, uint32 priorityRequestCount, bytes32 prefixPriorityRequestHash, bytes32 onChainOperationsHash, bytes32 stateRoot, bytes32 validiumRoot, bytes32 commitment) _lastStoredBatch, bytes32 _stateRoot, bytes32 _validiumRoot, bytes proof)",
-      "function validiumRoot() view returns (bytes32)",
-      "function verifiedBatchesCount() view returns (uint64)",
-      "function verifiedPriorityRequestCount() view returns (uint64)",
-      "function withdraw(uint48 _accountIndex, uint16 _assetIndex, uint8 _routeType, uint64 _baseAmount)"
-    ],
     "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": [
       "constructor(address _securityCouncilAddress, address _zkLighterProxy)",
       "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
@@ -910,6 +864,11 @@
     "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310": [
       "constructor(address _singleton)"
     ],
+    "eth:0xa271Df8660A318F155A31e64d0529ed85C2d1616": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
+    ],
     "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
@@ -933,7 +892,7 @@
       "function initialize(bytes)",
       "function upgrade(bytes upgradeParameters)"
     ],
-    "eth:0xe5FB592Ef1b620909000Af0D5fb55a3593026142": [
+    "eth:0xdC2877f6C162991B47fC5f7Cc50F85c084B9B408": [
       "constructor()",
       "error ZkLighter_AccountAlreadyPerformedDesertForAsset()",
       "error ZkLighter_BatchNotInOnChainQueue()",
@@ -984,11 +943,7 @@
       "event BatchVerification(uint64 batchNumber, uint32 batchSize, uint64 endBlockNumber)",
       "event BatchesExecuted(uint64 batchNumber, uint64 endBlockNumber)",
       "event BatchesRevert(uint64 newTotalBlocksCommitted)",
-      "event BurnShares(tuple(uint48 accountIndex, uint48 masterAccountIndex, uint48 publicPoolIndex, uint64 sharesAmount) params)",
-      "event CancelAllOrders(uint48 accountIndex)",
-      "event ChangePubKey(uint48 accountIndex, uint8 apiKeyIndex, bytes pubKey)",
       "event CreateMarket(tuple(uint16 marketIndex, uint8 marketType, bytes marketData) params, uint8 sizeDecimals, uint8 priceDecimals, bytes32 symbol)",
-      "event CreateOrder(tuple(uint48 accountIndex, uint48 masterAccountIndex, uint16 marketIndex, uint48 baseAmount, uint32 price, uint8 isAsk, uint8 orderType) params)",
       "event Deposit(uint48 toAccountIndex, address toAddress, uint16 assetIndex, uint8 routeType, uint128 baseAmount)",
       "event DesertMode()",
       "event Initialized(uint8 version)",
@@ -1001,7 +956,6 @@
       "event UpdateAsset(tuple(uint16 assetIndex, uint64 minL2TransferAmount, uint64 minL2WithdrawalAmount, uint8 marginMode) params)",
       "event UpdateAssetConfig(uint16 assetIndex, uint8 withdrawalsEnabled, uint64 depositCapTicks, uint64 minDepositTicks)",
       "event UpdateMarket(tuple(uint16 marketIndex, uint8 marketType, bytes marketData) params)",
-      "event Withdraw(uint48 accountIndex, uint16 assetIndex, uint8 routeType, uint64 baseAmount)",
       "event WithdrawPending(address indexed owner, uint16 assetIndex, uint128 baseAmount)",
       "function MAX_ACCOUNT_INDEX() view returns (uint48)",
       "function MAX_API_KEY_INDEX() view returns (uint8)",
@@ -1015,12 +969,14 @@
       "function MAX_PERPS_MARKET_INDEX() view returns (uint16)",
       "function MAX_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
       "function MAX_SPOT_MARKET_INDEX() view returns (uint16)",
+      "function MAX_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
       "function MAX_TICK_SIZE() view returns (uint128)",
       "function MIN_ASSET_INDEX() view returns (uint16)",
       "function MIN_ORDER_BASE_AMOUNT() view returns (uint48)",
       "function MIN_ORDER_PRICE() view returns (uint32)",
       "function MIN_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
       "function MIN_SPOT_MARKET_INDEX() view returns (uint16)",
+      "function MIN_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
       "function NATIVE_ASSET_INDEX() view returns (uint16)",
       "function NIL_ACCOUNT_INDEX() view returns (uint48)",
       "function NIL_ORDER_BASE_AMOUNT() view returns (uint48)",
@@ -1061,6 +1017,7 @@
       "function registerAssetConfig(uint16 assetIndex, address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
       "function revertBatches(tuple(uint64 batchNumber, uint64 endBlockNumber, uint32 batchSize, uint64 startTimestamp, uint64 endTimestamp, uint32 priorityRequestCount, bytes32 prefixPriorityRequestHash, bytes32 onChainOperationsHash, bytes32 stateRoot, bytes32 validiumRoot, bytes32 commitment)[] _batchesToRevert, tuple(uint64 batchNumber, uint64 endBlockNumber, uint32 batchSize, uint64 startTimestamp, uint64 endTimestamp, uint32 priorityRequestCount, bytes32 prefixPriorityRequestHash, bytes32 onChainOperationsHash, bytes32 stateRoot, bytes32 validiumRoot, bytes32 commitment) _remainingBatch)",
       "function setInsuranceFundOperator(address _newInsuranceFundOperator)",
+      "function setSystemConfig(tuple(uint48 liquidityPoolIndex, uint48 stakingPoolIndex, uint48 liquidityPoolCooldownPeriod, uint48 stakingPoolLockupPeriod) _params)",
       "function setTreasury(address _newTreasury)",
       "function stateRoot() view returns (bytes32)",
       "function stateRootUpdates(uint64) view returns (bytes32)",
@@ -1081,6 +1038,112 @@
       "function withdraw(uint48 _accountIndex, uint16 _assetIndex, uint8 _routeType, uint64 _baseAmount)",
       "function withdrawPendingBalance(address _owner, uint16 _assetIndex, uint128 _baseAmount)",
       "function withdrawPendingBalanceLegacy(address _owner, uint128 _baseAmount)"
+    ],
+    "eth:0xF7627A2ab5cD6a5Cdbb84ffa96afE21A136B05d9": [
+      "error AdditionalZkLighter_AccountIsNotRegistered()",
+      "error AdditionalZkLighter_InvalidAccountIndex()",
+      "error AdditionalZkLighter_InvalidApiKeyIndex()",
+      "error AdditionalZkLighter_InvalidAssetIndex()",
+      "error AdditionalZkLighter_InvalidBatch()",
+      "error AdditionalZkLighter_InvalidConfigPeriod()",
+      "error AdditionalZkLighter_InvalidCreateOrderParameters()",
+      "error AdditionalZkLighter_InvalidDepositAmount()",
+      "error AdditionalZkLighter_InvalidDepositBatchLength()",
+      "error AdditionalZkLighter_InvalidExtensionMultiplier()",
+      "error AdditionalZkLighter_InvalidFeeAmount()",
+      "error AdditionalZkLighter_InvalidFundingClampsOrInterestRate()",
+      "error AdditionalZkLighter_InvalidMarginFraction()",
+      "error AdditionalZkLighter_InvalidMarginMode()",
+      "error AdditionalZkLighter_InvalidMarketLimits()",
+      "error AdditionalZkLighter_InvalidMarketStatus()",
+      "error AdditionalZkLighter_InvalidMarketType()",
+      "error AdditionalZkLighter_InvalidMinAmounts()",
+      "error AdditionalZkLighter_InvalidPubKey()",
+      "error AdditionalZkLighter_InvalidShareAmount()",
+      "error AdditionalZkLighter_InvalidWithdrawAmount()",
+      "error AdditionalZkLighter_RecipientAddressInvalid()",
+      "error AdditionalZkLighter_StateRootUpgradeVerifierFailed()",
+      "error ZkLighter_DesertModeActive()",
+      "event BatchCommit(uint64 batchNumber, uint32 batchSize, uint64 endBlockNumber)",
+      "event BatchVerification(uint64 batchNumber, uint32 batchSize, uint64 endBlockNumber)",
+      "event BatchesExecuted(uint64 batchNumber, uint64 endBlockNumber)",
+      "event BatchesRevert(uint64 newTotalBlocksCommitted)",
+      "event CreateMarket(tuple(uint16 marketIndex, uint8 marketType, bytes marketData) params, uint8 sizeDecimals, uint8 priceDecimals, bytes32 symbol)",
+      "event Deposit(uint48 toAccountIndex, address toAddress, uint16 assetIndex, uint8 routeType, uint128 baseAmount)",
+      "event DesertMode()",
+      "event Initialized(uint8 version)",
+      "event InsuranceFundOperatorUpdate(address newInsuranceFundOperator)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 pubdataType, bytes pubData, uint64 expirationTimestamp)",
+      "event RegisterAsset(tuple(uint16 assetIndex, uint56 extensionMultiplier, uint64 minL2TransferAmount, uint64 minL2WithdrawalAmount, uint8 marginMode) params, uint8 l1Decimals, uint8 decimals, bytes32 symbol)",
+      "event RegisterAssetConfig(uint16 assetIndex, address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
+      "event StateRootUpdate(uint64 batchNumber, bytes32 oldStateRoot, bytes32 newStateRoot)",
+      "event TreasuryUpdate(address newTreasury)",
+      "event UpdateAsset(tuple(uint16 assetIndex, uint64 minL2TransferAmount, uint64 minL2WithdrawalAmount, uint8 marginMode) params)",
+      "event UpdateAssetConfig(uint16 assetIndex, uint8 withdrawalsEnabled, uint64 depositCapTicks, uint64 minDepositTicks)",
+      "event UpdateMarket(tuple(uint16 marketIndex, uint8 marketType, bytes marketData) params)",
+      "event WithdrawPending(address indexed owner, uint16 assetIndex, uint128 baseAmount)",
+      "function MAX_ACCOUNT_INDEX() view returns (uint48)",
+      "function MAX_API_KEY_INDEX() view returns (uint8)",
+      "function MAX_ASSET_INDEX() view returns (uint16)",
+      "function MAX_BATCH_DEPOSIT_LENGTH() view returns (uint64)",
+      "function MAX_DEPOSIT_CAP_TICKS() view returns (uint64)",
+      "function MAX_MASTER_ACCOUNT_INDEX() view returns (uint48)",
+      "function MAX_ORDER_BASE_AMOUNT() view returns (uint48)",
+      "function MAX_ORDER_PRICE() view returns (uint32)",
+      "function MAX_ORDER_QUOTE_AMOUNT() view returns (uint48)",
+      "function MAX_PERPS_MARKET_INDEX() view returns (uint16)",
+      "function MAX_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MAX_SPOT_MARKET_INDEX() view returns (uint16)",
+      "function MAX_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MAX_TICK_SIZE() view returns (uint128)",
+      "function MIN_ASSET_INDEX() view returns (uint16)",
+      "function MIN_ORDER_BASE_AMOUNT() view returns (uint48)",
+      "function MIN_ORDER_PRICE() view returns (uint32)",
+      "function MIN_POOL_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function MIN_SPOT_MARKET_INDEX() view returns (uint16)",
+      "function MIN_STAKING_SHARES_TO_MINT_OR_BURN() view returns (uint64)",
+      "function NATIVE_ASSET_INDEX() view returns (uint16)",
+      "function NIL_ACCOUNT_INDEX() view returns (uint48)",
+      "function NIL_ORDER_BASE_AMOUNT() view returns (uint48)",
+      "function PRIORITY_EXPIRATION() view returns (uint256)",
+      "function USDC_ASSET_INDEX() view returns (uint16)",
+      "function __DEPRECATED_stateRootUpdates(uint64) view returns (bytes32)",
+      "function addressToAccountIndex(address) view returns (uint48)",
+      "function assetConfigs(uint16) view returns (address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
+      "function burnShares(uint48 _accountIndex, uint48 _publicPoolIndex, uint64 _shareAmount)",
+      "function cancelAllOrders(uint48 _accountIndex)",
+      "function changePubKey(uint48 _accountIndex, uint8 _apiKeyIndex, bytes _pubKey)",
+      "function committedBatchesCount() view returns (uint64)",
+      "function committedPriorityRequestCount() view returns (uint64)",
+      "function createMarket(uint8 _size_decimals, uint8 _price_decimals, bytes32 _symbol, tuple(uint16 marketIndex, uint8 marketType, bytes marketData) _params)",
+      "function createOrder(uint48 _accountIndex, uint16 _marketIndex, uint48 _baseAmount, uint32 _price, uint8 _isAsk, uint8 _orderType)",
+      "function deposit(address _to, uint16 _assetIndex, uint8 _routeType, uint256 _amount) payable",
+      "function depositBatch(uint64[] _amount, address[] _to, uint48[] _accountIndex)",
+      "function desertMode() view returns (bool)",
+      "function executedBatchesCount() view returns (uint64)",
+      "function executedOnChainBatchesCount() view returns (uint64)",
+      "function executedPriorityRequestCount() view returns (uint64)",
+      "function insuranceFundOperator() view returns (address)",
+      "function lastAccountIndex() view returns (uint48)",
+      "function lastVerifiedEndBlockNumber() view returns (uint64)",
+      "function lastVerifiedStateRoot() view returns (bytes32)",
+      "function lastVerifiedValidiumRoot() view returns (bytes32)",
+      "function openPriorityRequestCount() view returns (uint64)",
+      "function pendingOnChainBatchesCount() view returns (uint64)",
+      "function registerAsset(uint8 _l1Decimals, uint8 _decimals, bytes32 _symbol, tuple(uint16 assetIndex, uint56 extensionMultiplier, uint64 minL2TransferAmount, uint64 minL2WithdrawalAmount, uint8 marginMode) _params)",
+      "function setSystemConfig(tuple(uint48 liquidityPoolIndex, uint48 stakingPoolIndex, uint48 liquidityPoolCooldownPeriod, uint48 stakingPoolLockupPeriod) _params)",
+      "function stateRoot() view returns (bytes32)",
+      "function stateRootUpdates(uint64) view returns (bytes32)",
+      "function storedBatchHashes(uint64) view returns (bytes32)",
+      "function tokenToAssetIndex(address) view returns (uint16)",
+      "function treasury() view returns (address)",
+      "function updateAsset(tuple(uint16 assetIndex, uint64 minL2TransferAmount, uint64 minL2WithdrawalAmount, uint8 marginMode) _params)",
+      "function updateMarket(tuple(uint16 marketIndex, uint8 marketType, bytes marketData) _params)",
+      "function updateStateRoot(tuple(uint64 batchNumber, uint64 endBlockNumber, uint32 batchSize, uint64 startTimestamp, uint64 endTimestamp, uint32 priorityRequestCount, bytes32 prefixPriorityRequestHash, bytes32 onChainOperationsHash, bytes32 stateRoot, bytes32 validiumRoot, bytes32 commitment) _lastStoredBatch, bytes32 _stateRoot, bytes32 _validiumRoot, bytes proof)",
+      "function validiumRoot() view returns (bytes32)",
+      "function verifiedBatchesCount() view returns (uint64)",
+      "function verifiedPriorityRequestCount() view returns (uint64)",
+      "function withdraw(uint48 _accountIndex, uint16 _assetIndex, uint8 _routeType, uint64 _baseAmount)"
     ]
   },
   "usedTemplates": {
@@ -1091,6 +1154,6 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpot": "0xc00318e126be1461845e143d518fe8dc218304f44203d1b26d6498613c67f4a0"
   },
-  "usedBlockNumbers": { "ethereum": 24174705 },
-  "permissionsConfigHash": "0xc400b717b3ea8371bbdf6793658d0db481d032bbcb1a32d6e30bc06d879ab9e6"
+  "usedBlockNumbers": { "ethereum": 24519630 },
+  "permissionsConfigHash": "0xd1e0b2f796c0d96b4b9801c4453b5edc394d28a91eb706a0ef4d51bb4c58fc9a"
 }

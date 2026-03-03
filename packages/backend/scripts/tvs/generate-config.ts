@@ -71,9 +71,7 @@ const cmd = command({
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-    let projects:
-      | Project<'escrows' | 'tvsInfo', 'chainConfig' | 'isBridge'>[]
-      | undefined
+    let projects: Project<'escrows' | 'tvsInfo', 'chainConfig'>[] | undefined
 
     const start = Date.now()
 
@@ -91,7 +89,7 @@ const cmd = command({
       projects = (
         await ps.getProjects({
           select: ['escrows', 'tvsInfo'],
-          optional: ['chainConfig', 'isBridge'],
+          optional: ['chainConfig'],
         })
       ).filter(
         (project) =>
@@ -112,7 +110,7 @@ const cmd = command({
       const project = await ps.getProject({
         id: ProjectId(args.project),
         select: ['escrows', 'tvsInfo'],
-        optional: ['chainConfig', 'isBridge'],
+        optional: ['chainConfig'],
       })
 
       if (!project) {
@@ -173,6 +171,7 @@ const cmd = command({
           tvsForProject,
           lastNonZeroValues,
           args.includeZeroAmounts,
+          timestamp,
           logger,
         ).sort((a, b) => a.id.localeCompare(b.id))
       } else {
@@ -237,6 +236,7 @@ function updateConfigWithTvs(
   tvs: TokenValue[],
   lastNonZeroValues: TokenValue[],
   includeZeroAmounts: boolean,
+  timestamp: number,
   logger: Logger,
 ) {
   const updatedTokens: TvsToken[] = []
@@ -287,6 +287,14 @@ function updateConfigWithTvs(
 
     updatedTokens.push(tokenConfig)
   }
+
+  // Keep tokens that are not active at the current timestamp (historical)
+  const updatedTokenIds = new Set(updatedTokens.map((token) => token.id))
+  const outOfRangeTokens = regenerated.filter(
+    (token) =>
+      !updatedTokenIds.has(token.id) && !isInTokenSyncRange(token, timestamp),
+  )
+  updatedTokens.push(...outOfRangeTokens)
 
   return updatedTokens
 }

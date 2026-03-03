@@ -5,12 +5,16 @@ import {
   type DashboardProject,
   getDashboardProjects,
 } from './props/getDashboardProjects'
+import {
+  renderDashboardMarkdown,
+  renderProjectMarkdown,
+} from './view/DashboardMarkdown'
 import { renderDashboardPage } from './view/DashboardPage'
 
 export class UpdateMonitorController {
   private readonly onDiskConfigs: ConfigRegistry[] = []
   private projectConfigs:
-    | Project<never, 'scalingInfo' | 'isBridge' | 'isDaLayer'>[]
+    | Project<never, 'scalingInfo' | 'isDaLayer'>[]
     | undefined
 
   constructor(
@@ -24,23 +28,36 @@ export class UpdateMonitorController {
   }
 
   async getDiscoveryDashboard(selectedEmoji?: string): Promise<string> {
-    const projects: DashboardProject[] = await getDashboardProjects(
-      this.onDiskConfigs.filter((config) => !config.archived),
-      this.configReader,
-      this.db,
-      this.projectService,
-    )
-
-    const projectConfigs = await this.getProjectConfigs()
-    const projectsWithHighSeverityChanges = new Set(
-      (await this.db.updateDiff.getAll()).map((diff) => diff.projectId),
-    )
+    const { projects, projectConfigs, projectsWithHighSeverityChanges } =
+      await this.getDiscoveryDashboardData()
     return renderDashboardPage(
       projects,
       projectConfigs,
       projectsWithHighSeverityChanges,
       selectedEmoji,
     )
+  }
+
+  async getDiscoveryDashboardMarkdown(selectedEmoji?: string): Promise<string> {
+    const { projects, projectConfigs, projectsWithHighSeverityChanges } =
+      await this.getDiscoveryDashboardData()
+    return renderDashboardMarkdown(
+      projects,
+      projectConfigs,
+      projectsWithHighSeverityChanges,
+      selectedEmoji,
+    )
+  }
+
+  async getProjectMarkdown(projectName: string): Promise<string | null> {
+    const { projects, projectsWithHighSeverityChanges } =
+      await this.getDiscoveryDashboardData()
+    const project = projects.find((p) => p.name === projectName)
+    if (!project) {
+      return null
+    }
+    const hasHighSeverity = projectsWithHighSeverityChanges.has(project.name)
+    return renderProjectMarkdown(project, hasHighSeverity)
   }
 
   async getUpdates() {
@@ -57,10 +74,30 @@ export class UpdateMonitorController {
 
     const ps = new ProjectService()
     this.projectConfigs = await ps.getProjects({
-      optional: ['scalingInfo', 'isBridge', 'isDaLayer'],
+      optional: ['scalingInfo', 'isDaLayer'],
       whereNot: ['isUpcoming'],
     })
 
     return this.projectConfigs
+  }
+
+  private async getDiscoveryDashboardData(): Promise<{
+    projects: DashboardProject[]
+    projectConfigs: Project<never, 'scalingInfo' | 'isDaLayer'>[]
+    projectsWithHighSeverityChanges: Set<string>
+  }> {
+    const projects: DashboardProject[] = await getDashboardProjects(
+      this.onDiskConfigs.filter((config) => !config.archived),
+      this.configReader,
+      this.db,
+      this.projectService,
+    )
+
+    const projectConfigs = await this.getProjectConfigs()
+    const projectsWithHighSeverityChanges = new Set(
+      (await this.db.updateDiff.getAll()).map((diff) => diff.projectId),
+    )
+
+    return { projects, projectConfigs, projectsWithHighSeverityChanges }
   }
 }

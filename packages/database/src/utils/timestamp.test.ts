@@ -75,7 +75,7 @@ describe('timestamp utilities', () => {
 
     it('handles null through round-trip', () => {
       const date = fromTimestamp(null)
-      const result = toTimestamp(date as Date)
+      const result = toTimestamp(date)
       expect(result).toEqual(null)
     })
   })

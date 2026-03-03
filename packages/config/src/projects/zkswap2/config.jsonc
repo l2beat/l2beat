@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "zkswap2",
+  "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7"],
   "names": {

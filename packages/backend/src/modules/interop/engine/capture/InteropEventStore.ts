@@ -28,11 +28,12 @@ export class InteropEventStore implements InteropEventDb {
   }
 
   async saveNewEvents(events: InteropEvent[]): Promise<void> {
+    // Add to DB first, so if it fails, events will not be added to memory
+    const records = events.map((e) => toDbRecord(e))
+    await this.db.interopEvent.insertMany(records)
     for (const event of events) {
       this.eventDb.addEvent(event)
     }
-    const records = events.map((e) => toDbRecord(e))
-    await this.db.interopEvent.insertMany(records)
   }
 
   async updateMatchedAndUnsupported({
@@ -42,13 +43,13 @@ export class InteropEventStore implements InteropEventDb {
     matched: InteropEvent[]
     unsupported: InteropEvent[]
   }): Promise<void> {
-    this.eventDb.removeEvents([...matched, ...unsupported])
     await this.db.transaction(async () => {
       await this.db.interopEvent.updateMatched(matched.map((e) => e.eventId))
       await this.db.interopEvent.updateUnsupported(
         unsupported.map((e) => e.eventId),
       )
     })
+    this.eventDb.removeEvents([...matched, ...unsupported])
   }
 
   getEvents(type: string): InteropEvent[] {
@@ -74,7 +75,7 @@ export class InteropEventStore implements InteropEventDb {
     type: InteropEventType<T>,
     query: InteropEventQuery<T>,
     approximate: InteropApproximateQuery<T>,
-  ): InteropEvent<T> | undefined {
+  ): InteropEvent<T>[] {
     return this.eventDb.findApproximate(type, query, approximate)
   }
 
@@ -86,8 +87,15 @@ export class InteropEventStore implements InteropEventDb {
   }
 
   async deleteExpired(now: UnixTime) {
+    const count = await this.db.interopEvent.deleteExpired(now)
     this.eventDb.removeExpired(now)
-    return await this.db.interopEvent.deleteExpired(now)
+    return count
+  }
+
+  async deleteAllForPlugin(plugin: string) {
+    const count = await this.db.interopEvent.deleteAllForPlugin(plugin)
+    this.eventDb.removeForPlugin(plugin)
+    return count
   }
 }
 

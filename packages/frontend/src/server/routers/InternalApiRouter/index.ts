@@ -3,7 +3,6 @@ import { v } from '@l2beat/validate'
 import express from 'express'
 import { validateRoute } from '~/utils/validateRoute'
 import { getDiscolupeProjects } from './getDiscolupeProjects'
-import { getHotPages } from './getHotPages'
 import { getInternalTokenBreakdown } from './getInternalTokenBreakdown'
 import { getLivenessTxs } from './getLivenessTxs'
 import { getLogoGeneratorProjects } from './getLogoGeneratorProjects'
@@ -22,9 +21,8 @@ export function createInternalApiRouter() {
     next()
   })
 
-  router.get('/api/hot-pages', async (_, res) => {
-    const hotPages = await getHotPages()
-    res.json(hotPages)
+  router.get('/api/hot-pages', (_, res) => {
+    res.json([])
   })
 
   router.get('/api/discolupe', async (_, res) => {

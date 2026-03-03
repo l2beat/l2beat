@@ -4,8 +4,8 @@ import {
   type ProjectId,
 } from '@l2beat/shared-pure'
 import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
-import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 
 export interface ContractUtils {
   getChainName(chain: string): string
@@ -68,16 +68,14 @@ async function getContractUsageMap() {
     ps.getProjects({ where: ['daLayer'] }),
     ps.getProjects({
       select: ['contracts'],
-      optional: ['permissions', 'isScaling', 'isBridge', 'daBridge'],
+      optional: ['permissions', 'isScaling', 'daBridge'],
       whereNot: ['archivedAt'],
     }),
   ])
 
   for (const project of projects) {
     let url = `/scaling/projects/${project.slug}`
-    if (project.isBridge) {
-      url = `/bridges/projects/${project.slug}`
-    } else if (project.daBridge) {
+    if (project.daBridge) {
       const layer = daLayers.find((x) => x.id === project.daBridge?.daLayer)
       url = `/data-availability/projects/${layer?.slug}/${project.slug}`
     }
@@ -86,7 +84,7 @@ async function getContractUsageMap() {
       id: project.id,
       name: project.name,
       slug: project.slug,
-      icon: getProjectIcon(project.slug),
+      icon: manifest.getUrl(`/icons/${project.slug}.png`),
       url,
     }
 

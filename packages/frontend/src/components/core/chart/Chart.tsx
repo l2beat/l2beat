@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
@@ -53,7 +54,6 @@ export function useChart() {
 }
 
 const chartContainerClassNames = cn(
-  'group relative',
   "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
   // Tooltip cursor line
   '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-2 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
@@ -66,9 +66,9 @@ const chartContainerClassNames = cn(
   // Cartesian grid line
   "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
   // Cartesian X axis tick text
-  '[&_.xAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.xAxis_.recharts-cartesian-axis-tick_text]:font-medium [&_.xAxis_.recharts-cartesian-axis-tick_text]:text-3xs [&_.xAxis_.recharts-cartesian-axis-tick_text]:leading-none',
+  '[&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-medium [&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-3xs [&_.recharts-xAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:leading-none',
   // Cartesian Y axis tick text
-  '[&_.yAxis_.recharts-cartesian-axis-tick_text]:z-100 [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/50 [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-sm dark:[&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/70',
+  '[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:z-100 [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-primary/50 [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-sm dark:[&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-primary/70',
   // Polar grid
   "[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/40",
   // Reference line
@@ -77,13 +77,12 @@ const chartContainerClassNames = cn(
 
 export interface ChartProject {
   id: ProjectId
-  slug: string
   name: string
   shortName: string | undefined
+  iconUrl: string
 }
 
 function ChartContainer<T extends { timestamp: number }>({
-  className,
   children,
   meta,
   data,
@@ -94,12 +93,9 @@ function ChartContainer<T extends { timestamp: number }>({
   size = 'regular',
   interactiveLegend,
   project,
-  ...props
-}: React.ComponentProps<'div'> & {
+}: {
   meta: ChartMeta
-  children: React.ComponentProps<
-    typeof RechartsPrimitive.ResponsiveContainer
-  >['children']
+  children: React.ReactNode
   data: T[] | undefined
   interactiveLegend?: {
     dataKeys: string[]
@@ -124,26 +120,22 @@ function ChartContainer<T extends { timestamp: number }>({
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
-      <div
-        ref={ref}
-        className={cn(
-          chartContainerClassNames,
-          size === 'regular' &&
-            'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
-          size === 'small' && 'h-[114px] min-h-[114px] w-full',
-          noDataSourcesSelected && [
-            '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
-            '[&_.recharts-reference-area]:hidden',
-          ],
-          className,
-        )}
-        {...props}
-      >
-        <RechartsPrimitive.ResponsiveContainer
-          className={cn(isLoading && 'pointer-events-none')}
+      <div ref={ref} className="group relative">
+        <Slot
+          className={cn(
+            chartContainerClassNames,
+            size === 'regular' &&
+              'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
+            size === 'small' && 'h-[114px] min-h-[114px] w-full',
+            noDataSourcesSelected && [
+              '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
+              '[&_.recharts-reference-area]:hidden',
+            ],
+            (isLoading || !hasData) && 'pointer-events-none',
+          )}
         >
           {children}
-        </RechartsPrimitive.ResponsiveContainer>
+        </Slot>
         {(!!isLoading || !isClient) && (
           <ChartLoader
             className={cn(
@@ -194,29 +186,25 @@ function ChartContainer<T extends { timestamp: number }>({
 ChartContainer.displayName = 'Chart'
 
 function SimpleChartContainer({
-  className,
   children,
   meta,
-  ...props
-}: React.ComponentProps<'div'> & {
+}: {
   meta: ChartMeta
-  children: React.ComponentProps<
-    typeof RechartsPrimitive.ResponsiveContainer
-  >['children']
+  children: React.ReactNode
 }) {
   return (
     <ChartContext.Provider value={{ meta }}>
-      <div className={cn(chartContainerClassNames, className)} {...props}>
-        <RechartsPrimitive.ResponsiveContainer>
-          {children}
-        </RechartsPrimitive.ResponsiveContainer>
-      </div>
+      <Slot className={chartContainerClassNames}>{children}</Slot>
     </ChartContext.Provider>
   )
 }
 SimpleChartContainer.displayName = 'Chart'
 
 const ChartTooltip = RechartsPrimitive.Tooltip
+type CustomChartTooltipProps = Omit<
+  RechartsPrimitive.DefaultTooltipContentProps<number, string>,
+  'accessibilityLayer'
+>
 
 function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
   return <div className={tooltipContentVariants()}>{children}</div>
@@ -227,11 +215,15 @@ const ChartLegend = RechartsPrimitive.Legend
 function ChartLegendContent({
   className,
   payload,
-  verticalAlign = 'bottom',
+  verticalAlign,
+  align = 'center',
   nameKey,
   children,
 }: React.ComponentProps<'div'> &
-  Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
+  Pick<
+    RechartsPrimitive.DefaultLegendContentProps,
+    'payload' | 'verticalAlign' | 'align'
+  > & {
     nameKey?: string
   }) {
   const id = React.useId()
@@ -259,17 +251,20 @@ function ChartLegendContent({
           !hasFinishedOnboardingInitial &&
           !interactiveLegend.disableOnboarding &&
           'mb-3',
+        verticalAlign === 'top' && 'pb-4 md:pb-8',
       )}
     >
-      <div className="mx-auto flex w-max max-w-full items-center">
+      <div
+        className={cn(
+          'flex w-max max-w-full items-center',
+          align === 'center' && 'mx-auto',
+          align === 'right' && 'ml-auto',
+        )}
+      >
         {children}
         <OverflowWrapper childrenRef={contentRef} className="min-w-0">
           <div
-            className={cn(
-              'flex h-3.5 w-max items-center gap-2',
-              verticalAlign === 'top' && 'pb-3',
-              className,
-            )}
+            className={cn('flex h-3.5 w-max items-center gap-2', className)}
             ref={contentRef}
           >
             {actualPayload.map((item) => {
@@ -303,9 +298,8 @@ function ChartLegendContent({
                     type={itemConfig.indicatorType}
                     backgroundColor={itemConfig.color}
                   />
-                  <span
+                  <ChartLegendItemLabel
                     className={cn(
-                      'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
                       !isHidden &&
                         interactiveLegend &&
                         'group-hover/legend-item:opacity-50',
@@ -313,7 +307,7 @@ function ChartLegendContent({
                     )}
                   >
                     {itemConfig.legendLabel ?? itemConfig.label}
-                  </span>
+                  </ChartLegendItemLabel>
                 </div>
               )
             })}
@@ -339,6 +333,25 @@ function ChartLegendContent({
   )
 }
 ChartLegendContent.displayName = 'ChartLegend'
+
+function ChartLegendItemLabel({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <span
+      className={cn(
+        'text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px] transition-opacity',
+        className,
+      )}
+    >
+      {children}
+    </span>
+  )
+}
 
 // Helper to extract item config from a payload.
 function getPayloadConfigFromPayload(
@@ -382,6 +395,7 @@ export {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  type CustomChartTooltipProps,
   ChartTooltipWrapper,
   SimpleChartContainer,
 }

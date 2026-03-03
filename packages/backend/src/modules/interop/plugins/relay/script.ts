@@ -2,7 +2,10 @@ import { ProjectService } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { RelayApiClient } from './RelayApiClient'
 
-main()
+main().catch((error) => {
+  console.error('Error:', error)
+  process.exit(1)
+})
 
 async function main() {
   const client = new RelayApiClient(new HttpClient())

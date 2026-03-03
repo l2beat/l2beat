@@ -1,24 +1,24 @@
-import type { ComponentProps, ReactNode } from 'react'
+import type { ComponentProps } from 'react'
 import { Area } from 'recharts'
 
-interface AreaChartProps {
+interface ChartStrokeOverFillAreaComponentsProps {
   data: Omit<ComponentProps<typeof Area>, 'ref'>[]
 }
 
 /**
- * This function generates components for multi-series area charts (non-stacked).
+ * This component generates components for multi-series area charts (non-stacked).
  * It separates each area into two components: one for the fill and one for the stroke.
  * This approach ensures that all strokes are rendered on top of all fills, preventing
  * visual artifacts where strokes from one series might be hidden behind the fill of another.
  * @param data - array of area chart props
  * @example
  * <AreaChart>
- *   {getStrokeOverFillAreaComponents({ data })}
+ *   <ChartStrokeOverFillAreaComponents data={data} />
  * </AreaChart>
  */
-export function getStrokeOverFillAreaComponents({
+export function ChartStrokeOverFillAreaComponents({
   data,
-}: AreaChartProps): ReactNode[] {
+}: ChartStrokeOverFillAreaComponentsProps) {
   const fillComponents = []
   const strokeComponents = []
 
@@ -47,5 +47,5 @@ export function getStrokeOverFillAreaComponents({
     index++
   }
 
-  return [...fillComponents, ...strokeComponents]
+  return <>{[...fillComponents, ...strokeComponents]}</>
 }

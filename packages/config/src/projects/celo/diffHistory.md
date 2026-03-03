@@ -1,3 +1,212 @@
+Generated with discovered.json: 0x8060d3967c6e27d2c5369c984c8e871489bc255c
+
+# Diff at Fri, 27 Feb 2026 13:21:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1771936675
+- current timestamp: 1772198382
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
+Generated with discovered.json: 0xd0ca5c02d378cf54d0fe5f3de4ca2c63e22c800c
+
+# Diff at Tue, 24 Feb 2026 12:39:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@6b636e64e387bed6b106ab3fb3c740f41fdb72fe block: 1771496067
+- current timestamp: 1771936675
+
+## Description
+
+Rename Celo Multisig 1 to Celo Security Council (6/8, community members from L2Beat, Hyperlane, Valora, Mento and others) and Celo Multisig 2 to Celo cLabs Multisig. Add reference to Celo Security Council docs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771496067 (main branch discovery), not current.
+
+```diff
+    contract Celo cLabs Multisig (eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d) {
+    +++ description: None
+      name:
+-        "Celo Multisig 2"
++        "Celo cLabs Multisig"
+    }
+```
+
+```diff
+    contract Celo Security Council (eth:0xC03172263409584f7860C25B6eB4985f0f6F4636) {
+    +++ description: None
+      name:
+-        "Celo Multisig 1"
++        "Celo Security Council"
+      references:
++        [{"text":"Security Council members - Celo Docs","href":"https://docs.celo.org/home/protocol/security-council"}]
+    }
+```
+
+Generated with discovered.json: 0x689b6a7fcf56e61f67e987e4f558aaf57133e4a5
+
+# Diff at Thu, 19 Feb 2026 10:15:36 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2b96f087639b90912cc82e06e34e7b0beefda5ab block: 1770736055
+- current timestamp: 1771496067
+
+## Description
+
+New SP1Verifier (v6.0.0) registered on the SP1VerifierGateway with selector `0xbb1a6f29`.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.1:
++        {"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.10:
++        {"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C)
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+## Source code changes
+
+```diff
+...0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol} |    0
+ ...:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C.sol | 1423 ++++++++++++++++++++
+ 2 files changed, 1423 insertions(+)
+```
+
+Generated with discovered.json: 0x59b7998363c40179e885e8cb8b5b69c4e053abc1
+
+# Diff at Fri, 13 Feb 2026 11:33:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1770736055
+- current timestamp: 1770736055
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770736055 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "EXPECT_REVERT"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
+Generated with discovered.json: 0xcdc5ba2261c45831df3808f167a1360abbc201cc
+
+# Diff at Tue, 10 Feb 2026 15:08:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1769272310
+- current timestamp: 1770736055
+
+## Description
+
+OPSuccinctFaultDisputeGame instance replaced in DisputeGameFactory (game42). Same contract version (1.0.0) but with updated SP1 proving keys: new aggregationVkey and rangeVkeyCommitment. The rollupConfigHash remains unchanged.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OPSuccinctFaultDisputeGame (eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
+-        "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e"
++        "eth:0xc5bd131ceAEb72F15C66418bc2668332AB99DE37"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctFaultDisputeGame (eth:0xc5bd131ceAEb72F15C66418bc2668332AB99DE37)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+Generated with discovered.json: 0x6d020f48887f8ad9038fc0c7b36ae29bcbba5e16
+
+# Diff at Mon, 26 Jan 2026 09:08:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766048053
+- current timestamp: 1769272310
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe. Timelock delays currently 0.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/celo/.flat/SaferSafes.sol         | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
 Generated with discovered.json: 0x9ba4e67fb76881a775c47316ca90294cede0c3d6
 
 # Diff at Thu, 18 Dec 2025 08:55:55 GMT:

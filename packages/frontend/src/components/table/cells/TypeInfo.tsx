@@ -1,12 +1,12 @@
 import type { ProjectScalingStack } from '@l2beat/config'
 import type { JSX } from 'react'
 import { EM_DASH } from '~/consts/characters'
+import { AgglayerIcon } from '~/icons/providers/AgglayerIcon'
 import { ArbitrumIcon } from '~/icons/providers/ArbitrumIcon'
 import { CartesiIcon } from '~/icons/providers/CartesiIcon'
 import { LoopringIcon } from '~/icons/providers/LoopringIcon'
 import { OptimismIcon } from '~/icons/providers/OptimismIcon'
 import { OVMIcon } from '~/icons/providers/OvmIcon'
-import { PolygonIcon } from '~/icons/providers/PolygonIcon'
 import { StarknetIcon } from '~/icons/providers/StarknetIcon'
 import { StarkWareIcon } from '~/icons/providers/StarkwareIcon'
 import { TaikoIcon } from '~/icons/providers/TaikoIcon'
@@ -81,7 +81,7 @@ const providerMap: Record<ProjectScalingStack, ProviderProps | undefined> = {
     text: "This project is based on Arbitrum's code base.",
   },
   'Agglayer CDK': {
-    Icon: PolygonIcon,
+    Icon: AgglayerIcon,
     text: 'This project is based on the Agglayer CDK code base.',
   },
   'SN Stack': {

@@ -40,4 +40,7 @@ If you are running `pnpm dev` or `pnpm build` you need to set the following envi
 - create file `.env` in frontend root folder
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
 
+Optional for interop debugging:
+- `INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE` - if present, interop aggregate queries use the earliest timestamp from the timestamp's day instead of the latest timestamp
+
 *if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉

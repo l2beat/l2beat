@@ -368,6 +368,7 @@
   --color-pink-750: #bc4b51;
   --color-pink-800: #b94ddf;
   --color-pink-900: #ab3bd2;
+  --color-n-pink-350: #ff5ffb;
   --color-n-pink-400: #fc49c2;
 
   --color-green-200: #b0ffaa;
@@ -764,4 +765,24 @@
   }
   -ms-overflow-style: none !important; /* IE and Edge */
   scrollbar-width: none !important; /* Firefox */
+}
+
+/* Theme toggle view transition */
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  animation: reveal-from-circle 0.4s ease-in-out;
+  z-index: 2;
+}
+
+@keyframes reveal-from-circle {
+  from {
+    clip-path: circle(0 at var(--circle-x) var(--circle-y));
+  }
+  to {
+    clip-path: circle(var(--circle-radius) at var(--circle-x) var(--circle-y));
+  }
 }

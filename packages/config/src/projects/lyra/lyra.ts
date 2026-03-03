@@ -39,6 +39,7 @@ export const lyra: ScalingProject = opStackL2({
         'https://discord.gg/Derive',
         'https://youtube.com/@derivexyz',
         'https://linkedin.com/company/derivelabs',
+        'https://t.me/Derive_Announcements',
       ],
       other: ['https://growthepie.com/chains/derive'],
     },

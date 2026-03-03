@@ -435,48 +435,36 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-DAI-1",
+      "id": "optimism-DAI",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-        "decimals": 18,
-        "sinceTimestamp": 1624401464
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+            "decimals": 18,
+            "sinceTimestamp": 1624401464
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+            "decimals": 18,
+            "sinceTimestamp": 1625675779
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "optimism-DAI-2",
-      "priceId": "dai",
-      "symbol": "DAI",
-      "name": "Dai Stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
-        "decimals": 18,
-        "sinceTimestamp": 1625675779
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
     },
     {
       "mode": "auto",
@@ -703,6 +691,26 @@
         "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "decimals": 18,
         "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1689552000,
+        "untilTimestamp": 1742428800
       },
       "category": "other",
       "source": "canonical",
@@ -1722,26 +1730,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-SNX-1",
-      "priceId": "havven",
-      "symbol": "SNX",
-      "name": "Synthetix Network Token",
-      "iconUrl": "https://assets.coingecko.com/coins/images/3406/large/SNX.png?1696504103",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
-        "chain": "ethereum",
-        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-        "decimals": 18,
-        "sinceTimestamp": 1624401464
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "optimism-SNX-2",
+      "id": "optimism-SNX",
       "priceId": "havven",
       "symbol": "SNX",
       "name": "Synthetix Network Token",
@@ -1750,6 +1739,14 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+            "chain": "ethereum",
+            "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+            "decimals": 18,
+            "sinceTimestamp": 1624401464
+          },
           {
             "type": "balanceOfEscrow",
             "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
@@ -1777,15 +1774,8 @@
         ]
       },
       "category": "other",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1860,14 +1850,14 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
     },
     {
       "mode": "custom",
-      "id": "optimism-sUSDS-2",
+      "id": "optimism-sUSDS",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
@@ -1923,7 +1913,7 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -2068,6 +2058,26 @@
         "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "decimals": 18,
         "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1706918400,
+        "untilTimestamp": 1742169600
       },
       "category": "other",
       "source": "canonical",
@@ -2281,14 +2291,14 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
     },
     {
       "mode": "custom",
-      "id": "optimism-USDS-2",
+      "id": "optimism-USDS",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",
@@ -2344,15 +2354,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -2534,48 +2537,36 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-wstETH-1",
+      "id": "optimism-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-        "decimals": 18,
-        "sinceTimestamp": 1633564800
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+            "decimals": 18,
+            "sinceTimestamp": 1633564800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
+            "decimals": 18,
+            "sinceTimestamp": 1659687799
+          }
+        ]
       },
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "optimism-wstETH-2",
-      "priceId": "wrapped-steth",
-      "symbol": "wstETH",
-      "name": "Wrapped liquid staked Ether 2.0",
-      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
-        "decimals": 18,
-        "sinceTimestamp": 1659687799
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
     },
     {
       "mode": "auto",

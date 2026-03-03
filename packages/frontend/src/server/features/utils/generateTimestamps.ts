@@ -21,7 +21,7 @@ export function generateTimestamps(
   )
 
   const generated = range(
-    Math.floor((to - from) / divider(resolution)) + 1,
+    Math.floor((to - adjustedFrom) / divider(resolution)) + 1,
   ).map((i) => {
     return (
       adjustedFrom +

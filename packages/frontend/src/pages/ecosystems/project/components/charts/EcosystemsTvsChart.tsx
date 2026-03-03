@@ -12,11 +12,12 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { Skeleton } from '~/components/core/Skeleton'
+import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
@@ -41,17 +42,20 @@ export function EcosystemsTvsChart({
   id: string
   name: string
   entries: EcosystemEntry['liveProjects']
-  allScalingProjectsTvs: number
+  allScalingProjectsTvs: EcosystemEntry['allScalingProjects']['tvs']
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
+  const {
+    display: { excludeRwaRestrictedTokens },
+  } = useEcosystemDisplayControlsContext()
 
   const { data, isLoading } = api.tvs.chart.useQuery({
     range,
     excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens: true,
+    excludeRwaRestrictedTokens,
     filter: {
       type: 'projects',
       projectIds: entries.map((project) => project.id).toSorted(),
@@ -85,7 +89,11 @@ export function EcosystemsTvsChart({
     } satisfies ChartMeta
   }, [name])
 
-  const stats = getStats(chartData, allScalingProjectsTvs)
+  const { withRwaRestricted, withoutRwaRestricted } = allScalingProjectsTvs
+  const stats = getStats(
+    chartData,
+    excludeRwaRestrictedTokens ? withoutRwaRestricted : withRwaRestricted,
+  )
   const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
@@ -100,10 +108,14 @@ export function EcosystemsTvsChart({
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
-        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
-        <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
+        <AreaChart
+          responsive
+          data={chartData}
+          className="h-44! min-h-44!"
+          margin={{ top: 20 }}
+        >
           <defs>
             <CustomFillGradientDef
               id="fill"
@@ -121,14 +133,14 @@ export function EcosystemsTvsChart({
             strokeWidth={2}
             isAnimationActive={false}
           />
-          {getCommonChartComponents({
-            data: chartData,
-            isLoading,
-            yAxis: {
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={{
               tickFormatter: (value: number) => formatCurrency(value, unit),
-            },
-            syncedUntil: data?.syncedUntil,
-          })}
+            }}
+            syncedUntil={data?.syncedUntil}
+          />
           <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>

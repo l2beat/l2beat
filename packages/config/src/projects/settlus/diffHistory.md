@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x837770b6147aa5d15445ad5397d6db3ce12d7fa2
+
+# Diff at Fri, 27 Feb 2026 13:25:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770993147
+- current timestamp: 1772198390
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
+Generated with discovered.json: 0x32689309aa202f04886883f0edc9077d29d6b2b8
+
+# Diff at Fri, 13 Feb 2026 14:33:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e1a04313e06de62db68bde894bcda2e7a6630a45 block: 1769272378
+- current timestamp: 1770993147
+
+## Description
+
+Settlus switched DA from Ethereum blobs to Celestia. The sequencer is no longer sending blob transactions.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x15C1dAED5443A77b4DcF6FE35cAFcCEBb0c6da0E) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSequencerSendingBlobTx:
+-        true
++        false
+      values.opStackDA.isUsingCelestia:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x7f21537e0f38ad017234549f2f2ea58434b8c8d2
+
+# Diff at Fri, 13 Feb 2026 11:33:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272378
+- current timestamp: 1769272378
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769272378 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "EXPECT_REVERT"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
+Generated with discovered.json: 0x679ecb7f6ed507e3c438ac9bb555e625f8401fc8
+
+# Diff at Mon, 26 Jan 2026 09:08:12 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ac37c78dd7a10d019f852f76f0bb7435768a0edc block: 1766048283
+- current timestamp: 1769272378
+
+## Description
+
+SaferSafes module (LivenessModule + TimelockGuard) added to OpFoundationUpgradeSafe. Timelock delays currently 0.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/settlus/.flat/SaferSafes.sol      | 3535 ++++++++++++++++++++
+ 1 file changed, 3535 insertions(+)
+```
+
 Generated with discovered.json: 0x156257507a839b1a6d71a28fb68544cb8723e686
 
 # Diff at Thu, 18 Dec 2025 08:59:29 GMT:

@@ -147,7 +147,7 @@ export const fuel: ScalingProject = {
         },
       },
     ],
-    activityConfig: { type: 'block' },
+    activityConfig: { type: 'block', adjustCount: { type: 'SubtractOne' } },
   },
   chainConfig: {
     name: 'fuel',

@@ -48,6 +48,7 @@ import type {
 } from '../../../../database/dist/repositories/ChainRepository'
 import { AutoFillIndicator } from '../AutoFillIndicator'
 import { CardActionButton, CardActionButtons } from '../CardActionButtons'
+import { Badge } from '../core/Badge'
 import { Card, CardContent } from '../core/Card'
 import { Checkbox } from '../core/Checkbox'
 import { Label } from '../core/Label'
@@ -67,20 +68,25 @@ export const fieldToDataSource: Record<
   'symbol' | 'decimals' | 'deploymentTimestamp' | 'abstractTokenId',
   DataSource[]
 > = {
-  symbol: ['coingecko'],
+  symbol: ['rpc', 'coingecko'],
   decimals: ['rpc'],
   deploymentTimestamp: ['etherscan', 'blockscout'],
   abstractTokenId: ['coingecko'],
 }
 
 export const dataSourceToLabel: Record<DataSource, string> = {
-  coingecko: 'Coingecko',
+  coingecko: 'CoinGecko',
   rpc: 'RPC',
   etherscan: 'Etherscan',
   blockscout: 'Blockscout',
   blockscoutV2: 'Blockscout V2',
   routescan: 'Routescan',
 }
+
+const symbolSourceToLabel = {
+  rpc: 'On-chain (RPC)',
+  coingecko: 'CoinGecko',
+} as const
 
 const TvsMetadata = v.object({
   includeInCalculations: v.boolean(),
@@ -153,9 +159,21 @@ export function DeployedTokenForm({
     (abstractToken) => abstractToken.id === abstractTokenId,
   )
   const chainValue = form.watch('chain')
+  const symbolValue = form.watch('symbol')
 
   const success =
     tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
+  const fetchedSymbol = tokenDetails.data?.data?.symbol
+  const symbolSource = tokenDetails.data?.data?.symbolSource as
+    | keyof typeof symbolSourceToLabel
+    | undefined
+  const shouldShowSymbolSourceIndicator =
+    symbolSource !== undefined &&
+    fetchedSymbol !== undefined &&
+    symbolValue === fetchedSymbol
+  const symbolSourceLabel = symbolSource
+    ? symbolSourceToLabel[symbolSource]
+    : undefined
 
   const metadata = form.watch('metadata')
 
@@ -298,7 +316,19 @@ export function DeployedTokenForm({
                         )
                       ) : null}
                     </div>
-                    <FormMessage />
+                    {tokenDetails.data?.error?.type === 'already-exists' ? (
+                      <p className="text-destructive text-sm">
+                        {tokenDetails.data.error.message}.{' '}
+                        <Link
+                          to={`/tokens/${chainValue}/${field.value}`}
+                          className="underline hover:no-underline"
+                        >
+                          View
+                        </Link>
+                      </p>
+                    ) : (
+                      <FormMessage />
+                    )}
                   </FormItem>
                 )
               }}
@@ -319,6 +349,11 @@ export function DeployedTokenForm({
                       available={autofill.symbol}
                       chainName={chainValue}
                     />
+                  )}
+                  {shouldShowSymbolSourceIndicator && symbolSourceLabel && (
+                    <Badge variant="outline" className="ml-1 text-[10px]">
+                      {symbolSourceLabel}
+                    </Badge>
                   )}
                 </FormLabel>
                 <FormControl>
@@ -527,6 +562,31 @@ export function DeployedTokenForm({
                     </Tooltip>
                   )}
                 </div>
+                {tokenDetails.data?.data?.abstractTokenSuggestions &&
+                  tokenDetails.data.data.abstractTokenSuggestions.length >
+                    0 && (
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-muted-foreground text-xs">
+                        Suggested:
+                      </span>
+                      {tokenDetails.data.data.abstractTokenSuggestions.map(
+                        (suggestion) => (
+                          <button
+                            key={suggestion.id}
+                            type="button"
+                            className="inline-flex items-center rounded-md border px-2 py-0.5 text-xs transition-colors hover:bg-accent"
+                            onClick={() => {
+                              form.setValue('abstractTokenId', suggestion.id, {
+                                shouldDirty: true,
+                              })
+                            }}
+                          >
+                            {getAbstractTokenDisplayId(suggestion)}
+                          </button>
+                        ),
+                      )}
+                    </div>
+                  )}
                 <FormMessage />
               </FormItem>
             )}

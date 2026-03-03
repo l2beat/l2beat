@@ -3,18 +3,20 @@ import type { ZkCatalogTvsSectionProps } from '~/components/projects/sections/tv
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
 import { optionToRange } from '~/utils/range/range'
+import { withProjectIcon } from '~/utils/withProjectIcon'
 
 export function getZkCatalogTvsSection(
   project: Project<'zkCatalogInfo', 'tvsInfo' | 'milestones'>,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
 ): Omit<ZkCatalogTvsSectionProps, keyof ProjectSectionProps> | undefined {
+  const allProjectsMap = new Map(
+    allProjects.map((project) => [project.id, project]),
+  )
+
   const projectsForTvs: ZkCatalogTvsSectionProps['projectsForTvs'] =
     project.zkCatalogInfo.projectsForTvs
       ?.flatMap((tvsProject) => {
-        const project = allProjects.find((p) => p.id === tvsProject.projectId)
+        const project = allProjectsMap.get(tvsProject.projectId)
         if (!project) {
           const logger = getLogger().for('getZkCatalogTvsSection')
           logger.warn(`Project ${tvsProject.projectId} not found`)
@@ -22,13 +24,28 @@ export function getZkCatalogTvsSection(
         }
 
         if (project.daBridge) {
-          return project.daBridge.usedIn.flatMap((p) => ({
-            projectId: p.id,
-            sinceTimestamp: tvsProject.sinceTimestamp,
-            untilTimestamp: tvsProject.untilTimestamp,
-          }))
+          return project.daBridge.usedIn.flatMap((p) => {
+            const usedProject = allProjectsMap.get(p.id)
+            if (!usedProject) {
+              const logger = getLogger().for('getZkCatalogTvsSection')
+              logger.warn(`Project ${p.id} not found`)
+              return []
+            }
+
+            return {
+              projectId: p.id,
+              name: usedProject.name,
+              sinceTimestamp: tvsProject.sinceTimestamp,
+              untilTimestamp: tvsProject.untilTimestamp,
+            }
+          })
         }
-        return tvsProject
+        return {
+          projectId: tvsProject.projectId,
+          name: project.name,
+          sinceTimestamp: tvsProject.sinceTimestamp,
+          untilTimestamp: tvsProject.untilTimestamp,
+        }
       })
       .filter((p) => p !== undefined) ?? []
 
@@ -40,7 +57,7 @@ export function getZkCatalogTvsSection(
     defaultRange: optionToRange('1y'),
     milestones: project.milestones ?? [],
     tvsInfo: project.tvsInfo,
-    project,
+    project: withProjectIcon(project),
     projectsForTvs,
   }
 }

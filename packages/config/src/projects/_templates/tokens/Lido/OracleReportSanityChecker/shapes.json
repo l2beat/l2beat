@@ -3,5 +3,11 @@
     "hash": "0xd50222dc8dfe7cd169366ab34979e2962975f9b018fa27dc1443d09a8698dc92",
     "address": "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
     "blockNumber": 22188285
+  },
+  "OracleReportSanityChecker_v2": {
+    "hash": "0xb1ae7110938670e0ac737a01859c9c6cec20361c269e686d82d1f9007f79dbd6",
+    "address": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
+    "chain": "ethereum",
+    "blockNumber": 24183468
   }
 }

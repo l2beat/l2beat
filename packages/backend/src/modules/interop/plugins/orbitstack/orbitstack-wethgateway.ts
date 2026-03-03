@@ -73,7 +73,7 @@ const parseWethWithdrawalFinalized = createEventParser(
 )
 
 export class OrbitStackWethGatewayPlugin implements InteropPlugin {
-  name = 'orbitstack-wethgateway'
+  readonly name = 'orbitstack-wethgateway'
 
   capture(input: LogToCapture) {
     if (input.chain === 'ethereum') {
@@ -178,6 +178,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
 
         if (wethWithdrawalLog) {
           // This is a WETH withdrawal! Capture it to prevent base plugin from seeing it
+          // Note: no ETH amount for WETH withdrawals as the value is in the token transfer
           return [
             L2ToL1Tx.create(input, {
               chain: network.chain,
@@ -309,9 +310,11 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           srcEvent: depositInitiated,
           srcAmount: depositInitiated.args.amount,
           srcTokenAddress: Address32.from(network.l1Weth),
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: Address32.from(network.l2Weth),
+          dstWasMinted: true,
         }),
       ]
     }
@@ -356,9 +359,11 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           srcEvent: withdrawalInitiated,
           srcAmount: withdrawalInitiated.args.amount,
           srcTokenAddress: Address32.from(network.l2Weth),
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: Address32.from(network.l1Weth),
+          dstWasMinted: false,
         }),
       ]
     }

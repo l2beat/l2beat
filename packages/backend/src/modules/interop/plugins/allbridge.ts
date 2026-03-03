@@ -84,7 +84,7 @@ export const TokensReceived = createInteropEventType<{
 }>('allbridge.TokensReceived')
 
 export class AllbridgePlugIn implements InteropPlugin {
-  name = 'allbridge'
+  readonly name = 'allbridge'
 
   capture(input: LogToCapture) {
     const messageSent = parseMessageSent(input.log, null)

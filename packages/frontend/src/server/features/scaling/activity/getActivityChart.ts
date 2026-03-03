@@ -4,19 +4,15 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { getActivitySyncState } from '../../utils/syncState'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { countPerSecond } from './utils/countPerSecond'
 import { getActivityProjects } from './utils/getActivityProjects'
+import { getActivitySyncInfo } from './utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import {
   ActivityProjectFilter,
   createActivityProjectsFilter,
 } from './utils/projectFilterUtils'
-import {
-  getActivityAdjustedTimestamp,
-  getActivitySyncWarning,
-} from './utils/syncStatus'
 
 export type ActivityChartParams = v.infer<typeof ActivityChartParams>
 export const ActivityChartParams = v.object({
@@ -91,12 +87,8 @@ export async function getActivityChart({
   if (isSingleProject) {
     const projectId = projects[0]
     assert(projectId, 'Project ID is required')
-    const syncMetadata = await db.syncMetadata.getByFeatureAndId(
-      'activity',
-      projectId,
-    )
-
-    if (!syncMetadata || syncMetadata.syncedUntil === null) {
+    const syncInfo = await getActivitySyncInfo(projectId, adjustedRange[1])
+    if (!syncInfo.hasSyncData) {
       return {
         data: [],
         syncWarning,
@@ -104,11 +96,8 @@ export async function getActivityChart({
         stats: undefined,
       }
     }
-
-    const syncState = getActivitySyncState(syncMetadata, adjustedRange[1])
-
-    syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
-    syncWarning = getActivitySyncWarning(syncState)
+    syncedUntil = syncInfo.syncedUntil
+    syncWarning = syncInfo.syncWarning
   }
 
   const aggregatedEntries = aggregateActivityRecords(entries)

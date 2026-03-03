@@ -6,11 +6,11 @@ import { GithubIcon } from '~/icons/products/Github'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import { ProgramHashNameCell } from './components/ProgramHashNameCell'
 import { VerificationSteps } from './components/VerificationSteps'
-import type { ZkProgramHashRow } from './ZkProgramHashesTable'
+import type { ProgramHashRow } from './ProgramHashesTable'
 
-const columnHelper = createColumnHelper<ZkProgramHashRow>()
+const columnHelper = createColumnHelper<ProgramHashRow>()
 
-export const zkProgramHashesColumns = [
+export const programHashesColumns = [
   columnHelper.accessor('title', {
     header: 'Name',
     cell: (ctx) => <ProgramHashNameCell {...ctx.row.original} />,

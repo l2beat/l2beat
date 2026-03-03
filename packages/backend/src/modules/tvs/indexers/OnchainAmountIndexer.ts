@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   BalanceOfEscrowAmountFormula,
   StarknetTotalSupplyAmountFormula,
@@ -25,7 +26,10 @@ export type OnchainAmountConfig =
   | StarknetTotalSupplyAmountFormula
 
 interface OnchainAmountIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<OnchainAmountConfig>, 'name'> {
+  extends Omit<
+    ManagedMultiIndexerOptions<OnchainAmountConfig>,
+    'name' | 'logger'
+  > {
   syncOptimizer: SyncOptimizer
   chain: string
   totalSupplyProvider: TotalSupplyProvider
@@ -34,16 +38,22 @@ interface OnchainAmountIndexerDeps
 }
 
 export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfig> {
-  constructor(private readonly $: OnchainAmountIndexerDeps) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.TVS_CHAIN_AMOUNT,
-      tags: {
-        tag: $.chain,
-        chain: $.chain,
+  constructor(
+    private readonly $: OnchainAmountIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.TVS_CHAIN_AMOUNT,
+        tags: {
+          tag: $.chain,
+          chain: $.chain,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
   }
 
   override async multiUpdate(
@@ -217,22 +227,21 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
-    for (const configuration of configurations) {
-      const deletedRecords =
-        await this.$.db.tvsAmount.deleteByConfigInTimeRange(
-          configuration.id,
-          UnixTime(configuration.from),
-          UnixTime(configuration.to),
-        )
+    if (configurations.length === 0) return
 
-      if (deletedRecords) {
-        this.logger.info('Deleted records for configuration', {
-          id: configuration.id,
-          from: configuration.from,
-          to: configuration.to,
-          deletedRecords,
-        })
-      }
+    const configs = configurations.map((c) => ({
+      configurationId: c.id,
+      fromInclusive: UnixTime(c.from),
+      toInclusive: UnixTime(c.to),
+    }))
+
+    const deletedRecords = await this.$.db.tvsAmount.deleteByConfigs(configs)
+
+    if (deletedRecords > 0) {
+      this.logger.info('Deleted records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
     }
   }
 }

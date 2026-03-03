@@ -3,5 +3,11 @@
     "hash": "0xfbb7d02542bc666f4b049d5138aced4257fcc21b784009966f830eae7b197643",
     "address": "scr:0xF34299210fB8505232649e9BEa14a84DD75e746b",
     "blockNumber": 17474807
+  },
+  "Rollup_pausable_block_posting": {
+    "hash": "0x210e1b4c7ca45694431b4a558e68cf0fc6e9c0f1444fe91538af462e050f3604",
+    "address": "scr:0xeAc5302f9AA81B38867Ef4Fd37D4e480C0bb8820",
+    "chain": "scroll",
+    "blockNumber": 29879991
   }
 }

@@ -25,7 +25,6 @@
     "hot-cache": "tsx scripts/hot-cache/index.ts"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.13.1",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/dal": "workspace:*",
@@ -60,6 +59,7 @@
     "compression": "^1.8.0",
     "connect-timeout": "^1.9.0",
     "dotenv": "^16.4.5",
+    "embla-carousel-react": "^8.6.0",
     "express": "^5.0.0",
     "fuzzysort": "^3.1.0",
     "gray-matter": "^4.0.3",
@@ -72,11 +72,10 @@
     "react": "19.0.0",
     "react-day-picker": "^9.11.1",
     "react-dom": "19.0.0",
-    "recharts": "^2.15.1",
+    "recharts": "^3.7.0",
     "satori": "^0.12.2",
     "sirv": "^3.0.1",
     "tailwind-merge": "^3.3.1",
-    "uuid": "^11.1.0",
     "vaul": "^0.9.1",
     "ws": "^8.18.2"
   },

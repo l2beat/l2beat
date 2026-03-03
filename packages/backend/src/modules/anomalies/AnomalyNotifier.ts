@@ -5,11 +5,20 @@ import type {
   NotificationRecord,
   RealTimeAnomalyRecord,
   RealTimeLivenessRecord,
+  UpdateDiffRecord,
 } from '@l2beat/database'
-import { type Block, formatAsAsciiTable, UnixTime } from '@l2beat/shared-pure'
-import type { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
+import type { TrackedTxLivenessConfig } from '@l2beat/shared'
+import {
+  type Block,
+  ChainSpecificAddress,
+  formatAsAsciiTable,
+  type TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import type { TrackedTxProject, TrackedTxsConfig } from '../../config/Config'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
+import type { DiscordWebhookClient } from './clients/DiscordWebhookClient'
 import { formatDuration, formatSubtype } from './format'
 
 export type AnomalyNotificationType =
@@ -20,6 +29,10 @@ export type AnomalyNotificationType =
 export class AnomalyNotifier {
   private logger: Logger
   private readonly notificationQueue: TaskQueue<void>
+  private trackedTxsConfigsMap: Map<
+    string,
+    TrackedTxLivenessConfig['params'][]
+  > = new Map()
 
   constructor(
     logger: Logger,
@@ -27,6 +40,7 @@ export class AnomalyNotifier {
     private readonly discordClient: DiscordWebhookClient,
     private readonly db: Database,
     private readonly minDuration: number,
+    private readonly trackedTxsConfig: TrackedTxsConfig,
   ) {
     this.logger = logger.for(this)
     this.notificationQueue = new TaskQueue<void>(
@@ -36,6 +50,8 @@ export class AnomalyNotifier {
       this.logger.for('notificationQueue'),
       { metricsId: 'AnomalyNotifier' },
     )
+
+    this.mapTrackedTxsConfigs(trackedTxsConfig.projects)
   }
 
   start() {
@@ -55,8 +71,18 @@ export class AnomalyNotifier {
       return
     }
 
+    const updateDiffs = await this.db.updateDiff.getAll()
+    const hasImplementationChange = this.checkIfHasImplementationChange(
+      newAnomaly.projectId,
+      newAnomaly.subtype,
+      updateDiffs,
+    )
+
     const message =
-      `**${newAnomaly.projectId}** stopped **${formatSubtype(newAnomaly.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
+      `**${newAnomaly.projectId}** stopped **${formatSubtype(newAnomaly.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n` +
+      (hasImplementationChange
+        ? '⚠️ There are unhandled implementation changes. ⚠️\n\n'
+        : '\n') +
       `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
       `- detected at time: \`${block.timestamp}\`\n` +
       `- detected on block: \`${block.number}\`\n` +
@@ -98,7 +124,7 @@ export class AnomalyNotifier {
       return
     }
 
-    this.anomalyDetected(
+    await this.anomalyDetected(
       ongoingAnomaly,
       interval,
       z,
@@ -142,21 +168,64 @@ export class AnomalyNotifier {
     )
   }
 
+  async anomalyAutoRecovered(
+    ongoingAnomaly: RealTimeAnomalyRecord,
+    block: Block,
+  ) {
+    const relatedEntityId = this.generateRelatedEntityId(ongoingAnomaly)
+    const notifications =
+      await this.db.notifications.getByRelatedEntityId(relatedEntityId)
+
+    // we only want to send notification if we previously sent a notification about the detected anomaly
+    if (notifications.length === 0) {
+      return
+    }
+
+    const message =
+      `🚧 AUTO RECOVERY: **${ongoingAnomaly.projectId}** recovered from **${formatSubtype(ongoingAnomaly.subtype)}**\n` +
+      'Insufficient data available to calculate the anomaly, resulting in automatic recovery. This may be due to configuration changes that caused the loss of the required 60-day data range for anomaly calculation.\n\n' +
+      `- recovered at time: \`${block.timestamp}\`\n` +
+      `- recovered on block: \`${block.number}\``
+
+    const id = await this.sendDiscordNotification(message)
+
+    if (!id) return
+
+    await this.saveNotification(
+      id,
+      'anomaly-recovered',
+      this.generateRelatedEntityId(ongoingAnomaly),
+      block.timestamp,
+    )
+  }
+
   async dailyReport() {
     this.logger.info('Sending daily report')
 
     const ongoingAnomalies =
       await this.db.realTimeAnomalies.getOngoingAnomalies()
+    const updateDiffs = await this.db.updateDiff.getAll()
 
     const now = UnixTime.now()
     const date = UnixTime.toYYYYMMDD(UnixTime.now())
 
-    const headers = ['Duration', 'ProjectId', 'Subtype', 'Approval']
+    const headers = [
+      'Duration',
+      'ProjectId',
+      'Subtype',
+      'Approval',
+      'Implementation Change',
+    ]
 
     const rows = ongoingAnomalies
       .map((anomaly) => ({
         duration: now - anomaly.start,
         ...anomaly,
+        hasImplementationChange: this.checkIfHasImplementationChange(
+          anomaly.projectId,
+          anomaly.subtype,
+          updateDiffs,
+        ),
       }))
       .sort((a, b) => b.duration - a.duration)
       .map((anomaly) => [
@@ -164,6 +233,7 @@ export class AnomalyNotifier {
         anomaly.projectId,
         anomaly.subtype,
         anomaly.isApproved ? 'approved' : 'not approved',
+        anomaly.hasImplementationChange ? '⚠️ yes ⚠️' : '-',
       ])
 
     const table = formatAsAsciiTable(headers, rows)
@@ -197,6 +267,61 @@ export class AnomalyNotifier {
     }
 
     await this.db.notifications.insertMany([notification])
+  }
+
+  private mapTrackedTxsConfigs(projects: TrackedTxProject[]) {
+    for (const project of projects) {
+      for (const configuration of project.configurations) {
+        if (configuration.type === 'liveness') {
+          const current = this.trackedTxsConfigsMap.get(
+            `${project.id}-${configuration.subtype}`,
+          )
+          if (current) {
+            current.push(configuration.params)
+          } else {
+            this.trackedTxsConfigsMap.set(
+              `${project.id}-${configuration.subtype}`,
+              [configuration.params],
+            )
+          }
+        }
+      }
+    }
+  }
+
+  private checkIfHasImplementationChange(
+    projectId: string,
+    subtype: TrackedTxsConfigSubtype,
+    updateDiffs: UpdateDiffRecord[],
+  ) {
+    const implementationChanges = updateDiffs
+      .filter(
+        (diff) =>
+          diff.projectId === projectId &&
+          diff.type === 'implementationChange' &&
+          ChainSpecificAddress.chain(ChainSpecificAddress(diff.address)) ===
+            'eth',
+      )
+      .map((diff) =>
+        ChainSpecificAddress.address(ChainSpecificAddress(diff.address)),
+      )
+
+    return this.trackedTxsConfigsMap
+      .get(`${projectId}-${subtype}`)
+      ?.some((config) => {
+        switch (config.formula) {
+          case 'functionCall':
+          case 'sharedBridge':
+          case 'sharpSubmission':
+            return implementationChanges.includes(config.address)
+          case 'transfer':
+            return (
+              (config.from
+                ? implementationChanges.includes(config.from)
+                : false) || implementationChanges.includes(config.to)
+            )
+        }
+      })
   }
 
   generateRelatedEntityId(anomaly: RealTimeAnomalyRecord): string {

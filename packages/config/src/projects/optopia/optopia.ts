@@ -8,6 +8,7 @@ const discovery = new ProjectDiscovery('optopia')
 
 export const optopia: ScalingProject = opStackL2({
   addedAt: UnixTime(1722451042), // 2024-07-31T18:37:22Z
+  archivedAt: UnixTime(1768394779),
   discovery,
   additionalPurposes: ['AI'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],

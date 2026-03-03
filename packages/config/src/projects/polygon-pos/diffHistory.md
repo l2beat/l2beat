@@ -1,3 +1,263 @@
+Generated with discovered.json: 0x27a26cc6be659c310b85e352f35491bd3b759afc
+
+# Diff at Thu, 26 Feb 2026 06:55:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1771253818
+- current timestamp: 1772088852
+
+## Description
+
+vali added, rewards decrease by 6.5%.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.CHECKPOINT_REWARD:
+-        "37108000000000000000000"
++        "34695980000000000000000"
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
+Generated with discovered.json: 0x4dc9df3263a452e24a10a45eb06938203767238b
+
+# Diff at Mon, 16 Feb 2026 14:58:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1770815888
+- current timestamp: 1771253818
+
+## Description
+
+vali removo.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
+Generated with discovered.json: 0xee7d85908708124aad28fea8538cc68c931d861b
+
+# Diff at Wed, 11 Feb 2026 13:19:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@141974a80471f8dbed910bc3deae728f2ae1bec7 block: 1770035188
+- current timestamp: 1770815888
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
+Generated with discovered.json: 0xb27d505ee1d040eb4582fa67fd58452639d7a50d
+
+# Diff at Wed, 28 Jan 2026 13:28:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c9622efccc03e90f3e3da4283b4873ee6b8197d6 block: 1769000103
+- current timestamp: 1769606705
+
+## Description
+
+add mappings for tokens via pos- / and plasma bridge (used in polygon interop plugin).
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769000103 (main branch discovery), not current.
+
+```diff
+    contract Registry (eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      template:
++        "polygonposbridge/Registry"
+      description:
++        "Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShare (eth:0xFB3a3A64E12FA787a6b709BF57834bdAD958d797)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xd3d772defe767848597eb21aa0aa5387f5a4b55e
+
+# Diff at Wed, 21 Jan 2026 12:56:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@244fb212545a72797e49afed711b24371c1ca962 block: 1768817836
+- current timestamp: 1769000103
+
+## Description
+
+ms change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xfd5E854b73a239c9052d89C53D1313f5AfB860ac"
++        "eth:0x6624307a4f672ec5C289fBA196952902BB518dc0"
+    }
+```
+
+Generated with discovered.json: 0xf36b99662b83385ed3ff578fc7a3e05a25a74a78
+
+# Diff at Mon, 19 Jan 2026 10:41:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fedbf0b580d39c802d10691add7e94f6a4b53464 block: 1768372119
+- current timestamp: 1768817836
+
+## Description
+
+Upgrade of the ValidatorShare contract (the contract that implements the delegation token for each validator):
+- validator share tokens (dPOL___) are now transferable
+
+## Watched changes
+
+```diff
+    contract Registry (eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      values.getValidatorShareAddress:
+-        "eth:0x7e94d6cAbb20114b22a088d828772645f68CC67B"
++        "eth:0xFB3a3A64E12FA787a6b709BF57834bdAD958d797"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.minDeposit:
+-        "1000000000000000000"
++        "100000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShare (eth:0x7e94d6cAbb20114b22a088d828772645f68CC67B)
+    +++ description: None
+```
+
+```diff
+    contract PolygonMultisig (eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      values.$members.7:
+-        "eth:0x06f2caFB5276B11bAA6679ABE49D5A5C0A911f5B"
++        "eth:0xdA66Df3920091eF4B54782B9463587c314DAdD41"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShare (eth:0xFB3a3A64E12FA787a6b709BF57834bdAD958d797)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1768372119 => .flat}/ValidatorShare.sol | 517 ++++++++++++++++-----
+ 1 file changed, 407 insertions(+), 110 deletions(-)
+```
+
+Generated with discovered.json: 0x36c75c26f1691d801fc8a3402cffbe4defa113b5
+
+# Diff at Wed, 14 Jan 2026 06:29:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@109a5d8ec861590e65983ea0257074c65c29ed21 block: 1767796862
+- current timestamp: 1768372119
+
+## Description
+
+Two members added to mapper multisig, vali added.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1"
+      values.$members.1:
++        "eth:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 10 (40%)"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
+Generated with discovered.json: 0xb92c4864910fe157e8592ea57c81b1caecd7717c
+
+# Diff at Wed, 07 Jan 2026 14:42:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e74ab9b13ecd61cbe4ef6104ebbb10b35ae037e block: 1767007913
+- current timestamp: 1767796862
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        104
+    }
+```
+
 Generated with discovered.json: 0x817c9843fe37ef352f3fdc5f83a759840d1dfb0d
 
 # Diff at Mon, 29 Dec 2025 11:33:00 GMT:

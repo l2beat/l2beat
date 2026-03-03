@@ -1,12 +1,12 @@
 import type { Project } from '@l2beat/config'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
+import { manifest } from '~/utils/Manifest'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
-import { getIsProjectVerified } from '../utils/getIsProjectVerified'
-import { getProjectIcon } from '../utils/getProjectIcon'
+import { getProjectVerificationWarnings } from '../utils/getIsProjectVerified'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -21,7 +21,7 @@ export function getCommonScalingEntry({
   syncWarning,
   ongoingAnomaly,
 }: {
-  project: Project<'scalingInfo' | 'statuses' | 'display'>
+  project: Project<'scalingInfo' | 'statuses' | 'display', 'contracts'>
   changes: ProjectChanges | undefined
   syncWarning?: string
   ongoingAnomaly?: boolean
@@ -29,10 +29,7 @@ export function getCommonScalingEntry({
   const statuses = {
     yellowWarning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
-    verificationWarning: !getIsProjectVerified(
-      project.statuses.unverifiedContracts,
-      changes,
-    ),
+    verificationWarnings: getProjectVerificationWarnings(project, changes),
     underReview: getUnderReviewStatus({
       isUnderReview: !!project.statuses.reviewStatus,
       impactfulChange: !!changes?.impactfulChange,
@@ -46,7 +43,7 @@ export function getCommonScalingEntry({
   return {
     id: project.id,
     slug: project.slug,
-    icon: getProjectIcon(project.slug),
+    icon: manifest.getUrl(`/icons/${project.slug}.png`),
     name: project.name,
     isLayer3: project.scalingInfo.layer === 'layer3',
     nameSecondLine:

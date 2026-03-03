@@ -16,7 +16,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -29,6 +29,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
+import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('immutablex')
 
@@ -57,12 +58,7 @@ const immutablexProgramHashes = []
 immutablexProgramHashes.push(
   discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-immutablexProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-immutablexProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+immutablexProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const immutablex: ScalingProject = {
   type: 'layer2',
@@ -96,6 +92,9 @@ export const immutablex: ScalingProject = {
         'https://medium.com/@immutablex',
         'https://twitter.com/Immutable',
         'https://discord.com/invite/immutable-play',
+        'https://reddit.com/r/ImmutableX/',
+        'https://linkedin.com/company/immutable-1/',
+        'https://youtube.com/channel/UCR_WlrGou7hm0ACXYpldcuA',
       ],
       other: ['https://growthepie.com/chains/immutable-x'],
     },
@@ -172,7 +171,7 @@ export const immutablex: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkProgramHashes: immutablexProgramHashes.map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: immutablexProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

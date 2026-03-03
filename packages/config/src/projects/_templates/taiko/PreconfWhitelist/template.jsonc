@@ -6,7 +6,8 @@
     "getOperatorCandidatesForCurrentEpoch",
     "getOperatorCandidatesForNextEpoch",
     "getOperatorForCurrentEpoch",
-    "getOperatorForNextEpoch"
+    "getOperatorForNextEpoch",
+    "registeredOperators"
   ],
   "fields": {
     "getOperatorCandidatesForCurrentEpoch": {

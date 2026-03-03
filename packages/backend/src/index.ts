@@ -7,14 +7,14 @@ import {
   type LoggerTransport,
   MetricsAggregator,
 } from '@l2beat/backend-tools'
+import {
+  ElasticSearchTransport,
+  type ElasticSearchTransportOptions,
+} from '@l2beat/backend-tools/elastic-search'
 import { Indexer } from '@l2beat/uif'
 import apm from 'elastic-apm-node'
 import { Application } from './Application'
 import { getConfig } from './config'
-import {
-  ElasticSearchTransport,
-  type ElasticSearchTransportOptions,
-} from './peripherals/elastic-search/ElasticSearchTransport'
 
 main().catch(() => {
   process.exit(1)

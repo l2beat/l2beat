@@ -56,6 +56,6 @@ function getOpenGraph(
 function getBaseUrl() {
   if (env.DEPLOYMENT_ENV === 'production') return 'https://l2beat.com'
   if (env.DEPLOYMENT_ENV === 'staging') return 'https://fe-stag.l2beat.com/'
-  if (env.HEROKU_APP_NAME) return `https://${env.HEROKU_APP_NAME}.herokuapp.com`
+  if (env.COOLIFY_URL) return env.COOLIFY_URL
   return 'http://localhost:3000'
 }

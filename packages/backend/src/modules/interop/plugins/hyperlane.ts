@@ -1,3 +1,7 @@
+/**
+ * Hyperlane AMB
+ * matches 'unknown' messages that we cannot identify as any tracked hyperlane app
+ */
 import { keccak256 } from 'viem'
 import {
   createEventParser,
@@ -38,18 +42,23 @@ export const Process = createInteropEventType<{
   $srcChain: string
 }>('hyperlane.Process')
 
+// https://github.com/hyperlane-xyz/hyperlane-registry
 export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'ethereum', chainId: 1 },
   { chain: 'arbitrum', chainId: 42161 },
   { chain: 'base', chainId: 8453 },
+  { chain: 'optimism', chainId: 10 },
   { chain: 'apechain', chainId: 33139 },
   { chain: 'polygonpos', chainId: 137 },
   { chain: 'zksync2', chainId: 324 },
   { chain: 'abstract', chainId: 2741 },
+  { chain: 'katana', chainId: 747474 },
+  { chain: 'bsc', chainId: 56 },
+  { chain: 'celo', chainId: 42220 },
 ])
 
 export class HyperlanePlugIn implements InteropPlugin {
-  name = 'hyperlane'
+  readonly name = 'hyperlane'
 
   capture(input: LogToCapture) {
     const process = parseProcess(input.log, null)

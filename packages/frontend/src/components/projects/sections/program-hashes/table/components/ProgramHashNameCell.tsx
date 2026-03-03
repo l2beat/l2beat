@@ -4,7 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import type { ZkProgramHashRow } from '../ZkProgramHashesTable'
+import type { ProgramHashRow } from '../ProgramHashesTable'
 import { ZkProjectTooltip } from './ZkProjectTooltip'
 
 export function ProgramHashNameCell({
@@ -12,9 +12,9 @@ export function ProgramHashNameCell({
   zkCatalogProject,
   description,
 }: {
-  title: ZkProgramHashRow['title']
-  description?: ZkProgramHashRow['description']
-  zkCatalogProject?: ZkProgramHashRow['zkCatalogProject']
+  title: ProgramHashRow['title']
+  description?: ProgramHashRow['description']
+  zkCatalogProject?: ProgramHashRow['zkCatalogProject']
 }) {
   const titleRef = useRef<HTMLDivElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)

@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import type { LivenessOverwriteMode, Project } from '@l2beat/config'
 import type {
   LivenessDataPoint,
   LivenessDetails,
@@ -28,14 +28,17 @@ export function transformLivenessData(
     stateUpdates: getSubTypeData(
       liveness.stateUpdates,
       project.livenessInfo.warnings?.stateUpdates,
+      project.livenessInfo.overwrites?.stateUpdates,
     ),
     batchSubmissions: getSubTypeData(
       liveness.batchSubmissions,
       project.livenessInfo.warnings?.batchSubmissions,
+      project.livenessInfo.overwrites?.batchSubmissions,
     ),
     proofSubmissions: getSubTypeData(
       liveness.proofSubmissions,
       project.livenessInfo.warnings?.proofSubmissions,
+      project.livenessInfo.overwrites?.proofSubmissions,
     ),
     isSynced,
   }
@@ -44,7 +47,16 @@ export function transformLivenessData(
 function getSubTypeData(
   data: LivenessDetails | undefined,
   warning: string | undefined,
+  overwrite: LivenessOverwriteMode | undefined,
 ): LivenessTypeData | undefined {
+  if (overwrite === 'no-data')
+    return {
+      '30d': null,
+      '90d': null,
+      max: null,
+      warning,
+    }
+
   if (data === undefined) return undefined
   return {
     '30d': data['30d'],

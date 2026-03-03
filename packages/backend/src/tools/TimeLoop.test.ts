@@ -3,6 +3,8 @@ import { assert } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
 import { TimeLoop } from './TimeLoop'
 
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 class TestTimeLoop extends TimeLoop {
   private fn: () => Promise<string>
   protected logger: Logger
@@ -32,7 +34,7 @@ describe(TimeLoop.name, () => {
       const intervalHandle = timeLoop.start()
       assert(intervalHandle)
 
-      await new Promise((resolve) => setTimeout(resolve, 10))
+      await wait(10)
       clearInterval(intervalHandle)
 
       expect(fn.calls.length).toBeGreaterThan(1)
@@ -71,6 +73,46 @@ describe(TimeLoop.name, () => {
       await timeLoop.loopBody()
 
       expect(fn).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe(TimeLoop.prototype.pause.name, () => {
+    it('stops interval ticks when paused', async () => {
+      const fn = mockFn().resolvesTo('')
+
+      const timeLoop = new TestTimeLoop(fn, Logger.SILENT)
+      timeLoop.start()
+
+      await wait(10)
+      timeLoop.pause()
+
+      await wait(5)
+      const callsAfterPause = fn.calls.length
+
+      await wait(10)
+      expect(fn.calls.length).toEqual(callsAfterPause)
+    })
+  })
+
+  describe(TimeLoop.prototype.unpause.name, () => {
+    it('restarts interval ticks when unpaused', async () => {
+      const fn = mockFn().resolvesTo('')
+
+      const timeLoop = new TestTimeLoop(fn, Logger.SILENT)
+      timeLoop.start()
+
+      await wait(10)
+      timeLoop.pause()
+
+      await wait(5)
+      const callsAfterPause = fn.calls.length
+
+      timeLoop.unpause()
+
+      await wait(10)
+      timeLoop.pause()
+
+      expect(fn.calls.length).toBeGreaterThan(callsAfterPause)
     })
   })
 })

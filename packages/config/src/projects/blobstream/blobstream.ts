@@ -5,7 +5,7 @@ import {
   DaUpgradeabilityRisk,
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
-import { ZK_PROGRAM_HASHES } from '../../common/zkProgramHashes'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   generateDiscoveryDrivenContracts,
@@ -35,7 +35,7 @@ export const blobstream: BaseProject = {
       'The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.',
     links: {
       documentation: [
-        'https://docs.celestia.org/how-to-guides/blobstream',
+        'https://docs.celestia.org/operate/blobstream/install-binary/#how-to-run',
         'https://hackmd.io/@succinctlabs/HJE7XRrup',
       ],
       repositories: [
@@ -147,7 +147,7 @@ export const blobstream: BaseProject = {
         text: 'the bridge contract is frozen by the Guardian (BlobstreamMultisig).',
       },
     ],
-    zkProgramHashes: getBlobstreamVKeys().map((el) => ZK_PROGRAM_HASHES(el)),
+    programHashes: getBlobstreamVKeys().map((el) => PROGRAM_HASHES(el)),
   },
   milestones: [
     {

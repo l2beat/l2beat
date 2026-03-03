@@ -119,8 +119,7 @@ import {
   MorphoMarketsHandlerDefinition,
 } from '../defidisco/MorphoMarketsHandler'
 
-export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
-export const UserHandlerDefinition = v.union([
+const DEFINITIONS = [
   StorageHandlerDefinition,
   DynamicArrayHandlerDefinition,
   ArrayHandlerDefinition,
@@ -154,7 +153,51 @@ export const UserHandlerDefinition = v.union([
   LidoACLHandlerDefinition,
   CrossChainAccessControlHandlerDefinition,
   MorphoMarketsHandlerDefinition,
-])
+] as const
+
+type AvailableHandlers = (typeof DEFINITIONS)[number]
+type HandlerType = v.infer<AvailableHandlers>['type']
+
+export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
+export const UserHandlerDefinition = v.union([...DEFINITIONS])
+
+export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
+  storage: StorageHandlerDefinition,
+  dynamicArray: DynamicArrayHandlerDefinition,
+  array: ArrayHandlerDefinition,
+  call: CallHandlerDefinition,
+  event: EventHandlerDefinition,
+  starkWareNamedStorage: StarkWareNamedStorageHandlerDefinition,
+  accessControl: AccessControlHandlerDefinition,
+  kintoAccessControl: KintoAccessControlHandlerDefinition,
+  scrollAccessControl: ScrollAccessControlHandlerDefinition,
+  lineaRolesModule: LineaRolesModuleHandlerDefinition,
+  constructorArgs: ConstructorArgsDefinition,
+  eventCount: EventCountHandlerDefinition,
+  hardcoded: HardCodedDefinition,
+  starkWareGovernance: StarkWareGovernanceHandlerDefinition,
+  layerZeroMultisig: LayerZeroMultisigHandlerDefinition,
+  arbitrumActors: ArbitrumActorsHandlerDefinition,
+  arbitrumScheduledTransactions: ArbitrumScheduledTransactionsHandlerDefinition,
+  opStackDA: OpStackDAHandlerDefinition,
+  opStackSequencerInbox: OpStackSequencerInboxHandlerDefinition,
+  arbitrumSequencerVersion: ArbitrumSequencerVersionDefinition,
+  arbitrumDACKeyset: ArbitrumDACKeysetHandlerDefinition,
+  eip2535Facets: EIP2535FacetHandlerDefinition,
+  zksynceraScheduledTransactions:
+    ZKsyncEraScheduledTransactionsHandlerDefinition,
+  zksynceraValidators: ZKsyncEraValidatorsHandlerDefinition,
+  orbitPostsBlobs: OrbitPostsBlobsDefinition,
+  polygoncdkScheduledTransactions:
+    PolygonCDKScheduledTransactionsHandlerDefinition,
+  ERC20Data: ERC20DataDefinition,
+  tradable: TradableDefinition,
+  YieldFiMinters: YieldFiMintersDefinition,
+  eventTrace: EventTraceHandlerDefinition,
+  crossChainAccessControl: CrossChainAccessControlHandlerDefinition,
+  lidoACL: LidoACLHandlerDefinition,
+  morphoMarkets: MorphoMarketsHandlerDefinition,
+}
 
 export function getUserHandler(
   field: string,

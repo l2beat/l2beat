@@ -1,4 +1,5 @@
 import compact from 'lodash/compact'
+import { useContext, useMemo } from 'react'
 import { HiringBadge } from '~/components/badge/HiringBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
@@ -11,12 +12,12 @@ import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCl
 import { externalLinks } from '~/consts/externalLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
-import { useIsMobile } from '~/hooks/useIsMobile'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
+import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
 
@@ -25,20 +26,193 @@ const LOGO_LINK = '/scaling/summary'
 export interface SideNavLayoutProps {
   children: React.ReactNode
   childrenWrapperClassName?: string
+  maxWidth?: 'default' | 'wide'
 }
 
 export function SideNavLayout({
   children,
   childrenWrapperClassName,
+  maxWidth = 'default',
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
-  const isMobile = useIsMobile()
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
+
+  const selectedChainsContext = useContext(InteropSelectedChainsContext)
+
+  const groups = useMemo(
+    () =>
+      compact<NavGroup>([
+        {
+          type: 'multiple',
+          title: 'Scaling',
+          match: 'scaling',
+          icon: (
+            <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+          links: [
+            {
+              title: 'Summary',
+              href: '/scaling/summary',
+            },
+            {
+              title: 'Risk Analysis',
+              shortTitle: 'Risks',
+              href: '/scaling/risk',
+            },
+            {
+              title: 'Value Secured',
+              shortTitle: 'Value',
+              href: '/scaling/tvs',
+            },
+            {
+              title: 'Activity',
+              href: '/scaling/activity',
+            },
+            {
+              title: 'Data Availability',
+              shortTitle: 'DA',
+              href: '/scaling/data-availability',
+            },
+            {
+              title: 'Liveness',
+              href: '/scaling/liveness',
+            },
+            {
+              title: 'Costs',
+              href: '/scaling/costs',
+            },
+          ],
+          secondaryLinks: [
+            {
+              title: 'Upcoming',
+              href: '/scaling/upcoming',
+            },
+            {
+              title: 'Archived',
+              href: '/scaling/archived',
+            },
+          ],
+        },
+        {
+          type: 'multiple',
+          title: 'Interop',
+          match: 'interop',
+          icon: (
+            <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+          links: [
+            {
+              title: 'Summary',
+              href:
+                selectedChainsContext?.buildUrl('/interop/summary') ??
+                '/interop/summary',
+            },
+            {
+              title: 'Non-minting protocols',
+              href:
+                selectedChainsContext?.buildUrl('/interop/non-minting') ??
+                '/interop/non-minting',
+            },
+            {
+              title: 'Lock & Mint protocols',
+              href:
+                selectedChainsContext?.buildUrl('/interop/lock-and-mint') ??
+                '/interop/lock-and-mint',
+            },
+            {
+              title: 'Burn & Mint protocols',
+              href:
+                selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
+                '/interop/burn-and-mint',
+            },
+          ],
+        },
+        {
+          type: 'multiple',
+          title: 'Data Availability',
+          match: 'data-availability',
+          icon: (
+            <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
+          ),
+          links: [
+            {
+              title: 'Summary',
+              href: '/data-availability/summary',
+            },
+            {
+              title: 'Risk Analysis',
+              shortTitle: 'Risks',
+              href: '/data-availability/risk',
+            },
+            {
+              title: 'Throughput',
+              shortTitle: 'Throughput',
+              href: '/data-availability/throughput',
+            },
+            {
+              title: 'Liveness',
+              shortTitle: 'Liveness',
+              href: '/data-availability/liveness',
+            },
+          ],
+          secondaryLinks: [
+            {
+              title: 'Archived',
+              href: '/data-availability/archived',
+            },
+          ],
+        },
+        {
+          type: 'single',
+          title: 'ZK Catalog',
+          match: 'zk-catalog',
+          href: '/zk-catalog',
+          icon: (
+            <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+        },
+        {
+          type: 'multiple',
+          title: 'Ecosystems',
+          match: 'ecosystems',
+          disableMobileTabs: true,
+          icon: (
+            <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+          preventTitleNavigation: true,
+          links: [
+            {
+              name: 'Agglayer',
+              slug: 'agglayer',
+            },
+            {
+              name: 'Arbitrum Orbit',
+              slug: 'arbitrum-orbit',
+            },
+            {
+              name: 'Superchain',
+              slug: 'superchain',
+            },
+            {
+              name: 'The Elastic Network',
+              slug: 'the-elastic-network',
+            },
+          ]
+            .sort(createOrderedSort(PARTNERS_ORDER, (item) => item.slug))
+            .map((ecosystem) => ({
+              title: ecosystem.name,
+              href: `/ecosystems/${ecosystem.slug}`,
+            })),
+        },
+      ]),
+    [selectedChainsContext],
+  )
+
   return (
     <SidebarProvider>
-      <div className="relative flex flex-col lg:flex-row">
+      <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
         <MobileTopNavbar
           groups={groups}
@@ -49,20 +223,28 @@ export function SideNavLayout({
           logoLink={LOGO_LINK}
           groups={groups}
           sideLinks={sideLinks}
-          whatsNew={whatsNew}
         />
         <div
           className={cn(
-            'min-w-0 flex-1 has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
+            'flex min-w-0 flex-1 flex-col has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
             childrenWrapperClassName,
           )}
         >
           <div className="hidden lg:mr-3 lg:block 2xl:mr-0">{topChildren}</div>
-          <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-5 lg:pl-0">
-            {children}
-            {whatsNew && isMobile && (
-              <WhatsNewWidgetCloseable whatsNew={whatsNew} />
+          <div
+            style={
+              {
+                '--tablet-content-horizontal-padding': '20px',
+              } as React.CSSProperties
+            }
+            className={cn(
+              'mx-auto flex w-full grow flex-col md:px-(--tablet-content-horizontal-padding) lg:pl-0',
+              maxWidth === 'default' && 'max-w-(--breakpoint-lg)',
+              maxWidth === 'wide' && 'max-w-412',
             )}
+          >
+            {children}
+            {whatsNew && <WhatsNewWidgetCloseable whatsNew={whatsNew} />}
           </div>
           <Footer
             className="md:px-12 md:pt-8 lg:pr-9 lg:pl-6"
@@ -74,157 +256,6 @@ export function SideNavLayout({
   )
 }
 
-const groups = compact<NavGroup>([
-  {
-    type: 'multiple',
-    title: 'Scaling',
-    match: 'scaling',
-    icon: (
-      <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-    links: [
-      {
-        title: 'Summary',
-        href: '/scaling/summary',
-      },
-      {
-        title: 'Risk Analysis',
-        shortTitle: 'Risks',
-        href: '/scaling/risk',
-      },
-      {
-        title: 'Value Secured',
-        shortTitle: 'Value',
-        href: '/scaling/tvs',
-      },
-      {
-        title: 'Activity',
-        href: '/scaling/activity',
-      },
-      {
-        title: 'Data Availability',
-        shortTitle: 'DA',
-        href: '/scaling/data-availability',
-      },
-      {
-        title: 'Liveness',
-        href: '/scaling/liveness',
-      },
-      {
-        title: 'Costs',
-        href: '/scaling/costs',
-      },
-    ],
-    secondaryLinks: [
-      {
-        title: 'Upcoming',
-        href: '/scaling/upcoming',
-      },
-      {
-        title: 'Archived',
-        href: '/scaling/archived',
-      },
-    ],
-  },
-  {
-    type: 'multiple',
-    title: 'Bridges',
-    match: 'bridges',
-    icon: (
-      <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-    links: [
-      {
-        title: 'Summary',
-        href: '/bridges/summary',
-      },
-    ],
-    secondaryLinks: [
-      {
-        title: 'Archived',
-        href: '/bridges/archived',
-      },
-    ],
-  },
-  {
-    type: 'multiple',
-    title: 'Data Availability',
-    match: 'data-availability',
-    icon: (
-      <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
-    ),
-    links: [
-      {
-        title: 'Summary',
-        href: '/data-availability/summary',
-      },
-      {
-        title: 'Risk Analysis',
-        shortTitle: 'Risks',
-        href: '/data-availability/risk',
-      },
-      {
-        title: 'Throughput',
-        shortTitle: 'Throughput',
-        href: '/data-availability/throughput',
-      },
-      {
-        title: 'Liveness',
-        shortTitle: 'Liveness',
-        href: '/data-availability/liveness',
-      },
-    ],
-    secondaryLinks: [
-      {
-        title: 'Archived',
-        href: '/data-availability/archived',
-      },
-    ],
-  },
-  {
-    type: 'single',
-    title: 'ZK Catalog',
-    match: 'zk-catalog',
-    href: '/zk-catalog',
-    icon: (
-      <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
-  {
-    type: 'multiple',
-    title: 'Ecosystems',
-    match: 'ecosystems',
-    disableMobileTabs: true,
-    icon: (
-      <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-    preventTitleNavigation: true,
-    links: [
-      {
-        name: 'Agglayer',
-        slug: 'agglayer',
-      },
-      {
-        name: 'Arbitrum Orbit',
-        slug: 'arbitrum-orbit',
-      },
-      {
-        name: 'Superchain',
-        slug: 'superchain',
-      },
-      {
-        name: 'The Elastic Network',
-        slug: 'the-elastic-network',
-      },
-    ]
-      .sort(createOrderedSort(PARTNERS_ORDER, (item) => item.slug))
-      .map((ecosystem) => ({
-        title: ecosystem.name,
-        href: `/ecosystems/${ecosystem.slug}`,
-      })),
-  },
-])
-
 const sideLinks = compact([
   {
     title: 'About Us',
@@ -233,6 +264,10 @@ const sideLinks = compact([
   {
     title: 'Publications',
     href: '/publications',
+  },
+  {
+    title: 'Changelog',
+    href: '/changelog',
   },
   {
     title: 'Forum',

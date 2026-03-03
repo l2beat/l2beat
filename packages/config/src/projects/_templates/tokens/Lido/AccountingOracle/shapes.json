@@ -8,5 +8,11 @@
     "hash": "0x90b97d1cb45e9893fa400657a6d60368adbd83c194db38ea948219e3cab9fb7b",
     "address": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
     "blockNumber": 23519375
+  },
+  "AccountingOracleV4.sol": {
+    "hash": "0xf330a3f485b5e535d79bf6d47f0acb1a8c8d4df1b8f410979ddd1d7c88751869",
+    "address": "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c",
+    "chain": "ethereum",
+    "blockNumber": 24183468
   }
 }

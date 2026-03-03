@@ -107,6 +107,29 @@ describe(ChainSpecificAddress.name, () => {
     })
   })
 
+  describe(ChainSpecificAddress.fromLong.name, () => {
+    it('creates an address from long chain name', () => {
+      const address = ChainSpecificAddress.fromLong(
+        'ethereum',
+        '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+      )
+      expect(address).toBeA(String)
+      expect(ChainSpecificAddress.check(address)).toEqual(true)
+      expect(address.toString()).toEqual(
+        'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+      )
+    })
+
+    it('throws on unknown long chain name', () => {
+      expect(() =>
+        ChainSpecificAddress.fromLong(
+          'unknown-chain',
+          '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+        ),
+      ).toThrow(TypeError, 'Unknown long chain name: unknown-chain')
+    })
+  })
+
   describe(ChainSpecificAddress.chain.name, () => {
     it('eth', () => {
       const address = ChainSpecificAddress.random('eth')

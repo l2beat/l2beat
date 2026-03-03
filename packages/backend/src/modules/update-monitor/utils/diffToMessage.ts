@@ -1,6 +1,6 @@
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
+import { DISCORD_MAX_MESSAGE_LENGTH } from '@l2beat/shared'
 import type { UnixTime } from '@l2beat/shared-pure'
-import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
 export function diffToMessage(
   name: string,
@@ -18,7 +18,7 @@ export function diffToMessage(
 
   const overheadLength =
     header.length + dependentsMessage.length + (trackedTxsMessage?.length ?? 0)
-  const maxLength = MAX_MESSAGE_LENGTH - overheadLength
+  const maxLength = DISCORD_MAX_MESSAGE_LENGTH - overheadLength
 
   const message = discoveryDiffToMarkdown(diffs, maxLength)
 

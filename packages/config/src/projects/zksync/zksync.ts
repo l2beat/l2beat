@@ -213,6 +213,10 @@ export const zksync: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: true,
+        programHashesReproducible: null,
+        proverSourcePublished: true,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
