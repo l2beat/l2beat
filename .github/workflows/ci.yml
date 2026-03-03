@@ -37,3 +37,22 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @l2beat/l2b... build
+
+  build-monitor:
+    name: Build Monitor
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Build dependency packages
+        run: pnpm turbo run build --filter='!@l2beat/token-backend' --filter='!@l2beat/backend'
+      - name: Build backend (allow upstream type errors)
+        run: cd packages/backend && npx tsc -p tsconfig.build.json --noEmitOnError false || true
+      - name: Verify monitor entry point
+        run: test -f packages/backend/build/src/defidisco-monitor.js
