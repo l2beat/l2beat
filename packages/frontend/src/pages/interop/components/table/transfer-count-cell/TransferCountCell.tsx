@@ -1,6 +1,6 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel } from '@tanstack/react-table'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -21,8 +21,6 @@ import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsCo
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
 import { columns, type TransferRow } from './columns'
 
-const INITIAL_RENDERED_ROWS = 100
-const RENDERED_ROWS_STEP = 100
 const SCROLL_LOAD_THRESHOLD_PX = 120
 
 export function TransferCountCell({
@@ -85,45 +83,37 @@ function TransferDetailsDialog({
 }) {
   const breakpoint = useBreakpoint()
   const { selectionForApi } = useInteropSelectedChains()
-  const [scrollContainer, setScrollContainer] = useState<HTMLDivElement | null>(
-    null,
-  )
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  const { data, isLoading } = api.interop.transfers.useQuery(
-    {
-      ...selectionForApi,
-      id: protocol.id,
-      type,
-      expectedTransferCount,
-      expectedVolume,
-    },
-    {
-      enabled: isOpen,
-    },
-  )
-
-  const transferRows = data?.items ?? []
-  const [visibleCount, setVisibleCount] = useState(
-    Math.min(INITIAL_RENDERED_ROWS, transferRows.length),
-  )
-
-  const hasIntegrityMismatch = !!data?.hasIntegrityMismatch
-  const hasMoreRows = visibleCount < transferRows.length
-
-  const loadMoreRows = useCallback(() => {
-    setVisibleCount((prev) =>
-      Math.min(prev + RENDERED_ROWS_STEP, transferRows.length),
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    api.interop.transfers.useInfiniteQuery(
+      {
+        ...selectionForApi,
+        id: protocol.id,
+        type,
+        expectedTransferCount,
+        expectedVolume,
+      },
+      {
+        enabled: isOpen,
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      },
     )
-  }, [transferRows.length])
 
-  const maybeLoadMoreRows = useCallback(() => {
-    if (
-      !scrollContainer ||
-      !hasMoreRows ||
-      hasIntegrityMismatch ||
-      isLoading ||
-      isOpen === false
-    ) {
+  const transferRows = useMemo(
+    () => data?.pages.flatMap((page) => page.items) ?? [],
+    [data],
+  )
+  const hasIntegrityMismatch = !!data?.pages[0]?.hasIntegrityMismatch
+  const canLoadMore =
+    isOpen &&
+    !!hasNextPage &&
+    !hasIntegrityMismatch &&
+    !isLoading &&
+    !isFetchingNextPage
+
+  function handleScroll(scrollContainer: HTMLDivElement) {
+    if (!canLoadMore) {
       return
     }
 
@@ -132,47 +122,23 @@ function TransferDetailsDialog({
       scrollContainer.scrollTop -
       scrollContainer.clientHeight
     if (distanceToBottom <= SCROLL_LOAD_THRESHOLD_PX) {
-      loadMoreRows()
+      fetchNextPage()
     }
-  }, [
-    hasMoreRows,
-    hasIntegrityMismatch,
-    isLoading,
-    isOpen,
-    loadMoreRows,
-    scrollContainer,
-  ])
+  }
 
   useEffect(() => {
-    if (
-      !isOpen ||
-      !scrollContainer ||
-      !hasMoreRows ||
-      hasIntegrityMismatch ||
-      isLoading
-    ) {
+    const scrollContainer = scrollContainerRef.current
+    if (!scrollContainer || !canLoadMore) {
       return
     }
 
     if (scrollContainer.scrollHeight <= scrollContainer.clientHeight + 1) {
-      loadMoreRows()
+      fetchNextPage()
     }
-  }, [
-    isOpen,
-    hasMoreRows,
-    hasIntegrityMismatch,
-    isLoading,
-    loadMoreRows,
-    scrollContainer,
-  ])
-
-  const visibleRows = useMemo(
-    () => transferRows.slice(0, visibleCount),
-    [transferRows, visibleCount],
-  )
+  }, [canLoadMore, fetchNextPage])
 
   const table = useTable<TransferRow>({
-    data: visibleRows,
+    data: transferRows,
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualFiltering: true,
@@ -200,8 +166,8 @@ function TransferDetailsDialog({
             </div>
           ) : (
             <div
-              ref={setScrollContainer}
-              onScroll={maybeLoadMoreRows}
+              ref={scrollContainerRef}
+              onScroll={(e) => handleScroll(e.currentTarget)}
               className="max-h-[60vh] overflow-x-auto overflow-y-auto"
             >
               <BasicTable
@@ -210,6 +176,11 @@ function TransferDetailsDialog({
                 skeletonCount={8}
                 tableWrapperClassName="pb-0"
               />
+              {isFetchingNextPage && (
+                <div className="px-4 py-2 text-center font-medium text-label-value-14 text-secondary">
+                  Loading more transfers...
+                </div>
+              )}
             </div>
           )}
         </DrawerContent>
@@ -238,8 +209,8 @@ function TransferDetailsDialog({
           </div>
         ) : (
           <div
-            ref={setScrollContainer}
-            onScroll={maybeLoadMoreRows}
+            ref={scrollContainerRef}
+            onScroll={(e) => handleScroll(e.currentTarget)}
             className="max-h-[460px] overflow-x-auto overflow-y-auto"
           >
             <div className="mx-6">
@@ -249,6 +220,11 @@ function TransferDetailsDialog({
                 skeletonCount={8}
                 tableWrapperClassName="pb-0"
               />
+              {isFetchingNextPage && (
+                <div className="py-2 text-center font-medium text-label-value-14 text-secondary">
+                  Loading more transfers...
+                </div>
+              )}
             </div>
           </div>
         )}

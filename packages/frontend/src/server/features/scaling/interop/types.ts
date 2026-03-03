@@ -92,6 +92,7 @@ export const InteropProtocolTransfersParams = v.object({
   type: KnownInteropBridgeType.optional(),
   expectedTransferCount: v.number(),
   expectedVolume: v.number(),
+  cursor: v.number().optional(),
 })
 
 export type InteropProtocolTransferDetailsItem = {
@@ -119,6 +120,7 @@ export type InteropProtocolTransferStats = {
 export type InteropProtocolTransfersResponse = {
   items: InteropProtocolTransferDetailsItem[]
   hasIntegrityMismatch: boolean
+  nextCursor: number | undefined
 }
 
 export type AggregatedInteropTransferWithTokens =

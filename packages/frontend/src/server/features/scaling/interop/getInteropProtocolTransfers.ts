@@ -24,6 +24,7 @@ interface TransfersWithStats {
 
 const VALUE_TOLERANCE_RATIO = 0.01
 const MIN_VALUE_TOLERANCE = 0.01
+const PAGE_SIZE = 100
 
 const INTEROP_CHAIN_TX_EXPLORER_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [chain.id, chain.txExplorerUrl]),
@@ -37,11 +38,13 @@ export async function getInteropProtocolTransfers({
   type,
   expectedTransferCount,
   expectedVolume,
+  cursor,
 }: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
   if (from.length === 0 || to.length === 0) {
     return {
       items: [],
       hasIntegrityMismatch: false,
+      nextCursor: undefined,
     }
   }
 
@@ -53,6 +56,7 @@ export async function getInteropProtocolTransfers({
     return {
       items: [],
       hasIntegrityMismatch: false,
+      nextCursor: undefined,
     }
   }
 
@@ -65,6 +69,7 @@ export async function getInteropProtocolTransfers({
     return {
       items: [],
       hasIntegrityMismatch: false,
+      nextCursor: undefined,
     }
   }
 
@@ -73,6 +78,7 @@ export async function getInteropProtocolTransfers({
     return {
       items: [],
       hasIntegrityMismatch: false,
+      nextCursor: undefined,
     }
   }
 
@@ -103,8 +109,15 @@ export async function getInteropProtocolTransfers({
       }),
   )
 
+  const startIndex = cursor ?? 0
+  const pagedItems = result.items.slice(startIndex, startIndex + PAGE_SIZE)
+  const nextCursor =
+    startIndex + PAGE_SIZE < result.items.length
+      ? startIndex + PAGE_SIZE
+      : undefined
+
   return {
-    items: result.items.map((transfer) =>
+    items: pagedItems.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_TX_EXPLORER_URLS,
@@ -115,6 +128,7 @@ export async function getInteropProtocolTransfers({
       expectedTransferCount,
       expectedVolume,
     ),
+    nextCursor,
   }
 }
 
