@@ -296,12 +296,8 @@ function evaluateVolumeSignals(
   },
 ) {
   const sideLabel = side === 'src' ? 'Src' : 'Dst'
-  const {
-    candidateVolumeUsd,
-    baselineVolumeUsd,
-    historyVolumeUsd,
-    reasons,
-  } = input
+  const { candidateVolumeUsd, baselineVolumeUsd, historyVolumeUsd, reasons } =
+    input
 
   if (
     baselineVolumeUsd !== undefined &&
@@ -309,10 +305,14 @@ function evaluateVolumeSignals(
   ) {
     const ratio = safeDivide(candidateVolumeUsd, baselineVolumeUsd)
     if (ratio > LARGE_RATIO_SPIKE) {
-      reasons.push(`Volume spike vs baseline (${sideLabel}): x${ratio.toFixed(2)}`)
+      reasons.push(
+        `Volume spike vs baseline (${sideLabel}): x${ratio.toFixed(2)}`,
+      )
     }
     if (ratio < LARGE_RATIO_DROP) {
-      reasons.push(`Volume drop vs baseline (${sideLabel}): x${ratio.toFixed(2)}`)
+      reasons.push(
+        `Volume drop vs baseline (${sideLabel}): x${ratio.toFixed(2)}`,
+      )
     }
   }
 
@@ -320,10 +320,14 @@ function evaluateVolumeSignals(
   const volumeWindow = lastNValues(volumeSeries, SIGNAL_WINDOW)
   const volumeLogWindow = volumeWindow.map(log1Plus)
   const volumeZRobust =
-    volumeLogWindow.length >= MIN_Z_SCORE_WINDOW ? zRobust(volumeLogWindow) : null
+    volumeLogWindow.length >= MIN_Z_SCORE_WINDOW
+      ? zRobust(volumeLogWindow)
+      : null
 
   if (volumeZRobust !== null && Math.abs(volumeZRobust) > EXTREME_Z_SCORE) {
-    reasons.push(`Volume robust z-score (${sideLabel})=${volumeZRobust.toFixed(2)}`)
+    reasons.push(
+      `Volume robust z-score (${sideLabel})=${volumeZRobust.toFixed(2)}`,
+    )
   }
   if (ratioSpike(volumeWindow, LARGE_RATIO_SPIKE)) {
     reasons.push(`Volume ratio spike in recent window (${sideLabel})`)
@@ -354,7 +358,9 @@ function evaluateDriftSignals(input: {
     candidate.dstVolumeUsd,
   )
   if (candidateDrift >= DRIFT_ALERT_THRESHOLD) {
-    reasons.push(`Src/Dst volume drift is high: ${formatPercent(candidateDrift)}`)
+    reasons.push(
+      `Src/Dst volume drift is high: ${formatPercent(candidateDrift)}`,
+    )
   }
 
   if (baseline !== undefined) {
