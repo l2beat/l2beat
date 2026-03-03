@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.",
+  "ignoreMethods": [
+    "getEffectiveMinimumWithdrawalReserve",
+    "getEffectiveTargetWithdrawalReserve",
+    "getMinimumReserveDeficit",
+    "getTargetReserveDeficit",
+    "getTotalSystemBalance",
+    "yieldProviderByIndex",
+    "pendingPermissionlessUnstake"
+  ],
+  "ignoreInWatchMode": ["userFundsInYieldProvidersTotal"],
+  "fields": {
+    "isWithdrawalReserveBelowMinimum": {
+      "severity": "HIGH",
+      "description": "If true, no more ETH can be staked and users can permissionlessly withdraw staked ETH."
+    },
+    "yieldProviderCount": {
+      "severity": "HIGH"
+    },
+    "minimumWithdrawalReserveAmount": {
+      "description": "Absolute value, part of the computation of minimal rollup ETH reserve."
+    },
+    "minimumWithdrawalReservePercentageBps": {
+      "description": "Value relative to TVS, part of the computation of minimal rollup ETH reserve."
+    },
+    "targetWithdrawalReserveAmount": {
+      "description": "Absolute value, part of the computation of target rollup ETH reserve."
+    },
+    "targetWithdrawalReservePercentageBps": {
+      "description": "Value relative to TVS, part of the computation of target rollup ETH reserve."
+    }
+  }
+}
