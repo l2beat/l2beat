@@ -13,7 +13,13 @@ import { assert } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import type { AmountConfig, PriceConfig } from '../types'
 
-export function extractPricesAndAmounts(tokens: TvsToken[]) {
+export function extractPricesAndAmounts(
+  tokens: TvsToken[],
+  chainRanges?: Map<
+    string,
+    { sinceTimestamp: number | undefined; untilTimestamp: number | undefined }
+  >,
+) {
   const amounts = new Map<string, AmountConfig>()
   const prices = new Map<string, PriceConfig>()
 
@@ -21,8 +27,9 @@ export function extractPricesAndAmounts(tokens: TvsToken[]) {
     if (token.amount.type === 'calculation') {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.amount,
+        chainRanges,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, a, chainRanges))
 
       assert(
         formulaPrices.length === 0,
@@ -39,7 +46,7 @@ export function extractPricesAndAmounts(tokens: TvsToken[]) {
       })
     } else {
       const amount = createAmountConfig(token.amount)
-      setAmount(amounts, amount)
+      setAmount(amounts, amount, chainRanges)
 
       setPrice(prices, {
         id: createPriceConfigId(token.priceId),
@@ -52,16 +59,18 @@ export function extractPricesAndAmounts(tokens: TvsToken[]) {
     if (token.valueForProject) {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.valueForProject,
+        chainRanges,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, a, chainRanges))
       formulaPrices.forEach((p) => setPrice(prices, p))
     }
 
     if (token.valueForSummary) {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.valueForSummary,
+        chainRanges,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, a, chainRanges))
       formulaPrices.forEach((p) => setPrice(prices, p))
     }
   }
@@ -74,6 +83,15 @@ export function extractPricesAndAmounts(tokens: TvsToken[]) {
 
 function processFormulaRecursive(
   formula: CalculationFormula | ValueFormula | AmountFormula,
+  chainRanges:
+    | Map<
+        string,
+        {
+          sinceTimestamp: number | undefined
+          untilTimestamp: number | undefined
+        }
+      >
+    | undefined,
 ): {
   formulaAmounts: AmountConfig[]
   formulaPrices: PriceConfig[]
@@ -86,7 +104,7 @@ function processFormulaRecursive(
       const {
         formulaAmounts: innerFormulaAmounts,
         formulaPrices: innerFormulaPrices,
-      } = processFormulaRecursive(arg)
+      } = processFormulaRecursive(arg, chainRanges)
       formulaAmounts.push(...innerFormulaAmounts)
       formulaPrices.push(...innerFormulaPrices)
     }
@@ -94,7 +112,7 @@ function processFormulaRecursive(
     const {
       formulaAmounts: innerFormulaAmounts,
       formulaPrices: innerFormulaPrices,
-    } = processFormulaRecursive(formula.amount)
+    } = processFormulaRecursive(formula.amount, chainRanges)
     formulaAmounts.push(...innerFormulaAmounts)
     formulaPrices.push(...innerFormulaPrices)
 
@@ -150,6 +168,15 @@ function setPrice(prices: Map<string, PriceConfig>, priceToAdd: PriceConfig) {
 function setAmount(
   amounts: Map<string, AmountConfig>,
   amountToAdd: AmountConfig,
+  chainRanges:
+    | Map<
+        string,
+        {
+          sinceTimestamp: number | undefined
+          untilTimestamp: number | undefined
+        }
+      >
+    | undefined,
 ) {
   if (amountToAdd.type === 'const') {
     return
@@ -157,6 +184,7 @@ function setAmount(
 
   const existingAmount = amounts.get(amountToAdd.id)
   if (!existingAmount) {
+    clampAmountToChainRange(amountToAdd, chainRanges)
     amounts.set(amountToAdd.id, amountToAdd)
     return
   }
@@ -179,7 +207,41 @@ function setAmount(
     mergedAmount.untilTimestamp = undefined
   }
 
+  clampAmountToChainRange(mergedAmount, chainRanges)
   amounts.set(mergedAmount.id, mergedAmount)
+}
+
+function clampAmountToChainRange(
+  amount: AmountConfig,
+  chainRanges:
+    | Map<
+        string,
+        {
+          sinceTimestamp: number | undefined
+          untilTimestamp: number | undefined
+        }
+      >
+    | undefined,
+): void {
+  if (!('chain' in amount) || !chainRanges) return
+
+  const chainRange = chainRanges.get(amount.chain)
+  if (!chainRange) return
+
+  if (
+    chainRange.sinceTimestamp &&
+    amount.sinceTimestamp < chainRange.sinceTimestamp
+  ) {
+    amount.sinceTimestamp = chainRange.sinceTimestamp
+  }
+
+  if (
+    chainRange.untilTimestamp &&
+    (!amount.untilTimestamp ||
+      amount.untilTimestamp > chainRange.untilTimestamp)
+  ) {
+    amount.untilTimestamp = chainRange.untilTimestamp
+  }
 }
 
 export function createAmountConfig(
