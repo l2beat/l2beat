@@ -100,6 +100,20 @@ export async function getInteropProtocolTransfers({
       }),
   )
 
+  const hasIntegrityMismatch = hasTransferStatsMismatch(
+    result.transferStats,
+    expectedTransferCount,
+    expectedVolume,
+  )
+
+  if (hasIntegrityMismatch) {
+    return {
+      items: [],
+      hasIntegrityMismatch: true,
+      nextCursor: undefined,
+    }
+  }
+
   const startIndex = cursor ?? 0
   const pagedItems = result.items.slice(startIndex, startIndex + PAGE_SIZE)
   const nextCursor =
@@ -114,11 +128,7 @@ export async function getInteropProtocolTransfers({
         INTEROP_CHAIN_EXPLORER_URLS,
       ),
     ),
-    hasIntegrityMismatch: hasTransferStatsMismatch(
-      result.transferStats,
-      expectedTransferCount,
-      expectedVolume,
-    ),
+    hasIntegrityMismatch: false,
     nextCursor,
   }
 }
