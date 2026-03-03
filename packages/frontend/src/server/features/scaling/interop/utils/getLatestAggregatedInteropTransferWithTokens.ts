@@ -17,20 +17,20 @@ export async function getLatestAggregatedInteropTransferWithTokens(
     return []
   }
 
-  const latestTimestamp = await getAggregatedInteropTimestamp()
-  if (!latestTimestamp) {
+  const snapshotTimestamp = await getAggregatedInteropTimestamp()
+  if (!snapshotTimestamp) {
     return []
   }
 
   const [transfers, tokens] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsAndTimestamp(
-      latestTimestamp,
+      snapshotTimestamp,
       selection.from,
       selection.to,
       type,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
-      latestTimestamp,
+      snapshotTimestamp,
       selection.from,
       selection.to,
       type,
