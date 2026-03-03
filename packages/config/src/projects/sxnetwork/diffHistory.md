@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x5364ea862a67b119d36a4c492b9803b008bc9bb4
+
+# Diff at Mon, 02 Mar 2026 22:17:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@2d549d484aa00d29aa19b6414f93749d79b100c4 block: 1764335299
+- current timestamp: 1772489760
+
+## Description
+
+SXNetwork transitioned from an AnyTrust Optimium (DAC) to a Calldata Rollup. The sequencerVersion changed from 0x88 (Celestia/AnyTrust) to 0x00 (standard calldata), meaning transaction data is now posted directly to Ethereum L1. This changes the project's stage from "Not applicable" to "Stage 0" and removes the DAC dependency entirely.
+
+Additionally, ownership transferred from Gelato Multisig (4 of 9, Safe v1.3.0) to a new Safe (3 of 5, Safe v1.4.1) with entirely new signers. Validator set updated: one validator removed, one added, stakerCount increased from 2 to 3. Batch poster rotation: one added, one removed.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x262711cA4DA6409Da795D8af9E18DDaF47397f80) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"validate","from":"eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators"}
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        4
++        6
+      values.stakerCount:
+-        2
++        3
+      values.validators.0:
+-        "eth:0x262711cA4DA6409Da795D8af9E18DDaF47397f80"
+      values.validators.2:
++        "eth:0xC711f8aCC65306D4f16F874Fe88C43eF23504F5c"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0xa4C325e25215C1fB2405EB28d81d2dFdbfC8D24C"
+      values.executors.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0xa4C325e25215C1fB2405EB28d81d2dFdbfC8D24C"
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
+```
+
+```diff
+    contract SequencerInbox (eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.1:
++        "eth:0x2EA9bb3d1022b8E63366aE3ea48Ada4E2Cd2ac46"
+      values.batchPosters.4:
+-        "eth:0xf244224843657bb59A6456754992Ea973655D918"
+      values.dacKeyset.membersCount:
+-        2
++        1
+      values.dacKeyset.blsSignatures.0:
+-        "YAW3zWmUnWa5bjus3lTpb2Nbm7dXxRdf3b+t7oLeR35v4TdZyBBliKCDBGOUb/GX9QiBL1uX01ojtrLB2lOYCkUSMyeL5LTuOfIz3NSnc9WlXrNn5GYXvtHzEEpgXWrqMwj5BsraZQMqDNLmTiTVorTHUPJgCYmmkvf6FAHZj/PSAT6iXOGD0/pIgcCAWo2w5wjZaVQzArukpt8Xpj9USXrf8nKlqkVdo83BOfLFV/vkBhrMUI6EILTJRFjS9ZIrchcs1T2I4DiCiox9erUl2mxJy86TIGCdhXkwWb9AP1JBD7WeQZOSkbOSbCfDO0njvAGJgq/9d5D4Wbud6AVJvAAOH4Gqhz7yEWQIXehiVcVLKf2NfuppDpaS35Xwa0KtSg=="
+      values.dacKeyset.blsSignatures.1:
+-        "YAaK3sypeExYzlInkMHqVKLuzHqfLT5DQWHB2v9z1tJxBz0xePbTPrQqYeJzq0kxZBZmWIBh0BCHlMQaua0yntYyJ0XURJtvcIo7cYDn7EWEpK2fNq0u2lFy6LbiL7p1Lxn/5GppMGKaL5jaocl7rkLs4kKqBJnm0BgibjjhuqZkl3w72uwqXrZRk6KYWF3+0w4sFM5ohbG8AW43vIB4Fj4jnK+8FkcJ+e9lR7mjBnCptf7hSw2LcakQw8lHR1SpJQqzNsy1y5rW8LIDWRPMe7by7o89GUZlKiWUuCaDUjYRwiILu6ZxaGILcv1N1v0hgQLbL7Zm/5vIcHcHIfxnSqtpRDR3ktJX+bQ6O0BYuDCM7sZTDdAC2PcDN7wIxjICNA=="
++        "YACRv5Sg0FxAlm6TmKBsvqG9ErZYeaDniYBR0S22raMmbTczq9FkH7yJsRHIxmhh/gO6gGJ7KF0u+Lf74t8k28237EyDnMQw80ZQn4d6zAL/7ho/uorq9DTj+vINz59BZQWo85EZml6f+aI3mz9FaTPy6nCIMNIsGOPppozq2ETpuNuHgNMBR4YfgSWRgxDqfRX7Q0C8VEdJQoXtYtg18a1RW7D799pLMugsHAUu9qOW53q9VVbNATxUKYHI2cbo4RCkF2j4oiYCfU7sujlb0j99nOzsLwNTuzBiL447GCYf397vX8ZXj5i6XRg69o0xmBdhxnBZsFztAYkxNm5u7Qa6p5Ik132rB7rH9rUR3elfeq2dqcVjxqoxgJzaeirMag=="
+      values.keySetUpdates:
+-        2
++        3
+      values.sequencerVersion:
+-        "0x88"
++        "0x00"
+      values.setIsBatchPosterCount:
+-        3
++        5
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xa4C325e25215C1fB2405EB28d81d2dFdbfC8D24C)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => .flat/Safe/Safe.sol}         | 685 ++++++++++++---------
+ .../Safe/SafeProxy.p.sol}                          |  10 +-
+ 2 files changed, 416 insertions(+), 279 deletions(-)
+```
+
 Generated with discovered.json: 0xcb3efcd7cb4b178800d636f5d7a640d20c749b77
 
 # Diff at Mon, 05 Jan 2026 17:45:31 GMT:
