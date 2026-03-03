@@ -12,6 +12,8 @@ Upgraded LineaRollup contract to version 7 to add native ETH yield.
 
 Permissioned entities can now move ETH from the rollup contract into yield providers via YieldManager. Accrued interest is paid to users on L2. YieldManager sets minimal and target reserve values. If ETH reserves are below the minimal value, users can permissionlessly replenish the reserve up to target by unstaking. 
 
+Also, removed Safe Zodiac roles on L1.
+
 ## Watched changes
 
 ```diff
