@@ -508,6 +508,21 @@ model InteropConfig {
   @@id([key, timestamp])
 }
 
+model InteropAggregationQuality {
+  timestamp         DateTime @db.Timestamp(6)
+  autoPromoted      Boolean
+  isPromoted        Boolean  @default(false)
+  promotionRequired Boolean
+  reasons           String   @db.Text
+  checkedGroups     Int
+  failingGroups     Int
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+
+  @@id([timestamp])
+  @@index([createdAt])
+  @@index([isPromoted, timestamp(sort: Desc)])
+}
+
 model Chain {
   name        String  @id @db.VarChar(255)
   chainId     Int     @unique()

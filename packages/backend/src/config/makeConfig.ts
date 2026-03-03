@@ -161,7 +161,17 @@ export async function makeConfig(
     },
     interop: flags.isEnabled('interop') && {
       aggregation: flags.isEnabled('interop', 'aggregation')
-        ? { configs: await getInteropAggregationConfigs(ps) }
+        ? {
+            configs: await getInteropAggregationConfigs(ps),
+            qualityGateEnabled: env.boolean(
+              'INTEROP_AGGREGATION_QUALITY_GATE_ENABLED',
+              true,
+            ),
+            autoPromotionEnabled: env.boolean(
+              'INTEROP_AGGREGATION_AUTO_PROMOTION_ENABLED',
+              false,
+            ),
+          }
         : false,
       capture: {
         enabled: flags.isEnabled('interop', 'capture'),

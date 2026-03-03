@@ -40,6 +40,7 @@ export async function getInteropDashboardData(
   const records = await getLatestAggregatedInteropTransferWithTokens(
     params,
     params.type,
+    params.aggregateTimestamp,
   )
 
   const abstractTokenIds = unique(

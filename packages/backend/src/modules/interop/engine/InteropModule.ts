@@ -12,6 +12,7 @@ import {
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
+import { DefaultInteropAggregationQualityGate } from './aggregation/InteropAggregationQualityGate'
 import { InteropAggregationService } from './aggregation/InteropAggregationService'
 import { InteropTransferClassifier } from './aggregation/InteropTransferClassifier'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
@@ -142,11 +143,15 @@ export function createInteropModule({
   if (config.interop.aggregation) {
     const classifier = new InteropTransferClassifier()
     const aggregationService = new InteropAggregationService(classifier)
+    const qualityGate = new DefaultInteropAggregationQualityGate(db)
     interopAggregatingIndexer = new InteropAggregatingIndexer(
       {
         db,
         configs: config.interop.aggregation.configs,
         aggregationService,
+        qualityGate,
+        qualityGateEnabled: config.interop.aggregation.qualityGateEnabled,
+        autoPromotionEnabled: config.interop.aggregation.autoPromotionEnabled,
         indexerService,
         parents: [hourlyIndexer],
         minHeight: 1,

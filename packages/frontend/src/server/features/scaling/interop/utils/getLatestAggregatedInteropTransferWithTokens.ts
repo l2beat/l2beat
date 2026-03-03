@@ -1,14 +1,15 @@
-import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type {
   AggregatedInteropTransferWithTokens,
   InteropSelectionInput,
 } from '../types'
-import { getAggregatedInteropTimestamp } from './getAggregatedInteropTimestamp'
+import { getAggregatedInteropTimestampWithOverride } from './getAggregatedInteropTimestamp'
 
 export async function getLatestAggregatedInteropTransferWithTokens(
   selection: InteropSelectionInput,
   type?: KnownInteropBridgeType,
+  timestamp?: UnixTime,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
   const db = getDb()
 
@@ -17,7 +18,8 @@ export async function getLatestAggregatedInteropTransferWithTokens(
     return []
   }
 
-  const latestTimestamp = await getAggregatedInteropTimestamp()
+  const latestTimestamp =
+    await getAggregatedInteropTimestampWithOverride(timestamp)
   if (!latestTimestamp) {
     return []
   }
