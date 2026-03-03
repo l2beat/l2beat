@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x240d4d79f57ded7481a1c4ccc272c0e54dd8d2aa
+Generated with discovered.json: 0xf23da1cadcf08ab07599e240a86025aaab5401b1
 
-# Diff at Tue, 03 Mar 2026 13:48:53 GMT:
+# Diff at Tue, 03 Mar 2026 16:10:21 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
@@ -547,7 +547,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453)
+    contract WalletRegistrar (matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453)
     +++ description: None
 ```
 
@@ -565,7 +565,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0x84903f46c93EC6EA14b4beCF2336429c29972743)
+    contract TokenReallocator (matic:0x84903f46c93EC6EA14b4beCF2336429c29972743)
     +++ description: None
 ```
 
@@ -583,13 +583,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0xb0580C67DEA0A945756732E6f10e00bA6E9f0491)
+    contract InvestorLockManager (matic:0xb0580C67DEA0A945756732E6f10e00bA6E9f0491)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0xBcC23bB9875AE6f9b4488855E3ACd42Ee91743Da)
+    contract WalletManager (matic:0xBcC23bB9875AE6f9b4488855E3ACd42Ee91743Da)
     +++ description: None
 ```
 
@@ -613,7 +613,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0xE944D53eEd3Eb14753275506ea2E5C47E62F6385)
+    contract ComplianceConfigurationService (matic:0xE944D53eEd3Eb14753275506ea2E5C47E62F6385)
     +++ description: None
 ```
 
