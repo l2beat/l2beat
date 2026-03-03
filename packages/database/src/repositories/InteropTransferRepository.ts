@@ -62,16 +62,16 @@ export interface InteropTransferRecord {
 }
 
 export interface InteropTransferUpdate {
-  srcAbstractTokenId: string | null
-  srcSymbol: string | null
-  srcPrice: number | null
-  srcAmount: number | null
-  srcValueUsd: number | null
-  dstAbstractTokenId: string | null
-  dstSymbol: string | null
-  dstPrice: number | null
-  dstAmount: number | null
-  dstValueUsd: number | null
+  srcAbstractTokenId?: string | null
+  srcSymbol?: string | null
+  srcPrice?: number | null
+  srcAmount?: number | null
+  srcValueUsd?: number | null
+  dstAbstractTokenId?: string | null
+  dstSymbol?: string | null
+  dstPrice?: number | null
+  dstAmount?: number | null
+  dstValueUsd?: number | null
 }
 
 export interface InteropMissingTokenInfo {
