@@ -8,7 +8,7 @@ Generated with discovered.json: 0x27d904a20ad8100bff5932e1e11ee8360fcf31bf
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+EigenPod consolidation request fee increased from 1 to 18 wei. This is a dynamic EIP-7251 protocol parameter, not an upgrade.
 
 ## Watched changes
 

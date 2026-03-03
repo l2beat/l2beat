@@ -8,7 +8,19 @@ Generated with discovered.json: 0xc7ea00eb51feb434a81e6fd8722a6188c6f8e406
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+HotShotLightClient upgraded from LightClient (v1) to LightClientV2 (v2), part of Espresso's transition to Proof-of-Stake consensus. Key changes:
+
+- Introduces an epoch-based system (blocksPerEpoch=40000, ~1 day). Each epoch boundary requires a mandatory state update submission.
+- Replaces the static genesisStakeTableState with a dynamic votingStakeTableState that rotates at epoch boundaries, enabling PoS validator set changes.
+- PLONK proof verification expanded from 7 to 11 public inputs to accommodate the next stake table commitment in proofs.
+- The old `newFinalizedState(state, proof)` function is deprecated (reverts with `DeprecatedApi()`), replaced by `newFinalizedState(state, nextStakeTable, proof)`.
+- PlonkVerifier replaced by PlonkVerifierV2 (new library at 0x0D654ce674D952B4944f6A2e410aBdaA824a417D) matching the expanded 11-input proof format.
+- `renounceOwnership()` now always reverts (OwnershipCannotBeRenounced).
+
+The PoS rollout started on March 2, 2026 across three epochs, with full activation targeted for March 4, 2026.
+
+LightClient diff: https://disco.l2beat.com/diff/eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B/eth:0x4DF3515bB525787e9eae08B8f9647C30F6FA7d93
+PlonkVerifier diff: https://disco.l2beat.com/diff/eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f/eth:0x0D654ce674D952B4944f6A2e410aBdaA824a417D
 
 ## Watched changes
 

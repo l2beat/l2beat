@@ -8,7 +8,7 @@ Generated with discovered.json: 0x5364ea862a67b119d36a4c492b9803b008bc9bb4
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+SXNetwork ownership transferred from Gelato Multisig (4 of 9) to a new Safe (3 of 5, Safe v1.4.1) with entirely new signers. The SequencerInbox sequencerVersion changed from 0x88 (Celestia) to 0x00 (standard Arbitrum DA), meaning SXNetwork stopped using Celestia for data availability. DAC keyset updated: membersCount reduced from 2 to 1. Validator set updated: one validator removed, one added, stakerCount increased from 2 to 3. Batch poster rotation: one added, one removed.
 
 ## Watched changes
 
