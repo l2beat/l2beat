@@ -220,9 +220,9 @@ export class LineaPlugin implements InteropPluginResyncable {
         sameTxAfter: messageSent,
       })
       if (bridgingInitiated) {
-        const tokenDstWasMinted =
-          bridgingFinalized.args.nativeToken ===
-          bridgingFinalized.args.bridgedToken
+        const tokenDstWasMinted = !(
+          bridgingFinalized.args.bridgedToken === Address32.ZERO
+        )
         const tokenSrcWasBurned = !tokenDstWasMinted
 
         messageApp = 'canonical-token'
@@ -232,7 +232,9 @@ export class LineaPlugin implements InteropPluginResyncable {
           srcAmount: bridgingInitiated.args.amount,
           srcWasBurned: tokenSrcWasBurned,
           dstEvent: bridgingFinalized,
-          dstTokenAddress: bridgingFinalized.args.nativeToken,
+          dstTokenAddress: tokenDstWasMinted
+            ? bridgingFinalized.args.bridgedToken
+            : bridgingFinalized.args.nativeToken,
           dstAmount: bridgingFinalized.args.amount,
           dstWasMinted: tokenDstWasMinted,
         })
