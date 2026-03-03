@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x777ba1f64491c98c6bc77cb148fbaf7bf26d902a
+
+# Diff at Mon, 02 Mar 2026 14:47:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1768298606
+- current timestamp: 1772462455
+
+## Description
+
+Add timelock with 0 minDelay.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) {
+    +++ description: None
+      values.owner:
+-        "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
++        "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"
+    }
+```
+
+```diff
+    contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"propose transactions.","role":".Proposer"}
+    }
+```
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"execute transactions that are ready.","role":".Executor"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"manage all access control roles.","role":".defaultAdminAC"}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7","role":"admin","via":[{"address":"eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"},{"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}]}
+      receivedPermissions.0.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.0.from:
+-        "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"
++        "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"
+      receivedPermissions.1.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.1.from:
+-        "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"
++        "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF"
+      receivedPermissions.2.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.2.from:
+-        "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF"
++        "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
+      receivedPermissions.3.via.0.address:
+-        "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
++        "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17"
+      receivedPermissions.3.from:
+-        "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
++        "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"
+      receivedPermissions.4.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.5.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.6.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.7.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","role":".Executor"}
+      directlyReceivedPermissions.0.from:
+-        "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
++        "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0x542675E90E269F20ecbb9e0095d4751ac155B530)
+    +++ description: A timelock with access control. The current minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x31110622D6CA24c9FF307d6ae1715F16E47F16A0.sol} |    0
+ ...:0x8654061457582c867B77A3a9f4ca714dFc84Ec17.sol |  132 ++
+ .../TimelockControllerUpgradeable.sol              | 1386 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  735 +++++++++++
+ 4 files changed, 2253 insertions(+)
+```
+
 Generated with discovered.json: 0x452d1b0cd68967ba7aa0ebd572e66d10b2b200ae
 
 # Diff at Tue, 13 Jan 2026 10:04:33 GMT:

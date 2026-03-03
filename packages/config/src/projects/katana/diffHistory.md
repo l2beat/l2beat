@@ -1,3 +1,89 @@
+Generated with discovered.json: 0xffb9f87a63daf9b5d9a9c78ffc8c7c1cc57e91af
+
+# Diff at Mon, 02 Mar 2026 13:34:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1771490328
+- current timestamp: 1772458371
+
+## Description
+
+gas config change + ms member changes.
+
+## Watched changes
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
++        "eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72"
+      values.$members.2:
+-        "eth:0xAb76AE6926371B82Af3652cCBABefBBA56270adC"
++        "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
+      values.$members.3:
+-        "eth:0xAb3506507449bF1880f3337825efd19ac89E235E"
++        "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
+      values.$members.4:
+-        "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9"
++        "eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xAb3506507449bF1880f3337825efd19ac89E235E)
+    +++ description: None
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        250
++        50
+      values.eip1559Elasticity:
+-        60
++        6
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        60000000
++        120000000
+    }
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0a59c7c34ba43637747a7bccbbfe306351db3f61
 
 # Diff at Thu, 19 Feb 2026 08:41:37 GMT:
