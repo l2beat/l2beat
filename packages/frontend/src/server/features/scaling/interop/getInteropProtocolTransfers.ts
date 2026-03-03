@@ -26,8 +26,8 @@ const VALUE_TOLERANCE_RATIO = 0.01
 const MIN_VALUE_TOLERANCE = 0.01
 const PAGE_SIZE = 100
 
-const INTEROP_CHAIN_TX_EXPLORER_URLS = new Map(
-  INTEROP_CHAINS.map((chain) => [chain.id, chain.txExplorerUrl]),
+const INTEROP_CHAIN_EXPLORER_URLS = new Map(
+  INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),
 )
 const interopTransfersCache = new InMemoryCache()
 
@@ -120,7 +120,7 @@ export async function getInteropProtocolTransfers({
     items: pagedItems.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
         transfer,
-        INTEROP_CHAIN_TX_EXPLORER_URLS,
+        INTEROP_CHAIN_EXPLORER_URLS,
       ),
     ),
     hasIntegrityMismatch: hasTransferStatsMismatch(
@@ -214,10 +214,10 @@ function getTxHashHref(
   chainId: string,
   txHash: string,
 ): string {
-  const txExplorerUrl = chainExplorerUrlsById.get(chainId)
-  assert(txExplorerUrl, `Missing tx explorer URL for chain: ${chainId}`)
+  const explorerUrl = chainExplorerUrlsById.get(chainId)
+  assert(explorerUrl, `Missing explorer URL for chain: ${chainId}`)
 
-  return `${txExplorerUrl}${txHash}`
+  return `${explorerUrl}/tx/${txHash}`
 }
 
 function toPluginMatcherCacheKey(

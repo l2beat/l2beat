@@ -4,7 +4,7 @@ export interface InteropChain {
   type: 'evm'
   display: string
   iconSlug?: string
-  txExplorerUrl: string
+  explorerUrl: string
 }
 
 export const INTEROP_CHAINS: InteropChain[] = [
@@ -13,21 +13,21 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Ethereum',
     type: 'evm',
     display: 'ETH',
-    txExplorerUrl: 'https://etherscan.io/tx/',
+    explorerUrl: 'https://etherscan.io',
   },
   {
     id: 'arbitrum',
     name: 'Arbitrum One',
     type: 'evm',
     display: 'ARB',
-    txExplorerUrl: 'https://arbiscan.io/tx/',
+    explorerUrl: 'https://arbiscan.io',
   },
   {
     id: 'base',
     name: 'Base',
     type: 'evm',
     display: 'BASE',
-    txExplorerUrl: 'https://basescan.org/tx/',
+    explorerUrl: 'https://basescan.org',
   },
   {
     id: 'optimism',
@@ -35,14 +35,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     iconSlug: 'op-mainnet',
     type: 'evm',
     display: 'OP',
-    txExplorerUrl: 'https://optimistic.etherscan.io/tx/',
+    explorerUrl: 'https://optimistic.etherscan.io',
   },
   {
     id: 'apechain',
     name: 'ApeChain',
     type: 'evm',
     display: 'APE',
-    txExplorerUrl: 'https://apescan.io/tx/',
+    explorerUrl: 'https://apescan.io',
   },
   {
     id: 'polygonpos',
@@ -50,7 +50,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Polygon PoS',
     type: 'evm',
     display: 'POL',
-    txExplorerUrl: 'https://polygonscan.com/tx/',
+    explorerUrl: 'https://polygonscan.com',
   },
   {
     id: 'zksync2',
@@ -58,14 +58,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'ZKsync Era',
     type: 'evm',
     display: 'ZK',
-    txExplorerUrl: 'https://explorer.zksync.io/tx/',
+    explorerUrl: 'https://explorer.zksync.io',
   },
   {
     id: 'abstract',
     name: 'Abstract',
     type: 'evm',
     display: 'ABS',
-    txExplorerUrl: 'https://abscan.org/tx/',
+    explorerUrl: 'https://abscan.org',
   },
   {
     id: 'katana',
@@ -73,42 +73,42 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Katana',
     type: 'evm',
     display: 'KAT',
-    txExplorerUrl: 'https://katanascan.com/tx/',
+    explorerUrl: 'https://katanascan.com',
   },
   {
     id: 'bsc',
     name: 'BNB Smart Chain',
     type: 'evm',
     display: 'BSC',
-    txExplorerUrl: 'https://bscscan.com/tx/',
+    explorerUrl: 'https://bscscan.com',
   },
   {
     id: 'solana',
     name: 'Solana',
     type: 'evm',
     display: 'SOL',
-    txExplorerUrl: 'https://solscan.io/tx/',
+    explorerUrl: 'https://solscan.io',
   },
   {
     id: 'starknet',
     name: 'Starknet',
     type: 'evm',
     display: 'STRK',
-    txExplorerUrl: 'https://starkscan.co/tx/',
+    explorerUrl: 'https://starkscan.co',
   },
   {
     id: 'ink',
     name: 'Ink',
     type: 'evm',
     display: 'INK',
-    txExplorerUrl: 'https://explorer.inkonchain.com/tx/',
+    explorerUrl: 'https://explorer.inkonchain.com',
   },
   {
     id: 'megaeth',
     name: 'MegaETH',
     type: 'evm',
     display: 'MEGA',
-    txExplorerUrl: 'https://megaeth.blockscout.com/tx/',
+    explorerUrl: 'https://megaeth.blockscout.com',
   },
   {
     id: 'worldchain',
@@ -116,21 +116,21 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'World Chain',
     type: 'evm',
     display: 'WORLD',
-    txExplorerUrl: 'https://worldscan.org/tx/',
+    explorerUrl: 'https://worldscan.org',
   },
   {
     id: 'celo',
     name: 'Celo',
     type: 'evm',
     display: 'CELO',
-    txExplorerUrl: 'https://celoscan.io/tx/',
+    explorerUrl: 'https://celoscan.io',
   },
   {
     id: 'unichain',
     name: 'Unichain',
     type: 'evm',
     display: 'UNI',
-    txExplorerUrl: 'https://uniscan.xyz/tx/',
+    explorerUrl: 'https://uniscan.xyz',
   },
   {
     id: 'forknet',
@@ -138,13 +138,13 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Forknet',
     type: 'evm',
     display: 'FORK',
-    txExplorerUrl: 'https://forkscan.org/tx/',
+    explorerUrl: 'https://forkscan.org',
   },
   {
     id: 'linea',
     name: 'Linea',
     type: 'evm',
     display: 'LINEA',
-    txExplorerUrl: 'https://lineascan.build/tx/',
+    explorerUrl: 'https://lineascan.build',
   },
 ]

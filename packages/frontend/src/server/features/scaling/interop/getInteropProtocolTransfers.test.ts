@@ -15,8 +15,8 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         dstValueUsd: 12.34,
       }),
       new Map([
-        ['ethereum', 'https://etherscan.io/tx/'],
-        ['arbitrum', 'https://arbiscan.io/tx/'],
+        ['ethereum', 'https://etherscan.io'],
+        ['arbitrum', 'https://arbiscan.io'],
       ]),
     )
 
@@ -42,8 +42,8 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
     const result = toInteropProtocolTransferDetailsItem(
       transfer(),
       new Map([
-        ['ethereum', 'https://etherscan.io/tx/'],
-        ['arbitrum', 'https://arbiscan.io/tx/'],
+        ['ethereum', 'https://etherscan.io'],
+        ['arbitrum', 'https://arbiscan.io'],
       ]),
     )
 
