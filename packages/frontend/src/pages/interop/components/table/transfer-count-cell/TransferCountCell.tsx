@@ -167,8 +167,8 @@ function TransferDetailsDialog({
   ])
 
   const visibleRows = useMemo(
-    () => (isOpen ? transferRows.slice(0, visibleCount) : []),
-    [transferRows, visibleCount, isOpen],
+    () => transferRows.slice(0, visibleCount),
+    [transferRows, visibleCount],
   )
 
   const table = useTable<TransferRow>({
