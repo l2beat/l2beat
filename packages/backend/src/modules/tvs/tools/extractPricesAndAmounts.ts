@@ -184,7 +184,9 @@ function setAmount(
 
   const existingAmount = amounts.get(amountToAdd.id)
   if (!existingAmount) {
-    clampAmountToChainRange(amountToAdd, chainRanges)
+    if (chainRanges && 'chain' in amountToAdd) {
+      clampAmountToChainRange(amountToAdd, chainRanges)
+    }
     amounts.set(amountToAdd.id, amountToAdd)
     return
   }
@@ -207,24 +209,22 @@ function setAmount(
     mergedAmount.untilTimestamp = undefined
   }
 
-  clampAmountToChainRange(mergedAmount, chainRanges)
+  if (chainRanges && 'chain' in mergedAmount) {
+    clampAmountToChainRange(mergedAmount, chainRanges)
+  }
   amounts.set(mergedAmount.id, mergedAmount)
 }
 
 function clampAmountToChainRange(
-  amount: AmountConfig,
-  chainRanges:
-    | Map<
-        string,
-        {
-          sinceTimestamp: number | undefined
-          untilTimestamp: number | undefined
-        }
-      >
-    | undefined,
+  amount: Extract<AmountConfig, { chain: string }>,
+  chainRanges: Map<
+    string,
+    {
+      sinceTimestamp: number | undefined
+      untilTimestamp: number | undefined
+    }
+  >,
 ): void {
-  if (!('chain' in amount) || !chainRanges) return
-
   const chainRange = chainRanges.get(amount.chain)
   if (!chainRange) return
 

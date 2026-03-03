@@ -15,10 +15,12 @@ export async function getTvsConfig(
   flags: FeatureFlags,
   sinceTimestamp?: number,
 ): Promise<TvsConfig> {
-  const projectsWithTvs = await ps.getProjects({
-    select: ['tvsConfig'],
-  })
-  const projectsWithChains = await ps.getProjects({ select: ['chainConfig'] })
+  const [projectsWithTvs, projectsWithChains] = await Promise.all([
+    ps.getProjects({
+      select: ['tvsConfig'],
+    }),
+    ps.getProjects({ select: ['chainConfig'] }),
+  ])
 
   // filter our projects disabled by flag
   const enabledProjects = projectsWithTvs.filter((p) =>
