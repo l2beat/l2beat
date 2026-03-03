@@ -1,4 +1,4 @@
-import type { ProjectService } from '@l2beat/config'
+import type { Project, ProjectService, TvsToken } from '@l2beat/config'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import {
@@ -18,6 +18,7 @@ export async function getTvsConfig(
   const projectsWithTvs = await ps.getProjects({
     select: ['tvsConfig'],
   })
+  const projectsWithChains = await ps.getProjects({ select: ['chainConfig'] })
 
   // filter our projects disabled by flag
   const enabledProjects = projectsWithTvs.filter((p) =>
@@ -36,6 +37,9 @@ export async function getTvsConfig(
       tokens: getEffectiveConfig(p.tokens, sinceTimestamp),
     }))
   }
+
+  const tokens = projects.flatMap((p) => p.tokens)
+  adjustTokensRange(tokens, projectsWithChains)
 
   // It is very important to pass ALL PROJECTS tokens here
   // this allows us to deduplicate amounts and extractPricesAndAmounts
@@ -73,12 +77,8 @@ export async function getTvsConfig(
     ),
   )
 
-  const allProjects = await ps.getProjects({
-    select: ['chainConfig'],
-  })
-
   const blockTimestamps = Array.from(new Set(chains).values()).map((c) => {
-    const project = allProjects.find((p) => p.chainConfig.name === c)
+    const project = projectsWithChains.find((p) => p.chainConfig.name === c)
     assert(project, `${c}: chainConfig not configured`)
     assert(project.chainConfig.sinceTimestamp)
 
@@ -96,5 +96,36 @@ export async function getTvsConfig(
     prices,
     chains,
     blockTimestamps,
+  }
+}
+
+export function adjustTokensRange(
+  tokens: TvsToken[],
+  projectsWithChains: Project<'chainConfig'>[],
+): void {
+  const nameToConfig = new Map(
+    projectsWithChains.map((c) => [c.chainConfig.name, c.chainConfig]),
+  )
+
+  for (const token of tokens) {
+    if (!('chain' in token.amount)) continue
+
+    const chain = token.amount.chain
+    const chainConfig = nameToConfig.get(chain)
+    if (!chainConfig) continue
+
+    if (
+      chainConfig.sinceTimestamp &&
+      token.amount.sinceTimestamp < chainConfig.sinceTimestamp
+    ) {
+      token.amount.sinceTimestamp = chainConfig.sinceTimestamp
+    }
+    if (
+      chainConfig.untilTimestamp &&
+      (!token.amount.untilTimestamp ||
+        token.amount.untilTimestamp > chainConfig.untilTimestamp)
+    ) {
+      token.amount.untilTimestamp = chainConfig.untilTimestamp
+    }
   }
 }
