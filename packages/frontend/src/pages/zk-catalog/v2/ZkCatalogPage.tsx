@@ -7,6 +7,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { cn } from '~/utils/cn'
 import type { ZkCatalogEntry } from '../../../server/features/zk-catalog/getZkCatalogEntries'
 import { ZkCatalogHeader } from '../v1/components/ZkCatalogHeader'
+import { ZkCatalogProversTvsCard } from './components/ZkCatalogProversTvsCard'
 import { ZkCatalogTable } from './table/ZkCatalogTable'
 
 interface Props extends AppLayoutProps {
@@ -23,6 +24,7 @@ export function ZkCatalogPage({ ...props }: Props) {
             <TableFilters entries={props.entries} />
             <TrustedSetupFrameworkLink />
           </div>
+          <ZkCatalogProversTvsCard entries={props.entries} />
           <ZkCatalogTable entries={props.entries} />
         </TableFilterContextProvider>
       </SideNavLayout>

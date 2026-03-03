@@ -17,6 +17,10 @@ import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,
 } from './utils/getTrustedSetupsWithVerifiersAndAttesters'
+import {
+  getZkCatalogProjectsForTvs,
+  type ZkCatalogProjectForTvs,
+} from './utils/getZkCatalogProjectsForTvs'
 import { getZkCatalogProjectTvs } from './utils/getZkCatalogProjectTvs'
 
 export type TrustedSetupVerifierData = {
@@ -28,6 +32,7 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   name: string
   icon: string
   creator?: string
+  projectsForTvs: ZkCatalogProjectForTvs[]
   tvs: {
     value: number
     numberOfProjects: number
@@ -73,6 +78,10 @@ function getZkCatalogEntry(
     allProjects,
     tvs,
   )
+  const projectsForTvs = getZkCatalogProjectsForTvs(
+    project.zkCatalogInfo.projectsForTvs,
+    allProjects,
+  )
 
   return {
     id: project.id,
@@ -82,6 +91,7 @@ function getZkCatalogEntry(
     name: project.name,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     creator: project.zkCatalogInfo.creator,
+    projectsForTvs,
     tvs: {
       value: tvsForProject,
       numberOfProjects,

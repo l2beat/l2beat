@@ -4,6 +4,7 @@ import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
 import { optionToRange } from '~/utils/range/range'
 import { withProjectIcon } from '~/utils/withProjectIcon'
+import { getZkCatalogProjectsForTvs } from './getZkCatalogProjectsForTvs'
 
 export function getZkCatalogTvsSection(
   project: Project<'zkCatalogInfo', 'tvsInfo' | 'milestones'>,
@@ -14,40 +15,22 @@ export function getZkCatalogTvsSection(
   )
 
   const projectsForTvs: ZkCatalogTvsSectionProps['projectsForTvs'] =
-    project.zkCatalogInfo.projectsForTvs
-      ?.flatMap((tvsProject) => {
-        const project = allProjectsMap.get(tvsProject.projectId)
-        if (!project) {
-          const logger = getLogger().for('getZkCatalogTvsSection')
-          logger.warn(`Project ${tvsProject.projectId} not found`)
-          return undefined
-        }
+    getZkCatalogProjectsForTvs(
+      project.zkCatalogInfo.projectsForTvs,
+      allProjects,
+    ).flatMap((tvsProject) => {
+      const tvsProjectConfig = allProjectsMap.get(tvsProject.projectId)
+      if (!tvsProjectConfig) {
+        const logger = getLogger().for('getZkCatalogTvsSection')
+        logger.warn(`Project ${tvsProject.projectId} not found`)
+        return []
+      }
 
-        if (project.daBridge) {
-          return project.daBridge.usedIn.flatMap((p) => {
-            const usedProject = allProjectsMap.get(p.id)
-            if (!usedProject) {
-              const logger = getLogger().for('getZkCatalogTvsSection')
-              logger.warn(`Project ${p.id} not found`)
-              return []
-            }
-
-            return {
-              projectId: p.id,
-              name: usedProject.name,
-              sinceTimestamp: tvsProject.sinceTimestamp,
-              untilTimestamp: tvsProject.untilTimestamp,
-            }
-          })
-        }
-        return {
-          projectId: tvsProject.projectId,
-          name: project.name,
-          sinceTimestamp: tvsProject.sinceTimestamp,
-          untilTimestamp: tvsProject.untilTimestamp,
-        }
-      })
-      .filter((p) => p !== undefined) ?? []
+      return {
+        ...tvsProject,
+        name: tvsProjectConfig.name,
+      }
+    })
 
   if (projectsForTvs.length === 0) {
     return undefined
