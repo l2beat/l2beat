@@ -19,6 +19,10 @@ const parseMessage = createEventParser(
   'event Message(address indexed sender, address receiver, uint256 dstChainId, bytes message, uint256 fee)',
 )
 
+const parseMessageWithTransfer = createEventParser(
+  'event MessageWithTransfer(address indexed sender, address receiver, uint256 dstChainId, address bridge, bytes32 srcTransferId, bytes message, uint256 fee)',
+)
+
 const parseExecuted = createEventParser(
   'event Executed(uint8 msgType, bytes32 msgId, uint8 status, address indexed receiver, uint64 srcChainId, bytes32 srcTxHash)',
 )
@@ -34,15 +38,20 @@ const parseRelay = createEventParser(
 export const CELER_NETWORKS = defineNetworks('celer', [
   { celerChainId: 1, chain: 'ethereum' },
   { celerChainId: 42161, chain: 'arbitrum' },
-  { celerChainId: 56, chain: 'bsc' },
   { celerChainId: 10, chain: 'optimism' },
   { celerChainId: 8453, chain: 'base' },
+  { celerChainId: 56, chain: 'bsc' },
+  { celerChainId: 137, chain: 'polygonpos' },
+  { celerChainId: 324, chain: 'zksync2' },
+  { celerChainId: 59144, chain: 'linea' },
+  { celerChainId: 196, chain: 'xlayer' },
 ])
 
 export const CelerMessage = createInteropEventType<{
   receiver: Address32
   $dstChain: string
   message: `0x${string}`
+  wraps?: Address32
 }>('celer.Message')
 
 export const CelerExecuted = createInteropEventType<{
@@ -72,17 +81,33 @@ export class CelerPlugIn implements InteropPlugin {
   readonly name = 'celer'
 
   capture(input: LogToCapture) {
-    const parsed = parseMessage(input.log, null)
-    if (parsed) {
+    const message = parseMessage(input.log, null)
+    if (message) {
       return [
         CelerMessage.create(input, {
-          receiver: Address32.from(parsed.receiver),
+          receiver: Address32.from(message.receiver),
           $dstChain: findChain(
             CELER_NETWORKS,
             (x) => x.celerChainId,
-            Number(parsed.dstChainId),
+            Number(message.dstChainId),
           ),
-          message: parsed.message,
+          message: message.message,
+        }),
+      ]
+    }
+
+    const messageWithTransfer = parseMessageWithTransfer(input.log, null)
+    if (messageWithTransfer) {
+      return [
+        CelerMessage.create(input, {
+          receiver: Address32.from(messageWithTransfer.receiver),
+          $dstChain: findChain(
+            CELER_NETWORKS,
+            (x) => x.celerChainId,
+            Number(messageWithTransfer.dstChainId),
+          ),
+          message: messageWithTransfer.message,
+          wraps: Address32.from(messageWithTransfer.bridge),
         }),
       ]
     }
@@ -146,9 +171,11 @@ export class CelerPlugIn implements InteropPlugin {
         ctx: { txHash: delivery.args.srcTxHash },
       })
       if (!message) return
+      // celer sometimes wraps cctp, canonical bridges, anything with a token
+      const app = message.args.wraps ? 'wrappingForeignTransfer' : 'unknown'
       return [
-        Result.Message('celer.InterchainMessage', {
-          app: 'unknown',
+        Result.Message('celer.Message', {
+          app,
           srcEvent: message,
           dstEvent: delivery,
         }),
@@ -162,18 +189,21 @@ export class CelerPlugIn implements InteropPlugin {
       if (!sent) return
 
       return [
-        Result.Message('celer.BridgeTransfer', {
-          app: 'celer bridge',
+        Result.Message('celer.Message', {
+          app: 'cBridge',
           srcEvent: sent,
           dstEvent: delivery,
         }),
-        Result.Transfer('celer.BridgeTransfer', {
+        Result.Transfer('celer.Transfer', {
           srcEvent: sent,
           srcTokenAddress: sent.args.token,
           srcAmount: sent.args.amount,
+          srcWasBurned: false,
           dstEvent: delivery,
           dstTokenAddress: delivery.args.token,
           dstAmount: delivery.args.amount,
+          dstWasMinted: false,
+          bridgeType: 'nonMinting',
         }),
       ]
     }

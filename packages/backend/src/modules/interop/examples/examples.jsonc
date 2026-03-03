@@ -398,21 +398,32 @@
   },
   "celer": {
     "txs": [
+      // message only, wrapping cctp
       {
-        "chain": "arbitrum", // IM
-        "tx": "0x2c3f1a655a15d77758fb4253e10572e6db9190ce9cf3a48264a78b28022919a3"
+        "chain": "ethereum",
+        "tx": "0x98B29DCFCD0F65B09584A14DCEDFA6DC29FD2C3FF96AFDD72EB0B71370D69DDF"
       },
       {
-        "chain": "arbitrum", // Executed
-        "tx": "0x6256f99519a3455a68baa3b671a79352ae5f721f36137f313e6107b2267b8ce6"
+        "chain": "polygonpos",
+        "tx": "0xcac581169caac00801aa086b98678a58d64b76349b8e680ce2e4391f75dff3eb"
+      },
+      // message only, unknown
+      {
+        "chain": "arbitrum",
+        "tx": "0xbec638451e06399b5c0ed44faec78e66efa33dc85261cede55f3f469291af549"
       },
       {
-        "chain": "ethereum", // Send
-        "tx": "0xff51fac268e039a5cc4026baa658c13a44046b6f7df15a647d1e4f8c73eaad64"
+        "chain": "bsc",
+        "tx": "0x91091c0a1ee70c82f3681f951068edeec9699859cc7bd6d20c54e0e9b8c49966"
+      },
+      // nonMinting transfer via cbridge liquidity pool
+      {
+        "chain": "linea",
+        "tx": "0x493f51cd5f2327660e6a682f038e9f93a1db296b2ac42bf345ef8859f6434bb4"
       },
       {
-        "chain": "ethereum", // Relay
-        "tx": "0x963f5203a729d35925faefe037504ab1ee7b12cda04d1a4b717817dca1af5f46"
+        "chain": "bsc",
+        "tx": "0x129b03dd3072c79b8829ea978b8cfef13c804d708d9c42b90b9497d1f2345e1a"
       }
     ]
   },
