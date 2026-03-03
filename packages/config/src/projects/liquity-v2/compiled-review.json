@@ -1,0 +1,4545 @@
+{
+  "version": "1.0",
+  "compiledAt": "2026-03-03T07:38:42.622Z",
+  "project": "liquity-v2",
+  "metadata": {
+    "protocolName": "Liquity V2",
+    "protocolSlug": "liquity-v2",
+    "chain": "Ethereum",
+    "projectType": "cdp",
+    "tokenName": "BOLD",
+    "description": "Liquity V2 is a multi-collateral CDP protocol that issues BOLD, a USD-soft-pegged stablecoin, against WETH, wstETH, and rETH collateral across three independent branches. Borrowers open Troves — each represented as a transferable NFT — and pay market-determined interest rates set individually or delegated to batch managers, replacing the fixed 0.5% fee model of Liquity V1. All 66 contracts are immutable, deployed without upgradeable proxies, and all ownership was renounced to the zero address after initialization; there are no administrative keys post-deployment. The protocol relies on Chainlink as its primary price oracle with Tellor as a fallback, with oracle failure triggering branch-level shutdown rather than corrupted liquidations."
+  },
+  "totals": {
+    "contractCount": 66,
+    "permissionedFunctionCount": 115,
+    "scoredFunctionCount": 17,
+    "adminCount": 8,
+    "dependencyCount": 1,
+    "totalCapitalAtRisk": 101932742.85900694,
+    "totalTokenValueAtRisk": 39517389.34563734
+  },
+  "admins": [
+    {
+      "address": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+      "name": "WETH Branch BorrowerOperations",
+      "description": "Internal protocol contract — not a human-controlled admin. BorrowerOperations is the exclusive caller permitted to execute sendColl, receiveColl, accountForReceivedColl, mintAggInterestAndAccountForTroveChange, and mintAggInterest on the ActivePool contracts, and is the entry point for Trove operations (openTrove, shutdown, batch interest management). All ownership chain terminals resolve to immutable Liquity V2 contracts with no external keyholder. Controls $87.23M in direct capital across 19 contracts.",
+      "adminType": "Untemplatized",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "sendColl",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "receiveColl",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "accountForReceivedColl",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterestAndAccountForTroveChange",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterest",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "sendColl",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "receiveColl",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "accountForReceivedColl",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterestAndAccountForTroveChange",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 3294385.782884921,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterest",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 3294385.782884921,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "sendColl",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "receiveColl",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "accountForReceivedColl",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterestAndAccountForTroveChange",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterest",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTrove",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "onOpenTrove",
+                "getTroveStatus",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "insert"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "mintAggInterestAndAccountForTroveChange",
+                "getCollBalance",
+                "getBoldDebt",
+                "accountForReceivedColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
+              "name": "TroveNFT",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTroveAndJoinInterestBatchManager",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "onOpenTroveAndJoinBatch",
+                "getTroveStatus",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "insertIntoBatch"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "mintAggInterestAndAccountForTroveChange",
+                "getCollBalance",
+                "getBoldDebt",
+                "accountForReceivedColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
+              "name": "TroveNFT",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "registerBatchManager",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "onRegisterBatchManager"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "lowerBatchManagementFee",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "onLowerBatchManagerAnnualFee"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintAggInterestAndAccountForTroveChange"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "setBatchManagerAnnualInterestRate",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "onSetBatchManagerAnnualInterestRate",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "mintAggInterestAndAccountForTroveChange",
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "isEmptyBatch",
+                "reInsertBatch"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "kickFromBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestTroveData",
+                "getLatestBatchData",
+                "onRemoveFromBatch",
+                "getTroveStatus",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "removeFromBatch",
+                "insert"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintAggInterestAndAccountForTroveChange",
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "getCollBalance",
+                "getBoldDebt",
+                "receiveColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
+              "name": "TroveNFT",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "ownerOf"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt",
+                "decreaseBoldDebt",
+                "sendCollToActivePool"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "switchBatchManager",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "getLatestTroveData",
+                "onRemoveFromBatch",
+                "getTroveStatus",
+                "onSetInterestBatchManager",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "removeFromBatch",
+                "insert",
+                "remove",
+                "insertIntoBatch"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintAggInterestAndAccountForTroveChange",
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "getCollBalance",
+                "getBoldDebt",
+                "receiveColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
+              "name": "TroveNFT",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "ownerOf"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt",
+                "decreaseBoldDebt",
+                "sendCollToActivePool"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "shutdown",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt",
+                "mintAggInterest"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "shutdown"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "setShutdownFlag"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "shutdownFromOracleFailure",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintAggInterest"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "shutdown"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "setShutdownFlag"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "registerBatchManager",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "onRegisterBatchManager"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "lowerBatchManagementFee",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "onLowerBatchManagerAnnualFee"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintAggInterestAndAccountForTroveChange"
+              ],
+              "fundsUsd": 13768330.240168054,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 3294385.782884921,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "setBatchManagerAnnualInterestRate",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "onSetBatchManagerAnnualInterestRate",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "mintAggInterestAndAccountForTroveChange",
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 13768330.240168054,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "isEmptyBatch",
+                "reInsertBatch"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 3294385.782884921,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "shutdown",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt",
+                "mintAggInterest"
+              ],
+              "fundsUsd": 13768330.240168054,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "shutdown"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 3294385.782884921,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "setShutdownFlag"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTrove",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "onOpenTrove",
+                "getTroveStatus",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "insert"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "mintAggInterestAndAccountForTroveChange",
+                "getCollBalance",
+                "getBoldDebt",
+                "accountForReceivedColl"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
+              "name": "TroveNFT",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTroveAndJoinInterestBatchManager",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "onOpenTroveAndJoinBatch",
+                "getTroveStatus",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "insertIntoBatch"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "mintAggInterestAndAccountForTroveChange",
+                "getCollBalance",
+                "getBoldDebt",
+                "accountForReceivedColl"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
+              "name": "TroveNFT",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "registerBatchManager",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "onRegisterBatchManager"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "lowerBatchManagementFee",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "onLowerBatchManagerAnnualFee"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintAggInterestAndAccountForTroveChange"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "setBatchManagerAnnualInterestRate",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "onSetBatchManagerAnnualInterestRate",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "mintAggInterestAndAccountForTroveChange",
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "isEmptyBatch",
+                "reInsertBatch"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "kickFromBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestTroveData",
+                "getLatestBatchData",
+                "onRemoveFromBatch",
+                "getTroveStatus",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "removeFromBatch",
+                "insert"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintAggInterestAndAccountForTroveChange",
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
+              "name": "TroveNFT",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "ownerOf"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decreaseBoldDebt",
+                "sendCollToActivePool"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "receiveColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "switchBatchManager",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getLatestBatchData",
+                "getLatestTroveData",
+                "onRemoveFromBatch",
+                "getTroveStatus",
+                "onSetInterestBatchManager",
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+              "name": "SortedTroves",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "removeFromBatch",
+                "insert",
+                "remove",
+                "insertIntoBatch"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintAggInterestAndAccountForTroveChange",
+                "getNewApproxAvgInterestRateFromTroveChange",
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013",
+              "name": "TroveNFT",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "ownerOf"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decreaseBoldDebt",
+                "sendCollToActivePool"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "receiveColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "shutdown",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+              "name": "PriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "fetchPrice"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt",
+                "mintAggInterest",
+                "setShutdownFlag"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+              "name": "DefaultPool",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getCollBalance",
+                "getBoldDebt"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "shutdown"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "latestRoundData",
+                "getRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+              "name": "TellorCaller",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTellorCurrentValue"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+              "name": "Tellor Tributes Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getNewValueCountbyRequestId",
+                "getTimestampbyRequestIDandIndex",
+                "retrieveData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "shutdownFromOracleFailure",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintAggInterest",
+                "setShutdownFlag"
+              ],
+              "fundsUsd": 11993501.281570517,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "shutdown"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 87229872.93194577,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 101932742.85900694,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
+      "name": "WETH Branch TroveManager",
+      "description": "Internal protocol contract. TroveManager is the exclusive caller permitted to execute sendColl, sendCollToDefaultPool, mintAggInterestAndAccountForTroveChange, mintBatchManagementFeeAndAccountForChange, and setShutdownFlag on the ActivePool, and drives SortedTroves remove/removeFromBatch operations during liquidations. Controls $87.23M in direct capital across 10 contracts.",
+      "adminType": "Untemplatized",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "sendColl",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "sendCollToDefaultPool",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "receiveColl"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterestAndAccountForTroveChange",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "mintBatchManagementFeeAndAccountForChange",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "setShutdownFlag",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "sendColl",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "sendCollToDefaultPool",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "receiveColl"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterestAndAccountForTroveChange",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 3294385.782884921,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "mintBatchManagementFeeAndAccountForChange",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "setShutdownFlag",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "sendColl",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "sendCollToDefaultPool",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+              "name": "DefaultPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "receiveColl"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterestAndAccountForTroveChange",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "mintBatchManagementFeeAndAccountForChange",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "setShutdownFlag",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+          "contractName": "DefaultPool",
+          "functionName": "sendCollToActivePool",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "receiveColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+          "contractName": "DefaultPool",
+          "functionName": "increaseBoldDebt",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+          "contractName": "DefaultPool",
+          "functionName": "decreaseBoldDebt",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+          "contractName": "DefaultPool",
+          "functionName": "sendCollToActivePool",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "receiveColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+          "contractName": "DefaultPool",
+          "functionName": "increaseBoldDebt",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+          "contractName": "DefaultPool",
+          "functionName": "decreaseBoldDebt",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
+          "contractName": "DefaultPool",
+          "functionName": "sendCollToActivePool",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "receiveColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
+          "contractName": "DefaultPool",
+          "functionName": "increaseBoldDebt",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
+          "contractName": "DefaultPool",
+          "functionName": "decreaseBoldDebt",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 87229872.93194577,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 101932742.85900694,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+      "name": "wstETH Branch StabilityPool",
+      "description": "Internal protocol contract. The wstETH StabilityPool is authorized to call sendColl and mintAggInterest on the wstETH ActivePool, enabling BOLD liquidation offsets and interest distribution to depositors. The $87.23M direct capital figure reflects its authorized access to ActivePool balances in the call graph.",
+      "adminType": "Untemplatized",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "sendColl",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterest",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 11408484.144176247,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "sendColl",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterest",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 3294385.782884921,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "sendColl",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "mintAggInterest",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "triggerBoldRewards"
+              ],
+              "fundsUsd": 7309640.005101214,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 87229872.93194577,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 101932742.85900694,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
+      "name": "wstETH Branch DefaultPool",
+      "description": "Internal protocol contract. DefaultPool is authorized to call receiveColl and accountForReceivedColl on the wstETH ActivePool, handling collateral accounting during redistribution liquidations where debt and collateral are socialized across existing trove holders. Controls $87.23M in direct capital.",
+      "adminType": "Untemplatized",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "receiveColl",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+          "contractName": "ActivePool",
+          "functionName": "accountForReceivedColl",
+          "impact": "critical",
+          "directFundsUsd": 61468041.41020721,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "receiveColl",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+          "contractName": "ActivePool",
+          "functionName": "accountForReceivedColl",
+          "impact": "critical",
+          "directFundsUsd": 13768330.240168054,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "receiveColl",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+          "contractName": "ActivePool",
+          "functionName": "accountForReceivedColl",
+          "impact": "critical",
+          "directFundsUsd": 11993501.281570517,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 87229872.93194577,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 87229872.93194577,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0x0000000000000000000000000000000000000000",
+      "name": "Zero Address (Renounced)",
+      "description": "Initialization functions across 6 contracts — setAddresses, setParams, and setCollateralRegistry — were restricted to an owner address set to the zero address after deployment. These functions wired up contract addresses and parameters at launch and can no longer be called by any party.",
+      "adminType": "Unknown",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+          "contractName": "ActivePool",
+          "functionName": "setAddresses",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "setAddresses",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
+          "contractName": "DefaultPool",
+          "functionName": "setAddresses",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
+          "contractName": "SortedTroves",
+          "functionName": "setParams",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+          "contractName": "StabilityPool",
+          "functionName": "setAddresses",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d",
+          "contractName": "BoldToken",
+          "functionName": "setBranchAddresses",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 39517389.34563734,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d",
+          "contractName": "BoldToken",
+          "functionName": "setCollateralRegistry",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 39517389.34563734,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 39517389.34563734,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 39517389.34563734
+    },
+    {
+      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+      "name": "rETH Branch ActivePool",
+      "description": "Internal protocol contract. The rETH ActivePool is authorized to call receiveColl on its DefaultPool and triggerBoldRewards on the rETH StabilityPool, coordinating redistribution collateral accounting and interest distribution to depositors. Controls $14.70M in direct capital across 5 contracts.",
+      "adminType": "Untemplatized",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+          "contractName": "DefaultPool",
+          "functionName": "receiveColl",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
+          "contractName": "DefaultPool",
+          "functionName": "receiveColl",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
+          "contractName": "DefaultPool",
+          "functionName": "receiveColl",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+          "contractName": "StabilityPool",
+          "functionName": "triggerBoldRewards",
+          "impact": "critical",
+          "directFundsUsd": 3294385.782884921,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9502b7c397e9aa22fe9db7ef7daf21cd2aebe56b",
+          "contractName": "StabilityPool",
+          "functionName": "triggerBoldRewards",
+          "impact": "critical",
+          "directFundsUsd": 11408484.144176247,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 14702869.927061167,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 14702869.927061167,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+      "name": "rETH Branch BorrowerOperations",
+      "description": "Internal protocol contract. The rETH branch BorrowerOperations is authorized to call insert, remove, reInsert, insertIntoBatch, removeFromBatch, and reInsertBatch on the rETH SortedTroves, maintaining the sorted-by-interest-rate doubly linked list used for batch management and redemptions. SortedTroves holds no collateral, so direct capital exposure is zero.",
+      "adminType": "Untemplatized",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+          "contractName": "SortedTroves",
+          "functionName": "insert",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+          "contractName": "SortedTroves",
+          "functionName": "remove",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+          "contractName": "SortedTroves",
+          "functionName": "reInsert",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+          "contractName": "SortedTroves",
+          "functionName": "insertIntoBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+          "contractName": "SortedTroves",
+          "functionName": "removeFromBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+          "contractName": "SortedTroves",
+          "functionName": "reInsertBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
+          "contractName": "SortedTroves",
+          "functionName": "insert",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
+          "contractName": "SortedTroves",
+          "functionName": "remove",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
+          "contractName": "SortedTroves",
+          "functionName": "reInsert",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
+          "contractName": "SortedTroves",
+          "functionName": "insertIntoBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
+          "contractName": "SortedTroves",
+          "functionName": "removeFromBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
+          "contractName": "SortedTroves",
+          "functionName": "reInsertBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
+          "contractName": "SortedTroves",
+          "functionName": "insert",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
+          "contractName": "SortedTroves",
+          "functionName": "remove",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
+          "contractName": "SortedTroves",
+          "functionName": "reInsert",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
+          "contractName": "SortedTroves",
+          "functionName": "insertIntoBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
+          "contractName": "SortedTroves",
+          "functionName": "removeFromBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
+          "contractName": "SortedTroves",
+          "functionName": "reInsertBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
+              "name": "TroveManager",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getTroveAnnualInterestRate"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
+      "name": "rETH Branch TroveManager",
+      "description": "Internal protocol contract. The rETH TroveManager is authorized to call remove and removeFromBatch on its SortedTroves, sendCollToActivePool and debt accounting functions on its DefaultPool, and triggerBoldRewards and offset on the rETH StabilityPool during liquidations. Controls $14.70M in direct capital across 8 contracts.",
+      "adminType": "Untemplatized",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+          "contractName": "SortedTroves",
+          "functionName": "remove",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
+          "contractName": "SortedTroves",
+          "functionName": "removeFromBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
+          "contractName": "SortedTroves",
+          "functionName": "remove",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
+          "contractName": "SortedTroves",
+          "functionName": "removeFromBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
+          "contractName": "SortedTroves",
+          "functionName": "remove",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
+          "contractName": "SortedTroves",
+          "functionName": "removeFromBatch",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+          "contractName": "StabilityPool",
+          "functionName": "offset",
+          "impact": "critical",
+          "directFundsUsd": 3294385.782884921,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendColl"
+              ],
+              "fundsUsd": 13768330.240168054,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9502b7c397e9aa22fe9db7ef7daf21cd2aebe56b",
+          "contractName": "StabilityPool",
+          "functionName": "offset",
+          "impact": "critical",
+          "directFundsUsd": 11408484.144176247,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+              "name": "BoldToken",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 39517389.34563734,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendColl"
+              ],
+              "fundsUsd": 61468041.41020721,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 14702869.927061167,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 76170911.33726838,
+      "totalReachableTokenValue": 0
+    }
+  ],
+  "dependencies": [
+    {
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "name": "Chainlink ETH/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy supplying the ETH/USD spot price to all three branch PriceFeed contracts. Used by BorrowerOperations to enforce minimum collateralization ratios and by TroveManager to trigger liquidations. An oracle outage lasting beyond the fallback timeout causes the affected branch to enter shutdown mode, halting new borrows and redemptions.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+          "contractName": "PriceFeed",
+          "functionName": "fetchPrice"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTrove"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTroveAndJoinInterestBatchManager"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "adjustTroveInterestRate"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "setInterestIndividualDelegate"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "setBatchManagerAnnualInterestRate"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "setInterestBatchManager"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "kickFromBatch"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "removeFromBatch"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "switchBatchManager"
+        },
+        {
+          "contractAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+          "contractName": "BorrowerOperations",
+          "functionName": "shutdown"
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTrove"
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTroveAndJoinInterestBatchManager"
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "adjustTroveInterestRate"
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "setInterestIndividualDelegate"
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "setBatchManagerAnnualInterestRate"
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "setInterestBatchManager"
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "removeFromBatch"
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "switchBatchManager"
+        },
+        {
+          "contractAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+          "contractName": "BorrowerOperations",
+          "functionName": "shutdown"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTrove"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTroveAndJoinInterestBatchManager"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "adjustTroveInterestRate"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "setInterestIndividualDelegate"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "setBatchManagerAnnualInterestRate"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "setInterestBatchManager"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "kickFromBatch"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "removeFromBatch"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "switchBatchManager"
+        },
+        {
+          "contractAddress": "eth:0x372abd1810eaf23cb9d941bbe7596dfb2c46bc65",
+          "contractName": "BorrowerOperations",
+          "functionName": "shutdown"
+        }
+      ]
+    }
+  ],
+  "funds": [
+    {
+      "address": "eth:0x531a8f99c70d6a56a7cee02d6b4281650d7919a0",
+      "name": "ActivePool (wstETH branch)",
+      "description": "Holds $61.47M in wstETH collateral deposited by wstETH-branch borrowers as backing for their BOLD debt. The largest collateral pool in the protocol; collateral is moved to DefaultPool during redistribution liquidations and to borrowers on full repayment.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null
+    },
+    {
+      "address": "eth:0xeb5a8c825582965f1d84606e078620a84ab16afe",
+      "name": "ActivePool (WETH branch)",
+      "description": "Holds $11.99M in WETH collateral deposited by WETH-branch borrowers. Collateral is transferred out to BorrowerOperations on withdrawals, to DefaultPool during redistributions, and to the StabilityPool during offset liquidations.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null
+    },
+    {
+      "address": "eth:0x9074d72cc82dad1e13e454755aa8f144c479532f",
+      "name": "ActivePool (rETH branch)",
+      "description": "Holds $13.77M in rETH collateral deposited by rETH-branch borrowers. rETH is a Rocket Pool liquid staking token that accrues ETH staking rewards, so the collateral value changes independently of ETH price movements.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null
+    },
+    {
+      "address": "eth:0x9502b7c397e9aa22fe9db7ef7daf21cd2aebe56b",
+      "name": "StabilityPool (wstETH branch)",
+      "description": "Holds $11.41M in BOLD deposits and wstETH liquidation proceeds. Depositors absorb liquidated wstETH-branch troves by canceling BOLD against bad debt and receive the liquidated wstETH collateral at a discount.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null
+    },
+    {
+      "address": "eth:0x5721cbbd64fc7ae3ef44a0a3f9a790a9264cf9bf",
+      "name": "StabilityPool (WETH branch)",
+      "description": "Holds $7.31M in BOLD deposits and WETH liquidation proceeds. Provides the first-line liquidation backstop for the WETH branch; depositors earn liquidated collateral and BOLD rewards from interest accrual.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null
+    },
+    {
+      "address": "eth:0xd442e41019b7f5c4dd78f50dc03726c446148695",
+      "name": "StabilityPool (rETH branch)",
+      "description": "Holds $3.29M in BOLD deposits and rETH liquidation proceeds. Provides the first-line liquidation backstop for the rETH branch; depositors earn liquidated collateral and BOLD rewards from interest accrual.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null
+    },
+    {
+      "address": "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d",
+      "name": "BOLD Stablecoin",
+      "description": "Protocol-native stablecoin with a circulating market cap of $39.52M. Minted when borrowers open Troves and burned on repayment or redemption. Ownership was renounced to the zero address after the CollateralRegistry address was set; all subsequent minting and burning is controlled by the branch contracts.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null
+    }
+  ],
+  "functions": [
+    {
+      "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+      "contractName": "ActivePool",
+      "functionName": "sendColl",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+      "contractName": "ActivePool",
+      "functionName": "sendCollToDefaultPool",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+      "contractName": "ActivePool",
+      "functionName": "mintAggInterestAndAccountForTroveChange",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+      "contractName": "ActivePool",
+      "functionName": "mintAggInterest",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+      "contractName": "ActivePool",
+      "functionName": "mintBatchManagementFeeAndAccountForChange",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+      "contractName": "ActivePool",
+      "functionName": "setShutdownFlag",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+      "contractName": "ActivePool",
+      "functionName": "setAddresses",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+      "contractName": "BorrowerOperations",
+      "functionName": "setAddresses",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
+      "contractName": "DefaultPool",
+      "functionName": "setAddresses",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
+      "contractName": "SortedTroves",
+      "functionName": "setParams",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+      "contractName": "StabilityPool",
+      "functionName": "setAddresses",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+      "contractName": "StabilityPool",
+      "functionName": "triggerBoldRewards",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+      "contractName": "StabilityPool",
+      "functionName": "offset",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d",
+      "contractName": "BoldToken",
+      "functionName": "setBranchAddresses",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d",
+      "contractName": "BoldToken",
+      "functionName": "setCollateralRegistry",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x9502b7c397e9aa22fe9db7ef7daf21cd2aebe56b",
+      "contractName": "StabilityPool",
+      "functionName": "triggerBoldRewards",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x9502b7c397e9aa22fe9db7ef7daf21cd2aebe56b",
+      "contractName": "StabilityPool",
+      "functionName": "offset",
+      "impact": "critical"
+    }
+  ],
+  "contracts": [
+    {
+      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "name": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x4CB67cfee180B6B73B70c7B3fC162E5FCF6532f1",
+      "name": "eth:0x4CB67cfee180B6B73B70c7B3fC162E5FCF6532f1",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x55AA0f5e955aBa989f69C6216405B7d3624E5E16",
+      "name": "eth:0x55AA0f5e955aBa989f69C6216405B7d3624E5E16",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d",
+      "name": "eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A",
+      "name": "eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5",
+      "name": "eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8",
+      "name": "eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E",
+      "name": "eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x97360A89B5adb7D82Dbde6C66A49de8a48D550E6",
+      "name": "eth:0x97360A89B5adb7D82Dbde6C66A49de8a48D550E6",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x9A5B545aA8B6289288E529c4099B0CcA62bcB708",
+      "name": "eth:0x9A5B545aA8B6289288E529c4099B0CcA62bcB708",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x9ef7D53aa6B62e272467B86ce724885D4e2853BE",
+      "name": "eth:0x9ef7D53aa6B62e272467B86ce724885D4e2853BE",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xC0C7eB4A39BAa77fD52715BD1dcE2246Df85E489",
+      "name": "eth:0xC0C7eB4A39BAa77fD52715BD1dcE2246Df85E489",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xC917E3BF6c211b326ffD4ed13E7D9a67682095CA",
+      "name": "eth:0xC917E3BF6c211b326ffD4ed13E7D9a67682095CA",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xd8D2297bDf4a84569bCec83C92A81549bE9c51E6",
+      "name": "eth:0xd8D2297bDf4a84569bCec83C92A81549bE9c51E6",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1",
+      "name": "eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xF38326579519377178725A741C35999E8051e907",
+      "name": "eth:0xF38326579519377178725A741C35999E8051e907",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xFe31f3EcfDE29Fc4915d80Eb8A9d67bFF14180B3",
+      "name": "eth:0xFe31f3EcfDE29Fc4915d80Eb8A9d67bFF14180B3",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+      "name": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6",
+      "name": "eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
+      "name": "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
+      "name": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
+      "name": "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
+      "name": "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
+      "name": "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
+      "name": "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
+      "name": "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
+      "name": "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
+      "name": "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
+      "name": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+      "name": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+      "name": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+      "name": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+      "name": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+      "name": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+      "name": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+      "name": "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x0000000000000000000000000000000000000000",
+      "name": "eth:0x0000000000000000000000000000000000000000",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+      "name": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
+      "name": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
+      "name": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
+      "name": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+      "name": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
+      "name": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+      "name": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    }
+  ],
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

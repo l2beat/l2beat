@@ -1,0 +1,1096 @@
+{
+  "version": "1.0",
+  "compiledAt": "2026-03-03T07:39:30.021Z",
+  "project": "Steakhouse-USDC",
+  "metadata": {
+    "protocolName": "Steakhouse USDC",
+    "protocolSlug": "Steakhouse-USDC",
+    "chain": "Ethereum",
+    "projectType": "yield",
+    "tokenName": "steakUSDC",
+    "description": "Steakhouse USDC is a Morpho MetaMorpho vault that allocates USDC deposits across multiple lending markets on Morpho Blue to generate yield for depositors. The vault is managed by Steakhouse Financial in partnership with Morpho, with governance controls exercised through a combination of multisig wallets and a timelock-protected DAO. All vault operations depend on Morpho Blue for capital deployment and multiple Chainlink price feeds for collateral valuation across the underlying markets."
+  },
+  "totals": {
+    "contractCount": 23,
+    "permissionedFunctionCount": 16,
+    "scoredFunctionCount": 0,
+    "adminCount": 7,
+    "dependencyCount": 8,
+    "totalCapitalAtRisk": 239843882.57210308,
+    "totalTokenValueAtRisk": 0
+  },
+  "admins": [
+    {
+      "address": "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
+      "name": "Steakhouse 5/8 Multisig",
+      "description": "Primary vault owner multisig (5-of-8 threshold, 63% approval required). Controls all critical vault parameters including curator and allocator designation (setCurator, setIsAllocator), fee configuration (setFee, setFeeRecipient), skim recipient management (setSkimRecipient), and initiation of timelock-protected governance changes (submitTimelock, submitGuardian). Can manage market caps and removals (submitCap, submitMarketRemoval), configure supply and withdrawal queues (setSupplyQueue, updateWithdrawQueue), execute fund reallocations (reallocate), and revoke pending governance proposals (revokePendingTimelock, revokePendingGuardian, revokePendingCap, revokePendingMarketRemoval).",
+      "adminType": "Multisig",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "setCurator",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "setIsAllocator",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "setSkimRecipient",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "submitTimelock",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "setFee",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "idToMarketParams",
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "setFeeRecipient",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "idToMarketParams",
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "submitGuardian",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "submitCap",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "submitMarketRemoval",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "setSupplyQueue",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "updateWithdrawQueue",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "reallocate",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "withdraw",
+                "supply",
+                "accrueInterest",
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingTimelock",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingGuardian",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingCap",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingMarketRemoval",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 239843882.57210308,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 239843882.57210308,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB",
+      "name": "Steakhouse/Morpho 2/5 Curator Multisig",
+      "description": "Designated curator multisig (2-of-5 threshold, 40% approval required) operated jointly by Steakhouse Financial and Morpho. Controls market cap submissions (submitCap) and market removal requests (submitMarketRemoval), both subject to timelock delays. Manages supply and withdrawal queue configuration (setSupplyQueue, updateWithdrawQueue) and can execute fund reallocations between markets (reallocate). Can revoke pending cap changes and market removals (revokePendingCap, revokePendingMarketRemoval).",
+      "adminType": "Multisig",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "submitCap",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "submitMarketRemoval",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "setSupplyQueue",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "updateWithdrawQueue",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "reallocate",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "withdraw",
+                "supply",
+                "accrueInterest",
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingCap",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingMarketRemoval",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 239843882.57210308,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 239843882.57210308,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
+      "name": "PublicAllocator",
+      "description": "Morpho protocol contract that enables permissionless reallocation of vault funds between markets based on predetermined rules. Can update withdrawal queues (updateWithdrawQueue) and execute reallocations (reallocate) without requiring multisig approval, allowing for automated optimization of capital deployment. This is an internal protocol mechanism that operates within constraints set by vault governance.",
+      "adminType": "Untemplatized",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "updateWithdrawQueue",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "reallocate",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "withdraw",
+                "supply",
+                "accrueInterest",
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 239843882.57210308,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 239843882.57210308,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0xfeed46c11F57B7126a773EeC6ae9cA7aE1C03C9a",
+      "name": "EOA (0xfeed...c9a)",
+      "description": "Designated allocator address with permissions to manage supply queues and execute reallocations. Can update withdrawal queues and execute reallocations within the vault's configured parameters. This EOA operates as part of the vault's allocator system.",
+      "adminType": "EOA",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "updateWithdrawQueue",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "reallocate",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "withdraw",
+                "supply",
+                "accrueInterest",
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 239843882.57210308,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 239843882.57210308,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1",
+      "name": "MorphoHelper",
+      "description": "Morpho protocol helper contract with allocator permissions. Can update withdrawal queues and execute reallocations as part of the vault's automated management system. This is an internal protocol contract that facilitates automated capital deployment.",
+      "adminType": "Untemplatized",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "updateWithdrawQueue",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "reallocate",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "withdraw",
+                "supply",
+                "accrueInterest",
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 239843882.57210308,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 239843882.57210308,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8",
+      "name": "Guardian 1/6 Multisig",
+      "description": "Low-threshold guardian multisig (1-of-6, 17% approval required) with emergency powers to revoke pending governance changes. Can revoke pending timelock updates (revokePendingTimelock), guardian changes (revokePendingGuardian), cap modifications (revokePendingCap), and market removals (revokePendingMarketRemoval). This provides a rapid response mechanism to cancel potentially harmful governance proposals during their timelock period.",
+      "adminType": "Multisig",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "updateWithdrawQueue",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "reallocate",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "name": "Morpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "withdraw",
+                "supply",
+                "accrueInterest",
+                "market",
+                "extSloads"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 239843882.57210308,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 239843882.57210308,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0xaa0500198B4425DfC4E272FbE42C8E64E21fc03d",
+      "name": "Governance DAO",
+      "description": "Designated guardian contract in the vault's governance structure. Can revoke pending governance changes including timelock updates and market parameter modifications. This governance contract provides an additional layer of oversight for timelock-protected changes.",
+      "adminType": "Contract",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingTimelock",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingGuardian",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingCap",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "revokePendingMarketRemoval",
+          "impact": "critical",
+          "directFundsUsd": 239843882.57210308,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 239843882.57210308,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 239843882.57210308,
+      "totalReachableTokenValue": 0
+    }
+  ],
+  "dependencies": [
+    {
+      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "name": "Morpho Blue",
+      "description": "Core lending protocol where all vault deposits are allocated. The vault supplies USDC to various lending markets on Morpho Blue, making it the fundamental dependency for capital deployment, yield generation, and withdrawal operations. All vault positions and reallocations interact directly with Morpho Blue.",
+      "entity": "Morpho",
+      "isAutoDetected": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "setFee"
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "setFeeRecipient"
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "submitCap"
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "updateWithdrawQueue"
+        },
+        {
+          "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+          "contractName": "MetaMorpho",
+          "functionName": "reallocate"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data. Used by Morpho Blue markets where the vault deploys capital to determine collateral valuations and health ratios. The vault's exposure to markets relying on this feed makes it a critical dependency for accurate position accounting.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+          "contractName": "Morpho",
+          "functionName": "liquidate"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Used to value collateral and determine borrowing capacity in markets where vault capital is deployed.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+          "contractName": "Morpho",
+          "functionName": "liquidate"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Supports collateral valuation in lending markets where the vault maintains positions.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+          "contractName": "Morpho",
+          "functionName": "liquidate"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Enables accurate pricing of collateral in markets where vault funds are allocated.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+          "contractName": "Morpho",
+          "functionName": "liquidate"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
+      "name": "Chainlink BTC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing BTC/USD price data for Morpho Blue markets with BTC-denominated collateral. Used to value Bitcoin collateral in markets where the vault deploys USDC.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+          "contractName": "Morpho",
+          "functionName": "liquidate"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Supports collateral and debt valuation in lending markets receiving vault capital.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+          "contractName": "Morpho",
+          "functionName": "liquidate"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
+      "name": "Chainlink wstETH Price Feed",
+      "description": "Custom Chainlink price feed for wstETH (wrapped staked ETH). Provides pricing for wstETH collateral in Morpho Blue markets where the vault maintains USDC lending positions. Critical for accurate valuation of liquid staking derivative collateral.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+          "contractName": "Morpho",
+          "functionName": "liquidate"
+        }
+      ]
+    }
+  ],
+  "funds": [
+    {
+      "address": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+      "name": "MetaMorpho Vault (steakUSDC)",
+      "description": "Main vault contract holding all depositor assets. Contains USDC positions across four Morpho Blue lending markets, generating yield through optimized capital allocation. The vault implements a MetaMorpho architecture with timelock-protected governance and curator-managed market selection.",
+      "balances": {
+        "totalUsdValue": 0.006016273599405394
+      },
+      "positions": {
+        "totalUsdValue": 239843882.5660868
+      },
+      "tokenInfo": null
+    }
+  ],
+  "functions": [],
+  "contracts": [
+    {
+      "address": "eth:0xaa0500198b4425dfc4e272fbe42c8e64e21fc03d",
+      "name": "eth:0xaa0500198b4425dfc4e272fbe42c8e64e21fc03d",
+      "isExternal": false,
+      "isGovernance": true,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+      "name": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Morpho",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xcba28b38103307ec8da98377fff9816c164f9afa",
+      "name": "eth:0xcba28b38103307ec8da98377fff9816c164f9afa",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x13ca8756e9470b71b8e998352c8741706217f963",
+      "name": "eth:0x13ca8756e9470b71b8e998352c8741706217f963",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x264c86dbbd2e4165fbbf0c35b0ddf0e00aec6b31",
+      "name": "eth:0x264c86dbbd2e4165fbbf0c35b0ddf0e00aec6b31",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xcf263cee139763114faafc5f52865135412f50ec",
+      "name": "eth:0xcf263cee139763114faafc5f52865135412f50ec",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x30e7c016fc702cde9a50720a469d418490b7b652",
+      "name": "eth:0x30e7c016fc702cde9a50720a469d418490b7b652",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xe0aeb6811d33df42a09066857cdafca16b506086",
+      "name": "eth:0xe0aeb6811d33df42a09066857cdafca16b506086",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x69fcefde2b48503d675181448b3d4272128bca9c",
+      "name": "eth:0x69fcefde2b48503d675181448b3d4272128bca9c",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x84d3e4ee550dd5f99e76a548ac59a6be1c8dcf79",
+      "name": "eth:0x84d3e4ee550dd5f99e76a548ac59a6be1c8dcf79",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x8f02b4a44eacd9b8ee7739aa0ba58833dd45d002",
+      "name": "eth:0x8f02b4a44eacd9b8ee7739aa0ba58833dd45d002",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xc100c251bdd297a66795112f04356e6ba5f89d80",
+      "name": "eth:0xc100c251bdd297a66795112f04356e6ba5f89d80",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x21f73d42eb58ba49ddb685dc29d3bf5c0f0373ca",
+      "name": "eth:0x21f73d42eb58ba49ddb685dc29d3bf5c0f0373ca",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x2e1b5a40edc922bce489668b11749b8eabd67f6b",
+      "name": "eth:0x2e1b5a40edc922bce489668b11749b8eabd67f6b",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x7052cb84079905400ea52b635cab6a275fda8823",
+      "name": "eth:0x7052cb84079905400ea52b635cab6a275fda8823",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x80efdee7f82d0f2abf3bf29a9a85edf0b42c9e19",
+      "name": "eth:0x80efdee7f82d0f2abf3bf29a9a85edf0b42c9e19",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xb65b6d224351cd61f856c227b2d5cfc611e9b2d8",
+      "name": "eth:0xb65b6d224351cd61f856c227b2d5cfc611e9b2d8",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xb7f0643d4ca8c296564ce335062833e1afa3afdb",
+      "name": "eth:0xb7f0643d4ca8c296564ce335062833e1afa3afdb",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812",
+      "name": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xfde996f00e42b33bde7c640786333623acc3f298",
+      "name": "eth:0xfde996f00e42b33bde7c640786333623acc3f298",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x05724b9c8c1dde1b2f659d7c0676ff63f6d5e781",
+      "name": "eth:0x05724b9c8c1dde1b2f659d7c0676ff63f6d5e781",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x3f7b49f03375aa588b828a5ffbaac5727fb8202d",
+      "name": "eth:0x3f7b49f03375aa588b828a5ffbaac5727fb8202d",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x47a1dd4e277530fffb5b5f70a43ccbd542f54e17",
+      "name": "eth:0x47a1dd4e277530fffb5b5f70a43ccbd542f54e17",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x480496c0884d61f2f56707adb11697f8018898c2",
+      "name": "eth:0x480496c0884d61f2f56707adb11697f8018898c2",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
+      "name": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad",
+      "name": "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
+      "name": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
+      "name": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
+      "name": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    },
+    {
+      "address": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+      "name": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": null
+    },
+    {
+      "address": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
+      "name": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": null
+    }
+  ],
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
