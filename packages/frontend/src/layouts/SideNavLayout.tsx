@@ -95,7 +95,7 @@ export function SideNavLayout({
             },
           ],
         },
-        env.CLIENT_SIDE_INTEROP_ENABLED && {
+        {
           type: 'multiple',
           title: 'Interop',
           match: 'interop',
@@ -126,26 +126,6 @@ export function SideNavLayout({
               href:
                 selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
                 '/interop/burn-and-mint',
-            },
-          ],
-        },
-        !env.CLIENT_SIDE_INTEROP_ENABLED && {
-          type: 'multiple',
-          title: 'Bridges',
-          match: 'bridges',
-          icon: (
-            <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-          ),
-          links: [
-            {
-              title: 'Summary',
-              href: '/bridges/summary',
-            },
-          ],
-          secondaryLinks: [
-            {
-              title: 'Archived',
-              href: '/bridges/archived',
             },
           ],
         },

@@ -8,8 +8,6 @@ export const pages = [
   '/scaling/costs',
   '/scaling/upcoming',
   '/scaling/archived',
-  '/bridges/summary',
-  '/bridges/archived',
   '/data-availability/summary',
   '/data-availability/risk',
   '/data-availability/throughput',
@@ -32,14 +30,6 @@ export const projectPages: Record<string, string[]> = {
     '/scaling/projects/fuel',
     '/scaling/projects/zora',
     '/scaling/projects/gasp',
-  ],
-  bridges: [
-    '/bridges/projects/sonicgateway',
-    '/bridges/projects/omni',
-    '/bridges/projects/connext',
-    '/bridges/projects/acrossv3',
-    '/bridges/projects/opticsv2',
-    '/bridges/projects/transporter',
   ],
   dataAvailability: [
     '/data-availability/projects/ethereum/ethereum',

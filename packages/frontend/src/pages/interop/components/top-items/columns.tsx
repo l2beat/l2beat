@@ -52,8 +52,7 @@ export const getTopItemsColumns = (
         />
       ),
       meta: {
-        headClassName: 'w-[32px] pr-0!',
-        cellClassName: 'pr-0!',
+        headClassName: 'w-[32px]',
       },
       size: 28,
       enableHiding: false,
@@ -73,6 +72,10 @@ export const getTopItemsColumns = (
           )}
         </TwoRowCell>
       ),
+      meta: {
+        headClassName: 'pl-0!',
+        cellClassName: 'pl-0!',
+      },
     }),
     columnHelper.accessor('volume', {
       header: 'Last 24h\nVolume',

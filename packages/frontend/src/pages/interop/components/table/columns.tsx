@@ -276,6 +276,7 @@ export function getAllProtocolsColumns(
               id: ctx.row.original.id,
               name: ctx.row.original.name,
               iconUrl: ctx.row.original.iconUrl,
+              bridgeTypes: ctx.row.original.bridgeTypes,
             }}
             showNetMintedValueColumn={showNetMintedValueColumn}
           />

@@ -189,7 +189,7 @@ export async function getScalingProjectEntry(
       select: ['contracts'],
     }),
     ps.getProjects({
-      optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
+      optional: ['daBridge', 'isScaling', 'isDaLayer'],
     }),
   ])
 

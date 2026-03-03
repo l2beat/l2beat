@@ -11,7 +11,7 @@ import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
  *
  */
 
-const discovery = new ProjectDiscovery('stargatev2')
+const discovery = new ProjectDiscovery('stargate')
 
 const pools: string[] = discovery.getContractValue<string[]>(
   'TokenMessaging',

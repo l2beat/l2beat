@@ -161,8 +161,8 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
   })
 
-  describe(TvsAmountRepository.prototype.deleteByConfigInTimeRange.name, () => {
-    it('deletes data in range for matching config', async () => {
+  describe(TvsAmountRepository.prototype.deleteByConfigs.name, () => {
+    it('deletes data in range for matching configs', async () => {
       await repository.upsertMany([
         tvsAmount('b', UnixTime(1), 1n),
         tvsAmount('b', UnixTime(2), 2n),
@@ -170,11 +170,13 @@ describeDatabase(TvsAmountRepository.name, (db) => {
         tvsAmount('c', UnixTime(2), 4n),
       ])
 
-      const deleted = await repository.deleteByConfigInTimeRange(
-        'b'.repeat(12),
-        UnixTime(1),
-        UnixTime(2),
-      )
+      const deleted = await repository.deleteByConfigs([
+        {
+          configurationId: 'b'.repeat(12),
+          fromInclusive: UnixTime(1),
+          toInclusive: UnixTime(2),
+        },
+      ])
 
       expect(deleted).toEqual(2)
 
@@ -188,16 +190,23 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     it('returns 0 if no matching config found', async () => {
       await repository.upsertMany([tvsAmount('b', UnixTime(1), 1n)])
 
-      const deleted = await repository.deleteByConfigInTimeRange(
-        'c'.repeat(12),
-        UnixTime(1),
-        UnixTime(2),
-      )
+      const deleted = await repository.deleteByConfigs([
+        {
+          configurationId: 'c'.repeat(12),
+          fromInclusive: UnixTime(1),
+          toInclusive: UnixTime(2),
+        },
+      ])
 
       expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([tvsAmount('b', UnixTime(1), 1n)])
+    })
+
+    it('returns 0 for empty configs', async () => {
+      const deleted = await repository.deleteByConfigs([])
+      expect(deleted).toEqual(0)
     })
   })
 

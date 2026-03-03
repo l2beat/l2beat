@@ -56,18 +56,6 @@ export const searchBarPages = withIndex([
     href: '/scaling/archived',
   },
   {
-    category: 'bridges',
-    name: 'Summary',
-    tags: ['pages', 'bridges'],
-    href: '/bridges/summary',
-  },
-  {
-    category: 'bridges',
-    name: 'Archived',
-    tags: ['pages', 'bridges'],
-    href: '/bridges/archived',
-  },
-  {
     category: 'da',
     name: 'Summary',
     tags: ['pages', 'da', 'data', 'availability'],

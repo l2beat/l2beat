@@ -1,5 +1,4 @@
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import range from 'lodash/range'
 
 import { Callout } from '~/components/Callout'
 import {
@@ -17,31 +16,13 @@ const SHOWN_ANOMALIES = 4
 
 interface Props {
   anomalies: LivenessAnomaly[]
-  showComingSoon?: boolean
   hasTrackedContractsChanged: boolean
 }
 
 export function AnomalyIndicator({
   anomalies,
-  showComingSoon,
   hasTrackedContractsChanged,
 }: Props) {
-  if (showComingSoon) {
-    return (
-      <div
-        className="w-min select-none text-center"
-        title="Anomalies coming soon"
-      >
-        <div className="mx-auto text-secondary">Coming soon</div>
-        <div className="flex gap-x-0.5">
-          {range(30).map((_, i) => (
-            <div key={i} className="size-0.5 rounded-full bg-secondary" />
-          ))}
-        </div>
-      </div>
-    )
-  }
-
   const indicators = toAnomalyIndicatorEntries(anomalies)
 
   return (

@@ -34,10 +34,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
   projectId?: ProjectId, // target project id for which we want to get verifiers, used only in this project
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
@@ -99,10 +96,7 @@ function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
   contractUtils: ContractUtils,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
@@ -141,10 +135,7 @@ export function getVerifiersWithAttesters(
 
 export function getProjectsUsedIn(
   projectIds: ProjectId[],
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
 ): UsedInProjectWithIcon[] {
   return projectIds
     .map((projectId) => {
@@ -152,9 +143,7 @@ export function getProjectsUsedIn(
       if (!project) return undefined
 
       let url = `/scaling/projects/${project.slug}`
-      if (project.isBridge) {
-        url = `/bridges/projects/${project.slug}`
-      } else if (project.daBridge) {
+      if (project.daBridge) {
         const layer = allProjects
           .filter((x) => x.isDaLayer)
           .find((x) => x.id === project.daBridge?.daLayer)

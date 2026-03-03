@@ -4,7 +4,6 @@ import { InMemoryCache } from '../server/cache/InMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
-import { createBridgesRouter } from './bridges/BridgesRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
 import { createDataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
@@ -48,7 +47,6 @@ export function createServerPageRouter(
   const routers = [
     createScalingRouter,
     createInteropRouter,
-    createBridgesRouter,
     createDataAvailabilityRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,

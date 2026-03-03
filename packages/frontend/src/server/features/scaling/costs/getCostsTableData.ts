@@ -1,11 +1,10 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import type { ChartRange } from '~/utils/range/range'
 import { getSummedActivityForProjects } from '../activity/getSummedActivityForProjects'
 import { getCostsForProjects } from './getCostsForProjects'
 import type { LatestCostsProjectResponse, LatestCostsValues } from './types'
 import { getCostsProjects } from './utils/getCostsProjects'
-import { isCostsSynced } from './utils/isCostsSynced'
 
 type LatestCostsValuesWithTotal = LatestCostsValues & {
   total: number
@@ -14,7 +13,7 @@ type LatestCostsValuesWithTotal = LatestCostsValues & {
 export type CostsTableData = Record<
   string,
   {
-    isSynced: boolean
+    syncedUntil: UnixTime | undefined
     uopsCount: number | undefined
     gas: LatestCostsValuesWithTotal
     eth: LatestCostsValuesWithTotal
@@ -45,16 +44,12 @@ export async function getCostsTable(
 
   return Object.fromEntries(
     Object.entries(projectsCosts).map(([projectId, costs]) => {
-      const isSynced = isCostsSynced({
-        syncedUntil: costs.syncedUntil,
-        to: UnixTime.now(),
-      })
       return [
         projectId,
         {
           ...withTotal(costs),
           uopsCount: projectsActivity[projectId],
-          isSynced,
+          syncedUntil: costs.syncedUntil,
         },
       ]
     }),
@@ -99,6 +94,7 @@ async function getMockCostsTableData(): Promise<CostsTableData> {
         p.id,
         {
           isSynced: true,
+          syncedUntil: undefined,
           uopsCount: 1500,
           gas: {
             total: 1000000,

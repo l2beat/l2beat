@@ -9,7 +9,6 @@ import { assert, ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import type { Bridge, ScalingProject } from '../internalTypes'
-import { bridges } from '../processing/bridges'
 import { layer2s } from '../processing/layer2s'
 import { layer3s } from '../processing/layer3s'
 import { refactored } from '../processing/refactored'
@@ -19,7 +18,7 @@ import { getChainNames } from '../utils/chains'
 describe('verification status', () => {
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
-  const projects = [...layer2s, ...bridges, ...layer3s, ...refactored]
+  const projects = [...layer2s, ...layer3s, ...refactored]
 
   for (const project of projects) {
     for (const chain of getChainNames(project)) {

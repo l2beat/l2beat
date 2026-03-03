@@ -153,6 +153,20 @@ export function createInteropRouter(
         type: 'relay.TokenReceived',
         chainArg: '$srcChain' as const,
       },
+      {
+        id: 'ccip-send-requested',
+        title: 'ccip.CCIPSendRequested destination chains',
+        centerLabel: 'CCIPSendRequested events',
+        type: 'ccip.CCIPSendRequested',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'ccip-execution-state-changed',
+        title: 'ccip.ExecutionStateChanged source chains',
+        centerLabel: 'ExecutionStateChanged events',
+        type: 'ccip.ExecutionStateChanged',
+        chainArg: '$srcChain' as const,
+      },
     ]
 
     const rows = await Promise.all(

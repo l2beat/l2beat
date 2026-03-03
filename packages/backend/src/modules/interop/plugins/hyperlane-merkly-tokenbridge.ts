@@ -58,6 +58,11 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
     },
     // no katana
     // no bsc
+    {
+      chain: 'celo',
+      chainId: 42220,
+      address: EthereumAddress('0xad8676147360dBc010504aB69C7f1b1877109527'),
+    },
   ],
 )
 

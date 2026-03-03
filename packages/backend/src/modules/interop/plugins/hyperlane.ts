@@ -54,6 +54,7 @@ export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'abstract', chainId: 2741 },
   { chain: 'katana', chainId: 747474 },
   { chain: 'bsc', chainId: 56 },
+  { chain: 'celo', chainId: 42220 },
 ])
 
 export class HyperlanePlugIn implements InteropPlugin {
