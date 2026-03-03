@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xab616bbd0017c167417b0efc2c3333089c40280c
+
+# Diff at Tue, 03 Mar 2026 14:34:41 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@8022124997d98da1ae388eae53ed6b9be1f19a8d block: 1764700344
+- current timestamp: 1764700344
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1764700344 (main branch discovery), not current.
+
+```diff
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      template:
++        "tokens"
+    }
+```
+
 Generated with discovered.json: 0xc3fcfefc1d17cce1fb8ada8fbe4c9290f86bc42f
 
 # Diff at Tue, 03 Mar 2026 10:03:01 GMT:

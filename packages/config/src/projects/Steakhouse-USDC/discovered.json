@@ -1,7 +1,7 @@
 {
   "name": "Steakhouse-USDC",
-  "timestamp": 1771947004,
-  "configHash": "0x9295488c7787db6f7fb31bcbea064b54e03d2e8e7d0245f76fec5a79ed46b73b",
+  "timestamp": 1772548726,
+  "configHash": "0x1f271bdfd66092ae7cd0ce1c24e1f4473f336aa1c2c072b4fb7b12def8177013",
   "entries": [
     {
       "name": "Safe",
@@ -32,7 +32,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 6 (17%)",
-        "nonce": 483,
+        "nonce": 494,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -76,7 +76,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 104,
+        "nonce": 106,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -105,7 +105,6 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "1849013062000000000000000000",
         "QUOTE_FEED_1": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -156,7 +155,7 @@
         ],
         "multisigThreshold": "4 of 9 (44%)",
         "NAME": "Gnosis Safe",
-        "nonce": 2063,
+        "nonce": 2066,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -269,13 +268,14 @@
         "0x237c913a314bfa16d9468aa4abb3491591a7a545e397647ff950ddcbccb66195"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["price"],
       "sinceTimestamp": 1703870003,
       "sinceBlock": 18892643,
       "values": {
         "$immutable": true,
         "BASE_FEED_1": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
-        "price": "2260297429454135673412364657",
+        "price": "2413731176027408957308438190",
         "QUOTE_FEED_1": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "SCALE_FACTOR": "10000000000000000000000000000000000",
@@ -300,13 +300,6 @@
         "$immutable": true,
         "decimals": 8,
         "description": "Custom price feed for wstETH / ETH",
-        "latestRoundData": {
-          "roundId": "36893488147419103921",
-          "answer": 122635675,
-          "startedAt": 1771874471,
-          "updatedAt": 1771874507,
-          "answeredInRound": "36893488147419103921"
-        },
         "stETHtoETHPriceFeed": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
         "stETHToETHPriceFeedDecimals": 18,
         "version": 1,
@@ -360,7 +353,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 113,
+        "nonce": 124,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -387,15 +380,14 @@
       "values": {
         "$immutable": true,
         "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0xC9c8Efa84eaB332d1950e5Ba0a913b090775825c",
         "decimals": 18,
         "description": "STETH / ETH",
-        "getAnswer": [0, 0, 0, 0, 0],
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 2,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
       },
-      "errors": { "getAnswer": "Processing error occurred." },
       "implementationNames": {
         "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": "EACAggregatorProxy"
       }
@@ -424,15 +416,14 @@
       "values": {
         "$immutable": true,
         "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7",
         "decimals": 8,
         "description": "USDC / USD",
-        "getAnswer": [0, 0, 0, 0, 0],
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 3,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
       },
-      "errors": { "getAnswer": "Processing error occurred." },
       "implementationNames": {
         "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": "EACAggregatorProxy"
       }
@@ -524,7 +515,6 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "637393284447800000000000000000000000000",
         "QUOTE_FEED_1": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -616,6 +606,7 @@
         "0x5a200a736c2ff00631db8db2d38de06efb719776ab601509667365e31999367a"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalAssets", "totalSupply", "lastTotalAssets"],
       "sinceTimestamp": 1704302495,
       "sinceBlock": 18928285,
       "values": {
@@ -643,7 +634,7 @@
         "fee": 0,
         "feeRecipient": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
         "guardian": "eth:0xaa0500198B4425DfC4E272FbE42C8E64E21fc03d",
-        "lastTotalAssets": 291613599440949,
+        "lastTotalAssets": 161941963364048,
         "marketOracles": [
           "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
           "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83",
@@ -713,8 +704,8 @@
         "supplyQueueLength": 5,
         "symbol": "steakUSDC",
         "timelock": 604800,
-        "totalAssets": 291613623828656,
-        "totalSupply": "260690210761601986288805746",
+        "totalAssets": 161942133121214,
+        "totalSupply": "144695254734701483451935875",
         "withdrawQueueLength": 5
       },
       "implementationNames": {
@@ -735,15 +726,14 @@
       "values": {
         "$immutable": true,
         "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0xad88fc1A810379Ef4EFbF2D97EdE57e306178e5a",
         "decimals": 8,
         "description": "ETH / USD",
-        "getAnswer": [0, 0, 0, 0, 0],
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 2,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
       },
-      "errors": { "getAnswer": "Processing error occurred." },
       "implementationNames": {
         "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD": "EACAggregatorProxy"
       }
@@ -821,13 +811,14 @@
         "0x237c913a314bfa16d9468aa4abb3491591a7a545e397647ff950ddcbccb66195"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["price"],
       "sinceTimestamp": 1705337555,
       "sinceBlock": 19013595,
       "values": {
         "$immutable": true,
         "BASE_FEED_1": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
         "BASE_FEED_2": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
-        "price": "635688267611010614843187454996399711976",
+        "price": "666955297248026184636739148353266582196",
         "QUOTE_FEED_1": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "SCALE_FACTOR": "100000000000000000000000000",
@@ -916,6 +907,7 @@
       "values": {
         "$immutable": true,
         "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0xA5e3A55cEa42B86560a5215094981c300899199D",
         "decimals": 8,
         "description": "WBTC / BTC",
         "getAnswer": [0, 0, 0, 0, 0],
@@ -1736,6 +1728,6 @@
     "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921",
     "taiko/DAO": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24527666 },
+  "usedBlockNumbers": { "ethereum": 24577577 },
   "permissionsConfigHash": "0xf061b25f0ca6647e53a04b25a630a6ce93fa9d02c1bb2dd3734453207e8f51df"
 }

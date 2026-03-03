@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x6f3eefac369bb75f1d75e98474beb58a014e2463
+
+# Diff at Tue, 03 Mar 2026 14:40:10 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@8022124997d98da1ae388eae53ed6b9be1f19a8d block: 1771947004
+- current timestamp: 1772548726
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771947004 (main branch discovery), not current.
+
+```diff
+    contract MorphoChainlinkOracleV2 (eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580) {
+    +++ description: None
+      values.price:
+-        "1849013062000000000000000000"
+    }
+```
+
+```diff
+    contract WstETHPriceFeed (eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79) {
+    +++ description: None
+      values.latestRoundData:
+-        {"roundId":"36893488147419103921","answer":122635675,"startedAt":1771874471,"updatedAt":1771874507,"answeredInRound":"36893488147419103921"}
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812) {
+    +++ description: None
+      values.getAnswer:
+-        [0,0,0,0,0]
+      values.aggregator:
++        "eth:0xC9c8Efa84eaB332d1950e5Ba0a913b090775825c"
+      errors:
+-        {"getAnswer":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6) {
+    +++ description: None
+      values.getAnswer:
+-        [0,0,0,0,0]
+      values.aggregator:
++        "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7"
+      errors:
+-        {"getAnswer":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract MorphoChainlinkOracleV2 (eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a) {
+    +++ description: None
+      values.price:
+-        "637393284447800000000000000000000000000"
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD) {
+    +++ description: None
+      values.getAnswer:
+-        [0,0,0,0,0]
+      values.aggregator:
++        "eth:0xad88fc1A810379Ef4EFbF2D97EdE57e306178e5a"
+      errors:
+-        {"getAnswer":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23) {
+    +++ description: None
+      values.aggregator:
++        "eth:0xA5e3A55cEa42B86560a5215094981c300899199D"
+    }
+```
+
 Generated with discovered.json: 0x37694947a180be33fde0f56e644e8b89c8fc063b
 
 # Diff at Tue, 03 Mar 2026 09:58:04 GMT:

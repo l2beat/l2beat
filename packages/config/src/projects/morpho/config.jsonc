@@ -17,9 +17,7 @@
   ],
   "defidisco": {
     "scanPermissions": true,
-    "permissionLimits": {
-      "maxSourceFiles": 35
-    }
+    "permissionLimits": { "maxSourceFiles": 35 }
   },
   "overrides": {
     "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
@@ -29,7 +27,11 @@
       "ignoreDiscovery": true
     },
     "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2": {
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999": {
+      "ignoreInWatchMode": ["totalSupply"]
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "morpho",
   "timestamp": 1764700344,
-  "configHash": "0xd6a9b5722fa55bffaeff8d4f16a975ea88758dbd8d26de5c6debdf0d6577f257",
+  "configHash": "0x9a73f023012f3c13e97acc9276fa4ea150fdbbab8f5f8e1c7388ffc99db4a909",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -225,6 +225,7 @@
         "0x5c0e97285626036fc0c240f5f76c1983be15b1f201159bc73b4ac19ff48febae"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1656076502,
       "sinceBlock": 15018448,
       "values": {
@@ -305,10 +306,12 @@
       "name": "Wrapped Ether Token",
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "type": "Contract",
+      "template": "tokens",
       "sourceHashes": [
         "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1513077455,
       "sinceBlock": 4719568,
       "values": {
@@ -825,7 +828,8 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "morpho/EthereumBundlerV2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682"
+    "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682",
+    "tokens": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23927583 },
   "permissionsConfigHash": "0xce490d36f08495636b3f59781adcd16ba96ce204f2bb73f786a1d545aaadcbff"
