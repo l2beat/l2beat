@@ -425,7 +425,23 @@
         "chain": "bsc",
         "tx": "0x129b03dd3072c79b8829ea978b8cfef13c804d708d9c42b90b9497d1f2345e1a"
       }
-    ]
+    ],
+    "expects": {
+      "events": [
+        "celer.Message",
+        "celer.Executed",
+        "celer.Message",
+        "celer.Executed",
+        "celer.Send",
+        "celer.Relay"
+      ],
+      "messages": [
+        { "type": "celer.Message", "app": "wrappingForeignTransfer" },
+        { "type": "celer.Message", "app": "unknown" },
+        { "type": "celer.Message", "app": "cBridge" }
+      ],
+      "transfers": ["celer.Transfer"]
+    }
   },
   "mayan-forwarder": {
     "txs": [
