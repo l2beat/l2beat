@@ -18,6 +18,10 @@ const EXTREME_Z_SCORE = 8
 const MIN_BASELINE_COUNT = 100
 const MIN_BASELINE_VOLUME_USD = 1_000_000
 const MIN_VOLUME_IDENTIFICATION_RATE = 0.5
+const DRIFT_ALERT_THRESHOLD = 0.35
+const DRIFT_SPIKE_FACTOR = 3
+const MIN_DRIFT_DELTA = 0.2
+const DRIFT_EPSILON = 0.01
 const LOOKBACK_POINTS = 20
 const SIGNAL_WINDOW = 14
 const MIN_Z_SCORE_WINDOW = 7
@@ -36,7 +40,8 @@ export interface AggregationGateState {
 export interface SnapshotTotals {
   transferCount: number
   identifiedCount: number
-  volumeUsd: number
+  srcVolumeUsd: number
+  dstVolumeUsd: number
 }
 
 export interface FailedAggregationGroup {
@@ -82,12 +87,14 @@ export class DefaultInteropAggregationQualityGate
             ? {
                 transferCount: historicalStats[0].transferCount,
                 identifiedCount: historicalStats[0].identifiedCount,
-                volumeUsd: historicalStats[0].volumeUsd,
+                srcVolumeUsd: historicalStats[0].srcVolumeUsd,
+                dstVolumeUsd: historicalStats[0].dstVolumeUsd,
               }
             : undefined
           const history = [...historicalStats].reverse().map((record) => ({
             transferCount: record.transferCount,
-            volumeUsd: record.volumeUsd,
+            srcVolumeUsd: record.srcVolumeUsd,
+            dstVolumeUsd: record.dstVolumeUsd,
           }))
 
           const reasons = evaluateQualitySignals({
@@ -130,15 +137,25 @@ export function evaluateQualitySignals(input: {
   baseline?: SnapshotTotals
   history: {
     transferCount: number
-    volumeUsd: number
+    srcVolumeUsd: number
+    dstVolumeUsd: number
   }[]
 }): string[] {
   const reasons: string[] = []
   const { candidate, baseline, history } = input
+  const candidateIdentificationRate = safeDivide(
+    candidate.identifiedCount,
+    candidate.transferCount,
+  )
 
-  if (candidate.volumeUsd > HARD_VOLUME_CAP_USD) {
+  if (candidate.srcVolumeUsd > HARD_VOLUME_CAP_USD) {
     reasons.push(
-      `Hard cap exceeded: volume=${Math.round(candidate.volumeUsd).toLocaleString()} USD`,
+      `Hard cap exceeded (src): volume=${Math.round(candidate.srcVolumeUsd).toLocaleString()} USD`,
+    )
+  }
+  if (candidate.dstVolumeUsd > HARD_VOLUME_CAP_USD) {
+    reasons.push(
+      `Hard cap exceeded (dst): volume=${Math.round(candidate.dstVolumeUsd).toLocaleString()} USD`,
     )
   }
 
@@ -152,23 +169,27 @@ export function evaluateQualitySignals(input: {
         reasons.push(`Count drop vs baseline: x${ratio.toFixed(2)}`)
       }
     }
+  }
 
-    const candidateIdentificationRate = safeDivide(
-      candidate.identifiedCount,
-      candidate.transferCount,
-    )
-    if (
-      baseline.volumeUsd >= MIN_BASELINE_VOLUME_USD &&
-      candidateIdentificationRate >= MIN_VOLUME_IDENTIFICATION_RATE
-    ) {
-      const ratio = safeDivide(candidate.volumeUsd, baseline.volumeUsd)
-      if (ratio > LARGE_RATIO_SPIKE) {
-        reasons.push(`Volume spike vs baseline: x${ratio.toFixed(2)}`)
-      }
-      if (ratio < LARGE_RATIO_DROP) {
-        reasons.push(`Volume drop vs baseline: x${ratio.toFixed(2)}`)
-      }
-    }
+  if (candidateIdentificationRate >= MIN_VOLUME_IDENTIFICATION_RATE) {
+    evaluateVolumeSignals('src', {
+      candidateVolumeUsd: candidate.srcVolumeUsd,
+      baselineVolumeUsd: baseline?.srcVolumeUsd,
+      historyVolumeUsd: history.map((h) => h.srcVolumeUsd),
+      reasons,
+    })
+    evaluateVolumeSignals('dst', {
+      candidateVolumeUsd: candidate.dstVolumeUsd,
+      baselineVolumeUsd: baseline?.dstVolumeUsd,
+      historyVolumeUsd: history.map((h) => h.dstVolumeUsd),
+      reasons,
+    })
+    evaluateDriftSignals({
+      candidate,
+      baseline,
+      history,
+      reasons,
+    })
   }
 
   const countSeries = [
@@ -188,33 +209,6 @@ export function evaluateQualitySignals(input: {
   }
   if (ratioDrop(countWindow, LARGE_RATIO_DROP)) {
     reasons.push('Count ratio drop in recent window')
-  }
-
-  const candidateIdentificationRate = safeDivide(
-    candidate.identifiedCount,
-    candidate.transferCount,
-  )
-  if (candidateIdentificationRate >= MIN_VOLUME_IDENTIFICATION_RATE) {
-    const volumeSeries = [
-      ...history.map((h) => h.volumeUsd),
-      candidate.volumeUsd,
-    ]
-    const volumeWindow = lastNValues(volumeSeries, SIGNAL_WINDOW)
-    const volumeLogWindow = volumeWindow.map(log1Plus)
-    const volumeZRobust =
-      volumeLogWindow.length >= MIN_Z_SCORE_WINDOW
-        ? zRobust(volumeLogWindow)
-        : null
-
-    if (volumeZRobust !== null && Math.abs(volumeZRobust) > EXTREME_Z_SCORE) {
-      reasons.push(`Volume robust z-score=${volumeZRobust.toFixed(2)}`)
-    }
-    if (ratioSpike(volumeWindow, LARGE_RATIO_SPIKE)) {
-      reasons.push('Volume ratio spike in recent window')
-    }
-    if (ratioDrop(volumeWindow, LARGE_RATIO_DROP)) {
-      reasons.push('Volume ratio drop in recent window')
-    }
   }
 
   return reasons
@@ -249,7 +243,8 @@ function groupTransfers(transfers: AggregatedInteropTransferRecord[]) {
         metrics: {
           transferCount: transfer.transferCount,
           identifiedCount: transfer.identifiedCount,
-          volumeUsd: transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0,
+          srcVolumeUsd: transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0,
+          dstVolumeUsd: transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0,
         },
       })
       continue
@@ -257,8 +252,10 @@ function groupTransfers(transfers: AggregatedInteropTransferRecord[]) {
 
     current.metrics.transferCount += transfer.transferCount
     current.metrics.identifiedCount += transfer.identifiedCount
-    current.metrics.volumeUsd +=
+    current.metrics.srcVolumeUsd +=
       transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
+    current.metrics.dstVolumeUsd +=
+      transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
   }
 
   return grouped
@@ -287,4 +284,126 @@ function safeDivide(a: number, b: number) {
     return a === 0 ? 1 : Number.POSITIVE_INFINITY
   }
   return a / b
+}
+
+function evaluateVolumeSignals(
+  side: 'src' | 'dst',
+  input: {
+    candidateVolumeUsd: number
+    baselineVolumeUsd?: number
+    historyVolumeUsd: number[]
+    reasons: string[]
+  },
+) {
+  const sideLabel = side === 'src' ? 'Src' : 'Dst'
+  const {
+    candidateVolumeUsd,
+    baselineVolumeUsd,
+    historyVolumeUsd,
+    reasons,
+  } = input
+
+  if (
+    baselineVolumeUsd !== undefined &&
+    baselineVolumeUsd >= MIN_BASELINE_VOLUME_USD
+  ) {
+    const ratio = safeDivide(candidateVolumeUsd, baselineVolumeUsd)
+    if (ratio > LARGE_RATIO_SPIKE) {
+      reasons.push(`Volume spike vs baseline (${sideLabel}): x${ratio.toFixed(2)}`)
+    }
+    if (ratio < LARGE_RATIO_DROP) {
+      reasons.push(`Volume drop vs baseline (${sideLabel}): x${ratio.toFixed(2)}`)
+    }
+  }
+
+  const volumeSeries = [...historyVolumeUsd, candidateVolumeUsd]
+  const volumeWindow = lastNValues(volumeSeries, SIGNAL_WINDOW)
+  const volumeLogWindow = volumeWindow.map(log1Plus)
+  const volumeZRobust =
+    volumeLogWindow.length >= MIN_Z_SCORE_WINDOW ? zRobust(volumeLogWindow) : null
+
+  if (volumeZRobust !== null && Math.abs(volumeZRobust) > EXTREME_Z_SCORE) {
+    reasons.push(`Volume robust z-score (${sideLabel})=${volumeZRobust.toFixed(2)}`)
+  }
+  if (ratioSpike(volumeWindow, LARGE_RATIO_SPIKE)) {
+    reasons.push(`Volume ratio spike in recent window (${sideLabel})`)
+  }
+  if (ratioDrop(volumeWindow, LARGE_RATIO_DROP)) {
+    reasons.push(`Volume ratio drop in recent window (${sideLabel})`)
+  }
+}
+
+function evaluateDriftSignals(input: {
+  candidate: SnapshotTotals
+  baseline?: SnapshotTotals
+  history: { srcVolumeUsd: number; dstVolumeUsd: number }[]
+  reasons: string[]
+}) {
+  const { candidate, baseline, history, reasons } = input
+  const candidateMaxVolumeUsd = Math.max(
+    candidate.srcVolumeUsd,
+    candidate.dstVolumeUsd,
+  )
+
+  if (candidateMaxVolumeUsd < MIN_BASELINE_VOLUME_USD) {
+    return
+  }
+
+  const candidateDrift = getSrcDstDrift(
+    candidate.srcVolumeUsd,
+    candidate.dstVolumeUsd,
+  )
+  if (candidateDrift >= DRIFT_ALERT_THRESHOLD) {
+    reasons.push(`Src/Dst volume drift is high: ${formatPercent(candidateDrift)}`)
+  }
+
+  if (baseline !== undefined) {
+    const baselineMaxVolumeUsd = Math.max(
+      baseline.srcVolumeUsd,
+      baseline.dstVolumeUsd,
+    )
+    if (baselineMaxVolumeUsd >= MIN_BASELINE_VOLUME_USD) {
+      const baselineDrift = getSrcDstDrift(
+        baseline.srcVolumeUsd,
+        baseline.dstVolumeUsd,
+      )
+      const driftRatio = safeDivide(
+        candidateDrift + DRIFT_EPSILON,
+        baselineDrift + DRIFT_EPSILON,
+      )
+
+      if (
+        candidateDrift - baselineDrift >= MIN_DRIFT_DELTA &&
+        driftRatio >= DRIFT_SPIKE_FACTOR
+      ) {
+        reasons.push(
+          `Src/Dst volume drift spike vs baseline: ${formatPercent(candidateDrift)} vs ${formatPercent(baselineDrift)}`,
+        )
+      }
+    }
+  }
+
+  const driftSeries = [
+    ...history.map((h) => getSrcDstDrift(h.srcVolumeUsd, h.dstVolumeUsd)),
+    candidateDrift,
+  ]
+  const driftWindow = lastNValues(driftSeries, SIGNAL_WINDOW)
+  if (
+    candidateDrift >= DRIFT_ALERT_THRESHOLD &&
+    ratioSpike(driftWindow, DRIFT_SPIKE_FACTOR)
+  ) {
+    reasons.push('Src/Dst volume drift ratio spike in recent window')
+  }
+}
+
+function getSrcDstDrift(srcVolumeUsd: number, dstVolumeUsd: number): number {
+  const maxVolume = Math.max(srcVolumeUsd, dstVolumeUsd)
+  if (maxVolume === 0) {
+    return 0
+  }
+  return Math.abs(srcVolumeUsd - dstVolumeUsd) / maxVolume
+}
+
+function formatPercent(value: number): string {
+  return `${(value * 100).toFixed(1)}%`
 }

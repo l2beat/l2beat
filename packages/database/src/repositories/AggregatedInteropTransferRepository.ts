@@ -53,6 +53,8 @@ export interface AggregatedInteropTransferGroupStatsRecord {
   transferCount: number
   identifiedCount: number
   volumeUsd: number
+  srcVolumeUsd: number
+  dstVolumeUsd: number
 }
 
 export function toRecord(
@@ -305,6 +307,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<number>`sum(coalesce("srcValueUsd", "dstValueUsd", 0))`.as(
           'volume_usd',
         ),
+        sql<number>`sum(coalesce("srcValueUsd", 0))`.as('src_volume_usd'),
+        sql<number>`sum(coalesce("dstValueUsd", 0))`.as('dst_volume_usd'),
       ])
       .where('id', '=', id)
       .where('bridgeType', '=', bridgeType)
@@ -324,6 +328,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       transferCount: Number(row.transfer_count ?? 0),
       identifiedCount: Number(row.identified_count ?? 0),
       volumeUsd: Number(row.volume_usd ?? 0),
+      srcVolumeUsd: Number(row.src_volume_usd ?? 0),
+      dstVolumeUsd: Number(row.dst_volume_usd ?? 0),
     }))
   }
 
