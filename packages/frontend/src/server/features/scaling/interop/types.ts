@@ -31,6 +31,7 @@ export type ProtocolEntry = {
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
+  snapshotTimestamp: number | undefined
 }
 
 export type ProtocolDisplayable = {
@@ -92,6 +93,7 @@ export const InteropProtocolTransfersParams = v.object({
   type: KnownInteropBridgeType.optional(),
   expectedTransferCount: v.number(),
   expectedVolume: v.number(),
+  snapshotTimestamp: v.number(),
   cursor: v.number().optional(),
 })
 

@@ -27,12 +27,14 @@ export function TransferCountCell({
   transferCount,
   expectedTransferCount,
   expectedVolume,
+  snapshotTimestamp,
   type,
   protocol,
 }: {
   transferCount: number
   expectedTransferCount: number
   expectedVolume: number
+  snapshotTimestamp: number | undefined
   type: KnownInteropBridgeType | undefined
   protocol: {
     id: ProjectId
@@ -55,6 +57,7 @@ export function TransferCountCell({
         type={type}
         expectedTransferCount={expectedTransferCount}
         expectedVolume={expectedVolume}
+        snapshotTimestamp={snapshotTimestamp}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
@@ -67,6 +70,7 @@ function TransferDetailsDialog({
   type,
   expectedTransferCount,
   expectedVolume,
+  snapshotTimestamp,
   isOpen,
   setIsOpen,
 }: {
@@ -78,6 +82,7 @@ function TransferDetailsDialog({
   type: KnownInteropBridgeType | undefined
   expectedTransferCount: number
   expectedVolume: number
+  snapshotTimestamp: number | undefined
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }) {
@@ -93,9 +98,10 @@ function TransferDetailsDialog({
         type,
         expectedTransferCount,
         expectedVolume,
+        snapshotTimestamp: snapshotTimestamp ?? 0,
       },
       {
-        enabled: isOpen,
+        enabled: isOpen && snapshotTimestamp !== undefined,
         getNextPageParam: (lastPage) => lastPage.nextCursor,
       },
     )

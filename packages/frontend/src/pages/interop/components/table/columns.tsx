@@ -146,6 +146,7 @@ export function getAllProtocolsColumns(
           transferCount={ctx.row.original.transferCount}
           expectedTransferCount={ctx.row.original.transferCount}
           expectedVolume={ctx.row.original.volume}
+          snapshotTimestamp={ctx.row.original.snapshotTimestamp}
           type={type}
           protocol={{
             id: ctx.row.original.id,

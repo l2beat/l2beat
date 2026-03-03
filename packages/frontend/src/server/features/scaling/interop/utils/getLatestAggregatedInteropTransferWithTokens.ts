@@ -1,4 +1,4 @@
-import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type {
   AggregatedInteropTransferWithTokens,
@@ -6,20 +6,25 @@ import type {
 } from '../types'
 import { getAggregatedInteropSnapshotTimestamp } from './getAggregatedInteropTimestamp'
 
+interface AggregatedInteropTransferWithTokensResult {
+  records: AggregatedInteropTransferWithTokens[]
+  snapshotTimestamp: UnixTime | undefined
+}
+
 export async function getLatestAggregatedInteropTransferWithTokens(
   selection: InteropSelectionInput,
   type?: KnownInteropBridgeType,
-): Promise<AggregatedInteropTransferWithTokens[]> {
+): Promise<AggregatedInteropTransferWithTokensResult> {
   const db = getDb()
 
   const { from, to } = selection
   if (from.length === 0 || to.length === 0) {
-    return []
+    return { records: [], snapshotTimestamp: undefined }
   }
 
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp) {
-    return []
+    return { records: [], snapshotTimestamp: undefined }
   }
 
   const [transfers, tokens] = await Promise.all([
@@ -37,7 +42,7 @@ export async function getLatestAggregatedInteropTransferWithTokens(
     ),
   ])
 
-  return transfers.map((transfer) => ({
+  const records = transfers.map((transfer) => ({
     ...transfer,
     tokens: tokens
       .filter(
@@ -58,4 +63,6 @@ export async function getLatestAggregatedInteropTransferWithTokens(
         burnedValueUsd: token.burnedValueUsd,
       })),
   }))
+
+  return { records, snapshotTimestamp }
 }

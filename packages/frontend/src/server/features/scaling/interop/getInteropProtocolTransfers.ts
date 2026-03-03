@@ -15,7 +15,6 @@ import type {
   InteropProtocolTransfersParams,
   InteropProtocolTransfersResponse,
 } from './types'
-import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 
 interface TransfersWithStats {
   items: InteropTransferRecord[]
@@ -38,6 +37,7 @@ export async function getInteropProtocolTransfers({
   type,
   expectedTransferCount,
   expectedVolume,
+  snapshotTimestamp,
   cursor,
 }: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
   if (from.length === 0 || to.length === 0) {
@@ -66,15 +66,6 @@ export async function getInteropProtocolTransfers({
       )
     : interopProject.interopConfig.plugins
   if (plugins.length === 0) {
-    return {
-      items: [],
-      hasIntegrityMismatch: false,
-      nextCursor: undefined,
-    }
-  }
-
-  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
-  if (!snapshotTimestamp) {
     return {
       items: [],
       hasIntegrityMismatch: false,
