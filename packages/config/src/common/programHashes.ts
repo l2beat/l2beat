@@ -232,7 +232,7 @@ Verify:
     `,
   },
   '0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f': {
-    title: 'Aggchain program of agglayer',
+    title: 'Aggchain program of agglayer v1.1.2',
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered sequencer signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
     programUrl:
@@ -271,7 +271,7 @@ fn main() {
     `,
   },
   '0x374ee73950cdb07d1b8779d90a8467df232639c13f9536b03f1ba76a2aa5dac6': {
-    title: 'Aggchain program of agglayer',
+    title: 'Aggchain program of agglayer v1.5.0',
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
     proverSystemProject: ProjectId('sp1'),
@@ -308,8 +308,46 @@ fn main() {
 \`\`\`
     `,
   },
+  '0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70': {
+    title: 'Aggchain program of agglayer v1.9.2',
+    description:
+      'Usually used for state validation of Aggchains. The source of this program hash was not found and is currently not verifiable.',
+    programUrl:
+      'https://github.com/agglayer/provers/tree/v1.9.2/crates/aggchain-proof-program',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [provers repo](https://github.com/agglayer/provers): \`git checkout v1.9.2\`. Commit hash should be \`191952ce5551badd578063e475f9a4f3c5a9b0f4\`.
+2. Make sure docker is running by running \`docker ps\`
+3. From the root dir: \`cargo make ap-elf\` to generate aggchain program elf from sources
+4. Compute vkey hash bytes of the generated \`crates/aggchain-proof-program/target/elf-compilation/docker/riscv32im-succinct-zkvm-elf/release/aggchain-proof-program\` using SP1 toolchain, e.g. by this simple rust script:
+
+\`\`\`
+use sp1_sdk::{HashableKey, Prover, CpuProver};
+
+fn main() {
+    let elf_path = std::env::args().nth(1).expect("Provide elf_path");
+    let elf_bytes = std::fs::read(&elf_path).expect("File read error");
+    let prover = CpuProver::new();
+    let (_pk, vkey) = Prover::setup(&prover, &elf_bytes);
+    let comm = vkey.hash_bytes();
+    let hex: String = comm.iter().
+        map(|b| format!("{:02x}", b)).collect();
+    println!("0x{}", hex);
+}
+\`\`\`
+    `,
+  },
   '0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53': {
-    title: 'Aggchain program of agglayer',
+    title: 'Aggchain program of agglayer v1.8.0',
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
     proverSystemProject: ProjectId('sp1'),

@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x9b5fe9e66b67abf9b8b8df38e26c5de0ffa4df86
+
+# Diff at Mon, 02 Mar 2026 14:06:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1772088580
+- current timestamp: 1772460290
+
+## Description
+
+DelegateController (proxy) on taiko verified.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
+      values.operatorCount:
+-        3
++        4
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772088580 (main branch discovery), not current.
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
+      implementationNames.taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C:
+-        ""
++        "ERC1967Proxy"
+    }
+```
+
 Generated with discovered.json: 0xf102a38e9646ae30251e102695a91c8d1423625f
 
 # Diff at Thu, 26 Feb 2026 06:51:07 GMT:

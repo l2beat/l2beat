@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xabdeac3c6d3865045bc1cf0fb61c0bd9daf69494
+
+# Diff at Mon, 02 Mar 2026 14:27:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1772088852
+- current timestamp: 1772461597
+
+## Description
+
+ms changes, new validatorShare address.
+
+## Watched changes
+
+```diff
+    contract StateSender (eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+      values.REGISTRATIONS.9:
++        "eth:0x0356e303B375D5a11D9Eb7d57DBF544FeE6972C9"
+    }
+```
+
+```diff
+    contract Registry (eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      values.getValidatorShareAddress:
+-        "eth:0xFB3a3A64E12FA787a6b709BF57834bdAD958d797"
++        "eth:0xBe63B977ABBAA99fC0243e208340c530Dd4ee9E8"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
++        "eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72"
+      values.$members.2:
+-        "eth:0xAb76AE6926371B82Af3652cCBABefBBA56270adC"
++        "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
+      values.$members.3:
+-        "eth:0xAb3506507449bF1880f3337825efd19ac89E235E"
++        "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
+      values.$members.4:
+-        "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9"
++        "eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x27a26cc6be659c310b85e352f35491bd3b759afc
 
 # Diff at Thu, 26 Feb 2026 06:55:31 GMT:
