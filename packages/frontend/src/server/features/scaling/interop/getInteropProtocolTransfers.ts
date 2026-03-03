@@ -231,10 +231,7 @@ function toPluginMatcherCacheKey(
   }[],
 ): string {
   return plugins
-    .map(
-      (plugin) =>
-        `${plugin.plugin}:${plugin.bridgeType}:${plugin.chain ?? ''}:${plugin.abstractTokenId ?? ''}:${plugin.transferType ?? ''}`,
-    )
+    .map((plugin) => Object.values(plugin).join(':'))
     .sort()
     .join('|')
 }
