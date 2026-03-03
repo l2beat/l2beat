@@ -8,7 +8,9 @@ Generated with discovered.json: 0x5364ea862a67b119d36a4c492b9803b008bc9bb4
 
 ## Description
 
-SXNetwork ownership transferred from Gelato Multisig (4 of 9) to a new Safe (3 of 5, Safe v1.4.1) with entirely new signers. The SequencerInbox sequencerVersion changed from 0x88 (Celestia) to 0x00 (standard Arbitrum DA), meaning SXNetwork stopped using Celestia for data availability. DAC keyset updated: membersCount reduced from 2 to 1. Validator set updated: one validator removed, one added, stakerCount increased from 2 to 3. Batch poster rotation: one added, one removed.
+SXNetwork transitioned from an AnyTrust Optimium (DAC) to a Calldata Rollup. The sequencerVersion changed from 0x88 (Celestia/AnyTrust) to 0x00 (standard calldata), meaning transaction data is now posted directly to Ethereum L1. This changes the project's stage from "Not applicable" to "Stage 0" and removes the DAC dependency entirely.
+
+Additionally, ownership transferred from Gelato Multisig (4 of 9, Safe v1.3.0) to a new Safe (3 of 5, Safe v1.4.1) with entirely new signers. Validator set updated: one validator removed, one added, stakerCount increased from 2 to 3. Batch poster rotation: one added, one removed.
 
 ## Watched changes
 
