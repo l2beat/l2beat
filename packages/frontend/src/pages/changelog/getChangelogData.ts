@@ -1,3 +1,4 @@
+import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getChangelogEntries } from '~/server/features/changelog/getChangelogEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -6,10 +7,10 @@ import { formatPublicationDate } from '~/utils/dates'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getChangelogData(
+  req: Request,
   manifest: Manifest,
-  url: string,
 ): Promise<RenderData> {
-  const appLayoutProps = await getAppLayoutProps()
+  const appLayoutProps = await getAppLayoutProps(req)
   const entries = getChangelogEntries().map((entry) => ({
     id: entry.id,
     title: entry.title,
@@ -26,7 +27,7 @@ export async function getChangelogData(
         description:
           'Track product and content updates shipped on L2BEAT in one place.',
         openGraph: {
-          url,
+          url: req.originalUrl,
           image: '/meta-images/changelog/opengraph-image.png',
         },
       }),

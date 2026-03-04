@@ -1,4 +1,3 @@
-import type { Request } from 'express'
 import {
   type KnownCookieName,
   type KnownCookieValue,
@@ -10,9 +9,7 @@ export type KnownCookies = {
   [key in KnownCookieName]: KnownCookieValue<key>
 }
 
-export function parseCookies(req: Request): KnownCookies {
-  const rawCookies = req.headers.cookie ?? ''
-
+export function parseCookies(rawCookies: string): KnownCookies {
   const allowedCookies = Object.keys(knownCookies) as KnownCookieName[]
 
   const parsedCookies = Object.fromEntries(

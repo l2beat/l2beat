@@ -1,3 +1,5 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
+import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getZkCatalogProjectEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import { ps } from '~/server/projects'
@@ -7,32 +9,37 @@ import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getZkCatalogProjectData(
+  req: Request<{ slug: string }, unknown, unknown, unknown>,
   manifest: Manifest,
-  slug: string,
-  url: string,
+  cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
   const helpers = getSsrHelpers()
-  const project = await ps.getProject({
-    slug,
-    select: ['zkCatalogInfo', 'display', 'statuses'],
-    optional: ['archivedAt', 'milestones', 'tvsInfo'],
-  })
-  if (!project) return undefined
+  const slug = req.params.slug
+  if (!slug) return undefined
 
   const [appLayoutProps, projectEntry] = await Promise.all([
-    getAppLayoutProps(),
-    getZkCatalogProjectEntry(project),
+    getAppLayoutProps(req),
+    cache.get(
+      {
+        key: ['zk-catalog', 'v2', 'projects', slug],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getCachedProjectEntry(slug),
+    ),
   ])
+
+  if (!projectEntry) return undefined
 
   return {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${project.name} - L2BEAT`,
-        description: project.display.description,
+        title: `${projectEntry.name} - L2BEAT`,
+        description: projectEntry.header.description,
         openGraph: {
-          url,
-          image: `/meta-images/zk-catalog/projects/${project.slug}/opengraph-image.png`,
+          url: req.originalUrl,
+          image: `/meta-images/zk-catalog/projects/${projectEntry.slug}/opengraph-image.png`,
         },
       }),
     },
@@ -45,4 +52,14 @@ export async function getZkCatalogProjectData(
       },
     },
   }
+}
+
+async function getCachedProjectEntry(slug: string) {
+  const project = await ps.getProject({
+    slug,
+    select: ['zkCatalogInfo', 'display', 'statuses'],
+    optional: ['archivedAt', 'milestones', 'tvsInfo'],
+  })
+  if (!project) return undefined
+  return getZkCatalogProjectEntry(project)
 }
