@@ -20,6 +20,35 @@ const config: InteropFeatureConfig = {
 }
 
 describe(createInteropRouter.name, () => {
+  describe('POST /interop/refresh-financials', () => {
+    it('marks all transfers as unprocessed', async () => {
+      const markAllAsUnprocessed = mockFn().resolvesTo(42)
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        markAllAsUnprocessed,
+      })
+      const db = mockObject<Database>({
+        interopTransfer,
+      })
+      const syncersManager = mockObject<InteropSyncersManager>({
+        getPluginSyncStatuses: mockFn().resolvesTo([]),
+      })
+
+      const router = createInteropRouter(
+        db,
+        config,
+        [],
+        syncersManager,
+        Logger.SILENT,
+      )
+      const api = createTestApiServer([router])
+
+      const response = await api.post('/interop/refresh-financials').expect(200)
+
+      expect(markAllAsUnprocessed).toHaveBeenCalledTimes(1)
+      expect(response.body).toEqual({ updatedTransfers: 42 })
+    })
+  })
+
   describe('POST /interop/resync', () => {
     it('applies wildcard to unspecified existing chains', async () => {
       const setResyncRequestedFrom = mockFn().resolvesTo(undefined)

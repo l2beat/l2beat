@@ -2653,6 +2653,15 @@
       {
         "chain": "base",
         "tx": "0x08fceb6f2db1a78a81a6ad94b8b2f137d7eb4e111043db1a7a05909db4208025"
+      },
+      // nonMinting usdt
+      {
+        "chain": "ethereum",
+        "tx": "0x9bf5081baeaad8390ae233f340c75981ac6a9de6cf9662d120c49a6715606e25"
+      },
+      {
+        "chain": "celo",
+        "tx": "0x6ff4008db4c54dad1cafd6a5179342b4f67ac658bc35809a8464b59cd3dbfc5c"
       }
     ]
   },

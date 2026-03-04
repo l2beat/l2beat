@@ -52,7 +52,7 @@ export const CelerMessage = createInteropEventType<{
   $dstChain: string
   message: `0x${string}`
   wraps?: Address32
-}>('celer.Message')
+}>('celer.Message', { direction: 'outgoing' })
 
 export const CelerExecuted = createInteropEventType<{
   msgType: number
@@ -60,14 +60,14 @@ export const CelerExecuted = createInteropEventType<{
   status: number
   $srcChain: string
   srcTxHash: string
-}>('celer.Executed')
+}>('celer.Executed', { direction: 'incoming' })
 
 export const CelerSent = createInteropEventType<{
   transferId: string
   token: Address32
   amount: bigint
   $dstChain: string
-}>('celer.Send')
+}>('celer.Send', { direction: 'outgoing' })
 
 export const CelerRelay = createInteropEventType<{
   transferId: string
@@ -75,7 +75,7 @@ export const CelerRelay = createInteropEventType<{
   amount: bigint
   srcTransferId: string
   $srcChain: string
-}>('celer.Relay')
+}>('celer.Relay', { direction: 'incoming' })
 
 export class CelerPlugIn implements InteropPlugin {
   readonly name = 'celer'

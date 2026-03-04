@@ -15,9 +15,12 @@ export async function getTvsConfig(
   flags: FeatureFlags,
   sinceTimestamp?: number,
 ): Promise<TvsConfig> {
-  const projectsWithTvs = await ps.getProjects({
-    select: ['tvsConfig'],
-  })
+  const [projectsWithTvs, projectsWithChains] = await Promise.all([
+    ps.getProjects({
+      select: ['tvsConfig'],
+    }),
+    ps.getProjects({ select: ['chainConfig'] }),
+  ])
 
   // filter our projects disabled by flag
   const enabledProjects = projectsWithTvs.filter((p) =>
@@ -37,15 +40,29 @@ export async function getTvsConfig(
     }))
   }
 
+  const chainRanges = new Map(
+    projectsWithChains.map((p) => [
+      p.chainConfig.name,
+      {
+        sinceTimestamp: p.chainConfig.sinceTimestamp,
+        untilTimestamp: p.chainConfig.untilTimestamp,
+      },
+    ]),
+  )
+
   // It is very important to pass ALL PROJECTS tokens here
   // this allows us to deduplicate amounts and extractPricesAndAmounts
   // and set since and untilTimestamp properly
   const { amounts, prices } = extractPricesAndAmounts(
     projects.flatMap((p) => p.tokens),
+    chainRanges,
   )
 
   const projectsWithSources = projects.map((p) => {
-    const { amounts: projectAmounts } = extractPricesAndAmounts(p.tokens)
+    const { amounts: projectAmounts } = extractPricesAndAmounts(
+      p.tokens,
+      chainRanges,
+    )
     const amountChains = projectAmounts
       .map((a) => {
         switch (a.type) {
@@ -73,12 +90,8 @@ export async function getTvsConfig(
     ),
   )
 
-  const allProjects = await ps.getProjects({
-    select: ['chainConfig'],
-  })
-
   const blockTimestamps = Array.from(new Set(chains).values()).map((c) => {
-    const project = allProjects.find((p) => p.chainConfig.name === c)
+    const project = projectsWithChains.find((p) => p.chainConfig.name === c)
     assert(project, `${c}: chainConfig not configured`)
     assert(project.chainConfig.sinceTimestamp)
 

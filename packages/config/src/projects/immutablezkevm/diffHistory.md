@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xa893b13f43a5921361d55533ef455acfed20fe61
+
+# Diff at Wed, 04 Mar 2026 09:01:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6a30ad0d296eab5cfae7df5ce6dbeea89f168dc4 block: 1741355351
+- current timestamp: 1772614819
+
+## Description
+
+ms member change.
+
+## Watched changes
+
+```diff
+    contract OwnerMultisig (eth:0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
++        "eth:0x94e97260182B9537822687Dd3c301225c6f87a5e"
+    }
+```
+
 Generated with discovered.json: 0x8e33f6da3bcf70b3b71d2d8598bf9c9cdfab7d04
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -256,7 +256,7 @@ function CustomTooltip({
                     entry.value !== undefined &&
                     total !== null && (
                       <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
-                        ({formatPercent(entry.value / total)})
+                        ({formatPercent(total !== 0 ? entry.value / total : 0)})
                       </span>
                     )}
                 </div>

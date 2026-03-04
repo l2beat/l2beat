@@ -1,17 +1,14 @@
-import type { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
-import type { ICache } from './ICache'
+import { UnixTime } from '../types/UnixTime.js'
 
 const PROMISE_TIMEOUT = 30
 
-interface Options {
-  key: (string | undefined)[]
-  ttl: number
-  staleWhileRevalidate?: number
+type Logger = {
+  info: (...args: unknown[]) => void
+  for: (object: object) => Logger
 }
 
 interface Config {
-  logger: Logger
+  logger?: Logger
   enabled?: boolean
   initialCache?: Map<
     string,
@@ -23,18 +20,24 @@ interface Config {
   promiseTimeout?: number
 }
 
-export class InMemoryCache implements ICache {
+interface Options {
+  key: (string | null | undefined)[]
+  ttl: number
+  staleWhileRevalidate?: number
+}
+
+export class InMemoryCache {
   private cache
   private enabled
   private promiseTimeout
-  private logger: Logger
+  private logger
   private inFlight = new Map<
     string,
     { promise: Promise<unknown>; timestamp: number }
   >()
 
   constructor(config: Config) {
-    this.logger = config.logger.for(this)
+    this.logger = config.logger
     this.enabled = config?.enabled ?? true
     this.cache =
       config?.initialCache ??
@@ -47,14 +50,14 @@ export class InMemoryCache implements ICache {
       return fallback()
     }
 
-    this.logger.info('Getting cache key', { key: options.key })
-    const key = this.getKey(options.key)
+    this.logger?.info('Getting cache key', { key: options.key })
+    const key = this.getKey(options.key.filter(Boolean) as string[])
     const result = this.cache.get(key)
     const now = UnixTime.now()
 
     // If we have a result and it's not expired, return it immediately
     if (result && result.timestamp + options.ttl > now) {
-      this.logger.info('Cache hit', { key, ttl: options.ttl })
+      this.logger?.info('Cache hit', { key, result })
       return result.result as T
     }
 
@@ -64,7 +67,7 @@ export class InMemoryCache implements ICache {
       options.staleWhileRevalidate &&
       result.timestamp + options.ttl + options.staleWhileRevalidate > now
     ) {
-      this.logger.info('Cache stale', { key, ttl: options.ttl })
+      this.logger?.info('Cache stale', { key })
       void this.revalidateInBackground(key, fallback)
       return result.result as T
     }
@@ -75,7 +78,7 @@ export class InMemoryCache implements ICache {
       existingPromise &&
       existingPromise.timestamp + this.promiseTimeout > now
     ) {
-      this.logger.info('Cache in flight', { key })
+      this.logger?.info('Cache in flight', { key })
       return existingPromise.promise as Promise<T>
     }
 
@@ -84,7 +87,7 @@ export class InMemoryCache implements ICache {
     })
     this.inFlight.set(key, { promise, timestamp: now })
 
-    this.logger.info('Cache miss', { key })
+    this.logger?.info('Cache miss', { key })
 
     const start = Date.now()
     const fallbackResult = await promise
@@ -94,7 +97,8 @@ export class InMemoryCache implements ICache {
       result: fallbackResult,
       timestamp: now,
     })
-    this.logger.info('Cache set', { key, duration })
+    this.logger?.info('Cache set', { key, duration })
+
     return fallbackResult
   }
 
@@ -134,7 +138,7 @@ export class InMemoryCache implements ICache {
     this.cache.set(key, value)
   }
 
-  private getKey(key: (string | undefined)[]) {
+  private getKey(key: (string | null | undefined)[]) {
     return key.filter(Boolean).join('-')
   }
 }
