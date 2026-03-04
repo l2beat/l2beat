@@ -227,7 +227,7 @@ export function SideNavLayout({
           title: 'Changelog',
           href: '/changelog',
           accessory: unreadChangelogCount ? (
-            <div className="inline-flex size-4 items-center justify-center rounded bg-brand font-medium text-2xs text-white tabular-nums leading-none">
+            <div className="inline-flex h-3.5 min-w-3.5 items-center justify-center rounded bg-brand p-1 font-medium text-2xs text-white tabular-nums leading-none">
               {unreadChangelogCount}
             </div>
           ) : null,
