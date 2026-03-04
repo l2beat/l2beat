@@ -16,6 +16,10 @@ commitBatchWithProof() can be called if any:
 
 `commitBatchWithProof()` currently reverts for non-whitelisted actors since it calls `getStakerBitmap(_msgSender())`, so in practice we still have whitelisted proposals
 
+diff:
+- [Rollup](https://disco.l2beat.com/diff/eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5/eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3)
+- [L1MessageQueueWithGasPriceOracle](https://disco.l2beat.com/diff/eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA/eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa)
+
 ## Watched changes
 
 ```diff
