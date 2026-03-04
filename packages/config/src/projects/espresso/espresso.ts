@@ -52,9 +52,11 @@ export const espresso: BaseProject = {
     badges: [],
   },
   trackedTxsConfig: [
+    // V1 newFinalizedState(tuple, tuple) — deprecated by V2 upgrade
     {
       projectId: ProjectId('espresso'),
       sinceTimestamp: 1704700211,
+      untilTimestamp: 1772483759, // 2026-03-02T20:35:59Z V2 upgrade
       type: 'liveness',
       subtype: 'proofSubmissions',
       params: {
@@ -67,6 +69,7 @@ export const espresso: BaseProject = {
     {
       projectId: ProjectId('espresso'),
       sinceTimestamp: 1704700211,
+      untilTimestamp: 1772483759,
       type: 'l2costs',
       subtype: 'proofSubmissions',
       params: {
@@ -74,6 +77,33 @@ export const espresso: BaseProject = {
         address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
         selector: '0x2063d4f7',
         signature: 'function newFinalizedState(tuple newState, tuple proof)',
+      },
+    },
+    // V3 newFinalizedState(tuple, tuple, uint256, tuple) — active since V3 upgrade
+    {
+      projectId: ProjectId('espresso'),
+      sinceTimestamp: 1772490059, // 2026-03-02T22:20:59Z V3 upgrade
+      type: 'liveness',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
+        selector: '0xaabd5db3',
+        signature:
+          'function newFinalizedState(tuple newState, tuple nextStakeTable, uint256 newAuthRoot, tuple proof)',
+      },
+    },
+    {
+      projectId: ProjectId('espresso'),
+      sinceTimestamp: 1772490059,
+      type: 'l2costs',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
+        selector: '0xaabd5db3',
+        signature:
+          'function newFinalizedState(tuple newState, tuple nextStakeTable, uint256 newAuthRoot, tuple proof)',
       },
     },
   ],
