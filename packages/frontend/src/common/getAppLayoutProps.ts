@@ -32,11 +32,21 @@ function getUnreadChangelogCount(
   if (req.originalUrl === '/changelog') {
     return 0
   }
-  return getChangelogEntries()
-    .map((entry) => UnixTime.fromDate(entry.publishedAt))
-    .filter(
-      (timestamp) =>
-        timestamp >
-        (cookies.changelogVisitedAt ?? UnixTime.now() - 14 * UnixTime.DAY),
-    ).length
+
+  const changelogEntries = getChangelogEntries().filter(
+    (entry) =>
+      UnixTime.fromDate(entry.publishedAt) > UnixTime.now() - 14 * UnixTime.DAY,
+  )
+  const lastReadChangelogId = cookies.lastReadChangelogId
+  if (!lastReadChangelogId) {
+    return changelogEntries.length
+  }
+  const lastReadChangelogIndex = changelogEntries.findIndex(
+    (entry) => entry.id === lastReadChangelogId,
+  )
+  if (lastReadChangelogIndex === -1) {
+    return changelogEntries.length
+  }
+
+  return lastReadChangelogIndex
 }

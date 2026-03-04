@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { useEffect } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
@@ -23,8 +22,11 @@ interface Props extends AppLayoutProps {
 
 export function ChangelogPage({ entries, ...props }: Props) {
   useEffect(() => {
-    setCookie('changelogVisitedAt', UnixTime.now())
-  }, [])
+    const latestEntry = entries[0]
+    if (latestEntry) {
+      setCookie('lastReadChangelogId', latestEntry.id)
+    }
+  }, [entries])
 
   return (
     <AppLayout {...props}>

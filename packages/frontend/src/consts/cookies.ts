@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { type Parser, type Validator, v as z } from '@l2beat/validate'
 
 /**
@@ -6,9 +5,9 @@ import { type Parser, type Validator, v as z } from '@l2beat/validate'
  */
 export const knownCookies = {
   // example: knownCookie('example', z.string(), 'example'),
-  changelogVisitedAt: knownCookie(
-    'changelogVisitedAt',
-    z.number().transform((value) => UnixTime(value)),
+  lastReadChangelogId: knownCookie(
+    'lastReadChangelogId',
+    z.string(),
     undefined,
   ),
 } as const
