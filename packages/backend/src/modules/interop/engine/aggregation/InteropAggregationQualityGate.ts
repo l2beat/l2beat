@@ -126,10 +126,10 @@ export function evaluateQualitySignals(input: {
   reasons.push(...analyzeHardCap(candidate))
   reasons.push(...analyzeCountRatio(candidate, previous))
   reasons.push(
-    ...analyzeRobustZScore(
-      'Count',
-      [...history.map((h) => h.transferCount), candidate.transferCount],
-    ),
+    ...analyzeRobustZScore('Count', [
+      ...history.map((h) => h.transferCount),
+      candidate.transferCount,
+    ]),
   )
 
   if (!isVolumeReliable(candidate)) {
@@ -155,16 +155,16 @@ export function evaluateQualitySignals(input: {
 
   const reliableHistory = history.filter((point) => isVolumeReliable(point))
   reasons.push(
-    ...analyzeRobustZScore(
-      'Src volume',
-      [...reliableHistory.map((h) => h.srcVolumeUsd), candidate.srcVolumeUsd],
-    ),
+    ...analyzeRobustZScore('Src volume', [
+      ...reliableHistory.map((h) => h.srcVolumeUsd),
+      candidate.srcVolumeUsd,
+    ]),
   )
   reasons.push(
-    ...analyzeRobustZScore(
-      'Dst volume',
-      [...reliableHistory.map((h) => h.dstVolumeUsd), candidate.dstVolumeUsd],
-    ),
+    ...analyzeRobustZScore('Dst volume', [
+      ...reliableHistory.map((h) => h.dstVolumeUsd),
+      candidate.dstVolumeUsd,
+    ]),
   )
 
   reasons.push(...analyzeDrift(candidate))
@@ -304,10 +304,7 @@ function analyzeVolumeRatio(
   return reasons
 }
 
-function analyzeRobustZScore(
-  label: string,
-  values: number[],
-): string[] {
+function analyzeRobustZScore(label: string, values: number[]): string[] {
   const reasons: string[] = []
   if (values.length < MIN_Z_SCORE_WINDOW) {
     return reasons

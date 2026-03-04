@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropPlugins } from '../../plugins'
 import type { InteropEventStore } from '../capture/InteropEventStore'
@@ -20,6 +21,11 @@ describe(InteropCleanerLoop.name, () => {
       })
 
       const db = mockObject<Database>({
+        interopAggregationQuality: mockObject<
+          Database['interopAggregationQuality']
+        >({
+          findLatestPromoted: mockFn().resolvesTo(undefined),
+        }),
         interopMessage: mockObject<Database['interopMessage']>({
           deleteBefore: deleteMessageBefore,
         }),
@@ -75,6 +81,11 @@ describe(InteropCleanerLoop.name, () => {
       })
 
       const db = mockObject<Database>({
+        interopAggregationQuality: mockObject<
+          Database['interopAggregationQuality']
+        >({
+          findLatestPromoted: mockFn().resolvesTo(undefined),
+        }),
         interopMessage: mockObject<Database['interopMessage']>({
           deleteBefore: mockFn().resolvesTo(0),
         }),
@@ -106,6 +117,69 @@ describe(InteropCleanerLoop.name, () => {
 
       expect(deleteSyncStateNotIn).toHaveBeenCalledWith([])
       expect(deleteSyncedRangeNotIn).toHaveBeenCalledWith([])
+    })
+
+    it('uses latest promoted timestamp as cleanup anchor', async () => {
+      const deleteMessageBefore = mockFn().resolvesTo(0)
+      const deleteTransferBefore = mockFn().resolvesTo(0)
+      const promotedTimestamp = UnixTime(1_700_000_000)
+      const findLatestPromoted = mockFn().resolvesTo({
+        timestamp: promotedTimestamp,
+        autoPromoted: true,
+        isPromoted: true,
+        promotionRequired: false,
+        reasons: [],
+        checkedGroups: 0,
+        failingGroups: 0,
+        createdAt: promotedTimestamp,
+      })
+
+      const store = mockObject<InteropEventStore>({
+        deleteExpired: mockFn().resolvesTo(0),
+      })
+
+      const db = mockObject<Database>({
+        interopAggregationQuality: mockObject<
+          Database['interopAggregationQuality']
+        >({
+          findLatestPromoted,
+        }),
+        interopMessage: mockObject<Database['interopMessage']>({
+          deleteBefore: deleteMessageBefore,
+        }),
+        interopTransfer: mockObject<Database['interopTransfer']>({
+          deleteBefore: deleteTransferBefore,
+        }),
+        interopRecentPrices: mockObject<Database['interopRecentPrices']>({
+          deleteBefore: mockFn().resolvesTo(0),
+        }),
+        interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+          deleteNotInPluginNames: mockFn().resolvesTo(0),
+        }),
+        interopPluginSyncedRange: mockObject<
+          Database['interopPluginSyncedRange']
+        >({
+          deleteNotInPluginNames: mockFn().resolvesTo(0),
+        }),
+      })
+
+      const plugins: InteropPlugins = {
+        comparePlugins: [],
+        configPlugins: [],
+        eventPlugins: [],
+      }
+
+      const cleaner = new InteropCleanerLoop(store, db, plugins, Logger.SILENT)
+
+      await cleaner.run()
+
+      expect(findLatestPromoted).toHaveBeenCalledTimes(1)
+      expect(deleteMessageBefore).toHaveBeenCalledWith(
+        promotedTimestamp - UnixTime.DAY,
+      )
+      expect(deleteTransferBefore).toHaveBeenCalledWith(
+        promotedTimestamp - UnixTime.DAY - 2 * UnixTime.HOUR,
+      )
     })
   })
 })
