@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getAllTokensEntries } from '~/server/features/scaling/tvs/breakdown/getAllTokenEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -9,7 +9,7 @@ import type { Manifest } from '~/utils/Manifest'
 export async function getScalingTvsBreakdownData(
   req: Request,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
