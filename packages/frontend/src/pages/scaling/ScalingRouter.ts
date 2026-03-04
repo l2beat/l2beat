@@ -119,7 +119,14 @@ export function createScalingRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getScalingProjectData(req, manifest, cache)
+      const data = await cache.get(
+        {
+          key: ['scaling', 'projects', req.params.slug],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () => getScalingProjectData(manifest, req.params.slug, req.originalUrl),
+      )
       if (!data) {
         res.status(404).send('Not found')
         return
@@ -135,7 +142,19 @@ export function createScalingRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getScalingProjectTvsBreakdownData(req, manifest, cache)
+      const data = await cache.get(
+        {
+          key: ['scaling', 'projects', req.params.slug, 'tvs-breakdown'],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () =>
+          getScalingProjectTvsBreakdownData(
+            manifest,
+            req.params.slug,
+            req.originalUrl,
+          ),
+      )
       if (!data) {
         res.status(404).send('Not found')
         return
