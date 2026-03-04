@@ -1,7 +1,9 @@
 import type { ProjectId } from '@l2beat/shared-pure'
+import { Breakdown } from '~/components/breakdown/Breakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { api } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
@@ -15,6 +17,34 @@ export function InteropProtocolSummary({ id }: { id: ProjectId }) {
     ...selectionForApi,
     id,
   })
+
+  const breakdownValues = [
+    {
+      value: data?.transferSize?.countUnder100 ?? 0,
+      className: 'bg-[#567FFF]',
+      label: 'Under $100',
+    },
+    {
+      value: data?.transferSize?.count100To1K ?? 0,
+      className: 'bg-[#7AE7C7]',
+      label: '$100-$1K',
+    },
+    {
+      value: data?.transferSize?.count1KTo10K ?? 0,
+      className: 'bg-[#F7CB15]',
+      label: '$1K-$10K',
+    },
+    {
+      value: data?.transferSize?.count10KTo100K ?? 0,
+      className: 'bg-[#503047]',
+      label: '$10K-$100K',
+    },
+    {
+      value: data?.transferSize?.countOver100K ?? 0,
+      className: 'bg-[#F55D3E]',
+      label: 'Over $100K',
+    },
+  ]
 
   return (
     <section
@@ -80,6 +110,20 @@ export function InteropProtocolSummary({ id }: { id: ProjectId }) {
         />
       </div>
       <HorizontalSeparator className="my-4" />
+      <span className="font-medium text-paragraph-12 text-secondary">
+        Protocol transfer size
+      </span>
+      <Breakdown values={breakdownValues} className="h-1.5 w-full" />
+      <div className="mt-2 flex gap-2">
+        {breakdownValues.map((value) => (
+          <div key={value.label} className="flex items-center gap-[3px]">
+            <div className={cn('size-3.5 rounded-xs', value.className)} />
+            <span className="font-medium text-label-value-12 text-secondary leading-none">
+              {value.label}
+            </span>
+          </div>
+        ))}
+      </div>
     </section>
   )
 }

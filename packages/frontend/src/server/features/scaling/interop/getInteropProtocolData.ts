@@ -5,7 +5,10 @@ import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
 import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
-import type { TransferSizeDataPoint } from './utils/getTransferSizeChartData'
+import {
+  getTransferSizeChartData,
+  type TransferSizeDataPoint,
+} from './utils/getTransferSizeChartData'
 
 export type InteropProtocolDashboardData = {
   entry: ProtocolEntry | undefined
@@ -62,6 +65,6 @@ export async function getInteropProtocolData(
       interopProjects: [interopProject],
     }),
     entry: projectEntry,
-    transferSize: undefined,
+    transferSize: getTransferSizeChartData(records, [interopProject])?.[0],
   }
 }
