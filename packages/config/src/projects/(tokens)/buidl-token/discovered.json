@@ -6986,11 +6986,36 @@
       }
     },
     {
-      "name": "",
+      "address": "matic:0x5072Ed40EBa6bE38C2370cAD1Cb1df0202924e53",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint new tokens and burn existing tokens.",
+          "role": ".issuerRole"
+        }
+      ]
+    },
+    {
+      "name": "OmnibusTBEController",
       "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
       "type": "Contract",
-      "unverified": true,
+      "template": "buidl-token/OmnibusTBEController",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x00dba34a21126dfe2e252e8c827e72832bd932440f05e26bbb78e97b3d67475f"
+      ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint new tokens and burn existing tokens.",
+          "role": ".issuerRole"
+        }
+      ],
       "sinceTimestamp": 1730729598,
       "sinceBlock": 63877097,
       "values": {
@@ -7003,12 +7028,53 @@
             ["matic:0xEC6BBE5cc2C04947353987Fb2e1Fe2b9796e45c9"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "getImplementationAddress": "matic:0xEC6BBE5cc2C04947353987Fb2e1Fe2b9796e45c9",
+        "getInitializedVersion": 1,
+        "getOmnibusWallet": "matic:0xf274f2D29bf6079316db034687D8C30571EF5bDD",
+        "owner": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "services": {
+          "TrustService": "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C",
+          "DSToken": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "ComplianceService": "matic:0xA082446441f69554265158f98Ec9C156760fD161",
+          "ComplianceConfigurationService": "matic:0xE944D53eEd3Eb14753275506ea2E5C47E62F6385"
+        },
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
         "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE": "ERC1967Proxy",
-        "matic:0xEC6BBE5cc2C04947353987Fb2e1Fe2b9796e45c9": ""
-      }
+        "matic:0xEC6BBE5cc2C04947353987Fb2e1Fe2b9796e45c9": "OmnibusTBEController"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "TrustService",
+            "2": "DSToken",
+            "4": "RegistryService",
+            "8": "ComplianceService",
+            "16": "Unused1",
+            "32": "WalletManager",
+            "64": "LockManager",
+            "128": "PartitionsManager",
+            "256": "ComplianceConfigurationService",
+            "512": "TokenIssuer",
+            "1024": "WalletRegistrar",
+            "2048": "OmnibusTBEController",
+            "4096": "TransactionRelayer",
+            "8192": "TokenReallocator",
+            "8193": "BulkOperator",
+            "8194": "IssuerMulticall",
+            "8195": "TAMulticall",
+            "16384": "SecuritizeSwap"
+          }
+        }
+      ]
     },
     {
       "address": "matic:0x53207E216540125e322CdA8A693b0b89576DEb46",
@@ -7037,6 +7103,14 @@
         "0x70cc4883f9ee03ac63ae57d6b84f6701e674230bef02ea51c2db71a0fc04fb80"
       ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint new tokens and burn existing tokens.",
+          "role": ".issuerRole"
+        }
+      ],
       "sinceTimestamp": 1730729536,
       "sinceBlock": 63877068,
       "values": {
@@ -7112,10 +7186,14 @@
       ]
     },
     {
-      "name": "",
+      "name": "TrustService",
       "address": "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C",
       "type": "Contract",
-      "unverified": true,
+      "template": "buidl-token/TrustService",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x16dbbd1072340cd1cc4fb5e441e474eb71688f9b0963a59f056b447e4b1a522f"
+      ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1730729468,
       "sinceBlock": 63877036,
@@ -7129,12 +7207,48 @@
             ["matic:0x10b3e15F605Aa4DFcbbe8DCE73EB07886A7D7512"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "EXCHANGE": 4,
+        "getImplementationAddress": "matic:0x10b3e15F605Aa4DFcbbe8DCE73EB07886A7D7512",
+        "getInitializedVersion": 1,
+        "ISSUER": 2,
+        "issuerRole": [
+          "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5",
+          "matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453",
+          "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
+          "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+          "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
+          "matic:0x5072Ed40EBa6bE38C2370cAD1Cb1df0202924e53",
+          "matic:0x880723570cA646Eb220299825Dff8111bBa8d8C8",
+          "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E"
+        ],
+        "MASTER": 1,
+        "masterRole": ["matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e"],
+        "NONE": 0,
+        "TRANSFER_AGENT": 8,
+        "transferAgentRole": [
+          "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743",
+          "matic:0xA9994621F1c3EE59846Df756488229E8efDCB8bf"
+        ],
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
         "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C": "ERC1967Proxy",
-        "matic:0x10b3e15F605Aa4DFcbbe8DCE73EB07886A7D7512": ""
-      }
+        "matic:0x10b3e15F605Aa4DFcbbe8DCE73EB07886A7D7512": "TrustService"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "NONE",
+            "1": "MASTER",
+            "2": "ISSUER",
+            "4": "EXCHANGE",
+            "8": "TRANSFER_AGENT"
+          }
+        }
+      ]
     },
     {
       "name": "DeliveryProviderImplementation",
@@ -7192,6 +7306,14 @@
         "0xaba73346557bd36dae486f8b1925b55987eba55e91551e73ad6578e64f1a393f"
       ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
+          "role": ".transferAgentRole"
+        }
+      ],
       "sinceTimestamp": 1730729638,
       "sinceBlock": 63877116,
       "values": {
@@ -7222,11 +7344,65 @@
       }
     },
     {
+      "address": "matic:0x880723570cA646Eb220299825Dff8111bBa8d8C8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint new tokens and burn existing tokens.",
+          "role": ".issuerRole"
+        }
+      ]
+    },
+    {
+      "name": "",
+      "address": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint new tokens and burn existing tokens.",
+          "role": ".issuerRole"
+        }
+      ],
+      "sinceTimestamp": 1730729686,
+      "sinceBlock": 63877138,
+      "values": {
+        "$admin": "matic:0xC95C7Eb94a83aCFdF21A6dc9654c02496335B8Bc",
+        "$implementation": "matic:0x668368345E0B5b069702367E4b8290C484baEA9b",
+        "$pastUpgrades": [
+          [
+            "2024-11-04T14:14:46.000Z",
+            "0x0767329f1100a4a4ba60e580572269113dde2483918a56caaa048a0a06452242",
+            ["matic:0x668368345E0B5b069702367E4b8290C484baEA9b"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f": "ERC1967Proxy",
+        "matic:0x668368345E0B5b069702367E4b8290C484baEA9b": ""
+      }
+    },
+    {
       "name": "",
       "address": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint new tokens and burn existing tokens.",
+          "role": ".issuerRole"
+        }
+      ],
       "sinceTimestamp": 1730729650,
       "sinceBlock": 63877121,
       "values": {
@@ -7270,6 +7446,19 @@
         "matic:0xA082446441f69554265158f98Ec9C156760fD161": "ERC1967Proxy",
         "matic:0x16a9dDb0a6aB34Fd8DB2698b4d6049e61609c0b8": ""
       }
+    },
+    {
+      "address": "matic:0xA9994621F1c3EE59846Df756488229E8efDCB8bf",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
+          "role": ".transferAgentRole"
+        }
+      ]
     },
     {
       "name": "InvestorLockManager",
@@ -7454,6 +7643,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
+          "from": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
           "role": "admin"
         }
@@ -7469,6 +7663,14 @@
         "0x4a95cca52f5993a4df0141bc526077f4023f9678f2bd0348f06577b699db0de4"
       ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint new tokens and burn existing tokens.",
+          "role": ".issuerRole"
+        }
+      ],
       "sinceTimestamp": 1730903112,
       "sinceBlock": 63957797,
       "values": {
@@ -7506,11 +7708,23 @@
       }
     },
     {
-      "name": "",
+      "name": "TokenIssuer",
       "address": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5",
       "type": "Contract",
-      "unverified": true,
+      "template": "buidl-token/TokenIssuer",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xd79a3cec0442a945713ce4b16e960ac0e4d360a3f9f03163d57996dd7e721a92"
+      ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint new tokens and burn existing tokens.",
+          "role": ".issuerRole"
+        }
+      ],
       "sinceTimestamp": 1730729524,
       "sinceBlock": 63877062,
       "values": {
@@ -7523,12 +7737,72 @@
             ["matic:0x6631805Bcc5C532124f65a7F287BE29d359659ef"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "ACCREDITED": 2,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "DS_TOKEN": 2,
+        "getImplementationAddress": "matic:0x6631805Bcc5C532124f65a7F287BE29d359659ef",
+        "getInitializedVersion": 1,
+        "ISSUER_MULTICALL": 8194,
+        "KYC_APPROVED": 1,
+        "LOCK_MANAGER": 64,
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "QUALIFIED": 4,
+        "REGISTRY_SERVICE": 4,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SECURITIZE_SWAP": 16384,
+        "services": {
+          "TrustService": "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C",
+          "DSToken": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "RegistryService": "matic:0x2E47DFd5cd8AB3fBE725199BAE04d793108E4D8C",
+          "LockManager": "matic:0xb0580C67DEA0A945756732E6f10e00bA6E9f0491"
+        },
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024
       },
       "implementationNames": {
         "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5": "ERC1967Proxy",
-        "matic:0x6631805Bcc5C532124f65a7F287BE29d359659ef": ""
-      }
+        "matic:0x6631805Bcc5C532124f65a7F287BE29d359659ef": "TokenIssuer"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "TrustService",
+            "2": "DSToken",
+            "4": "RegistryService",
+            "8": "ComplianceService",
+            "16": "Unused1",
+            "32": "WalletManager",
+            "64": "LockManager",
+            "128": "PartitionsManager",
+            "256": "ComplianceConfigurationService",
+            "512": "TokenIssuer",
+            "1024": "WalletRegistrar",
+            "2048": "OmnibusTBEController",
+            "4096": "TransactionRelayer",
+            "8192": "TokenReallocator",
+            "8193": "BulkOperator",
+            "8194": "IssuerMulticall",
+            "8195": "TAMulticall",
+            "16384": "SecuritizeSwap"
+          }
+        }
+      ]
     },
     {
       "address": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
@@ -7536,6 +7810,12 @@
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
+          "role": ".masterRole"
+        },
         {
           "permission": "upgrade",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
@@ -7594,11 +7874,23 @@
       ]
     },
     {
-      "name": "",
+      "name": "TransactionRelayer",
       "address": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
       "type": "Contract",
-      "unverified": true,
+      "template": "buidl-token/TransactionRelayer",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x8a14d3e5f09615e0edc1a75069ec58c31725171d7b68c02b49a87a16ebf8c6f4"
+      ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint new tokens and burn existing tokens.",
+          "role": ".issuerRole"
+        }
+      ],
       "sinceTimestamp": 1730729616,
       "sinceBlock": 63877105,
       "values": {
@@ -7611,12 +7903,73 @@
             ["matic:0xe071e5F1c961F3F0C069e9d6411160da11104623"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "CONTRACT_VERSION": 5,
+        "DOMAIN_SEPARATOR": "0xd25d8ed9261ea292faf8ca5666330fbaeb78bac1bcd8b86e71450029b6d8714d",
+        "DS_TOKEN": 2,
+        "EIP712DOMAINTYPE_HASH": "0xd87cd6ef79d4e2b95e15ce8abf732db51ec771f1ca2edccf22a46c729ac56472",
+        "getImplementationAddress": "matic:0xe071e5F1c961F3F0C069e9d6411160da11104623",
+        "getInitializedVersion": 1,
+        "ISSUER_MULTICALL": 8194,
+        "LOCK_MANAGER": 64,
+        "NAME_HASH": "0x378460f4f89643d76dadb1d55fed95ff69d3c2e4b34cc81a5b565a797b10ce30",
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "matic:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "REGISTRY_SERVICE": 4,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SALT": "0x6e31104f5170e59a0a98ebdeb5ba99f8b32ef7b56786b1722f81a5fa19dd1629",
+        "SECURITIZE_SWAP": 16384,
+        "services": {
+          "TrustService": "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C"
+        },
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "TXTYPE_HASH": "0xe6d21e84f71e7221d45242249466f859d08c5b2820de017dfd5e28a588c401a9",
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "VERSION_HASH": "0xceebf77a833b30520287ddd9478ff51abbdffa30aa90a8d655dba0e8a79ce0c1",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024
       },
       "implementationNames": {
         "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69": "ERC1967Proxy",
-        "matic:0xe071e5F1c961F3F0C069e9d6411160da11104623": ""
-      }
+        "matic:0xe071e5F1c961F3F0C069e9d6411160da11104623": "TransactionRelayer"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "TrustService",
+            "2": "DSToken",
+            "4": "RegistryService",
+            "8": "ComplianceService",
+            "16": "Unused1",
+            "32": "WalletManager",
+            "64": "LockManager",
+            "128": "PartitionsManager",
+            "256": "ComplianceConfigurationService",
+            "512": "TokenIssuer",
+            "1024": "WalletRegistrar",
+            "2048": "OmnibusTBEController",
+            "4096": "TransactionRelayer",
+            "8192": "TokenReallocator",
+            "8193": "BulkOperator",
+            "8194": "IssuerMulticall",
+            "8195": "TAMulticall",
+            "16384": "SecuritizeSwap"
+          }
+        }
+      ]
     },
     {
       "address": "matic:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
@@ -7751,6 +8104,11 @@
           }
         }
       ]
+    },
+    {
+      "address": "matic:0xf274f2D29bf6079316db034687D8C30571EF5bDD",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "matic:0xF3AAe1168fBF3a5cf1CB4B57C5C8C5e9401627D9",
@@ -14647,6 +15005,47 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "matic:0x10b3e15F605Aa4DFcbbe8DCE73EB07886A7D7512": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSTrustServiceRoleAdded(address targetAddress, uint8 role, address sender)",
+      "event DSTrustServiceRoleRemoved(address targetAddress, uint8 role, address sender)",
+      "event Initialized(uint64 version)",
+      "event Upgraded(address indexed implementation)",
+      "function EXCHANGE() view returns (uint8)",
+      "function ISSUER() view returns (uint8)",
+      "function MASTER() view returns (uint8)",
+      "function NONE() view returns (uint8)",
+      "function TRANSFER_AGENT() view returns (uint8)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function addEntity(string _name, address _owner)",
+      "function addOperator(string _name, address _operator)",
+      "function addResource(string _name, address _resource)",
+      "function changeEntityOwner(string _name, address _oldOwner, address _newOwner)",
+      "function getEntityByOperator(address _operator) view returns (string)",
+      "function getEntityByOwner(address _owner) view returns (string)",
+      "function getEntityByResource(address _resource) view returns (string)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getRole(address _address) view returns (uint8)",
+      "function initialize()",
+      "function isResourceOperator(address _resource, address _operator) view returns (bool)",
+      "function isResourceOwner(address _resource, address _owner) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeOperator(string _name, address _operator)",
+      "function removeResource(string _name, address _resource)",
+      "function removeRole(address _address) returns (bool)",
+      "function setRole(address _address, uint8 _role) returns (bool)",
+      "function setRoles(address[] _addresses, uint8[] _roles) returns (bool)",
+      "function setServiceOwner(address _address) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "matic:0x20C4c5194658e58Fc783F4272254d3F8F18BB836": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -14957,6 +15356,61 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "matic:0x6631805Bcc5C532124f65a7F287BE29d359659ef": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function ACCREDITED() view returns (uint8)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function KYC_APPROVED() view returns (uint8)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function QUALIFIED() view returns (uint8)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function initialize()",
+      "function issueTokens(string _id, address _to, uint256[] _issuanceValues, string _reason, uint256[] _locksValues, uint64[] _lockReleaseTimes, string _collisionHash, string _country, uint256[] _attributeValues, uint256[] _attributeExpirations) returns (bool)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -15050,6 +15504,14 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -15280,6 +15742,72 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "matic:0xe071e5F1c961F3F0C069e9d6411160da11104623": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event DomainSeparatorUpdated(uint256 chainId)",
+      "event Initialized(uint64 version)",
+      "event InvestorNonceUpdated(string investorId, uint256 newNonce)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function CONTRACT_VERSION() view returns (uint256)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function EIP712DOMAINTYPE_HASH() view returns (bytes32)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function NAME_HASH() view returns (bytes32)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SALT() view returns (bytes32)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function TXTYPE_HASH() view returns (bytes32)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function VERSION_HASH() view returns (bytes32)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function execute(uint8, bytes32, bytes32, address, uint256, bytes, address, uint256) pure",
+      "function executeByInvestor(uint8, bytes32, bytes32, string, address, uint256, bytes, address, uint256) pure",
+      "function executeByInvestorWithBlockLimit(uint8 sigV, bytes32 sigR, bytes32 sigS, string senderInvestor, address destination, address executor, bytes data, uint256[] params)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function initialize()",
+      "function nonceByInvestor(string investorId) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function setInvestorNonce(string investorId, uint256 newNonce)",
+      "function transferOwnership(address newOwner)",
+      "function updateDomainSeparator(uint256 chainId)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "matic:0xE4451E8479115CeA6B785bf71C1CD4ADa963991c": [
       "constructor(address wormhole)",
       "error ChainAlreadyRegistered(uint16 chainId, bytes32 registeredWormholeRelayerContract)",
@@ -15363,6 +15891,67 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "matic:0xEC6BBE5cc2C04947353987Fb2e1Fe2b9796e45c9": [
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeCastOverflowedIntToUint(int256 value)",
+      "error SafeCastOverflowedUintToInt(uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function adjustCounters(int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta, bytes32[] euRetailCountries, int256[] euRetailCountryDeltas)",
+      "function bulkBurn(uint256 value, uint256 totalInvestors, uint256 accreditedInvestors, uint256 usAccreditedInvestors, uint256 usTotalInvestors, uint256 jpTotalInvestors, bytes32[] euRetailCountries, uint256[] euRetailCountryCounts)",
+      "function bulkIssuance(uint256 value, uint256 issuanceTime, uint256 totalInvestors, uint256 accreditedInvestors, uint256 usAccreditedInvestors, uint256 usTotalInvestors, uint256 jpTotalInvestors, bytes32[] euRetailCountries, uint256[] euRetailCountryCounts)",
+      "function bulkTransfer(address[] wallets, uint256[] values)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getOmnibusWallet() view returns (address)",
+      "function initialize(address _omnibusWallet, bool _isPartitionedToken)",
+      "function internalTBETransfer(string externalId, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta, bytes32[] euRetailCountries, int256[] euRetailCountryDeltas)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "matic:0xf2f47b6022846ABE20E45392B581862b327eaA1B": [
       "error AddressEmptyCode(address target)",
@@ -16645,5 +17234,5 @@
     "optimism": 144853013,
     "polygonpos": 80099855
   },
-  "permissionsConfigHash": "0x63bae3497cda333d611b7d2ee6eaa1af21c15c965379404ea86ae5cf53f03149"
+  "permissionsConfigHash": "0xc35b3d922cd7ead40dfcb8e9a45898f329e0197b6176962626555fcbd02ea5aa"
 }

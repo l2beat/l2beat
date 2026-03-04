@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf23da1cadcf08ab07599e240a86025aaab5401b1
+Generated with discovered.json: 0x993a1f91e512094967c1f83192c2ae34c2d53a28
 
-# Diff at Tue, 03 Mar 2026 16:10:21 GMT:
+# Diff at Wed, 04 Mar 2026 08:11:54 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
@@ -541,7 +541,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE)
+    contract OmnibusTBEController (matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE)
     +++ description: None
 ```
 
@@ -553,7 +553,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C)
+    contract TrustService (matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C)
     +++ description: None
 ```
 
@@ -566,6 +566,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract TokenReallocator (matic:0x84903f46c93EC6EA14b4beCF2336429c29972743)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f)
     +++ description: None
 ```
 
@@ -601,13 +607,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5)
+    contract TokenIssuer (matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69)
+    contract TransactionRelayer (matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69)
     +++ description: None
 ```
 
