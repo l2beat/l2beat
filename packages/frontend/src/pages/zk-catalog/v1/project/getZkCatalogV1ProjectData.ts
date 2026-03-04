@@ -9,7 +9,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { getZkCatalogProjectDetails } from './utils/getZkCatalogProjectDetails'
 
 export async function getZkCatalogV1ProjectData(
-  req: Request,
+  req: Request<{ slug: string }, unknown, unknown, unknown>,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {

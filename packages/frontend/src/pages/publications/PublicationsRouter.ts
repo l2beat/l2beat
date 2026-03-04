@@ -1,6 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express, { type Request } from 'express'
+import express from 'express'
 import { getCollectionEntry } from '~/content/getCollection'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
@@ -43,19 +43,14 @@ export function createPublicationsRouter(
       let data: RenderData | undefined
       if (governancePublication) {
         data = await getGovernancePublicationData(
-          req as Request,
+          req,
           manifest,
           governancePublication,
         )
       }
 
       if (monthlyUpdate) {
-        data = await getMonthlyUpdateData(
-          req as Request,
-          manifest,
-          monthlyUpdate,
-          cache,
-        )
+        data = await getMonthlyUpdateData(req, manifest, monthlyUpdate, cache)
       }
 
       if (!data) {

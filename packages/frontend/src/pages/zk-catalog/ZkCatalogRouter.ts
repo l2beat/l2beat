@@ -1,6 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express, { type Request } from 'express'
+import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
@@ -34,11 +34,7 @@ export function createZkCatalogRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getZkCatalogV1ProjectData(
-        req as Request,
-        manifest,
-        cache,
-      )
+      const data = await getZkCatalogV1ProjectData(req, manifest, cache)
       if (!data) {
         res.status(404).send('Not found')
         return
@@ -54,11 +50,7 @@ export function createZkCatalogRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getZkCatalogProjectData(
-        req as Request,
-        manifest,
-        cache,
-      )
+      const data = await getZkCatalogProjectData(req, manifest, cache)
       if (!data) {
         res.status(404).send('Not found')
         return

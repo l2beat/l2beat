@@ -8,7 +8,7 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getMonthlyUpdateData(
-  req: Request,
+  req: Request<{ id: string }, unknown, unknown, unknown>,
   manifest: Manifest,
   monthlyUpdate: CollectionEntry<'monthly-updates'>,
   cache: InMemoryCache,

@@ -8,7 +8,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getScalingProjectTvsBreakdownData(
-  req: Request,
+  req: Request<{ slug: string }, unknown, unknown, unknown>,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {

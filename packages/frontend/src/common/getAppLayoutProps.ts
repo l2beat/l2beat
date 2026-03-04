@@ -27,7 +27,7 @@ export async function getAppLayoutProps(
 function getUnreadChangelogCount(
   req: Request<unknown, unknown, unknown, unknown>,
 ) {
-  const cookies = parseCookies(req.headers.cookie ?? '')
+  const cookies = parseCookies(req.headers?.cookie ?? '')
 
   if (req.originalUrl === '/changelog') {
     return 0

@@ -6,7 +6,7 @@ import { type Parser, type Validator, v as z } from '@l2beat/validate'
  */
 export const knownCookies = {
   // example: knownCookie('example', z.string(), 'example'),
-  changelogVisitedAt: knownCookie<number | undefined>(
+  changelogVisitedAt: knownCookie(
     'changelogVisitedAt',
     z.number().transform((value) => UnixTime(value)),
     undefined,

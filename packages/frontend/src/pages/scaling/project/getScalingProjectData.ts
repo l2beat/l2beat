@@ -10,7 +10,7 @@ import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingProjectData(
-  req: Request,
+  req: Request<{ slug: string }, unknown, unknown, unknown>,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {

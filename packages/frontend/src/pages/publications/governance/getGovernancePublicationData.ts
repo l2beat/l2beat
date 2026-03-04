@@ -7,7 +7,7 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getGovernancePublicationData(
-  req: Request,
+  req: Request<{ id: string }, unknown, unknown, unknown>,
   manifest: Manifest,
   publicationEntry: CollectionEntry<'governance-publications'>,
 ): Promise<RenderData> {

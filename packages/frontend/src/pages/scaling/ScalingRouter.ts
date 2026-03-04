@@ -1,6 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express, { type Request } from 'express'
+import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -119,7 +119,7 @@ export function createScalingRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getScalingProjectData(req as Request, manifest, cache)
+      const data = await getScalingProjectData(req, manifest, cache)
       if (!data) {
         res.status(404).send('Not found')
         return
@@ -135,11 +135,7 @@ export function createScalingRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getScalingProjectTvsBreakdownData(
-        req as Request,
-        manifest,
-        cache,
-      )
+      const data = await getScalingProjectTvsBreakdownData(req, manifest, cache)
       if (!data) {
         res.status(404).send('Not found')
         return
