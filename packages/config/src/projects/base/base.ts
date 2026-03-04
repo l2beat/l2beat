@@ -307,16 +307,16 @@ export const base: ScalingProject = opStackL2({
     },
   ],
   upgradesAndGovernance:
-    'All contracts are upgradable by a `ProxyAdmin` contract controlled by a nested 2/2 `Base Governance Multisig` composed of the `Base Coordinator Multisig` (3/6, operated by Coinbase) and the `Base Security Council` (8/11). Upgrades require approval from both parties, making the effective entity-level quorum 9 out of 12 entities (75%). There is no delay on upgrades. The Guardian role for the SuperchainConfig is assigned to the Base Governance Multisig, which can pause and unpause withdrawals. The `Base Multisig 1` (3/13) serves as Incident Responder and can pause withdrawals but cannot unpause or extend pauses. Each pause automatically expires after 3 months if not extended by the Guardian. The single Sequencer actor can be modified by `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
+    'All contracts are upgradable by a `ProxyAdmin` contract controlled by a nested 2/2 `Base Governance Multisig` composed of the `Base Coordinator Multisig` and the `Base Security Council`. Upgrades require approval from both parties. There is no delay on upgrades. The Guardian role for the SuperchainConfig is assigned to the Base Governance Multisig, which can pause and unpause withdrawals. `Base Multisig 1` serves as Incident Responder and can pause withdrawals but cannot unpause or extend pauses. Each pause automatically expires after 3 months if not extended by the Guardian. The single Sequencer actor can be modified by `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',
-    text: 'a contract receives a malicious code upgrade. Upgrades must be approved by 2 parties: the Base Coordinator Multisig (3/6) and the Base Security Council (8/11). There is no delay on upgrades.',
+    text: 'a contract receives a malicious code upgrade. Upgrades must be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council. There is no delay on upgrades.',
   },
   nonTemplateRiskView: {
     exitWindow: {
       value: 'None',
       description:
-        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 2 parties: the Base Coordinator Multisig (3/6) and the Base Security Council (8/11).',
+        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council.',
       sentiment: 'bad',
       orderHint: 0, // 0-7 days
     },
