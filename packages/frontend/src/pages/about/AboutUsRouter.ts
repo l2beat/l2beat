@@ -10,7 +10,7 @@ export function createAboutUsRouter(
   const router = express.Router()
 
   router.get('/about-us', async (req, res) => {
-    const data = await getAboutUsData(manifest, req.originalUrl)
+    const data = await getAboutUsData(req, manifest)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })

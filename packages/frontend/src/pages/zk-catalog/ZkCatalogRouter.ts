@@ -1,6 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express from 'express'
+import express, { type Request } from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
@@ -17,16 +17,13 @@ export function createZkCatalogRouter(
   const router = express.Router()
 
   router.get('/zk-catalog', async (req, res) => {
-    const data = await getZkCatalogData(manifest, req.originalUrl, cache)
+    const data = await getZkCatalogData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/zk-catalog/v1', async (req, res) => {
-    const data = await cache.get(
-      { key: ['zk-catalog', 'v1'], ttl: 5 * 60, staleWhileRevalidate: 25 * 60 },
-      () => getZkCatalogV1Data(manifest, req.originalUrl),
-    )
+    const data = await getZkCatalogV1Data(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
@@ -37,14 +34,10 @@ export function createZkCatalogRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await cache.get(
-        {
-          key: ['zk-catalog', 'v1', 'projects', req.params.slug],
-          ttl: 5 * 60,
-          staleWhileRevalidate: 25 * 60,
-        },
-        () =>
-          getZkCatalogV1ProjectData(manifest, req.params.slug, req.originalUrl),
+      const data = await getZkCatalogV1ProjectData(
+        req as Request,
+        manifest,
+        cache,
       )
       if (!data) {
         res.status(404).send('Not found')
@@ -61,14 +54,10 @@ export function createZkCatalogRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await cache.get(
-        {
-          key: ['zk-catalog', 'v2', 'projects', req.params.slug],
-          ttl: 5 * 60,
-          staleWhileRevalidate: 25 * 60,
-        },
-        () =>
-          getZkCatalogProjectData(manifest, req.params.slug, req.originalUrl),
+      const data = await getZkCatalogProjectData(
+        req as Request,
+        manifest,
+        cache,
       )
       if (!data) {
         res.status(404).send('Not found')

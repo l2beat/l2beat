@@ -1,6 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express from 'express'
+import express, { type Request } from 'express'
 import { getCollectionEntry } from '~/content/getCollection'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
@@ -17,7 +17,7 @@ export function createPublicationsRouter(
   const router = express.Router()
 
   router.get('/publications', async (req, res) => {
-    const data = await getPublicationsData(manifest, req.originalUrl)
+    const data = await getPublicationsData(req, manifest)
 
     if (!data) {
       res.status(404).send('Not found')
@@ -43,17 +43,17 @@ export function createPublicationsRouter(
       let data: RenderData | undefined
       if (governancePublication) {
         data = await getGovernancePublicationData(
+          req as Request,
           manifest,
           governancePublication,
-          req.originalUrl,
         )
       }
 
       if (monthlyUpdate) {
         data = await getMonthlyUpdateData(
+          req as Request,
           manifest,
           monthlyUpdate,
-          req.originalUrl,
           cache,
         )
       }

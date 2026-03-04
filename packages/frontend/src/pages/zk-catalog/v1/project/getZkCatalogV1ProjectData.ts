@@ -1,3 +1,5 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
+import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getVerifiers } from '~/server/features/zk-catalog/getVerifiers'
 import { ps } from '~/server/projects'
@@ -7,34 +9,35 @@ import type { Manifest } from '~/utils/Manifest'
 import { getZkCatalogProjectDetails } from './utils/getZkCatalogProjectDetails'
 
 export async function getZkCatalogV1ProjectData(
+  req: Request,
   manifest: Manifest,
-  slug: string,
-  url: string,
+  cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
-  const project = await ps.getProject({
-    slug,
-    select: ['proofVerification'],
-    optional: ['isScaling'],
-    whereNot: ['archivedAt'],
-  })
-  if (!project) {
-    return undefined
-  }
-  const [appLayoutProps, verifiers] = await Promise.all([
-    getAppLayoutProps(),
-    getVerifiers(),
+  const slug = req.params.slug
+  if (!slug) return undefined
+
+  const [appLayoutProps, projectDetails] = await Promise.all([
+    getAppLayoutProps(req),
+    cache.get(
+      {
+        key: ['zk-catalog', 'v1', 'projects', slug],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getCachedProjectDetails(slug),
+    ),
   ])
 
-  const projectDetails = getZkCatalogProjectDetails(project, verifiers)
+  if (!projectDetails) return undefined
 
   return {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${project.name} - ZK Catalog`,
+        title: `${projectDetails.title} - ZK Catalog`,
         openGraph: {
-          url,
-          image: `/meta-images/zk-catalog/projects/${project.slug}/opengraph-image.png`,
+          url: req.originalUrl,
+          image: `/meta-images/zk-catalog/projects/${slug}/opengraph-image.png`,
         },
       }),
     },
@@ -46,4 +49,16 @@ export async function getZkCatalogV1ProjectData(
       },
     },
   }
+}
+
+async function getCachedProjectDetails(slug: string) {
+  const project = await ps.getProject({
+    slug,
+    select: ['proofVerification'],
+    optional: ['isScaling'],
+    whereNot: ['archivedAt'],
+  })
+  if (!project) return undefined
+  const verifiers = await getVerifiers()
+  return getZkCatalogProjectDetails(project, verifiers)
 }

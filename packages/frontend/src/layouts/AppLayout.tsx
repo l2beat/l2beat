@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'next-themes'
-import { ChangelogEntriesContextProvider } from '~/components/changelog/ChangelogEntriesContext'
+import { ChangelogContextProvider } from '~/components/changelog/ChangelogEntriesContext'
 import { ChartLegendOnboardingProvider } from '~/components/core/chart/ChartLegendOnboardingContext'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { DevAutoReloader } from '~/components/DevAutoReloader'
@@ -16,7 +16,7 @@ import { TRPCReactProvider } from '~/trpc/React'
 export interface AppLayoutProps {
   terms: GlossaryTerm[]
   recentlyAddedProjects: SearchBarProject[]
-  changelogPublishedAtTimestamps: number[]
+  unreadChangelogCount: number
   whatsNew: WhatsNewWidget | undefined
 }
 
@@ -24,7 +24,7 @@ export function AppLayout({
   children,
   terms,
   recentlyAddedProjects,
-  changelogPublishedAtTimestamps,
+  unreadChangelogCount,
   whatsNew,
 }: AppLayoutProps & {
   children: React.ReactNode
@@ -40,8 +40,8 @@ export function AppLayout({
         <TooltipProvider delayDuration={300} disableHoverableContent>
           {env.NODE_ENV === 'development' && <L2BeatDevTools />}
           <GlossaryContextProvider terms={terms}>
-            <ChangelogEntriesContextProvider
-              publishedAtTimestamps={changelogPublishedAtTimestamps}
+            <ChangelogContextProvider
+              unreadChangelogCount={unreadChangelogCount}
             >
               <WhatsNewContextProvider whatsNew={whatsNew}>
                 <SearchBarContextProvider
@@ -52,7 +52,7 @@ export function AppLayout({
                   </ChartLegendOnboardingProvider>
                 </SearchBarContextProvider>
               </WhatsNewContextProvider>
-            </ChangelogEntriesContextProvider>
+            </ChangelogContextProvider>
           </GlossaryContextProvider>
         </TooltipProvider>
       </ThemeProvider>

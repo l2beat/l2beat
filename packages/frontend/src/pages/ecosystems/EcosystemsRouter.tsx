@@ -1,6 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import express from 'express'
+import express, { type Request } from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
@@ -19,14 +19,10 @@ export function createEcosystemsRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await cache.get(
-        {
-          key: ['ecosystems', req.params.slug],
-          ttl: 5 * 60,
-          staleWhileRevalidate: 25 * 60,
-        },
-        () =>
-          getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
+      const data = await getEcosystemProjectData(
+        req as Request,
+        manifest,
+        cache,
       )
       if (!data) {
         res.status(404).send('Not found')

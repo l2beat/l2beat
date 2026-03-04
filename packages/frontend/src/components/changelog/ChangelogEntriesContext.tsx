@@ -1,28 +1,28 @@
 import { createContext, useContext } from 'react'
 
-const ChangelogEntriesContext = createContext<number[] | null>(null)
+const ChangelogContext = createContext<{ unreadCount: number } | null>(null)
 
 interface Props {
-  publishedAtTimestamps: number[]
+  unreadChangelogCount: number
   children: React.ReactNode
 }
 
-export function ChangelogEntriesContextProvider({
+export function ChangelogContextProvider({
   children,
-  publishedAtTimestamps,
+  unreadChangelogCount,
 }: Props) {
   return (
-    <ChangelogEntriesContext.Provider value={publishedAtTimestamps}>
+    <ChangelogContext.Provider value={{ unreadCount: unreadChangelogCount }}>
       {children}
-    </ChangelogEntriesContext.Provider>
+    </ChangelogContext.Provider>
   )
 }
 
-export function useChangelogEntriesContext() {
-  const context = useContext(ChangelogEntriesContext)
+export function useChangelogContext() {
+  const context = useContext(ChangelogContext)
   if (context === null) {
     throw new Error(
-      'useChangelogEntriesContext must be used within a ChangelogEntriesContextProvider',
+      'useChangelogContext must be used within a ChangelogContextProvider',
     )
   }
   return context

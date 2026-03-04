@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { type Parser, type Validator, v as z } from '@l2beat/validate'
 
 /**
@@ -5,10 +6,10 @@ import { type Parser, type Validator, v as z } from '@l2beat/validate'
  */
 export const knownCookies = {
   // example: knownCookie('example', z.string(), 'example'),
-  recategorisationPreview: knownCookie(
-    'recategorisationPreview',
-    z.boolean(),
-    false,
+  changelogVisitedAt: knownCookie<number | undefined>(
+    'changelogVisitedAt',
+    z.number().transform((value) => UnixTime(value)),
+    undefined,
   ),
 } as const
 
@@ -19,10 +20,10 @@ export const knownCookies = {
  * @param defaultValue default value (required!)
  * @returns an object that can be used in `knownCookies` object
  */
-function knownCookie<TT, T extends Parser<TT> | Validator<TT>>(
+function knownCookie<T>(
   key: string,
-  schema: T,
-  defaultValue: z.infer<T>,
+  schema: Parser<T> | Validator<T>,
+  defaultValue: z.infer<Parser<T> | Validator<T>>,
 ) {
   return { key, schema, defaultValue }
 }

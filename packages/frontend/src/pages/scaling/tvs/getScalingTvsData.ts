@@ -20,7 +20,7 @@ export async function getScalingTvsData(
   cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
-    getAppLayoutProps(),
+    getAppLayoutProps(req),
     cache.get(
       {
         key: ['scaling', 'tvs', 'data'],

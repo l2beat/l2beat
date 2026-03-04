@@ -11,7 +11,7 @@ export function createGovernanceRouter(
   const router = express.Router()
 
   router.get('/governance', async (req, res) => {
-    const data = await getGovernanceData(manifest, req.originalUrl)
+    const data = await getGovernanceData(req, manifest)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })

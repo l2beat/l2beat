@@ -10,7 +10,7 @@ export function createChangelogRouter(
   const router = express.Router()
 
   router.get('/changelog', async (req, res) => {
-    const data = await getChangelogData(manifest, req.originalUrl)
+    const data = await getChangelogData(req, manifest)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })

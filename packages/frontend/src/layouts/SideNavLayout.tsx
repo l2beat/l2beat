@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import { useContext, useMemo } from 'react'
 import { HiringBadge } from '~/components/badge/HiringBadge'
+import { useChangelogContext } from '~/components/changelog/ChangelogEntriesContext'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
@@ -12,7 +13,6 @@ import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCl
 import { externalLinks } from '~/consts/externalLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
-import { useUnreadChangelog } from '~/hooks/useUnreadChangelog'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
@@ -35,7 +35,7 @@ export function SideNavLayout({
   childrenWrapperClassName,
   maxWidth = 'default',
 }: SideNavLayoutProps) {
-  const unreadChangelogEntriesCount = useUnreadChangelog()
+  const { unreadCount: unreadChangelogCount } = useChangelogContext()
   const whatsNew = useWhatsNewContext()
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
@@ -230,10 +230,10 @@ export function SideNavLayout({
             <div
               className={cn(
                 'inline-flex size-4 items-center justify-center rounded bg-brand font-medium text-2xs text-white tabular-nums leading-none',
-                !unreadChangelogEntriesCount ? 'bg-secondary' : 'bg-brand',
+                !unreadChangelogCount ? 'bg-secondary' : 'bg-brand',
               )}
             >
-              {unreadChangelogEntriesCount}
+              {unreadChangelogCount}
             </div>
           ),
         },
@@ -273,7 +273,7 @@ export function SideNavLayout({
           href: '/faq',
         },
       ]),
-    [unreadChangelogEntriesCount],
+    [unreadChangelogCount],
   )
 
   return (

@@ -1,3 +1,4 @@
+import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollectionEntry } from '~/content/getCollection'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -6,10 +7,10 @@ import { formatPublicationDate } from '~/utils/dates'
 import type { Manifest } from '../../utils/Manifest'
 
 export async function getTermsOfServiceData(
+  req: Request,
   manifest: Manifest,
-  url: string,
 ): Promise<RenderData | undefined> {
-  const appLayoutProps = await getAppLayoutProps()
+  const appLayoutProps = await getAppLayoutProps(req)
   const content = getCollectionEntry('pages', 'terms-of-service')
   if (!content) {
     return undefined
@@ -22,7 +23,7 @@ export async function getTermsOfServiceData(
         title: 'Terms of Service - L2BEAT',
         description: 'Terms of Service for L2BEAT.',
         openGraph: {
-          url,
+          url: req.originalUrl,
           image: '/meta-images/terms-of-service/opengraph-image.png',
         },
       }),

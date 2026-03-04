@@ -25,7 +25,7 @@ export async function getInteropNonMintingData(
   options?: GetInteropNonMintingDataOptions,
 ): Promise<RenderData> {
   const mode = options?.mode ?? 'public'
-  const appLayoutProps = await getAppLayoutProps()
+  const appLayoutProps = await getAppLayoutProps(req)
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
