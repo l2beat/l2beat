@@ -95,6 +95,11 @@ export const base: ScalingProject = opStackL2({
         plugin: 'lido-wsteth',
         bridgeType: 'lockAndMint',
       },
+      {
+        chain: 'base',
+        plugin: 'sky-bridge',
+        bridgeType: 'lockAndMint',
+      },
     ],
     type: 'canonical',
   },

@@ -14,6 +14,7 @@ import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
+import { renderSupportChartsPage } from './SupportChartsPage'
 import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
 
@@ -25,6 +26,7 @@ export function createInteropRouter(
   logger: Logger,
 ) {
   const router = new Router()
+  let coveragePiesCache: string | undefined
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
@@ -121,6 +123,95 @@ export function createInteropRouter(
     })
   })
 
+  const buildCoveragePiesPage = async () => {
+    const chartConfigs = [
+      {
+        id: 'layerzero-packet-oft-sent',
+        title: 'layerzero-v2.PacketOFTSent destination chains',
+        centerLabel: 'PacketOFTSent events',
+        type: 'layerzero-v2.PacketOFTSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'layerzero-packet-oft-delivered',
+        title: 'layerzero-v2.PacketOFTDelivered source chains',
+        centerLabel: 'PacketOFTDelivered events',
+        type: 'layerzero-v2.PacketOFTDelivered',
+        chainArg: '$srcChain' as const,
+      },
+      {
+        id: 'relay-token-sent',
+        title: 'relay.TokenSent destination chains',
+        centerLabel: 'relay.TokenSent events',
+        type: 'relay.TokenSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'relay-token-received',
+        title: 'relay.TokenReceived source chains',
+        centerLabel: 'relay.TokenReceived events',
+        type: 'relay.TokenReceived',
+        chainArg: '$srcChain' as const,
+      },
+      {
+        id: 'ccip-send-requested',
+        title: 'ccip.CCIPSendRequested destination chains',
+        centerLabel: 'CCIPSendRequested events',
+        type: 'ccip.CCIPSendRequested',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'ccip-execution-state-changed',
+        title: 'ccip.ExecutionStateChanged source chains',
+        centerLabel: 'ExecutionStateChanged events',
+        type: 'ccip.ExecutionStateChanged',
+        chainArg: '$srcChain' as const,
+      },
+    ]
+
+    const rows = await Promise.all(
+      chartConfigs.map((chart) =>
+        db.interopEvent.getSupportBreakdownByChainArg(
+          chart.type,
+          chart.chainArg,
+        ),
+      ),
+    )
+
+    return renderSupportChartsPage({
+      charts: chartConfigs.map((chart, i) => ({
+        id: chart.id,
+        title: chart.title,
+        centerLabel: chart.centerLabel,
+        rows: rows[i] ?? [],
+      })),
+    })
+  }
+
+  const isRefreshRequested = (value: unknown): boolean => {
+    if (Array.isArray(value)) {
+      return value.includes('1') || value.includes('true')
+    }
+    return value === '1' || value === 'true'
+  }
+
+  const renderCoveragePies = async (ctx: Router.RouterContext) => {
+    const refresh = isRefreshRequested(ctx.query.refresh)
+
+    if (refresh) {
+      coveragePiesCache = await buildCoveragePiesPage()
+      return ctx.redirect('/interop/coverage-pies')
+    }
+
+    if (coveragePiesCache === undefined) {
+      coveragePiesCache = await buildCoveragePiesPage()
+    }
+
+    ctx.body = coveragePiesCache
+  }
+
+  router.get('/interop/coverage-pies', renderCoveragePies)
+
   router.get('/interop/memory', (ctx) => {
     const memoryUsage = process.memoryUsage()
 
@@ -193,6 +284,12 @@ export function createInteropRouter(
     ctx.body = {
       updatedChains: Array.from(updatedChains),
     }
+  })
+
+  router.post('/interop/refresh-financials', async (ctx) => {
+    const updatedTransfers = await db.interopTransfer.markAllAsUnprocessed()
+
+    ctx.body = { updatedTransfers }
   })
 
   router.get('/interop/events/:kind/:type', async (ctx) => {

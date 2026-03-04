@@ -192,6 +192,22 @@ describe(validateBlip.name, () => {
       expect(validateBlip(['to_entries', [123, 'value']])).toBeFalsy() // Non-string key
     })
 
+    it('validates "map_values" operation', () => {
+      expect(validateBlip(['map_values'])).toBeFalsy() // Empty map_values is invalid
+      expect(validateBlip(['map_values', 123])).toBeTruthy() // Valid with exactly one argument
+      expect(validateBlip(['map_values', ['get', 'prop']])).toBeTruthy() // Valid with nested blip
+      expect(validateBlip(['map_values', 123, 456])).toBeFalsy() // Too many arguments
+      expect(validateBlip(['map_values', {}])).toBeFalsy() // Invalid sub-element
+    })
+
+    it('validates "map_keys" operation', () => {
+      expect(validateBlip(['map_keys'])).toBeFalsy() // Empty map_keys is invalid
+      expect(validateBlip(['map_keys', 'prefix'])).toBeTruthy() // Valid with exactly one argument
+      expect(validateBlip(['map_keys', ['get', 'prop']])).toBeTruthy() // Valid with nested blip
+      expect(validateBlip(['map_keys', 123, 456])).toBeFalsy() // Too many arguments
+      expect(validateBlip(['map_keys', {}])).toBeFalsy() // Invalid sub-element
+    })
+
     it('rejects unknown operations', () => {
       expect(validateBlip(['unknownOp', 123])).toBeFalsy()
       expect(validateBlip(['invalid', true, false])).toBeFalsy()

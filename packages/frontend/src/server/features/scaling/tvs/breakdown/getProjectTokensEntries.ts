@@ -51,7 +51,6 @@ export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
   bridgedUsing?: {
     bridges: {
       name: string
-      slug?: string
     }[]
     warning?: string
   }

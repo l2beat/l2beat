@@ -54,7 +54,7 @@ export async function getZkCatalogProjectEntry(
   const [allProjects, allProjectsWithContracts, tvs, contractUtils] =
     await Promise.all([
       ps.getProjects({
-        optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
+        optional: ['daBridge', 'isScaling', 'isDaLayer'],
       }),
       ps.getProjects({
         select: ['contracts'],

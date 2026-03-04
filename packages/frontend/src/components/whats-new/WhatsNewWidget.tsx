@@ -5,7 +5,7 @@ export interface WhatsNewWidget {
   id: string
   href: string
   image: string
-  mobileDisabledOnMatches?: string[]
+  disabledOnMatches?: string[]
   alt: string
 }
 

@@ -20,7 +20,8 @@ describe('tinify', () => {
 
     if (missing.length > 0) {
       throw new Error(
-        'Not all images were tinified. Run \`pnpm tinify\` to tinify them.',
+        'Not all images were tinified. Run \`pnpm tinify\` to tinify them. Missing: ' +
+          missing.join(', '),
       )
     }
   })

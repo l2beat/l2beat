@@ -279,8 +279,6 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'Layer 2'
     case 'layer3':
       return 'Layer 3'
-    case 'bridge':
-      return 'Bridge'
     case 'da':
       return 'DA Layer'
     case 'zkCatalog':

@@ -6,7 +6,6 @@ import { testPage } from './testPage'
 async function main() {
   const [
     scalingProjects,
-    bridgedProjects,
     daLayerProjects,
     daBridgeProjects,
     zkCatalogProjects,
@@ -15,9 +14,6 @@ async function main() {
     ps.getProjects({
       where: ['isScaling'],
       optional: ['tvsConfig'],
-    }),
-    ps.getProjects({
-      where: ['isBridge'],
     }),
     ps.getProjects({
       where: ['isDaLayer'],
@@ -51,9 +47,6 @@ async function main() {
       `/scaling/projects/${x.slug}`,
       x.tvsConfig && `/scaling/projects/${x.slug}/tvs-breakdown`,
     ]),
-    '/bridges/summary',
-    '/bridges/archived',
-    ...bridgedProjects.map((x) => `/bridges/projects/${x.slug}`),
     '/data-availability/summary',
     '/data-availability/risk',
     '/data-availability/throughput',

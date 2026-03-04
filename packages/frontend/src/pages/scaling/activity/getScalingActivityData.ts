@@ -1,8 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getScalingActivityEntries } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -13,7 +12,7 @@ import { optionToRange } from '~/utils/range/range'
 export async function getScalingActivityData(
   req: Request,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps(),

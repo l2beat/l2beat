@@ -125,7 +125,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isBridge?: true
   isScaling?: true
   isZkCatalog?: true
   isInteropProtocol?: true
@@ -1249,6 +1248,7 @@ export type InteropPluginName =
   | 'wormhole-token-bridge'
   | 'zkstack'
   | 'zklink-nova'
+  | 'linea'
 
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 

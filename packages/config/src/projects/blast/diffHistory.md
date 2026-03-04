@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6da793428421d0cb4cc21169b622955bc2920d5c
+
+# Diff at Thu, 26 Feb 2026 15:07:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1730369759
+- current timestamp: 1772118382
+
+## Description
+
+BlastMultisig 1: member #5 rotated from 0x2cF48F69 to 0x7DbDFbb2. Threshold remains 3 of 5.
+
+## Watched changes
+
+```diff
+    contract BlastMultisig 1 (eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x2cF48F69a61261e67e3317D28Cf0EdD1aCAfA03d"
++        "eth:0x7DbDFbb265bF26e626B44132eF4e3A3E6eEc1282"
+    }
+```
+
 Generated with discovered.json: 0x5e4768dda10139392764ecc3b2bbfdcf8759d781
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

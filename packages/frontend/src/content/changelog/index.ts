@@ -6,7 +6,7 @@ const whatsNew = v.object({
   image: v.string(),
   alt: v.string(),
   href: v.string().optional(),
-  mobileDisabledOnMatches: v.array(v.string()).optional(),
+  disabledOnMatches: v.array(v.string()).optional(),
   expiresAt: v.unknown().transform((value) => new Date(value as string)),
 })
 

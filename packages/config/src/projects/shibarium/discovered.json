@@ -1,6 +1,6 @@
 {
   "name": "shibarium",
-  "timestamp": 1769674846,
+  "timestamp": 1772461789,
   "configHash": "0xe5f21efa4cbe01905122f3eab80b8c68449e061203ad343a8cbbcfd9a842f4d1",
   "entries": [
     {
@@ -307,7 +307,7 @@
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 41855,
+        "counter": 41881,
         "isOwner": false,
         "owner": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
         "REGISTRATIONS": [
@@ -514,18 +514,18 @@
         "CHECKPOINT_REWARD": "100000000000000000000",
         "checkPointBlockInterval": 1024,
         "checkpointRewardDelta": 0,
-        "currentEpoch": 32887,
-        "currentValidatorSetSize": 12,
-        "currentValidatorSetTotalStake": "11849279623317376114908460",
+        "currentEpoch": 33675,
+        "currentValidatorSetSize": 11,
+        "currentValidatorSetTotalStake": "10974090167514730948320174",
         "delegationEnabled": true,
         "delegatorsReward": [
-          "308310923277696774983",
-          "1063764248967526638042",
-          "749835942349605860841",
-          "108993899135463130425"
+          "54911389445056707525",
+          "2677685296629256234780",
+          "1730353506949552533917",
+          "347962365256831434831"
         ],
         "dynasty": 30,
-        "epoch": 32887,
+        "epoch": 33675,
         "eventsHub": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
         "extensionCode": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
         "getRegistry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
@@ -552,18 +552,18 @@
         "registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
         "replacementCoolDown": 29342,
         "rewardDecreasePerCheckpoint": 0,
-        "rewardPerStake": "1868038240758016846817555",
+        "rewardPerStake": "1909798253376899971064576",
         "rootChain": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "signerUpdateLimit": 100,
         "token": "eth:0x9813037ee2218799597d83D4a5B6F3b6778218d9",
         "totalHeimdallFee": "4502000000000000000000",
         "totalRewards": 0,
-        "totalRewardsLiquidated": "22873381702964528824673",
+        "totalRewardsLiquidated": "51092552757519919236129",
         "totalStaked": "119999000000000000000000",
         "validatorShareFactory": "eth:0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD",
         "validatorState": {
-          "amount": "11849279623317376114908460",
-          "stakerCount": 12
+          "amount": "10974090167514730948320174",
+          "stakerCount": 11
         },
         "validatorThreshold": 15,
         "WITHDRAWAL_DELAY": 30,
@@ -1078,7 +1078,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 328840000,
+        "_nextHeaderBlock": 336720000,
         "$immutable": false,
         "$implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -1087,8 +1087,8 @@
           "_registry": "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 328830000,
-        "getLastChildBlock": 15404572,
+        "currentHeaderBlock": 336710000,
+        "getLastChildBlock": 15960092,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -2028,6 +2028,6 @@
     "polygonposbridge/ValidatorRegistry": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shibarium/WithdrawManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 24339275 },
+  "usedBlockNumbers": { "ethereum": 24570364 },
   "permissionsConfigHash": "0xb9418c456962c038809bed5d65324ce350af667a66cb600e40fbb5e9ba9eb525"
 }

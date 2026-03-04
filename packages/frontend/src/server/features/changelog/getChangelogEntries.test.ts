@@ -60,12 +60,14 @@ describe('changelog whats new selection', () => {
     const active = makeEntry('anchor-test', '2026-02-18T00:00:00.000Z', {
       image: '/banner.png',
       alt: 'banner',
+      disabledOnMatches: ['/interop', '/bridges'],
       expiresAt: '2026-03-01T00:00:00.000Z',
     })
 
     const result = selectActiveChangelogWhatsNewWidget([active], now)
 
     expect(result?.href).toEqual('/changelog#anchor-test')
+    expect(result?.disabledOnMatches).toEqual(['/interop', '/bridges'])
   })
 })
 
@@ -76,7 +78,7 @@ function makeEntry(
     image: string
     alt: string
     href?: string
-    mobileDisabledOnMatches?: string[]
+    disabledOnMatches?: string[]
     expiresAt: string
   },
 ): ChangelogEntry {
@@ -91,7 +93,7 @@ function makeEntry(
           image: whatsNew.image,
           alt: whatsNew.alt,
           href: whatsNew.href,
-          mobileDisabledOnMatches: whatsNew.mobileDisabledOnMatches,
+          disabledOnMatches: whatsNew.disabledOnMatches,
           expiresAt: new Date(whatsNew.expiresAt),
         }
       : undefined,
