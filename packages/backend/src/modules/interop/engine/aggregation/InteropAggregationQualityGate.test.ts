@@ -2,501 +2,327 @@ import { expect } from 'earl'
 import { evaluateQualitySignals } from './InteropAggregationQualityGate'
 
 describe(evaluateQualitySignals.name, () => {
-  it('returns no reasons for stable candidate', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 1_050,
-        identifiedCount: 1_000,
-        srcVolumeUsd: 11_000_000,
-        dstVolumeUsd: 11_000_000,
-      },
-      baseline: {
-        transferCount: 1_000,
-        identifiedCount: 960,
-        srcVolumeUsd: 10_000_000,
-        dstVolumeUsd: 10_000_000,
-      },
-      history: [
-        {
-          transferCount: 980,
-          identifiedCount: 960,
-          srcVolumeUsd: 9_900_000,
-          dstVolumeUsd: 9_900_000,
-        },
-        {
-          transferCount: 1_010,
-          identifiedCount: 990,
-          srcVolumeUsd: 10_200_000,
-          dstVolumeUsd: 10_200_000,
-        },
-        {
-          transferCount: 1_020,
-          identifiedCount: 1_000,
-          srcVolumeUsd: 10_150_000,
-          dstVolumeUsd: 10_150_000,
-        },
-      ],
+  describe('single-signal cases', () => {
+    it('flags src hard cap breach', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ srcVolumeUsd: 150_000_000_000 }),
+        history: [],
+      })
+
+      expect(hasReason(result, 'Hard cap exceeded (src)')).toEqual(true)
     })
 
-    expect(result).toEqual([])
-  })
+    it('flags dst hard cap breach', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ dstVolumeUsd: 120_000_000_000 }),
+        history: [],
+      })
 
-  it('flags hard-cap volume spikes', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 2_000,
-        identifiedCount: 2_000,
-        srcVolumeUsd: 1_500_000_000_000,
-        dstVolumeUsd: 1_500_000_000_000,
-      },
-      baseline: {
-        transferCount: 1_000,
-        identifiedCount: 900,
-        srcVolumeUsd: 10_000_000,
-        dstVolumeUsd: 10_000_000,
-      },
-      history: [],
+      expect(hasReason(result, 'Hard cap exceeded (dst)')).toEqual(true)
     })
 
-    expect(result.some((x) => x.includes('Hard cap exceeded'))).toEqual(true)
-  })
+    it('flags count spike vs previous point', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ transferCount: 9_000 }),
+        history: [point({ transferCount: 1_000 })],
+      })
 
-  it('flags count spikes against baseline', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 9_000,
-        identifiedCount: 8_000,
-        srcVolumeUsd: 12_000_000,
-        dstVolumeUsd: 12_000_000,
-      },
-      baseline: {
-        transferCount: 1_000,
-        identifiedCount: 900,
-        srcVolumeUsd: 10_000_000,
-        dstVolumeUsd: 10_000_000,
-      },
-      history: [],
+      expect(hasReason(result, 'Count spike vs previous')).toEqual(true)
     })
 
-    expect(result.some((x) => x.includes('Count spike vs baseline'))).toEqual(
-      true,
-    )
-  })
+    it('flags count drop vs previous point', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ transferCount: 100 }),
+        history: [point({ transferCount: 1_000 })],
+      })
 
-  it('does not use volume checks when identification quality is low', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 1_100,
-        identifiedCount: 100,
-        srcVolumeUsd: 120_000_000,
-        dstVolumeUsd: 120_000_000,
-      },
-      baseline: {
-        transferCount: 1_000,
-        identifiedCount: 900,
-        srcVolumeUsd: 10_000_000,
-        dstVolumeUsd: 10_000_000,
-      },
-      history: [],
+      expect(hasReason(result, 'Count drop vs previous')).toEqual(true)
     })
 
-    expect(result.some((x) => x.includes('Volume spike vs baseline'))).toEqual(
-      false,
-    )
-  })
+    it('flags src volume spike vs previous point', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ srcVolumeUsd: 20_000_000 }),
+        history: [point({ srcVolumeUsd: 2_000_000 })],
+      })
 
-  it('flags extreme z-score anomalies from history', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 100_000,
-        identifiedCount: 100_000,
-        srcVolumeUsd: 100_000_000,
-        dstVolumeUsd: 100_000_000,
-      },
-      baseline: {
-        transferCount: 1_000,
-        identifiedCount: 990,
-        srcVolumeUsd: 1_000_000,
-        dstVolumeUsd: 1_000_000,
-      },
-      history: [
-        {
-          transferCount: 950,
-          identifiedCount: 940,
-          srcVolumeUsd: 950_000,
-          dstVolumeUsd: 950_000,
-        },
-        {
-          transferCount: 980,
-          identifiedCount: 970,
-          srcVolumeUsd: 980_000,
-          dstVolumeUsd: 980_000,
-        },
-        {
-          transferCount: 1_000,
-          identifiedCount: 990,
-          srcVolumeUsd: 1_000_000,
+      expect(hasReason(result, 'Src volume spike vs previous')).toEqual(true)
+    })
+
+    it('flags src volume drop vs previous point', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ srcVolumeUsd: 200_000 }),
+        history: [point({ srcVolumeUsd: 2_000_000 })],
+      })
+
+      expect(hasReason(result, 'Src volume drop vs previous')).toEqual(true)
+    })
+
+    it('flags dst volume spike vs previous point', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ dstVolumeUsd: 20_000_000 }),
+        history: [point({ dstVolumeUsd: 2_000_000 })],
+      })
+
+      expect(hasReason(result, 'Dst volume spike vs previous')).toEqual(true)
+    })
+
+    it('flags dst volume drop vs previous point', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ dstVolumeUsd: 200_000 }),
+        history: [point({ dstVolumeUsd: 2_000_000 })],
+      })
+
+      expect(hasReason(result, 'Dst volume drop vs previous')).toEqual(true)
+    })
+
+    it('flags count robust z-score anomaly', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ transferCount: 20_000 }),
+        history: [
+          point({ transferCount: 900 }),
+          point({ transferCount: 980 }),
+          point({ transferCount: 1_040 }),
+          point({ transferCount: 1_000 }),
+          point({ transferCount: 1_100 }),
+          point({ transferCount: 950 }),
+        ],
+      })
+
+      expect(hasReason(result, 'Count robust z-score=')).toEqual(true)
+    })
+
+    it('flags src volume robust z-score anomaly', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ srcVolumeUsd: 70_000_000 }),
+        history: [
+          point({ srcVolumeUsd: 1_900_000 }),
+          point({ srcVolumeUsd: 2_050_000 }),
+          point({ srcVolumeUsd: 2_150_000 }),
+          point({ srcVolumeUsd: 2_000_000 }),
+          point({ srcVolumeUsd: 2_120_000 }),
+          point({ srcVolumeUsd: 1_970_000 }),
+        ],
+      })
+
+      expect(hasReason(result, 'Src volume robust z-score=')).toEqual(true)
+    })
+
+    it('flags dst volume robust z-score anomaly', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ dstVolumeUsd: 65_000_000 }),
+        history: [
+          point({ dstVolumeUsd: 1_940_000 }),
+          point({ dstVolumeUsd: 2_020_000 }),
+          point({ dstVolumeUsd: 2_110_000 }),
+          point({ dstVolumeUsd: 2_030_000 }),
+          point({ dstVolumeUsd: 2_140_000 }),
+          point({ dstVolumeUsd: 1_980_000 }),
+        ],
+      })
+
+      expect(hasReason(result, 'Dst volume robust z-score=')).toEqual(true)
+    })
+
+    it('flags high src/dst drift', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({
+          srcVolumeUsd: 4_000_000,
           dstVolumeUsd: 1_000_000,
-        },
-        {
-          transferCount: 1_010,
-          identifiedCount: 1_000,
-          srcVolumeUsd: 1_010_000,
-          dstVolumeUsd: 1_010_000,
-        },
-        {
-          transferCount: 990,
-          identifiedCount: 980,
-          srcVolumeUsd: 990_000,
-          dstVolumeUsd: 990_000,
-        },
-        {
-          transferCount: 1_020,
-          identifiedCount: 1_010,
-          srcVolumeUsd: 1_020_000,
-          dstVolumeUsd: 1_020_000,
-        },
-      ],
-    })
+        }),
+        history: [point({ srcVolumeUsd: 2_000_000, dstVolumeUsd: 2_000_000 })],
+      })
 
-    expect(
-      result.some(
-        (x) => x.includes('robust z-score') || x.includes('ratio spike'),
-      ),
-    ).toEqual(true)
+      expect(hasReason(result, 'Src/Dst volume drift is high')).toEqual(true)
+    })
   })
 
-  it('flags significant src/dst volume drifts', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 1_500,
-        identifiedCount: 1_400,
-        srcVolumeUsd: 40_000_000,
-        dstVolumeUsd: 10_000_000,
-      },
-      baseline: {
-        transferCount: 1_450,
-        identifiedCount: 1_400,
-        srcVolumeUsd: 10_000_000,
-        dstVolumeUsd: 9_800_000,
-      },
-      history: [
-        {
-          transferCount: 1_400,
-          identifiedCount: 1_390,
-          srcVolumeUsd: 9_800_000,
-          dstVolumeUsd: 9_700_000,
-        },
-        {
-          transferCount: 1_420,
-          identifiedCount: 1_410,
-          srcVolumeUsd: 10_200_000,
-          dstVolumeUsd: 10_100_000,
-        },
-        {
-          transferCount: 1_430,
-          identifiedCount: 1_420,
-          srcVolumeUsd: 10_300_000,
-          dstVolumeUsd: 10_200_000,
-        },
-      ],
+  describe('mixed-signal cases', () => {
+    it('combines hard cap, count spike, volume spikes and drift', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({
+          transferCount: 10_000,
+          identifiedCount: 9_500,
+          srcVolumeUsd: 200_000_000_000,
+          dstVolumeUsd: 80_000_000_000,
+        }),
+        history: [
+          point({
+            transferCount: 1_000,
+            srcVolumeUsd: 2_000_000,
+            dstVolumeUsd: 2_000_000,
+          }),
+        ],
+      })
+
+      expect(hasReason(result, 'Hard cap exceeded (src)')).toEqual(true)
+      expect(hasReason(result, 'Count spike vs previous')).toEqual(true)
+      expect(hasReason(result, 'Src volume spike vs previous')).toEqual(true)
+      expect(hasReason(result, 'Dst volume spike vs previous')).toEqual(true)
+      expect(hasReason(result, 'Src/Dst volume drift is high')).toEqual(true)
     })
 
-    expect(result.some((x) => x.includes('Src/Dst volume drift'))).toEqual(true)
-  })
+    it('combines count drop, src drop, dst spike and drift', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({
+          transferCount: 100,
+          srcVolumeUsd: 200_000,
+          dstVolumeUsd: 20_000_000,
+        }),
+        history: [
+          point({
+            transferCount: 1_000,
+            srcVolumeUsd: 2_000_000,
+            dstVolumeUsd: 2_000_000,
+          }),
+        ],
+      })
 
-  it('merges src/dst volume window alerts into a single reason', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 1_000,
-        identifiedCount: 950,
-        srcVolumeUsd: 120_000,
-        dstVolumeUsd: 120_000,
-      },
-      history: [
-        {
-          transferCount: 1_000,
-          identifiedCount: 950,
-          srcVolumeUsd: 2_000_000,
-          dstVolumeUsd: 2_000_000,
-        },
-        {
-          transferCount: 1_020,
-          identifiedCount: 970,
-          srcVolumeUsd: 2_100_000,
-          dstVolumeUsd: 2_100_000,
-        },
-        {
-          transferCount: 980,
-          identifiedCount: 940,
-          srcVolumeUsd: 1_950_000,
-          dstVolumeUsd: 1_950_000,
-        },
-        {
-          transferCount: 1_050,
-          identifiedCount: 1_000,
-          srcVolumeUsd: 2_050_000,
-          dstVolumeUsd: 2_050_000,
-        },
-        {
-          transferCount: 1_030,
-          identifiedCount: 980,
-          srcVolumeUsd: 2_200_000,
-          dstVolumeUsd: 2_200_000,
-        },
-        {
-          transferCount: 1_010,
-          identifiedCount: 960,
-          srcVolumeUsd: 2_150_000,
-          dstVolumeUsd: 2_150_000,
-        },
-        {
-          transferCount: 990,
-          identifiedCount: 940,
-          srcVolumeUsd: 2_000_000,
-          dstVolumeUsd: 2_000_000,
-        },
-      ],
+      expect(hasReason(result, 'Count drop vs previous')).toEqual(true)
+      expect(hasReason(result, 'Src volume drop vs previous')).toEqual(true)
+      expect(hasReason(result, 'Dst volume spike vs previous')).toEqual(true)
+      expect(hasReason(result, 'Src/Dst volume drift is high')).toEqual(true)
     })
 
-    expect(
-      result.includes('Volume ratio drop in recent window (Src+Dst)'),
-    ).toEqual(true)
-    expect(result.some((x) => x.endsWith('(Src)'))).toEqual(false)
-    expect(result.some((x) => x.endsWith('(Dst)'))).toEqual(false)
-  })
+    it('combines robust z-score anomalies for count, src volume and dst volume', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({
+          transferCount: 20_000,
+          identifiedCount: 19_000,
+          srcVolumeUsd: 60_000_000,
+          dstVolumeUsd: 55_000_000,
+        }),
+        history: [
+          point({
+            transferCount: 900,
+            srcVolumeUsd: 1_900_000,
+            dstVolumeUsd: 1_940_000,
+          }),
+          point({
+            transferCount: 980,
+            srcVolumeUsd: 2_050_000,
+            dstVolumeUsd: 2_020_000,
+          }),
+          point({
+            transferCount: 1_040,
+            srcVolumeUsd: 2_150_000,
+            dstVolumeUsd: 2_110_000,
+          }),
+          point({
+            transferCount: 1_000,
+            srcVolumeUsd: 2_000_000,
+            dstVolumeUsd: 2_030_000,
+          }),
+          point({
+            transferCount: 1_100,
+            srcVolumeUsd: 2_120_000,
+            dstVolumeUsd: 2_140_000,
+          }),
+          point({
+            transferCount: 950,
+            srcVolumeUsd: 1_970_000,
+            dstVolumeUsd: 1_980_000,
+          }),
+        ],
+      })
 
-  it('does not report infinite robust z-score for near-flat count history', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 151,
-        identifiedCount: 145,
-        srcVolumeUsd: 2_000_000,
-        dstVolumeUsd: 2_000_000,
-      },
-      history: [
-        {
-          transferCount: 150,
-          identifiedCount: 145,
-          srcVolumeUsd: 2_000_000,
-          dstVolumeUsd: 2_000_000,
-        },
-        {
-          transferCount: 150,
-          identifiedCount: 145,
-          srcVolumeUsd: 2_010_000,
-          dstVolumeUsd: 2_010_000,
-        },
-        {
-          transferCount: 150,
-          identifiedCount: 145,
-          srcVolumeUsd: 1_990_000,
-          dstVolumeUsd: 1_990_000,
-        },
-        {
-          transferCount: 150,
-          identifiedCount: 145,
-          srcVolumeUsd: 2_005_000,
-          dstVolumeUsd: 2_005_000,
-        },
-        {
-          transferCount: 150,
-          identifiedCount: 145,
-          srcVolumeUsd: 1_995_000,
-          dstVolumeUsd: 1_995_000,
-        },
-        {
-          transferCount: 150,
-          identifiedCount: 145,
-          srcVolumeUsd: 2_000_000,
-          dstVolumeUsd: 2_000_000,
-        },
-        {
-          transferCount: 150,
-          identifiedCount: 145,
-          srcVolumeUsd: 2_000_000,
-          dstVolumeUsd: 2_000_000,
-        },
-      ],
+      expect(hasReason(result, 'Count robust z-score=')).toEqual(true)
+      expect(hasReason(result, 'Src volume robust z-score=')).toEqual(true)
+      expect(hasReason(result, 'Dst volume robust z-score=')).toEqual(true)
     })
-
-    expect(result.some((x) => x.includes('z-score=Infinity'))).toEqual(false)
   })
 
-  it('does not apply count ratio window checks when history window is too short', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 10,
-        identifiedCount: 10,
-        srcVolumeUsd: 1_500_000,
-        dstVolumeUsd: 1_500_000,
-      },
-      history: [
-        {
-          transferCount: 1_000,
-          identifiedCount: 980,
-          srcVolumeUsd: 1_600_000,
-          dstVolumeUsd: 1_600_000,
-        },
-        {
-          transferCount: 980,
-          identifiedCount: 960,
-          srcVolumeUsd: 1_550_000,
-          dstVolumeUsd: 1_550_000,
-        },
-        {
-          transferCount: 1_020,
-          identifiedCount: 1_000,
-          srcVolumeUsd: 1_520_000,
-          dstVolumeUsd: 1_520_000,
-        },
-      ],
-    })
-
-    expect(
-      result.some((x) => x.includes('Count ratio') || x.includes('Count robust')),
-    ).toEqual(false)
-  })
-
-  it('triggers count ratio drop when history is long enough and median is high', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 10,
-        identifiedCount: 10,
-        srcVolumeUsd: 1_500_000,
-        dstVolumeUsd: 1_500_000,
-      },
-      history: [
-        {
-          transferCount: 1_000,
-          identifiedCount: 980,
-          srcVolumeUsd: 1_600_000,
-          dstVolumeUsd: 1_600_000,
-        },
-        {
-          transferCount: 990,
-          identifiedCount: 970,
-          srcVolumeUsd: 1_550_000,
-          dstVolumeUsd: 1_550_000,
-        },
-        {
-          transferCount: 1_020,
-          identifiedCount: 1_000,
-          srcVolumeUsd: 1_520_000,
-          dstVolumeUsd: 1_520_000,
-        },
-        {
-          transferCount: 1_010,
+  describe('guard cases', () => {
+    it('returns no reasons for stable candidate', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({
+          transferCount: 1_040,
           identifiedCount: 990,
-          srcVolumeUsd: 1_510_000,
-          dstVolumeUsd: 1_510_000,
-        },
-        {
-          transferCount: 980,
-          identifiedCount: 960,
-          srcVolumeUsd: 1_580_000,
-          dstVolumeUsd: 1_580_000,
-        },
-        {
-          transferCount: 1_030,
-          identifiedCount: 1_010,
-          srcVolumeUsd: 1_630_000,
-          dstVolumeUsd: 1_630_000,
-        },
-        {
+          srcVolumeUsd: 2_050_000,
+          dstVolumeUsd: 2_020_000,
+        }),
+        history: [
+          point({
+            transferCount: 980,
+            identifiedCount: 940,
+            srcVolumeUsd: 1_950_000,
+            dstVolumeUsd: 1_930_000,
+          }),
+          point({
+            transferCount: 1_000,
+            identifiedCount: 950,
+            srcVolumeUsd: 2_000_000,
+            dstVolumeUsd: 1_980_000,
+          }),
+          point({
+            transferCount: 1_020,
+            identifiedCount: 970,
+            srcVolumeUsd: 2_040_000,
+            dstVolumeUsd: 2_010_000,
+          }),
+        ],
+      })
+
+      expect(result).toEqual([])
+    })
+
+    it('skips volume analyzers when candidate identification quality is low', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({
           transferCount: 1_000,
-          identifiedCount: 980,
-          srcVolumeUsd: 1_590_000,
-          dstVolumeUsd: 1_590_000,
-        },
-      ],
+          identifiedCount: 100,
+          srcVolumeUsd: 40_000_000,
+          dstVolumeUsd: 10_000_000,
+        }),
+        history: [
+          point({
+            transferCount: 1_000,
+            identifiedCount: 950,
+            srcVolumeUsd: 2_000_000,
+            dstVolumeUsd: 2_000_000,
+          }),
+        ],
+      })
+
+      expect(hasReason(result, 'Src volume spike vs previous')).toEqual(false)
+      expect(hasReason(result, 'Dst volume spike vs previous')).toEqual(false)
+      expect(hasReason(result, 'Src/Dst volume drift is high')).toEqual(false)
     })
 
-    expect(result.includes('Count ratio drop in recent window')).toEqual(true)
-  })
+    it('does not report infinite robust z-score values', () => {
+      const result = evaluateQualitySignals({
+        candidate: point({ transferCount: 151 }),
+        history: [
+          point({ transferCount: 150 }),
+          point({ transferCount: 150 }),
+          point({ transferCount: 150 }),
+          point({ transferCount: 150 }),
+          point({ transferCount: 150 }),
+          point({ transferCount: 150 }),
+        ],
+      })
 
-  it('ignores low-identification history points for volume window checks', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 1_000,
-        identifiedCount: 980,
-        srcVolumeUsd: 1_200_000,
-        dstVolumeUsd: 1_200_000,
-      },
-      history: [
-        {
-          transferCount: 1_000,
-          identifiedCount: 0,
-          srcVolumeUsd: 5_000_000,
-          dstVolumeUsd: 5_000_000,
-        },
-        {
-          transferCount: 980,
-          identifiedCount: 0,
-          srcVolumeUsd: 4_500_000,
-          dstVolumeUsd: 4_500_000,
-        },
-        {
-          transferCount: 1_010,
-          identifiedCount: 0,
-          srcVolumeUsd: 4_800_000,
-          dstVolumeUsd: 4_800_000,
-        },
-        {
-          transferCount: 1_020,
-          identifiedCount: 0,
-          srcVolumeUsd: 5_200_000,
-          dstVolumeUsd: 5_200_000,
-        },
-        {
-          transferCount: 990,
-          identifiedCount: 0,
-          srcVolumeUsd: 4_900_000,
-          dstVolumeUsd: 4_900_000,
-        },
-        {
-          transferCount: 995,
-          identifiedCount: 0,
-          srcVolumeUsd: 5_100_000,
-          dstVolumeUsd: 5_100_000,
-        },
-        {
-          transferCount: 1_005,
-          identifiedCount: 0,
-          srcVolumeUsd: 4_700_000,
-          dstVolumeUsd: 4_700_000,
-        },
-      ],
+      expect(hasReason(result, 'z-score=Infinity')).toEqual(false)
     })
-
-    expect(result.some((x) => x.includes('Volume ratio'))).toEqual(false)
-    expect(result.some((x) => x.includes('Volume robust z-score'))).toEqual(
-      false,
-    )
-  })
-
-  it('skips baseline volume comparison when baseline identification quality is low', () => {
-    const result = evaluateQualitySignals({
-      candidate: {
-        transferCount: 1_000,
-        identifiedCount: 990,
-        srcVolumeUsd: 15_000_000,
-        dstVolumeUsd: 15_000_000,
-      },
-      baseline: {
-        transferCount: 1_000,
-        identifiedCount: 0,
-        srcVolumeUsd: 1_000_000,
-        dstVolumeUsd: 1_000_000,
-      },
-      history: [],
-    })
-
-    expect(result.some((x) => x.includes('Volume spike vs baseline'))).toEqual(
-      false,
-    )
-    expect(result.some((x) => x.includes('Volume drop vs baseline'))).toEqual(
-      false,
-    )
   })
 })
+
+function hasReason(reasons: string[], phrase: string): boolean {
+  return reasons.some((reason) => reason.includes(phrase))
+}
+
+function point(
+  overrides: Partial<{
+    transferCount: number
+    identifiedCount: number
+    srcVolumeUsd: number
+    dstVolumeUsd: number
+  }> = {},
+) {
+  return {
+    transferCount: 1_000,
+    identifiedCount: 950,
+    srcVolumeUsd: 2_000_000,
+    dstVolumeUsd: 2_000_000,
+    ...overrides,
+  }
+}
