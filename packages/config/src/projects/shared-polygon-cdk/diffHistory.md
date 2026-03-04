@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xf138edf8f74d64377a136201ad1d3b1d3239b4ba
+
+# Diff at Mon, 02 Mar 2026 13:42:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1770040275
+- current timestamp: 1772458852
+
+## Description
+
+new vkey for selector 0x000a0001.
+
+## Watched changes
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.aggchainVKeys.0x000a0001:
++        [{"selector":"0x000a0001","newVKey":"0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70"}]
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9"
++        "eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72"
+      values.$members.8:
+-        "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
++        "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
+    }
+```
+
 Generated with discovered.json: 0x6c87aa27bd99a68775df188ec0941e83b3254e63
 
 # Diff at Mon, 02 Feb 2026 13:53:02 GMT:

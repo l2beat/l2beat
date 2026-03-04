@@ -86,6 +86,10 @@ export function validateBlip(input: unknown): boolean {
       return input.length === 1
     case 'length':
       return input.length === 1
+    case 'map_values':
+      return input.length === 2 && validateBlip(input[1])
+    case 'map_keys':
+      return input.length === 2 && validateBlip(input[1])
     default:
       return false
   }

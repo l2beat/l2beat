@@ -10,16 +10,15 @@ export const cbridge: BaseProject = {
   name: 'Celer cBridge',
   shortName: 'cBridge',
   addedAt: UnixTime(1662628329),
-  // TODO: add to FE
   // TODO!: when added, remove it from filter in config.test.ts
-  // interopConfig: {
-  //   plugins: [
-  //     {
-  //       plugin: 'cbridge',
-  //       bridgeType: 'nonMinting',
-  //     },
-  //   ],
-  //   type: 'intent',
-  // },
-  // isInteropProtocol: true,
+  interopConfig: {
+    plugins: [
+      {
+        plugin: 'celer',
+        bridgeType: 'nonMinting',
+      },
+    ],
+    type: 'intent',
+  },
+  isInteropProtocol: true,
 }

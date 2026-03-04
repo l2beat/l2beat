@@ -232,7 +232,7 @@ Verify:
     `,
   },
   '0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f': {
-    title: 'Aggchain program of agglayer',
+    title: 'Aggchain program of agglayer v1.1.2',
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered sequencer signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
     programUrl:
@@ -271,7 +271,7 @@ fn main() {
     `,
   },
   '0x374ee73950cdb07d1b8779d90a8467df232639c13f9536b03f1ba76a2aa5dac6': {
-    title: 'Aggchain program of agglayer',
+    title: 'Aggchain program of agglayer v1.5.0',
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
     proverSystemProject: ProjectId('sp1'),
@@ -308,8 +308,46 @@ fn main() {
 \`\`\`
     `,
   },
+  '0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70': {
+    title: 'Aggchain program of agglayer v1.9.2',
+    description:
+      'Usually used for state validation of Aggchains. The source of this program hash was not found and is currently not verifiable.',
+    programUrl:
+      'https://github.com/agglayer/provers/tree/v1.9.2/crates/aggchain-proof-program',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [provers repo](https://github.com/agglayer/provers): \`git checkout v1.9.2\`. Commit hash should be \`191952ce5551badd578063e475f9a4f3c5a9b0f4\`.
+2. Make sure docker is running by running \`docker ps\`
+3. From the root dir: \`cargo make ap-elf\` to generate aggchain program elf from sources
+4. Compute vkey hash bytes of the generated \`crates/aggchain-proof-program/target/elf-compilation/docker/riscv32im-succinct-zkvm-elf/release/aggchain-proof-program\` using SP1 toolchain, e.g. by this simple rust script:
+
+\`\`\`
+use sp1_sdk::{HashableKey, Prover, CpuProver};
+
+fn main() {
+    let elf_path = std::env::args().nth(1).expect("Provide elf_path");
+    let elf_bytes = std::fs::read(&elf_path).expect("File read error");
+    let prover = CpuProver::new();
+    let (_pk, vkey) = Prover::setup(&prover, &elf_bytes);
+    let comm = vkey.hash_bytes();
+    let hex: String = comm.iter().
+        map(|b| format!("{:02x}", b)).collect();
+    println!("0x{}", hex);
+}
+\`\`\`
+    `,
+  },
   '0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53': {
-    title: 'Aggchain program of agglayer',
+    title: 'Aggchain program of agglayer v1.8.0',
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
     proverSystemProject: ProjectId('sp1'),
@@ -621,6 +659,13 @@ Verify:
     verificationStatus: 'unsuccessful',
     verificationSteps:
       'According to the SOON team, this Kailua FPVM program was compiled using a local version with some additional logging added for debugging purposes. The code is not public and thus the program hash cannot be independently verified.',
+  },
+  '0x4aca4abde3db9c42152b4d9eb359e6030111c34ba68f7c68160fce93ed5b7b25': {
+    title: 'Kailua fault proof program (BOB, op-contracts v5 compat)',
+    description:
+      'Program that executes OP Kona client to derive blocks and generate fault or validity proofs, is a part of ZK non-interactive fault proof system. This version adds op-contracts v5 compatibility.',
+    proverSystemProject: ProjectId('risc0'),
+    verificationStatus: 'notVerified',
   },
   '0xf0ce5d15fa89991210ca2667b7f7a8bb740ce551c0f2b20cc76f9debc55d22c2': {
     title: 'Kailua fault proof program (MegaETH)',
@@ -1329,9 +1374,26 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v32/arbos',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [nitro](https://github.com/OffchainLabs/nitro) repo:  \`git checkout consensus-v32\` . Commit hash should be  \`ce7d035d21a74c080c31eeb35f6e8c1089332f85\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. To fix build errors, add this to \`contracts/foundry.toml\`: 
+\`\`\`
+[profile.yul.lint]
+lint_on_build = false
+\`\`\`
+Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindgen --version "=0.26.0"\` and line 46 with \`RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.75.0 --target x86_64-unknown-linux-gnu --target wasm32-unknown-unknown --target wasm32-wasi\`.
+
+5. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+6. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
   },
   '0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4': {
+    // only used by archived projects
     title: 'ArbOS v20 wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
@@ -1340,12 +1402,14 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
     verificationStatus: 'notVerified',
   },
   '0x58a9512cf4096461f866446387e845c6573856ef603bba4e24cb1d89630a675c': {
+    // only used by archived projects
     title: 'ArbOS Kinto wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
     verificationStatus: 'notVerified',
   },
   '0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69': {
+    // only used by archived projects
     title: 'ArbOS v31 wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
@@ -1380,13 +1444,48 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
     title: 'Celestia Nitro 3.2.1 wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
-    verificationStatus: 'notVerified',
+    programUrl: 'https://github.com/celestiaorg/nitro/tree/v3.2.1-rc.1/arbos',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [celestiaorg/nitro](https://github.com/celestiaorg/nitro/tree/v3.2.1-rc.1) repo:  \`git checkout v3.2.1-rc.1\` . Commit hash should be  \`9e6fa83f56d3d4d46226c5f0687c949476e08917\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. To fix build errors, add this to \`contracts/foundry.toml\`: 
+\`\`\`
+[profile.yul.lint]
+lint_on_build = false
+\`\`\`
+Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindgen --version "=0.26.0"\` and line 46 with \`RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.75.0 --target x86_64-unknown-linux-gnu --target wasm32-unknown-unknown --target wasm32-wasi\`.
+
+5. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+6. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
   },
   '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3': {
-    title: 'Celestia Nitro 3.2.2 wasmModuleRoot',
+    title: 'Celestia Nitro 3.3.2 wasmModuleRoot',
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/celestiaorg/nitro/tree/celestia-v3.3.2/arbos',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Even though the program is compiled in docker for reproducibility reasons, it gives the correct results only on linux OS. Steps below were done on Ubuntu 22.04 OS. The steps below consume ~35 GiB disk space.
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/).
+2. Checkout the correct branch in [celestiaorg/nitro](https://github.com/celestiaorg/nitro/tree/celestia-v3.3.2) repo:  \`git checkout celestia-v3.3.2\` . Commit hash should be  \`7c9d688a256cc60f2b8db9dbe9ac40511d0d1f2e\`.
+3. Update git submodules \`git submodule update --init --recursive --force\`.
+4. To fix build errors, add this to \`contracts/foundry.toml\`: 
+\`\`\`
+[profile.yul.lint]
+lint_on_build = false
+\`\`\`
+Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindgen --version "=0.26.0"\` and line 46 with \`RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.75.0 --target x86_64-unknown-linux-gnu --target wasm32-unknown-unknown --target wasm32-wasi\`.
+
+5. Generate wasm module root in docker: \`docker buildx build --target nitro-node-dev -t nitro-node-dev .\`.
+6. Export the value from the docker: \`docker run --rm --entrypoint cat nitro-node-dev /home/user/target/machines/latest/module-root.txt\`.
+    `,
   },
   '0x0323914d3050e80c3d09da528be54794fde60cd26849cd3410dde0da7cd7d4fa': {
     title: 'OP Kona absolute prestate v1.2.7 (cannon64)',

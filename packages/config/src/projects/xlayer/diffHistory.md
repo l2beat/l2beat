@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xa0d62645da0a7f803f2a660bd7f58d8cad227a3e
+
+# Diff at Wed, 04 Mar 2026 08:44:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6a30ad0d296eab5cfae7df5ce6dbeea89f168dc4 block: 1768998877
+- current timestamp: 1768998877
+
+## Description
+
+config: updated guardian comment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768998877 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system. Since the OptimismPortal is not used for state root management in this setup, the guardian role and pausing may be inconsequential.
+      description:
+-        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system. Since the OptimismPortal is not used for state root management in this setup, the guardian role and pausing may be inconsequential."
+    }
+```
+
 Generated with discovered.json: 0xc77cac59635d8095d210069fa229e71d9a9a329a
 
 # Diff at Fri, 13 Feb 2026 11:33:26 GMT:

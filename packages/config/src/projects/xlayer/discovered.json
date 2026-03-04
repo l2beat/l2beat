@@ -657,7 +657,7 @@
         "0x6cfb201001cb96cee7b477019cd49965bdecb41a5187426e75ec032f7ebc5091"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system. Since the OptimismPortal is not used for state root management in this setup, the guardian role and pausing may be inconsequential.",
       "sinceTimestamp": 1761567083,
       "sinceBlock": 23668695,
       "values": {

@@ -82,7 +82,7 @@ export class InteropFinancialsLoop extends TimeLoop {
 
     const updates: { id: string; update: InteropTransferUpdate }[] =
       unprocessed.map((t) => {
-        const update: InteropTransferUpdate = {}
+        const update: InteropTransferUpdate = getEmptyFinancialUpdate()
         if (t.srcId) {
           this.applyTokenUpdate(
             tokenInfos,
@@ -115,7 +115,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     this.logger.info('Transfers processed', {
       transfers: updates.length,
       transfersWithUpdatedValue: updates.filter(
-        (u) => u.update.srcValueUsd || u.update.dstValueUsd,
+        (u) => u.update.srcValueUsd !== null || u.update.dstValueUsd !== null,
       ).length,
     })
   }
@@ -145,11 +145,9 @@ export class InteropFinancialsLoop extends TimeLoop {
     } as const
 
     Object.entries(tokenUpdate).forEach(([key, value]) => {
-      if (value !== undefined) {
-        const updateKey = fieldMapping[key as keyof typeof fieldMapping]
-        // biome-ignore lint/suspicious/noExplicitAny: generic type
-        ;(update as any)[updateKey] = value
-      }
+      const updateKey = fieldMapping[key as keyof typeof fieldMapping]
+      // biome-ignore lint/suspicious/noExplicitAny: generic type
+      ;(update as any)[updateKey] = value
     })
   }
 
@@ -189,6 +187,21 @@ export class InteropFinancialsLoop extends TimeLoop {
       amount,
       valueUsd: price * amount,
     }
+  }
+}
+
+function getEmptyFinancialUpdate(): InteropTransferUpdate {
+  return {
+    srcAbstractTokenId: null,
+    srcSymbol: null,
+    srcPrice: null,
+    srcAmount: null,
+    srcValueUsd: null,
+    dstAbstractTokenId: null,
+    dstSymbol: null,
+    dstPrice: null,
+    dstAmount: null,
+    dstValueUsd: null,
   }
 }
 

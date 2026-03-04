@@ -128,21 +128,21 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
-    for (const configuration of configurations) {
-      const deletedRecords = await this.$.db.tvsPrice.deleteByConfigInTimeRange(
-        configuration.id,
-        UnixTime(configuration.from),
-        UnixTime(configuration.to),
-      )
+    if (configurations.length === 0) return
 
-      if (deletedRecords > 0) {
-        this.logger.info('Deleted records for configuration', {
-          from: configuration.from,
-          to: configuration.to,
-          id: configuration.id,
-          deletedRecords,
-        })
-      }
+    const configs = configurations.map((c) => ({
+      configurationId: c.id,
+      fromInclusive: UnixTime(c.from),
+      toInclusive: UnixTime(c.to),
+    }))
+
+    const deletedRecords = await this.$.db.tvsPrice.deleteByConfigs(configs)
+
+    if (deletedRecords > 0) {
+      this.logger.info('Deleted records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
     }
   }
 }

@@ -13,5 +13,11 @@
     "hash": "0x5b8836fe706f4142d9d19316f7ae849ba43b55173015f72bc3f9216f7a86cf0d",
     "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
     "blockNumber": 22944504
+  },
+  "TimelockControllerUpgradeable.sol": {
+    "hash": "0xd6475b362415a3692a3b5af6ae0a14fcdd0a99ac3a39ffc5523dd78dd2b00713",
+    "address": "eth:0x5F0CAaf0d3b8dd8eA9f80CDbb0021930d3c17353",
+    "chain": "ethereum",
+    "blockNumber": 24570419
   }
 }

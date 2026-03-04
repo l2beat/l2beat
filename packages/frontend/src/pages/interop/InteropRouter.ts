@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -30,7 +30,7 @@ const InteropQuery = v
 export function createInteropRouter(
   manifest: Manifest,
   render: RenderFunction,
-  cache: ICache,
+  cache: InMemoryCache,
 ) {
   const router = express.Router()
 
