@@ -1467,5 +1467,9 @@
   "static/meta-images/publications/interoperability-page.png": "fe08306bc7eac0f30ab3fdafb64774e2",
   "static/icons/meson.png": "450cbae860a2652f3079d1045ffc704d",
   "static/meta-images/publications/monthly-update-2026-02.png": "438e215479099fc1cc71caa3d7c22400",
-  "static/meta-images/publications/governance-review-86.png": "353fe2f02a0aa5fadf1080405d51b586"
+  "static/meta-images/publications/governance-review-86.png": "353fe2f02a0aa5fadf1080405d51b586",
+  "static/icons/sp1turbo.png": "767a37fa0928173d50732276315edf41",
+  "static/meta-images/zk-catalog/projects/sp1turbo/opengraph-image.png": "2dff7ca2297e41ae848dc3417d7517ce",
+  "static/icons/sp1hypercube.png": "bc65955f4da7fa2f7f83faad193fdddf",
+  "static/meta-images/zk-catalog/projects/sp1hypercube/opengraph-image.png": "14c50d8dedc7e7053d91a186c36d04e4"
 }

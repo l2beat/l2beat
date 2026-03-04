@@ -37,7 +37,7 @@ export const airbender: BaseProject = {
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Airbender,
-        ZK_CATALOG_TAGS.ISA.RISCV,
+        ZK_CATALOG_TAGS.ISA.RISCV32,
         ZK_CATALOG_TAGS.Field.Mersenne31,
       ],
       finalWrap: [
