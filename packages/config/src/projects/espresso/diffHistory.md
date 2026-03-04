@@ -20,6 +20,8 @@ PlonkVerifierV2 replaced by PlonkVerifierV3 (`0x0D65...` → `0x098C...`) — up
 
 Diff: https://disco.l2beat.com/diff/eth:0x4DF3515bB525787e9eae08B8f9647C30F6FA7d93/eth:0x0177b586A949088309227f1A91951571CF770D8C
 
+Espresso transitioned to permissionless PoS on March 4, 2026 ([announcement](https://paragraph.com/@espressofndn/proof-of-stake-upgrade-begins)). Validator set is now open — top 100 by staked ESP. Slashing is not yet implemented ([StakeTable.sol](https://github.com/EspressoSystems/espresso-network/blob/main/contracts/src/StakeTable.sol) comments: "will be used for slashing later"). Updated project type from DA Service to Public Blockchain.
+
 ## Watched changes
 
 ```diff
