@@ -8,7 +8,7 @@ Generated with discovered.json: 0x81b7e8b613d61a7ab9904009a1ded2823915648a
 
 ## Description
 
-Upgrade to op-contracts v1.8.0-rc.4 (isthmus).
+Upgrade to known op-contracts version.
 
 Optimism portal is neutered, diff to standard: https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4
 
