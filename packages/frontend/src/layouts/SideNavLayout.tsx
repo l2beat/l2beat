@@ -226,16 +226,11 @@ export function SideNavLayout({
         {
           title: 'Changelog',
           href: '/changelog',
-          accessory: (
-            <div
-              className={cn(
-                'inline-flex size-4 items-center justify-center rounded bg-brand font-medium text-2xs text-white tabular-nums leading-none',
-                !unreadChangelogCount ? 'bg-secondary' : 'bg-brand',
-              )}
-            >
+          accessory: unreadChangelogCount ? (
+            <div className="inline-flex size-4 items-center justify-center rounded bg-brand font-medium text-2xs text-white tabular-nums leading-none">
               {unreadChangelogCount}
             </div>
-          ),
+          ) : null,
         },
         {
           title: 'Forum',
@@ -260,9 +255,7 @@ export function SideNavLayout({
         {
           title: 'Jobs',
           href: externalLinks.jobs,
-          accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? (
-            <HiringBadge />
-          ) : undefined,
+          accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? <HiringBadge /> : null,
         },
         {
           title: 'Brand Kit',
