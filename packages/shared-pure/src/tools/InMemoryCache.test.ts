@@ -1,5 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
+import { UnixTime } from '../types/UnixTime.js'
 import { InMemoryCache } from './InMemoryCache.js'
 
 describe(InMemoryCache.name, () => {
