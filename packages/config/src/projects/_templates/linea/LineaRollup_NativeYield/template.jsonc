@@ -57,6 +57,30 @@
         }
       ]
     },
+    "ethStakerAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "YIELD_PROVIDER_STAKING_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "send ETH from the rollup bridge to the YieldManager."
+        }
+      ]
+    },
+    "yieldManagerSetterAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "SET_YIELD_MANAGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the address of the yield manager contract that receives ETH from rollup bridge."
+        }
+      ]
+    },
     "Operators": {
       "handler": {
         "type": "accessControl",

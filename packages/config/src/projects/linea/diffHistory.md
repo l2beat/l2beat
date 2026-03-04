@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xcb5fd82dba306f728a9a68e2bd48f47fee3ea17d
+Generated with discovered.json: 0xba51707d98600208cf93084f406a51f922540191
 
-# Diff at Tue, 03 Mar 2026 13:32:27 GMT:
+# Diff at Wed, 04 Mar 2026 12:04:51 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@2eb87e059e69bd614702c745d6438caa0684d42b block: 1765276326
+- comparing to: main@1f1cf4fcbeb4c2ad86765920452b33a7c90a15a5 block: 1765276326
 - current timestamp: 1772533779
 
 ## Description
@@ -11,6 +11,8 @@ Generated with discovered.json: 0xcb5fd82dba306f728a9a68e2bd48f47fee3ea17d
 Upgraded LineaRollup contract to version 7 to add native ETH yield. 
 
 Permissioned entities can now move ETH from the rollup contract into yield providers via YieldManager. Accrued interest is paid to users on L2. YieldManager sets minimal and target reserve values. If ETH reserves are below the minimal value, users can permissionlessly replenish the reserve up to target by unstaking. 
+
+Diff for LineaRollup: https://disco.l2beat.com/diff/eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0/eth:0x04728BF704a716C26F9EF4085013b760AC885631.
 
 Also, removed Safe Zodiac roles on L1.
 
@@ -21,7 +23,15 @@ Also, removed Safe Zodiac roles on L1.
     +++ description: None
       values.GnosisSafe_modules.0:
 -        "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"send ETH from the rollup bridge to the YieldManager.","role":".ethStakerAC"}
+      receivedPermissions.19:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"set the address of the yield manager contract that receives ETH from rollup bridge.","role":".yieldManagerSetterAC"}
+      receivedPermissions.25:
++        {"permission":"interact","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","description":"manage native yield staking: modify reserve parameters, set yield pools, set yield receiver addresses.","role":".yieldStakingManagerAC"}
       receivedPermissions.26:
++        {"permission":"interact","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","description":"operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.","role":".yieldStakingOperatorAC"}
+      receivedPermissions.30:
 +        {"permission":"upgrade","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","role":"admin","via":[{"address":"eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"eth:0xd6B95c960779c72B8C6752119849318E5d550574"}]}
     }
 ```
@@ -59,6 +69,8 @@ Also, removed Safe Zodiac roles on L1.
 +        "7.0"
       values.GENESIS_SHNARF:
 -        "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f"
+      values.ethStakerAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"]
       values.isWithdrawLSTAllowed:
 +        false
       values.PAUSE_NATIVE_YIELD_STAKING_ROLE:
@@ -72,6 +84,8 @@ Also, removed Safe Zodiac roles on L1.
 +++ severity: HIGH
       values.yieldManager:
 +        "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94"
+      values.yieldManagerSetterAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
       fieldMeta.yieldManager:
 +        {"severity":"HIGH"}
       implementationNames.eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0:

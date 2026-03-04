@@ -595,6 +595,18 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "send ETH from the rollup bridge to the YieldManager.",
+          "role": ".ethStakerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "set the address of the yield manager contract that receives ETH from rollup bridge.",
+          "role": ".yieldManagerSetterAC"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "cancel queued transactions.",
           "role": ".cancellerAC"
@@ -632,6 +644,18 @@
           "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions.",
           "role": ".proposerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "description": "manage native yield staking: modify reserve parameters, set yield pools, set yield receiver addresses.",
+          "role": ".yieldStakingManagerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "description": "operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.",
+          "role": ".yieldStakingOperatorAC"
         },
         {
           "permission": "upgrade",
@@ -853,7 +877,21 @@
     {
       "address": "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "send ETH from the rollup bridge to the YieldManager.",
+          "role": ".ethStakerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "description": "operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.",
+          "role": ".yieldStakingOperatorAC"
+        }
+      ]
     },
     {
       "name": "LineaRollup",
@@ -1031,6 +1069,10 @@
         "currentPeriodAmountInWei": "505639795830108490324",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "ethStakerAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+        ],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
@@ -1095,7 +1137,10 @@
           "eth:0x0000000000000000000000000000000000000000"
         ],
         "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
-        "yieldManager": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94"
+        "yieldManager": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+        "yieldManagerSetterAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        ]
       },
       "fieldMeta": {
         "yieldManager": { "severity": "HIGH" },
@@ -1223,6 +1268,107 @@
           ]
         ],
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "YIELD_PROVIDER_STAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "YIELD_PROVIDER_UNSTAKER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "YIELD_REPORTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "STAKING_PAUSE_CONTROLLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "OSSIFICATION_PROCESSOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "OSSIFICATION_INITIATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_YIELD_PROVIDER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_L2_YIELD_RECIPIENT_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "WITHDRAWAL_RESERVE_SETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_NATIVE_YIELD_STAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_NATIVE_YIELD_STAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_NATIVE_YIELD_UNSTAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_NATIVE_YIELD_UNSTAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_NATIVE_YIELD_PERMISSIONLESS_ACTIONS_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_NATIVE_YIELD_PERMISSIONLESS_ACTIONS_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_NATIVE_YIELD_REPORTING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_NATIVE_YIELD_REPORTING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isWithdrawalReserveBelowMinimum": false,
         "L1_MESSAGE_SERVICE": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -1252,9 +1398,25 @@
         "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
         "YIELD_PROVIDER_UNSTAKER_ROLE": "0x1208ee08ba851b41059d729bfba4fffc3a98c2b6d121e3cf0db274417dea3d70",
         "YIELD_REPORTER_ROLE": "0xa980ae8105ebca8c4bda1143caefa4ff96b61271718a11b7239cdb9eabfc7e27",
-        "yieldProviderCount": 0
+        "yieldProviderCount": 0,
+        "yieldStakingManagerAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        ],
+        "yieldStakingOperatorAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+        ]
       },
       "fieldMeta": {
+        "accessControl": { "severity": "HIGH" },
+        "yieldStakingOperatorAC": {
+          "severity": "HIGH",
+          "description": "Logically this combines several roles: YIELD_PROVIDER_STAKING_ROLE, YIELD_PROVIDER_UNSTAKER_ROLE, YIELD_REPORTER_ROLE, STAKING_PAUSE_CONTROLLER_ROLE, OSSIFICATION_PROCESSOR_ROLE. Currently they are shared by the same two addresses, if this changes the permissions must be modified."
+        },
+        "yieldStakingManagerAC": {
+          "severity": "HIGH",
+          "description": "Logically this combines several roles: SET_YIELD_PROVIDER_ROLE, SET_L2_YIELD_RECIPIENT_ROLE, WITHDRAWAL_RESERVE_SETTER_ROLE. Currently they are shared by the same address, if this changes the permissions must be modified."
+        },
         "isWithdrawalReserveBelowMinimum": {
           "severity": "HIGH",
           "description": "If true, no more ETH can be staked and users can permissionlessly withdraw staked ETH."
@@ -3649,12 +3811,12 @@
     "linea/L2MessageService": "0xedda44cd37e50cfac16b991bfd1291c10ed903063625cc7621f278451b5997af",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
     "linea/L2TokenBridge": "0xde60fe36104dfc27d1da95bf2e74c70fc2b30fa7cb17e179ebcfce8c4a701e3b",
-    "linea/LineaRollup_NativeYield": "0x609ab7801487c82ab3eb252dd3e0b261c8e53443770e5f3b28f92a1ab0876046",
+    "linea/LineaRollup_NativeYield": "0x43ca4c9b4c70a37b08d2cc88342dd2959bdc3d397dcd20d780d02705d5e4f1b5",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "linea/YieldManager": "0x4679e673c8d84b1a0aeaa5db5b31c51d4b27ddbd02e86c54af0662180f9e0553"
+    "linea/YieldManager": "0x79687f873e91b1cb445ebdf7fd97fd735ee5316f46ded4ce44afda3132157517"
   },
   "usedBlockNumbers": { "ethereum": 24576341, "linea": 29407859 },
-  "permissionsConfigHash": "0x2e2b33ecd7ea89bb46271844a3bd9ca5668704bb11a350cb3089e238a10dd2f4"
+  "permissionsConfigHash": "0x612064ef224d6d8001c13879d2379068aa882b8d398af5277df065179301475c"
 }
