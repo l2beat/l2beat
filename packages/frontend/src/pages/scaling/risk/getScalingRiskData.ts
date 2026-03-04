@@ -12,7 +12,7 @@ export async function getScalingRiskData(
   cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
-    getAppLayoutProps(),
+    getAppLayoutProps(req),
     cache.get(
       {
         key: ['scaling', 'risk', 'entries'],

@@ -7,7 +7,7 @@ export function createFaqRouter(manifest: Manifest, render: RenderFunction) {
   const router = express.Router()
 
   router.get('/faq', async (req, res) => {
-    const data = await getFaqData(manifest, req.originalUrl)
+    const data = await getFaqData(req, manifest)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })

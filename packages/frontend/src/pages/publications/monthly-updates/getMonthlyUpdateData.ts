@@ -1,4 +1,5 @@
 import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
+import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { CollectionEntry } from '~/content/getCollection'
 import { getMonthlyUpdateEntry } from '~/server/features/monthly-reports/getMonthlyUpdateEntry'
@@ -7,13 +8,13 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getMonthlyUpdateData(
+  req: Request<{ id: string }, unknown, unknown, unknown>,
   manifest: Manifest,
   monthlyUpdate: CollectionEntry<'monthly-updates'>,
-  url: string,
   cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, monthlyUpdateEntry] = await Promise.all([
-    getAppLayoutProps(),
+    getAppLayoutProps(req),
     cache.get(
       {
         key: ['monthly-updates', 'data', monthlyUpdate.id],
@@ -32,7 +33,7 @@ export async function getMonthlyUpdateData(
         description:
           "L2BEAT's monthly overview of the Ethereum scaling ecosystem: key news, protocol updates, and metrics.",
         openGraph: {
-          url,
+          url: req.originalUrl,
           image: `/meta-images/publications/${monthlyUpdateEntry.id}.png`,
         },
       }),

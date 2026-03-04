@@ -15,7 +15,7 @@ export async function getScalingActivityData(
   cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
-    getAppLayoutProps(),
+    getAppLayoutProps(req),
     cache.get(
       {
         key: ['scaling', 'activity', 'data'],

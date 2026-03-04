@@ -17,7 +17,7 @@ export function createPublicationsRouter(
   const router = express.Router()
 
   router.get('/publications', async (req, res) => {
-    const data = await getPublicationsData(manifest, req.originalUrl)
+    const data = await getPublicationsData(req, manifest)
 
     if (!data) {
       res.status(404).send('Not found')
@@ -43,19 +43,14 @@ export function createPublicationsRouter(
       let data: RenderData | undefined
       if (governancePublication) {
         data = await getGovernancePublicationData(
+          req,
           manifest,
           governancePublication,
-          req.originalUrl,
         )
       }
 
       if (monthlyUpdate) {
-        data = await getMonthlyUpdateData(
-          manifest,
-          monthlyUpdate,
-          req.originalUrl,
-          cache,
-        )
+        data = await getMonthlyUpdateData(req, manifest, monthlyUpdate, cache)
       }
 
       if (!data) {
