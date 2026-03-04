@@ -260,7 +260,7 @@ export function ExposureCharts({ review }: ExposureChartsProps) {
               Funds by Admin
             </h4>
             <p className="text-xs text-text-muted mt-0.5">
-              Direct funds and token value controlled per admin
+              Direct funds and protocol token value controlled per admin
             </p>
           </div>
           <div className="p-4">
@@ -320,7 +320,7 @@ export function ExposureCharts({ review }: ExposureChartsProps) {
                 </Bar>
                 <Bar
                   dataKey="tokenValue"
-                  name="Token Value"
+                  name="Protocol Token Value"
                   stackId="a"
                   radius={[0, 2, 2, 0]}
                 >

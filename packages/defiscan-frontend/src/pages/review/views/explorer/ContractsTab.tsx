@@ -13,10 +13,10 @@ interface ContractsTabProps {
 
 type SortField = 'name' | 'functions' | 'external' | 'governance' | 'proxy'
 type SortDir = 'asc' | 'desc'
-type Filter = 'all' | 'permissioned' | 'external' | 'governance'
+type Filter = 'all' | 'internal' | 'permissioned' | 'dependencies' | 'governance'
 
 export function ContractsTab({ review }: ContractsTabProps) {
-  const { contracts, functions, admins } = review
+  const { contracts, functions, admins, dependencies } = review
   const [sortField, setSortField] = useState<SortField>('functions')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [filter, setFilter] = useState<Filter>('all')
@@ -26,7 +26,8 @@ export function ContractsTab({ review }: ContractsTabProps) {
   const fnCountByContract = useMemo(() => {
     const map = new Map<string, number>()
     for (const fn of functions) {
-      map.set(fn.contractAddress, (map.get(fn.contractAddress) ?? 0) + 1)
+      const addr = fn.contractAddress.toLowerCase()
+      map.set(addr, (map.get(addr) ?? 0) + 1)
     }
     return map
   }, [functions])
@@ -36,7 +37,7 @@ export function ContractsTab({ review }: ContractsTabProps) {
     const map = new Map<string, string[]>()
     for (const admin of admins) {
       for (const fn of admin.functions) {
-        const key = `${fn.contractAddress}:${fn.functionName}`
+        const key = `${fn.contractAddress.toLowerCase()}:${fn.functionName}`
         const list = map.get(key) ?? []
         list.push(admin.name)
         map.set(key, list)
@@ -45,17 +46,26 @@ export function ContractsTab({ review }: ContractsTabProps) {
     return map
   }, [admins])
 
+  // Build dependency address set for filtering
+  const depAddresses = useMemo(
+    () => new Set(dependencies.map((d) => d.address.toLowerCase())),
+    [dependencies],
+  )
+
   // Filter and sort
   const filtered = useMemo(() => {
     let list = [...contracts]
 
     // Apply filter
     switch (filter) {
-      case 'permissioned':
-        list = list.filter((c) => fnCountByContract.has(c.address))
+      case 'internal':
+        list = list.filter((c) => !c.isExternal && !c.isGovernance)
         break
-      case 'external':
-        list = list.filter((c) => c.isExternal)
+      case 'permissioned':
+        list = list.filter((c) => fnCountByContract.has(c.address.toLowerCase()))
+        break
+      case 'dependencies':
+        list = list.filter((c) => depAddresses.has(c.address.toLowerCase()))
         break
       case 'governance':
         list = list.filter((c) => c.isGovernance)
@@ -82,8 +92,8 @@ export function ContractsTab({ review }: ContractsTabProps) {
           break
         case 'functions':
           cmp =
-            (fnCountByContract.get(a.address) ?? 0) -
-            (fnCountByContract.get(b.address) ?? 0)
+            (fnCountByContract.get(a.address.toLowerCase()) ?? 0) -
+            (fnCountByContract.get(b.address.toLowerCase()) ?? 0)
           break
         case 'external':
           cmp = Number(a.isExternal) - Number(b.isExternal)
@@ -99,7 +109,7 @@ export function ContractsTab({ review }: ContractsTabProps) {
     })
 
     return list
-  }, [contracts, filter, search, sortField, sortDir, fnCountByContract])
+  }, [contracts, filter, search, sortField, sortDir, fnCountByContract, depAddresses])
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -111,20 +121,21 @@ export function ContractsTab({ review }: ContractsTabProps) {
   }
 
   // Contract type breakdown
-  const externalCount = contracts.filter((c) => c.isExternal).length
+  const internalCount = contracts.filter((c) => !c.isExternal && !c.isGovernance).length
   const governanceCount = contracts.filter((c) => c.isGovernance).length
   const permissionedCount = new Set(
-    functions.map((f) => f.contractAddress),
+    functions.map((f) => f.contractAddress.toLowerCase()),
   ).size
 
   const filters: { label: string; value: Filter; count: number }[] = [
     { label: 'All', value: 'all', count: contracts.length },
+    { label: 'Internal', value: 'internal', count: internalCount },
     {
       label: 'Permissioned',
       value: 'permissioned',
       count: permissionedCount,
     },
-    { label: 'External', value: 'external', count: externalCount },
+    { label: 'External/Dependencies', value: 'dependencies', count: dependencies.length },
     { label: 'Governance', value: 'governance', count: governanceCount },
   ]
 
@@ -199,7 +210,7 @@ export function ContractsTab({ review }: ContractsTabProps) {
               <ContractRow
                 key={contract.address}
                 contract={contract}
-                fnCount={fnCountByContract.get(contract.address) ?? 0}
+                fnCount={fnCountByContract.get(contract.address.toLowerCase()) ?? 0}
                 functions={functions.filter(
                   (f) => f.contractAddress === contract.address,
                 )}
@@ -321,7 +332,7 @@ function ContractRow({
                 </thead>
                 <tbody>
                   {functions.map((fn) => {
-                    const key = `${fn.contractAddress}:${fn.functionName}`
+                    const key = `${fn.contractAddress.toLowerCase()}:${fn.functionName}`
                     const fnAdmins = adminsByFunction.get(key) ?? []
                     return (
                       <tr

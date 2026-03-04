@@ -126,7 +126,7 @@ export function FundsTab({ review }: FundsTabProps) {
       {chartData.length > 0 && (
         <div className="rounded-lg border border-border bg-white p-4 mb-4">
           <h3 className="text-sm font-semibold text-text-primary mb-3">
-            Fund Distribution (Balances vs Positions)
+            Fund Distribution (Token Value vs User Funds)
           </h3>
           <ResponsiveContainer
             width="100%"
@@ -152,7 +152,7 @@ export function FundsTab({ review }: FundsTabProps) {
               <Tooltip
                 formatter={(value: number, name: string) => [
                   formatUsdValue(value),
-                  name === 'balances' ? 'Token Balances' : 'DeFi Positions',
+                  name === 'balances' ? 'Protocol Owned Token Value' : 'User Funds',
                 ]}
                 contentStyle={{
                   backgroundColor: '#fff',
@@ -165,26 +165,26 @@ export function FundsTab({ review }: FundsTabProps) {
                 dataKey="balances"
                 stackId="total"
                 fill="#7C3AED"
-                name="Balances"
+                name="Protocol Owned Token Value"
                 radius={[0, 0, 0, 0]}
               />
               <Bar
                 dataKey="positions"
                 stackId="total"
                 fill="#10B981"
-                name="Positions"
+                name="User Funds"
                 radius={[0, 4, 4, 0]}
               />
             </BarChart>
           </ResponsiveContainer>
           <div className="flex gap-4 mt-2 text-xs text-text-muted">
             <span className="flex items-center gap-1">
-              <span className="w-3 h-3 rounded-sm bg-purple-600" /> Token
-              Balances
+              <span className="w-3 h-3 rounded-sm bg-purple-600" /> Protocol
+              Owned Token Value
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-3 h-3 rounded-sm bg-status-green" /> DeFi
-              Positions
+              <span className="w-3 h-3 rounded-sm bg-status-green" /> User
+              Funds
             </span>
           </div>
         </div>
@@ -207,7 +207,7 @@ export function FundsTab({ review }: FundsTabProps) {
               </th>
               <SortHeader
                 field="balances"
-                label="Balances"
+                label="Token Value"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -215,7 +215,7 @@ export function FundsTab({ review }: FundsTabProps) {
               />
               <SortHeader
                 field="positions"
-                label="Positions"
+                label="User Funds"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -395,8 +395,8 @@ function FundRow({ fund }: { fund: CompiledFundHolder }) {
                   />
                 </div>
                 <span className="text-xs text-text-muted">
-                  {balPct.toFixed(0)}% balances / {(100 - balPct).toFixed(0)}%
-                  positions
+                  {balPct.toFixed(0)}% token value / {(100 - balPct).toFixed(0)}%
+                  user funds
                 </span>
               </div>
             )}

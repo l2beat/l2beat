@@ -30,11 +30,11 @@ function narrativeForFund(fund: CompiledFundHolder): string {
 
   if (balanceVal > 0 && positionVal > 0) {
     parts.push(
-      `This contract holds ${formatUsdValue(balanceVal)} in token balances and ${formatUsdValue(positionVal)} in DeFi positions`,
+      `This contract holds ${formatUsdValue(balanceVal)} in protocol token value and ${formatUsdValue(positionVal)} in DeFi positions`,
     )
   } else if (balanceVal > 0) {
     parts.push(
-      `This contract holds ${formatUsdValue(balanceVal)} in token balances`,
+      `This contract holds ${formatUsdValue(balanceVal)} in protocol token value`,
     )
   } else {
     parts.push(
@@ -186,7 +186,7 @@ function FundCard({ fund }: { fund: CompiledFundHolder }) {
               style={{
                 width: `${(fund.balances!.totalUsdValue / totalValue) * 100}%`,
               }}
-              title={`Balances: ${formatUsdValue(fund.balances!.totalUsdValue)}`}
+              title={`Protocol Token Value: ${formatUsdValue(fund.balances!.totalUsdValue)}`}
             />
             <div
               className="bg-purple-300 rounded-r-full transition-all"
@@ -198,7 +198,7 @@ function FundCard({ fund }: { fund: CompiledFundHolder }) {
           </div>
           <div className="mt-2 flex justify-between text-xs text-text-muted">
             <span>
-              Token Balances:{' '}
+              Protocol Token Value:{' '}
               <UsdValue
                 value={fund.balances!.totalUsdValue}
                 className="text-xs"

@@ -1,8 +1,4 @@
 import { clsx } from 'clsx'
-import { Badge } from '../../../../components/Badge'
-import { ProtocolTypeBadge } from '../../../../components/ProtocolTypeBadge'
-import { GlossaryTooltip } from '../../../../components/GlossaryTooltip'
-import { MetricCard } from '../../../../components/MetricCard'
 import { formatUsdValue } from '../../../../utils/format'
 import { computeRiskScore, riskLevelFromScore, type RiskLevel } from '../../../../utils/risk'
 import type { CompiledReview } from '../../../../types'
@@ -19,21 +15,9 @@ export function NarrativeHero({ review }: NarrativeHeroProps) {
 
   return (
     <div>
-      {/* Protocol identity */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <h1 className="text-4xl font-bold text-text-primary tracking-tight">
-          {metadata.protocolName}
-        </h1>
-        <ProtocolTypeBadge type={metadata.projectType} />
-        <Badge>{metadata.chain}</Badge>
-        {metadata.tokenName && (
-          <Badge variant="purple">{metadata.tokenName}</Badge>
-        )}
-      </div>
-
       {/* Protocol description */}
       {metadata.description && (
-        <p className="mt-4 text-lg text-text-secondary leading-relaxed max-w-3xl">
+        <p className="text-lg text-text-secondary leading-relaxed max-w-3xl">
           {metadata.description}
         </p>
       )}
@@ -64,43 +48,35 @@ export function NarrativeHero({ review }: NarrativeHeroProps) {
       </div>
 
       {/* At-a-glance metrics */}
-      <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        <MetricCard
-          label="Funds Locked"
-          value={formatUsdValue(totals.totalCapitalAtRisk)}
-          sublabel="in protocol"
-          accent="green"
-        />
-        {totals.totalTokenValueAtRisk > 0 && (
-          <MetricCard
-            label="Token Value"
-            value={formatUsdValue(totals.totalTokenValueAtRisk)}
-            sublabel="market cap"
-            accent="amber"
-          />
-        )}
-        <MetricCard
-          label="Admins"
-          value={String(totals.adminCount)}
-          sublabel="with control"
-          accent="purple"
-        />
-        <MetricCard
-          label="Dependencies"
-          value={String(totals.dependencyCount)}
-          sublabel="external"
-          accent="blue"
-        />
-        <MetricCard
-          label="Contracts"
-          value={String(totals.contractCount)}
-          sublabel="analyzed"
-        />
-        <MetricCard
-          label="Functions"
-          value={String(totals.permissionedFunctionCount)}
-          sublabel="permissioned"
-        />
+      <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+          <p className="text-sm font-medium text-text-secondary">Contracts</p>
+          <p className="mt-1 text-2xl font-bold text-text-primary">
+            {totals.contractCount}
+          </p>
+          <p className="mt-1 text-sm text-text-muted">analyzed</p>
+        </div>
+        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+          <p className="text-sm font-medium text-text-secondary">Admins</p>
+          <p className="mt-1 text-2xl font-bold text-text-primary">
+            {totals.adminCount}
+          </p>
+          <p className="mt-1 text-sm text-text-muted">with control</p>
+        </div>
+        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+          <p className="text-sm font-medium text-text-secondary">Capital at Risk</p>
+          <p className="mt-1 text-2xl font-bold text-capital">
+            {formatUsdValue(totals.totalCapitalAtRisk)}
+          </p>
+          <p className="mt-1 text-sm text-text-muted">in protocol</p>
+        </div>
+        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+          <p className="text-sm font-medium text-text-secondary">Dependencies</p>
+          <p className="mt-1 text-2xl font-bold text-text-primary">
+            {totals.dependencyCount}
+          </p>
+          <p className="mt-1 text-sm text-text-muted">external</p>
+        </div>
       </div>
     </div>
   )
@@ -184,9 +160,9 @@ function riskPresentation(
     admins.every(
       (a) =>
         a.adminType === 'Revoked' ||
+        a.adminType === 'Immutable' ||
         a.adminType === 'Contract' ||
-        a.adminType === 'Untemplatized' ||
-        a.adminType === 'Immutable',
+        a.adminType === 'Untemplatized',
     )
 
   switch (level) {
@@ -194,8 +170,8 @@ function riskPresentation(
       return {
         label: 'Critical Risk',
         summary: hasEOA
-          ? `This protocol has externally owned accounts (EOAs) with admin access to ${formatUsdValue(totals.totalCapitalAtRisk)} in locked funds. A single compromised key could affect user funds.`
-          : `This protocol has significant centralization risks with ${totals.adminCount} admins controlling ${formatUsdValue(totals.totalCapitalAtRisk)} in locked funds.`,
+          ? `This protocol has externally owned accounts (EOAs) with admin access to ${formatUsdValue(totals.totalCapitalAtRisk)} in capital. A single compromised key could affect user funds.`
+          : `This protocol has significant centralization risks with ${totals.adminCount} admins controlling ${formatUsdValue(totals.totalCapitalAtRisk)} in capital.`,
         color: 'text-risk-critical',
         bgColor: 'bg-risk-critical/5',
         borderColor: 'border-risk-critical/30',
@@ -203,7 +179,7 @@ function riskPresentation(
     case 'HIGH':
       return {
         label: 'High Risk',
-        summary: `This protocol has notable centralization vectors. ${totals.adminCount} admin${totals.adminCount !== 1 ? 's' : ''} control${totals.adminCount === 1 ? 's' : ''} permissioned functions across ${totals.contractCount} contracts with ${formatUsdValue(totals.totalCapitalAtRisk)} in locked funds.`,
+        summary: `This protocol has notable centralization vectors. ${totals.adminCount} admin${totals.adminCount !== 1 ? 's' : ''} control${totals.adminCount === 1 ? 's' : ''} permissioned functions across ${totals.contractCount} contracts with ${formatUsdValue(totals.totalCapitalAtRisk)} at stake.`,
         color: 'text-risk-high',
         bgColor: 'bg-risk-high/5',
         borderColor: 'border-risk-high/30',
@@ -211,7 +187,7 @@ function riskPresentation(
     case 'MEDIUM':
       return {
         label: 'Medium Risk',
-        summary: `This protocol has standard governance controls. Admin access is distributed across ${totals.adminCount} entit${totals.adminCount !== 1 ? 'ies' : 'y'} managing ${formatUsdValue(totals.totalCapitalAtRisk)} in locked funds.`,
+        summary: `This protocol has standard governance controls. Admin access is distributed across ${totals.adminCount} entit${totals.adminCount !== 1 ? 'ies' : 'y'} with ${formatUsdValue(totals.totalCapitalAtRisk)} in managed capital.`,
         color: 'text-risk-medium',
         bgColor: 'bg-risk-medium/5',
         borderColor: 'border-risk-medium/30',
@@ -221,7 +197,7 @@ function riskPresentation(
         label: 'Low Risk',
         summary: allImmutable
           ? 'All admin controls resolve to immutable contracts or revoked addresses. No human entity can modify protocol behavior.'
-          : `This protocol has minimal centralization risk with strong governance controls protecting ${formatUsdValue(totals.totalCapitalAtRisk)} in locked funds.`,
+          : `This protocol has minimal centralization risk with strong governance controls protecting ${formatUsdValue(totals.totalCapitalAtRisk)} in capital.`,
         color: 'text-risk-low',
         bgColor: 'bg-risk-low/5',
         borderColor: 'border-risk-low/30',

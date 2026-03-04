@@ -6,11 +6,14 @@ interface CapitalFlowDiagramProps {
   review: CompiledReview
 }
 
+const HUMAN_ADMIN_TYPES = new Set(['EOA', 'EOAPermissioned', 'Multisig', 'Timelock'])
+
 export function CapitalFlowDiagram({ review }: CapitalFlowDiagramProps) {
   const { admins, funds } = review
 
-  // Pick up to 4 admins sorted by direct capital
+  // Only show human-controlled admins (centralization risk focus)
   const topAdmins = [...admins]
+    .filter((a) => HUMAN_ADMIN_TYPES.has(a.adminType))
     .sort((a, b) => b.totalDirectCapital - a.totalDirectCapital)
     .slice(0, 4)
 

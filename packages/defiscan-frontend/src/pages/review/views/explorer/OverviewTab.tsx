@@ -9,6 +9,10 @@ interface OverviewTabProps {
 export function OverviewTab({ review }: OverviewTabProps) {
   const { totals, admins, dependencies } = review
 
+  const vendorCount = new Set(
+    dependencies.map((d) => d.entity).filter(Boolean),
+  ).size
+
   // Compute key metrics
   const hasEOA = admins.some(
     (a) => a.adminType === 'EOA' || a.adminType === 'EOAPermissioned',
@@ -19,7 +23,6 @@ export function OverviewTab({ review }: OverviewTabProps) {
   const immutableAdmins = admins.filter(
     (a) =>
       a.adminType === 'Untemplatized' ||
-      a.adminType === 'Contract' ||
       a.adminType === 'Diamond' ||
       a.adminType === 'Immutable' ||
       a.adminType === 'Upgradeable',
@@ -33,7 +36,7 @@ export function OverviewTab({ review }: OverviewTabProps) {
         )
       : null
 
-  // Admin type breakdown
+  // Admin type breakdown (excludes "Contract" type to focus on human-relevant admins)
   const adminBreakdown = [
     {
       label: 'EOA',
@@ -44,7 +47,7 @@ export function OverviewTab({ review }: OverviewTabProps) {
     },
     { label: 'Multisig', count: multisigAdmins.length, color: '#F59E0B' },
     { label: 'Timelock', count: timelockAdmins.length, color: '#10B981' },
-    { label: 'Contract', count: immutableAdmins.length, color: '#3B82F6' },
+    { label: 'Other', count: immutableAdmins.length, color: '#3B82F6' },
     { label: 'Revoked', count: revokedAdmins.length, color: '#6B7280' },
   ].filter((b) => b.count > 0)
 
@@ -53,7 +56,7 @@ export function OverviewTab({ review }: OverviewTabProps) {
   return (
     <div className="space-y-6">
       {/* Key metrics row */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         <MetricBox
           label="Funds Locked"
           value={formatUsdValue(totals.totalCapitalAtRisk)}
@@ -81,7 +84,12 @@ export function OverviewTab({ review }: OverviewTabProps) {
         <MetricBox
           label="Contracts"
           value={String(totals.contractCount)}
-          sublabel={`${totals.scoredFunctionCount}/${totals.permissionedFunctionCount} scored`}
+          sublabel="analyzed"
+        />
+        <MetricBox
+          label="Vendors"
+          value={String(vendorCount)}
+          sublabel="external providers"
         />
       </div>
 

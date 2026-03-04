@@ -109,14 +109,6 @@ export function AdminsTab({ review }: AdminsTabProps) {
         )}
       </div>
 
-      {/* Admin hierarchy diagram */}
-      <div className="rounded-lg border border-border bg-white p-4 mb-4">
-        <h3 className="text-sm font-semibold text-text-primary mb-3">
-          Admin Hierarchy Overview
-        </h3>
-        <AdminHierarchySvg admins={admins} />
-      </div>
-
       {/* Sortable table */}
       <div className="rounded-lg border border-border bg-white shadow-sm overflow-hidden">
         <table className="w-full text-sm">
@@ -396,96 +388,6 @@ function ExpandedFunctions({ admin }: { admin: CompiledAdmin }) {
         </table>
       </div>
     </div>
-  )
-}
-
-function AdminHierarchySvg({ admins }: { admins: CompiledAdmin[] }) {
-  const types = new Map<
-    string,
-    { count: number; capital: number; names: string[] }
-  >()
-  for (const admin of admins) {
-    const existing = types.get(admin.adminType) ?? {
-      count: 0,
-      capital: 0,
-      names: [],
-    }
-    existing.count += 1
-    existing.capital += admin.totalDirectCapital
-    existing.names.push(admin.name)
-    types.set(admin.adminType, existing)
-  }
-
-  const entries = Array.from(types.entries()).sort(
-    (a, b) => b[1].capital - a[1].capital,
-  )
-  const typeColors: Record<string, string> = {
-    EOA: '#EF4444',
-    EOAPermissioned: '#EF4444',
-    Multisig: '#F59E0B',
-    Timelock: '#10B981',
-    Contract: '#3B82F6',
-    Diamond: '#3B82F6',
-    Upgradeable: '#3B82F6',
-    Revoked: '#10B981',
-    Immutable: '#10B981',
-    Untemplatized: '#8B5CF6',
-  }
-
-  const boxWidth = 160
-  const boxHeight = 50
-  const gap = 20
-  const totalWidth = entries.length * (boxWidth + gap) - gap
-  const viewWidth = Math.max(totalWidth + 40, 400)
-
-  return (
-    <svg
-      viewBox={`0 0 ${viewWidth} ${boxHeight + 40}`}
-      className="w-full"
-      style={{ maxHeight: '90px' }}
-    >
-      {entries.map((entry, i) => {
-        const [type, data] = entry
-        const x = 20 + i * (boxWidth + gap)
-        const color = typeColors[type] ?? '#6B7280'
-        return (
-          <g key={type}>
-            <rect
-              x={x}
-              y={10}
-              width={boxWidth}
-              height={boxHeight}
-              rx={6}
-              fill={`${color}10`}
-              stroke={color}
-              strokeWidth={1.5}
-            />
-            <text
-              x={x + boxWidth / 2}
-              y={30}
-              textAnchor="middle"
-              fill={color}
-              fontWeight="600"
-              fontSize="11"
-            >
-              {type} ({data.count})
-            </text>
-            <text
-              x={x + boxWidth / 2}
-              y={48}
-              textAnchor="middle"
-              fill="#10B981"
-              fontWeight="500"
-              fontSize="10"
-            >
-              {data.capital > 0
-                ? formatUsdValue(data.capital)
-                : 'No direct funds'}
-            </text>
-          </g>
-        )
-      })}
-    </svg>
   )
 }
 

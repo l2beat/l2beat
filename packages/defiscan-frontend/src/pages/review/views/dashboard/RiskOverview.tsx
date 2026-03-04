@@ -83,7 +83,7 @@ export function RiskOverview({ review }: RiskOverviewProps) {
                   )}
                   {admin.totalDirectTokenValue > 0 && (
                     <div className="text-xs text-token tabular-nums">
-                      {formatUsdValue(admin.totalDirectTokenValue)} token
+                      {formatUsdValue(admin.totalDirectTokenValue)} protocol token
                     </div>
                   )}
                 </div>
@@ -182,7 +182,7 @@ export function RiskOverview({ review }: RiskOverviewProps) {
                     Positions
                   </th>
                   <th className="px-5 py-2.5 text-right text-xs font-semibold text-text-secondary">
-                    Token Value
+                    Protocol Token Value
                   </th>
                 </tr>
               </thead>

@@ -34,7 +34,7 @@ export function DashboardView({ review }: DashboardViewProps) {
           accent="green"
         />
         <MetricCard
-          label="Token Value"
+          label="Protocol Token Value"
           value={formatUsdValue(totalTokenValueAtRisk)}
           accent="amber"
         />

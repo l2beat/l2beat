@@ -159,10 +159,16 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
       detail: 'The protocol does not depend on any external contracts, operating entirely through its own on-chain logic.',
     })
   } else {
+    const entities = new Set(dependencies.map((d) => d.entity).filter(Boolean))
+    const entityCount = entities.size
+    const contractCount = dependencies.length
+    const entityLabel = entityCount > 0
+      ? `${entityCount} external vendor${entityCount !== 1 ? 's' : ''}`
+      : `${contractCount} external dependenc${contractCount !== 1 ? 'ies' : 'y'}`
     findings.push({
       type: 'warning',
-      title: `${dependencies.length} external dependenc${dependencies.length !== 1 ? 'ies' : 'y'}`,
-      detail: `The protocol depends on ${dependencies.length} external contract${dependencies.length !== 1 ? 's' : ''}, introducing third-party risk. A failure or compromise in any dependency could affect protocol operations.`,
+      title: entityLabel,
+      detail: `The protocol depends on ${contractCount} external contract${contractCount !== 1 ? 's' : ''} from ${entityCount > 0 ? `${entityCount} vendor${entityCount !== 1 ? 's' : ''}` : 'external sources'}, introducing third-party risk. A failure or compromise in any dependency could affect protocol operations.`,
     })
   }
 
