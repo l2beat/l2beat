@@ -1,5 +1,4 @@
-import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
-import type { Request } from 'express'
+import { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import {
   getDaProjectEntry,
@@ -14,34 +13,17 @@ import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getDataAvailabilityProjectData(
-  req: Request<
-    {
-      layer: string
-      bridge: string
-    },
-    unknown,
-    unknown,
-    unknown
-  >,
   manifest: Manifest,
-  cache: InMemoryCache,
+  params: {
+    layer: string
+    bridge: string
+  },
+  url: string,
 ): Promise<RenderData | undefined> {
   const helpers = getSsrHelpers()
   const [appLayoutProps, projectEntry] = await Promise.all([
-    getAppLayoutProps(req),
-    cache.get(
-      {
-        key: [
-          'data-availability',
-          'projects',
-          req.params.layer,
-          req.params.bridge,
-        ],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getProjectEntry(req.params, helpers),
-    ),
+    getAppLayoutProps(),
+    getProjectEntry(params, helpers),
   ])
   if (!projectEntry) return undefined
 
@@ -57,8 +39,8 @@ export async function getDataAvailabilityProjectData(
           },
         }),
         openGraph: {
-          url: req.originalUrl,
-          image: `/meta-images/data-availability/projects/${req.params.layer}/opengraph-image.png`,
+          url,
+          image: `/meta-images/data-availability/projects/${params.layer}/opengraph-image.png`,
         },
       }),
     },

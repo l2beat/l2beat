@@ -19,7 +19,15 @@ export function createEcosystemsRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getEcosystemProjectData(req, manifest, cache)
+      const data = await cache.get(
+        {
+          key: ['ecosystems', req.params.slug],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () =>
+          getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
+      )
       if (!data) {
         res.status(404).send('Not found')
         return

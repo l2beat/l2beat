@@ -1,5 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { useEffect } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -7,7 +5,6 @@ import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { setCookie } from '~/utils/cookies/client'
 
 interface ChangelogPageEntry {
   id: string
@@ -22,10 +19,6 @@ interface Props extends AppLayoutProps {
 }
 
 export function ChangelogPage({ entries, ...props }: Props) {
-  useEffect(() => {
-    setCookie('changelogVisitedAt', UnixTime.now())
-  }, [])
-
   return (
     <AppLayout {...props}>
       <SideNavLayout>

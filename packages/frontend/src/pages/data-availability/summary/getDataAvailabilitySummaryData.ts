@@ -1,5 +1,3 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
-import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/getDaThroughputSummary'
@@ -8,23 +6,17 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getDataAvailabilitySummaryData(
-  req: Request,
   manifest: Manifest,
-  cache: InMemoryCache,
+  url: string,
 ): Promise<RenderData> {
   const [
     appLayoutProps,
-    [{ publicSystems, customSystems }, throughputSummaryData],
+    { publicSystems, customSystems },
+    throughputSummaryData,
   ] = await Promise.all([
-    getAppLayoutProps(req),
-    cache.get(
-      {
-        key: ['data-availability', 'summary'],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => Promise.all([getDaSummaryEntries(), getDaThroughputSummary()]),
-    ),
+    getAppLayoutProps(),
+    getDaSummaryEntries(),
+    getDaThroughputSummary(),
   ])
 
   return {
@@ -35,7 +27,7 @@ export async function getDataAvailabilitySummaryData(
         description:
           'Get an overview of the data availability solutions powering Ethereum scaling projects.',
         openGraph: {
-          url: req.originalUrl,
+          url,
           image: '/meta-images/data-availability/summary/opengraph-image.png',
         },
       }),

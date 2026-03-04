@@ -1,5 +1,4 @@
 import { assert } from '@l2beat/shared-pure'
-import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { getCollection } from '~/content/getCollection'
@@ -11,11 +10,11 @@ import { type Manifest, manifest } from '~/utils/Manifest'
 import { createOrderedSort } from '~/utils/sort'
 
 export async function getDonateData(
-  req: Request,
   manifest: Manifest,
+  url: string,
 ): Promise<RenderData> {
   const [appLayoutProps, partners] = await Promise.all([
-    getAppLayoutProps(req),
+    getAppLayoutProps(),
     getPartners(),
   ])
 
@@ -27,7 +26,7 @@ export async function getDonateData(
         description:
           "Support L2BEAT's independent research & development with a donation.",
         openGraph: {
-          url: req.originalUrl,
+          url,
           image: '/meta-images/donate/opengraph-image.png',
         },
       }),

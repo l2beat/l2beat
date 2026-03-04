@@ -10,7 +10,7 @@ export function createMultisigReportRouter(
   const router = express.Router()
 
   router.get('/multisig-report', async (req, res) => {
-    const data = await getMultisigReportData(req, manifest)
+    const data = await getMultisigReportData(manifest, req.originalUrl)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })

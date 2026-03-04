@@ -1,7 +1,6 @@
 import compact from 'lodash/compact'
 import { useContext, useMemo } from 'react'
 import { HiringBadge } from '~/components/badge/HiringBadge'
-import { useChangelogContext } from '~/components/changelog/ChangelogEntriesContext'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
@@ -35,7 +34,6 @@ export function SideNavLayout({
   childrenWrapperClassName,
   maxWidth = 'default',
 }: SideNavLayoutProps) {
-  const { unreadCount: unreadChangelogCount } = useChangelogContext()
   const whatsNew = useWhatsNewContext()
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
@@ -212,63 +210,6 @@ export function SideNavLayout({
     [selectedChainsContext],
   )
 
-  const sideLinks = useMemo(
-    () =>
-      compact([
-        {
-          title: 'About Us',
-          href: '/about-us',
-        },
-        {
-          title: 'Publications',
-          href: '/publications',
-        },
-        {
-          title: 'Changelog',
-          href: '/changelog',
-          accessory: unreadChangelogCount ? (
-            <div className="inline-flex size-4 items-center justify-center rounded bg-brand font-medium text-2xs text-white tabular-nums leading-none">
-              {unreadChangelogCount}
-            </div>
-          ) : null,
-        },
-        {
-          title: 'Forum',
-          href: externalLinks.forum,
-        },
-        {
-          title: 'Donate',
-          href: '/donate',
-        },
-        {
-          title: 'Governance',
-          href: '/governance',
-        },
-        {
-          title: 'Tools',
-          href: externalLinks.tools,
-        },
-        {
-          title: 'Glossary',
-          href: '/glossary',
-        },
-        {
-          title: 'Jobs',
-          href: externalLinks.jobs,
-          accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? <HiringBadge /> : null,
-        },
-        {
-          title: 'Brand Kit',
-          href: externalLinks.brandKit,
-        },
-        {
-          title: 'FAQ',
-          href: '/faq',
-        },
-      ]),
-    [unreadChangelogCount],
-  )
-
   return (
     <SidebarProvider>
       <div className="relative flex grow flex-col lg:flex-row">
@@ -314,3 +255,51 @@ export function SideNavLayout({
     </SidebarProvider>
   )
 }
+
+const sideLinks = compact([
+  {
+    title: 'About Us',
+    href: '/about-us',
+  },
+  {
+    title: 'Publications',
+    href: '/publications',
+  },
+  {
+    title: 'Changelog',
+    href: '/changelog',
+  },
+  {
+    title: 'Forum',
+    href: externalLinks.forum,
+  },
+  {
+    title: 'Donate',
+    href: '/donate',
+  },
+  {
+    title: 'Governance',
+    href: '/governance',
+  },
+  {
+    title: 'Tools',
+    href: externalLinks.tools,
+  },
+  {
+    title: 'Glossary',
+    href: '/glossary',
+  },
+  {
+    title: 'Jobs',
+    href: externalLinks.jobs,
+    accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? <HiringBadge /> : undefined,
+  },
+  {
+    title: 'Brand Kit',
+    href: externalLinks.brandKit,
+  },
+  {
+    title: 'FAQ',
+    href: '/faq',
+  },
+])

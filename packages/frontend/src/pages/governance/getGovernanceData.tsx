@@ -1,4 +1,3 @@
-import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
 import { getGovernanceEventEntries } from '~/pages/governance/utils/getGovernanceEventEntries'
@@ -8,10 +7,10 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getGovernanceData(
-  req: Request,
   manifest: Manifest,
+  url: string,
 ): Promise<RenderData> {
-  const appLayoutProps = await getAppLayoutProps(req)
+  const appLayoutProps = await getAppLayoutProps()
   const publications = getCollection('governance-publications')
     .sort((a, b) => b.data.publishedOn.getTime() - a.data.publishedOn.getTime())
     .slice(0, 4)
@@ -41,7 +40,7 @@ export async function getGovernanceData(
         description:
           'Discover everything about the L2BEAT Governance Team, including the latest insights, analyses, and updates',
         openGraph: {
-          url: req.originalUrl,
+          url,
           image: '/meta-images/governance/opengraph-image.png',
         },
       }),

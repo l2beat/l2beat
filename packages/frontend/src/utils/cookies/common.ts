@@ -12,14 +12,11 @@ export function parseKnownCookie<T extends KnownCookieName>({
   value,
 }: {
   name: T
-  value: KnownCookieValue<T> | string
+  value: string
 }): KnownCookieValue<T> {
   const meta = knownCookies[name]
-  if (value === undefined) {
-    return meta.defaultValue
-  }
   try {
-    const parsedValue: unknown = JSON.parse(value.toString())
+    const parsedValue: unknown = JSON.parse(value)
     return meta.schema.parse(parsedValue)
   } catch (e) {
     console.error(`Failed to parse cookie ${name}`, e)
