@@ -5,11 +5,14 @@
     "Troves",
     "getLatestTroveData",
     "getTroveFromTroveIdsArray",
-    "getTroveStatus"
+    "getTroveStatus",
+    "getTroveAnnualInterestRate"
   ],
   "ignoreInWatchMode": [
     "getTroveIdsCount",
     "lastZombieTroveId",
-    "rewardSnapshots"
+    "rewardSnapshots",
+    "getEntireBranchDebt",
+    "getEntireBranchColl"
   ]
 }

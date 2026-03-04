@@ -226,18 +226,23 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const allProjects = configReader.readAllDiscoveredProjects()
 
     const reasons = allProjects.flatMap((project) => {
-      const discovery = configReader.readDiscovery(project)
-      const config = configReader.readConfig(project)
+      try {
+        const discovery = configReader.readDiscovery(project)
+        const config = configReader.readConfig(project)
 
-      const reasons = templateService.discoveryNeedsRefresh(discovery, config)
+        const reasons = templateService.discoveryNeedsRefresh(discovery, config)
 
-      if (reasons.length === 0) {
+        if (reasons.length === 0) {
+          return []
+        }
+
+        return {
+          project,
+          reasons,
+        }
+      } catch (e) {
+        console.warn(`Skipping project ${project} in sync-status:`, e instanceof Error ? e.message : e)
         return []
-      }
-
-      return {
-        project,
-        reasons,
       }
     })
 

@@ -85,11 +85,16 @@
         "disputesById",
         "getLastNewValueById",
         "getNewValueCountbyRequestId",
-        "newValueTimestamps"
+        "newValueTimestamps",
+        "currentMiners",
+        "getNewCurrentVariables"
       ],
       "ignoreInWatchMode": ["totalSupply", "verify"]
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": {
       "ignoreInWatchMode": ["totalSupply"]
     }
   }

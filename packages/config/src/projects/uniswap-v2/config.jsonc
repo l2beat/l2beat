@@ -22,7 +22,8 @@
         "price1CumulativeLast",
         "totalSupply",
         "getReserves",
-        "price0CumulativeLast"
+        "price0CumulativeLast",
+        "kLast"
       ]
     },
     "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": {
@@ -31,6 +32,9 @@
     },
     "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": {
       "ignoreMethods": ["proposals", "getActions"]
+    },
+    "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": {
+      "ignoreMethods": ["nonce"]
     }
   }
 }
