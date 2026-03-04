@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SuperchainConfig",
+  "description": "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.",
+  "fields": {
+    "paused": {
+      "severity": "HIGH"
+    },
+    "pauseExpiryFmt": {
+      "handler": {
+        "type": "call",
+        "method": "pauseExpiry",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "guardian": {
+      "permissions": [{ "type": "guard" }]
+    },
+    "INCIDENT_RESPONDER": {
+      "permissions": [{ "type": "guard" }]
+    }
+  },
+  "category": "local"
+}
