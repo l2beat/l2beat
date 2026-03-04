@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5ecc2f0b100aa64691371c86eb752e6105132947
+Generated with discovered.json: 0x8323686fcd7cff7a861f1819b45d4744f72e8656
 
-# Diff at Wed, 04 Mar 2026 20:16:05 GMT:
+# Diff at Wed, 04 Mar 2026 20:35:16 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1772198381
-- current timestamp: 1772655300
+- current timestamp: 1772656450
 
 ## Description
 
@@ -77,6 +77,14 @@ Base Security Council threshold increased from 7/10 to 8/11 (new member added). 
 -   Status: DELETED
     contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
     +++ description: None
+```
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"guard","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":".INCIDENT_RESPONDER"}
+    }
 ```
 
 ```diff
@@ -210,7 +218,9 @@ Base Security Council threshold increased from 7/10 to 8/11 (new member added). 
       values.$members.1:
 -        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
 +        "eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd"
-      receivedPermissions.11:
+      receivedPermissions.0:
++        {"permission":"guard","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":".guardian"}
+      receivedPermissions.12:
 +        {"permission":"upgrade","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
     }
 ```
@@ -304,7 +314,7 @@ Base Security Council threshold increased from 7/10 to 8/11 (new member added). 
 ```diff
 +   Status: CREATED
     contract SuperchainConfig (eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c)
-    +++ description: None
+    +++ description: Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.
 ```
 
 ## Source code changes

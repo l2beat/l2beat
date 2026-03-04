@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1772655300,
+  "timestamp": 1772656450,
   "configHash": "0x7e5006a9cd6e910bbcff7795125cf6ccb79bc0029116463ab977215145232266",
   "entries": [
     {
@@ -287,10 +287,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 179971913,
+        "basefee": 113304650,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 9498790,
+        "blobBaseFee": 6759177,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 139,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -300,15 +300,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xc87986dab58d8ad68e0c5a162b09cef44648326dc6a9053271d17063f68cd7a4",
+        "hash": "0x0f243d186659edeb5da8d59c7bca0d00f79d611d41cd76b01c93c002c3e221dd",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 24586400,
+        "number": 24586495,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 5,
-        "timestamp": 1772655107,
+        "sequenceNumber": 3,
+        "timestamp": 1772656259,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -932,6 +932,11 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "guard",
+          "from": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
+          "role": ".INCIDENT_RESPONDER"
+        },
+        {
           "permission": "interact",
           "from": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
@@ -1107,7 +1112,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
-        "totalSupply": "20080000000000000000",
+        "totalSupply": "20160000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -1221,7 +1226,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 11723,
+        "gameCount": 11724,
         "gameImpls": [
           "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1344,8 +1349,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 514422,
-          "prevBlockNum": 24586414
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 24586508
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1966,6 +1971,11 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "guard",
+          "from": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
+          "role": ".guardian"
+        },
+        {
           "permission": "interact",
           "from": "eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
           "description": "set and change address mappings.",
@@ -2189,7 +2199,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293148079",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293148081",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2519,11 +2529,13 @@
       "name": "SuperchainConfig",
       "address": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
       "type": "Contract",
+      "template": "opstack/SuperchainConfig_base",
       "sourceHashes": [
         "0xa4c6eec89ca5a138c3f0f983a01542174071c7f37870aaa0fba0ef9613c2f530",
         "0x96cc0e27c01fa6d20f27d851526b1c6c638f8051e7951254dabb531bed30d6d5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.",
       "sinceTimestamp": 1771973279,
       "sinceBlock": 24529846,
       "values": {
@@ -2543,14 +2555,17 @@
         "incidentResponder": "eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "paused": false,
         "pauseExpiry": 7884000,
+        "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "version": "2.5.0"
       },
+      "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c": "Proxy",
         "eth:0xc4ceeB264Fa35a022e470aCc3C6A522308f3ec02": "SuperchainConfig"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xbDE1845c879942fC326F247Ad708677733Dd5594",
@@ -4077,8 +4092,9 @@
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
+    "opstack/SuperchainConfig_base": "0x103395272d77a2e3ce04a5f4cdef3df2f6d47b5d24f3e8b1137118cfdce7c9a8",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 42932976, "ethereum": 24586416 },
-  "permissionsConfigHash": "0x0510a0b396543b24a9507e9db89e3f30d468407e921985920afd4625fd939ff6"
+  "usedBlockNumbers": { "base": 42933551, "ethereum": 24586510 },
+  "permissionsConfigHash": "0x17c4b187cda9f11d312ecebe25d337c2f743f1595d5325538f05e02ef1a67d6a"
 }
