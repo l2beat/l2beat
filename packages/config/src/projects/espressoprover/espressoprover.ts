@@ -79,7 +79,7 @@ export const espressoprover: BaseProject = {
         knownDeployments: [
           {
             address: EthereumAddress(
-              '0x0D654ce674D952B4944f6A2e410aBdaA824a417D',
+              '0x098c593361d12dd638ce7dbf34c8c6a655f8274c',
             ),
             chain: 'ethereum',
           },
