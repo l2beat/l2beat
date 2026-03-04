@@ -314,8 +314,8 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 /**
  * Maps raw admin types to user-facing types based on proxy information.
  * - Zero address → 'Revoked'
- * - Untemplatized/Unknown + immutable proxyType → 'Immutable'
- * - Untemplatized/Unknown + proxy proxyType → 'Upgradeable'
+ * - Any type + immutable proxyType → 'Immutable'
+ * - Untemplatized/Unknown + non-immutable proxyType → 'Upgradeable'
  */
 function mapAdminType(
   rawType: ApiAddressType,
@@ -328,16 +328,15 @@ function mapAdminType(
     return 'Revoked'
   }
 
+  const proxyType = proxyTypeMap.get(normalizedAddress)
+  if (proxyType === 'immutable') {
+    return 'Immutable'
+  }
+
   if (rawType === 'Untemplatized' || rawType === 'Unknown') {
-    const proxyType = proxyTypeMap.get(normalizedAddress)
-    if (proxyType === 'immutable') {
-      return 'Immutable'
-    }
     if (proxyType !== undefined) {
       return 'Upgradeable'
     }
-    // No proxy info available — keep original type
-    return rawType
   }
 
   return rawType

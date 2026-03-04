@@ -4,6 +4,7 @@ import { Layout } from './components/Layout'
 import { LandingPage } from './pages/landing/LandingPage'
 import { ReviewPage } from './pages/review/ReviewPage'
 import { ComparePage } from './pages/compare/ComparePage'
+import { AboutPage } from './pages/about/AboutPage'
 
 const queryClient = new QueryClient()
 
@@ -16,6 +17,7 @@ export function App() {
             <Route index element={<LandingPage />} />
             <Route path="/protocol/:slug" element={<ReviewPage />} />
             <Route path="/compare" element={<ComparePage />} />
+            <Route path="/about" element={<AboutPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

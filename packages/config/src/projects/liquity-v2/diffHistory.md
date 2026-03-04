@@ -1,3 +1,258 @@
+Generated with discovered.json: 0xc33e4c7f516c90272a2614b2984ed136b051228f
+
+# Diff at Wed, 04 Mar 2026 13:43:35 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@5c5c44235795d65ecbf46dd1f25637dd2b98fb7e block: 1772533129
+- current timestamp: 1772629150
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract RocketTokenRETH (eth:0xae78736Cd615f374D3085123A210448E74Fc6393) {
+    +++ description: None
+      values.getCollateralRate:
+-        "9894551981467223"
++        "9684838227955654"
+      values.getExchangeRate:
+-        "1158664260967282507"
++        "1158735463711660524"
+      values.getTotalCollateral:
+-        "3931796865958088178329"
++        "3865027871669339910088"
+      values.totalSupply:
+-        "342955148059130674096008"
++        "344410164552332742285096"
+    }
+```
+
+```diff
+    contract ActivePool (eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE) {
+    +++ description: None
+      values.aggWeightedBatchManagementFeeSum:
+-        "eth:0x4123855519570108964282467500000000000000"
++        "eth:0x4671404119147669602431827500000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772533129 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract BorrowerOperations (eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockupContractFactory (eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B)
+    +++ description: None
+```
+
+```diff
+    contract BorrowerOperations (eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65) {
+    +++ description: None
+      values.priceFeed:
++        "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PriceFeed (eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LQTYStaking (eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LUSD Stablecoin Token (eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UserProxy (eth:0x65f9A98009Aecaa3fc8A3A83FEF44e2b6931A7b2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StabilityPool (eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LQTY Token (eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D)
+    +++ description: None
+```
+
+```diff
+    contract TroveManager (eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A) {
+    +++ description: None
+      values.getTroveAnnualInterestRate:
+-        [0,0,0,0,0]
+      errors.getTroveAnnualInterestRate:
+-        "Processing error occurred."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Tellor Tributes Token (eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DefaultPool (eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SortedTroves (eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6)
+    +++ description: None
+```
+
+```diff
+    contract TroveManager (eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22) {
+    +++ description: None
+      values.getTroveAnnualInterestRate:
+-        [0,0,0,0,0]
+      errors.getTroveAnnualInterestRate:
+-        "Processing error occurred."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TroveManager (eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2)
+    +++ description: None
+```
+
+```diff
+    contract BorrowerOperations (eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3) {
+    +++ description: None
+      values.priceFeed:
++        "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TellorCaller (eth:0xAd430500ECDa11E38C9bCB08a702274b94641112)
+    +++ description: None
+```
+
+```diff
+    contract TroveManager (eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e) {
+    +++ description: None
+      values.getTroveAnnualInterestRate:
+-        [0,0,0,0,0]
+      errors.getTroveAnnualInterestRate:
+-        "Processing error occurred."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CommunityIssuance (eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ActivePool (eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F)
+    +++ description: None
+```
+
+```diff
+    contract BorrowerOperations (eth:0xe8119fC02953B27a1b48D2573855738485A17329) {
+    +++ description: None
+      values.priceFeed:
++        "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B"
+    }
+```
+
+```diff
+    contract CollateralRegistry (eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684) {
+    +++ description: None
+      values.getEffectiveRedemptionFeeInBold:
+-        [0,0,0,0,0]
+      values.getToken.3:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.getToken.4:
+-        "eth:0x0000000000000000000000000000000000000000"
+      errors.getEffectiveRedemptionFeeInBold:
+-        "Processing error occurred."
+      errors.getToken:
+-        "Processing error occurred."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RETHPriceFeed (eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EACAggregatorProxy (eth:0x536218f9E9Eb48863970252233c8F271f554C2d0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WstETH (eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RocketTokenRETH (eth:0xae78736Cd615f374D3085123A210448E74Fc6393)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETHPriceFeed (eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EACAggregatorProxy (eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WSTETHPriceFeed (eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x98c6913a9334db8f786c96853815a916ccebfa57
 
 # Diff at Tue, 03 Mar 2026 14:55:25 GMT:

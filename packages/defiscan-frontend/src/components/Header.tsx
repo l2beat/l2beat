@@ -29,14 +29,9 @@ export function Header() {
           <Link to="/compare" className={navClass('/compare')}>
             Compare
           </Link>
-          <a
-            href="https://deficollective.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-text-secondary hover:text-purple-600 transition-colors"
-          >
+          <Link to="/about" className={navClass('/about')}>
             About
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

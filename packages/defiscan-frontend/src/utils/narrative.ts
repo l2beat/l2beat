@@ -1,5 +1,6 @@
 import type { CompiledReview, CompiledAdmin, CompiledDependency } from '../types'
 import { formatUsdValue } from './format'
+import { computeEntityDependencyCount } from './dependencies'
 
 /** Generate executive summary sentence from review data */
 export function generateExecutiveSummary(review: CompiledReview): string {
@@ -19,9 +20,10 @@ export function generateExecutiveSummary(review: CompiledReview): string {
     )
   }
 
-  if (totals.dependencyCount > 0) {
+  const depCount = computeEntityDependencyCount(review.dependencies)
+  if (depCount > 0) {
     parts.push(
-      `with ${totals.dependencyCount} external dependenc${totals.dependencyCount !== 1 ? 'ies' : 'y'}`,
+      `with ${depCount} external dependenc${depCount !== 1 ? 'ies' : 'y'}`,
     )
   }
 

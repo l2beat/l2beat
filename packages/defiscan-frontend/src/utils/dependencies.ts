@@ -84,3 +84,20 @@ export function getFunctionFunds(
   }
   return total
 }
+
+/**
+ * Count dependencies grouped by entity.
+ * Dependencies with an entity are counted once per unique entity.
+ * Dependencies without an entity are counted individually.
+ */
+export function computeEntityDependencyCount(
+  dependencies: { entity: string | null }[],
+): number {
+  const entities = new Set<string>()
+  let ungrouped = 0
+  for (const dep of dependencies) {
+    if (dep.entity) entities.add(dep.entity)
+    else ungrouped++
+  }
+  return entities.size + ungrouped
+}

@@ -4,5 +4,10 @@
     "getEntireBranchColl",
     "getEntireBranchDebt",
     "getInterestIndividualDelegateOf"
-  ]
+  ],
+  "fields": {
+    "priceFeed": {
+      "handler": { "type": "storage", "slot": 2, "returnType": "address" }
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import type { CompiledReview } from '../../../../types'
 import { formatUsdValue } from '../../../../utils/format'
+import { computeEntityDependencyCount } from '../../../../utils/dependencies'
 import { CapitalFlowDiagram } from './svg/CapitalFlowDiagram'
 
 interface OverviewTabProps {
@@ -78,7 +79,7 @@ export function OverviewTab({ review }: OverviewTabProps) {
         />
         <MetricBox
           label="Dependencies"
-          value={String(totals.dependencyCount)}
+          value={String(computeEntityDependencyCount(dependencies))}
           sublabel="external contracts"
         />
         <MetricBox

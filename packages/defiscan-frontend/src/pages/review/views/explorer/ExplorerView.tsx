@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { CompiledReview } from '../../../../types'
+import { computeEntityDependencyCount } from '../../../../utils/dependencies'
 import { OverviewTab } from './OverviewTab'
 import { AdminsTab } from './AdminsTab'
 import { DepsTab } from './DepsTab'
@@ -73,7 +74,7 @@ function getTabCount(
     case 'admins':
       return review.totals.adminCount
     case 'dependencies':
-      return review.totals.dependencyCount
+      return computeEntityDependencyCount(review.dependencies)
     case 'funds':
       return review.funds.length
     case 'contracts':

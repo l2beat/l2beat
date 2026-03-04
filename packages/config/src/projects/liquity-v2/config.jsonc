@@ -12,12 +12,6 @@
     "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": "RocketTokenRETH"
   },
   "overrides": {
-    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
-      "ignoreDiscovery": true
-    },
-    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": {
-      "ignoreDiscovery": true
-    },
     "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {
       "ignoreDiscovery": true
     },
@@ -45,7 +39,13 @@
         "getRedemptionFeeWithDecay",
         "getRedemptionRateWithDecay",
         "lastFeeOperationTime"
-      ]
+      ],
+      "fields": {
+        "getToken": {
+          "handler": { "type": "array", "length": "{{ totalCollaterals }}" }
+        }
+      },
+      "ignoreMethods": ["getEffectiveRedemptionFeeInBold"]
     },
     "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F": {
       "ignoreInWatchMode": ["getETH", "getLUSDDebt"]
@@ -61,7 +61,8 @@
         "secondsWithinEpoch",
         "UNREGISTRATION_AFTER_EPOCHS",
         "votesSnapshot"
-      ]
+      ],
+      "ignoreRelatives": ["lqty", "stakingV1", "userProxyImplementation"]
     },
     "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d": {
       "ignoreInWatchMode": ["F_ETH", "F_LUSD", "totalLQTYStaked"]
@@ -96,6 +97,15 @@
     },
     "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": {
       "ignoreInWatchMode": ["totalSupply"]
+    },
+    "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112": {
+      "ignoreInWatchMode": ["getTellorCurrentValue"]
+    },
+    "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F": {
+      "ignoreInWatchMode": ["lastGoodPrice"]
+    },
+    "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1": {
+      "ignoreRelatives": ["collToken"]
     }
   }
 }

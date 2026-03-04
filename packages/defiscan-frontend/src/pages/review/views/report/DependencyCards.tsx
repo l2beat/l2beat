@@ -169,13 +169,9 @@ function DependencyCard({
             <h4 className="font-semibold text-text-primary">
               {dependency.name}
             </h4>
-            {dependency.viewOnlyPath ? (
+            {dependency.viewOnlyPath && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-status-blue/10 text-status-blue">
                 Read-only
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-status-amber/10 text-status-amber">
-                Write access
               </span>
             )}
           </div>

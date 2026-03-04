@@ -167,7 +167,21 @@ export class ReviewCompiler {
     private readonly log: (msg: string) => void = console.log,
   ) {}
 
-  compile(project: string): CompileResult {
+  /**
+   * Returns the default output directory for compiled reviews:
+   * <repo-root>/packages/defiscan-frontend/public/data
+   */
+  getDefaultOutputDir(): string {
+    return path.join(
+      this.paths.root,
+      'packages',
+      'defiscan-frontend',
+      'public',
+      'data',
+    )
+  }
+
+  compile(project: string, outputDir?: string): CompileResult {
     const projectDir = path.join(this.paths.discovery, project)
 
     // Guard: review-config.json must exist
@@ -225,8 +239,13 @@ export class ReviewCompiler {
         fundsData,
       })
 
-      // 8. Write compiled-review.json
-      const outputPath = path.join(projectDir, 'compiled-review.json')
+      // 8. Write compiled-review.json to defiscan-frontend/public/data/<slug>/
+      const targetDir = outputDir ?? this.getDefaultOutputDir()
+      const slug = reviewConfig.protocolSlug
+      const slugDir = path.join(targetDir, slug)
+      fs.mkdirSync(slugDir, { recursive: true })
+
+      const outputPath = path.join(slugDir, 'compiled-review.json')
       fs.writeFileSync(outputPath, JSON.stringify(compiled, null, 2))
 
       this.log(`Review compiled successfully: ${outputPath}`)

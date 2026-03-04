@@ -141,6 +141,19 @@ function main() {
       }
     }
 
+    // Compute entity-grouped dependency count
+    const depEntities = new Set<string>()
+    let ungroupedDeps = 0
+    for (const dep of review.dependencies) {
+      if (dep.entity) depEntities.add(dep.entity)
+      else ungroupedDeps++
+    }
+
+    // Count admins excluding Immutable and Revoked
+    const activeAdminCount = review.admins.filter(
+      (a) => a.adminType !== 'Immutable' && a.adminType !== 'Revoked',
+    ).length
+
     // Add to protocol list
     protocols.push({
       slug: review.metadata.protocolSlug,
@@ -148,7 +161,11 @@ function main() {
       chain: review.metadata.chain,
       projectType: review.metadata.projectType,
       tokenName: review.metadata.tokenName,
-      totals: review.totals,
+      totals: {
+        ...review.totals,
+        adminCount: activeAdminCount,
+        dependencyCount: depEntities.size + ungroupedDeps,
+      },
     })
 
     totalCapitalAtRisk += review.totals.totalCapitalAtRisk

@@ -53,10 +53,9 @@ public/data/
 ### Adding a New Protocol
 
 1. Run the review workflow in protocolbeat (permissions, call graph, review config)
-2. Click "Compile Review" in the Terminal panel
-3. Copy the output `compiled-review.json` to `public/data/<slug>/`
-4. Optionally copy `funds-data.json` alongside it
-5. Run `pnpm build` or `pnpm dev` — the protocol appears automatically
+2. Click "Compile Review" in the Terminal panel — output is written directly to `public/data/<slug>/compiled-review.json`
+3. Optionally copy `funds-data.json` alongside it
+4. Run `pnpm build` or `pnpm dev` — the protocol appears automatically
 
 ## Pages
 
@@ -68,9 +67,13 @@ Protocol listing table with sortable columns, global stats (total capital review
 
 Three view modes toggled via tabs:
 
-- **Report View**: Narrative-style read, with sticky section navigation, key findings, admin cards, fund holders, dependency cards, and code/contracts section.
+- **Report View**: Summary, key findings, fund holders ("What Is at Stake?"), admin cards ("Who Is in Control?"), dependency cards, and "More Information" section with code/audits. Sticky section navigation.
 - **Explorer View**: Tabbed data explorer with Contracts, Functions, Admins, Dependencies, Funds tabs. Includes SVG diagrams (capital flow, dependency risk, direct vs reachable).
-- **Dashboard View**: Visual risk dashboard with risk gauge, exposure charts (treemaps, pie charts), and risk overview cards.
+- **Dashboard View**: Visual dashboard with exposure charts (treemaps, pie charts) and protocol statistics.
+
+### About Page (`/about`)
+
+Static page describing DeFiScan's mission, methodology, open source commitment, and The DeFi Collective.
 
 ### Compare Page (`/compare`)
 
@@ -108,6 +111,8 @@ src/
 ├── pages/
 │   ├── landing/
 │   │   └── LandingPage.tsx     # Protocol table + stats
+│   ├── about/
+│   │   └── AboutPage.tsx       # Mission, methodology, team
 │   ├── compare/
 │   │   ├── ComparePage.tsx     # Main compare page
 │   │   ├── ComparisonTable.tsx
@@ -128,8 +133,7 @@ src/
     ├── comparison.ts           # Metrics extraction, radar data, shared deps
     ├── dependencies.ts         # Dependency grouping utilities
     ├── format.ts               # USD formatting, address truncation, Etherscan URLs
-    ├── narrative.ts            # Executive summary, key findings, glossary
-    └── risk.ts                 # Risk scoring (0-100), risk levels, risk profiles
+    └── narrative.ts            # Key findings, glossary
 ```
 
 ## Key Types
@@ -144,15 +148,3 @@ The frontend types in `src/types.ts` mirror the backend's `CompiledReview` inter
 - `CompiledContract` — contract with tags (external, governance, entity)
 - `ProtocolSummary` — lightweight summary for the landing page index
 
-## Risk Scoring
-
-`utils/risk.ts` computes a 0-100 risk score from review data:
-
-| Factor | Points | Criteria |
-|--------|--------|----------|
-| Admin types | 0-40 | EOA: 40, Multisig: 20, Timelock: 10, Immutable: 0 |
-| Dependencies | 0-25 | 5+: 25, 3+: 15, 1+: 8, 0: 0 |
-| Capital locked | 0-20 | >$500M: 20, >$100M: 15, >$10M: 10, >$0: 5 |
-| Function density | 0-15 | ratio>3: 15, ratio>1.5: 10, ratio>0: 5 |
-
-Risk levels: CRITICAL (70+), HIGH (50-69), MEDIUM (35-49), LOW (20-34), MINIMAL (<20)

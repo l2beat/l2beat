@@ -10,5 +10,6 @@
     "P",
     "scaleToB",
     "scaleToS"
-  ]
+  ],
+  "ignoreRelatives": ["collToken"]
 }

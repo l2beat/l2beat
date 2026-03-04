@@ -2,6 +2,7 @@ import { Badge } from '../../components/Badge'
 import { ProtocolTypeBadge } from '../../components/ProtocolTypeBadge'
 import { StatCard } from '../../components/StatCard'
 import { formatUsdValue } from '../../utils/format'
+import { computeEntityDependencyCount } from '../../utils/dependencies'
 import type { CompiledReview } from '../../types'
 
 interface ReviewHeaderProps {
@@ -43,7 +44,7 @@ export function ReviewHeader({ review }: ReviewHeaderProps) {
         />
         <StatCard
           label="Dependencies"
-          value={String(totals.dependencyCount)}
+          value={String(computeEntityDependencyCount(review.dependencies))}
         />
       </div>
     </div>

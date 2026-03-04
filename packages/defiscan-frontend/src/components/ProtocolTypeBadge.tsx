@@ -4,7 +4,7 @@ interface ProtocolTypeBadgeProps {
   type: string
 }
 
-const TYPE_LABELS: Record<string, string> = {
+export const TYPE_LABELS: Record<string, string> = {
   stablecoin: 'Stablecoin',
   lending: 'Lending',
   dex: 'DEX',

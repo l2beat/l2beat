@@ -12,7 +12,7 @@ It runs as a Digital Ocean App Platform **worker** (no HTTP port), backed by Pos
 2. **Diffing** — Compares results against the previous discovery stored in PostgreSQL
 3. **Notification** — Sends Discord messages when contract changes are detected
 4. **Funds Refresh** — Fetches live token balances and DeFi positions via DeBank API
-5. **Review Compilation** — Produces a self-contained `compiled-review.json` per project, ready for D1 ingestion
+5. **Review Compilation** — Produces a self-contained `compiled-review.json` per project, written directly to the defiscan-frontend `public/data/<slug>/` directory for static serving
 6. **Cycle Summary** — Posts a Discord summary after every cycle (with change count and duration)
 
 ### What it does NOT do (researcher actions)
@@ -20,7 +20,7 @@ It runs as a Digital Ocean App Platform **worker** (no HTTP port), backed by Pos
 - Re-run call graph analysis (Slither)
 - Re-run permission detection (AI or manual)
 - Modify permission overrides, function scores, or review descriptions
-- Push compiled reviews to D1 (deferred to a future task)
+- Push compiled reviews to a hosted database (deferred to a future task)
 
 ---
 
@@ -63,7 +63,7 @@ Every hour (Clock.onNewHour):
     3. Notify: if diff → Discord message via UpdateNotifier
     4. Store: db.updateMonitor.upsert(discovery snapshot)
     5. Funds: fetchAllFundsForProject → updates funds-data.json on disk
-    6. Compile: ReviewCompiler.compile() → writes compiled-review.json
+    6. Compile: ReviewCompiler.compile() → writes compiled-review.json to defiscan-frontend/public/data/<slug>/
   After all projects:
     Post cycle summary to Discord (project count, duration, changes)
 ```
@@ -86,6 +86,8 @@ Discovery + diff + funds refresh still run regardless. Only the compilation step
 ### Design Principle
 
 The compiled review is **the exact data a frontend needs to render a protocol review page**. It joins V2 scoring data (contracts, functions, admins, dependencies, capital analysis) with human-written descriptions from `review-config.json`, resolves template variables, and produces a single self-contained JSON file.
+
+Output is written directly to `packages/defiscan-frontend/public/data/<slug>/compiled-review.json` (alongside `funds-data.json`), so the frontend can serve them as static assets.
 
 ### Data Sources → Compiled Fields
 
@@ -175,6 +177,8 @@ Each run:
 1. Builds the Docker image (`Dockerfile.monitor`) with layer caching
 2. Runs Prisma migrations (separate step for clear error reporting)
 3. Runs the monitor with `RUN_ONCE=true` — single cycle, then clean exit
+4. Rebuilds the frontend index (`compile-data.ts`) from compiled reviews
+5. Commits updated `defiscan-frontend/public/data/` and pushes to main
 
 ### Database: Neon Free Tier (temporary)
 

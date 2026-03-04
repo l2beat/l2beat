@@ -9,7 +9,7 @@ import { UsdValue } from '../../components/UsdValue'
 import { StatCard } from '../../components/StatCard'
 import type { CompiledReview, ProtocolSummary } from '../../types'
 
-type SortKey = 'name' | 'capital' | 'tokenValue' | 'admins' | 'dependencies' | 'contracts' | 'functions' | 'capitalPerAdmin'
+type SortKey = 'name' | 'capital' | 'tokenValue' | 'admins' | 'dependencies' | 'contracts' | 'functions'
 
 export function LandingPage() {
   const { data: indexData, isLoading: indexLoading } = useIndex()
@@ -32,6 +32,10 @@ export function LandingPage() {
   }, [allReviews])
 
   const sorted = useMemo(() => {
+    const getAdminCount = (p: ProtocolSummary) => {
+      const review = reviewMap.get(p.slug)
+      return review ? countActiveAdmins(review) : p.totals.adminCount
+    }
     return [...protocols].sort((a, b) => {
       let cmp = 0
       switch (sortKey) {
@@ -45,7 +49,7 @@ export function LandingPage() {
           cmp = a.totals.totalTokenValueAtRisk - b.totals.totalTokenValueAtRisk
           break
         case 'admins':
-          cmp = a.totals.adminCount - b.totals.adminCount
+          cmp = getAdminCount(a) - getAdminCount(b)
           break
         case 'dependencies':
           cmp = a.totals.dependencyCount - b.totals.dependencyCount
@@ -56,16 +60,10 @@ export function LandingPage() {
         case 'functions':
           cmp = a.totals.permissionedFunctionCount - b.totals.permissionedFunctionCount
           break
-        case 'capitalPerAdmin': {
-          const aRatio = a.totals.adminCount > 0 ? a.totals.totalCapitalAtRisk / a.totals.adminCount : 0
-          const bRatio = b.totals.adminCount > 0 ? b.totals.totalCapitalAtRisk / b.totals.adminCount : 0
-          cmp = aRatio - bRatio
-          break
-        }
       }
       return sortAsc ? cmp : -cmp
     })
-  }, [protocols, sortKey, sortAsc])
+  }, [protocols, sortKey, sortAsc, reviewMap])
 
   const maxCapital = useMemo(
     () => Math.max(...protocols.map((p) => p.totals.totalCapitalAtRisk), 1),
@@ -138,7 +136,6 @@ export function LandingPage() {
               <th className="px-3 py-3 text-xs uppercase tracking-wide font-medium text-text-secondary text-left w-32">Relative</th>
               <SortHeader label="Token Value" sortKey="tokenValue" current={sortKey} asc={sortAsc} onToggle={toggleSort} align="right" />
               <SortHeader label="Admins" sortKey="admins" current={sortKey} asc={sortAsc} onToggle={toggleSort} align="right" />
-              <SortHeader label="$/Admin" sortKey="capitalPerAdmin" current={sortKey} asc={sortAsc} onToggle={toggleSort} align="right" />
               <SortHeader label="Deps" sortKey="dependencies" current={sortKey} asc={sortAsc} onToggle={toggleSort} align="right" />
               <SortHeader label="Contracts" sortKey="contracts" current={sortKey} asc={sortAsc} onToggle={toggleSort} align="right" />
               <SortHeader label="Perm Fns" sortKey="functions" current={sortKey} asc={sortAsc} onToggle={toggleSort} align="right" />
@@ -149,8 +146,8 @@ export function LandingPage() {
             {sorted.map((p) => {
               const review = reviewMap.get(p.slug)
               const adminBreakdown = review ? computeAdminBreakdown(review) : {}
+              const adminCount = review ? countActiveAdmins(review) : p.totals.adminCount
               const capitalPct = maxCapital > 0 ? (p.totals.totalCapitalAtRisk / maxCapital) * 100 : 0
-              const capitalPerAdmin = p.totals.adminCount > 0 ? p.totals.totalCapitalAtRisk / p.totals.adminCount : 0
 
               return (
                 <tr key={p.slug} className="border-b border-border last:border-0 hover:bg-bg-muted/50 transition-colors">
@@ -170,8 +167,7 @@ export function LandingPage() {
                   <td className="px-3 py-3 text-right">
                     {p.totals.totalTokenValueAtRisk > 0 ? <UsdValue value={p.totals.totalTokenValueAtRisk} variant="token" /> : <span className="text-text-muted">-</span>}
                   </td>
-                  <td className="px-3 py-3 text-right tabular-nums font-medium">{p.totals.adminCount}</td>
-                  <td className="px-3 py-3 text-right"><span className="tabular-nums text-text-secondary">{formatUsdValue(capitalPerAdmin)}</span></td>
+                  <td className="px-3 py-3 text-right tabular-nums font-medium">{adminCount}</td>
                   <td className="px-3 py-3 text-right tabular-nums">{p.totals.dependencyCount}</td>
                   <td className="px-3 py-3 text-right tabular-nums">{p.totals.contractCount}</td>
                   <td className="px-3 py-3 text-right tabular-nums">{p.totals.permissionedFunctionCount}</td>
@@ -205,7 +201,7 @@ function SortHeader({ label, sortKey, current, asc, onToggle, align = 'left' }: 
 
 function AdminTypeBar({ breakdown }: { breakdown: Record<string, number> }) {
   const total = Object.values(breakdown).reduce((s, n) => s + n, 0)
-  if (total === 0) return <span className="text-text-muted text-xs">-</span>
+  if (total === 0) return <span className="inline-flex items-center gap-1 text-xs text-green-600"><svg className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>None</span>
   return (
     <div className="flex items-center gap-1">
       {Object.entries(breakdown).map(([type, count]) => (
@@ -222,7 +218,14 @@ function computeAdminBreakdown(review: CompiledReview) {
   const counts: Record<string, number> = {}
   for (const admin of review.admins) {
     const t = admin.adminType || 'Unknown'
+    if (t === 'Immutable' || t === 'Revoked') continue
     counts[t] = (counts[t] || 0) + 1
   }
   return counts
+}
+
+function countActiveAdmins(review: CompiledReview): number {
+  return review.admins.filter(
+    (a) => a.adminType !== 'Immutable' && a.adminType !== 'Revoked',
+  ).length
 }

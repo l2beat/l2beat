@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { useReview } from '../../data/hooks'
 import { ViewModeToggle, type ViewMode } from '../../components/ViewModeToggle'
+import { TYPE_LABELS } from '../../components/ProtocolTypeBadge'
 
 const ReportView = lazy(() => import('./views/report/ReportView').then((m) => ({ default: m.ReportView })))
 const ExplorerView = lazy(() => import('./views/explorer/ExplorerView').then((m) => ({ default: m.ExplorerView })))
@@ -80,7 +81,7 @@ export function ReviewPage() {
             </h1>
             <p className="mt-1 text-sm text-text-secondary">
               {review.metadata.chain} &middot;{' '}
-              <span className="capitalize">{review.metadata.projectType}</span>
+              {TYPE_LABELS[review.metadata.projectType] ?? review.metadata.projectType}
               {review.metadata.tokenName && (
                 <> &middot; {review.metadata.tokenName}</>
               )}
@@ -105,10 +106,13 @@ export function ReviewPage() {
       <div className="mt-16 pt-6 border-t border-border text-center">
         <p className="text-xs text-text-muted">
           This review was compiled on{' '}
-          {new Date(review.compiledAt).toLocaleDateString('en-US', {
+          {new Date(review.compiledAt).toLocaleString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZoneName: 'short',
           })}
           . Protocol data may have changed since then. Always verify current on-chain state before making financial decisions.
         </p>

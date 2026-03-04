@@ -1,7 +1,7 @@
 {
   "name": "liquity-v2",
-  "timestamp": 1772533129,
-  "configHash": "0x0cc1cea60b49879c16c05fe1a292dce7864751e8ebc4eca2377b8e7e698898f5",
+  "timestamp": 1772629150,
+  "configHash": "0x29b808bd7959f3488a762005ee7649112546eaf8ccb165caa4576335366bd541",
   "entries": [
     {
       "address": "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",
@@ -23,27 +23,17 @@
       "values": {
         "$immutable": true,
         "borrowerOperationsAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-        "getSize": 23,
+        "getSize": 22,
         "isBatchedNode": [false, false, false, false, false],
         "isEmpty": false,
         "NAME": "SortedTroves",
-        "size": 23,
+        "size": 22,
         "troveManager": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e"
       },
       "errors": { "isBatchedNode": "Processing error occurred." },
       "implementationNames": {
         "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386": "SortedTroves"
       }
-    },
-    {
-      "address": "eth:0x1690A999A99999bBf94BC3F8C4B882e8a54D0dA9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x185Bb4F1cEA89FffF3D437be49c9c1FA4c57feB9",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "TroveNFT",
@@ -104,49 +94,12 @@
         ],
         "multisigThreshold": "4 of 9 (44%)",
         "NAME": "Gnosis Safe",
-        "nonce": 2066,
+        "nonce": 2068,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
         "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": "Proxy",
         "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
-      }
-    },
-    {
-      "name": "BorrowerOperations",
-      "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-      "type": "Contract",
-      "template": "liquity-v2/BorrowerOperations",
-      "sourceHashes": [
-        "0x3c68132ab520759c42c3104d7483ac017b19b1191517436816f51ce4108910d2"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1617611189,
-      "sinceBlock": 12178582,
-      "values": {
-        "_100pct": "1000000000000000000",
-        "$immutable": true,
-        "activePool": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-        "BORROWING_FEE_FLOOR": 5000000000000000,
-        "CCR": "1500000000000000000",
-        "DECIMAL_PRECISION": "1000000000000000000",
-        "defaultPool": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
-        "isOwner": false,
-        "lqtyStaking": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
-        "lqtyStakingAddress": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
-        "LUSD_GAS_COMPENSATION": "200000000000000000000",
-        "lusdToken": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-        "MCR": "1100000000000000000",
-        "MIN_NET_DEBT": "1800000000000000000000",
-        "NAME": "BorrowerOperations",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "PERCENT_DIVISOR": 200,
-        "priceFeed": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
-        "sortedTroves": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-        "troveManager": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2"
-      },
-      "implementationNames": {
-        "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007": "BorrowerOperations"
       }
     },
     {
@@ -177,28 +130,6 @@
       }
     },
     {
-      "name": "LockupContractFactory",
-      "address": "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x53b1313f2f3601d5528ad098b3a6b1a32aaacb8467f408b06f4e01ca8c67a044"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1617611517,
-      "sinceBlock": 12178611,
-      "values": {
-        "$immutable": true,
-        "isOwner": false,
-        "lqtyTokenAddress": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-        "NAME": "LockupContractFactory",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "SECONDS_IN_ONE_YEAR": 31536000
-      },
-      "implementationNames": {
-        "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B": "LockupContractFactory"
-      }
-    },
-    {
       "name": "MetadataNFT",
       "address": "eth:0x3400874305E1547020fb8e80eAF1308B757171Af",
       "type": "Contract",
@@ -214,6 +145,39 @@
       },
       "implementationNames": {
         "eth:0x3400874305E1547020fb8e80eAF1308B757171Af": "MetadataNFT"
+      }
+    },
+    {
+      "name": "RETHPriceFeed",
+      "address": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+      "type": "Contract",
+      "template": "liquity-v2/RETHPriceFeed",
+      "sourceHashes": [
+        "0x8fc6ea7532f34b983044fb19ed663b06d617604941942e20e9d5a0c472b41d04"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["lastGoodPrice"],
+      "sinceTimestamp": 1747646819,
+      "sinceBlock": 22516114,
+      "values": {
+        "$immutable": true,
+        "ethUsdOracle": {
+          "aggregator": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+          "stalenessThreshold": 86400,
+          "decimals": 8
+        },
+        "lastGoodPrice": "2311246032176026938457",
+        "priceSource": 0,
+        "rateProviderAddress": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "RETH_ETH_DEVIATION_THRESHOLD": "20000000000000000",
+        "rEthEthOracle": {
+          "aggregator": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
+          "stalenessThreshold": 172800,
+          "decimals": 18
+        }
+      },
+      "implementationNames": {
+        "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B": "RETHPriceFeed"
       }
     },
     {
@@ -267,6 +231,7 @@
           "eth:0x0000000000000000000000000000000000000000"
         ],
         "MCR": "1100000000000000000",
+        "priceFeed": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
         "removeManagerReceiverOf": [
           [
             "eth:0x0000000000000000000000000000000000000000",
@@ -307,17 +272,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x4123855519570108964282467500000000000000",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x44156552427c444c873067e593bB9721593B284f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x44220c740b288403E75658ac693674C59e4aB895",
+      "address": "eth:0x4671404119147669602431827500000000000000",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -330,68 +285,6 @@
       "address": "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "PriceFeed",
-      "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x4117def79066ad76ff6a6dff5c00754f816d3b310d70af492738456db9fe0800"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": ["lastGoodPrice"],
-      "sinceTimestamp": 1617610823,
-      "sinceBlock": 12178551,
-      "values": {
-        "$immutable": true,
-        "DECIMAL_PRECISION": "1000000000000000000",
-        "ETHUSD_TELLOR_REQ_ID": 1,
-        "isOwner": false,
-        "lastGoodPrice": "1985770000000000000000",
-        "MAX_PRICE_DEVIATION_FROM_PREVIOUS_ROUND": "500000000000000000",
-        "MAX_PRICE_DIFFERENCE_BETWEEN_ORACLES": "50000000000000000",
-        "NAME": "PriceFeed",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "priceAggregator": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-        "status": 0,
-        "TARGET_DIGITS": 18,
-        "TELLOR_DIGITS": 6,
-        "tellorCaller": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
-        "TIMEOUT": 14400
-      },
-      "implementationNames": {
-        "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De": "PriceFeed"
-      }
-    },
-    {
-      "name": "LQTYStaking",
-      "address": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xd8c1374deb23a98d5b621f8474f18d95009165158596c7338f16a3719a0c1dcd"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": ["F_ETH", "F_LUSD", "totalLQTYStaked"],
-      "sinceTimestamp": 1617611481,
-      "sinceBlock": 12178607,
-      "values": {
-        "$immutable": true,
-        "activePoolAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-        "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-        "DECIMAL_PRECISION": "1000000000000000000",
-        "F_ETH": 185473878166139,
-        "F_LUSD": "601243131442849934862",
-        "isOwner": false,
-        "lqtyToken": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-        "lusdToken": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-        "NAME": "LQTYStaking",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "totalLQTYStaked": "58526676494000591906836418",
-        "troveManagerAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2"
-      },
-      "implementationNames": {
-        "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d": "LQTYStaking"
-      }
     },
     {
       "name": "ActivePool",
@@ -419,22 +312,22 @@
       "values": {
         "$immutable": true,
         "aggBatchManagementFees": "158940431303364915436",
-        "aggRecordedDebt": "18419669061722483531175725",
+        "aggRecordedDebt": "18441681556409172293999092",
         "aggWeightedBatchManagementFeeSum": "15224465054459121365746676000000000000000",
-        "aggWeightedDebtSum": "279911197040542281679949580018847364452521",
+        "aggWeightedDebtSum": "280558495348003237072220921108847364452521",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperationsAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-        "calcPendingAggBatchManagementFee": "117526150136914838336",
-        "calcPendingAggInterest": "65610843750751158872",
-        "calcPendingSPYield": "49208132813063369154",
+        "calcPendingAggBatchManagementFee": "163877346826689355097",
+        "calcPendingAggInterest": "128108901985389605970",
+        "calcPendingSPYield": "96081676489042204477",
         "collToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "defaultPoolAddress": "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1",
-        "getBoldDebt": "18420011139147674562088369",
-        "getCollBalance": "25058960887966770823495",
+        "getBoldDebt": "18442132483089287737875595",
+        "getCollBalance": "25100737265460317881161",
         "hasBeenShutDown": false,
         "interestRouter": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
         "lastAggBatchManagementFeesUpdateTime": 1772289683,
-        "lastAggUpdateTime": 1772525735,
+        "lastAggUpdateTime": 1772614739,
         "NAME": "ActivePool",
         "shutdownTime": 0,
         "stabilityPool": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
@@ -442,6 +335,32 @@
       },
       "implementationNames": {
         "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": "ActivePool"
+      }
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
+      "type": "Contract",
+      "template": "Steakhouse-USDC/EACAggregatorProxy",
+      "sourceHashes": [
+        "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1677265283,
+      "sinceBlock": 16700133,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0xc77904CD2CA0806CC3DB0819E9630FF3e2f6093d",
+        "decimals": 18,
+        "description": "RETH / ETH",
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 2,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "implementationNames": {
+        "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": "EACAggregatorProxy"
       }
     },
     {
@@ -474,9 +393,9 @@
         "currentScale": 0,
         "getCollBalance": "64236772726256188432",
         "getEntireBranchColl": "6006781966669596358390",
-        "getEntireBranchDebt": "6512522368737798442903949",
-        "getTotalBoldDeposits": "7127141493830941978509317",
-        "getYieldGainsOwed": "13648148282466055211572",
+        "getEntireBranchDebt": "6512662800217855475304864",
+        "getTotalBoldDeposits": "7355117164721913533017801",
+        "getYieldGainsOwed": "14146333959475574612099",
         "getYieldGainsPending": 0,
         "MAX_SCALE_FACTOR_EXPONENT": 8,
         "NAME": "StabilityPool",
@@ -484,7 +403,7 @@
         "P_PRECISION": "1000000000000000000000000000000000000",
         "SCALE_FACTOR": 1000000000,
         "SCALE_SPAN": 2,
-        "scaleToB": ["93521788453496673250877287708846749", 0, 0, 0, 0],
+        "scaleToB": ["93594784897010159892645574907477928", 0, 0, 0, 0],
         "scaleToS": ["91973646659030210071285211989882", 0, 0, 0, 0],
         "troveManager": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A"
       },
@@ -559,34 +478,6 @@
       }
     },
     {
-      "name": "LUSD Stablecoin Token",
-      "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x661dca742b39fe8c4265e0ec96c7ee0d958dc3d341cd6f18552ed8a6940d9b4e"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": ["totalSupply"],
-      "sinceTimestamp": 1617611299,
-      "sinceBlock": 12178594,
-      "values": {
-        "$immutable": true,
-        "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-        "decimals": 18,
-        "domainSeparator": "0xf85dbb1e9a5845cbb7605972678082c839c02db2df0e2e2eb4977e9744bbcd89",
-        "name": "LUSD Stablecoin",
-        "permitTypeHash": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "stabilityPoolAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
-        "symbol": "LUSD",
-        "totalSupply": "30749572878952724070962338",
-        "troveManagerAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-        "version": "1"
-      },
-      "implementationNames": {
-        "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0": "LUSDToken"
-      }
-    },
-    {
       "name": "BoldToken",
       "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
       "type": "Contract",
@@ -594,6 +485,7 @@
         "0xa87a89445c41128b0aed513dc6009b16d8c222f09870aac10a9eee8d14b0e3b0"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1747245587,
       "sinceBlock": 22483043,
       "values": {
@@ -614,121 +506,10 @@
         "name": "BOLD Stablecoin",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "BOLD",
-        "totalSupply": "30728770193970129332264404"
+        "totalSupply": "30721468893452507387071518"
       },
       "implementationNames": {
         "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": "BoldToken"
-      }
-    },
-    {
-      "name": "UserProxy",
-      "address": "eth:0x65f9A98009Aecaa3fc8A3A83FEF44e2b6931A7b2",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe7c6d54af8f01ef571fc2e026efebff1ec252bce90cd96fbcd15ce9c41f7f82b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747647047,
-      "sinceBlock": 22516133,
-      "values": {
-        "$immutable": true,
-        "lqty": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-        "lusd": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-        "staked": 0,
-        "stakingV1": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
-        "stakingV2": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1"
-      },
-      "implementationNames": {
-        "eth:0x65f9A98009Aecaa3fc8A3A83FEF44e2b6931A7b2": "UserProxy"
-      }
-    },
-    {
-      "name": "StabilityPool",
-      "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x98b8604de4b60664e38f64b0bcd7464a5097cfd06024016bd644a119d466a1c2"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": [
-        "getETH",
-        "getTotalLUSDDeposits",
-        "lastETHError_Offset",
-        "lastLQTYError",
-        "lastLUSDLossError_Offset",
-        "P"
-      ],
-      "sinceTimestamp": 1617611020,
-      "sinceBlock": 12178565,
-      "values": {
-        "_100pct": "1000000000000000000",
-        "$immutable": true,
-        "activePool": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-        "borrowerOperations": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-        "BORROWING_FEE_FLOOR": 5000000000000000,
-        "CCR": "1500000000000000000",
-        "communityIssuance": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
-        "currentEpoch": 0,
-        "currentScale": 0,
-        "DECIMAL_PRECISION": "1000000000000000000",
-        "defaultPool": "eth:0x0000000000000000000000000000000000000000",
-        "getETH": "649286643596609113134",
-        "getTotalLUSDDeposits": "12508192049907750115571656",
-        "isOwner": false,
-        "lastETHError_Offset": "14452840112584956861931264",
-        "lastLQTYError": "10737521422702344144187562",
-        "lastLUSDLossError_Offset": "10296099677808650302564214",
-        "LUSD_GAS_COMPENSATION": "200000000000000000000",
-        "lusdToken": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-        "MCR": "1100000000000000000",
-        "MIN_NET_DEBT": "1800000000000000000000",
-        "NAME": "StabilityPool",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "P": "117913546050033757",
-        "PERCENT_DIVISOR": 200,
-        "priceFeed": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
-        "SCALE_FACTOR": 1000000000,
-        "sortedTroves": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-        "troveManager": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2"
-      },
-      "implementationNames": {
-        "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb": "StabilityPool"
-      }
-    },
-    {
-      "address": "eth:0x6B19D4DB4d0bF6faF04aeea45b2f7930e0E09eE4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "LQTY Token",
-      "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xeae1569b572818e590ffb10f2be7acdd661b89f81d83813b11d3ad27fe6c1694"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1617611590,
-      "sinceBlock": 12178618,
-      "values": {
-        "$immutable": true,
-        "communityIssuanceAddress": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
-        "decimals": 18,
-        "domainSeparator": "0xb792684cdd543bf3e75c7ef4698df91baed0742f0c78c3398904a3542e937594",
-        "getDeploymentStartTime": 1617611590,
-        "getLpRewardsEntitlement": "1333333333333333333333333",
-        "lockupContractFactory": "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B",
-        "lqtyStakingAddress": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
-        "multisigAddress": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
-        "name": "LQTY",
-        "ONE_YEAR_IN_SECONDS": 31536000,
-        "permitTypeHash": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "symbol": "LQTY",
-        "totalSupply": "100000000000000000000000000",
-        "version": "1"
-      },
-      "implementationNames": {
-        "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D": "LQTYToken"
       }
     },
     {
@@ -772,7 +553,9 @@
       "ignoreInWatchMode": [
         "getTroveIdsCount",
         "lastZombieTroveId",
-        "rewardSnapshots"
+        "rewardSnapshots",
+        "getEntireBranchDebt",
+        "getEntireBranchColl"
       ],
       "sinceTimestamp": 1747646387,
       "sinceBlock": 22516078,
@@ -782,8 +565,7 @@
         "borrowerOperations": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
         "CCR": "1500000000000000000",
         "getEntireBranchColl": "6006781966669596358390",
-        "getEntireBranchDebt": "6512522368737798442903949",
-        "getTroveAnnualInterestRate": [0, 0, 0, 0, 0],
+        "getEntireBranchDebt": "6512662800217855475304864",
         "getTroveIdsCount": 88,
         "lastZombieTroveId": 0,
         "rewardSnapshots": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
@@ -792,12 +574,36 @@
         "stabilityPool": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
         "troveNFT": "eth:0x1A0FC0b843aFD9140267D25d4E575Cb37a838013"
       },
-      "errors": {
-        "getTroveAnnualInterestRate": "Processing error occurred.",
-        "rewardSnapshots": "Processing error occurred."
-      },
+      "errors": { "rewardSnapshots": "Processing error occurred." },
       "implementationNames": {
         "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A": "TroveManager"
+      }
+    },
+    {
+      "name": "WstETH",
+      "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+      "type": "Contract",
+      "template": "tokens/Lido/wstETH",
+      "sourceHashes": [
+        "0x6b938c3d38678ebb00f3860def4bdf9d5d8ab7008a6d598cc109fdf7a6c34e0e"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["tokensPerStEth", "stEthPerToken", "totalSupply"],
+      "sinceTimestamp": 1613752640,
+      "sinceBlock": 11888477,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe",
+        "name": "Wrapped liquid staked Ether 2.0",
+        "stETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "stEthPerToken": "1228451344976762689",
+        "symbol": "wstETH",
+        "tokensPerStEth": "814033053965939480",
+        "totalSupply": "3469329530474778546795132"
+      },
+      "implementationNames": {
+        "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
       }
     },
     {
@@ -838,14 +644,14 @@
             "forEpoch": 42
           },
           "state": {
-            "countedVoteLQTY": "41896487367378866170658864",
-            "countedVoteOffset": "73407850182685304040933407912211752"
+            "countedVoteLQTY": "41896987981287496170658864",
+            "countedVoteOffset": "73408737544246556469563577912211752"
           },
           "shouldUpdate": false
         },
         "globalState": {
-          "countedVoteLQTY": "41896487367378866170658864",
-          "countedVoteOffset": "73407850182685304040933407912211752"
+          "countedVoteLQTY": "41896987981287496170658864",
+          "countedVoteOffset": "73408737544246556469563577912211752"
         },
         "isOwner": false,
         "lqty": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
@@ -854,7 +660,7 @@
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "REGISTRATION_FEE": "100000000000000000000",
         "REGISTRATION_THRESHOLD_FACTOR": 100000000000000,
-        "secondsWithinEpoch": 469127,
+        "secondsWithinEpoch": 565139,
         "stakingV1": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
         "UNREGISTRATION_AFTER_EPOCHS": 4,
         "UNREGISTRATION_THRESHOLD_FACTOR": "1000000000000000001",
@@ -908,11 +714,11 @@
       "values": {
         "$immutable": true,
         "borrowerOperationsAddress": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-        "getSize": 44,
+        "getSize": 46,
         "isBatchedNode": [false, false, false, false, false],
         "isEmpty": false,
         "NAME": "SortedTroves",
-        "size": 44,
+        "size": 46,
         "troveManager": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22"
       },
       "errors": { "isBatchedNode": "Processing error occurred." },
@@ -945,11 +751,6 @@
       }
     },
     {
-      "address": "eth:0x87376f16268A0b93055A6FbcBe94f093cb589B81",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "",
       "address": "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42",
       "type": "Contract",
@@ -960,106 +761,6 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x884Acfa4593a6FdbA0a9373007E48Ea9AF881C42": ""
-      }
-    },
-    {
-      "name": "Tellor Tributes Token",
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf4a810ae36a4153cb37ffc28be9874ec4b39f3221b006876104ab914b2ae800f",
-        "0xfee67b0540b9cb199cdaafcb59da18256cfe5b61cf94bd528960cc33552f3f17"
-      ],
-      "proxyType": "ZeppelinOS proxy",
-      "ignoreInWatchMode": ["totalSupply", "verify"],
-      "sinceTimestamp": 1613850551,
-      "sinceBlock": 11895800,
-      "values": {
-        "$admin": [],
-        "$immutable": true,
-        "$implementation": "eth:0xD3b9A1DCAbd16c482785Fd4265cB4580B84cdeD7",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "currentMiners": [
-          [2, "eth:0x0000000000000000000000000000000000000000"],
-          [1, "eth:0x0000000000000000000000000000000000000000"],
-          [5, "eth:0x0000000000000000000000000000000000000000"],
-          [3, "eth:0x0000000000000000000000000000000000000000"],
-          [10, "eth:0x0000000000000000000000000000000000000000"]
-        ],
-        "decimals": 18,
-        "getNewCurrentVariables": {
-          "_c": "0x1321d205ba3a0e2e076c1a7f124f00504fbcd9223f411f3d3d02415c048cdb76",
-          "_r": [1, 1, 1, 1, 1],
-          "_diff": 0,
-          "_tip": 0
-        },
-        "name": "Tellor Tributes",
-        "symbol": "TRB",
-        "totalSupply": "2838043078922911636428630",
-        "verify": 9999
-      },
-      "errors": { "currentMiners": "Processing error occurred." },
-      "implementationNames": {
-        "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0": "TellorMaster",
-        "eth:0xD3b9A1DCAbd16c482785Fd4265cB4580B84cdeD7": "Tellor360"
-      }
-    },
-    {
-      "name": "DefaultPool",
-      "address": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xa0d0235ae3bb6216a8c40dc8d30cf74dfd719beeeb03b974d19d77c004c0e6e8"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1617611078,
-      "sinceBlock": 12178574,
-      "values": {
-        "$immutable": true,
-        "activePoolAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-        "getETH": 0,
-        "getLUSDDebt": 0,
-        "isOwner": false,
-        "NAME": "DefaultPool",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "troveManagerAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2"
-      },
-      "implementationNames": {
-        "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C": "DefaultPool"
-      }
-    },
-    {
-      "address": "eth:0x8a93d344D012aA51E2D6e4C40892bF93b479586a",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "SortedTroves",
-      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-      "type": "Contract",
-      "template": "liquity-v2/SortedTroves_all",
-      "sourceHashes": [
-        "0x80eced0895f40ebd46a3480f97794df96f0457b6aab692fad4f947d35f468398"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": ["getSize"],
-      "sinceTimestamp": 1617610853,
-      "sinceBlock": 12178554,
-      "values": {
-        "$immutable": true,
-        "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-        "getMaxSize": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "getSize": 105,
-        "isEmpty": false,
-        "isFull": false,
-        "isOwner": false,
-        "NAME": "SortedTroves",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "troveManager": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2"
-      },
-      "implementationNames": {
-        "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6": "SortedTroves"
       }
     },
     {
@@ -1088,22 +789,22 @@
       "values": {
         "$immutable": true,
         "aggBatchManagementFees": "1845131107383543399",
-        "aggRecordedDebt": "5796619080667665476188307",
+        "aggRecordedDebt": "5767298649060496203540977",
         "aggWeightedBatchManagementFeeSum": "14593442887722890197289245500000000000000",
-        "aggWeightedDebtSum": "169079220118249922147780191518797812681070",
+        "aggWeightedDebtSum": "168192813986637143079648389598797812681070",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperationsAddress": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-        "calcPendingAggBatchManagementFee": "22989670302577155791",
-        "calcPendingAggInterest": "39631963315388870641",
-        "calcPendingSPYield": "29723972486541652980",
+        "calcPendingAggBatchManagementFee": "67419707039514311220",
+        "calcPendingAggInterest": "127360616374964959943",
+        "calcPendingSPYield": "95520462281223719957",
         "collToken": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
         "defaultPoolAddress": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
-        "getBoldDebt": "5796683547432390825758138",
-        "getCollBalance": "5945688136045064762180",
+        "getBoldDebt": "5767495274515018066355539",
+        "getCollBalance": "5918346373805473016365",
         "hasBeenShutDown": false,
         "interestRouter": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
         "lastAggBatchManagementFeesUpdateTime": 1772483447,
-        "lastAggUpdateTime": 1772525735,
+        "lastAggUpdateTime": 1772605259,
         "NAME": "ActivePool",
         "shutdownTime": 0,
         "stabilityPool": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
@@ -1142,10 +843,10 @@
         "collToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "currentScale": 0,
         "getCollBalance": "48191851423121521984",
-        "getEntireBranchColl": "25058960887966770823495",
-        "getEntireBranchDebt": "18420011139147674562088369",
-        "getTotalBoldDeposits": "11205113701787373293015233",
-        "getYieldGainsOwed": "37016343460093670091418",
+        "getEntireBranchColl": "25100737265460317881161",
+        "getEntireBranchDebt": "18442132483089287737875595",
+        "getTotalBoldDeposits": "10952225283585746611124676",
+        "getYieldGainsOwed": "37362631082360009012748",
         "getYieldGainsPending": 0,
         "MAX_SCALE_FACTOR_EXPONENT": 8,
         "NAME": "StabilityPool",
@@ -1153,7 +854,7 @@
         "P_PRECISION": "1000000000000000000000000000000000000",
         "SCALE_FACTOR": 1000000000,
         "SCALE_SPAN": 2,
-        "scaleToB": ["56674684760166372506469297368484546", 0, 0, 0, 0],
+        "scaleToB": ["56719197418129694937721751635607054", 0, 0, 0, 0],
         "scaleToS": ["49484103944342211213589019074888", 0, 0, 0, 0],
         "troveManager": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22"
       },
@@ -1222,7 +923,9 @@
       "ignoreInWatchMode": [
         "getTroveIdsCount",
         "lastZombieTroveId",
-        "rewardSnapshots"
+        "rewardSnapshots",
+        "getEntireBranchDebt",
+        "getEntireBranchColl"
       ],
       "sinceTimestamp": 1747646627,
       "sinceBlock": 22516098,
@@ -1231,10 +934,9 @@
         "activePool": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
         "borrowerOperations": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
         "CCR": "1600000000000000000",
-        "getEntireBranchColl": "25058960887966770823495",
-        "getEntireBranchDebt": "18420011139147674562088369",
-        "getTroveAnnualInterestRate": [0, 0, 0, 0, 0],
-        "getTroveIdsCount": 53,
+        "getEntireBranchColl": "25100737265460317881161",
+        "getEntireBranchDebt": "18442132483089287737875595",
+        "getTroveIdsCount": 55,
         "lastZombieTroveId": 0,
         "rewardSnapshots": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
         "shutdownTime": 0,
@@ -1242,82 +944,9 @@
         "stabilityPool": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
         "troveNFT": "eth:0x857aECeBF75f1012DC18E15020C97096aeA31b04"
       },
-      "errors": {
-        "getTroveAnnualInterestRate": "Processing error occurred.",
-        "rewardSnapshots": "Processing error occurred."
-      },
+      "errors": { "rewardSnapshots": "Processing error occurred." },
       "implementationNames": {
         "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22": "TroveManager"
-      }
-    },
-    {
-      "name": "TroveManager",
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "type": "Contract",
-      "template": "liquity-v2/TroveManager_all",
-      "sourceHashes": [
-        "0x412792126fd1350719ab48a6ad14d761d102baa8431f212b8b2e1c279fc742b6"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": [
-        "getBorrowingRate",
-        "getBorrowingRateWithDecay",
-        "getEntireSystemColl",
-        "getEntireSystemDebt",
-        "getRedemptionRate",
-        "getRedemptionRateWithDecay"
-      ],
-      "sinceTimestamp": 1617610896,
-      "sinceBlock": 12178557,
-      "values": {
-        "_100pct": "1000000000000000000",
-        "$immutable": true,
-        "activePool": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-        "baseRate": 3327826668194,
-        "BETA": 2,
-        "BOOTSTRAP_PERIOD": 1209600,
-        "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-        "BORROWING_FEE_FLOOR": 5000000000000000,
-        "CCR": "1500000000000000000",
-        "checkRecoveryMode": [true, true, true, true, true],
-        "DECIMAL_PRECISION": "1000000000000000000",
-        "defaultPool": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
-        "getBorrowingRate": 5003327826668194,
-        "getBorrowingRateWithDecay": 5000430233390755,
-        "getEntireSystemColl": "77459866898405683285253",
-        "getEntireSystemDebt": "30749572878952724070962338",
-        "getRedemptionRate": 5003327826668194,
-        "getRedemptionRateWithDecay": 5000430233390755,
-        "getTroveOwnersCount": 105,
-        "isOwner": false,
-        "L_ETH": 0,
-        "L_LUSDDebt": 0,
-        "lastETHError_Redistribution": 0,
-        "lastFeeOperationTime": 1772405579,
-        "lastLUSDDebtError_Redistribution": 0,
-        "lqtyStaking": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
-        "lqtyToken": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-        "LUSD_GAS_COMPENSATION": "200000000000000000000",
-        "lusdToken": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-        "MAX_BORROWING_FEE": "50000000000000000",
-        "MCR": "1100000000000000000",
-        "MIN_NET_DEBT": "1800000000000000000000",
-        "MINUTE_DECAY_FACTOR": "999037758833783000",
-        "NAME": "TroveManager",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "PERCENT_DIVISOR": 200,
-        "priceFeed": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
-        "REDEMPTION_FEE_FLOOR": 5000000000000000,
-        "SECONDS_IN_ONE_MINUTE": 60,
-        "sortedTroves": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-        "stabilityPool": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
-        "totalCollateralSnapshot": "77898061772842602270572",
-        "totalStakes": "77459866898405683285253",
-        "totalStakesSnapshot": "77898061772842602270572"
-      },
-      "errors": { "checkRecoveryMode": "Processing error occurred." },
-      "implementationNames": {
-        "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2": "TroveManager"
       }
     },
     {
@@ -1370,6 +999,7 @@
           "eth:0x0000000000000000000000000000000000000000"
         ],
         "MCR": "1200000000000000000",
+        "priceFeed": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
         "removeManagerReceiverOf": [
           [
             "eth:0x0000000000000000000000000000000000000000",
@@ -1404,22 +1034,34 @@
       }
     },
     {
-      "name": "TellorCaller",
-      "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+      "name": "RocketTokenRETH",
+      "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
       "type": "Contract",
       "sourceHashes": [
-        "0xb24c0391c41815e708f76e188c57a6cf80ac6584073cf567e7e791a4ae0501eb"
+        "0x3abd0076b3c015fb6e0288c4b962b0d8f5b529971dccac72ead20921ae9279b2"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1617611268,
-      "sinceBlock": 12178590,
+      "sinceTimestamp": 1632980684,
+      "sinceBlock": 13325304,
       "values": {
         "$immutable": true,
-        "getTellorCurrentValue": [[true, 1948617091, 1772532167]],
-        "tellor": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0"
+        "decimals": 18,
+        "getCollateralRate": "9684838227955654",
+        "getEthValue": [0, 1, 2, 3, 4],
+        "getExchangeRate": "1158735463711660524",
+        "getRethValue": [0, 0, 1, 2, 3],
+        "getTotalCollateral": "3865027871669339910088",
+        "name": "Rocket Pool ETH",
+        "symbol": "rETH",
+        "totalSupply": "344410164552332742285096",
+        "version": 1
+      },
+      "errors": {
+        "getEthValue": "Processing error occurred.",
+        "getRethValue": "Processing error occurred."
       },
       "implementationNames": {
-        "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112": "TellorCaller"
+        "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": "RocketTokenRETH"
       }
     },
     {
@@ -1434,7 +1076,9 @@
       "ignoreInWatchMode": [
         "getTroveIdsCount",
         "lastZombieTroveId",
-        "rewardSnapshots"
+        "rewardSnapshots",
+        "getEntireBranchDebt",
+        "getEntireBranchColl"
       ],
       "sinceTimestamp": 1747646855,
       "sinceBlock": 22516117,
@@ -1443,10 +1087,9 @@
         "activePool": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
         "borrowerOperations": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
         "CCR": "1600000000000000000",
-        "getEntireBranchColl": "5945688136045064762180",
-        "getEntireBranchDebt": "5796683547432390825758138",
-        "getTroveAnnualInterestRate": [0, 0, 0, 0, 0],
-        "getTroveIdsCount": 30,
+        "getEntireBranchColl": "5918346373805473016365",
+        "getEntireBranchDebt": "5767495274515018066355539",
+        "getTroveIdsCount": 29,
         "lastZombieTroveId": 0,
         "rewardSnapshots": [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
         "shutdownTime": 0,
@@ -1454,10 +1097,7 @@
         "stabilityPool": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
         "troveNFT": "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873"
       },
-      "errors": {
-        "getTroveAnnualInterestRate": "Processing error occurred.",
-        "rewardSnapshots": "Processing error occurred."
-      },
+      "errors": { "rewardSnapshots": "Processing error occurred." },
       "implementationNames": {
         "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": "TroveManager"
       }
@@ -1471,46 +1111,6 @@
       "address": "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1616760338,
-      "sinceBlock": 12114533,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-        "$members": [
-          "eth:0x8a93d344D012aA51E2D6e4C40892bF93b479586a",
-          "eth:0x44220c740b288403E75658ac693674C59e4aB895",
-          "eth:0x87376f16268A0b93055A6FbcBe94f093cb589B81",
-          "eth:0x1690A999A99999bBf94BC3F8C4B882e8a54D0dA9",
-          "eth:0xDa70Aa8079148F0f78c86dfeC27e20329450Bf79",
-          "eth:0x185Bb4F1cEA89FffF3D437be49c9c1FA4c57feB9",
-          "eth:0x6B19D4DB4d0bF6faF04aeea45b2f7930e0E09eE4",
-          "eth:0x44156552427c444c873067e593bB9721593B284f"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x19c39eb9a8b14aaccb9a42edc86131e03767eb198d7785648e830570e485a8f4",
-        "getModules": [],
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "NAME": "Gnosis Safe",
-        "nonce": 124,
-        "VERSION": "1.1.1"
-      },
-      "implementationNames": {
-        "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C": "Proxy",
-        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
-      }
     },
     {
       "name": "Wrapped Ether Token",
@@ -1529,10 +1129,35 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2078337536601904704809062"
+        "totalSupply": "2058508786538273965537231"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
+      }
+    },
+    {
+      "name": "WETHPriceFeed",
+      "address": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x44383161cfda219b00f1e94bb530b1011dfea08f6b280bcce410e7c82107e61e"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["lastGoodPrice"],
+      "sinceTimestamp": 1747646351,
+      "sinceBlock": 22516075,
+      "values": {
+        "$immutable": true,
+        "ethUsdOracle": {
+          "aggregator": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+          "stalenessThreshold": 86400,
+          "decimals": 8
+        },
+        "lastGoodPrice": "1978306700000000000000",
+        "priceSource": 0
+      },
+      "implementationNames": {
+        "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F": "WETHPriceFeed"
       }
     },
     {
@@ -1551,6 +1176,32 @@
       },
       "implementationNames": {
         "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e": "FixedAssetReader"
+      }
+    },
+    {
+      "name": "EACAggregatorProxy",
+      "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
+      "type": "Contract",
+      "template": "Steakhouse-USDC/EACAggregatorProxy",
+      "sourceHashes": [
+        "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1629828389,
+      "sinceBlock": 13089591,
+      "values": {
+        "$immutable": true,
+        "accessController": "eth:0x0000000000000000000000000000000000000000",
+        "aggregator": "eth:0x26f196806f43E88FD27798C9e3fb8fdF4618240f",
+        "decimals": 8,
+        "description": "STETH / USD",
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "phaseId": 2,
+        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
+        "version": 6
+      },
+      "implementationNames": {
+        "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": "EACAggregatorProxy"
       }
     },
     {
@@ -1582,10 +1233,10 @@
         "collToken": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
         "currentScale": 0,
         "getCollBalance": "3190945782731810634",
-        "getEntireBranchColl": "5945688136045064762180",
-        "getEntireBranchDebt": "5796683547432390825758138",
-        "getTotalBoldDeposits": "3267564356524613086660220",
-        "getYieldGainsOwed": "5402817386958089492444",
+        "getEntireBranchColl": "5918346373805473016365",
+        "getEntireBranchDebt": "5767495274515018066355539",
+        "getTotalBoldDeposits": "3296741469491296221975431",
+        "getYieldGainsOwed": "5514323585312133931866",
         "getYieldGainsPending": 0,
         "MAX_SCALE_FACTOR_EXPONENT": 8,
         "NAME": "StabilityPool",
@@ -1593,7 +1244,7 @@
         "P_PRECISION": "1000000000000000000000000000000000000",
         "SCALE_FACTOR": 1000000000,
         "SCALE_SPAN": 2,
-        "scaleToB": ["49900316282219646306684475507690560", 0, 0, 0, 0],
+        "scaleToB": ["49994529099937625523749905685565757", 0, 0, 0, 0],
         "scaleToS": ["12516419898161033555263713090285", 0, 0, 0, 0],
         "troveManager": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e"
       },
@@ -1652,63 +1303,36 @@
       }
     },
     {
-      "name": "CommunityIssuance",
-      "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
+      "name": "WSTETHPriceFeed",
+      "address": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
       "type": "Contract",
+      "template": "liquity-v2/WSTETHPriceFeed",
       "sourceHashes": [
-        "0x660f90040fab58be29a08c6a298a1e85a44e476899d585eccab2366384a57abe"
+        "0x3a549e5f9f7c4c184cbf7a78f0a039d2f2ef52c05cdeb5c7032645b674fc74d8"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1617611537,
-      "sinceBlock": 12178614,
+      "ignoreInWatchMode": ["lastGoodPrice"],
+      "sinceTimestamp": 1747646591,
+      "sinceBlock": 22516095,
       "values": {
         "$immutable": true,
-        "DECIMAL_PRECISION": "1000000000000000000",
-        "deploymentTime": 1617611537,
-        "isOwner": false,
-        "ISSUANCE_FACTOR": "999998681227695000",
-        "LQTYSupplyCap": "32000000000000000000000000",
-        "lqtyToken": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-        "NAME": "CommunityIssuance",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "SECONDS_IN_ONE_MINUTE": 60,
-        "stabilityPoolAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
-        "totalLQTYIssued": "30937394161462134272000000"
+        "ethUsdOracle": {
+          "aggregator": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+          "stalenessThreshold": 86400,
+          "decimals": 8
+        },
+        "lastGoodPrice": "2533143181884415775864",
+        "priceSource": 0,
+        "rateProviderAddress": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "STETH_USD_DEVIATION_THRESHOLD": "10000000000000000",
+        "stEthUsdOracle": {
+          "aggregator": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
+          "stalenessThreshold": 86400,
+          "decimals": 8
+        }
       },
       "implementationNames": {
-        "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816": "CommunityIssuance"
-      }
-    },
-    {
-      "address": "eth:0xDa70Aa8079148F0f78c86dfeC27e20329450Bf79",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "ActivePool",
-      "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x676451cf2cbcb8846fa323a43c34ffb7758ab07d6d4da11cc67666e322a2cb1b"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": ["getETH", "getLUSDDebt"],
-      "sinceTimestamp": 1617610930,
-      "sinceBlock": 12178562,
-      "values": {
-        "$immutable": true,
-        "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-        "defaultPoolAddress": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
-        "getETH": "77459866898405683285253",
-        "getLUSDDebt": "30749572878952724070962338",
-        "isOwner": false,
-        "NAME": "ActivePool",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "stabilityPoolAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
-        "troveManagerAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2"
-      },
-      "implementationNames": {
-        "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F": "ActivePool"
+        "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E": "WSTETHPriceFeed"
       }
     },
     {
@@ -1743,6 +1367,7 @@
           "eth:0x0000000000000000000000000000000000000000"
         ],
         "MCR": "1200000000000000000",
+        "priceFeed": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
         "removeManagerReceiverOf": [
           [
             "eth:0x0000000000000000000000000000000000000000",
@@ -1801,23 +1426,23 @@
       "sinceBlock": 22516081,
       "values": {
         "$immutable": true,
-        "aggBatchManagementFees": "2077122131284034369",
-        "aggRecordedDebt": "6512482051579980324900372",
-        "aggWeightedBatchManagementFeeSum": "eth:0x4123855519570108964282467500000000000000",
-        "aggWeightedDebtSum": "244625683552211255088979613178669892909379",
+        "aggBatchManagementFees": "7981236384910263552",
+        "aggRecordedDebt": "6512488687982838889531449",
+        "aggWeightedBatchManagementFeeSum": "eth:0x4671404119147669602431827500000000000000",
+        "aggWeightedDebtSum": "242689652200423571144275731394626738392901",
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
         "borrowerOperationsAddress": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
-        "calcPendingAggBatchManagementFee": "633956480177444453",
-        "calcPendingAggInterest": "37606079206656524755",
-        "calcPendingSPYield": "28204559404992393566",
+        "calcPendingAggBatchManagementFee": "3137377576215995757",
+        "calcPendingAggInterest": "162993621055459514106",
+        "calcPendingSPYield": "122245215791594635579",
         "collToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "defaultPoolAddress": "eth:0xD4558240d50C2E219a21c9d25afD513Bb6e5B1A0",
-        "getBoldDebt": "6512522368737798442903949",
+        "getBoldDebt": "6512662800217855475304864",
         "getCollBalance": "6006781966669596358390",
         "hasBeenShutDown": false,
         "interestRouter": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
-        "lastAggBatchManagementFeesUpdateTime": 1772528279,
-        "lastAggUpdateTime": 1772528279,
+        "lastAggBatchManagementFeesUpdateTime": 1772607959,
+        "lastAggUpdateTime": 1772607959,
         "NAME": "ActivePool",
         "shutdownTime": 0,
         "stabilityPool": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
@@ -1860,22 +1485,19 @@
       "sinceBlock": 22516069,
       "values": {
         "$immutable": true,
-        "baseRate": 2041852123170433,
+        "baseRate": 663826765213462,
         "boldToken": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
-        "getEffectiveRedemptionFeeInBold": [0, 0, 0, 0, 0],
         "getRedemptionFeeWithDecay": [0, 0, 0, 0, 0],
-        "getRedemptionRate": 7041852123170433,
+        "getRedemptionRate": 5663826765213462,
         "getRedemptionRateForRedeemedAmount": [
-          5031659170686853, 5031659170686853, 5031659170686853,
-          5031659170686853, 5031659170686853
+          5059930501641867, 5059930501641867, 5059930501641867,
+          5059930501641867, 5059930501641867
         ],
-        "getRedemptionRateWithDecay": 5031659170686853,
+        "getRedemptionRateWithDecay": 5059930501641867,
         "getToken": [
           "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-          "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000"
+          "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
         ],
         "getTroveManager": [
           "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
@@ -1884,14 +1506,12 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
-        "lastFeeOperationTime": 1772403239,
+        "lastFeeOperationTime": 1772554199,
         "totalCollaterals": 3
       },
       "errors": {
-        "getEffectiveRedemptionFeeInBold": "Processing error occurred.",
         "getRedemptionFeeWithDecay": "Processing error occurred.",
         "getRedemptionRateForRedeemedAmount": "Processing error occurred.",
-        "getToken": "Processing error occurred.",
         "getTroveManager": "Processing error occurred."
       },
       "implementationNames": {
@@ -1959,54 +1579,6 @@
     "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": [
       "constructor(address _masterCopy)"
     ],
-    "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007": [
-      "event ActivePoolAddressChanged(address _activePoolAddress)",
-      "event CollSurplusPoolAddressChanged(address _collSurplusPoolAddress)",
-      "event DefaultPoolAddressChanged(address _defaultPoolAddress)",
-      "event GasPoolAddressChanged(address _gasPoolAddress)",
-      "event LQTYStakingAddressChanged(address _lqtyStakingAddress)",
-      "event LUSDBorrowingFeePaid(address indexed _borrower, uint256 _LUSDFee)",
-      "event LUSDTokenAddressChanged(address _lusdTokenAddress)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PriceFeedAddressChanged(address _newPriceFeedAddress)",
-      "event SortedTrovesAddressChanged(address _sortedTrovesAddress)",
-      "event StabilityPoolAddressChanged(address _stabilityPoolAddress)",
-      "event TroveCreated(address indexed _borrower, uint256 arrayIndex)",
-      "event TroveManagerAddressChanged(address _newTroveManagerAddress)",
-      "event TroveUpdated(address indexed _borrower, uint256 _debt, uint256 _coll, uint256 stake, uint8 operation)",
-      "function BORROWING_FEE_FLOOR() view returns (uint256)",
-      "function CCR() view returns (uint256)",
-      "function DECIMAL_PRECISION() view returns (uint256)",
-      "function LUSD_GAS_COMPENSATION() view returns (uint256)",
-      "function MCR() view returns (uint256)",
-      "function MIN_NET_DEBT() view returns (uint256)",
-      "function NAME() view returns (string)",
-      "function PERCENT_DIVISOR() view returns (uint256)",
-      "function _100pct() view returns (uint256)",
-      "function activePool() view returns (address)",
-      "function addColl(address _upperHint, address _lowerHint) payable",
-      "function adjustTrove(uint256 _maxFeePercentage, uint256 _collWithdrawal, uint256 _LUSDChange, bool _isDebtIncrease, address _upperHint, address _lowerHint) payable",
-      "function claimCollateral()",
-      "function closeTrove()",
-      "function defaultPool() view returns (address)",
-      "function getCompositeDebt(uint256 _debt) pure returns (uint256)",
-      "function getEntireSystemColl() view returns (uint256 entireSystemColl)",
-      "function getEntireSystemDebt() view returns (uint256 entireSystemDebt)",
-      "function isOwner() view returns (bool)",
-      "function lqtyStaking() view returns (address)",
-      "function lqtyStakingAddress() view returns (address)",
-      "function lusdToken() view returns (address)",
-      "function moveETHGainToTrove(address _borrower, address _upperHint, address _lowerHint) payable",
-      "function openTrove(uint256 _maxFeePercentage, uint256 _LUSDAmount, address _upperHint, address _lowerHint) payable",
-      "function owner() view returns (address)",
-      "function priceFeed() view returns (address)",
-      "function repayLUSD(uint256 _LUSDAmount, address _upperHint, address _lowerHint)",
-      "function setAddresses(address _troveManagerAddress, address _activePoolAddress, address _defaultPoolAddress, address _stabilityPoolAddress, address _gasPoolAddress, address _collSurplusPoolAddress, address _priceFeedAddress, address _sortedTrovesAddress, address _lusdTokenAddress, address _lqtyStakingAddress)",
-      "function sortedTroves() view returns (address)",
-      "function troveManager() view returns (address)",
-      "function withdrawColl(uint256 _collWithdrawal, address _upperHint, address _lowerHint)",
-      "function withdrawLUSD(uint256 _maxFeePercentage, uint256 _LUSDAmount, address _upperHint, address _lowerHint)"
-    ],
     "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": [
       "event ChangedMasterCopy(address masterCopy)",
       "event Confirmed(bytes32 indexed transactionHash, address indexed manager)",
@@ -2025,20 +1597,6 @@
       "function revokeTransaction(bytes32 transactionHash)",
       "function setExecutor(address executor, bool allowed)",
       "function setup()"
-    ],
-    "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B": [
-      "event LQTYTokenAddressSet(address _lqtyTokenAddress)",
-      "event LockupContractDeployedThroughFactory(address _lockupContractAddress, address _beneficiary, uint256 _unlockTime, address _deployer)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function NAME() view returns (string)",
-      "function SECONDS_IN_ONE_YEAR() view returns (uint256)",
-      "function deployLockupContract(address _beneficiary, uint256 _unlockTime)",
-      "function isOwner() view returns (bool)",
-      "function isRegisteredLockup(address _contractAddress) view returns (bool)",
-      "function lockupContractToDeployer(address) view returns (address)",
-      "function lqtyTokenAddress() view returns (address)",
-      "function owner() view returns (address)",
-      "function setLQTYTokenAddress(address _lqtyTokenAddress)"
     ],
     "eth:0x3400874305E1547020fb8e80eAF1308B757171Af": [
       "constructor(address _assetReader)",
@@ -2091,6 +1649,19 @@
       "function signMessage(bytes _data)",
       "function signedMessages(bytes32) view returns (uint256)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B": [
+      "constructor(address _ethUsdOracleAddress, address _rEthEthOracleAddress, address _rEthTokenAddress, uint256 _ethUsdStalenessThreshold, uint256 _rEthEthStalenessThreshold, address _borrowerOperationsAddress)",
+      "error InsufficientGasForExternalCall()",
+      "event ShutDownFromOracleFailure(address _failedOracleAddr)",
+      "function RETH_ETH_DEVIATION_THRESHOLD() view returns (uint256)",
+      "function ethUsdOracle() view returns (address aggregator, uint256 stalenessThreshold, uint8 decimals)",
+      "function fetchPrice() returns (uint256, bool)",
+      "function fetchRedemptionPrice() returns (uint256, bool)",
+      "function lastGoodPrice() view returns (uint256)",
+      "function priceSource() view returns (uint8)",
+      "function rEthEthOracle() view returns (address aggregator, uint256 stalenessThreshold, uint8 decimals)",
+      "function rateProviderAddress() view returns (address)"
     ],
     "eth:0x362f822dF79790C8077e61110484Fffa48F682A1": [
       "constructor(address _assetReader)",
@@ -2195,63 +1766,6 @@
       "function withdrawBold(uint256 _troveId, uint256 _boldAmount, uint256 _maxUpfrontFee)",
       "function withdrawColl(uint256 _troveId, uint256 _collWithdrawal)"
     ],
-    "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De": [
-      "event LastGoodPriceUpdated(uint256 _lastGoodPrice)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PriceFeedStatusChanged(uint8 newStatus)",
-      "function DECIMAL_PRECISION() view returns (uint256)",
-      "function ETHUSD_TELLOR_REQ_ID() view returns (uint256)",
-      "function MAX_PRICE_DEVIATION_FROM_PREVIOUS_ROUND() view returns (uint256)",
-      "function MAX_PRICE_DIFFERENCE_BETWEEN_ORACLES() view returns (uint256)",
-      "function NAME() view returns (string)",
-      "function TARGET_DIGITS() view returns (uint256)",
-      "function TELLOR_DIGITS() view returns (uint256)",
-      "function TIMEOUT() view returns (uint256)",
-      "function fetchPrice() returns (uint256)",
-      "function isOwner() view returns (bool)",
-      "function lastGoodPrice() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function priceAggregator() view returns (address)",
-      "function setAddresses(address _priceAggregatorAddress, address _tellorCallerAddress)",
-      "function status() view returns (uint8)",
-      "function tellorCaller() view returns (address)"
-    ],
-    "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d": [
-      "event ActivePoolAddressSet(address _activePoolAddress)",
-      "event BorrowerOperationsAddressSet(address _borrowerOperationsAddress)",
-      "event EtherSent(address _account, uint256 _amount)",
-      "event F_ETHUpdated(uint256 _F_ETH)",
-      "event F_LUSDUpdated(uint256 _F_LUSD)",
-      "event LQTYTokenAddressSet(address _lqtyTokenAddress)",
-      "event LUSDTokenAddressSet(address _lusdTokenAddress)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event StakeChanged(address indexed staker, uint256 newStake)",
-      "event StakerSnapshotsUpdated(address _staker, uint256 _F_ETH, uint256 _F_LUSD)",
-      "event StakingGainsWithdrawn(address indexed staker, uint256 LUSDGain, uint256 ETHGain)",
-      "event TotalLQTYStakedUpdated(uint256 _totalLQTYStaked)",
-      "event TroveManagerAddressSet(address _troveManager)",
-      "function DECIMAL_PRECISION() view returns (uint256)",
-      "function F_ETH() view returns (uint256)",
-      "function F_LUSD() view returns (uint256)",
-      "function NAME() view returns (string)",
-      "function activePoolAddress() view returns (address)",
-      "function borrowerOperationsAddress() view returns (address)",
-      "function getPendingETHGain(address _user) view returns (uint256)",
-      "function getPendingLUSDGain(address _user) view returns (uint256)",
-      "function increaseF_ETH(uint256 _ETHFee)",
-      "function increaseF_LUSD(uint256 _LUSDFee)",
-      "function isOwner() view returns (bool)",
-      "function lqtyToken() view returns (address)",
-      "function lusdToken() view returns (address)",
-      "function owner() view returns (address)",
-      "function setAddresses(address _lqtyTokenAddress, address _lusdTokenAddress, address _troveManagerAddress, address _borrowerOperationsAddress, address _activePoolAddress)",
-      "function snapshots(address) view returns (uint256 F_ETH_Snapshot, uint256 F_LUSD_Snapshot)",
-      "function stake(uint256 _LQTYamount)",
-      "function stakes(address) view returns (uint256)",
-      "function totalLQTYStaked() view returns (uint256)",
-      "function troveManagerAddress() view returns (address)",
-      "function unstake(uint256 _LQTYamount)"
-    ],
     "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": [
       "constructor(address _addressesRegistry)",
       "event ActivePoolBoldDebtUpdated(uint256 _recordedDebtSum)",
@@ -2291,6 +1805,36 @@
       "function shutdownTime() view returns (uint256)",
       "function stabilityPool() view returns (address)",
       "function troveManagerAddress() view returns (address)"
+    ],
+    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
     ],
     "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": [
       "constructor(address _addressesRegistry)",
@@ -2387,38 +1931,6 @@
       "function transferOwnership(address _to)",
       "function version() view returns (uint256)"
     ],
-    "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0": [
-      "constructor(address _troveManagerAddress, address _stabilityPoolAddress, address _borrowerOperationsAddress)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event BorrowerOperationsAddressChanged(address _newBorrowerOperationsAddress)",
-      "event LUSDTokenBalanceUpdated(address _user, uint256 _amount)",
-      "event StabilityPoolAddressChanged(address _newStabilityPoolAddress)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event TroveManagerAddressChanged(address _troveManagerAddress)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function borrowerOperationsAddress() view returns (address)",
-      "function burn(address _account, uint256 _amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function domainSeparator() view returns (bytes32)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function mint(address _account, uint256 _amount)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function permitTypeHash() view returns (bytes32)",
-      "function returnFromPool(address _poolAddress, address _receiver, uint256 _amount)",
-      "function sendToPool(address _sender, address _poolAddress, uint256 _amount)",
-      "function stabilityPoolAddress() view returns (address)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
-      "function troveManagerAddress() view returns (address)",
-      "function version() view returns (string)"
-    ],
     "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": [
       "constructor(address _owner)",
       "error InvalidShortString()",
@@ -2456,125 +1968,6 @@
       "function totalSupply() view returns (uint256)",
       "function transfer(address recipient, uint256 amount) returns (bool)",
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
-    ],
-    "eth:0x65f9A98009Aecaa3fc8A3A83FEF44e2b6931A7b2": [
-      "constructor(address _lqty, address _lusd, address _stakingV1)",
-      "function lqty() view returns (address)",
-      "function lusd() view returns (address)",
-      "function stake(uint256 _amount, address _lqtyFrom, bool _doSendRewards, address _recipient) returns (uint256 lusdReceived, uint256 lusdSent, uint256 ethReceived, uint256 ethSent)",
-      "function stakeViaPermit(uint256 _amount, address _lqtyFrom, tuple(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) _permitParams, bool _doSendRewards, address _recipient) returns (uint256 lusdReceived, uint256 lusdSent, uint256 ethReceived, uint256 ethSent)",
-      "function staked() view returns (uint256)",
-      "function stakingV1() view returns (address)",
-      "function stakingV2() view returns (address)",
-      "function unstake(uint256 _amount, bool _doSendRewards, address _recipient) returns (uint256 lqtyReceived, uint256 lqtySent, uint256 lusdReceived, uint256 lusdSent, uint256 ethReceived, uint256 ethSent)"
-    ],
-    "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb": [
-      "event ActivePoolAddressChanged(address _newActivePoolAddress)",
-      "event BorrowerOperationsAddressChanged(address _newBorrowerOperationsAddress)",
-      "event CommunityIssuanceAddressChanged(address _newCommunityIssuanceAddress)",
-      "event DefaultPoolAddressChanged(address _newDefaultPoolAddress)",
-      "event DepositSnapshotUpdated(address indexed _depositor, uint256 _P, uint256 _S, uint256 _G)",
-      "event ETHGainWithdrawn(address indexed _depositor, uint256 _ETH, uint256 _LUSDLoss)",
-      "event EpochUpdated(uint128 _currentEpoch)",
-      "event EtherSent(address _to, uint256 _amount)",
-      "event FrontEndRegistered(address indexed _frontEnd, uint256 _kickbackRate)",
-      "event FrontEndSnapshotUpdated(address indexed _frontEnd, uint256 _P, uint256 _G)",
-      "event FrontEndStakeChanged(address indexed _frontEnd, uint256 _newFrontEndStake, address _depositor)",
-      "event FrontEndTagSet(address indexed _depositor, address indexed _frontEnd)",
-      "event G_Updated(uint256 _G, uint128 _epoch, uint128 _scale)",
-      "event LQTYPaidToDepositor(address indexed _depositor, uint256 _LQTY)",
-      "event LQTYPaidToFrontEnd(address indexed _frontEnd, uint256 _LQTY)",
-      "event LUSDTokenAddressChanged(address _newLUSDTokenAddress)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event P_Updated(uint256 _P)",
-      "event PriceFeedAddressChanged(address _newPriceFeedAddress)",
-      "event S_Updated(uint256 _S, uint128 _epoch, uint128 _scale)",
-      "event ScaleUpdated(uint128 _currentScale)",
-      "event SortedTrovesAddressChanged(address _newSortedTrovesAddress)",
-      "event StabilityPoolETHBalanceUpdated(uint256 _newBalance)",
-      "event StabilityPoolLUSDBalanceUpdated(uint256 _newBalance)",
-      "event TroveManagerAddressChanged(address _newTroveManagerAddress)",
-      "event UserDepositChanged(address indexed _depositor, uint256 _newDeposit)",
-      "function BORROWING_FEE_FLOOR() view returns (uint256)",
-      "function CCR() view returns (uint256)",
-      "function DECIMAL_PRECISION() view returns (uint256)",
-      "function LUSD_GAS_COMPENSATION() view returns (uint256)",
-      "function MCR() view returns (uint256)",
-      "function MIN_NET_DEBT() view returns (uint256)",
-      "function NAME() view returns (string)",
-      "function P() view returns (uint256)",
-      "function PERCENT_DIVISOR() view returns (uint256)",
-      "function SCALE_FACTOR() view returns (uint256)",
-      "function _100pct() view returns (uint256)",
-      "function activePool() view returns (address)",
-      "function borrowerOperations() view returns (address)",
-      "function communityIssuance() view returns (address)",
-      "function currentEpoch() view returns (uint128)",
-      "function currentScale() view returns (uint128)",
-      "function defaultPool() view returns (address)",
-      "function depositSnapshots(address) view returns (uint256 S, uint256 P, uint256 G, uint128 scale, uint128 epoch)",
-      "function deposits(address) view returns (uint256 initialValue, address frontEndTag)",
-      "function epochToScaleToG(uint128, uint128) view returns (uint256)",
-      "function epochToScaleToSum(uint128, uint128) view returns (uint256)",
-      "function frontEndSnapshots(address) view returns (uint256 S, uint256 P, uint256 G, uint128 scale, uint128 epoch)",
-      "function frontEndStakes(address) view returns (uint256)",
-      "function frontEnds(address) view returns (uint256 kickbackRate, bool registered)",
-      "function getCompoundedFrontEndStake(address _frontEnd) view returns (uint256)",
-      "function getCompoundedLUSDDeposit(address _depositor) view returns (uint256)",
-      "function getDepositorETHGain(address _depositor) view returns (uint256)",
-      "function getDepositorLQTYGain(address _depositor) view returns (uint256)",
-      "function getETH() view returns (uint256)",
-      "function getEntireSystemColl() view returns (uint256 entireSystemColl)",
-      "function getEntireSystemDebt() view returns (uint256 entireSystemDebt)",
-      "function getFrontEndLQTYGain(address _frontEnd) view returns (uint256)",
-      "function getTotalLUSDDeposits() view returns (uint256)",
-      "function isOwner() view returns (bool)",
-      "function lastETHError_Offset() view returns (uint256)",
-      "function lastLQTYError() view returns (uint256)",
-      "function lastLUSDLossError_Offset() view returns (uint256)",
-      "function lusdToken() view returns (address)",
-      "function offset(uint256 _debtToOffset, uint256 _collToAdd)",
-      "function owner() view returns (address)",
-      "function priceFeed() view returns (address)",
-      "function provideToSP(uint256 _amount, address _frontEndTag)",
-      "function registerFrontEnd(uint256 _kickbackRate)",
-      "function setAddresses(address _borrowerOperationsAddress, address _troveManagerAddress, address _activePoolAddress, address _lusdTokenAddress, address _sortedTrovesAddress, address _priceFeedAddress, address _communityIssuanceAddress)",
-      "function sortedTroves() view returns (address)",
-      "function troveManager() view returns (address)",
-      "function withdrawETHGainToTrove(address _upperHint, address _lowerHint)",
-      "function withdrawFromSP(uint256 _amount)"
-    ],
-    "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D": [
-      "constructor(address _communityIssuanceAddress, address _lqtyStakingAddress, address _lockupFactoryAddress, address _bountyAddress, address _lpRewardsAddress, address _multisigAddress)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event CommunityIssuanceAddressSet(address _communityIssuanceAddress)",
-      "event LQTYStakingAddressSet(address _lqtyStakingAddress)",
-      "event LockupContractFactoryAddressSet(address _lockupContractFactoryAddress)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function ONE_YEAR_IN_SECONDS() view returns (uint256)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function communityIssuanceAddress() view returns (address)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function domainSeparator() view returns (bytes32)",
-      "function getDeploymentStartTime() view returns (uint256)",
-      "function getLpRewardsEntitlement() view returns (uint256)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function lockupContractFactory() view returns (address)",
-      "function lqtyStakingAddress() view returns (address)",
-      "function multisigAddress() view returns (address)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function permitTypeHash() view returns (bytes32)",
-      "function sendToLQTYStaking(address _sender, uint256 _amount)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
-      "function version() view returns (string)"
     ],
     "eth:0x7ae430E25b67f19B431e1D1Dc048a5BCF24C0873": [
       "constructor(address _addressesRegistry)",
@@ -2667,6 +2060,32 @@
       "function stabilityPool() view returns (address)",
       "function troveNFT() view returns (address)",
       "function urgentRedemption(uint256 _boldAmount, uint256[] _troveIds, uint256 _minCollateral)"
+    ],
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": [
+      "constructor(address _stETH)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function getStETHByWstETH(uint256 _wstETHAmount) view returns (uint256)",
+      "function getWstETHByStETH(uint256 _stETHAmount) view returns (uint256)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function stETH() view returns (address)",
+      "function stEthPerToken() view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function tokensPerStEth() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function unwrap(uint256 _wstETHAmount) returns (uint256)",
+      "function wrap(uint256 _stETHAmount) returns (uint256)"
     ],
     "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1": [
       "constructor(address _lqty, address _lusd, address _stakingV1, address _bold, tuple(uint256 registrationFee, uint256 registrationThresholdFactor, uint256 unregistrationThresholdFactor, uint256 unregistrationAfterEpochs, uint256 votingThresholdFactor, uint256 minClaim, uint256 minAccrual, uint256 epochStart, uint256 epochDuration, uint256 epochVotingCutoff) _config, address _owner, address[] _initiatives)",
@@ -2795,77 +2214,6 @@
       "function tokenURI(uint256 _tokenId) view returns (string)",
       "function transferFrom(address from, address to, uint256 tokenId)",
       "function troveManager() view returns (address)"
-    ],
-    "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0": [
-      "constructor(address _tContract, address _oTellor)",
-      "event NewTellorAddress(address _newTellor)",
-      "function _allowances(address, address) view returns (uint256)",
-      "function addresses(bytes32) view returns (address)",
-      "function balances(address, uint256) view returns (uint128 fromBlock, uint128 value)",
-      "function bytesVars(bytes32) view returns (bytes32)",
-      "function changeDeity(address _newDeity)",
-      "function changeOwner(address _newOwner)",
-      "function changeTellorContract(address _tContract)",
-      "function currentMiners(uint256) view returns (uint256 value, address miner)",
-      "function disputeIdByDisputeHash(bytes32) view returns (uint256)",
-      "function disputesById(uint256) view returns (bytes32 hash, int256 tally, bool executed, bool disputeVotePassed, bool isPropFork, address reportedMiner, address reportingParty, address proposedForkAddress)",
-      "function migrated(address) view returns (bool)",
-      "function minersByChallenge(bytes32, address) view returns (bool)",
-      "function newValueTimestamps(uint256) view returns (uint256)",
-      "function requestIdByQueryHash(bytes32) view returns (uint256)",
-      "function uints(bytes32) view returns (uint256)"
-    ],
-    "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C": [
-      "event ActivePoolAddressChanged(address _newActivePoolAddress)",
-      "event DefaultPoolAddressChanged(address _newDefaultPoolAddress)",
-      "event DefaultPoolETHBalanceUpdated(uint256 _ETH)",
-      "event DefaultPoolLUSDDebtUpdated(uint256 _LUSDDebt)",
-      "event ETHBalanceUpdated(uint256 _newBalance)",
-      "event EtherSent(address _to, uint256 _amount)",
-      "event LUSDBalanceUpdated(uint256 _newBalance)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event StabilityPoolAddressChanged(address _newStabilityPoolAddress)",
-      "event TroveManagerAddressChanged(address _newTroveManagerAddress)",
-      "function NAME() view returns (string)",
-      "function activePoolAddress() view returns (address)",
-      "function decreaseLUSDDebt(uint256 _amount)",
-      "function getETH() view returns (uint256)",
-      "function getLUSDDebt() view returns (uint256)",
-      "function increaseLUSDDebt(uint256 _amount)",
-      "function isOwner() view returns (bool)",
-      "function owner() view returns (address)",
-      "function sendETHToActivePool(uint256 _amount)",
-      "function setAddresses(address _troveManagerAddress, address _activePoolAddress)",
-      "function troveManagerAddress() view returns (address)"
-    ],
-    "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6": [
-      "event BorrowerOperationsAddressChanged(address _borrowerOperationsAddress)",
-      "event NodeAdded(address _id, uint256 _NICR)",
-      "event NodeRemoved(address _id)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event SortedTrovesAddressChanged(address _sortedDoublyLLAddress)",
-      "event TroveManagerAddressChanged(address _troveManagerAddress)",
-      "function NAME() view returns (string)",
-      "function borrowerOperationsAddress() view returns (address)",
-      "function contains(address _id) view returns (bool)",
-      "function data() view returns (address head, address tail, uint256 maxSize, uint256 size)",
-      "function findInsertPosition(uint256 _NICR, address _prevId, address _nextId) view returns (address, address)",
-      "function getFirst() view returns (address)",
-      "function getLast() view returns (address)",
-      "function getMaxSize() view returns (uint256)",
-      "function getNext(address _id) view returns (address)",
-      "function getPrev(address _id) view returns (address)",
-      "function getSize() view returns (uint256)",
-      "function insert(address _id, uint256 _NICR, address _prevId, address _nextId)",
-      "function isEmpty() view returns (bool)",
-      "function isFull() view returns (bool)",
-      "function isOwner() view returns (bool)",
-      "function owner() view returns (address)",
-      "function reInsert(address _id, uint256 _newNICR, address _prevId, address _nextId)",
-      "function remove(address _id)",
-      "function setParams(uint256 _size, address _troveManagerAddress, address _borrowerOperationsAddress)",
-      "function troveManager() view returns (address)",
-      "function validInsertPosition(uint256 _NICR, address _prevId, address _nextId) view returns (bool)"
     ],
     "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F": [
       "constructor(address _addressesRegistry)",
@@ -3058,109 +2406,6 @@
       "function troveNFT() view returns (address)",
       "function urgentRedemption(uint256 _boldAmount, uint256[] _troveIds, uint256 _minCollateral)"
     ],
-    "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2": [
-      "event ActivePoolAddressChanged(address _activePoolAddress)",
-      "event BaseRateUpdated(uint256 _baseRate)",
-      "event BorrowerOperationsAddressChanged(address _newBorrowerOperationsAddress)",
-      "event CollSurplusPoolAddressChanged(address _collSurplusPoolAddress)",
-      "event DefaultPoolAddressChanged(address _defaultPoolAddress)",
-      "event GasPoolAddressChanged(address _gasPoolAddress)",
-      "event LQTYStakingAddressChanged(address _lqtyStakingAddress)",
-      "event LQTYTokenAddressChanged(address _lqtyTokenAddress)",
-      "event LTermsUpdated(uint256 _L_ETH, uint256 _L_LUSDDebt)",
-      "event LUSDTokenAddressChanged(address _newLUSDTokenAddress)",
-      "event LastFeeOpTimeUpdated(uint256 _lastFeeOpTime)",
-      "event Liquidation(uint256 _liquidatedDebt, uint256 _liquidatedColl, uint256 _collGasCompensation, uint256 _LUSDGasCompensation)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PriceFeedAddressChanged(address _newPriceFeedAddress)",
-      "event Redemption(uint256 _attemptedLUSDAmount, uint256 _actualLUSDAmount, uint256 _ETHSent, uint256 _ETHFee)",
-      "event SortedTrovesAddressChanged(address _sortedTrovesAddress)",
-      "event StabilityPoolAddressChanged(address _stabilityPoolAddress)",
-      "event SystemSnapshotsUpdated(uint256 _totalStakesSnapshot, uint256 _totalCollateralSnapshot)",
-      "event TotalStakesUpdated(uint256 _newTotalStakes)",
-      "event TroveIndexUpdated(address _borrower, uint256 _newIndex)",
-      "event TroveLiquidated(address indexed _borrower, uint256 _debt, uint256 _coll, uint8 _operation)",
-      "event TroveSnapshotsUpdated(uint256 _L_ETH, uint256 _L_LUSDDebt)",
-      "event TroveUpdated(address indexed _borrower, uint256 _debt, uint256 _coll, uint256 _stake, uint8 _operation)",
-      "function BETA() view returns (uint256)",
-      "function BOOTSTRAP_PERIOD() view returns (uint256)",
-      "function BORROWING_FEE_FLOOR() view returns (uint256)",
-      "function CCR() view returns (uint256)",
-      "function DECIMAL_PRECISION() view returns (uint256)",
-      "function LUSD_GAS_COMPENSATION() view returns (uint256)",
-      "function L_ETH() view returns (uint256)",
-      "function L_LUSDDebt() view returns (uint256)",
-      "function MAX_BORROWING_FEE() view returns (uint256)",
-      "function MCR() view returns (uint256)",
-      "function MINUTE_DECAY_FACTOR() view returns (uint256)",
-      "function MIN_NET_DEBT() view returns (uint256)",
-      "function NAME() view returns (string)",
-      "function PERCENT_DIVISOR() view returns (uint256)",
-      "function REDEMPTION_FEE_FLOOR() view returns (uint256)",
-      "function SECONDS_IN_ONE_MINUTE() view returns (uint256)",
-      "function TroveOwners(uint256) view returns (address)",
-      "function Troves(address) view returns (uint256 debt, uint256 coll, uint256 stake, uint8 status, uint128 arrayIndex)",
-      "function _100pct() view returns (uint256)",
-      "function activePool() view returns (address)",
-      "function addTroveOwnerToArray(address _borrower) returns (uint256 index)",
-      "function applyPendingRewards(address _borrower)",
-      "function baseRate() view returns (uint256)",
-      "function batchLiquidateTroves(address[] _troveArray)",
-      "function borrowerOperationsAddress() view returns (address)",
-      "function checkRecoveryMode(uint256 _price) view returns (bool)",
-      "function closeTrove(address _borrower)",
-      "function decayBaseRateFromBorrowing()",
-      "function decreaseTroveColl(address _borrower, uint256 _collDecrease) returns (uint256)",
-      "function decreaseTroveDebt(address _borrower, uint256 _debtDecrease) returns (uint256)",
-      "function defaultPool() view returns (address)",
-      "function getBorrowingFee(uint256 _LUSDDebt) view returns (uint256)",
-      "function getBorrowingFeeWithDecay(uint256 _LUSDDebt) view returns (uint256)",
-      "function getBorrowingRate() view returns (uint256)",
-      "function getBorrowingRateWithDecay() view returns (uint256)",
-      "function getCurrentICR(address _borrower, uint256 _price) view returns (uint256)",
-      "function getEntireDebtAndColl(address _borrower) view returns (uint256 debt, uint256 coll, uint256 pendingLUSDDebtReward, uint256 pendingETHReward)",
-      "function getEntireSystemColl() view returns (uint256 entireSystemColl)",
-      "function getEntireSystemDebt() view returns (uint256 entireSystemDebt)",
-      "function getNominalICR(address _borrower) view returns (uint256)",
-      "function getPendingETHReward(address _borrower) view returns (uint256)",
-      "function getPendingLUSDDebtReward(address _borrower) view returns (uint256)",
-      "function getRedemptionFeeWithDecay(uint256 _ETHDrawn) view returns (uint256)",
-      "function getRedemptionRate() view returns (uint256)",
-      "function getRedemptionRateWithDecay() view returns (uint256)",
-      "function getTCR(uint256 _price) view returns (uint256)",
-      "function getTroveColl(address _borrower) view returns (uint256)",
-      "function getTroveDebt(address _borrower) view returns (uint256)",
-      "function getTroveFromTroveOwnersArray(uint256 _index) view returns (address)",
-      "function getTroveOwnersCount() view returns (uint256)",
-      "function getTroveStake(address _borrower) view returns (uint256)",
-      "function getTroveStatus(address _borrower) view returns (uint256)",
-      "function hasPendingRewards(address _borrower) view returns (bool)",
-      "function increaseTroveColl(address _borrower, uint256 _collIncrease) returns (uint256)",
-      "function increaseTroveDebt(address _borrower, uint256 _debtIncrease) returns (uint256)",
-      "function isOwner() view returns (bool)",
-      "function lastETHError_Redistribution() view returns (uint256)",
-      "function lastFeeOperationTime() view returns (uint256)",
-      "function lastLUSDDebtError_Redistribution() view returns (uint256)",
-      "function liquidate(address _borrower)",
-      "function liquidateTroves(uint256 _n)",
-      "function lqtyStaking() view returns (address)",
-      "function lqtyToken() view returns (address)",
-      "function lusdToken() view returns (address)",
-      "function owner() view returns (address)",
-      "function priceFeed() view returns (address)",
-      "function redeemCollateral(uint256 _LUSDamount, address _firstRedemptionHint, address _upperPartialRedemptionHint, address _lowerPartialRedemptionHint, uint256 _partialRedemptionHintNICR, uint256 _maxIterations, uint256 _maxFeePercentage)",
-      "function removeStake(address _borrower)",
-      "function rewardSnapshots(address) view returns (uint256 ETH, uint256 LUSDDebt)",
-      "function setAddresses(address _borrowerOperationsAddress, address _activePoolAddress, address _defaultPoolAddress, address _stabilityPoolAddress, address _gasPoolAddress, address _collSurplusPoolAddress, address _priceFeedAddress, address _lusdTokenAddress, address _sortedTrovesAddress, address _lqtyTokenAddress, address _lqtyStakingAddress)",
-      "function setTroveStatus(address _borrower, uint256 _num)",
-      "function sortedTroves() view returns (address)",
-      "function stabilityPool() view returns (address)",
-      "function totalCollateralSnapshot() view returns (uint256)",
-      "function totalStakes() view returns (uint256)",
-      "function totalStakesSnapshot() view returns (uint256)",
-      "function updateStakeAndTotalStakes(address _borrower) returns (uint256)",
-      "function updateTroveRewardSnapshots(address _borrower)"
-    ],
     "eth:0xa5224865040034A9f8E5C60e0a616c9c8A63f237": [
       "constructor(address _pointer, bytes4[] _sigs, tuple(uint128 start, uint128 end)[] _assets)",
       "function assets(bytes4) view returns (uint128 start, uint128 end)",
@@ -3263,10 +2508,34 @@
       "function withdrawBold(uint256 _troveId, uint256 _boldAmount, uint256 _maxUpfrontFee)",
       "function withdrawColl(uint256 _troveId, uint256 _collWithdrawal)"
     ],
-    "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112": [
-      "constructor(address _tellorMasterAddress)",
-      "function getTellorCurrentValue(uint256 _requestId) view returns (bool ifRetrieve, uint256 value, uint256 _timestampRetrieved)",
-      "function tellor() view returns (address)"
+    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": [
+      "constructor(address _rocketStorageAddress)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EtherDeposited(address indexed from, uint256 amount, uint256 time)",
+      "event TokensBurned(address indexed from, uint256 amount, uint256 ethAmount, uint256 time)",
+      "event TokensMinted(address indexed to, uint256 amount, uint256 ethAmount, uint256 time)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 _rethAmount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function depositExcess() payable",
+      "function depositExcessCollateral()",
+      "function getCollateralRate() view returns (uint256)",
+      "function getEthValue(uint256 _rethAmount) view returns (uint256)",
+      "function getExchangeRate() view returns (uint256)",
+      "function getRethValue(uint256 _ethAmount) view returns (uint256)",
+      "function getTotalCollateral() view returns (uint256)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function mint(uint256 _ethAmount, address _to)",
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function version() view returns (uint8)"
     ],
     "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e": [
       "constructor(address _addressesRegistry)",
@@ -3337,9 +2606,6 @@
       "function troveNFT() view returns (address)",
       "function urgentRedemption(uint256 _boldAmount, uint256[] _troveIds, uint256 _minCollateral)"
     ],
-    "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C": [
-      "constructor(address _masterCopy)"
-    ],
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
       "function name() view returns (string)",
       "function approve(address guy, uint256 wad) returns (bool)",
@@ -3357,57 +2623,51 @@
       "event Deposit(address indexed dst, uint256 wad)",
       "event Withdrawal(address indexed src, uint256 wad)"
     ],
+    "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F": [
+      "constructor(address _ethUsdOracleAddress, uint256 _ethUsdStalenessThreshold, address _borrowerOperationsAddress)",
+      "error InsufficientGasForExternalCall()",
+      "event ShutDownFromOracleFailure(address _failedOracleAddr)",
+      "function ethUsdOracle() view returns (address aggregator, uint256 stalenessThreshold, uint8 decimals)",
+      "function fetchPrice() returns (uint256, bool)",
+      "function fetchRedemptionPrice() returns (uint256, bool)",
+      "function lastGoodPrice() view returns (uint256)",
+      "function priceSource() view returns (uint8)"
+    ],
     "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e": [
       "constructor(address _pointer, bytes4[] _sigs, tuple(uint128 start, uint128 end)[] _assets)",
       "function assets(bytes4) view returns (uint128 start, uint128 end)",
       "function pointer() view returns (address)",
       "function readAsset(bytes4 _sig) view returns (string)"
     ],
-    "eth:0xD3b9A1DCAbd16c482785Fd4265cB4580B84cdeD7": [
-      "constructor(address _flexAddress)",
-      "event Approval(address indexed _owner, address indexed _spender, uint256 _value)",
-      "event NewOracleAddress(address _newOracle, uint256 _timestamp)",
-      "event NewProposedOracleAddress(address _newProposedOracle, uint256 _timestamp)",
-      "event Transfer(address indexed _from, address indexed _to, uint256 _value)",
-      "function _allowances(address, address) view returns (uint256)",
-      "function addresses(bytes32) view returns (address)",
-      "function allowance(address _user, address _spender) view returns (uint256)",
-      "function allowedToTrade(address _user, uint256 _amount) view returns (bool)",
-      "function approve(address _spender, uint256 _amount) returns (bool)",
-      "function balanceOf(address _user) view returns (uint256)",
-      "function balanceOfAt(address _user, uint256 _blockNumber) view returns (uint256)",
-      "function balances(address, uint256) view returns (uint128 fromBlock, uint128 value)",
-      "function bytesVars(bytes32) view returns (bytes32)",
-      "function currentMiners(uint256) view returns (uint256 value, address miner)",
-      "function decimals() pure returns (uint8)",
-      "function disputeIdByDisputeHash(bytes32) view returns (uint256)",
-      "function disputesById(uint256) view returns (bytes32 hash, int256 tally, bool executed, bool disputeVotePassed, bool isPropFork, address reportedMiner, address reportingParty, address proposedForkAddress)",
-      "function getAddressVars(bytes32 _data) view returns (address)",
-      "function getLastNewValueById(uint256 _requestId) view returns (uint256, bool)",
-      "function getNewCurrentVariables() view returns (bytes32 _c, uint256[5] _r, uint256 _diff, uint256 _tip)",
-      "function getNewValueCountbyRequestId(uint256 _requestId) view returns (uint256)",
-      "function getTimestampbyRequestIDandIndex(uint256 _requestId, uint256 _index) view returns (uint256)",
-      "function getUintVar(bytes32 _data) view returns (uint256)",
-      "function init()",
-      "function isMigrated(address _addy) view returns (bool)",
-      "function migrate()",
-      "function migrated(address) view returns (bool)",
-      "function minersByChallenge(bytes32, address) view returns (bool)",
-      "function mintToOracle()",
-      "function mintToTeam()",
-      "function name() pure returns (string)",
-      "function newValueTimestamps(uint256) view returns (uint256)",
-      "function requestIdByQueryHash(bytes32) view returns (uint256)",
-      "function retrieveData(uint256 _requestId, uint256 _timestamp) view returns (uint256)",
-      "function symbol() pure returns (string)",
-      "function teamTransferDisputedStake(address _from, address _to)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address _to, uint256 _amount) returns (bool success)",
-      "function transferFrom(address _from, address _to, uint256 _amount) returns (bool success)",
-      "function transferOutOfContract()",
-      "function uints(bytes32) view returns (uint256)",
-      "function updateOracleAddress()",
-      "function verify() pure returns (uint256)"
+    "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": [
+      "constructor(address _aggregator, address _accessController)",
+      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
+      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function accessController() view returns (address)",
+      "function aggregator() view returns (address)",
+      "function confirmAggregator(address _aggregator)",
+      "function decimals() view returns (uint8)",
+      "function description() view returns (string)",
+      "function getAnswer(uint256 _roundId) view returns (int256)",
+      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getTimestamp(uint256 _roundId) view returns (uint256)",
+      "function latestAnswer() view returns (int256)",
+      "function latestRound() view returns (uint256)",
+      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function phaseAggregators(uint16) view returns (address)",
+      "function phaseId() view returns (uint16)",
+      "function proposeAggregator(address _aggregator)",
+      "function proposedAggregator() view returns (address)",
+      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setController(address _accessController)",
+      "function transferOwnership(address _to)",
+      "function version() view returns (uint256)"
     ],
     "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695": [
       "constructor(address _addressesRegistry)",
@@ -3492,52 +2752,18 @@
       "function sendCollToActivePool(uint256 _amount)",
       "function troveManagerAddress() view returns (address)"
     ],
-    "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816": [
-      "constructor()",
-      "event LQTYTokenAddressSet(address _lqtyTokenAddress)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event StabilityPoolAddressSet(address _stabilityPoolAddress)",
-      "event TotalLQTYIssuedUpdated(uint256 _totalLQTYIssued)",
-      "function DECIMAL_PRECISION() view returns (uint256)",
-      "function ISSUANCE_FACTOR() view returns (uint256)",
-      "function LQTYSupplyCap() view returns (uint256)",
-      "function NAME() view returns (string)",
-      "function SECONDS_IN_ONE_MINUTE() view returns (uint256)",
-      "function deploymentTime() view returns (uint256)",
-      "function isOwner() view returns (bool)",
-      "function issueLQTY() returns (uint256)",
-      "function lqtyToken() view returns (address)",
-      "function owner() view returns (address)",
-      "function sendLQTY(address _account, uint256 _LQTYamount)",
-      "function setAddresses(address _lqtyTokenAddress, address _stabilityPoolAddress)",
-      "function stabilityPoolAddress() view returns (address)",
-      "function totalLQTYIssued() view returns (uint256)"
-    ],
-    "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F": [
-      "event ActivePoolAddressChanged(address _newActivePoolAddress)",
-      "event ActivePoolETHBalanceUpdated(uint256 _ETH)",
-      "event ActivePoolLUSDDebtUpdated(uint256 _LUSDDebt)",
-      "event BorrowerOperationsAddressChanged(address _newBorrowerOperationsAddress)",
-      "event DefaultPoolAddressChanged(address _newDefaultPoolAddress)",
-      "event ETHBalanceUpdated(uint256 _newBalance)",
-      "event EtherSent(address _to, uint256 _amount)",
-      "event LUSDBalanceUpdated(uint256 _newBalance)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event StabilityPoolAddressChanged(address _newStabilityPoolAddress)",
-      "event TroveManagerAddressChanged(address _newTroveManagerAddress)",
-      "function NAME() view returns (string)",
-      "function borrowerOperationsAddress() view returns (address)",
-      "function decreaseLUSDDebt(uint256 _amount)",
-      "function defaultPoolAddress() view returns (address)",
-      "function getETH() view returns (uint256)",
-      "function getLUSDDebt() view returns (uint256)",
-      "function increaseLUSDDebt(uint256 _amount)",
-      "function isOwner() view returns (bool)",
-      "function owner() view returns (address)",
-      "function sendETH(address _account, uint256 _amount)",
-      "function setAddresses(address _borrowerOperationsAddress, address _troveManagerAddress, address _stabilityPoolAddress, address _defaultPoolAddress)",
-      "function stabilityPoolAddress() view returns (address)",
-      "function troveManagerAddress() view returns (address)"
+    "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E": [
+      "constructor(address _ethUsdOracleAddress, address _stEthUsdOracleAddress, address _wstEthTokenAddress, uint256 _ethUsdStalenessThreshold, uint256 _stEthUsdStalenessThreshold, address _borrowerOperationsAddress)",
+      "error InsufficientGasForExternalCall()",
+      "event ShutDownFromOracleFailure(address _failedOracleAddr)",
+      "function STETH_USD_DEVIATION_THRESHOLD() view returns (uint256)",
+      "function ethUsdOracle() view returns (address aggregator, uint256 stalenessThreshold, uint8 decimals)",
+      "function fetchPrice() returns (uint256, bool)",
+      "function fetchRedemptionPrice() returns (uint256, bool)",
+      "function lastGoodPrice() view returns (uint256)",
+      "function priceSource() view returns (uint8)",
+      "function rateProviderAddress() view returns (address)",
+      "function stEthUsdOracle() view returns (address aggregator, uint256 stalenessThreshold, uint8 decimals)"
     ],
     "eth:0xe8119fC02953B27a1b48D2573855738485A17329": [
       "constructor(address _addressesRegistry)",
@@ -3695,17 +2921,17 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "liquity-v2/ActivePool": "0xd5434e3d209d0f7cab6de4e355d3bb2311b7ed9b5bd29099bcd73466954ea01b",
-    "liquity-v2/BorrowerOperations": "0x1fdf9c7f1b0948bbeee91cc4f3924eb35004abed47eff61aef47b6e0a1a6d558",
-    "liquity-v2/BorrowerOperations_branch": "0x5462780ebe36b8e7cc6cab4947d3891cc17b8b26bd6042596f1eac07bf05f245",
+    "liquity-v2/ActivePool": "0xef5a0a5eba1c895e30126fa770d66d3680d47994784e41917e65d8c76848f612",
+    "liquity-v2/BorrowerOperations_branch": "0x66f80c0b16819c441cc196b21254e95ba25055f59acc9000b6c7008bdbd465fa",
+    "liquity-v2/RETHPriceFeed": "0x0400d4dbad4a306c057961da554cc2bf5ed084b7c1a7154b4adf3d74c915ab48",
     "liquity-v2/SortedTroves": "0x43e52cb548af799685b4ad6b5e50e44ffbbcd21ce181eb934b2d8190a41d11a8",
-    "liquity-v2/SortedTroves_all": "0x7cf8e0c6a4795efd88036d319ed708e1474529d2b0d1439df2c519322c243e16",
-    "liquity-v2/StabilityPool": "0xb8c921f8b04d752561be8ec69d59a543915fc14f222e9c5dd2685b04ec64c7f6",
-    "liquity-v2/TroveManager": "0x8ab87d5dcaf33527677e32b02bb3d1f362667280553a27bfdbd905cff319b758",
-    "liquity-v2/TroveManager_all": "0x5f9ec16b9ba7d92fb18836c540310dd648c6ffb953a61fe31ddb3a2ac51a172f",
+    "liquity-v2/StabilityPool": "0x469773d335f167ea1fb3097784038bda6842049b4f63622035baf052173d6608",
+    "liquity-v2/TroveManager": "0x41c124f6809589515b0024617055686fb1c8751b71966da719ff7134c17c863a",
+    "liquity-v2/WSTETHPriceFeed": "0x0400d4dbad4a306c057961da554cc2bf5ed084b7c1a7154b4adf3d74c915ab48",
     "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921",
-    "tokens": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30"
+    "tokens": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
+    "tokens/Lido/wstETH": "0xd55ccc93c3f52e654ebbffee9194b0b8a0d974753091db2a43a185679e002e88"
   },
-  "usedBlockNumbers": { "ethereum": 24576289 },
-  "permissionsConfigHash": "0x84f29b9a6bdbdafd9a960868994b11048086b4b0036d8915d54b5a122ed53250"
+  "usedBlockNumbers": { "ethereum": 24584247 },
+  "permissionsConfigHash": "0x83530d6e768eda479127bb594b9dd501ffdf1061db58893cf9a7e7112a6250a1"
 }

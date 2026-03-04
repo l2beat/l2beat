@@ -11,5 +11,6 @@
     "getCollBalance",
     "lastAggBatchManagementFeesUpdateTime",
     "lastAggUpdateTime"
-  ]
+  ],
+  "ignoreRelatives": ["collToken"]
 }

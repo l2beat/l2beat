@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { clsx } from 'clsx'
 import type { CompiledReview } from '../../../../types'
-import { NarrativeHero } from './NarrativeHero'
 import { KeyFindings } from './KeyFindings'
 import { AdminCards } from './AdminCards'
 import { FundCards } from './FundCards'
@@ -18,11 +17,12 @@ interface SectionDef {
 }
 
 const SECTIONS: SectionDef[] = [
+  { id: 'summary', title: 'Summary' },
   { id: 'key-findings', title: 'Key Findings' },
-  { id: 'admins', title: 'Who Controls It?' },
-  { id: 'funds', title: 'How Much Is at Stake?' },
+  { id: 'funds', title: 'What Is at Stake?' },
+  { id: 'admins', title: 'Who Is in Control?' },
   { id: 'dependencies', title: 'What Does It Depend On?' },
-  { id: 'code', title: 'Code & Contracts' },
+  { id: 'code', title: 'More Information' },
 ]
 
 export function ReportView({ review }: ReportViewProps) {
@@ -70,9 +70,6 @@ export function ReportView({ review }: ReportViewProps) {
 
   return (
     <article className="max-w-4xl mx-auto">
-      {/* Executive summary / hero */}
-      <NarrativeHero review={review} />
-
       {/* Sticky section navigation bar */}
       <nav className="mt-10 sticky top-0 z-40 -mx-4 px-4 py-3 bg-white/90 backdrop-blur-sm border-b border-border">
         <div className="flex gap-1 overflow-x-auto">
@@ -103,6 +100,22 @@ export function ReportView({ review }: ReportViewProps) {
       {/* Story sections -- generous spacing for readability */}
       <div className="mt-10 space-y-16">
         <section
+          id="summary"
+          data-section-id="summary"
+          className="scroll-mt-20"
+          ref={(el) => registerRef('summary', el)}
+        >
+          <h2 className="text-2xl font-bold text-text-primary mb-6">
+            Summary
+          </h2>
+          {review.metadata.description && (
+            <p className="text-lg text-text-secondary leading-relaxed max-w-3xl">
+              {review.metadata.description}
+            </p>
+          )}
+        </section>
+
+        <section
           id="key-findings"
           data-section-id="key-findings"
           className="scroll-mt-20"
@@ -115,27 +128,27 @@ export function ReportView({ review }: ReportViewProps) {
         </section>
 
         <section
-          id="admins"
-          data-section-id="admins"
-          className="scroll-mt-20"
-          ref={(el) => registerRef('admins', el)}
-        >
-          <h2 className="text-2xl font-bold text-text-primary mb-6">
-            Who Controls It?
-          </h2>
-          <AdminCards review={review} />
-        </section>
-
-        <section
           id="funds"
           data-section-id="funds"
           className="scroll-mt-20"
           ref={(el) => registerRef('funds', el)}
         >
           <h2 className="text-2xl font-bold text-text-primary mb-6">
-            How Much Is at Stake?
+            What Is at Stake?
           </h2>
           <FundCards review={review} />
+        </section>
+
+        <section
+          id="admins"
+          data-section-id="admins"
+          className="scroll-mt-20"
+          ref={(el) => registerRef('admins', el)}
+        >
+          <h2 className="text-2xl font-bold text-text-primary mb-6">
+            Who Is in Control?
+          </h2>
+          <AdminCards review={review} />
         </section>
 
         <section
@@ -157,7 +170,7 @@ export function ReportView({ review }: ReportViewProps) {
           ref={(el) => registerRef('code', el)}
         >
           <h2 className="text-2xl font-bold text-text-primary mb-6">
-            Code & Contracts
+            More Information
           </h2>
           <CodeSection review={review} />
         </section>

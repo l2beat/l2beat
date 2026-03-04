@@ -136,7 +136,7 @@ export function DirectVsReachableDiagram({ admins }: DirectVsReachableDiagramPro
       {/* Key distinction note */}
       <g transform={`translate(${leftMargin}, ${svgHeight - 22})`}>
         <text fill="#9CA3AF" fontSize="9">
-          Direct = funds held in the modified contract | Reachable = downstream contracts via call graph
+          Direct = funds held in the modified contract | Reachable = downstream impactable contracts
         </text>
       </g>
     </svg>

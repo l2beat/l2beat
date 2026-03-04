@@ -386,9 +386,8 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - **Shared Scoring Module**: `/defidisco/scoringShared.tsx` — **single source of truth** for all scoring UI utilities and components
 - **Admin Type Mapping** (`mapAdminType` in `v2Scoring.ts`): Maps raw types to user-facing types based on proxy info:
   - Zero address → `Revoked`
-  - `Untemplatized`/`Unknown` + `immutable` proxyType → `Immutable`
+  - Any type + `immutable` proxyType → `Immutable`
   - `Untemplatized`/`Unknown` + non-immutable proxyType → `Upgradeable`
-  - `Untemplatized`/`Unknown` + no proxy info → keeps original type
 
 **Shared Module (`scoringShared.tsx`)** — DO NOT duplicate code from this file:
 
@@ -519,8 +518,9 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 
 - **Package**: `packages/defiscan-frontend/` (Vite + React + TailwindCSS + Recharts)
 - **Data Model**: Static JSON — reads pre-compiled `compiled-review.json` from `public/data/<slug>/`
-- **Build Script**: `scripts/compile-data.ts` — aggregates compiled reviews into `public/data/index.json` with global stats and dependency aggregation
-- **Pages**: Landing (protocol table + stats), Review (3 views: Report, Explorer, Dashboard), Compare (side-by-side charts)
+- **Build Script**: `scripts/compile-data.ts` — aggregates compiled reviews into `public/data/index.json` with global stats, entity-grouped dependency counts, and active admin counts (excludes Immutable/Revoked)
+- **Pages**: Landing (protocol table + stats), Review (3 views: Report, Explorer, Dashboard), Compare (side-by-side charts), About (mission, methodology, team)
+- **Deployment**: Vercel with SPA rewrites (`vercel.json` — excludes `/data/` from rewrites)
 - **Commands**: `pnpm dev` (dev server), `pnpm build` (production build, runs compile-data first)
 - **Detailed Docs**: See `packages/defiscan-frontend/README.md`
 
@@ -532,7 +532,7 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - **API Endpoint**: `POST /api/projects/:project/compile-review` (in `main.ts`)
 - **UI Button**: "Compile Review" in `TerminalExtensions.tsx`
 - **Frontend API**: `compileReview()` in `api.ts`
-- **Output**: `compiled-review.json` per project
+- **Output**: `compiled-review.json` written to `packages/defiscan-frontend/public/data/<slug>/`
 - **Guard Conditions**: Requires `review-config.json` and `call-graph-data.json`; skips if either is missing
 
 ### Continuous Monitoring Service ✅
@@ -554,7 +554,7 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 3. **Notify**: Discord message if changes detected (via `UpdateNotifier`)
 4. **Store**: Upsert discovery snapshot to PostgreSQL
 5. **Funds Refresh**: `fetchAllFundsForProject()` via in-process defiscan-endpoints
-6. **Compile**: `ReviewCompiler.compile()` — writes `compiled-review.json`
+6. **Compile**: `ReviewCompiler.compile()` — writes `compiled-review.json` to `defiscan-frontend/public/data/<slug>/`
 7. **Cycle Summary**: Discord message after all projects (project count, duration, change count)
 
 **Key Files**:
@@ -573,7 +573,8 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - Discovery + diff + funds refresh still run regardless
 
 **Compiled Review** (`compiled-review.json`):
-- Self-contained JSON per project — exact data a frontend needs to render a review page
+- Self-contained JSON per project — exact data the defiscan-frontend needs to render a review page
+- Written to `packages/defiscan-frontend/public/data/<slug>/` (alongside `funds-data.json`)
 - Joins V2 scoring data (contracts, functions, admins, dependencies, capital analysis) with descriptions from `review-config.json`
 - Template variables (`{{variableName}}`) resolved at compile time via `dataKeys` map
 - See `reviewCompiler.ts` in `packages/l2b/` for TypeScript interfaces: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
@@ -584,7 +585,7 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - Re-run call graph analysis (Slither)
 - Re-run permission detection (AI or manual)
 - Modify permission overrides, function scores, or review descriptions
-- Push compiled reviews to D1 (deferred to future task)
+- Push compiled reviews to a hosted database (deferred to future task)
 
 **Database**: Currently using **Neon free tier** PostgreSQL (temporary). The database stores discovery cache, update monitor snapshots, and diff history. No user credentials or sensitive data. See README.md for security considerations and migration recommendations.
 
@@ -685,8 +686,7 @@ packages/
 │   └── README.md                       # Monitor documentation
 └── config/src/projects/compound-v3/
     ├── permission-overrides.json
-    ├── review-config.json            # Per-project review config
-    └── compiled-review.json          # Monitor output (auto-generated)
+    └── review-config.json            # Per-project review config
 ```
 
 ### Data Access Patterns

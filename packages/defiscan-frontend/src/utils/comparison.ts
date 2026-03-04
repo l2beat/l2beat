@@ -1,4 +1,5 @@
 import type { CompiledReview } from '../types'
+import { computeEntityDependencyCount } from './dependencies'
 
 export interface ProtocolMetrics {
   slug: string
@@ -33,6 +34,7 @@ const CHART_COLORS = [
 
 export function extractMetrics(review: CompiledReview, index: number): ProtocolMetrics {
   const { totals, admins, dependencies, metadata } = review
+  const entityDepCount = computeEntityDependencyCount(dependencies)
 
   const eoaAdminCount = admins.filter((a) =>
     a.adminType === 'EOA' || a.adminType === 'EOAPermissioned',
@@ -67,13 +69,13 @@ export function extractMetrics(review: CompiledReview, index: number): ProtocolM
     contractCount: totals.contractCount,
     permissionedFunctionCount: totals.permissionedFunctionCount,
     adminCount: totals.adminCount,
-    dependencyCount: totals.dependencyCount,
+    dependencyCount: entityDepCount,
     totalCapitalAtRisk: totals.totalCapitalAtRisk,
     totalTokenValueAtRisk: totals.totalTokenValueAtRisk,
     combinedValue,
     capitalPerAdmin: totals.adminCount > 0 ? totals.totalCapitalAtRisk / totals.adminCount : 0,
     functionsPerAdmin: totals.adminCount > 0 ? totals.permissionedFunctionCount / totals.adminCount : 0,
-    dependencyDensity: totals.contractCount > 0 ? totals.dependencyCount / totals.contractCount : 0,
+    dependencyDensity: totals.contractCount > 0 ? entityDepCount / totals.contractCount : 0,
     eoaAdminCount,
     multisigAdminCount,
     contractAdminCount,

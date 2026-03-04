@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { clsx } from 'clsx'
 import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { Badge } from '../../../../components/Badge'
 import { UsdValue } from '../../../../components/UsdValue'
@@ -17,42 +19,22 @@ const BAR_COLORS = [
   '#10B981',
 ]
 
-/** Generate a narrative sentence for a fund holder */
-function narrativeForFund(fund: CompiledFundHolder): string {
-  const parts: string[] = []
-  const balanceVal = fund.balances?.totalUsdValue ?? 0
-  const positionVal = fund.positions?.totalUsdValue ?? 0
-  const total = balanceVal + positionVal
-
-  if (total === 0) {
-    return 'This contract currently holds no significant value.'
-  }
-
-  if (balanceVal > 0 && positionVal > 0) {
-    parts.push(
-      `This contract holds ${formatUsdValue(balanceVal)} in protocol token value and ${formatUsdValue(positionVal)} in DeFi positions`,
-    )
-  } else if (balanceVal > 0) {
-    parts.push(
-      `This contract holds ${formatUsdValue(balanceVal)} in protocol token value`,
-    )
-  } else {
-    parts.push(
-      `This contract has ${formatUsdValue(positionVal)} deployed in DeFi positions`,
-    )
-  }
-
-  if (fund.tokenInfo) {
-    parts.push(
-      `, with the protocol token ${fund.tokenInfo.symbol} having a market cap of ${formatUsdValue(fund.tokenInfo.tokenValue)}`,
-    )
-  }
-
-  return parts.join('') + '.'
-}
 
 export function FundCards({ review }: FundCardsProps) {
   const { funds, totals } = review
+  const [expandedFunds, setExpandedFunds] = useState<Set<string>>(new Set())
+
+  const toggleFund = (address: string) => {
+    setExpandedFunds((prev) => {
+      const next = new Set(prev)
+      if (next.has(address)) {
+        next.delete(address)
+      } else {
+        next.add(address)
+      }
+      return next
+    })
+  }
 
   if (funds.length === 0) {
     return (
@@ -72,6 +54,7 @@ export function FundCards({ review }: FundCardsProps) {
 
   const chartData = funds
     .map((f) => ({
+      address: f.address,
       name: f.name.length > 30 ? `${f.name.slice(0, 27)}...` : f.name,
       fullName: f.name,
       value:
@@ -79,6 +62,8 @@ export function FundCards({ review }: FundCardsProps) {
     }))
     .filter((d) => d.value > 0)
     .sort((a, b) => b.value - a.value)
+
+  const fundByAddress = new Map(funds.map((f) => [f.address, f]))
 
   return (
     <div>
@@ -102,7 +87,7 @@ export function FundCards({ review }: FundCardsProps) {
         Here's where the money sits and what controls it.
       </p>
 
-      {/* Simple bar visualization for fund distribution */}
+      {/* Expandable bar visualization for fund distribution */}
       {chartData.length > 1 && (
         <div className="rounded-xl border border-border bg-white p-6 shadow-sm mb-8">
           <h3 className="text-base font-semibold text-text-primary mb-4">
@@ -111,26 +96,59 @@ export function FundCards({ review }: FundCardsProps) {
           <div className="space-y-3">
             {chartData.map((entry, index) => {
               const percentage = totalFunds > 0 ? (entry.value / totalFunds) * 100 : 0
+              const isExpanded = expandedFunds.has(entry.address)
+              const fund = fundByAddress.get(entry.address)
+
               return (
-                <div key={entry.fullName}>
-                  <div className="flex items-center justify-between text-sm mb-1">
-                    <span className="text-text-primary font-medium truncate mr-4">
-                      {entry.fullName}
-                    </span>
-                    <span className="text-text-secondary shrink-0">
-                      {formatUsdValue(entry.value)}
-                    </span>
-                  </div>
-                  <div className="h-3 rounded-full bg-bg-muted overflow-hidden">
-                    <div
-                      className="h-full rounded-full transition-all"
-                      style={{
-                        width: `${Math.max(percentage, 1)}%`,
-                        backgroundColor:
-                          BAR_COLORS[index % BAR_COLORS.length],
-                      }}
-                    />
-                  </div>
+                <div key={entry.address}>
+                  <button
+                    type="button"
+                    onClick={() => toggleFund(entry.address)}
+                    className="w-full text-left group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <svg
+                        className={clsx(
+                          'w-3 h-3 text-text-muted transition-transform shrink-0',
+                          isExpanded && 'rotate-90',
+                        )}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                      <div className="flex items-center justify-between flex-1 text-sm">
+                        <span className="text-text-primary font-medium truncate mr-4 group-hover:text-purple-600 transition-colors">
+                          {entry.fullName}
+                        </span>
+                        <span className="text-text-secondary shrink-0">
+                          {formatUsdValue(entry.value)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="h-3 rounded-full bg-bg-muted overflow-hidden ml-5">
+                      <div
+                        className="h-full rounded-full transition-all"
+                        style={{
+                          width: `${Math.max(percentage, 1)}%`,
+                          backgroundColor:
+                            BAR_COLORS[index % BAR_COLORS.length],
+                        }}
+                      />
+                    </div>
+                  </button>
+
+                  {isExpanded && fund && (
+                    <div className="ml-5 mt-3 mb-2">
+                      <FundCardInline fund={fund} />
+                    </div>
+                  )}
                 </div>
               )
             })}
@@ -138,12 +156,14 @@ export function FundCards({ review }: FundCardsProps) {
         </div>
       )}
 
-      {/* Fund holder cards with narrative */}
-      <div className="space-y-4">
-        {funds.map((fund) => (
-          <FundCard key={fund.address} fund={fund} />
-        ))}
-      </div>
+      {/* Standalone fund cards only when no chart (single fund holder) */}
+      {chartData.length <= 1 && (
+        <div className="space-y-4">
+          {funds.map((fund) => (
+            <FundCard key={fund.address} fund={fund} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -230,16 +250,88 @@ function FundCard({ fund }: { fund: CompiledFundHolder }) {
         </div>
       )}
 
-      {/* Narrative */}
-      <div className="mt-3 rounded-lg bg-bg-muted/60 p-3">
-        <p className="text-sm text-text-secondary leading-relaxed">
-          {narrativeForFund(fund)}
-        </p>
-      </div>
-
       {/* Description from review config */}
       {fund.description && (
         <p className="mt-3 text-sm text-text-secondary leading-relaxed">
+          {fund.description}
+        </p>
+      )}
+    </div>
+  )
+}
+
+function FundCardInline({ fund }: { fund: CompiledFundHolder }) {
+  const totalValue =
+    (fund.balances?.totalUsdValue ?? 0) + (fund.positions?.totalUsdValue ?? 0)
+  const hasBalances = fund.balances && fund.balances.totalUsdValue > 0
+  const hasPositions = fund.positions && fund.positions.totalUsdValue > 0
+
+  return (
+    <div className="rounded-lg border border-border/50 bg-bg-muted/30 p-4">
+      <div className="flex items-center justify-between gap-4">
+        <AddressDisplay address={fund.address} />
+        {totalValue > 0 && (
+          <UsdValue
+            value={totalValue}
+            variant="capital"
+            className="text-sm font-semibold"
+          />
+        )}
+      </div>
+
+      {hasBalances && hasPositions && totalValue > 0 && (
+        <div className="mt-3">
+          <div className="flex gap-1 h-2 rounded-full overflow-hidden bg-white/50">
+            <div
+              className="bg-purple-500 rounded-l-full"
+              style={{
+                width: `${(fund.balances!.totalUsdValue / totalValue) * 100}%`,
+              }}
+              title={`Protocol Token Value: ${formatUsdValue(fund.balances!.totalUsdValue)}`}
+            />
+            <div
+              className="bg-purple-300 rounded-r-full"
+              style={{
+                width: `${(fund.positions!.totalUsdValue / totalValue) * 100}%`,
+              }}
+              title={`Positions: ${formatUsdValue(fund.positions!.totalUsdValue)}`}
+            />
+          </div>
+          <div className="mt-1.5 flex justify-between text-xs text-text-muted">
+            <span>
+              Protocol Token Value:{' '}
+              <UsdValue
+                value={fund.balances!.totalUsdValue}
+                className="text-xs"
+              />
+            </span>
+            <span>
+              DeFi Positions:{' '}
+              <UsdValue
+                value={fund.positions!.totalUsdValue}
+                className="text-xs"
+              />
+            </span>
+          </div>
+        </div>
+      )}
+
+      {fund.tokenInfo && (
+        <div className="mt-2.5 flex items-center gap-2">
+          <Badge variant="purple">{fund.tokenInfo.symbol}</Badge>
+          <span className="text-sm text-text-secondary">
+            Market Cap:{' '}
+            <UsdValue
+              value={fund.tokenInfo.tokenValue}
+              variant="token"
+              className="text-sm"
+            />
+          </span>
+        </div>
+      )}
+
+      {fund.description && (
+        <p className="mt-2 text-sm text-text-secondary leading-relaxed">
           {fund.description}
         </p>
       )}
