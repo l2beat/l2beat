@@ -79,6 +79,35 @@ export const espresso: BaseProject = {
         signature: 'function newFinalizedState(tuple newState, tuple proof)',
       },
     },
+    // V2 newFinalizedState(tuple, tuple, tuple) — brief window between V2 and V3 upgrades (~1h45m, likely no txs)
+    {
+      projectId: ProjectId('espresso'),
+      sinceTimestamp: 1772483759, // 2026-03-02T20:35:59Z V2 upgrade
+      untilTimestamp: 1772490059, // 2026-03-02T22:20:59Z V3 upgrade
+      type: 'liveness',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
+        selector: '0x757c37ad',
+        signature:
+          'function newFinalizedState(tuple newState, tuple nextStakeTable, tuple proof)',
+      },
+    },
+    {
+      projectId: ProjectId('espresso'),
+      sinceTimestamp: 1772483759,
+      untilTimestamp: 1772490059,
+      type: 'l2costs',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
+        selector: '0x757c37ad',
+        signature:
+          'function newFinalizedState(tuple newState, tuple nextStakeTable, tuple proof)',
+      },
+    },
     // V3 newFinalizedState(tuple, tuple, uint256, tuple) — active since V3 upgrade
     {
       projectId: ProjectId('espresso'),
