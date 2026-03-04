@@ -11,7 +11,7 @@ const OnChainQuantifiable: AdjustableEconomicSecurityRisk = {
 }
 
 function OnChainNotSlashable(token?: string): AdjustableEconomicSecurityRisk {
-  const tokenExpression = token ? ` ${token} tokens` : 'tokens'
+  const tokenExpression = token ? `${token} tokens` : 'tokens'
   const description =
     token === 'EIGEN'
       ? 'Node operators are required to stake a minimum of 32 ETH (first quorum) or 1 EIGEN (second quorum) to become members of the DA network. Although slashing is enabled at EigenLayer protocol level, individual AVSs like EigenDA need to activate it by migrating to Operators Sets and defining slashing conditions. Currently, there is no slashing condition in place for misbehaving nodes. The EIGEN token social forking protocol for intersubjective attributable faults is under active development.'
