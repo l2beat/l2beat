@@ -57,5 +57,14 @@ export function getInteropProtocolEntry(
 
   const sections: ProjectDetailsSection[] = []
 
+  sections.push({
+    type: 'InteropVolumeSection',
+    props: {
+      id: 'interop-volume',
+      projectId: project.id,
+      title: 'Volume',
+    },
+  })
+
   return { ...common, sections }
 }

@@ -7,6 +7,7 @@ import { DetailedDescriptionSection } from './sections/DetailedDescriptionSectio
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
+import { InteropVolumeSection } from './sections/interop/InteropVolumeSection'
 import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
 import { LivenessSection } from './sections/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
@@ -184,6 +185,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'ProgramHashesSection':
             return (
               <ProgramHashesSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'InteropVolumeSection':
+            return (
+              <InteropVolumeSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
