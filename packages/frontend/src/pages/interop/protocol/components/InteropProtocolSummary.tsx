@@ -50,7 +50,7 @@ export function InteropProtocolSummary({ id }: { id: ProjectId }) {
     <section
       id="summary"
       data-role="nav-section"
-      className="mt-4 w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
+      className="mt-4 w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b max-md:pb-6 md:rounded-lg md:bg-surface-primary md:p-6"
     >
       <div className="grid grid-cols-6 gap-3">
         <StatsItem
