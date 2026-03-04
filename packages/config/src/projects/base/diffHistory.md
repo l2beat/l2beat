@@ -1,27 +1,33 @@
-Generated with discovered.json: 0xe48e30558a1d0123e318d9f031af45acbb28aa35
+Generated with discovered.json: 0x73136dc70a918f767aff8bd6e532f8ee7208070b
 
-# Diff at Wed, 04 Mar 2026 14:44:30 GMT:
+# Diff at Wed, 04 Mar 2026 17:13:21 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1772198381
-- current timestamp: 1772635401
+- current timestamp: 1772644269
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Base decouples from the shared Optimism SuperchainConfig (`0x95703e...`) and deploys its own SuperchainConfig v2.5.0 at `0xb535ff7F118260a952CE65e7fF41B1743De8EE6c`. The new contract introduces per-identifier pause system (each chain can be paused independently), automatic 3-month pause expiry, an immutable guardian (Base Governance Multisig) and a new incident responder role (Base Multisig 1, 3-of-13). All L1 contracts (OptimismPortal2, L1StandardBridge, L1ERC721Bridge, L1CrossDomainMessenger, AnchorStateRegistry, DelayedWETH x2) now reference the new SuperchainConfig.
+
+Guardian changed from Optimism Guardian Multisig (`0x09f7150D...`) to Base Governance Multisig (`0x7bB41C3...`). All Optimism shared governance contracts removed from discovery scope (SuperchainProxyAdmin, SuperchainProxyAdminOwner, OpFoundationUpgradeSafe, OpFoundationOperationsSafe, Optimism Security Council, LivenessModule, LivenessGuard, DeputyPauseModule, SaferSafes).
+
+SystemConfig upgraded from v3.13.1 to v3.13.2 — only change is ReinitializableBase version bump from 3 to 4 (allows re-initialization with new parameters). [Diff](https://disco.l2beat.com/diff/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2/eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44)
+
+FeeDisburser upgraded (impl `0x45969D...` → `0xDa70b4...`), removing on-chain Optimism revenue sharing (previously 2.5% gross / 15% net to OPTIMISM_WALLET). Now bridges 100% of collected fees to L1_WALLET. Revenue sharing likely moved off-chain or to a different mechanism. [Diff](https://disco.l2beat.com/diff/base:0x45969D00739d518f0Dde41920B67cE30395135A0/base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75)
+
+Pause mechanics: the Incident Responder (Base Multisig 1, 3/13) can trigger a single pause lasting up to 3 months. It cannot unpause, extend, or re-pause after expiry — only the Guardian (Base Governance Multisig, 2/2) can do that. The Guardian can extend pauses indefinitely. This prevents the operator from permanently censoring withdrawals without Security Council approval.
+
+Base Security Council threshold increased from 7/10 to 8/11 (new member added). The upgrade path changed from 3 parties (Coordinator + SC + OP Foundation) to 2 parties (Coordinator 3/6 + SC 8/11), with an effective entity-level quorum of 9/12 (75%). The Coordinator Multisig absorbed the old Base Multisig 2 members directly (same 6 EOAs) and the OP Foundation was removed as a signer on the Governance Multisig.
 
 ## Watched changes
 
 ```diff
     contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) {
-    +++ description: None
-      template:
--        "opstack/Layer2/FeeDisburser"
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
       sourceHashes.1:
 -        "0x62c0410a08a90b339fd9d345a563e2f93aa3afb72082cb32c23ab6dee23706ed"
 +        "0x9e4d8a31512b7aaafcbf23f817cbdc9bbe404a0fa262aaf98220120c52fde7cb"
-      description:
--        "Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1."
       values.$implementation:
 -        "base:0x45969D00739d518f0Dde41920B67cE30395135A0"
 +        "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75"
@@ -32,9 +38,6 @@ Provide description of changes. This section will be preserved.
 +        2
       values.BASIS_POINT_SCALE:
 -        10000
-      values.lastDisbursementTime:
--        1771718423
-+        1772323219
       values.OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS:
 -        250
       values.OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS:
@@ -74,14 +77,6 @@ Provide description of changes. This section will be preserved.
 -   Status: DELETED
     contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
     +++ description: None
-```
-
-```diff
-    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}]
-    }
 ```
 
 ```diff
@@ -172,14 +167,10 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
-    +++ description: None
-      template:
--        "opstack/SystemConfig"
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       sourceHashes.1:
 -        "0x86dc9ef5cbf4cc436d50678ad7b2abbf9cc1905641ebbeccddbf1adf9b724403"
 +        "0xe6e96ed1643d7aa0bde96b58e278bd6716600479c36623c8cbca4da634304c97"
-      description:
--        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
       values.$implementation:
 -        "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"
 +        "eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44"
@@ -188,33 +179,22 @@ Provide description of changes. This section will be preserved.
       values.$upgradeCount:
 -        14
 +        15
-      values.batcherHash:
--        "eth:0x5050F69a9786F081509234F1a7F4684b5E5b76C9"
-+        "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9"
       values.guardian:
 -        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
 +        "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
       values.initVersion:
 -        3
 +        4
-      values.opStackDA:
--        {"isSequencerSendingBlobTx":true,"isUsingCelestia":false,"isUsingEigenDA":false}
-      values.sequencerInbox:
--        "eth:0xFf00000000000000000000000000000000008453"
       values.superchainConfig:
 -        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
 +        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c"
       values.version:
 -        "3.13.1"
 +        "3.13.2"
-      fieldMeta:
--        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."},"eip1559Denominator":{"description":"volatility param: lower denominator -> quicker fee changes on L2"}}
       implementationNames.eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2:
 -        "SystemConfig"
       implementationNames.eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44:
 +        "SystemConfig"
-      category:
--        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
