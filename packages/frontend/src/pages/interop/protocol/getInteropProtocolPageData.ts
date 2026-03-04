@@ -11,7 +11,7 @@ import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
 
-export async function getInteropProtocolData(
+export async function getInteropProtocolPageData(
   req: Request<{ slug: string }, unknown, unknown, InteropQuery>,
   manifest: Manifest,
 ): Promise<RenderData | undefined> {

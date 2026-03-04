@@ -74,6 +74,12 @@ export const InteropDashboardParams = v.object({
   type: KnownInteropBridgeType.optional(),
 })
 
+export type InteropProtocolParams = v.infer<typeof InteropProtocolParams>
+export const InteropProtocolParams = v.object({
+  id: v.string().transform((value) => ProjectId(value)),
+  ...InteropSelectionInputShape,
+})
+
 export type InteropProtocolTokensParams = v.infer<
   typeof InteropProtocolTokensParams
 >

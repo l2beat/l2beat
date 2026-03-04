@@ -9,6 +9,7 @@ import { getAggregatedInteropTimestamp } from './getAggregatedInteropTimestamp'
 export async function getLatestAggregatedInteropTransferWithTokens(
   selection: InteropSelectionInput,
   type?: KnownInteropBridgeType,
+  protocolId?: string,
 ): Promise<AggregatedInteropTransferWithTokens[]> {
   const db = getDb()
 
@@ -28,12 +29,14 @@ export async function getLatestAggregatedInteropTransferWithTokens(
       selection.from,
       selection.to,
       type,
+      protocolId,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
       latestTimestamp,
       selection.from,
       selection.to,
       type,
+      protocolId,
     ),
   ])
 

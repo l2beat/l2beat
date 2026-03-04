@@ -7,7 +7,7 @@ import { validateRoute } from '~/utils/validateRoute'
 import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
-import { getInteropProtocolData } from './protocol/getInteropProtocolData'
+import { getInteropProtocolPageData } from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
 
 export type InteropQuery = v.infer<typeof InteropQuery>
@@ -94,7 +94,7 @@ export function createInteropRouter(
       query: InteropQuery,
     }),
     async (req, res) => {
-      const data = await getInteropProtocolData(req, manifest)
+      const data = await getInteropProtocolPageData(req, manifest)
       if (!data) {
         res.status(404).send('Not found')
         return

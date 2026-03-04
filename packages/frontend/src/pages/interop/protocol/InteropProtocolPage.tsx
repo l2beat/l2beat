@@ -19,6 +19,7 @@ import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InteropSelectedChainsProvider } from '../utils/InteropSelectedChainsContext'
 import type { InteropMode, InteropSelection } from '../utils/types'
+import { InteropProtocolSummary } from './components/InteropProtocolSummary'
 
 interface Props extends AppLayoutProps {
   mode: InteropMode
@@ -74,6 +75,7 @@ export function InteropProtocolPage({
                 </div>
                 <div className="row-start-2">
                   <ChainSelector chains={interopChains} protocols={undefined} />
+                  <InteropProtocolSummary id={projectEntry.id} />
                   <HighlightableLinkContextProvider>
                     <ProjectDetails items={projectEntry.sections} />
                   </HighlightableLinkContextProvider>
