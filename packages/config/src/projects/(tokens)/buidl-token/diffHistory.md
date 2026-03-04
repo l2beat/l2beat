@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x993a1f91e512094967c1f83192c2ae34c2d53a28
+Generated with discovered.json: 0x6846ccbce158c2e356174591844d74799023f285
 
-# Diff at Wed, 04 Mar 2026 08:11:54 GMT:
+# Diff at Wed, 04 Mar 2026 09:04:47 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
@@ -127,7 +127,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0)
+    contract TransactionRelayer (avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0)
     +++ description: None
 ```
 
@@ -139,7 +139,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (avax:0x43f2998A926328a72868c505BD6C574a63fECBb1)
+    contract TokenReallocator (avax:0x43f2998A926328a72868c505BD6C574a63fECBb1)
     +++ description: None
 ```
 
@@ -193,7 +193,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B)
+    contract OmnibusTBEController (avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B)
     +++ description: None
 ```
 

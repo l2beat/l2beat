@@ -1648,10 +1648,14 @@
       ]
     },
     {
-      "name": "",
+      "name": "TransactionRelayer",
       "address": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0",
       "type": "Contract",
-      "unverified": true,
+      "template": "buidl-token/TransactionRelayer",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x8a14d3e5f09615e0edc1a75069ec58c31725171d7b68c02b49a87a16ebf8c6f4"
+      ],
       "proxyType": "EIP1967 proxy",
       "receivedPermissions": [
         {
@@ -1673,12 +1677,73 @@
             ["avax:0x632c7BF19E5b715D60fd100B9b466536e396A0e4"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "COMPLIANCE_CONFIGURATION_SERVICE": 256,
+        "COMPLIANCE_SERVICE": 8,
+        "CONTRACT_VERSION": 5,
+        "DOMAIN_SEPARATOR": "0xa38e6567a4f6164c95c5f952076ac41bc521ff820a8065f4a1ec07a73e6bed16",
+        "DS_TOKEN": 2,
+        "EIP712DOMAINTYPE_HASH": "0xd87cd6ef79d4e2b95e15ce8abf732db51ec771f1ca2edccf22a46c729ac56472",
+        "getImplementationAddress": "avax:0x632c7BF19E5b715D60fd100B9b466536e396A0e4",
+        "getInitializedVersion": 1,
+        "ISSUER_MULTICALL": 8194,
+        "LOCK_MANAGER": 64,
+        "NAME_HASH": "0x378460f4f89643d76dadb1d55fed95ff69d3c2e4b34cc81a5b565a797b10ce30",
+        "OMNIBUS_TBE_CONTROLLER": 2048,
+        "owner": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "PARTITIONS_MANAGER": 128,
+        "REGISTRY_SERVICE": 4,
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "SALT": "0x6e31104f5170e59a0a98ebdeb5ba99f8b32ef7b56786b1722f81a5fa19dd1629",
+        "SECURITIZE_SWAP": 16384,
+        "services": {
+          "TrustService": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6"
+        },
+        "TA_MULTICALL": 8195,
+        "TOKEN_ISSUER": 512,
+        "TOKEN_REALLOCATOR": 8192,
+        "TRANSACTION_RELAYER": 4096,
+        "TRUST_SERVICE": 1,
+        "TXTYPE_HASH": "0xe6d21e84f71e7221d45242249466f859d08c5b2820de017dfd5e28a588c401a9",
+        "UNUSED_1": 16,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "VERSION_HASH": "0xceebf77a833b30520287ddd9478ff51abbdffa30aa90a8d655dba0e8a79ce0c1",
+        "WALLET_MANAGER": 32,
+        "WALLET_REGISTRAR": 1024
       },
       "implementationNames": {
         "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0": "ERC1967Proxy",
-        "avax:0x632c7BF19E5b715D60fd100B9b466536e396A0e4": ""
-      }
+        "avax:0x632c7BF19E5b715D60fd100B9b466536e396A0e4": "TransactionRelayer"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "TrustService",
+            "2": "DSToken",
+            "4": "RegistryService",
+            "8": "ComplianceService",
+            "16": "Unused1",
+            "32": "WalletManager",
+            "64": "LockManager",
+            "128": "PartitionsManager",
+            "256": "ComplianceConfigurationService",
+            "512": "TokenIssuer",
+            "1024": "WalletRegistrar",
+            "2048": "OmnibusTBEController",
+            "4096": "TransactionRelayer",
+            "8192": "TokenReallocator",
+            "8193": "BulkOperator",
+            "8194": "IssuerMulticall",
+            "8195": "TAMulticall",
+            "16384": "SecuritizeSwap"
+          }
+        }
+      ]
     },
     {
       "address": "avax:0x28e39c2dC5fA249A53B7ea5247ccAdB561Cfb3FD",
@@ -1726,10 +1791,14 @@
       }
     },
     {
-      "name": "",
+      "name": "TokenReallocator",
       "address": "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1",
       "type": "Contract",
-      "unverified": true,
+      "template": "buidl-token/TokenReallocator",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xaba73346557bd36dae486f8b1925b55987eba55e91551e73ad6578e64f1a393f"
+      ],
       "proxyType": "EIP1967 proxy",
       "receivedPermissions": [
         {
@@ -1751,11 +1820,21 @@
             ["avax:0xBc98e7ce7Bd78f9ABA546bFa8933c0E0775C2ccA"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "getImplementationAddress": "avax:0xBc98e7ce7Bd78f9ABA546bFa8933c0E0775C2ccA",
+        "getInitializedVersion": 1,
+        "owner": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "services": {},
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
         "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1": "ERC1967Proxy",
-        "avax:0xBc98e7ce7Bd78f9ABA546bFa8933c0E0775C2ccA": ""
+        "avax:0xBc98e7ce7Bd78f9ABA546bFa8933c0E0775C2ccA": "TokenReallocator"
       }
     },
     {
@@ -2464,10 +2543,14 @@
       ]
     },
     {
-      "name": "",
+      "name": "OmnibusTBEController",
       "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
       "type": "Contract",
-      "unverified": true,
+      "template": "buidl-token/OmnibusTBEController",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x00dba34a21126dfe2e252e8c827e72832bd932440f05e26bbb78e97b3d67475f"
+      ],
       "proxyType": "EIP1967 proxy",
       "receivedPermissions": [
         {
@@ -2489,12 +2572,53 @@
             ["avax:0x075dD7e5331568fF4e85480e2738ab21528b154A"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "getImplementationAddress": "avax:0x075dD7e5331568fF4e85480e2738ab21528b154A",
+        "getInitializedVersion": 1,
+        "getOmnibusWallet": "avax:0xf274f2D29bf6079316db034687D8C30571EF5bDD",
+        "owner": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "ROLE_EXCHANGE": 4,
+        "ROLE_ISSUER": 2,
+        "ROLE_MASTER": 1,
+        "ROLE_NONE": 0,
+        "ROLE_TRANSFER_AGENT": 8,
+        "services": {
+          "TrustService": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
+          "DSToken": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "ComplianceService": "avax:0xf56720a7D78d13650cB497cc3a84d7eF1780D5F9",
+          "ComplianceConfigurationService": "avax:0x4777faC58460644f20e5648C8296dB8e4f661a37"
+        },
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
         "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B": "ERC1967Proxy",
-        "avax:0x075dD7e5331568fF4e85480e2738ab21528b154A": ""
-      }
+        "avax:0x075dD7e5331568fF4e85480e2738ab21528b154A": "OmnibusTBEController"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": "TrustService",
+            "2": "DSToken",
+            "4": "RegistryService",
+            "8": "ComplianceService",
+            "16": "Unused1",
+            "32": "WalletManager",
+            "64": "LockManager",
+            "128": "PartitionsManager",
+            "256": "ComplianceConfigurationService",
+            "512": "TokenIssuer",
+            "1024": "WalletRegistrar",
+            "2048": "OmnibusTBEController",
+            "4096": "TransactionRelayer",
+            "8192": "TokenReallocator",
+            "8193": "BulkOperator",
+            "8194": "IssuerMulticall",
+            "8195": "TAMulticall",
+            "16384": "SecuritizeSwap"
+          }
+        }
+      ]
     },
     {
       "address": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
@@ -2564,6 +2688,11 @@
           "role": "admin"
         }
       ]
+    },
+    {
+      "address": "avax:0xf274f2D29bf6079316db034687D8C30571EF5bDD",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ComplianceServiceRegulated",
@@ -10787,6 +10916,67 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "avax:0x075dD7e5331568fF4e85480e2738ab21528b154A": [
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeCastOverflowedIntToUint(int256 value)",
+      "error SafeCastOverflowedUintToInt(uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function adjustCounters(int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta, bytes32[] euRetailCountries, int256[] euRetailCountryDeltas)",
+      "function bulkBurn(uint256 value, uint256 totalInvestors, uint256 accreditedInvestors, uint256 usAccreditedInvestors, uint256 usTotalInvestors, uint256 jpTotalInvestors, bytes32[] euRetailCountries, uint256[] euRetailCountryCounts)",
+      "function bulkIssuance(uint256 value, uint256 issuanceTime, uint256 totalInvestors, uint256 accreditedInvestors, uint256 usAccreditedInvestors, uint256 usTotalInvestors, uint256 jpTotalInvestors, bytes32[] euRetailCountries, uint256[] euRetailCountryCounts)",
+      "function bulkTransfer(address[] wallets, uint256[] values)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function getOmnibusWallet() view returns (address)",
+      "function initialize(address _omnibusWallet, bool _isPartitionedToken)",
+      "function internalTBETransfer(string externalId, int256 totalDelta, int256 accreditedDelta, int256 usAccreditedDelta, int256 usTotalDelta, int256 jpTotalDelta, bytes32[] euRetailCountries, int256[] euRetailCountryDeltas)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "avax:0x0CF5d0A3C29582Aa02C74917aDa440e95a0129F1": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -10976,6 +11166,72 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "avax:0x632c7BF19E5b715D60fd100B9b466536e396A0e4": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event DomainSeparatorUpdated(uint256 chainId)",
+      "event Initialized(uint64 version)",
+      "event InvestorNonceUpdated(string investorId, uint256 newNonce)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function CONTRACT_VERSION() view returns (uint256)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function EIP712DOMAINTYPE_HASH() view returns (bytes32)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function NAME_HASH() view returns (bytes32)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SALT() view returns (bytes32)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function TXTYPE_HASH() view returns (bytes32)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function VERSION_HASH() view returns (bytes32)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function execute(uint8, bytes32, bytes32, address, uint256, bytes, address, uint256) pure",
+      "function executeByInvestor(uint8, bytes32, bytes32, string, address, uint256, bytes, address, uint256) pure",
+      "function executeByInvestorWithBlockLimit(uint8 sigV, bytes32 sigR, bytes32 sigS, string senderInvestor, address destination, address executor, bytes data, uint256[] params)",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function initialize()",
+      "function nonceByInvestor(string investorId) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function setInvestorNonce(string investorId, uint256 newNonce)",
+      "function transferOwnership(address newOwner)",
+      "function updateDomainSeparator(uint256 chainId)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "avax:0x7011F88cB740e4a88acEfEFCDd5ED11b2597930D": [
       "error AddressEmptyCode(address target)",
@@ -11209,6 +11465,58 @@
       "function setDSService(uint256 _serviceId, address _address) returns (bool)",
       "function transferOwnership(address newOwner)",
       "function updateInvestor(string _id, string _collisionHash, string _country, address[] _wallets, uint8[] _attributeIds, uint256[] _attributeValues, uint256[] _attributeExpirations) returns (bool)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "avax:0xBc98e7ce7Bd78f9ABA546bFa8933c0E0775C2ccA": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event DSServiceSet(uint256 serviceId, address serviceAddress)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function COMPLIANCE_CONFIGURATION_SERVICE() view returns (uint256)",
+      "function COMPLIANCE_SERVICE() view returns (uint256)",
+      "function DS_TOKEN() view returns (uint256)",
+      "function ISSUER_MULTICALL() view returns (uint256)",
+      "function LOCK_MANAGER() view returns (uint256)",
+      "function OMNIBUS_TBE_CONTROLLER() view returns (uint256)",
+      "function PARTITIONS_MANAGER() view returns (uint256)",
+      "function REGISTRY_SERVICE() view returns (uint256)",
+      "function ROLE_EXCHANGE() view returns (uint8)",
+      "function ROLE_ISSUER() view returns (uint8)",
+      "function ROLE_MASTER() view returns (uint8)",
+      "function ROLE_NONE() view returns (uint8)",
+      "function ROLE_TRANSFER_AGENT() view returns (uint8)",
+      "function SECURITIZE_SWAP() view returns (uint256)",
+      "function TA_MULTICALL() view returns (uint256)",
+      "function TOKEN_ISSUER() view returns (uint256)",
+      "function TOKEN_REALLOCATOR() view returns (uint256)",
+      "function TRANSACTION_RELAYER() view returns (uint256)",
+      "function TRUST_SERVICE() view returns (uint256)",
+      "function UNUSED_1() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WALLET_MANAGER() view returns (uint256)",
+      "function WALLET_REGISTRAR() view returns (uint256)",
+      "function __BaseDSContract_init()",
+      "function __ServiceConsumer_init()",
+      "function getDSService(uint256 _serviceId) view returns (address)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reallocateTokens(string _id, address _wallet, string _collisionHash, string _country, uint8[] _attributeIds, uint256[] _attributeValues, uint256[] _attributeExpirations, uint256 _value, bool isAffiliate) returns (bool)",
+      "function renounceOwnership()",
+      "function setDSService(uint256 _serviceId, address _address) returns (bool)",
+      "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E": [
@@ -17234,5 +17542,5 @@
     "optimism": 144853013,
     "polygonpos": 80099855
   },
-  "permissionsConfigHash": "0xc35b3d922cd7ead40dfcb8e9a45898f329e0197b6176962626555fcbd02ea5aa"
+  "permissionsConfigHash": "0xa8e902b198146e924412fae124d3b6ff90e8c0d9a91b7f3eaea8179dfaae9777"
 }
