@@ -8,11 +8,11 @@ Generated with discovered.json: 0x73136dc70a918f767aff8bd6e532f8ee7208070b
 
 ## Description
 
-Base decouples from the shared Optimism SuperchainConfig (`0x95703e...`) and deploys its own SuperchainConfig v2.5.0 at `0xb535ff7F118260a952CE65e7fF41B1743De8EE6c`. The new contract introduces per-identifier pause system (each chain can be paused independently), automatic 3-month pause expiry, an immutable guardian (Base Governance Multisig) and a new incident responder role (Base Multisig 1, 3-of-13). All L1 contracts (OptimismPortal2, L1StandardBridge, L1ERC721Bridge, L1CrossDomainMessenger, AnchorStateRegistry, DelayedWETH x2) now reference the new SuperchainConfig.
+Base decouples from the shared Optimism SuperchainConfig (`0x95703e...`) and deploys its own SuperchainConfig v2.5.0 at `0xb535ff7F118260a952CE65e7fF41B1743De8EE6c`. Compared to the previous v2.4.0, the new version adds an immutable incident responder role (Base Multisig 1) and makes the guardian immutable in the constructor. All L1 contracts (OptimismPortal2, L1StandardBridge, L1ERC721Bridge, L1CrossDomainMessenger, AnchorStateRegistry, DelayedWETH x2) now reference the new SuperchainConfig.
 
 Guardian changed from Optimism Guardian Multisig (`0x09f7150D...`) to Base Governance Multisig (`0x7bB41C3...`). All Optimism shared governance contracts removed from discovery scope (SuperchainProxyAdmin, SuperchainProxyAdminOwner, OpFoundationUpgradeSafe, OpFoundationOperationsSafe, Optimism Security Council, LivenessModule, LivenessGuard, DeputyPauseModule, SaferSafes).
 
-SystemConfig upgraded from v3.13.1 to v3.13.2 — only change is ReinitializableBase version bump from 3 to 4 (allows re-initialization with new parameters). [Diff](https://disco.l2beat.com/diff/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2/eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44)
+SystemConfig upgraded from v3.13.1 to v3.13.2 — implementation change is only a ReinitializableBase version bump from 3 to 4. The reinit sets new runtime values (guardian, superchainConfig now point to Base's own contracts). [Diff](https://disco.l2beat.com/diff/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2/eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44)
 
 FeeDisburser upgraded (impl `0x45969D...` → `0xDa70b4...`), removing on-chain Optimism revenue sharing (previously 2.5% gross / 15% net to OPTIMISM_WALLET). Now bridges 100% of collected fees to L1_WALLET. Revenue sharing likely moved off-chain or to a different mechanism. [Diff](https://disco.l2beat.com/diff/base:0x45969D00739d518f0Dde41920B67cE30395135A0/base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75)
 
