@@ -261,7 +261,7 @@ export const base: ScalingProject = opStackL2({
     {
       title: 'Base leaves the Superchain',
       url: 'https://blog.base.dev/next-chapter-for-base-chain-1',
-      date: '2026-02-19T00:00:00Z',
+      date: '2026-03-04T00:00:00Z',
       description:
         'Base decouples from the shared Optimism Superchain governance and deploys its own sovereign upgrade path.',
       type: 'general',
