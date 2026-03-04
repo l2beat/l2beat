@@ -1,4 +1,5 @@
 import { ThemeProvider } from 'next-themes'
+import { ChangelogEntriesContextProvider } from '~/components/changelog/ChangelogEntriesContext'
 import { ChartLegendOnboardingProvider } from '~/components/core/chart/ChartLegendOnboardingContext'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import { DevAutoReloader } from '~/components/DevAutoReloader'
@@ -15,6 +16,7 @@ import { TRPCReactProvider } from '~/trpc/React'
 export interface AppLayoutProps {
   terms: GlossaryTerm[]
   recentlyAddedProjects: SearchBarProject[]
+  changelogPublishedAtTimestamps: number[]
   whatsNew: WhatsNewWidget | undefined
 }
 
@@ -22,6 +24,7 @@ export function AppLayout({
   children,
   terms,
   recentlyAddedProjects,
+  changelogPublishedAtTimestamps,
   whatsNew,
 }: AppLayoutProps & {
   children: React.ReactNode
@@ -37,15 +40,19 @@ export function AppLayout({
         <TooltipProvider delayDuration={300} disableHoverableContent>
           {env.NODE_ENV === 'development' && <L2BeatDevTools />}
           <GlossaryContextProvider terms={terms}>
-            <WhatsNewContextProvider whatsNew={whatsNew}>
-              <SearchBarContextProvider
-                recentlyAddedProjects={recentlyAddedProjects}
-              >
-                <ChartLegendOnboardingProvider>
-                  {children}
-                </ChartLegendOnboardingProvider>
-              </SearchBarContextProvider>
-            </WhatsNewContextProvider>
+            <ChangelogEntriesContextProvider
+              publishedAtTimestamps={changelogPublishedAtTimestamps}
+            >
+              <WhatsNewContextProvider whatsNew={whatsNew}>
+                <SearchBarContextProvider
+                  recentlyAddedProjects={recentlyAddedProjects}
+                >
+                  <ChartLegendOnboardingProvider>
+                    {children}
+                  </ChartLegendOnboardingProvider>
+                </SearchBarContextProvider>
+              </WhatsNewContextProvider>
+            </ChangelogEntriesContextProvider>
           </GlossaryContextProvider>
         </TooltipProvider>
       </ThemeProvider>

@@ -1,7 +1,11 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import { useEffect } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { useLocalStorage } from '~/hooks/useLocalStorage'
+import { CHANGELOG_LAST_VISITED_AT_LOCAL_STORAGE_KEY } from '~/hooks/useUnreadChangelog'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -19,6 +23,15 @@ interface Props extends AppLayoutProps {
 }
 
 export function ChangelogPage({ entries, ...props }: Props) {
+  const [, setLastVisitedChangelogAt] = useLocalStorage(
+    CHANGELOG_LAST_VISITED_AT_LOCAL_STORAGE_KEY,
+    UnixTime.now(),
+  )
+
+  useEffect(() => {
+    setLastVisitedChangelogAt(UnixTime.now())
+  }, [setLastVisitedChangelogAt])
+
   return (
     <AppLayout {...props}>
       <SideNavLayout>
