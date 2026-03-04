@@ -16,6 +16,7 @@ import { GovernancePage } from './governance/GovernancePage'
 import { InteropBurnAndMintPage } from './interop/burn-and-mint/InteropBurnAndMintPage'
 import { InteropLockAndMintPage } from './interop/lock-and-mint/InteropLockAndMintPage'
 import { InteropNonMintingPage } from './interop/non-minting/InteropNonMintingPage'
+import { InteropProtocolPage } from './interop/protocol/InteropProtocolPage'
 import { InteropSummaryPage } from './interop/summary/InteropSummaryPage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
@@ -70,6 +71,7 @@ const pages = {
   InteropNonMintingPage,
   InteropLockAndMintPage,
   InteropBurnAndMintPage,
+  InteropProtocolPage,
   // Data Availability
   DataAvailabilitySummaryPage,
   DataAvailabilityRiskPage,
