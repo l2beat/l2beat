@@ -259,6 +259,14 @@ export const base: ScalingProject = opStackL2({
   ),
   milestones: [
     {
+      title: 'Base leaves the Superchain',
+      url: 'https://blog.base.dev/next-chapter-for-base-chain-1',
+      date: '2026-02-19T00:00:00Z',
+      description:
+        'Base decouples from the shared Optimism Superchain governance and deploys its own sovereign upgrade path.',
+      type: 'general',
+    },
+    {
       title: 'Base halts block production for 33mins',
       url: 'https://status.base.org/incidents/kdq3t8s13gfs',
       date: '2025-08-05T00:00:00Z',
