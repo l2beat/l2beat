@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x64eef7a91d081e2d52fee27222872019b4730e7e
+Generated with discovered.json: 0x9fd87859a23ff4b6b1117e60cfd58be101b32950
 
-# Diff at Wed, 04 Mar 2026 09:41:48 GMT:
+# Diff at Wed, 04 Mar 2026 11:13:08 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
@@ -19,7 +19,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032)
+    contract IssuerMulticall (arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032)
     +++ description: None
 ```
 
@@ -37,7 +37,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22)
+    contract BulkOperator (arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22)
     +++ description: None
 ```
 
@@ -139,7 +139,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22)
+    contract IssuerMulticall (avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22)
     +++ description: None
 ```
 
@@ -151,7 +151,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9)
+    contract BulkOperator (avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9)
     +++ description: None
 ```
 
@@ -265,7 +265,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad)
+    contract BulkOperator (bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad)
     +++ description: None
 ```
 
@@ -283,7 +283,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48)
+    contract IssuerMulticall (bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48)
     +++ description: None
 ```
 
@@ -403,7 +403,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B)
+    contract IssuerMulticall (eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B)
     +++ description: None
 ```
 
@@ -433,7 +433,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0)
+    contract BulkOperator (eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0)
     +++ description: None
 ```
 
@@ -583,13 +583,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f)
+    contract IssuerMulticall (matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5)
+    contract BulkOperator (matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5)
     +++ description: None
 ```
 
@@ -637,13 +637,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07)
+    contract IssuerMulticall (oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830)
+    contract BulkOperator (oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830)
     +++ description: None
 ```
 
