@@ -70,9 +70,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
         failingGroups: gateState.failingGroups,
         reasons: gateState.reasons,
       })
-      throw new Error(
-        `Interop aggregation quality gate blocked timestamp ${UnixTime.toDate(to).toISOString()}`,
-      )
+      // TODO: Notify
     }
 
     this.logger.info('Aggregated interop transfers saved to db', {
