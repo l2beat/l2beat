@@ -7,7 +7,7 @@ export function createStagesRouter(manifest: Manifest, render: RenderFunction) {
   const router = express.Router()
 
   router.get('/stages', async (req, res) => {
-    const data = await getStagesData(req, manifest)
+    const data = await getStagesData(manifest, req.originalUrl)
     if (!data) {
       res.status(404).send('Not found')
       return

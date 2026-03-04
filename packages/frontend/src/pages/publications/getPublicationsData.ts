@@ -1,4 +1,3 @@
-import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -11,10 +10,10 @@ import {
 } from './utils/getPublicationEntry'
 
 export async function getPublicationsData(
-  req: Request,
   manifest: Manifest,
+  url: string,
 ): Promise<RenderData | undefined> {
-  const appLayoutProps = await getAppLayoutProps(req)
+  const appLayoutProps = await getAppLayoutProps()
   const governancePublications = getCollection('governance-publications')
   const monthlyUpdates = getCollection('monthly-updates')
   const externalPublications = getCollection('external-publications')
@@ -35,7 +34,7 @@ export async function getPublicationsData(
         description:
           'Your hub for everything L2BEAT publishes: research, explainers, essays, interviews, and curated highlights on the evolving Layer 2 ecosystem.',
         openGraph: {
-          url: req.originalUrl,
+          url,
           image: '/meta-images/publications/opengraph-image.png',
         },
       }),

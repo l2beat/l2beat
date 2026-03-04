@@ -25,7 +25,7 @@ export async function getInteropLockAndMintData(
   options?: GetInteropLockAndMintDataOptions,
 ): Promise<RenderData> {
   const mode = options?.mode ?? 'public'
-  const appLayoutProps = await getAppLayoutProps(req)
+  const appLayoutProps = await getAppLayoutProps()
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 

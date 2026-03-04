@@ -23,31 +23,66 @@ export function createDataAvailabilityRouter(
   })
 
   router.get('/data-availability/summary', async (req, res) => {
-    const data = await getDataAvailabilitySummaryData(req, manifest, cache)
+    const data = await cache.get(
+      {
+        key: ['data-availability', 'summary'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getDataAvailabilitySummaryData(manifest, req.originalUrl),
+    )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/data-availability/risk', async (req, res) => {
-    const data = await getDataAvailabilityRiskData(req, manifest, cache)
+    const data = await cache.get(
+      {
+        key: ['data-availability', 'risk'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getDataAvailabilityRiskData(manifest, req.originalUrl),
+    )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/data-availability/throughput', async (req, res) => {
-    const data = await getDataAvailabilityThroughputData(req, manifest, cache)
+    const data = await cache.get(
+      {
+        key: ['data-availability', 'throughput'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
+    )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/data-availability/liveness', async (req, res) => {
-    const data = await getDataAvailabilityLivenessData(req, manifest, cache)
+    const data = await cache.get(
+      {
+        key: ['data-availability', 'liveness'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getDataAvailabilityLivenessData(manifest, req.originalUrl),
+    )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/data-availability/archived', async (req, res) => {
-    const data = await getDataAvailabilityArchivedData(req, manifest, cache)
+    const data = await cache.get(
+      {
+        key: ['data-availability', 'archived'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getDataAvailabilityArchivedData(manifest, req.originalUrl),
+    )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
@@ -58,8 +93,20 @@ export function createDataAvailabilityRouter(
       params: v.object({ layer: v.string(), bridge: v.string() }),
     }),
     async (req, res) => {
-      const data = await getDataAvailabilityProjectData(req, manifest, cache)
-
+      const data = await cache.get(
+        {
+          key: [
+            'data-availability',
+            'projects',
+            req.params.layer,
+            req.params.bridge,
+          ],
+          ttl: 5 * 60,
+          staleWhileRevalidate: 25 * 60,
+        },
+        () =>
+          getDataAvailabilityProjectData(manifest, req.params, req.originalUrl),
+      )
       if (!data) {
         res.status(404).send('Not found')
         return
