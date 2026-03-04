@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9fd87859a23ff4b6b1117e60cfd58be101b32950
+Generated with discovered.json: 0xffed658c05e56f5453fca76249a1947b5a44db2c
 
-# Diff at Wed, 04 Mar 2026 11:13:08 GMT:
+# Diff at Wed, 04 Mar 2026 13:42:02 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
@@ -547,7 +547,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0x2E47DFd5cd8AB3fBE725199BAE04d793108E4D8C)
+    contract RegistryService (matic:0x2E47DFd5cd8AB3fBE725199BAE04d793108E4D8C)
     +++ description: None
 ```
 
@@ -595,7 +595,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (matic:0xA082446441f69554265158f98Ec9C156760fD161)
+    contract ComplianceServiceRegulated (matic:0xA082446441f69554265158f98Ec9C156760fD161)
     +++ description: None
 ```
 
