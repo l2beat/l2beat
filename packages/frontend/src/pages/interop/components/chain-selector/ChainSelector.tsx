@@ -7,7 +7,7 @@ import type { InteropChainWithIcon } from './types'
 
 interface Props {
   chains: InteropChainWithIcon[]
-  protocols: ProtocolDisplayable[]
+  protocols: ProtocolDisplayable[] | undefined
 }
 
 export function ChainSelector({ chains, protocols }: Props) {
@@ -40,10 +40,14 @@ export function ChainSelector({ chains, protocols }: Props) {
               Internal dashboard
             </a>
           )}
-          <span className="font-medium text-xs leading-none max-md:opacity-50 md:text-base">
-            Across {protocols.length} protocols
-          </span>
-          <AllProtocolsDialog protocols={protocols} />
+          {protocols && (
+            <>
+              <span className="font-medium text-xs leading-none max-md:opacity-50 md:text-base">
+                Across {protocols.length} protocols
+              </span>
+              <AllProtocolsDialog protocols={protocols} />
+            </>
+          )}
         </div>
       </div>
     </div>

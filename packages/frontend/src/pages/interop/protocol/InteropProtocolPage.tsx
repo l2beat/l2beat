@@ -15,14 +15,24 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
+import { ChainSelector } from '../components/chain-selector/ChainSelector'
+import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { InteropSelectedChainsProvider } from '../utils/InteropSelectedChainsContext'
+import type { InteropMode, InteropSelection } from '../utils/types'
 
 interface Props extends AppLayoutProps {
+  mode: InteropMode
   projectEntry: InteropProtocolEntry
   queryState: DehydratedState
+  interopChains: InteropChainWithIcon[]
+  initialSelection: InteropSelection
 }
 
 export function InteropProtocolPage({
+  mode,
   projectEntry,
+  interopChains,
+  initialSelection,
   queryState,
   ...props
 }: Props) {
@@ -33,52 +43,59 @@ export function InteropProtocolPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout childrenWrapperClassName="md:pt-0">
-          {!isNavigationEmpty && (
-            <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 lg:hidden">
-              <MobileSectionNavigation sections={navigationSections} />
-            </div>
-          )}
-          <div className="relative z-0 max-md:bg-surface-primary">
-            <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
-              <div className="pt-6 max-md:px-4 lg:pt-4">
-                <ProjectHeader project={projectEntry} />
-                <ProjectSummaryBars project={projectEntry} />
-                {projectEntry.header?.description && (
-                  <AboutSection
-                    description={projectEntry.header.description}
-                    className="md:hidden"
-                  />
+        <InteropSelectedChainsProvider
+          mode={mode}
+          interopChains={interopChains}
+          initialSelection={initialSelection}
+        >
+          <SideNavLayout childrenWrapperClassName="md:pt-0">
+            {!isNavigationEmpty && (
+              <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 lg:hidden">
+                <MobileSectionNavigation sections={navigationSections} />
+              </div>
+            )}
+            <div className="relative z-0 max-md:bg-surface-primary">
+              <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
+                <div className="pt-6 max-md:px-4 lg:pt-4">
+                  <ProjectHeader project={projectEntry} />
+                  <ProjectSummaryBars project={projectEntry} />
+                  {projectEntry.header?.description && (
+                    <AboutSection
+                      description={projectEntry.header.description}
+                      className="md:hidden"
+                    />
+                  )}
+                  <HorizontalSeparator className="my-4 md:hidden" />
+                  <div className="mb-3 max-md:hidden">
+                    <DesktopProjectLinks
+                      projectLinks={projectEntry.header.links ?? []}
+                    />
+                  </div>
+                </div>
+                <div className="row-start-2">
+                  <ChainSelector chains={interopChains} protocols={undefined} />
+                  <HighlightableLinkContextProvider>
+                    <ProjectDetails items={projectEntry.sections} />
+                  </HighlightableLinkContextProvider>
+                </div>
+                {!isNavigationEmpty && (
+                  <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
+                    <DesktopProjectNavigation
+                      project={{
+                        title: projectEntry.shortName ?? projectEntry.name,
+                        slug: projectEntry.slug,
+                        isUnderReview: !!projectEntry.underReviewStatus,
+                        icon: projectEntry.icon,
+                      }}
+                      sections={navigationSections}
+                    />
+                  </div>
                 )}
-                <HorizontalSeparator className="my-4 md:hidden" />
-                <div className="mb-3 max-md:hidden">
-                  <DesktopProjectLinks
-                    projectLinks={projectEntry.header.links ?? []}
-                  />
-                </div>
               </div>
-              <div className="row-start-2">
-                <HighlightableLinkContextProvider>
-                  <ProjectDetails items={projectEntry.sections} />
-                </HighlightableLinkContextProvider>
-              </div>
-              {!isNavigationEmpty && (
-                <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
-                  <DesktopProjectNavigation
-                    project={{
-                      title: projectEntry.shortName ?? projectEntry.name,
-                      slug: projectEntry.slug,
-                      isUnderReview: !!projectEntry.underReviewStatus,
-                      icon: projectEntry.icon,
-                    }}
-                    sections={navigationSections}
-                  />
-                </div>
-              )}
+              <ScrollToTopButton />
             </div>
-            <ScrollToTopButton />
-          </div>
-        </SideNavLayout>
+          </SideNavLayout>
+        </InteropSelectedChainsProvider>
       </HydrationBoundary>
     </AppLayout>
   )

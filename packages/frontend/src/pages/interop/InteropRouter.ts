@@ -91,13 +91,10 @@ export function createInteropRouter(
     '/interop/protocols/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
+      query: InteropQuery,
     }),
     async (req, res) => {
-      const data = await getInteropProtocolData(
-        manifest,
-        req.params.slug,
-        req.originalUrl,
-      )
+      const data = await getInteropProtocolData(req, manifest)
       if (!data) {
         res.status(404).send('Not found')
         return
