@@ -1469,6 +1469,11 @@
           "permission": "upgrade",
           "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
+          "role": "admin"
         }
       ]
     },
@@ -1744,6 +1749,45 @@
           }
         }
       ]
+    },
+    {
+      "name": "WormholeRelayer",
+      "address": "avax:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
+        "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1686939032,
+      "sinceBlock": 31413937,
+      "values": {
+        "$admin": "avax:0x0000000000000000000000000000000000000000",
+        "$implementation": "avax:0x27C472d1DB89aFd6F41A61EEc0F4db996800f8cD",
+        "$pastUpgrades": [
+          [
+            "2023-06-16T18:10:32.000Z",
+            "0xa5f9179f7a03708e393e54c8f8c8a2bd8d7a95f164d612bc59bec110cbce3a63",
+            ["avax:0x25688636CEc6CE0F1434b1e7dd0A223F3f258336"]
+          ],
+          [
+            "2023-06-16T18:10:32.000Z",
+            "0xa5f9179f7a03708e393e54c8f8c8a2bd8d7a95f164d612bc59bec110cbce3a63",
+            ["avax:0x00337a31aEE3Ed37f5D5FBF892031d0090Da2EeF"]
+          ],
+          [
+            "2024-01-27T02:57:15.000Z",
+            "0xc8ea2a0a5dc16453c76c6eb3f51745078960bbfdfc123f59c457a7cdf89da81f",
+            ["avax:0x27C472d1DB89aFd6F41A61EEc0F4db996800f8cD"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "getDefaultDeliveryProvider": "avax:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
+      },
+      "implementationNames": {
+        "avax:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": "SimpleProxy",
+        "avax:0x27C472d1DB89aFd6F41A61EEc0F4db996800f8cD": "WormholeRelayer"
+      }
     },
     {
       "address": "avax:0x28e39c2dC5fA249A53B7ea5247ccAdB561Cfb3FD",
@@ -2116,6 +2160,11 @@
       ]
     },
     {
+      "address": "avax:0x53207E216540125e322CdA8A693b0b89576DEb46",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "DSToken",
       "address": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
       "type": "Contract",
@@ -2218,6 +2267,64 @@
           }
         }
       ]
+    },
+    {
+      "address": "avax:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "avax:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "DeliveryProviderImplementation",
+      "address": "avax:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
+        "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1686937753,
+      "sinceBlock": 31413301,
+      "values": {
+        "$admin": "avax:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
+        "$implementation": "avax:0x1a8dD0FA61990Db5aef353DC122bc17Ac4F10358",
+        "$pastUpgrades": [
+          [
+            "2023-06-16T17:49:13.000Z",
+            "0x0532ec1bc7f2bfdd292b6b5612b3b93558de3ab03f833f1276dcaa305f1ecd98",
+            ["avax:0xedd08D4363820603fb1B261F7667B8ee170c37a5"]
+          ],
+          [
+            "2023-06-16T17:49:13.000Z",
+            "0x0532ec1bc7f2bfdd292b6b5612b3b93558de3ab03f833f1276dcaa305f1ecd98",
+            ["avax:0x401d3A2ec0a071e2A8f8Fc9B4C69313C1a04540c"]
+          ],
+          [
+            "2023-11-07T19:12:55.000Z",
+            "0x7d1142585ac81d5f55f985eeea17c874485fadb2c9f0315731b635f462dbb2b5",
+            ["avax:0x1a8dD0FA61990Db5aef353DC122bc17Ac4F10358"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "chainId": 6,
+        "coreRelayer": "avax:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
+        "getRewardAddress": "avax:0x53207E216540125e322CdA8A693b0b89576DEb46",
+        "getSupportedKeys": 6,
+        "owner": "avax:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
+        "pendingOwner": "avax:0x0000000000000000000000000000000000000000",
+        "pricingWallet": "avax:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
+        "rewardAddress": "avax:0x53207E216540125e322CdA8A693b0b89576DEb46"
+      },
+      "implementationNames": {
+        "avax:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": "DeliveryProviderProxy",
+        "avax:0x1a8dD0FA61990Db5aef353DC122bc17Ac4F10358": "DeliveryProviderImplementation"
+      }
     },
     {
       "name": "RegistryService",
@@ -2418,10 +2525,14 @@
       ]
     },
     {
-      "name": "",
+      "name": "SecuritizeBridge",
       "address": "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
       "type": "Contract",
-      "unverified": true,
+      "template": "buidl-token/SecuritizeBridge",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x4a95cca52f5993a4df0141bc526077f4023f9678f2bd0348f06577b699db0de4"
+      ],
       "proxyType": "EIP1967 proxy",
       "receivedPermissions": [
         {
@@ -2443,11 +2554,28 @@
             ["avax:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "dsServiceConsumer": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+        "dsToken": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+        "gasLimit": 2500000,
+        "getImplementationAddress": "avax:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373",
+        "getInitializedVersion": 1,
+        "owner": "avax:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "paused": false,
+        "remoteBridge": [
+          "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "bnb:0x0dDAAc0C6fC44523b41B6Fa3e0ff32c144b1F517"
+        ],
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "whChainId": 6,
+        "wormholeRelayer": "avax:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
       },
       "implementationNames": {
         "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E": "ERC1967Proxy",
-        "avax:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373": ""
+        "avax:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373": "SecuritizeBridge"
       }
     },
     {
@@ -2688,6 +2816,11 @@
           "role": "admin"
         }
       ]
+    },
+    {
+      "address": "avax:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "avax:0xf274f2D29bf6079316db034687D8C30571EF5bDD",
@@ -11111,6 +11244,82 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "avax:0x1a8dD0FA61990Db5aef353DC122bc17Ac4F10358": [
+      "error AddressIsZero()",
+      "error CallerMustBeOwner()",
+      "error CallerMustBeOwnerOrPricingWallet()",
+      "error CallerMustBePendingOwner()",
+      "error CallerNotApproved(address msgSender)",
+      "error ChainIdIsZero()",
+      "error ExceedsMaximumBudget(uint16 targetChain, uint256 exceedingValue, uint256 maximumBudget)",
+      "error FailedToInitializeImplementation(string reason)",
+      "error GasPriceIsZero()",
+      "error ImplementationAlreadyInitialized()",
+      "error MaxRefundGreaterThanGasLimitCost(uint256 maxRefund, uint256 gasLimitCost)",
+      "error MaxRefundGreaterThanGasLimitCostOnSourceChain(uint256 maxRefund, uint256 gasLimitCost)",
+      "error NativeCurrencyPriceIsZero()",
+      "error Overflow(uint256 value, uint256 max)",
+      "error PriceIsZero(uint16 chain)",
+      "error UnexpectedExecutionParamsVersion(uint8 version, uint8 expectedVersion)",
+      "error UnsupportedExecutionParamsVersion(uint8 version)",
+      "error WrongChainId()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event AssetConversionBufferUpdated(uint16 targetChain, uint16 buffer, uint16 bufferDenominator)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ChainSupportUpdated(uint16 targetChain, bool isSupported)",
+      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
+      "event DeliverGasOverheadUpdated(uint256 indexed oldGasOverhead, uint256 indexed newGasOverhead)",
+      "event OwnershipTransfered(address indexed oldOwner, address indexed newOwner)",
+      "event RewardAddressUpdated(address indexed newAddress)",
+      "event TargetChainAddressUpdated(uint16 indexed targetChain, bytes32 indexed newAddress)",
+      "event Upgraded(address indexed implementation)",
+      "event WormholeRelayerUpdated(address coreRelayer)",
+      "function assetConversionBuffer(uint16 targetChain) view returns (uint16 buffer, uint16 bufferDenominator)",
+      "function chainId() view returns (uint16)",
+      "function confirmOwnershipTransferRequest()",
+      "function coreRelayer() view returns (address)",
+      "function deliverGasOverhead(uint16 targetChain) view returns (uint256)",
+      "function gasPrice(uint16 targetChain) view returns (uint256)",
+      "function getRewardAddress() view returns (address)",
+      "function getSupportedKeys() view returns (uint256 bitmap)",
+      "function getTargetChainAddress(uint16 targetChain) view returns (bytes32 deliveryProviderAddress)",
+      "function initialize()",
+      "function isChainSupported(uint16 targetChain) view returns (bool supported)",
+      "function isInitialized(address impl) view returns (bool)",
+      "function isMessageKeyTypeSupported(uint8 keyType) view returns (bool supported)",
+      "function maximumBudget(uint16 targetChain) view returns (uint256)",
+      "function nativeCurrencyPrice(uint16 targetChain) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function pricingWallet() view returns (address)",
+      "function quoteAssetConversion(uint16 targetChain, uint256 currentChainAmount) view returns (uint256 targetChainAmount)",
+      "function quoteDeliveryOverhead(uint16 targetChain) view returns (uint256 nativePriceQuote)",
+      "function quoteDeliveryPrice(uint16 targetChain, uint256 receiverValue, bytes encodedExecutionParams) view returns (uint256 nativePriceQuote, bytes encodedExecutionInfo)",
+      "function quoteEvmDeliveryPrice(uint16 targetChain, uint256 gasLimit, uint256 receiverValue) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerUnitGasUnused)",
+      "function quoteGasCost(uint16 targetChain, uint256 gasAmount) view returns (uint256 totalCost)",
+      "function quoteGasPrice(uint16 targetChain) view returns (uint256 price)",
+      "function rewardAddress() view returns (address)",
+      "function submitOwnershipTransferRequest(uint16 thisRelayerChainId, address newOwner)",
+      "function targetChainAddress(uint16 targetChain) view returns (bytes32)",
+      "function updateAssetConversionBuffer(uint16 targetChain, uint16 buffer, uint16 bufferDenominator)",
+      "function updateAssetConversionBuffers(tuple(uint16 chainId, uint16 buffer, uint16 bufferDenominator)[] updates)",
+      "function updateConfig(tuple(bool updateAssetConversionBuffer, bool updateDeliverGasOverhead, bool updatePrice, bool updateTargetChainAddress, bool updateMaximumBudget, bool updateSupportedChain, bool isSupported, uint16 chainId, uint16 buffer, uint16 bufferDenominator, uint256 newGasOverhead, uint256 gasPrice, uint256 nativeCurrencyPrice, bytes32 targetChainAddress, uint256 maximumTotalBudget)[] updates, tuple(bool updateWormholeRelayer, bool updateRewardAddress, bool updateSupportedKeyTypes, address coreRelayer, address rewardAddress, uint256 supportedKeyTypesBitmap) coreConfig)",
+      "function updateDeliverGasOverhead(uint16 chainId, uint256 newGasOverhead)",
+      "function updateDeliverGasOverheads(tuple(uint16 chainId, uint256 newGasOverhead)[] overheadUpdates)",
+      "function updateMaximumBudget(uint16 targetChain, uint256 maximumTotalBudget)",
+      "function updateMaximumBudgets(tuple(uint16 chainId, uint256 maximumTotalBudget)[] updates)",
+      "function updatePrice(uint16 updateChainId, uint256 updateGasPrice, uint256 updateNativeCurrencyPrice)",
+      "function updatePrices(tuple(uint16 chainId, uint256 gasPrice, uint256 nativeCurrencyPrice)[] updates)",
+      "function updatePricingWallet(address newPricingWallet)",
+      "function updateRewardAddress(address newAddress)",
+      "function updateSupportedChain(uint16 targetChain, bool isSupported)",
+      "function updateSupportedChains(tuple(uint16 chainId, bool isSupported)[] updates)",
+      "function updateSupportedMessageKeyTypes(uint8 keyType, bool supported)",
+      "function updateTargetChainAddress(uint16 targetChain, bytes32 newAddress)",
+      "function updateTargetChainAddresses(tuple(uint16 chainId, bytes32 targetChainAddress)[] updates)",
+      "function updateWormholeRelayer(address newAddress)",
+      "function upgrade(uint16 deliveryProviderChainId, address newImplementation)"
+    ],
     "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -11119,6 +11328,80 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "avax:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": [
+      "constructor(address impl)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "avax:0x27C472d1DB89aFd6F41A61EEc0F4db996800f8cD": [
+      "constructor(address wormhole)",
+      "error ChainAlreadyRegistered(uint16 chainId, bytes32 registeredWormholeRelayerContract)",
+      "error ContractUpgradeFailed(bytes failure)",
+      "error DeliveryProviderCannotReceivePayment()",
+      "error DeliveryProviderDoesNotSupportMessageKeyType(uint8 keyType)",
+      "error DeliveryProviderDoesNotSupportTargetChain(address relayer, uint16 chainId)",
+      "error GovernanceActionAlreadyConsumed(bytes32 hash)",
+      "error InsufficientRelayerFunds(uint256 msgValue, uint256 minimum)",
+      "error InvalidDefaultDeliveryProvider(bytes32 defaultDeliveryProvider)",
+      "error InvalidDeliveryVaa(string reason)",
+      "error InvalidEmitter(bytes32 emitter, bytes32 registered, uint16 chainId)",
+      "error InvalidFork()",
+      "error InvalidGovernanceChainId(uint16 parsed, uint16 expected)",
+      "error InvalidGovernanceContract(bytes32 parsed, bytes32 expected)",
+      "error InvalidGovernanceVM(string reason)",
+      "error InvalidMsgValue(uint256 msgValue, uint256 totalFee)",
+      "error InvalidOverrideGasLimit()",
+      "error InvalidOverrideReceiverValue()",
+      "error InvalidPayloadAction(uint8 parsed, uint8 expected)",
+      "error InvalidPayloadChainId(uint16 parsed, uint16 expected)",
+      "error InvalidPayloadId(uint8 parsed, uint8 expected)",
+      "error InvalidPayloadLength(uint256 received, uint256 expected)",
+      "error InvalidPayloadModule(bytes32 parsed, bytes32 expected)",
+      "error MessageKeysLengthDoesNotMatchMessagesLength(uint256 keys, uint256 vaas)",
+      "error NotAnEvmAddress(bytes32)",
+      "error ReentrantDelivery(address msgSender, address lockedBy)",
+      "error TargetChainIsNotThisChain(uint16 targetChain)",
+      "error TooManyMessageKeys(uint256 numMessageKeys)",
+      "error UnexpectedExecutionInfoVersion(uint8 version, uint8 expectedVersion)",
+      "error VaaKeysDoNotMatchVaas(uint8 index)",
+      "error VersionMismatchOverride(uint8 instructionVersion, uint8 overrideVersion)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
+      "event Delivery(address indexed recipientContract, uint16 indexed sourceChain, uint64 indexed sequence, bytes32 deliveryVaaHash, uint8 status, uint256 gasUsed, uint8 refundStatus, bytes additionalStatusInfo, bytes overridesInfo)",
+      "event SendEvent(uint64 indexed sequence, uint256 deliveryQuote, uint256 paymentForExtraReceiverValue)",
+      "event Upgraded(address indexed implementation)",
+      "function checkAndExecuteUpgradeMigration()",
+      "function deliver(bytes[] encodedVMs, bytes encodedDeliveryVAA, address relayerRefundAddress, bytes deliveryOverrides) payable",
+      "function deliveryAttempted(bytes32 deliveryHash) view returns (bool attempted)",
+      "function deliveryFailureBlock(bytes32 deliveryHash) view returns (uint256 blockNumber)",
+      "function deliverySuccessBlock(bytes32 deliveryHash) view returns (uint256 blockNumber)",
+      "function forward(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable",
+      "function forwardPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit) payable",
+      "function forwardToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable",
+      "function forwardVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys) payable",
+      "function getDefaultDeliveryProvider() view returns (address deliveryProvider)",
+      "function getRegisteredWormholeRelayerContract(uint16 chainId) view returns (bytes32)",
+      "function initialize(address defaultDeliveryProvider)",
+      "function quoteDeliveryPrice(uint16 targetChain, uint256 receiverValue, bytes encodedExecutionParameters, address deliveryProviderAddress) view returns (uint256 nativePriceQuote, bytes encodedExecutionInfo)",
+      "function quoteEVMDeliveryPrice(uint16 targetChain, uint256 receiverValue, uint256 gasLimit, address deliveryProviderAddress) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerGasUnused)",
+      "function quoteEVMDeliveryPrice(uint16 targetChain, uint256 receiverValue, uint256 gasLimit) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerGasUnused)",
+      "function quoteNativeForChain(uint16 targetChain, uint256 currentChainAmount, address deliveryProviderAddress) view returns (uint256 targetChainAmount)",
+      "function registerWormholeRelayerContract(bytes encodedVm)",
+      "function resend(tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence) deliveryVaaKey, uint16 targetChain, uint256 newReceiverValue, bytes newEncodedExecutionParameters, address newDeliveryProviderAddress) payable returns (uint64 sequence)",
+      "function resendToEvm(tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence) deliveryVaaKey, uint16 targetChain, uint256 newReceiverValue, uint256 newGasLimit, address newDeliveryProviderAddress) payable returns (uint64 sequence)",
+      "function send(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
+      "function send(uint16 targetChain, bytes32 targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, bytes encodedExecutionParameters, uint16 refundChain, bytes32 refundAddress, address deliveryProviderAddress, tuple(uint8 keyType, bytes encodedKey)[] messageKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
+      "function sendPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress) payable returns (uint64 sequence)",
+      "function sendPayloadToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit) payable returns (uint64 sequence)",
+      "function sendToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
+      "function sendToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 paymentForExtraReceiverValue, uint256 gasLimit, uint16 refundChain, address refundAddress, address deliveryProviderAddress, tuple(uint8 keyType, bytes encodedKey)[] messageKeys, uint8 consistencyLevel) payable returns (uint64 sequence)",
+      "function sendVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys) payable returns (uint64 sequence)",
+      "function sendVaasToEvm(uint16 targetChain, address targetAddress, bytes payload, uint256 receiverValue, uint256 gasLimit, tuple(uint16 chainId, bytes32 emitterAddress, uint64 sequence)[] vaaKeys, uint16 refundChain, address refundAddress) payable returns (uint64 sequence)",
+      "function setDefaultDeliveryProvider(bytes encodedVm)",
+      "function submitContractUpgrade(bytes encodedVm)"
+    ],
     "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -11126,6 +11409,54 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "avax:0x3Ef5DB4b59885c09E82882c144cb12D82eC33373": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event BridgeAddressAdd(uint16 chainId, address bridgeAddress)",
+      "event BridgeAddressRemove(uint16 chainId)",
+      "event DSTokenBridgeReceive(uint16 sourceChainId, address dsToken, address investorWallet, uint256 value)",
+      "event DSTokenBridgeSend(uint16 targetChainId, address dsToken, address investorWallet, uint256 value)",
+      "event GasLimitUpdate(uint256 oldGasLimit, uint256 newGasLimit)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function bridgeAddresses(uint16) view returns (address)",
+      "function bridgeDSTokens(uint16 targetChain, uint256 value) payable",
+      "function dsServiceConsumer() view returns (address)",
+      "function dsToken() view returns (address)",
+      "function gasLimit() view returns (uint256)",
+      "function getImplementationAddress() view returns (address)",
+      "function getInitializedVersion() view returns (uint64)",
+      "function initialize(uint16 _whChainId, address _wormholeRelayer, address _dsToken, address _owner)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function quoteBridge(uint16 targetChain) view returns (uint256 cost)",
+      "function receiveWormholeMessages(bytes payload, bytes[], bytes32 sourceBridge, uint16 sourceChain, bytes32) payable",
+      "function removeBridgeAddress(uint16 chainId)",
+      "function renounceOwnership()",
+      "function setBridgeAddress(uint16 chainId, address bridgeAddress)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateGasLimit(uint256 _gasLimit)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function whChainId() view returns (uint16)",
+      "function wormholeRelayer() view returns (address)"
     ],
     "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1": [
       "constructor(address implementation, bytes _data) payable",
@@ -11302,6 +11633,12 @@
       "function transferOwnership(address newOwner)",
       "function unlockInvestor(string _investorId) returns (bool)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "avax:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": [
+      "constructor(address implementation, bytes initData)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "avax:0x856A99407b13F210F77a7b41E17E64C99Abc1aC8": [
       "constructor(address implementation, bytes _data) payable",
@@ -17542,5 +17879,5 @@
     "optimism": 144853013,
     "polygonpos": 80099855
   },
-  "permissionsConfigHash": "0xa8e902b198146e924412fae124d3b6ff90e8c0d9a91b7f3eaea8179dfaae9777"
+  "permissionsConfigHash": "0x710ed290029da90c0d403efd18e1137b72b8c931668a2e520a502806b6becf95"
 }

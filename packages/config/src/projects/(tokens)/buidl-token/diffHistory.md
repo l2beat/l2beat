@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6846ccbce158c2e356174591844d74799023f285
+Generated with discovered.json: 0x64eef7a91d081e2d52fee27222872019b4730e7e
 
-# Diff at Wed, 04 Mar 2026 09:04:47 GMT:
+# Diff at Wed, 04 Mar 2026 09:41:48 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1765304803
@@ -133,6 +133,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract WormholeRelayer (avax:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract  (avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22)
     +++ description: None
 ```
@@ -169,6 +175,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract DeliveryProviderImplementation (avax:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract RegistryService (avax:0x856A99407b13F210F77a7b41E17E64C99Abc1aC8)
     +++ description: None
 ```
@@ -181,7 +193,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract  (avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E)
+    contract SecuritizeBridge (avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E)
     +++ description: None
 ```
 
