@@ -187,6 +187,162 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   )
 
   describe(
+    AggregatedInteropTransferRepository.prototype.getRecentStatsForGroup.name,
+    () => {
+      const group = {
+        id: 'group-1',
+        bridgeType: 'nonMinting' as const,
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+      }
+
+      it('returns latest snapshot per day for a group', async () => {
+        const day1Early = UnixTime(100)
+        const day1Late = UnixTime(200)
+        const day2Early = UnixTime(UnixTime.DAY + 100)
+        const day2Late = UnixTime(UnixTime.DAY + 300)
+        const day3Early = UnixTime(2 * UnixTime.DAY + 120)
+        const day3Late = UnixTime(2 * UnixTime.DAY + 360)
+
+        await repository.insertMany([
+          record({
+            ...group,
+            timestamp: day1Early,
+            transferCount: 10,
+            identifiedCount: 9,
+            srcValueUsd: 100,
+            dstValueUsd: 110,
+          }),
+          record({
+            ...group,
+            timestamp: day1Late,
+            transferCount: 20,
+            identifiedCount: 19,
+            srcValueUsd: 1000,
+            dstValueUsd: 1010,
+          }),
+          record({
+            ...group,
+            timestamp: day2Early,
+            transferCount: 30,
+            identifiedCount: 29,
+            srcValueUsd: 200,
+            dstValueUsd: 210,
+          }),
+          record({
+            ...group,
+            timestamp: day2Late,
+            transferCount: 40,
+            identifiedCount: 39,
+            srcValueUsd: 2000,
+            dstValueUsd: 2020,
+          }),
+          record({
+            ...group,
+            timestamp: day3Early,
+            transferCount: 50,
+            identifiedCount: 49,
+            srcValueUsd: 300,
+            dstValueUsd: 330,
+          }),
+          record({
+            ...group,
+            timestamp: day3Late,
+            transferCount: 60,
+            identifiedCount: 59,
+            srcValueUsd: 3000,
+            dstValueUsd: 3030,
+          }),
+          // noise: same timestamp/day, different group
+          record({
+            id: 'group-2',
+            bridgeType: 'nonMinting',
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            timestamp: day3Late,
+            transferCount: 999,
+            identifiedCount: 999,
+            srcValueUsd: 9999,
+            dstValueUsd: 9999,
+          }),
+        ])
+
+        const result = await repository.getRecentStatsForGroup(
+          10,
+          group.id,
+          group.bridgeType,
+          group.srcChain,
+          group.dstChain,
+        )
+
+        expect(result.map((r) => r.timestamp)).toEqual([
+          day3Late,
+          day2Late,
+          day1Late,
+        ])
+        expect(result.map((r) => r.transferCount)).toEqual([60, 40, 20])
+        expect(result.map((r) => r.identifiedCount)).toEqual([59, 39, 19])
+        expect(result.map((r) => r.srcVolumeUsd)).toEqual([3000, 2000, 1000])
+        expect(result.map((r) => r.dstVolumeUsd)).toEqual([3030, 2020, 1010])
+      })
+
+      it('respects before filter and limit over canonical daily snapshots', async () => {
+        const day1Late = UnixTime(200)
+        const day2Late = UnixTime(UnixTime.DAY + 300)
+        const day3Early = UnixTime(2 * UnixTime.DAY + 120)
+        const day3Late = UnixTime(2 * UnixTime.DAY + 360)
+
+        await repository.insertMany([
+          record({
+            ...group,
+            timestamp: day1Late,
+            transferCount: 20,
+            identifiedCount: 19,
+            srcValueUsd: 1000,
+            dstValueUsd: 1010,
+          }),
+          record({
+            ...group,
+            timestamp: day2Late,
+            transferCount: 40,
+            identifiedCount: 39,
+            srcValueUsd: 2000,
+            dstValueUsd: 2020,
+          }),
+          record({
+            ...group,
+            timestamp: day3Early,
+            transferCount: 50,
+            identifiedCount: 49,
+            srcValueUsd: 300,
+            dstValueUsd: 330,
+          }),
+          record({
+            ...group,
+            timestamp: day3Late,
+            transferCount: 60,
+            identifiedCount: 59,
+            srcValueUsd: 3000,
+            dstValueUsd: 3030,
+          }),
+        ])
+
+        const result = await repository.getRecentStatsForGroup(
+          2,
+          group.id,
+          group.bridgeType,
+          group.srcChain,
+          group.dstChain,
+          { before: day3Late },
+        )
+
+        // "before" excludes day3Late, so canonical snapshot for day3 becomes day3Early
+        expect(result.map((r) => r.timestamp)).toEqual([day3Early, day2Late])
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTransferRepository.prototype
       .deleteAllButEarliestPerDayBefore.name,
     () => {

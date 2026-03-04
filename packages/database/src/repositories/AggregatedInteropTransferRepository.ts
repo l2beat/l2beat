@@ -298,29 +298,49 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       before?: UnixTime
     },
   ): Promise<AggregatedInteropTransferGroupStatsRecord[]> {
-    let query = this.db
+    let latestPerDayQuery = this.db
       .selectFrom('AggregatedInteropTransfer')
       .select((eb) => [
-        'timestamp',
-        eb.fn.sum('transferCount').as('transfer_count'),
-        eb.fn.sum('identifiedCount').as('identified_count'),
-        sql<number>`sum(coalesce("srcValueUsd", "dstValueUsd", 0))`.as(
-          'volume_usd',
-        ),
-        sql<number>`sum(coalesce("srcValueUsd", 0))`.as('src_volume_usd'),
-        sql<number>`sum(coalesce("dstValueUsd", 0))`.as('dst_volume_usd'),
+        sql<Date>`date_trunc('day', timestamp)`.as('day'),
+        eb.fn.max('timestamp').as('latest_ts'),
       ])
       .where('id', '=', id)
       .where('bridgeType', '=', bridgeType)
       .where('srcChain', '=', srcChain)
       .where('dstChain', '=', dstChain)
-      .groupBy('timestamp')
-      .orderBy('timestamp', 'desc')
-      .limit(limit)
+      .groupBy(sql`date_trunc('day', timestamp)`)
 
     if (options?.before !== undefined) {
-      query = query.where('timestamp', '<', UnixTime.toDate(options.before))
+      latestPerDayQuery = latestPerDayQuery.where(
+        'timestamp',
+        '<',
+        UnixTime.toDate(options.before),
+      )
     }
+
+    const query = this.db
+      .with('latest_per_day', () => latestPerDayQuery)
+      .selectFrom('AggregatedInteropTransfer as a')
+      .innerJoin('latest_per_day as l', (join) =>
+        join.onRef('a.timestamp', '=', 'l.latest_ts'),
+      )
+      .select((eb) => [
+        sql<Date>`"a"."timestamp"`.as('timestamp'),
+        eb.fn.sum('a.transferCount').as('transfer_count'),
+        eb.fn.sum('a.identifiedCount').as('identified_count'),
+        sql<number>`sum(coalesce("a"."srcValueUsd", "a"."dstValueUsd", 0))`.as(
+          'volume_usd',
+        ),
+        sql<number>`sum(coalesce("a"."srcValueUsd", 0))`.as('src_volume_usd'),
+        sql<number>`sum(coalesce("a"."dstValueUsd", 0))`.as('dst_volume_usd'),
+      ])
+      .where('a.id', '=', id)
+      .where('a.bridgeType', '=', bridgeType)
+      .where('a.srcChain', '=', srcChain)
+      .where('a.dstChain', '=', dstChain)
+      .groupBy('a.timestamp')
+      .orderBy('a.timestamp', 'desc')
+      .limit(limit)
 
     const rows = await query.execute()
     return rows.map((row) => ({

@@ -24,6 +24,7 @@ const MIN_DRIFT_DELTA = 0.2
 const DRIFT_EPSILON = 0.01
 const LOOKBACK_POINTS = 20
 const SIGNAL_WINDOW = 14
+const MIN_RATIO_WINDOW = 7
 const MIN_Z_SCORE_WINDOW = 7
 const MAX_SUMMARY_REASONS = 100
 
@@ -93,6 +94,7 @@ export class DefaultInteropAggregationQualityGate
             : undefined
           const history = [...historicalStats].reverse().map((record) => ({
             transferCount: record.transferCount,
+            identifiedCount: record.identifiedCount,
             srcVolumeUsd: record.srcVolumeUsd,
             dstVolumeUsd: record.dstVolumeUsd,
           }))
@@ -137,6 +139,7 @@ export function evaluateQualitySignals(input: {
   baseline?: SnapshotTotals
   history: {
     transferCount: number
+    identifiedCount: number
     srcVolumeUsd: number
     dstVolumeUsd: number
   }[]
@@ -146,6 +149,14 @@ export function evaluateQualitySignals(input: {
   const candidateIdentificationRate = safeDivide(
     candidate.identifiedCount,
     candidate.transferCount,
+  )
+  const baselineIdentificationRate = baseline
+    ? safeDivide(baseline.identifiedCount, baseline.transferCount)
+    : undefined
+  const reliableVolumeHistory = history.filter(
+    (point) =>
+      safeDivide(point.identifiedCount, point.transferCount) >=
+      MIN_VOLUME_IDENTIFICATION_RATE,
   )
 
   if (candidate.srcVolumeUsd > HARD_VOLUME_CAP_USD) {
@@ -172,22 +183,31 @@ export function evaluateQualitySignals(input: {
   }
 
   if (candidateIdentificationRate >= MIN_VOLUME_IDENTIFICATION_RATE) {
-    evaluateVolumeSignals('src', {
+    const srcVolumeSignals = evaluateVolumeSignals('src', {
       candidateVolumeUsd: candidate.srcVolumeUsd,
-      baselineVolumeUsd: baseline?.srcVolumeUsd,
-      historyVolumeUsd: history.map((h) => h.srcVolumeUsd),
+      baselineVolumeUsd:
+        baselineIdentificationRate !== undefined &&
+        baselineIdentificationRate >= MIN_VOLUME_IDENTIFICATION_RATE
+          ? baseline?.srcVolumeUsd
+          : undefined,
+      historyVolumeUsd: reliableVolumeHistory.map((h) => h.srcVolumeUsd),
       reasons,
     })
-    evaluateVolumeSignals('dst', {
+    const dstVolumeSignals = evaluateVolumeSignals('dst', {
       candidateVolumeUsd: candidate.dstVolumeUsd,
-      baselineVolumeUsd: baseline?.dstVolumeUsd,
-      historyVolumeUsd: history.map((h) => h.dstVolumeUsd),
+      baselineVolumeUsd:
+        baselineIdentificationRate !== undefined &&
+        baselineIdentificationRate >= MIN_VOLUME_IDENTIFICATION_RATE
+          ? baseline?.dstVolumeUsd
+          : undefined,
+      historyVolumeUsd: reliableVolumeHistory.map((h) => h.dstVolumeUsd),
       reasons,
     })
+    appendVolumeWindowReasons(reasons, srcVolumeSignals, dstVolumeSignals)
     evaluateDriftSignals({
       candidate,
       baseline,
-      history,
+      history: reliableVolumeHistory,
       reasons,
     })
   }
@@ -201,14 +221,24 @@ export function evaluateQualitySignals(input: {
   const countZRobust =
     countLogWindow.length >= MIN_Z_SCORE_WINDOW ? zRobust(countLogWindow) : null
 
-  if (countZRobust !== null && Math.abs(countZRobust) > EXTREME_Z_SCORE) {
+  if (
+    countZRobust !== null &&
+    Number.isFinite(countZRobust) &&
+    Math.abs(countZRobust) > EXTREME_Z_SCORE
+  ) {
     reasons.push(`Count robust z-score=${countZRobust.toFixed(2)}`)
   }
-  if (ratioSpike(countWindow, LARGE_RATIO_SPIKE)) {
-    reasons.push('Count ratio spike in recent window')
-  }
-  if (ratioDrop(countWindow, LARGE_RATIO_DROP)) {
-    reasons.push('Count ratio drop in recent window')
+  const countWindowMedian = medianOf(countWindow.slice(0, -1))
+  if (
+    countWindow.length >= MIN_RATIO_WINDOW &&
+    countWindowMedian >= MIN_BASELINE_COUNT
+  ) {
+    if (ratioSpike(countWindow, LARGE_RATIO_SPIKE)) {
+      reasons.push('Count ratio spike in recent window')
+    }
+    if (ratioDrop(countWindow, LARGE_RATIO_DROP)) {
+      reasons.push('Count ratio drop in recent window')
+    }
   }
 
   return reasons
@@ -294,7 +324,7 @@ function evaluateVolumeSignals(
     historyVolumeUsd: number[]
     reasons: string[]
   },
-) {
+): { ratioSpike: boolean; ratioDrop: boolean } {
   const sideLabel = side === 'src' ? 'Src' : 'Dst'
   const { candidateVolumeUsd, baselineVolumeUsd, historyVolumeUsd, reasons } =
     input
@@ -324,23 +354,70 @@ function evaluateVolumeSignals(
       ? zRobust(volumeLogWindow)
       : null
 
-  if (volumeZRobust !== null && Math.abs(volumeZRobust) > EXTREME_Z_SCORE) {
+  if (
+    volumeZRobust !== null &&
+    Number.isFinite(volumeZRobust) &&
+    Math.abs(volumeZRobust) > EXTREME_Z_SCORE
+  ) {
     reasons.push(
       `Volume robust z-score (${sideLabel})=${volumeZRobust.toFixed(2)}`,
     )
   }
-  if (ratioSpike(volumeWindow, LARGE_RATIO_SPIKE)) {
-    reasons.push(`Volume ratio spike in recent window (${sideLabel})`)
+
+  const volumeWindowMedian = medianOf(volumeWindow.slice(0, -1))
+  if (
+    volumeWindow.length < MIN_RATIO_WINDOW ||
+    volumeWindowMedian < MIN_BASELINE_VOLUME_USD
+  ) {
+    return {
+      ratioSpike: false,
+      ratioDrop: false,
+    }
   }
-  if (ratioDrop(volumeWindow, LARGE_RATIO_DROP)) {
-    reasons.push(`Volume ratio drop in recent window (${sideLabel})`)
+
+  return {
+    ratioSpike: ratioSpike(volumeWindow, LARGE_RATIO_SPIKE),
+    ratioDrop: ratioDrop(volumeWindow, LARGE_RATIO_DROP),
+  }
+}
+
+function appendVolumeWindowReasons(
+  reasons: string[],
+  src: { ratioSpike: boolean; ratioDrop: boolean },
+  dst: { ratioSpike: boolean; ratioDrop: boolean },
+) {
+  if (src.ratioSpike && dst.ratioSpike) {
+    reasons.push('Volume ratio spike in recent window (Src+Dst)')
+  } else {
+    if (src.ratioSpike) {
+      reasons.push('Volume ratio spike in recent window (Src)')
+    }
+    if (dst.ratioSpike) {
+      reasons.push('Volume ratio spike in recent window (Dst)')
+    }
+  }
+
+  if (src.ratioDrop && dst.ratioDrop) {
+    reasons.push('Volume ratio drop in recent window (Src+Dst)')
+  } else {
+    if (src.ratioDrop) {
+      reasons.push('Volume ratio drop in recent window (Src)')
+    }
+    if (dst.ratioDrop) {
+      reasons.push('Volume ratio drop in recent window (Dst)')
+    }
   }
 }
 
 function evaluateDriftSignals(input: {
   candidate: SnapshotTotals
   baseline?: SnapshotTotals
-  history: { srcVolumeUsd: number; dstVolumeUsd: number }[]
+  history: {
+    srcVolumeUsd: number
+    dstVolumeUsd: number
+    transferCount: number
+    identifiedCount: number
+  }[]
   reasons: string[]
 }) {
   const { candidate, baseline, history, reasons } = input
@@ -395,6 +472,7 @@ function evaluateDriftSignals(input: {
   ]
   const driftWindow = lastNValues(driftSeries, SIGNAL_WINDOW)
   if (
+    driftWindow.length >= MIN_RATIO_WINDOW &&
     candidateDrift >= DRIFT_ALERT_THRESHOLD &&
     ratioSpike(driftWindow, DRIFT_SPIKE_FACTOR)
   ) {
@@ -412,4 +490,17 @@ function getSrcDstDrift(srcVolumeUsd: number, dstVolumeUsd: number): number {
 
 function formatPercent(value: number): string {
   return `${(value * 100).toFixed(1)}%`
+}
+
+function medianOf(values: number[]): number {
+  if (values.length === 0) {
+    return 0
+  }
+
+  const sorted = [...values].sort((a, b) => a - b)
+  const middle = Math.floor(sorted.length / 2)
+  if (sorted.length % 2 === 0) {
+    return (sorted[middle - 1] + sorted[middle]) / 2
+  }
+  return sorted[middle]
 }
