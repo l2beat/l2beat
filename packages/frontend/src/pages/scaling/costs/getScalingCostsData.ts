@@ -1,7 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/getScalingCostsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -12,7 +12,7 @@ import { optionToRange } from '~/utils/range/range'
 export async function getScalingCostsData(
   req: Request<unknown, unknown, unknown, { tab: 'rollups' | 'others' }>,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps(),
@@ -50,7 +50,7 @@ export async function getScalingCostsData(
   }
 }
 
-async function getCachedData(cache: ICache, tab: 'rollups' | 'others') {
+async function getCachedData(cache: InMemoryCache, tab: 'rollups' | 'others') {
   const helpers = getSsrHelpers()
   const [entries, queryState] = await Promise.all([
     getScalingCostsEntries(helpers),
