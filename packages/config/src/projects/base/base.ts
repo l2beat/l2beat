@@ -257,10 +257,6 @@ export const base: ScalingProject = opStackL2({
       rollupNodeLink: 'https://github.com/base-org/node',
     },
   ),
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-    isPartOfSuperchain: true,
-  },
   milestones: [
     {
       title: 'Base halts block production for 33mins',
