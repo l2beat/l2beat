@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/ScalingSummaryActivityChart'
@@ -15,15 +14,11 @@ import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getS
 import { optionToRange } from '~/utils/range/range'
 import { ChartTabs } from './components/ChartTabs'
 import { ScalingSummaryTables } from './components/ScalingSummaryTables'
-
-export const SCALING_SUMMARY_TVS_CHART_RANGE_ARGS = ['1y'] as const
-export const SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS = [
-  '1y',
-  {
-    offset: -UnixTime.DAY,
-  },
-] as const
-const SCALING_SUMMARY_UNIT = 'usd'
+import {
+  SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
+  SCALING_SUMMARY_TVS_CHART_RANGE_ARGS,
+  SCALING_SUMMARY_UNIT,
+} from './scalingSummaryConstants'
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingSummaryEntry>
