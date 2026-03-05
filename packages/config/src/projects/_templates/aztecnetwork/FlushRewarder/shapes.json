@@ -1,0 +1,14 @@
+{
+  "FlushRewarder.sol": {
+    "hash": "0xca3a74bcbc0669b8ae1d90ce8a449d46e14868a7e35219d02118063908eb53ff",
+    "address": "eth:0xf1AcfB0C6ADd7104e700b8FAd3Ea025dbB041F34",
+    "chain": "ethereum",
+    "blockNumber": 24590324
+  },
+  "FlushRewarder_ignition.sol": {
+    "hash": "0xd7f12f5dbac77168a11817bc18488af1779a67b4d2985dfee99ed3eb8b2254f6",
+    "address": "eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65",
+    "chain": "ethereum",
+    "blockNumber": 24590324
+  }
+}

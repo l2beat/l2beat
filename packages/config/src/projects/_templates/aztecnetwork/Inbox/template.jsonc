@@ -1,5 +1,21 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Handles L1-to-L2 messaging. Users deposit funds or send messages here, which are organized into a Merkle tree for the sequencer to include in an L2 block.",
-  "ignoreMethods": ["getRoot", "trees"]
+  "description": "Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1, accumulates them in an append-only frontier tree per checkpoint, and forces the Sequencers and the Rollup contract to sequentially consume the roots of these message trees, ensuring message inclusion.",
+  "ignoreMethods": ["getRoot", "trees"],
+  "ignoreInWatchMode": [
+    "getInProgress",
+    "getState",
+    "getTotalMessagesInserted"
+  ],
+  "fields": {
+    "FEE_ASSET_PORTAL": {
+      "description": "The address of the FeeJuicePortal contract used for bridging fee assets to the L2."
+    },
+    "LAG": {
+      "description": "The delay (in checkpoints) before L1 to L2 messages can be consumed by the sequencer."
+    },
+    "ROLLUP": {
+      "description": "The address of the core Rollup contract that possesses the permission to consume the message trees."
+    }
+  }
 }
