@@ -6,7 +6,11 @@ export interface RenderData {
   head: HeadProps
 }
 
-export type RenderFunction = (data: RenderData, url: string) => string
+export type RenderFunction = (data: RenderData, url: string) => Promise<string>
+
+export interface RenderOptions {
+  stylesheetUrl: string
+}
 
 export interface RenderResult {
   html: string

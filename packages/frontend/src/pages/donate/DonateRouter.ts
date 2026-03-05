@@ -8,7 +8,7 @@ export function createDonateRouter(manifest: Manifest, render: RenderFunction) {
 
   router.get('/donate', async (req, res) => {
     const data = await getDonateData(manifest, req.originalUrl)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 

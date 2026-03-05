@@ -14,7 +14,7 @@
   <script>
     (function () { try { var e, t = window.__SSR_DATA__.props.recentChangelogEntriesIds, n = localStorage.getItem("last-read-changelog-entry-id"), r = n ? JSON.parse(n) : null; if (r) { var a = t.indexOf(r); e = -1 === a ? t.length : a } else e = t.length; if (e <= 0) return; for (var l = document.querySelectorAll('[data-role="changelog-unread-badge"]'), g = 0; g < l.length; g++)l[g].textContent = String(e), l[g].hidden = !1 } catch (e) { } })();
   </script>
-  <script type="module" src="/index.js"></script>
+  <script type="module" src="/src/ssr/ClientEntry.tsx"></script>
 </body>
 
 </html>

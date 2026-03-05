@@ -4,7 +4,9 @@ import type {
   StageConfigured,
   StageUnderReview,
 } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { UnderReviewBadge } from '~/components/badge/UnderReviewBadge'
+import { useCountdownsContext } from '~/components/CountdownsContext'
 import {
   Collapsible,
   CollapsibleContent,
@@ -18,7 +20,6 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { StageOneRequirementsChangeStageSectionNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { CustomLink } from '~/components/link/CustomLink'
-import { featureFlags } from '~/consts/featureFlags'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { InfoIcon } from '~/icons/Info'
 import { MissingIcon } from '~/icons/Missing'
@@ -65,6 +66,7 @@ export function StageSection({
   walkAway,
   ...sectionProps
 }: StageSectionProps) {
+  const countdowns = useCountdownsContext()
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
     return (
       <ProjectSection {...sectionProps} isUnderReview>
@@ -89,7 +91,7 @@ export function StageSection({
       : UnderReviewIcon
 
   const notEvenAStage0 = type === 'Other' && stageConfig.missing?.requirements
-  const showUpcomingGuidelines = !featureFlags.stageOneRequirementsChanged()
+  const showUpcomingGuidelines = countdowns.stageChanges >= UnixTime.now()
 
   return (
     <ProjectSection {...sectionProps}>

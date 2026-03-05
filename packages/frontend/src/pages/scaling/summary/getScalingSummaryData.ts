@@ -10,7 +10,7 @@ import { optionToRange } from '~/utils/range/range'
 import {
   SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
   SCALING_SUMMARY_TVS_CHART_RANGE_ARGS,
-} from './ScalingSummaryPage'
+} from './scalingSummaryConstants'
 
 export async function getScalingSummaryData(
   req: Request,

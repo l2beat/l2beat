@@ -1,3 +1,4 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getCollection } from '~/content/getCollection'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -26,5 +27,6 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
     recentlyAddedProjects,
     recentChangelogEntriesIds,
     whatsNew,
+    countdowns: PROJECT_COUNTDOWNS,
   }
 }

@@ -1,25 +1,28 @@
 // DO NOT MOVE ANYTHING ABOVE THIS LINE BELOW
 import './dotenv'
 
-import { env } from '~/env'
+import express from 'express'
+import { env } from './env'
 import { createCacheWarmer } from './server/cacheWarmer'
-import { setupDevReload } from './server/devReload'
 import { createServer } from './server/server'
 import { getLogger } from './server/utils/logger'
+import { render } from './ssr/ServerEntry'
+import { manifest } from './utils/Manifest'
 
 function main() {
   const logger = getLogger()
 
   logger.info('Starting frontend...')
-
-  createServer(logger)
+  const app = express()
+  createServer(logger, {
+    dev: false,
+    app,
+    render,
+    stylesheetUrl: manifest.getUrl('/index.css'),
+  })
 
   if (env.REDIS_URL && env.DEPLOYMENT_ENV === 'production') {
     createCacheWarmer(logger)
-  }
-
-  if (env.NODE_ENV !== 'production') {
-    setupDevReload(logger)
   }
 }
 
