@@ -1,5 +1,6 @@
 import compact from 'lodash/compact'
 import { useContext, useMemo } from 'react'
+import { ChangelogUnreadBadge } from '~/components/changelog/ChangelogUnreadBadge'
 import { HiringBadge } from '~/components/badge/HiringBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
@@ -224,12 +225,7 @@ export function SideNavLayout({
         {
           title: 'Changelog',
           href: '/changelog',
-          accessory: (
-            <div
-              data-role="changelog-unread-badge"
-              className="inline-flex h-3.5 min-w-3.5 items-center justify-center rounded bg-brand p-px font-medium text-2xs text-white tabular-nums leading-none"
-            />
-          ),
+          accessory: <ChangelogUnreadBadge />,
         },
         {
           title: 'Forum',
