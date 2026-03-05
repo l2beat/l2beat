@@ -118,16 +118,18 @@ export const immutablex: ScalingProject = {
   dataAvailability: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: 0,
-      requiredSignatures: 0,
+      // hardcoded last values
+      membersCount: 7,
+      requiredSignatures: 5,
     }),
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: 0,
-      requiredSignatures: 0,
+      // hardcoded last values
+      membersCount: 7,
+      requiredSignatures: 5,
     }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, 0),
     sequencerFailure: {
