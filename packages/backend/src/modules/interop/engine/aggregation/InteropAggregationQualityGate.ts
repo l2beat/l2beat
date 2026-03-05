@@ -8,7 +8,7 @@ import { log1Plus, zRobust } from '../dashboard/statsComputation'
 const HARD_VOLUME_CAP_USD = 100_000_000_000
 const LARGE_RATIO_SPIKE = 8
 const LARGE_RATIO_DROP = 0.2
-const EXTREME_Z_SCORE = 8
+const EXTREME_Z_SCORE = 15
 const MIN_COUNT_FOR_RATIO = 100
 const MIN_VOLUME_FOR_RATIO_USD = 1_000_000
 const MIN_VOLUME_IDENTIFICATION_RATE = 0.5
