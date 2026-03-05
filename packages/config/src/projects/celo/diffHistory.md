@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xd7a03912de5954186256dff9ff5a58569453f253
+
+# Diff at Thu, 05 Mar 2026 15:16:57 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1772198382
+- current timestamp: 1772723699
+
+## Description
+
+Celo Security Council member rotation: signer at index 7 changed from `0xc3E9...` to `0xC912...`. Threshold remains 6 of 8.
+
+Anchor game rotated to a new instance (`0x5f06...`), updating the anchor root and L2 block number.
+
+## Watched changes
+
+```diff
+    contract Celo Security Council (eth:0xC03172263409584f7860C25B6eB4985f0f6F4636) {
+    +++ description: None
+      values.$members.7:
+-        "eth:0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA"
++        "eth:0xC91252606ff547d8B0345491CfABcCf0f6F0a29a"
+    }
+```
+
 Generated with discovered.json: 0x8060d3967c6e27d2c5369c984c8e871489bc255c
 
 # Diff at Fri, 27 Feb 2026 13:21:00 GMT:

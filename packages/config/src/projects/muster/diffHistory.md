@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x236b49642d69d88688ed21d5b04ca08237c2c0e0
+
+# Diff at Thu, 05 Mar 2026 15:17:38 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1753341899
+- current timestamp: 1772723758
+
+## Description
+
+EXECUTOR_ROLE on the UpgradeExecutor changed from `0xCa9c...` to `0xc47a...`. This EOA controls all upgrade permissions for the system.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
++        "arb1:0xc47a4C5F37eD1b78128A913f68f1711ea097aE24"
+      values.executors.0:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
++        "arb1:0xc47a4C5F37eD1b78128A913f68f1711ea097aE24"
+    }
+```
+
+```diff
+    EOA  (arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","role":".owner","via":[{"address":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}]},{"permission":"upgrade","from":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36","role":"admin","via":[{"address":"arb1:0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"},{"address":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}]},{"permission":"upgrade","from":"arb1:0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f","role":"admin","via":[{"address":"arb1:0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"},{"address":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}]},{"permission":"upgrade","from":"arb1:0x37D07D97673c79afe3b92548175Af47488E28694","role":"admin","via":[{"address":"arb1:0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"},{"address":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}]},{"permission":"upgrade","from":"arb1:0x8987777757a91Ed09912D7A5B8430bbAC2cf153C","role":"admin","via":[{"address":"arb1:0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"},{"address":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}]},{"permission":"upgrade","from":"arb1:0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1","role":"admin","via":[{"address":"arb1:0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"},{"address":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}]},{"permission":"upgrade","from":"arb1:0xD17550876106645988051ffDd31dFc3cDaA29F9c","role":"admin","via":[{"address":"arb1:0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"},{"address":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}]},{"permission":"upgrade","from":"arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864","role":"admin","via":[{"address":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}]},{"permission":"upgrade","from":"arb1:0xfb27e42E964F3364630F76D62EB295ae792BD4FA","role":"admin","via":[{"address":"arb1:0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"},{"address":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}]}]
+      controlsMajorityOfUpgradePermissions:
+-        true
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36","role":".executors"}]
+    }
+```
+
 Generated with discovered.json: 0x667fd2569f8cd9e1b3534aea5330c9f0978d71df
 
 # Diff at Mon, 05 Jan 2026 17:44:43 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "muster",
-  "timestamp": 1753341899,
+  "timestamp": 1772723758,
   "configHash": "0x647db72b3fb22557c9ebefba0cb086a10c09214f18a4f43ffb36c1cac24e8f76",
   "entries": [
     {
@@ -56,13 +56,13 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"]
+            "members": ["arb1:0xc47a4C5F37eD1b78128A913f68f1711ea097aE24"]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": ["arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"]
+        "executors": ["arb1:0xc47a4C5F37eD1b78128A913f68f1711ea097aE24"]
       },
       "implementationNames": {
         "arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36": "TransparentUpgradeableProxy",
@@ -416,7 +416,7 @@
         "allowedOutboxList": [
           "arb1:0xD17550876106645988051ffDd31dFc3cDaA29F9c"
         ],
-        "delayedMessageCount": 14802,
+        "delayedMessageCount": 18726,
         "inboxHistory": [
           "arb1:0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f",
           "arb1:0x8987777757a91Ed09912D7A5B8430bbAC2cf153C"
@@ -424,8 +424,8 @@
         "outboxHistory": ["arb1:0xD17550876106645988051ffDd31dFc3cDaA29F9c"],
         "rollup": "arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864",
         "sequencerInbox": "arb1:0xfb27e42E964F3364630F76D62EB295ae792BD4FA",
-        "sequencerMessageCount": 12754,
-        "sequencerReportedSubMessageCount": 374437
+        "sequencerMessageCount": 16647,
+        "sequencerReportedSubMessageCount": 409426
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -452,7 +452,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
+      "address": "arb1:0xc47a4C5F37eD1b78128A913f68f1711ea097aE24",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
@@ -547,6 +547,11 @@
       ]
     },
     {
+      "address": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Outbox",
       "address": "arb1:0xD17550876106645988051ffDd31dFc3cDaA29F9c",
       "type": "Contract",
@@ -639,7 +644,7 @@
         "getValidators": ["arb1:0x26C9cC5681Dc8CfA7d0CD2F52769479b54612298"],
         "inbox": "arb1:0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x3e700970a3dac8b0f05579712af3d59e890c8af602b1a45c7c0c933727b95ea0",
+        "latestConfirmed": "0x0747cd0d45bf7f4132fed05c88fe5f55cbb646c697946424239001249ce511f4",
         "loserStakeEscrow": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xD17550876106645988051ffDd31dFc3cDaA29F9c",
@@ -758,7 +763,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "batchCount": 12754,
+        "batchCount": 16647,
         "batchPosterManager": "arb1:0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117",
         "batchPosters": ["arb1:0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"],
         "bridge": "arb1:0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1",
@@ -798,7 +803,7 @@
         "rollup": "arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 14801,
+        "totalDelayedMessagesRead": 18725,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1472,6 +1477,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 360996679 },
-  "permissionsConfigHash": "0x2361e49c1136bbd9470e34e82e30f1b1b8a40c8c49754cc091236821643df723"
+  "usedBlockNumbers": { "arbitrum": 438631326 },
+  "permissionsConfigHash": "0x69cbb4b76a9b5b7361dad8c8080289fdb1a010b658ad02e6733c2f192310a525"
 }

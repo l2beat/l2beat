@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x1bf62212be6b9319cc5267fa7eec6a1398aaa853
+
+# Diff at Thu, 05 Mar 2026 15:18:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1772638086
+- current timestamp: 1772723829
+
+## Description
+
+Routine epoch rotation (276 → 277) on HotShotLightClient. The votingStakeTableState updated with new BLS/Schnorr key commitments, amount commitment, and a significantly larger threshold value — indicating a change in the validator set composition for the new epoch.
+
+## Watched changes
+
+```diff
+    contract HotShotLightClient (eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      values.authRoot:
+-        "95706045122542419068533472823093870027268909194070702472720375130594565742773"
++        "51023204165850023074572022546582207905522855371750882113725224518316468926003"
+      values.currentEpoch:
+-        276
++        277
+      values.votingStakeTableState.threshold:
+-        34
++        "305847763101714193430879339"
+      values.votingStakeTableState.blsKeyComm:
+-        "1561632536195555148145050274009949812309785157828896392838981322602622136791"
++        "15633696011885280257302935345094934670542445474830911243936880027643575064195"
+      values.votingStakeTableState.schnorrKeyComm:
+-        "20147560324529416943341534119711171689827441694011856532375917186049770295574"
++        "4022228050688041128391327501472944465697074365671956771271522710844480122160"
+      values.votingStakeTableState.amountComm:
+-        "349594070000690608819508126396071528924936277306125447047023081215269308099"
++        "10016458162984725114930573855070482480651055940387207178330854735658737351789"
+    }
+```
+
 Generated with discovered.json: 0xb2d94d7cc8105f9ea9422fded81f4e12efb367d3
 
 # Diff at Wed, 04 Mar 2026 15:29:14 GMT:
