@@ -1921,6 +1921,20 @@
       "supply": "zero"
     },
     {
+      "name": "Espresso",
+      "coingeckoId": "espresso",
+      "address": "0x031De51F3E8016514Bd0963d0B2AB825A591Db9A",
+      "symbol": "ESP",
+      "decimals": 18,
+      "deploymentTimestamp": 1769784155,
+      "coingeckoListingTimestamp": 1770854400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67626/large/espresso.jpg?1753324525",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Ether",
       "coingeckoId": "ethereum",
       "symbol": "ETH",

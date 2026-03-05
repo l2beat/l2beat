@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x0cee00f12387e940a707ae7746095dbf69378e69
+
+# Diff at Wed, 04 Mar 2026 20:43:28 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1760090951
+- current timestamp: 1772656918
+
+## Description
+
+One member of AlchemyMultisig2 was rotated: 0xA351...700a replaced by 0x04a2...7Bd.
+
+## Watched changes
+
+```diff
+    contract AlchemyMultisig2 (base:0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      values.$members.5:
+-        "base:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a"
++        "base:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd"
+    }
+```
+
 Generated with discovered.json: 0xe5d5d868a6b46a4743e126ef33322737479ab3cb
 
 # Diff at Mon, 05 Jan 2026 17:44:12 GMT:

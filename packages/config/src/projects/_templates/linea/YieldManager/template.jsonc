@@ -1,0 +1,69 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.",
+  "ignoreMethods": [
+    "getEffectiveMinimumWithdrawalReserve",
+    "getEffectiveTargetWithdrawalReserve",
+    "getMinimumReserveDeficit",
+    "getTargetReserveDeficit",
+    "getTotalSystemBalance",
+    "yieldProviderByIndex",
+    "pendingPermissionlessUnstake"
+  ],
+  "ignoreInWatchMode": ["userFundsInYieldProvidersTotal"],
+  "fields": {
+    "accessControl": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "yieldStakingOperatorAC": {
+      "severity": "HIGH",
+      "description": "Logically this combines several roles: YIELD_PROVIDER_STAKING_ROLE, YIELD_PROVIDER_UNSTAKER_ROLE, YIELD_REPORTER_ROLE, STAKING_PAUSE_CONTROLLER_ROLE, OSSIFICATION_PROCESSOR_ROLE. Currently they are shared by the same two addresses, if this changes the permissions must be modified.",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "YIELD_PROVIDER_STAKING_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers."
+        }
+      ]
+    },
+    "yieldStakingManagerAC": {
+      "severity": "HIGH",
+      "description": "Logically this combines several roles: SET_YIELD_PROVIDER_ROLE, SET_L2_YIELD_RECIPIENT_ROLE, WITHDRAWAL_RESERVE_SETTER_ROLE. Currently they are shared by the same address, if this changes the permissions must be modified.",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "SET_YIELD_PROVIDER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage native yield staking: modify reserve parameters, set yield pools, set yield receiver addresses."
+        }
+      ]
+    },
+    "isWithdrawalReserveBelowMinimum": {
+      "severity": "HIGH",
+      "description": "If true, no more ETH can be staked and users can permissionlessly withdraw staked ETH."
+    },
+    "yieldProviderCount": {
+      "severity": "HIGH"
+    },
+    "minimumWithdrawalReserveAmount": {
+      "description": "Absolute value, part of the computation of minimal rollup ETH reserve."
+    },
+    "minimumWithdrawalReservePercentageBps": {
+      "description": "Value relative to TVS, part of the computation of minimal rollup ETH reserve."
+    },
+    "targetWithdrawalReserveAmount": {
+      "description": "Absolute value, part of the computation of target rollup ETH reserve."
+    },
+    "targetWithdrawalReservePercentageBps": {
+      "description": "Value relative to TVS, part of the computation of target rollup ETH reserve."
+    }
+  }
+}

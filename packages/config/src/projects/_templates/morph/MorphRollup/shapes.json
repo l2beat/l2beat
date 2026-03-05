@@ -4,5 +4,11 @@
     "address": "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5",
     "chain": "ethereum",
     "blockNumber": 24147273
+  },
+  "Rollup_brokenPermissionlessUpgrade.sol": {
+    "hash": "0x8918639fcac94fac40711260ca7cb4027dbac6a2a48b10cd380818ede6636206",
+    "address": "eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3",
+    "chain": "ethereum",
+    "blockNumber": 24583163
   }
 }

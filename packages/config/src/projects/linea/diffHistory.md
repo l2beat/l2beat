@@ -1,3 +1,130 @@
+Generated with discovered.json: 0xba51707d98600208cf93084f406a51f922540191
+
+# Diff at Wed, 04 Mar 2026 12:04:51 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1f1cf4fcbeb4c2ad86765920452b33a7c90a15a5 block: 1765276326
+- current timestamp: 1772533779
+
+## Description
+
+Upgraded LineaRollup contract to version 7 to add native ETH yield. 
+
+Permissioned entities can now move ETH from the rollup contract into yield providers via YieldManager. Accrued interest is paid to users on L2. YieldManager sets minimal and target reserve values. If ETH reserves are below the minimal value, users can permissionlessly replenish the reserve up to target by unstaking. 
+
+Diff for LineaRollup: https://disco.l2beat.com/diff/eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0/eth:0x04728BF704a716C26F9EF4085013b760AC885631.
+
+Also, removed Safe Zodiac roles on L1.
+
+## Watched changes
+
+```diff
+    contract Linea Multisig 1 (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"send ETH from the rollup bridge to the YieldManager.","role":".ethStakerAC"}
+      receivedPermissions.19:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"set the address of the yield manager contract that receives ETH from rollup bridge.","role":".yieldManagerSetterAC"}
+      receivedPermissions.25:
++        {"permission":"interact","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","description":"manage native yield staking: modify reserve parameters, set yield pools, set yield receiver addresses.","role":".yieldStakingManagerAC"}
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","description":"operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.","role":".yieldStakingOperatorAC"}
+      receivedPermissions.30:
++        {"permission":"upgrade","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","role":"admin","via":[{"address":"eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"eth:0xd6B95c960779c72B8C6752119849318E5d550574"}]}
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      template:
+-        "linea/LineaRollup"
++        "linea/LineaRollup_NativeYield"
+      sourceHashes.1:
+-        "0xd9038151917d14b4d25257789abe9a10cecf3a5b4c0c2520860ce1338757ceff"
++        "0x7f1b1a08526c142b2843c2e0d1fb7d8511f9fe0da9001aa980e58eea6ddd3fb1"
+      description:
+-        "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2."
++        "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol."
+      values.$implementation:
+-        "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"
++        "eth:0x04728BF704a716C26F9EF4085013b760AC885631"
+      values.$pastUpgrades.9:
++        ["2026-03-01T14:25:35.000Z","0xac24732952f9eea514ba28030218267575bb42dd5f713dab7c29f3d330086d8f",["eth:0x04728BF704a716C26F9EF4085013b760AC885631"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.accessControl.SET_YIELD_MANAGER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.YIELD_PROVIDER_STAKING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"]}
+      values.accessControl.PAUSE_NATIVE_YIELD_STAKING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_NATIVE_YIELD_STAKING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.CONTRACT_VERSION:
+-        "6.0"
++        "7.0"
+      values.GENESIS_SHNARF:
+-        "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f"
+      values.ethStakerAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"]
+      values.isWithdrawLSTAllowed:
++        false
+      values.PAUSE_NATIVE_YIELD_STAKING_ROLE:
++        "0xcc10d6eec3c757d645e27b3f3001a3ba52f692da0bce25fabf58c6ecaf376450"
+      values.SET_YIELD_MANAGER_ROLE:
++        "0x76ef52a5344b10ed112c1d48c7c06f51e919518ea6fb005f9b25b359b955e3be"
+      values.UNPAUSE_NATIVE_YIELD_STAKING_ROLE:
++        "0x4b4665d8754e6ea0608430ef3e91c1b45c72aafe8800e289cd35f38d85361858"
+      values.YIELD_PROVIDER_STAKING_ROLE:
++        "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258"
++++ severity: HIGH
+      values.yieldManager:
++        "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94"
+      values.yieldManagerSetterAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      fieldMeta.yieldManager:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0:
+-        "LineaRollup"
+      implementationNames.eth:0x04728BF704a716C26F9EF4085013b760AC885631:
++        "LineaRollup"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Roles (eth:0xF24f1DC519d88246809B660eb56D94048575d083)
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94)
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+```
+
+## Source code changes
+
+```diff
+.../LineaRollup/LineaRollup.sol                    | 4114 +++++++++++---------
+ .../linea/.flat@1765276326/Roles.sol => /dev/null  | 1753 ---------
+ .../YieldManager/TransparentUpgradeableProxy.p.sol |  695 ++++
+ .../linea/.flat/YieldManager/YieldManager.sol      | 3719 ++++++++++++++++++
+ 4 files changed, 6683 insertions(+), 3598 deletions(-)
+```
+
 Generated with discovered.json: 0x2539feb622b1cabeebee8f8f33dd1080acca93c3
 
 # Diff at Tue, 09 Dec 2025 10:38:14 GMT:

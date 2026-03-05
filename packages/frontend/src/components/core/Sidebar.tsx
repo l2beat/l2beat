@@ -217,7 +217,7 @@ function SidebarGroupSmallLink({
     <a
       target={isInternalLink ? undefined : '_blank'}
       className={cn(
-        'pl-1.5 text-primary text-xs leading-none transition-colors hover:text-secondary',
+        'flex items-center gap-1 pl-1.5 text-primary text-xs leading-none transition-colors hover:text-secondary',
         isActive && 'text-brand hover:text-brand',
         className,
       )}
