@@ -110,9 +110,9 @@ export function InteropTokensSection({
         isLoading={isLoading}
       />
       {!isLoading && pageCount > 1 && (
-        <div className="mt-4 overflow-x-auto">
-          <Pagination className="w-max min-w-full px-1">
-            <PaginationContent className="flex-nowrap justify-center gap-1.5">
+        <div className="mt-4">
+          <Pagination className="min-w-full px-1">
+            <PaginationContent className="justify-center">
               {paginationItems.map((item) =>
                 item.type === 'ellipsis' ? (
                   <PaginationItem key={item.key}>
