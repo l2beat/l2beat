@@ -4,5 +4,11 @@
     "address": "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5",
     "chain": "ethereum",
     "blockNumber": 23919381
+  },
+  "HonkVerifier_alpha.sol": {
+    "hash": "0x8ccbd9969496e6e190b97c2988df87d248cdf18d3173a7f4bf1184de23202e78",
+    "address": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348",
+    "chain": "ethereum",
+    "blockNumber": 24590324
   }
 }

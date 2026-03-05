@@ -1,48 +1,70 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
+  "description": "Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
   "ignoreMethods": [
-    "canPruneAtTime",
     "archiveAt",
+    "canPruneAtTime",
+    "getAttesterAtIndex",
+    "getBlobCommitmentsHash",
+    "getCheckpoint",
     "getCollectiveProverRewardsForEpoch",
     "getEntryQueueAt",
     "getEpochAt",
     "getEpochAtSlot",
+    "getEpochForCheckpoint",
+    "getEscapeHatchForEpoch",
     "getFeeHeader",
+    "getL1FeesAt",
+    "getManaMinFeeAt",
+    "getManaMinFeeComponentsAt",
+    "getSampleSeedAt",
+    "getSamplingSizeAt",
+    "getSlotAt",
+    "getSpecificProverRewardsForEpoch",
+    "getTimestampForEpoch",
     "getTimestampForSlot",
     "status",
-    "getAttesterAtIndex",
-    "getBlock",
-    "getBlobCommitmentsHash"
+    "validateBlobs"
   ],
   "ignoreInWatchMode": [
     "archive",
     "getActiveAttesterCount",
+    "getAvailableValidatorFlushes",
     "getCurrentBlobCommitmentsHash",
     "getCurrentEpoch",
     "getCurrentSampleSeed",
     "getCurrentSlot",
+    "getEntryQueueFlushSize",
     "getEntryQueueLength",
+    "getEthPerFeeAsset",
     "getNextFlushableEpoch",
-    "getPendingBlockNumber",
-    "getProvenBlockNumber",
-    "getTips",
-    "getAvailableValidatorFlushes"
+    "getPendingCheckpointNumber",
+    "getProvenCheckpointNumber",
+    "getTips"
   ],
   "fields": {
     "_epochProofVerifier": {
       "description": "immutable, defined in constructor",
       "handler": {
         "type": "hardcoded",
-        "value": "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5"
+        "value": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348"
       }
     },
-    "getManaLimit": {
-      "severity": "HIGH",
-      "description": "gas limit, currently 0 to prevent transactions"
-    },
+    "getManaLimit": { "description": "gas limit" },
     "getEntryQueueFlushSize": {
       "description": "number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"
+    },
+    "getEscapeHatch": {
+      "description": "Address of the EscapeHatch contract used as a fallback for trustless proposal generation if the committee stalls."
+    },
+    "getCheckpointReward": {
+      "description": "The amount of reward tokens distributed per proven checkpoint."
+    },
+    "getLagInEpochsForValidatorSet": {
+      "description": "The delay in epochs for the validator set selection to become active, preventing rapid targeted restructuring."
+    },
+    "getLagInEpochsForRandao": {
+      "description": "The delay in epochs for the RANDAO seed to be applied to validator selection to prevent manipulation."
     }
   }
 }

@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The Alpha Upgrade Governance Payload encoding the recipe for bringing execution to the next Aztec rollup smart contract system."
+}

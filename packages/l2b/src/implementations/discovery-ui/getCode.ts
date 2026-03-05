@@ -156,7 +156,9 @@ export function getCodePaths(
       continue
     }
 
-    const similar = discovery.entries.filter((x) => x.name === entry.name)
+    const similar = discovery.entries.filter(
+      (x) => x.name === entry.name && x.type !== 'Reference',
+    )
     const hasImplementations = get$Implementations(entry.values).length > 0
 
     const name =
@@ -178,6 +180,7 @@ export function getCodePaths(
         path: join(root, name, file),
       }))
       .sort((a, b) => compareFiles(a.name, b.name))
+
     return {
       entryName: entry.name,
       codePaths,
