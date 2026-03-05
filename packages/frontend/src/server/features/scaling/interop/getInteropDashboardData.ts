@@ -150,11 +150,11 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
 
   const entries: ProtocolEntry[] = interopProjects.map((project) => ({
     id: project.id,
+    slug: project.slug,
     name: project.interopConfig.name ?? project.name,
     shortName: project.interopConfig.shortName,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
-    iconSlug: project.slug,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     bridgeTypes: ['lockAndMint', 'nonMinting', 'burnAndMint'],
     volume: 15_000_000,

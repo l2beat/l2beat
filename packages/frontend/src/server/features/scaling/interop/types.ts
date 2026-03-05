@@ -10,6 +10,7 @@ import type { TopItems } from './utils/getTopItems'
 
 export type ProtocolEntry = {
   id: ProjectId
+  slug: string
   iconUrl: string
   name: string
   shortName: string | undefined

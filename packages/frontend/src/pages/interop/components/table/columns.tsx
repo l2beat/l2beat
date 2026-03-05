@@ -10,7 +10,9 @@ import {
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
+import { env } from '~/env'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopTokensCell } from '../top-items/TopTokensCell'
@@ -44,23 +46,36 @@ const commonColumns = [
   }),
   columnHelper.accessor('name', {
     header: 'Name',
-    cell: (ctx) => (
-      <TwoRowCell>
-        <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-          <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-            {ctx.row.original.name}
-          </div>
-          {ctx.row.original.subgroup && (
-            <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
-          )}
-        </TwoRowCell.First>
-        <TwoRowCell.Second>
-          {ctx.row.original.isAggregate && 'Aggregate'}
-        </TwoRowCell.Second>
-      </TwoRowCell>
-    ),
+    cell: (ctx) => {
+      const nameCell = (
+        <TwoRowCell>
+          <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+            <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+              {ctx.row.original.name}
+            </div>
+            {ctx.row.original.subgroup && (
+              <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+            )}
+          </TwoRowCell.First>
+          <TwoRowCell.Second>
+            {ctx.row.original.isAggregate && 'Aggregate'}
+          </TwoRowCell.Second>
+        </TwoRowCell>
+      )
+
+      return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
+        <TableLink
+          href={`/interop/protocols/${ctx.row.original.slug}`}
+          className="h-full"
+        >
+          {nameCell}
+        </TableLink>
+      ) : (
+        nameCell
+      )
+    },
     meta: {
-      cellClassName: 'whitespace-normal py-1',
+      cellClassName: 'whitespace-normal',
       headClassName: 'text-2xs',
     },
   }),

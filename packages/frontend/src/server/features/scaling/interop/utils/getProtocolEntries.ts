@@ -125,6 +125,7 @@ export function getProtocolEntries(
 
     entries.push({
       id: project.id,
+      slug: project.slug,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       name: project.interopConfig.name ?? project.name,
       shortName: project.interopConfig.shortName,
