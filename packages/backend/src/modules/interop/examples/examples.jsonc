@@ -1662,30 +1662,6 @@
     ],
     "transfers": ["opstack.L1ToL2Transfer", "opstack.L2ToL1Transfer"]
   },
-  "opstack-celo": {
-    "tags": ["opstack"],
-    "description": "Celo L1 → L2 ERC20 deposit via StandardBridge",
-    "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0xa2cbb41cab94d8fd1ecde9fb83abfb88ee6b73882ed2ff2280c46bdec1be8bfe"
-      },
-      {
-        "chain": "celo",
-        "tx": "0x49b0a6f42d7cfe05525f126945768a6e46f8a8dbb552537b9c05afa9f4ad72e5"
-      }
-    ],
-    "events": [
-      "opstack.SentMessage",
-      "opstack.ERC20DepositInitiated",
-      "opstack.RelayedMessage",
-      "opstack.DepositFinalized"
-    ],
-    "messages": [
-      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
-    ],
-    "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
-  },
   "across-settlement-op": {
     "tags": ["across", "opstack"],
     "description": "L1 → Optimism",
