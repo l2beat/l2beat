@@ -5,6 +5,7 @@ import type {
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { InteropFlowData } from './utils/getFlows'
 import type { TopItems } from './utils/getTopItems'
 
 export type ProtocolEntry = {
@@ -44,22 +45,23 @@ export type ByBridgeTypeData = {
   burnAndMint: BurnAndMintProtocolData | undefined
 }
 
-export type LockAndMintProtocolData = {
+type BridgeTypeCommonData = {
   volume: number
-  netMintedValue: number | undefined
+  transferCount: number
+  averageValue: number | null
   tokens: TopItems<TokenData>
+  flows: InteropFlowData[]
 }
 
-export type NonMintingProtocolData = {
-  volume: number
-  tokens: TopItems<TokenData>
+export type LockAndMintProtocolData = BridgeTypeCommonData & {
+  netMintedValue: number | undefined
+}
+
+export type NonMintingProtocolData = BridgeTypeCommonData & {
   averageValueInFlight: number
 }
 
-export type BurnAndMintProtocolData = {
-  volume: number
-  tokens: TopItems<TokenData>
-}
+export type BurnAndMintProtocolData = BridgeTypeCommonData
 
 export type InteropSelectionInput = v.infer<typeof InteropSelectionInput>
 const InteropSelectionInputShape = {

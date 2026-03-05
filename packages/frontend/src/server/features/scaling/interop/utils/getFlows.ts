@@ -13,13 +13,13 @@ export type InteropFlowData = {
 
 export function getFlows(
   records: AggregatedInteropTransferWithTokens[],
-  subgroupProjects: Set<ProjectId>,
+  subgroupProjects?: Set<ProjectId>,
 ): InteropFlowData[] {
   const map = new Map<string, number>()
 
   for (const record of records) {
     // Skip projects that are part of other projects to not double count
-    if (subgroupProjects.has(record.id as ProjectId)) continue
+    if (subgroupProjects?.has(record.id as ProjectId)) continue
 
     const key = `${record.srcChain}::${record.dstChain}`
     const current = map.get(key) ?? 0

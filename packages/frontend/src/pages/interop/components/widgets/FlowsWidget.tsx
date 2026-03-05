@@ -129,17 +129,24 @@ function FlowTooltipItem({
   )
 }
 
-function FlowItem({
+export function FlowItem({
   from,
   to,
   volume,
+  className,
 }: {
   from: { id: string; iconUrl: string }
   to: { id: string; iconUrl: string }
   volume: number
+  className?: string
 }) {
   return (
-    <div className="flex flex-col items-center rounded-lg border border-divider px-4 py-3 md:py-4">
+    <div
+      className={cn(
+        'flex flex-col items-center rounded-lg border border-divider px-4 py-3 md:py-4',
+        className,
+      )}
+    >
       <div className="flex gap-1.5">
         <img src={from.iconUrl} alt={from.id} className="size-5" />
         <ArrowRightIcon className="size-5 fill-brand" />

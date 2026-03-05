@@ -20,6 +20,7 @@ export interface ProtocolDataByBridgeType {
 type ProtocolDataByBridgeTypeCommon = {
   volume: number
   tokens: Map<string, CommonInteropData>
+  flows: Map<string, number>
   transferCount: number
   identifiedTransferCount: number
   minTransferValueUsd: number | undefined
@@ -89,6 +90,7 @@ export function getProtocolsDataMapByBridgeType(
             record.tokens,
             direction,
           ),
+          flows: mergeFlowsData(bridgeTypeMap.lockAndMint?.flows, record),
           transferCount:
             (bridgeTypeMap.lockAndMint?.transferCount ?? 0) +
             record.transferCount,
@@ -138,6 +140,7 @@ export function getProtocolsDataMapByBridgeType(
             record.tokens,
             direction,
           ),
+          flows: mergeFlowsData(bridgeTypeMap.nonMinting?.flows, record),
           transferCount:
             (bridgeTypeMap.nonMinting?.transferCount ?? 0) +
             record.transferCount,
@@ -175,6 +178,7 @@ export function getProtocolsDataMapByBridgeType(
             record.tokens,
             direction,
           ),
+          flows: mergeFlowsData(bridgeTypeMap.burnAndMint?.flows, record),
           transferCount:
             (bridgeTypeMap.burnAndMint?.transferCount ?? 0) +
             record.transferCount,
@@ -328,6 +332,17 @@ function mergeTokensData(
     )
   }
 
+  return result
+}
+
+function mergeFlowsData(
+  currentFlows: Map<string, number> | undefined,
+  record: AggregatedInteropTransferWithTokens,
+): Map<string, number> {
+  const result = new Map(currentFlows)
+  const key = `${record.srcChain}::${record.dstChain}`
+  const current = result.get(key) ?? 0
+  result.set(key, current + (getInteropTransferValue(record) ?? 0))
   return result
 }
 

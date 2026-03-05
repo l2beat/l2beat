@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
 import {
+  assert,
   type KnownInteropBridgeType,
   notUndefined,
   type ProjectId,
@@ -18,6 +19,7 @@ import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { buildTransfersTimeModeMap } from './buildTransfersTimeModeMap'
 import { buildDurationSplitMap, getAverageDuration } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
+import type { InteropFlowData } from './getFlows'
 import {
   getProtocolsDataMap,
   getProtocolsDataMapByBridgeType,
@@ -172,6 +174,12 @@ function getByBridgeTypeData(
     lockAndMint: data.lockAndMint
       ? {
           volume: data.lockAndMint.volume,
+          transferCount: data.lockAndMint.transferCount,
+          averageValue:
+            data.lockAndMint.identifiedTransferCount > 0
+              ? data.lockAndMint.volume /
+                data.lockAndMint.identifiedTransferCount
+              : null,
           tokens: getTopItems(
             getTokensData({
               projectId,
@@ -186,6 +194,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
+          flows: flowsMapToSorted(data.lockAndMint.flows),
           netMintedValue:
             data.lockAndMint.mintedValueUsd !== undefined &&
             data.lockAndMint.burnedValueUsd !== undefined
@@ -197,6 +206,11 @@ function getByBridgeTypeData(
     nonMinting: data.nonMinting
       ? {
           volume: data.nonMinting.volume,
+          transferCount: data.nonMinting.transferCount,
+          averageValue:
+            data.nonMinting.identifiedTransferCount > 0
+              ? data.nonMinting.volume / data.nonMinting.identifiedTransferCount
+              : null,
           tokens: getTopItems(
             getTokensData({
               projectId,
@@ -211,12 +225,19 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
+          flows: flowsMapToSorted(data.nonMinting.flows),
           averageValueInFlight: data.nonMinting.averageValueInFlight,
         }
       : undefined,
     burnAndMint: data.burnAndMint
       ? {
           volume: data.burnAndMint.volume,
+          transferCount: data.burnAndMint.transferCount,
+          averageValue:
+            data.burnAndMint.identifiedTransferCount > 0
+              ? data.burnAndMint.volume /
+                data.burnAndMint.identifiedTransferCount
+              : null,
           tokens: getTopItems(
             getTokensData({
               projectId,
@@ -231,6 +252,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
+          flows: flowsMapToSorted(data.burnAndMint.flows),
         }
       : undefined,
   }
@@ -243,4 +265,14 @@ function sortBridgeTypesFn(
   b: KnownInteropBridgeType,
 ): number {
   return bridgeTypesOrder.indexOf(a) - bridgeTypesOrder.indexOf(b)
+}
+
+function flowsMapToSorted(flows: Map<string, number>): InteropFlowData[] {
+  return Array.from(flows.entries())
+    .toSorted((a, b) => b[1] - a[1])
+    .map(([key, volume]): InteropFlowData => {
+      const [srcChain, dstChain] = key.split('::')
+      assert(srcChain && dstChain)
+      return { srcChain, dstChain, volume }
+    })
 }

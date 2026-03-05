@@ -2,6 +2,7 @@ import uniq from 'lodash/uniq'
 import { ps } from '~/server/projects'
 import type { InteropProtocolParams, ProtocolEntry } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import { getFlows, type InteropFlowData } from './utils/getFlows'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
 import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
@@ -12,6 +13,7 @@ import {
 
 export type InteropProtocolDashboardData = {
   entry: ProtocolEntry | undefined
+  flows: InteropFlowData[]
   transferSize: TransferSizeDataPoint | undefined
   topToken: InteropTopTokenData | undefined
 }
@@ -27,6 +29,7 @@ export async function getInteropProtocolData(
     return {
       topToken: undefined,
       entry: undefined,
+      flows: [],
       transferSize: undefined,
     }
   }
@@ -54,6 +57,7 @@ export async function getInteropProtocolData(
     return {
       topToken: undefined,
       entry: undefined,
+      flows: [],
       transferSize: undefined,
     }
   }
@@ -65,6 +69,7 @@ export async function getInteropProtocolData(
       interopProjects: [interopProject],
     }),
     entry: projectEntry,
+    flows: getFlows(records),
     transferSize: getTransferSizeChartData(records, [interopProject])?.[0],
   }
 }
