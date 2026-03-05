@@ -246,6 +246,37 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getProjectTransfers(options: {
+    plugins: string[]
+    snapshotTimestamp: UnixTime
+    sourceChains: string[]
+    destinationChains: string[]
+  }): Promise<InteropTransferRecord[]> {
+    if (
+      options.plugins.length === 0 ||
+      options.sourceChains.length === 0 ||
+      options.destinationChains.length === 0
+    ) {
+      return []
+    }
+
+    const from = options.snapshotTimestamp - UnixTime.DAY
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('timestamp', '>', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(options.snapshotTimestamp))
+      .where('plugin', 'in', options.plugins)
+      .where('srcChain', 'in', options.sourceChains)
+      .where('dstChain', 'in', options.destinationChains)
+      .whereRef('srcChain', '!=', 'dstChain')
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getUnprocessed() {
     const rows = await this.db
       .selectFrom('InteropTransfer')

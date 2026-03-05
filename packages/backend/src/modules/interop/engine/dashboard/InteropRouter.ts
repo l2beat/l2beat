@@ -1,10 +1,10 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
-import { InteropTransferClassifier } from '../aggregation/InteropTransferClassifier'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { renderAggregatesPage } from './AggregatesPage'
@@ -106,7 +106,10 @@ export function createInteropRouter(
     const classifier = new InteropTransferClassifier()
     const consumedIds = new Set<string>()
     for (const aggConfig of configs) {
-      const classified = classifier.classifyTransfers(transfers, aggConfig)
+      const classified = classifier.classifyTransfers(
+        transfers,
+        aggConfig.plugins,
+      )
       for (const records of Object.values(classified)) {
         for (const r of records) {
           consumedIds.add(r.transferId)

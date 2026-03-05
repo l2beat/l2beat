@@ -662,6 +662,106 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(InteropTransferRepository.prototype.getProjectTransfers.name, () => {
+    const snapshotTimestamp = UnixTime(2_000_000)
+
+    it('returns all matching transfers ordered by timestamp desc then transferId desc', async () => {
+      await repository.insertMany([
+        transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          snapshotTimestamp - 10,
+          'ethereum',
+          'arbitrum',
+          10,
+        ),
+        transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          snapshotTimestamp - 10,
+          'ethereum',
+          'base',
+          10,
+        ),
+        transfer(
+          'plugin2',
+          'msg3',
+          'deposit',
+          snapshotTimestamp - 9,
+          'optimism',
+          'base',
+          10,
+        ),
+        transfer(
+          'plugin3',
+          'msg4',
+          'deposit',
+          snapshotTimestamp - 8,
+          'optimism',
+          'base',
+          10,
+        ),
+      ])
+
+      const result = await repository.getProjectTransfers({
+        snapshotTimestamp,
+        sourceChains: ['ethereum', 'optimism'],
+        destinationChains: ['arbitrum', 'base'],
+        plugins: ['plugin1', 'plugin2'],
+      })
+
+      expect(result.map((x) => x.transferId)).toEqual(['msg3', 'msg2', 'msg1'])
+    })
+
+    it('excludes same-chain transfers and returns empty when plugins or chains are empty', async () => {
+      await repository.insertMany([
+        transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          snapshotTimestamp - 10,
+          'ethereum',
+          'ethereum',
+          10,
+        ),
+        transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          snapshotTimestamp - 9,
+          'ethereum',
+          'arbitrum',
+          10,
+        ),
+      ])
+
+      const valid = await repository.getProjectTransfers({
+        snapshotTimestamp,
+        sourceChains: ['ethereum'],
+        destinationChains: ['arbitrum', 'ethereum'],
+        plugins: ['plugin1'],
+      })
+      const emptyPlugins = await repository.getProjectTransfers({
+        snapshotTimestamp,
+        sourceChains: ['ethereum'],
+        destinationChains: ['arbitrum'],
+        plugins: [],
+      })
+      const emptyChains = await repository.getProjectTransfers({
+        snapshotTimestamp,
+        sourceChains: [],
+        destinationChains: ['arbitrum'],
+        plugins: ['plugin1'],
+      })
+
+      expect(valid.map((x) => x.transferId)).toEqual(['msg2'])
+      expect(emptyPlugins).toEqual([])
+      expect(emptyChains).toEqual([])
+    })
+  })
+
   afterEach(async () => {
     await repository.deleteAll()
   })

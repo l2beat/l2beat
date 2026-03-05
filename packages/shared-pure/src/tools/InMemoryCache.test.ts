@@ -32,7 +32,11 @@ describe(InMemoryCache.name, () => {
       const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
       expect(fallback).toHaveBeenCalled()
-      expect(cache._get('key')).toEqual({ result: 'test2', timestamp: now })
+      expect(cache._get('key')).toEqual({
+        result: 'test2',
+        timestamp: now,
+        maxLifetime: 1000,
+      })
       expect(result).toEqual('test2')
     })
 
@@ -157,6 +161,43 @@ describe(InMemoryCache.name, () => {
 
         expect(result4).toEqual('fresh')
         expect(fallback).toHaveBeenCalledTimes(1)
+      })
+
+      it('should sweep expired entries on get to free memory', async () => {
+        const now = UnixTime.now()
+        const cache = new InMemoryCache({})
+
+        // Populate cache with entries that have known maxLifetime
+        cache._set('fresh', {
+          result: 'fresh',
+          timestamp: now,
+          maxLifetime: 1000,
+        })
+        cache._set('expired1', {
+          result: 'old1',
+          timestamp: now - 10000,
+          maxLifetime: 1000,
+        })
+        cache._set('expired2', {
+          result: 'old2',
+          timestamp: now - 20000,
+          maxLifetime: 5000,
+        })
+        cache._set('no-lifetime', {
+          result: 'permanent',
+          timestamp: now - 99999,
+        })
+
+        expect(cache._get('expired1')).not.toEqual(undefined)
+        expect(cache._get('expired2')).not.toEqual(undefined)
+
+        // Trigger a get — sweep should remove expired entries
+        await cache.get({ key: ['other'], ttl: 1000 }, async () => 'result')
+
+        expect(cache._get('fresh')).not.toEqual(undefined)
+        expect(cache._get('expired1')).toEqual(undefined)
+        expect(cache._get('expired2')).toEqual(undefined)
+        expect(cache._get('no-lifetime')).not.toEqual(undefined)
       })
 
       it('should handle failed background revalidation gracefully', async () => {

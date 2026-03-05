@@ -1,8 +1,8 @@
 import type { InteropTransferRecord } from '@l2beat/database'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import { Address32, formatSeconds } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { InteropTransferClassifier } from '../aggregation/InteropTransferClassifier'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import {
