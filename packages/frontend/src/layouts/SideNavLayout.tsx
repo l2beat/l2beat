@@ -1,7 +1,7 @@
 import compact from 'lodash/compact'
 import { useContext, useMemo } from 'react'
-import { ChangelogUnreadBadge } from '~/components/changelog/ChangelogUnreadBadge'
 import { HiringBadge } from '~/components/badge/HiringBadge'
+import { ChangelogUnreadBadge } from '~/components/changelog/ChangelogUnreadBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
