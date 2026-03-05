@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { useLocalStorage } from '~/hooks/useLocalStorage'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -19,6 +21,18 @@ interface Props extends AppLayoutProps {
 }
 
 export function ChangelogPage({ entries, ...props }: Props) {
+  const [, setLastReadChangelogEntryId] = useLocalStorage<string | undefined>(
+    'last-read-changelog-entry-id',
+    undefined,
+  )
+
+  useEffect(() => {
+    const latestChangelogEntry = entries[0]
+    if (!latestChangelogEntry) return
+
+    setLastReadChangelogEntryId(latestChangelogEntry.id)
+  }, [entries, setLastReadChangelogEntryId])
+
   return (
     <AppLayout {...props}>
       <SideNavLayout>

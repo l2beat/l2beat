@@ -210,6 +210,66 @@ export function SideNavLayout({
     [selectedChainsContext],
   )
 
+  const sideLinks = useMemo(
+    () =>
+      compact([
+        {
+          title: 'About Us',
+          href: '/about-us',
+        },
+        {
+          title: 'Publications',
+          href: '/publications',
+        },
+        {
+          title: 'Changelog',
+          href: '/changelog',
+          accessory: (
+            <div
+              data-role="changelog-unread-badge"
+              className="inline-flex h-3.5 min-w-3.5 items-center justify-center rounded bg-brand p-px font-medium text-2xs text-white tabular-nums leading-none"
+            />
+          ),
+        },
+        {
+          title: 'Forum',
+          href: externalLinks.forum,
+        },
+        {
+          title: 'Donate',
+          href: '/donate',
+        },
+        {
+          title: 'Governance',
+          href: '/governance',
+        },
+        {
+          title: 'Tools',
+          href: externalLinks.tools,
+        },
+        {
+          title: 'Glossary',
+          href: '/glossary',
+        },
+        {
+          title: 'Jobs',
+          href: externalLinks.jobs,
+          accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? (
+            <HiringBadge />
+          ) : undefined,
+        },
+        {
+          title: 'Brand Kit',
+          href: externalLinks.brandKit,
+        },
+        {
+          title: 'FAQ',
+          href: '/faq',
+        },
+      ]),
+    [],
+  )
+
   return (
     <SidebarProvider>
       <div className="relative flex grow flex-col lg:flex-row">
@@ -255,51 +315,3 @@ export function SideNavLayout({
     </SidebarProvider>
   )
 }
-
-const sideLinks = compact([
-  {
-    title: 'About Us',
-    href: '/about-us',
-  },
-  {
-    title: 'Publications',
-    href: '/publications',
-  },
-  {
-    title: 'Changelog',
-    href: '/changelog',
-  },
-  {
-    title: 'Forum',
-    href: externalLinks.forum,
-  },
-  {
-    title: 'Donate',
-    href: '/donate',
-  },
-  {
-    title: 'Governance',
-    href: '/governance',
-  },
-  {
-    title: 'Tools',
-    href: externalLinks.tools,
-  },
-  {
-    title: 'Glossary',
-    href: '/glossary',
-  },
-  {
-    title: 'Jobs',
-    href: externalLinks.jobs,
-    accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? <HiringBadge /> : undefined,
-  },
-  {
-    title: 'Brand Kit',
-    href: externalLinks.brandKit,
-  },
-  {
-    title: 'FAQ',
-    href: '/faq',
-  },
-])
