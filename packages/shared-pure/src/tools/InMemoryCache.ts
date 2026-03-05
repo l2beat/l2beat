@@ -7,16 +7,16 @@ type Logger = {
   for: (object: object) => Logger
 }
 
+interface CacheEntry {
+  result: unknown
+  timestamp: number
+  maxLifetime?: number
+}
+
 interface Config {
   logger?: Logger
   enabled?: boolean
-  initialCache?: Map<
-    string,
-    {
-      result: unknown
-      timestamp: number
-    }
-  >
+  initialCache?: Map<string, CacheEntry>
   promiseTimeout?: number
 }
 
@@ -27,7 +27,7 @@ interface Options {
 }
 
 export class InMemoryCache {
-  private cache
+  private cache: Map<string, CacheEntry>
   private enabled
   private promiseTimeout
   private logger
@@ -39,9 +39,7 @@ export class InMemoryCache {
   constructor(config: Config) {
     this.logger = config.logger
     this.enabled = config?.enabled ?? true
-    this.cache =
-      config?.initialCache ??
-      new Map<string, { result: unknown; timestamp: number }>()
+    this.cache = config?.initialCache ?? new Map<string, CacheEntry>()
     this.promiseTimeout = config?.promiseTimeout ?? PROMISE_TIMEOUT
   }
 
@@ -52,8 +50,12 @@ export class InMemoryCache {
 
     this.logger?.info('Getting cache key', { key: options.key })
     const key = this.getKey(options.key.filter(Boolean) as string[])
-    const result = this.cache.get(key)
     const now = UnixTime.now()
+    const maxLifetime = options.ttl + (options.staleWhileRevalidate ?? 0)
+
+    this.sweep(now)
+
+    const result = this.cache.get(key)
 
     // If we have a result and it's not expired, return it immediately
     if (result && result.timestamp + options.ttl > now) {
@@ -68,7 +70,7 @@ export class InMemoryCache {
       result.timestamp + options.ttl + options.staleWhileRevalidate > now
     ) {
       this.logger?.info('Cache stale', { key })
-      void this.revalidateInBackground(key, fallback)
+      void this.revalidateInBackground(key, fallback, maxLifetime)
       return result.result as T
     }
 
@@ -96,6 +98,7 @@ export class InMemoryCache {
     this.cache.set(key, {
       result: fallbackResult,
       timestamp: now,
+      maxLifetime,
     })
     this.logger?.info('Cache set', { key, duration })
 
@@ -105,6 +108,7 @@ export class InMemoryCache {
   private async revalidateInBackground<T>(
     key: string,
     fallback: () => Promise<T>,
+    maxLifetime: number,
   ): Promise<void> {
     const existingPromise = this.inFlight.get(key)
     if (
@@ -124,9 +128,21 @@ export class InMemoryCache {
       this.cache.set(key, {
         result,
         timestamp: UnixTime.now(),
+        maxLifetime,
       })
     } catch {
       // If revalidation fails, we keep the stale data
+    }
+  }
+
+  private sweep(now: number) {
+    for (const [key, entry] of this.cache) {
+      if (
+        entry.maxLifetime !== undefined &&
+        entry.timestamp + entry.maxLifetime <= now
+      ) {
+        this.cache.delete(key)
+      }
     }
   }
 
@@ -134,7 +150,7 @@ export class InMemoryCache {
     return this.cache.get(key)
   }
 
-  _set(key: string, value: { result: unknown; timestamp: number }) {
+  _set(key: string, value: CacheEntry) {
     this.cache.set(key, value)
   }
 
