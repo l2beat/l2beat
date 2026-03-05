@@ -202,9 +202,9 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from, { keepTimestamps: [to] })
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
-      expect(interopAggregationQuality.findLatestPromoted).toHaveBeenCalledTimes(
-        1,
-      )
+      expect(
+        interopAggregationQuality.findLatestPromoted,
+      ).toHaveBeenCalledTimes(1)
     })
 
     it('handles empty transfers correctly', async () => {
