@@ -65,6 +65,7 @@ export async function getInteropProtocolPageData(
         interopChains: interopChainsWithIcons.filter(
           (chain) => !chain.isUpcoming,
         ),
+        onboardingInteropChains: interopChainsWithIcons,
         initialSelection,
       },
     },
