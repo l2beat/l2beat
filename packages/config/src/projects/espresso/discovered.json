@@ -1,7 +1,7 @@
 {
   "name": "espresso",
-  "timestamp": 1772723829,
-  "configHash": "0xbc54f4e990277e1a7e9850dc4be8d4c97975b9416b09258ad4e2a97d28b34b96",
+  "timestamp": 1772726425,
+  "configHash": "0xf2ae7808c1822342d3f165d68b1fdb46d92a6c735482b1350edc2512208f0db4",
   "entries": [
     {
       "name": "PlonkVerifierV3",
@@ -124,7 +124,10 @@
         "stateHistoryFirstIndex",
         "getStateHistoryCount",
         "finalizedState",
-        "currentBlockNumber"
+        "currentBlockNumber",
+        "authRoot",
+        "currentEpoch",
+        "votingStakeTableState"
       ],
       "sinceTimestamp": 1730830835,
       "sinceBlock": 21123201,
@@ -160,7 +163,7 @@
         "$upgradeCount": 4,
         "authRoot": "51023204165850023074572022546582207905522855371750882113725224518316468926003",
         "blocksPerEpoch": 40000,
-        "currentBlockNumber": 24592111,
+        "currentBlockNumber": 24592326,
         "currentEpoch": 277,
         "epochStartBlock": 10960201,
         "finalizedState": {
@@ -410,6 +413,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24592111 },
+  "usedBlockNumbers": { "ethereum": 24592326 },
   "permissionsConfigHash": "0x6ff33b1f8c062c3cc6e4fed7f18f949efbbf1a84cbaab26a57e45377561752fe"
 }
