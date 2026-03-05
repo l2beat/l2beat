@@ -25,61 +25,66 @@ export type ProtocolRow = ProtocolEntry & BasicTableRow
 
 const columnHelper = createColumnHelper<ProtocolEntry>()
 
-const commonColumns = [
-  columnHelper.display({
-    id: 'logo',
-    cell: (ctx) => (
-      <img
-        className="min-h-[20px] min-w-[20px]"
-        src={ctx.row.original.iconUrl}
-        width={20}
-        height={20}
-        alt={`${ctx.row.original.name} logo`}
-      />
-    ),
-    meta: {
-      headClassName: 'w-0',
-      cellClassName: 'lg:pr-1.5!',
-    },
-    size: 28,
-    enableHiding: false,
-  }),
-  columnHelper.accessor('name', {
-    header: 'Name',
-    cell: (ctx) => {
-      const nameCell = (
-        <TwoRowCell>
-          <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-            <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-              {ctx.row.original.name}
-            </div>
-            {ctx.row.original.subgroup && (
-              <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
-            )}
-          </TwoRowCell.First>
-          <TwoRowCell.Second>
-            {ctx.row.original.isAggregate && 'Aggregate'}
-          </TwoRowCell.Second>
-        </TwoRowCell>
-      )
+function getCommonColumns(getProtocolHref?: (slug: string) => string) {
+  return [
+    columnHelper.display({
+      id: 'logo',
+      cell: (ctx) => (
+        <img
+          className="min-h-[20px] min-w-[20px]"
+          src={ctx.row.original.iconUrl}
+          width={20}
+          height={20}
+          alt={`${ctx.row.original.name} logo`}
+        />
+      ),
+      meta: {
+        headClassName: 'w-0',
+        cellClassName: 'lg:pr-1.5!',
+      },
+      size: 28,
+      enableHiding: false,
+    }),
+    columnHelper.accessor('name', {
+      header: 'Name',
+      cell: (ctx) => {
+        const nameCell = (
+          <TwoRowCell>
+            <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+              <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+                {ctx.row.original.name}
+              </div>
+              {ctx.row.original.subgroup && (
+                <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+              )}
+            </TwoRowCell.First>
+            <TwoRowCell.Second>
+              {ctx.row.original.isAggregate && 'Aggregate'}
+            </TwoRowCell.Second>
+          </TwoRowCell>
+        )
 
-      return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
-        <TableLink
-          href={`/interop/protocols/${ctx.row.original.slug}`}
-          className="h-full"
-        >
-          {nameCell}
-        </TableLink>
-      ) : (
-        nameCell
-      )
-    },
-    meta: {
-      cellClassName: 'whitespace-normal',
-      headClassName: 'text-2xs',
-    },
-  }),
-]
+        return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
+          <TableLink
+            href={
+              getProtocolHref?.(ctx.row.original.slug) ??
+              `/interop/protocols/${ctx.row.original.slug}`
+            }
+            className="h-full"
+          >
+            {nameCell}
+          </TableLink>
+        ) : (
+          nameCell
+        )
+      },
+      meta: {
+        cellClassName: 'whitespace-normal',
+        headClassName: 'text-2xs',
+      },
+    }),
+  ]
+}
 
 const last24hVolumeColumn = columnHelper.accessor('volume', {
   header: 'Last 24h\nVolume',
@@ -123,6 +128,7 @@ export function getAllProtocolsColumns(
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
   showNetMintedValueColumn?: boolean,
+  getProtocolHref?: (slug: string) => string,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -135,7 +141,7 @@ export function getAllProtocolsColumns(
       },
       size: 44,
     }),
-    ...commonColumns,
+    ...getCommonColumns(getProtocolHref),
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
         header: 'Type',

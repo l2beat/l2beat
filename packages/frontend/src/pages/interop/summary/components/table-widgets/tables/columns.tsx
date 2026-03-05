@@ -33,7 +33,10 @@ function getCommonColumns<
     subgroup: { name: string; iconUrl: string } | undefined
     isAggregate: boolean | undefined
   },
->(columnHelper: ColumnHelper<T>) {
+>(
+  columnHelper: ColumnHelper<T>,
+  getProtocolHref?: (slug: string) => string,
+) {
   return [
     columnHelper.display({
       id: 'logo',
@@ -74,7 +77,10 @@ function getCommonColumns<
 
         return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
           <TableLink
-            href={`/interop/protocols/${ctx.row.original.slug}`}
+            href={
+              getProtocolHref?.(ctx.row.original.slug) ??
+              `/interop/protocols/${ctx.row.original.slug}`
+            }
             className="h-full"
           >
             {nameCell}
@@ -141,54 +147,64 @@ function getTokensByVolumeColumn<
   })
 }
 
-export const nonMintingColumns = [
-  ...getCommonColumns(nonMintingColumnHelper),
-  getLast24hVolumeColumn(nonMintingColumnHelper),
-  nonMintingColumnHelper.accessor('averageValueInFlight', {
-    header: 'Last 24h avg.\nin-flight value',
-    invertSorting: true,
-    meta: {
-      align: 'right',
-      headClassName: 'text-2xs',
-      tooltip:
-        'The average USD value of funds in transit at any given second over the past 24 hours.',
-    },
-    cell: (ctx) => {
-      if (ctx.row.original.averageValueInFlight === undefined) return '-'
-      return (
+export function getNonMintingColumns(getProtocolHref?: (slug: string) => string) {
+  return [
+    ...getCommonColumns(nonMintingColumnHelper, getProtocolHref),
+    getLast24hVolumeColumn(nonMintingColumnHelper),
+    nonMintingColumnHelper.accessor('averageValueInFlight', {
+      header: 'Last 24h avg.\nin-flight value',
+      invertSorting: true,
+      meta: {
+        align: 'right',
+        headClassName: 'text-2xs',
+        tooltip:
+          'The average USD value of funds in transit at any given second over the past 24 hours.',
+      },
+      cell: (ctx) => {
+        if (ctx.row.original.averageValueInFlight === undefined) return '-'
+        return (
+          <span className="font-medium text-label-value-15">
+            {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
+          </span>
+        )
+      },
+    }),
+    getTokensByVolumeColumn(nonMintingColumnHelper, 'nonMinting'),
+  ]
+}
+
+export function getLockAndMintColumns(
+  getProtocolHref?: (slug: string) => string,
+) {
+  return [
+    ...getCommonColumns(lockAndMintColumnHelper, getProtocolHref),
+    getLast24hVolumeColumn(lockAndMintColumnHelper),
+    lockAndMintColumnHelper.accessor('netMintedValue', {
+      header: 'Last 24h net\nminted value',
+      meta: {
+        align: 'right',
+        headClassName: 'text-2xs',
+        tooltip:
+          "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
+      },
+      cell: (ctx) => (
         <span className="font-medium text-label-value-15">
-          {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
+          {ctx.row.original.netMintedValue
+            ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
+            : EM_DASH}
         </span>
-      )
-    },
-  }),
-  getTokensByVolumeColumn(nonMintingColumnHelper, 'nonMinting'),
-]
+      ),
+    }),
+    getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
+  ]
+}
 
-export const lockAndMintColumns = [
-  ...getCommonColumns(lockAndMintColumnHelper),
-  getLast24hVolumeColumn(lockAndMintColumnHelper),
-  lockAndMintColumnHelper.accessor('netMintedValue', {
-    header: 'Last 24h net\nminted value',
-    meta: {
-      align: 'right',
-      headClassName: 'text-2xs',
-      tooltip:
-        "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
-    },
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {ctx.row.original.netMintedValue
-          ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
-          : EM_DASH}
-      </span>
-    ),
-  }),
-  getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
-]
-
-export const burnAndMintColumns = [
-  ...getCommonColumns(burnAndMintColumnHelper),
-  getLast24hVolumeColumn(burnAndMintColumnHelper),
-  getTokensByVolumeColumn(burnAndMintColumnHelper, 'burnAndMint'),
-]
+export function getBurnAndMintColumns(
+  getProtocolHref?: (slug: string) => string,
+) {
+  return [
+    ...getCommonColumns(burnAndMintColumnHelper, getProtocolHref),
+    getLast24hVolumeColumn(burnAndMintColumnHelper),
+    getTokensByVolumeColumn(burnAndMintColumnHelper, 'burnAndMint'),
+  ]
+}
