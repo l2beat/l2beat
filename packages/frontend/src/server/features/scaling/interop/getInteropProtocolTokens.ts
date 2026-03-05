@@ -12,7 +12,7 @@ import type {
 import { accumulateTokens } from './utils/accumulate'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { buildTransfersTimeModeMap } from './utils/buildTransfersTimeModeMap'
-import { getAggregatedInteropTimestamp } from './utils/getAggregatedInteropTimestamp'
+import { getAggregatedInteropTimestampWithOverride } from './utils/getAggregatedInteropTimestamp'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
 import {
@@ -30,6 +30,7 @@ export async function getInteropProtocolTokens({
   from,
   to,
   type,
+  aggregateTimestamp,
 }: InteropProtocolTokensParams): Promise<TokenData[]> {
   const logger = getLogger().for('getProtocolTokens')
   const db = getDb()
@@ -42,7 +43,8 @@ export async function getInteropProtocolTokens({
     return []
   }
 
-  const latestTimestamp = await getAggregatedInteropTimestamp()
+  const latestTimestamp =
+    await getAggregatedInteropTimestampWithOverride(aggregateTimestamp)
   if (!latestTimestamp) {
     return []
   }

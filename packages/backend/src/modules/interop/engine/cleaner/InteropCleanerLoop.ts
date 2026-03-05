@@ -19,13 +19,16 @@ export class InteropCleanerLoop extends TimeLoop {
 
   async run() {
     const now = UnixTime.now()
+    const latestPromotedTimestamp =
+      await this.db.interopAggregationQuality.findLatestPromoted()
+    const cleanupAnchor = latestPromotedTimestamp?.timestamp ?? now
 
     const expiredEvents = await this.store.deleteExpired(now)
     const expiredMessages = await this.db.interopMessage.deleteBefore(
-      now - 1 * UnixTime.DAY,
+      cleanupAnchor - 1 * UnixTime.DAY,
     )
     const expiredTransfers = await this.db.interopTransfer.deleteBefore(
-      now - 1 * UnixTime.DAY - 2 * UnixTime.HOUR,
+      cleanupAnchor - 1 * UnixTime.DAY - 2 * UnixTime.HOUR,
     )
     const expiredPrices = await this.db.interopRecentPrices.deleteBefore(
       now - 7 * UnixTime.DAY,
@@ -48,6 +51,8 @@ export class InteropCleanerLoop extends TimeLoop {
       expiredMessages,
       expiredTransfers,
       expiredPrices,
+      latestPromotedTimestamp,
+      cleanupAnchor,
       orphanedSyncStates,
       orphanedSyncedRanges,
     })

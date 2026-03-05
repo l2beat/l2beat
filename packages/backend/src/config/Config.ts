@@ -211,6 +211,8 @@ export interface InteropFeatureConfig {
   aggregation:
     | {
         configs: InteropAggregationConfig[]
+        qualityGateEnabled: boolean
+        autoPromotionEnabled: boolean
       }
     | false
   capture: {

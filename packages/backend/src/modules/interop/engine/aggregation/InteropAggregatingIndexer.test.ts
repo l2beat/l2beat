@@ -12,6 +12,7 @@ import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
+import type { InteropAggregationQualityGate } from './InteropAggregationQualityGate'
 import type { InteropAggregationService } from './InteropAggregationService'
 
 describe(InteropAggregatingIndexer.name, () => {
@@ -104,6 +105,11 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(1),
       })
+      const interopAggregationQuality = mockObject<
+        Database['interopAggregationQuality']
+      >({
+        upsert: mockFn().resolvesTo(undefined),
+      })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
@@ -112,6 +118,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        interopAggregationQuality,
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
@@ -121,12 +128,26 @@ describe(InteropAggregatingIndexer.name, () => {
           warnings: [],
         }),
       })
+      const qualityGate = mockObject<InteropAggregationQualityGate>({
+        evaluate: mockFn().resolvesTo({
+          candidateTimestamp: to,
+          autoPromoted: true,
+          promotionRequired: false,
+          checkedGroups: 1,
+          failingGroups: 0,
+          reasons: [],
+          failedGroups: [],
+        }),
+      })
 
       const indexer = new InteropAggregatingIndexer(
         {
           db,
           configs,
           aggregationService,
+          qualityGate,
+          qualityGateEnabled: true,
+          autoPromotionEnabled: false,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
@@ -143,6 +164,7 @@ describe(InteropAggregatingIndexer.name, () => {
         configs,
         to,
       )
+      expect(qualityGate.evaluate).toHaveBeenCalledWith(to, aggregatedTransfers)
       expect(transaction).toHaveBeenCalledTimes(1)
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
@@ -156,6 +178,16 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith(
         aggregatedTokens,
       )
+      expect(interopAggregationQuality.upsert).toHaveBeenCalledTimes(1)
+      expect(interopAggregationQuality.upsert).toHaveBeenCalledWith({
+        timestamp: to,
+        autoPromoted: true,
+        isPromoted: true,
+        promotionRequired: false,
+        reasons: [],
+        checkedGroups: 1,
+        failingGroups: 0,
+      })
       expect(
         aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
@@ -191,6 +223,11 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const interopAggregationQuality = mockObject<
+        Database['interopAggregationQuality']
+      >({
+        upsert: mockFn().resolvesTo(undefined),
+      })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
@@ -199,6 +236,7 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        interopAggregationQuality,
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
@@ -208,12 +246,26 @@ describe(InteropAggregatingIndexer.name, () => {
           warnings: [],
         }),
       })
+      const qualityGate = mockObject<InteropAggregationQualityGate>({
+        evaluate: mockFn().resolvesTo({
+          candidateTimestamp: to,
+          autoPromoted: true,
+          promotionRequired: false,
+          checkedGroups: 0,
+          failingGroups: 0,
+          reasons: [],
+          failedGroups: [],
+        }),
+      })
 
       const indexer = new InteropAggregatingIndexer(
         {
           db,
           configs,
           aggregationService,
+          qualityGate,
+          qualityGateEnabled: true,
+          autoPromotionEnabled: false,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
           minHeight: 0,
@@ -231,6 +283,112 @@ describe(InteropAggregatingIndexer.name, () => {
       )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([])
+      expect(interopAggregationQuality.upsert).toHaveBeenCalledTimes(1)
+      expect(interopAggregationQuality.upsert).toHaveBeenCalledWith({
+        timestamp: to,
+        autoPromoted: true,
+        isPromoted: true,
+        promotionRequired: false,
+        reasons: [],
+        checkedGroups: 0,
+        failingGroups: 0,
+      })
+    })
+
+    it('auto-promotes failing snapshot when auto promotion is enabled', async () => {
+      const transfers: InteropTransferRecord[] = []
+
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getByRange: mockFn().resolvesTo(transfers),
+      })
+      const aggregatedInteropTransfer = mockObject<
+        Database['aggregatedInteropTransfer']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const interopAggregationQuality = mockObject<
+        Database['interopAggregationQuality']
+      >({
+        upsert: mockFn().resolvesTo(undefined),
+      })
+      const transaction = mockFn(async (fn: any) => await fn())
+
+      const db = mockDatabase({
+        transaction,
+        interopTransfer,
+        aggregatedInteropTransfer,
+        aggregatedInteropToken,
+        interopAggregationQuality,
+      })
+
+      const aggregationService = mockObject<InteropAggregationService>({
+        aggregate: mockFn().returns({
+          aggregatedTransfers: [],
+          aggregatedTokens: [],
+          warnings: [],
+        }),
+      })
+
+      const qualityGate = mockObject<InteropAggregationQualityGate>({
+        evaluate: mockFn().resolvesTo({
+          candidateTimestamp: to,
+          autoPromoted: false,
+          promotionRequired: true,
+          checkedGroups: 1,
+          failingGroups: 1,
+          reasons: ['config1:lockAndMint:ethereum->arbitrum: Count spike'],
+          failedGroups: [
+            {
+              id: 'config1',
+              bridgeType: 'lockAndMint',
+              srcChain: 'ethereum',
+              dstChain: 'arbitrum',
+              reasons: ['Count spike'],
+            },
+          ],
+        }),
+      })
+
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs: [],
+          aggregationService,
+          qualityGate,
+          qualityGateEnabled: true,
+          autoPromotionEnabled: true,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
+
+      const result = await indexer.update(from, to)
+
+      expect(result).toEqual(to)
+      expect(transaction).toHaveBeenCalledTimes(1)
+      expect(interopAggregationQuality.upsert).toHaveBeenCalledTimes(1)
+      expect(interopAggregationQuality.upsert).toHaveBeenCalledWith({
+        timestamp: to,
+        autoPromoted: false,
+        isPromoted: true,
+        promotionRequired: true,
+        reasons: ['config1:lockAndMint:ethereum->arbitrum: Count spike'],
+        checkedGroups: 1,
+        failingGroups: 1,
+      })
+      expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledTimes(1)
+      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledTimes(1)
     })
   })
 })

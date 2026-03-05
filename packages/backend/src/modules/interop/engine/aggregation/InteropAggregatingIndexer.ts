@@ -6,6 +6,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
+import type { InteropAggregationQualityGate } from './InteropAggregationQualityGate'
 import type { InteropAggregationService } from './InteropAggregationService'
 
 export interface InteropAggregatingIndexerDeps
@@ -13,6 +14,9 @@ export interface InteropAggregatingIndexerDeps
   db: Database
   configs: InteropAggregationConfig[]
   aggregationService: InteropAggregationService
+  qualityGate: InteropAggregationQualityGate
+  qualityGateEnabled: boolean
+  autoPromotionEnabled: boolean
 }
 
 export class InteropAggregatingIndexer extends ManagedChildIndexer {
@@ -31,6 +35,12 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     const { aggregatedTransfers, aggregatedTokens } =
       this.$.aggregationService.aggregate(transfers, this.$.configs, to)
 
+    const gateState = await this.$.qualityGate.evaluate(to, aggregatedTransfers)
+    const isPromoted =
+      !this.$.qualityGateEnabled ||
+      this.$.autoPromotionEnabled ||
+      gateState.autoPromoted
+
     await this.$.db.transaction(async () => {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
         from,
@@ -42,10 +52,38 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedTransfers)
       await this.$.db.aggregatedInteropToken.insertMany(aggregatedTokens)
+      await this.$.db.interopAggregationQuality.upsert({
+        timestamp: to,
+        autoPromoted: gateState.autoPromoted,
+        isPromoted,
+        promotionRequired: gateState.promotionRequired,
+        reasons: gateState.reasons,
+        checkedGroups: gateState.checkedGroups,
+        failingGroups: gateState.failingGroups,
+      })
     })
+
+    if (!isPromoted && gateState.promotionRequired) {
+      this.logger.error('Interop aggregation quality gate blocked timestamp', {
+        timestamp: to,
+        checkedGroups: gateState.checkedGroups,
+        failingGroups: gateState.failingGroups,
+        reasons: gateState.reasons,
+      })
+      // TODO: Notify
+    }
+
     this.logger.info('Aggregated interop transfers saved to db', {
       aggregatedRecords: aggregatedTransfers.length,
       aggregatedTokens: aggregatedTokens.length,
+      autoPromoted: gateState.autoPromoted,
+      isPromoted,
+      promotionRequired: gateState.promotionRequired,
+      qualityGateEnabled: this.$.qualityGateEnabled,
+      autoPromotionEnabled: this.$.autoPromotionEnabled,
+      checkedGroups: gateState.checkedGroups,
+      failingGroups: gateState.failingGroups,
+      reasons: gateState.reasons,
     })
 
     return to

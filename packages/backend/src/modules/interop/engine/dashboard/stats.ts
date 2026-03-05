@@ -1,7 +1,17 @@
 import type { AggregatedInteropTransferSeriesRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
-import sum from 'lodash/sum'
+import {
+  flatLine,
+  lastNValues,
+  log1Plus,
+  MAD,
+  median,
+  ratioDrop,
+  ratioSpike,
+  zClassic,
+  zRobust,
+} from './statsComputation'
 export const Z_CLASSIC_THRESHOLD = 7
 export const Z_ROBUST_THRESHOLD = {
   warn: 4,
@@ -74,7 +84,7 @@ export function explore(rows: DataRow[]) {
     const prevDayCount = dataPoints.at(-2)?.transferCount ?? null
     const prev7dCount = dataPoints.at(-8)?.transferCount ?? null
 
-    const zWindow = pick.lastNDays(
+    const zWindow = pick.lastNValues(
       log1PlusDataPoints.map((dp) => dp.transferCount),
       14,
     )
@@ -82,8 +92,8 @@ export function explore(rows: DataRow[]) {
     const zR = zRobust(zWindow)
     const zC = zClassic(zWindow)
 
-    const ratioWindow = pick.lastNDays(counts, RATIO_WINDOW_DAYS)
-    const flatLineWindow = pick.lastNDays(counts, FLAT_LINE_WINDOW_DAYS)
+    const ratioWindow = pick.lastNValues(counts, RATIO_WINDOW_DAYS)
+    const flatLineWindow = pick.lastNValues(counts, FLAT_LINE_WINDOW_DAYS)
 
     const isFlatLine =
       flatLineWindow.length >= FLAT_LINE_WINDOW_DAYS &&
@@ -162,105 +172,12 @@ export function interpretZRobust(value: number) {
   }
 }
 
-function log1Plus(x: number) {
-  return Math.log(1 + x)
-}
-
 function byDay(a: DataRow, b: DataRow) {
   return a.day - b.day
 }
 
-export function median(values: number[]) {
-  assert(values.length > 0, 'Values must be non-empty')
-  const sorted = [...values].sort((a, b) => a - b)
-  const middle = Math.floor(sorted.length / 2)
-  if (sorted.length % 2 === 0) {
-    return (sorted[middle - 1] + sorted[middle]) / 2
-  }
-  return sorted[middle]
-}
-
-export function MAD(values: number[]) {
-  const med = median(values)
-  const deviations = values.map((value) => Math.abs(value - med))
-  return median(deviations)
-}
-
-/**
- * For a standard normal distribution:
- * - Median = 0
- * - Median of |X| ≈ 0.67449
- *
- * σ ≈ MAD / 0.67449 ≈ MAD × 1.4826
- */
-export function zRobust(values: number[]) {
-  if (values.length < 2) {
-    return null
-  }
-
-  const prev = values.slice(0, -1)
-  const current = values.at(-1)
-  assert(current !== undefined, 'Current value must be defined')
-  const med = median(prev)
-  const mad = MAD(prev)
-  if (mad === 0) return current === med ? 0 : Number.POSITIVE_INFINITY
-  return (current - med) / (1.4826 * mad)
-}
-
-export function zClassic(values: number[]) {
-  if (values.length < 2) {
-    return null
-  }
-
-  const prev = values.slice(0, -1)
-  const current = values.at(-1)
-  assert(current !== undefined, 'Current value must be defined')
-  const mean = sum(prev) / prev.length
-  const varPop = prev.reduce((acc, v) => acc + (v - mean) ** 2, 0) / prev.length
-  const std = Math.sqrt(varPop)
-  if (std === 0) return current === mean ? 0 : null
-  return (current - mean) / std
-}
-
-function flatLine(values: number[]) {
-  const unique = [...new Set(values)]
-
-  return unique.length === 1
-}
-
-function ratioDrop(values: number[], threshold = 0.1 /* 90% sudden drop */) {
-  if (values.length <= 2) {
-    return false
-  }
-
-  const prev = values.slice(0, -1)
-  const current = values.at(-1)
-
-  assert(prev.length > 0, 'Previous values must be defined')
-  assert(current !== undefined, 'Current value must be defined')
-
-  return current / median(prev) < threshold
-}
-
-function ratioSpike(values: number[], threshold = 1.9 /* +90% */) {
-  if (values.length <= 2) return false
-  const prev = values.slice(0, -1)
-  const current = values.at(-1)
-  assert(current !== undefined, 'Current value must be defined')
-  const base = median(prev)
-  if (base === 0) return current > 0 // or handle separately
-  return current / base > threshold
-}
-
-function lastNDays(values: number[], n: number) {
-  if (values.length < n) {
-    return values
-  }
-  return values.slice(-n)
-}
-
 export const pick = {
-  lastNDays,
+  lastNValues,
 }
 
 export const detect = {

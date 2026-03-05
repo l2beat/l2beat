@@ -17,6 +17,7 @@ import { EcosystemTokenRepository } from './repositories/EcosystemTokenRepositor
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
+import { InteropAggregationQualityRepository } from './repositories/InteropAggregationQualityRepository'
 import { InteropConfigRepository } from './repositories/InteropConfigRepository'
 import { InteropEventRepository } from './repositories/InteropEventRepository'
 import { InteropMessageRepository } from './repositories/InteropMessageRepository'
@@ -65,6 +66,7 @@ export function createDatabase(
     interopTransfer: new InteropTransferRepository(db),
     aggregatedInteropTransfer: new AggregatedInteropTransferRepository(db),
     aggregatedInteropToken: new AggregatedInteropTokenRepository(db),
+    interopAggregationQuality: new InteropAggregationQualityRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
     interopPluginSyncState: new InteropPluginSyncStateRepository(db),
     interopPluginSyncedRange: new InteropPluginSyncedRangeRepository(db),
