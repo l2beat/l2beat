@@ -77,7 +77,7 @@ export function ChangelogPage({ entries, ...props }: Props) {
                         <div className="mx-2 flex w-full items-center gap-3">
                           <span className="h-px flex-1 bg-brand" />
                           <span className="font-semibold text-brand text-subtitle-12 uppercase leading-none">
-                            Last read
+                            Unread above
                           </span>
                           <span className="h-px flex-1 bg-brand" />
                         </div>
