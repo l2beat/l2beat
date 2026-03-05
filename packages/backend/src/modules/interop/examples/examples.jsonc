@@ -132,6 +132,33 @@
       {
         "chain": "arbitrum",
         "tx": "0x142313291f839043b3f56627b5022ab4dc5cb6f1dffe15a3985f7093a2bc96b1"
+      },
+      // 10. v1.5 Burned + Released (LINK burn & unlock): Celo → Ethereum
+      {
+        "chain": "celo",
+        "tx": "0xfeac6910d4809306821b846d8cacd484ce25d57610cbfe6893a11d8bb931d66f"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x17790b1d74e9a290140d93feb5bf8a44aaed26fc89ab2139a887ab98cc95373e"
+      },
+      // 11. v1.5 Locked + MintedAndWithdrawn (USDT lock & release via XERC20Lockbox): Ethereum → Celo
+      {
+        "chain": "ethereum",
+        "tx": "0x96f01f09475d7c17b801b8750f53cd161e86ee7228f68fae383016e13a121a57"
+      },
+      {
+        "chain": "celo",
+        "tx": "0xb9ed1df00d2d1eea7d9bbfff59a38c2b8f36b7d880e66308b8cadcfaccc844be"
+      },
+      // 12. v1.5 DepositedAndBurned + Released (USDT lock & release via XERC20Lockbox): Celo → Ethereum
+      {
+        "chain": "celo",
+        "tx": "0xec9b14f3bd905f23c889c5b74f8817045423420ae815f139687cf39d6ae16849"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xeb8f2f24d7fa86947f6ad0b14c5355c5dfaf76c58e712b99f14d073715dd948a"
       }
     ],
     "expects": {
@@ -146,8 +173,26 @@
         { "type": "ccip.Transfer" },
         // 8: LINK burn & unlock
         { "type": "ccip.Transfer" },
-        // 9: WETH lock & mint
-        { "type": "ccip.Transfer" }
+        // 9: WETH lock & unlock
+        { "type": "ccip.Transfer" },
+        // 10: Celo → Ethereum LINK (burn & release)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "LINK" } },
+          "dst": { "financials": { "symbol": "LINK" } }
+        },
+        // 11: Ethereum → Celo USDT (lock & release via XERC20Lockbox)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "USDT", "amount": 60 } },
+          "dst": { "financials": { "amount": 60 } }
+        },
+        // 12: Celo → Ethereum USDT (lock & release via XERC20Lockbox)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "amount": 1000 } },
+          "dst": { "financials": { "symbol": "USDT", "amount": 1000 } }
+        }
       ]
     }
   },
