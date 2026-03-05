@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropAggregationQuality } from '../kysely/generated/types'
 
@@ -100,6 +100,21 @@ export class InteropAggregationQualityRepository extends BaseRepository {
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined
+  }
+
+  async findLatestPromotedTimestampsPerDay(): Promise<UnixTime[]> {
+    const rows = await this.db
+      .selectFrom('InteropAggregationQuality')
+      .select((eb) => [
+        sql<Date>`date_trunc('day', timestamp)`.as('day'),
+        eb.fn.max('timestamp').as('latest_timestamp'),
+      ])
+      .where('isPromoted', '=', true)
+      .groupBy(sql`date_trunc('day', timestamp)`)
+      .orderBy('day', 'desc')
+      .execute()
+
+    return rows.map((row) => UnixTime.fromDate(row.latest_timestamp))
   }
 
   async findByTimestamp(

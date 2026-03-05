@@ -11,6 +11,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
   beforeEach(async () => {
     await repository.deleteAll()
+    await db.interopAggregationQuality.deleteAll()
   })
 
   describe(
@@ -338,6 +339,97 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         // "before" excludes day3Late, so canonical snapshot for day3 becomes day3Early
         expect(result.map((r) => r.timestamp)).toEqual([day3Early, day2Late])
+      })
+
+      it('uses latest promoted timestamp per day when promotedOnly is enabled', async () => {
+        const day1Early = UnixTime(100)
+        const day1Late = UnixTime(200)
+        const day2Early = UnixTime(UnixTime.DAY + 100)
+        const day2Late = UnixTime(UnixTime.DAY + 300)
+        const day3Late = UnixTime(2 * UnixTime.DAY + 360)
+
+        await repository.insertMany([
+          record({
+            ...group,
+            timestamp: day1Early,
+            transferCount: 10,
+            identifiedCount: 9,
+            srcValueUsd: 100,
+            dstValueUsd: 110,
+          }),
+          record({
+            ...group,
+            timestamp: day1Late,
+            transferCount: 20,
+            identifiedCount: 19,
+            srcValueUsd: 1000,
+            dstValueUsd: 1010,
+          }),
+          record({
+            ...group,
+            timestamp: day2Early,
+            transferCount: 30,
+            identifiedCount: 29,
+            srcValueUsd: 200,
+            dstValueUsd: 210,
+          }),
+          record({
+            ...group,
+            timestamp: day2Late,
+            transferCount: 40,
+            identifiedCount: 39,
+            srcValueUsd: 2000,
+            dstValueUsd: 2020,
+          }),
+          record({
+            ...group,
+            timestamp: day3Late,
+            transferCount: 60,
+            identifiedCount: 59,
+            srcValueUsd: 3000,
+            dstValueUsd: 3030,
+          }),
+        ])
+
+        await db.interopAggregationQuality.upsert({
+          timestamp: day1Early,
+          autoPromoted: true,
+          isPromoted: true,
+          promotionRequired: false,
+          reasons: [],
+          checkedGroups: 1,
+          failingGroups: 0,
+        })
+        await db.interopAggregationQuality.upsert({
+          timestamp: day2Early,
+          autoPromoted: true,
+          isPromoted: true,
+          promotionRequired: false,
+          reasons: [],
+          checkedGroups: 1,
+          failingGroups: 0,
+        })
+        await db.interopAggregationQuality.upsert({
+          timestamp: day3Late,
+          autoPromoted: false,
+          isPromoted: false,
+          promotionRequired: true,
+          reasons: ['blocked'],
+          checkedGroups: 1,
+          failingGroups: 1,
+        })
+
+        const result = await repository.getRecentStatsForGroup(
+          10,
+          group.id,
+          group.bridgeType,
+          group.srcChain,
+          group.dstChain,
+          { promotedOnly: true },
+        )
+
+        expect(result.map((r) => r.timestamp)).toEqual([day2Early, day1Early])
+        expect(result.map((r) => r.transferCount)).toEqual([30, 10])
       })
     },
   )

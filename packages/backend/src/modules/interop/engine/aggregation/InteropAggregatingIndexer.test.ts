@@ -109,16 +109,7 @@ describe(InteropAggregatingIndexer.name, () => {
         Database['interopAggregationQuality']
       >({
         upsert: mockFn().resolvesTo(undefined),
-        findLatestPromoted: mockFn().resolvesTo({
-          timestamp: to,
-          autoPromoted: true,
-          isPromoted: true,
-          promotionRequired: false,
-          reasons: [],
-          checkedGroups: 1,
-          failingGroups: 0,
-          createdAt: to,
-        }),
+        findLatestPromotedTimestampsPerDay: mockFn().resolvesTo([to]),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
@@ -203,7 +194,7 @@ describe(InteropAggregatingIndexer.name, () => {
       ).toHaveBeenCalledWith(from, { keepTimestamps: [to] })
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
       expect(
-        interopAggregationQuality.findLatestPromoted,
+        interopAggregationQuality.findLatestPromotedTimestampsPerDay,
       ).toHaveBeenCalledTimes(1)
     })
 
@@ -240,16 +231,7 @@ describe(InteropAggregatingIndexer.name, () => {
         Database['interopAggregationQuality']
       >({
         upsert: mockFn().resolvesTo(undefined),
-        findLatestPromoted: mockFn().resolvesTo({
-          timestamp: to,
-          autoPromoted: true,
-          isPromoted: true,
-          promotionRequired: false,
-          reasons: [],
-          checkedGroups: 0,
-          failingGroups: 0,
-          createdAt: to,
-        }),
+        findLatestPromotedTimestampsPerDay: mockFn().resolvesTo([to]),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
@@ -348,16 +330,7 @@ describe(InteropAggregatingIndexer.name, () => {
         Database['interopAggregationQuality']
       >({
         upsert: mockFn().resolvesTo(undefined),
-        findLatestPromoted: mockFn().resolvesTo({
-          timestamp: to,
-          autoPromoted: true,
-          isPromoted: true,
-          promotionRequired: true,
-          reasons: ['config1:lockAndMint:ethereum->arbitrum: Count spike'],
-          checkedGroups: 1,
-          failingGroups: 1,
-          createdAt: to,
-        }),
+        findLatestPromotedTimestampsPerDay: mockFn().resolvesTo([to]),
       })
       const transaction = mockFn(async (fn: any) => await fn())
 
@@ -460,16 +433,9 @@ describe(InteropAggregatingIndexer.name, () => {
         Database['interopAggregationQuality']
       >({
         upsert: mockFn().resolvesTo(undefined),
-        findLatestPromoted: mockFn().resolvesTo({
-          timestamp: previousPromoted,
-          autoPromoted: true,
-          isPromoted: true,
-          promotionRequired: false,
-          reasons: [],
-          checkedGroups: 1,
-          failingGroups: 0,
-          createdAt: previousPromoted,
-        }),
+        findLatestPromotedTimestampsPerDay: mockFn().resolvesTo([
+          previousPromoted,
+        ]),
       })
       const transaction = mockFn(async (fn: any) => await fn())
 

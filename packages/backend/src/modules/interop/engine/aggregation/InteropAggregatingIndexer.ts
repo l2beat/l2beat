@@ -55,9 +55,8 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
         checkedGroups: gateState.checkedGroups,
         failingGroups: gateState.failingGroups,
       })
-      const latestPromoted =
-        await this.$.db.interopAggregationQuality.findLatestPromoted()
-      const keepTimestamps = latestPromoted ? [latestPromoted.timestamp] : []
+      const keepTimestamps =
+        await this.$.db.interopAggregationQuality.findLatestPromotedTimestampsPerDay()
 
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
         from,

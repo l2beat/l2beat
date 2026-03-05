@@ -71,6 +71,7 @@ export class DefaultInteropAggregationQualityGate
               group.dstChain,
               {
                 before: candidateTimestamp,
+                promotedOnly: true,
               },
             )
 

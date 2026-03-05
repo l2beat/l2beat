@@ -107,6 +107,45 @@ describeDatabase(InteropAggregationQualityRepository.name, (db) => {
       })
     },
   )
+
+  describe(
+    InteropAggregationQualityRepository.prototype
+      .findLatestPromotedTimestampsPerDay.name,
+    () => {
+      it('returns latest promoted timestamp per day in descending day order', async () => {
+        const day1Early = qualityRecord({
+          timestamp: UnixTime.fromDate(new Date('2026-03-01T01:00:00Z')),
+          isPromoted: true,
+        })
+        const day1Late = qualityRecord({
+          timestamp: UnixTime.fromDate(new Date('2026-03-01T18:00:00Z')),
+          isPromoted: true,
+        })
+        const day2Promoted = qualityRecord({
+          timestamp: UnixTime.fromDate(new Date('2026-03-02T09:00:00Z')),
+          isPromoted: true,
+        })
+        const day2LaterNotPromoted = qualityRecord({
+          timestamp: UnixTime.fromDate(new Date('2026-03-02T21:00:00Z')),
+          isPromoted: false,
+        })
+        const day3NotPromoted = qualityRecord({
+          timestamp: UnixTime.fromDate(new Date('2026-03-03T12:00:00Z')),
+          isPromoted: false,
+        })
+
+        await repository.upsert(day1Early)
+        await repository.upsert(day1Late)
+        await repository.upsert(day2Promoted)
+        await repository.upsert(day2LaterNotPromoted)
+        await repository.upsert(day3NotPromoted)
+
+        const result = await repository.findLatestPromotedTimestampsPerDay()
+
+        expect(result).toEqual([day2Promoted.timestamp, day1Late.timestamp])
+      })
+    },
+  )
 })
 
 function qualityRecord(
