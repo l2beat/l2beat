@@ -1,5 +1,6 @@
 import { env } from '~/env'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import { cn } from '~/utils/cn'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { AllProtocolsDialog } from './AllProtocolsDialog'
 import { ChainSelectorButton } from './ChainSelectorButton'
@@ -8,14 +9,15 @@ import type { InteropChainWithIcon } from './types'
 interface Props {
   chains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[] | undefined
+  className?: string
 }
 
-export function ChainSelector({ chains, protocols }: Props) {
+export function ChainSelector({ chains, protocols, className }: Props) {
   const { buildUrl } = useInteropSelectedChains()
   const internalSummaryUrl = buildUrl('/interop/summary', { mode: 'internal' })
 
   return (
-    <div className="sticky top-0 z-30 md:pt-4">
+    <div className={cn('sticky top-0 z-30 md:pt-4', className)}>
       <div className="-z-10 absolute top-0 h-22 w-full bg-gradient-to-b from-surface-secondary via-60% via-surface-secondary to-transparent max-md:hidden dark:from-background dark:via-background" />
       <div className="flex items-start justify-between bg-[#ECB2FF] px-4 py-3 max-md:flex-col max-md:gap-3 max-md:border-brand max-md:border-b md:items-center md:rounded-lg md:py-2 min-[1024px]:px-6 dark:bg-pink-900">
         <div className="mr-2 max-md:w-full">

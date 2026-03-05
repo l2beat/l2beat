@@ -58,6 +58,11 @@ export function InteropProtocolPage({
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
+                <ChainSelector
+                  chains={interopChains}
+                  protocols={undefined}
+                  className="top-10 md:hidden"
+                />
                 <div className="pt-6 max-md:px-4 lg:pt-4">
                   <ProjectHeader project={projectEntry} />
                   <ProjectSummaryBars project={projectEntry} />
@@ -68,15 +73,19 @@ export function InteropProtocolPage({
                     />
                   )}
                   <HorizontalSeparator className="my-4 md:hidden" />
-                  <div className="mb-3 max-md:hidden">
+                  <div className="max-md:hidden">
                     <DesktopProjectLinks
                       projectLinks={projectEntry.header.links ?? []}
                     />
                   </div>
                 </div>
                 <div className="row-start-2">
-                  <ChainSelector chains={interopChains} protocols={undefined} />
-                  <InteropProtocolSummary id={projectEntry.id} />
+                  <ChainSelector
+                    chains={interopChains}
+                    protocols={undefined}
+                    className="max-md:hidden"
+                  />
+                  <InteropProtocolSummary protocol={projectEntry} />
                   <TopToken id={projectEntry.id} />
 
                   <HighlightableLinkContextProvider>

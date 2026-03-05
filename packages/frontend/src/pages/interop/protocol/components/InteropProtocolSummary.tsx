@@ -2,6 +2,8 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
+import { AboutSection } from '~/components/projects/sections/AboutSection'
+import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -11,11 +13,15 @@ import { BridgeTypeBadge } from '../../components/table/BridgeTypeBadge'
 import { TopTokensCell } from '../../components/top-items/TopTokensCell'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
-export function InteropProtocolSummary({ id }: { id: ProjectId }) {
+export function InteropProtocolSummary({
+  protocol,
+}: {
+  protocol: InteropProtocolEntry
+}) {
   const { selectionForApi } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.protocol.useQuery({
     ...selectionForApi,
-    id,
+    id: protocol.id,
   })
 
   const breakdownValues = [
@@ -50,7 +56,7 @@ export function InteropProtocolSummary({ id }: { id: ProjectId }) {
     <section
       id="summary"
       data-role="nav-section"
-      className="mt-4 w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b max-md:pb-6 md:rounded-lg md:bg-surface-primary md:p-6"
+      className="mt-4 flex w-full scroll-mt-[100vh] flex-col border-divider px-4 max-md:border-b max-md:pb-6 md:rounded-lg md:bg-surface-primary md:p-6"
     >
       <div className="grid grid-cols-6 gap-3">
         <StatsItem
@@ -124,6 +130,12 @@ export function InteropProtocolSummary({ id }: { id: ProjectId }) {
           </div>
         ))}
       </div>
+      {protocol.header.description && (
+        <div className="max-md:hidden">
+          <HorizontalSeparator className="my-4" />
+          <AboutSection description={protocol.header.description} />
+        </div>
+      )}
     </section>
   )
 }
