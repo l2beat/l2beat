@@ -77,6 +77,7 @@ export const stone: BaseProject = {
       {
         projectId: ProjectId('immutablex'),
         sinceTimestamp: UnixTime(1617832800),
+        untilTimestamp: UnixTime(1772672831),
       },
       {
         projectId: ProjectId('sorare'),
@@ -121,7 +122,6 @@ export const stone: BaseProject = {
             chain: 'ethereum',
             overrideUsedIn: [
               ProjectId('edgex'),
-              ProjectId('immutablex'),
               ProjectId('myria'),
               ProjectId('sorare'),
               ProjectId('brine'),
