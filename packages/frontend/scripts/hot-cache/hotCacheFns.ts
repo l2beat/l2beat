@@ -2,24 +2,12 @@
 import { getScalingSummaryData } from '~/pages/scaling/summary/getScalingSummaryData'
 import '../../src/dotenv'
 
+import { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getScalingTvsData } from '~/pages/scaling/tvs/getScalingTvsData'
-import type { ICache } from '~/server/cache/ICache'
 import { manifest } from '~/utils/Manifest'
 
-class FakeCache implements ICache {
-  get: <T>(
-    options: {
-      key: (string | null | undefined)[]
-      ttl: number
-      staleWhileRevalidate?: number
-    },
-    fallback: () => Promise<T>,
-  ) => Promise<T> = (_, fallback) => {
-    return fallback()
-  }
-}
-const cache = new FakeCache()
+const cache = new InMemoryCache({ enabled: false })
 
 /*
  * Hot cache functions

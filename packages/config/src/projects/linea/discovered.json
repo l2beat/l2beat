@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1765276326,
+  "timestamp": 1772533779,
   "configHash": "0x5d65359f0dc679f9293b57d3bb52529c793b7e887a7ae8757ae7bf79d07f4836",
   "entries": [
     {
@@ -287,19 +287,6 @@
       "implementationNames": {
         "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF24f1DC519d88246809B660eb56D94048575d083",
-          "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).",
-          "role": ".pausers"
-        }
-      ]
     },
     {
       "address": "eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
@@ -608,6 +595,18 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "send ETH from the rollup bridge to the YieldManager.",
+          "role": ".ethStakerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "set the address of the yield manager contract that receives ETH from rollup bridge.",
+          "role": ".yieldManagerSetterAC"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "cancel queued transactions.",
           "role": ".cancellerAC"
@@ -647,6 +646,18 @@
           "role": ".proposerAC"
         },
         {
+          "permission": "interact",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "description": "manage native yield staking: modify reserve parameters, set yield pools, set yield receiver addresses.",
+          "role": ".yieldStakingManagerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "description": "operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.",
+          "role": ".yieldStakingOperatorAC"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "role": "admin",
@@ -666,6 +677,15 @@
         {
           "permission": "upgrade",
           "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
           "role": "admin",
           "via": [
             { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
@@ -711,11 +731,9 @@
         "$threshold": 5,
         "domainSeparator": "0xf720f1fd8bfacb497aa1c16a19a7f17ba6e7bfba9ae23c73812ce40727956e08",
         "getChainId": 1,
-        "GnosisSafe_modules": [
-          "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
-        ],
+        "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 67,
+        "nonce": 68,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -843,7 +861,7 @@
           "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -857,16 +875,35 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "send ETH from the rollup bridge to the YieldManager.",
+          "role": ".ethStakerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "description": "operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.",
+          "role": ".yieldStakingOperatorAC"
+        }
+      ]
+    },
+    {
       "name": "LineaRollup",
       "address": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
       "type": "Contract",
-      "template": "linea/LineaRollup",
+      "template": "linea/LineaRollup_NativeYield",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0xd9038151917d14b4d25257789abe9a10cecf3a5b4c0c2520860ce1338757ceff"
+        "0x7f1b1a08526c142b2843c2e0d1fb7d8511f9fe0da9001aa980e58eea6ddd3fb1"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.",
+      "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.",
       "ignoreInWatchMode": [
         "currentPeriodAmountInWei",
         "currentL2StoredL1MessageNumber",
@@ -878,7 +915,7 @@
       "sinceBlock": 17677070,
       "values": {
         "$admin": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-        "$implementation": "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0",
+        "$implementation": "eth:0x04728BF704a716C26F9EF4085013b760AC885631",
         "$pastUpgrades": [
           [
             "2023-07-12T11:05:23.000Z",
@@ -924,9 +961,14 @@
             "2024-12-16T13:52:11.000Z",
             "0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",
             ["eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"]
+          ],
+          [
+            "2026-03-01T14:25:35.000Z",
+            "0xac24732952f9eea514ba28030218267575bb42dd5f713dab7c29f3d330086d8f",
+            ["eth:0x04728BF704a716C26F9EF4085013b760AC885631"]
           ]
         ],
-        "$upgradeCount": 9,
+        "$upgradeCount": 10,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -998,18 +1040,40 @@
           "VERIFIER_UNSETTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_YIELD_MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "YIELD_PROVIDER_STAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "PAUSE_NATIVE_YIELD_STAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_NATIVE_YIELD_STAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xe0d8d361166471634c44f2d1a8edb4d9cf442069f5ec88b2f4cd05eb7cb6ef89",
-        "currentFinalizedState": "0x205d06913e881dc4f0b8a04479c2bedd8252821a8255b3757fbb28c499eb0aa6",
+        "CONTRACT_VERSION": "7.0",
+        "currentFinalizedShnarf": "0xf5c0060ddea11e74b6302ec652656893653ac9269af9169069906236bd72be3c",
+        "currentFinalizedState": "0x6dca79a282d75f6d29f21cfb687cb51d3018ccc430062435da6cb11d42537d15",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "1868874518657706733479",
+        "currentPeriodAmountInWei": "505639795830108490324",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "ethStakerAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+        ],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
-        "GENESIS_SHNARF": "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f",
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
         "isPaused_BLOB_SUBMISSION": false,
@@ -1020,6 +1084,7 @@
         "isPaused_INITIATE_TOKEN_BRIDGING": false,
         "isPaused_L1_L2": false,
         "isPaused_L2_L1": false,
+        "isWithdrawLSTAllowed": false,
         "limitInWei": "30000000000000000000000",
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
         "Operators": [
@@ -1034,15 +1099,18 @@
         "PAUSE_FINALIZATION_ROLE": "0xe37c272ea30e2bb381ad7cf89ae754b49153250609f36d0cbdad8b64c184bb5c",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
+        "PAUSE_NATIVE_YIELD_STAKING_ROLE": "0xcc10d6eec3c757d645e27b3f3001a3ba52f692da0bce25fabf58c6ecaf376450",
         "periodInSeconds": 86400,
         "RATE_LIMIT_SETTER_ROLE": "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82",
         "sender": "eth:0x0000000000000000000000000000000000000000",
+        "SET_YIELD_MANAGER_ROLE": "0x76ef52a5344b10ed112c1d48c7c06f51e919518ea6fb005f9b25b359b955e3be",
         "systemMigrationBlock": 19219000,
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
         "UNPAUSE_BLOB_SUBMISSION_ROLE": "0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40",
         "UNPAUSE_FINALIZATION_ROLE": "0x1ab87f7458c0e3d07e9881c14ee67f0141703614fd48ea5b15ed987e5f4b030e",
         "UNPAUSE_L1_L2_ROLE": "0xe8cb6172fcf5cbaae022b7c910224a4f0c20d53227e630056efff182155a5abc",
         "UNPAUSE_L2_L1_ROLE": "0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770",
+        "UNPAUSE_NATIVE_YIELD_STAKING_ROLE": "0x4b4665d8754e6ea0608430ef3e91c1b45c72aafe8800e289cd35f38d85361858",
         "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9",
         "VERIFIER_SETTER_ROLE": "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c",
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
@@ -1067,9 +1135,15 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
+        ],
+        "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
+        "yieldManager": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+        "yieldManagerSetterAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
         ]
       },
       "fieldMeta": {
+        "yieldManager": { "severity": "HIGH" },
         "verifiers": {
           "description": "Mapping of proof type to ZK Plonk Verifier contract."
         },
@@ -1090,7 +1164,7 @@
       },
       "implementationNames": {
         "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "TransparentUpgradeableProxy",
-        "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0": "LineaRollup"
+        "eth:0x04728BF704a716C26F9EF4085013b760AC885631": "LineaRollup"
       }
     },
     {
@@ -1170,91 +1244,200 @@
       }
     },
     {
-      "name": "Roles",
-      "address": "eth:0xF24f1DC519d88246809B660eb56D94048575d083",
+      "name": "YieldManager",
+      "address": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
       "type": "Contract",
-      "template": "linea/Roles",
+      "template": "linea/YieldManager",
       "sourceHashes": [
-        "0x699a67bde09c0d73c29ec9de66133bfee484544494865d954ac01f9736efed30"
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0xc3427bd2db97b44ddfb965b33a9835e0a46de0edee605a4400e662e0e099e9f8"
       ],
-      "proxyType": "gnosis safe zodiac module",
-      "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1700506439,
-      "sinceBlock": 18614911,
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.",
+      "ignoreInWatchMode": ["userFundsInYieldProvidersTotal"],
+      "sinceTimestamp": 1770742511,
+      "sinceBlock": 24427702,
       "values": {
-        "$immutable": false,
-        "avatar": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-        "getGuard": "eth:0x0000000000000000000000000000000000000000",
-        "guard": "eth:0x0000000000000000000000000000000000000000",
-        "multisend": "eth:0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
-        "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-        "pausers": "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
-        "roles": {
-          "defaultRoles": {},
-          "roles": {
-            "1": {
-              "members": {
-                "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8": true
-              },
-              "targets": {
-                "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F": {
-                  "clearance": "Function",
-                  "options": "None"
-                },
-                "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": {
-                  "clearance": "Function",
-                  "options": "None"
-                },
-                "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": {
-                  "clearance": "Function",
-                  "options": "None"
-                }
-              },
-              "functions": {
-                "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": {
-                  "pause()": {
-                    "options": "None",
-                    "wildcarded": true,
-                    "parameters": []
-                  }
-                },
-                "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": {
-                  "pause()": {
-                    "options": "None",
-                    "wildcarded": true,
-                    "parameters": []
-                  }
-                },
-                "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F": {
-                  "pauseByType(uint8)": {
-                    "options": "None",
-                    "wildcarded": true,
-                    "parameters": []
-                  }
-                }
-              },
-              "compValues": {},
-              "compValuesOneOf": {}
-            }
+        "$admin": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+        "$implementation": "eth:0x751236A1aFC11B7F1A7630fe87b0Bd96AC5203C4",
+        "$pastUpgrades": [
+          [
+            "2026-02-10T16:55:11.000Z",
+            "0x69fb4be68a461b7953579236e33e62f1463ebf0e02e397221a35c16dadecd77a",
+            ["eth:0x751236A1aFC11B7F1A7630fe87b0Bd96AC5203C4"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "YIELD_PROVIDER_STAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "YIELD_PROVIDER_UNSTAKER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "YIELD_REPORTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "STAKING_PAUSE_CONTROLLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "OSSIFICATION_PROCESSOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+            ]
+          },
+          "OSSIFICATION_INITIATOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_YIELD_PROVIDER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_L2_YIELD_RECIPIENT_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "WITHDRAWAL_RESERVE_SETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_NATIVE_YIELD_STAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_NATIVE_YIELD_STAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_NATIVE_YIELD_UNSTAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_NATIVE_YIELD_UNSTAKING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_NATIVE_YIELD_PERMISSIONLESS_ACTIONS_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_NATIVE_YIELD_PERMISSIONLESS_ACTIONS_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_NATIVE_YIELD_REPORTING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_NATIVE_YIELD_REPORTING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "target": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-        "ZodiacModule_avatar": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-        "ZodiacModule_guard": "eth:0x0000000000000000000000000000000000000000",
-        "ZodiacModule_modules": [
-          "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "isWithdrawalReserveBelowMinimum": false,
+        "L1_MESSAGE_SERVICE": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+        "minimumWithdrawalReserveAmount": "17500000000000000000000",
+        "minimumWithdrawalReservePercentageBps": 9000,
+        "OSSIFICATION_INITIATOR_ROLE": "0x9b6f6cc60cc992c1b2dbfe3564c7159c78b4c15a858781972f9be245ab0a7962",
+        "OSSIFICATION_PROCESSOR_ROLE": "0x9ef55ee0235bd9abf16b2b7865531896bd633b74155b6c1d064d0402f2d1b3c8",
+        "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
+        "PAUSE_NATIVE_YIELD_DONATION_ROLE": "0xb2beb5add702c942d127a2f73a7875a5c9640458f3535d68cbf03ba940bd0fab",
+        "PAUSE_NATIVE_YIELD_PERMISSIONLESS_ACTIONS_ROLE": "0x393d2e95deba7a477d5535948d830f9760a4cec17bbb245b27328519bc352f86",
+        "PAUSE_NATIVE_YIELD_REPORTING_ROLE": "0xc7320f8b3278900bd319b3ad770ea73ce548c217978874599400e3b17e120c19",
+        "PAUSE_NATIVE_YIELD_STAKING_ROLE": "0xcc10d6eec3c757d645e27b3f3001a3ba52f692da0bce25fabf58c6ecaf376450",
+        "PAUSE_NATIVE_YIELD_UNSTAKING_ROLE": "0x06c421ad716396bcfdef0d016c4820d40cf7f6fbcb79641777bac5e94c752f3d",
+        "SET_L2_YIELD_RECIPIENT_ROLE": "0xedd66f6e9b5c4d0e97b7d84abd332823333b4210446a6cb917983caefd083143",
+        "SET_YIELD_PROVIDER_ROLE": "0x4bfab1661ce1ffeb4b53fc15e3fd6e7ae742e97d90ba229951fcc314e10f05d9",
+        "STAKING_PAUSE_CONTROLLER_ROLE": "0xb05f5f3bc6b24add2de79f85477c2f0351f8e8a2209394f90c9e1c6c7e540c79",
+        "targetWithdrawalReserveAmount": "20000000000000000000000",
+        "targetWithdrawalReservePercentageBps": 9985,
+        "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
+        "UNPAUSE_NATIVE_YIELD_DONATION_ROLE": "0xdeffd8054a76b73eb83e6ecf8d06a4e7af5aae3149b7863aed86d69dc1fea967",
+        "UNPAUSE_NATIVE_YIELD_PERMISSIONLESS_ACTIONS_ROLE": "0x7961622440af20a7a00804174e730d12d511766368df55fbaf2d698ffa1d4216",
+        "UNPAUSE_NATIVE_YIELD_REPORTING_ROLE": "0x32026462812ef90f03ebdf4117c1e143d38ab0e31e1266d4e8bd348c28ee2aa5",
+        "UNPAUSE_NATIVE_YIELD_STAKING_ROLE": "0x4b4665d8754e6ea0608430ef3e91c1b45c72aafe8800e289cd35f38d85361858",
+        "UNPAUSE_NATIVE_YIELD_UNSTAKING_ROLE": "0xf3b4edd31d82596b9f4e954680c4101d115ae7609dd7c1e14a6fdb7387f56e5c",
+        "userFundsInYieldProvidersTotal": 0,
+        "WITHDRAWAL_RESERVE_SETTER_ROLE": "0x58cd6cd2c63b9e5685aee547419caac3d1184e3aeb3ed7c8b63ec61cda1e27e0",
+        "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
+        "YIELD_PROVIDER_UNSTAKER_ROLE": "0x1208ee08ba851b41059d729bfba4fffc3a98c2b6d121e3cf0db274417dea3d70",
+        "YIELD_REPORTER_ROLE": "0xa980ae8105ebca8c4bda1143caefa4ff96b61271718a11b7239cdb9eabfc7e27",
+        "yieldProviderCount": 0,
+        "yieldStakingManagerAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
         ],
-        "ZodiacModule_target": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        "yieldStakingOperatorAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
+        ]
+      },
+      "fieldMeta": {
+        "accessControl": { "severity": "HIGH" },
+        "yieldStakingOperatorAC": {
+          "severity": "HIGH",
+          "description": "Logically this combines several roles: YIELD_PROVIDER_STAKING_ROLE, YIELD_PROVIDER_UNSTAKER_ROLE, YIELD_REPORTER_ROLE, STAKING_PAUSE_CONTROLLER_ROLE, OSSIFICATION_PROCESSOR_ROLE. Currently they are shared by the same two addresses, if this changes the permissions must be modified."
+        },
+        "yieldStakingManagerAC": {
+          "severity": "HIGH",
+          "description": "Logically this combines several roles: SET_YIELD_PROVIDER_ROLE, SET_L2_YIELD_RECIPIENT_ROLE, WITHDRAWAL_RESERVE_SETTER_ROLE. Currently they are shared by the same address, if this changes the permissions must be modified."
+        },
+        "isWithdrawalReserveBelowMinimum": {
+          "severity": "HIGH",
+          "description": "If true, no more ETH can be staked and users can permissionlessly withdraw staked ETH."
+        },
+        "yieldProviderCount": { "severity": "HIGH" },
+        "minimumWithdrawalReserveAmount": {
+          "description": "Absolute value, part of the computation of minimal rollup ETH reserve."
+        },
+        "minimumWithdrawalReservePercentageBps": {
+          "description": "Value relative to TVS, part of the computation of minimal rollup ETH reserve."
+        },
+        "targetWithdrawalReserveAmount": {
+          "description": "Absolute value, part of the computation of target rollup ETH reserve."
+        },
+        "targetWithdrawalReservePercentageBps": {
+          "description": "Value relative to TVS, part of the computation of target rollup ETH reserve."
+        }
       },
       "implementationNames": {
-        "eth:0xF24f1DC519d88246809B660eb56D94048575d083": "Roles"
+        "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94": "TransparentUpgradeableProxy",
+        "eth:0x751236A1aFC11B7F1A7630fe87b0Bd96AC5203C4": "YieldManager"
       }
     },
     {
@@ -1275,6 +1458,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
           "role": "admin"
         }
       ],
@@ -1768,8 +1956,8 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "62002000000000000000",
-        "currentPeriodEnd": 1765357905,
+        "currentPeriodAmountInWei": "75524000000000000000",
+        "currentPeriodEnd": 1772592816,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1778,11 +1966,11 @@
         "l1l2MessageSetter": [
           "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
         ],
-        "lastAnchoredL1MessageNumber": 794034,
+        "lastAnchoredL1MessageNumber": 799030,
         "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 104920,
+        "nextMessageNumber": 106438,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -2357,26 +2545,22 @@
     }
   ],
   "abis": {
-    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0": [
+    "eth:0x04728BF704a716C26F9EF4085013b760AC885631": [
       "constructor()",
       "error ArrayLengthsDoNotMatch()",
       "error BlobSubmissionDataEmpty(uint256 emptyBlobIndex)",
       "error BlobSubmissionDataIsMissing()",
       "error BytesLengthNotMultipleOf32()",
       "error BytesLengthNotMultipleOfTwo(uint256 bytesLength)",
+      "error CallerIsNotYieldManager()",
+      "error CallerNotLSTWithdrawalRecipient()",
+      "error CallerNotProxyAdmin()",
       "error DataAlreadySubmitted(bytes32 currentDataHash)",
       "error EmptyBlobDataAtIndex(uint256 index)",
       "error EmptySubmissionData()",
       "error FeePaymentFailed(address recipient)",
       "error FeeTooLow()",
       "error FinalBlobNotSubmitted(bytes32 shnarf)",
-      "error FinalBlockNumberLessThanOrEqualToLastFinalizedBlock(uint256 finalBlockNumber, uint256 lastFinalizedBlock)",
       "error FinalBlockStateEqualsZeroHash()",
       "error FinalShnarfWrong(bytes32 expected, bytes32 value)",
       "error FinalizationInTheFuture(uint256 l2BlockTimestamp, uint256 currentBlockTimestamp)",
@@ -2391,6 +2575,7 @@
       "error L1RollingHashDoesNotExistOnL1(uint256 messageNumber, bytes32 rollingHash)",
       "error L2MerkleRootAlreadyAnchored(bytes32 merkleRoot)",
       "error L2MerkleRootDoesNotExist()",
+      "error LSTWithdrawalRequiresDeficit()",
       "error LastFinalizationTimeNotLapsed()",
       "error LeafIndexOutOfBounds(uint32 leafIndex, uint32 maxAllowedIndex)",
       "error LimitIsZero()",
@@ -2399,8 +2584,10 @@
       "error MessageSendingFailed(address destination)",
       "error MissingMessageNumberForRollingHash(bytes32 rollingHash)",
       "error MissingRollingHashForMessageNumber(uint256 messageNumber)",
+      "error NoEthSent()",
       "error OnlyNonFallbackOperator()",
       "error ParentBlobNotSubmitted(bytes32 shnarf)",
+      "error PauseTypeNotUsed()",
       "error PeriodIsZero()",
       "error PointEvaluationFailed()",
       "error PointEvaluationResponseInvalid(uint256 fieldElements, uint256 blsCurveModulus)",
@@ -2409,6 +2596,7 @@
       "error ProofLengthDifferentThanMerkleDepth(uint256 actual, uint256 expected)",
       "error RateLimitExceeded()",
       "error ReentrantCall()",
+      "error RolesNotDifferent()",
       "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
       "error StartingRootHashDoesNotMatch()",
       "error ValueSentTooLow()",
@@ -2419,6 +2607,7 @@
       "event DataSubmittedV3(bytes32 parentShnarf, bytes32 indexed shnarf, bytes32 finalStateRootHash)",
       "event FallbackOperatorAddressSet(address indexed caller, address indexed fallbackOperator)",
       "event FallbackOperatorRoleGranted(address indexed caller, address indexed fallbackOperator)",
+      "event FundingReceived(uint256 amount)",
       "event Initialized(uint8 version)",
       "event L2MerkleRootAdded(bytes32 indexed l2MerkleRoot, uint256 indexed treeDepth)",
       "event L2MessagingBlockAnchored(uint256 indexed l2Block)",
@@ -2427,6 +2616,7 @@
       "event MessageClaimed(bytes32 indexed _messageHash)",
       "event MessageSent(address indexed _from, address indexed _to, uint256 _fee, uint256 _value, uint256 _nonce, bytes _calldata, bytes32 indexed _messageHash)",
       "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
+      "event PauseTypeRoleUpdated(uint8 indexed pauseType, bytes32 indexed role, bytes32 indexed previousRole)",
       "event Paused(address messageSender, uint8 indexed pauseType)",
       "event RateLimitInitialized(uint256 periodInSeconds, uint256 limitInWei, uint256 currentPeriodEnd)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -2434,11 +2624,12 @@
       "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
       "event RollingHashUpdated(uint256 indexed messageNumber, bytes32 indexed rollingHash, bytes32 indexed messageHash)",
       "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
+      "event UnPauseTypeRoleUpdated(uint8 indexed unPauseType, bytes32 indexed role, bytes32 indexed previousRole)",
       "event UnPaused(address messageSender, uint8 indexed pauseType)",
       "event VerifierAddressChanged(address indexed verifierAddress, uint256 indexed proofType, address indexed verifierSetBy, address oldVerifierAddress)",
+      "event YieldManagerChanged(address oldYieldManagerAddress, address newYieldManagerAddress)",
       "function CONTRACT_VERSION() view returns (string)",
       "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function GENESIS_SHNARF() view returns (bytes32)",
       "function INBOX_STATUS_RECEIVED() view returns (uint8)",
       "function INBOX_STATUS_UNKNOWN() view returns (uint8)",
       "function OPERATOR_ROLE() view returns (bytes32)",
@@ -2450,18 +2641,23 @@
       "function PAUSE_FINALIZATION_ROLE() view returns (bytes32)",
       "function PAUSE_L1_L2_ROLE() view returns (bytes32)",
       "function PAUSE_L2_L1_ROLE() view returns (bytes32)",
+      "function PAUSE_NATIVE_YIELD_STAKING_ROLE() view returns (bytes32)",
       "function RATE_LIMIT_SETTER_ROLE() view returns (bytes32)",
+      "function SET_YIELD_MANAGER_ROLE() view returns (bytes32)",
       "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
       "function UNPAUSE_BLOB_SUBMISSION_ROLE() view returns (bytes32)",
       "function UNPAUSE_FINALIZATION_ROLE() view returns (bytes32)",
       "function UNPAUSE_L1_L2_ROLE() view returns (bytes32)",
       "function UNPAUSE_L2_L1_ROLE() view returns (bytes32)",
+      "function UNPAUSE_NATIVE_YIELD_STAKING_ROLE() view returns (bytes32)",
       "function USED_RATE_LIMIT_RESETTER_ROLE() view returns (bytes32)",
       "function VERIFIER_SETTER_ROLE() view returns (bytes32)",
       "function VERIFIER_UNSETTER_ROLE() view returns (bytes32)",
+      "function YIELD_PROVIDER_STAKING_ROLE() view returns (bytes32)",
       "function blobShnarfExists(bytes32 shnarf) view returns (uint256 exists)",
       "function claimMessage(address _from, address _to, uint256 _fee, uint256 _value, address _feeRecipient, bytes _calldata, uint256 _nonce)",
       "function claimMessageWithProof(tuple(bytes32[] proof, uint256 messageNumber, uint32 leafIndex, address from, address to, uint256 fee, uint256 value, address feeRecipient, bytes32 merkleRoot, bytes data) _params)",
+      "function claimMessageWithProofAndWithdrawLST(tuple(bytes32[] proof, uint256 messageNumber, uint32 leafIndex, address from, address to, uint256 fee, uint256 value, address feeRecipient, bytes32 merkleRoot, bytes data) _params, address _yieldProvider)",
       "function currentFinalizedShnarf() view returns (bytes32)",
       "function currentFinalizedState() view returns (bytes32)",
       "function currentL2BlockNumber() view returns (uint256)",
@@ -2477,13 +2673,15 @@
       "function dataStartingBlock(bytes32 dataHash) view returns (uint256 startingBlock)",
       "function fallbackOperator() view returns (address)",
       "function finalizeBlocks(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, uint256 endBlockNumber, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, bytes32[] l2MerkleRoots, bytes l2MessagingBlocksOffsets) _finalizationData)",
+      "function fund() payable",
       "function getRoleAdmin(bytes32 role) view returns (bytes32)",
       "function grantRole(bytes32 role, address account)",
       "function hasRole(bytes32 role, address account) view returns (bool)",
       "function inboxL2L1MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
-      "function initialize(tuple(bytes32 initialStateRootHash, uint256 initialL2BlockNumber, uint256 genesisTimestamp, address defaultVerifier, uint256 rateLimitPeriodInSeconds, uint256 rateLimitAmountInWei, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles, address fallbackOperator, address defaultAdmin) _initializationData)",
+      "function initialize(tuple(bytes32 initialStateRootHash, uint256 initialL2BlockNumber, uint256 genesisTimestamp, address defaultVerifier, uint256 rateLimitPeriodInSeconds, uint256 rateLimitAmountInWei, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles, address initialYieldManager, address fallbackOperator, address defaultAdmin) _initializationData)",
       "function isMessageClaimed(uint256 _messageNumber) view returns (bool isClaimed)",
       "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+      "function isWithdrawLSTAllowed() view returns (bool)",
       "function l2MerkleRootsDepths(bytes32 merkleRoot) view returns (uint256 treeDepth)",
       "function limitInWei() view returns (uint256)",
       "function nextMessageNumber() view returns (uint256)",
@@ -2491,8 +2689,9 @@
       "function pauseByType(uint8 _pauseType)",
       "function pauseTypeStatuses(bytes32 pauseType) view returns (bool pauseStatus)",
       "function periodInSeconds() view returns (uint256)",
-      "function reinitializeLineaRollupV6(tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles, address _fallbackOperator)",
+      "function reinitializeLineaRollupV7(tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles, address _yieldManager)",
       "function renounceRole(bytes32 _role, address _account)",
+      "function reportNativeYield(uint256 _amount, address _l2YieldRecipient)",
       "function resetAmountUsedInPeriod()",
       "function resetRateLimitAmount(uint256 _amount)",
       "function revokeRole(bytes32 role, address account)",
@@ -2501,14 +2700,25 @@
       "function sender() view returns (address originalSender)",
       "function setFallbackOperator(uint256 _messageNumber, bytes32 _rollingHash, uint256 _lastFinalizedTimestamp)",
       "function setVerifierAddress(address _newVerifierAddress, uint256 _proofType)",
+      "function setYieldManager(address _newYieldManager)",
       "function stateRootHashes(uint256 blockNumber) view returns (bytes32 stateRootHash)",
       "function submitBlobs(tuple(uint256 dataEvaluationClaim, bytes kzgCommitment, bytes kzgProof, bytes32 finalStateRootHash, bytes32 snarkHash)[] _blobSubmissions, bytes32 _parentShnarf, bytes32 _finalBlobShnarf)",
       "function submitDataAsCalldata(tuple(bytes32 finalStateRootHash, bytes32 snarkHash, bytes compressedData) _submission, bytes32 _parentShnarf, bytes32 _expectedShnarf)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function systemMigrationBlock() view returns (uint256)",
+      "function transferFundsForNativeYield(uint256 _amount)",
       "function unPauseByType(uint8 _pauseType)",
       "function unsetVerifierAddress(uint256 _proofType)",
-      "function verifiers(uint256 proofType) view returns (address verifierAddress)"
+      "function updatePauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
+      "function updateUnpauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
+      "function verifiers(uint256 proofType) view returns (address verifierAddress)",
+      "function yieldManager() view returns (address)"
+    ],
+    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34": [
       "constructor()",
@@ -2743,6 +2953,154 @@
       "function unpause()",
       "function usdc() view returns (address)"
     ],
+    "eth:0x751236A1aFC11B7F1A7630fe87b0Bd96AC5203C4": [
+      "constructor(address _l1MessageService)",
+      "error AlreadyOssified()",
+      "error ArrayLengthsDoNotMatch()",
+      "error BpsMoreThan10000()",
+      "error CallerNotProxyAdmin()",
+      "error DelegateCallFailed()",
+      "error InsufficientWithdrawalReserve()",
+      "error IsNotPaused(uint8 pauseType)",
+      "error IsPaused(uint8 pauseType)",
+      "error L2YieldRecipientAlreadyAdded()",
+      "error LSTWithdrawalExceedsYieldProviderFunds()",
+      "error LSTWithdrawalNotAllowed()",
+      "error NoAvailableFundsToReplenishWithdrawalReserve()",
+      "error NoEthSent()",
+      "error NoRequirementToUnstakePermissionless()",
+      "error OssificationAlreadyInitiated()",
+      "error OssificationNotInitiated()",
+      "error PauseTypeNotUsed()",
+      "error ReentrantCall()",
+      "error RolesNotDifferent()",
+      "error SenderNotL1MessageService()",
+      "error SlotTooCloseToLastProvenSlot(uint256 _validatorIndex, uint256 _lastProvenSlot, uint256 _slot)",
+      "error StakingAlreadyPaused()",
+      "error StakingAlreadyUnpaused()",
+      "error TargetReserveAmountMustBeAboveMinimum()",
+      "error TargetReservePercentageMustBeAboveMinimum()",
+      "error UnknownL2YieldRecipient()",
+      "error UnknownYieldProvider()",
+      "error UnpauseStakingForbiddenDuringPendingOssification()",
+      "error UnpauseStakingForbiddenWithCurrentLSTLiability()",
+      "error UnstakedAmountExceedsRequired(uint256 _unstakedAmountWei, uint256 _requiredUnstakeAmountWei)",
+      "error WithdrawalReserveNotInDeficit()",
+      "error YieldProviderAlreadyAdded()",
+      "error YieldProviderHasRemainingFunds(uint256 remainingUserFunds)",
+      "error YieldProviderIndexOutOfBounds(uint256 index, uint256 count)",
+      "error YieldProviderReturnedZeroUnstakeAmount()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroHashNotAllowed()",
+      "event Initialized(uint8 version)",
+      "event L2YieldRecipientAdded(address l2YieldRecipient)",
+      "event L2YieldRecipientRemoved(address l2YieldRecipient)",
+      "event LSTMinted(address indexed yieldProvider, address indexed recipient, uint256 amount)",
+      "event NativeYieldReported(address indexed yieldProvider, address indexed l2YieldRecipient, uint256 yieldAmount, uint256 outstandingNegativeYield)",
+      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
+      "event PauseTypeRoleUpdated(uint8 indexed pauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event Paused(address messageSender, uint8 indexed pauseType)",
+      "event ReserveFundsReceived(uint256 amount)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
+      "event UnPauseTypeRoleUpdated(uint8 indexed unPauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event UnPaused(address messageSender, uint8 indexed pauseType)",
+      "event UnstakePermissionlessRequest(address indexed yieldProvider, uint64 indexed validatorIndex, uint64 indexed slot, uint256 requiredUnstakeAmount, uint256 unstakedAmount, bytes withdrawalParams)",
+      "event WithdrawalReserveAugmented(address indexed yieldProvider, uint256 reserveIncrementAmount, uint256 fromYieldManager, uint256 fromYieldProvider)",
+      "event WithdrawalReserveParametersSet(uint256 oldMinimumWithdrawalReservePercentageBps, uint256 oldMinimumWithdrawalReserveAmount, uint256 oldTargetWithdrawalReservePercentageBps, uint256 oldTargetWithdrawalReserveAmount, uint256 newMinimumWithdrawalReservePercentageBps, uint256 newMinimumWithdrawalReserveAmount, uint256 newTargetWithdrawalReservePercentageBps, uint256 newTargetWithdrawalReserveAmount)",
+      "event WithdrawalReserveReplenished(address indexed yieldProvider, uint256 targetDeficit, uint256 reserveIncrementAmount, uint256 fromYieldManager, uint256 fromYieldProvider)",
+      "event YieldManagerDeployed(address l1MessageService)",
+      "event YieldManagerInitialized(address[] initialL2YieldRecipients)",
+      "event YieldProviderAdded(address indexed yieldProvider, uint8 indexed yieldProviderVendor, address primaryEntrypoint, address indexed ossifiedEntrypoint, uint256 usersFundsIncrement)",
+      "event YieldProviderFunded(address indexed yieldProvider, uint256 amount)",
+      "event YieldProviderOssificationInitiated(address indexed yieldProvider)",
+      "event YieldProviderOssificationProcessed(address indexed yieldProvider, uint8 progressOssificationResult)",
+      "event YieldProviderRemoved(address indexed yieldProvider, bool emergencyRemoval)",
+      "event YieldProviderStakingPaused(address indexed yieldProvider)",
+      "event YieldProviderStakingUnpaused(address indexed yieldProvider)",
+      "event YieldProviderWithdrawal(address indexed yieldProvider, uint256 amountWithdrawn, uint256 reserveIncrementAmount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function L1_MESSAGE_SERVICE() view returns (address)",
+      "function OSSIFICATION_INITIATOR_ROLE() view returns (bytes32)",
+      "function OSSIFICATION_PROCESSOR_ROLE() view returns (bytes32)",
+      "function PAUSE_ALL_ROLE() view returns (bytes32)",
+      "function PAUSE_NATIVE_YIELD_DONATION_ROLE() view returns (bytes32)",
+      "function PAUSE_NATIVE_YIELD_PERMISSIONLESS_ACTIONS_ROLE() view returns (bytes32)",
+      "function PAUSE_NATIVE_YIELD_REPORTING_ROLE() view returns (bytes32)",
+      "function PAUSE_NATIVE_YIELD_STAKING_ROLE() view returns (bytes32)",
+      "function PAUSE_NATIVE_YIELD_UNSTAKING_ROLE() view returns (bytes32)",
+      "function SET_L2_YIELD_RECIPIENT_ROLE() view returns (bytes32)",
+      "function SET_YIELD_PROVIDER_ROLE() view returns (bytes32)",
+      "function STAKING_PAUSE_CONTROLLER_ROLE() view returns (bytes32)",
+      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
+      "function UNPAUSE_NATIVE_YIELD_DONATION_ROLE() view returns (bytes32)",
+      "function UNPAUSE_NATIVE_YIELD_PERMISSIONLESS_ACTIONS_ROLE() view returns (bytes32)",
+      "function UNPAUSE_NATIVE_YIELD_REPORTING_ROLE() view returns (bytes32)",
+      "function UNPAUSE_NATIVE_YIELD_STAKING_ROLE() view returns (bytes32)",
+      "function UNPAUSE_NATIVE_YIELD_UNSTAKING_ROLE() view returns (bytes32)",
+      "function WITHDRAWAL_RESERVE_SETTER_ROLE() view returns (bytes32)",
+      "function YIELD_PROVIDER_STAKING_ROLE() view returns (bytes32)",
+      "function YIELD_PROVIDER_UNSTAKER_ROLE() view returns (bytes32)",
+      "function YIELD_REPORTER_ROLE() view returns (bytes32)",
+      "function addL2YieldRecipient(address _l2YieldRecipient)",
+      "function addYieldProvider(address _yieldProvider, bytes _vendorInitializationData)",
+      "function emergencyRemoveYieldProvider(address _yieldProvider, bytes _vendorExitData)",
+      "function fundYieldProvider(address _yieldProvider, uint256 _amount)",
+      "function getEffectiveMinimumWithdrawalReserve() view returns (uint256 minimumWithdrawalReserve)",
+      "function getEffectiveTargetWithdrawalReserve() view returns (uint256 targetWithdrawalReserve)",
+      "function getMinimumReserveDeficit() view returns (uint256 minimumReserveDeficit)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTargetReserveDeficit() view returns (uint256 targetReserveDeficit)",
+      "function getTotalSystemBalance() view returns (uint256 totalSystemBalance)",
+      "function getYieldProviderData(address _yieldProvider) view returns (tuple(uint8 yieldProviderVendor, bool isStakingPaused, bool isOssificationInitiated, bool isOssified, address primaryEntrypoint, address ossifiedEntrypoint, uint96 yieldProviderIndex, uint256 userFunds, uint256 yieldReportedCumulative, uint256 lstLiabilityPrincipal, uint256 lastReportedNegativeYield) yieldProviderData)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles, tuple(address addressWithRole, bytes32 role)[] roleAddresses, address[] initialL2YieldRecipients, address defaultAdmin, uint16 initialMinimumWithdrawalReservePercentageBps, uint16 initialTargetWithdrawalReservePercentageBps, uint256 initialMinimumWithdrawalReserveAmount, uint256 initialTargetWithdrawalReserveAmount) _initializationData)",
+      "function initiateOssification(address _yieldProvider)",
+      "function isL2YieldRecipientKnown(address _l2YieldRecipient) view returns (bool)",
+      "function isOssificationInitiated(address _yieldProvider) view returns (bool isInitiated)",
+      "function isOssified(address _yieldProvider) view returns (bool)",
+      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+      "function isStakingPaused(address _yieldProvider) view returns (bool isPaused)",
+      "function isWithdrawalReserveBelowMinimum() view returns (bool)",
+      "function isYieldProviderKnown(address _yieldProvider) view returns (bool)",
+      "function lastProvenSlot(uint64 _validatorIndex) view returns (uint64 lastProvenSlot)",
+      "function minimumWithdrawalReserveAmount() view returns (uint256)",
+      "function minimumWithdrawalReservePercentageBps() view returns (uint256)",
+      "function pauseByType(uint8 _pauseType)",
+      "function pauseStaking(address _yieldProvider)",
+      "function pauseTypeStatuses(bytes32 pauseType) view returns (bool pauseStatus)",
+      "function pendingPermissionlessUnstake() view returns (uint256 pendingUnstake)",
+      "function progressPendingOssification(address _yieldProvider) returns (uint8 progressOssificationResult)",
+      "function receiveFundsFromReserve() payable",
+      "function removeL2YieldRecipient(address _l2YieldRecipient)",
+      "function removeYieldProvider(address _yieldProvider, bytes _vendorExitData)",
+      "function renounceRole(bytes32 role, address account)",
+      "function replenishWithdrawalReserve(address _yieldProvider)",
+      "function reportYield(address _yieldProvider, address _l2YieldRecipient) returns (uint256 newReportedYield, uint256 outstandingNegativeYield)",
+      "function revokeRole(bytes32 role, address account)",
+      "function safeAddToWithdrawalReserve(address _yieldProvider, uint256 _amount)",
+      "function safeWithdrawFromYieldProvider(address _yieldProvider, uint256 _amount)",
+      "function setWithdrawalReserveParameters(tuple(uint16 minimumWithdrawalReservePercentageBps, uint16 targetWithdrawalReservePercentageBps, uint256 minimumWithdrawalReserveAmount, uint256 targetWithdrawalReserveAmount) _params)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function targetWithdrawalReserveAmount() view returns (uint256)",
+      "function targetWithdrawalReservePercentageBps() view returns (uint256)",
+      "function transferFundsToReserve(uint256 _amount)",
+      "function unPauseByType(uint8 _pauseType)",
+      "function unpauseStaking(address _yieldProvider)",
+      "function unstake(address _yieldProvider, bytes _withdrawalParams) payable",
+      "function unstakePermissionless(address _yieldProvider, uint64 _validatorIndex, uint64 _slot, bytes _withdrawalParams, bytes _withdrawalParamsProof) payable",
+      "function updatePauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
+      "function updateUnpauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
+      "function userFunds(address _yieldProvider) view returns (uint256 funds)",
+      "function userFundsInYieldProvidersTotal() view returns (uint256 totalUserFunds)",
+      "function withdrawLST(address _yieldProvider, uint256 _amount, address _recipient)",
+      "function withdrawableValue(address _yieldProvider) returns (uint256 withdrawableAmount)",
+      "function yieldProviderByIndex(uint256 _index) view returns (address yieldProvider)",
+      "function yieldProviderCount() view returns (uint256 count)"
+    ],
     "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": [
       "constructor(address _owner, address _avatar, address _target, uint256 _cooldown, uint256 _expiration)",
       "event AvatarSet(address indexed previousAvatar, address indexed newAvatar)",
@@ -2901,56 +3259,11 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0xF24f1DC519d88246809B660eb56D94048575d083": [
-      "constructor(address _owner, address _avatar, address _target)",
-      "error ArraysDifferentLength()",
-      "error ModuleTransactionFailed()",
-      "error NoMembership()",
-      "error SetUpModulesAlreadyCalled()",
-      "event AssignRoles(address module, uint16[] roles, bool[] memberOf)",
-      "event AvatarSet(address indexed previousAvatar, address indexed newAvatar)",
-      "event ChangedGuard(address guard)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RolesModSetup(address indexed initiator, address indexed owner, address indexed avatar, address target)",
-      "event SetDefaultRole(address module, uint16 defaultRole)",
-      "event SetMultisendAddress(address multisendAddress)",
-      "event TargetSet(address indexed previousTarget, address indexed newTarget)",
-      "function allowTarget(uint16 role, address targetAddress, uint8 options)",
-      "function assignRoles(address module, uint16[] _roles, bool[] memberOf)",
-      "function avatar() view returns (address)",
-      "function defaultRoles(address) view returns (uint16)",
-      "function disableModule(address prevModule, address module)",
-      "function enableModule(address module)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool, bytes)",
-      "function execTransactionWithRole(address to, uint256 value, bytes data, uint8 operation, uint16 role, bool shouldRevert) returns (bool success)",
-      "function execTransactionWithRoleReturnData(address to, uint256 value, bytes data, uint8 operation, uint16 role, bool shouldRevert) returns (bool success, bytes returnData)",
-      "function getGuard() view returns (address _guard)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function guard() view returns (address)",
-      "function isModuleEnabled(address _module) view returns (bool)",
-      "function multisend() view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function revokeTarget(uint16 role, address targetAddress)",
-      "function scopeAllowFunction(uint16 role, address targetAddress, bytes4 functionSig, uint8 options)",
-      "function scopeFunction(uint16 role, address targetAddress, bytes4 functionSig, bool[] isParamScoped, uint8[] paramType, uint8[] paramComp, bytes[] compValue, uint8 options)",
-      "function scopeFunctionExecutionOptions(uint16 role, address targetAddress, bytes4 functionSig, uint8 options)",
-      "function scopeParameter(uint16 role, address targetAddress, bytes4 functionSig, uint256 paramIndex, uint8 paramType, uint8 paramComp, bytes compValue)",
-      "function scopeParameterAsOneOf(uint16 role, address targetAddress, bytes4 functionSig, uint256 paramIndex, uint8 paramType, bytes[] compValues)",
-      "function scopeRevokeFunction(uint16 role, address targetAddress, bytes4 functionSig)",
-      "function scopeTarget(uint16 role, address targetAddress)",
-      "function setAvatar(address _avatar)",
-      "function setDefaultRole(address module, uint16 role)",
-      "function setGuard(address _guard)",
-      "function setMultisend(address _multisend)",
-      "function setTarget(address _target)",
-      "function setUp(bytes initParams)",
-      "function target() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unscopeParameter(uint16 role, address targetAddress, bytes4 functionSig, uint8 paramIndex)"
+    "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -3498,12 +3811,12 @@
     "linea/L2MessageService": "0xedda44cd37e50cfac16b991bfd1291c10ed903063625cc7621f278451b5997af",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
     "linea/L2TokenBridge": "0xde60fe36104dfc27d1da95bf2e74c70fc2b30fa7cb17e179ebcfce8c4a701e3b",
-    "linea/LineaRollup": "0xd44592a83dca8480df2581e49f66228d752ccc4ccc6ea4b446e1054b29246933",
+    "linea/LineaRollup_NativeYield": "0x43ca4c9b4c70a37b08d2cc88342dd2959bdc3d397dcd20d780d02705d5e4f1b5",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
-    "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
-    "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "linea/YieldManager": "0x79687f873e91b1cb445ebdf7fd97fd735ee5316f46ded4ce44afda3132157517"
   },
-  "usedBlockNumbers": { "ethereum": 23974643, "linea": 26494862 },
-  "permissionsConfigHash": "0xbe6937ce06f8cf928030f065d32297a15e58c1824e8208a68afdaf6fc2fdbe86"
+  "usedBlockNumbers": { "ethereum": 24576341, "linea": 29407859 },
+  "permissionsConfigHash": "0x612064ef224d6d8001c13879d2379068aa882b8d398af5277df065179301475c"
 }

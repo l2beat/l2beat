@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -21,7 +21,7 @@ import { getScalingUpcomingData } from './upcoming/getScalingUpcomingData'
 export function createScalingRouter(
   manifest: Manifest,
   render: RenderFunction,
-  cache: ICache,
+  cache: InMemoryCache,
 ) {
   const router = express.Router()
 
@@ -31,25 +31,25 @@ export function createScalingRouter(
 
   router.get('/scaling/summary', async (req, res) => {
     const data = await getScalingSummaryData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/activity', async (req, res) => {
     const data = await getScalingActivityData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/risk', async (req, res) => {
     const data = await getScalingRiskData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/risk/state-validation', async (req, res) => {
     const data = await getScalingRiskStateValidationData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -64,26 +64,26 @@ export function createScalingRouter(
     }),
     async (req, res) => {
       const data = await getScalingTvsData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
 
   router.get('/scaling/tvs/breakdown', async (req, res) => {
     const data = await getScalingTvsBreakdownData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/data-availability', async (req, res) => {
     const data = await getScalingDataAvailabilityData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/liveness', async (req, res) => {
     const data = await getScalingLivenessData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -96,20 +96,20 @@ export function createScalingRouter(
     }),
     async (req, res) => {
       const data = await getScalingCostsData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
 
   router.get('/scaling/archived', async (req, res) => {
     const data = await getScalingArchivedData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
   router.get('/scaling/upcoming', async (req, res) => {
     const data = await getScalingUpcomingData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -131,7 +131,7 @@ export function createScalingRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -159,7 +159,7 @@ export function createScalingRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )

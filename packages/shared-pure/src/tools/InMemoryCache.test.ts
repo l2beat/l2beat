@@ -1,27 +1,17 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
-import { env } from '~/env'
-import { InMemoryCache } from './InMemoryCache'
+import { UnixTime } from '../types/UnixTime.js'
+import { InMemoryCache } from './InMemoryCache.js'
 
 describe(InMemoryCache.name, () => {
-  let DEPLOYMENT_ENV: 'preview' | 'staging' | 'production' | undefined
-
-  before(() => {
-    DEPLOYMENT_ENV = env.DEPLOYMENT_ENV
-    env.DEPLOYMENT_ENV = 'production'
-  })
-
-  after(() => {
-    env.DEPLOYMENT_ENV = DEPLOYMENT_ENV
-  })
-
   describe(InMemoryCache.prototype.get.name, () => {
     it('should return cached value if it is not expired', async () => {
       const now = UnixTime.now()
       const initialCache = new Map([
         ['key', { result: 'test', timestamp: now }],
       ])
-      const cache = new InMemoryCache(initialCache)
+      const cache = new InMemoryCache({
+        initialCache,
+      })
       const fallback = mockFn().resolvesTo('test2')
 
       const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
@@ -36,18 +26,22 @@ describe(InMemoryCache.name, () => {
       const initialCache = new Map([
         ['key', { result: 'test', timestamp: now - 10000 }],
       ])
-      const cache = new InMemoryCache(initialCache)
+      const cache = new InMemoryCache({ initialCache })
       const fallback = mockFn().resolvesTo('test2')
 
       const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
       expect(fallback).toHaveBeenCalled()
-      expect(cache._get('key')).toEqual({ result: 'test2', timestamp: now })
+      expect(cache._get('key')).toEqual({
+        result: 'test2',
+        timestamp: now,
+        maxLifetime: 1000,
+      })
       expect(result).toEqual('test2')
     })
 
     it('should not run fallback three times if three getData calls are ongoing', async () => {
-      const cache = new InMemoryCache()
+      const cache = new InMemoryCache({})
       const fallback = mockFn().resolvesTo('test2')
 
       const [res1, res2, res3] = await Promise.all([
@@ -63,7 +57,9 @@ describe(InMemoryCache.name, () => {
     })
 
     it('should timeout if fallback takes too long', async () => {
-      const cache = new InMemoryCache(undefined, 0)
+      const cache = new InMemoryCache({
+        promiseTimeout: 0,
+      })
       const cacheOptions = { key: ['key'], ttl: 1000 }
       const fallback1 = () =>
         new Promise((resolve) => setTimeout(() => resolve('test1'), 10))
@@ -84,7 +80,7 @@ describe(InMemoryCache.name, () => {
         const initialCache = new Map([
           ['key', { result: 'stale', timestamp: now - 2000 }],
         ])
-        const cache = new InMemoryCache(initialCache)
+        const cache = new InMemoryCache({ initialCache })
         const fallback = mockFn().resolvesTo('fresh')
 
         // First call should return stale data and trigger revalidation
@@ -114,7 +110,7 @@ describe(InMemoryCache.name, () => {
         const initialCache = new Map([
           ['key', { result: 'stale', timestamp: now - 7000 }],
         ])
-        const cache = new InMemoryCache(initialCache)
+        const cache = new InMemoryCache({ initialCache })
         const fallback = mockFn().resolvesTo('fresh')
 
         const result = await cache.get(
@@ -131,7 +127,7 @@ describe(InMemoryCache.name, () => {
         const initialCache = new Map([
           ['key', { result: 'stale', timestamp: now - 2000 }],
         ])
-        const cache = new InMemoryCache(initialCache)
+        const cache = new InMemoryCache({ initialCache })
         const fallback = mockFn().resolvesTo('fresh')
 
         const [result1, result2, result3] = await Promise.all([
@@ -167,12 +163,49 @@ describe(InMemoryCache.name, () => {
         expect(fallback).toHaveBeenCalledTimes(1)
       })
 
+      it('should sweep expired entries on get to free memory', async () => {
+        const now = UnixTime.now()
+        const cache = new InMemoryCache({})
+
+        // Populate cache with entries that have known maxLifetime
+        cache._set('fresh', {
+          result: 'fresh',
+          timestamp: now,
+          maxLifetime: 1000,
+        })
+        cache._set('expired1', {
+          result: 'old1',
+          timestamp: now - 10000,
+          maxLifetime: 1000,
+        })
+        cache._set('expired2', {
+          result: 'old2',
+          timestamp: now - 20000,
+          maxLifetime: 5000,
+        })
+        cache._set('no-lifetime', {
+          result: 'permanent',
+          timestamp: now - 99999,
+        })
+
+        expect(cache._get('expired1')).not.toEqual(undefined)
+        expect(cache._get('expired2')).not.toEqual(undefined)
+
+        // Trigger a get — sweep should remove expired entries
+        await cache.get({ key: ['other'], ttl: 1000 }, async () => 'result')
+
+        expect(cache._get('fresh')).not.toEqual(undefined)
+        expect(cache._get('expired1')).toEqual(undefined)
+        expect(cache._get('expired2')).toEqual(undefined)
+        expect(cache._get('no-lifetime')).not.toEqual(undefined)
+      })
+
       it('should handle failed background revalidation gracefully', async () => {
         const now = UnixTime.now()
         const initialCache = new Map([
           ['key', { result: 'stale', timestamp: now - 2000 }],
         ])
-        const cache = new InMemoryCache(initialCache)
+        const cache = new InMemoryCache({ initialCache })
         const fallback = mockFn().rejectsWith(new Error('Revalidation failed'))
 
         // First call should return stale data and trigger revalidation

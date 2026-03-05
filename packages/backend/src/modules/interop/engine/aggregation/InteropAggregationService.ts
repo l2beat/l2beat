@@ -3,11 +3,11 @@ import type {
   AggregatedInteropTransferRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
+import type { InteropTransferClassifier } from '@l2beat/shared'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import { getAggregatedTokens, getAggregatedTransfer } from './aggregation'
-import type { InteropTransferClassifier } from './InteropTransferClassifier'
 
 export interface AggregationResult {
   aggregatedTransfers: AggregatedInteropTransferRecord[]
@@ -28,7 +28,7 @@ export class InteropAggregationService {
     for (const config of configs) {
       const classifiedTransfers = this.classifier.classifyTransfers(
         transfers,
-        config,
+        config.plugins,
       )
 
       // Aggregate transfers and tokens

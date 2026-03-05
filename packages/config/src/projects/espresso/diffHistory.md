@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xb2d94d7cc8105f9ea9422fded81f4e12efb367d3
+
+# Diff at Wed, 04 Mar 2026 15:29:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1772489763
+- current timestamp: 1772638086
+
+## Description
+
+HotShotLightClient upgraded from LightClientV2 to LightClientV3 (impl `0x4DF3...` → `0x0177...`).
+
+Key changes in V3:
+- New `authRoot` state variable: a value signed by validators as part of the extended light client state, stored on-chain after SNARK verification.
+- New `newFinalizedState()` overload accepting `newAuthRoot` parameter. The V2 overload now reverts with `DeprecatedApi()`.
+- Redesigned proof verification: public inputs reduced from 11 to 5. Instead of passing all state fields individually, V3 computes `keccak256(abi.encodePacked(state, nextStakeTable, authRoot)) mod p` as a single signed message digest. This makes the circuit more future-proof — adding new certified states no longer requires circuit/VK updates.
+- `initializeV3()` re-initializes `_firstEpoch`.
+
+PlonkVerifierV2 replaced by PlonkVerifierV3 (`0x0D65...` → `0x098C...`) — updated to match the new circuit with `uint256[5]` public inputs instead of `uint256[11]`.
+
+Diff: https://disco.l2beat.com/diff/eth:0x4DF3515bB525787e9eae08B8f9647C30F6FA7d93/eth:0x0177b586A949088309227f1A91951571CF770D8C
+
+Espresso transitioned to permissionless PoS on March 4, 2026 ([announcement](https://paragraph.com/@espressofndn/proof-of-stake-upgrade-begins)). Validator set is now open — top 100 by staked ESP. Slashing is not yet implemented ([StakeTable.sol](https://github.com/EspressoSystems/espresso-network/blob/main/contracts/src/StakeTable.sol) comments: "will be used for slashing later"). Updated project type from DA Service to Public Blockchain.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierV2 (eth:0x0D654ce674D952B4944f6A2e410aBdaA824a417D)
+    +++ description: None
+```
+
+```diff
+    contract HotShotLightClient (eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      sourceHashes.1:
+-        "0x40a6e4b3d7ad267eb7f657fa35a983e445fe17019f66297d20a469d80f50cb15"
++        "0xcd6859a33f4bb591c2c5303ca74047fbdd842f543c98e518219c727c33d864ba"
+      values.$implementation:
+-        "eth:0x4DF3515bB525787e9eae08B8f9647C30F6FA7d93"
++        "eth:0x0177b586A949088309227f1A91951571CF770D8C"
+      values.$libraries.1:
+-        "eth:0x0D654ce674D952B4944f6A2e410aBdaA824a417D"
++        "eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c"
+      values.$pastUpgrades.3:
++        ["2026-03-02T22:20:59.000Z","0xce95265e02f16c8f7d227474167c4ce8dea8b540696748c8fad1676a6cc44269",["eth:0x0177b586A949088309227f1A91951571CF770D8C"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.currentEpoch:
+-        274
++        276
+      values.getVersion.majorVersion:
+-        2
++        3
+      values.authRoot:
++        "95706045122542419068533472823093870027268909194070702472720375130594565742773"
+      implementationNames.eth:0x4DF3515bB525787e9eae08B8f9647C30F6FA7d93:
+-        "LightClientV2"
+      implementationNames.eth:0x0177b586A949088309227f1A91951571CF770D8C:
++        "LightClientV3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV3 (eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../HotShotLightClient/LightClientV3.sol}          | 2915 +++++++++++++++-----
+ .../PlonkVerifierV3.sol}                           |   94 +-
+ 2 files changed, 2194 insertions(+), 815 deletions(-)
+```
+
 Generated with discovered.json: 0xc7ea00eb51feb434a81e6fd8722a6188c6f8e406
 
 # Diff at Mon, 02 Mar 2026 22:17:06 GMT:

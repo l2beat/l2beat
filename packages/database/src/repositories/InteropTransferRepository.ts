@@ -62,16 +62,16 @@ export interface InteropTransferRecord {
 }
 
 export interface InteropTransferUpdate {
-  srcAbstractTokenId?: string
-  srcSymbol?: string
-  srcPrice?: number
-  srcAmount?: number
-  srcValueUsd?: number
-  dstAbstractTokenId?: string
-  dstSymbol?: string
-  dstPrice?: number
-  dstAmount?: number
-  dstValueUsd?: number
+  srcAbstractTokenId?: string | null
+  srcSymbol?: string | null
+  srcPrice?: number | null
+  srcAmount?: number | null
+  srcValueUsd?: number | null
+  dstAbstractTokenId?: string | null
+  dstSymbol?: string | null
+  dstPrice?: number | null
+  dstAmount?: number | null
+  dstValueUsd?: number | null
 }
 
 export interface InteropMissingTokenInfo {
@@ -246,6 +246,37 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getProjectTransfers(options: {
+    plugins: string[]
+    snapshotTimestamp: UnixTime
+    sourceChains: string[]
+    destinationChains: string[]
+  }): Promise<InteropTransferRecord[]> {
+    if (
+      options.plugins.length === 0 ||
+      options.sourceChains.length === 0 ||
+      options.destinationChains.length === 0
+    ) {
+      return []
+    }
+
+    const from = options.snapshotTimestamp - UnixTime.DAY
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('timestamp', '>', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(options.snapshotTimestamp))
+      .where('plugin', 'in', options.plugins)
+      .where('srcChain', 'in', options.sourceChains)
+      .where('dstChain', 'in', options.destinationChains)
+      .whereRef('srcChain', '!=', 'dstChain')
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getUnprocessed() {
     const rows = await this.db
       .selectFrom('InteropTransfer')
@@ -265,6 +296,16 @@ export class InteropTransferRepository extends BaseRepository {
       .set({ ...update, isProcessed: true })
       .where('transferId', '=', id)
       .execute()
+  }
+
+  async markAllAsUnprocessed(): Promise<number> {
+    const result = await this.db
+      .updateTable('InteropTransfer')
+      .set({ isProcessed: false })
+      .where('isProcessed', '=', true)
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
   }
 
   async getStats(): Promise<InteropTransfersStatsRecord[]> {

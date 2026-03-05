@@ -8,7 +8,7 @@ export function createFaqRouter(manifest: Manifest, render: RenderFunction) {
 
   router.get('/faq', async (req, res) => {
     const data = await getFaqData(manifest, req.originalUrl)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 

@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -31,7 +31,7 @@ const InteropQuery = v
 export function createInteropRouter(
   manifest: Manifest,
   render: RenderFunction,
-  cache: ICache,
+  cache: InMemoryCache,
 ) {
   const router = express.Router()
 
@@ -46,7 +46,7 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropSummaryData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -58,7 +58,7 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropNonMintingData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -70,7 +70,7 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropLockAndMintData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -82,7 +82,7 @@ export function createInteropRouter(
     }),
     async (req, res) => {
       const data = await getInteropBurnAndMintData(req, manifest, cache)
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -113,7 +113,7 @@ export function createInteropRouter(
       const data = await getInteropSummaryData(req, manifest, cache, {
         mode: 'internal',
       })
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -127,7 +127,7 @@ export function createInteropRouter(
       const data = await getInteropNonMintingData(req, manifest, cache, {
         mode: 'internal',
       })
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -141,7 +141,7 @@ export function createInteropRouter(
       const data = await getInteropLockAndMintData(req, manifest, cache, {
         mode: 'internal',
       })
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )
@@ -155,7 +155,7 @@ export function createInteropRouter(
       const data = await getInteropBurnAndMintData(req, manifest, cache, {
         mode: 'internal',
       })
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )

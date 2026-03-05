@@ -1,8 +1,8 @@
 {
   "Outbox.sol": {
-    "hash": "0xe9ea050e1b0b8a10d023bae844d6efe6d644671b0bef1bffa83987dacfed72a7",
-    "address": "eth:0xf006c41097861AFeb18b05e586B921c081411Ee9",
+    "hash": "0x268c3927e6d7e9e7e84f7cb8d1557c6a593638888c766837b2aac1a0e4c3e64c",
+    "address": "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0",
     "chain": "ethereum",
-    "blockNumber": 23834069
+    "blockNumber": 24590324
   }
 }
