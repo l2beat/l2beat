@@ -4,7 +4,14 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
 } from '@tanstack/react-table'
-import { type ComponentProps, useMemo } from 'react'
+import { useMemo } from 'react'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+} from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
@@ -14,7 +21,6 @@ import {
 } from '~/pages/interop/components/top-items/columns'
 import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { api } from '~/trpc/React'
-import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -104,25 +110,30 @@ export function InteropTokensSection({
         isLoading={isLoading}
       />
       {!isLoading && pageCount > 1 && (
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5">
-          {paginationItems.map((item) =>
-            item.type === 'ellipsis' ? (
-              <span
-                key={item.key}
-                className="px-1 font-medium text-label-value-12 text-secondary"
-              >
-                ...
-              </span>
-            ) : (
-              <PaginationButton
-                key={item.index}
-                onClick={() => table.setPageIndex(item.index)}
-                isActive={currentPage === item.index}
-              >
-                {item.index + 1}
-              </PaginationButton>
-            ),
-          )}
+        <div className="mt-4 overflow-x-auto">
+          <Pagination className="w-max min-w-full px-1">
+            <PaginationContent className="flex-nowrap justify-center gap-1.5">
+              {paginationItems.map((item) =>
+                item.type === 'ellipsis' ? (
+                  <PaginationItem key={item.key}>
+                    <PaginationEllipsis className="text-secondary" />
+                  </PaginationItem>
+                ) : (
+                  <PaginationLink
+                    key={item.index}
+                    size="sm"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      table.setPageIndex(item.index)
+                    }}
+                    isActive={currentPage === item.index}
+                  >
+                    {item.index + 1}
+                  </PaginationLink>
+                ),
+              )}
+            </PaginationContent>
+          </Pagination>
         </div>
       )}
     </ProjectSection>
@@ -134,7 +145,7 @@ type PaginationItem =
   | { type: 'ellipsis'; key: string }
 
 function getPaginationItems(pageCount: number, currentPage: number) {
-  const edgeCount = 3
+  const edgeCount = 2
   const siblingCount = 1
 
   const pages = new Set<number>()
@@ -171,26 +182,4 @@ function getPaginationItems(pageCount: number, currentPage: number) {
   }
 
   return items
-}
-
-function PaginationButton({
-  isActive,
-  children,
-  className,
-  ...props
-}: ComponentProps<'button'> & { isActive?: boolean }) {
-  return (
-    <button
-      className={cn(
-        'flex h-7 min-w-7 items-center justify-center rounded-md border border-divider px-2',
-        'font-medium text-label-value-12 transition-colors',
-        'hover:bg-surface-secondary disabled:cursor-not-allowed disabled:opacity-40',
-        isActive && 'border-brand bg-brand text-white hover:bg-brand',
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </button>
-  )
 }
