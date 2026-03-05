@@ -279,6 +279,7 @@
       "name": "WormholeRelayer",
       "address": "arb1:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
       "type": "Contract",
+      "template": "buidl-token/WormholeRelayer",
       "sourceHashes": [
         "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
@@ -457,6 +458,7 @@
       "name": "DeliveryProviderImplementation",
       "address": "arb1:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
       "type": "Contract",
+      "template": "buidl-token/DeliveryProviderImplementation",
       "sourceHashes": [
         "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
@@ -1876,6 +1878,7 @@
       "name": "WormholeRelayer",
       "address": "avax:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
       "type": "Contract",
+      "template": "buidl-token/WormholeRelayer",
       "sourceHashes": [
         "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
@@ -2528,6 +2531,7 @@
       "name": "DeliveryProviderImplementation",
       "address": "avax:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
       "type": "Contract",
+      "template": "buidl-token/DeliveryProviderImplementation",
       "sourceHashes": [
         "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
@@ -3468,6 +3472,7 @@
       "name": "WormholeRelayer",
       "address": "bnb:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
       "type": "Contract",
+      "template": "buidl-token/WormholeRelayer",
       "sourceHashes": [
         "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
@@ -3925,6 +3930,7 @@
       "name": "DeliveryProviderImplementation",
       "address": "bnb:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
       "type": "Contract",
+      "template": "buidl-token/DeliveryProviderImplementation",
       "sourceHashes": [
         "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
@@ -5515,6 +5521,7 @@
       "name": "WormholeRelayer",
       "address": "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
       "type": "Contract",
+      "template": "buidl-token/WormholeRelayer",
       "sourceHashes": [
         "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
@@ -6499,6 +6506,7 @@
       "name": "DeliveryProviderImplementation",
       "address": "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
       "type": "Contract",
+      "template": "buidl-token/DeliveryProviderImplementation",
       "sourceHashes": [
         "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
@@ -7571,6 +7579,7 @@
       "name": "WormholeRelayer",
       "address": "matic:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
       "type": "Contract",
+      "template": "buidl-token/WormholeRelayer",
       "sourceHashes": [
         "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
@@ -8074,6 +8083,7 @@
       "name": "DeliveryProviderImplementation",
       "address": "matic:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
       "type": "Contract",
+      "template": "buidl-token/DeliveryProviderImplementation",
       "sourceHashes": [
         "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
@@ -9452,6 +9462,7 @@
       "name": "WormholeRelayer",
       "address": "oeth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
       "type": "Contract",
+      "template": "buidl-token/WormholeRelayer",
       "sourceHashes": [
         "0xd3fe13cb32b323dcf9f1e5c9c334577136633345e2d376340b4cd18d44231968",
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
@@ -9926,6 +9937,7 @@
       "name": "DeliveryProviderImplementation",
       "address": "oeth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
       "type": "Contract",
+      "template": "buidl-token/DeliveryProviderImplementation",
       "sourceHashes": [
         "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
         "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
@@ -19600,6 +19612,7 @@
     "buidl-token/BulkOperator": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
     "buidl-token/ComplianceConfigurationService": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
     "buidl-token/ComplianceService": "0x7f9c1e817f67e0ac1162f252fdd0967766c43eb4656cf184d1cd096499bf413b",
+    "buidl-token/DeliveryProviderImplementation": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "buidl-token/DSToken": "0x8b7cd2731320322d26deac9e9de2130d467d82c3ecdaa25e781d869ae32a8618",
     "buidl-token/DSTokenClassSwap": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "buidl-token/IssuerMulticall": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
@@ -19612,7 +19625,8 @@
     "buidl-token/TransactionRelayer": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
     "buidl-token/TrustService": "0x9b6963b83f092006de8ae7fb377c0c0c5364a48478a60e737f658b512fac7b1c",
     "buidl-token/WalletManager": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
-    "buidl-token/WalletRegistrar": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250"
+    "buidl-token/WalletRegistrar": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
+    "buidl-token/WormholeRelayer": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": {
     "arbitrum": 408901992,
