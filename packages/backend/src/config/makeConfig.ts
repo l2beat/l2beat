@@ -198,6 +198,11 @@ export async function makeConfig(
         ),
       },
       inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
+      notifications: flags.isEnabled('interop', 'notifications') && {
+        discordWebhookUrl: env.string(
+          'INTEROP_NOTIFICATIONS_DISCORD_WEBHOOK_URL',
+        ),
+      },
     },
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last

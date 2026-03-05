@@ -1,7 +1,7 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 
-type InteropConfig<T> = { key: string; __type: T }
+export type InteropConfig<T> = { key: string; __type: T }
 
 export function defineConfig<T>(key: string): InteropConfig<T> {
   return { key } as InteropConfig<T>
