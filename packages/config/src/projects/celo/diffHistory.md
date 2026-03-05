@@ -10,8 +10,6 @@ Generated with discovered.json: 0xd7a03912de5954186256dff9ff5a58569453f253
 
 Celo Security Council member rotation: signer at index 7 changed from `0xc3E9...` to `0xC912...`. Threshold remains 6 of 8.
 
-Anchor game rotated to a new instance (`0x5f06...`), updating the anchor root and L2 block number.
-
 ## Watched changes
 
 ```diff
