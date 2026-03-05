@@ -87,6 +87,36 @@ export const celo: ScalingProject = opStackL2({
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
   isNodeAvailable: 'UnderReview',
+  interopConfig: {
+    name: 'Celo Canonical',
+    durationSplit: {
+      lockAndMint: {
+        in: {
+          label: 'L1 -> L2',
+          from: 'ethereum',
+          to: 'celo',
+        },
+        out: {
+          label: 'L2 -> L1',
+          from: 'celo',
+          to: 'ethereum',
+        },
+      },
+    },
+    plugins: [
+      {
+        chain: 'celo',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'celo',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   discovery,
   genesisTimestamp: UnixTime(1742960663), // ts of first batch posted, block 0 from the rpc: 1587571200
   milestones: [

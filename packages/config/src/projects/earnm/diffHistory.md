@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xbbf3beb4e0d5a8ac6fbed920b8f7565305d3f41e
+
+# Diff at Wed, 04 Mar 2026 20:42:56 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1767802188
+- current timestamp: 1772656885
+
+## Description
+
+One member of SafeL2 (AlchemyMultisig2) was rotated: 0xA351...700a replaced by 0x04a2...7Bd.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      values.$members.5:
+-        "arb1:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a"
++        "arb1:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd"
+    }
+```
+
 Generated with discovered.json: 0x95afca38de1bef98fa2e27b1c756532ffbda25cc
 
 # Diff at Wed, 07 Jan 2026 16:10:53 GMT:

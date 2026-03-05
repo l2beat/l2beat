@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xd0cd37b2fdf6fba92757ebce83c5f1510e3fe0af
+
+# Diff at Wed, 04 Mar 2026 09:00:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6a30ad0d296eab5cfae7df5ce6dbeea89f168dc4 block: 1772460290
+- current timestamp: 1772614552
+
+## Description
+
+operator change.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      values.operatorCount:
+-        4
++        3
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772460290 (main branch discovery), not current.
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered.
+      fieldMeta:
++        {"havingPerfectOperators":{"description":"tells the contract whether it can safely pick a random operator using a simple mathematical operation, or if it needs to perform a more expensive \"loop-and-check\" operation"}}
+    }
+```
+
 Generated with discovered.json: 0x9b5fe9e66b67abf9b8b8df38e26c5de0ffa4df86
 
 # Diff at Mon, 02 Mar 2026 14:06:19 GMT:

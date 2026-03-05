@@ -5,7 +5,9 @@
     "getCrossDomainMessage",
     "isMessageDropped",
     "isMessageSkipped",
-    "messageQueue"
+    "messageQueue",
+    "getMessageEnqueueTimestamp",
+    "messageEnqueueTime"
   ],
   "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"],
   "owner": {

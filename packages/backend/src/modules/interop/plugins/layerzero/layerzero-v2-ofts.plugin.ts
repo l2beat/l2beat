@@ -104,6 +104,13 @@ export function getBridgeType({
     return 'lockAndMint'
   }
 
+  if (srcWasBurned && dstWasMinted) {
+    return 'burnAndMint'
+  }
+  if (srcWasBurned || dstWasMinted) {
+    return 'lockAndMint'
+  }
+
   const srcAbstractToken = tokenMap.get(
     ChainSpecificAddress.fromLong(
       srcChain,
@@ -117,20 +124,14 @@ export function getBridgeType({
     ),
   )
   if (!srcAbstractToken || !dstAbstractToken) return
-
-  const followsDefaultFlow =
-    defaultBridgeType === 'nonMinting'
-      ? !srcWasBurned && !dstWasMinted
-      : srcWasBurned && dstWasMinted
-
-  if (
-    !followsDefaultFlow &&
-    srcAbstractToken.issuer !== dstAbstractToken.issuer
-  ) {
-    return 'lockAndMint'
+  if (srcAbstractToken.issuer === null || dstAbstractToken.issuer === null) {
+    return defaultBridgeType
   }
 
-  return defaultBridgeType
+  // lock + release
+  return srcAbstractToken.issuer === dstAbstractToken.issuer
+    ? 'nonMinting'
+    : 'lockAndMint'
 }
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {

@@ -1,6 +1,6 @@
 {
   "name": "karak",
-  "timestamp": 1765535115,
+  "timestamp": 1772526845,
   "configHash": "0xfe20d67ced1a80a854e121c74a14f6354cc694609d57ec71133d87a5eec4acc6",
   "entries": [
     {
@@ -45,10 +45,10 @@
         "finalizationPeriodSeconds": 259200,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 31068000,
-        "latestOutputIndex": 4314,
-        "nextBlockNumber": 31075200,
-        "nextOutputIndex": 4315,
+        "latestBlockNumber": 34560000,
+        "latestOutputIndex": 4799,
+        "nextBlockNumber": 34567200,
+        "nextOutputIndex": 4800,
         "proposer": "eth:0x4179f43f3b994e97090557363b09F403138a729e",
         "PROPOSER": "eth:0x4179f43f3b994e97090557363b09F403138a729e",
         "startingBlockNumber": 0,
@@ -470,7 +470,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644794",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644802",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -564,8 +564,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 23979269
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 24157407
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x622333688CC1878C7ff4205c89bDe051798788A7",
@@ -984,6 +984,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23995938 },
+  "usedBlockNumbers": { "ethereum": 24575765 },
   "permissionsConfigHash": "0xa553ee5088a454f944efcbf48c118529f8c52ed73b21e3f0c7d174f0bf8d9256"
 }

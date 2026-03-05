@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x0918dd0d67c16cef451b0ff0e258a0955e12281c
+
+# Diff at Wed, 04 Mar 2026 09:20:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6a30ad0d296eab5cfae7df5ce6dbeea89f168dc4 block: 1772461789
+- current timestamp: 1772615972
+
+## Description
+
+minus one vali.
+
+## Watched changes
+
+```diff
+    contract StakingNFT (eth:0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0) {
+    +++ description: None
+      values.totalSupply:
+-        12
++        11
+    }
+```
+
 Generated with discovered.json: 0x7e7fd3b54b1fb93b37bce40ac7a5c2e7e8d7d0cd
 
 # Diff at Mon, 02 Mar 2026 14:31:35 GMT:

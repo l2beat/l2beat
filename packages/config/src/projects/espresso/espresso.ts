@@ -52,9 +52,11 @@ export const espresso: BaseProject = {
     badges: [],
   },
   trackedTxsConfig: [
+    // V1 newFinalizedState(tuple, tuple) — deprecated by V2 upgrade
     {
       projectId: ProjectId('espresso'),
       sinceTimestamp: 1704700211,
+      untilTimestamp: 1772483759, // 2026-03-02T20:35:59Z V2 upgrade
       type: 'liveness',
       subtype: 'proofSubmissions',
       params: {
@@ -67,6 +69,7 @@ export const espresso: BaseProject = {
     {
       projectId: ProjectId('espresso'),
       sinceTimestamp: 1704700211,
+      untilTimestamp: 1772483759,
       type: 'l2costs',
       subtype: 'proofSubmissions',
       params: {
@@ -76,9 +79,65 @@ export const espresso: BaseProject = {
         signature: 'function newFinalizedState(tuple newState, tuple proof)',
       },
     },
+    // V2 newFinalizedState(tuple, tuple, tuple) — brief window between V2 and V3 upgrades (~1h45m, likely no txs)
+    {
+      projectId: ProjectId('espresso'),
+      sinceTimestamp: 1772483759, // 2026-03-02T20:35:59Z V2 upgrade
+      untilTimestamp: 1772490059, // 2026-03-02T22:20:59Z V3 upgrade
+      type: 'liveness',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
+        selector: '0x757c37ad',
+        signature:
+          'function newFinalizedState(tuple newState, tuple nextStakeTable, tuple proof)',
+      },
+    },
+    {
+      projectId: ProjectId('espresso'),
+      sinceTimestamp: 1772483759,
+      untilTimestamp: 1772490059,
+      type: 'l2costs',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
+        selector: '0x757c37ad',
+        signature:
+          'function newFinalizedState(tuple newState, tuple nextStakeTable, tuple proof)',
+      },
+    },
+    // V3 newFinalizedState(tuple, tuple, uint256, tuple) — active since V3 upgrade
+    {
+      projectId: ProjectId('espresso'),
+      sinceTimestamp: 1772490059, // 2026-03-02T22:20:59Z V3 upgrade
+      type: 'liveness',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
+        selector: '0xaabd5db3',
+        signature:
+          'function newFinalizedState(tuple newState, tuple nextStakeTable, uint256 newAuthRoot, tuple proof)',
+      },
+    },
+    {
+      projectId: ProjectId('espresso'),
+      sinceTimestamp: 1772490059,
+      type: 'l2costs',
+      subtype: 'proofSubmissions',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458'),
+        selector: '0xaabd5db3',
+        signature:
+          'function newFinalizedState(tuple newState, tuple nextStakeTable, uint256 newAuthRoot, tuple proof)',
+      },
+    },
   ],
   daLayer: {
-    type: 'DA Service',
+    type: 'Public Blockchain',
     systemCategory: 'public',
     technology: {
       description: `
@@ -87,11 +146,10 @@ export const espresso: BaseProject = {
 
 ## Consensus
 
-Currently only a fixed set of pre-registered operators can run a node. The Espresso Network will upgrade to proof-of-stake in a later release.
-
-Espresso uses the HotShot consensus protocol, a communication-efficient proof-of-stake system that is Byzantine Fault Tolerant (BFT). 
-The protocol is currently permissioned, with a fixed set of 100 nodes participating in consensus.
+Espresso uses the HotShot consensus protocol, a communication-efficient proof-of-stake system that is Byzantine Fault Tolerant (BFT).
+The validator set is permissionless: anyone can stake ESP tokens and the top 100 validators by total stake form the active consensus set, which is dynamically adjusted at epoch boundaries.
 Built on HotStuff-2, it achieves linear communication complexity using a pacemaker module to synchronize views and ensures safety and liveness as long as over two-thirds of the stake is controlled by honest nodes.
+Although validators are required to stake ESP to participate, there is currently no slashing mechanism in place for misbehaving nodes.
 
 HotShot operates in a view-by-view manner, where each view designates a leader and an external builder. 
 During a view, the consensus proposer finalizes a block with a certificate of availability by utilizing Espresso DA for data availability.
@@ -130,9 +188,17 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       bridge: undefined,
     }),
     risks: {
-      economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+      economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('ESP'),
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
+    // TODO: add economicSecurity token config once DaBeatStatsProvider supports espresso
+    // economicSecurity: {
+    //   token: {
+    //     symbol: 'ESP',
+    //     decimals: 18,
+    //     coingeckoId: 'espresso',
+    //   },
+    // },
     throughput: [
       {
         size: 1000000, // 1 MB max_block_size (from genesis config)
@@ -141,7 +207,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       },
     ],
     validators: {
-      type: 'static',
+      type: 'static', // permissionless PoS, but active set is always top 100 by ESP stake
       count: 100,
     },
   },
@@ -193,138 +259,21 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
         },
       ],
     },
-    dac: {
-      requiredMembers: 67, // 2/3 + 1
-      membersCount: 100, // max allowed node operators
-      knownMembers: [
-        // key mapping: https://docs.google.com/spreadsheets/d/1GB9HYE7T25QLJQoa2TuA4c43oHk-t8uWkychRNuMcpg/edit?gid=0#gid=0
-        {
-          external: true,
-          name: '01node Validator',
-          href: 'https://x.com/EspressoSys/status/1861106651471978614',
-        },
-        {
-          external: true,
-          name: 'Blockdaemon',
-          href: 'https://x.com/EspressoSys/status/1861106663354442095',
-        },
-        {
-          external: true,
-          name: 'BlockPI',
-          href: 'https://x.com/EspressoSys/status/1861106675278848329',
-        },
-        {
-          external: true,
-          name: 'ChorusOne',
-          href: 'https://x.com/EspressoSys/status/1861106687115173990',
-        },
-        {
-          external: true,
-          name: 'deNodes',
-          href: 'https://x.com/EspressoSys/status/1861106698825670830',
-        },
-        {
-          external: true,
-          name: 'Figment',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Finoa Consensus Services (FCS)',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Imperator.co',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Informal Systems',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Kiln',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'KudasaiJP',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'LinkPool',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Luganodes',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Nethermind',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Node Guardians',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'P2P Validator',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Pier Two',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Staked',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Sub7',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Treasure DAO',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Unit 410',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'Validation Cloud',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-        {
-          external: true,
-          name: 'ZKV',
-          href: 'https://x.com/EspressoSys/status/1861106639690178610',
-        },
-      ],
-    },
+    // dac: {
+    //   requiredMembers: 67, // 2/3 + 1
+    //   membersCount: 100, // max allowed node operators
+    //   knownMembers: [
+    //     // key mapping: https://docs.google.com/spreadsheets/d/1GB9HYE7T25QLJQoa2TuA4c43oHk-t8uWkychRNuMcpg/edit?gid=0#gid=0
+    //     // Commented out: validator set is now permissionless PoS (top 100 by ESP stake)
+    //   ],
+    // },
     usedIn: linkByDA({
       layer: ProjectId('espresso'),
       bridge: ProjectId('espresso'),
     }),
     risks: {
-      committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
-        'Permissioned',
-        undefined,
-        100,
-      ),
+      committeeSecurity:
+        DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validator set'),
       upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(),
       relayerFailure: DaRelayerFailureRisk.NoMechanism,
     },
@@ -340,6 +289,14 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
+    {
+      title: 'Espresso transitions to Proof-of-Stake',
+      url: 'https://paragraph.com/@espressofndn/proof-of-stake-upgrade-begins',
+      date: '2026-03-04T00:00:00Z',
+      description:
+        'Espresso transitions from a permissioned validator set to permissionless proof-of-stake secured by staked ESP tokens.',
+      type: 'general',
+    },
     {
       title: 'EspressoDA launch on mainnet',
       url: 'https://medium.com/@espressosys/espresso-mainnet-0-is-live-deedc2505081',
