@@ -31,14 +31,9 @@ rm -rf dist
 
 # Only bundle the server (Express + data fetching + routers).
 # Vite handles client JS and CSS with HMR in dev mode.
-esbuild \
-  src/index.dev.ts \
-  --bundle \
-  --platform=node \
-  --packages=external \
-  --jsx=automatic \
-  --watch=forever \
-  --outfile=dist/server/index.js &
+# Uses a custom esbuild script with a plugin that blocks .tsx files
+# from being bundled (they should be handled by Vite, not esbuild).
+tsx scripts/buildServer.ts --watch &
 pids+=($!)
 
 while [ ! -f dist/server/index.js ]; do

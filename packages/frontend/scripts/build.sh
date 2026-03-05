@@ -16,11 +16,4 @@ node -r esbuild-register ./scripts/hashFiles.ts
 vite build --mode production
 node -r esbuild-register ./scripts/mergeManifests.ts
 
-esbuild \
-  src/index.ts \
-  --bundle \
-  --minify \
-  --platform=node \
-  --packages=external \
-  --jsx=automatic \
-  --outfile=dist/server/index.js
+tsx scripts/buildServer.ts --prod
