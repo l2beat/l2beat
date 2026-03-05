@@ -1,55 +1,20 @@
 {
   "name": "immutablex",
-  "timestamp": 1772450911,
-  "configHash": "0xb590478abf7768c6200d140601719b4907fc578f20c56c841a3d708d32e5038c",
+  "timestamp": 1772703009,
+  "configHash": "0xe46b8b562b1bff824ebfad714b8f750801d72c84b904cb0d354320678c503ebb",
   "entries": [
     {
-      "name": "DACommittee",
-      "address": "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295",
-      "type": "Contract",
-      "template": "starkex/Committee",
-      "sourceHashes": [
-        "0x83a4f7af4e5a371aadb57903aed1b1f96556a0b3eb4665044a65ad8f70a89edc"
-      ],
-      "proxyType": "immutable",
-      "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 5.",
-      "sinceTimestamp": 1616668125,
-      "sinceBlock": 12107592,
-      "values": {
-        "$immutable": true,
-        "constructorArgs": [
-          [
-            "eth:0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
-            "eth:0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
-            "eth:0x48AF849535DDFa560A0EB0FbDEf436688169B949",
-            "eth:0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
-            "eth:0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
-            "eth:0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
-            "eth:0xfF506616E8C53EE5e513b906AC00B5D76664C537"
-          ],
-          "5"
-        ],
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_Committee_2019_1",
-        "signaturesRequired": 5
-      },
-      "fieldMeta": {
-        "constructorArgs": {
-          "description": "Includes DAC members and threshold."
-        }
-      },
-      "implementationNames": {
-        "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295": "Committee"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
+      "address": "eth:0x000000000000000000000000000000000000007B",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
+      "address": "eth:0x0000000000000000000000000000000000000Eee",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0000000000000000000000000000000000000FfF",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -57,6 +22,44 @@
       "address": "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "AxelarGasService",
+      "address": "eth:0x2d5d7d31F671F86C782533cc367F14109a082712",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x8fa191bfa9dc72a70e40c3074333b73f30f8db135dc11d16443f6f26a079ddfe",
+        "0xffdc4806ed0369d49b542adf6eb3b3572e0f76d44bda8f0a093467ebcbe225df"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1661972207,
+      "sinceBlock": 15448318,
+      "values": {
+        "$admin": "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "$implementation": "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
+        "$pastUpgrades": [
+          [
+            "2023-12-14T07:19:11.000Z",
+            "0xfc2554f725e599e45041529be0d88fd97508a5d3fb043cd26fc93a0bb45bf887",
+            ["eth:0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"]
+          ],
+          [
+            "2024-06-04T04:22:47.000Z",
+            "0x89d167023ab2edd2f46e1c80f09118d7ab37362d845b2a9a781ec97eaa5c6563",
+            ["eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "contractId": "0xfaa2f015f2ce5aee225904728de2def86eb8837491efd21f1a04fc20d8e923f6",
+        "gasCollector": "eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
+        "implementation": "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
+        "owner": "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x2d5d7d31F671F86C782533cc367F14109a082712": "AxelarGasServiceProxy",
+        "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": "AxelarGasService"
+      }
     },
     {
       "address": "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",
@@ -69,287 +72,226 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SHARPVerifierCallProxy",
-      "address": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-      "type": "Reference",
-      "targetType": "Contract",
-      "targetProject": "shared-sharp-verifier"
-    },
-    {
-      "address": "eth:0x48AF849535DDFa560A0EB0FbDEf436688169B949",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "OrderRegistry",
-      "address": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "name": "AxelarGatewayProxyMultisig",
+      "address": "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5",
       "type": "Contract",
-      "template": "starkex/OrderRegistry",
       "sourceHashes": [
-        "0x1e28fda3c245bc1fc13d0ddc7b108be510d1e0220fc67552921c87724bb45a4c"
+        "0xe65732e356e64373f949ce1e543c2af7a89f91a8e3e8337cf9b83a3cd6ae9082"
       ],
       "proxyType": "immutable",
-      "description": "Helper contract for registering limit orders from L1.",
-      "sinceTimestamp": 1626352379,
-      "sinceBlock": 12831566,
-      "values": {
-        "$immutable": true,
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_OrderRegistry_2021_1"
-      },
+      "sinceTimestamp": 1640210870,
+      "sinceBlock": 13857570,
+      "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
+        "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5": "AxelarGatewayProxyMultisig"
       }
     },
     {
-      "address": "eth:0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
+      "name": "RootAxelarBridgeAdaptor",
+      "address": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0x3bbb1bbee722c566a76a1dbd006c8014bc97e10583a6ff7cc69a72725948746e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1702962623,
+      "sinceBlock": 18817837,
+      "values": {
+        "$admin": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+        "$implementation": "eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345",
+        "$pastUpgrades": [
+          [
+            "2023-12-19T05:10:23.000Z",
+            "0x39c068494cbb3daa564a918bda53218f86d781976e6a8235c1c89a03dc9ec182",
+            ["eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "BRIDGE_MANAGER_ROLE": "0x77eacfcb6207f26b72edc4f15c48e5518843e7e98ccfd7e0d6c16f92ed1fef8d",
+        "childBridgeAdaptor": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+        "childChainId": "immutable",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "GAS_SERVICE_MANAGER_ROLE": "0x2b5bda39c23731c6890b6a6f985ff1c326c66dc20aa14dc2e50fc5ec656ecc35",
+        "gasService": "eth:0x2d5d7d31F671F86C782533cc367F14109a082712",
+        "gateway": "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5",
+        "initializerAddress": "eth:0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333",
+        "rootBridge": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+        "TARGET_MANAGER_ROLE": "0x28a0840e09502c63ed1e83b95421995a3ea654657390bb15ac27b2b85aef53b2"
+      },
+      "implementationNames": {
+        "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932": "TransparentUpgradeableProxy",
+        "eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345": "RootAxelarBridgeAdaptor"
+      }
+    },
+    {
+      "address": "eth:0x52A6c53869Ce09a731CD772f245b97A4401d3348",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "StarkExchangeMigration",
+      "address": "eth:0x58b5484F489f7858DC83a5a677338074b57de806",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2e7cc0661a38ee126a3b09ecb461b7b1d7e0301c2f7b4245c5334553d16f9848"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1770940583,
+      "sinceBlock": 24444120,
+      "values": {
+        "$immutable": true,
+        "getAssetInfo": [],
+        "isFrozen": false,
+        "migrationManager": "eth:0x0000000000000000000000000000000000000000",
+        "NATIVE_ETH": "eth:0x0000000000000000000000000000000000000Eee",
+        "rootSenderAdapter": "eth:0x0000000000000000000000000000000000000000",
+        "vaultRoot": 0,
+        "VERSION": "StarkEx-IMX-Migration-1.0.0",
+        "zkEVMBridge": "eth:0x0000000000000000000000000000000000000000",
+        "zkEVMWithdrawalProcessor": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x58b5484F489f7858DC83a5a677338074b57de806": "StarkExchangeMigration"
+      }
     },
     {
       "name": "StarkExchange",
       "address": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
       "type": "Contract",
-      "template": "starkex/StarkExchange",
       "sourceHashes": [
         "0xc527211f14e6fa12809b6b7ec28c6757daa907478cefeb1b8835ee7d47139bf7",
-        "0xfaa0bf87cf9230ba5a3f5530b447f76606e0cd9fb9d1acd2f3b87d30884e63d1"
+        "0x2e7cc0661a38ee126a3b09ecb461b7b1d7e0301c2f7b4245c5334553d16f9848"
       ],
-      "proxyType": "StarkWare diamond",
-      "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getSequenceNumber",
-        "getVaultRoot",
-        "getValidiumVaultRoot"
-      ],
+      "proxyType": "StarkWare proxy",
       "sinceTimestamp": 1615389188,
       "sinceBlock": 12011518,
       "values": {
         "$admin": "eth:0xD2C37fC6fD89563187f3679304975655e448D192",
         "$immutable": false,
-        "$implementation": [
-          "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-          "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-          "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
-          "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-          "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-          "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-          "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
-        ],
+        "$implementation": "eth:0x58b5484F489f7858DC83a5a677338074b57de806",
         "$pastUpgrades": [
           [
             "2021-03-10T15:13:08.000Z",
             "0x9b57c19aa91cc17c9487085b68532cd65d1e4c263b5928f14c03a9d36c9097df",
-            [
-              "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
-              "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b",
-              "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
-              "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
-            ]
+            ["eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"]
           ],
           [
             "2021-03-16T18:04:39.000Z",
             "0xf42d8fc579401fc76769bf63ba72f7277aac976aeb2a4cd3eca899ca08de7c20",
-            [
-              "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
-              "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b",
-              "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
-              "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
-            ]
+            ["eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"]
           ],
           [
             "2021-03-25T11:24:15.000Z",
             "0x79f72bef0984e3ae76ab638c078f92f1a0d4ad2a289b8a91e072d81f77d505ce",
-            [
-              "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
-              "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b",
-              "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
-              "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
-            ]
+            ["eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"]
           ],
           [
             "2021-03-26T08:01:31.000Z",
             "0x9e8cc538b40a70723a287ece3ecb4e6aafbbde0e04f621124df6e4c2d7995dc7",
-            [
-              "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
-              "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b",
-              "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
-              "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
-            ]
+            ["eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"]
           ],
           [
             "2021-08-31T08:15:29.000Z",
             "0x26fb60bb6b5ff3ef22cd959d007588f7410586499870411cfddc2759b97d44d6",
-            [
-              "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
-              "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57",
-              "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
-              "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
-              "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
-              "eth:0x2D542881E93491e765E5110c1e373FC2968E720A",
-              "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
-            ]
+            ["eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"]
           ],
           [
             "2021-09-09T16:30:02.000Z",
             "0xeaa0efb3937eee43c1083cc776d5033b131e6ef12ba0d0646db1b34e600847cd",
-            [
-              "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
-              "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57",
-              "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
-              "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
-              "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
-              "eth:0x2D542881E93491e765E5110c1e373FC2968E720A",
-              "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
-            ]
+            ["eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"]
           ],
           [
             "2022-01-13T08:08:51.000Z",
             "0x658a93571ca9733ba346bd746790a6d07821d86c89fd90809e85bf7f2f8d9797",
-            [
-              "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
-              "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57",
-              "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
-              "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
-              "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
-              "eth:0x2D542881E93491e765E5110c1e373FC2968E720A",
-              "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
-            ]
+            ["eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"]
           ],
           [
             "2024-05-20T06:39:35.000Z",
             "0x3425fd24435e4aefdb08f3970e61e446eb5d21a1e0c916d1ba9331b060b72192",
-            [
-              "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-              "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-              "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
-              "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-              "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-              "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-              "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
-            ]
+            ["eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"]
+          ],
+          [
+            "2026-03-05T01:07:11.000Z",
+            "0x07ac699d0dc30804af73843cc1cba5f50780135e25932cf78be69a3e6c11b194",
+            ["eth:0x58b5484F489f7858DC83a5a677338074b57de806"]
           ]
         ],
-        "$upgradeCount": 8,
-        "defaultVaultWithdrawalLock": 0,
-        "DEPOSIT_CANCEL_DELAY": 172800,
-        "FREEZE_GRACE_PERIOD": 604800,
-        "getLastBatchId": 37990,
-        "getOrderRoot": "168353765887718686397671181439168594225139531838374564195072013673941816314",
-        "getOrderTreeHeight": 63,
-        "getRegisteredAvailabilityVerifiers": [
-          "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
-        ],
-        "getRegisteredVerifiers": [
-          "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
-        ],
-        "getSequenceNumber": 37802,
+        "$upgradeCount": 9,
+        "getAssetInfo": [],
         "getUpgradeActivationDelay": 1209600,
-        "getVaultRoot": "543280986076401044787518957175086881219650536676907070252569311042264623146",
-        "getVaultTreeHeight": 31,
-        "implementation": "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+        "implementation": "eth:0x58b5484F489f7858DC83a5a677338074b57de806",
         "isFrozen": false,
         "isNotFinalized": true,
-        "isStrictVaultBalancePolicy": false,
-        "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
-        "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
-        "MAX_VERIFIER_COUNT": 64,
-        "operators": ["eth:0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"],
-        "orderRegistryAddress": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+        "migrationManager": "eth:0xD2C37fC6fD89563187f3679304975655e448D192",
+        "NATIVE_ETH": "eth:0x0000000000000000000000000000000000000Eee",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
-        "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
-        "StarkWareDiamond_upgradeDelay": 1209600,
-        "tokenAdmins": [
-          "eth:0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A",
-          "eth:0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"
-        ],
-        "UNFREEZE_DELAY": 31536000,
+        "rootSenderAdapter": "eth:0x9Fabd9Cc71f15b9Cfd717E117FBb9cfD9fC7cd32",
+        "StarkWareProxy_upgradeDelay": 1209600,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
-        "VERIFIER_REMOVAL_DELAY": 2419200,
-        "VERSION": "4.0.1"
-      },
-      "fieldMeta": {
-        "$admin": {
-          "severity": "HIGH",
-          "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."
-        },
-        "isFinalized": {
-          "severity": "HIGH",
-          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
-        },
-        "DEPOSIT_CANCEL_DELAY": {
-          "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
-        }
+        "vaultRoot": "543280986076401044787518957175086881219650536676907070252569311042264623146",
+        "VERSION": "StarkEx-IMX-Migration-1.0.0",
+        "zkEVMBridge": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+        "zkEVMWithdrawalProcessor": "eth:0xCeA34C706C4A18E103575832Dd21fD3656026D1E"
       },
       "implementationNames": {
         "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": "Proxy",
-        "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": "StarkExchange",
-        "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379": "AllVerifiers",
-        "eth:0x8536850750956c2FEebeCAB786d82271a5467687": "TokensAndRamping",
-        "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": "StarkExState",
-        "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": "ForcedActions",
-        "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": "OnchainVaults",
-        "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6": "ProxyUtils"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+        "eth:0x58b5484F489f7858DC83a5a677338074b57de806": "StarkExchangeMigration"
+      }
     },
     {
-      "name": "GpsFactRegistryAdapter",
-      "address": "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
-      "type": "Contract",
-      "template": "starkex/GpsFactRegistryAdapter",
-      "sourceHashes": [
-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
-      ],
-      "proxyType": "immutable",
-      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).",
-      "sinceTimestamp": 1640107463,
-      "sinceBlock": 13849860,
-      "values": {
-        "$immutable": true,
-        "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-        "hasRegisteredFact": true,
-        "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
-        "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556",
-        "programHashMapped": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)"
-      },
-      "implementationNames": {
-        "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": "GpsFactRegistryAdapter"
-      },
-      "usedTypes": [
+      "address": "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
         {
-          "typeCaster": "Mapping",
-          "arg": {
-            "793595346346724189681221050719974054861327641387231526786912662354259445535": "StarkNet OS (since v0.14.0)",
-            "760308386675154762009993173725077399730170358078020153308029499928875469870": "Starknet Aggregator (since v0.14.0)",
-            "273279642033703284306509103355536170486431195329675679055627933497997642494": "Starknet Aggregator (since v0.13.4)",
-            "2231644845387633655859130162745748394456578773184260372693322394988769337368": "StarkNet OS (since v0.13.4)",
-            "15787695375210609250491147414005894154890873413229882671403677761527504080": "Starknet Aggregator (since v0.13.3)",
-            "2397984267054479079853548842566103781972463965746662494980785692480538410509": "StarkNet OS (since v0.13.3)",
-            "853638403225561750106379562222782223909906501242604214771127703946595519856": "StarkNet OS (Paradex)",
-            "3383082961563516565935611087683915026448707331436034043529592588079494402084": "StarkNet OS (old Paradex, old StarkNet)",
-            "3485280386001712778192330279103973322645241679001461923469191557000342180556": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)",
-            "770346231394331402493200980986217737662224545740427952627288191358999988146": "ApeX-USDT",
-            "3174901404014912024702042974619036870715605532092680335571201877913899936957": "StarkEx Spot v4.0 (RhinoFi, Sorare)",
-            "16830627573509542901909952446321116535677491650708854009406762893086223513": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)",
-            "2530337539466159944237001094809327283009177793361359619481044346150483328860": "ApeX-USDC 20250130",
-            "3114724292040200590153042023978438629733352741898912919152162079752811928849": "StarkEx Perp v2.0 ApeX-USDC",
-            "217719352201300445998518619904782191262194843262573339166404641663770051805": "StarkNet (old)",
-            "3003515909324298587247571665454372831319437787162989623104387385306791861180": "StarkNet (old)",
-            "1161178844461337253856226043908368523817098764221830529880464854589141231910": "StarkNet Aggregator (old)",
-            "1921772108187713503530008849184725638117898887391063185252422808224349294626": "StarkNet (old)",
-            "3258367057337572248818716706664617507069572185152472699066582725377748079373": "StarkNet (old)",
-            "407700941260678649793204927710478760533239334662847444187959202896452163393": "StarkNet (old)",
-            "1865367024509426979036104162713508294334262484507712987283009063059134893433": "StarkNet (old)",
-            "54878256403880350656938046611252303365750679698042371543935159963667935317": "StarkNet (old)",
-            "2479841346739966073527450029179698923866252973805981504232089731754042431018": "StarkNet (old)",
-            "109586309220455887239200613090920758778188956576212125550190099009305121410": "StarkNet (old)"
-          }
+          "permission": "upgrade",
+          "from": "eth:0x2d5d7d31F671F86C782533cc367F14109a082712",
+          "role": "admin"
         }
       ]
+    },
+    {
+      "name": "Operators",
+      "address": "eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa898c8df7706ef8117978fb0d8653aea9d509fa5e96475894390689c93b28187"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1702533995,
+      "sinceBlock": 18782489,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC": "Operators"
+      }
+    },
+    {
+      "name": "ChildERC20",
+      "address": "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x444c835c000c2401ad8e7d4d0a67fe0a11cf78d3eccdb105ed7c591296c4cf30"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1702962467,
+      "sinceBlock": 18817824,
+      "values": {
+        "$immutable": true,
+        "bridge": "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
+        "decimals": 18,
+        "name": "TEMPLATE",
+        "rootToken": "eth:0x000000000000000000000000000000000000007B",
+        "symbol": "TPT",
+        "totalSupply": 0
+      },
+      "implementationNames": {
+        "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1": "ChildERC20"
+      }
     },
     {
       "address": "eth:0x94e97260182B9537822687Dd3c301225c6f87a5e",
@@ -357,16 +299,32 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e",
+      "address": "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarkEx",
-          "from": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
+    },
+    {
+      "name": "VaultRootSenderAdapter",
+      "address": "eth:0x9Fabd9Cc71f15b9Cfd717E117FBb9cfD9fC7cd32",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x810ef9f8704116bfc2cb7bbce29bf0d33c691b1eb798da9bb81d0060a11ba7eb"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1770940571,
+      "sinceBlock": 24444119,
+      "values": {
+        "$immutable": true,
+        "AXELAR_GAS_SERVICE": "eth:0x2d5d7d31F671F86C782533cc367F14109a082712",
+        "gateway": "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5",
+        "rootReceiver": "eth:0x58b5484F489f7858DC83a5a677338074b57de806",
+        "rootReceiverChain": "immutable",
+        "SET_VAULT_ROOT": "0x3b3a05ff87bdb34cbfc45108f2edd75d335411fc0a16d9e2a9415e30e4f1489b",
+        "VAULT_ROOT_SENDER": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
+      },
+      "implementationNames": {
+        "eth:0x9Fabd9Cc71f15b9Cfd717E117FBb9cfD9fC7cd32": "VaultRootSenderAdapter"
+      }
     },
     {
       "address": "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
@@ -374,12 +332,78 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "RootERC20BridgeFlowRate",
+      "address": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xe3da0044c1cc2966f6a45573c47d38d8a1b647879b25570db9b2b8c6efe43e45"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1702962563,
+      "sinceBlock": 18817832,
+      "values": {
+        "$admin": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+        "$implementation": "eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154",
+        "$pastUpgrades": [
+          [
+            "2023-12-19T05:09:23.000Z",
+            "0x2e14d2e7f495b17f93c4c839315cfedfd5ee28df540e6433ccc6abb0206b0775",
+            ["eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ADAPTOR_MANAGER_ROLE": "0xa6d0b532cacea090bc411482cd491720e2eac14d48ce5d0402b8851e0bb2aec1",
+        "childERC20Bridge": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+        "childETHToken": "eth:0x52A6c53869Ce09a731CD772f245b97A4401d3348",
+        "childTokenTemplate": "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DEPOSIT_SIG": "0x87a7811f4bfedea3d341ad165680ae306b01aaeacc205d227629cf157dd9f821",
+        "imxCumulativeDepositLimit": "100000000000000000000000000",
+        "initializerAddress": "eth:0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333",
+        "MAP_TOKEN_SIG": "0x2cef46a936bdc5b7e6e8c71aa04560c41cf7d88bb26901a7e7f4936ff02accad",
+        "NATIVE_ETH": "eth:0x0000000000000000000000000000000000000Eee",
+        "NATIVE_IMX": "eth:0x0000000000000000000000000000000000000FfF",
+        "paused": false,
+        "PAUSER_ROLE": "0x539440820030c4994db4e31b6b800deafd503688728f932addfe7a410515c14c",
+        "rootBridgeAdaptor": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+        "rootIMXToken": "eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF",
+        "rootWETHToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "UNLIMITED_DEPOSIT": 0,
+        "UNPAUSER_ROLE": "0x82b32d9ab5100db08aeb9a0e08b422d14851ec118736590462bf9c085a6e9448",
+        "VARIABLE_MANAGER_ROLE": "0x5b94a8cd68affa84315f488cc2e6e456f761d334859cae8a073ef8fe13fb0ee6",
+        "WITHDRAW_SIG": "0x7a8dc26796a1e50e6e190b70259f58f6a4edd5b22280ceecc82b687b8e982869",
+        "withdrawalDelay": 86400,
+        "withdrawalQueueActivated": false
+      },
+      "implementationNames": {
+        "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6": "TransparentUpgradeableProxy",
+        "eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154": "RootERC20BridgeFlowRate"
+      }
     },
     {
-      "address": "eth:0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
+      "name": "Wrapped Ether Token",
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1513077455,
+      "sinceBlock": 4719568,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "totalSupply": "2085345052105916626831059"
+      },
+      "implementationNames": {
+        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
+      }
+    },
+    {
+      "address": "eth:0xCeA34C706C4A18E103575832Dd21fD3656026D1E",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -395,21 +419,32 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
-          "from": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
+          "permission": "upgrade",
+          "from": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }
+          ]
         },
         {
           "permission": "upgrade",
           "from": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "delay": 1209600,
-          "role": ".$admin"
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -431,7 +466,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 39,
+        "nonce": 45,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -445,187 +480,241 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "role": ".tokenAdmins"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xeDb0219557ba13816f1dEb7fA54688362B05A5aE",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "role": ".tokenAdmins"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xfF506616E8C53EE5e513b906AC00B5D76664C537",
+      "address": "eth:0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1702962527,
+      "sinceBlock": 18817829,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      },
+      "implementationNames": {
+        "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "Immutable X Token",
+      "address": "eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x4c7ee53d0e57b173022a09bfce726f93b14abf42b30af0acbb6c915a2e618a91"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1634198360,
+      "sinceBlock": 13415141,
+      "values": {
+        "$immutable": true,
+        "cap": "2000000000000000000000000000",
+        "decimals": 18,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
+        "name": "Immutable X",
+        "symbol": "IMX",
+        "totalSupply": "2000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF": "IMXToken"
+      }
     }
   ],
   "abis": {
-    "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [
-      "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",
-      "event LogDepositToVault(address ethKey, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogVaultWithdrawalLockSet(address ethKey, uint256 assetId, uint256 vaultId, uint256 timeRelease)",
-      "event LogWithdrawalFromVault(address ethKey, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
-      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
-      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
-      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
-      "function MAX_VERIFIER_COUNT() view returns (uint256)",
-      "function STARKEX_MAX_DEFAULT_VAULT_LOCK() view returns (uint256)",
-      "function UNFREEZE_DELAY() view returns (uint256)",
-      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
-      "function defaultVaultWithdrawalLock() view returns (uint256)",
-      "function depositERC20ToVault(uint256 assetId, uint256 vaultId, uint256 quantizedAmount)",
-      "function depositEthToVault(uint256 assetId, uint256 vaultId) payable",
-      "function getAssetInfo(uint256 assetType) view returns (bytes assetInfo)",
-      "function getQuantizedVaultBalance(address ethKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
-      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
-      "function getVaultBalance(address ethKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
-      "function getVaultWithdrawalLock(address ethKey, uint256 assetId, uint256 vaultId) view returns (uint256)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes)",
-      "function initializerSize() view returns (uint256)",
-      "function isStrictVaultBalancePolicy() view returns (bool)",
-      "function isVaultLocked(address ethKey, uint256 assetId, uint256 vaultId) view returns (bool)",
-      "function lockVault(uint256 assetId, uint256 vaultId, uint256 lockTime)",
-      "function mainAcceptGovernance()",
-      "function mainCancelNomination()",
-      "function mainIsGovernor(address testGovernor) view returns (bool)",
-      "function mainNominateNewGovernor(address newGovernor)",
-      "function mainRemoveGovernor(address governorForRemoval)",
-      "function orderRegistryAddress() view returns (address)",
-      "function setDefaultVaultWithdrawalLock(uint256 newDefaultTime)",
-      "function withdrawFromVault(uint256 assetId, uint256 vaultId, uint256 quantizedAmount)"
+    "eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154": [
+      "constructor(address _initializerAddress)",
+      "error AlreadyMapped()",
+      "error BalanceInvariantCheckFailed(uint256 actualBalance, uint256 expectedBalance)",
+      "error CantMapETH()",
+      "error CantMapIMX()",
+      "error CantMapWETH()",
+      "error ImxDepositLimitExceeded()",
+      "error ImxDepositLimitTooLow()",
+      "error IndexOutsideWithdrawalQueue(uint256 lengthOfQueue, uint256 requestedIndex)",
+      "error InsufficientValue()",
+      "error InvalidCapacity()",
+      "error InvalidChildChain()",
+      "error InvalidData(string reason)",
+      "error InvalidRefillRate()",
+      "error InvalidToken()",
+      "error MixedTokens(address token, address actualToken)",
+      "error NoGas()",
+      "error NonWrappedNativeTransfer()",
+      "error NotBridgeAdaptor()",
+      "error NotMapped()",
+      "error ProvideAtLeastOneIndex()",
+      "error TokenIsZero(address receiver)",
+      "error TokenNotSupported()",
+      "error UnauthorizedInitializer()",
+      "error WithdrawalAlreadyProcessed(address receiver, uint256 index)",
+      "error WithdrawalRequestTooEarly(uint256 timeNow, uint256 currentWithdrawalTime)",
+      "error WrongInitializer()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event ActivatedWithdrawalQueue(address who)",
+      "event AutoActivatedWithdrawalQueue()",
+      "event ChildChainERC20Deposit(address indexed rootToken, address indexed childToken, address depositor, address indexed receiver, uint256 amount)",
+      "event DeactivatedWithdrawalQueue(address who)",
+      "event EnQueuedWithdrawal(address indexed token, address indexed withdrawer, address indexed receiver, uint256 amount, uint256 timestamp, uint256 index)",
+      "event IMXDeposit(address indexed rootToken, address depositor, address indexed receiver, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event L1TokenMapped(address indexed rootToken, address indexed childToken)",
+      "event NativeEthDeposit(address indexed rootToken, address indexed childToken, address depositor, address indexed receiver, uint256 amount)",
+      "event NewImxDepositLimit(uint256 oldImxDepositLimit, uint256 newImxDepositLimit)",
+      "event Paused(address account)",
+      "event ProcessedWithdrawal(address indexed token, address indexed withdrawer, address indexed receiver, uint256 amount, uint256 timestamp, uint256 index)",
+      "event QueuedWithdrawal(address indexed token, address indexed withdrawer, address indexed receiver, uint256 amount, bool delayWithdrawalLargeAmount, bool delayWithdrawalUnknownToken, bool withdrawalQueueActivated)",
+      "event RateControlThresholdSet(address indexed token, uint256 capacity, uint256 refillRate, uint256 largeTransferThreshold, uint256 previousCapacity, uint256 previousRefillRate, uint256 previousLargeTransferThreshold)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RootBridgeAdaptorUpdated(address oldRootBridgeAdaptor, address newRootBridgeAdaptor)",
+      "event RootChainERC20Withdraw(address indexed rootToken, address indexed childToken, address withdrawer, address indexed receiver, uint256 amount)",
+      "event RootChainETHWithdraw(address indexed rootToken, address indexed childToken, address withdrawer, address indexed receiver, uint256 amount)",
+      "event Unpaused(address account)",
+      "event WETHDeposit(address indexed rootToken, address indexed childToken, address depositor, address indexed receiver, uint256 amount)",
+      "event WithdrawalDelayUpdated(uint256 delay, uint256 previousDelay)",
+      "event WithdrawalForNonFlowRatedToken(address indexed token, uint256 amount)",
+      "function ADAPTOR_MANAGER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSIT_SIG() view returns (bytes32)",
+      "function MAP_TOKEN_SIG() view returns (bytes32)",
+      "function NATIVE_ETH() view returns (address)",
+      "function NATIVE_IMX() view returns (address)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function UNLIMITED_DEPOSIT() view returns (uint256)",
+      "function UNPAUSER_ROLE() view returns (bytes32)",
+      "function VARIABLE_MANAGER_ROLE() view returns (bytes32)",
+      "function WITHDRAW_SIG() view returns (bytes32)",
+      "function activateWithdrawalQueue()",
+      "function childERC20Bridge() view returns (address)",
+      "function childETHToken() view returns (address)",
+      "function childTokenTemplate() view returns (address)",
+      "function deactivateWithdrawalQueue()",
+      "function deposit(address rootToken, uint256 amount) payable",
+      "function depositETH(uint256 amount) payable",
+      "function depositTo(address rootToken, address receiver, uint256 amount) payable",
+      "function depositToETH(address receiver, uint256 amount) payable",
+      "function finaliseQueuedWithdrawal(address receiver, uint256 index)",
+      "function finaliseQueuedWithdrawalsAggregated(address receiver, address token, uint256[] indices)",
+      "function findPendingWithdrawals(address receiver, address token, uint256 startIndex, uint256 stopIndex, uint256 maxFind) view returns (tuple(uint256 index, uint256 amount, uint256 timestamp)[] found)",
+      "function flowRateBuckets(address) view returns (uint256 capacity, uint256 depth, uint256 refillTime, uint256 refillRate)",
+      "function getPendingWithdrawals(address receiver, uint256[] indices) view returns (tuple(address withdrawer, address token, uint256 amount, uint256 timestamp)[] pending)",
+      "function getPendingWithdrawalsLength(address receiver) view returns (uint256 length)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantAdaptorManagerRole(address account)",
+      "function grantPauserRole(address account)",
+      "function grantRole(bytes32 role, address account)",
+      "function grantUnpauserRole(address account)",
+      "function grantVariableManagerRole(address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function imxCumulativeDepositLimit() view returns (uint256)",
+      "function initialize(tuple(address defaultAdmin, address pauser, address unpauser, address variableManager, address adaptorManager) newRoles, address newRootBridgeAdaptor, address newChildERC20Bridge, address newChildTokenTemplate, address newRootIMXToken, address newRootWETHToken, uint256 newImxCumulativeDepositLimit, address rateAdmin)",
+      "function initialize(tuple(address defaultAdmin, address pauser, address unpauser, address variableManager, address adaptorManager), address, address, address, address, address, uint256) pure",
+      "function initializerAddress() view returns (address)",
+      "function largeTransferThresholds(address) view returns (uint256)",
+      "function mapToken(address rootToken) payable returns (address)",
+      "function onMessageReceive(bytes data)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAdaptorManagerRole(address account)",
+      "function revokePauserRole(address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function revokeUnpauserRole(address account)",
+      "function revokeVariableManagerRole(address account)",
+      "function rootBridgeAdaptor() view returns (address)",
+      "function rootIMXToken() view returns (address)",
+      "function rootTokenToChildToken(address) view returns (address)",
+      "function rootWETHToken() view returns (address)",
+      "function setRateControlThreshold(address token, uint256 capacity, uint256 refillRate, uint256 largeTransferThreshold)",
+      "function setWithdrawalDelay(uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function updateImxCumulativeDepositLimit(uint256 newImxCumulativeDepositLimit)",
+      "function updateRootBridgeAdaptor(address newRootBridgeAdaptor)",
+      "function withdrawalDelay() view returns (uint256)",
+      "function withdrawalQueueActivated() view returns (bool)"
     ],
-    "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295": [
-      "constructor(address[] committeeMembers, uint256 numSignaturesRequired)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isMember(address) view returns (bool)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function signaturesRequired() view returns (uint256)",
-      "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
+    "eth:0x2d5d7d31F671F86C782533cc367F14109a082712": [
+      "error AlreadyInitialized()",
+      "error EtherNotAccepted()",
+      "error InvalidImplementation()",
+      "error NotOwner()",
+      "error SetupFailed()",
+      "function implementation() view returns (address implementation_)",
+      "function init(address implementationAddress, address newOwner, bytes params)",
+      "function setup(bytes data)"
     ],
-    "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": [
-      "event LogFrozen()",
-      "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNftWithdrawalAllowed(uint256 ownerKey, uint256 assetId)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogOperatorAdded(address operator)",
-      "event LogOperatorRemoved(address operator)",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogRootUpdate(uint256 sequenceNumber, uint256 batchId, uint256 vaultRoot, uint256 orderRoot)",
-      "event LogStateTransitionFact(bytes32 stateTransitionFact)",
-      "event LogUnFrozen()",
-      "event LogVaultBalanceChangeApplied(address ethKey, uint256 assetId, uint256 vaultId, int256 quantizedAmountChange)",
-      "event LogWithdrawalAllowed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
-      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
-      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
-      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
-      "function MAX_VERIFIER_COUNT() view returns (uint256)",
-      "function STARKEX_MAX_DEFAULT_VAULT_LOCK() view returns (uint256)",
-      "function UNFREEZE_DELAY() view returns (uint256)",
-      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
-      "function defaultVaultWithdrawalLock() view returns (uint256)",
-      "function escape(uint256 starkKey, uint256 vaultId, uint256 assetId, uint256 quantizedAmount)",
-      "function getActionCount() view returns (uint256)",
-      "function getActionHashByIndex(uint256 actionIndex) view returns (bytes32)",
-      "function getFullWithdrawalRequest(uint256 starkKey, uint256 vaultId) view returns (uint256 res)",
-      "function getLastBatchId() view returns (uint256 batchId)",
-      "function getOrderRoot() view returns (uint256 root)",
-      "function getOrderTreeHeight() view returns (uint256 height)",
-      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
-      "function getSequenceNumber() view returns (uint256 seq)",
-      "function getVaultRoot() view returns (uint256 root)",
-      "function getVaultTreeHeight() view returns (uint256 height)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes data)",
-      "function initializerSize() view returns (uint256)",
-      "function isFrozen() view returns (bool)",
-      "function isOperator(address testedOperator) view returns (bool)",
-      "function mainAcceptGovernance()",
-      "function mainCancelNomination()",
-      "function mainIsGovernor(address testGovernor) view returns (bool)",
-      "function mainNominateNewGovernor(address newGovernor)",
-      "function mainRemoveGovernor(address governorForRemoval)",
-      "function orderRegistryAddress() view returns (address)",
-      "function registerOperator(address newOperator)",
-      "function unFreeze()",
-      "function unregisterOperator(address removedOperator)",
-      "function updateState(uint256[] publicInput, uint256[] applicationData)"
+    "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5": [
+      "constructor(bytes params)",
+      "function getAddress(bytes32 key) view returns (address)",
+      "function getBool(bytes32 key) view returns (bool)",
+      "function getBytes(bytes32 key) view returns (bytes)",
+      "function getInt(bytes32 key) view returns (int256)",
+      "function getString(bytes32 key) view returns (string)",
+      "function getUint(bytes32 key) view returns (uint256)",
+      "function setup(bytes params)"
     ],
-    "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": [
-      "event LogFrozen()",
-      "event LogFullWithdrawalRequest(uint256 starkKey, uint256 vaultId)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogUnFrozen()",
-      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
-      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
-      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
-      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
-      "function MAX_VERIFIER_COUNT() view returns (uint256)",
-      "function STARKEX_MAX_DEFAULT_VAULT_LOCK() view returns (uint256)",
-      "function UNFREEZE_DELAY() view returns (uint256)",
-      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
-      "function defaultVaultWithdrawalLock() view returns (uint256)",
-      "function freezeRequest(uint256 starkKey, uint256 vaultId)",
-      "function fullWithdrawalRequest(uint256 starkKey, uint256 vaultId)",
-      "function getActionCount() view returns (uint256)",
-      "function getActionHashByIndex(uint256 actionIndex) view returns (bytes32)",
-      "function getEthKey(uint256 ownerKey) view returns (address)",
-      "function getFullWithdrawalRequest(uint256 starkKey, uint256 vaultId) view returns (uint256 res)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes)",
-      "function initializerSize() view returns (uint256)",
-      "function isFrozen() view returns (bool)",
-      "function mainAcceptGovernance()",
-      "function mainCancelNomination()",
-      "function mainIsGovernor(address testGovernor) view returns (bool)",
-      "function mainNominateNewGovernor(address newGovernor)",
-      "function mainRemoveGovernor(address governorForRemoval)",
-      "function orderRegistryAddress() view returns (address)",
-      "function unFreeze()"
+    "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": [
+    "eth:0x58b5484F489f7858DC83a5a677338074b57de806": [
+      "constructor()",
+      "error AmountExceedsBalance()",
+      "error ExcessBridgeFeeProvided()",
+      "error InsufficientBridgeFee()",
+      "error InvalidAddress()",
+      "error InvalidAmount()",
+      "error InvalidInitialization()",
+      "error NoMigrationDetails()",
+      "error NotInitializing()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeERC20FailedOperation(address token)",
+      "error UnauthorizedMigrationInitiator()",
+      "event ERC20HoldingsMigration(address indexed token, uint256 amount, address indexed recipient, address indexed initiator)",
+      "event ETHHoldingsMigration(uint256 amount, address indexed recipient, address indexed initiator)",
+      "event Initialized(uint64 version)",
+      "event LogWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, address recipient)",
+      "function NATIVE_ETH() view returns (address)",
       "function VERSION() view returns (string)",
-      "function initialize(bytes data)"
-    ],
-    "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
-      "event LogL1LimitOrderRegistered(address userAddress, address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
-      "event LogMsgRegistered(address from, address to, bytes32 msgHash)",
-      "function calcL1LimitOrderHash(uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp) pure returns (bytes32)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isMessageRegistered(address from, address to, bytes32 messageHash) view returns (bool)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function registerLimitOrder(address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
-      "function registerMessage(address to, bytes32 messageHash)"
+      "function getAssetInfo(uint256 assetType) view returns (bytes assetInfo)",
+      "function getEthKey(uint256 ownerKey) view returns (address)",
+      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
+      "function getWithdrawalBalance(uint256 ownerKey, uint256 assetId) view returns (uint256)",
+      "function initialize(bytes data)",
+      "function isFrozen() pure returns (bool)",
+      "function migrateHoldings(tuple(address token, uint256 amount, uint256 bridgeFee)[] tokens) payable",
+      "function migrateVaultRoot() payable",
+      "function migrationManager() view returns (address)",
+      "function rootSenderAdapter() view returns (address)",
+      "function vaultRoot() view returns (uint256)",
+      "function withdraw(uint256 ownerKey, uint256 assetType)",
+      "function zkEVMBridge() view returns (address)",
+      "function zkEVMWithdrawalProcessor() view returns (address)"
     ],
     "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": [
       "constructor(uint256 upgradeActivationDelay)",
@@ -652,143 +741,161 @@
       "function removeImplementation(address newImplementation)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379": [
-      "event LogFrozen()",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRegistered(address entry, string entryId)",
-      "event LogRemovalIntent(address entry, string entryId)",
-      "event LogRemoved(address entry, string entryId)",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogUnFrozen()",
-      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
-      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
-      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
-      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
-      "function MAX_VERIFIER_COUNT() view returns (uint256)",
-      "function UNFREEZE_DELAY() view returns (uint256)",
-      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
-      "function announceAvailabilityVerifierRemovalIntent(address verifier)",
-      "function announceVerifierRemovalIntent(address verifier)",
-      "function getRegisteredAvailabilityVerifiers() view returns (address[] _verifers)",
-      "function getRegisteredVerifiers() view returns (address[] _verifers)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes)",
-      "function initializerSize() view returns (uint256)",
-      "function isAvailabilityVerifier(address verifierAddress) view returns (bool)",
-      "function isFrozen() view returns (bool)",
-      "function isVerifier(address verifierAddress) view returns (bool)",
-      "function mainAcceptGovernance()",
-      "function mainCancelNomination()",
-      "function mainIsGovernor(address testGovernor) view returns (bool)",
-      "function mainNominateNewGovernor(address newGovernor)",
-      "function mainRemoveGovernor(address governorForRemoval)",
-      "function registerAvailabilityVerifier(address verifier, string identifier)",
-      "function registerVerifier(address verifier, string identifier)",
-      "function removeAvailabilityVerifier(address verifier)",
-      "function removeVerifier(address verifier)",
-      "function unFreeze()"
+    "eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC": [
+      "constructor(address initialOwner)",
+      "error ExecutionFailed()",
+      "error InvalidOperator()",
+      "error InvalidOwner()",
+      "error InvalidOwnerAddress()",
+      "error NotAnOperator()",
+      "error NotOperator()",
+      "error NotOwner()",
+      "error OperatorAlreadyAdded()",
+      "event OperatorAdded(address indexed operator)",
+      "event OperatorRemoved(address indexed operator)",
+      "event OwnershipTransferStarted(address indexed newOwner)",
+      "event OwnershipTransferred(address indexed newOwner)",
+      "function acceptOwnership()",
+      "function addOperator(address operator)",
+      "function executeContract(address target, bytes callData, uint256 nativeValue) payable returns (bytes)",
+      "function isOperator(address account) view returns (bool)",
+      "function operators(address) view returns (bool)",
+      "function owner() view returns (address owner_)",
+      "function pendingOwner() view returns (address owner_)",
+      "function proposeOwnership(address newOwner)",
+      "function removeOperator(address operator)",
+      "function transferOwnership(address newOwner)"
     ],
-    "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": [
-      "constructor(address gpsStatementContract, uint256 programHash_)",
-      "function gpsContract() view returns (address)",
-      "function hasRegisteredFact() view returns (bool)",
-      "function identify() pure returns (string)",
-      "function isValid(bytes32 fact) view returns (bool)",
-      "function programHash() view returns (uint256)"
+    "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Initialized(uint8 version)",
+      "event MetaTransactionExecuted(address userAddress, address relayerAddress, bytes functionSignature)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridge() view returns (address)",
+      "function burn(address account, uint256 amount) returns (bool)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function executeMetaTransaction(address userAddress, bytes functionSignature, bytes32 sigR, bytes32 sigS, uint8 sigV) returns (bytes)",
+      "function getNonce(address user) view returns (uint256 nonce)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(address rootToken_, string name_, string symbol_, uint8 decimals_)",
+      "function invalidateNext(uint256 offset)",
+      "function mint(address account, uint256 amount) returns (bool)",
+      "function name() view returns (string)",
+      "function rootToken() view returns (address)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
-    "eth:0x8536850750956c2FEebeCAB786d82271a5467687": [
-      "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "event LogDepositCancel(uint256 starkKey, uint256 vaultId, uint256 assetId)",
-      "event LogDepositCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "event LogDepositNftCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId)",
-      "event LogFrozen()",
-      "event LogMintWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, uint256 assetId)",
-      "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNftDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 tokenId, uint256 assetId)",
-      "event LogNftWithdrawalAllowed(uint256 ownerKey, uint256 assetId)",
-      "event LogNftWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 tokenId, uint256 assetId, address recipient)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogTokenAdminAdded(address tokenAdmin)",
-      "event LogTokenAdminRemoved(address tokenAdmin)",
-      "event LogTokenRegistered(uint256 assetType, bytes assetInfo, uint256 quantum)",
-      "event LogUnFrozen()",
-      "event LogUserRegistered(address ethKey, uint256 starkKey, address sender)",
-      "event LogWithdrawalAllowed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
-      "event LogWithdrawalPerformed(uint256 ownerKey, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount, address recipient)",
-      "function DEPOSIT_CANCEL_DELAY() view returns (uint256)",
-      "function FREEZE_GRACE_PERIOD() view returns (uint256)",
-      "function MAIN_GOVERNANCE_INFO_TAG() view returns (string)",
-      "function MAX_FORCED_ACTIONS_REQS_PER_BLOCK() view returns (uint256)",
-      "function MAX_VERIFIER_COUNT() view returns (uint256)",
-      "function UNFREEZE_DELAY() view returns (uint256)",
-      "function VERIFIER_REMOVAL_DELAY() view returns (uint256)",
-      "function defaultVaultWithdrawalLock() view returns (uint256)",
-      "function deposit(uint256 starkKey, uint256 assetType, uint256 vaultId) payable",
-      "function deposit(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
-      "function depositCancel(uint256 starkKey, uint256 assetId, uint256 vaultId)",
-      "function depositERC20(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
-      "function depositEth(uint256 starkKey, uint256 assetType, uint256 vaultId) payable",
-      "function depositNft(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 tokenId)",
-      "function depositNftReclaim(uint256 starkKey, uint256 assetType, uint256 vaultId, uint256 tokenId)",
-      "function depositReclaim(uint256 starkKey, uint256 assetId, uint256 vaultId)",
-      "function getActionCount() view returns (uint256)",
-      "function getActionHashByIndex(uint256 actionIndex) view returns (bytes32)",
-      "function getAssetInfo(uint256 assetType) view returns (bytes assetInfo)",
-      "function getCancellationRequest(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256 request)",
-      "function getDepositBalance(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256 balance)",
-      "function getEthKey(uint256 ownerKey) view returns (address)",
-      "function getFullWithdrawalRequest(uint256 starkKey, uint256 vaultId) view returns (uint256 res)",
-      "function getQuantizedDepositBalance(uint256 starkKey, uint256 assetId, uint256 vaultId) view returns (uint256 balance)",
-      "function getQuantum(uint256 presumedAssetType) view returns (uint256 quantum)",
-      "function getWithdrawalBalance(uint256 ownerKey, uint256 assetId) view returns (uint256 balance)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes)",
-      "function initializerSize() view returns (uint256)",
-      "function isAssetRegistered(uint256 assetType) view returns (bool)",
-      "function isFrozen() view returns (bool)",
-      "function isTokenAdmin(address testedAdmin) view returns (bool)",
-      "function mainAcceptGovernance()",
-      "function mainCancelNomination()",
-      "function mainIsGovernor(address testGovernor) view returns (bool)",
-      "function mainNominateNewGovernor(address newGovernor)",
-      "function mainRemoveGovernor(address governorForRemoval)",
-      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
-      "function orderRegistryAddress() view returns (address)",
-      "function registerAndDepositERC20(address ethKey, uint256 starkKey, bytes signature, uint256 assetType, uint256 vaultId, uint256 quantizedAmount)",
-      "function registerAndDepositEth(address ethKey, uint256 starkKey, bytes signature, uint256 assetType, uint256 vaultId) payable",
-      "function registerEthAddress(address ethKey, uint256 starkKey, bytes starkSignature)",
-      "function registerSender(uint256 starkKey, bytes starkSignature)",
-      "function registerToken(uint256 assetType, bytes assetInfo)",
-      "function registerToken(uint256 assetType, bytes assetInfo, uint256 quantum)",
-      "function registerTokenAdmin(address newAdmin)",
-      "function unFreeze()",
-      "function unregisterTokenAdmin(address oldAdmin)",
-      "function withdraw(uint256 ownerKey, uint256 assetType)",
-      "function withdrawAndMint(uint256 ownerKey, uint256 assetType, bytes mintingBlob)",
-      "function withdrawNft(uint256 ownerKey, uint256 assetType, uint256 tokenId)"
+    "eth:0x9Fabd9Cc71f15b9Cfd717E117FBb9cfD9fC7cd32": [
+      "constructor(address _vaultRootSender, string _rootReceiver, string _rootReceiverChain, address _axelarGasService, address _axelarGateway)",
+      "error InvalidAddress()",
+      "error InvalidChainId()",
+      "error InvalidVaultRoot()",
+      "error NoBridgeFee()",
+      "error NotApprovedByGateway()",
+      "error UnauthorizedRootSender()",
+      "event VaultRootSent(string indexed _destinationChain, string indexed _destinationReceiver, bytes indexed _payload)",
+      "function AXELAR_GAS_SERVICE() view returns (address)",
+      "function SET_VAULT_ROOT() view returns (bytes32)",
+      "function VAULT_ROOT_SENDER() view returns (address)",
+      "function execute(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload)",
+      "function gateway() view returns (address)",
+      "function rootReceiver() view returns (string)",
+      "function rootReceiverChain() view returns (string)",
+      "function sendVaultRoot(uint256 vaultRoot, address gasRefundReceiver) payable"
     ],
-    "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6": [
-      "event ImplementationActivationRescheduled(address indexed implementation, uint256 updatedActivationTime)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "function PROXY_GOVERNANCE_TAG() view returns (string)",
-      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes)",
-      "function initializerSize() view returns (uint256)",
-      "function proxyAcceptGovernance()",
-      "function proxyCancelNomination()",
-      "function proxyIsGovernor(address testGovernor) view returns (bool)",
-      "function proxyNominateNewGovernor(address newGovernor)",
-      "function proxyRemoveGovernor(address governorForRemoval)",
-      "function updateImplementationActivationTime(address implementation, bytes data, bool finalize)"
+    "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
+      "function name() view returns (string)",
+      "function approve(address guy, uint256 wad) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
+      "function withdraw(uint256 wad)",
+      "function decimals() view returns (uint8)",
+      "function balanceOf(address) view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function transfer(address dst, uint256 wad) returns (bool)",
+      "function deposit() payable",
+      "function allowance(address, address) view returns (uint256)",
+      "event Approval(address indexed src, address indexed guy, uint256 wad)",
+      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
+      "event Deposit(address indexed dst, uint256 wad)",
+      "event Withdrawal(address indexed src, uint256 wad)"
+    ],
+    "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": [
+      "constructor(address gasCollector_)",
+      "error InsufficientGasPayment(uint256 required, uint256 provided)",
+      "error InvalidAddress()",
+      "error InvalidAmounts()",
+      "error InvalidCodeHash()",
+      "error InvalidGasUpdates()",
+      "error InvalidImplementation()",
+      "error InvalidOwner()",
+      "error InvalidOwnerAddress()",
+      "error InvalidParams()",
+      "error NativeTransferFailed()",
+      "error NotCollector()",
+      "error NotOwner()",
+      "error NotProxy()",
+      "error SetupFailed()",
+      "error TokenTransferFailed()",
+      "error UnsupportedEstimationType(uint8 gasEstimationType)",
+      "event ExpressGasAdded(bytes32 indexed txHash, uint256 indexed logIndex, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasAdded(bytes32 indexed txHash, uint256 indexed logIndex, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasInfoUpdated(string chain, tuple(uint64 gasEstimationType, uint64 l1FeeScalar, uint128 axelarBaseFee, uint128 relativeGasPrice, uint128 relativeBlobBaseFee, uint128 expressFee) info)",
+      "event GasPaidForContractCall(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasPaidForContractCallWithToken(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasPaidForExpressCall(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasPaidForExpressCallWithToken(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeExpressGasAdded(bytes32 indexed txHash, uint256 indexed logIndex, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasAdded(bytes32 indexed txHash, uint256 indexed logIndex, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasPaidForContractCall(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasPaidForContractCallWithToken(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasPaidForExpressCall(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasPaidForExpressCallWithToken(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, uint256 gasFeeAmount, address refundAddress)",
+      "event OwnershipTransferStarted(address indexed newOwner)",
+      "event OwnershipTransferred(address indexed newOwner)",
+      "event Refunded(bytes32 indexed txHash, uint256 indexed logIndex, address receiver, address token, uint256 amount)",
+      "event Upgraded(address indexed newImplementation)",
+      "function acceptOwnership()",
+      "function addExpressGas(bytes32 txHash, uint256 logIndex, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function addGas(bytes32 txHash, uint256 logIndex, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function addNativeExpressGas(bytes32 txHash, uint256 logIndex, address refundAddress) payable",
+      "function addNativeGas(bytes32 txHash, uint256 logIndex, address refundAddress) payable",
+      "function collectFees(address receiver, address[] tokens, uint256[] amounts)",
+      "function contractId() pure returns (bytes32)",
+      "function estimateGasFee(string destinationChain, string, bytes payload, uint256 executionGasLimit, bytes) view returns (uint256 gasEstimate)",
+      "function gasCollector() view returns (address)",
+      "function getGasInfo(string chain) view returns (tuple(uint64 gasEstimationType, uint64 l1FeeScalar, uint128 axelarBaseFee, uint128 relativeGasPrice, uint128 relativeBlobBaseFee, uint128 expressFee))",
+      "function implementation() view returns (address implementation_)",
+      "function owner() view returns (address owner_)",
+      "function payGas(address sender, string destinationChain, string destinationAddress, bytes payload, uint256 executionGasLimit, bool estimateOnChain, address refundAddress, bytes params) payable",
+      "function payGasForContractCall(address sender, string destinationChain, string destinationAddress, bytes payload, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function payGasForContractCallWithToken(address sender, string destinationChain, string destinationAddress, bytes payload, string symbol, uint256 amount, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function payGasForExpressCall(address sender, string destinationChain, string destinationAddress, bytes payload, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function payGasForExpressCallWithToken(address sender, string destinationChain, string destinationAddress, bytes payload, string symbol, uint256 amount, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function payNativeGasForContractCall(address sender, string destinationChain, string destinationAddress, bytes payload, address refundAddress) payable",
+      "function payNativeGasForContractCallWithToken(address sender, string destinationChain, string destinationAddress, bytes payload, string symbol, uint256 amount, address refundAddress) payable",
+      "function payNativeGasForExpressCall(address sender, string destinationChain, string destinationAddress, bytes payload, address refundAddress) payable",
+      "function payNativeGasForExpressCallWithToken(address sender, string destinationChain, string destinationAddress, bytes payload, string symbol, uint256 amount, address refundAddress) payable",
+      "function pendingOwner() view returns (address owner_)",
+      "function proposeOwnership(address newOwner)",
+      "function refund(bytes32 txHash, uint256 logIndex, address receiver, address token, uint256 amount)",
+      "function refund(address receiver, address token, uint256 amount)",
+      "function setup(bytes data)",
+      "function transferOwnership(address newOwner)",
+      "function updateGasInfo(string[] chains, tuple(uint64 gasEstimationType, uint64 l1FeeScalar, uint128 axelarBaseFee, uint128 relativeGasPrice, uint128 relativeBlobBaseFee, uint128 expressFee)[] gasUpdates)",
+      "function upgrade(address newImplementation, bytes32 newImplementationCodeHash, bytes params)"
     ],
     "eth:0xD2C37fC6fD89563187f3679304975655e448D192": [
       "constructor(address _singleton)"
@@ -841,15 +948,106 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345": [
+      "constructor(address _gateway, address _initializerAddress)",
+      "error CallerNotBridge()",
+      "error InvalidAddress()",
+      "error InvalidChildBridgeAdaptor()",
+      "error InvalidChildChain()",
+      "error InvalidSourceAddress()",
+      "error InvalidSourceChain()",
+      "error NoGas()",
+      "error NotApprovedByGateway()",
+      "error UnauthorizedInitializer()",
+      "error UnsupportedOperation()",
+      "error ZeroAddresses()",
+      "event AdaptorExecute(string sourceChain, string sourceAddress_, bytes payload_)",
+      "event AxelarMessageSent(string indexed childChain, string indexed childBridgeAdaptor, bytes indexed payload)",
+      "event ChildBridgeAdaptorUpdated(string oldChildBridgeAdaptor, string newChildBridgeAdaptor)",
+      "event ChildChainUpdated(string indexed oldChildChain, string indexed newChildChain)",
+      "event GasServiceUpdated(address indexed oldGasService, address indexed newGasService)",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RootBridgeUpdated(address indexed oldRootBridge, address indexed newRootBridge)",
+      "function BRIDGE_MANAGER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GAS_SERVICE_MANAGER_ROLE() view returns (bytes32)",
+      "function TARGET_MANAGER_ROLE() view returns (bytes32)",
+      "function childBridgeAdaptor() view returns (string)",
+      "function childChainId() view returns (string)",
+      "function execute(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload)",
+      "function executeWithToken(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload, string tokenSymbol, uint256 amount)",
+      "function gasService() view returns (address)",
+      "function gateway() view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantBridgeManagerRole(address account)",
+      "function grantGasServiceManagerRole(address account)",
+      "function grantRole(bytes32 role, address account)",
+      "function grantTargetManagerRole(address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address defaultAdmin, address bridgeManager, address gasServiceManager, address targetManager) _adaptorRoles, address _rootBridge, string _childChainId, string _childBridgeAdaptor, address _gasService)",
+      "function initializerAddress() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeBridgeManagerRole(address account)",
+      "function revokeGasServiceManagerRole(address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function revokeTargetManagerRole(address account)",
+      "function rootBridge() view returns (address)",
+      "function sendMessage(bytes payload, address refundRecipient) payable",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateChildBridgeAdaptor(string newChildBridgeAdaptor)",
+      "function updateChildChain(string newChildChain)",
+      "function updateGasService(address newGasService)",
+      "function updateRootBridge(address newRootBridge)"
+    ],
+    "eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF": [
+      "constructor(address minter)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MINTER_ROLE() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
-    "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
-    "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24569463 },
-  "permissionsConfigHash": "0x72a8e01b662671e8d7bb67bdc82c0db09e029d14dab88c8feb9931d39bb69413"
+  "usedBlockNumbers": { "ethereum": 24590379 },
+  "permissionsConfigHash": "0x12c5b354f02954c8f154c81e7c577cb464e527c6f1bbdfe28fb8882713f8d543"
 }
