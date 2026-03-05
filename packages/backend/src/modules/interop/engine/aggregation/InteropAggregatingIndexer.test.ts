@@ -109,6 +109,16 @@ describe(InteropAggregatingIndexer.name, () => {
         Database['interopAggregationQuality']
       >({
         upsert: mockFn().resolvesTo(undefined),
+        findLatestPromoted: mockFn().resolvesTo({
+          timestamp: to,
+          autoPromoted: true,
+          isPromoted: true,
+          promotionRequired: false,
+          reasons: [],
+          checkedGroups: 1,
+          failingGroups: 0,
+          createdAt: to,
+        }),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
@@ -168,7 +178,7 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(transaction).toHaveBeenCalledTimes(1)
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
-      ).toHaveBeenCalledWith(from)
+      ).toHaveBeenCalledWith(from, { keepTimestamps: [to] })
       expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
         to,
       )
@@ -190,8 +200,11 @@ describe(InteropAggregatingIndexer.name, () => {
       })
       expect(
         aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
-      ).toHaveBeenCalledWith(from)
+      ).toHaveBeenCalledWith(from, { keepTimestamps: [to] })
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
+      expect(interopAggregationQuality.findLatestPromoted).toHaveBeenCalledTimes(
+        1,
+      )
     })
 
     it('handles empty transfers correctly', async () => {
@@ -227,6 +240,16 @@ describe(InteropAggregatingIndexer.name, () => {
         Database['interopAggregationQuality']
       >({
         upsert: mockFn().resolvesTo(undefined),
+        findLatestPromoted: mockFn().resolvesTo({
+          timestamp: to,
+          autoPromoted: true,
+          isPromoted: true,
+          promotionRequired: false,
+          reasons: [],
+          checkedGroups: 0,
+          failingGroups: 0,
+          createdAt: to,
+        }),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
@@ -293,6 +316,12 @@ describe(InteropAggregatingIndexer.name, () => {
         checkedGroups: 0,
         failingGroups: 0,
       })
+      expect(
+        aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from, { keepTimestamps: [to] })
+      expect(
+        aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from, { keepTimestamps: [to] })
     })
 
     it('auto-promotes failing snapshot when auto promotion is enabled', async () => {
@@ -319,6 +348,16 @@ describe(InteropAggregatingIndexer.name, () => {
         Database['interopAggregationQuality']
       >({
         upsert: mockFn().resolvesTo(undefined),
+        findLatestPromoted: mockFn().resolvesTo({
+          timestamp: to,
+          autoPromoted: true,
+          isPromoted: true,
+          promotionRequired: true,
+          reasons: ['config1:lockAndMint:ethereum->arbitrum: Count spike'],
+          checkedGroups: 1,
+          failingGroups: 1,
+          createdAt: to,
+        }),
       })
       const transaction = mockFn(async (fn: any) => await fn())
 
@@ -387,8 +426,122 @@ describe(InteropAggregatingIndexer.name, () => {
         checkedGroups: 1,
         failingGroups: 1,
       })
+      expect(
+        aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from, { keepTimestamps: [to] })
+      expect(
+        aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from, { keepTimestamps: [to] })
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledTimes(1)
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledTimes(1)
+    })
+
+    it('pins previously promoted timestamp when current snapshot is blocked', async () => {
+      const previousPromoted = to - UnixTime.HOUR
+
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getByRange: mockFn().resolvesTo([]),
+      })
+      const aggregatedInteropTransfer = mockObject<
+        Database['aggregatedInteropTransfer']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const interopAggregationQuality = mockObject<
+        Database['interopAggregationQuality']
+      >({
+        upsert: mockFn().resolvesTo(undefined),
+        findLatestPromoted: mockFn().resolvesTo({
+          timestamp: previousPromoted,
+          autoPromoted: true,
+          isPromoted: true,
+          promotionRequired: false,
+          reasons: [],
+          checkedGroups: 1,
+          failingGroups: 0,
+          createdAt: previousPromoted,
+        }),
+      })
+      const transaction = mockFn(async (fn: any) => await fn())
+
+      const db = mockDatabase({
+        transaction,
+        interopTransfer,
+        aggregatedInteropTransfer,
+        aggregatedInteropToken,
+        interopAggregationQuality,
+      })
+
+      const aggregationService = mockObject<InteropAggregationService>({
+        aggregate: mockFn().returns({
+          aggregatedTransfers: [],
+          aggregatedTokens: [],
+          warnings: [],
+        }),
+      })
+
+      const qualityGate = mockObject<InteropAggregationQualityGate>({
+        evaluate: mockFn().resolvesTo({
+          candidateTimestamp: to,
+          autoPromoted: false,
+          promotionRequired: true,
+          checkedGroups: 1,
+          failingGroups: 1,
+          reasons: ['config1:lockAndMint:ethereum->arbitrum: Count spike'],
+          failedGroups: [
+            {
+              id: 'config1',
+              bridgeType: 'lockAndMint',
+              srcChain: 'ethereum',
+              dstChain: 'arbitrum',
+              reasons: ['Count spike'],
+            },
+          ],
+        }),
+      })
+
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs: [],
+          aggregationService,
+          qualityGate,
+          qualityGateEnabled: true,
+          autoPromotionEnabled: false,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
+
+      const result = await indexer.update(from, to)
+
+      expect(result).toEqual(to)
+      expect(interopAggregationQuality.upsert).toHaveBeenCalledWith({
+        timestamp: to,
+        autoPromoted: false,
+        isPromoted: false,
+        promotionRequired: true,
+        reasons: ['config1:lockAndMint:ethereum->arbitrum: Count spike'],
+        checkedGroups: 1,
+        failingGroups: 1,
+      })
+      expect(
+        aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from, { keepTimestamps: [previousPromoted] })
+      expect(
+        aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from, { keepTimestamps: [previousPromoted] })
     })
   })
 })

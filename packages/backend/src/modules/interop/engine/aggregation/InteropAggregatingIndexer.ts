@@ -42,12 +42,6 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       gateState.autoPromoted
 
     await this.$.db.transaction(async () => {
-      await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
-        from,
-      )
-      await this.$.db.aggregatedInteropToken.deleteAllButEarliestPerDayBefore(
-        from,
-      )
       await this.$.db.aggregatedInteropToken.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedTransfers)
@@ -61,6 +55,18 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
         checkedGroups: gateState.checkedGroups,
         failingGroups: gateState.failingGroups,
       })
+      const latestPromoted =
+        await this.$.db.interopAggregationQuality.findLatestPromoted()
+      const keepTimestamps = latestPromoted ? [latestPromoted.timestamp] : []
+
+      await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
+        from,
+        { keepTimestamps },
+      )
+      await this.$.db.aggregatedInteropToken.deleteAllButEarliestPerDayBefore(
+        from,
+        { keepTimestamps },
+      )
     })
 
     if (!isPromoted && gateState.promotionRequired) {

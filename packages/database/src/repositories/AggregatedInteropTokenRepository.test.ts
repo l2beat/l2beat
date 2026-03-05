@@ -136,6 +136,65 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         expect(remaining).toEqualUnsorted([record1, record4])
       })
 
+      it('keeps pinned timestamp even if it is not the earliest for the day', async () => {
+        const day1Early = UnixTime(100)
+        const day1Mid = UnixTime(200)
+        const day2Early = UnixTime(100 + UnixTime.DAY)
+        const day2Mid = UnixTime(200 + UnixTime.DAY)
+
+        const record1 = record({
+          id: 'id1',
+          timestamp: day1Early,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'token1',
+          transferCount: 5,
+          totalDurationSum: 1000,
+          volume: 5000,
+        })
+        const record2 = record({
+          id: 'id2',
+          timestamp: day1Mid,
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
+          abstractTokenId: 'token2',
+          transferCount: 3,
+          totalDurationSum: 2000,
+          volume: 6000,
+        })
+        const record3 = record({
+          id: 'id3',
+          timestamp: day2Early,
+          srcChain: 'polygon',
+          dstChain: 'ethereum',
+          abstractTokenId: 'token3',
+          transferCount: 7,
+          totalDurationSum: 3000,
+          volume: 7000,
+        })
+        const record4 = record({
+          id: 'id4',
+          timestamp: day2Mid,
+          srcChain: 'ethereum',
+          dstChain: 'polygon',
+          abstractTokenId: 'token4',
+          transferCount: 2,
+          totalDurationSum: 4000,
+          volume: 8000,
+        })
+
+        await repository.insertMany([record1, record2, record3, record4])
+
+        const deleted = await repository.deleteAllButEarliestPerDayBefore(
+          UnixTime(500 + UnixTime.DAY),
+          { keepTimestamps: [day1Mid] },
+        )
+        expect(deleted).toEqual(1) // delete only day2Mid
+
+        const remaining = await repository.getAll()
+        expect(remaining).toEqualUnsorted([record1, record2, record3])
+      })
+
       it('does not delete records at or after the timestamp', async () => {
         const day1Early = UnixTime(100)
         const day1Mid = UnixTime(200)

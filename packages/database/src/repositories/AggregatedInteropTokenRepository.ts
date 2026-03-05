@@ -145,8 +145,13 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async deleteAllButEarliestPerDayBefore(timestamp: UnixTime): Promise<number> {
-    const query = this.db
+  async deleteAllButEarliestPerDayBefore(
+    timestamp: UnixTime,
+    options?: {
+      keepTimestamps?: UnixTime[]
+    },
+  ): Promise<number> {
+    let query = this.db
       .with('earliest_timestamp_by_day', (eb) =>
         eb
           .selectFrom('AggregatedInteropToken')
@@ -158,6 +163,14 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       .where('timestamp', 'not in', (eb) =>
         eb.selectFrom('earliest_timestamp_by_day').select('min_timestamp'),
       )
+
+    if (options?.keepTimestamps && options.keepTimestamps.length > 0) {
+      query = query.where(
+        'timestamp',
+        'not in',
+        options.keepTimestamps.map((t) => UnixTime.toDate(t)),
+      )
+    }
 
     const result = await query.executeTakeFirst()
 

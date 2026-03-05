@@ -408,6 +408,57 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         expect(remaining).toEqualUnsorted([record1, record4])
       })
 
+      it('keeps pinned timestamp even if it is not the earliest for the day', async () => {
+        const day1Early = UnixTime(100)
+        const day1Mid = UnixTime(200)
+        const day2Early = UnixTime(100 + UnixTime.DAY)
+        const day2Mid = UnixTime(200 + UnixTime.DAY)
+
+        const record1 = record({
+          id: 'id1',
+          timestamp: day1Early,
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 1000,
+        })
+        const record2 = record({
+          id: 'id2',
+          timestamp: day1Mid,
+          srcChain: 'arbitrum',
+          dstChain: 'ethereum',
+          transferCount: 3,
+          identifiedCount: 2000,
+        })
+        const record3 = record({
+          id: 'id3',
+          timestamp: day2Early,
+          srcChain: 'polygon',
+          dstChain: 'ethereum',
+          transferCount: 7,
+          identifiedCount: 3000,
+        })
+        const record4 = record({
+          id: 'id4',
+          timestamp: day2Mid,
+          srcChain: 'ethereum',
+          dstChain: 'polygon',
+          transferCount: 2,
+          identifiedCount: 4000,
+        })
+
+        await repository.insertMany([record1, record2, record3, record4])
+
+        const deleted = await repository.deleteAllButEarliestPerDayBefore(
+          UnixTime(500 + UnixTime.DAY),
+          { keepTimestamps: [day1Mid] },
+        )
+        expect(deleted).toEqual(1) // delete only day2Mid
+
+        const remaining = await repository.getAll()
+        expect(remaining).toEqualUnsorted([record1, record2, record3])
+      })
+
       it('does not delete records at or after the timestamp', async () => {
         const day1Early = UnixTime(100)
         const day1Mid = UnixTime(200)
