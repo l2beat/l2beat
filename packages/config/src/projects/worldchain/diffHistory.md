@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xbb91281b53639e1d32ccd5ddc4ad57e321081e1a
+
+# Diff at Wed, 04 Mar 2026 20:37:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1772198395
+- current timestamp: 1772656605
+
+## Description
+
+One member of the Alchemy Multisig 1 (5/8 threshold) was rotated: 0xA351...700a replaced by 0x04a2...7Bd.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a"
++        "eth:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd"
+    }
+```
+
 Generated with discovered.json: 0x6fe3ae36eb7b367e5718fb9b9247becc951a3e55
 
 # Diff at Fri, 27 Feb 2026 13:25:17 GMT:

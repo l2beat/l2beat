@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x5723c22a7c8eed9664016c265b9d069183ea1f2b
+
+# Diff at Wed, 04 Mar 2026 12:17:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b14d03cc1bc40ae1ff9db1aa222fe4117c711685 block: 1769532941
+- current timestamp: 1772626589
+
+## Description
+
+PermissionedDisputeGame redeployed with a new proposer address (same implementation, same version 1.3.1-beta.2, same absolutePrestate). Proposer rotated from 0xD1B3Ea8b98C86b1fc00B28096CB504d930D17A54 to 0xF660E0982b3720bc01692f9D10c647f688FD07ba. [Diff (identical code)](https://disco.l2beat.com/diff/eth:0x80243779986D4F08b7bc2888a8Ce086E0d45dF41/eth:0xE38135e20BA018a5542C83De258d80d6883Da8A3)
+
+Batcher and unsafeBlockSigner addresses rotated in SystemConfig.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0x80243779986D4F08b7bc2888a8Ce086E0d45dF41"
++        "eth:0xE38135e20BA018a5542C83De258d80d6883Da8A3"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0xFa35501cab42175918093F40C317642919F45165"
++        "eth:0x5e70713222FaF60c9e9fB69240D06ae6D688563A"
+      values.unsafeBlockSigner:
+-        "eth:0x38Eb7BDa08297a65d399FbE46F061116f6Dd0ECB"
++        "eth:0x0dD773e949a7E53f622A3A5cC89a6C6663652638"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x80243779986D4F08b7bc2888a8Ce086E0d45dF41)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0xE38135e20BA018a5542C83De258d80d6883Da8A3)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
 Generated with discovered.json: 0x94167b26fd8f299a01895b6f3f8c7adfe4158270
 
 # Diff at Fri, 13 Feb 2026 11:33:10 GMT:
