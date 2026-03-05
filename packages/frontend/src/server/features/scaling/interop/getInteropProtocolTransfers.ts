@@ -7,7 +7,6 @@ import {
   InMemoryCache,
   type UnixTime,
 } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import type {
@@ -29,11 +28,7 @@ const PAGE_SIZE = 100
 const INTEROP_CHAIN_EXPLORER_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),
 )
-const interopTransfersCache = new InMemoryCache({
-  enabled:
-    !env.DISABLE_CACHE &&
-    (env.DEPLOYMENT_ENV === 'production' || env.DEPLOYMENT_ENV === 'staging'),
-})
+const interopTransfersCache = new InMemoryCache({})
 
 export async function getInteropProtocolTransfers({
   id,
