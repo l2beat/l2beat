@@ -1,3 +1,101 @@
+Generated with discovered.json: 0x794f32f2728152920b79cbf95134a65c349f42ce
+
+# Diff at Wed, 04 Mar 2026 10:30:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2a5ae798224824cb1d7a9042127342a177c86d1a block: 1772462455
+- current timestamp: 1772616101
+
+## Description
+
+Upgrade adding external func `commitBatchWithProof()` and rollupDelayPeriod with the apparent intention of permissionless proposing after a delay.
+
+commitBatchWithProof() can be called if any:
+1. last committed batch + rollupDelayPeriod < now
+2. oldest enqueued msg + rollupDelayPeriod < now
+
+`commitBatchWithProof()` currently reverts for non-whitelisted actors since it calls `getStakerBitmap(_msgSender())`, so in practice we still have whitelisted proposals
+
+diff:
+- [Rollup](https://disco.l2beat.com/diff/eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5/eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3)
+- [L1MessageQueueWithGasPriceOracle](https://disco.l2beat.com/diff/eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA/eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa)
+
+## Watched changes
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      sourceHashes.1:
+-        "0x1719cdcf5cd2921747ddc6f0dea1d383d56e48c613a99782597914a32d40e4cd"
++        "0x06be3e07c53c199805b384f80352b668ca35f7bdb1b6d5addc8fcb490ff63eac"
+      values.$implementation:
+-        "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA"
++        "eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa"
+      values.$pastUpgrades.3:
++        ["2026-03-03T06:03:11.000Z","0x29632a0458dbc5cbad5e831228a54c118e8e0746bff06fcf151cad568079a318",["eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.getFirstUnfinalizedMessageEnqueueTime:
++        1772616095
+      implementationNames.eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA:
+-        "L1MessageQueueWithGasPriceOracle"
+      implementationNames.eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa:
++        "L1MessageQueueWithGasPriceOracle"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors.
+      sourceHashes.1:
+-        "0xf8331668c19c4399a7caf054895f9dd43a0593e13f4fdb6b7ac6cc2b130da357"
++        "0x8918639fcac94fac40711260ca7cb4027dbac6a2a48b10cd380818ede6636206"
+      values.$implementation:
+-        "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5"
++        "eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3"
+      values.$pastUpgrades.7:
++        ["2026-03-03T06:06:11.000Z","0xc86bc6dc60ad304afbc7f423668a272434c17dbf4a0bb27906d74f0940a6eab1",["eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3"]]
+      values.$upgradeCount:
+-        7
++        8
++++ description: commitBatchWithProof() can be called if any:
+1. last committed batch + rollupDelayPeriod < now
+2. oldest enqueued msg + rollupDelayPeriod < now
+      values.rollupDelayPeriod:
++        604800
+      implementationNames.eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5:
+-        "Rollup"
+      implementationNames.eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3:
++        "Rollup"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1MessageQueueWithGasPriceOracle.sol           |  27 +++++-
+ .../{.flat@1772462455 => .flat}/Rollup/Rollup.sol  | 102 ++++++++++++++++++++-
+ 2 files changed, 121 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772462455 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors.
+      description:
+-        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist."
++        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors."
+      fieldMeta:
++        {"rollupDelayPeriod":{"description":"commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"}}
+    }
+```
+
 Generated with discovered.json: 0x777ba1f64491c98c6bc77cb148fbaf7bf26d902a
 
 # Diff at Mon, 02 Mar 2026 14:47:24 GMT:
