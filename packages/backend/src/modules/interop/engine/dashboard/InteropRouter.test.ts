@@ -17,6 +17,7 @@ const config: InteropFeatureConfig = {
   financials: { enabled: false, tokenDbApiUrl: '' },
   config: { enabled: false, chains: [], configIntervalMs: -1 },
   inMemoryEventCap: 0,
+  notifications: false,
 }
 
 describe(createInteropRouter.name, () => {
