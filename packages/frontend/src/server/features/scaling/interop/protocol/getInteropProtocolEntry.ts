@@ -62,7 +62,7 @@ export function getInteropProtocolEntry(
     props: {
       id: 'interop-volume',
       projectId: project.id,
-      title: 'Volume',
+      title: 'Volume and flows',
     },
   })
 

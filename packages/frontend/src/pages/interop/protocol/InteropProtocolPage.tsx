@@ -3,6 +3,7 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
+import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
@@ -86,6 +87,11 @@ export function InteropProtocolPage({
                     className="max-md:hidden"
                   />
                   <InteropProtocolSummary protocol={projectEntry} />
+                  <div className="border-divider border-b px-4 md:hidden">
+                    <MobileProjectLinks
+                      projectLinks={projectEntry.header.links ?? []}
+                    />
+                  </div>
                   <TopToken id={projectEntry.id} />
 
                   <HighlightableLinkContextProvider>

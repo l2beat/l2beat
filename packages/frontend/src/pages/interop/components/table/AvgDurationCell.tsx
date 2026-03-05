@@ -9,13 +9,16 @@ import type {
   AverageDuration,
   SplitAverageDuration,
 } from '~/server/features/scaling/interop/types'
+import { cn } from '~/utils/cn'
 
 export function AvgDurationCell({
   averageDuration,
   disableTooltip = false,
+  className,
 }: {
   averageDuration: AverageDuration
   disableTooltip?: boolean
+  className?: string
 }) {
   switch (averageDuration.type) {
     case 'unknown':
@@ -34,7 +37,7 @@ export function AvgDurationCell({
       )
     case 'single':
       return (
-        <div className="font-medium text-label-value-15">
+        <div className={cn('font-medium text-label-value-15', className)}>
           {formatSeconds(averageDuration.duration)}
         </div>
       )

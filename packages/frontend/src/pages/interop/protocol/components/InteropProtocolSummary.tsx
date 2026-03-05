@@ -58,7 +58,7 @@ export function InteropProtocolSummary({
       data-role="nav-section"
       className="mt-4 flex w-full scroll-mt-[100vh] flex-col border-divider px-4 max-md:border-b max-md:pb-6 md:rounded-lg md:bg-surface-primary md:p-6"
     >
-      <div className="grid grid-cols-6 gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-6">
         <StatsItem
           title="Type"
           isLoading={isLoading}
@@ -85,6 +85,7 @@ export function InteropProtocolSummary({
           isLoading={isLoading}
           value={
             <AvgDurationCell
+              className="font-bold text-label-value-16"
               averageDuration={
                 data?.entry?.averageDuration ?? {
                   type: 'unknown',
@@ -119,8 +120,8 @@ export function InteropProtocolSummary({
       <span className="font-medium text-paragraph-12 text-secondary">
         Protocol transfer size
       </span>
-      <Breakdown values={breakdownValues} className="h-1.5 w-full" />
-      <div className="mt-2 flex gap-2">
+      <Breakdown values={breakdownValues} className="mt-2! h-1.5 w-full" />
+      <div className="mt-2 flex flex-wrap gap-2">
         {breakdownValues.map((value) => (
           <div key={value.label} className="flex items-center gap-[3px]">
             <div className={cn('size-3.5 rounded-xs', value.className)} />
@@ -150,7 +151,7 @@ function StatsItem({
   isLoading?: boolean
 }) {
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex gap-1.5 max-md:justify-between md:flex-col">
       <span className="font-medium text-paragraph-12 text-secondary">
         {title}
       </span>
