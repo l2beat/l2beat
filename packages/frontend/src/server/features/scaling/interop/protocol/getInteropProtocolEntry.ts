@@ -66,5 +66,14 @@ export function getInteropProtocolEntry(
     },
   })
 
+  sections.push({
+    type: 'InteropTokensSection',
+    props: {
+      id: 'interop-tokens',
+      projectId: project.id,
+      title: 'Top tokens by volume',
+    },
+  })
+
   return { ...common, sections }
 }
