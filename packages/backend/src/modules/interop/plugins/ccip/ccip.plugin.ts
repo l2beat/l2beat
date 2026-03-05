@@ -60,6 +60,13 @@ const parseLockedEvent = createEventParser(lockedLog)
 const burnedLog = 'event Burned(address indexed sender, uint256 amount)'
 const parseBurnedEvent = createEventParser(burnedLog)
 
+// Non-standard: emitted by custom XERC20LockboxTokenPool (e.g. USDT on Celo).
+// The pool deposits native ERC20 into a lockbox, then burns the minted XERC20.
+// Same shape as Locked; the user's tokens are locked in the lockbox (wasBurned = false).
+const depositedAndBurnedLog =
+  'event DepositedAndBurned(address indexed sender, uint256 amount)'
+const parseDepositedAndBurned = createEventParser(depositedAndBurnedLog)
+
 // v1.6.1+ (token address in event data)
 const lockedOrBurnedLog =
   'event LockedOrBurned(uint64 indexed remoteChainSelector, address token, address sender, uint256 amount)'
@@ -75,6 +82,13 @@ const parseReleased = createEventParser(releasedLog)
 const mintedLog =
   'event Minted(address indexed sender, address indexed recipient, uint256 amount)'
 const parseMinted = createEventParser(mintedLog)
+
+// Non-standard: emitted by custom XERC20LockboxTokenPool (e.g. USDT on Celo).
+// The pool mints XERC20 tokens, then burns them via a lockbox to release native ERC20
+// to the receiver. MintedAndWithdrawn is emitted instead of the standard Minted event.
+const mintedAndWithdrawnLog =
+  'event MintedAndWithdrawn(address indexed sender, address indexed recipient, uint256 amount)'
+const parseMintedAndWithdrawn = createEventParser(mintedAndWithdrawnLog)
 
 // v1.6.1+ (token address in event data)
 const releasedOrMintedLog =
@@ -169,6 +183,7 @@ function findPrecedingTransferForToken(
 const SOURCE_TOKEN_POOL_EVENTS = [
   lockedLog,
   burnedLog,
+  depositedAndBurnedLog,
   lockedOrBurnedLog,
   transferLog,
   depositForBurnLog,
@@ -177,6 +192,7 @@ const DEST_TOKEN_POOL_EVENTS = [
   releasedOrMintedLog,
   releasedLog,
   mintedLog,
+  mintedAndWithdrawnLog,
   transferLog,
 ]
 
@@ -465,6 +481,28 @@ export class CCIPPlugin implements InteropPluginResyncable {
         continue
       }
 
+      // Non-standard: XERC20LockboxTokenPool deposits native ERC20 into lockbox and burns XERC20.
+      // The user's tokens are locked in the lockbox, so wasBurned = false.
+      const depositedAndBurned = parseDepositedAndBurned(log, null)
+      if (depositedAndBurned) {
+        const transfer = findPrecedingTransfer(
+          logsBeforeSend,
+          i,
+          depositedAndBurned.amount,
+        )
+        if (
+          transfer &&
+          !processedTokens.has(transfer.tokenAddress.toLowerCase())
+        ) {
+          processedTokens.add(transfer.tokenAddress.toLowerCase())
+          result.push({
+            wasBurned: false,
+            tokenAddress: transfer.tokenAddress,
+          })
+        }
+        continue
+      }
+
       // v1.5 Burned (burn & mint pattern — wasBurned = true)
       const burned = parseBurnedEvent(log, null)
       if (burned) {
@@ -585,6 +623,27 @@ export class CCIPPlugin implements InteropPluginResyncable {
             address: Address32.from(transfer.tokenAddress),
             amount: minted.amount,
             wasMinted: true,
+          })
+        }
+        continue
+      }
+
+      // Non-standard: XERC20LockboxTokenPool emits MintedAndWithdrawn instead of Minted.
+      // The pool mints XERC20, then burns it via a lockbox to release native ERC20.
+      // The preceding Transfer is the lockbox sending native ERC20 to the receiver.
+      // Marked as wasMinted: false because the receiver gets released (not minted) tokens.
+      const mintedAndWithdrawn = parseMintedAndWithdrawn(log, null)
+      if (mintedAndWithdrawn) {
+        const transfer = findPrecedingTransfer(
+          logsBetween,
+          i,
+          mintedAndWithdrawn.amount,
+        )
+        if (transfer) {
+          result.push({
+            address: Address32.from(transfer.tokenAddress),
+            amount: mintedAndWithdrawn.amount,
+            wasMinted: false,
           })
         }
       }
