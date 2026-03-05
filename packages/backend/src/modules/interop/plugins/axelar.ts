@@ -68,6 +68,7 @@ export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'linea', chain: 'linea' },
   { axelarChainName: 'optimism', chain: 'optimism' },
   { axelarChainName: 'Polygon', chain: 'polygonpos' },
+  { axelarChainName: 'celo', chain: 'celo' },
 ])
 
 export const SquidExpressExecutedWithToken = createInteropEventType<{

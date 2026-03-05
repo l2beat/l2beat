@@ -13,9 +13,9 @@ import {
 import { assert, ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isDeepStrictEqual } from 'util'
-import { bridges } from '../../processing/bridges'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'
+import { refactored } from '../../processing/refactored'
 
 const paths = getDiscoveryPaths()
 const configReader = new ConfigReader(paths.discovery)
@@ -38,6 +38,7 @@ export const onChainProjects: string[] = [
   'gateway',
   'opcm16',
   'aztecnetwork',
+  'aztecnetwork-alphapayload',
   ...configReader.getProjectsInGroup('tokens'),
 ]
 
@@ -50,8 +51,8 @@ describe('discovery config.jsonc', () => {
 
   const projectIds = layer2s
     .map((p) => p.id.toString())
-    .concat(bridges.map((p) => p.id.toString()))
     .concat(layer3s.map((p) => p.id.toString()))
+    .concat(refactored.map((p) => p.id.toString()))
     .concat(onChainProjects)
 
   it('every config name corresponds to ProjectId', () => {
@@ -59,9 +60,8 @@ describe('discovery config.jsonc', () => {
       configs
         ?.flat()
         ?.filter((c) => !c.name.startsWith('shared-'))
-        // TODO!: Please remove this check once transporter bridge is back in the config
-        ?.filter((c) => c.name !== 'transporter')
         ?.filter((c) => !projectIds.includes(c.name))
+        .filter((c) => c.name !== 'everclearbridge' && c.name !== 'hop')
         .map((c) => c.name) ?? []
 
     expect(notCorresponding).toBeEmpty()

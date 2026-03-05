@@ -13,6 +13,7 @@ import {
 } from '../getCommonScalingEntry'
 import type { CostsTableData } from './getCostsTableData'
 import { compareCosts } from './utils/compareCosts'
+import { getCostsSyncWarning } from './utils/isCostsSynced'
 
 export async function getScalingCostsEntries(helpers: SsrHelpers) {
   const [projectsChangeReport, projects, costs] = await Promise.all([
@@ -57,7 +58,11 @@ function getScalingCostEntry(
       : Number.POSITIVE_INFINITY
 
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({
+      project,
+      syncWarning: getCostsSyncWarning(costs?.syncedUntil),
+      changes,
+    }),
     costsWarning: project.costsInfo.warning,
     costOrder: costPerUop,
   }

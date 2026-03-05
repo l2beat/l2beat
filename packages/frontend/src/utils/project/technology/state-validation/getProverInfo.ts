@@ -14,10 +14,7 @@ export function getProverInfo(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
 ): StateValidationSectionProps['proverInfo'] {
   const zkCatalogProject = zkCatalogProjects.find(
     (x) => x.id === zkCatalogProjectId,

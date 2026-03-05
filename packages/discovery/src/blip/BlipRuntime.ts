@@ -214,6 +214,37 @@ export class BlipRuntime {
         }
         return result
       }
+      case 'map_values': {
+        const fn = blip[1]
+        assert(
+          typeof v === 'object' && v !== null && !Array.isArray(v),
+          'map_values requires an object input',
+        )
+        const result: Record<string, ContractValue> = {}
+        for (const [key, val] of Object.entries(v)) {
+          assert(val !== undefined, 'Value is undefined')
+          result[key] = this.executeBlip(val, fn)
+        }
+        return result
+      }
+      case 'map_keys': {
+        const fn = blip[1]
+        assert(
+          typeof v === 'object' && v !== null && !Array.isArray(v),
+          'map_keys requires an object input',
+        )
+        const result: Record<string, ContractValue> = {}
+        for (const [key, val] of Object.entries(v)) {
+          const newKey = this.executeBlip(key, fn)
+          assert(
+            typeof newKey === 'string',
+            'map_keys filter must return a string',
+          )
+          assert(val !== undefined, 'Value is undefined')
+          result[newKey] = val
+        }
+        return result
+      }
       default: {
         assert(false, 'unhandled')
       }

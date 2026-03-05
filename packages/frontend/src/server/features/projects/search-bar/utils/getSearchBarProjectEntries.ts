@@ -33,7 +33,6 @@ export function getSearchBarProjectEntries<
     | 'daBridge'
     | 'isScaling'
     | 'isDaLayer'
-    | 'isBridge'
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
     | 'contracts'
@@ -43,7 +42,6 @@ export function getSearchBarProjectEntries<
   const results: SearchBarProjectEntry[] = []
   if (
     !project.isScaling &&
-    !project.isBridge &&
     !project.daLayer &&
     !project.daBridge &&
     !project.ecosystemConfig &&
@@ -72,14 +70,6 @@ export function getSearchBarProjectEntries<
       href: `/scaling/projects/${project.slug}`,
       category: 'scaling',
       scalingCategory: project.scalingInfo?.type,
-    })
-  }
-
-  if (project.isBridge) {
-    results.push({
-      ...common,
-      href: `/bridges/projects/${project.slug}`,
-      category: 'bridges',
     })
   }
 

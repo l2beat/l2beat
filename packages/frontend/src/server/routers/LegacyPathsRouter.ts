@@ -35,5 +35,12 @@ export function createLegacyPathsRouter() {
     res.redirect(301, `/publications/${req.params.id}`)
   })
 
+  router.get('/bridges/*splat', (_req, res) => {
+    res.redirect(301, '/interop')
+  })
+  router.get('/bridges', (_req, res) => {
+    res.redirect(301, '/interop')
+  })
+
   return router
 }

@@ -1,3 +1,381 @@
+Generated with discovered.json: 0x8323686fcd7cff7a861f1819b45d4744f72e8656
+
+# Diff at Wed, 04 Mar 2026 20:35:16 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1772198381
+- current timestamp: 1772656450
+
+## Description
+
+Base decouples from the shared Optimism SuperchainConfig (`0x95703e...`) and deploys its own SuperchainConfig v2.5.0 at `0xb535ff7F118260a952CE65e7fF41B1743De8EE6c`. Compared to the previous v2.4.0, the new version adds an immutable incident responder role (Base Multisig 1) and makes the guardian immutable in the constructor. All L1 contracts (OptimismPortal2, L1StandardBridge, L1ERC721Bridge, L1CrossDomainMessenger, AnchorStateRegistry, DelayedWETH x2) now reference the new SuperchainConfig.
+
+Guardian changed from Optimism Guardian Multisig (`0x09f7150D...`) to Base Governance Multisig (`0x7bB41C3...`). All Optimism shared governance contracts removed from discovery scope (SuperchainProxyAdmin, SuperchainProxyAdminOwner, OpFoundationUpgradeSafe, OpFoundationOperationsSafe, Optimism Security Council, LivenessModule, LivenessGuard, DeputyPauseModule, SaferSafes).
+
+SystemConfig upgraded from v3.13.1 to v3.13.2 — implementation change is only a ReinitializableBase version bump from 3 to 4. The reinit sets new runtime values (guardian, superchainConfig now point to Base's own contracts). [Diff](https://disco.l2beat.com/diff/eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2/eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44)
+
+FeeDisburser upgraded (impl `0x45969D...` → `0xDa70b4...`), removing on-chain Optimism revenue sharing (previously 2.5% gross / 15% net to OPTIMISM_WALLET). Now bridges 100% of collected fees to L1_WALLET. Revenue sharing likely moved off-chain or to a different mechanism. [Diff](https://disco.l2beat.com/diff/base:0x45969D00739d518f0Dde41920B67cE30395135A0/base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75)
+
+Pause mechanics: the Incident Responder (Base Multisig 1, 3/13) can trigger a single pause lasting up to 3 months. It cannot unpause, extend, or re-pause after expiry — only the Guardian (Base Governance Multisig, 2/2) can do that. The Guardian can extend pauses indefinitely. This prevents the operator from permanently censoring withdrawals without Security Council approval.
+
+Base Security Council threshold increased from 7/10 to 8/11 (new member added). The upgrade path changed from 3 parties (Coordinator + SC + OP Foundation) to 2 parties (Coordinator 3/6 + SC 8/11), with an effective entity-level quorum of 9/12 (75%). The Coordinator Multisig absorbed the old Base Multisig 2 members directly (same 6 EOAs) and the OP Foundation was removed as a signer on the Governance Multisig.
+
+## Watched changes
+
+```diff
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      sourceHashes.1:
+-        "0x62c0410a08a90b339fd9d345a563e2f93aa3afb72082cb32c23ab6dee23706ed"
++        "0x9e4d8a31512b7aaafcbf23f817cbdc9bbe404a0fa262aaf98220120c52fde7cb"
+      values.$implementation:
+-        "base:0x45969D00739d518f0Dde41920B67cE30395135A0"
++        "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75"
+      values.$pastUpgrades.1:
++        ["2026-03-03T17:36:17.000Z","0x055b31e8fb8689e5e72d9c41c1c38b5a165fd145aa76bf118194f86a066d0650",["base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.BASIS_POINT_SCALE:
+-        10000
+      values.OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS:
+-        250
+      values.OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS:
+-        1500
+      values.OPTIMISM_WALLET:
+-        "base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05"
+      values.version:
++        "1.0.0"
+      implementationNames.base:0x45969D00739d518f0Dde41920B67cE30395135A0:
+-        "FeeDisburser"
+      implementationNames.base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75:
++        "FeeDisburser"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+```
+
+```diff
+    contract ProxyAdmin (eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) {
+    +++ description: None
+      directlyReceivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
+    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"guard","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":".INCIDENT_RESPONDER"}
+    }
+```
+
+```diff
+    contract Base Security Council (eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xbDE1845c879942fC326F247Ad708677733Dd5594"
+      values.$threshold:
+-        7
++        8
+      values.multisigThreshold:
+-        "7 of 10 (70%)"
++        "8 of 11 (73%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+```
+
+```diff
+    contract DelayedWETH (eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.config:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      values.guardian:
+-        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    +++ description: None
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x608d94945A64503E642E6370Ec598e519a2C1E53) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.config:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x86dc9ef5cbf4cc436d50678ad7b2abbf9cc1905641ebbeccddbf1adf9b724403"
++        "0xe6e96ed1643d7aa0bde96b58e278bd6716600479c36623c8cbca4da634304c97"
+      values.$implementation:
+-        "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"
++        "eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44"
+      values.$pastUpgrades.14:
++        ["2026-03-03T17:30:59.000Z","0xa2dc938704977d2f3d0765832e79e1239d97aa6912efadc21a9705ef7dca42eb",["eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44"]]
+      values.$upgradeCount:
+-        14
++        15
+      values.guardian:
+-        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
+      values.initVersion:
+-        3
++        4
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c"
+      values.version:
+-        "3.13.1"
++        "3.13.2"
+      implementationNames.eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2:
+-        "SystemConfig"
+      implementationNames.eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44:
++        "SystemConfig"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754)
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+```
+
+```diff
+    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd"
+      receivedPermissions.0:
++        {"permission":"guard","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":".guardian"}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c","role":"admin","via":[{"address":"eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    +++ description: None
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C)
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+```
+
+```diff
+    contract Base Coordinator Multisig (eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c"
+      values.$members.1:
++        "eth:0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7"
+      values.$members.2:
++        "eth:0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E"
+      values.$members.3:
++        "eth:0x1c870776B168A9ffAE80c51f050C611eDd246741"
+      values.$members.0:
+-        "eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd"
++        "eth:0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1"
+      values.$members.1:
+-        "eth:0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110"
++        "eth:0x6CD3850756b7894774Ab715D136F9dD02837De50"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 2 (100%)"
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Base Multisig 2 (eth:0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+```diff
+-   Status: DELETED
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c)
+    +++ description: Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       |  152 -
+ .../AddressManager.sol}                            |    0
+ .../Base Multisig 2/Safe.sol => /dev/null          | 1088 ------
+ .../Base Multisig 2/SafeProxy.p.sol => /dev/null   |   37 -
+ .../DeputyPauseModule.sol => /dev/null             | 1305 --------
+ .../FeeDisburser/FeeDisburser.sol                  |  985 +++---
+ .../GnosisSafe/GnosisSafe.sol => /dev/null         |  953 ------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |   35 -
+ .../GnosisSafeL2/GnosisSafeL2.sol => /dev/null     | 1032 ------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../LivenessGuard.sol => /dev/null                 |  582 ----
+ .../LivenessModule.sol => /dev/null                |  258 --
+ .../Proxy.p.sol => /dev/null                       |   39 -
+ .../Safe.sol => /dev/null                          | 1088 ------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../OpFoundationUpgradeSafe/Safe.sol => /dev/null  | 1088 ------
+ .../GnosisSafe.sol => /dev/null                    |  953 ------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../GnosisSafe.sol => /dev/null                    |  953 ------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../.flat@1772198381/SaferSafes.sol => /dev/null   | 3535 --------------------
+ .../SuperchainConfig/Proxy.p.sol                   |   17 +-
+ .../SuperchainConfig/SuperchainConfig.sol          |  409 +--
+ .../SuperchainProxyAdmin.sol => /dev/null          |  298 --
+ .../GnosisSafe.sol => /dev/null                    |  953 ------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../SystemConfig/SystemConfig.sol                  |    9 +-
+ 27 files changed, 455 insertions(+), 15489 deletions(-)
+```
+
+Generated with discovered.json: 0x265e940ca2444d20ae88c6477f97e2284c2a3e45
+
+# Diff at Fri, 27 Feb 2026 13:20:57 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1771857552
+- current timestamp: 1772198381
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
 Generated with discovered.json: 0x4ee1f3fb8b064042f6b9508f7739c927e7dea4b4
 
 # Diff at Mon, 23 Feb 2026 14:40:22 GMT:
@@ -10687,7 +11065,7 @@ Generated with discovered.json: 0x6757674a13dfee574f8810059dcd95149c32bb2f
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Optimism Security Council: 2 members replaced.
 
 ## Config/verification related changes
 

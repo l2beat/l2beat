@@ -70,7 +70,7 @@ describe(ProjectService.name, () => {
     const result = await ps.getProject({
       id: ProjectId('foo'),
       select: ['isScaling'],
-      optional: ['isBridge', 'archivedAt'],
+      optional: ['isZkCatalog', 'archivedAt'],
     })
     expect(result).toEqual({
       id: ProjectId('foo'),
@@ -79,7 +79,7 @@ describe(ProjectService.name, () => {
       shortName: undefined,
       addedAt: 0,
       isScaling: true,
-      isBridge: undefined,
+      isZkCatalog: undefined,
       archivedAt: UnixTime(1112470620),
     })
   })
@@ -88,7 +88,7 @@ describe(ProjectService.name, () => {
     const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProjects({
       select: ['isScaling'],
-      optional: ['isBridge', 'archivedAt'],
+      optional: ['isZkCatalog', 'archivedAt'],
     })
     expect(result).toEqual([
       {
@@ -98,7 +98,7 @@ describe(ProjectService.name, () => {
         shortName: undefined,
         addedAt: 0,
         isScaling: true,
-        isBridge: undefined,
+        isZkCatalog: undefined,
         archivedAt: UnixTime(1112470620),
       },
       {
@@ -108,7 +108,7 @@ describe(ProjectService.name, () => {
         shortName: 'Bar',
         addedAt: 0,
         isScaling: true,
-        isBridge: undefined,
+        isZkCatalog: undefined,
         archivedAt: undefined,
       },
     ])

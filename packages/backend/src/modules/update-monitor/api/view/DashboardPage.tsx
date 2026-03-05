@@ -582,7 +582,7 @@ function ChangedDetectedDropdown({
 
 export function renderDashboardPage(
   projects: DashboardProject[],
-  projectConfigs: Project<never, 'scalingInfo' | 'isBridge' | 'isDaLayer'>[],
+  projectConfigs: Project<never, 'scalingInfo' | 'isDaLayer'>[],
   projectsWithHighSeverityChanges: Set<string>,
   selectedEmoji?: string,
 ) {

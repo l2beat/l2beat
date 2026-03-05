@@ -3,5 +3,11 @@
     "hash": "0x62c0410a08a90b339fd9d345a563e2f93aa3afb72082cb32c23ab6dee23706ed",
     "address": "base:0x45969D00739d518f0Dde41920B67cE30395135A0",
     "blockNumber": 29605802
+  },
+  "FeeDisburser_v2": {
+    "hash": "0x9e4d8a31512b7aaafcbf23f817cbdc9bbe404a0fa262aaf98220120c52fde7cb",
+    "address": "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75",
+    "chain": "base",
+    "blockNumber": 42923027
   }
 }

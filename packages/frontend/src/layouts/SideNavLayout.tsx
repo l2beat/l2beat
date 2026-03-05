@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import { useContext, useMemo } from 'react'
 import { HiringBadge } from '~/components/badge/HiringBadge'
+import { ChangelogUnreadBadge } from '~/components/changelog/ChangelogUnreadBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
@@ -95,7 +96,7 @@ export function SideNavLayout({
             },
           ],
         },
-        env.CLIENT_SIDE_INTEROP_ENABLED && {
+        {
           type: 'multiple',
           title: 'Interop',
           match: 'interop',
@@ -126,26 +127,6 @@ export function SideNavLayout({
               href:
                 selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
                 '/interop/burn-and-mint',
-            },
-          ],
-        },
-        !env.CLIENT_SIDE_INTEROP_ENABLED && {
-          type: 'multiple',
-          title: 'Bridges',
-          match: 'bridges',
-          icon: (
-            <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-          ),
-          links: [
-            {
-              title: 'Summary',
-              href: '/bridges/summary',
-            },
-          ],
-          secondaryLinks: [
-            {
-              title: 'Archived',
-              href: '/bridges/archived',
             },
           ],
         },
@@ -230,6 +211,61 @@ export function SideNavLayout({
     [selectedChainsContext],
   )
 
+  const sideLinks = useMemo(
+    () =>
+      compact([
+        {
+          title: 'About Us',
+          href: '/about-us',
+        },
+        {
+          title: 'Publications',
+          href: '/publications',
+        },
+        {
+          title: 'Changelog',
+          href: '/changelog',
+          accessory: <ChangelogUnreadBadge />,
+        },
+        {
+          title: 'Forum',
+          href: externalLinks.forum,
+        },
+        {
+          title: 'Donate',
+          href: '/donate',
+        },
+        {
+          title: 'Governance',
+          href: '/governance',
+        },
+        {
+          title: 'Tools',
+          href: externalLinks.tools,
+        },
+        {
+          title: 'Glossary',
+          href: '/glossary',
+        },
+        {
+          title: 'Jobs',
+          href: externalLinks.jobs,
+          accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? (
+            <HiringBadge />
+          ) : undefined,
+        },
+        {
+          title: 'Brand Kit',
+          href: externalLinks.brandKit,
+        },
+        {
+          title: 'FAQ',
+          href: '/faq',
+        },
+      ]),
+    [],
+  )
+
   return (
     <SidebarProvider>
       <div className="relative flex grow flex-col lg:flex-row">
@@ -275,51 +311,3 @@ export function SideNavLayout({
     </SidebarProvider>
   )
 }
-
-const sideLinks = compact([
-  {
-    title: 'About Us',
-    href: '/about-us',
-  },
-  {
-    title: 'Publications',
-    href: '/publications',
-  },
-  {
-    title: 'Changelog',
-    href: '/changelog',
-  },
-  {
-    title: 'Forum',
-    href: externalLinks.forum,
-  },
-  {
-    title: 'Donate',
-    href: '/donate',
-  },
-  {
-    title: 'Governance',
-    href: '/governance',
-  },
-  {
-    title: 'Tools',
-    href: externalLinks.tools,
-  },
-  {
-    title: 'Glossary',
-    href: '/glossary',
-  },
-  {
-    title: 'Jobs',
-    href: externalLinks.jobs,
-    accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? <HiringBadge /> : undefined,
-  },
-  {
-    title: 'Brand Kit',
-    href: externalLinks.brandKit,
-  },
-  {
-    title: 'FAQ',
-    href: '/faq',
-  },
-])

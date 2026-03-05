@@ -95,6 +95,11 @@ export const base: ScalingProject = opStackL2({
         plugin: 'lido-wsteth',
         bridgeType: 'lockAndMint',
       },
+      {
+        chain: 'base',
+        plugin: 'sky-bridge',
+        bridgeType: 'lockAndMint',
+      },
     ],
     type: 'canonical',
   },
@@ -252,11 +257,15 @@ export const base: ScalingProject = opStackL2({
       rollupNodeLink: 'https://github.com/base-org/node',
     },
   ),
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-    isPartOfSuperchain: true,
-  },
   milestones: [
+    {
+      title: 'Base leaves the Superchain',
+      url: 'https://blog.base.dev/next-chapter-for-base-chain-1',
+      date: '2026-03-04T00:00:00Z',
+      description:
+        'Base decouples from Optimism Superchain governance with its own upgrade path.',
+      type: 'general',
+    },
     {
       title: 'Base halts block production for 33mins',
       url: 'https://status.base.org/incidents/kdq3t8s13gfs',
@@ -302,16 +311,16 @@ export const base: ScalingProject = opStackL2({
     },
   ],
   upgradesAndGovernance:
-    'All contracts are upgradable by a `ProxyAdmin` contract which is controlled by a nested 2/2 `Base Governance Multisig` composed by the `Base Coordinator Multisig` and the OP Foundation. The `Base Coordinator Multisig` is a 2/2 controlled by the Base Security Council multisig and the Base team multisig. The Guardian role is assigned to the Security Council multisig, with a Safe Module that limits the Optimism Foundation to act through it to stop withdrawals in the whole Superchain or specific individual chains. Each pause automatically expires after 3 months if not extended or unpaused by the Security Council. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
+    'All contracts are upgradable by a `ProxyAdmin` contract controlled by a nested 2/2 `Base Governance Multisig` composed of the `Base Coordinator Multisig` and the `Base Security Council`. Upgrades require approval from both parties. There is no delay on upgrades. The Guardian role for the SuperchainConfig is assigned to the Base Governance Multisig, which can pause and unpause withdrawals. `Base Multisig 1` serves as Incident Responder and can pause withdrawals but cannot unpause or extend pauses. Each pause automatically expires after 3 months if not extended by the Guardian. The single Sequencer actor can be modified by `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',
-    text: 'a contract receives a malicious code upgrade. Upgrades must be approved by 3 parties: Base Security Council, BaseMultisig2 and the OpFoundationOperationsSafe. There is no delay on upgrades.',
+    text: 'a contract receives a malicious code upgrade. Upgrades must be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council. There is no delay on upgrades.',
   },
   nonTemplateRiskView: {
     exitWindow: {
       value: 'None',
       description:
-        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 3 parties: Base multisig, the Op Foundation Operations multisig, and the Base Security Council.',
+        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council.',
       sentiment: 'bad',
       orderHint: 0, // 0-7 days
     },

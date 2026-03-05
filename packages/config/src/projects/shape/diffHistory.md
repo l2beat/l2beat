@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xd45842f4a2e196079c867ba1f5a6287592a79218
+
+# Diff at Wed, 04 Mar 2026 20:07:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1772198391
+- current timestamp: 1772654729
+
+## Description
+
+One member of the Alchemy Multisig 1 (5/8 threshold) was rotated: 0xA351...700a replaced by 0x04a2...7Bd.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a"
++        "eth:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd"
+    }
+```
+
+Generated with discovered.json: 0xcedd2888975bae0de4e095ba9cde516fa93fcd12
+
+# Diff at Fri, 27 Feb 2026 13:25:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1769272387
+- current timestamp: 1772198391
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
 Generated with discovered.json: 0xa7e5e45cc439a2557d131c8ffb900350e0fc8d4f
 
 # Diff at Fri, 13 Feb 2026 11:33:20 GMT:

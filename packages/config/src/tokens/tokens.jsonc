@@ -1011,6 +1011,11 @@
       "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75"
     },
     {
+      "symbol": "ESP",
+      "address": "0x031De51F3E8016514Bd0963d0B2AB825A591Db9A",
+      "coingeckoId": "espresso"
+    },
+    {
       "symbol": "EQB",
       "address": "0xfe80d611c6403f70e5b1b9b722d2b3510b740b2b"
     },
@@ -2093,7 +2098,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2110,7 +2115,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2127,7 +2132,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2145,7 +2150,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2161,7 +2166,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2176,7 +2181,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2516,7 +2521,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3185,7 +3190,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3201,7 +3206,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3677,7 +3682,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3693,7 +3698,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3784,7 +3789,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4043,7 +4048,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4107,7 +4112,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4123,7 +4128,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4460,7 +4465,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4476,7 +4481,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4586,7 +4591,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4602,7 +4607,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4747,7 +4752,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4763,7 +4768,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5016,7 +5021,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5032,7 +5037,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5224,7 +5229,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5240,7 +5245,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5439,7 +5444,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5455,7 +5460,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5587,7 +5592,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5603,7 +5608,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6256,7 +6261,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6318,7 +6323,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       },
@@ -6335,7 +6340,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       },
@@ -6354,7 +6359,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       },
@@ -6371,7 +6376,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       },
@@ -6552,7 +6557,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6568,7 +6573,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6727,7 +6732,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6743,7 +6748,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6758,7 +6763,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7397,7 +7402,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7413,7 +7418,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7617,7 +7622,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7633,7 +7638,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7649,7 +7654,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7680,7 +7685,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7696,7 +7701,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7909,7 +7914,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7974,7 +7979,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2" // this is not the standard USDT0, but a stargate-version
+            "slug": "stargate" // this is not the standard USDT0, but a stargate-version
           }
         ]
       }
@@ -8072,7 +8077,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }

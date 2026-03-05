@@ -4,5 +4,11 @@
     "address": "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA",
     "chain": "ethereum",
     "blockNumber": 24147273
+  },
+  "L1MessageQueueWithGasPriceOracle_enqueueTime.sol": {
+    "hash": "0x06be3e07c53c199805b384f80352b668ca35f7bdb1b6d5addc8fcb490ff63eac",
+    "address": "eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa",
+    "chain": "ethereum",
+    "blockNumber": 24583163
   }
 }

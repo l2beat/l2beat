@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x92f551c2b9184180faf9259206f16209a4558dc8
+
+# Diff at Mon, 02 Mar 2026 11:29:35 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@8b908d97fec97b337bc2c1fba3217619af1f515e block: 1741355279
+- current timestamp: 1772450911
+
+## Description
+
+Rotated ms member.
+
+## Watched changes
+
+```diff
+    contract IMXAdminMultisig (eth:0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
++        "eth:0x94e97260182B9537822687Dd3c301225c6f87a5e"
+    }
+```
+
 Generated with discovered.json: 0x2e21964fa1ece9411484f35027c22a9104895b67
 
 # Diff at Wed, 03 Sep 2025 15:52:06 GMT:

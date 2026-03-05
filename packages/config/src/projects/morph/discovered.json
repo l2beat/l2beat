@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "timestamp": 1768298606,
+  "timestamp": 1772616101,
   "configHash": "0x2742757df23ff811599c5ada31eff0688b5667a0d23786423a7d98ff08aec4c8",
   "entries": [
     {
@@ -261,7 +261,7 @@
       "sinceBlock": 20996776,
       "values": {
         "$immutable": true,
-        "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+        "owner": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"
       },
       "implementationNames": {
         "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": "ProxyAdmin"
@@ -299,7 +299,7 @@
       "template": "morph/L1MessageQueueWithGasPriceOracle",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1719cdcf5cd2921747ddc6f0dea1d383d56e48c613a99782597914a32d40e4cd"
+        "0x06be3e07c53c199805b384f80352b668ca35f7bdb1b6d5addc8fcb490ff63eac"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
@@ -308,7 +308,7 @@
       "sinceBlock": 20996821,
       "values": {
         "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-        "$implementation": "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA",
+        "$implementation": "eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa",
         "$pastUpgrades": [
           [
             "2024-10-19T03:06:47.000Z",
@@ -324,22 +324,28 @@
             "2025-01-13T08:11:59.000Z",
             "0x60cc38cb058516da361ecd5f548fc9216fbcda9eb08255b529ebbf78dac44f7b",
             ["eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA"]
+          ],
+          [
+            "2026-03-03T06:03:11.000Z",
+            "0x29632a0458dbc5cbad5e831228a54c118e8e0746bff06fcf151cad568079a318",
+            ["eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "ENFORCED_TX_GATEWAAY": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+        "getFirstUnfinalizedMessageEnqueueTime": 1772616095,
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25526,
+        "nextCrossDomainMessageIndex": 25619,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25521,
+        "pendingQueueIndex": 25615,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
       "implementationNames": {
         "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": "TransparentUpgradeableProxy",
-        "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": "L1MessageQueueWithGasPriceOracle"
+        "eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa": "L1MessageQueueWithGasPriceOracle"
       }
     },
     {
@@ -436,6 +442,83 @@
       "address": "eth:0x5300000000000000000000000000000000000015",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "TimelockController",
+      "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+      "type": "Contract",
+      "template": "global/TimelockController",
+      "sourceHashes": [
+        "0x5553c4f2dc9ebb4f397dabef70540cedb6c655c68ac950596144f4f8c6cbf9e8",
+        "0xd6475b362415a3692a3b5af6ae0a14fcdd0a99ac3a39ffc5523dd78dd2b00713"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A timelock with access control. The current minimum delay is 0s.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        }
+      ],
+      "sinceTimestamp": 1770779267,
+      "sinceBlock": 24430740,
+      "values": {
+        "$admin": "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17",
+        "$implementation": "eth:0x5F0CAaf0d3b8dd8eA9f80CDbb0021930d3c17353",
+        "$pastUpgrades": [
+          [
+            "2026-02-11T03:07:47.000Z",
+            "0x8758e296217ea0a7f75403d57eb75eaa7067a45dd1b9cfc070e7fb1c1d9f6554",
+            ["eth:0x5F0CAaf0d3b8dd8eA9f80CDbb0021930d3c17353"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+              "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"]
+          }
+        },
+        "Canceller": ["eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": [
+          "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+        ],
+        "Executor": ["eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 0,
+        "getMinDelayFormatted": "0s",
+        "Proposer": ["eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "implementationNames": {
+        "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530": "TransparentUpgradeableProxy",
+        "eth:0x5F0CAaf0d3b8dd8eA9f80CDbb0021930d3c17353": "TimelockControllerUpgradeable"
+      }
     },
     {
       "address": "eth:0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5",
@@ -627,10 +710,10 @@
       "template": "morph/MorphRollup",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xf8331668c19c4399a7caf054895f9dd43a0593e13f4fdb6b7ac6cc2b130da357"
+        "0x8918639fcac94fac40711260ca7cb4027dbac6a2a48b10cd380818ede6636206"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist.",
+      "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors.",
       "ignoreInWatchMode": [
         "batchChallenged",
         "lastCommittedBatchIndex",
@@ -641,7 +724,7 @@
       "values": {
         "__maxNumTxInChunk": 0,
         "$admin": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-        "$implementation": "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5",
+        "$implementation": "eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3",
         "$pastUpgrades": [
           [
             "2024-10-19T03:11:47.000Z",
@@ -677,9 +760,14 @@
             "2025-11-25T08:51:35.000Z",
             "0x27b0e1b46f9878a502c68e414bc6fea028c3a551760e5687c56bdd4eda4f31c9",
             ["eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5"]
+          ],
+          [
+            "2026-03-03T06:06:11.000Z",
+            "0xc86bc6dc60ad304afbc7f423668a272434c17dbf4a0bb27906d74f0940a6eab1",
+            ["eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 8,
         "batchChallenged": 47101,
         "challengers": [
           "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -724,8 +812,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 47986,
-        "lastFinalizedBatchIndex": 47907,
+        "lastCommittedBatchIndex": 50206,
+        "lastFinalizedBatchIndex": 50123,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -734,11 +822,17 @@
         "proofWindow": 259200,
         "proveRemaining": 0,
         "revertReqIndex": 0,
+        "rollupDelayPeriod": 604800,
         "verifier": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
+      },
+      "fieldMeta": {
+        "rollupDelayPeriod": {
+          "description": "commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"
+        }
       },
       "implementationNames": {
         "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "TransparentUpgradeableProxy",
-        "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5": "Rollup"
+        "eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3": "Rollup"
       }
     },
     {
@@ -765,6 +859,33 @@
           "role": ".challengers"
         }
       ]
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1770779267,
+      "sinceBlock": 24430740,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17": "ProxyAdmin"
+      }
     },
     {
       "address": "eth:0x8b8bc0EB904fDD2862a6433d020F15bBc8a7b13e",
@@ -910,6 +1031,18 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
           "description": "register new verifiers to be used starting from a given L2 batch index.",
           "role": ".owner"
@@ -957,7 +1090,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 57,
+        "nonce": 59,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1164,7 +1297,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25526,
+        "messageNonce": 25619,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1230,11 +1363,33 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "role": "admin",
           "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
           ]
         },
         {
@@ -1242,7 +1397,8 @@
           "from": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
           "role": "admin",
           "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
           ]
         },
         {
@@ -1250,7 +1406,8 @@
           "from": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
           "role": "admin",
           "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
           ]
         },
         {
@@ -1258,7 +1415,16 @@
           "from": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
           "role": "admin",
           "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17" }
           ]
         },
         {
@@ -1266,7 +1432,8 @@
           "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
           "role": "admin",
           "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
           ]
         },
         {
@@ -1274,7 +1441,8 @@
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": "admin",
           "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
           ]
         },
         {
@@ -1282,7 +1450,8 @@
           "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
           "role": "admin",
           "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
           ]
         },
         {
@@ -1290,14 +1459,20 @@
           "from": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
           "role": "admin",
           "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "role": ".Executor"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17",
           "role": ".owner"
         }
       ],
@@ -1320,7 +1495,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 19,
+        "nonce": 22,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1446,6 +1621,79 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3": [
+      "constructor(uint64 _chainID)",
+      "error ErrZeroAddress()",
+      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
+      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
+      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
+      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ProveRemainingClaimed(address receiver, uint256 amount)",
+      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event Unpaused(address account)",
+      "event UpdateChallenger(address indexed account, bool status)",
+      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
+      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
+      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
+      "event UpdateRollupDelayPeriod(uint256 oldPeriod, uint256 newPeriod)",
+      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
+      "function LAYER_2_CHAIN_ID() view returns (uint64)",
+      "function __maxNumTxInChunk() view returns (uint256)",
+      "function addChallenger(address _account)",
+      "function batchChallengeReward(address owner) view returns (uint256 amount)",
+      "function batchChallenged() view returns (uint256)",
+      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
+      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, uint256 signedSequencersBitmap)",
+      "function batchExist(uint256 batchIndex) view returns (bool)",
+      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
+      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
+      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
+      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
+      "function claimProveRemaining(address receiver)",
+      "function claimReward(address receiver)",
+      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput) payable",
+      "function commitBatchWithProof(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput, bytes _batchHeader, bytes _batchProof)",
+      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
+      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function finalizeBatch(bytes _batchHeader)",
+      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function importGenesisBatch(bytes _batchHeader)",
+      "function inChallenge() view returns (bool)",
+      "function initialize(address _l1StakingContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
+      "function initialize2(bytes32 _prevStateRoot)",
+      "function initialize3(uint256 _rollupDelayPeriod)",
+      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
+      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
+      "function l1StakingContract() view returns (address)",
+      "function lastCommittedBatchIndex() view returns (uint256)",
+      "function lastFinalizedBatchIndex() view returns (uint256)",
+      "function messageQueue() view returns (address)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function proofRewardPercent() view returns (uint256)",
+      "function proofWindow() view returns (uint256)",
+      "function proveRemaining() view returns (uint256)",
+      "function proveState(bytes _batchHeader, bytes _batchProof)",
+      "function removeChallenger(address _account)",
+      "function renounceOwnership()",
+      "function revertBatch(bytes _batchHeader, uint256 _count)",
+      "function revertReqIndex() view returns (uint256)",
+      "function rollupDelayPeriod() view returns (uint256)",
+      "function setPause(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
+      "function updateProofWindow(uint256 _newWindow)",
+      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
+      "function updateRollupDelayPeriod(uint256 _newPeriod)",
+      "function updateVerifier(address _newVerifier)",
+      "function verifier() view returns (address)",
+      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
+    ],
     "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1523,6 +1771,18 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC1967ProxyUninitialized()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": [
       "constructor(uint256[] _versions, address[] _verifiers)",
       "error ErrorStartBatchIndexFinalized()",
@@ -1542,6 +1802,56 @@
       "function transferOwnership(address newOwner)",
       "function updateVerifier(uint256 _version, uint64 _startBatchIndex, address _verifier)",
       "function verifyAggregateProof(uint256 _version, uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view"
+    ],
+    "eth:0x5F0CAaf0d3b8dd8eA9f80CDbb0021930d3c17353": [
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event Initialized(uint64 version)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function initialize(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
     ],
     "eth:0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70": [
       "constructor(bytes32 _programVkey)",
@@ -1646,41 +1956,16 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": [
-      "constructor(address _messenger, address _rollup, address _enforcedTxGateway)",
-      "error ErrZeroAddress()",
-      "event DequeueTransaction(uint256 startIndex, uint256 count)",
-      "event Initialized(uint8 version)",
+    "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
-      "event UpdateEnforcedTxGateway(address indexed _oldGateway, address indexed _newGateway)",
-      "event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle)",
-      "event UpdateL2BaseFee(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
-      "event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit)",
-      "event UpdateWhitelistChecker(address indexed _oldWhitelistChecker, address indexed _newWhitelistChecker)",
-      "function ENFORCED_TX_GATEWAAY() view returns (address)",
-      "function MESSENGER() view returns (address)",
-      "function ROLLUP_CONTRACT() view returns (address)",
-      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
-      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
-      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
-      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
-      "function estimateCrossDomainMessageFee(address _sender, uint256 _gasLimit) view returns (uint256)",
-      "function getCrossDomainMessage(uint256 _queueIndex) view returns (bytes32)",
-      "function initialize(uint256 _maxGasLimit, address _whitelistChecker)",
-      "function l2BaseFee() view returns (uint256)",
-      "function maxGasLimit() view returns (uint256)",
-      "function messageQueue(uint256) view returns (bytes32)",
-      "function nextCrossDomainMessageIndex() view returns (uint256)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
       "function owner() view returns (address)",
-      "function pendingQueueIndex() view returns (uint256)",
-      "function popCrossDomainMessage(uint256 _startIndex, uint256 _count)",
       "function renounceOwnership()",
-      "function setL2BaseFee(uint256 _newL2BaseFee)",
       "function transferOwnership(address newOwner)",
-      "function updateMaxGasLimit(uint256 _newMaxGasLimit)",
-      "function updateWhitelistChecker(address _newWhitelistChecker)",
-      "function whitelistChecker() view returns (address)"
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": [
       "constructor(address _singleton)"
@@ -1784,76 +2069,47 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5": [
-      "constructor(uint64 _chainID)",
-      "error ErrZeroAddress()",
-      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
-      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
-      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
-      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event ProveRemainingClaimed(address receiver, uint256 amount)",
-      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event Unpaused(address account)",
-      "event UpdateChallenger(address indexed account, bool status)",
-      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
-      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
-      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
-      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
-      "function LAYER_2_CHAIN_ID() view returns (uint64)",
-      "function __maxNumTxInChunk() view returns (uint256)",
-      "function addChallenger(address _account)",
-      "function batchChallengeReward(address owner) view returns (uint256 amount)",
-      "function batchChallenged() view returns (uint256)",
-      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
-      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, uint256 signedSequencersBitmap)",
-      "function batchExist(uint256 batchIndex) view returns (bool)",
-      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
-      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
-      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
-      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
-      "function claimProveRemaining(address receiver)",
-      "function claimReward(address receiver)",
-      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, uint64 lastBlockNumber, uint16 numL1Messages, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput) payable",
-      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
-      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function finalizeBatch(bytes _batchHeader)",
-      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function importGenesisBatch(bytes _batchHeader)",
-      "function inChallenge() view returns (bool)",
-      "function initialize(address _l1StakingContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
-      "function initialize2(bytes32 _prevStateRoot)",
-      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
-      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
-      "function l1StakingContract() view returns (address)",
-      "function lastCommittedBatchIndex() view returns (uint256)",
-      "function lastFinalizedBatchIndex() view returns (uint256)",
-      "function messageQueue() view returns (address)",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function proofRewardPercent() view returns (uint256)",
-      "function proofWindow() view returns (uint256)",
-      "function proveRemaining() view returns (uint256)",
-      "function proveState(bytes _batchHeader, bytes _batchProof)",
-      "function removeChallenger(address _account)",
-      "function renounceOwnership()",
-      "function revertBatch(bytes _batchHeader, uint256 _count)",
-      "function revertReqIndex() view returns (uint256)",
-      "function setPause(bool _status)",
-      "function transferOwnership(address newOwner)",
-      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
-      "function updateProofWindow(uint256 _newWindow)",
-      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
-      "function updateVerifier(address _newVerifier)",
-      "function verifier() view returns (address)",
-      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
-    ],
     "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": [
       "constructor(address _singleton)"
+    ],
+    "eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa": [
+      "constructor(address _messenger, address _rollup, address _enforcedTxGateway)",
+      "error ErrZeroAddress()",
+      "event DequeueTransaction(uint256 startIndex, uint256 count)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
+      "event UpdateEnforcedTxGateway(address indexed _oldGateway, address indexed _newGateway)",
+      "event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle)",
+      "event UpdateL2BaseFee(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit)",
+      "event UpdateWhitelistChecker(address indexed _oldWhitelistChecker, address indexed _newWhitelistChecker)",
+      "function ENFORCED_TX_GATEWAAY() view returns (address)",
+      "function MESSENGER() view returns (address)",
+      "function ROLLUP_CONTRACT() view returns (address)",
+      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
+      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
+      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
+      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
+      "function estimateCrossDomainMessageFee(address _sender, uint256 _gasLimit) view returns (uint256)",
+      "function getCrossDomainMessage(uint256 _queueIndex) view returns (bytes32)",
+      "function getFirstUnfinalizedMessageEnqueueTime() view returns (uint256 timestamp)",
+      "function getMessageEnqueueTimestamp(uint256 index) view returns (uint256 timestamp)",
+      "function initialize(uint256 _maxGasLimit, address _whitelistChecker)",
+      "function l2BaseFee() view returns (uint256)",
+      "function maxGasLimit() view returns (uint256)",
+      "function messageEnqueueTime(uint256) view returns (uint256)",
+      "function messageQueue(uint256) view returns (bytes32)",
+      "function nextCrossDomainMessageIndex() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingQueueIndex() view returns (uint256)",
+      "function popCrossDomainMessage(uint256 _startIndex, uint256 _count)",
+      "function renounceOwnership()",
+      "function setL2BaseFee(uint256 _newL2BaseFee)",
+      "function transferOwnership(address newOwner)",
+      "function updateMaxGasLimit(uint256 _newMaxGasLimit)",
+      "function updateWhitelistChecker(address _newWhitelistChecker)",
+      "function whitelistChecker() view returns (address)"
     ],
     "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": [
       "constructor(address _owner)",
@@ -1868,19 +2124,20 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "morph/EnforcedTxGateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "morph/L1CrossDomainMessenger": "0xe6eb973e1da6d70fff6409b261940b9e4415bd0bb740942fef25bb8778aa4e37",
     "morph/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "morph/L1GatewayRouter": "0x75d8f72d7a567ebdd261b1cd49fbe60bb70eba6eba7f76e062da2077aef8766b",
-    "morph/L1MessageQueueWithGasPriceOracle": "0x397bfa253b671dce5c2dc237c74abbcb62a8546a82f9f0dde3296ab9596e4d81",
+    "morph/L1MessageQueueWithGasPriceOracle": "0xe99184601a5e1a8fb617ad3a789966cec0a946118d4d9b56bc92b1d7d284b6c2",
     "morph/L1Staking": "0x3628b27131bceae20a3ba1e6858e52dc3afb537e7624b0d369b877bbca4d9830",
     "morph/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "morph/MorphRollup": "0x8c1811818c29498d4bb01605e3bd9329308c48a8745b57e46b177360b3107556",
+    "morph/MorphRollup": "0xfdde9ff40ce57d566176c3fbac3dfaf3caca7b43ccf3a4634fc7dca51892f936",
     "morph/MultipleVersionRollupVerifier": "0x18c849e277165d1e348f720058cc03de059801204ee5e7f09bb2a9de7fac1d8c",
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
     "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24225077 },
-  "permissionsConfigHash": "0xd084324cca38769cbbb64419de058ede8ce084f36710453b14a9cb65ee8f3ef7"
+  "usedBlockNumbers": { "ethereum": 24583163 },
+  "permissionsConfigHash": "0xd00e2728ff620c31f5def07e4bb1f0f3d71185e7985bba16777fc090ecf03367"
 }

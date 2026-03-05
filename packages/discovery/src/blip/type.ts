@@ -22,3 +22,5 @@ export type BlipSexp =
   | ['shape', ...ShapeArg[]]
   | ['to_entries']
   | ['length']
+  | ['map_values', BlipSexp]
+  | ['map_keys', BlipSexp]
