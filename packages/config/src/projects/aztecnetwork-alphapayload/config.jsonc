@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "aztecnetwork-alphapayload",
+  "import": ["../globalConfig.jsonc"],
+  "sharedModules": ["aztecnetwork"],
+  "initialAddresses": ["eth:0x780523FBa95e4Be0Fa09DA0fff5Fab3aBAE7B58e"]
+}
