@@ -147,4 +147,11 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'LINEA',
     explorerUrl: 'https://lineascan.build',
   },
+  {
+    id: 'avalanche',
+    name: 'Avalanche',
+    type: 'evm',
+    display: 'AVAX',
+    explorerUrl: 'https://snowtrace.io',
+  },
 ]
