@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
+import { assert } from '@l2beat/shared-pure'
 import type { Manifest as ViteManifest } from 'vite'
 
 interface Manifest {
@@ -42,9 +43,11 @@ export function mergeManifests(
       ...Object.entries(viteManifest).reduce(
         (acc, [key, value]) => {
           if (value.imports && value.imports.length > 0) {
-            acc[`/${key}`] = value.imports.map(
-              (imp) => `/static/${viteManifest[imp]?.file}`,
-            )
+            acc[`/${key}`] = value.imports.map((imp) => {
+              const entry = viteManifest[imp]
+              assert(entry, `Import ${imp} not found in vite manifest`)
+              return `/static/${entry.file}`
+            })
           }
           return acc
         },
