@@ -560,6 +560,15 @@ Verify:
 4. From op-succinct/elf dir:  \`cargo prove vkey --elf aggregation-elf \` to check the verification key of this elf.
     `,
   },
+  '0x0077f45ec2258cc98fa879d13a2773190bffb9cafb9f428ce3c5718dc768f03e': {
+    title: 'Aggregation program of OP Succinct',
+    description:
+      'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+    proverSystemProject: ProjectId('sp1'),
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.5.0/programs/aggregation',
+    verificationStatus: 'notVerified',
+  },
   '0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63': {
     title: 'Range program of OP Succinct',
     description:
@@ -575,6 +584,13 @@ Verify:
     verificationStatus: 'unsuccessful',
     verificationSteps:
       'The sources for this program contain a security advisory fix and are not published yet. Thus the hash cannot be independently regenerated.',
+  },
+  '0x0e5158b64c46007c04e5972727a2a26832337fbe765162294b0ce1ed0db36f9d': {
+    title: 'Range program of OP Succinct',
+    description:
+      'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
   },
   '0x00cd47e188eeeab95c3c666088b928ff8243f8dd8d6e94f49795013bcd6231f0': {
     title: 'SP1 Helios program',
