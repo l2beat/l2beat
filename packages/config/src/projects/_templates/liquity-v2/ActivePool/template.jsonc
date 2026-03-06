@@ -10,7 +10,8 @@
     "getBoldDebt",
     "getCollBalance",
     "lastAggBatchManagementFeesUpdateTime",
-    "lastAggUpdateTime"
+    "lastAggUpdateTime",
+    "aggWeightedBatchManagementFeeSum"
   ],
   "ignoreRelatives": ["collToken"]
 }

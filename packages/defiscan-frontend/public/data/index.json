@@ -53,8 +53,20 @@
       ]
     },
     {
-      "address": "eth:0x536218f9e9eb48863970252233c8f271f554c2d0",
-      "name": "Chainlink stETH/USD Price Feed",
+      "address": "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+      "name": "Chainlink ETH/USD Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 87579530.73604652,
+      "protocols": [
+        {
+          "slug": "liquity-v2",
+          "name": "Liquity V2"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xcfe54b5cd566ab89272946f602d76ea879cab4a8",
+      "name": "Chainlink rETH/ETH Price Feed",
       "entity": "Chainlink",
       "totalFundsAtRisk": 87579530.73604652,
       "protocols": [
@@ -68,6 +80,18 @@
       "address": "eth:0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
       "name": "Lido wstETH",
       "entity": "Lido",
+      "totalFundsAtRisk": 87579530.73604652,
+      "protocols": [
+        {
+          "slug": "liquity-v2",
+          "name": "Liquity V2"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x536218f9e9eb48863970252233c8f271f554c2d0",
+      "name": "Chainlink stETH/USD Price Feed",
+      "entity": "Chainlink",
       "totalFundsAtRisk": 87579530.73604652,
       "protocols": [
         {
@@ -169,18 +193,6 @@
         {
           "slug": "Steakhouse-USDC",
           "name": "Steakhouse USDC"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
-      "name": "Chainlink ETH/USD Price Feed",
-      "entity": "Chainlink",
-      "totalFundsAtRisk": 0,
-      "protocols": [
-        {
-          "slug": "liquity-v2",
-          "name": "Liquity V2"
         }
       ]
     }

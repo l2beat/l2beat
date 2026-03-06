@@ -299,7 +299,7 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 
 **External Call Detection**: Uses Slither to analyze which external contracts each function calls
 
-- **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/callGraph.ts`
+- **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/callGraph.ts` (Slither runner + parser), `callGraphHeuristics.ts` (resolution heuristic engine)
 - **Storage**: `call-graph-data.json` per project
 - **Tool**: Slither's `--print slithir` command
 - **Configuration**:
@@ -323,6 +323,18 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - **View inference**: If caller is view/pure, external call must also be view
 - **Contract name matching**: Slithir uses `INFO:Printers:Contract X` or alternatives such as `Contract X` format for main contract
 - **Deduplication**: Removes duplicate calls per caller function
+- **Nested object resolution**: `resolveStorageVariable` extracts addresses from struct-like objects (e.g., `{ aggregator: "eth:0x...", decimals: 8 }`) and resolves when exactly one address is found
+- **REF_ propagation**: Parent type substitutions propagate through synthetic Slither `REF_`/`TMP_` references, so the same internal function called with different arguments (e.g., `_getPrice(ethUsdOracle)` vs `_getPrice(rEthEthOracle)`) produces separate call entries
+- **Context-aware deduplication**: Visited-set key includes type substitutions to prevent merging calls with different argument contexts
+
+**Heuristic Resolution Engine** (`callGraphHeuristics.ts`): Resolves storage variables to contract addresses when direct `discovered.json` lookup fails. Runs all heuristics and picks the highest-confidence result:
+
+1. **VariableChainHeuristic** (confidence: 100%) — follows Slither variable assignment chains to find state variables, handles nested struct fields
+2. **DiscoveredValuesScanHeuristic** (confidence: 95/70/50%) — scans caller contract's discovered values for `eth:` addresses, matches against contracts that have the called function in their ABI
+3. **InterfaceNameHeuristic** (confidence: 90/60/40%) — strips `I` prefix from interface name and matches contract names
+4. **FunctionSignatureHeuristic** (confidence: 99/50/30%) — finds all contracts with the called function in their ABI
+
+Internal helper: `contractHasFunction(discovered, entry, functionName)` — checks if a contract (including proxy implementations) has a function in its ABI. Module-private to `callGraphHeuristics.ts` (not exported).
 
 **Data Structure** (`call-graph-data.json`):
 
@@ -354,6 +366,7 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - `buildExternalAddressSet(tags)` / `buildTagsByAddress(tags)` — build lookup structures from contract tags
 - `isExternalAddress(address, externalAddresses)` / `findTag(tagsByAddress, address)` — address matching with `eth:` prefix normalization
 - `getCallGraphContractName(callGraphData, address)` — resolve contract name from call graph data
+- `extractEthAddresses(value)` — extract all `eth:` addresses from a value (handles flat strings and one-level-deep object fields)
 
 ### Enhanced Traversal & Function Analysis ✅
 
@@ -497,10 +510,11 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - **File**: `.claude/skills/generate-review/SKILL.md`
 - **Prerequisites**: l2b UI server running at `localhost:2021` (`cd packages/config && l2b ui`)
 - **Behavior**: Always replaces the entire review — every run generates fresh content
+- **Isolation**: Moves existing `review-config.json` aside before generation to prevent bias from prior output
 
 **How It Works**:
 1. Fetches pre-processed data from l2b API endpoints (v2-score, enhanced-traversal, funds-data, contract-tags, functions, project data)
-2. Preprocesses large responses into compact summaries (python3 scripts)
+2. Preprocesses large responses into compact summaries (python3 scripts); includes contract `description` fields from config for context
 3. Analyzes protocol structure, admin hierarchy, dependencies, and fund distribution
 4. Generates professional descriptions following built-in writing guidelines (neutral tone, data-driven, no marketing copy, no hardcoded USD values)
 5. Writes result directly to `packages/config/src/projects/{project}/review-config.json`
@@ -674,6 +688,8 @@ packages/
 │   ├── reviewConfig.ts              # Review config CRUD
 │   ├── reviewCompiler.ts            # Compiled review builder (shared with monitor)
 │   ├── generatePermissionsReport.ts
+│   ├── callGraph.ts                  # Slither-based external call detection
+│   ├── callGraphHeuristics.ts        # Heuristic engine for variable-to-address resolution
 │   ├── enhancedTraversal.ts          # Backward BFS governance chains
 │   └── functionAnalysis.ts           # Forward BFS impact & dependencies
 ├── defiscan-frontend/                # Standalone public review website

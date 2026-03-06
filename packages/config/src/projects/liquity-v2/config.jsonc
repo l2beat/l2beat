@@ -106,6 +106,21 @@
     },
     "eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1": {
       "ignoreRelatives": ["collToken"]
+    },
+    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": {
+      "description": "rETH/ETH Chainlink Price Feed"
+    },
+    "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": {
+      "description": "stETH/USD Price Feed"
+    },
+    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": {
+      "ignoreInWatchMode": [
+        "getCollateralRate",
+        "getExchangeRate",
+        "getTotalCollateral",
+        "totalSupply"
+      ],
+      "ignoreMethods": ["getEthValue", "getRethValue"]
     }
   }
 }

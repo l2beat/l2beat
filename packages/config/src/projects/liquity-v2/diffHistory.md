@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x9fcc5159a31b84da9d6d988627b80a2f25d80dc3
+
+# Diff at Fri, 06 Mar 2026 08:47:37 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@98630e5ebe9adefa807d3e71ec36dab2eb8594e0 block: 1772629150
+- current timestamp: 1772786748
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract ActivePool (eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0) {
+    +++ description: None
+      values.aggWeightedBatchManagementFeeSum:
+-        "15224465054459121365746676000000000000000"
++        "26069934540966459620744293000000000000000"
+    }
+```
+
+```diff
+    contract RocketTokenRETH (eth:0xae78736Cd615f374D3085123A210448E74Fc6393) {
+    +++ description: None
+      values.getCollateralRate:
+-        "9684838227955654"
++        "9939385896594708"
+      values.getExchangeRate:
+-        "1158735463711660524"
++        "1158872140378225549"
+      values.getTotalCollateral:
+-        "3865027871669339910088"
++        "3965862867625100873492"
+      values.totalSupply:
+-        "344410164552332742285096"
++        "344304436006420139696216"
+    }
+```
+
+```diff
+    contract ActivePool (eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE) {
+    +++ description: None
+      values.aggWeightedBatchManagementFeeSum:
+-        "eth:0x4671404119147669602431827500000000000000"
++        "eth:0x6048896546837818165748415000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772629150 (main branch discovery), not current.
+
+```diff
+    contract EACAggregatorProxy (eth:0x536218f9E9Eb48863970252233c8F271f554C2d0) {
+    +++ description: rETH/ETH Chainlink Price Feed
+      description:
++        "rETH/ETH Chainlink Price Feed"
+    }
+```
+
+```diff
+    contract EACAggregatorProxy (eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8) {
+    +++ description: stETH/USD Price Feed
+      description:
++        "stETH/USD Price Feed"
+    }
+```
+
 Generated with discovered.json: 0xc33e4c7f516c90272a2614b2984ed136b051228f
 
 # Diff at Wed, 04 Mar 2026 13:43:35 GMT:

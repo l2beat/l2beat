@@ -1,92 +1,92 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-04T14:06:02.873Z",
+  "lastModified": "2026-03-06T12:00:00.000Z",
   "protocolSlug": "liquity-v2",
   "protocolName": "Liquity V2",
   "tokenName": "BOLD",
   "chain": "Ethereum",
   "projectType": "cdp",
-  "description": "Liquity V2 is a multi-collateral CDP protocol that issues BOLD, a USD-soft-pegged stablecoin, against WETH, wstETH, and rETH collateral across three independent branches, with {{totalCapitalAtRisk}} held across the protocol's collateral and stability pools. Borrowers open Troves — each represented as a transferable NFT — and pay market-determined interest rates set individually or delegated to batch managers, replacing the fixed-fee model of Liquity V1. All 44 contracts are immutable with no upgradeable proxies, ownership was renounced to the zero address after initialization, and no administrative keys exist post-deployment. The protocol relies on Chainlink price feeds (ETH/USD, stETH/USD, rETH/ETH) as the primary price source, with on-chain exchange rate queries from the wstETH and rETH token contracts as secondary inputs; oracle failure beyond the fallback timeout triggers branch-level shutdown.",
+  "description": "Liquity V2 is a multi-collateral borrowing protocol that lets users deposit WETH, wstETH, or rETH as collateral to mint BOLD, a USD-pegged stablecoin. All 44 contracts are immutable with no admin keys, timelocks, or governance — every permissioned function is restricted to internal contract-to-contract calls, making the protocol fully autonomous once deployed. The system relies on three Chainlink price feeds for collateral valuation and on Lido's wstETH and RocketPool's rETH exchange rate contracts for LST pricing, with {{totalCapitalAtRisk}} in total capital across its collateral pools.",
   "admins": {
     "eth:0xa741a32f9dcfe6adba088fd0f97e90742d7d5da3": {
-      "name": "wstETH Branch BorrowerOperations",
-      "description": "Internal protocol contract — not a human-controlled admin. BorrowerOperations is the exclusive caller permitted to execute sendColl, receiveColl, accountForReceivedColl, and mintAggInterest functions on the wstETH branch collateral pools, and is the entry point for all Trove operations. All ownership chain terminals resolve to immutable Liquity V2 contracts with no external keyholder. Authorized access spans {{borrowerOpsDirectCapital}} in direct capital across 21 contracts."
+      "name": "BorrowerOperations (wstETH branch)",
+      "description": "Internal protocol contract that gates user-facing operations for the wstETH collateral branch. Controls 37 permissioned functions across 24 contracts including collateral transfers in ActivePool, interest minting, trove management in SortedTroves, and branch shutdown. This is not a human admin — it enforces protocol logic for opening, adjusting, and closing troves."
     },
     "eth:0xa2895d6a3bf110561dfe4b71ca539d84e1928b22": {
-      "name": "wstETH Branch TroveManager",
-      "description": "Internal protocol contract. TroveManager is authorized to call sendCollToDefaultPool, mintAggInterestAndAccountForTroveChange, mintBatchManagementFeeAndAccountForChange, and setShutdownFlag on the wstETH ActivePool, and drives SortedTroves remove and removeFromBatch operations during liquidations. Authorized access spans {{wstethTroveManagerDirectCapital}} in direct capital across 10 contracts."
+      "name": "TroveManager (wstETH branch)",
+      "description": "Internal protocol contract that manages trove lifecycle for the wstETH branch. Controls 24 permissioned functions across 10 contracts including collateral redistribution to DefaultPool, batch management fee minting, branch shutdown flag, and StabilityPool offset (liquidation debt cancellation). All calls are protocol-internal with no external admin."
     },
     "eth:0x9502b7c397e9aa22fe9db7ef7daf21cd2aebe56b": {
-      "name": "wstETH Branch StabilityPool",
-      "description": "Internal protocol contract. The wstETH StabilityPool is authorized to call sendColl and mintAggInterest on the wstETH ActivePool, enabling BOLD liquidation offsets and interest distribution to stability depositors. Holds {{wstethStabilityPoolBalance}} in BOLD deposits and wstETH liquidation proceeds."
+      "name": "StabilityPool (wstETH branch)",
+      "description": "Internal protocol contract that manages the wstETH Stability Pool. Controls 6 permissioned functions across 7 contracts, primarily collateral transfers from ActivePool and interest minting. Acts as a caller for ActivePool.sendColl and ActivePool.mintAggInterest during liquidation processing."
     },
     "eth:0xd796e1648526400386cc4d12fa05e5f11e6a22a1": {
-      "name": "wstETH Branch DefaultPool",
-      "description": "Internal protocol contract. DefaultPool is authorized to call receiveColl and accountForReceivedColl on the wstETH ActivePool, handling collateral accounting during redistribution liquidations where bad debt and collateral are socialized across surviving trove holders. Authorized access spans {{defaultPoolDirectCapital}} in direct capital."
+      "name": "DefaultPool (wstETH branch)",
+      "description": "Internal protocol contract that holds redistributed collateral for the wstETH branch. Controls 6 permissioned functions across 3 contracts, primarily receiving collateral from ActivePool during redistributions and sending it back. All calls are protocol-internal."
     },
     "eth:0x9074d72cc82dad1e13e454755aa8f144c479532f": {
-      "name": "rETH Branch ActivePool",
-      "description": "Internal protocol contract. The rETH ActivePool is authorized to call receiveColl on its DefaultPool and triggerBoldRewards on the rETH StabilityPool, coordinating redistribution accounting and interest distribution to depositors. Holds {{rethActivePoolBalance}} in rETH collateral, and its authorized-caller set is fixed at deployment."
+      "name": "ActivePool (rETH branch)",
+      "description": "Internal protocol contract that holds rETH collateral. Controls 5 permissioned functions across 5 contracts, gating collateral receipt from DefaultPool and BorrowerOperations. Holds {{rethActivePoolBalance}} in rETH collateral."
     },
     "eth:0xe8119fc02953b27a1b48d2573855738485a17329": {
-      "name": "rETH Branch BorrowerOperations",
-      "description": "Internal protocol contract. The rETH branch BorrowerOperations is authorized to call insert, remove, reInsert, insertIntoBatch, removeFromBatch, and reInsertBatch on the rETH SortedTroves, maintaining the sorted-by-interest-rate linked list used for batch management and redemptions. SortedTroves holds no collateral, so direct capital exposure is zero."
+      "name": "BorrowerOperations (rETH branch)",
+      "description": "Internal protocol contract that gates user-facing operations for the rETH collateral branch. Controls 18 permissioned functions across 6 contracts, mirroring the wstETH BorrowerOperations for rETH-collateralized troves. No capital directly at risk in this branch's pools as measured."
     },
     "eth:0xb2b2abeb5c357a234363ff5d180912d319e3e19e": {
-      "name": "rETH Branch TroveManager",
-      "description": "Internal protocol contract. The rETH TroveManager is authorized to call remove and removeFromBatch on its SortedTroves, collateral accounting functions on its DefaultPool, and offset on the rETH StabilityPool during liquidations. Authorized access spans {{rethTroveManagerDirectCapital}} in direct capital across 8 contracts."
+      "name": "TroveManager (rETH branch)",
+      "description": "Internal protocol contract that manages trove lifecycle for the rETH branch. Controls 8 permissioned functions across 8 contracts including collateral redistribution, shutdown flags, and StabilityPool offsets."
     }
   },
   "dependencies": {
     "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419": {
       "name": "Chainlink ETH/USD Price Feed",
-      "description": "Chainlink EACAggregatorProxy supplying the ETH/USD spot price used by WETHPriceFeed for WETH collateral valuation. An oracle outage lasting beyond the fallback timeout causes the WETH branch to enter shutdown mode, halting new borrows and redemptions. The aggregator address can be updated by a Chainlink-operated 4/9 multisig."
-    },
-    "eth:0x536218f9e9eb48863970252233c8f271f554c2d0": {
-      "name": "Chainlink stETH/USD Price Feed",
-      "description": "Chainlink EACAggregatorProxy used by WSTETHPriceFeed as a price input for wstETH collateral valuation, combined with the on-chain stETH/wstETH exchange rate from the Lido contract. 29 borrowing and interest rate management functions in the wstETH branch depend on this feed being live and accurate."
+      "description": "Chainlink EACAggregatorProxy providing the ETH/USD price. Used by all three collateral branches via their respective PriceFeed contracts — impacts 30 functions including openTrove, adjustTroveInterestRate, shutdown, and liquidation operations across BorrowerOperations and TroveManager contracts. Owned by a Chainlink 4/9 multisig."
     },
     "eth:0xcfe54b5cd566ab89272946f602d76ea879cab4a8": {
+      "name": "Chainlink stETH/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing the stETH/USD price, used by the WSTETHPriceFeed contract to value wstETH collateral. Impacts 10 functions in the wstETH BorrowerOperations branch."
+    },
+    "eth:0x536218f9e9eb48863970252233c8f271f554c2d0": {
       "name": "Chainlink rETH/ETH Price Feed",
-      "description": "Chainlink EACAggregatorProxy providing rETH/ETH price data used by RETHPriceFeed alongside the Rocket Pool on-chain exchange rate to compute rETH collateral value. Failure of this feed triggers rETH branch shutdown after the fallback timeout."
+      "description": "Chainlink EACAggregatorProxy providing the rETH/ETH exchange rate, used by the RETHPriceFeed contract to value rETH collateral. Impacts 9 functions in the rETH BorrowerOperations branch."
     },
     "eth:0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0": {
-      "name": "Lido wstETH",
-      "description": "Lido's wrapped staked ETH token, queried by WSTETHPriceFeed for the current stETH/wstETH exchange rate as a component in collateral pricing. A sustained stETH depeg or Lido systemic failure would directly affect collateral ratios in the wstETH branch and could trigger mass liquidations."
+      "name": "Lido wstETH Token",
+      "description": "Lido's wrapped staked ETH token contract, used by the WSTETHPriceFeed for the wstETH/stETH exchange rate via stEthPerToken(). Impacts 10 functions in the wstETH collateral branch. The largest collateral pool holds {{wstethActivePoolBalance}} in wstETH."
     },
     "eth:0xae78736cd615f374d3085123a210448e74fc6393": {
-      "name": "Rocket Pool rETH",
-      "description": "Rocket Pool's liquid staking token, queried by RETHPriceFeed for the rETH/ETH exchange rate as a component in collateral pricing. A depeg or liquidity disruption in the rETH market would affect collateral valuations in the rETH branch."
+      "name": "RocketPool rETH Token",
+      "description": "RocketPool's liquid staking token contract, used by the RETHPriceFeed for the rETH/ETH exchange rate via getExchangeRate(). Impacts 9 functions in the rETH collateral branch."
     }
   },
   "funds": {
     "eth:0x531a8f99c70d6a56a7cee02d6b4281650d7919a0": {
-      "name": "ActivePool (wstETH branch)",
-      "description": "Holds {{wstethActivePoolBalance}} in wstETH collateral deposited by wstETH-branch borrowers as backing for their BOLD debt. The largest collateral pool in the protocol; collateral moves to DefaultPool during redistribution liquidations and returns to borrowers on full repayment."
-    },
-    "eth:0xeb5a8c825582965f1d84606e078620a84ab16afe": {
-      "name": "ActivePool (WETH branch)",
-      "description": "Holds {{wethActivePoolBalance}} in WETH collateral deposited by WETH-branch borrowers. Collateral is transferred to BorrowerOperations on withdrawals, to DefaultPool during redistributions, and to the StabilityPool during offset liquidations."
+      "name": "ActivePool (wstETH)",
+      "description": "Main collateral pool for the wstETH branch, holding {{wstethActivePoolBalance}} in wstETH deposited by borrowers. The largest single pool in the protocol."
     },
     "eth:0x9074d72cc82dad1e13e454755aa8f144c479532f": {
-      "name": "ActivePool (rETH branch)",
-      "description": "Holds {{rethActivePoolBalance}} in rETH collateral deposited by rETH-branch borrowers. rETH accrues ETH staking rewards over time, so the collateral value changes independently of ETH spot price movements."
+      "name": "ActivePool (rETH)",
+      "description": "Main collateral pool for the rETH branch, holding {{rethActivePoolBalance}} in rETH deposited by borrowers."
+    },
+    "eth:0xeb5a8c825582965f1d84606e078620a84ab16afe": {
+      "name": "ActivePool (WETH)",
+      "description": "Main collateral pool for the WETH branch, holding {{wethActivePoolBalance}} in wrapped Ether deposited by borrowers."
     },
     "eth:0x9502b7c397e9aa22fe9db7ef7daf21cd2aebe56b": {
-      "name": "StabilityPool (wstETH branch)",
-      "description": "Holds {{wstethStabilityPoolBalance}} in BOLD deposits and wstETH liquidation proceeds. Depositors absorb liquidated wstETH-branch troves by canceling BOLD against bad debt and receive the liquidated wstETH collateral at a discount."
+      "name": "StabilityPool (wstETH)",
+      "description": "Stability pool for the wstETH branch, holding {{wstethStabilityPoolBalance}} in BOLD deposits and wstETH liquidation gains from borrowers."
     },
     "eth:0x5721cbbd64fc7ae3ef44a0a3f9a790a9264cf9bf": {
-      "name": "StabilityPool (WETH branch)",
-      "description": "Holds {{wethStabilityPoolBalance}} in BOLD deposits and WETH liquidation proceeds. Provides the primary liquidation backstop for the WETH branch; depositors earn liquidated WETH collateral and BOLD rewards from branch interest accrual."
+      "name": "StabilityPool (WETH)",
+      "description": "Stability pool for the WETH branch, holding {{wethStabilityPoolBalance}} in BOLD deposits and WETH liquidation gains."
     },
     "eth:0xd442e41019b7f5c4dd78f50dc03726c446148695": {
-      "name": "StabilityPool (rETH branch)",
-      "description": "Holds {{rethStabilityPoolBalance}} in BOLD deposits and rETH liquidation proceeds. Provides the primary liquidation backstop for the rETH branch; depositors earn liquidated rETH collateral and BOLD rewards from branch interest accrual."
+      "name": "StabilityPool (rETH)",
+      "description": "Stability pool for the rETH branch, holding {{rethStabilityPoolBalance}} in BOLD deposits and rETH liquidation gains."
     },
     "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d": {
       "name": "BOLD Stablecoin",
-      "description": "Protocol-native stablecoin with a circulating market cap of {{boldMarketCap}}. Minted when borrowers open Troves and burned on repayment or redemption. Token ownership was renounced to the zero address after the CollateralRegistry address was set; all subsequent minting and burning is exclusively controlled by the immutable branch contracts."
+      "description": "The protocol's native stablecoin token contract with a market cap of {{boldMarketCap}}. Ownership was renounced to the zero address after initialization — setBranchAddresses and setCollateralRegistry can no longer be called."
     }
   },
   "sections": {
@@ -101,34 +101,18 @@
               "type": "dataTable",
               "dataSource": "project.contracts",
               "columns": [
-                {
-                  "field": "name",
-                  "header": "Name"
-                },
-                {
-                  "field": "address",
-                  "header": "Address",
-                  "format": "address"
-                },
-                {
-                  "field": "proxyType",
-                  "header": "Proxy Type",
-                  "format": "badge"
-                }
+                { "field": "name", "header": "Name" },
+                { "field": "address", "header": "Address", "format": "address" },
+                { "field": "proxyType", "header": "Proxy Type", "format": "badge" }
               ],
-              "filters": {
-                "excludeExternal": true
-              }
+              "filters": { "excludeExternal": true }
             }
           ]
         },
         {
           "title": "Audits",
           "content": [
-            {
-              "type": "text",
-              "content": ""
-            }
+            { "type": "text", "content": "" }
           ]
         }
       ]
@@ -136,16 +120,12 @@
   },
   "dataKeys": {
     "totalCapitalAtRisk": "v2score.inventory.admins.totalCapitalAtRisk",
-    "borrowerOpsDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3\"].totalDirectCapital",
-    "wstethTroveManagerDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22\"].totalDirectCapital",
-    "defaultPoolDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xD796e1648526400386CC4d12FA05E5F11e6a22A1\"].totalDirectCapital",
-    "rethTroveManagerDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e\"].totalDirectCapital",
-    "wstethActivePoolBalance": "fundsdata.contracts[\"eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0\"].balances.totalUsdValue",
-    "wethActivePoolBalance": "fundsdata.contracts[\"eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE\"].balances.totalUsdValue",
-    "rethActivePoolBalance": "fundsdata.contracts[\"eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F\"].balances.totalUsdValue",
-    "wstethStabilityPoolBalance": "fundsdata.contracts[\"eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B\"].balances.totalUsdValue",
-    "wethStabilityPoolBalance": "fundsdata.contracts[\"eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF\"].balances.totalUsdValue",
-    "rethStabilityPoolBalance": "fundsdata.contracts[\"eth:0xd442E41019B7F5C4dD78F50dc03726C446148695\"].balances.totalUsdValue",
-    "boldMarketCap": "fundsdata.contracts[\"eth:0x6440f144b7e50D6a8439336510312d2F54beB01D\"].tokenInfo.tokenValue"
+    "wstethActivePoolBalance": "fundsdata.contracts[\"eth:0x531a8f99c70d6a56a7cee02d6b4281650d7919a0\"].balances.totalUsdValue",
+    "rethActivePoolBalance": "fundsdata.contracts[\"eth:0x9074d72cc82dad1e13e454755aa8f144c479532f\"].balances.totalUsdValue",
+    "wethActivePoolBalance": "fundsdata.contracts[\"eth:0xeb5a8c825582965f1d84606e078620a84ab16afe\"].balances.totalUsdValue",
+    "wstethStabilityPoolBalance": "fundsdata.contracts[\"eth:0x9502b7c397e9aa22fe9db7ef7daf21cd2aebe56b\"].balances.totalUsdValue",
+    "wethStabilityPoolBalance": "fundsdata.contracts[\"eth:0x5721cbbd64fc7ae3ef44a0a3f9a790a9264cf9bf\"].balances.totalUsdValue",
+    "rethStabilityPoolBalance": "fundsdata.contracts[\"eth:0xd442e41019b7f5c4dd78f50dc03726c446148695\"].balances.totalUsdValue",
+    "boldMarketCap": "fundsdata.contracts[\"eth:0x6440f144b7e50d6a8439336510312d2f54beb01d\"].tokenInfo.tokenValue"
   }
 }

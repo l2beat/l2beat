@@ -1,4 +1,5 @@
 import type { DiscoveryOutput } from '@l2beat/discovery'
+import { extractEthAddresses } from './callGraph'
 import type { ExternalCall, ResolutionCandidate } from './types'
 
 // =============================================================================
@@ -32,6 +33,40 @@ export interface HeuristicEngineResult {
   heuristicName: string
   matches: ResolutionCandidate[]
   confidence: number
+}
+
+// =============================================================================
+// Shared Helpers
+// =============================================================================
+
+/**
+ * Check if a contract (including proxy implementations) has a function in its ABI.
+ */
+function contractHasFunction(
+  discovered: DiscoveryOutput,
+  entry: DiscoveryOutput['entries'][number],
+  functionName: string,
+): boolean {
+  const abiAddresses = [entry.address]
+  const implValue = entry.values?.$implementation
+  if (typeof implValue === 'string' && implValue.startsWith('eth:')) {
+    abiAddresses.push(implValue as typeof entry.address)
+  }
+
+  for (const abiAddress of abiAddresses) {
+    const abi = discovered.abis[abiAddress]
+    if (!abi) continue
+
+    const found = abi.some((abiEntry) => {
+      if (!abiEntry.startsWith('function ')) return false
+      const match = abiEntry.match(/^function\s+(\w+)\(/)
+      return match && match[1] === functionName
+    })
+
+    if (found) return true
+  }
+
+  return false
 }
 
 // =============================================================================
@@ -93,6 +128,37 @@ class VariableChainHeuristic implements ResolutionHeuristic {
           },
         ],
         confidence: 100, // Single match via chain = 100%
+      }
+    }
+
+    // Handle nested objects (e.g., oracle structs like { aggregator: "eth:0x...", decimals: 8 })
+    // Filter to addresses that actually have the called function in their ABI
+    const addresses = extractEthAddresses(value)
+    if (addresses.length > 0) {
+      const validMatches = addresses
+        .map((addr) => {
+          const entry = discovered.entries.find(
+            (e) => e.address.toLowerCase() === addr.toLowerCase(),
+          )
+          return { address: addr, contractName: entry?.name, entry }
+        })
+        .filter(
+          (m) =>
+            m.entry &&
+            m.entry.type === 'Contract' &&
+            contractHasFunction(
+              discovered,
+              m.entry,
+              context.call.calledFunction,
+            ),
+        )
+        .map(({ address, contractName }) => ({ address, contractName }))
+
+      if (validMatches.length > 0) {
+        return {
+          matches: validMatches,
+          confidence: validMatches.length === 1 ? 100 : 70,
+        }
       }
     }
 
@@ -235,29 +301,7 @@ class FunctionSignatureHeuristic implements ResolutionHeuristic {
     for (const entry of discovered.entries) {
       if (entry.type !== 'Contract') continue
 
-      // Collect ABI addresses: entry address + implementation address for proxies
-      const abiAddresses = [entry.address]
-      const implValue = entry.values?.$implementation
-      if (typeof implValue === 'string' && implValue.startsWith('eth:')) {
-        abiAddresses.push(implValue as typeof entry.address)
-      }
-
-      // Check if any of the contract's ABIs have the function
-      let hasFunction = false
-      for (const abiAddress of abiAddresses) {
-        const abi = discovered.abis[abiAddress]
-        if (!abi) continue
-
-        hasFunction = abi.some((abiEntry) => {
-          if (!abiEntry.startsWith('function ')) return false
-          const match = abiEntry.match(/^function\s+(\w+)\(/)
-          return match && match[1] === functionName
-        })
-
-        if (hasFunction) break
-      }
-
-      if (hasFunction) {
+      if (contractHasFunction(discovered, entry, functionName)) {
         matches.push({
           address: entry.address,
           contractName: entry.name,
@@ -282,6 +326,82 @@ class FunctionSignatureHeuristic implements ResolutionHeuristic {
     if (matchCount === 1) return 99
     if (matchCount === 2) return 50
     return 30
+  }
+}
+
+/**
+ * Discovered Values Scan Heuristic
+ *
+ * Scans the caller contract's discovered values (recursively) for eth: addresses,
+ * then finds contracts at those addresses that have the called function in their ABI.
+ * This catches dependencies stored in nested structs (e.g., oracle configs with
+ * an `aggregator` address) that other heuristics miss.
+ *
+ * Confidence: 1 match → 95%, 2 matches → 70%, 3+ matches → 50%
+ */
+class DiscoveredValuesScanHeuristic implements ResolutionHeuristic {
+  name = 'discovered-values-scan'
+  description =
+    'Match candidates against addresses found in caller contract values'
+
+  apply(context: HeuristicContext): HeuristicResult | null {
+    const { call, callerContractAddress, discovered } = context
+
+    // Find the caller contract's values
+    const callerContract = discovered.entries.find(
+      (e) =>
+        e.address.toLowerCase() === callerContractAddress.toLowerCase() &&
+        e.type === 'Contract',
+    )
+
+    if (
+      !callerContract ||
+      !('values' in callerContract) ||
+      !callerContract.values
+    ) {
+      return null
+    }
+
+    // Collect all eth: addresses from the caller's values (one level deep into objects)
+    const valueAddresses = new Set<string>()
+    for (const value of Object.values(callerContract.values)) {
+      for (const addr of extractEthAddresses(value)) {
+        valueAddresses.add(addr.toLowerCase())
+      }
+    }
+
+    if (valueAddresses.size === 0) {
+      return null
+    }
+
+    // Find contracts at those addresses that have the called function in their ABI
+    const functionName = call.calledFunction
+    const matches: HeuristicMatch[] = []
+
+    for (const entry of discovered.entries) {
+      if (entry.type !== 'Contract') continue
+      if (!valueAddresses.has(entry.address.toLowerCase())) continue
+
+      if (contractHasFunction(discovered, entry, functionName)) {
+        matches.push({
+          address: entry.address,
+          contractName: entry.name,
+        })
+      }
+    }
+
+    if (matches.length === 0) {
+      return null
+    }
+
+    const confidence = this.calculateConfidence(matches.length)
+    return { matches, confidence }
+  }
+
+  private calculateConfidence(matchCount: number): number {
+    if (matchCount === 1) return 95
+    if (matchCount === 2) return 70
+    return 50
   }
 }
 
@@ -510,8 +630,9 @@ export function parseVariableAssignments(
 export function createHeuristicEngine(): HeuristicEngine {
   const engine = new HeuristicEngine()
 
-  // Register heuristics in order of reliability
+  // Register heuristics (engine selects by highest confidence, order only affects tiebreaking)
   engine.register(new VariableChainHeuristic())
+  engine.register(new DiscoveredValuesScanHeuristic())
   engine.register(new InterfaceNameHeuristic())
   engine.register(new FunctionSignatureHeuristic())
 

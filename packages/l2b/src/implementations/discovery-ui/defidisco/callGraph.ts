@@ -632,6 +632,25 @@ function getContractsToAnalyze(
 }
 
 /**
+ * Extract all eth: addresses from a value.
+ * Handles flat strings and one-level-deep object fields (e.g., oracle structs
+ * with an `aggregator` address alongside non-address fields like `stalenessThreshold`).
+ */
+export function extractEthAddresses(value: unknown): string[] {
+  if (typeof value === 'string' && value.startsWith('eth:')) return [value]
+  if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+    const addresses: string[] = []
+    for (const v of Object.values(value)) {
+      if (typeof v === 'string' && v.startsWith('eth:')) {
+        addresses.push(v)
+      }
+    }
+    return addresses
+  }
+  return []
+}
+
+/**
  * Resolve storage variable to actual contract address using discovered.json
  */
 function resolveStorageVariable(
@@ -660,6 +679,20 @@ function resolveStorageVariable(
     )
     return {
       address: value,
+      name: resolvedContract?.name,
+    }
+  }
+
+  // Handle nested objects (e.g., oracle structs like { aggregator: "eth:0x...", decimals: 8 }).
+  // Only deterministic if exactly one address is found (unambiguous).
+  const addresses = extractEthAddresses(value)
+  if (addresses.length === 1) {
+    const addr = addresses[0]!
+    const resolvedContract = discovered.entries.find(
+      (e) => e.address.toLowerCase() === addr.toLowerCase(),
+    )
+    return {
+      address: addr,
       name: resolvedContract?.name,
     }
   }
@@ -894,11 +927,25 @@ function buildTypeSubstitutionMap(
     // If the argument is itself a substituted value from a parent scope, resolve it
     if (parentSubstitutions.has(argValue)) {
       argValue = parentSubstitutions.get(argValue)!
+    } else if (
+      (argValue.startsWith('REF_') || argValue.startsWith('TMP_')) &&
+      parentSubstitutions.size > 0
+    ) {
+      // The argument is a synthetic Slither reference (e.g., REF_1343 from a struct
+      // field access like _oracle.aggregator). The parent substitution holds the real
+      // context (e.g., {Oracle → ethUsdOracle}). Propagate it so that downstream calls
+      // differentiate _getOracleAnswer(ethUsdOracle) from _getOracleAnswer(rEthEthOracle).
+      if (parentSubstitutions.size === 1) {
+        const firstParentValue = parentSubstitutions.values().next().value
+        if (firstParentValue) {
+          argValue = firstParentValue
+        }
+      }
     }
 
-    // Only store if we don't already have a mapping for this type
+    // Only store if we have a valid type and don't already have a mapping
     // (handles case where multiple params have same type - first one wins)
-    if (!substitutions.has(paramType)) {
+    if (paramType !== undefined && !substitutions.has(paramType)) {
       substitutions.set(paramType, argValue)
     }
   }
@@ -925,7 +972,18 @@ function collectHighLevelCalls(
   interfaceType: string
   calledFunction: string
 }[] {
-  const key = `${contractName}.${functionName}`
+  // Include type substitutions in the visited key so the same internal function
+  // called with different arguments (e.g., _fetchOracleData(ethUsdOracle) vs
+  // _fetchOracleData(rEthEthOracle)) produces separate call entries.
+  const subsKey =
+    typeSubstitutions.size > 0
+      ? '|' +
+        Array.from(typeSubstitutions.entries())
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([k, v]) => `${k}=${v}`)
+          .join(',')
+      : ''
+  const key = `${contractName}.${functionName}${subsKey}`
   if (visited.has(key)) return []
   visited.add(key)
 
@@ -947,9 +1005,33 @@ function collectHighLevelCalls(
     // This handles the case where a function parameter is used to make an external call
     const substitutedVar = typeSubstitutions.get(hlc.interfaceType)
 
+    let storageVariable = substitutedVar ?? hlc.storageVariable
+
+    // If the storageVariable is still a synthetic reference (REF_ or TMP_) and we have
+    // unused substitutions from the caller, use the first substitution value.
+    // This handles: fetchPrice → _getPrice(ethUsdOracle) → REF_1343.latestRoundData
+    // where the parameter type (Oracle) differs from the call interface (AggregatorV3Interface).
+    // Without this, both _getPrice(ethUsdOracle) and _getPrice(rEthEthOracle) produce
+    // the same REF_1343 and get deduplicated.
+    if (
+      !substitutedVar &&
+      (hlc.storageVariable.startsWith('REF_') ||
+        hlc.storageVariable.startsWith('TMP_')) &&
+      typeSubstitutions.size > 0
+    ) {
+      // Use the substitution value as context when unambiguous (single entry).
+      // With multiple entries we can't determine which parameter the REF_ derived from.
+      if (typeSubstitutions.size === 1) {
+        const firstSubValue = typeSubstitutions.values().next().value
+        if (firstSubValue) {
+          storageVariable = firstSubValue
+        }
+      }
+    }
+
     calls.push({
       ...hlc,
-      storageVariable: substitutedVar ?? hlc.storageVariable,
+      storageVariable,
     })
   }
 

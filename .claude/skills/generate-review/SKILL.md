@@ -12,9 +12,26 @@ You are a DeFi protocol security review writer. Your task is to generate a profe
 
 This skill **always replaces** the entire existing review. Every run produces a fresh review from scratch.
 
+**CRITICAL: Do NOT read, reference, or be influenced by any existing `review-config.json` for this project.** Your output must be generated entirely from the API data fetched below. If the file exists, it will be moved aside before generation begins.
+
 ## Prerequisites
 
 The l2b UI server must be running at `http://localhost:2021`. If not, tell the user to start it with `cd packages/config && l2b ui`.
+
+---
+
+## Step 0: Remove Existing Review
+
+Move the existing review-config.json out of the way so it cannot influence generation:
+
+```bash
+if [ -f "packages/config/src/projects/$0/review-config.json" ]; then
+  mv "packages/config/src/projects/$0/review-config.json" "/tmp/review-config-backup-$0.json"
+  echo "Moved existing review-config.json to /tmp/review-config-backup-$0.json"
+else
+  echo "No existing review-config.json found"
+fi
+```
 
 ---
 
@@ -61,6 +78,7 @@ INTERESTING_FIELDS = {'multisigThreshold','\$members','\$threshold','delay','MIN
 for entry in d.get('entries', []):
     for c in entry.get('initialContracts',[]) + entry.get('discoveredContracts',[]):
         summary = {'name': c.get('name',''), 'address': c['address'], 'type': c.get('type',''), 'proxyType': c.get('proxyType','')}
+        if c.get('description'): summary['description'] = c['description']
         if c.get('template'): summary['template'] = c['template'].get('id','')
         key_fields = {}
         for field in c.get('fields', []):
@@ -128,6 +146,7 @@ If any core file (v2-score, project, tags, funds, functions) is empty or contain
 
 ### From project (contract details)
 - `contracts[]`: Each has `name`, `address`, `type`, `proxyType`, `template`
+- `description`: Human-written contract description from config (if present). Use these descriptions as context when writing about dependencies or funds — they capture the researcher's understanding of what the contract does
 - `keyFields`: Only present for contracts with interesting fields:
   - `multisigThreshold`: e.g. "3 of 5 (60%)" — for naming multisigs
   - `$members`: array of signer addresses — for multisig member count
@@ -281,7 +300,7 @@ packages/config/src/projects/$0/review-config.json
 Then clean up all temporary files:
 
 ```bash
-rm -f /tmp/review-project-raw.json /tmp/review-v2score-raw.json /tmp/review-traversal-raw.json /tmp/review-project.json /tmp/review-v2score.json /tmp/review-tags.json /tmp/review-funds.json /tmp/review-functions.json /tmp/review-traversal.json
+rm -f /tmp/review-project-raw.json /tmp/review-v2score-raw.json /tmp/review-traversal-raw.json /tmp/review-project.json /tmp/review-v2score.json /tmp/review-tags.json /tmp/review-funds.json /tmp/review-functions.json /tmp/review-traversal.json /tmp/review-config-backup-$0.json
 ```
 
 Report what was generated:
