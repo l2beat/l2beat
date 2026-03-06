@@ -9,7 +9,11 @@
     "getMessageEnqueueTimestamp",
     "messageEnqueueTime"
   ],
-  "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"],
+  "ignoreInWatchMode": [
+    "pendingQueueIndex",
+    "nextCrossDomainMessageIndex",
+    "getFirstUnfinalizedMessageEnqueueTime"
+  ],
   "owner": {
     "permissions": [
       {

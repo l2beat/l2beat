@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd2884699d4bd950fe84a8f8d3868ffca40856f38
+
+# Diff at Fri, 06 Mar 2026 09:47:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@464f5fa94dac665b855f973e6cbee143f2fbb4bd block: 1772702345
+- current timestamp: 1772790297
+
+## Description
+
+config related.
+
+## Watched changes
+
+```diff
+    contract AlphaPayload (eth:0x780523FBa95e4Be0Fa09DA0fff5Fab3aBAE7B58e) {
+    +++ description: The Alpha Upgrade Governance Payload encoding the recipe for bringing execution to the next Aztec rollup smart contract system.
+      values.getActions.4.data:
+-        "0x1ec82cb8000000000000000000000000a27ec0006e59f245217ff08cd52a7e8b169e62d2000000000000000000000000f1acfb0c6add7104e700b8fad3ea025dbb041f340000000000000000000000000000000000000000000066831d13e84649900000"
++        "0x1ec82cb8000000000000000000000000a27ec0006e59f245217ff08cd52a7e8b169e62d2000000000000000000000000f1acfb0c6add7104e700b8fad3ea025dbb041f3400000000000000000000000000000000000000000000659f6e5e74d408f00000"
+    }
+```
+
 Generated with discovered.json: 0x1baddc5bf75259746f29033b2f69a97111e89f86
 
 # Diff at Thu, 05 Mar 2026 11:17:32 GMT:
