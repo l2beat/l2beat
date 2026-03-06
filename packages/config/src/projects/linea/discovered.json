@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1772533779,
+  "timestamp": 1772786430,
   "configHash": "0x5d65359f0dc679f9293b57d3bb52529c793b7e887a7ae8757ae7bf79d07f4836",
   "entries": [
     {
@@ -1062,11 +1062,11 @@
           }
         },
         "CONTRACT_VERSION": "7.0",
-        "currentFinalizedShnarf": "0xf5c0060ddea11e74b6302ec652656893653ac9269af9169069906236bd72be3c",
-        "currentFinalizedState": "0x6dca79a282d75f6d29f21cfb687cb51d3018ccc430062435da6cb11d42537d15",
+        "currentFinalizedShnarf": "0x519e92ac45c9d8af09d5d8f7343d20ffb8ce3e34e5adc6c9e1514310131f6b5c",
+        "currentFinalizedState": "0x90fcbcfed9f65b3e82a5442af2fefd1d194c46fc2e34e1e71e1d1bb6b318c090",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "505639795830108490324",
+        "currentPeriodAmountInWei": "83264186953605482444",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1528,6 +1528,19 @@
       "proxyType": "EOA"
     },
     {
+      "address": "linea:0x2b0F9C76970975aec03784EFd763623757EF7652",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+          "description": "Can anchor L1 data on the L2. A check is supposed to be added to the proof system on L1 so that it is not possible to settle if the anchor is not correct. The function is permissioned because otherwise anyone can cause a liveness failure by posting an invalid anchor.",
+          "role": ".l1l2MessageSetter"
+        }
+      ]
+    },
+    {
       "name": "TokenBridge",
       "address": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
       "type": "Contract",
@@ -1912,7 +1925,7 @@
           },
           "L1_L2_MESSAGE_SETTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"]
+            "members": ["linea:0x2b0F9C76970975aec03784EFd763623757EF7652"]
           },
           "MINIMUM_FEE_SETTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1956,21 +1969,21 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "75524000000000000000",
-        "currentPeriodEnd": 1772592816,
+        "currentPeriodAmountInWei": "89617886953605482444",
+        "currentPeriodEnd": 1772800623,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
         "L1_L2_MESSAGE_SETTER_ROLE": "0x4705265620026983c754c5288b65446d794a03174326ec6d7c0b5c7f1fd67415",
         "l1l2MessageSetter": [
-          "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
+          "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
         ],
-        "lastAnchoredL1MessageNumber": 799030,
+        "lastAnchoredL1MessageNumber": 799206,
         "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 106438,
+        "nextMessageNumber": 106474,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -2154,19 +2167,6 @@
         "linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": "SafeProxy",
         "linea:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       }
-    },
-    {
-      "address": "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-          "description": "Can anchor L1 data on the L2. A check is supposed to be added to the proof system on L1 so that it is not possible to settle if the anchor is not correct. The function is permissioned because otherwise anyone can cause a liveness failure by posting an invalid anchor.",
-          "role": ".l1l2MessageSetter"
-        }
-      ]
     },
     {
       "address": "linea:0xC263178AC471C4411abAf5c22cD4D8D67033bc82",
@@ -2535,7 +2535,7 @@
           "linea:0x3886a948eA7b4053312c3aE31a13776144aA6239"
         ],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 51,
+        "nonce": 52,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3817,6 +3817,6 @@
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/YieldManager": "0x79687f873e91b1cb445ebdf7fd97fd735ee5316f46ded4ce44afda3132157517"
   },
-  "usedBlockNumbers": { "ethereum": 24576341, "linea": 29407859 },
-  "permissionsConfigHash": "0x612064ef224d6d8001c13879d2379068aa882b8d398af5277df065179301475c"
+  "usedBlockNumbers": { "ethereum": 24597285, "linea": 29514589 },
+  "permissionsConfigHash": "0x6d299b629935ed4ed4962cfae0249c3ff87010181bb3fae09967f584fcc99e8b"
 }
