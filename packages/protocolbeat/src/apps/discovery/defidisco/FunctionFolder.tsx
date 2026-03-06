@@ -27,6 +27,7 @@ import {
   formatUsdValue,
   getAdminTypeColor,
   isZeroAddress,
+  MIN_TOKEN_USD_VALUE,
 } from '../../../defidisco/scoringShared'
 import { useContractTags } from './hooks/useContractTags'
 import { IconCheckFalse } from './IconCheckFalse'
@@ -343,8 +344,14 @@ export function FunctionFolder({
     enabled: !!project,
   })
 
-  const contractFunds: ContractFundsData | null =
-    fundsData?.contracts?.[contractAddress] ?? null
+  const contractFunds: ContractFundsData | null = React.useMemo(() => {
+    if (!fundsData?.contracts) return null
+    const normalizedAddr = contractAddress.toLowerCase()
+    const entry = Object.entries(fundsData.contracts).find(
+      ([key]) => key.toLowerCase() === normalizedAddr,
+    )
+    return entry?.[1] ?? null
+  }, [fundsData, contractAddress])
 
   // Fetch enhanced traversal data (React Query caches by key — shared across all FunctionFolder instances)
   const { data: traversalData } = useQuery({
@@ -689,11 +696,30 @@ export function FunctionFolder({
       return true
     }
 
-    // For permissioned functions, require all fields to be completed
-    const hasValidScore = scoreStatus !== 'unscored'
-    const hasDescription = description.trim().length > 0
+    // Check if all resolved owners are zero address (revoked)
+    const allOwnersRevoked =
+      resolvedOwners.length > 0 &&
+      resolvedOwners.every((o) => o.isResolved && isZeroAddress(o.address))
+
+    // If ownership is revoked, only require description
+    if (allOwnersRevoked) {
+      return description.trim().length > 0
+    }
+
+    // Has non-zero owner → require owner definitions
     const hasOwnerDefinitions =
       (currentFunction?.ownerDefinitions || []).length > 0
+
+    // Has funds at risk → require score
+    const hasFundsAtRisk =
+      (functionAnalysis?.impact?.totalFundsAtRisk ?? 0) > 0 ||
+      (functionAnalysis?.impact?.totalTokenValueAtRisk ?? 0) > 0 ||
+      contractFunds !== null
+    const hasValidScore = !hasFundsAtRisk || scoreStatus !== 'unscored'
+
+    // Always require description for permissioned functions
+    const hasDescription = description.trim().length > 0
+
     return hasValidScore && hasDescription && hasOwnerDefinitions
   }
 
@@ -870,7 +896,7 @@ export function FunctionFolder({
             title={
               canCheck || isChecked
                 ? `Click to mark as ${isChecked ? 'unchecked' : 'checked'}`
-                : 'Complete description, score, and add owners before checking'
+                : 'Complete required fields before checking (description, owners, score if funds at risk)'
             }
             onMouseEnter={(e) => {
               if (canCheck || isChecked) {
@@ -1676,15 +1702,16 @@ export function FunctionFolder({
                   Direct Contract Funds
                 </div>
                 {contractFunds.balances &&
-                  contractFunds.balances.tokens.filter((t) => t.usdValue > 0)
-                    .length > 0 && (
+                  contractFunds.balances.tokens.filter(
+                    (t) => t.usdValue >= MIN_TOKEN_USD_VALUE,
+                  ).length > 0 && (
                     <div>
                       <div className="mb-1 text-coffee-400 text-xs">
                         Token Balances
                       </div>
                       <div className="space-y-1">
                         {contractFunds.balances.tokens
-                          .filter((t) => t.usdValue > 0)
+                          .filter((t) => t.usdValue >= MIN_TOKEN_USD_VALUE)
                           .sort((a, b) => b.usdValue - a.usdValue)
                           .map((token, idx) => (
                             <div
@@ -1700,6 +1727,15 @@ export function FunctionFolder({
                             </div>
                           ))}
                       </div>
+                      {contractFunds.balances.tokens.some(
+                        (t) =>
+                          t.usdValue > 0 && t.usdValue < MIN_TOKEN_USD_VALUE,
+                      ) && (
+                        <div className="mt-1 text-[10px] text-coffee-600">
+                          Showing tokens {'>'}={' '}
+                          {formatUsdValue(MIN_TOKEN_USD_VALUE)}
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -1745,7 +1781,9 @@ export function FunctionFolder({
                   </div>
                 )}
 
-                {!contractFunds.balances?.tokens.some((t) => t.usdValue > 0) &&
+                {!contractFunds.balances?.tokens.some(
+                  (t) => t.usdValue >= MIN_TOKEN_USD_VALUE,
+                ) &&
                   !contractFunds.positions?.protocols.length &&
                   !contractFunds.tokenInfo && (
                     <div className="text-coffee-500 text-xs">

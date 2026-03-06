@@ -1,0 +1,160 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "liquity-v1",
+  "import": [
+    "../globalConfig.jsonc"
+  ],
+  "maxAddresses": 25,
+  "initialAddresses": [
+    "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F", // activePool
+    "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007", // borrowerOperations
+    "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2", // troveManager
+    "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521", // collSurplusPool
+    "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816", // communityIssuance
+    "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C", // defaultPool
+    "eth:0xE84251b93D9524E0d2e621Ba7dc7cb3579F997C0", // hintHelpers
+    "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B", // lockupContractFactory
+    "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d", // lqtyStaking
+    "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De", // priceFeed
+    "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6", // sortedTroves
+    "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb", // stabilityPool
+    "eth:0x9555b042F969E561855e5F28cB1230819149A8d9", // gasPool
+    "eth:0xd37a77E71ddF3373a79BE2eBB76B6c4808bDF0d5", // unipool
+    "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0", // lusdToken
+    "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D", // lqtyToken
+    "eth:0xFc92d0E9Fa35df17E3A6d9F40716ca2cE749922B", // multiTroveGetter
+    "eth:0xF20EF17b889b437C151eB5bA15A47bFc62bfF469", // uniToken
+    "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0", // Chainlink LUSD feed
+    "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112" // Tellor USD feed
+  ],
+  "names": {
+    "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0": "Chainlink LUSD/USD Price Feed",
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "Chainlink ETH/USD Price Feed",
+    "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112": "Tellor Price Feed"
+  },
+  "overrides": {
+    "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xd37a77E71ddF3373a79BE2eBB76B6c4808bDF0d5": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xF20EF17b889b437C151eB5bA15A47bFc62bfF469": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2": {
+      "ignoreMethods": [
+        "TroveOwners",
+        "getTroveFromTroveOwnersArray",
+        "getRedemptionFeeWithDecay",
+        "getBorrowingFee",
+        "getBorrowingFeeWithDecay",
+        "checkRecoveryMode",
+        "getTCR"
+      ],
+      "ignoreInWatchMode": [
+        "baseRate",
+        "getEntireSystemColl",
+        "getEntireSystemDebt",
+        "totalCollateralSnapshot",
+        "totalStakes",
+        "totalStakesSnapshot",
+        "MINUTE_DECAY_FACTOR",
+        "lastFeeOperationTime",
+        "getTroveOwnersCount"
+      ]
+    },
+    "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6": {
+      "ignoreMethods": [
+        "getFirst",
+        "getLast",
+        "data"
+      ],
+      "ignoreInWatchMode": [
+        "getSize",
+        "isEmpty",
+        "isFull",
+        "isOwner"
+      ]
+    },
+    "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0": {
+      "ignoreMethods": [
+        "aggregator"
+      ],
+      "ignoreInWatchMode": [
+        "getAnswer",
+        "getTimestamp",
+        "latestRoundData",
+        "latestTimestamp",
+        "latestAnswer",
+        "latestRound",
+        "proposedLatestRoundData"
+      ]
+    },
+    "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F": {
+      "ignoreInWatchMode": [
+        "getETH",
+        "getLUSDDebt"
+      ]
+    },
+    "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007": {
+      "ignoreInWatchMode": [
+        "getEntireSystemColl",
+        "getEntireSystemDebt"
+      ],
+      "ignoreMethods": [
+        "getCompositeDebt"
+      ]
+    },
+    "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521": {
+      "ignoreInWatchMode": [
+        "getETH"
+      ]
+    },
+    "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De": {
+      "ignoreInWatchMode": [
+        "lastGoodPrice"
+      ]
+    },
+    "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb": {
+      "ignoreInWatchMode": [
+        "getETH",
+        "getTotalLUSDDeposits",
+        "lastETHError_Offset",
+        "lastLQTYError",
+        "lastLUSDLossError_Offset",
+        "P"
+      ]
+    },
+    "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0": {
+      "ignoreInWatchMode": [
+        "totalSupply"
+      ]
+    },
+    "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112": {
+      "ignoreInWatchMode": [
+        "getTellorCurrentValue"
+      ]
+    },
+    "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0": {
+      "ignoreInWatchMode": [
+        "currentMiners",
+        "disputesById",
+        "getLastNewValueById",
+        "getNewCurrentVariables",
+        "newValueTimestamps",
+        "totalSupply",
+        "getNewValueCountbyRequestId"
+      ]
+    }
+  }
+}

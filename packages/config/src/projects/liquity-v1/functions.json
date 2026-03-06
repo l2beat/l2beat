@@ -1,0 +1,491 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-04T12:51:12.035Z",
+  "contracts": {
+    "eth:0x4c517d4e2c851ca76d7ec94b805269df0f2201de": {
+      "functions": [
+        {
+          "functionName": "fetchPrice",
+          "isPermissioned": false,
+          "checked": true,
+          "dependencies": [
+            {
+              "contractAddress": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112"
+            }
+          ],
+          "timestamp": "2026-03-04T12:32:56.511Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:32:56.511Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:32:33.601Z"
+          },
+          "comments": [
+            {
+              "author": "yvesboutellier",
+              "date": "2026-03-04T12:32:56.511Z",
+              "text": "todo: constraints to be added"
+            }
+          ]
+        },
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Set relationships to co-dependent contracts: priceAggregator, tellorCaller.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "dependencies": [
+            {
+              "contractAddress": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112"
+            }
+          ],
+          "timestamp": "2026-03-04T12:51:01.729Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:51:01.729Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:51:01.729Z"
+          }
+        }
+      ]
+    },
+    "eth:0xdf9eb223bafbe5c5271415c75aecd68c21fe3d7f": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "unscored",
+          "description": "Set relationships to co-dependent smart contracts: troveManager, borrowerOperations, stabilityPoolAddress, defaultPoolAddress.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:50:09.451Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:09.451Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:09.451Z"
+          }
+        }
+      ]
+    },
+    "eth:0x24179cd81c9e782a4096035f7ec97fb8b783e007": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "unscored",
+          "description": "Set relationships to co-dependent contracts: activePool, collSurplusPool, lusdToken, troveManager, lqtyStaking, gasPoolAddress, defaultPool, priceFeed, sortedTroves, stabilityPoolAddress.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:50:25.272Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:25.272Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:19.560Z"
+          }
+        }
+      ]
+    },
+    "eth:0x3d32e8b97ed5881324241cf03b2da5e2ebce5521": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Set relationships to co-dependent contracts: activePoolAddress, borrowerOperationsAddress, troveManagerAddress.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:50:35.256Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:35.256Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:35.256Z"
+          }
+        }
+      ]
+    },
+    "eth:0xd8c9d9071123a059c6e0a945cf0e0c82b508d816": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Set relationships to co-dependent contracts: lqtyToken, stabilityPoolAddress.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:50:37.499Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:37.499Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:37.499Z"
+          }
+        }
+      ]
+    },
+    "eth:0x896a3f03176f05cfbb4f006bfcd8723f2b0d741c": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Set relationships to co-dependent contracts: troveManagerAddress, activePoolAddress.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:50:39.461Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:39.461Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:39.461Z"
+          }
+        }
+      ]
+    },
+    "eth:0xe84251b93d9524e0d2e621ba7dc7cb3579f997c0": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Set relationships to co-dependent contracts: troveManager, sortedTroves.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:50:43.476Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:43.476Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:43.476Z"
+          }
+        }
+      ]
+    },
+    "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d": {
+      "functions": [
+        {
+          "functionName": "transfer",
+          "isPermissioned": false,
+          "ownerDefinitions": [
+            {
+              "path": "$self.multisigAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:52:38.228Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:52:38.228Z"
+          }
+        },
+        {
+          "functionName": "approve",
+          "isPermissioned": false,
+          "ownerDefinitions": [
+            {
+              "path": "$self.multisigAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:52:34.617Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:52:34.617Z"
+          }
+        },
+        {
+          "functionName": "transferFrom",
+          "isPermissioned": false,
+          "ownerDefinitions": [
+            {
+              "path": "$self.multisigAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:52:39.226Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:52:39.226Z"
+          }
+        },
+        {
+          "functionName": "increaseAllowance",
+          "isPermissioned": false,
+          "ownerDefinitions": [
+            {
+              "path": "$self.multisigAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:52:36.163Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:52:36.163Z"
+          }
+        },
+        {
+          "functionName": "decreaseAllowance",
+          "isPermissioned": false,
+          "ownerDefinitions": [
+            {
+              "path": "$self.multisigAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:52:35.159Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:52:35.159Z"
+          }
+        },
+        {
+          "functionName": "sendToLQTYStaking",
+          "isPermissioned": false,
+          "ownerDefinitions": [
+            {
+              "path": "$self.lqtyStakingAddress"
+            },
+            {
+              "path": "$self.multisigAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:52:37.245Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:52:37.245Z"
+          }
+        }
+      ]
+    },
+    "eth:0x4f9fbb3f1e99b56e0fe2892e623ed36a76fc605d": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Set relationships to co-dependent contracts: lqtyToken, troveManagerAddress, borrowerOperationsAddress, activePoolAddress, lusdToken.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:50:47.676Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:47.676Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:50:47.676Z"
+          }
+        },
+        {
+          "functionName": "increaseF_ETH",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:42:23.395Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:42:23.395Z"
+          }
+        },
+        {
+          "functionName": "increaseF_LUSD",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:42:23.395Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:42:23.395Z"
+          }
+        }
+      ]
+    },
+    "eth:0x5f98805a4e8be255a32880fdec7f6728c6568ba0": {
+      "functions": [
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:42:27.625Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:42:27.625Z"
+          }
+        },
+        {
+          "functionName": "burn",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.borrowerOperationsAddress"
+            },
+            {
+              "path": "$self.troveManagerAddress"
+            },
+            {
+              "path": "$self.stabilityPoolAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:42:27.625Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:42:27.625Z"
+          }
+        },
+        {
+          "functionName": "sendToPool",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.stabilityPoolAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:42:27.626Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:42:27.626Z"
+          }
+        },
+        {
+          "functionName": "returnFromPool",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.troveManagerAddress"
+            },
+            {
+              "path": "$self.stabilityPoolAddress"
+            }
+          ],
+          "timestamp": "2026-03-02T12:42:27.626Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-02T12:42:27.626Z"
+          }
+        }
+      ]
+    },
+    "eth:0x8fdd3fbfeb32b28fb73555518f8b361bcea741a6": {
+      "functions": [
+        {
+          "functionName": "setParams",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Set contract relationships and max data size.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:51:08.439Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:51:08.439Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:51:08.439Z"
+          }
+        }
+      ]
+    },
+    "eth:0x66017d22b0f8556afdd19fc67041899eb65a21bb": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Set relationships to co-dependent contracts: troveManager, borrowerOperations, activePool, lusdToken, sortedTroves, priceFeed, communityIssuance.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:51:09.932Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:51:09.932Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:51:09.932Z"
+          }
+        }
+      ]
+    },
+    "eth:0xa39739ef8b0231dbfa0dcda07d7e29faabcf4bb2": {
+      "functions": [
+        {
+          "functionName": "setAddresses",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Set relationships to co-dependent contracts: defaultPool, priceFeed, collSurplusPool, lqtyStaking, borrowerOperationsAddress, activePool, gasPoolAddress, lqtyToken, lusdToken, sortedTroves, stabilityPool.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-04T12:51:12.034Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:51:12.034Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-04T12:51:12.034Z"
+          }
+        }
+      ]
+    }
+  }
+}

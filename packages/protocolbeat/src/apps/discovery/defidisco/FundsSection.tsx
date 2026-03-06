@@ -7,7 +7,10 @@ import type {
   FundsTokenBalance,
 } from '../../../api/types'
 import { usePanelStore } from '../store/panel-store'
-import { formatUsdValue } from '../../../defidisco/scoringShared'
+import {
+  formatUsdValue,
+  MIN_TOKEN_USD_VALUE,
+} from '../../../defidisco/scoringShared'
 import { useContractTags } from './hooks/useContractTags'
 import { ProxyTypeTag } from './ProxyTypeTag'
 import { buildProxyTypeMap } from './proxyTypeUtils'
@@ -116,22 +119,31 @@ function ContractFundsRow({
               </div>
               <div className="ml-2 flex flex-col gap-1">
                 {fundsData.balances.tokens
-                  .filter((t) => t.usdValue > 0)
+                  .filter((t) => t.usdValue >= MIN_TOKEN_USD_VALUE)
                   .sort((a, b) => b.usdValue - a.usdValue)
                   .slice(0, 10)
                   .map((token, idx) => (
                     <TokenRow key={idx} token={token} />
                   ))}
-                {fundsData.balances.tokens.filter((t) => t.usdValue > 0)
-                  .length > 10 && (
+                {fundsData.balances.tokens.filter(
+                  (t) => t.usdValue >= MIN_TOKEN_USD_VALUE,
+                ).length > 10 && (
                   <div className="text-coffee-500">
                     +
-                    {fundsData.balances.tokens.filter((t) => t.usdValue > 0)
-                      .length - 10}{' '}
+                    {fundsData.balances.tokens.filter(
+                      (t) => t.usdValue >= MIN_TOKEN_USD_VALUE,
+                    ).length - 10}{' '}
                     more tokens
                   </div>
                 )}
               </div>
+              {fundsData.balances.tokens.some(
+                (t) => t.usdValue > 0 && t.usdValue < MIN_TOKEN_USD_VALUE,
+              ) && (
+                <div className="ml-2 mt-1 text-[10px] text-coffee-600">
+                  Showing tokens {'>='} {formatUsdValue(MIN_TOKEN_USD_VALUE)}
+                </div>
+              )}
             </div>
           )}
 
@@ -292,22 +304,31 @@ function TokenContractRow({
               </div>
               <div className="ml-2 flex flex-col gap-1">
                 {fundsData.balances.tokens
-                  .filter((t) => t.usdValue > 0)
+                  .filter((t) => t.usdValue >= MIN_TOKEN_USD_VALUE)
                   .sort((a, b) => b.usdValue - a.usdValue)
                   .slice(0, 10)
                   .map((token, idx) => (
                     <TokenRow key={idx} token={token} />
                   ))}
-                {fundsData.balances.tokens.filter((t) => t.usdValue > 0)
-                  .length > 10 && (
+                {fundsData.balances.tokens.filter(
+                  (t) => t.usdValue >= MIN_TOKEN_USD_VALUE,
+                ).length > 10 && (
                   <div className="text-coffee-500">
                     +
-                    {fundsData.balances.tokens.filter((t) => t.usdValue > 0)
-                      .length - 10}{' '}
+                    {fundsData.balances.tokens.filter(
+                      (t) => t.usdValue >= MIN_TOKEN_USD_VALUE,
+                    ).length - 10}{' '}
                     more tokens
                   </div>
                 )}
               </div>
+              {fundsData.balances.tokens.some(
+                (t) => t.usdValue > 0 && t.usdValue < MIN_TOKEN_USD_VALUE,
+              ) && (
+                <div className="ml-2 mt-1 text-[10px] text-coffee-600">
+                  Showing tokens {'>='} {formatUsdValue(MIN_TOKEN_USD_VALUE)}
+                </div>
+              )}
             </div>
           )}
 

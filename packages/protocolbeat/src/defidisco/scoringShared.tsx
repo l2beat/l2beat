@@ -11,6 +11,10 @@ import type {
 import { ProxyTypeTag } from '../apps/discovery/defidisco/ProxyTypeTag'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
 
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+export const MIN_TOKEN_USD_VALUE = 10_000
+
 // ─── Pure utility functions ───────────────────────────────────────────────────
 
 export function formatUsdValue(value: number): string {

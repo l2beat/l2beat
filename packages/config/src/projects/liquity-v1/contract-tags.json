@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-04T12:22:00.084Z",
+  "tags": [
+    {
+      "contractAddress": "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+      "isExternal": true,
+      "timestamp": "2026-03-02T11:57:56.837Z"
+    },
+    {
+      "contractAddress": "eth:0x3d7ae7e594f2f2091ad8798313450130d0aba3a0",
+      "isExternal": true,
+      "timestamp": "2026-03-02T12:10:36.129Z"
+    },
+    {
+      "contractAddress": "eth:0x88df592f8eb5d7bd38bfef7deb0fbc02cf3778a0",
+      "isExternal": true,
+      "timestamp": "2026-03-02T12:13:48.166Z"
+    },
+    {
+      "contractAddress": "eth:0xad430500ecda11e38c9bcb08a702274b94641112",
+      "isExternal": true,
+      "timestamp": "2026-03-02T12:25:00.045Z"
+    },
+    {
+      "contractAddress": "eth:0x21f73d42eb58ba49ddb685dc29d3bf5c0f0373ca",
+      "isExternal": true,
+      "timestamp": "2026-03-02T12:26:45.736Z"
+    },
+    {
+      "contractAddress": "eth:0x66017d22b0f8556afdd19fc67041899eb65a21bb",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-03-02T12:38:35.678Z"
+    },
+    {
+      "contractAddress": "eth:0xdf9eb223bafbe5c5271415c75aecd68c21fe3d7f",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-03-02T12:38:46.559Z"
+    },
+    {
+      "contractAddress": "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-03-02T12:38:51.492Z"
+    },
+    {
+      "contractAddress": "eth:0x3d32e8b97ed5881324241cf03b2da5e2ebce5521",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-03-02T12:39:25.794Z"
+    },
+    {
+      "contractAddress": "eth:0x9555b042f969e561855e5f28cb1230819149a8d9",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-03-02T12:39:46.844Z"
+    },
+    {
+      "contractAddress": "eth:0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-03-02T12:40:07.046Z"
+    }
+  ]
+}
