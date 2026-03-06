@@ -159,6 +159,15 @@ function main() {
       (a) => a.adminType !== 'Immutable' && a.adminType !== 'Revoked',
     ).length
 
+    // Compute totalTokenValue from funds array (handles old compiled reviews missing this field)
+    const computedTokenValue = review.funds
+      ? review.funds.reduce((sum, f) => sum + (f.tokenInfo?.tokenValue ?? 0), 0)
+      : 0
+    const totalTokenValueForProtocol =
+      computedTokenValue > 0
+        ? computedTokenValue
+        : (review.totals.totalTokenValue ?? 0)
+
     // Add to protocol list
     protocols.push({
       slug: review.metadata.protocolSlug,
@@ -168,13 +177,16 @@ function main() {
       tokenName: review.metadata.tokenName,
       totals: {
         ...review.totals,
+        totalTokenValue: totalTokenValueForProtocol,
         adminCount: activeAdminCount,
         dependencyCount: depEntities.size + ungroupedDeps,
       },
     })
 
     totalCapitalAtRisk += review.totals.totalCapitalAtRisk
-    const protocolTokenValue = review.totals.totalTokenValue ?? review.totals.totalTokenValueAtRisk
+    const protocolTokenValue = totalTokenValueForProtocol > 0
+      ? totalTokenValueForProtocol
+      : (review.totals.totalTokenValueAtRisk ?? 0)
     totalTokenValue += protocolTokenValue
 
     // Only count token value as "at risk" if the protocol has human-controlled admins
