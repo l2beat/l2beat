@@ -33,6 +33,7 @@ const V2_MESSAGE_TRANSMITTER = EthereumAddress(
 // https://developers.circle.com/cctp/v1/evm-smart-contracts
 // V1 is an older version, we assume there won't be any changes.
 // Notably absent: bsc (V1 was never deployed there; BSC is only on V2, domain 17).
+// chainconfeeg COMPLETE
 const OVERRIDES_V1 = [
   {
     chain: 'ethereum',
@@ -86,6 +87,7 @@ const OVERRIDES_V1 = [
 ]
 
 // https://developers.circle.com/cctp/evm-smart-contracts
+// chainconfeeg actual override
 const OVERRIDES_V2 = [
   { chain: 'solana', domain: 5 },
   { chain: 'sonic', domain: 13 },

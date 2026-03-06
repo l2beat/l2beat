@@ -31,7 +31,8 @@ import {
   Result,
 } from './types'
 
-// https://minter.merkly.com/hyperlane/docs
+// https://minter.merkly.com/hyperlane/docs --> ETH bridge
+// chainconfeeg
 const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
   'hyperlane-merkly-tokenbridge',
   [
@@ -70,10 +71,16 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
     },
     // no katana
     // no bsc
+    // no celo
     {
-      chain: 'celo',
-      chainId: 42220,
-      address: EthereumAddress('0xad8676147360dBc010504aB69C7f1b1877109527'),
+      chain: 'linea',
+      chainId: 59144,
+      address: EthereumAddress('0x8F2161c83F46B46628cb591358dE4a89A63eEABf'),
+    },
+    {
+      chain: 'ink',
+      chainId: 57073,
+      address: EthereumAddress('0x25730BDE542aDBEf1FD978526Bf20c04b5251530'),
     },
   ],
 )

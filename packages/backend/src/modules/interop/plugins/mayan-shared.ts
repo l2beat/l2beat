@@ -25,6 +25,7 @@ const MAYAN_SWAP2 = EthereumAddress(
 
 // Chains where Mayan contracts are deployed
 // https://docs.mayan.finance/integration/forwarder-contract
+// chainconfeeg
 const MAYAN_EVM_CHAINS = [
   'ethereum',
   'arbitrum',
@@ -33,6 +34,8 @@ const MAYAN_EVM_CHAINS = [
   'polygonpos',
   'bsc',
   'avalanche',
+  'unichain',
+  'linea',
   // no celo
 ] as const
 

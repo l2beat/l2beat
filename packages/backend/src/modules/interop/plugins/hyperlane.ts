@@ -42,6 +42,7 @@ export const Process = createInteropEventType<{
 }>('hyperlane.Process')
 
 // https://github.com/hyperlane-xyz/hyperlane-registry
+// chainconfeeg
 export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'ethereum', chainId: 1 },
   { chain: 'arbitrum', chainId: 42161 },
@@ -52,8 +53,13 @@ export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'zksync2', chainId: 324 },
   { chain: 'abstract', chainId: 2741 },
   { chain: 'katana', chainId: 747474 },
+  { chain: 'forknet', chainId: 8338 },
   { chain: 'bsc', chainId: 56 },
   { chain: 'celo', chainId: 42220 },
+  { chain: 'avalanche', chainId: 43114 },
+  { chain: 'linea', chainId: 59144 },
+  { chain: 'unichain', chainId: 130 },
+  { chain: 'ink', chainId: 57073 },
 ])
 
 export class HyperlanePlugIn implements InteropPluginResyncable {
