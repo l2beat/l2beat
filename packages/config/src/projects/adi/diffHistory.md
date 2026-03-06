@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa7fcc8fadc971535dce9f2af2a2cf21f4ba4c9ae
+Generated with discovered.json: 0x610c8507a9d070b42c521cedcd0c2a858fcc384e
 
-# Diff at Fri, 06 Mar 2026 11:07:35 GMT:
+# Diff at Fri, 06 Mar 2026 11:43:02 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@464f5fa94dac665b855f973e6cbee143f2fbb4bd block: 1770376622
@@ -17,8 +17,11 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1770376622 (main branch discovery), not current.
 
 ```diff
-    contract ADI DialVerifier (eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE) {
+    contract ZKsyncOSDualVerifier (eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE) {
     +++ description: A router contract for verifiers. Routes verification requests to THE PLONK VERIFIER ONLY depending on the supplied proof version.
+      name:
+-        "ADI DialVerifier"
++        "ZKsyncOSDualVerifier"
       unverified:
 -        true
 +++ description: Fflonk verifier with version 0. Verifiers are read from mapping so they are not displayed in an array.
@@ -60,7 +63,7 @@ discovery. Values are for block 1770376622 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F)
+    contract ADI PlonkVerifier (eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F)
     +++ description: None
 ```
 

@@ -316,7 +316,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "",
+      "name": "ADI PlonkVerifier",
       "address": "eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F",
       "type": "Contract",
       "unverified": true,
@@ -676,7 +676,7 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "ADI DialVerifier",
+      "name": "ZKsyncOSDualVerifier",
       "address": "eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE",
       "type": "Contract",
       "template": "adi/ZKsyncOSDualVerifier_post_v30",
@@ -2743,5 +2743,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 24598008 },
-  "permissionsConfigHash": "0x244ba9aa8e287bab818edd184c397760a0344ef6cc6fcd22eefbc2f00e70abac"
+  "permissionsConfigHash": "0xb7ba2597ac3f335c0d4afa237493b92a5e535c4c3c124919fcf5f1510987ed99"
 }
