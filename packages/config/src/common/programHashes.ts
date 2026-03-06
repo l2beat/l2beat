@@ -24,7 +24,7 @@ const programHashes: Record<
     title: 'Aggregation program of OP Succinct FDP',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client in fault dispute proof mode.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/celo-org/op-succinct/tree/celo/v1.0.1/programs/aggregation',
     verificationStatus: 'successful',
@@ -48,7 +48,7 @@ const programHashes: Record<
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks in fault dispute proof mode.',
     programUrl:
       'https://github.com/celo-org/op-succinct/tree/celo/v1.0.1/programs/range/eigenda',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -68,7 +68,7 @@ Verify:
     title: 'Aggregation program of OP Succinct FDP',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client in fault dispute proof mode.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
       'https://github.com/celo-org/op-succinct/tree/celo/v1.0.2/programs/aggregation',
     verificationStatus: 'successful',
@@ -92,7 +92,7 @@ Verify:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks in fault dispute proof mode.',
     programUrl:
       'https://github.com/celo-org/op-succinct/tree/celo/v1.0.2/programs/range/eigenda',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -112,7 +112,7 @@ Verify:
     title: 'Aggregation program of OP Succinct',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/aggregation',
     verificationStatus: 'successful',
@@ -134,7 +134,7 @@ Verify:
     title: 'Aggregation program of OP Succinct',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/agglayer/op-succinct/tree/v3.1.0-agglayer/programs/aggregation',
     verificationStatus: 'successful',
@@ -159,7 +159,7 @@ Verify:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v2.3.1/programs/range/ethereum',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -181,14 +181,14 @@ Verify:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
     programUrl:
       'https://github.com/agglayer/op-succinct/tree/v3.1.0-agglayer/programs/range/ethereum',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30': {
     title: 'Pessimistic program of agglayer',
     description:
       'Verifies that a chain connected to Polygon Agglayer does not bridge out more tokens that were bridged in, thus preventing stealing tokens from other Agglayer chains. Also verifies aggchain proof for this chain.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/agglayer/agglayer/tree/v0.3.3-post.4/crates/pessimistic-proof-program',
     verificationStatus: 'successful',
@@ -212,7 +212,7 @@ Verify:
     title: 'Pessimistic program of agglayer',
     description:
       'Verifies that a chain connected to Polygon Agglayer does not bridge out more tokens that were bridged in, thus preventing stealing tokens from other Agglayer chains. Also verifies aggchain proof for this chain.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/agglayer/agglayer/tree/v0.4.4/crates/pessimistic-proof',
     verificationStatus: 'successful',
@@ -237,7 +237,7 @@ Verify:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered sequencer signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
     programUrl:
       'https://github.com/agglayer/provers/tree/v1.1.2/crates/aggchain-proof-program',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -274,7 +274,7 @@ fn main() {
     title: 'Aggchain program of agglayer v1.5.0',
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/agglayer/provers/tree/v1.5.0/crates/aggchain-proof-program',
     verificationStatus: 'successful',
@@ -314,7 +314,7 @@ fn main() {
       'Usually used for state validation of Aggchains. The source of this program hash was not found and is currently not verifiable.',
     programUrl:
       'https://github.com/agglayer/provers/tree/v1.9.2/crates/aggchain-proof-program',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -350,7 +350,7 @@ fn main() {
     title: 'Aggchain program of agglayer v1.8.0',
     description:
       'Verifies state transition of an Agglayer-based chain either by checking a full validity proof or just by checking a registered multisig signature. Also checks that L1 information on the chain aligns with the values stored on Agglayer.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/agglayer/provers/tree/v1.8.0/crates/aggchain-proof-program', // ??? verify version tag
     verificationStatus: 'successful',
@@ -389,28 +389,28 @@ fn main() {
     title: 'Celestia Blobstream DA bridge program',
     description:
       'ZK-friendly implementation of Celestia Blobstream DA bridge that proves that enough Celestia validators have confirmed a given data root.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'notVerified',
   },
   '0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1': {
     title: 'Avail VectorX DA bridge program',
     description:
       'ZK-friendly implementation of Avail Vector DA bridge that proves that a given data root was finalized on Avail.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'notVerified',
   },
   '0x00bca7947ba758bd6f539f480c6d983cca4bd4387a411a41a71fb953d5df3de7': {
     title: 'Aggregation program of OP Succinct',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x2d0dcc4f4a5e59b80239c28a3fb68ab63b8eaf6f132239e95f927da9046f4256': {
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x006110a295396036ad8df48c333e2b99b11624799138fbc18e10181551e29eb1': {
@@ -419,7 +419,7 @@ fn main() {
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
     programUrl:
       'https://github.com/mantle-xyz/op-succinct/tree/v2.1.8/programs/aggregation',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -439,7 +439,7 @@ Verify:
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x05044f60230e1ea664a43fa92e27735e3bbc97736c2e7ab961a5115a732a6da5': {
@@ -448,7 +448,7 @@ Verify:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks. Mantle-specific build addressing revm/geth inconsistency.',
     programUrl:
       'https://github.com/mantle-xyz/op-succinct/tree/v2.1.8/programs/range/eigenda',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -468,14 +468,14 @@ Verify:
     title: 'Aggregation program of OP Succinct',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x40bc0563112dcc6868037ea0445916342df200ec0152bf7b4c2cca1d640fdaa3': {
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2': {
@@ -484,7 +484,7 @@ Verify:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
     programUrl:
       'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/aggregation',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -506,7 +506,7 @@ Verify:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
     programUrl:
       'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/range',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -526,21 +526,21 @@ Verify:
     title: 'Aggregation program of OP Succinct',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x04415a0d46de8b145eb5056969fa3b5900c3c23a21cb3feb2bdcb8da752de7a1': {
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x007efdd073c9845bbc446e0e62018af999bde96ecec416725391efa4a3f0a44d': {
     title: 'Aggregation program of OP Succinct',
     description:
       'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/succinctlabs/op-succinct/tree/v3.4.0-rc.1/programs/aggregation',
     verificationStatus: 'successful',
@@ -564,14 +564,14 @@ Verify:
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x64c8517c14f10577381d8961139a4420420e90e528d02be96e2b0961671db248': {
     title: 'Range program of OP Succinct',
     description:
       'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'unsuccessful',
     verificationSteps:
       'The sources for this program contain a security advisory fix and are not published yet. Thus the hash cannot be independently regenerated.',
@@ -580,35 +580,35 @@ Verify:
     title: 'SP1 Helios program',
     description:
       'Implements a light client of Ethereum, validating state data and block headers in a trust-minimized way.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3': {
     title: 'Aggregation program of Raiko (reth Taiko)',
     description:
       'Aggregates proofs of correct execution for several consecutive block batches of Rust-based Taiko L2 client (raiko).',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x00b14510cec97d3449eb84b814be2f4b5dae3eb56528d6bb65e1aa8226f2bed3': {
     title: 'Batch proving program of Raiko (reth Taiko)',
     description:
       'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecutive L2 blocks.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x008f96447139673b3f2d29b30ad4b43fe6ccb3f31d40f6e61478ac5640201d9e': {
     title: 'Aggregation program of Raiko (reth Taiko)',
     description:
       'Aggregates proofs of correct execution for several consecutive block batches of Rust-based Taiko L2 client (raiko).',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x00a32a15ab7a74a9a79f3b97a71d1b014cd4361b37819004b9322b502b5f5be1': {
     title: 'Batch proving program of Raiko (reth Taiko)',
     description:
       'Proves correct state transition function within Rust-based Taiko L2 client (raiko) over a batch of consecutive L2 blocks.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x7ce98c36408e86dac21fc16af301740d07a849be0a80529debcb0797fd66f5e3': {
@@ -1278,7 +1278,7 @@ Verify:
     title: 'Morph Guest Program (zkEVM Executor)',
     description:
       'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
@@ -1287,7 +1287,7 @@ Verify:
       'Aggregates proofs of correct execution for several consecutive block ranges of the Ethscriptions L2 client.',
     programUrl:
       'https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/aggregation',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -1309,7 +1309,7 @@ Verify:
       'Proves correct state transition function within the Ethscriptions L2 client over a range of consecutive L2 blocks.',
     programUrl:
       'https://github.com/0xFacet/ethscriptions-zk-fault-proofs/tree/251c5248cf92b544a3e6b1b4c0b98b0146dab1c6/programs/range/ethereum',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
@@ -1331,7 +1331,7 @@ Verify:
       'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
     programUrl:
       'https://github.com/morph-l2/morph/tree/v0.4.9/prover/bin/client',
-    proverSystemProject: ProjectId('sp1'),
+    proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a': {
