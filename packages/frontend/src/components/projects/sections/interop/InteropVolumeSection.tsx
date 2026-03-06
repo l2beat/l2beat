@@ -56,10 +56,6 @@ export function InteropVolumeSection({
   return (
     <ProjectSection {...sectionProps}>
       <div className="flex flex-col gap-4">
-        <p className="text-paragraph-15 md:text-paragraph-16">
-          Flow direction by volume
-        </p>
-
         {!isLoading ? (
           <Tabs
             name="bridgeType"
