@@ -16,3 +16,9 @@ export interface RenderResult {
   html: string
   head: string
 }
+
+export type ServerRenderFunction = (
+  data: RenderData,
+  url: string,
+  options: RenderOptions,
+) => RenderResult | Promise<RenderResult>

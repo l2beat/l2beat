@@ -8,7 +8,7 @@ import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
 import { rawEnv } from '~/env'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
-import type { RenderData, RenderOptions, RenderResult } from '../ssr/types'
+import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
@@ -20,24 +20,18 @@ import { createTrpcRouter } from './routers/TrpcRouter'
 
 const port = process.env.PORT ?? 3000
 
-type RenderFn = (
-  data: RenderData,
-  url: string,
-  options: RenderOptions,
-) => RenderResult
-
 type ServerOptions =
   | {
       dev: true
       app: express.Application
       vite: ViteDevServer
-      render: RenderFn
+      render: ServerRenderFunction
       stylesheetUrl: string
     }
   | {
       dev: false
       app: express.Application
-      render: RenderFn
+      render: ServerRenderFunction
       stylesheetUrl: string
     }
 
@@ -57,7 +51,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   }
 
   const renderToHtml = async (data: RenderData, url: string) => {
-    const rendered = render(data, url, {
+    const rendered = await render(data, url, {
       stylesheetUrl,
     })
     const template = options.dev
