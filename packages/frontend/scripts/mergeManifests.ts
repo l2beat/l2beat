@@ -5,6 +5,7 @@ import type { Manifest as ViteManifest } from 'vite'
 interface Manifest {
   names: Record<string, string>
   images: Record<string, { src: string; width: number; height: number }>
+  imports: Record<string, string[]>
 }
 
 const manifestPath = path.join('dist', 'manifest.json')
@@ -36,6 +37,20 @@ export function mergeManifests(
       ),
     },
     images: manifest.images,
+    imports: {
+      ...manifest.imports,
+      ...Object.entries(viteManifest).reduce(
+        (acc, [key, value]) => {
+          if (value.imports && value.imports.length > 0) {
+            acc[`/${key}`] = value.imports.map(
+              (imp) => `/static/${viteManifest[imp]!.file}`,
+            )
+          }
+          return acc
+        },
+        {} as Record<string, string[]>,
+      ),
+    },
   }
 }
 
