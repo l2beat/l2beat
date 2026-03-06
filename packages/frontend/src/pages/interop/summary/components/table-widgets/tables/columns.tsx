@@ -86,8 +86,8 @@ function getCommonColumns<
         )
       },
       meta: {
-        cellClassName: 'whitespace-normal',
-        headClassName: 'text-2xs',
+        cellClassName: 'whitespace-normal md:pl-2!',
+        headClassName: 'text-2xs md:pl-2!',
       },
     }),
   ]
