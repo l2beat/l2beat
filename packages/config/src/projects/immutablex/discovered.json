@@ -1,7 +1,7 @@
 {
   "name": "immutablex",
-  "timestamp": 1772703009,
-  "configHash": "0xe46b8b562b1bff824ebfad714b8f750801d72c84b904cb0d354320678c503ebb",
+  "timestamp": 1772785651,
+  "configHash": "0x231f4d8c32a1011e4890ce6bc3ac51a6c7c9384a189deb4d0132aa32f58f524d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000007B",
@@ -382,27 +382,6 @@
       }
     },
     {
-      "name": "Wrapped Ether Token",
-      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1513077455,
-      "sinceBlock": 4719568,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "2085345052105916626831059"
-      },
-      "implementationNames": {
-        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
-      }
-    },
-    {
       "address": "eth:0xCeA34C706C4A18E103575832Dd21fD3656026D1E",
       "type": "EOA",
       "proxyType": "EOA"
@@ -513,30 +492,6 @@
       },
       "implementationNames": {
         "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8": "ProxyAdmin"
-      }
-    },
-    {
-      "name": "Immutable X Token",
-      "address": "eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x4c7ee53d0e57b173022a09bfce726f93b14abf42b30af0acbb6c915a2e618a91"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1634198360,
-      "sinceBlock": 13415141,
-      "values": {
-        "$immutable": true,
-        "cap": "2000000000000000000000000000",
-        "decimals": 18,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
-        "name": "Immutable X",
-        "symbol": "IMX",
-        "totalSupply": "2000000000000000000000000000"
-      },
-      "implementationNames": {
-        "eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF": "IMXToken"
       }
     }
   ],
@@ -815,23 +770,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
-    ],
     "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": [
       "constructor(address gasCollector_)",
       "error InsufficientGasPayment(uint256 required, uint256 provided)",
@@ -1013,41 +951,12 @@
       "function updateChildChain(string newChildChain)",
       "function updateGasService(address newGasService)",
       "function updateRootBridge(address newRootBridge)"
-    ],
-    "eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF": [
-      "constructor(address minter)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MINTER_ROLE() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function cap() view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function mint(address to, uint256 amount)",
-      "function name() view returns (string)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24590379 },
-  "permissionsConfigHash": "0x12c5b354f02954c8f154c81e7c577cb464e527c6f1bbdfe28fb8882713f8d543"
+  "usedBlockNumbers": { "ethereum": 24597221 },
+  "permissionsConfigHash": "0xc03a17928233e3d099eccb12ac3ff84d8976ac3a59dde784fab4069411f198e2"
 }

@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xaa71388163d734a1da4ef7a00d8542edd278e016
+
+# Diff at Fri, 06 Mar 2026 08:30:35 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@464f5fa94dac665b855f973e6cbee143f2fbb4bd block: 1772703009
+- current timestamp: 1772785651
+
+## Description
+
+Removed tokens from the discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772703009 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Immutable X Token (eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe0e70921fea126bc98e487c8b6d76da3309c2f41
 
 # Diff at Thu, 05 Mar 2026 12:02:27 GMT:
