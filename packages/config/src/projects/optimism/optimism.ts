@@ -102,6 +102,11 @@ export const optimism: ScalingProject = opStackL2({
         plugin: 'lido-wsteth',
         bridgeType: 'lockAndMint',
       },
+      {
+        chain: 'optimism',
+        plugin: 'synthetix-bridge',
+        bridgeType: 'lockAndMint',
+      },
     ],
     type: 'canonical',
   },

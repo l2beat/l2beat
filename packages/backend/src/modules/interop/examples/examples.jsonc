@@ -1826,6 +1826,52 @@
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "sorare" }],
     "transfers": ["sorare-base.L1ToL2Transfer"]
   },
+  "synthetix-bridge": {
+    "txs": [
+      // L1 → L2 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xdb75ac17c95ae52986a8c62514da622ee18a1a7417ab177e172a443d2cafa51c"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x39f17fb6f6040661e5785cc1aed3d53fb94a366af2706b84fedb433b5a501e61"
+      },
+      // L2 → L1 withdrawal
+      {
+        "chain": "optimism",
+        "tx": "0xa0f993f78ca209864747f7a102acff91303a0674963b3f18521450b8cab90245"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xfe9a8c5ca5895d057548d6584fea4ddc7e61e372d7b54634814d271bc2cc3390"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "synthetix-bridge.InitiateL1" },
+        { "type": "synthetix-bridge.FinalizeL2" },
+        { "type": "synthetix-bridge.InitiateL2" },
+        { "type": "synthetix-bridge.FinalizeL1" }
+      ],
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "synthetix-bridge" },
+        { "type": "opstack.L2ToL1Message", "app": "synthetix-bridge" }
+      ],
+      "transfers": [
+        {
+          "type": "synthetix-bridge.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "sUSD", "amount": 1234.66961 } },
+          "dst": { "financials": { "symbol": "sUSD", "amount": 1234.66961 } }
+        },
+        {
+          "type": "synthetix-bridge.L2ToL1Transfer",
+          "src": { "financials": { "symbol": "sUSD", "amount": 50362.24 } },
+          "dst": { "financials": { "symbol": "sUSD", "amount": 50362.24 } }
+        }
+      ]
+    }
+  },
   "beefy-bridge": {
     "txs": [
       {

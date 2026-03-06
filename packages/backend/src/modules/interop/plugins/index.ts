@@ -59,6 +59,7 @@ import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
+import { SynthetixBridgePlugin } from './synthetix-bridge'
 import type { InteropPlugin } from './types'
 import { WorldIdPlugin } from './world-id'
 import { WormholeConfigPlugin } from './wormhole/wormhole.config'
@@ -216,6 +217,7 @@ export function createInteropPlugins(
           new ZklinkNovaPlugin(), // should be run before OpStack
           new WorldIdPlugin(), // should be run before OpStack
           new LidoWstethPlugin(), // should be run before OpStack
+          new SynthetixBridgePlugin(), // should be run before OpStackStandardBridge
           new SorareBasePlugin(), // should be run before OpStackStandardBridge
           new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
           new MakerBridgePlugin(), // should be run before OpStackStandardBridge
