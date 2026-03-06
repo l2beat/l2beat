@@ -88,14 +88,14 @@ export class SynthetixBridgePlugin implements InteropPluginResyncable {
       const initiate = parseInitiateSynthTransfer(input.log, [
         ChainSpecificAddress.address(L1_BRIDGE),
       ])
-      if (initiate && initiate.currencyKey === SUSD_CURRENCY_KEY) {
+      if (initiate?.currencyKey === SUSD_CURRENCY_KEY) {
         return [InitiateL1.create(input, { amount: initiate.amount })]
       }
 
       const finalize = parseFinalizeSynthTransfer(input.log, [
         ChainSpecificAddress.address(L1_BRIDGE),
       ])
-      if (finalize && finalize.currencyKey === SUSD_CURRENCY_KEY) {
+      if (finalize?.currencyKey === SUSD_CURRENCY_KEY) {
         return [FinalizeL1.create(input, { amount: finalize.amount })]
       }
     }
@@ -104,14 +104,14 @@ export class SynthetixBridgePlugin implements InteropPluginResyncable {
       const finalize = parseFinalizeSynthTransfer(input.log, [
         ChainSpecificAddress.address(L2_BRIDGE),
       ])
-      if (finalize && finalize.currencyKey === SUSD_CURRENCY_KEY) {
+      if (finalize?.currencyKey === SUSD_CURRENCY_KEY) {
         return [FinalizeL2.create(input, { amount: finalize.amount })]
       }
 
       const initiate = parseInitiateSynthTransfer(input.log, [
         ChainSpecificAddress.address(L2_BRIDGE),
       ])
-      if (initiate && initiate.currencyKey === SUSD_CURRENCY_KEY) {
+      if (initiate?.currencyKey === SUSD_CURRENCY_KEY) {
         return [InitiateL2.create(input, { amount: initiate.amount })]
       }
     }

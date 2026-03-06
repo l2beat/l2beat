@@ -1849,10 +1849,14 @@
     ],
     "expects": {
       "events": [
+        { "type": "opstack.SentMessage" },
         { "type": "synthetix-bridge.InitiateL1" },
         { "type": "synthetix-bridge.FinalizeL2" },
+        { "type": "opstack.RelayedMessage" },
+        { "type": "opstack.MessagePassed" },
         { "type": "synthetix-bridge.InitiateL2" },
-        { "type": "synthetix-bridge.FinalizeL1" }
+        { "type": "synthetix-bridge.FinalizeL1" },
+        { "type": "opstack.WithdrawalFinalized" }
       ],
       "messages": [
         { "type": "opstack.L1ToL2Message", "app": "synthetix-bridge" },
