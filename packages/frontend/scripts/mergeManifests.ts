@@ -43,7 +43,7 @@ export function mergeManifests(
         (acc, [key, value]) => {
           if (value.imports && value.imports.length > 0) {
             acc[`/${key}`] = value.imports.map(
-              (imp) => `/static/${viteManifest[imp]!.file}`,
+              (imp) => `/static/${viteManifest[imp]?.file}`,
             )
           }
           return acc
