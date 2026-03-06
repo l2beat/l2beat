@@ -5,15 +5,27 @@
  * NON-MINTING
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
-import { Dispatch, Process, parseDispatch, parseDispatchId } from './hyperlane'
-import { findParsedAround, parseSentTransferRemote } from './hyperlane-hwr'
+import {
+  Dispatch,
+  dispatchIdLog,
+  dispatchLog,
+  Process,
+  parseDispatch,
+  parseDispatchId,
+} from './hyperlane'
+import {
+  findParsedAround,
+  parseSentTransferRemote,
+  sentTransferRemoteLog,
+} from './hyperlane-hwr'
 import {
   createInteropEventType,
+  type DataRequest,
   defineNetworks,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -75,8 +87,21 @@ export const HwrTransferSentMerkly = createInteropEventType<{
   tokenAddress: Address32
 }>('hyperlane-merkly-tokenbridge.TransferSent')
 
-export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
+export class HyperlaneMerklyTokenBridgePlugin
+  implements InteropPluginResyncable
+{
   readonly name = 'hyperlane-merkly-tokenbridge'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: sentTransferRemoteLog,
+        includeTxEvents: [dispatchLog, dispatchIdLog],
+        addresses: '*',
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const network = MERKLY_TOKENBRIDGE_NETWORKS.find(

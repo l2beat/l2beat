@@ -82,11 +82,18 @@ export const zkCatalogTags = [
     description: 'Instruction language for ZKsync Era virtual machine.',
   },
   {
-    id: 'RISCV',
+    id: 'RISCV32',
     type: ZkCatalogTagType.ISA,
-    name: 'RISC-V',
+    name: 'RISC-V 32bit',
     description:
       'Free and open-source universal 32-bit ISA used across a variety of hardware and software.',
+  },
+  {
+    id: 'RISCV64',
+    type: ZkCatalogTagType.ISA,
+    name: 'RISC-V 64bit',
+    description:
+      'Free and open-source universal 64-bit ISA used across a variety of hardware and software.',
   },
   {
     id: 'ZkASM',
@@ -240,13 +247,19 @@ export const zkCatalogTags = [
     id: 'Goldilocks',
     type: ZkCatalogTagType.Field,
     name: 'Goldilocks',
-    description: 'Prime field of order p = 2**64 - 2**32  + 1.',
+    description: 'Prime field of order p = 2**64 - 2**32 + 1.',
   },
   {
     id: 'BabyBear',
     type: ZkCatalogTagType.Field,
     name: 'Baby Bear',
     description: 'Prime field of order p = 15 * 2**27 + 1.',
+  },
+  {
+    id: 'KoalaBear',
+    type: ZkCatalogTagType.Field,
+    name: 'Koala Bear',
+    description: 'Prime field of order p = 2**31 - 2**24 + 1.',
   },
   {
     id: 'felt252',

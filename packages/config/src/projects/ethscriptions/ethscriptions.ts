@@ -64,7 +64,7 @@ export const ethscriptions: ScalingProject = {
   },
   proofSystem: {
     type: 'Optimistic',
-    zkCatalogId: ProjectId('sp1'),
+    zkCatalogId: ProjectId('sp1turbo'),
     challengeProtocol: 'Single-step',
   },
   stage: getStage(

@@ -35,6 +35,9 @@ export function Head({ manifest, metadata, stylesheetUrl }: HeadProps) {
         sizes="180x180"
       />
       <link rel="stylesheet" href={resolvedStylesheetUrl} />
+      {manifest.getImports('/src/ssr/ClientEntry.tsx').map((url) => (
+        <link key={url} rel="modulepreload" href={url} />
+      ))}
 
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />

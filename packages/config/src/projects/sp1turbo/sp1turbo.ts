@@ -4,10 +4,10 @@ import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
 
-export const sp1: BaseProject = {
-  id: ProjectId('sp1'),
-  slug: 'sp1',
-  name: 'SP1',
+export const sp1turbo: BaseProject = {
+  id: ProjectId('sp1turbo'),
+  slug: 'sp1turbo',
+  name: 'SP1 Turbo',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-08')),
   statuses: {
@@ -19,11 +19,13 @@ export const sp1: BaseProject = {
   },
   display: {
     description:
-      'SP1 is a zk proving system for RISC-V programs built by Succinct.',
+      'SP1 Turbo is a zk proving system for RISC-V programs built by Succinct, release v5.',
     links: {
       websites: ['https://www.succinct.xyz'],
-      documentation: ['https://docs.succinct.xyz/docs/sp1/introduction'],
-      repositories: ['https://github.com/succinctlabs/sp1'],
+      documentation: [
+        'https://docs.succinct.xyz/docs/v5/protocol/introduction',
+      ],
+      repositories: ['https://github.com/succinctlabs/sp1/tree/v5.0.0'],
       socialMedia: [
         'https://x.com/SuccinctLabs',
         'https://discord.com/invite/succinctlabs',
@@ -55,7 +57,7 @@ export const sp1: BaseProject = {
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Plonky3,
-        ZK_CATALOG_TAGS.ISA.RISCV,
+        ZK_CATALOG_TAGS.ISA.RISCV32,
         ZK_CATALOG_TAGS.Field.BabyBear,
       ],
       finalWrap: [
@@ -68,23 +70,23 @@ export const sp1: BaseProject = {
     proofSystemInfo: `
       ## Description
 
-      SP1 is a RISC-V zkVM using the [Plonky3](https://github.com/Plonky3/Plonky3) stack. The zkVM execution is proven recursively and is wrapped into a SNARK for final verification. It provides tools to generate onchain Groth16 or Plonk verifiers. SP1 targets [100 bits of security](https://docs.succinct.xyz/docs/sp1/security/security-model#conjectures-for-fris-security).
+      SP1 Turbo is a RISC-V zkVM using the [Plonky3](https://github.com/Plonky3/Plonky3) stack. The zkVM execution is proven recursively and is wrapped into a SNARK for final verification. It provides tools to generate onchain Groth16 or Plonk verifiers. SP1 targets [100 bits of security based on unproven proximity gaps conjecture](https://docs.succinct.xyz/docs/v5/sp1/security/security-model#conjectures-for-fris-security), so the actual security is likely lower.
 
       ## Proof system
 
-      SP1 proves execution of a RISC-V VM using several ZK circuits connected by lookup arguments, as implemented in Plonky3. VM execution trace is split into several chunks that could be proven in parallel with a STARK proving system. The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof is verified with the final wrap SNARK program, the wrap SNARK proof is verified onchain.
+      SP1 Turbo proves execution of a 32 bit RISC-V VM (RV32IM) using several ZK circuits connected by lookup arguments, as implemented in Plonky3. VM execution trace is split into several chunks that could be proven in parallel with a STARK proving system. The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof is verified with the final wrap SNARK program, the wrap SNARK proof is verified onchain.
 
       ### zkVM component
 
-      Verifies execution of a RISC-V program in a zkVM. Uses [Plonky3](https://github.com/Plonky3/Plonky3) STARK toolkit with AIR arithmetization and FRI-based polynomial commitment scheme within the [BabyBear field](https://docs.succinct.xyz/docs/sp1/security/security-model#hash-functions-and-the-random-oracle-model).
+      Verifies execution of a RISC-V program in a zkVM. See [here](https://docs.succinct.xyz/docs/v5/sp1/security/rv32im-implementation) for more details on the exact RISC-V standard implemented. Uses [Plonky3](https://github.com/Plonky3/Plonky3) STARK toolkit with AIR arithmetization and FRI-based polynomial commitment scheme within the [BabyBear field](https://docs.succinct.xyz/docs/v5/sp1/security/security-model#hash-functions-and-the-random-oracle-model).
 
       ### Recursion circuits
 
-      SP1 provides tools for recursive proof generation by [verifying proofs in a zkVM](https://docs.succinct.xyz/docs/sp1/writing-programs/proof-aggregation#verifying-proofs-inside-the-zkvm). This uses the same toolkit as top-level proof system, but proves the correct verification of all proofs generated on the previous step.
+      SP1 provides tools for recursive proof generation by [verifying proofs in a zkVM](https://docs.succinct.xyz/docs/v5/sp1/writing-programs/proof-aggregation#verifying-proofs-inside-the-zkvm). This uses the same toolkit as top-level proof system, but proves the correct verification of all proofs generated on the previous step.
 
       ### Final wrap
 
-      SP1 supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof verification ([link](https://docs.succinct.xyz/docs/sp1/generating-proofs/proof-types#compressed)). The [gnark](https://github.com/Consensys/gnark) implementation of these proof systems over BN254 curve is used. For Plonk, Aztec Ignition trusted setup ceremony is used, for Groth16 Succinct run internal circuit-dependent phase 2 trusted setup, see [below](#trusted-setups) for more details.
+      SP1 supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof verification ([link](https://docs.succinct.xyz/docs/v5/sp1/generating-proofs/proof-types#compressed)). The [gnark](https://github.com/Consensys/gnark) implementation of these proof systems over BN254 curve is used. For Plonk, Aztec Ignition trusted setup ceremony is used, for Groth16 Succinct run internal circuit-dependent phase 2 trusted setup, see [below](#trusted-setups) for more details.
       `,
     trustedSetups: [
       {
@@ -93,7 +95,7 @@ export const sp1: BaseProject = {
       },
       {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
-        ...TRUSTED_SETUPS.SP1Groth16,
+        ...TRUSTED_SETUPS.SP1TurboGroth16,
       },
     ],
     projectsForTvs: [
@@ -226,56 +228,6 @@ export const sp1: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-The regeneration process consumed around 70 GiB of memory on the peak.
-
-1. Install necessary dependencies: rust, docker, sp1 toolkit, go.
-
-\`\`\`
-sudo apt update
-sudo apt install build-essential golang-go protobuf-compiler
-
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-cargo install --debug --locked cargo-make
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-sudo apt install -y docker-ce
-sudo usermod -aG docker $\{USER\}
-
-curl -L https://sp1up.succinct.xyz/ | bash
-source ~/.bashrc
-sp1up
-\`\`\`
-
-2. Clone [sp1 repo](https://github.com/succinctlabs/sp1), set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to regenerate verifiers.
-
-\`\`\`
-git clone https://github.com/succinctlabs/sp1.git
-cd sp1/crates/prover
-git checkout v6.0.0   # commit should be f87f8d6ff005d542db22e241928319f5e96a4609
-export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
-
-make build-circuits
-\`\`\`
-      
-The script will generate Plonk verifier smart contract with verification keys and the verifier hash in \`build/plonk\` dir.
-        `,
-      },
-      {
         hash: '0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
@@ -328,78 +280,6 @@ make build-circuits
       
 The script will generate Plonk verifier smart contract with verification keys and the verifier hash in \`build/plonk\` dir.
         `,
-      },
-      {
-        hash: '0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
-        knownDeployments: [
-          {
-            address: EthereumAddress(
-              '0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508',
-            ),
-            chain: 'ethereum',
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-The regeneration process consumed around 70 GiB of memory on the peak.
-
-1. Install necessary dependencies: rust, docker, sp1 toolkit, go.
-
-\`\`\`
-sudo apt update
-sudo apt install build-essential golang-go protobuf-compiler
-
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-. .cargo/env
-cargo install --debug --locked cargo-make
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-sudo apt install -y docker-ce
-sudo usermod -aG docker $\{USER\}
-
-curl -L https://sp1up.succinct.xyz/ | bash
-source ~/.bashrc
-sp1up
-\`\`\`
-
-2. Clone [sp1 repo](https://github.com/succinctlabs/sp1), set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to build groth16 circuit file.
-
-\`\`\`
-git clone https://github.com/succinctlabs/sp1.git
-cd sp1/crates/prover
-git checkout v6.0.0   # commit should be f87f8d6ff005d542db22e241928319f5e96a4609
-export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
-
-make build-circuits
-\`\`\`
-
-This script will generate \`groth16_circuit.bin\` file in the \`prover/build/groth16\` directory, however it will not generate correct prover and verifier keys.
-
-3. Generate correct pk and vk using the correct SP1 trusted setup. This will require [semaphore-gnark-11](https://github.com/succinctlabs/semaphore-gnark-11/tree/main) repo.
-
-\`\`\`
-cd
-git clone https://github.com/succinctlabs/semaphore-gnark-11.git  # tested on commit hash 6d6ebc3608e609ec879e9ba99abee6b6b97d937d
-cd semaphore-gnark-11
-# Download the trusted setup transcript
-curl "https://sp1-circuits.s3-us-east-2.amazonaws.com/v6.0.0-trusted-setup.tar.gz" -o trusted-setup.tar.gz
-
-# Extract trusted setup transcript.
-tar -xzf trusted-setup.tar.gz
-
-# Build the binary.
-go build
-
-# Generate keys. They are outputted to the files pk and vk in the root directory.
-./semaphore-gnark-11 key trusted-setup/phase1 trusted-setup/phase2-11 trusted-setup/evals /path/to/sp1/crates/prover/build/groth16/groth16_circuit.bin
-\`\`\`
-The last step will take several hours to complete.
-
-4. Compute the hash of generated \`vk\` file: \`shasum vk -a 256\`.
-    `,
       },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',

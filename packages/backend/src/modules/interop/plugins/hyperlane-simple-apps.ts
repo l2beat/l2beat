@@ -7,40 +7,58 @@ import {
   Process,
   parseProcess,
   parseProcessId,
+  processIdLog,
+  processLog,
 } from './hyperlane'
 import { findParsedAround } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-const parsePriceUpdated = createEventParser(
-  'event PriceUpdated(uint256 price, uint256 timestamp)',
-)
+const priceUpdatedLog = 'event PriceUpdated(uint256 price, uint256 timestamp)'
+const parsePriceUpdated = createEventParser(priceUpdatedLog)
 
 const PriceUpdatedProcess = createInteropEventType<{
   messageId: `0x${string}`
   $srcChain: string
 }>('hyperlane-renzo.PriceUpdatedProcess')
 
-const parseReceivedFromBridge = createEventParser(
-  'event ReceivedFromBridge(bytes32 indexed txId)',
-)
+const receivedFromBridgeLog = 'event ReceivedFromBridge(bytes32 indexed txId)'
+const parseReceivedFromBridge = createEventParser(receivedFromBridgeLog)
 
 const ReceivedFromBridgeProcess = createInteropEventType<{
   messageId: `0x${string}`
   $srcChain: string
 }>('hyperlane-decent.ReceivedFromBridge')
 
-export class HyperlaneSimpleAppsPlugIn implements InteropPlugin {
+export class HyperlaneSimpleAppsPlugIn implements InteropPluginResyncable {
   readonly name = 'hyperlane-simple-apps'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: priceUpdatedLog,
+        includeTxEvents: [processLog, processIdLog],
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: receivedFromBridgeLog,
+        includeTxEvents: [processLog, processIdLog],
+        addresses: '*',
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const priceUpdated = parsePriceUpdated(input.log, null)
