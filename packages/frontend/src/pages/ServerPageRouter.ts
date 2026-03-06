@@ -37,9 +37,7 @@ export function createServerPageRouter(
       'Content-Type': 'text/html; charset=utf-8',
     })
 
-    if (env.NODE_ENV !== 'production') {
-      headers.set('Cache-Control', 'no-store')
-    } else if (env.DEPLOYMENT_ENV === 'production') {
+    if (env.DEPLOYMENT_ENV === 'production') {
       headers.set('Cache-Control', 'public, max-age=300')
     }
 
