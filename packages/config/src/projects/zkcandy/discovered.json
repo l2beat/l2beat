@@ -1,6 +1,6 @@
 {
   "name": "zkcandy",
-  "timestamp": 1765463883,
+  "timestamp": 1772794720,
   "configHash": "0x0fb99e4de7dba5be44dad22a4fe32f6e2a77557010847bf0a9f91083cac9d51b",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -121,7 +121,8 @@
           { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1742914362 },
           { "_protocolVersion": 115964116992, "_upgradeTimestamp": 1748443499 },
           { "_protocolVersion": 120259084288, "_upgradeTimestamp": 1752170801 },
-          { "_protocolVersion": 120259084289, "_upgradeTimestamp": 1754911800 }
+          { "_protocolVersion": 120259084289, "_upgradeTimestamp": 1754911800 },
+          { "_protocolVersion": 124554051586, "_upgradeTimestamp": 1772762400 }
         ]
       },
       "fieldMeta": {
@@ -267,7 +268,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 35,
+        "nonce": 39,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -574,7 +575,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 6336,
+        "getFirstUnprocessedPriorityTx": 6349,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -583,20 +584,20 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x75cbc26d25464ddd14d9459281e5965928288d76cca68627137c895b127cd67d",
+        "getPriorityTreeRoot": "0x96a507a5cf6214735a7c11c637e8aae71d8ba12ffcf3a136c07bac8eddd5f65f",
         "getPriorityTreeStartIndex": 56,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084289,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 4701,
-        "getTotalBatchesExecuted": 4701,
-        "getTotalBatchesVerified": 4701,
-        "getTotalBlocksCommitted": 4701,
-        "getTotalBlocksExecuted": 4701,
-        "getTotalBlocksVerified": 4701,
-        "getTotalPriorityTxs": 6336,
+        "getTotalBatchesCommitted": 4916,
+        "getTotalBatchesExecuted": 4916,
+        "getTotalBatchesVerified": 4916,
+        "getTotalBlocksCommitted": 4916,
+        "getTotalBlocksExecuted": 4916,
+        "getTotalBlocksVerified": 4916,
+        "getTotalPriorityTxs": 6349,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
         "getVerifierParams": {
@@ -1101,6 +1102,6 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 23990081 },
+  "usedBlockNumbers": { "ethereum": 24597970 },
   "permissionsConfigHash": "0x8929958a2dd01826f664ec857148decdf131f99b9b65743fc033550d4e26a50f"
 }

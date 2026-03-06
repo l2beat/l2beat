@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xe547286be9afb53810d664f1fc9defc8b98128c1
+
+# Diff at Fri, 06 Mar 2026 08:41:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@464f5fa94dac665b855f973e6cbee143f2fbb4bd block: 1772533779
+- current timestamp: 1772786430
+
+## Description
+
+Rotated L1 to L2 message settler (role on Linea L2).
+
+## Watched changes
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) {
+    +++ description: None
+      values.accessControl.L1_L2_MESSAGE_SETTER_ROLE.members.0:
+-        "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
++        "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
+      values.l1l2MessageSetter.0:
+-        "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
++        "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
+    }
+```
+
 Generated with discovered.json: 0xba51707d98600208cf93084f406a51f922540191
 
 # Diff at Wed, 04 Mar 2026 12:04:51 GMT:

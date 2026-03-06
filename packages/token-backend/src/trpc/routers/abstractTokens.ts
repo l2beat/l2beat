@@ -92,13 +92,11 @@ export const abstractTokensRouter = (deps: AbstractTokensRouterDeps) => {
         )
         const [firstPrice] = marketChart.prices
 
-        if (!firstPrice) {
-          return null
+        if (firstPrice) {
+          listingTimestamp = UnixTime(
+            Math.floor(firstPrice.date.getTime() / 1000),
+          )
         }
-
-        listingTimestamp = UnixTime(
-          Math.floor(firstPrice.date.getTime() / 1000),
-        )
       } catch (error) {
         console.error(error)
       }

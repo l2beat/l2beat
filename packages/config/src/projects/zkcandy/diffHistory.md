@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x8bb47c6ea42285d678cb0163fe46b243e05e4df8
+
+# Diff at Fri, 06 Mar 2026 10:59:45 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@464f5fa94dac665b855f973e6cbee143f2fbb4bd block: 1765463883
+- current timestamp: 1772794720
+
+## Description
+
+An upgrade timestamp was registered approx. 9 hours in the past. No other changes in that transaction: https://tools.l2beat.com/decoder-new/?hash=0x9e57751872e9e00959791f0eff4771a388363fb776ddca16476a7ed975d9f3fe&data=AwA.
+
+Maybe an actual upgrade is still upcoming.
+
+## Watched changes
+
+```diff
+    contract zkCandyZkEvmAdmin (eth:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2) {
+    +++ description: A governance proxy that lets eth:0x8eb156588D2FAD21dE0066BAA5BfDcd940695196 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.4:
++        {"_protocolVersion":124554051586,"_upgradeTimestamp":1772762400}
+    }
+```
+
 Generated with discovered.json: 0x1dd036861ed0f83d2b5739c8ba13b5f129b67c46
 
 # Diff at Wed, 17 Dec 2025 14:34:43 GMT:
