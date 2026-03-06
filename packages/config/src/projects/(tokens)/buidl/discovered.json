@@ -1,6 +1,6 @@
 {
   "name": "buidl",
-  "timestamp": 1772088696,
+  "timestamp": 1772790410,
   "configHash": "0xa54e81c1e58114168b12e2065c9a3d02af11c9692d383d70df5d41c91d3af4cc",
   "entries": [
     {
@@ -55,7 +55,8 @@
         "getWalletAt": [
           "arb1:0x7f4e4384137b6aF7732e4e0951832b4152082fbB",
           "arb1:0x54FE3425f09854E15081fa5B3276afCB4C46FCa2",
-          "arb1:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69"
+          "arb1:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+          "arb1:0xC8abbd5bC34C943C908D99581e77D0A91b104515"
         ],
         "isPaused": false,
         "ISSUER_MULTICALL": 8194,
@@ -76,15 +77,15 @@
         "TA_MULTICALL": 8195,
         "TOKEN_ISSUER": 512,
         "TOKEN_REALLOCATOR": 8192,
-        "totalIssued": 47973086450000,
-        "totalSupply": 30024691090000,
+        "totalIssued": 47994118380000,
+        "totalSupply": 27045723020000,
         "TRANSACTION_RELAYER": 4096,
         "TRUST_SERVICE": 1,
         "UNUSED_1": 16,
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "WALLET_MANAGER": 32,
         "WALLET_REGISTRAR": 1024,
-        "walletCount": 3
+        "walletCount": 4
       },
       "implementationNames": {
         "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": "ERC1967Proxy",
@@ -207,6 +208,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 436084747 },
+  "usedBlockNumbers": { "arbitrum": 438898467 },
   "permissionsConfigHash": "0x2a82a405963425c693d9f2dd82d1dbfbf2e3b57fe263aee148af26a1c97ff044"
 }
