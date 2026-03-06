@@ -1501,5 +1501,6 @@
   "static/meta-images/interop/projects/stargate/opengraph-image.png": "19ac0e3eb41d21575dd995bb2c847e62",
   "static/meta-images/interop/projects/wormhole-ntt/opengraph-image.png": "1225e1b6b31d381dac76239b4ff38e8f",
   "static/meta-images/interop/projects/wormhole-wtt/opengraph-image.png": "f051573be70e814d26cb2920c22003ef",
-  "static/meta-images/interop/projects/zksync-era/opengraph-image.png": "30cf4f5244087bd152144f6471d4c539"
+  "static/meta-images/interop/projects/zksync-era/opengraph-image.png": "30cf4f5244087bd152144f6471d4c539",
+  "static/meta-images/interop/projects/ink/opengraph-image.png": "959fcd74021ea5324bbbdb699e648135"
 }
