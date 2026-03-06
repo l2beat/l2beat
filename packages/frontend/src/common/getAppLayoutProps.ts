@@ -1,10 +1,22 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { getCollection } from '~/content/getCollection'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
-import { getActiveChangelogWhatsNewWidget } from '~/server/features/changelog/getChangelogEntries'
+import {
+  getActiveChangelogWhatsNewWidget,
+  getChangelogEntries,
+} from '~/server/features/changelog/getChangelogEntries'
 import { getRecentlyAddedProjects } from '~/server/features/projects/search-bar/getRecentlyAddedProjects'
 
 export async function getAppLayoutProps(): Promise<AppLayoutProps> {
   const recentlyAddedProjects = await getRecentlyAddedProjects()
+  const recentChangelogEntriesIds = getChangelogEntries()
+    .filter(
+      (entry) =>
+        UnixTime.fromDate(entry.publishedAt) >
+        UnixTime.now() - 14 * UnixTime.DAY,
+    )
+    .map((entry) => entry.id)
   const whatsNew = getActiveChangelogWhatsNewWidget()
   return {
     terms: getCollection('glossary').map((term) => ({
@@ -13,6 +25,8 @@ export async function getAppLayoutProps(): Promise<AppLayoutProps> {
       description: term.data.definition,
     })),
     recentlyAddedProjects,
+    recentChangelogEntriesIds,
     whatsNew,
+    countdowns: PROJECT_COUNTDOWNS,
   }
 }

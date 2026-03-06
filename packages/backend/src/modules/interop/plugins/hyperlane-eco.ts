@@ -5,21 +5,26 @@
 import { Address32 } from '@l2beat/shared-pure'
 import {
   Dispatch,
+  dispatchIdLog,
+  dispatchLog,
   HYPERLANE_NETWORKS,
   Process,
   parseDispatch,
   parseDispatchId,
   parseProcess,
   parseProcessId,
+  processIdLog,
+  processLog,
 } from './hyperlane'
 import { findParsedAround } from './hyperlane-hwr'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
@@ -39,25 +44,34 @@ import {
  * the new 'portal' contract can also send via other bridges than hyperlane
  */
 
-const parseBatchSent = createEventParser(
-  'event BatchSent(bytes32[] indexed _hashes, uint256 indexed _sourceChainID)',
-)
+const batchSentLog =
+  'event BatchSent(bytes32[] indexed _hashes, uint256 indexed _sourceChainID)'
+const parseBatchSent = createEventParser(batchSentLog)
 
-const parseIntentProvenSource = createEventParser(
-  'event IntentProven(bytes32 indexed intentHash, bytes32 indexed claimant)',
-)
+const intentProvenSourceLog =
+  'event IntentProven(bytes32 indexed intentHash, bytes32 indexed claimant)'
+const parseIntentProvenSource = createEventParser(intentProvenSourceLog)
 
+const intentProvenDestinationLegacyLog =
+  'event IntentProven(bytes32 indexed _hash, address indexed _claimant)'
 const parseIntentProvenDestinationLegacy = createEventParser(
-  'event IntentProven(bytes32 indexed _hash, address indexed _claimant)',
+  intentProvenDestinationLegacyLog,
 )
 
+const intentProvenDestinationLog =
+  'event IntentProven(bytes32 indexed intentHash, address indexed _claimant, uint64 destination)'
 const parseIntentProvenDestination = createEventParser(
-  'event IntentProven(bytes32 indexed intentHash, address indexed _claimant, uint64 destination)',
+  intentProvenDestinationLog,
 )
 
+const hyperInstantFulfillmentLog =
+  'event HyperInstantFulfillment(bytes32 indexed _hash, uint256 indexed _sourceChainID, address indexed _claimant)'
 const parseHyperInstantFulfillment = createEventParser(
-  'event HyperInstantFulfillment(bytes32 indexed _hash, uint256 indexed _sourceChainID, address indexed _claimant)',
+  hyperInstantFulfillmentLog,
 )
+
+const ecoSourceTxEventSignatures = [dispatchLog, dispatchIdLog]
+const ecoDestinationTxEventSignatures = [processLog, processIdLog]
 
 const BatchSentDispatch = createInteropEventType<{
   messageId: `0x${string}`
@@ -70,8 +84,43 @@ const IntentProvenProcess = createInteropEventType<{
   recipient: Address32 // claimant
 }>('hyperlane-eco.IntentProvenProcess')
 
-export class HyperlaneEcoPlugin implements InteropPlugin {
+export class HyperlaneEcoPlugin implements InteropPluginResyncable {
   readonly name = 'hyperlane-eco'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: batchSentLog,
+        includeTxEvents: ecoSourceTxEventSignatures,
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: intentProvenSourceLog,
+        includeTxEvents: ecoSourceTxEventSignatures,
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: hyperInstantFulfillmentLog,
+        includeTxEvents: ecoSourceTxEventSignatures,
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: intentProvenDestinationLegacyLog,
+        includeTxEvents: ecoDestinationTxEventSignatures,
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: intentProvenDestinationLog,
+        includeTxEvents: ecoDestinationTxEventSignatures,
+        addresses: '*',
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const batchSent = parseBatchSent(input.log, null)

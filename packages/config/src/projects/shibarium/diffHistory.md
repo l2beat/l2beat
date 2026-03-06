@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x0918dd0d67c16cef451b0ff0e258a0955e12281c
+
+# Diff at Wed, 04 Mar 2026 09:20:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6a30ad0d296eab5cfae7df5ce6dbeea89f168dc4 block: 1772461789
+- current timestamp: 1772615972
+
+## Description
+
+minus one vali.
+
+## Watched changes
+
+```diff
+    contract StakingNFT (eth:0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0) {
+    +++ description: None
+      values.totalSupply:
+-        12
++        11
+    }
+```
+
+Generated with discovered.json: 0x7e7fd3b54b1fb93b37bce40ac7a5c2e7e8d7d0cd
+
+# Diff at Mon, 02 Mar 2026 14:31:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1769674846
+- current timestamp: 1772461789
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064) {
+    +++ description: Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. After the shibarium hack, this contract also includes a validator blacklist managed by eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06.
+      values.currentValidatorSetSize:
+-        12
++        11
+    }
+```
+
 Generated with discovered.json: 0x6c2253374ff25d8456927b5135e21ba2ddacef56
 
 # Diff at Thu, 29 Jan 2026 08:21:57 GMT:

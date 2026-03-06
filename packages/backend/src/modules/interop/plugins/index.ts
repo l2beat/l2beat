@@ -39,6 +39,7 @@ import { LayerZeroV1Plugin } from './layerzero/layerzero-v1.plugin'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
 import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
 import { LidoWstethPlugin } from './lido-wsteth'
+import { LineaPlugin } from './linea'
 import { MakerBridgePlugin } from './maker-bridge'
 import { MayanForwarderPlugin } from './mayan-forwarder'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
@@ -58,6 +59,7 @@ import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
+import { SynthetixBridgePlugin } from './synthetix-bridge'
 import type { InteropPlugin } from './types'
 import { WorldIdPlugin } from './world-id'
 import { WormholeConfigPlugin } from './wormhole/wormhole.config'
@@ -189,6 +191,7 @@ export function createInteropPlugins(
         ],
       },
       new AllbridgePlugIn(),
+      new LineaPlugin(),
       {
         name: 'axelar',
         plugins: [
@@ -214,6 +217,7 @@ export function createInteropPlugins(
           new ZklinkNovaPlugin(), // should be run before OpStack
           new WorldIdPlugin(), // should be run before OpStack
           new LidoWstethPlugin(), // should be run before OpStack
+          new SynthetixBridgePlugin(), // should be run before OpStackStandardBridge
           new SorareBasePlugin(), // should be run before OpStackStandardBridge
           new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
           new MakerBridgePlugin(), // should be run before OpStackStandardBridge

@@ -25,6 +25,7 @@ interface AddHashesOptions {
 }
 
 function addHashes(options: AddHashesOptions) {
+  console.time('Hashing files')
   const fullInputDir = path.resolve(options.inputDir)
   const fullOutputDir = path.resolve(options.outputDir)
 
@@ -70,6 +71,7 @@ function addHashes(options: AddHashesOptions) {
   }
 
   fs.writeFileSync(options.manifest, JSON.stringify(manifest, null, 2))
+  console.timeEnd('Hashing files')
 }
 
 function getFileList(dir: string): string[] {

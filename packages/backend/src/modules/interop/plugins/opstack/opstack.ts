@@ -163,6 +163,48 @@ export const OPSTACK_NETWORKS = defineNetworks<OpStackNetwork>('opstack', [
       'eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
     ),
   },
+  {
+    chain: 'ink',
+    l2ToL1MessagePasser: ChainSpecificAddress(
+      'ink:0x4200000000000000000000000000000000000016',
+    ),
+    l2CrossDomainMessenger: ChainSpecificAddress(
+      'ink:0x4200000000000000000000000000000000000007',
+    ),
+    l2StandardBridge: ChainSpecificAddress(
+      'ink:0x4200000000000000000000000000000000000010',
+    ),
+    optimismPortal: ChainSpecificAddress(
+      'eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F',
+    ),
+    l1CrossDomainMessenger: ChainSpecificAddress(
+      'eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f',
+    ),
+    l1StandardBridge: ChainSpecificAddress(
+      'eth:0x88FF1e5b602916615391F55854588EFcBB7663f0',
+    ),
+  },
+  {
+    chain: 'celo',
+    l2ToL1MessagePasser: ChainSpecificAddress(
+      'celo:0x4200000000000000000000000000000000000016',
+    ),
+    l2CrossDomainMessenger: ChainSpecificAddress(
+      'celo:0x4200000000000000000000000000000000000007',
+    ),
+    l2StandardBridge: ChainSpecificAddress(
+      'celo:0x4200000000000000000000000000000000000010',
+    ),
+    optimismPortal: ChainSpecificAddress(
+      'eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC',
+    ),
+    l1CrossDomainMessenger: ChainSpecificAddress(
+      'eth:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95',
+    ),
+    l1StandardBridge: ChainSpecificAddress(
+      'eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe',
+    ),
+  },
 ])
 
 export class OpStackPlugin implements InteropPluginResyncable {

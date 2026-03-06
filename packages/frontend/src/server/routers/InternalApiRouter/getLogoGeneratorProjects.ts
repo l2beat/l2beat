@@ -7,16 +7,15 @@ export async function getLogoGeneratorProjects() {
       'archivedAt',
       'bridgeInfo',
       'scalingInfo',
-      'isBridge',
       'isScaling',
     ],
   })
 
   return projects
-    .filter((project) => !!project.isBridge || !!project.isScaling)
+    .filter((project) => !!project.isScaling)
     .map((project) => ({
       name: project.name,
-      type: project.scalingInfo?.layer ?? 'bridge',
+      type: project.scalingInfo?.layer,
       slug: project.slug,
       isUpcoming: project.isUpcoming,
       isArchived: !!project.archivedAt,

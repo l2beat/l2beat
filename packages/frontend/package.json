@@ -82,6 +82,7 @@
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@tailwindcss/cli": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.11",
     "@types/connect-timeout": "^1.9.0",
     "@types/d3-scale": "^4.0.9",
     "@types/lodash": "^4.17.4",
@@ -91,6 +92,7 @@
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@types/ws": "^8.18.1",
+    "@vitejs/plugin-react-swc": "^4.2.3",
     "autoprefixer": "^10.4.20",
     "mockdate": "^3.0.5",
     "postcss": "^8.4.38",
@@ -98,7 +100,8 @@
     "tailwindcss": "^4.1.11",
     "tailwindcss-animate": "^1.0.7",
     "tinify": "^1.7.1",
-    "tsx": "^4.9.3"
+    "tsx": "^4.9.3",
+    "vite": "^7.3.1"
   },
   "overrides": {
     "react-is": "19.0.0",

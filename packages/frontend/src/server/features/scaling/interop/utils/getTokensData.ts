@@ -1,8 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { type KnownInteropBridgeType, notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
-
-import type { CommonInteropData, DurationSplitMap, TokenData } from '../types'
+import type {
+  CommonInteropData,
+  DurationSplitMap,
+  TokenData,
+  TokenFlowData,
+} from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 
 import { getAverageDuration } from './getAverageDuration'
@@ -10,7 +14,10 @@ import { getAverageDuration } from './getAverageDuration'
 type Params = {
   projectId: string
   bridgeType: KnownInteropBridgeType | undefined
-  tokens: Map<string, CommonInteropData>
+  tokens: Map<
+    string,
+    CommonInteropData & { flows?: Map<string, TokenFlowData> }
+  >
   tokensDetailsMap: TokensDetailsMap
   durationSplitMap: DurationSplitMap | undefined
   unknownTransfersCount: number
@@ -61,6 +68,11 @@ export function getTokensData({
           token.burnedValueUsd !== undefined
             ? token.mintedValueUsd - token.burnedValueUsd
             : undefined,
+        flows: token.flows
+          ? Array.from(token.flows.values()).toSorted(
+              (a, b) => b.volume - a.volume,
+            )
+          : [],
       }
     })
     .filter(notUndefined)
@@ -79,6 +91,7 @@ export function getTokensData({
       minTransferValueUsd: undefined,
       maxTransferValueUsd: undefined,
       netMintedValue: undefined,
+      flows: [],
     })
   }
 

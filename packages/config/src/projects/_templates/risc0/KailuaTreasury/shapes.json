@@ -3,5 +3,11 @@
     "hash": "0x114d2fa4777cda59fdbe4bbaa3e319588066e3d66bff66ae8dc4b96589ac1d4b",
     "address": "eth:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746",
     "blockNumber": 22961594
+  },
+  "KailuaTreasury_v5compat": {
+    "hash": "0x35b14b7fe8f45053c4a94391397d28b9c761b99f61f05a08762e1f6acb6faa1f",
+    "address": "eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895",
+    "chain": "ethereum",
+    "blockNumber": 24537231
   }
 }

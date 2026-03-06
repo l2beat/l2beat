@@ -4,6 +4,7 @@ import {
   type KnownInteropBridgeType,
   notUndefined,
   type ProjectId,
+  type UnixTime,
   unique,
 } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
@@ -34,6 +35,7 @@ export function getProtocolEntries(
   tokensDetailsMap: TokensDetailsMap,
   interopProjects: Project<'interopConfig'>[],
   type: KnownInteropBridgeType | undefined,
+  snapshotTimestamp: UnixTime | undefined,
 ): {
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
@@ -149,6 +151,7 @@ export function getProtocolEntries(
         data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
           ? data.mintedValueUsd - data.burnedValueUsd
           : undefined,
+      snapshotTimestamp,
     })
   }
 

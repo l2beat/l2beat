@@ -30,6 +30,12 @@ export const WormholeConfig = defineConfig<WormholeNetwork[]>('wormhole')
 const DOCS_URL =
   'https://wormhole.com/docs/products/reference/contract-addresses/'
 
+// Wormhole Standard Relayer — same address on all EVM chains (CREATE2 deployment).
+// No longer listed on the Wormhole docs page, so we hardcode it.
+const WORMHOLE_RELAYER = EthereumAddress(
+  '0x27428DD2d3DD32A4D7f7C497eAaa23130d894911',
+)
+
 const OVERRIDES: WormholeNetwork[] = [
   {
     chain: 'solana',
@@ -115,32 +121,11 @@ export class WormholeConfigPlugin
     })
 
     // Parse addresses from sections by finding h2 headers and the tables after them
-    const relayerByChain = new Map<string, EthereumAddress>()
     const tokenBridgeByChain = new Map<string, EthereumAddress>()
 
     $('h2').each((_, h2) => {
       const headerText = $(h2).text()
       const table = $(h2).nextAll('div').find('table').first()
-
-      // Parse Wormhole Relayer addresses
-      if (headerText.includes('Wormhole Relayer')) {
-        table.find('tbody tr').each((__, row) => {
-          const cells = $(row).find('td')
-          if (cells.length === 2) {
-            const chain = $(cells[0]).text().trim().toLowerCase()
-            const address = $(cells[1]).find('code').text().trim()
-
-            if (
-              chain &&
-              address &&
-              address.startsWith('0x') &&
-              address.length === 42
-            ) {
-              relayerByChain.set(chain, EthereumAddress(address))
-            }
-          }
-        })
-      }
 
       // Parse Token Bridge (WTT) addresses
       if (headerText.includes('Wrapped Token Transfers')) {
@@ -224,7 +209,7 @@ export class WormholeConfigPlugin
           chainId: chain.id,
           wormholeChainId: selected.wormholeChainId,
           coreContract: selected.coreContract,
-          relayer: relayerByChain.get(docsChainName),
+          relayer: WORMHOLE_RELAYER,
           tokenBridge: tokenBridgeByChain.get(docsChainName),
         }
       } catch (error) {

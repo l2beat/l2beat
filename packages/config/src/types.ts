@@ -125,7 +125,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isBridge?: true
   isScaling?: true
   isZkCatalog?: true
   isInteropProtocol?: true
@@ -1242,6 +1241,7 @@ export type InteropPluginName =
   | 'squid-coral'
   | 'stargate'
   | 'superform'
+  | 'synthetix-bridge'
   | 'world-id'
   | 'wormhole'
   | 'wormhole-ntt'
@@ -1249,6 +1249,7 @@ export type InteropPluginName =
   | 'wormhole-token-bridge'
   | 'zkstack'
   | 'zklink-nova'
+  | 'linea'
 
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 

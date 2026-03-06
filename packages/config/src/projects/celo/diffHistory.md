@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xd7a03912de5954186256dff9ff5a58569453f253
+
+# Diff at Thu, 05 Mar 2026 15:16:57 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1772198382
+- current timestamp: 1772723699
+
+## Description
+
+Celo Security Council member rotation: signer at index 7 changed from `0xc3E9...` to `0xC912...`. Threshold remains 6 of 8.
+
+## Watched changes
+
+```diff
+    contract Celo Security Council (eth:0xC03172263409584f7860C25B6eB4985f0f6F4636) {
+    +++ description: None
+      values.$members.7:
+-        "eth:0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA"
++        "eth:0xC91252606ff547d8B0345491CfABcCf0f6F0a29a"
+    }
+```
+
+Generated with discovered.json: 0x8060d3967c6e27d2c5369c984c8e871489bc255c
+
+# Diff at Fri, 27 Feb 2026 13:21:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1771936675
+- current timestamp: 1772198382
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
 Generated with discovered.json: 0xd0ca5c02d378cf54d0fe5f3de4ca2c63e22c800c
 
 # Diff at Tue, 24 Feb 2026 12:39:02 GMT:

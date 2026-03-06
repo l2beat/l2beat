@@ -31,6 +31,7 @@ export type ProtocolEntry = {
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
+  snapshotTimestamp: number | undefined
 }
 
 export type ProtocolDisplayable = {
@@ -83,6 +84,47 @@ export const InteropProtocolTokensParams = v.object({
   type: KnownInteropBridgeType.optional(),
 })
 
+export type InteropProtocolTransfersParams = v.infer<
+  typeof InteropProtocolTransfersParams
+>
+export const InteropProtocolTransfersParams = v.object({
+  id: v.string().transform((value) => ProjectId(value)),
+  ...InteropSelectionInputShape,
+  type: KnownInteropBridgeType.optional(),
+  expectedTransferCount: v.number(),
+  expectedVolume: v.number(),
+  snapshotTimestamp: v.number(),
+  cursor: v.number().optional(),
+})
+
+export type InteropProtocolTransferDetailsItem = {
+  transferId: string
+  timestamp: number
+  srcAmount: number | undefined
+  srcSymbol: string | undefined
+  dstAmount: number | undefined
+  dstSymbol: string | undefined
+  valueUsd: number | undefined
+  duration: number
+  srcChain: string
+  srcTxHash: string
+  srcTxHashHref: string
+  dstChain: string
+  dstTxHash: string
+  dstTxHashHref: string
+}
+
+export type InteropProtocolTransferStats = {
+  transferCount: number
+  volume: number
+}
+
+export type InteropProtocolTransfersResponse = {
+  items: InteropProtocolTransferDetailsItem[]
+  hasIntegrityMismatch: boolean
+  nextCursor: number | undefined
+}
+
 export type AggregatedInteropTransferWithTokens =
   AggregatedInteropTransferRecord & {
     tokens: Omit<
@@ -105,6 +147,18 @@ export type CommonInteropData = {
   burnedValueUsd: number | undefined
 }
 
+export type TokenFlowData = {
+  srcChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  dstChain: {
+    id: string
+    iconUrl: string | undefined
+  }
+  volume: number
+}
+
 export type TokenData = {
   id: string
   symbol: string
@@ -117,6 +171,7 @@ export type TokenData = {
   minTransferValueUsd: number | undefined
   maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
+  flows: TokenFlowData[]
 }
 
 export type ChainData = {

@@ -86,7 +86,7 @@ export const blobstream: BaseProject = {
       value: 'Validity Proof',
       description:
         'The DA attestation requires onchain SNARK proof verification to be accepted by the bridge. Operators signatures and their corresponding stake are verified as part of the proof.',
-      zkCatalogId: ProjectId('sp1'),
+      zkCatalogId: ProjectId('sp1hypercube'),
     },
     usedIn: linkByDA({
       layer: ProjectId('celestia'),

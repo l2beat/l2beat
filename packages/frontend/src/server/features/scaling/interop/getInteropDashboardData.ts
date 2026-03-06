@@ -37,10 +37,8 @@ export async function getInteropDashboardData(
     select: ['interopConfig'],
   })
 
-  const records = await getLatestAggregatedInteropTransferWithTokens(
-    params,
-    params.type,
-  )
+  const { records, snapshotTimestamp } =
+    await getLatestAggregatedInteropTransferWithTokens(params, params.type)
 
   const abstractTokenIds = unique(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
@@ -67,6 +65,7 @@ export async function getInteropDashboardData(
       tokensDetailsMap,
       interopProjects,
       params.type,
+      snapshotTimestamp,
     ),
   }
 }
@@ -103,6 +102,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       minTransferValueUsd: 8_500,
       maxTransferValueUsd: 12_000,
       netMintedValue: undefined,
+      flows: [],
     },
     {
       id: 'usdc01',
@@ -117,6 +117,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       minTransferValueUsd: 9_500,
       maxTransferValueUsd: 10_500,
       netMintedValue: undefined,
+      flows: [],
     },
   ]
 
@@ -167,6 +168,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     byBridgeType: undefined,
     averageValueInFlight: undefined,
     netMintedValue: undefined,
+    snapshotTimestamp: undefined,
   }))
 
   const topToken: InteropTopTokenData | undefined = mockTokens[0]

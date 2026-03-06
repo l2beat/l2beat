@@ -37,7 +37,7 @@ export const airbender: BaseProject = {
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Airbender,
-        ZK_CATALOG_TAGS.ISA.RISCV,
+        ZK_CATALOG_TAGS.ISA.RISCV32,
         ZK_CATALOG_TAGS.Field.Mersenne31,
       ],
       finalWrap: [
@@ -109,8 +109,24 @@ export const airbender: BaseProject = {
         // Is a dummy to show adi as using airbender proof system. Verifier
         // contract sources are unknown, so the actual hash cannot be computed.
         // Fix once the sources are on etherscan.
-        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
+        // Is a dummy to show adi as using airbender proof system. Verifier
+        // contract sources are unknown, so the actual hash cannot be computed.
+        // Fix once the sources are on etherscan.
+        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
             // Based on standard DualVerifier architecture, this contract should be

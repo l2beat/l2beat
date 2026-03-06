@@ -36,12 +36,17 @@ export function TopTokensCell({
     id: ProjectId
     name: string
     iconUrl: string
+    bridgeTypes?: KnownInteropBridgeType[]
   }
   showNetMintedValueColumn?: boolean
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const utils = api.useUtils()
   const { selectionForApi } = useInteropSelectedChains()
+
+  const resolvedType =
+    type ??
+    (protocol.bridgeTypes?.length === 1 ? protocol.bridgeTypes[0] : undefined)
 
   return (
     <>
@@ -65,13 +70,13 @@ export function TopTokensCell({
           utils.interop.tokens.prefetch({
             ...selectionForApi,
             id: protocol.id,
-            type,
+            type: resolvedType,
           })
         }
         setIsOpen={setIsOpen}
       />
       <TopTokensContent
-        type={type}
+        type={resolvedType}
         protocol={protocol}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -109,18 +114,9 @@ function TopTokensContent({
 
   const tableData = useMemo(
     () =>
-      data?.map((chain) => ({
-        id: chain.id,
-        displayName: chain.symbol,
-        iconUrl: chain.iconUrl,
-        issuer: chain.issuer,
-        volume: chain.volume,
-        transferCount: chain.transferCount,
-        avgDuration: chain.avgDuration,
-        avgValue: chain.avgValue,
-        minTransferValueUsd: chain.minTransferValueUsd,
-        maxTransferValueUsd: chain.maxTransferValueUsd,
-        netMintedValue: chain.netMintedValue,
+      data?.map((token) => ({
+        ...token,
+        displayName: token.symbol,
       })) ?? [],
     [data],
   )
@@ -136,6 +132,9 @@ function TopTokensContent({
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
     initialState: {
+      columnPinning: {
+        left: ['icon'],
+      },
       sorting: [
         {
           id: 'volume',
@@ -176,8 +175,8 @@ function TopTokensContent({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[450px] w-[800px] max-w-[calc(100%-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
-        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
+      <DialogContent className="max-h-[450px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
+        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
             <span>Top tokens by volume for </span>
             <img
