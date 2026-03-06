@@ -103,16 +103,17 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
   const findings: KeyFinding[] = []
   const { admins, totals, dependencies } = review
 
-  // Check for immutability
-  const allRevoked = admins.every(
+  // Check for immutability — no human-controlled or governance admins
+  const hasHumanOrGov = admins.some(
     (a) =>
-      a.adminType === 'Revoked' ||
-      a.adminType === 'Contract' ||
-      a.adminType === 'Untemplatized' ||
-      a.adminType === 'Immutable',
+      a.adminType === 'EOA' ||
+      a.adminType === 'EOAPermissioned' ||
+      a.adminType === 'Multisig' ||
+      a.adminType === 'Timelock' ||
+      a.isGovernance,
   )
 
-  if (allRevoked && admins.length > 0) {
+  if (!hasHumanOrGov && admins.length > 0) {
     findings.push({
       type: 'positive',
       title: 'Fully immutable protocol',

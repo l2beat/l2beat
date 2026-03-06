@@ -22,6 +22,7 @@ export interface CompiledReview {
     dependencyCount: number
     totalCapitalAtRisk: number
     totalTokenValueAtRisk: number
+    totalTokenValue: number
   }
 
   admins: CompiledAdmin[]
@@ -120,6 +121,7 @@ export interface IndexData {
   globalTotals: {
     totalCapitalAtRisk: number
     totalTokenValueAtRisk: number
+    totalTokenValue: number
     protocolsReviewed: number
   }
   dependencies: AggregatedDependency[]

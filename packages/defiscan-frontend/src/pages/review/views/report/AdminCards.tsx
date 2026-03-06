@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { clsx } from 'clsx'
 import { Badge } from '../../../../components/Badge'
 import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { UsdValue } from '../../../../components/UsdValue'
 import { GlossaryTooltip } from '../../../../components/GlossaryTooltip'
 import { generateAdminNarrative } from '../../../../utils/narrative'
+import { formatUsdValue } from '../../../../utils/format'
 import type {
   CompiledReview,
   CompiledAdmin,
@@ -14,6 +14,15 @@ import type {
 interface AdminCardsProps {
   review: CompiledReview
 }
+
+const ADMIN_BAR_COLORS = [
+  '#EF4444',
+  '#F97316',
+  '#F59E0B',
+  '#FBBF24',
+  '#A78BFA',
+  '#10B981',
+]
 
 /** Describe what an admin type means in plain language */
 function describeAdminType(adminType: string): string {
@@ -26,13 +35,13 @@ function describeAdminType(adminType: string): string {
       return 'This is a multi-signature wallet requiring multiple parties to approve transactions. While safer than a single key, it still requires trust in the signer set.'
     case 'Timelock':
       return 'This is a timelock contract that enforces a mandatory waiting period before changes take effect, giving users time to react to proposed changes.'
-    case 'Immutable':
-      return 'This is an immutable contract — its code cannot be changed after deployment. No entity can modify its behavior, providing the strongest guarantee of permanence.'
-    case 'Upgradeable':
-      return 'This is an upgradeable contract whose logic can be replaced by its admin. While this allows bug fixes and improvements, it also means the admin can alter protocol behavior.'
     case 'Contract':
     case 'Untemplatized':
       return 'This is a smart contract with admin privileges. Its behavior is determined by its code logic rather than human decisions.'
+    case 'Immutable':
+      return 'This is an immutable smart contract whose code cannot be changed after deployment. Its admin privileges are exercised purely through fixed on-chain logic.'
+    case 'Upgradeable':
+      return 'This is an upgradeable smart contract whose logic can be changed by whoever controls the upgrade mechanism.'
     case 'Diamond':
       return 'This is a Diamond proxy contract that can have its logic upgraded through facet additions, replacements, or removals.'
     case 'Revoked':
@@ -49,12 +58,12 @@ function sortAdminsByRisk(admins: CompiledAdmin[]): CompiledAdmin[] {
     EOAPermissioned: 1,
     Multisig: 2,
     Timelock: 3,
+    Upgradeable: 4,
     Diamond: 4,
-    Upgradeable: 4.5,
     Contract: 5,
+    Immutable: 5,
     Untemplatized: 6,
     Revoked: 7,
-    Immutable: 8,
   }
 
   return [...admins].sort((a, b) => {
@@ -68,6 +77,7 @@ function sortAdminsByRisk(admins: CompiledAdmin[]): CompiledAdmin[] {
 
 export function AdminCards({ review }: AdminCardsProps) {
   const { admins, totals } = review
+  const [expandedAdmins, setExpandedAdmins] = useState<Set<string>>(new Set())
 
   if (admins.length === 0) {
     return (
@@ -86,45 +96,48 @@ export function AdminCards({ review }: AdminCardsProps) {
 
   const sorted = sortAdminsByRisk(admins)
 
-  const allImmutable =
-    admins.length > 0 &&
-    admins.every(
-      (a) =>
-        a.adminType === 'Revoked' ||
-        a.adminType === 'Immutable' ||
-        a.adminType === 'Contract' ||
-        a.adminType === 'Untemplatized',
-    )
-
-  const isHumanControlled = (a: CompiledAdmin) =>
+  const isHumanType = (a: CompiledAdmin) =>
     a.adminType === 'EOA' ||
     a.adminType === 'EOAPermissioned' ||
     a.adminType === 'Multisig' ||
     a.adminType === 'Timelock'
 
-  // Categorize admins into 3 groups
-  const humanControlled = sorted.filter(isHumanControlled)
-  const governanceContracts = sorted.filter(
-    (a) => !isHumanControlled(a) && a.isGovernance,
+  const humanControlled = sorted.filter(
+    (a) => isHumanType(a) && !a.isGovernance,
   )
-  const internalContracts = sorted.filter(
-    (a) => !isHumanControlled(a) && !a.isGovernance,
+  const governance = sorted.filter((a) => a.isGovernance)
+
+  const noHumanControl =
+    humanControlled.length === 0 && governance.length === 0
+
+  function toggleAdmin(key: string) {
+    setExpandedAdmins((prev) => {
+      const next = new Set(prev)
+      if (next.has(key)) {
+        next.delete(key)
+      } else {
+        next.add(key)
+      }
+      return next
+    })
+  }
+
+  const humanTotal = humanControlled.reduce(
+    (sum, a) => sum + a.totalDirectCapital,
+    0,
+  )
+  const govTotal = governance.reduce(
+    (sum, a) => sum + a.totalDirectCapital,
+    0,
   )
 
   return (
     <div>
-      {allImmutable ? (
-        <div className="rounded-xl border border-status-green/30 bg-status-green/5 p-6 mb-8">
-          <p className="text-status-green font-semibold">
-            No human-controlled admins.
-          </p>
-          <p className="mt-2 text-sm text-text-secondary">
-            This protocol has{' '}
-            <span className="font-semibold text-text-primary">
-              {totals.permissionedFunctionCount} permissioned function
-              {totals.permissionedFunctionCount !== 1 ? 's' : ''}
-            </span>
-            , but all admin controls resolve to immutable contracts or revoked
+      {noHumanControl ? (
+        <div className="rounded-xl border border-green-200 bg-green-50 px-6 py-5 mb-8 max-w-3xl">
+          <p className="text-lg font-semibold text-green-700 mb-1">No Admins</p>
+          <p className="text-sm text-text-secondary leading-relaxed">
+            All admin controls resolve to immutable contracts or revoked
             addresses. No permissioned functions can affect user funds.
           </p>
         </div>
@@ -132,7 +145,7 @@ export function AdminCards({ review }: AdminCardsProps) {
         <p className="text-lg text-text-secondary leading-relaxed max-w-3xl mb-8">
           Who can change this protocol? We identified{' '}
           <span className="font-semibold text-text-primary">
-            {admins.length} admin{admins.length !== 1 ? 's' : ''}
+            {humanControlled.length + governance.length} admin{humanControlled.length + governance.length !== 1 ? 's' : ''}
           </span>{' '}
           with permissioned access to{' '}
           <span className="font-semibold text-text-primary">
@@ -140,7 +153,7 @@ export function AdminCards({ review }: AdminCardsProps) {
           </span>
           , controlling{' '}
           <UsdValue value={totals.totalCapitalAtRisk} variant="capital" />
-          {' '}in capital
+          {' '}in locked funds
           {totals.totalTokenValueAtRisk > 0 && (
             <>
               {' '}and{' '}
@@ -155,158 +168,169 @@ export function AdminCards({ review }: AdminCardsProps) {
         </p>
       )}
 
-      {/* Centralized admins -- the ones readers care about most */}
+      {/* Human-controlled admins */}
       {humanControlled.length > 0 && (
-        <div className="mb-8">
-          <h3 className="text-lg font-semibold text-text-primary mb-4">
-            Centralized Control through following Admins
-          </h3>
-          <p className="text-sm text-text-secondary mb-4">
-            These are the entities that a person or group of people can directly
-            control. They represent the most significant centralization vectors.
-          </p>
-          <div className="space-y-4">
-            {humanControlled.map((admin) => (
-              <AdminCard key={admin.address} admin={admin} />
-            ))}
-          </div>
-        </div>
+        <AdminDistributionChart
+          title="Admins"
+          subtitle="These are the entities that a person or group of people can directly control. They represent the most significant centralization vectors."
+          admins={humanControlled}
+          totalCapital={humanTotal}
+          expandedSet={expandedAdmins}
+          onToggle={toggleAdmin}
+        />
       )}
 
-      {/* Governance contracts */}
-      {governanceContracts.length > 0 && (
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <h3 className="text-lg font-semibold text-text-primary">
-              Governance Contracts
-            </h3>
-            <span className="text-sm text-text-muted">
-              ({governanceContracts.length})
-            </span>
-          </div>
-          <p className="text-sm text-text-secondary mb-4">
-            These contracts implement on-chain governance mechanisms for the
-            protocol.
-          </p>
-          <div className="space-y-4">
-            {governanceContracts.map((admin) => (
-              <AdminCard key={admin.address} admin={admin} />
-            ))}
-          </div>
+      {/* Governance admins */}
+      {governance.length > 0 && (
+        <div className={humanControlled.length > 0 ? 'mt-6' : ''}>
+          <AdminDistributionChart
+            title="Governance"
+            subtitle="These are on-chain governance contracts that manage protocol changes through decentralized voting or proposal mechanisms."
+            admins={governance}
+            totalCapital={govTotal}
+            expandedSet={expandedAdmins}
+            onToggle={toggleAdmin}
+          />
         </div>
-      )}
-
-      {/* Internal / contract admins */}
-      {internalContracts.length > 0 && (
-        <InternalAdminsSection admins={internalContracts} />
       )}
     </div>
   )
 }
 
-function AdminCard({ admin }: { admin: CompiledAdmin }) {
-  const [expanded, setExpanded] = useState(false)
+function AdminDistributionChart({
+  title,
+  subtitle,
+  admins,
+  totalCapital,
+  expandedSet,
+  onToggle,
+}: {
+  title: string
+  subtitle: string
+  admins: CompiledAdmin[]
+  totalCapital: number
+  expandedSet: Set<string>
+  onToggle: (key: string) => void
+}) {
+  const maxCapital = Math.max(...admins.map((a) => a.totalDirectCapital), 0)
 
   return (
-    <div className="rounded-xl border border-border bg-white shadow-sm overflow-hidden">
-      {/* Header */}
-      <div className="p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <GlossaryTooltip term={admin.adminType}>
-                <Badge
-                  variant="admin-type"
-                  adminType={admin.adminType}
-                >
-                  {admin.adminType}
-                </Badge>
-              </GlossaryTooltip>
-              {admin.isGovernance && (
-                <GlossaryTooltip term="Governance">
-                  <Badge variant="governance">Governance</Badge>
-                </GlossaryTooltip>
-              )}
-              <h3 className="font-semibold text-text-primary text-lg">
-                {admin.name}
-              </h3>
-            </div>
-            <div className="mt-1">
-              <AddressDisplay address={admin.address} />
-            </div>
-          </div>
-          <div className="text-right shrink-0">
-            {admin.totalDirectCapital > 0 && (
-              <div>
-                <UsdValue
-                  value={admin.totalDirectCapital}
-                  variant="capital"
-                  className="text-lg font-semibold"
-                />
-                <p className="text-xs text-text-muted">capital at risk</p>
-              </div>
-            )}
-          </div>
-        </div>
+    <div className="rounded-xl border border-border bg-white p-6 shadow-sm">
+      <h3 className="text-base font-semibold text-text-primary mb-1">
+        {title}
+      </h3>
+      <p className="text-sm text-text-secondary mb-4">{subtitle}</p>
+      <div className="space-y-3">
+        {admins.map((admin, index) => {
+          const percentage =
+            maxCapital > 0
+              ? (admin.totalDirectCapital / maxCapital) * 100
+              : 0
+          const expandKey = `admin-${admin.address}`
+          const isExpanded = expandedSet.has(expandKey)
 
-        {/* Narrative description -- the story */}
-        <div className="mt-4 rounded-lg bg-bg-muted/60 p-4">
-          <p className="text-sm font-medium text-text-primary mb-1">
-            What does this mean?
-          </p>
-          <p className="text-sm text-text-secondary leading-relaxed">
-            {describeAdminType(admin.adminType)}{' '}
-            {generateAdminNarrative(admin)}
-          </p>
-        </div>
+          return (
+            <div key={expandKey} id={expandKey}>
+              <button
+                type="button"
+                onClick={() => onToggle(expandKey)}
+                className="w-full text-left cursor-pointer group"
+              >
+                <div className="flex items-center justify-between text-sm mb-1">
+                  <span className="text-text-primary font-medium truncate mr-4 flex items-center gap-1.5">
+                    <span className="text-text-muted text-xs">
+                      {isExpanded ? '\u25BC' : '\u25B6'}
+                    </span>
+                    <GlossaryTooltip term={admin.adminType}>
+                      <Badge
+                        variant="admin-type"
+                        adminType={admin.adminType}
+                      >
+                        {admin.adminType}
+                      </Badge>
+                    </GlossaryTooltip>
+                    {admin.isGovernance && (
+                      <GlossaryTooltip term="Governance">
+                        <Badge variant="governance">Governance</Badge>
+                      </GlossaryTooltip>
+                    )}
+                    {admin.name}
+                  </span>
+                  {admin.totalDirectCapital > 0 && (
+                    <span className="font-semibold shrink-0 text-capital">
+                      {formatUsdValue(admin.totalDirectCapital)}
+                    </span>
+                  )}
+                </div>
+                {totalCapital > 0 && (
+                  <div className="h-3 rounded-full bg-bg-muted overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{
+                        width: `${Math.max(percentage, 1)}%`,
+                        backgroundColor:
+                          ADMIN_BAR_COLORS[index % ADMIN_BAR_COLORS.length],
+                      }}
+                    />
+                  </div>
+                )}
+              </button>
 
-        {/* Description from review config */}
-        {admin.description && (
-          <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-            {admin.description}
-          </p>
-        )}
+              {isExpanded && <AdminExpandedContent admin={admin} />}
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function AdminExpandedContent({ admin }: { admin: CompiledAdmin }) {
+  return (
+    <div className="mt-2 ml-6 rounded-lg border border-border/60 bg-bg-muted/30 p-5 space-y-4">
+      <div>
+        <AddressDisplay address={admin.address} />
       </div>
 
-      {/* Functions -- progressive disclosure */}
+      {admin.isGovernance && (
+        <div className="flex items-center gap-2">
+          <Badge variant="governance">Governance</Badge>
+          <span className="text-sm text-text-secondary">
+            On-chain governance contract
+          </span>
+        </div>
+      )}
+
+      {/* Risk narrative */}
+      <div>
+        <p className="text-sm text-text-secondary leading-relaxed">
+          {describeAdminType(admin.adminType)}{' '}
+          {generateAdminNarrative(admin)}
+        </p>
+      </div>
+
+      {/* Description from review config */}
+      {admin.description && (
+        <p className="text-sm text-text-secondary leading-relaxed">
+          {admin.description}
+        </p>
+      )}
+
+      {/* Permissioned functions */}
       {admin.functions.length > 0 && (
-        <div className="border-t border-border">
-          <button
-            type="button"
-            onClick={() => setExpanded(!expanded)}
-            className="w-full px-5 py-3 flex items-center justify-between text-sm font-medium text-text-secondary hover:bg-bg-muted/40 transition-colors"
-          >
-            <span>
-              {admin.functions.length} permissioned function
-              {admin.functions.length !== 1 ? 's' : ''}
-            </span>
-            <svg
-              className={clsx(
-                'h-4 w-4 transition-transform',
-                expanded && 'rotate-180',
-              )}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 9l-7 7-7-7"
+        <div className="pt-2 border-t border-border/40">
+          <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-1.5">
+            {admin.functions.length} permissioned function
+            {admin.functions.length !== 1 ? 's' : ''}
+          </p>
+          <div className="space-y-2">
+            {admin.functions.map((fn) => (
+              <FunctionDetail
+                key={`${fn.contractAddress}-${fn.functionName}`}
+                fn={fn}
               />
-            </svg>
-          </button>
-          {expanded && (
-            <div className="px-5 pb-4 space-y-2">
-              {admin.functions.map((fn) => (
-                <FunctionDetail
-                  key={`${fn.contractAddress}-${fn.functionName}`}
-                  fn={fn}
-                />
-              ))}
-            </div>
-          )}
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -402,81 +426,3 @@ function FunctionDetail({ fn }: { fn: CompiledAdminFunction }) {
   )
 }
 
-function InternalAdminsSection({ admins }: { admins: CompiledAdmin[] }) {
-  const [showAll, setShowAll] = useState(false)
-
-  return (
-    <div>
-      <div className="flex items-center gap-3 mb-4">
-        <h3 className="text-lg font-semibold text-text-primary">
-          Internal Protocol Contracts
-        </h3>
-        <span className="text-sm text-text-muted">({admins.length})</span>
-      </div>
-      <p className="text-sm text-text-secondary mb-4">
-        These are smart contracts within the protocol that hold permissions for
-        internal operations. They are not directly controlled by humans but
-        execute protocol logic programmatically.
-      </p>
-
-      {!showAll ? (
-        <button
-          type="button"
-          onClick={() => setShowAll(true)}
-          className="text-sm text-purple-600 hover:text-purple-800 transition-colors font-medium"
-        >
-          Show {admins.length} internal admin
-          {admins.length !== 1 ? 's' : ''}
-        </button>
-      ) : (
-        <div className="space-y-3">
-          {admins.map((admin) => (
-            <div
-              key={admin.address}
-              className="rounded-lg border border-border/60 bg-bg-muted/30 p-4"
-            >
-              <div className="flex items-center gap-2 flex-wrap">
-                <Badge variant="admin-type" adminType={admin.adminType}>
-                  {admin.adminType}
-                </Badge>
-                <span className="font-medium text-text-primary text-sm">
-                  {admin.name}
-                </span>
-                <AddressDisplay
-                  address={admin.address}
-                  className="text-xs"
-                />
-              </div>
-              {admin.description && (
-                <p className="mt-2 text-xs text-text-secondary leading-relaxed">
-                  {admin.description}
-                </p>
-              )}
-              <p className="mt-1 text-xs text-text-muted">
-                {admin.functions.length} function
-                {admin.functions.length !== 1 ? 's' : ''}
-                {admin.totalDirectCapital > 0 && (
-                  <>
-                    {' -- '}
-                    <UsdValue
-                      value={admin.totalDirectCapital}
-                      variant="capital"
-                      className="text-xs"
-                    />
-                  </>
-                )}
-              </p>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => setShowAll(false)}
-            className="text-sm text-purple-600 hover:text-purple-800 transition-colors font-medium"
-          >
-            Collapse
-          </button>
-        </div>
-      )}
-    </div>
-  )
-}

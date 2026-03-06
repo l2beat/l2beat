@@ -21,10 +21,12 @@ interface CompiledReview {
     dependencyCount: number
     totalCapitalAtRisk: number
     totalTokenValueAtRisk: number
+    totalTokenValue?: number
   }
   admins: {
     address: string
     adminType: string
+    isGovernance: boolean
     totalDirectCapital: number
     functions: { contractAddress: string }[]
   }[]
@@ -99,6 +101,9 @@ function main() {
 
   let totalCapitalAtRisk = 0
   let totalTokenValueAtRisk = 0
+  let totalTokenValue = 0
+
+  const HUMAN_ADMIN_TYPES = new Set(['EOA', 'EOAPermissioned', 'Multisig', 'Timelock'])
 
   for (const slug of slugs) {
     const reviewPath = join(DATA_DIR, slug, 'compiled-review.json')
@@ -169,7 +174,16 @@ function main() {
     })
 
     totalCapitalAtRisk += review.totals.totalCapitalAtRisk
-    totalTokenValueAtRisk += review.totals.totalTokenValueAtRisk
+    const protocolTokenValue = review.totals.totalTokenValue ?? review.totals.totalTokenValueAtRisk
+    totalTokenValue += protocolTokenValue
+
+    // Only count token value as "at risk" if the protocol has human-controlled admins
+    const hasHumanAdmin = review.admins.some(
+      (a) => HUMAN_ADMIN_TYPES.has(a.adminType) || a.isGovernance,
+    )
+    if (hasHumanAdmin) {
+      totalTokenValueAtRisk += protocolTokenValue
+    }
 
     // Aggregate dependencies across protocols
     // For each dependency, sum capital of admins whose functions use this dependency
@@ -221,6 +235,7 @@ function main() {
     globalTotals: {
       totalCapitalAtRisk,
       totalTokenValueAtRisk,
+      totalTokenValue,
       protocolsReviewed: protocols.length,
     },
     dependencies,

@@ -44,6 +44,7 @@ export interface CompiledReview {
     dependencyCount: number
     totalCapitalAtRisk: number
     totalTokenValueAtRisk: number
+    totalTokenValue: number
   }
 
   admins: CompiledAdmin[]
@@ -272,7 +273,10 @@ export class ReviewCompiler {
       ApiContractTagsResponse['tags'][number]
     >()
     for (const tag of contractTags.tags ?? []) {
-      tagsByAddress.set(tag.contractAddress.toLowerCase(), tag)
+      tagsByAddress.set(
+        tag.contractAddress.replace(/^eth:/i, '').toLowerCase(),
+        tag,
+      )
     }
 
     // Case-insensitive lookup for funds data with eth: prefix normalization
@@ -511,6 +515,10 @@ export class ReviewCompiler {
         totalCapitalAtRisk: v2Score.inventory.admins.totalCapitalAtRisk ?? 0,
         totalTokenValueAtRisk:
           v2Score.inventory.admins.totalTokenValueAtRisk ?? 0,
+        totalTokenValue: funds.reduce(
+          (sum, f) => sum + (f.tokenInfo?.tokenValue ?? 0),
+          0,
+        ),
       },
 
       admins,

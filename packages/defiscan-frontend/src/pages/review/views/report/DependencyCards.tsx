@@ -1,8 +1,6 @@
-import { useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { Badge } from '../../../../components/Badge'
 import { AddressDisplay } from '../../../../components/AddressDisplay'
-import { UsdValue } from '../../../../components/UsdValue'
-import { Expandable } from '../../../../components/Expandable'
 import { GlossaryTooltip } from '../../../../components/GlossaryTooltip'
 import { formatUsdValue } from '../../../../utils/format'
 import {
@@ -16,8 +14,18 @@ interface DependencyCardsProps {
   review: CompiledReview
 }
 
+const DEP_BAR_COLORS = [
+  '#3B82F6',
+  '#6366F1',
+  '#8B5CF6',
+  '#A78BFA',
+  '#C4B5FD',
+  '#10B981',
+]
+
 export function DependencyCards({ review }: DependencyCardsProps) {
   const { dependencies } = review
+  const [expandedDeps, setExpandedDeps] = useState<Set<string>>(new Set())
   const fnContractMap = useMemo(
     () => buildFunctionContractFundsMap(review),
     [review],
@@ -56,6 +64,18 @@ export function DependencyCards({ review }: DependencyCardsProps) {
   const entities = entityGroups
     .filter(([entity]) => entity !== null)
     .map(([entity]) => entity as string)
+
+  function toggleDep(key: string) {
+    setExpandedDeps((prev) => {
+      const next = new Set(prev)
+      if (next.has(key)) {
+        next.delete(key)
+      } else {
+        next.add(key)
+      }
+      return next
+    })
+  }
 
   return (
     <div>
@@ -104,162 +124,226 @@ export function DependencyCards({ review }: DependencyCardsProps) {
       </div>
 
       {/* Dependencies grouped by entity */}
-      <div className="space-y-8">
-        {entityGroups.map(([entity, deps]) => (
-          <div key={entity ?? '__ungrouped'}>
-            {entity && (
-              <div className="flex items-center gap-3 mb-4">
-                <h3 className="text-lg font-semibold text-text-primary">
-                  {entity}
-                </h3>
-                <span className="text-sm text-text-muted">
-                  {deps.length} contract{deps.length !== 1 ? 's' : ''}
-                </span>
-              </div>
-            )}
-            {!entity && entityGroups.length > 1 && (
-              <h3 className="text-lg font-semibold text-text-primary mb-4">
-                Other Dependencies
-              </h3>
-            )}
-            <div className="space-y-3">
-              {deps.map((dep) => (
-                <DependencyCard key={dep.address} dependency={dep} fnContractMap={fnContractMap} />
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="space-y-6">
+        {entityGroups.map(([entity, deps]) => {
+          // Sort deps by funds at risk descending within each group
+          const depsWithFunds = deps.map((dep) => ({
+            dep,
+            fundsAtRisk: computeDepFundsAtRisk(dep, fnContractMap),
+          }))
+          depsWithFunds.sort((a, b) => b.fundsAtRisk - a.fundsAtRisk)
+          const groupTotal = depsWithFunds.reduce(
+            (sum, d) => sum + d.fundsAtRisk,
+            0,
+          )
+
+          const groupTitle =
+            entity ??
+            (entityGroups.length > 1 ? 'Other Dependencies' : undefined)
+
+          return (
+            <DepDistributionChart
+              key={entity ?? '__ungrouped'}
+              title={groupTitle}
+              deps={depsWithFunds}
+              groupTotal={groupTotal}
+              expandedSet={expandedDeps}
+              onToggle={toggleDep}
+              fnContractMap={fnContractMap}
+            />
+          )
+        })}
       </div>
     </div>
   )
 }
 
-function DependencyCard({
-  dependency,
+function DepDistributionChart({
+  title,
+  deps,
+  groupTotal,
+  expandedSet,
+  onToggle,
   fnContractMap,
 }: {
-  dependency: CompiledDependency
+  title: string | undefined
+  deps: { dep: CompiledDependency; fundsAtRisk: number }[]
+  groupTotal: number
+  expandedSet: Set<string>
+  onToggle: (key: string) => void
   fnContractMap: Map<string, Map<string, number>>
 }) {
-  const fundsAtRisk = computeDepFundsAtRisk(dependency, fnContractMap)
-  const readFns = dependency.functions.filter((f) => f.viewOnlyPath)
-  const writeFns = dependency.functions.filter((f) => !f.viewOnlyPath)
+  const maxFunds = Math.max(...deps.map((d) => d.fundsAtRisk), 0)
 
   return (
-    <div className="rounded-xl border border-border bg-white p-5 shadow-sm">
-      <div className="flex items-start gap-3">
-        <div className="shrink-0 mt-1">
-          {dependency.entity === 'Chainlink' ? (
-            <GlossaryTooltip term="Oracle">
-              <span className="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-status-blue/10 text-status-blue text-sm font-bold">
-                O
-              </span>
-            </GlossaryTooltip>
-          ) : (
-            <span className="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-purple-100 text-purple-600 text-sm font-bold">
-              D
-            </span>
-          )}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            {dependency.entity && (
-              <Badge variant="purple">{dependency.entity}</Badge>
-            )}
-            <h4 className="font-semibold text-text-primary">
-              {dependency.name}
-            </h4>
-            {dependency.viewOnlyPath && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-status-blue/10 text-status-blue">
-                Read-only
-              </span>
-            )}
-          </div>
-          <div className="mt-1 flex items-center gap-3">
-            <AddressDisplay address={dependency.address} />
-            {fundsAtRisk > 0 && (
-              <UsdValue
-                value={fundsAtRisk}
-                variant="capital"
-                className="text-sm"
-              />
-            )}
-          </div>
-          {dependency.description && (
-            <p className="mt-2 text-sm text-text-secondary leading-relaxed">
-              {dependency.description}
-            </p>
-          )}
+    <div className="rounded-xl border border-border bg-white p-6 shadow-sm">
+      {title && (
+        <h3 className="text-base font-semibold text-text-primary mb-4">
+          {title}
+        </h3>
+      )}
+      <div className="space-y-3">
+        {deps.map(({ dep, fundsAtRisk }, index) => {
+          const percentage =
+            maxFunds > 0 ? (fundsAtRisk / maxFunds) * 100 : 0
+          const expandKey = `dep-${dep.address}`
+          const isExpanded = expandedSet.has(expandKey)
 
-          {/* Called functions on this dependency */}
-          {dependency.calledFunctions.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {dependency.calledFunctions.map((fn) => (
-                <span
-                  key={fn}
-                  className="inline-flex items-center px-2 py-0.5 rounded bg-bg-muted border border-border text-xs font-mono text-text-secondary"
-                >
-                  {fn}()
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Functions using this dependency */}
-          {dependency.functions.length > 0 && (
-            <div className="mt-3">
-              <Expandable
-                trigger={
-                  <span className="text-sm font-medium text-text-secondary">
-                    Used by {dependency.functions.length} function
-                    {dependency.functions.length !== 1 ? 's' : ''}
-                    {readFns.length > 0 && writeFns.length > 0 && (
-                      <span className="text-text-muted ml-1">
-                        ({writeFns.length} write, {readFns.length} read)
-                      </span>
-                    )}
-                  </span>
-                }
+          return (
+            <div key={expandKey}>
+              <button
+                type="button"
+                onClick={() => onToggle(expandKey)}
+                className="w-full text-left cursor-pointer group"
               >
-                <div className="mt-2 space-y-1">
-                  {dependency.functions.map((fn) => {
-                    const fnFunds = getFunctionFunds(
-                      fn.contractAddress,
-                      fn.functionName,
-                      fnContractMap,
-                    )
-                    return (
-                      <div
-                        key={`${fn.contractAddress}-${fn.functionName}`}
-                        className="flex items-center justify-between text-sm"
-                      >
-                        <div className="flex items-center gap-2">
-                          {fn.viewOnlyPath ? (
-                            <span className="text-status-blue text-xs">R</span>
-                          ) : (
-                            <span className="text-status-amber text-xs">W</span>
-                          )}
-                          <span className="text-text-muted">
-                            {fn.contractName}
-                          </span>
-                          <span className="text-text-primary font-medium font-mono">
-                            .{fn.functionName}()
-                          </span>
-                        </div>
-                        {fnFunds > 0 && (
-                          <span className="text-capital text-xs font-medium tabular-nums">
-                            {formatUsdValue(fnFunds)}
-                          </span>
-                        )}
-                      </div>
-                    )
-                  })}
+                <div className="flex items-center justify-between text-sm mb-1">
+                  <span className="text-text-primary font-medium truncate mr-4 flex items-center gap-1.5">
+                    <span className="text-text-muted text-xs">
+                      {isExpanded ? '\u25BC' : '\u25B6'}
+                    </span>
+                    {dep.entity && (
+                      <Badge variant="purple">{dep.entity}</Badge>
+                    )}
+                    {dep.viewOnlyPath ? (
+                      <GlossaryTooltip term="Read-only Dependency">
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-status-blue/10 text-status-blue">
+                          R
+                        </span>
+                      </GlossaryTooltip>
+                    ) : (
+                      <GlossaryTooltip term="Write Dependency">
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-status-amber/10 text-status-amber">
+                          W
+                        </span>
+                      </GlossaryTooltip>
+                    )}
+                    {dep.name}
+                  </span>
+                  {fundsAtRisk > 0 && (
+                    <span className="font-semibold shrink-0 text-capital">
+                      {formatUsdValue(fundsAtRisk)}
+                    </span>
+                  )}
                 </div>
-              </Expandable>
+                {groupTotal > 0 && (
+                  <div className="h-3 rounded-full bg-bg-muted overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{
+                        width: `${Math.max(percentage, 1)}%`,
+                        backgroundColor:
+                          DEP_BAR_COLORS[index % DEP_BAR_COLORS.length],
+                      }}
+                    />
+                  </div>
+                )}
+              </button>
+
+              {isExpanded && (
+                <DepExpandedContent
+                  dep={dep}
+                  fnContractMap={fnContractMap}
+                />
+              )}
             </div>
-          )}
-        </div>
+          )
+        })}
       </div>
+    </div>
+  )
+}
+
+function DepExpandedContent({
+  dep,
+  fnContractMap,
+}: {
+  dep: CompiledDependency
+  fnContractMap: Map<string, Map<string, number>>
+}) {
+  const readFns = dep.functions.filter((f) => f.viewOnlyPath)
+  const writeFns = dep.functions.filter((f) => !f.viewOnlyPath)
+
+  return (
+    <div className="mt-2 ml-6 rounded-lg border border-border/60 bg-bg-muted/30 p-5 space-y-4">
+      <div>
+        <AddressDisplay address={dep.address} />
+      </div>
+
+      {dep.description && (
+        <div>
+          <p className="text-sm text-text-secondary leading-relaxed">
+            {dep.description}
+          </p>
+        </div>
+      )}
+
+      {/* Called functions on this dependency */}
+      {dep.calledFunctions?.length > 0 && (
+        <div>
+          <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-1.5">
+            Called functions
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {dep.calledFunctions.map((fn) => (
+              <span
+                key={fn}
+                className="inline-flex items-center px-2 py-0.5 rounded bg-white border border-border text-xs font-mono text-text-secondary"
+              >
+                {fn}()
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Functions using this dependency */}
+      {dep.functions.length > 0 && (
+        <div className="pt-2 border-t border-border/40">
+          <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-1.5">
+            Used by {dep.functions.length} function
+            {dep.functions.length !== 1 ? 's' : ''}
+            {readFns.length > 0 && writeFns.length > 0 && (
+              <span className="text-text-muted ml-1">
+                ({writeFns.length} write, {readFns.length} read)
+              </span>
+            )}
+          </p>
+          <div className="space-y-1">
+            {dep.functions.map((fn) => {
+              const fnFunds = getFunctionFunds(
+                fn.contractAddress,
+                fn.functionName,
+                fnContractMap,
+              )
+              return (
+                <div
+                  key={`${fn.contractAddress}-${fn.functionName}`}
+                  className="flex items-center justify-between text-sm"
+                >
+                  <div className="flex items-center gap-2">
+                    {fn.viewOnlyPath ? (
+                      <span className="text-status-blue text-xs">R</span>
+                    ) : (
+                      <span className="text-status-amber text-xs">W</span>
+                    )}
+                    <span className="text-text-muted">
+                      {fn.contractName}
+                    </span>
+                    <span className="text-text-primary font-medium font-mono">
+                      .{fn.functionName}()
+                    </span>
+                  </div>
+                  {fnFunds > 0 && (
+                    <span className="text-capital text-xs font-medium tabular-nums">
+                      {formatUsdValue(fnFunds)}
+                    </span>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

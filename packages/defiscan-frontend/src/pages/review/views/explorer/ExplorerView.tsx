@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { CompiledReview } from '../../../../types'
 import { computeEntityDependencyCount } from '../../../../utils/dependencies'
+import { getHumanAdmins } from '../../../../utils/admins'
 import { OverviewTab } from './OverviewTab'
 import { AdminsTab } from './AdminsTab'
 import { DepsTab } from './DepsTab'
@@ -72,7 +73,7 @@ function getTabCount(
 ): number | null {
   switch (tabId) {
     case 'admins':
-      return review.totals.adminCount
+      return getHumanAdmins(review.admins).length
     case 'dependencies':
       return computeEntityDependencyCount(review.dependencies)
     case 'funds':

@@ -59,7 +59,7 @@ export function DirectVsReachableDiagram({ admins }: DirectVsReachableDiagramPro
 
       {withCapital.map((admin, i) => {
         const y = topPadding + i * rowHeight
-        const color = adminTypeColor(admin.adminType)
+        const color = admin.isGovernance ? '#8B5CF6' : adminTypeColor(admin.adminType)
         const directW = barWidth(admin.totalDirectCapital)
         const reachableW = barWidth(admin.totalReachableCapital)
 
@@ -85,7 +85,7 @@ export function DirectVsReachableDiagram({ admins }: DirectVsReachableDiagramPro
               fontSize="9"
               fontWeight="500"
             >
-              {admin.adminType}
+              {admin.isGovernance ? 'Governance' : admin.adminType}
             </text>
 
             {/* Direct capital bar */}

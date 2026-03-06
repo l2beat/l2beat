@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import type { CompiledReview } from '../../../../types'
 import { formatUsdValue } from '../../../../utils/format'
 import { computeEntityDependencyCount } from '../../../../utils/dependencies'
+import { getHumanAdmins } from '../../../../utils/admins'
 import { MetricCard } from '../../../../components/MetricCard'
 import { ExposureCharts } from './ExposureCharts'
 
@@ -15,11 +16,15 @@ export function DashboardView({ review }: DashboardViewProps) {
     [review.dependencies],
   )
 
+  const humanAdminCount = useMemo(
+    () => getHumanAdmins(review.admins).length,
+    [review.admins],
+  )
+
   const {
     totalCapitalAtRisk,
     totalTokenValueAtRisk,
     contractCount,
-    adminCount,
     permissionedFunctionCount,
   } = review.totals
 
@@ -44,7 +49,7 @@ export function DashboardView({ review }: DashboardViewProps) {
         />
         <MetricCard
           label="Admins"
-          value={String(adminCount)}
+          value={String(humanAdminCount)}
           sublabel={adminSublabel(review)}
           accent="red"
         />

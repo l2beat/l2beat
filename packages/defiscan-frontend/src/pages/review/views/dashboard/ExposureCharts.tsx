@@ -12,6 +12,7 @@ import {
   Treemap,
 } from 'recharts'
 import { formatUsdValue } from '../../../../utils/format'
+import { getHumanAdmins } from '../../../../utils/admins'
 import type { CompiledReview } from '../../../../types'
 
 interface ExposureChartsProps {
@@ -101,9 +102,14 @@ function TreemapContent({
 }
 
 export function ExposureCharts({ review }: ExposureChartsProps) {
+  const humanAdmins = useMemo(
+    () => getHumanAdmins(review.admins),
+    [review.admins],
+  )
+
   // Treemap: admin capital distribution
   const treemapData = useMemo(() => {
-    return review.admins
+    return humanAdmins
       .filter((a) => a.totalDirectCapital > 0 || a.totalDirectTokenValue > 0)
       .map((a) => ({
         name: a.name,
@@ -111,12 +117,12 @@ export function ExposureCharts({ review }: ExposureChartsProps) {
         color: ADMIN_TYPE_COLORS[a.adminType] ?? '#6B7280',
       }))
       .sort((a, b) => b.value - a.value)
-  }, [review.admins])
+  }, [humanAdmins])
 
   // Pie chart: admin type distribution
   const adminTypePieData = useMemo(() => {
     const typeMap = new Map<string, number>()
-    for (const admin of review.admins) {
+    for (const admin of humanAdmins) {
       const existing = typeMap.get(admin.adminType) ?? 0
       typeMap.set(admin.adminType, existing + 1)
     }
@@ -125,11 +131,11 @@ export function ExposureCharts({ review }: ExposureChartsProps) {
       value: count,
       fill: ADMIN_TYPE_COLORS[type] ?? '#6B7280',
     }))
-  }, [review.admins])
+  }, [humanAdmins])
 
   // Bar chart: capital per admin
   const adminCapitalData = useMemo(() => {
-    return review.admins
+    return humanAdmins
       .filter((a) => a.totalDirectCapital > 0 || a.totalDirectTokenValue > 0)
       .map((a) => ({
         name: a.name.length > 22 ? a.name.slice(0, 22) + '...' : a.name,
@@ -138,7 +144,7 @@ export function ExposureCharts({ review }: ExposureChartsProps) {
         type: a.adminType,
       }))
       .sort((a, b) => b.capital + b.tokenValue - (a.capital + a.tokenValue))
-  }, [review.admins])
+  }, [humanAdmins])
 
   const hasTreemapData = treemapData.length > 0
   const hasAdminCapital = adminCapitalData.length > 0

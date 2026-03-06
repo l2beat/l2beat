@@ -79,29 +79,23 @@ export function FundsTab({ review }: FundsTabProps) {
     0,
   )
 
-  // Chart data
+  // Chart data: TVL (balances + positions) and Market Cap (tokenInfo.tokenValue)
   const chartData = funds
     .map((f) => ({
       name:
         f.name.length > 20 ? `${f.name.slice(0, 18)}...` : f.name,
-      balances: f.balances?.totalUsdValue ?? 0,
-      positions: f.positions?.totalUsdValue ?? 0,
+      tvl:
+        (f.balances?.totalUsdValue ?? 0) + (f.positions?.totalUsdValue ?? 0),
+      marketCap: f.tokenInfo?.tokenValue ?? 0,
     }))
-    .filter((d) => d.balances > 0 || d.positions > 0)
-    .sort(
-      (a, b) => b.balances + b.positions - (a.balances + a.positions),
-    )
+    .filter((d) => d.tvl > 0 || d.marketCap > 0)
+    .sort((a, b) => b.tvl + b.marketCap - (a.tvl + a.marketCap))
 
   return (
     <div>
       {/* Summary */}
       <div className="flex items-center gap-6 mb-4 text-sm flex-wrap">
-        <span className="text-text-secondary">
-          <span className="font-semibold text-text-primary">
-            {funds.length}
-          </span>{' '}
-          fund holder{funds.length !== 1 ? 's' : ''}
-        </span>
+        <FundsSummaryLabel funds={funds} />
         <span className="text-text-secondary">
           Total:{' '}
           <UsdValue
@@ -112,7 +106,7 @@ export function FundsTab({ review }: FundsTabProps) {
         </span>
         {totalTokenValue > 0 && (
           <span className="text-text-secondary">
-            Token value:{' '}
+            Market Cap:{' '}
             <UsdValue
               value={totalTokenValue}
               variant="token"
@@ -126,7 +120,7 @@ export function FundsTab({ review }: FundsTabProps) {
       {chartData.length > 0 && (
         <div className="rounded-lg border border-border bg-white p-4 mb-4">
           <h3 className="text-sm font-semibold text-text-primary mb-3">
-            Fund Distribution (Token Value vs User Funds)
+            Fund Distribution (Market Cap vs Total Value Locked)
           </h3>
           <ResponsiveContainer
             width="100%"
@@ -150,10 +144,7 @@ export function FundsTab({ review }: FundsTabProps) {
                 tick={{ fill: '#6B7280' }}
               />
               <Tooltip
-                formatter={(value: number, name: string) => [
-                  formatUsdValue(value),
-                  name === 'balances' ? 'Protocol Owned Token Value' : 'User Funds',
-                ]}
+                formatter={(value: number) => formatUsdValue(value)}
                 contentStyle={{
                   backgroundColor: '#fff',
                   border: '1px solid #E5E1ED',
@@ -162,29 +153,28 @@ export function FundsTab({ review }: FundsTabProps) {
                 }}
               />
               <Bar
-                dataKey="balances"
+                dataKey="tvl"
                 stackId="total"
-                fill="#7C3AED"
-                name="Protocol Owned Token Value"
+                fill="#10B981"
+                name="Total Value Locked (TVL)"
                 radius={[0, 0, 0, 0]}
               />
               <Bar
-                dataKey="positions"
+                dataKey="marketCap"
                 stackId="total"
-                fill="#10B981"
-                name="User Funds"
+                fill="#F59E0B"
+                name="Market Cap"
                 radius={[0, 4, 4, 0]}
               />
             </BarChart>
           </ResponsiveContainer>
           <div className="flex gap-4 mt-2 text-xs text-text-muted">
             <span className="flex items-center gap-1">
-              <span className="w-3 h-3 rounded-sm bg-purple-600" /> Protocol
-              Owned Token Value
+              <span className="w-3 h-3 rounded-sm bg-status-green" /> Total
+              Value Locked (TVL)
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-3 h-3 rounded-sm bg-status-green" /> User
-              Funds
+              <span className="w-3 h-3 rounded-sm bg-amber-500" /> Market Cap
             </span>
           </div>
         </div>
@@ -207,7 +197,7 @@ export function FundsTab({ review }: FundsTabProps) {
               </th>
               <SortHeader
                 field="balances"
-                label="Token Value"
+                label="Balances"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -215,7 +205,7 @@ export function FundsTab({ review }: FundsTabProps) {
               />
               <SortHeader
                 field="positions"
-                label="User Funds"
+                label="Positions"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -230,7 +220,7 @@ export function FundsTab({ review }: FundsTabProps) {
                 className="text-right"
               />
               <th className="px-4 py-2 font-medium text-text-secondary text-left">
-                Token
+                Market Cap Token
               </th>
             </tr>
           </thead>
@@ -390,13 +380,13 @@ function FundRow({ fund }: { fund: CompiledFundHolder }) {
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-2 bg-gray-200 rounded overflow-hidden">
                   <div
-                    className="h-full bg-purple-600 rounded-l"
+                    className="h-full bg-status-green rounded-l"
                     style={{ width: `${balPct}%` }}
                   />
                 </div>
                 <span className="text-xs text-text-muted">
-                  {balPct.toFixed(0)}% token value / {(100 - balPct).toFixed(0)}%
-                  user funds
+                  {balPct.toFixed(0)}% balances / {(100 - balPct).toFixed(0)}%
+                  positions
                 </span>
               </div>
             )}
@@ -404,6 +394,37 @@ function FundRow({ fund }: { fund: CompiledFundHolder }) {
         </tr>
       )}
     </>
+  )
+}
+
+function FundsSummaryLabel({ funds }: { funds: CompiledFundHolder[] }) {
+  const tvlCount = funds.filter(
+    (f) =>
+      (f.balances?.totalUsdValue ?? 0) > 0 ||
+      (f.positions?.totalUsdValue ?? 0) > 0,
+  ).length
+  const tokenCount = funds.filter((f) => f.tokenInfo != null).length
+
+  if (tvlCount === 0 && tokenCount === 0) {
+    return <span className="text-text-muted">No fund data</span>
+  }
+
+  return (
+    <span className="text-text-secondary">
+      {tvlCount > 0 && (
+        <>
+          <span className="font-semibold text-text-primary">{tvlCount}</span>
+          {' '}contract{tvlCount !== 1 ? 's' : ''} holding TVL
+        </>
+      )}
+      {tvlCount > 0 && tokenCount > 0 && ', '}
+      {tokenCount > 0 && (
+        <>
+          <span className="font-semibold text-text-primary">{tokenCount}</span>
+          {' '}issued token{tokenCount !== 1 ? 's' : ''}
+        </>
+      )}
+    </span>
   )
 }
 

@@ -22,7 +22,7 @@ const SECTIONS: SectionDef[] = [
   { id: 'funds', title: 'What Is at Stake?' },
   { id: 'admins', title: 'Who Is in Control?' },
   { id: 'dependencies', title: 'What Does It Depend On?' },
-  { id: 'code', title: 'More Information' },
+  { id: 'code', title: 'Further Resources' },
 ]
 
 export function ReportView({ review }: ReportViewProps) {
@@ -170,7 +170,7 @@ export function ReportView({ review }: ReportViewProps) {
           ref={(el) => registerRef('code', el)}
         >
           <h2 className="text-2xl font-bold text-text-primary mb-6">
-            More Information
+            Further Resources
           </h2>
           <CodeSection review={review} />
         </section>
