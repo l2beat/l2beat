@@ -2,8 +2,15 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
+import { EM_DASH } from '~/consts/characters'
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
+import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -122,17 +129,37 @@ export function InteropProtocolSummary({
       <span className="font-medium text-paragraph-12 text-secondary">
         Protocol transfer size
       </span>
-      <Breakdown values={breakdownValues} className="mt-2! h-1.5 w-full" />
-      <div className="mt-2 flex flex-wrap gap-2">
-        {breakdownValues.map((value) => (
-          <div key={value.label} className="flex items-center gap-[3px]">
-            <div className={cn('size-3.5 rounded-xs', value.className)} />
-            <span className="font-medium text-label-value-12 text-secondary leading-none">
-              {value.label}
-            </span>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="cursor-pointer">
+            <Breakdown
+              values={breakdownValues}
+              className="mt-2! h-1.5 w-full"
+            />
+            <div className="mt-2 flex flex-wrap gap-2">
+              {breakdownValues.map((value) => (
+                <div
+                  key={value.label}
+                  className="flex items-center gap-[3px]"
+                >
+                  <div
+                    className={cn('size-3.5 rounded-xs', value.className)}
+                  />
+                  <span className="font-medium text-label-value-12 text-secondary leading-none">
+                    {value.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
+        </TooltipTrigger>
+        <TooltipContent fitContent>
+          <TransferSizeTooltipContent
+            breakdownValues={breakdownValues}
+            transferSize={data?.transferSize}
+          />
+        </TooltipContent>
+      </Tooltip>
       {protocol.header.description && (
         <div className="max-md:hidden">
           <HorizontalSeparator className="my-4" />
@@ -166,4 +193,70 @@ function StatsItem({
       )}
     </div>
   )
+}
+
+function TransferSizeTooltipContent({
+  breakdownValues,
+  transferSize,
+}: {
+  breakdownValues: { value: number; className: string; label: string }[]
+  transferSize: TransferSizeDataPoint | undefined
+}) {
+  const totalTransfers = breakdownValues.reduce((sum, v) => sum + v.value, 0)
+
+  return (
+    <div className="flex flex-col">
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">
+            Total transfers
+          </span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatInteger(totalTransfers)} transfers
+          </span>
+        </div>
+        {breakdownValues.map((entry) => (
+          <div
+            key={entry.label}
+            className="flex items-center justify-between gap-x-6"
+          >
+            <div className="flex items-center gap-1">
+              <div className={cn('size-3 rounded-xs', entry.className)} />
+              <span className="font-medium text-label-value-14">
+                {entry.label}
+              </span>
+            </div>
+            <span className="font-medium text-label-value-15 text-primary tabular-nums">
+              {formatInteger(entry.value)} transfers
+            </span>
+          </div>
+        ))}
+      </div>
+      <HorizontalSeparator className="my-1.5" />
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Min size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(transferSize?.minTransferValueUsd)}
+          </span>
+        </div>
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Average size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(transferSize?.averageTransferSizeUsd)}
+          </span>
+        </div>
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Max size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(transferSize?.maxTransferValueUsd)}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function formatTransferSize(value: number | undefined) {
+  return value !== undefined ? formatCurrency(value, 'usd') : EM_DASH
 }
