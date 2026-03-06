@@ -134,8 +134,8 @@ export function AdminCards({ review }: AdminCardsProps) {
   return (
     <div>
       {noHumanControl ? (
-        <div className="rounded-xl border border-green-200 bg-green-50 px-6 py-5 mb-8 max-w-3xl">
-          <p className="text-lg font-semibold text-green-700 mb-1">No Admins</p>
+        <div className="rounded-xl border border-status-green/30 bg-status-green/5 px-6 py-5 mb-8 max-w-3xl">
+          <p className="text-lg font-semibold text-status-green mb-1">No Admins</p>
           <p className="text-sm text-text-secondary leading-relaxed">
             All admin controls resolve to immutable contracts or revoked
             addresses. No permissioned functions can affect user funds.

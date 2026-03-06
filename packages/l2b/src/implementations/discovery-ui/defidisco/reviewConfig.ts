@@ -25,6 +25,7 @@ export function getReviewConfig(
       config.admins ??= {}
       config.dependencies ??= {}
       config.funds ??= {}
+      config.resources ??= []
       // Strip removed sections from old configs
       if (config.sections) {
         const { codeAndAudits } = config.sections as any

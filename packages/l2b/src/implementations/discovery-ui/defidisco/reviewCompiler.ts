@@ -10,6 +10,7 @@ import type {
   ContractFundsData,
   ApiFunctionAnalysisResponse,
   ApiFundsDataResponse,
+  ResourceEntry,
   ReviewConfig,
 } from './types'
 import { computeFunctionAnalysis } from './functionAnalysis'
@@ -52,6 +53,7 @@ export interface CompiledReview {
   funds: CompiledFundHolder[]
   functions: CompiledFunction[]
   contracts: CompiledContract[]
+  resources: CompiledResourceEntry[]
 
   sections: Record<string, unknown>
 }
@@ -134,6 +136,8 @@ export interface CompiledContract {
   entity: string | null
   proxyType: string | null
 }
+
+export type CompiledResourceEntry = ResourceEntry
 
 // ============================================================================
 // Compilation Result
@@ -526,6 +530,7 @@ export class ReviewCompiler {
       funds,
       functions,
       contracts,
+      resources: reviewConfig.resources ?? [],
       sections: reviewConfig.sections ?? {},
     }
   }
@@ -604,7 +609,16 @@ export class ReviewCompiler {
           return this.resolveBreakdownPath(root, remainingPath)
         }
       } else if (dataPath.startsWith('fundsdata.')) {
-        root = sources.fundsData
+        // Lowercase contract address keys for case-insensitive matching
+        const fundsData = { ...sources.fundsData }
+        if (fundsData.contracts) {
+          const lowered: Record<string, any> = {}
+          for (const [k, v] of Object.entries(fundsData.contracts)) {
+            lowered[k.toLowerCase()] = v
+          }
+          fundsData.contracts = lowered as any
+        }
+        root = fundsData
         remainingPath = dataPath.slice('fundsdata.'.length)
       } else {
         return null

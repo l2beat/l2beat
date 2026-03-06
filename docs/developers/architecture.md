@@ -48,7 +48,7 @@ Contract tags are specified by the reviewer/researcher and can only be changed m
 
 ### Review Builder
 
-The Review Builder stores all review configuration in a single `review-config.json` file per project. This includes protocol metadata (name, slug, chain, project type), entity descriptions for admins/dependencies/fund-holding contracts, and section content (e.g., Code & Audits).
+The Review Builder stores all review configuration in a single `review-config.json` file per project. This includes protocol metadata (name, slug, chain, project type), entity descriptions for admins/dependencies/fund-holding contracts, project resources (links to frontends, docs, GitHub, X, source code), and section content (e.g., Code & Audits).
 
 **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/reviewConfig.ts` handles CRUD operations. Three API endpoints are registered in `main.ts`:
 
@@ -56,9 +56,11 @@ The Review Builder stores all review configuration in a single `review-config.js
 - `PUT /api/projects/:project/review-config` — saves the full config
 - `PUT /api/projects/:project/review-config/entity` — partial update for a single admin/dependency/funds entry
 
-**Frontend**: The `ReviewBuilderPanel.tsx` component provides the editor UI, with `ReviewDescriptionsEditor.tsx` for entity descriptions and `ReviewSectionEditor.tsx` for section tabs. Data source definitions in `reviewDataSources.ts` power the data table blocks.
+**Frontend**: The `ReviewBuilderPanel.tsx` component provides the editor UI, with `ReviewDescriptionsEditor.tsx` for entity descriptions, `ReviewResourcesEditor.tsx` for project resource links (frontends, docs, socials), and `ReviewSectionEditor.tsx` for section tabs. Data source definitions in `reviewDataSources.ts` power the data table blocks.
 
-**AI Generation**: The `/generate-review` Claude Code skill fetches pre-processed data from the l2b API, analyzes the protocol structure, and writes generated descriptions directly to `review-config.json`.
+**AI Generation**: The `/generate-review` Claude Code skill fetches pre-processed data from the l2b API, analyzes the protocol structure, and writes generated descriptions directly to `review-config.json`. Human-specified `resources` (project links) are automatically preserved across regenerations.
+
+**Resources**: The `resources` field is a flat array of `ResourceEntry` objects (`{ url, type, label?, frontendSubtype? }`). Resource types: `frontend` (with subtype: official/third-party/self-hosted), `docs`, `source-code`, `github`, `x`, `other`. Resources are compiled as-is into `compiled-review.json` and rendered in the frontend's "More Information" section.
 
 ### Continuous Monitoring Service
 

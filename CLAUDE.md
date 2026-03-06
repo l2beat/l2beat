@@ -443,7 +443,7 @@ Internal helper: `contractHasFunction(discovered, entry, functionName)` — chec
 - **File**: `review-config.json` per project in `packages/config/src/projects/{project}/`
 - **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/reviewConfig.ts`
 - **Templates**: `packages/protocolbeat/src/apps/discovery/defidisco/reviewBuilderTemplates.ts`
-- **UI**: `ReviewBuilderPanel.tsx` (main panel), `ReviewDescriptionsEditor.tsx` (Descriptions tab), `ReviewSectionEditor.tsx` (section tabs)
+- **UI**: `ReviewBuilderPanel.tsx` (main panel), `ReviewDescriptionsEditor.tsx` (Descriptions tab), `ReviewResourcesEditor.tsx` (Resources section in Descriptions tab), `ReviewSectionEditor.tsx` (section tabs)
 - **Frontend API**: `getReviewConfig()`, `updateReviewConfig()`, `updateReviewConfigEntity()` in `api.ts`
 
 **Data Structure** (`review-config.json`):
@@ -476,6 +476,10 @@ Internal helper: `contractHasFunction(discovered, entry, functionName)` — chec
       "description": "Main protocol treasury holding reserves."
     }
   },
+  "resources": [
+    { "url": "https://app.example.com", "type": "frontend", "frontendSubtype": "official" },
+    { "url": "https://docs.example.com", "type": "docs" },
+  ],
   "sections": {
     "codeAndAudits": { "title": "Code & Audits", "subsections": [] }
   },
@@ -486,20 +490,29 @@ Internal helper: `contractHasFunction(discovered, entry, functionName)` — chec
 **Key Types**:
 - `ReviewProjectType`: `'stablecoin' | 'lending' | 'dex' | 'bridge' | 'derivatives' | 'yield' | 'liquid-staking' | 'cdp' | 'other'`
 - `EntityDescription`: `{ name?, description }` — used for admins, dependencies, and funds
+- `ResourceType`: `'frontend' | 'docs' | 'source-code' | 'github' | 'x' | 'other'`
+- `FrontendSubtype`: `'official' | 'third-party' | 'self-hosted'`
+- `ResourceEntry`: `{ url, type: ResourceType, label?, frontendSubtype?: FrontendSubtype }`
 - `ApiUpdateEntityDescriptionRequest`: `{ section: 'admins' | 'dependencies' | 'funds', address, name?, description }`
-- `ReviewConfig`: Full config including metadata, descriptions, sections, and dataKeys
+- `ReviewConfig`: Full config including metadata, descriptions, resources, sections, and dataKeys
 
 **API Endpoints**:
 - `GET /api/projects/:project/review-config` — full config (returns `{ config, availableTemplates }`)
 - `PUT /api/projects/:project/review-config` — full config save
 - `PUT /api/projects/:project/review-config/entity` — partial update for a single admin/dependency/funds entry
 
+**Resources**: Protocol links (frontends, docs, GitHub, X, source code, other) stored as `resources: ResourceEntry[]`
+- **Types**: `frontend` (with subtype: official/third-party/self-hosted), `docs`, `source-code`, `github`, `x`, `other`
+- **Compiler**: Pass-through to `compiled-review.json` as `resources: CompiledResourceEntry[]`
+- **Preservation**: The `/generate-review` skill extracts and restores resources automatically (not AI-generated)
+
 **Design Decisions**:
-- Single unified file (protocol metadata + descriptions + sections + data keys)
+- Single unified file (protocol metadata + descriptions + resources + sections + data keys)
 - Three curated entity description records: `admins`, `dependencies`, `funds` — each keyed by address
+- Resources are a flat array (not address-keyed) — researcher-specified links to external URLs
 - Only `codeAndAudits` in sections (collaterals/dependencies/actors data comes from DeFiScan panel)
 - `name` field overrides auto-resolved discovery names for display
-- Templates provide starting configs per project type 
+- Templates provide starting configs per project type
 - Complements V2 scoring data — frontend joins on address to show descriptions alongside scoring/capital data
 
 ### Review Generation Agent ✅
@@ -511,6 +524,7 @@ Internal helper: `contractHasFunction(discovered, entry, functionName)` — chec
 - **Prerequisites**: l2b UI server running at `localhost:2021` (`cd packages/config && l2b ui`)
 - **Behavior**: Always replaces the entire review — every run generates fresh content
 - **Isolation**: Moves existing `review-config.json` aside before generation to prevent bias from prior output
+- **Resource Preservation**: Extracts `resources` field before moving config aside, restores it after generation (resources are human-specified, not AI-generated)
 
 **How It Works**:
 1. Fetches pre-processed data from l2b API endpoints (v2-score, enhanced-traversal, funds-data, contract-tags, functions, project data)
@@ -681,6 +695,7 @@ packages/
 │   ├── DependencyInventoryBreakdown.tsx  # Dependencies section (imports from scoringShared)
 │   ├── FunctionBreakdown.tsx         # Functions section
 │   ├── ReviewDescriptionsEditor.tsx  # Review descriptions editor (Descriptions tab)
+│   ├── ReviewResourcesEditor.tsx    # Resources editor (links, frontends, socials)
 │   └── icons/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts

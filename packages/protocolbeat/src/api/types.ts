@@ -788,6 +788,22 @@ export interface EntityDescription {
   description: string
 }
 
+export type ResourceType =
+  | 'frontend'
+  | 'docs'
+  | 'source-code'
+  | 'github'
+  | 'x'
+  | 'other'
+export type FrontendSubtype = 'official' | 'third-party' | 'self-hosted'
+
+export interface ResourceEntry {
+  url: string
+  type: ResourceType
+  label?: string
+  frontendSubtype?: FrontendSubtype
+}
+
 export interface ReviewConfig {
   version: string
   lastModified: string
@@ -800,6 +816,7 @@ export interface ReviewConfig {
   admins: Record<string, EntityDescription>
   dependencies: Record<string, EntityDescription>
   funds: Record<string, EntityDescription>
+  resources?: ResourceEntry[]
   sections: {
     codeAndAudits: ReviewSection
   }

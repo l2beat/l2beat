@@ -31,7 +31,27 @@ export interface CompiledReview {
   functions: CompiledFunction[]
   contracts: CompiledContract[]
 
+  resources?: CompiledResourceEntry[]
   sections: Record<string, unknown>
+}
+
+export type CompiledResourceType =
+  | 'frontend'
+  | 'docs'
+  | 'source-code'
+  | 'github'
+  | 'x'
+  | 'other'
+export type CompiledFrontendSubtype =
+  | 'official'
+  | 'third-party'
+  | 'self-hosted'
+
+export interface CompiledResourceEntry {
+  url: string
+  type: CompiledResourceType
+  label?: string
+  frontendSubtype?: CompiledFrontendSubtype
 }
 
 export interface CompiledAdmin {
