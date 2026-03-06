@@ -6,11 +6,13 @@ import { env } from '~/env'
 interface ManifestJson {
   names: Record<string, string>
   images: Record<string, { src: string; width: number; height: number }>
+  imports: Record<string, string[]>
 }
 
 export interface Manifest {
   getUrl(url: string): string
   getImage(url: string): { src: string; width: number; height: number }
+  getImports(url: string): string[]
 }
 
 // I know its weird to have this rewrite specific code in the next frontend.
@@ -40,11 +42,17 @@ function getManifest(isProduction: boolean, rootDir: string) {
         }
         return resolved
       },
+      getImports(url: string) {
+        return json.imports[url] ?? []
+      },
     }
   }
   return {
     getUrl(url: string) {
       return url
+    },
+    getImports() {
+      return []
     },
     getImage(url: string) {
       const content = fs.readFileSync(path.join(rootDir, 'static', url))
