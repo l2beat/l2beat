@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
-import { getBurnAndMintColumns, type BurnAndMintProtocolRow } from './columns'
+import { type BurnAndMintProtocolRow, getBurnAndMintColumns } from './columns'
 import type { BurnAndMintProtocolEntry } from './getBridgeTypeEntries'
 
 export function BurnAndMintTable({

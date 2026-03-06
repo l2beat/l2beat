@@ -13,7 +13,8 @@ export function NonMintingTable({
 }) {
   const { buildUrl } = useInteropSelectedChains()
   const columns = useMemo(
-    () => getNonMintingColumns((slug) => buildUrl(`/interop/protocols/${slug}`)),
+    () =>
+      getNonMintingColumns((slug) => buildUrl(`/interop/protocols/${slug}`)),
     [buildUrl],
   )
 
