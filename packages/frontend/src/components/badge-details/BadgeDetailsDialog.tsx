@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { cn } from '~/utils/cn'
 import {
   Dialog,
@@ -10,27 +9,26 @@ import {
   DialogHeader,
   DialogTitle,
 } from '~/components/core/Dialog'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   Tooltip,
   TooltipContent,
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { CloseIcon } from '~/icons/Close'
 import {
   ProjectBadge,
   type BadgeWithParams,
 } from '~/components/projects/ProjectBadge'
-import { BadgeModalProjectsTable } from './BadgeModalProjectsTable'
+import { BadgeModalProjectsList } from './BadgeModalProjectsList'
 
 export interface BadgeDetails {
   badge: BadgeWithParams
   type: string
   projectsCount: number
   projects: ScalingSummaryEntry[]
-  combinedTvs: number
 }
 
 export function useBadgeDetails(entries: ScalingSummaryEntry[]) {
@@ -46,14 +44,12 @@ export function useBadgeDetails(entries: ScalingSummaryEntry[]) {
         if (existing) {
           existing.projectsCount += 1
           existing.projects.push(entry)
-          if (entry.tvsOrder >= 0) existing.combinedTvs += entry.tvsOrder
         } else {
           badgeDetailsById.set(badge.id, {
             badge,
             type: badgeType,
             projectsCount: 1,
             projects: [entry],
-            combinedTvs: entry.tvsOrder >= 0 ? entry.tvsOrder : 0,
           })
         }
         seen.add(badge.id)
@@ -61,9 +57,7 @@ export function useBadgeDetails(entries: ScalingSummaryEntry[]) {
     }
 
     for (const d of badgeDetailsById.values()) {
-      d.projects.sort(
-        (a, b) => b.tvsOrder - a.tvsOrder || a.name.localeCompare(b.name),
-      )
+      d.projects.sort((a, b) => a.name.localeCompare(b.name))
     }
 
     return badgeDetailsById
@@ -113,7 +107,7 @@ export function BadgeDetailsDialog({
         if (!open) onOpenedBadgeIdChange(undefined)
       }}
     >
-      <DialogContent className="flex max-h-[85dvh] w-full flex-col overflow-hidden bg-surface-primary md:max-w-[960px] !gap-0 !p-0">
+      <DialogContent className="flex max-h-[85dvh] w-full flex-col overflow-hidden bg-surface-primary md:max-w-[860px] !gap-0 !p-0">
         {openedBadge && (
           <div className="flex min-h-0 flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
             {/* Left panel: badge info + related badges */}
@@ -141,26 +135,22 @@ export function BadgeDetailsDialog({
                   <p className="mt-1.5 text-center text-xs leading-relaxed text-secondary dark:text-zinc-300">
                     {openedBadge.badge.description}
                   </p>
-                  <div className="mt-3 flex items-center divide-x divide-divider">
+                  <div className="mt-3">
                     <StatChip
                       label="Projects"
                       value={openedBadge.projectsCount.toString()}
-                    />
-                    <StatChip
-                      label="Combined TVS"
-                      value={formatCurrency(openedBadge.combinedTvs, 'usd')}
                     />
                   </div>
                 </div>
               </div>
               {relatedBadges.length > 0 && (
-                <div className="flex flex-col px-5 py-3">
+                <div className="flex flex-col px-4 py-3 md:px-5">
                   <p className="mb-2 text-xs text-secondary">
                     Other {openedBadge.type} badges
                   </p>
                   <div
                     key={openedBadge.badge.id}
-                    className="flex flex-wrap gap-2"
+                    className="grid grid-cols-3 justify-items-center gap-1.5"
                     onPointerMove={() => {
                       if (!allowRelatedBadgeTooltips) {
                         setAllowRelatedBadgeTooltips(true)
@@ -178,6 +168,7 @@ export function BadgeDetailsDialog({
                             type="button"
                             title={related.badge.name}
                             className={cn(
+                              'flex items-center justify-center',
                               'cursor-pointer rounded-lg p-1 transition-all',
                               'hover:bg-surface-tertiary hover:ring-1 hover:ring-brand/20',
                               'active:scale-95',
@@ -210,9 +201,10 @@ export function BadgeDetailsDialog({
               )}
             </div>
 
-            {/* Right panel: project table. On md the table scrolls; on max-md the whole modal scrolls. */}
+            {/* Right panel: project list */}
             <div className="flex min-h-0 flex-1 flex-col max-md:min-h-0 max-md:flex-none">
-              <div className="flex items-center justify-between px-5 pt-4 pb-2 md:pt-5">
+              <HorizontalSeparator className="md:hidden" />
+              <div className="flex items-center justify-between px-4 pt-3 pb-1 md:px-5 md:pt-5 md:pb-2">
                 <p className="font-bold text-sm">
                   Projects ({openedBadge.projectsCount})
                 </p>
@@ -220,9 +212,8 @@ export function BadgeDetailsDialog({
                   <CloseIcon className="size-4 fill-primary" />
                 </DialogClose>
               </div>
-              <HorizontalSeparator className="md:hidden" />
-              <ScrollWithGradient className="min-h-0 flex-1 px-5 pb-5 max-md:!min-h-0 max-md:!overflow-visible max-md:!max-h-none">
-                <BadgeModalProjectsTable entries={openedBadge.projects} />
+              <ScrollWithGradient className="min-h-0 flex-1 px-4 pb-4 md:px-5 md:pb-5 max-md:!min-h-0 max-md:!overflow-visible max-md:!max-h-none">
+                <BadgeModalProjectsList entries={openedBadge.projects} />
               </ScrollWithGradient>
             </div>
           </div>
