@@ -33,10 +33,7 @@ function getCommonColumns<
     subgroup: { name: string; iconUrl: string } | undefined
     isAggregate: boolean | undefined
   },
->(
-  columnHelper: ColumnHelper<T>,
-  getProtocolHref?: (slug: string) => string,
-) {
+>(columnHelper: ColumnHelper<T>, getProtocolHref?: (slug: string) => string) {
   return [
     columnHelper.display({
       id: 'logo',
@@ -81,7 +78,6 @@ function getCommonColumns<
               getProtocolHref?.(ctx.row.original.slug) ??
               `/interop/protocols/${ctx.row.original.slug}`
             }
-            className="h-full"
           >
             {nameCell}
           </TableLink>
@@ -147,7 +143,9 @@ function getTokensByVolumeColumn<
   })
 }
 
-export function getNonMintingColumns(getProtocolHref?: (slug: string) => string) {
+export function getNonMintingColumns(
+  getProtocolHref?: (slug: string) => string,
+) {
   return [
     ...getCommonColumns(nonMintingColumnHelper, getProtocolHref),
     getLast24hVolumeColumn(nonMintingColumnHelper),

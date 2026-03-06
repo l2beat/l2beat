@@ -70,7 +70,6 @@ function getCommonColumns(getProtocolHref?: (slug: string) => string) {
               getProtocolHref?.(ctx.row.original.slug) ??
               `/interop/protocols/${ctx.row.original.slug}`
             }
-            className="h-full"
           >
             {nameCell}
           </TableLink>
