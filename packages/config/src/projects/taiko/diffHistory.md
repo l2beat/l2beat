@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xb1e7d44a9235de4aa70e4b6924570a5bad84cecd
+
+# Diff at Fri, 06 Mar 2026 09:41:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@464f5fa94dac665b855f973e6cbee143f2fbb4bd block: 1772614552
+- current timestamp: 1772790015
+
+## Description
+
+veto period 21d -> 10d.
+
+https://dao.taiko.xyz/plugins/community-proposals/#/proposals/25
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.lastMultisigSettingsChange:
+-        22574240
++        24588180
+      values.multisigSettings.destinationProposalDuration:
+-        1814400
++        864000
+    }
+```
+
 Generated with discovered.json: 0xd0cd37b2fdf6fba92757ebce83c5f1510e3fe0af
 
 # Diff at Wed, 04 Mar 2026 09:00:02 GMT:
