@@ -58,7 +58,7 @@ export function InteropProtocolSummary({
       data-role="nav-section"
       className="mt-4 flex w-full scroll-mt-[100vh] flex-col border-divider px-4 max-md:border-b max-md:pb-6 md:rounded-lg md:bg-surface-primary md:p-6"
     >
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-6">
+      <div className="grid grid-cols-1 gap-x-3 max-md:gap-y-3 md:grid-cols-3">
         <StatsItem
           title="Type"
           isLoading={isLoading}
@@ -80,12 +80,14 @@ export function InteropProtocolSummary({
           isLoading={isLoading}
           value={formatInteger(data?.entry?.transferCount ?? 0)}
         />
+        <HorizontalSeparator className="col-span-3 my-4 max-md:hidden" />
         <StatsItem
           title="Last 24h avg. transfer time"
           isLoading={isLoading}
           value={
             <AvgDurationCell
               className="font-bold text-label-value-16"
+              splitClassName="flex-row text-label-value-16 font-bold"
               averageDuration={
                 data?.entry?.averageDuration ?? {
                   type: 'unknown',

@@ -15,10 +15,12 @@ export function AvgDurationCell({
   averageDuration,
   disableTooltip = false,
   className,
+  splitClassName,
 }: {
   averageDuration: AverageDuration
   disableTooltip?: boolean
   className?: string
+  splitClassName?: string
 }) {
   switch (averageDuration.type) {
     case 'unknown':
@@ -45,7 +47,12 @@ export function AvgDurationCell({
       return (
         <Tooltip>
           <TooltipTrigger disabled={disableTooltip}>
-            <div className="flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5">
+            <div
+              className={cn(
+                'flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5',
+                splitClassName,
+              )}
+            >
               <DurationCellItem averageDuration={averageDuration} type="in" />
               <DurationCellItem averageDuration={averageDuration} type="out" />
             </div>
@@ -77,7 +84,7 @@ function DurationCellItem({
   type: 'in' | 'out'
 }) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-baseline">
       <span className="text-[13px] text-secondary capitalize leading-none">
         {type}:{' '}
       </span>
