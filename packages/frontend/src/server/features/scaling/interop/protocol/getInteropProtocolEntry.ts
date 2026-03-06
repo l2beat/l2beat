@@ -44,7 +44,7 @@ export function getInteropProtocolEntry(
 
   const common = {
     id: project.id,
-    name: project.name,
+    name: project.interopConfig?.name ?? project.name,
     shortName: project.shortName,
     slug: project.slug,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
