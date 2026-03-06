@@ -8,7 +8,7 @@ Generated with discovered.json: 0xf0bb58023a98fd39109645752020ba3478d9e196
 
 ## Description
 
-progHash changed to op succinct 3.5.0, not yet verified.
+progHash changed to op succinct 3.5.0.
 
 ## Watched changes
 
