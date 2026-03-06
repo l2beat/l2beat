@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "jaaa-token",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x5a0F93D040De44e78F251b03c43be9CF317Dcf64"],
+  "overrides": {
+    "eth:0x5a0F93D040De44e78F251b03c43be9CF317Dcf64": {
+      "fields": { 
+        "$tokenData": { "handler": { "type": "ERC20Data" } },
+        "wards": {
+          "handler": {
+            "type": "event",
+            "select": "user",
+            "add": { "event": "Rely" },
+            "remove": { "event": "Deny" }
+          }
+        } 
+      }
+    },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {  // USDC
+      "ignoreDiscovery": true
+    }
+  }
+}
