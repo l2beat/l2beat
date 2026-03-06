@@ -105,7 +105,7 @@ export const optimism: ScalingProject = opStackL2({
       {
         chain: 'optimism',
         plugin: 'synthetix-bridge',
-        bridgeType: 'lockAndMint',
+        bridgeType: 'burnAndMint',
       },
     ],
     type: 'canonical',
