@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xcab49155848ea334fc3ed570a653afe2281e1bd7
+
+# Diff at Thu, 05 Mar 2026 15:18:08 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1772489760
+- current timestamp: 1772723799
+
+## Description
+
+SxNetworkMultisig member at index 0 changed from `0x2627...` to `0xC711...`. The new signer now also holds fastconfirm and validate permissions (previously held by the removed signer via the multisig).
+
+## Watched changes
+
+```diff
+    EOA  (eth:0xC711f8aCC65306D4f16F874Fe88C43eF23504F5c) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"fastconfirm","from":"eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"}]}
+      receivedPermissions.1:
++        {"permission":"validate","from":"eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"}]}
+    }
+```
+
+```diff
+    contract SxNetworkMultisig (eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x262711cA4DA6409Da795D8af9E18DDaF47397f80"
++        "eth:0xC711f8aCC65306D4f16F874Fe88C43eF23504F5c"
+    }
+```
+
 Generated with discovered.json: 0x5364ea862a67b119d36a4c492b9803b008bc9bb4
 
 # Diff at Mon, 02 Mar 2026 22:17:10 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "espresso",
-  "timestamp": 1772638086,
-  "configHash": "0xbc54f4e990277e1a7e9850dc4be8d4c97975b9416b09258ad4e2a97d28b34b96",
+  "timestamp": 1772726425,
+  "configHash": "0xf2ae7808c1822342d3f165d68b1fdb46d92a6c735482b1350edc2512208f0db4",
   "entries": [
     {
       "name": "PlonkVerifierV3",
@@ -124,7 +124,10 @@
         "stateHistoryFirstIndex",
         "getStateHistoryCount",
         "finalizedState",
-        "currentBlockNumber"
+        "currentBlockNumber",
+        "authRoot",
+        "currentEpoch",
+        "votingStakeTableState"
       ],
       "sinceTimestamp": 1730830835,
       "sinceBlock": 21123201,
@@ -158,15 +161,15 @@
           ]
         ],
         "$upgradeCount": 4,
-        "authRoot": "95706045122542419068533472823093870027268909194070702472720375130594565742773",
+        "authRoot": "51023204165850023074572022546582207905522855371750882113725224518316468926003",
         "blocksPerEpoch": 40000,
-        "currentBlockNumber": 24584989,
-        "currentEpoch": 276,
+        "currentBlockNumber": 24592326,
+        "currentEpoch": 277,
         "epochStartBlock": 10960201,
         "finalizedState": {
-          "viewNum": 11678543,
-          "blockHeight": 11019078,
-          "blockCommRoot": "12701608935084152478770642094539058324427995613202930219923091687459222410057"
+          "viewNum": 11723891,
+          "blockHeight": 11060362,
+          "blockCommRoot": "17004164513382465782542128407607373676641767447421647220676058191644914274384"
         },
         "genesisStakeTableState": {
           "threshold": 34,
@@ -175,7 +178,7 @@
           "amountComm": "349594070000690608819508126396071528924936277306125447047023081215269308099"
         },
         "genesisState": { "viewNum": 0, "blockHeight": 0, "blockCommRoot": 0 },
-        "getStateHistoryCount": 1208,
+        "getStateHistoryCount": 1213,
         "getVersion": {
           "majorVersion": 3,
           "minorVersion": 0,
@@ -184,14 +187,14 @@
         "isPermissionedProverEnabled": true,
         "owner": "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
         "permissionedProver": "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
-        "stateHistoryFirstIndex": 979,
+        "stateHistoryFirstIndex": 984,
         "stateHistoryRetentionPeriod": 864000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "votingStakeTableState": {
-          "threshold": 34,
-          "blsKeyComm": "1561632536195555148145050274009949812309785157828896392838981322602622136791",
-          "schnorrKeyComm": "20147560324529416943341534119711171689827441694011856532375917186049770295574",
-          "amountComm": "349594070000690608819508126396071528924936277306125447047023081215269308099"
+          "threshold": "305847763101714193430879339",
+          "blsKeyComm": "15633696011885280257302935345094934670542445474830911243936880027643575064195",
+          "schnorrKeyComm": "4022228050688041128391327501472944465697074365671956771271522710844480122160",
+          "amountComm": "10016458162984725114930573855070482480651055940387207178330854735658737351789"
         }
       },
       "implementationNames": {
@@ -410,6 +413,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24584989 },
+  "usedBlockNumbers": { "ethereum": 24592326 },
   "permissionsConfigHash": "0x6ff33b1f8c062c3cc6e4fed7f18f949efbbf1a84cbaab26a57e45377561752fe"
 }
