@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-06T07:53:53.710Z",
+  "compiledAt": "2026-03-07T07:41:06.147Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -16,8 +16,9 @@
     "scoredFunctionCount": 0,
     "adminCount": 7,
     "dependencyCount": 8,
-    "totalCapitalAtRisk": 160440859.57738438,
-    "totalTokenValueAtRisk": 0
+    "totalCapitalAtRisk": 152640660.89139044,
+    "totalTokenValueAtRisk": 0,
+    "totalTokenValue": 0
   },
   "admins": [
     {
@@ -32,7 +33,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setCurator",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -41,7 +42,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setIsAllocator",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -50,7 +51,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setSkimRecipient",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -59,7 +60,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitTimelock",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -68,7 +69,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setFee",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -91,7 +92,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setFeeRecipient",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -114,7 +115,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitGuardian",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -123,7 +124,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -145,7 +146,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -154,7 +155,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -163,7 +164,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -184,7 +185,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -209,7 +210,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingTimelock",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -218,7 +219,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingGuardian",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -227,7 +228,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -236,14 +237,14 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 160440859.57738438,
+      "totalDirectCapital": 152640660.89139044,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 160440859.57738438,
+      "totalReachableCapital": 152640660.89139044,
       "totalReachableTokenValue": 0
     },
     {
@@ -258,7 +259,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -280,7 +281,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -289,7 +290,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -298,7 +299,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -319,7 +320,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -344,7 +345,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -353,14 +354,14 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 160440859.57738438,
+      "totalDirectCapital": 152640660.89139044,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 160440859.57738438,
+      "totalReachableCapital": 152640660.89139044,
       "totalReachableTokenValue": 0
     },
     {
@@ -375,7 +376,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -396,7 +397,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -417,9 +418,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 160440859.57738438,
+      "totalDirectCapital": 152640660.89139044,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 160440859.57738438,
+      "totalReachableCapital": 152640660.89139044,
       "totalReachableTokenValue": 0
     },
     {
@@ -434,7 +435,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -455,7 +456,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -476,9 +477,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 160440859.57738438,
+      "totalDirectCapital": 152640660.89139044,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 160440859.57738438,
+      "totalReachableCapital": 152640660.89139044,
       "totalReachableTokenValue": 0
     },
     {
@@ -493,7 +494,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -514,7 +515,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -535,9 +536,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 160440859.57738438,
+      "totalDirectCapital": 152640660.89139044,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 160440859.57738438,
+      "totalReachableCapital": 152640660.89139044,
       "totalReachableTokenValue": 0
     },
     {
@@ -552,7 +553,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -573,7 +574,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -594,9 +595,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 160440859.57738438,
+      "totalDirectCapital": 152640660.89139044,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 160440859.57738438,
+      "totalReachableCapital": 152640660.89139044,
       "totalReachableTokenValue": 0
     },
     {
@@ -604,14 +605,14 @@
       "name": "Governance DAO",
       "description": "Designated guardian contract in the vault's governance structure. Can revoke pending governance changes including timelock updates and market parameter modifications. This governance contract provides an additional layer of oversight for timelock-protected changes.",
       "adminType": "Contract",
-      "isGovernance": false,
+      "isGovernance": true,
       "functions": [
         {
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingTimelock",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -620,7 +621,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingGuardian",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -629,7 +630,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -638,14 +639,14 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 160440859.57738438,
+          "directFundsUsd": 152640660.89139044,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 160440859.57738438,
+      "totalDirectCapital": 152640660.89139044,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 160440859.57738438,
+      "totalReachableCapital": 152640660.89139044,
       "totalReachableTokenValue": 0
     }
   ],
@@ -824,10 +825,10 @@
       "name": "MetaMorpho Vault (steakUSDC)",
       "description": "Main vault contract holding all depositor assets. Contains USDC positions across four Morpho Blue lending markets, generating yield through optimized capital allocation. The vault implements a MetaMorpho architecture with timelock-protected governance and curator-managed market selection.",
       "balances": {
-        "totalUsdValue": 0.006015270354208777
+        "totalUsdValue": 0.006014425928092729
       },
       "positions": {
-        "totalUsdValue": 160440859.5713691
+        "totalUsdValue": 152640660.885376
       },
       "tokenInfo": null
     }
@@ -1083,6 +1084,7 @@
       "proxyType": null
     }
   ],
+  "resources": [],
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",
