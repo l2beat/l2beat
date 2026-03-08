@@ -70,7 +70,11 @@
         "totalStakesSnapshot",
         "MINUTE_DECAY_FACTOR",
         "lastFeeOperationTime",
-        "getTroveOwnersCount"
+        "getTroveOwnersCount",
+        "getBorrowingRate",
+        "getBorrowingRateWithDecay",
+        "getRedemptionRate",
+        "getRedemptionRateWithDecay"
       ]
     },
     "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6": {
@@ -154,6 +158,18 @@
         "newValueTimestamps",
         "totalSupply",
         "getNewValueCountbyRequestId"
+      ]
+    },
+    "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d": {
+      "ignoreInWatchMode": [
+        "F_ETH",
+        "F_LUSD",
+        "totalLQTYStaked"
+      ]
+    },
+    "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816": {
+      "ignoreInWatchMode": [
+        "totalLQTYIssued"
       ]
     }
   }

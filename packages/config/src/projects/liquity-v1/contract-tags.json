@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-04T12:22:00.084Z",
+  "lastModified": "2026-03-08T22:26:14.287Z",
   "tags": [
     {
       "contractAddress": "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
@@ -10,7 +10,8 @@
     {
       "contractAddress": "eth:0x3d7ae7e594f2f2091ad8798313450130d0aba3a0",
       "isExternal": true,
-      "timestamp": "2026-03-02T12:10:36.129Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-03-08T22:25:59.307Z"
     },
     {
       "contractAddress": "eth:0x88df592f8eb5d7bd38bfef7deb0fbc02cf3778a0",
@@ -20,7 +21,8 @@
     {
       "contractAddress": "eth:0xad430500ecda11e38c9bcb08a702274b94641112",
       "isExternal": true,
-      "timestamp": "2026-03-02T12:25:00.045Z"
+      "entity": "Tellor",
+      "timestamp": "2026-03-08T22:26:14.287Z"
     },
     {
       "contractAddress": "eth:0x21f73d42eb58ba49ddb685dc29d3bf5c0f0373ca",
