@@ -240,6 +240,11 @@ export interface InteropFeatureConfig {
     configIntervalMs: number
   }
   inMemoryEventCap: number
+  notifications:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
 }
 
 export interface DaBeatConfig {
