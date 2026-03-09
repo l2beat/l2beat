@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-08T07:45:19.727Z",
+  "compiledAt": "2026-03-09T07:59:13.242Z",
   "project": "liquity-v2",
   "metadata": {
     "protocolName": "Liquity V2",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "cdp",
     "tokenName": "BOLD",
-    "description": "Liquity V2 is an immutable borrowing protocol that lets users open collateralized debt positions (Troves) against wstETH, rETH, or WETH to mint BOLD, a USD-pegged stablecoin. All 44 smart contracts are deployed as immutable (non-upgradeable), and the protocol has no admin keys, timelocks, or governance-controlled parameters -- ownership of the BoldToken and Governance contracts is renounced to the zero address. The protocol relies on three Chainlink price feeds (ETH/USD, stETH/USD, rETH/ETH) and the wstETH and rETH token contracts for exchange rate conversions, making oracle liveness and accuracy the primary external risk factor. Total collateral held across all branches is $99.62M."
+    "description": "Liquity V2 is an immutable borrowing protocol that lets users open collateralized debt positions (Troves) against wstETH, rETH, or WETH to mint BOLD, a USD-pegged stablecoin. All 44 smart contracts are deployed as immutable (non-upgradeable), and the protocol has no admin keys, timelocks, or governance-controlled parameters -- ownership of the BoldToken and Governance contracts is renounced to the zero address. The protocol relies on three Chainlink price feeds (ETH/USD, stETH/USD, rETH/ETH) and the wstETH and rETH token contracts for exchange rate conversions, making oracle liveness and accuracy the primary external risk factor. Total collateral held across all branches is $100.75M."
   },
   "totals": {
     "contractCount": 44,
@@ -16,9 +16,9 @@
     "scoredFunctionCount": 17,
     "adminCount": 7,
     "dependencyCount": 5,
-    "totalCapitalAtRisk": 99621137.11063571,
+    "totalCapitalAtRisk": 100748222.87813373,
     "totalTokenValueAtRisk": 0,
-    "totalTokenValue": 31378767.088103246
+    "totalTokenValue": 31376646.582052276
   },
   "admins": [
     {
@@ -33,7 +33,7 @@
           "contractName": "ActivePool",
           "functionName": "sendColl",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -42,7 +42,7 @@
           "contractName": "ActivePool",
           "functionName": "receiveColl",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -51,7 +51,7 @@
           "contractName": "ActivePool",
           "functionName": "accountForReceivedColl",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -60,7 +60,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterestAndAccountForTroveChange",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -71,7 +71,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -81,7 +81,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -92,7 +92,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterest",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -103,7 +103,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -113,7 +113,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -124,7 +124,7 @@
           "contractName": "ActivePool",
           "functionName": "sendColl",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -133,7 +133,7 @@
           "contractName": "ActivePool",
           "functionName": "receiveColl",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -142,7 +142,7 @@
           "contractName": "ActivePool",
           "functionName": "accountForReceivedColl",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -151,7 +151,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterestAndAccountForTroveChange",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -162,7 +162,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -172,7 +172,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 3319093.378778925,
+              "fundsUsd": 3316094.8367577367,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -183,7 +183,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterest",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -194,7 +194,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -204,7 +204,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 3319093.378778925,
+              "fundsUsd": 3316094.8367577367,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -215,7 +215,7 @@
           "contractName": "ActivePool",
           "functionName": "sendColl",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -224,7 +224,7 @@
           "contractName": "ActivePool",
           "functionName": "receiveColl",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -233,7 +233,7 @@
           "contractName": "ActivePool",
           "functionName": "accountForReceivedColl",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -242,7 +242,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterestAndAccountForTroveChange",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -253,7 +253,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -263,7 +263,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -274,7 +274,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterest",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -285,7 +285,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -295,7 +295,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -344,7 +344,7 @@
                 "getBoldDebt",
                 "accountForReceivedColl"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -356,7 +356,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -400,7 +400,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -456,7 +456,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -467,7 +467,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -517,7 +517,7 @@
                 "getBoldDebt",
                 "accountForReceivedColl"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -529,7 +529,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -573,7 +573,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -629,7 +629,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -640,7 +640,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -694,7 +694,7 @@
               "calledFunctions": [
                 "mintAggInterestAndAccountForTroveChange"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -706,7 +706,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -716,7 +716,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -753,7 +753,7 @@
                 "getCollBalance",
                 "getBoldDebt"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -788,7 +788,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -798,7 +798,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -865,7 +865,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -876,7 +876,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -927,7 +927,7 @@
                 "getCollBalance",
                 "getBoldDebt"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -972,7 +972,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -982,7 +982,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1049,7 +1049,7 @@
               "calledFunctions": [
                 "receiveColl"
               ],
-              "fundsUsd": 13414056.382566465,
+              "fundsUsd": 13601949.224523995,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1061,7 +1061,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1072,7 +1072,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -1126,7 +1126,7 @@
                 "getCollBalance",
                 "getBoldDebt"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1171,7 +1171,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -1181,7 +1181,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1248,7 +1248,7 @@
               "calledFunctions": [
                 "receiveColl"
               ],
-              "fundsUsd": 13414056.382566465,
+              "fundsUsd": 13601949.224523995,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1260,7 +1260,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1271,7 +1271,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -1305,7 +1305,7 @@
                 "getBoldDebt",
                 "mintAggInterest"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1372,7 +1372,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -1382,7 +1382,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1394,7 +1394,7 @@
                 "setShutdownFlag",
                 "mintAggInterest"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1405,7 +1405,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -1426,7 +1426,7 @@
               "calledFunctions": [
                 "mintAggInterest"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1449,7 +1449,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -1459,7 +1459,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1470,7 +1470,7 @@
               "calledFunctions": [
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -1524,7 +1524,7 @@
               "calledFunctions": [
                 "mintAggInterestAndAccountForTroveChange"
               ],
-              "fundsUsd": 13414056.382566465,
+              "fundsUsd": 13601949.224523995,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1536,7 +1536,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -1546,7 +1546,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 3319093.378778925,
+              "fundsUsd": 3316094.8367577367,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1583,7 +1583,7 @@
                 "getCollBalance",
                 "getBoldDebt"
               ],
-              "fundsUsd": 13414056.382566465,
+              "fundsUsd": 13601949.224523995,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1618,7 +1618,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -1628,7 +1628,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 3319093.378778925,
+              "fundsUsd": 3316094.8367577367,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1695,7 +1695,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1706,7 +1706,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -1740,7 +1740,7 @@
                 "getBoldDebt",
                 "mintAggInterest"
               ],
-              "fundsUsd": 13414056.382566465,
+              "fundsUsd": 13601949.224523995,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1807,7 +1807,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -1817,7 +1817,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 3319093.378778925,
+              "fundsUsd": 3316094.8367577367,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1829,7 +1829,7 @@
                 "setShutdownFlag",
                 "mintAggInterest"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1840,7 +1840,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -1891,7 +1891,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -1903,7 +1903,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -1959,7 +1959,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2022,7 +2022,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2034,7 +2034,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -2090,7 +2090,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2155,7 +2155,7 @@
               "calledFunctions": [
                 "mintAggInterestAndAccountForTroveChange"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2167,7 +2167,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -2177,7 +2177,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -2216,7 +2216,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2263,7 +2263,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -2273,7 +2273,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2348,7 +2348,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2405,7 +2405,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -2415,7 +2415,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2449,7 +2449,7 @@
               "calledFunctions": [
                 "receiveColl"
               ],
-              "fundsUsd": 13414056.382566465,
+              "fundsUsd": 13601949.224523995,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -2505,7 +2505,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2562,7 +2562,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -2572,7 +2572,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2606,7 +2606,7 @@
               "calledFunctions": [
                 "receiveColl"
               ],
-              "fundsUsd": 13414056.382566465,
+              "fundsUsd": 13601949.224523995,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -2641,7 +2641,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2687,7 +2687,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -2697,7 +2697,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -2719,7 +2719,7 @@
                 "mintAggInterest",
                 "setShutdownFlag"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -2742,7 +2742,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -2752,16 +2752,16 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
           ]
         }
       ],
-      "totalDirectCapital": 84279175.64515704,
+      "totalDirectCapital": 85425160.7876218,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 99621137.11063571,
+      "totalReachableCapital": 100748222.87813373,
       "totalReachableTokenValue": 0
     },
     {
@@ -2776,7 +2776,7 @@
           "contractName": "ActivePool",
           "functionName": "sendColl",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2785,7 +2785,7 @@
           "contractName": "ActivePool",
           "functionName": "sendCollToDefaultPool",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2806,7 +2806,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterestAndAccountForTroveChange",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2817,7 +2817,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -2827,7 +2827,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -2838,7 +2838,7 @@
           "contractName": "ActivePool",
           "functionName": "mintBatchManagementFeeAndAccountForChange",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2849,7 +2849,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             }
           ]
@@ -2859,7 +2859,7 @@
           "contractName": "ActivePool",
           "functionName": "setShutdownFlag",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2868,7 +2868,7 @@
           "contractName": "ActivePool",
           "functionName": "sendColl",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2877,7 +2877,7 @@
           "contractName": "ActivePool",
           "functionName": "sendCollToDefaultPool",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2898,7 +2898,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterestAndAccountForTroveChange",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2909,7 +2909,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -2919,7 +2919,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 3319093.378778925,
+              "fundsUsd": 3316094.8367577367,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -2930,7 +2930,7 @@
           "contractName": "ActivePool",
           "functionName": "mintBatchManagementFeeAndAccountForChange",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2941,7 +2941,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             }
           ]
@@ -2951,7 +2951,7 @@
           "contractName": "ActivePool",
           "functionName": "setShutdownFlag",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2960,7 +2960,7 @@
           "contractName": "ActivePool",
           "functionName": "sendColl",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2969,7 +2969,7 @@
           "contractName": "ActivePool",
           "functionName": "sendCollToDefaultPool",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2990,7 +2990,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterestAndAccountForTroveChange",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -3001,7 +3001,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -3011,7 +3011,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -3022,7 +3022,7 @@
           "contractName": "ActivePool",
           "functionName": "mintBatchManagementFeeAndAccountForChange",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -3033,7 +3033,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             }
           ]
@@ -3043,7 +3043,7 @@
           "contractName": "ActivePool",
           "functionName": "setShutdownFlag",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3062,7 +3062,7 @@
               "calledFunctions": [
                 "receiveColl"
               ],
-              "fundsUsd": 13414056.382566465,
+              "fundsUsd": 13601949.224523995,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -3101,7 +3101,7 @@
               "calledFunctions": [
                 "receiveColl"
               ],
-              "fundsUsd": 10543757.231527694,
+              "fundsUsd": 10701938.406965379,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -3140,7 +3140,7 @@
               "calledFunctions": [
                 "receiveColl"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -3165,9 +3165,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 84279175.64515704,
+      "totalDirectCapital": 85425160.7876218,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 99621137.11063571,
+      "totalReachableCapital": 100748222.87813373,
       "totalReachableTokenValue": 0
     },
     {
@@ -3182,7 +3182,7 @@
           "contractName": "ActivePool",
           "functionName": "sendColl",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3191,7 +3191,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterest",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -3202,7 +3202,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -3212,7 +3212,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 12022868.086699756,
+              "fundsUsd": 12006967.253754206,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -3223,7 +3223,7 @@
           "contractName": "ActivePool",
           "functionName": "sendColl",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3232,7 +3232,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterest",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -3243,7 +3243,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -3253,7 +3253,7 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 3319093.378778925,
+              "fundsUsd": 3316094.8367577367,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -3264,7 +3264,7 @@
           "contractName": "ActivePool",
           "functionName": "sendColl",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3273,7 +3273,7 @@
           "contractName": "ActivePool",
           "functionName": "mintAggInterest",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -3284,7 +3284,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -3294,16 +3294,16 @@
               "calledFunctions": [
                 "triggerBoldRewards"
               ],
-              "fundsUsd": 6792446.037995483,
+              "fundsUsd": 6781760.692047374,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
           ]
         }
       ],
-      "totalDirectCapital": 84279175.64515704,
+      "totalDirectCapital": 85425160.7876218,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 99621137.11063571,
+      "totalReachableCapital": 100748222.87813373,
       "totalReachableTokenValue": 0
     },
     {
@@ -3318,7 +3318,7 @@
           "contractName": "ActivePool",
           "functionName": "receiveColl",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3327,7 +3327,7 @@
           "contractName": "ActivePool",
           "functionName": "accountForReceivedColl",
           "impact": "critical",
-          "directFundsUsd": 60321362.03106289,
+          "directFundsUsd": 61121273.15613243,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3336,7 +3336,7 @@
           "contractName": "ActivePool",
           "functionName": "receiveColl",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3345,7 +3345,7 @@
           "contractName": "ActivePool",
           "functionName": "accountForReceivedColl",
           "impact": "critical",
-          "directFundsUsd": 13414056.382566465,
+          "directFundsUsd": 13601949.224523995,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3354,7 +3354,7 @@
           "contractName": "ActivePool",
           "functionName": "receiveColl",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3363,20 +3363,20 @@
           "contractName": "ActivePool",
           "functionName": "accountForReceivedColl",
           "impact": "critical",
-          "directFundsUsd": 10543757.231527694,
+          "directFundsUsd": 10701938.406965379,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 84279175.64515704,
+      "totalDirectCapital": 85425160.7876218,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 84279175.64515704,
+      "totalReachableCapital": 85425160.7876218,
       "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
       "name": "ActivePool (rETH branch)",
-      "description": "Immutable protocol contract holding rETH collateral deposited by borrowers. Authorized to send collateral to the DefaultPool and trigger BOLD reward distributions to the StabilityPool. Controls $13.41M in rETH collateral through internal protocol logic only.",
+      "description": "Immutable protocol contract holding rETH collateral deposited by borrowers. Authorized to send collateral to the DefaultPool and trigger BOLD reward distributions to the StabilityPool. Controls (N/A) in rETH collateral through internal protocol logic only.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -3412,7 +3412,7 @@
           "contractName": "StabilityPool",
           "functionName": "triggerBoldRewards",
           "impact": "critical",
-          "directFundsUsd": 3319093.378778925,
+          "directFundsUsd": 3316094.8367577367,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3421,14 +3421,14 @@
           "contractName": "StabilityPool",
           "functionName": "triggerBoldRewards",
           "impact": "critical",
-          "directFundsUsd": 12022868.086699756,
+          "directFundsUsd": 12006967.253754206,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 15341961.465478681,
+      "totalDirectCapital": 15323062.090511942,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 15341961.465478681,
+      "totalReachableCapital": 15323062.090511942,
       "totalReachableTokenValue": 0
     },
     {
@@ -3753,7 +3753,7 @@
     {
       "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
       "name": "TroveManager (rETH branch)",
-      "description": "Immutable protocol contract responsible for liquidations and redemptions in the rETH branch. Can remove troves from SortedTroves and manage batch operations. Controls access to $75.66M in reachable capital through internal protocol coordination.",
+      "description": "Immutable protocol contract responsible for liquidations and redemptions in the rETH branch. Can remove troves from SortedTroves and manage batch operations. Controls access to $76.44M in reachable capital through internal protocol coordination.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -3816,7 +3816,7 @@
           "contractName": "StabilityPool",
           "functionName": "offset",
           "impact": "critical",
-          "directFundsUsd": 3319093.378778925,
+          "directFundsUsd": 3316094.8367577367,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -3827,7 +3827,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -3837,7 +3837,7 @@
               "calledFunctions": [
                 "sendColl"
               ],
-              "fundsUsd": 13414056.382566465,
+              "fundsUsd": 13601949.224523995,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -3848,7 +3848,7 @@
           "contractName": "StabilityPool",
           "functionName": "offset",
           "impact": "critical",
-          "directFundsUsd": 12022868.086699756,
+          "directFundsUsd": 12006967.253754206,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -3859,7 +3859,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31378767.088103246,
+              "tokenValueUsd": 31376646.582052276,
               "fundsAtRisk": false
             },
             {
@@ -3869,16 +3869,16 @@
               "calledFunctions": [
                 "sendColl"
               ],
-              "fundsUsd": 60321362.03106289,
+              "fundsUsd": 61121273.15613243,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalDirectCapital": 15341961.465478681,
+      "totalDirectCapital": 15323062.090511942,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 75663323.49654157,
+      "totalReachableCapital": 76444335.24664438,
       "totalReachableTokenValue": 0
     }
   ],
@@ -4152,7 +4152,7 @@
     {
       "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
       "name": "Lido wstETH Token",
-      "description": "Wrapped staked ETH token contract used as collateral in the wstETH borrowing branch. The WSTETHPriceFeed contract calls wstETH's exchange rate function to convert between stETH and wstETH values. The ActivePool for this branch holds $60.32M in wstETH deposits.",
+      "description": "Wrapped staked ETH token contract used as collateral in the wstETH borrowing branch. The WSTETHPriceFeed contract calls wstETH's exchange rate function to convert between stETH and wstETH values. The ActivePool for this branch holds (N/A) in wstETH deposits.",
       "entity": "Lido",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -4292,7 +4292,7 @@
     {
       "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
       "name": "RocketPool rETH Token",
-      "description": "Rocket Pool's liquid staking token used as collateral in the rETH borrowing branch. The RETHPriceFeed contract queries the rETH exchange rate to derive USD pricing. The ActivePool for this branch holds $13.41M in rETH deposits.",
+      "description": "Rocket Pool's liquid staking token used as collateral in the rETH borrowing branch. The RETHPriceFeed contract queries the rETH exchange rate to derive USD pricing. The ActivePool for this branch holds (N/A) in rETH deposits.",
       "entity": "RocketPool",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -4361,9 +4361,9 @@
     {
       "address": "eth:0x531a8f99c70d6a56a7cee02d6b4281650d7919a0",
       "name": "ActivePool (wstETH)",
-      "description": "Holds $60.32M in wstETH collateral deposited by borrowers in the wstETH branch. This is the largest collateral pool in the protocol. Collateral is locked here while Troves remain open and is released during closures, liquidations, or redemptions.",
+      "description": "Holds (N/A) in wstETH collateral deposited by borrowers in the wstETH branch. This is the largest collateral pool in the protocol. Collateral is locked here while Troves remain open and is released during closures, liquidations, or redemptions.",
       "balances": {
-        "totalUsdValue": 60321362.03106289
+        "totalUsdValue": 61121273.15613243
       },
       "positions": null,
       "tokenInfo": null
@@ -4371,9 +4371,9 @@
     {
       "address": "eth:0x9074d72cc82dad1e13e454755aa8f144c479532f",
       "name": "ActivePool (rETH)",
-      "description": "Holds $13.41M in rETH collateral deposited by borrowers in the rETH branch. Functions identically to the wstETH ActivePool but for Rocket Pool ETH collateral.",
+      "description": "Holds (N/A) in rETH collateral deposited by borrowers in the rETH branch. Functions identically to the wstETH ActivePool but for Rocket Pool ETH collateral.",
       "balances": {
-        "totalUsdValue": 13414056.382566465
+        "totalUsdValue": 13601949.224523995
       },
       "positions": null,
       "tokenInfo": null
@@ -4381,9 +4381,9 @@
     {
       "address": "eth:0xeb5a8c825582965f1d84606e078620a84ab16afe",
       "name": "ActivePool (WETH)",
-      "description": "Holds $10.54M in WETH collateral deposited by borrowers in the WETH branch. The simplest collateral branch using native wrapped Ether without additional liquid staking token exchange rate dependencies.",
+      "description": "Holds (N/A) in WETH collateral deposited by borrowers in the WETH branch. The simplest collateral branch using native wrapped Ether without additional liquid staking token exchange rate dependencies.",
       "balances": {
-        "totalUsdValue": 10543757.231527694
+        "totalUsdValue": 10701938.406965379
       },
       "positions": null,
       "tokenInfo": null
@@ -4391,9 +4391,9 @@
     {
       "address": "eth:0x9502b7c397e9aa22fe9db7ef7daf21cd2aebe56b",
       "name": "StabilityPool (wstETH)",
-      "description": "Holds $12.02M in BOLD deposits and liquidated wstETH collateral. Depositors provide BOLD to absorb liquidations in the wstETH branch and receive discounted wstETH collateral plus BOLD interest rewards in return.",
+      "description": "Holds (N/A) in BOLD deposits and liquidated wstETH collateral. Depositors provide BOLD to absorb liquidations in the wstETH branch and receive discounted wstETH collateral plus BOLD interest rewards in return.",
       "balances": {
-        "totalUsdValue": 12022868.086699756
+        "totalUsdValue": 12006967.253754206
       },
       "positions": null,
       "tokenInfo": null
@@ -4401,9 +4401,9 @@
     {
       "address": "eth:0x5721cbbd64fc7ae3ef44a0a3f9a790a9264cf9bf",
       "name": "StabilityPool (WETH)",
-      "description": "Holds $6.79M in BOLD deposits and liquidated WETH collateral. Depositors provide BOLD to absorb liquidations in the WETH branch and receive discounted WETH collateral plus BOLD interest rewards in return.",
+      "description": "Holds (N/A) in BOLD deposits and liquidated WETH collateral. Depositors provide BOLD to absorb liquidations in the WETH branch and receive discounted WETH collateral plus BOLD interest rewards in return.",
       "balances": {
-        "totalUsdValue": 6792446.037995483
+        "totalUsdValue": 6781760.692047374
       },
       "positions": null,
       "tokenInfo": null
@@ -4411,9 +4411,9 @@
     {
       "address": "eth:0xd442e41019b7f5c4dd78f50dc03726c446148695",
       "name": "StabilityPool (rETH)",
-      "description": "Holds $3.32M in BOLD deposits and liquidated rETH collateral. Depositors provide BOLD to absorb liquidations in the rETH branch and receive discounted rETH collateral plus BOLD interest rewards in return.",
+      "description": "Holds (N/A) in BOLD deposits and liquidated rETH collateral. Depositors provide BOLD to absorb liquidations in the rETH branch and receive discounted rETH collateral plus BOLD interest rewards in return.",
       "balances": {
-        "totalUsdValue": 3319093.378778925
+        "totalUsdValue": 3316094.8367577367
       },
       "positions": null,
       "tokenInfo": null
@@ -4421,14 +4421,14 @@
     {
       "address": "eth:0x6440f144b7e50d6a8439336510312d2f54beb01d",
       "name": "BOLD Stablecoin",
-      "description": "The protocol's native stablecoin with a market capitalization of $31.38M. BOLD is minted when users open Troves and burned during repayments and Stability Pool liquidation offsets. Ownership is renounced to the zero address, making the token contract immutable with no admin minting capability.",
+      "description": "The protocol's native stablecoin with a market capitalization of (N/A). BOLD is minted when users open Troves and burned during repayments and Stability Pool liquidation offsets. Ownership is renounced to the zero address, making the token contract immutable with no admin minting capability.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "BOLD",
-        "price": 1.004497691980661,
+        "price": 1.0044298103004137,
         "totalSupply": "31238266985194192048139156",
-        "tokenValue": 31378767.088103246
+        "tokenValue": 31376646.582052276
       }
     }
   ],
