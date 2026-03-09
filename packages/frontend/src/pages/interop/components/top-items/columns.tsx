@@ -108,9 +108,11 @@ export const getTopItemsColumns = (
           ? undefined
           : row.avgDuration.type === 'single'
             ? row.avgDuration.duration
-            : (row.avgDuration.in.duration ??
-              row.avgDuration.out.duration ??
-              Number.POSITIVE_INFINITY),
+            : Math.min(
+                ...row.avgDuration.splits
+                  .filter((split) => split.duration !== null)
+                  .map((split) => split.duration ?? Number.POSITIVE_INFINITY),
+              ),
       {
         header: 'Last 24h avg.\ntransfer time',
         cell: (ctx) => {
