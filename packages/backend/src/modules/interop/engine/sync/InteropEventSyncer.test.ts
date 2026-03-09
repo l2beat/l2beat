@@ -46,7 +46,7 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe(InteropEventSyncer.prototype.run.name, () => {
-    it('runs only for timeLoop state and unpauses', async () => {
+    it('runs timeLoop state', async () => {
       const syncer = createSyncer()
       const { state: timeLoopState, run } = makeTimeLoopState()
       syncer.state = timeLoopState
@@ -54,20 +54,41 @@ describe(InteropEventSyncer.name, () => {
       await syncer.run()
 
       expect(run).toHaveBeenCalled()
-      expect(syncer.unpauseCalls).toEqual(1)
     })
 
-    it('does nothing for blockProcessor state', async () => {
+    it('checks status for blockProcessor state', async () => {
       const syncer = createSyncer()
-      const { state: blockProcessorState, processNewestBlock } =
-        makeBlockProcessorState()
+      const {
+        state: blockProcessorState,
+        checkStatus,
+        processNewestBlock,
+      } = makeBlockProcessorState()
       syncer.state = blockProcessorState
 
       await syncer.run()
 
+      expect(checkStatus).toHaveBeenCalled()
       expect(processNewestBlock).not.toHaveBeenCalled()
-      expect(syncer.pauseCalls).toEqual(0)
-      expect(syncer.unpauseCalls).toEqual(0)
+    })
+
+    it('does not clear errors when checking blockProcessor status', async () => {
+      const setLastError = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        db: mockObject<InteropEventSyncer['db']>({
+          interopPluginSyncState: mockObject<
+            InteropEventSyncer['db']['interopPluginSyncState']
+          >({
+            setLastError,
+            findByPluginNameAndChain: mockFn().resolvesTo(undefined),
+          }),
+        }),
+      })
+      const { state: blockProcessorState } = makeBlockProcessorState()
+      syncer.state = blockProcessorState
+
+      await syncer.run()
+
+      expect(setLastError).not.toHaveBeenCalled()
     })
   })
 
@@ -82,7 +103,6 @@ describe(InteropEventSyncer.name, () => {
 
       expect(syncer.latestBlockNumber).toEqual(7n)
       expect(processNewestBlock).toHaveBeenCalled()
-      expect(syncer.pauseCalls).toEqual(1)
     })
 
     it('updates latest block number but skips when in timeLoop state', async () => {
@@ -94,11 +114,9 @@ describe(InteropEventSyncer.name, () => {
 
       expect(syncer.latestBlockNumber).toEqual(9n)
       expect(run).not.toHaveBeenCalled()
-      expect(syncer.pauseCalls).toEqual(0)
-      expect(syncer.unpauseCalls).toEqual(0)
     })
 
-    it('unpauses when switching to timeLoop state', async () => {
+    it('updates state when switching to timeLoop state', async () => {
       const syncer = createSyncer()
       const { state: timeLoopState } = makeTimeLoopState()
       const { state: blockProcessorState } =
@@ -107,8 +125,74 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(5), [])
 
-      expect(syncer.unpauseCalls).toEqual(1)
       expect(syncer.state as SyncerState).toEqual(timeLoopState)
+    })
+  })
+
+  describe('state execution serialization', () => {
+    it('skips timer status checks while block processing is active', async () => {
+      const syncer = createSyncer()
+      const pending = deferred<SyncerState>()
+      const {
+        state: blockProcessorState,
+        checkStatus,
+        processNewestBlock,
+      } = makeBlockProcessorState()
+      processNewestBlock.executes(async () => await pending.promise)
+      syncer.state = blockProcessorState
+
+      const blockPromise = syncer.processNewestBlock(makeBlock(7), [])
+
+      await syncer.run()
+
+      expect(checkStatus).not.toHaveBeenCalled()
+      pending.resolve(blockProcessorState)
+      await blockPromise
+    })
+
+    it('waits for status checks before processing a block', async () => {
+      const syncer = createSyncer()
+      const pending = deferred<SyncerState>()
+      const {
+        state: blockProcessorState,
+        checkStatus,
+        processNewestBlock,
+      } = makeBlockProcessorState()
+      checkStatus.executes(async () => await pending.promise)
+      syncer.state = blockProcessorState
+
+      const runPromise = syncer.run()
+      const blockPromise = syncer.processNewestBlock(makeBlock(7), [])
+
+      expect(processNewestBlock).not.toHaveBeenCalled()
+
+      pending.resolve(blockProcessorState)
+      await Promise.all([runPromise, blockPromise])
+
+      expect(checkStatus).toHaveBeenCalled()
+      expect(processNewestBlock).toHaveBeenCalled()
+    })
+
+    it('re-reads state after waiting for a status check', async () => {
+      const syncer = createSyncer()
+      const pending = deferred<SyncerState>()
+      const {
+        state: blockProcessorState,
+        processNewestBlock,
+        checkStatus,
+      } = makeBlockProcessorState()
+      const { state: timeLoopState } = makeTimeLoopState()
+      checkStatus.executes(async () => await pending.promise)
+      syncer.state = blockProcessorState
+
+      const runPromise = syncer.run()
+      const blockPromise = syncer.processNewestBlock(makeBlock(7), [])
+
+      pending.resolve(timeLoopState)
+      await Promise.all([runPromise, blockPromise])
+
+      expect(syncer.state as SyncerState).toEqual(timeLoopState)
+      expect(processNewestBlock).not.toHaveBeenCalled()
     })
   })
 
@@ -547,8 +631,6 @@ describe(InteropEventSyncer.name, () => {
 })
 
 class TestSyncer extends InteropEventSyncer {
-  pauseCalls = 0
-  unpauseCalls = 0
   runInTransactionCalls = 0
 
   public triggerStatePublic<T extends SyncerState>(
@@ -556,15 +638,6 @@ class TestSyncer extends InteropEventSyncer {
     fn: (state: T) => Promise<SyncerState>,
   ) {
     return this.triggerState(state, fn)
-  }
-
-  override pause() {
-    this.pauseCalls++
-  }
-
-  override unpause() {
-    this.unpauseCalls++
-    return undefined
   }
 
   protected override async runInTransaction<T>(
@@ -631,17 +704,21 @@ function makeTimeLoopState(): {
 
 function makeBlockProcessorState(resultState?: SyncerState): {
   state: BlockProcessorState
+  checkStatus: ReturnType<typeof mockFn>
   processNewestBlock: ReturnType<typeof mockFn>
 } {
+  const checkStatus = mockFn<[], Promise<SyncerState>>()
   const processNewestBlock = mockFn<[], Promise<SyncerState>>()
   const state: BlockProcessorState = {
     type: 'blockProcessor',
     name: 'blockProcessor',
     status: 'idle',
+    checkStatus,
     processNewestBlock,
   }
+  checkStatus.resolvesTo(resultState ?? state)
   processNewestBlock.resolvesTo(resultState ?? state)
-  return { state, processNewestBlock }
+  return { state, checkStatus, processNewestBlock }
 }
 
 function makeBlock(number: number): Block {
@@ -822,6 +899,14 @@ function mockDb(): InteropEventSyncer['db'] {
       deleteForPlugin: mockFn().resolvesTo(undefined),
     }),
   })
+}
+
+function deferred<T>() {
+  let resolve!: (value: T) => void
+  const promise = new Promise<T>((res) => {
+    resolve = res
+  })
+  return { promise, resolve }
 }
 
 const ZERO_HASH = `0x${'00'.repeat(32)}`
