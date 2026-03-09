@@ -7,6 +7,11 @@ import express from 'express'
 import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
 import { rawEnv } from '~/env'
+import {
+  CLIENT_ASSETS_OUTPUT_DIR,
+  CLIENT_ASSETS_PATH,
+  CLIENT_TEMPLATE_PATH,
+} from '../clientBuild'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
@@ -36,14 +41,17 @@ type ServerOptions =
 export function createServer(baseLogger: Logger, options: ServerOptions) {
   const logger = baseLogger.for('HTTP Server')
   const { app, render } = options
+  const productionTemplate = options.dev
+    ? undefined
+    : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
 
   if (options.dev) {
     app.use('/', express.static('./static'))
   } else {
     app.use(compression())
     app.use(
-      '/static/assets',
-      sirv('./dist/client/assets', { maxAge: 31536000, immutable: true }),
+      CLIENT_ASSETS_PATH,
+      sirv(CLIENT_ASSETS_OUTPUT_DIR, { maxAge: 31536000, immutable: true }),
     )
     app.use(
       '/static',
@@ -54,7 +62,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
 
   const renderToHtml = async (data: RenderData, url: string) => {
     const rendered = await render(data, url)
-    const template = await getTemplate(options, url)
+    const template = await getTemplate(options, url, productionTemplate)
 
     return template
       .replace('<!--app-head-->', rendered.head)
@@ -134,13 +142,21 @@ function createDevPageRouterMiddleware(
   }
 }
 
-async function getTemplate(options: ServerOptions, url: string) {
+async function getTemplate(
+  options: ServerOptions,
+  url: string,
+  productionTemplate: string | undefined,
+) {
   if (options.dev) {
     const template = readFileSync('index.html', 'utf-8')
     return await options.vite.transformIndexHtml(url, template)
   }
 
-  return readFileSync('dist/client/index.html', 'utf-8')
+  if (!productionTemplate) {
+    throw new Error(`Missing production template at ${CLIENT_TEMPLATE_PATH}`)
+  }
+
+  return productionTemplate
 }
 
 function getClientEnvData() {
