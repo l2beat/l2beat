@@ -8,6 +8,11 @@ import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
 import { rawEnv } from '~/env'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
+import {
+  CLIENT_ASSETS_OUTPUT_DIR,
+  CLIENT_ASSETS_PATH,
+  CLIENT_TEMPLATE_PATH,
+} from '../paths'
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
@@ -26,23 +31,28 @@ type ServerOptions =
       app: express.Application
       vite: ViteDevServer
       render: ServerRenderFunction
-      stylesheetUrl: string
     }
   | {
       dev: false
       app: express.Application
       render: ServerRenderFunction
-      stylesheetUrl: string
     }
 
 export function createServer(baseLogger: Logger, options: ServerOptions) {
   const logger = baseLogger.for('HTTP Server')
-  const { app, render, stylesheetUrl } = options
+  const { app, render } = options
+  const productionTemplate = options.dev
+    ? undefined
+    : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
 
   if (options.dev) {
     app.use('/', express.static('./static'))
   } else {
     app.use(compression())
+    app.use(
+      CLIENT_ASSETS_PATH,
+      sirv(CLIENT_ASSETS_OUTPUT_DIR, { maxAge: 31536000, immutable: true }),
+    )
     app.use(
       '/static',
       sirv('./dist/static', { maxAge: 31536000, immutable: true }),
@@ -51,14 +61,10 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   }
 
   const renderToHtml = async (data: RenderData, url: string) => {
-    const rendered = await render(data, url, {
-      stylesheetUrl,
-    })
-    const template = options.dev
-      ? readFileSync('index.html', 'utf-8')
-      : getTemplate(manifest)
+    const rendered = await render(data, url)
+    const template = await getTemplate(options, url, productionTemplate)
 
-    let html = template
+    return template
       .replace('<!--app-head-->', rendered.head)
       .replace('<!--app-html-->', rendered.html)
       .replace(
@@ -69,12 +75,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
         '<!--env-data-->',
         `window.__ENV__=${JSON.stringify(getClientEnvData())}`,
       )
-
-    if (options.dev) {
-      html = await options.vite.transformIndexHtml(url, html)
-    }
-
-    return html
   }
 
   app.use(timeout('25s'))
@@ -142,12 +142,21 @@ function createDevPageRouterMiddleware(
   }
 }
 
-function getTemplate(manifest: Manifest) {
-  const template = readFileSync('index.html', 'utf-8')
-  return template.replace(
-    '/src/ssr/ClientEntry.tsx',
-    manifest.getUrl('/src/ssr/ClientEntry.tsx'),
-  )
+async function getTemplate(
+  options: ServerOptions,
+  url: string,
+  productionTemplate: string | undefined,
+) {
+  if (options.dev) {
+    const template = readFileSync('index.html', 'utf-8')
+    return await options.vite.transformIndexHtml(url, template)
+  }
+
+  if (!productionTemplate) {
+    throw new Error(`Missing production template at ${CLIENT_TEMPLATE_PATH}`)
+  }
+
+  return productionTemplate
 }
 
 function getClientEnvData() {
