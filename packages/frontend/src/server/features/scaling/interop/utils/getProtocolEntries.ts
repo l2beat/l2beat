@@ -38,7 +38,7 @@ export function getProtocolEntries(
   interopProjects: Project<'interopConfig'>[],
   type: KnownInteropBridgeType | undefined,
   snapshotTimestamp: UnixTime | undefined,
-  selection?: InteropSelectionInput,
+  selection: InteropSelectionInput,
 ): {
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
@@ -172,7 +172,7 @@ function getByBridgeTypeData(
   tokensDetailsMap: TokensDetailsMap,
   durationSplitMap: DurationSplitMap | undefined,
   logger: Logger,
-  selection: InteropSelectionInput | undefined,
+  selection: InteropSelectionInput,
 ): ByBridgeTypeData | undefined {
   const data = protocolsDataByBridgeTypeMap.get(projectId)
   if (!data) return undefined

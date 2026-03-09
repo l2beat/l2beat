@@ -66,6 +66,7 @@ export async function getInteropDashboardData(
       interopProjects,
       params.type,
       snapshotTimestamp,
+      params,
     ),
   }
 }
