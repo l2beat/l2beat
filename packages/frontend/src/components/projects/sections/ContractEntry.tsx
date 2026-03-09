@@ -203,7 +203,8 @@ function EscrowDetailsEntry({ escrow }: { escrow: TechnologyContractEscrow }) {
     return (
       <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
         <strong className="text-primary">
-          This contract can store any token.
+          All supported tokens in this escrow are included in the value
+          secured calculation.
         </strong>
       </p>
     )
@@ -212,7 +213,7 @@ function EscrowDetailsEntry({ escrow }: { escrow: TechnologyContractEscrow }) {
   return (
     <div className="mt-2 flex flex-wrap items-center text-paragraph-15 md:text-paragraph-16">
       <strong className="text-primary">
-        This contract stores the following tokens:
+        The following tokens are included in the value secured calculation:
       </strong>
       <div className="ml-1.5 flex flex-wrap items-center gap-1.5">
         {escrow.tokenIcons.map((token) => (
