@@ -51,7 +51,7 @@ export async function getInteropDashboardData(
   )
 
   return {
-    flows: getFlows(records, params, subgroupProjects),
+    flows: getFlows(records, params, subgroupProjects).slice(0, 2),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     topToken: getTopToken({
       records,
