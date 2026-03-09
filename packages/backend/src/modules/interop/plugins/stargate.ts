@@ -1,7 +1,6 @@
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import type { TokenMap } from '../engine/match/TokenMap'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
   parseOFTReceived,
@@ -456,7 +455,6 @@ export class StargatePlugin implements InteropPlugin {
   match(
     packetDelivered: InteropEvent,
     db: InteropEventDb,
-    _tokenMap: TokenMap,
   ): MatchResult | undefined {
     if (!PacketDelivered.checkType(packetDelivered)) return
 
