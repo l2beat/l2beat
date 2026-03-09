@@ -117,7 +117,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const reconciledV1 = reconcileNetworks(previousV1, latest.v1)
 
     if (reconciledV1.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: CCTPV1Config.key,
         removed: reconciledV1.removed,
       })
@@ -134,7 +134,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const reconciledV2 = reconcileNetworks(previousV2, latest.v2)
 
     if (reconciledV2.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: CCTPV2Config.key,
         removed: reconciledV2.removed,
       })

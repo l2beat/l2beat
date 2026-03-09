@@ -63,7 +63,7 @@ export class AcrossConfigPlugin
     const reconciled = reconcileNetworks(previous, latest)
 
     if (reconciled.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: AcrossConfig.key,
         removed: reconciled.removed,
       })
