@@ -128,6 +128,10 @@ export function SideNavLayout({
                 selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
                 '/interop/burn-and-mint',
             },
+            {
+              title: 'Framework Comparison',
+              href: '/interop/frameworks',
+            },
           ],
         },
         {

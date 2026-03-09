@@ -32,6 +32,7 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 interface Props {
   data: TransferSizeDataPoint[]
   isLoading: boolean
+  horizontal?: boolean
 }
 
 const chartMeta = {
@@ -62,11 +63,15 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
-export function TransferSizeChart({ data, isLoading }: Props) {
+export function TransferSizeChart({ data, isLoading, horizontal }: Props) {
   const isClient = useIsClient()
 
   if (isLoading || !isClient) {
     return <Skeleton className="mt-5 h-full min-h-[250px] w-full" />
+  }
+
+  if (horizontal) {
+    return <HorizontalTransferSizeChart data={data} />
   }
 
   return (
@@ -135,6 +140,118 @@ export function TransferSizeChart({ data, isLoading }: Props) {
         )}
       />
     </div>
+  )
+}
+
+function HorizontalTransferSizeChart({
+  data,
+}: {
+  data: TransferSizeDataPoint[]
+}) {
+  return (
+    <div className="relative size-full">
+      <SimpleChartContainer meta={chartMeta}>
+        <BarChart
+          responsive
+          layout="vertical"
+          width="100%"
+          data={data}
+          margin={{ top: 20 }}
+          maxBarSize={28}
+          barGap={4}
+          className="size-full min-h-[200px]! md:aspect-auto"
+        >
+          <ChartLegend
+            verticalAlign="top"
+            align="left"
+            content={<ChartLegendContent />}
+          />
+          {Object.keys(chartMeta).map((bucket) => {
+            const actualKey = bucket as keyof typeof chartMeta
+            return [
+              <Bar
+                key={actualKey}
+                dataKey={actualKey}
+                stackId="a"
+                fill={chartMeta[actualKey].color}
+                fillOpacity={0.8}
+                isAnimationActive={false}
+              />,
+            ]
+          })}
+          <CartesianGrid
+            horizontal={false}
+            strokeDasharray="5 5"
+            zIndex={DefaultZIndexes.line + 1}
+          />
+          <XAxis
+            type="number"
+            tickCount={5}
+            axisLine={false}
+            tickLine={false}
+            unit="%"
+            domain={[0, 100]}
+            allowDataOverflow={true}
+          />
+          <YAxis
+            type="category"
+            dataKey="name"
+            axisLine={false}
+            tickLine={false}
+            width={80}
+            interval={0}
+            tick={(props: Record<string, unknown>) => (
+              <YAxisNameTick
+                x={props.x as number}
+                y={props.y as number}
+                payload={props.payload as { value: string }}
+                data={data}
+              />
+            )}
+          />
+          <ChartTooltip
+            filterNull={false}
+            content={<CustomTooltip />}
+            allowEscapeViewBox={{ x: true }}
+          />
+        </BarChart>
+      </SimpleChartContainer>
+      <Logo
+        animated={false}
+        className={cn(
+          'pointer-events-none absolute right-3 bottom-10 h-8 w-20 opacity-50',
+        )}
+      />
+    </div>
+  )
+}
+
+function YAxisNameTick({
+  x,
+  y,
+  payload,
+  data,
+}: {
+  x: number
+  y: number
+  payload: { value: string }
+  data: TransferSizeDataPoint[]
+}) {
+  const item = data.find((item) => item.name === payload.value)
+  if (!item) return null
+  return (
+    <g transform={`translate(${x - 4},${y})`}>
+      <image x={-20} y={-10} width={20} height={20} href={item.iconUrl} />
+      <text
+        x={-26}
+        y={0}
+        dy={5}
+        textAnchor="end"
+        className="fill-primary text-label-value-14"
+      >
+        {item.name}
+      </text>
+    </g>
   )
 }
 

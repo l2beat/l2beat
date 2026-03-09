@@ -14,6 +14,7 @@ import { GlossaryPage } from './glossary/GlossaryPage'
 import { EthereumConnectPage } from './governance/ethereum-connect/EthereumConnectPage'
 import { GovernancePage } from './governance/GovernancePage'
 import { InteropBurnAndMintPage } from './interop/burn-and-mint/InteropBurnAndMintPage'
+import { InteropFrameworksPage } from './interop/frameworks/InteropFrameworksPage'
 import { InteropLockAndMintPage } from './interop/lock-and-mint/InteropLockAndMintPage'
 import { InteropNonMintingPage } from './interop/non-minting/InteropNonMintingPage'
 import { InteropSummaryPage } from './interop/summary/InteropSummaryPage'
@@ -67,6 +68,7 @@ const pages = {
   ScalingRiskStateValidationPage,
   // Interop
   InteropSummaryPage,
+  InteropFrameworksPage,
   InteropNonMintingPage,
   InteropLockAndMintPage,
   InteropBurnAndMintPage,

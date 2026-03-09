@@ -356,6 +356,99 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     }
   }
 
+  async getSevenDayAggregatedByFramework(frameworkIds: string[]) {
+    if (frameworkIds.length === 0) return []
+
+    const rows = await this.db
+      .with('daily_snapshots', (db) =>
+        db
+          .selectFrom('AggregatedInteropTransfer')
+          .select(
+            sql<Date>`DISTINCT ON (date_trunc('day', timestamp)) timestamp`.as(
+              'timestamp',
+            ),
+          )
+          .where(
+            'timestamp',
+            '>=',
+            new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          )
+          .orderBy(sql`date_trunc('day', timestamp)`)
+          .orderBy('timestamp', 'asc'),
+      )
+      .selectFrom('AggregatedInteropTransfer as a')
+      .innerJoin('daily_snapshots as ds', 'a.timestamp', 'ds.timestamp')
+      .select((eb) => [
+        'a.id',
+        'a.bridgeType',
+        eb.fn.sum('a.transferCount').as('transfer_count'),
+        sql<number>`ROUND(SUM(a."srcValueUsd")::numeric, 0)`.as('volume_usd'),
+        sql<number>`ROUND((SUM(a."totalDurationSum")::float / NULLIF(SUM(a."transferCount"), 0))::numeric)`.as(
+          'avg_duration_sec',
+        ),
+        eb.fn.sum('a.identifiedCount').as('identified_count'),
+      ])
+      .where('a.id', 'in', frameworkIds)
+      .groupBy(['a.id', 'a.bridgeType'])
+      .orderBy('a.id')
+      .orderBy('volume_usd', 'desc')
+      .execute()
+
+    return rows.map((r) => ({
+      id: r.id,
+      bridgeType: r.bridgeType as string,
+      transferCount: Number(r.transfer_count ?? 0),
+      volumeUsd: Number(r.volume_usd ?? 0),
+      avgDurationSec: Number(r.avg_duration_sec ?? 0),
+      identifiedCount: Number(r.identified_count ?? 0),
+    }))
+  }
+
+  async getSevenDaySizeDistribution(frameworkIds: string[]) {
+    if (frameworkIds.length === 0) return []
+
+    const rows = await this.db
+      .with('daily_snapshots', (db) =>
+        db
+          .selectFrom('AggregatedInteropTransfer')
+          .select(
+            sql<Date>`DISTINCT ON (date_trunc('day', timestamp)) timestamp`.as(
+              'timestamp',
+            ),
+          )
+          .where(
+            'timestamp',
+            '>=',
+            new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          )
+          .orderBy(sql`date_trunc('day', timestamp)`)
+          .orderBy('timestamp', 'asc'),
+      )
+      .selectFrom('AggregatedInteropTransfer as a')
+      .innerJoin('daily_snapshots as ds', 'a.timestamp', 'ds.timestamp')
+      .select((eb) => [
+        'a.id',
+        eb.fn.sum('a.countUnder100').as('under_100'),
+        eb.fn.sum('a.count100To1K').as('from_100_to_1k'),
+        eb.fn.sum('a.count1KTo10K').as('from_1k_to_10k'),
+        eb.fn.sum('a.count10KTo100K').as('from_10k_to_100k'),
+        eb.fn.sum('a.countOver100K').as('over_100k'),
+      ])
+      .where('a.id', 'in', frameworkIds)
+      .groupBy('a.id')
+      .orderBy('a.id')
+      .execute()
+
+    return rows.map((r) => ({
+      id: r.id,
+      under100: Number(r.under_100 ?? 0),
+      from100To1K: Number(r.from_100_to_1k ?? 0),
+      from1KTo10K: Number(r.from_1k_to_10k ?? 0),
+      from10KTo100K: Number(r.from_10k_to_100k ?? 0),
+      over100K: Number(r.over_100k ?? 0),
+    }))
+  }
+
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,

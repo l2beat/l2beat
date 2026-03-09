@@ -5,6 +5,7 @@ import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
+import { getInteropFrameworksData } from './frameworks/getInteropFrameworksData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
@@ -85,6 +86,12 @@ export function createInteropRouter(
       res.status(200).send(html)
     },
   )
+
+  router.get('/interop/frameworks', async (req, res) => {
+    const data = await getInteropFrameworksData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
 
   router.get(
     '/interop/summary/internal',
