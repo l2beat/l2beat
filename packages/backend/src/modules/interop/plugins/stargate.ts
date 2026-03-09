@@ -307,7 +307,7 @@ function getStargateBridgeType(srcWasBurned: boolean, dstWasMinted: boolean) {
     return 'burnAndMint' // full hydra
   }
 
-  return 'lockAndMint' 
+  return 'lockAndMint'
 }
 
 export class StargatePlugin implements InteropPlugin {
