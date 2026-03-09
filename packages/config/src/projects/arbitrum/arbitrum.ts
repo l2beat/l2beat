@@ -165,18 +165,16 @@ export const arbitrum: ScalingProject = orbitStackL2({
   interopConfig: {
     name: 'Arbitrum Canonical',
     durationSplit: {
-      lockAndMint: {
-        in: {
+      lockAndMint: [
+        {
           label: 'L1 -> L2',
-          from: 'ethereum',
-          to: 'arbitrum',
+          transferTypes: [],
         },
-        out: {
+        {
           label: 'L2 -> L1',
-          from: 'arbitrum',
-          to: 'ethereum',
+          transferTypes: [],
         },
-      },
+      ],
     },
     plugins: [
       {

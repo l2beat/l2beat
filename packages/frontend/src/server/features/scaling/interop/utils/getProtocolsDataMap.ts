@@ -291,24 +291,14 @@ function createInitialProtocolData(): ProtocolData {
 }
 
 export function getDirection(
-  record: { srcChain: string; dstChain: string },
+  _record: { srcChain: string; dstChain: string },
   durationSplit: InteropDurationSplit | undefined,
   transfersTimeMode: 'unknown' | undefined,
 ): 'in' | 'out' | null {
-  if (!durationSplit || transfersTimeMode === 'unknown') return null
+  if (!durationSplit?.length || transfersTimeMode === 'unknown') return null
 
-  if (
-    record.srcChain === durationSplit.in.from &&
-    record.dstChain === durationSplit.in.to
-  ) {
-    return 'in'
-  }
-  if (
-    record.srcChain === durationSplit.out.from &&
-    record.dstChain === durationSplit.out.to
-  ) {
-    return 'out'
-  }
+  // Duration splits are transfer-type based now. The actual split accumulation
+  // will be switched over once the frontend starts consuming transferTypeStats.
   return null
 }
 
