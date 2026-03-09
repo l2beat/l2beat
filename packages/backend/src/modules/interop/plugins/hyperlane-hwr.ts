@@ -9,44 +9,59 @@ import { Address32 } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
 import {
   Dispatch,
+  dispatchIdLog,
+  dispatchLog,
   HYPERLANE_NETWORKS,
   Process,
   parseDispatch,
   parseDispatchId,
   parseProcess,
   parseProcessId,
+  processIdLog,
+  processLog,
 } from './hyperlane'
 import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-export const parseSentTransferRemote = createEventParser(
-  'event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)',
-)
+export const sentTransferRemoteLog =
+  'event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)'
+export const parseSentTransferRemote = createEventParser(sentTransferRemoteLog)
 
-const parseReceivedTransferRemote = createEventParser(
-  'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
-)
+const receivedTransferRemoteLog =
+  'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)'
+const parseReceivedTransferRemote = createEventParser(receivedTransferRemoteLog)
 
-export const parseTransfer = createEventParser(
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
-)
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
+export const parseTransfer = createEventParser(transferLog)
 
-const parseDepositForBurnCCTPv1 = createEventParser(
-  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)',
-)
-const parseDepositForBurnCCTPv2 = createEventParser(
-  'event DepositForBurn(address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller, uint256 maxFee, uint32 indexed minFinalityThreshold, bytes hookData)',
-)
+const depositForBurnCCTPv1Log =
+  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)'
+const parseDepositForBurnCCTPv1 = createEventParser(depositForBurnCCTPv1Log)
+const depositForBurnCCTPv2Log =
+  'event DepositForBurn(address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller, uint256 maxFee, uint32 indexed minFinalityThreshold, bytes hookData)'
+const parseDepositForBurnCCTPv2 = createEventParser(depositForBurnCCTPv2Log)
+
+const hwrTxEventSignatures = [
+  dispatchLog,
+  dispatchIdLog,
+  processLog,
+  processIdLog,
+  transferLog,
+  depositForBurnCCTPv1Log,
+  depositForBurnCCTPv2Log,
+]
 
 const HwrTransferSent = createInteropEventType<{
   messageId: `0x${string}`
@@ -69,8 +84,27 @@ const HwrTransferReceived = createInteropEventType<{
   minted: boolean
 }>('hyperlane-hwr.TransferReceived')
 
-export class HyperlaneHwrPlugin implements InteropPlugin {
+export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   readonly name = 'hyperlane-hwr'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: sentTransferRemoteLog,
+        includeTxEvents: hwrTxEventSignatures,
+        includeTx: true,
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: receivedTransferRemoteLog,
+        includeTxEvents: hwrTxEventSignatures,
+        includeTx: true,
+        addresses: '*',
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const sentTransferRemote = parseSentTransferRemote(input.log, null)

@@ -63,7 +63,7 @@ export const risc0: BaseProject = {
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.RISC0,
-        ZK_CATALOG_TAGS.ISA.RISCV,
+        ZK_CATALOG_TAGS.ISA.RISCV32,
         // ZK_CATALOG_TAGS.Arithmetization.AIR,
         ZK_CATALOG_TAGS.Field.BabyBear,
       ],

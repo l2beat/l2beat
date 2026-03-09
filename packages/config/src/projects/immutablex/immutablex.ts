@@ -4,8 +4,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  DaCommitteeSecurityRisk,
-  DaEconomicSecurityRisk,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -15,56 +13,42 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { formatDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import {
-  getCommittee,
-  getSHARPVerifierUpgradeDelay,
-} from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { StarkexDAC } from '../../templates/starkex-template'
-import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('immutablex')
 
 const upgradeDelaySeconds = discovery.getContractValue<number>(
   'StarkExchange',
-  'StarkWareDiamond_upgradeDelay',
-)
-const includingSHARPUpgradeDelaySeconds = Math.min(
-  upgradeDelaySeconds,
-  getSHARPVerifierUpgradeDelay(),
-)
-const freezeGracePeriod = discovery.getContractValue<number>(
-  'StarkExchange',
-  'FREEZE_GRACE_PERIOD',
+  'StarkWareProxy_upgradeDelay',
 )
 
-const { committeePermission, minSigners } = getCommittee(discovery)
+// const { committeePermission, minSigners } = getCommittee(discovery)
 
-const requiredHonestMembersPercentage = (
-  ((committeePermission.accounts.length - minSigners + 1) /
-    committeePermission.accounts.length) *
-  100
-).toFixed(0)
+// const requiredHonestMembersPercentage = (
+//   ((committeePermission.accounts.length - minSigners + 1) /
+//     committeePermission.accounts.length) *
+//   100
+// ).toFixed(0)
 
-const immutablexProgramHashes = []
-immutablexProgramHashes.push(
-  discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
-)
-immutablexProgramHashes.push(...getSHARPBootloaderHashes())
+const immutablexProgramHashes: string[] = []
+// immutablexProgramHashes.push(
+//   discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
+// )
+// immutablexProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const immutablex: ScalingProject = {
   type: 'layer2',
   id: ProjectId('immutablex'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1772672831), // Mar-05-2026 01:07:11 AM UTC
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -134,24 +118,22 @@ export const immutablex: ScalingProject = {
   dataAvailability: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: committeePermission.accounts.length,
-      requiredSignatures: minSigners,
+      // hardcoded last values
+      membersCount: 7,
+      requiredSignatures: 5,
     }),
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: committeePermission.accounts.length,
-      requiredSignatures: minSigners,
+      // hardcoded last values
+      membersCount: 7,
+      requiredSignatures: 5,
     }),
-    exitWindow: RISK_VIEW.EXIT_WINDOW(
-      includingSHARPUpgradeDelaySeconds,
-      freezeGracePeriod,
-    ),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, 0),
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
-      secondLine: formatDelay(freezeGracePeriod),
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
     },
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
   },
@@ -166,15 +148,19 @@ export const immutablex: ScalingProject = {
   },
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
-        includingSHARPUpgradeDelaySeconds,
-      ),
-    ],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelaySeconds)],
     programHashes: immutablexProgramHashes.map((el) => PROGRAM_HASHES(el)),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
+    {
+      title: 'Immutable X migrated to Immutable zkEVM',
+      url: 'https://x.com/Immutable/status/2016389261575258446',
+      date: '2026-03-05T00:00:00Z',
+      description:
+        'Immutable X deployed contracts for migration to Immutable zkEVM. Operation of Immutable X halts.',
+      type: 'general',
+    },
     {
       title: 'Trading is live on Immutable X Marketplace',
       url: 'https://twitter.com/immutable/status/1380269810525872131?s=21&t=kyMdE6ORI9f76e8aqizlpg',
@@ -192,60 +178,55 @@ export const immutablex: ScalingProject = {
       type: 'general',
     },
   ],
-  customDa: StarkexDAC({
-    dac: {
-      knownMembers: [
-        {
-          external: false,
-          name: 'Immutable',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'StarkWare',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Deversifi',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Consensys',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Nethermind',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Iqlusion',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Infura',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Cephalopod',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-      ],
-    },
-    discovery,
-    risks: {
-      economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
-      committeeSecurity:
-        DaCommitteeSecurityRisk.NoHonestMinimumCommitteeSecurity(
-          `${minSigners}/${committeePermission.accounts.length}`,
-          requiredHonestMembersPercentage,
-        ),
-    },
-  }),
+  // customDa: StarkexDAC({
+  //   dac: {
+  //     knownMembers: [
+  //       {
+  //         external: false,
+  //         name: 'Immutable',
+  //         href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+  //       },
+  //       {
+  //         external: true,
+  //         name: 'StarkWare',
+  //         href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+  //       },
+  //       {
+  //         external: true,
+  //         name: 'Deversifi',
+  //         href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+  //       },
+  //       {
+  //         external: true,
+  //         name: 'Consensys',
+  //         href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+  //       },
+  //       {
+  //         external: true,
+  //         name: 'Nethermind',
+  //         href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+  //       },
+  //       {
+  //         external: true,
+  //         name: 'Iqlusion',
+  //         href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+  //       },
+  //       {
+  //         external: true,
+  //         name: 'Infura',
+  //         href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+  //       },
+  //       {
+  //         external: true,
+  //         name: 'Cephalopod',
+  //         href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+  //       },
+  //     ],
+  //   },
+  //   discovery,
+  //   risks: {
+  //     economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+  //   },
+  // }),
   discoveryInfo: getDiscoveryInfo([discovery]),
 }

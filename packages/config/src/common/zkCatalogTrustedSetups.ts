@@ -25,18 +25,32 @@ export const TRUSTED_SETUPS = {
     longDescription:
       'Transparent proving systems require no trusted setups and have no additional setup-related trust assumptions.',
   },
-  SP1Groth16: {
-    id: 'SP1Groth16',
-    name: 'SP1 Groth16 circuit-specific setup',
+  SP1TurboGroth16: {
+    id: 'SP1TurboGroth16',
+    name: 'SP1 Turbo Groth16 circuit-specific setup',
     risk: 'red',
     shortDescription:
-      "Succinct's internally run trusted setup for SP1 Groth16 final wrap circuits. Ceremony was run among 7 contributors to the SP1 project without public calls to participate.",
+      "Succinct's internally run trusted setup for SP1 Turbo (release v5.0.0) Groth16 final wrap circuits. Ceremony was run among 7 contributors to the SP1 project without public calls to participate.",
     longDescription: `
     Ceremony was run among 7 contributors to the SP1 project without public calls to participate. It generated setup parameters for Groth16 wrapper of SP1 zkVM.
 
-    - Ceremony info on Succinct docs page: [https://docs.succinct.xyz/docs/sp1/security/security-model#options](https://docs.succinct.xyz/docs/sp1/security/security-model#options).
+    - Ceremony info on Succinct docs page: [https://docs.succinct.xyz/docs/v5/sp1/security/security-model#options](https://docs.succinct.xyz/docs/v5/sp1/security/security-model#options).
     - Ceremony instructions and verification instructions: [https://github.com/succinctlabs/semaphore-gnark-11/tree/main](https://github.com/succinctlabs/semaphore-gnark-11/tree/main).
     - Link to transcript and other artifacts (Note: will immediately start downloading .tar.gz file): [https://sp1-circuits.s3.us-east-2.amazonaws.com/v4.0.0-rc.3-trusted-setup.tar.gz](https://sp1-circuits.s3.us-east-2.amazonaws.com/v4.0.0-rc.3-trusted-setup.tar.gz).
+    `,
+  },
+  SP1HypercubeGroth16: {
+    id: 'SP1HypercubeGroth16',
+    name: 'SP1 Hypercube Groth16 circuit-specific setup',
+    risk: 'red',
+    shortDescription:
+      'Trusted setup ceremony for SP1 Hypercube (release v6.0.0) Groth16 final wrap circuits. Ceremony was organized by Succinct and includes 12 participants from 7 different organizations, without public calls to participate.',
+    longDescription: `
+Ceremony was run among 12 participants affiliated with Across Protocol, OP Labs, Offchain Labs, Succinct Labs, Conduit, Ethrealize and 1 independent participant. It generated circuit-specific setup parameters for Groth16 wrapper of SP1 Hypercube zkVM.
+
+- Ceremony info on Succinct docs page: <https://docs.succinct.xyz/docs/sp1/security/security-model#options>.
+- Ceremony instructions and verification instructions: [https://github.com/succinctlabs/semaphore-gnark-11/tree/main](https://github.com/succinctlabs/semaphore-gnark-11/tree/main).
+- Link to transcript and other artifacts (Note: will immediately start downloading .tar.gz file): <https://sp1-circuits.s3-us-east-2.amazonaws.com/v6.0.0-trusted-setup.tar.gz>.
     `,
   },
   CeloPlumo: {

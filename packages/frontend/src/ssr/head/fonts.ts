@@ -1,6 +1,6 @@
 export interface FontInfo {
   name: string
-  src: { path: string; weight: string }[]
+  src: { path: string; weight: string; preload?: boolean }[]
 }
 
 export const fonts: FontInfo[] = [
@@ -22,18 +22,22 @@ export const fonts: FontInfo[] = [
       {
         path: '/fonts/roboto/roboto-v48-latin-400.woff2',
         weight: '400',
+        preload: true,
       },
       {
         path: '/fonts/roboto/roboto-v48-latin-500.woff2',
         weight: '500',
+        preload: true,
       },
       {
         path: '/fonts/roboto/roboto-v48-latin-600.woff2',
         weight: '600',
+        preload: true,
       },
       {
         path: '/fonts/roboto/roboto-v48-latin-700.woff2',
         weight: '700',
+        preload: true,
       },
       {
         path: '/fonts/roboto/roboto-v48-latin-900.woff2',

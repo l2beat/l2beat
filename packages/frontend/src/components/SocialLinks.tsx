@@ -1,6 +1,4 @@
 import { externalLinks } from '~/consts/externalLinks'
-
-import { DiscordIcon } from '~/icons/products/Discord'
 import { GithubIcon } from '~/icons/products/Github'
 import { LinkedInIcon } from '~/icons/products/Linkedin'
 import { MediumIcon } from '~/icons/products/Medium'
@@ -18,11 +16,6 @@ export function SocialLinks({ variant }: Props) {
       href: externalLinks.x,
       title: 'X',
       icon: XIcon,
-    },
-    {
-      href: externalLinks.discord,
-      title: 'Discord',
-      icon: DiscordIcon,
     },
     {
       href: externalLinks.github,

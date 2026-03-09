@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "timestamp": 1772616101,
+  "timestamp": 1772790459,
   "configHash": "0x2742757df23ff811599c5ada31eff0688b5667a0d23786423a7d98ff08aec4c8",
   "entries": [
     {
@@ -303,7 +303,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
-      "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"],
+      "ignoreInWatchMode": [
+        "pendingQueueIndex",
+        "nextCrossDomainMessageIndex",
+        "getFirstUnfinalizedMessageEnqueueTime"
+      ],
       "sinceTimestamp": 1729307207,
       "sinceBlock": 20996821,
       "values": {
@@ -333,13 +337,13 @@
         ],
         "$upgradeCount": 4,
         "ENFORCED_TX_GATEWAAY": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-        "getFirstUnfinalizedMessageEnqueueTime": 1772616095,
+        "getFirstUnfinalizedMessageEnqueueTime": 1772651159,
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25619,
+        "nextCrossDomainMessageIndex": 25620,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25615,
+        "pendingQueueIndex": 25619,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -812,8 +816,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 50206,
-        "lastFinalizedBatchIndex": 50123,
+        "lastCommittedBatchIndex": 50284,
+        "lastFinalizedBatchIndex": 50206,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -1297,7 +1301,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25619,
+        "messageNonce": 25620,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -2130,7 +2134,7 @@
     "morph/L1CrossDomainMessenger": "0xe6eb973e1da6d70fff6409b261940b9e4415bd0bb740942fef25bb8778aa4e37",
     "morph/L1ETHGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "morph/L1GatewayRouter": "0x75d8f72d7a567ebdd261b1cd49fbe60bb70eba6eba7f76e062da2077aef8766b",
-    "morph/L1MessageQueueWithGasPriceOracle": "0xe99184601a5e1a8fb617ad3a789966cec0a946118d4d9b56bc92b1d7d284b6c2",
+    "morph/L1MessageQueueWithGasPriceOracle": "0x8750025a157f931a42c275d73ea945ade8e900a0069627cde82c9ee24e88ab65",
     "morph/L1Staking": "0x3628b27131bceae20a3ba1e6858e52dc3afb537e7624b0d369b877bbca4d9830",
     "morph/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "morph/MorphRollup": "0xfdde9ff40ce57d566176c3fbac3dfaf3caca7b43ccf3a4634fc7dca51892f936",
@@ -2138,6 +2142,6 @@
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
     "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24583163 },
+  "usedBlockNumbers": { "ethereum": 24597618 },
   "permissionsConfigHash": "0xd00e2728ff620c31f5def07e4bb1f0f3d71185e7985bba16777fc090ecf03367"
 }

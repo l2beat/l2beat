@@ -6,31 +6,30 @@ import { keccak256 } from 'viem'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   defineNetworks,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-export const parseDispatch = createEventParser(
-  'event Dispatch(address indexed sender, uint32 indexed destination, bytes32 indexed recipient, bytes message)',
-)
+export const dispatchLog =
+  'event Dispatch(address indexed sender, uint32 indexed destination, bytes32 indexed recipient, bytes message)'
+export const parseDispatch = createEventParser(dispatchLog)
 
-export const parseProcess = createEventParser(
-  'event Process(uint32 indexed origin, bytes32 indexed sender, address indexed recipient)',
-)
+export const processLog =
+  'event Process(uint32 indexed origin, bytes32 indexed sender, address indexed recipient)'
+export const parseProcess = createEventParser(processLog)
 
-export const parseProcessId = createEventParser(
-  'event ProcessId(bytes32 indexed messageId)',
-)
+export const processIdLog = 'event ProcessId(bytes32 indexed messageId)'
+export const parseProcessId = createEventParser(processIdLog)
 
-export const parseDispatchId = createEventParser(
-  'event DispatchId(bytes32 indexed messageId)',
-)
+export const dispatchIdLog = 'event DispatchId(bytes32 indexed messageId)'
+export const parseDispatchId = createEventParser(dispatchIdLog)
 
 export const Dispatch = createInteropEventType<{
   messageId: `0x${string}`
@@ -43,6 +42,7 @@ export const Process = createInteropEventType<{
 }>('hyperlane.Process')
 
 // https://github.com/hyperlane-xyz/hyperlane-registry
+// chainconfeeg
 export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'ethereum', chainId: 1 },
   { chain: 'arbitrum', chainId: 42161 },
@@ -53,12 +53,26 @@ export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'zksync2', chainId: 324 },
   { chain: 'abstract', chainId: 2741 },
   { chain: 'katana', chainId: 747474 },
+  { chain: 'forknet', chainId: 8338 },
   { chain: 'bsc', chainId: 56 },
   { chain: 'celo', chainId: 42220 },
+  { chain: 'avalanche', chainId: 43114 },
+  { chain: 'linea', chainId: 59144 },
+  { chain: 'unichain', chainId: 130 },
+  { chain: 'ink', chainId: 57073 },
 ])
 
-export class HyperlanePlugIn implements InteropPlugin {
+export class HyperlanePlugIn implements InteropPluginResyncable {
   readonly name = 'hyperlane'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      { type: 'event', signature: dispatchLog, addresses: '*' },
+      { type: 'event', signature: processLog, addresses: '*' },
+      { type: 'event', signature: dispatchIdLog, addresses: '*' },
+      { type: 'event', signature: processIdLog, addresses: '*' },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const process = parseProcess(input.log, null)

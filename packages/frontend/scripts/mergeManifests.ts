@@ -1,14 +1,17 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
+import { assert } from '@l2beat/shared-pure'
 import type { Manifest as ViteManifest } from 'vite'
 
 interface Manifest {
   names: Record<string, string>
   images: Record<string, { src: string; width: number; height: number }>
+  imports: Record<string, string[]>
 }
 
 const manifestPath = path.join('dist', 'manifest.json')
 const viteManifestPath = path.join('dist', 'static', '.vite', 'manifest.json')
+const stylesheetSource = 'src/styles/globals.css'
 
 function getViteManifest() {
   const viteManifest = readFileSync(viteManifestPath, 'utf-8')
@@ -24,6 +27,12 @@ export function mergeManifests(
   manifest: Manifest,
   viteManifest: ViteManifest,
 ): Manifest {
+  const stylesheetEntry = viteManifest[stylesheetSource]
+  assert(
+    stylesheetEntry,
+    `Entry ${stylesheetSource} not found in vite manifest`,
+  )
+
   return {
     names: {
       ...manifest.names,
@@ -34,8 +43,25 @@ export function mergeManifests(
         },
         {} as Record<string, string>,
       ),
+      '/index.css': `/static/${stylesheetEntry.file}`,
     },
     images: manifest.images,
+    imports: {
+      ...manifest.imports,
+      ...Object.entries(viteManifest).reduce(
+        (acc, [key, value]) => {
+          if (value.imports && value.imports.length > 0) {
+            acc[`/${key}`] = value.imports.map((imp) => {
+              const entry = viteManifest[imp]
+              assert(entry, `Import ${imp} not found in vite manifest`)
+              return `/static/${entry.file}`
+            })
+          }
+          return acc
+        },
+        {} as Record<string, string[]>,
+      ),
+    },
   }
 }
 

@@ -10,5 +10,6 @@
       },
       "edit": ["format", "Undecimal18"]
     }
-  }
+  },
+  "ignoreInWatchMode": ["rewardsAvailable"]
 }

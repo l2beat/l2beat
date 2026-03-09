@@ -1,6 +1,6 @@
 {
   "name": "aztecnetwork-alphapayload",
-  "timestamp": 1772702345,
+  "timestamp": 1772790297,
   "configHash": "0x8af65a117b0a38508b8e9752b2d044a5477e9bad13f0f9728ca10efae8676410",
   "sharedModules": ["aztecnetwork"],
   "entries": [
@@ -182,7 +182,7 @@
           },
           {
             "target": "eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65",
-            "data": "0x1ec82cb8000000000000000000000000a27ec0006e59f245217ff08cd52a7e8b169e62d2000000000000000000000000f1acfb0c6add7104e700b8fad3ea025dbb041f340000000000000000000000000000000000000000000066831d13e84649900000"
+            "data": "0x1ec82cb8000000000000000000000000a27ec0006e59f245217ff08cd52a7e8b169e62d2000000000000000000000000f1acfb0c6add7104e700b8fad3ea025dbb041f3400000000000000000000000000000000000000000000659f6e5e74d408f00000"
           },
           {
             "target": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
@@ -211,6 +211,7 @@
       ],
       "proxyType": "immutable",
       "description": "Incentivizes 'flushing' of the sequencer join queue. Flushing is needed to add sequencers to the active set at a preset rate limit and incurs gas costs. Adding one sequencer is rewarded by 100 AZTEC as long as supply lasts.",
+      "ignoreInWatchMode": ["rewardsAvailable"],
       "sinceTimestamp": 1762995191,
       "sinceBlock": 23786839,
       "values": {
@@ -220,7 +221,7 @@
         "REWARD_ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "rewardPerInsertion": "100000000000000000000",
         "rewardPerInsertionFmt": "100",
-        "rewardsAvailable": "484100000000000000000000",
+        "rewardsAvailable": "479900000000000000000000",
         "ROLLUP": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12"
       },
       "implementationNames": {
@@ -383,7 +384,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 5,
+        "getCurrentRound": 14,
         "INSTANCE": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -476,9 +477,9 @@
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
         "getCheckpointReward": "500000000000000000000",
         "getCurrentBlobCommitmentsHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentEpoch": 20,
-        "getCurrentSampleSeed": "110230389156157808577914836566975029715413025198405944415010025157249418394438",
-        "getCurrentSlot": 669,
+        "getCurrentEpoch": 59,
+        "getCurrentSampleSeed": "1908693173873725939445094070174056598148160322491928596367728137445313221342",
+        "getCurrentSlot": 1890,
         "getEarliestRewardsClaimableTimestamp": 0,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 0,
@@ -593,6 +594,7 @@
       ],
       "proxyType": "immutable",
       "description": "Incentivizes 'flushing' of the sequencer join queue. Flushing is needed to add sequencers to the active set at a preset rate limit and incurs gas costs. Adding one sequencer is rewarded by 100 AZTEC as long as supply lasts.",
+      "ignoreInWatchMode": ["rewardsAvailable"],
       "sinceTimestamp": 1772654195,
       "sinceBlock": 24586325,
       "values": {
@@ -1064,7 +1066,7 @@
     "aztecnetwork/AlphaPayload": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/EscapeHatch": "0xd6ca76ba562f9d5104f0b7436e49280330a5e5bf67513aa1c2574d5f6ccefc25",
     "aztecnetwork/FeeJuicePortal": "0x6f147ef34633afd5e35a1aa0eb062b016a58f73357ef821d912ba19733398d9e",
-    "aztecnetwork/FlushRewarder": "0x479e962a19aa28260af8d6dd0ecaf6aa7dcdcc7d3a0d345a4977b22db5e2ed9e",
+    "aztecnetwork/FlushRewarder": "0x34fc643bb9197330609e77e4daef3aed2f280e286d79d60dded543a912043185",
     "aztecnetwork/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/Inbox": "0x244f5e1cb5a02f605bb45a135c9a4a4d0d33f0623c42258988c05ae3ff74e62a",
     "aztecnetwork/Outbox": "0x8d7e24fc272f6667c39e1f22ffa7564cd1314b29a1ccaa6f5ddbfd54a7af285b",
@@ -1074,6 +1076,6 @@
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7"
   },
-  "usedBlockNumbers": { "ethereum": 24590324 },
+  "usedBlockNumbers": { "ethereum": 24597604 },
   "permissionsConfigHash": "0x3a66993de183843e5a5df23e1ddbe7ec0529cbb804d8b43739a793e6e86ed401"
 }

@@ -2,6 +2,7 @@
 import './dotenv'
 
 import express from 'express'
+import { createDevRender } from './server/createDevRender'
 import { createServer } from './server/server'
 import { getLogger } from './server/utils/logger'
 
@@ -12,13 +13,11 @@ async function main() {
   const app = express()
   const { createDevMiddleware } = await import('./server/createDevMiddleware')
   const vite = await createDevMiddleware(app)
-  const mod = await vite.ssrLoadModule('/src/ssr/ServerEntry.tsx')
-  const render = mod.render
   createServer(logger, {
     dev: true,
     app,
     vite,
-    render,
+    render: createDevRender(vite),
     stylesheetUrl: '/src/styles/globals.css?direct',
   })
 }
