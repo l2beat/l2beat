@@ -7,11 +7,11 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('plumenetwork')
 
-export const plumenetwork: ScalingProject = orbitStackL2({
+export const plumenetwork: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1719224239), // 2024-06-24T10:17:19Z
   additionalBadges: [BADGES.RaaS.Conduit],
   discovery,

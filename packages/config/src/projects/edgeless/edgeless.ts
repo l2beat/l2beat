@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('edgeless')
 
-export const edgeless: ScalingProject = orbitStackL2({
+export const edgeless: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1712313901), // 2024-04-05T10:45:01Z
   archivedAt: UnixTime(1761698219),
   reasonsForBeingOther: [

@@ -5,11 +5,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('reya')
 
-export const reya: ScalingProject = orbitStackL2({
+export const reya: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1715019483), // 2024-05-06T18:18:03Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],

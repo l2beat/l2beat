@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('oevnetwork')
 
-export const oevnetwork: ScalingProject = orbitStackL2({
+export const oevnetwork: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
   archivedAt: UnixTime(1766143183),
   additionalPurposes: ['Oracles'],

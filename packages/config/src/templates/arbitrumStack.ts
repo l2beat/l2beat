@@ -119,7 +119,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   },
 ]
 
-interface OrbitStackConfigCommon {
+interface ArbitrumStackConfigCommon {
   addedAt: UnixTime
   capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
@@ -177,12 +177,12 @@ interface OrbitStackConfigCommon {
   celestiaProofSystemInactive?: boolean
 }
 
-export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
+export interface ArbitrumStackConfigL3 extends ArbitrumStackConfigCommon {
   stackedRiskView?: Partial<ProjectScalingRiskView>
   hostChain: string
 }
 
-export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
+export interface ArbitrumStackConfigL2 extends ArbitrumStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   upgradesAndGovernance?: string
   interopConfig?: InteropConfig
@@ -337,9 +337,9 @@ const wmrValidForBlobstream = [
 // TODO: Add blobstream delay when timelock is enabled
 const BLOBSTREAM_DELAY_SECONDS = 0
 
-function orbitStackCommon(
+function arbitrumStackCommon(
   type: ScalingProject['type'],
-  templateVars: OrbitStackConfigCommon,
+  templateVars: ArbitrumStackConfigCommon,
   explorerUrl: string | undefined,
   hostChainDA?: DAProvider,
 ): Omit<ScalingProject, 'type' | 'display'> & {
@@ -437,7 +437,7 @@ function orbitStackCommon(
   //   )
 
   const automaticBadges = [
-    BADGES.Stack.Orbit,
+    BADGES.Stack.ArbitrumStack,
     BADGES.VM.EVM,
     ...daProviders.map((p) => p.badge),
   ]
@@ -712,14 +712,16 @@ function orbitStackCommon(
   }
 }
 
-export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
+export function orbitStackL3(
+  templateVars: ArbitrumStackConfigL3,
+): ScalingProject {
   const layer2s = require('../processing/layer2s').layer2s as ScalingProject[]
   const hostChain = templateVars.hostChain
 
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
-  const common = orbitStackCommon(
+  const common = arbitrumStackCommon(
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
@@ -775,7 +777,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
   }
 }
 
-export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
+export function arbitrumStackL2(
+  templateVars: ArbitrumStackConfigL2,
+): ScalingProject {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
@@ -790,7 +794,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
 
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
-  const common = orbitStackCommon(
+  const common = arbitrumStackCommon(
     'layer2',
     templateVars,
     EXPLORER_URLS['ethereum'],
@@ -831,7 +835,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
 }
 
 function getDaTracking(
-  templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
+  templateVars: ArbitrumStackConfigL2 | ArbitrumStackConfigL3,
 ): ProjectDaTrackingConfig[] | undefined {
   // Return non-template tracking if it exists
   if (templateVars.nonTemplateDaTracking) {
@@ -889,7 +893,7 @@ function getDaTracking(
   return undefined
 }
 
-function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
+function postsToEthereum(templateVars: ArbitrumStackConfigCommon): boolean {
   const sequencerVersion = templateVars.discovery.getContractValue<string>(
     'SequencerInbox',
     'sequencerVersion',
@@ -897,7 +901,7 @@ function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
   return sequencerVersion === '0x00'
 }
 
-function postsToDAC(templateVars: OrbitStackConfigCommon): boolean {
+function postsToDAC(templateVars: ArbitrumStackConfigCommon): boolean {
   const sequencerVersion = templateVars.discovery.getContractValue<string>(
     'SequencerInbox',
     'sequencerVersion',
@@ -906,7 +910,7 @@ function postsToDAC(templateVars: OrbitStackConfigCommon): boolean {
 }
 
 function ifPostsToEthereum<T>(
-  templateVars: OrbitStackConfigCommon,
+  templateVars: ArbitrumStackConfigCommon,
   value: T,
 ): T | undefined {
   const sequencerVersion = templateVars.discovery.getContractValue<string>(
@@ -919,7 +923,7 @@ function ifPostsToEthereum<T>(
 }
 
 function getRiskView(
-  templateVars: OrbitStackConfigCommon,
+  templateVars: ArbitrumStackConfigCommon,
   daProviders: DAProvider[],
   isPostBoLD = false,
 ): ProjectScalingRiskView {
@@ -1053,7 +1057,7 @@ function getRiskView(
 
 function getDAProviders(
   type: ScalingProject['type'],
-  templateVars: OrbitStackConfigCommon,
+  templateVars: ArbitrumStackConfigCommon,
   explorerUrl: string | undefined,
   hostChainDA?: DAProvider,
 ): DAProvider[] {
@@ -1218,7 +1222,9 @@ function getDAProviders(
   return result
 }
 
-function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
+function getTrackedTxs(
+  templateVars: ArbitrumStackConfigCommon,
+): Layer2TxConfig[] {
   const sequencerInbox = templateVars.discovery.getContract('SequencerInbox')
   const outbox = templateVars.discovery.getContract('Outbox')
 
@@ -1361,7 +1367,7 @@ function extractDAs(daProviders: DAProvider[]): ProjectScalingDa[] {
 }
 
 function computedStage(
-  templateVars: OrbitStackConfigCommon,
+  templateVars: ArbitrumStackConfigCommon,
 ): ProjectScalingStage {
   const postsToL1 = postsToEthereum(templateVars)
 

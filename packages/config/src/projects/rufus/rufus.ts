@@ -10,7 +10,7 @@ export const rufus: ScalingProject = underReviewL2({
   badges: [
     BADGES.RaaS.Caldera,
     BADGES.DA.DAC,
-    BADGES.Stack.Orbit,
+    BADGES.Stack.ArbitrumStack,
     BADGES.VM.EVM,
   ],
   display: {

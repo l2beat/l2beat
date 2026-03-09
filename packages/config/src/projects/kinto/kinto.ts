@@ -9,7 +9,7 @@ import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('kinto')
 
@@ -47,7 +47,7 @@ const sanctionExpirySeconds = discovery.getContractValue<number>(
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
 
-export const kinto: ScalingProject = orbitStackL2({
+export const kinto: ScalingProject = arbitrumStackL2({
   capability: 'appchain',
   addedAt: UnixTime(1716336000), // 2024-05-22T00:00:00Z
   discovery,

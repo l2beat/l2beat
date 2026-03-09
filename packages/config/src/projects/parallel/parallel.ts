@@ -6,11 +6,11 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('parallel')
 
-export const parallel: ScalingProject = orbitStackL2({
+export const parallel: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1704289654), // 2024-01-03T13:47:34Z
   archivedAt: UnixTime(1733356800), // 2024-12-05T00:00:00.000Z,
   discovery,

@@ -12,7 +12,7 @@ export const pmon: ScalingProject = underReviewL3({
   badges: [
     BADGES.L3ParentChain.Arbitrum,
     BADGES.DA.Celestia,
-    BADGES.Stack.Orbit,
+    BADGES.Stack.ArbitrumStack,
     BADGES.VM.EVM,
     BADGES.RaaS.AltLayer,
   ],

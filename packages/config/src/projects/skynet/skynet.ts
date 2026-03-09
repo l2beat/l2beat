@@ -9,7 +9,7 @@ export const skynet: ScalingProject = underReviewL3({
   addedAt: UnixTime(1739372930), // 2025-02-12T15:08:50Z
   archivedAt: UnixTime(1766143183),
   hostChain: ProjectId('arbitrum'),
-  badges: [BADGES.Stack.Orbit, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
+  badges: [BADGES.Stack.ArbitrumStack, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {
     name: 'Skynet',
     slug: 'skynet',

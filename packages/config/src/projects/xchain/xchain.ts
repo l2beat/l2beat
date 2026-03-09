@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('xchain')
 
-export const xchain: ScalingProject = orbitStackL2({
+export const xchain: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1725235200), // 2024-09-02T00:00:00Z
   archivedAt: UnixTime(1771582624),
   additionalBadges: [BADGES.RaaS.Conduit],

@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('everclear')
 
-export const everclear: ScalingProject = orbitStackL2({
+export const everclear: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1726617600), // 2024-09-18T00:00:00Z
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Interoperability'],

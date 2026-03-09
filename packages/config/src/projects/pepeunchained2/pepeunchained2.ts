@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('pepeunchained2')
 
-export const pepeunchained2: ScalingProject = orbitStackL2({
+export const pepeunchained2: ScalingProject = arbitrumStackL2({
   capability: 'universal',
   addedAt: UnixTime(1752134764), //10-7-2025
   reasonsForBeingOther: [

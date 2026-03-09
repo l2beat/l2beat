@@ -3,11 +3,11 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('lasernet')
 
-export const lasernet: ScalingProject = orbitStackL2({
+export const lasernet: ScalingProject = arbitrumStackL2({
   capability: 'universal',
   addedAt: UnixTime(1745311928),
   reasonsForBeingOther: [

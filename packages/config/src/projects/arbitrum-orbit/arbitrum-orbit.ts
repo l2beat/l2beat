@@ -15,7 +15,7 @@ export const arbitrumOrbit: BaseProject = {
       bridges: ['https://bridge.arbitrum.io/'],
       documentation: ['https://docs.arbitrum.io/get-started/overview'],
     },
-    badges: [BADGES.Stack.Orbit],
+    badges: [BADGES.Stack.ArbitrumStack],
   },
   colors: {
     primary: {

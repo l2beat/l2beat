@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('alienx')
 
-export const alienx: ScalingProject = orbitStackL2({
+export const alienx: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1719187200), // 2024-06-24T00:00:00Z
   additionalPurposes: ['Gaming', 'AI', 'NFT'],
   additionalBadges: [BADGES.RaaS.Caldera],

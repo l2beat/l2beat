@@ -17,10 +17,10 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
+  arbitrumStackL2,
   getNitroGovernance,
-  orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
-} from '../../templates/orbitStack'
+} from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('arbitrum')
 
@@ -94,7 +94,7 @@ const selfSequencingDelay = maxTimeVariation.delaySeconds
 
 const chainId = 42161
 
-export const arbitrum: ScalingProject = orbitStackL2({
+export const arbitrum: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
     BADGES.VM.WasmVM,

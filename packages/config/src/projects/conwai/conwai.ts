@@ -10,7 +10,7 @@ export const conwai: ScalingProject = underReviewL3({
   archivedAt: UnixTime(1761826453), // 2025-10-30T12:14:13Z
   badges: [
     BADGES.L3ParentChain.Arbitrum,
-    BADGES.Stack.Orbit,
+    BADGES.Stack.ArbitrumStack,
     BADGES.VM.EVM,
     BADGES.RaaS.Caldera,
   ],

@@ -3,11 +3,11 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('galxegravity')
 
-export const galxegravity: ScalingProject = orbitStackL2({
+export const galxegravity: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],

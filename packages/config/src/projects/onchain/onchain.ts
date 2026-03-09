@@ -13,7 +13,7 @@ export const onchain: ScalingProject = underReviewL3({
     BADGES.RaaS.Conduit,
     BADGES.L3ParentChain.Base,
     BADGES.DA.DAC,
-    BADGES.Stack.Orbit,
+    BADGES.Stack.ArbitrumStack,
     BADGES.VM.EVM,
   ],
   display: {

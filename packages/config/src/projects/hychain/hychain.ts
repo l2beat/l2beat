@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('hychain')
 
-export const hychain: ScalingProject = orbitStackL2({
+export const hychain: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1709942400), // 2024-03-09T00:00:00Z
   archivedAt: UnixTime(1761826453), // 2025-10-30T12:14:13Z
   additionalBadges: [BADGES.RaaS.Caldera],

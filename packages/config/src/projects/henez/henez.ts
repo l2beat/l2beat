@@ -13,7 +13,7 @@ export const henez: ScalingProject = underReviewL3({
     BADGES.RaaS.Caldera,
     BADGES.L3ParentChain.Arbitrum,
     BADGES.DA.DAC,
-    BADGES.Stack.Orbit,
+    BADGES.Stack.ArbitrumStack,
     BADGES.VM.EVM,
   ],
   dataAvailability: undefined,

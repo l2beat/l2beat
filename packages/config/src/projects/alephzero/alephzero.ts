@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('alephzero')
 
-export const alephzero: ScalingProject = orbitStackL2({
+export const alephzero: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1723420800), // 2024-08-12T00:00:00Z
   archivedAt: UnixTime(1758278706),
   discovery,
