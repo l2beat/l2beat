@@ -300,14 +300,14 @@ const GUID_ZERO =
 
 function getStargateBridgeType(srcWasBurned: boolean, dstWasMinted: boolean) {
   if (!srcWasBurned && !dstWasMinted) {
-    return 'nonMinting' // full hydra
+    return 'nonMinting' // normal case
   }
 
   if (srcWasBurned && dstWasMinted) {
-    return 'burnAndMint'
+    return 'burnAndMint' // full hydra
   }
 
-  return 'lockAndMint' // normal case
+  return 'lockAndMint' 
 }
 
 export class StargatePlugin implements InteropPlugin {
