@@ -147,6 +147,7 @@ export class AvalanchePlugin implements InteropPluginResyncable {
         type: 'event',
         signature: unwrapLog,
         includeTxEvents: [transferLog],
+        includeTx: true,
         addresses: '*',
       },
     ]
