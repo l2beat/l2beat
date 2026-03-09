@@ -19,7 +19,7 @@ export const capx: ScalingProject = orbitStackL2({
     name: 'Capx',
     slug: 'capx',
     description:
-      'Capx is an Orbit stack Optimium focused on simplifying and reducing the cost of building AI agents.',
+      'Capx is an Arbitrum Stack Optimium focused on simplifying and reducing the cost of building AI agents.',
     links: {
       websites: ['https://capx.ai/'],
       bridges: ['https://bridge.capx.fi/'],

@@ -118,7 +118,7 @@ The proposed V2 program will function like a Governance Bootcamp, and the Onboar
 
 ### **[RFC] Arbitrum D.A.O. (Domain Allocator Offerings) Grant Program - Season 3**
 
-JoJo [submitted an RFC](https://forum.arbitrum.foundation/t/non-constitutional-rfc-arbitrum-d-a-o-domain-allocator-offerings-grant-program-season-3/27584) to propose a third season of the Domain Allocators Offerings Grant Program that would run for a full year, encompassing the existing four domains (Protocols, Education/Community and Events, Dev Tooling, and Gaming) while potentially adding a fifth domain (Orbit).
+JoJo [submitted an RFC](https://forum.arbitrum.foundation/t/non-constitutional-rfc-arbitrum-d-a-o-domain-allocator-offerings-grant-program-season-3/27584) to propose a third season of the Domain Allocators Offerings Grant Program that would run for a full year, encompassing the existing four domains (Protocols, Education/Community and Events, Dev Tooling, and Gaming) while potentially adding a fifth domain (Arbitrum Stack).
 
 The requested budget is $1,500,000 per domain, for a total of $6,000,000 excluding operational expenses which come out at approximately $622,200. If an ‘Orbit’ domain is added, the proposal will request an additional $750,000 to fund it with, along with another $27,800 for the compensation of the domain allocator.
 

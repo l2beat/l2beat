@@ -21,7 +21,7 @@ export const pepeunchained2: ScalingProject = orbitStackL2({
     name: 'Pepe Unchained',
     slug: 'pepe-unchained',
     description:
-      'Pepe Unchained is an Optimium utilizing the Orbit Stack. It focuses on memes and provides a home for meme creators, traders, and communities to thrive.',
+      'Pepe Unchained is an Optimium utilizing the Arbitrum Stack. It focuses on memes and provides a home for meme creators, traders, and communities to thrive.',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://pepeunchained.com/'],
@@ -59,7 +59,7 @@ export const pepeunchained2: ScalingProject = orbitStackL2({
     {
       title: 'Mainnet migration',
       description:
-        'Pepe Unchained migrates their optimium from op stack to orbit stack.',
+        'Pepe Unchained migrates their optimium from op stack to arbitrum stack.',
       url: 'https://x.com/pepe_unchained/status/1928485153132916993',
       date: '2025-05-30T00:00:00Z',
       type: 'general',

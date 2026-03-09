@@ -36,9 +36,9 @@ You can find us to discuss everything related to Optimism’s governance, from c
 [AIP: ArbOS Version 50 Dia](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0x33754da4006d0ef38666ec5d5e85fd0966a891a594ab9dc21f23beedea2d330b) - ends on September 4 at 17:44 UTC.
 
 
-### **Arbitrum Orbit Chains Revenue Dashboard by Lampros DAO**
+### **Arbitrum Stack Chains Revenue Dashboard by Lampros DAO**
 
-Lampros DAO [created a post](https://forum.arbitrum.foundation/t/arbitrum-orbit-chains-revenue-dashboard-by-lampros-dao/29894) that outlines a new Dune dashboard tracking ETH/USD revenues from Orbit chains that settle on Arbitrum One—complementing their earlier activity dashboard. It offers per-chain views (gas used for batch posts, daily batch activity, revenue by chain/contract/license) and aggregate comps (monthly totals, gas trends, efficiency), with initial coverage for Xai, EDU Chain, ApeChain, Deri, Rari, Proof of Play (Apex/Boss), Molten, WINR, Superposition, Sanko, Blessnet, and more as they’re indexed. Aimed at delegates, chain teams, and treasury analysts, it updates near-real-time and invites requests for additional chains/metrics.
+Lampros DAO [created a post](https://forum.arbitrum.foundation/t/arbitrum-orbit-chains-revenue-dashboard-by-lampros-dao/29894) that outlines a new Dune dashboard tracking ETH/USD revenues from Arbitrum Stack chains that settle on Arbitrum One—complementing their earlier activity dashboard. It offers per-chain views (gas used for batch posts, daily batch activity, revenue by chain/contract/license) and aggregate comps (monthly totals, gas trends, efficiency), with initial coverage for Xai, EDU Chain, ApeChain, Deri, Rari, Proof of Play (Apex/Boss), Molten, WINR, Superposition, Sanko, Blessnet, and more as they’re indexed. Aimed at delegates, chain teams, and treasury analysts, it updates near-real-time and invites requests for additional chains/metrics.
 
 **Discuss with L2BEAT**
 

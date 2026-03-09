@@ -20,7 +20,7 @@ export const everclear: ScalingProject = orbitStackL2({
     name: 'Everclear Hub',
     slug: 'everclear',
     description:
-      'Everclear Hub is an AnyTrust Optimium on Ethereum, built on the Orbit stack. It is used as a liquidity hub (clearing layer) to solve the liquidity fragmentation between modular scaling solutions.',
+      'Everclear Hub is an AnyTrust Optimium on Ethereum, built on the Arbitrum Stack. It is used as a liquidity hub (clearing layer) to solve the liquidity fragmentation between modular scaling solutions.',
     links: {
       websites: ['https://everclear.org'],
       bridges: ['https://bridge.gelato.network/bridge/everclear-mainnet'],

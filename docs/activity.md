@@ -39,7 +39,7 @@ The `chainConfig` also needs a `name` and `chainId`. If you're adding a Starknet
 
     - `type`: set it as `'block'`, unless it's a StarkEx project
     - `startBlock` (optional): if you want to start from specific block, set it here, in most cases it's block 1
-    - `assessCount` (optional): custom function to assess count of transactions in block - applies to projects that have some system transactions, like OP Stack or Orbit chains.
+    - `assessCount` (optional): custom function to assess count of transactions in block - applies to projects that have some system transactions, like OP Stack or Arbitrum Stack chains.
   
 
 4. (Only if you are using private RPC) - if you are using private RPC, fill in the `url`

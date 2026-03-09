@@ -11,7 +11,7 @@
       "news": [
         {
           "title": "Robinhood Goes Live on Arbitrum with Tokenized Stocks and Plans for a Dedicated Layer 2",
-          "content": "Robinhood [has launched](https://x.com/arbitrum/status/1939710498553176383) tokenized stocks on Arbitrum One, enabling EU customers to access over 200 U.S. stocks and ETFs directly within the Robinhood app. The rollout leverages Arbitrum’s infrastructure to provide a blockchain-based solution for issuing and managing tokenized assets. In addition to this launch, Robinhood plans to develop a dedicated Layer 2 blockchain using Arbitrum’s Orbit stack. This initiative aims to integrate crypto-native infrastructure into Robinhood’s platform, facilitating more efficient settlement and expanding access to digital financial services."
+          "content": "Robinhood [has launched](https://x.com/arbitrum/status/1939710498553176383) tokenized stocks on Arbitrum One, enabling EU customers to access over 200 U.S. stocks and ETFs directly within the Robinhood app. The rollout leverages Arbitrum’s infrastructure to provide a blockchain-based solution for issuing and managing tokenized assets. In addition to this launch, Robinhood plans to develop a dedicated Layer 2 blockchain using Arbitrum’s Arbitrum Stack. This initiative aims to integrate crypto-native infrastructure into Robinhood’s platform, facilitating more efficient settlement and expanding access to digital financial services."
         },
         {
           "title": "PayPal USD Deploys on Arbitrum to Unlock Layer 2 Efficiency",

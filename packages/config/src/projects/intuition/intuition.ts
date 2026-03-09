@@ -12,7 +12,7 @@ export const intuition: ScalingProject = upcomingL3({
     name: 'Intuition',
     slug: 'intuition',
     description:
-      'Intuition Testnet is the first public deployment of our network—an Ethereum L3 built with Arbitrum Orbit for cross-chain interop—moving us one step closer to the vision outlined in our roadmap of becoming the Data Liquidity Layer for the Internet.',
+      'Intuition Testnet is the first public deployment of our network—an Ethereum L3 built with Arbitrum Stack for cross-chain interop—moving us one step closer to the vision outlined in our roadmap of becoming the Data Liquidity Layer for the Internet.',
     purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {

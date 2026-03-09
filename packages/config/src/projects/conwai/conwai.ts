@@ -19,7 +19,7 @@ export const conwai: ScalingProject = underReviewL3({
     name: 'ConWai',
     slug: 'conwai',
     description:
-      'Conwai is an Optimium using the Orbit stack. It is focused on supporting AI-driven applications.',
+      'Conwai is an Optimium using the Arbitrum Stack. It is focused on supporting AI-driven applications.',
     purposes: ['AI'],
     stacks: ['Arbitrum'],
     links: {

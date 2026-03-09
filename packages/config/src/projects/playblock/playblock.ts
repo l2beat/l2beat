@@ -24,7 +24,7 @@ export const playblock: ScalingProject = orbitStackL3({
     name: 'PlayBlock',
     slug: 'playblock',
     description:
-      'PlayBlock is an Orbit stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
+      'PlayBlock is an Arbitrum Stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
     links: {
       websites: ['https://playnance.com/'],
       documentation: ['https://docs.playnance.com/'],

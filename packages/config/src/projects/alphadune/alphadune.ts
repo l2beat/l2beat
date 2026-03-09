@@ -12,7 +12,7 @@ export const alphadune: ScalingProject = upcomingL3({
     name: 'Alpha Dune Network',
     slug: 'alphadune',
     description:
-      'Alpha Dune Network is an upcoming Layer 3 on Arbitrum, built on the Orbit stack and using Celestia for DA. It aims to be a meta progression layer for games that unlocks value for gamers and developers alike.',
+      'Alpha Dune Network is an upcoming Layer 3 on Arbitrum, built on the Arbitrum Stack and using Celestia for DA. It aims to be a meta progression layer for games that unlocks value for gamers and developers alike.',
     purposes: ['Universal', 'Gaming'],
     stacks: ['Arbitrum'],
     links: {

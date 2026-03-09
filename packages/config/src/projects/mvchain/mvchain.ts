@@ -11,7 +11,7 @@ export const mvchain: ScalingProject = upcomingL3({
     name: 'MV Chain',
     slug: 'mvchain',
     description:
-      'MV Chain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is focused on creating a better gaming- and metaverse experience.',
+      'MV Chain is an upcoming Layer 3 on Arbitrum, built on the Arbitrum Stack. It is focused on creating a better gaming- and metaverse experience.',
     purposes: ['Gaming'],
     stacks: ['Arbitrum'],
     links: {

@@ -453,12 +453,12 @@ export const badges = [
   {
     id: 'Orbit',
     type: BadgeType.Stack,
-    name: 'Built on Arbitrum Orbit',
-    description: 'The project is built on Arbitrum Orbit',
+    name: 'Built on Arbitrum Stack',
+    description: 'The project is built on Arbitrum Stack',
     action: {
       type: 'scalingFilter',
       id: 'stack',
-      value: 'Arbitrum',
+      value: 'Arbitrum Stack',
     },
   },
   {
@@ -469,7 +469,7 @@ export const badges = [
     action: {
       type: 'scalingFilter',
       id: 'stack',
-      value: 'Arbitrum',
+      value: 'Arbitrum Stack',
     },
   },
   {

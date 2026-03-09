@@ -21,7 +21,7 @@ export const hychain: ScalingProject = orbitStackL2({
     name: 'HYCHAIN',
     slug: 'hychain',
     description:
-      'HYCHAIN is a gaming-focused Orbit stack Optimium that was created to eliminate onboarding and technical challenges for web3 games aiming for widespread adoption.',
+      'HYCHAIN is a gaming-focused Arbitrum Stack Optimium that was created to eliminate onboarding and technical challenges for web3 games aiming for widespread adoption.',
     links: {
       websites: ['https://hychain.com'],
       bridges: ['https://bridge.hychain.com'],

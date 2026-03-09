@@ -11,7 +11,7 @@ export const anomaly: ScalingProject = upcomingL3({
     name: 'Anomaly Network',
     slug: 'anomaly',
     description:
-      'Anomaly Chain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It focuses on reimagining a decentralized AI gaming world and cultivates an ecosystem where boundless development results in players experiencing games that are as intelligent as they are thrilling.',
+      'Anomaly Chain is an upcoming Layer 3 on Arbitrum, built on the Arbitrum Stack. It focuses on reimagining a decentralized AI gaming world and cultivates an ecosystem where boundless development results in players experiencing games that are as intelligent as they are thrilling.',
     purposes: ['Gaming', 'AI'],
     stacks: ['Arbitrum'],
     links: {

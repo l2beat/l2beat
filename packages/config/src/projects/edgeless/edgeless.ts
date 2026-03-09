@@ -20,7 +20,7 @@ export const edgeless: ScalingProject = orbitStackL2({
     slug: 'edgeless',
     description:
       // edgeless is posting limited data hashes to ethereum (0x88 sequencerVersion), planning to use EigenDA. Currently there is no DA.
-      'Edgeless is an Orbit stack general-purpose Optimium without application layer fees. It uses ewETH as the native token, which is a wrapped version of underlying investment strategies.',
+      'Edgeless is an Arbitrum Stack general-purpose Optimium without application layer fees. It uses ewETH as the native token, which is a wrapped version of underlying investment strategies.',
     links: {
       websites: ['https://edgeless.network/'],
       bridges: ['https://bridge.edgeless.network/'],

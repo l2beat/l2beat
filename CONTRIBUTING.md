@@ -83,7 +83,7 @@ If you want to add a new project you can do that by opening a PR. To do this you
    contains an annotated data format for the project definition.
 2. Add a directory to describe your project inside
    `packages/config/src/projects`. You can use the existing projects and
-   templates (e.g. OP stack and Orbit stack templates in
+   templates (e.g. OP stack and Arbitrum stack templates in
    `packages/config/src/templates/`) as reference.
 3. Add your project into `packages/config/src/processing/layer2s.ts` or
    `packages/config/src/processing/layer3s.ts`. The order of the projects

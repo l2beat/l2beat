@@ -74,7 +74,7 @@ Cupojoseph [created a post](https://forum.arbitrum.foundation/t/non-constitution
 
 ### **AIP: Remove Cost Cap on Arbitrum Nova**
 
-The Arbitrum Foundation [created a post](https://forum.arbitrum.foundation/t/constitutional-aip-remove-cost-cap-on-arbitrum-nova/29332) outlining an AIP to scrap Nova’s “Amortized Cost Cap,” allowing batch posters to reclaim 100% of their L1 data fees for the first time. Because EIP-4844 narrowed Nova’s cost edge to ~2×, and Orbit chains now handle the ultra-cheap use cases, the Foundation argues that the cap only forces it to subsidize deficits and distorts real usage. Flipping the cap parameter to 0 bips would shift those costs back to users, end the Foundation’s top-ups, and acknowledge Nova’s lower strategic priority. The change requires its own Snapshot (95% FOR, 100M quorum) before proceeding to a joint Tally execution with other maintenance items.
+The Arbitrum Foundation [created a post](https://forum.arbitrum.foundation/t/constitutional-aip-remove-cost-cap-on-arbitrum-nova/29332) outlining an AIP to scrap Nova’s “Amortized Cost Cap,” allowing batch posters to reclaim 100% of their L1 data fees for the first time. Because EIP-4844 narrowed Nova’s cost edge to ~2×, and Arbitrum Stack chains now handle the ultra-cheap use cases, the Foundation argues that the cap only forces it to subsidize deficits and distorts real usage. Flipping the cap parameter to 0 bips would shift those costs back to users, end the Foundation’s top-ups, and acknowledge Nova’s lower strategic priority. The change requires its own Snapshot (95% FOR, 100M quorum) before proceeding to a joint Tally execution with other maintenance items.
 
 ### **Entropy Advisors Monthly Update: May 2025**
 

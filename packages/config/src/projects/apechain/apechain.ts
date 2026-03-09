@@ -19,7 +19,7 @@ export const apechain: ScalingProject = orbitStackL3({
     name: 'ApeChain',
     slug: 'apechain',
     description:
-      'ApeChain is an Optimium built on the Arbitrum Orbit stack utilizing $APE as its native gas token. It fuels culture by being the chain for digital and IRL communities, builders, creators, collectors, gamers and beyond.',
+      'ApeChain is an Optimium built on the Arbitrum Stack utilizing $APE as its native gas token. It fuels culture by being the chain for digital and IRL communities, builders, creators, collectors, gamers and beyond.',
     links: {
       websites: ['https://apechain.com/'],
       bridges: ['https://apechain.com/portal'],

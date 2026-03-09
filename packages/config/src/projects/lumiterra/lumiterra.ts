@@ -12,7 +12,7 @@ export const lumiterra: ScalingProject = upcomingL3({
     name: 'Lumiterra',
     slug: 'lumiterra',
     description:
-      'Lumiterra is a multiplayer open-world survival crafting game built on L3 Arbitrum Orbit chain.',
+      'Lumiterra is a multiplayer open-world survival crafting game built with Arbitrum Stack, and as an L3 settling on Arbitrum One.',
     purposes: ['Gaming'],
     stacks: ['Arbitrum'],
     links: {

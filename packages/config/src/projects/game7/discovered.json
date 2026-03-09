@@ -339,7 +339,7 @@
         "0x5c7b5d634bb6392d1662b17adb247ff923a285a471ad50aca1f9d34d82ddf671"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Orbit stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally.",
+      "description": "Arbitrum Stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally.",
       "sinceTimestamp": 1730299307,
       "sinceBlock": 269256316,
       "values": {
@@ -584,7 +584,7 @@
         "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
       ],
       "proxyType": "Arbitrum proxy",
-      "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+      "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators).",
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",

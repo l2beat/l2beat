@@ -55,9 +55,9 @@ Lumen from Powerhouse [submitted an RFC](https://forum.arbitrum.foundation/t/non
 
 AJC [submitted an RFC](https://forum.arbitrum.foundation/t/idea-for-a-direct-user-rewards-program/22939) that seeks to discuss the initiation of a simple rewards program that directly airdrops ARB tokens to users. The goal is to create a long-lasting program that continuously rewards both new and old Arbitrum users. This proposal is currently still in ideation, so the exact details of how this will look are TBD.
 
-### **[RFC] L3 Orbit Ecosystem Fund**
+### **[RFC] L3 Arbitrum Stack Ecosystem Fund**
 
-Cryptobyrde [submitted an RFC](https://forum.arbitrum.foundation/t/l3-orbit-ecosystem-fund/22989) that proposes the launch of a 4.9M ARB L3 Orbit Ecosystem Fund for a 1-month trial period.
+Cryptobyrde [submitted an RFC](https://forum.arbitrum.foundation/t/l3-orbit-ecosystem-fund/22989) that proposes the launch of a 4.9M ARB L3 Arbitrum Stack Ecosystem Fund for a 1-month trial period.
 
 The Ecosystem Fund would use the funds to:
 

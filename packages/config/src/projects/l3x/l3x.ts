@@ -29,7 +29,7 @@ export const l3x: ScalingProject = orbitStackL3({
     name: 'L3X',
     slug: 'l3x',
     description:
-      'L3X is an Orbit stack Appchain on Arbitrum focusing on DeFi (leveraged trading and liquid restaking).',
+      'L3X is an Arbitrum Stack Appchain on Arbitrum focusing on DeFi (leveraged trading and liquid restaking).',
     links: {
       websites: ['https://l3x.com/'],
       bridges: [

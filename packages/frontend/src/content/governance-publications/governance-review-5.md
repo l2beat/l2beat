@@ -64,7 +64,7 @@ The post also includes a link to the [Telegram of the gaming working group](http
 
 ### **[RFC] Arbitrum Day 2024: Gas Free**
 
-[This RFC](https://forum.arbitrum.foundation/t/arbitrum-day-2024-gas-free/21164) proposes that the Arbitrum DAO should fund a gas-free day on Arbitrum and all Arbitrum Orbits on mainnet, with the goal of attracting users. While the overall cost is not concrete, a calculated guess from the proposer is in the range of ~$6M.
+[This RFC](https://forum.arbitrum.foundation/t/arbitrum-day-2024-gas-free/21164) proposes that the Arbitrum DAO should fund a gas-free day on Arbitrum and all Arbitrum Stack chains on mainnet, with the goal of attracting users. While the overall cost is not concrete, a calculated guess from the proposer is in the range of ~$6M.
 
 ### **[RFC] Front-end interface to force transaction inclusion during sequencer downtime**
 

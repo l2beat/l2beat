@@ -21,7 +21,7 @@ export const bitlazer: ScalingProject = underReviewL3({
     slug: 'bitlazer',
     stacks: ['Arbitrum'],
     description:
-      'Bitlazer is an Orbit stack L3 with AnyTrust DA powering BTC-focused DeFi applications and payments.',
+      'Bitlazer is an Arbitrum Stack L3 with AnyTrust DA powering BTC-focused DeFi applications and payments.',
     purposes: ['Bitcoin DApps'],
     links: {
       websites: ['https://bitlazer.io/'],

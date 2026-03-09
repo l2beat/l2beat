@@ -17,7 +17,7 @@ export const earnm: ScalingProject = orbitStackL3({
     name: 'Earnm',
     slug: 'earnm',
     description:
-      'Earnm is a mobile-first Orbit stack L3 on Arbitrum that converts everyday mobile activity into cryptocurrency rewards through its EarnOS technology.',
+      'Earnm is a mobile-first Arbitrum Stack L3 on Arbitrum that converts everyday mobile activity into cryptocurrency rewards through its EarnOS technology.',
     links: {
       websites: ['https://earnm.com/'],
       documentation: [],

@@ -1379,7 +1379,7 @@ Verify:
   '0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a': {
     title: 'ArbOS v40 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games.',
     verificationStatus: 'successful',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v40/arbos',
@@ -1396,7 +1396,7 @@ L2BEAT team was able to independently regenerate this program hash. However curr
   '0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499': {
     title: 'ArbOS v51 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games.',
     verificationStatus: 'successful',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v51/arbos',
@@ -1413,7 +1413,7 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
   '0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39': {
     title: 'ArbOS v32 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games.',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v32/arbos',
     verificationStatus: 'successful',
@@ -1438,7 +1438,7 @@ Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindge
     // only used by archived projects
     title: 'ArbOS v20 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games.',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v20/arbos',
     verificationStatus: 'notVerified',
@@ -1447,14 +1447,14 @@ Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindge
     // only used by archived projects
     title: 'ArbOS Kinto wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games.',
     verificationStatus: 'notVerified',
   },
   '0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69': {
     // only used by archived projects
     title: 'ArbOS v31 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games.',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v31/arbos',
     verificationStatus: 'notVerified',
@@ -1462,13 +1462,13 @@ Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindge
   '0x5b82aa008989d331bf6f3cf75b85a04c9ee809447c19b85fecaf3b7d749a6576': {
     title: 'ArbOS Apechain wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games.',
     verificationStatus: 'notVerified',
   },
   '0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a': {
     title: 'ArbOS v41 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games.',
     programUrl:
       'https://github.com/OffchainLabs/nitro/tree/consensus-v41/arbos',
     verificationStatus: 'successful',
@@ -1485,7 +1485,7 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287': {
     title: 'Celestia Nitro 3.2.1 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games, which uses Celestia DA.',
     programUrl: 'https://github.com/celestiaorg/nitro/tree/v3.2.1-rc.1/arbos',
     verificationStatus: 'successful',
     verificationSteps: `
@@ -1508,7 +1508,7 @@ Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindge
   '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3': {
     title: 'Celestia Nitro 3.3.2 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games, which uses Celestia DA.',
     programUrl:
       'https://github.com/celestiaorg/nitro/tree/celestia-v3.3.2/arbos',
     verificationStatus: 'successful',

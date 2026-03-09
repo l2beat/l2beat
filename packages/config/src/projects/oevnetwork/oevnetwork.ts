@@ -21,7 +21,7 @@ export const oevnetwork: ScalingProject = orbitStackL2({
     name: 'OEV Network',
     slug: 'oev',
     description:
-      'OEV is an Orbit stack Optimium by API3, designed to capture oracle extractable value and return it to the dApps and users that generated it.',
+      'OEV is an Arbitrum Stack Optimium by API3, designed to capture oracle extractable value and return it to the dApps and users that generated it.',
     links: {
       websites: ['https://api3.org/'],
       bridges: ['https://oev.bridge.api3.org/'],

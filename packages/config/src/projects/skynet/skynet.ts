@@ -14,7 +14,7 @@ export const skynet: ScalingProject = underReviewL3({
     name: 'Skynet',
     slug: 'skynet',
     description:
-      'Skynet is a scaling solution built on the Orbit stack that aims to act as infrastructure for AI Agents.',
+      'Skynet is a scaling solution built on the Arbitrum Stack that aims to act as infrastructure for AI Agents.',
     purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {

@@ -137,7 +137,7 @@ ArbOS updated to v51 "Dia" (wasmModuleRoot `0x8a7513bf...`), adding Ethereum Fus
 ```diff
 -   Status: DELETED
     contract RollupProxy (arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561)
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators).
 ```
 
 ```diff
@@ -275,7 +275,7 @@ ArbOS updated to v51 "Dia" (wasmModuleRoot `0x8a7513bf...`), adding Ethereum Fus
 ```diff
 +   Status: CREATED
     contract RollupProxy (arb1:0x75c070fe237817Bd027d402327069e9cd07De078)
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both called Validators).
 ```
 
 ```diff
@@ -439,7 +439,7 @@ discovery. Values are for block 1766406768 (main branch discovery), not current.
 
 ```diff
     contract RollupProxy (arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561) {
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators).
       usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
 +        "ArbOS v51 wasmModuleRoot"
     }
@@ -547,7 +547,7 @@ Generated with discovered.json: 0x2502db7e651b56a054870633e3dc8f71a8c1cf43
 
 add ethereal on ethereal disco incl the exchange contract. heavily EOA and layerzero-governed.
 
-this is the first orbit stack that uses the native OFT integration (uses a precompile to allow gas token mints on the L2).
+this is the first Arbitrum Stack that uses the native OFT integration (uses a precompile to allow gas token mints on the L2).
 
 for TVS we are counting the wrapped USDe for now (covers >90% since the exchange only supports this token). in the future we will need a custom tvs adapter for such chains.
 
@@ -626,7 +626,7 @@ Generated with discovered.json: 0x38981589e68554c66993a2e5ae1eaf5d9cad124c
 
 ## Description
 
-standard v41 (wasmroot) orbit stack with custom outbox that can sweep native tokens from the escrow.
+standard v41 (wasmroot) Arbitrum Stack with custom outbox that can sweep native tokens from the escrow.
 
 the wasmroot is not yet resolved because that would require global disco refresh.
 
@@ -701,7 +701,7 @@ the wasmroot is not yet resolved because that would require global disco refresh
 ```diff
 +   Status: CREATED
     contract RollupProxy (arb1:0x63a751E0564eAb8B225F1922888b4F08d7d33561)
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators).
 ```
 
 ```diff

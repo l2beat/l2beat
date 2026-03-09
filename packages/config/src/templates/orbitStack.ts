@@ -189,7 +189,7 @@ export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
-  // some orbit chains represent maxTimeVariation as an array, others an object
+  // some Arbitrum Stack chains represent maxTimeVariation as an array, others an object
   const result = discovery.getContractValue<
     | {
         delayBlocks: number
@@ -930,7 +930,7 @@ function getRiskView(
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
   const blockNumberOpcodeTimeSeconds =
-    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
+    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, arbitrum stack host chains do not do this)
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',

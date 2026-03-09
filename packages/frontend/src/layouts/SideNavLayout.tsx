@@ -189,7 +189,7 @@ export function SideNavLayout({
               slug: 'agglayer',
             },
             {
-              name: 'Arbitrum Orbit',
+              name: 'Arbitrum',
               slug: 'arbitrum-orbit',
             },
             {

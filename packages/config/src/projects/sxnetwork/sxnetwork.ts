@@ -18,7 +18,7 @@ export const sxnetwork: ScalingProject = orbitStackL2({
     name: 'SX Network',
     slug: 'sxnetwork',
     description:
-      "SX Network is an Orbit stack Optimistic Rollup, built to scale the SX team's existing sports betting platform.",
+      "SX Network is an Arbitrum Stack Optimistic Rollup, built to scale the SX team's existing sports betting platform.",
     links: {
       websites: ['https://sx.technology/'],
       bridges: [

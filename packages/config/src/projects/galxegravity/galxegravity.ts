@@ -20,7 +20,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
     name: 'Gravity',
     slug: 'galxegravity',
     description:
-      'Gravity is an Optimium built on the Orbit stack. It features onchain questing and has its own gas token - G. Other Galxe products are aiming to integrate with the L2 and a future migration to an L1 of the same name is planned.',
+      'Gravity is an Optimium built on the Arbitrum Stack. It features onchain questing and has its own gas token - G. Other Galxe products are aiming to integrate with the L2 and a future migration to an L1 of the same name is planned.',
     links: {
       websites: ['https://gravity.xyz'],
       bridges: ['https://bridge.gravity.xyz/'],

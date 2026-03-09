@@ -21,7 +21,7 @@ export const onchain: ScalingProject = underReviewL3({
     slug: 'onchain',
     stacks: ['Arbitrum'],
     description:
-      'Onchain Chain is an Orbit stack L3 with AnyTrust DA powering the ONCHAIN score system that evaluates addresses connected to a farcaster profile based on their onchain activity.',
+      'Onchain Chain is an Arbitrum Stack L3 with AnyTrust DA powering the ONCHAIN score system that evaluates addresses connected to a farcaster profile based on their onchain activity.',
     purposes: ['Gaming', 'Social'],
     links: {
       websites: ['https://onchaincoin.io/', 'https://portal.onchaincoin.io/'],

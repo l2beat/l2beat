@@ -88,7 +88,7 @@ The end goal of the fellowships is to experiment with creating a streamlined pro
 
 ### **Arbitrum Foundation Grant Program Phase Three**
 
-Arbitrum Foundation [announced the beginning of the third phase of its grant program](https://twitter.com/arbitrum/status/1780650675245879512) which will run until the end of June and is welcoming applications from builders building on Arbitrum One, Nova, Orbit, or Stylus.
+Arbitrum Foundation [announced the beginning of the third phase of its grant program](https://twitter.com/arbitrum/status/1780650675245879512) which will run until the end of June and is welcoming applications from builders building on Arbitrum One, Nova, Arbitrum Stack, or Stylus.
 
 ### **Launching an RFP Process for Innovative Grant Programs and Managers**
 

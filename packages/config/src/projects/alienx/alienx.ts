@@ -20,7 +20,7 @@ export const alienx: ScalingProject = orbitStackL2({
     name: 'AlienX',
     slug: 'alienx',
     description:
-      'AlienX is an Orbit stack Optimium on Ethereum focused on Gaming, AI and NFTs.',
+      'AlienX is an Arbitrum Stack Optimium on Ethereum focused on Gaming, AI and NFTs.',
     links: {
       websites: ['https://alienxchain.io/'],
       bridges: ['https://bridge.alienxchain.io/', 'https://alienswap.xyz/'],

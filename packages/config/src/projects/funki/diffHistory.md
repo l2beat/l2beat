@@ -2162,7 +2162,7 @@ Generated with discovered.json: 0x605763006a0f1065b16ec3e6bbbf961f5c924bba
 
 ## Description
 
-Standard Orbit chain.
+Standard Arbitrum Stack chain.
 
 ## Initial discovery
 

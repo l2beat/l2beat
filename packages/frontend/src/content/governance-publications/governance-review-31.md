@@ -77,7 +77,7 @@ There are two active onchain votes and one active temp-check, and a handful of o
 
 ### **[RFC] Arbitrum as the Home of Builders - embracing Chain Abstraction**
 
-Maxlomu [submitted an RFC](https://forum.arbitrum.foundation/t/rfc-arbitrum-as-the-home-of-builders-embracing-chain-abstraction/27250) that advocates the adoption of a comprehensive chain abstraction package that bootstraps and promotes this stack across all Orbit chains. It outlines a phased implementation, beginning with a working stream to define technical solutions, budget asks and then initiate an RFP process that leads to implementation.
+Maxlomu [submitted an RFC](https://forum.arbitrum.foundation/t/rfc-arbitrum-as-the-home-of-builders-embracing-chain-abstraction/27250) that advocates the adoption of a comprehensive chain abstraction package that bootstraps and promotes this stack across all Arbitrum Stack chains. It outlines a phased implementation, beginning with a working stream to define technical solutions, budget asks and then initiate an RFP process that leads to implementation.
 
 The post itself is more about the discussion around the importance of exploring chain abstraction and interoperability from a high-level perspective rather than a concrete and finalized proposal on how to do so. We encourage you to read the whole post and drop your own thoughts to drive the discussion forward.
 

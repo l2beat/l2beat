@@ -93,7 +93,7 @@
       ]
     },
     "eth:0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8": {
-      "description": "A Routing contract to the standard orbit stack bridge of the L2.",
+      "description": "A Routing contract to the standard Arbitrum Stack bridge of the L2.",
       "ignoreMethods": ["proxiableUUID"]
     }
   }

@@ -14,7 +14,7 @@ export const blockfit: ScalingProject = underReviewL3({
     name: 'BlockFit',
     slug: 'blockfit',
     description:
-      'BlockFit is a scaling solution built on the Orbit stack. It aims to revolutionize healthcare.',
+      'BlockFit is a scaling solution built on the Arbitrum Stack. It aims to revolutionize healthcare.',
     purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {

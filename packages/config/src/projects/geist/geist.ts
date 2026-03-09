@@ -24,7 +24,7 @@ export const geist: ScalingProject = orbitStackL3({
     name: 'Geist',
     slug: 'geist',
     description:
-      'Geist is an Orbit stack Optimium on Base. It is focused on creating a better gaming and metaverse experience around the AavegotchiDAO and the GHST governance token.',
+      'Geist is an Arbitrum Stack Optimium on Base. It is focused on creating a better gaming and metaverse experience around the AavegotchiDAO and the GHST governance token.',
     links: {
       websites: ['https://playongeist.com/', 'https://dapp.aavegotchi.com/'],
       bridges: [

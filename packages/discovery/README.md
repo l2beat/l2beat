@@ -837,7 +837,7 @@ Extracts an array of actors from the Arbitrum stack. Both validators and batch p
 
 ### Arbitrum DAC keyset handler
 
-Extracts the DAC keyset from projects based on Orbit stack.
+Extracts the DAC keyset from projects based on Arbitrum Stack.
 
 **Parameters:**
 
@@ -857,7 +857,7 @@ Extracts the DAC keyset from projects based on Orbit stack.
 
 ### Arbitrum Sequencer version handler
 
-Extract the sequencer version from data posted by projects based on Orbit stacks.
+Extract the sequencer version from data posted by projects based on Arbitrum Stacks.
 Using this value you can determine if the data is posted an L1 or to a DAC.
 
 **Parameters:**

@@ -21,7 +21,7 @@ export const pmon: ScalingProject = underReviewL3({
     name: 'PMON Chain',
     slug: 'pmon',
     description:
-      'Polychain Monsters built an Orbit stack Optimium, housing the Onchain Monsters game.',
+      'Polychain Monsters built an Arbitrum Stack Optimium, housing the Onchain Monsters game.',
     purposes: ['Gaming', 'NFT'],
     links: {
       websites: ['https://protocolmonsterlabs.com/'],

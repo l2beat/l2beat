@@ -22,7 +22,7 @@ export const inevm: ScalingProject = orbitStackL3({
     slug: 'inevm',
     headerWarning: 'Injective has deprecated inEVM.',
     description:
-      'inEVM is an Orbit stack Optimium built by the Injective team, complementing their Cosmos L1 and Wormhole integration with an EVM-based Layer 3 for Ethereum interoperability.',
+      'inEVM is an Arbitrum Stack Optimium built by the Injective team, complementing their Cosmos L1 and Wormhole integration with an EVM-based Layer 3 for Ethereum interoperability.',
     links: {
       websites: ['https://inevm.com/'],
       bridges: [

@@ -21,7 +21,7 @@ export const blessnet: ScalingProject = orbitStackL3({
     name: 'Blessnet',
     slug: 'blessnet',
     description:
-      'Blessnet is an Orbit stack Optimium aiming to create a more interconnected and efficient Ethereum ecosystem, where users can interact safely across multiple chains while keeping their valuable assets secure on established networks.',
+      'Blessnet is an Arbitrum Stack Optimium aiming to create a more interconnected and efficient Ethereum ecosystem, where users can interact safely across multiple chains while keeping their valuable assets secure on established networks.',
     links: {
       websites: ['https://bless.net/'],
       bridges: [
