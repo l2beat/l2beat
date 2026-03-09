@@ -96,6 +96,8 @@ type TransferData = {
   value: bigint
 }
 
+type TransferQuery = Partial<TransferData>
+
 type TokenRelation = 'exact' | 'unknown' | 'mismatch'
 
 type WithdrawalCandidate = {
@@ -103,7 +105,14 @@ type WithdrawalCandidate = {
   feeGapBps: bigint
   timeDelta: number
   tokenRelation: TokenRelation
+  tokenRank: number
 }
+
+const TOKEN_RELATION_RANK = {
+  exact: 0,
+  unknown: 1,
+  mismatch: 2,
+} satisfies Record<TokenRelation, number>
 
 // Drop burns that are too old to plausibly belong to this withdrawal.
 const MAX_WITHDRAWAL_DELAY = 1 * UnixTime.DAY
@@ -179,22 +188,28 @@ export class AvalanchePlugin implements InteropPluginResyncable {
     if (mint) {
       const tokenAddress = Address32.from(input.log.address)
       const recipient = EthereumAddress(mint.to)
-      const hasRecipientTransfer = findMintedTransfer(
+      const hasRecipientTransfer = findTransferAround(
         input.txLogs,
         input.log.logIndex ?? -1,
-        tokenAddress,
-        recipient,
-        mint.amount,
+        {
+          tokenAddress,
+          from: EthereumAddress.ZERO,
+          to: recipient,
+          value: mint.amount,
+        },
       )
       if (!hasRecipientTransfer) return
 
       if (mint.feeAmount > 0n) {
-        const feeTransfer = findMintedTransfer(
+        const feeTransfer = findTransferAround(
           input.txLogs,
           input.log.logIndex ?? -1,
-          tokenAddress,
-          EthereumAddress(mint.feeAddress),
-          mint.feeAmount,
+          {
+            tokenAddress,
+            from: EthereumAddress.ZERO,
+            to: EthereumAddress(mint.feeAddress),
+            value: mint.feeAmount,
+          },
         )
         if (!feeTransfer) return
       }
@@ -214,11 +229,14 @@ export class AvalanchePlugin implements InteropPluginResyncable {
     const unwrap = parseUnwrap(input.log, null)
     if (unwrap) {
       const tokenAddress = Address32.from(input.log.address)
-      const burnTransfer = findBurnTransfer(
+      const burnTransfer = findTransferAround(
         input.txLogs,
         input.log.logIndex ?? -1,
-        tokenAddress,
-        unwrap.amount,
+        {
+          tokenAddress,
+          to: EthereumAddress.ZERO,
+          value: unwrap.amount,
+        },
       )
 
       const sender = burnTransfer?.from ?? input.tx.from
@@ -307,36 +325,24 @@ function parseTransferData(log: LogToCapture['txLogs'][number]) {
   } satisfies TransferData
 }
 
-function findMintedTransfer(
+function findTransferAround(
   logs: LogToCapture['txLogs'],
   startLogIndex: number,
-  tokenAddress: Address32,
-  recipient: EthereumAddress,
-  amount: bigint,
+  query: TransferQuery,
 ) {
   return findParsedAround(logs, startLogIndex, (log) => {
     const transfer = parseTransferData(log)
     if (!transfer) return
-    if (transfer.tokenAddress !== tokenAddress) return
-    if (transfer.from !== EthereumAddress.ZERO) return
-    if (transfer.to !== recipient) return
-    if (transfer.value !== amount) return
-    return transfer
-  })
-}
 
-function findBurnTransfer(
-  logs: LogToCapture['txLogs'],
-  startLogIndex: number,
-  tokenAddress: Address32,
-  amount: bigint,
-) {
-  return findParsedAround(logs, startLogIndex, (log) => {
-    const transfer = parseTransferData(log)
-    if (!transfer) return
-    if (transfer.tokenAddress !== tokenAddress) return
-    if (transfer.to !== EthereumAddress.ZERO) return
-    if (transfer.value !== amount) return
+    if (
+      query.tokenAddress !== undefined &&
+      transfer.tokenAddress !== query.tokenAddress
+    ) {
+      return
+    }
+    if (query.from !== undefined && transfer.from !== query.from) return
+    if (query.to !== undefined && transfer.to !== query.to) return
+    if (query.value !== undefined && transfer.value !== query.value) return
     return transfer
   })
 }
@@ -346,56 +352,92 @@ function findBestBurnCandidate(
   db: InteropEventDb,
   tokenMap: TokenMap,
 ) {
-  const rawCandidates = db.findAll(AvalancheBurn, {
+  const candidates = collectWithdrawalCandidates(withdrawal, db, tokenMap)
+  const narrowedCandidates = narrowByTimeWindow(
+    preferExactTokenMatches(candidates),
+  )
+  return pickUnambiguousBestCandidate(narrowedCandidates)?.burn
+}
+
+function collectWithdrawalCandidates(
+  withdrawal: InteropEvent<AvalancheWithdrawalArgs>,
+  db: InteropEventDb,
+  tokenMap: TokenMap,
+) {
+  const candidates: WithdrawalCandidate[] = []
+
+  for (const burn of db.findAll(AvalancheBurn, {
     sender: withdrawal.args.recipient,
-  })
+  })) {
+    if (!isPlausibleWithdrawalBurn(burn, withdrawal)) continue
 
-  let candidates = rawCandidates
-    .filter((burn) => burn.ctx.timestamp <= withdrawal.ctx.timestamp)
-    .filter(
-      (burn) =>
-        withdrawal.ctx.timestamp - burn.ctx.timestamp <= MAX_WITHDRAWAL_DELAY,
-    )
-    .filter((burn) => burn.args.srcAmount >= withdrawal.args.dstAmount)
-    .map((burn) => createWithdrawalCandidate(burn, withdrawal, tokenMap))
-    .filter((candidate) => candidate.tokenRelation !== 'mismatch')
+    const candidate = createWithdrawalCandidate(burn, withdrawal, tokenMap)
+    if (candidate.tokenRelation === 'mismatch') continue
 
-  if (candidates.length === 0) return
+    candidates.push(candidate)
+  }
 
+  return candidates
+}
+
+function isPlausibleWithdrawalBurn(
+  burn: InteropEvent<AvalancheBurnArgs>,
+  withdrawal: InteropEvent<AvalancheWithdrawalArgs>,
+) {
+  if (burn.ctx.timestamp > withdrawal.ctx.timestamp) return false
+
+  const timeDelta = withdrawal.ctx.timestamp - burn.ctx.timestamp
+  if (timeDelta > MAX_WITHDRAWAL_DELAY) return false
+
+  return burn.args.srcAmount >= withdrawal.args.dstAmount
+}
+
+function preferExactTokenMatches(candidates: WithdrawalCandidate[]) {
   const exactMatches = candidates.filter(
     (candidate) => candidate.tokenRelation === 'exact',
   )
-  if (exactMatches.length > 0) {
-    candidates = exactMatches
+  return exactMatches.length > 0 ? exactMatches : candidates
+}
+
+function narrowByTimeWindow(candidates: WithdrawalCandidate[]) {
+  if (hasCandidatesWithinWindow(candidates, STRONG_TIME_WINDOW)) {
+    return keepCandidatesWithinWindow(candidates, STRONG_TIME_WINDOW)
   }
 
-  if (
-    candidates.some((candidate) => candidate.timeDelta <= STRONG_TIME_WINDOW)
-  ) {
-    candidates = candidates.filter(
-      (candidate) => candidate.timeDelta <= STRONG_TIME_WINDOW,
-    )
-  } else if (
-    candidates.some((candidate) => candidate.timeDelta <= SECONDARY_TIME_WINDOW)
-  ) {
-    candidates = candidates.filter(
-      (candidate) => candidate.timeDelta <= SECONDARY_TIME_WINDOW,
-    )
+  if (hasCandidatesWithinWindow(candidates, SECONDARY_TIME_WINDOW)) {
+    return keepCandidatesWithinWindow(candidates, SECONDARY_TIME_WINDOW)
   }
 
-  candidates.sort(compareWithdrawalCandidates)
-  const [best, second] = candidates
+  return candidates
+}
+
+function hasCandidatesWithinWindow(
+  candidates: WithdrawalCandidate[],
+  window: number,
+) {
+  return candidates.some((candidate) => candidate.timeDelta <= window)
+}
+
+function keepCandidatesWithinWindow(
+  candidates: WithdrawalCandidate[],
+  window: number,
+) {
+  return candidates.filter((candidate) => candidate.timeDelta <= window)
+}
+
+function pickUnambiguousBestCandidate(candidates: WithdrawalCandidate[]) {
+  const [best, second] = [...candidates].sort(compareWithdrawalCandidates)
   if (!best) return
 
-  if (best.tokenRelation === 'unknown' && best.timeDelta > STRONG_TIME_WINDOW) {
+  if (best.tokenRank > TOKEN_RELATION_RANK.exact) {
+    if (best.timeDelta > STRONG_TIME_WINDOW) return
+  }
+
+  if (second && areCandidatesAmbiguous(best, second)) {
     return
   }
 
-  if (second && isAmbiguous(best, second)) {
-    return
-  }
-
-  return best.burn
+  return best
 }
 
 function createWithdrawalCandidate(
@@ -404,13 +446,15 @@ function createWithdrawalCandidate(
   tokenMap: TokenMap,
 ): WithdrawalCandidate {
   const feeGap = burn.args.srcAmount - withdrawal.args.dstAmount
+  const tokenRelation = resolveTokenRelation(burn, withdrawal, tokenMap)
 
   return {
     burn,
     feeGapBps:
       burn.args.srcAmount === 0n ? BPS : (feeGap * BPS) / burn.args.srcAmount,
     timeDelta: withdrawal.ctx.timestamp - burn.ctx.timestamp,
-    tokenRelation: getTokenRelation(burn, withdrawal, tokenMap),
+    tokenRelation,
+    tokenRank: TOKEN_RELATION_RANK[tokenRelation],
   }
 }
 
@@ -418,9 +462,7 @@ function compareWithdrawalCandidates(
   a: WithdrawalCandidate,
   b: WithdrawalCandidate,
 ) {
-  const tokenOrder =
-    tokenRelationRank(a.tokenRelation) - tokenRelationRank(b.tokenRelation)
-  if (tokenOrder !== 0) return tokenOrder
+  if (a.tokenRank !== b.tokenRank) return a.tokenRank - b.tokenRank
 
   if (a.feeGapBps !== b.feeGapBps) {
     return a.feeGapBps < b.feeGapBps ? -1 : 1
@@ -429,37 +471,28 @@ function compareWithdrawalCandidates(
   return a.timeDelta - b.timeDelta
 }
 
-function isAmbiguous(best: WithdrawalCandidate, second: WithdrawalCandidate) {
+function areCandidatesAmbiguous(
+  best: WithdrawalCandidate,
+  second: WithdrawalCandidate,
+) {
   return (
-    tokenRelationRank(best.tokenRelation) ===
-      tokenRelationRank(second.tokenRelation) &&
+    best.tokenRank === second.tokenRank &&
     absBigInt(best.feeGapBps - second.feeGapBps) <= AMBIGUOUS_FEE_GAP_BPS &&
     Math.abs(best.timeDelta - second.timeDelta) <= AMBIGUOUS_TIME_DELTA
   )
 }
 
-function tokenRelationRank(tokenRelation: TokenRelation) {
-  switch (tokenRelation) {
-    case 'exact':
-      return 0
-    case 'unknown':
-      return 1
-    case 'mismatch':
-      return 2
-  }
-}
-
-function getTokenRelation(
+function resolveTokenRelation(
   burn: InteropEvent<AvalancheBurnArgs>,
   withdrawal: InteropEvent<AvalancheWithdrawalArgs>,
   tokenMap: TokenMap,
 ): TokenRelation {
-  const srcAbstractTokenId = getAbstractTokenId(
+  const srcAbstractTokenId = resolveAbstractTokenId(
     tokenMap,
     burn.ctx.chain,
     burn.args.srcTokenAddress,
   )
-  const dstAbstractTokenId = getAbstractTokenId(
+  const dstAbstractTokenId = resolveAbstractTokenId(
     tokenMap,
     withdrawal.ctx.chain,
     withdrawal.args.dstTokenAddress,
@@ -472,7 +505,7 @@ function getTokenRelation(
   return srcAbstractTokenId === dstAbstractTokenId ? 'exact' : 'mismatch'
 }
 
-function getAbstractTokenId(
+function resolveAbstractTokenId(
   tokenMap: TokenMap,
   chain: string,
   tokenAddress: Address32,
