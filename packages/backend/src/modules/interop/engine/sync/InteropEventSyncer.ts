@@ -189,6 +189,11 @@ export class InteropEventSyncer extends TimeLoop {
 
   async processNewestBlock(block: Block, logs: Log[]) {
     this.latestBlockNumber = BigInt(block.number)
+
+    if (this.state.type === 'timeLoop') {
+      return
+    }
+
     await this.exclusiveExecutionMutex.runExclusive(async () => {
       const state = this.state
       if (state.type === 'blockProcessor') {

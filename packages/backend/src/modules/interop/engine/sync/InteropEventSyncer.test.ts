@@ -130,6 +130,30 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe('state execution serialization', () => {
+    it('does not wait for active timeLoop work before returning from processNewestBlock', async () => {
+      const syncer = createSyncer()
+      const pending = deferred<SyncerState>()
+      const { state: timeLoopState, run } = makeTimeLoopState()
+      run.executes(async () => await pending.promise)
+      syncer.state = timeLoopState
+
+      const runPromise = syncer.run()
+      let finished = false
+      const blockPromise = syncer
+        .processNewestBlock(makeBlock(7), [])
+        .then(() => {
+          finished = true
+        })
+
+      await new Promise<void>((resolve) => setImmediate(resolve))
+
+      expect(finished).toEqual(true)
+      expect(syncer.latestBlockNumber).toEqual(7n)
+
+      pending.resolve(timeLoopState)
+      await Promise.all([runPromise, blockPromise])
+    })
+
     it('skips timer status checks while block processing is active', async () => {
       const syncer = createSyncer()
       const pending = deferred<SyncerState>()
