@@ -163,14 +163,10 @@ export class InteropSyncersManager {
       )
       const state = stateByKey.get(key)
       seen.add(key)
-      let syncMode = `${syncer?.state.name}-${syncer?.state.status}`
-      if (syncer?.logRangeDivider !== undefined) {
-        syncMode += ` (log div: ${syncer.logRangeDivider})`
-      }
       rows.push({
         pluginName: range.pluginName,
         chain: range.chain,
-        syncMode,
+        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
         toBlock: range.toBlock,
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,
