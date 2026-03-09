@@ -60,7 +60,7 @@ export const RoleDescriptions: {
       'Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).',
   },
   validate: {
-    // ORBIT specific
+    // Arbitrum Stack specific
     name: 'Validator',
     description:
       'Arbitrum Stack specific Proposer and Challenger role. Can propose new state roots (called nodes) and challenge state roots on the host chain.',
