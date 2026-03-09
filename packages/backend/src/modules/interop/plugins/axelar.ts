@@ -56,6 +56,7 @@ const parsePayloadVerified = createEventParser(
 )
 
 // https://docs.axelar.dev/resources/contract-addresses/mainnet/
+// chainconfeeg
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
   { axelarChainName: 'arbitrum', chain: 'arbitrum' },
@@ -69,6 +70,7 @@ export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'optimism', chain: 'optimism' },
   { axelarChainName: 'Polygon', chain: 'polygonpos' },
   { axelarChainName: 'celo', chain: 'celo' },
+  { axelarChainName: 'Avalanche', chain: 'avalanche' },
 ])
 
 export const SquidExpressExecutedWithToken = createInteropEventType<{

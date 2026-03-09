@@ -11,6 +11,7 @@ interface Manifest {
 
 const manifestPath = path.join('dist', 'manifest.json')
 const viteManifestPath = path.join('dist', 'static', '.vite', 'manifest.json')
+const stylesheetSource = 'src/styles/globals.css'
 
 function getViteManifest() {
   const viteManifest = readFileSync(viteManifestPath, 'utf-8')
@@ -26,6 +27,12 @@ export function mergeManifests(
   manifest: Manifest,
   viteManifest: ViteManifest,
 ): Manifest {
+  const stylesheetEntry = viteManifest[stylesheetSource]
+  assert(
+    stylesheetEntry,
+    `Entry ${stylesheetSource} not found in vite manifest`,
+  )
+
   return {
     names: {
       ...manifest.names,
@@ -36,6 +43,7 @@ export function mergeManifests(
         },
         {} as Record<string, string>,
       ),
+      '/index.css': `/static/${stylesheetEntry.file}`,
     },
     images: manifest.images,
     imports: {

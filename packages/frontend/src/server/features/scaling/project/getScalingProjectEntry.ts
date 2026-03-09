@@ -696,6 +696,7 @@ export async function getScalingProjectEntry(
       isVerified: !hostChainVerificationWarnings.contracts,
       slug: project.slug,
       contracts: project.contracts,
+      tvsConfig: project.tvsConfig,
       isUnderReview: !!project.statuses.reviewStatus,
       architectureImage: project.scalingTechnology.architectureImage,
     },
