@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('sxnetwork')
 export const sxnetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1722430544), // 2024-07-31T12:55:44Z
   discovery,
-  additionalBadges: [BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Caldera],
   additionalPurposes: ['Betting'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
