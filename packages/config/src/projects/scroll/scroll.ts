@@ -1,5 +1,4 @@
 import {
-  ChainId,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -22,7 +21,6 @@ import {
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -491,146 +489,6 @@ export const scroll: ScalingProject = {
         ],
       },
     ],
-    proofVerification: {
-      shortDescription: 'Scroll is a ZK-EVM rollup on Ethereum.',
-      aggregation: true,
-      requiredTools: [
-        {
-          name: 'Custom tool',
-          version: 'v0.10.3',
-          link: 'https://github.com/scroll-tech/scroll-prover/tree/v0.10.3?tab=readme-ov-file#verifier-contract',
-        },
-      ],
-      verifiers: [
-        {
-          name: 'PlonkVerifierV0',
-          description:
-            'Scroll verifier using calldata for DA. Corresponds to version v0.9.5 of the circuits.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/aggregator',
-            },
-            {
-              name: 'Main circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierV1',
-          description:
-            'Scroll verifier using blobs for DA. Corresponds to version v0.10.3 of the circuits.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x2293cd12e8564e8219d314b075867c2f66ac6941',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/aggregator',
-            },
-            {
-              name: 'Main circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierV1-1',
-          description:
-            'Scroll verifier using blobs for DA. Corresponds to version v0.11.4 of the circuits (Curie upgrade).',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x03a72B00D036C479105fF98A1953b15d9c510110',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/aggregator',
-            },
-            {
-              name: 'Main verifier',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierV2',
-          description:
-            'Scroll verifier proving bundles (group of batches). Corresponds to version v0.12.0 of the circuits (Darwin upgrade).',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.12.0/aggregator',
-            },
-            {
-              name: 'Main verifier',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.12.0/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierV2-1',
-          description:
-            'Scroll verifier proving bundles (group of batches). Corresponds to version v0.13.0 of the circuits (Darwin v2 upgrade).',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x8c1b52757b5c571ADcB5572E992679d4D48e30f7',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.13.0/aggregator',
-            },
-            {
-              name: 'Main verifier',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.13.0/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierPostEuclid',
-          description:
-            'Scroll verifier proving bundles (group of batches). Corresponds to openvm zkVM Circuits (Euclid upgrade).',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x9F66505cB1626D06B50EF2597f41De6686e8f79a',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Main verifier',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits',
-            },
-          ],
-        },
-      ],
-    },
   },
   contracts: {
     addresses: {
