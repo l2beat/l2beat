@@ -52,7 +52,7 @@ export function groupProjects(
     {
       name: 'Orbit/Arbitrum Stack',
       assignees: ['🐿', '🐱'],
-      predicate: (p) => getFirstStack(p.name) === 'Arbitrum Stack',
+      predicate: (p) => getFirstStack(p.name) === 'Arbitrum',
     },
     {
       name: 'Polygon Stack',
