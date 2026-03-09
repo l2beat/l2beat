@@ -56,6 +56,7 @@ describe(InteropAggregatingIndexer.name, () => {
           minTransferValueUsd: 2000,
           maxTransferValueUsd: 2000,
           avgValueInFlight: undefined,
+          transferTypeStats: undefined,
           mintedValueUsd: 0,
           burnedValueUsd: 2000,
           countUnder100: 0,
