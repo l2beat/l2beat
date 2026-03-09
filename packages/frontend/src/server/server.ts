@@ -7,12 +7,12 @@ import express from 'express'
 import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
 import { rawEnv } from '~/env'
+import { createServerPageRouter } from '../pages/ServerPageRouter'
 import {
   CLIENT_ASSETS_OUTPUT_DIR,
   CLIENT_ASSETS_PATH,
   CLIENT_TEMPLATE_PATH,
 } from '../paths'
-import { createServerPageRouter } from '../pages/ServerPageRouter'
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
