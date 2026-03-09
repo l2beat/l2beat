@@ -1,6 +1,11 @@
 import type { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
+import {
+  addressesEqual,
+  isChainAddress,
+  normalizeChainAddress,
+} from './addressUtils'
 import { DiscoveredDataAccess, resolvePathExpression } from './ownerResolution'
 import type {
   ApiFunctionsResponse,
@@ -117,7 +122,7 @@ export function updateFunction(
 
   // Get or create contract entry (case-insensitive key lookup, preserve original case)
   const existingKey = Object.keys(userContracts).find(
-    (k) => k.toLowerCase() === contractAddress.toLowerCase(),
+    (k) => normalizeChainAddress(k) === normalizeChainAddress(contractAddress),
   )
   if (!existingKey) {
     userContracts[contractAddress] = { functions: [] }
@@ -250,7 +255,8 @@ export function deleteContractFunctions(
   // Remove the contract entry (case-insensitive key lookup)
   const keyToDelete =
     Object.keys(userContracts).find(
-      (k) => k.toLowerCase() === contractAddress.toLowerCase(),
+      (k) =>
+        normalizeChainAddress(k) === normalizeChainAddress(contractAddress),
     ) ?? contractAddress
   delete userContracts[keyToDelete]
 
@@ -372,7 +378,7 @@ function mergeContractFunctions(
   // Build case-insensitive lookup for user contracts
   const userLookup = new Map<string, ContractFunctions>()
   for (const [addr, contract] of Object.entries(userContracts)) {
-    userLookup.set(addr.toLowerCase(), contract)
+    userLookup.set(normalizeChainAddress(addr), contract)
   }
 
   // Track which discovered addresses we've processed (lowercase)
@@ -382,7 +388,7 @@ function mergeContractFunctions(
   for (const [contractAddress, discoveredContract] of Object.entries(
     discoveredContracts,
   )) {
-    const normalizedAddr = contractAddress.toLowerCase()
+    const normalizedAddr = normalizeChainAddress(contractAddress)
     discoveredAddrsLower.add(normalizedAddr)
     const userContract = userLookup.get(normalizedAddr)
 
@@ -416,7 +422,7 @@ function mergeContractFunctions(
 
   // Add user-only contracts (contracts that have user functions but no discovered data)
   for (const [contractAddress, userContract] of Object.entries(userContracts)) {
-    if (!discoveredAddrsLower.has(contractAddress.toLowerCase())) {
+    if (!discoveredAddrsLower.has(normalizeChainAddress(contractAddress))) {
       result[contractAddress] = { functions: [...userContract.functions] }
     }
   }
@@ -595,7 +601,10 @@ function extractAddressesFromValue(value: any, addresses: string[]): void {
   if (!value) return
 
   // If it's an address-like string
-  if (typeof value === 'string' && value.match(/^(eth:)?0x[a-fA-F0-9]{40}$/)) {
+  if (
+    typeof value === 'string' &&
+    (isChainAddress(value) || /^0x[a-fA-F0-9]{40}$/.test(value))
+  ) {
     addresses.push(value)
     return
   }
@@ -647,7 +656,7 @@ export function resolveDelayFromDiscovered(
     const contractEntry = discovered.entries.find(
       (entry: any) =>
         entry.type === 'Contract' &&
-        entry.address.toLowerCase() === delayRef.contractAddress.toLowerCase(),
+        addressesEqual(entry.address, delayRef.contractAddress),
     )
 
     if (!contractEntry) {

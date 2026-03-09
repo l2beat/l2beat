@@ -11,6 +11,7 @@ import {
   formatUsdValue,
   MIN_TOKEN_USD_VALUE,
 } from '../../../defidisco/scoringShared'
+import { normalizeForLookup, stripChainPrefix } from './addressUtils'
 import { useContractTags } from './hooks/useContractTags'
 import { ProxyTypeTag } from './ProxyTypeTag'
 import { buildProxyTypeMap } from './proxyTypeUtils'
@@ -48,7 +49,7 @@ function ContractFundsRow({
     (fundsData.balances?.totalUsdValue ?? 0) +
     (fundsData.positions?.totalUsdValue ?? 0)
 
-  const shortAddress = contractAddress.replace('eth:', '').slice(0, 10) + '...'
+  const shortAddress = stripChainPrefix(contractAddress).slice(0, 10) + '...'
   const displayName = contractName || shortAddress
 
   const handleSelectClick = (e: React.MouseEvent) => {
@@ -187,7 +188,7 @@ function TokenContractRow({
   const [isExpanded, setIsExpanded] = useState(false)
   const tokenInfo = fundsData.tokenInfo
 
-  const shortAddress = contractAddress.replace('eth:', '').slice(0, 10) + '...'
+  const shortAddress = stripChainPrefix(contractAddress).slice(0, 10) + '...'
   const displayName = contractName || shortAddress
 
   const handleSelectClick = (e: React.MouseEvent) => {
@@ -442,7 +443,7 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     projectData.entries.forEach((entry: any) => {
       ;[...entry.initialContracts, ...entry.discoveredContracts].forEach(
         (c: any) => {
-          map.set(c.address.toLowerCase(), c.name)
+          map.set(normalizeForLookup(c.address), c.name)
         },
       )
     })
@@ -461,12 +462,7 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     if (contractTags?.tags) {
       for (const tag of contractTags.tags) {
         if (tag.isToken) {
-          const normalized = tag.contractAddress
-            .toLowerCase()
-            .startsWith('eth:')
-            ? tag.contractAddress.toLowerCase()
-            : `eth:${tag.contractAddress.toLowerCase()}`
-          set.add(normalized)
+          set.add(normalizeForLookup(tag.contractAddress))
         }
       }
     }
@@ -479,7 +475,7 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     const fundsEntries: [string, ContractFundsData][] = []
     if (fundsData?.contracts) {
       for (const [address, data] of Object.entries(fundsData.contracts)) {
-        if (tokenAddressSet.has(address.toLowerCase())) {
+        if (tokenAddressSet.has(normalizeForLookup(address))) {
           tokenEntries.push([address, data])
         } else {
           fundsEntries.push([address, data])
@@ -669,8 +665,10 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
                       key={address}
                       contractAddress={address}
                       fundsData={data}
-                      contractName={contractNameMap.get(address.toLowerCase())}
-                      proxyType={proxyTypeMap.get(address.toLowerCase())}
+                      contractName={contractNameMap.get(
+                        normalizeForLookup(address),
+                      )}
+                      proxyType={proxyTypeMap.get(normalizeForLookup(address))}
                       onSelect={() => usePanelStore.getState().select(address)}
                     />
                   ))}
@@ -690,8 +688,10 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
                       key={address}
                       contractAddress={address}
                       fundsData={data}
-                      contractName={contractNameMap.get(address.toLowerCase())}
-                      proxyType={proxyTypeMap.get(address.toLowerCase())}
+                      contractName={contractNameMap.get(
+                        normalizeForLookup(address),
+                      )}
+                      proxyType={proxyTypeMap.get(normalizeForLookup(address))}
                       onSelect={() => usePanelStore.getState().select(address)}
                     />
                   ))}

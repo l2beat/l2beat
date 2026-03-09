@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { IS_READONLY } from '../../../config/readonly'
+import { findByAddress } from './addressUtils'
 import { DependencyPropagationDialog } from './DependencyPropagationDialog'
 import { EntitySelector } from './EntitySelector'
 import { GovernanceIndicator } from './GovernanceIndicator'
@@ -30,11 +31,10 @@ export function ExternalIndicator({
   const [showEntityPicker, setShowEntityPicker] = useState(false)
 
   const currentEntity = useMemo(() => {
-    const normalizeAddress = (addr: string) =>
-      addr.toLowerCase().replace('eth:', '')
-    const normalized = normalizeAddress(address)
-    return contractTags?.tags.find(
-      (t) => normalizeAddress(t.contractAddress) === normalized,
+    return findByAddress(
+      contractTags?.tags ?? [],
+      (t) => t.contractAddress,
+      address,
     )?.entity
   }, [contractTags, address])
 

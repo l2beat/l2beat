@@ -7,6 +7,7 @@ import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
+import { addressesEqual, stripChainPrefix } from './addressUtils'
 import { usePanelStore } from '../store/panel-store'
 import { AddressEntry } from './AddressEntry'
 
@@ -184,9 +185,10 @@ function getEntity(
   contractTags: ApiContractTagsResponse | undefined,
 ): string | undefined {
   if (!contractTags?.tags) return undefined
-  const normalized = address.toLowerCase().replace('eth:', '')
-  return contractTags.tags.find(
-    (tag) =>
-      tag.contractAddress.toLowerCase().replace('eth:', '') === normalized,
+  return contractTags.tags.find((tag) =>
+    addressesEqual(
+      stripChainPrefix(tag.contractAddress),
+      stripChainPrefix(address),
+    ),
   )?.entity
 }

@@ -1,0 +1,169 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
+
+/**
+ * Address utility functions for DeFiDisco.
+ *
+ * All internal addresses use the chain-prefixed format "chain:0xChecksummed".
+ * These helpers ensure addresses are always normalized on ingestion and
+ * compared without ad-hoc toLowerCase() calls scattered through the codebase.
+ */
+
+// ---------------------------------------------------------------------------
+// Core: normalize a chain-prefixed address to checksummed form
+// ---------------------------------------------------------------------------
+
+/**
+ * Normalize a chain-prefixed address (e.g. "eth:0xabc...") so that:
+ *  - the chain prefix is preserved as-is (lowercase by convention)
+ *  - the hex address part is ERC-55 checksummed
+ *
+ * If the address has no chain prefix it is returned with "eth:" prepended
+ * (legacy compatibility). If the hex part is invalid the input is returned
+ * unchanged so callers don't crash on non-address strings.
+ */
+export function normalizeChainAddress(raw: string): string {
+  const colonIdx = raw.indexOf(':')
+
+  let chain: string
+  let hex: string
+
+  if (colonIdx !== -1 && !raw.startsWith('0x')) {
+    chain = raw.slice(0, colonIdx)
+    hex = raw.slice(colonIdx + 1)
+  } else {
+    // No chain prefix – treat as ethereum
+    chain = 'eth'
+    hex = raw
+  }
+
+  if (!hex.startsWith('0x') || hex.length !== 42) {
+    return raw // not an address, return as-is
+  }
+
+  try {
+    const checksummed = EthereumAddress(hex)
+    return `${chain}:${checksummed}`
+  } catch {
+    return raw
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Comparison helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Compare two chain-prefixed addresses for equality.
+ * Handles mixed casing and optional chain prefix gracefully.
+ */
+export function addressesEqual(a: string, b: string): boolean {
+  return normalizeChainAddress(a) === normalizeChainAddress(b)
+}
+
+/**
+ * Strip the chain prefix from an address.
+ * Works with any chain prefix (eth:, arb1:, base:, etc.).
+ */
+export function stripChainPrefix(address: string): string {
+  const colonIdx = address.indexOf(':')
+  if (colonIdx !== -1 && !address.startsWith('0x')) {
+    return address.slice(colonIdx + 1)
+  }
+  return address
+}
+
+/**
+ * Get only the chain prefix from a chain-specific address.
+ * Returns 'eth' as default if no prefix is found.
+ */
+export function getChainPrefix(address: string): string {
+  const colonIdx = address.indexOf(':')
+  if (colonIdx !== -1 && !address.startsWith('0x')) {
+    return address.slice(0, colonIdx)
+  }
+  return 'eth'
+}
+
+/**
+ * Ensure an address has a chain prefix.
+ * If it already has one, normalizes the checksumming.
+ * If it doesn't, prepends 'eth:' by default.
+ */
+export function ensureChainPrefix(address: string, chain = 'eth'): string {
+  const colonIdx = address.indexOf(':')
+  if (colonIdx !== -1 && !address.startsWith('0x')) {
+    return normalizeChainAddress(address)
+  }
+  return normalizeChainAddress(`${chain}:${address}`)
+}
+
+/**
+ * Check if a string looks like a chain-prefixed address.
+ */
+export function isChainAddress(value: string): boolean {
+  const colonIdx = value.indexOf(':')
+  if (colonIdx === -1 || value.startsWith('0x')) return false
+  const hex = value.slice(colonIdx + 1)
+  return hex.startsWith('0x') && hex.length === 42
+}
+
+// ---------------------------------------------------------------------------
+// Collection helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Build a case-insensitive lookup Set from an array of addresses.
+ * All entries are normalized so lookups don't need toLowerCase().
+ */
+export function buildAddressSet(addresses: string[]): Set<string> {
+  return new Set(addresses.map(normalizeChainAddress))
+}
+
+/**
+ * Check if an address is in a normalized address set.
+ */
+export function isInAddressSet(address: string, set: Set<string>): boolean {
+  return set.has(normalizeChainAddress(address))
+}
+
+/**
+ * Build a Map keyed by normalized addresses.
+ */
+export function buildAddressMap<T>(
+  entries: Array<[string, T]>,
+): Map<string, T> {
+  const map = new Map<string, T>()
+  for (const [addr, value] of entries) {
+    map.set(normalizeChainAddress(addr), value)
+  }
+  return map
+}
+
+/**
+ * Look up a value in an address-keyed Map using normalized comparison.
+ */
+export function getFromAddressMap<T>(
+  map: Map<string, T>,
+  address: string,
+): T | undefined {
+  return map.get(normalizeChainAddress(address))
+}
+
+/**
+ * Look up a value in a plain object keyed by addresses.
+ * Tries the normalized form first, then falls back to scanning all keys.
+ */
+export function getFromAddressRecord<T>(
+  record: Record<string, T>,
+  address: string,
+): T | undefined {
+  const normalized = normalizeChainAddress(address)
+  if (normalized in record) return record[normalized]
+  // Fallback: scan keys (handles legacy data with non-checksummed keys)
+  for (const key of Object.keys(record)) {
+    if (normalizeChainAddress(key) === normalized) {
+      return record[key]
+    }
+  }
+  return undefined
+}

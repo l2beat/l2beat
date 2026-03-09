@@ -366,7 +366,7 @@ Internal helper: `contractHasFunction(discovered, entry, functionName)` — chec
 - `buildExternalAddressSet(tags)` / `buildTagsByAddress(tags)` — build lookup structures from contract tags
 - `isExternalAddress(address, externalAddresses)` / `findTag(tagsByAddress, address)` — address matching with `eth:` prefix normalization
 - `getCallGraphContractName(callGraphData, address)` — resolve contract name from call graph data
-- `extractEthAddresses(value)` — extract all `eth:` addresses from a value (handles flat strings and one-level-deep object fields)
+- `extractChainAddresses(value)` — extract all chain-prefixed addresses from a value (handles flat strings and one-level-deep object fields). Legacy alias `extractEthAddresses` is deprecated
 
 ### Enhanced Traversal & Function Analysis ✅
 
@@ -696,6 +696,7 @@ packages/
 │   ├── FunctionBreakdown.tsx         # Functions section
 │   ├── ReviewDescriptionsEditor.tsx  # Review descriptions editor (Descriptions tab)
 │   ├── ReviewResourcesEditor.tsx    # Resources editor (links, frontends, socials)
+│   ├── addressUtils.ts             # Frontend address utilities (stripChainPrefix, addressesEqual, normalizeForLookup, findByAddress)
 │   └── icons/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts
@@ -706,7 +707,8 @@ packages/
 │   ├── callGraph.ts                  # Slither-based external call detection
 │   ├── callGraphHeuristics.ts        # Heuristic engine for variable-to-address resolution
 │   ├── enhancedTraversal.ts          # Backward BFS governance chains
-│   └── functionAnalysis.ts           # Forward BFS impact & dependencies
+│   ├── functionAnalysis.ts           # Forward BFS impact & dependencies
+│   └── addressUtils.ts              # Backend address utilities (stripChainPrefix, ensureChainPrefix, addressesEqual, isChainAddress)
 ├── defiscan-frontend/                # Standalone public review website
 │   ├── scripts/compile-data.ts       # Build-time data aggregation
 │   └── src/                          # React app (see README.md for structure)
@@ -729,9 +731,9 @@ packages/
 - **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
 - **Address Format**:
   - **IMPORTANT**: Contract addresses use `eth:` prefix in ALL data files (functions.json, contract-tags.json, discovered.json)
-  - When comparing addresses, keep the prefix: `address1.toLowerCase() === address2.toLowerCase()`
+  - When comparing addresses, use `addressesEqual(a, b)` from `addressUtils.ts` (handles mixed prefix formats)
+  - For map lookups, use `normalizeForLookup(address)` which ensures chain prefix + lowercase
   - **Do NOT strip** the `eth:` prefix unless specifically needed for display purposes
-  - Example: `eth:0x123...` should match `eth:0x123...` (both lowercase)
 - **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
 
 **Contract Tags Data Structure**:

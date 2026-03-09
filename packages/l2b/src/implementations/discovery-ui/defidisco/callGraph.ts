@@ -7,6 +7,14 @@ import { spawn } from 'child_process'
 import * as fs from 'fs'
 import * as path from 'path'
 import {
+  addressesEqual,
+  buildAddressSet,
+  isChainAddress,
+  isInAddressSet,
+  normalizeChainAddress,
+  stripChainPrefix,
+} from './addressUtils'
+import {
   createHeuristicEngine,
   type HeuristicContext,
   parseVariableAssignments,
@@ -472,7 +480,7 @@ function getSlithirCacheFilePath(
   contractAddress: string,
 ): string {
   // Use the address (without eth: prefix) as filename
-  const cleanAddress = contractAddress.replace(/^eth:/i, '')
+  const cleanAddress = stripChainPrefix(contractAddress)
   return path.join(
     getSlithirCacheFolderPath(paths, project),
     `${cleanAddress}.json`,
@@ -520,8 +528,8 @@ function getContractSourceHash(
   entryAddress: string,
   slitherAddress: string,
 ): string | undefined {
-  const entry = discovered.entries.find(
-    (e) => e.address.toLowerCase() === entryAddress.toLowerCase(),
+  const entry = discovered.entries.find((e) =>
+    addressesEqual(e.address, entryAddress),
   )
 
   if (!entry?.sourceHashes || entry.sourceHashes.length === 0) {
@@ -531,7 +539,7 @@ function getContractSourceHash(
   // For proxies (entryAddress !== slitherAddress), use only the implementation hash
   // to avoid cache thrashing when two proxies share one implementation.
   // sourceHashes order: [proxy, implementation] — last element is the implementation.
-  if (entryAddress.toLowerCase() !== slitherAddress.toLowerCase()) {
+  if (!addressesEqual(entryAddress, slitherAddress)) {
     return entry.sourceHashes[entry.sourceHashes.length - 1]
   }
 
@@ -564,10 +572,8 @@ function getContractsToAnalyze(
 ): ContractToAnalyze[] {
   // Load contract tags to identify external contracts
   const tags = getContractTags(paths, project)
-  const externalAddresses = new Set(
-    tags.tags
-      .filter((tag) => tag.isExternal)
-      .map((tag) => tag.contractAddress.toLowerCase()),
+  const externalAddresses = buildAddressSet(
+    tags.tags.filter((tag) => tag.isExternal).map((tag) => tag.contractAddress),
   )
 
   const contracts: ContractToAnalyze[] = []
@@ -576,8 +582,7 @@ function getContractsToAnalyze(
     if (entry.type !== 'Contract') continue
 
     // Skip external contracts
-    const normalizedAddress = entry.address.toLowerCase()
-    if (externalAddresses.has(normalizedAddress)) continue
+    if (isInAddressSet(entry.address, externalAddresses)) continue
 
     const displayName = entry.name || 'Unknown'
     const implNames = entry.implementationNames
@@ -590,7 +595,7 @@ function getContractsToAnalyze(
       // Get implementation address from values.$implementation
       const implValue = entry.values?.$implementation
 
-      if (typeof implValue === 'string' && implValue.startsWith('eth:')) {
+      if (typeof implValue === 'string' && isChainAddress(implValue)) {
         // Proxy contract — analyze the implementation
         const implAddress = implValue as typeof entry.address
         const implName = implNames?.[implAddress] ?? displayName
@@ -636,12 +641,12 @@ function getContractsToAnalyze(
  * Handles flat strings and one-level-deep object fields (e.g., oracle structs
  * with an `aggregator` address alongside non-address fields like `stalenessThreshold`).
  */
-export function extractEthAddresses(value: unknown): string[] {
-  if (typeof value === 'string' && value.startsWith('eth:')) return [value]
+export function extractChainAddresses(value: unknown): string[] {
+  if (typeof value === 'string' && isChainAddress(value)) return [value]
   if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
     const addresses: string[] = []
     for (const v of Object.values(value)) {
-      if (typeof v === 'string' && v.startsWith('eth:')) {
+      if (typeof v === 'string' && isChainAddress(v)) {
         addresses.push(v)
       }
     }
@@ -649,6 +654,9 @@ export function extractEthAddresses(value: unknown): string[] {
   }
   return []
 }
+
+/** @deprecated Use extractChainAddresses instead */
+export const extractEthAddresses = extractChainAddresses
 
 /**
  * Resolve storage variable to actual contract address using discovered.json
@@ -660,9 +668,7 @@ function resolveStorageVariable(
 ): { address: string | undefined; name: string | undefined } {
   // Find the contract in discovered data
   const contract = discovered.entries.find(
-    (e) =>
-      e.address.toLowerCase() === contractAddress.toLowerCase() &&
-      e.type === 'Contract',
+    (e) => addressesEqual(e.address, contractAddress) && e.type === 'Contract',
   )
 
   if (!contract || !('values' in contract) || !contract.values) {
@@ -672,10 +678,10 @@ function resolveStorageVariable(
   // Look up the storage variable in contract values
   const value = contract.values[storageVariable]
 
-  if (typeof value === 'string' && value.startsWith('eth:')) {
+  if (typeof value === 'string' && isChainAddress(value)) {
     // Find the name of the resolved contract
-    const resolvedContract = discovered.entries.find(
-      (e) => e.address.toLowerCase() === value.toLowerCase(),
+    const resolvedContract = discovered.entries.find((e) =>
+      addressesEqual(e.address, value),
     )
     return {
       address: value,
@@ -685,11 +691,11 @@ function resolveStorageVariable(
 
   // Handle nested objects (e.g., oracle structs like { aggregator: "eth:0x...", decimals: 8 }).
   // Only deterministic if exactly one address is found (unambiguous).
-  const addresses = extractEthAddresses(value)
+  const addresses = extractChainAddresses(value)
   if (addresses.length === 1) {
     const addr = addresses[0]!
-    const resolvedContract = discovered.entries.find(
-      (e) => e.address.toLowerCase() === addr.toLowerCase(),
+    const resolvedContract = discovered.entries.find((e) =>
+      addressesEqual(e.address, addr),
     )
     return {
       address: addr,
@@ -1187,7 +1193,7 @@ async function runSlitherOnContract(
     }
 
     // Clean address - remove eth: prefix
-    const cleanAddress = address.replace(/^eth:/i, '')
+    const cleanAddress = stripChainPrefix(address)
 
     onProgress?.(`Running slither on ${cleanAddress}...`)
 
@@ -1311,7 +1317,7 @@ export function traverseWithPaths(
   while (queue.length > 0) {
     const { contract, function: func, pathIsViewOnly, path } = queue.shift()!
 
-    const visitKey = `${contract.toLowerCase()}:${func}`
+    const visitKey = `${normalizeChainAddress(contract)}:${func}`
     if (visited.has(visitKey)) continue
     visited.add(visitKey)
 
@@ -1393,20 +1399,16 @@ export function findContractGraph(
 ) {
   const direct = callGraphData.contracts[contract]
   if (direct) return direct
-  const entry = Object.entries(callGraphData.contracts).find(
-    ([addr]) => addr.toLowerCase() === contract.toLowerCase(),
+  const entry = Object.entries(callGraphData.contracts).find(([addr]) =>
+    addressesEqual(addr, contract),
   )
   return entry ? entry[1] : undefined
 }
 
 export function buildExternalAddressSet(tags: ContractTag[]): Set<string> {
-  const set = new Set<string>()
-  for (const tag of tags) {
-    if (tag.isExternal) {
-      set.add(tag.contractAddress.toLowerCase())
-    }
-  }
-  return set
+  return buildAddressSet(
+    tags.filter((tag) => tag.isExternal).map((tag) => tag.contractAddress),
+  )
 }
 
 export function buildTagsByAddress(
@@ -1414,7 +1416,7 @@ export function buildTagsByAddress(
 ): Map<string, ContractTag> {
   const map = new Map<string, ContractTag>()
   for (const tag of tags) {
-    map.set(tag.contractAddress.toLowerCase(), tag)
+    map.set(normalizeChainAddress(tag.contractAddress), tag)
   }
   return map
 }
@@ -1423,32 +1425,22 @@ export function isExternalAddress(
   address: string,
   externalAddresses: Set<string>,
 ): boolean {
-  const normalized = address.toLowerCase()
-  if (externalAddresses.has(normalized)) return true
-  if (externalAddresses.has(normalized.replace('eth:', ''))) return true
-  if (externalAddresses.has(`eth:${normalized}`)) return true
-  return false
+  return isInAddressSet(address, externalAddresses)
 }
 
 export function findTag(
   tagsByAddress: Map<string, ContractTag>,
   address: string,
 ): ContractTag | undefined {
-  const normalized = address.toLowerCase()
-  return (
-    tagsByAddress.get(normalized) ??
-    tagsByAddress.get(normalized.replace('eth:', '')) ??
-    tagsByAddress.get(`eth:${normalized}`)
-  )
+  return tagsByAddress.get(normalizeChainAddress(address))
 }
 
 export function getCallGraphContractName(
   callGraphData: ApiCallGraphResponse,
   address: string,
 ): string | undefined {
-  const normalizedAddress = address.toLowerCase()
-  const entry = Object.entries(callGraphData.contracts).find(
-    ([key]) => key.toLowerCase() === normalizedAddress,
+  const entry = Object.entries(callGraphData.contracts).find(([key]) =>
+    addressesEqual(key, address),
   )
   return entry?.[1]?.name
 }

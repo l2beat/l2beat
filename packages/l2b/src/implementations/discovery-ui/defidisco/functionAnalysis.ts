@@ -1,4 +1,5 @@
 import type { DiscoveryPaths } from '@l2beat/discovery'
+import { addressesEqual, normalizeChainAddress } from './addressUtils'
 import {
   buildExternalAddressSet,
   buildTagsByAddress,
@@ -117,7 +118,7 @@ function computeImpact(
 
   for (const [addr, data] of traversalResult.reachableContracts) {
     // Skip self-reference
-    if (addr.toLowerCase() === startContractAddress.toLowerCase()) continue
+    if (addressesEqual(addr, startContractAddress)) continue
 
     const fundsUsd = getContractFunds(fundsData, addr)
     const tokenValueUsd = getContractTokenValue(fundsData, addr)
@@ -186,12 +187,12 @@ function computeDependencies(
   // 1. Auto-detected: external contracts reachable via call graph
   for (const [addr, data] of traversalResult.reachableContracts) {
     // Skip self-reference
-    if (addr.toLowerCase() === startContractAddress.toLowerCase()) continue
+    if (addressesEqual(addr, startContractAddress)) continue
 
     // Only include external contracts
     if (!isExternalAddress(addr, externalAddresses)) continue
 
-    const normalized = addr.toLowerCase()
+    const normalized = normalizeChainAddress(addr)
     if (seenAddresses.has(normalized)) continue
     seenAddresses.add(normalized)
 
@@ -216,7 +217,7 @@ function computeDependencies(
   // 2. Manual dependencies (from functions.json)
   if (manualDeps) {
     for (const dep of manualDeps) {
-      const normalized = dep.contractAddress.toLowerCase()
+      const normalized = normalizeChainAddress(dep.contractAddress)
       if (seenAddresses.has(normalized)) continue
       seenAddresses.add(normalized)
 
@@ -249,9 +250,9 @@ function getContractFunds(
   contractAddress: string,
 ): number {
   if (!fundsData?.contracts) return 0
-  const normalizedAddress = contractAddress.toLowerCase()
+  const normalizedAddress = normalizeChainAddress(contractAddress)
   const fundsEntry = Object.entries(fundsData.contracts).find(
-    ([key]) => key.toLowerCase() === normalizedAddress,
+    ([key]) => normalizeChainAddress(key) === normalizedAddress,
   )
   if (!fundsEntry) return 0
   const funds = fundsEntry[1]
@@ -265,9 +266,9 @@ function getContractTokenValue(
   contractAddress: string,
 ): number {
   if (!fundsData?.contracts) return 0
-  const normalizedAddress = contractAddress.toLowerCase()
+  const normalizedAddress = normalizeChainAddress(contractAddress)
   const fundsEntry = Object.entries(fundsData.contracts).find(
-    ([key]) => key.toLowerCase() === normalizedAddress,
+    ([key]) => normalizeChainAddress(key) === normalizedAddress,
   )
   if (!fundsEntry) return 0
   return fundsEntry[1].tokenInfo?.tokenValue ?? 0
@@ -279,9 +280,9 @@ function isFunctionPermissioned(
   functionName: string,
 ): boolean {
   if (!functionsData.contracts) return false
-  const normalizedAddress = contractAddress.toLowerCase()
+  const normalizedAddress = normalizeChainAddress(contractAddress)
   const contractEntry = Object.entries(functionsData.contracts).find(
-    ([key]) => key.toLowerCase() === normalizedAddress,
+    ([key]) => normalizeChainAddress(key) === normalizedAddress,
   )
   if (!contractEntry) return false
   const func = contractEntry[1].functions.find(

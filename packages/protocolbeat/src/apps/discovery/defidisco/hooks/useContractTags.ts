@@ -3,6 +3,7 @@ import { getContractTags, updateContractTag } from '../../../../api/api'
 import type { ApiContractTagsUpdateRequest } from '../../../../api/types'
 import type { OklchColor } from '../../panel-nodes/view/colors/oklch'
 import oklchColors from '../../../../oklchColors.json'
+import { findByAddress } from '../addressUtils'
 
 export function useContractTags(project: string) {
   return useQuery({
@@ -37,16 +38,13 @@ export function useIsContractExternal(
   const { data: contractTags } = useContractTags(project)
 
   // Normalize both addresses for comparison (handle eth: prefix)
-  const normalizeAddress = (addr: string) => {
-    return addr.toLowerCase().replace('eth:', '')
-  }
-
-  const normalizedNodeAddress = normalizeAddress(contractAddress)
-
-  const tag = contractTags?.tags.find((tag) => {
-    const normalizedTagAddress = normalizeAddress(tag.contractAddress)
-    return normalizedTagAddress === normalizedNodeAddress
-  })
+  const tag = contractTags?.tags
+    ? findByAddress(
+        contractTags.tags,
+        (t) => t.contractAddress,
+        contractAddress,
+      )
+    : undefined
 
   return tag?.isExternal ?? false
 }
@@ -57,16 +55,13 @@ export function useIsContractGovernance(
 ) {
   const { data: contractTags } = useContractTags(project)
 
-  const normalizeAddress = (addr: string) => {
-    return addr.toLowerCase().replace('eth:', '')
-  }
-
-  const normalizedNodeAddress = normalizeAddress(contractAddress)
-
-  const tag = contractTags?.tags.find((tag) => {
-    const normalizedTagAddress = normalizeAddress(tag.contractAddress)
-    return normalizedTagAddress === normalizedNodeAddress
-  })
+  const tag = contractTags?.tags
+    ? findByAddress(
+        contractTags.tags,
+        (t) => t.contractAddress,
+        contractAddress,
+      )
+    : undefined
 
   return tag?.isGovernance ?? false
 }
@@ -89,13 +84,13 @@ export function useContractTagColor(
 ): { color: OklchColor; isDark: boolean } | undefined {
   const { data: contractTags } = useContractTags(project)
 
-  const normalizeAddress = (addr: string) =>
-    addr.toLowerCase().replace('eth:', '')
-  const normalizedAddress = normalizeAddress(contractAddress)
-
-  const tag = contractTags?.tags.find(
-    (t) => normalizeAddress(t.contractAddress) === normalizedAddress,
-  )
+  const tag = contractTags?.tags
+    ? findByAddress(
+        contractTags.tags,
+        (t) => t.contractAddress,
+        contractAddress,
+      )
+    : undefined
 
   if (tag?.isExternal) return { color: oklchColors.aux.orange, isDark: false }
   if (tag?.isGovernance) return { color: oklchColors.aux.green, isDark: false }

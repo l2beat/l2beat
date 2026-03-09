@@ -1,3 +1,4 @@
+import { normalizeChainAddress } from './addressUtils'
 import type {
   ApiCallGraphResponse,
   CallGraphTraversalResult,
@@ -63,7 +64,7 @@ export class CallGraphTraverser {
       const { contract, function: func, pathIsViewOnly } = queue.shift()!
 
       // Create visit key for cycle detection
-      const visitKey = `${contract.toLowerCase()}:${func}`
+      const visitKey = `${normalizeChainAddress(contract)}:${func}`
       if (visited.has(visitKey)) continue
       visited.add(visitKey)
 
@@ -73,7 +74,10 @@ export class CallGraphTraverser {
         // Try case-insensitive lookup
         const contractGraphEntry = Object.entries(
           this.callGraphData.contracts,
-        ).find(([addr]) => addr.toLowerCase() === contract.toLowerCase())
+        ).find(
+          ([addr]) =>
+            normalizeChainAddress(addr) === normalizeChainAddress(contract),
+        )
         if (!contractGraphEntry) continue
         // Use the found contract graph
         const [, foundGraph] = contractGraphEntry

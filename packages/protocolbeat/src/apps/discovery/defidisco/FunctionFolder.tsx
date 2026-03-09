@@ -29,6 +29,11 @@ import {
   isZeroAddress,
   MIN_TOKEN_USD_VALUE,
 } from '../../../defidisco/scoringShared'
+import {
+  addressesEqual,
+  normalizeForLookup,
+  stripChainPrefix,
+} from './addressUtils'
 import { useContractTags } from './hooks/useContractTags'
 import { IconCheckFalse } from './IconCheckFalse'
 import { IconCheckTrue } from './IconCheckTrue'
@@ -83,7 +88,9 @@ function collapseChains(
   // Group by contract address sequence
   const groups = new Map<string, TraversalTerminal['chain'][]>()
   for (const chain of chains) {
-    const key = chain.map((s) => s.contractAddress.toLowerCase()).join('\u2192')
+    const key = chain
+      .map((s) => normalizeForLookup(s.contractAddress))
+      .join('\u2192')
     const group = groups.get(key)
     if (group) {
       group.push(chain)
@@ -126,7 +133,7 @@ function groupOwnersByAddress(owners: TraversalTerminal[]): GroupedOwner[] {
     }
   >()
   for (const owner of owners) {
-    const key = owner.address.toLowerCase()
+    const key = normalizeForLookup(owner.address)
     const existing = grouped.get(key)
     if (existing) {
       existing.chains.push(owner.chain)
@@ -346,9 +353,9 @@ export function FunctionFolder({
 
   const contractFunds: ContractFundsData | null = React.useMemo(() => {
     if (!fundsData?.contracts) return null
-    const normalizedAddr = contractAddress.toLowerCase()
+    const normalizedAddr = normalizeForLookup(contractAddress)
     const entry = Object.entries(fundsData.contracts).find(
-      ([key]) => key.toLowerCase() === normalizedAddr,
+      ([key]) => normalizeForLookup(key) === normalizedAddr,
     )
     return entry?.[1] ?? null
   }, [fundsData, contractAddress])
@@ -364,9 +371,9 @@ export function FunctionFolder({
     React.useMemo(() => {
       if (!traversalData?.contracts) return null
       // Case-insensitive lookup — functions.json keys may differ in case from project data
-      const normalizedAddr = contractAddress.toLowerCase()
+      const normalizedAddr = normalizeForLookup(contractAddress)
       const contractEntry = Object.entries(traversalData.contracts).find(
-        ([key]) => key.toLowerCase() === normalizedAddr,
+        ([key]) => normalizeForLookup(key) === normalizedAddr,
       )
       return contractEntry?.[1]?.[functionName] ?? null
     }, [traversalData, contractAddress, functionName])
@@ -380,9 +387,9 @@ export function FunctionFolder({
 
   const functionAnalysis: FunctionAnalysis | null = React.useMemo(() => {
     if (!analysisData?.contracts) return null
-    const normalizedAddr = contractAddress.toLowerCase()
+    const normalizedAddr = normalizeForLookup(contractAddress)
     const contractEntry = Object.entries(analysisData.contracts).find(
-      ([key]) => key.toLowerCase() === normalizedAddr,
+      ([key]) => normalizeForLookup(key) === normalizedAddr,
     )
     return contractEntry?.[1]?.[functionName] ?? null
   }, [analysisData, contractAddress, functionName])
@@ -577,9 +584,7 @@ export function FunctionFolder({
       // Address normalization is now handled in the backend when saving
       const contract = projectData.entries
         .flatMap((e) => [...e.initialContracts, ...e.discoveredContracts])
-        .find(
-          (c) => c.address.toLowerCase() === tag.contractAddress.toLowerCase(),
-        )
+        .find((c) => addressesEqual(c.address, tag.contractAddress))
 
       if (contract) {
         contracts.push({
@@ -1468,11 +1473,12 @@ export function FunctionFolder({
                 )
                 const isGovernanceAddress = (addr: string) => {
                   if (!contractTags?.tags) return false
-                  const norm = addr.toLowerCase().replace('eth:', '')
                   return contractTags.tags.some(
                     (tag) =>
-                      tag.contractAddress.toLowerCase().replace('eth:', '') ===
-                        norm && tag.isGovernance,
+                      addressesEqual(
+                        stripChainPrefix(tag.contractAddress),
+                        stripChainPrefix(addr),
+                      ) && tag.isGovernance,
                   )
                 }
                 const isKeyOwner = (owner: GroupedOwner) =>

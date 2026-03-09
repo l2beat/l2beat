@@ -7,6 +7,7 @@ import type {
   ReviewProjectType,
 } from '../../../api/types'
 import { ReviewResourcesEditor } from './ReviewResourcesEditor'
+import { ensureChainPrefix } from './addressUtils'
 
 const PROTOCOL_TYPES: ReviewProjectType[] = [
   'stablecoin',
@@ -57,9 +58,7 @@ export function ReviewDescriptionsEditor({
       // Optimistically update localConfig
       onUpdateConfig((prev) => {
         const sectionData = { ...prev[section] }
-        const normalizedAddress = address.startsWith('eth:')
-          ? address
-          : `eth:${address}`
+        const normalizedAddress = ensureChainPrefix(address)
         if (!description && !name) {
           delete sectionData[normalizedAddress]
         } else {

@@ -6,6 +6,7 @@ import type {
 import * as fs from 'fs'
 import * as path from 'path'
 import { getProject } from '../getProject'
+import { normalizeChainAddress } from './addressUtils'
 import { getCallGraphData } from './callGraph'
 import {
   extractAddressesFromResolvedOwners,
@@ -118,7 +119,7 @@ function buildEnhancedGraph(
           }
         }
         if (errors.length > 0) {
-          const key = `${contractAddr.toLowerCase()}:${func.functionName}`
+          const key = `${normalizeChainAddress(contractAddr)}:${func.functionName}`
           constructionErrors.set(key, errors)
         }
 
@@ -150,7 +151,7 @@ function buildIndices(edges: EnhancedEdge[]): EnhancedGraph {
   const backwardIndex = new Map<string, EnhancedEdge[]>()
 
   for (const edge of edges) {
-    const fwdKey = edge.sourceContract.toLowerCase()
+    const fwdKey = normalizeChainAddress(edge.sourceContract)
     let fwdList = forwardIndex.get(fwdKey)
     if (!fwdList) {
       fwdList = []
@@ -158,7 +159,7 @@ function buildIndices(edges: EnhancedEdge[]): EnhancedGraph {
     }
     fwdList.push(edge)
 
-    const bwdKey = edge.targetContract.toLowerCase()
+    const bwdKey = normalizeChainAddress(edge.targetContract)
     let bwdList = backwardIndex.get(bwdKey)
     if (!bwdList) {
       bwdList = []
@@ -223,7 +224,7 @@ function traverse(
     return { terminals: [], errors: [], depthLimitReached: true }
   }
 
-  const visitKey = `${contractAddress.toLowerCase()}:${functionName ?? '*'}`
+  const visitKey = `${normalizeChainAddress(contractAddress)}:${functionName ?? '*'}`
 
   // Check memoization cache FIRST — reuse previous results with adjusted chain prefix.
   // Safe because cached results are fully computed (no risk of infinite loop).
@@ -401,7 +402,7 @@ function groupEdgesBySource(
 ): { sourceContract: string; edges: EnhancedEdge[] }[] {
   const groups = new Map<string, EnhancedEdge[]>()
   for (const edge of edges) {
-    const key = edge.sourceContract.toLowerCase()
+    const key = normalizeChainAddress(edge.sourceContract)
     let list = groups.get(key)
     if (!list) {
       list = []
@@ -420,7 +421,7 @@ function lookupBackwardEdges(
   ctx: TraversalContext,
   contractAddress: string,
 ): EnhancedEdge[] {
-  const normalized = contractAddress.toLowerCase()
+  const normalized = normalizeChainAddress(contractAddress)
 
   // Direct match
   const direct = ctx.graph.backwardIndex.get(normalized)
@@ -429,7 +430,7 @@ function lookupBackwardEdges(
   // impl → proxy fallback
   const proxyAddr = ctx.implToProxyMap.get(normalized)
   if (proxyAddr) {
-    const via = ctx.graph.backwardIndex.get(proxyAddr.toLowerCase())
+    const via = ctx.graph.backwardIndex.get(normalizeChainAddress(proxyAddr))
     if (via && via.length > 0) return via
   }
 
@@ -437,7 +438,7 @@ function lookupBackwardEdges(
   const implAddrs = ctx.proxyToImplsMap.get(normalized)
   if (implAddrs) {
     for (const implAddr of implAddrs) {
-      const via = ctx.graph.backwardIndex.get(implAddr.toLowerCase())
+      const via = ctx.graph.backwardIndex.get(normalizeChainAddress(implAddr))
       if (via && via.length > 0) return via
     }
   }
@@ -451,9 +452,9 @@ function findContractFunctions(
   contractAddress: string,
 ) {
   if (!functionsData.contracts) return undefined
-  const normalized = contractAddress.toLowerCase()
+  const normalized = normalizeChainAddress(contractAddress)
   const entry = Object.entries(functionsData.contracts).find(
-    ([key]) => key.toLowerCase() === normalized,
+    ([key]) => normalizeChainAddress(key) === normalized,
   )
   return entry ? entry[1] : undefined
 }
@@ -467,7 +468,7 @@ function findContractFunctionsWithMapping(
   let result = findContractFunctions(ctx.functionsData, address)
   if (result) return result
 
-  const normalized = address.toLowerCase()
+  const normalized = normalizeChainAddress(address)
 
   // impl → proxy fallback
   const proxyAddr = ctx.implToProxyMap.get(normalized)
@@ -505,9 +506,9 @@ function lookupType(
 ): ApiAddressType {
   const exact = typeMap.get(address)
   if (exact) return exact
-  const normalized = address.toLowerCase()
+  const normalized = normalizeChainAddress(address)
   for (const [key, value] of typeMap) {
-    if (key.toLowerCase() === normalized) return value
+    if (normalizeChainAddress(key) === normalized) return value
   }
   return 'Unknown'
 }
@@ -516,9 +517,9 @@ function lookupType(
 function lookupName(nameMap: Map<string, string>, address: string): string {
   const exact = nameMap.get(address)
   if (exact) return exact
-  const normalized = address.toLowerCase()
+  const normalized = normalizeChainAddress(address)
   for (const [key, value] of nameMap) {
-    if (key.toLowerCase() === normalized) return value
+    if (normalizeChainAddress(key) === normalized) return value
   }
   return address
 }
@@ -531,9 +532,12 @@ function deduplicateTerminals(
   const result: TraversalTerminal[] = []
   for (const terminal of terminals) {
     const chainSig = terminal.chain
-      .map((s) => `${s.contractAddress.toLowerCase()}:${s.functionName ?? ''}`)
+      .map(
+        (s) =>
+          `${normalizeChainAddress(s.contractAddress)}:${s.functionName ?? ''}`,
+      )
       .join('→')
-    const key = `${terminal.address.toLowerCase()}|${chainSig}`
+    const key = `${normalizeChainAddress(terminal.address)}|${chainSig}`
     if (seen.has(key)) continue
     seen.add(key)
     result.push(terminal)
@@ -611,12 +615,12 @@ export function resolveEnhancedTraversal(
     ]
     allContracts.forEach((contract: any) => {
       if (contract.implementationNames) {
-        const proxyAddr = contract.address.toLowerCase()
+        const proxyAddr = normalizeChainAddress(contract.address)
         const impls: string[] = []
         for (const implAddr of Object.keys(contract.implementationNames)) {
-          const implLower = implAddr.toLowerCase()
-          if (implLower !== proxyAddr) {
-            implToProxyMap.set(implLower, contract.address)
+          const implNormalized = normalizeChainAddress(implAddr)
+          if (implNormalized !== proxyAddr) {
+            implToProxyMap.set(implNormalized, contract.address)
             impls.push(implAddr)
           }
         }
@@ -679,7 +683,7 @@ export function resolveEnhancedTraversal(
         const terminals = deduplicateTerminals(result.terminals)
 
         // Merge construction errors for this function
-        const errorKey = `${contractAddress.toLowerCase()}:${func.functionName}`
+        const errorKey = `${normalizeChainAddress(contractAddress)}:${func.functionName}`
         const buildErrors = constructionErrors.get(errorKey) ?? []
         const allErrors = [
           ...new Set([

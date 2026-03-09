@@ -16,6 +16,11 @@ import type {
 import { computeFunctionAnalysis } from './functionAnalysis'
 import { getFundsData } from './fundsData'
 import { getContractTags } from './contractTags'
+import {
+  normalizeChainAddress,
+  addressesEqual,
+  getFromAddressRecord,
+} from './addressUtils'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -277,28 +282,24 @@ export class ReviewCompiler {
       ApiContractTagsResponse['tags'][number]
     >()
     for (const tag of contractTags.tags ?? []) {
-      tagsByAddress.set(
-        tag.contractAddress.replace(/^eth:/i, '').toLowerCase(),
-        tag,
-      )
+      tagsByAddress.set(normalizeChainAddress(tag.contractAddress), tag)
     }
 
     // Case-insensitive lookup for funds data with eth: prefix normalization
     const fundsLookup = new Map<string, ContractFundsData>()
     for (const [addr, data] of Object.entries(fundsData.contracts ?? {})) {
-      fundsLookup.set(addr.replace(/^eth:/i, '').toLowerCase(), data)
+      fundsLookup.set(normalizeChainAddress(addr), data)
     }
 
     // Build admins from v2 scoring breakdown
     const admins: CompiledAdmin[] = []
     if (v2Score.inventory.admins.breakdown) {
       for (const admin of v2Score.inventory.admins.breakdown) {
-        const desc =
-          reviewConfig.admins[admin.adminAddress] ??
-          reviewConfig.admins[admin.adminAddress.toLowerCase()]
-        const tag = tagsByAddress.get(
-          admin.adminAddress.replace(/^eth:/i, '').toLowerCase(),
+        const desc = getFromAddressRecord(
+          reviewConfig.admins,
+          admin.adminAddress,
         )
+        const tag = tagsByAddress.get(normalizeChainAddress(admin.adminAddress))
 
         const withCapital = admin as AdminDetailWithCapital
         const hasCapital = 'totalDirectCapital' in withCapital
@@ -355,7 +356,10 @@ export class ReviewCompiler {
     if (v2Score.inventory.admins.breakdown) {
       for (const admin of v2Score.inventory.admins.breakdown) {
         for (const fn of admin.functions) {
-          contractNameMap.set(fn.contractAddress.toLowerCase(), fn.contractName)
+          contractNameMap.set(
+            normalizeChainAddress(fn.contractAddress),
+            fn.contractName,
+          )
         }
       }
     }
@@ -383,7 +387,7 @@ export class ReviewCompiler {
     )) {
       for (const [funcName, analysis] of Object.entries(contractFuncs)) {
         for (const dep of analysis.dependencies.entries) {
-          const key = dep.contractAddress.toLowerCase()
+          const key = normalizeChainAddress(dep.contractAddress)
           let existing = depMap.get(key)
           if (!existing) {
             existing = {
@@ -404,14 +408,14 @@ export class ReviewCompiler {
           // Add caller function (deduplicate)
           const alreadyAdded = existing.functions.some(
             (f) =>
-              f.contractAddress.toLowerCase() === contractAddr.toLowerCase() &&
+              addressesEqual(f.contractAddress, contractAddr) &&
               f.functionName === funcName,
           )
           if (!alreadyAdded) {
             existing.functions.push({
               contractAddress: contractAddr,
               contractName:
-                contractNameMap.get(contractAddr.toLowerCase()) ??
+                contractNameMap.get(normalizeChainAddress(contractAddr)) ??
                 'Unknown Contract',
               functionName: funcName,
               viewOnlyPath: dep.viewOnlyPath,
@@ -424,9 +428,7 @@ export class ReviewCompiler {
     // Build final CompiledDependency[] with review-config descriptions
     const dependencies: CompiledDependency[] = []
     for (const dep of depMap.values()) {
-      const desc =
-        reviewConfig.dependencies[dep.address] ??
-        reviewConfig.dependencies[dep.address.toLowerCase()]
+      const desc = getFromAddressRecord(reviewConfig.dependencies, dep.address)
 
       dependencies.push({
         address: dep.address,
@@ -445,9 +447,7 @@ export class ReviewCompiler {
     // Build fund holders from funds data + review config descriptions
     const funds: CompiledFundHolder[] = []
     for (const [address, desc] of Object.entries(reviewConfig.funds ?? {})) {
-      const contractFunds = fundsLookup.get(
-        address.replace(/^eth:/i, '').toLowerCase(),
-      )
+      const contractFunds = fundsLookup.get(normalizeChainAddress(address))
 
       funds.push({
         address,
@@ -609,14 +609,14 @@ export class ReviewCompiler {
           return this.resolveBreakdownPath(root, remainingPath)
         }
       } else if (dataPath.startsWith('fundsdata.')) {
-        // Lowercase contract address keys for case-insensitive matching
+        // Normalize contract address keys for case-insensitive matching
         const fundsData = { ...sources.fundsData }
         if (fundsData.contracts) {
-          const lowered: Record<string, any> = {}
+          const normalized: Record<string, any> = {}
           for (const [k, v] of Object.entries(fundsData.contracts)) {
-            lowered[k.toLowerCase()] = v
+            normalized[normalizeChainAddress(k)] = v
           }
-          fundsData.contracts = lowered as any
+          fundsData.contracts = normalized as any
         }
         root = fundsData
         remainingPath = dataPath.slice('fundsdata.'.length)
@@ -642,7 +642,7 @@ export class ReviewCompiler {
     if (!Array.isArray(breakdown)) return null
 
     const admin = breakdown.find(
-      (a: any) => a.adminAddress?.toLowerCase() === address.toLowerCase(),
+      (a: any) => a.adminAddress && addressesEqual(a.adminAddress, address),
     )
     if (!admin) return null
 

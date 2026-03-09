@@ -6,6 +6,7 @@ import type {
   AffectedFunction,
   ExternalContract,
 } from '../DependencyPropagationDialog'
+import { addressesEqual, normalizeForLookup } from '../addressUtils'
 import { useContractTags, useUpdateContractTag } from './useContractTags'
 
 export interface ExternalToggleTarget {
@@ -55,11 +56,9 @@ export function useExternalToggle(
 
   // Check if any of the targets are external
   const hasExternalContract = targets.some((target) => {
-    const normalizedAddress = target.address.toLowerCase().replace('eth:', '')
+    const normalized = normalizeForLookup(target.address)
     const tag = contractTags?.tags.find(
-      (tag) =>
-        tag.contractAddress.toLowerCase().replace('eth:', '') ===
-        normalizedAddress,
+      (tag) => normalizeForLookup(tag.contractAddress) === normalized,
     )
     return tag?.isExternal ?? false
   })
@@ -76,13 +75,9 @@ export function useExternalToggle(
   // Helper function to get contract name from address
   const getContractName = (address: string): string => {
     const allContracts = getAllContracts()
-    const normalizedAddress = address.toLowerCase().replace('eth:', '')
-    const contract = allContracts.find((c) => {
-      const normalizedContractAddress = c.address
-        .toLowerCase()
-        .replace('eth:', '')
-      return normalizedContractAddress === normalizedAddress
-    })
+    const contract = allContracts.find((c) =>
+      addressesEqual(c.address, address),
+    )
     return contract?.name || address.slice(0, 10) + '...'
   }
 
@@ -99,13 +94,9 @@ export function useExternalToggle(
 
     // Map targets to external contracts, using the actual contract address from project data (with prefix)
     const externalContractsList: ExternalContract[] = targets.map((target) => {
-      const normalizedAddress = target.address.toLowerCase().replace('eth:', '')
-      const contract = allContracts.find((c) => {
-        const normalizedContractAddress = c.address
-          .toLowerCase()
-          .replace('eth:', '')
-        return normalizedContractAddress === normalizedAddress
-      })
+      const contract = allContracts.find((c) =>
+        addressesEqual(c.address, target.address),
+      )
       // Use the contract's actual address (with prefix) or fallback to target address
       return {
         address: contract?.address || target.address,
@@ -117,27 +108,21 @@ export function useExternalToggle(
 
     // Create a set of target addresses for quick lookup (these are all being marked external)
     const targetAddresses = new Set(
-      targets.map((t) => t.address.toLowerCase().replace('eth:', '')),
+      targets.map((t) => normalizeForLookup(t.address)),
     )
 
     // For each external contract, find referencing contracts
     for (const target of targets) {
-      const normalizedAddress = target.address.toLowerCase().replace('eth:', '')
-      const extContract = allContracts.find((c) => {
-        const normalizedContractAddress = c.address
-          .toLowerCase()
-          .replace('eth:', '')
-        return normalizedContractAddress === normalizedAddress
-      })
+      const extContract = allContracts.find((c) =>
+        addressesEqual(c.address, target.address),
+      )
 
       if (!extContract?.referencedBy) continue
 
       // Filter to only internal contracts
       for (const ref of extContract.referencedBy) {
         // Check if the referencing contract is one of the targets being marked external
-        const normalizedRefAddress = ref.address
-          .toLowerCase()
-          .replace('eth:', '')
+        const normalizedRefAddress = normalizeForLookup(ref.address)
         if (targetAddresses.has(normalizedRefAddress)) {
           continue // Skip contracts being marked external in this batch
         }
@@ -145,8 +130,7 @@ export function useExternalToggle(
         // Check if the referencing contract is already external
         const refTag = contractTags.tags.find(
           (tag) =>
-            tag.contractAddress.toLowerCase().replace('eth:', '') ===
-            normalizedRefAddress,
+            normalizeForLookup(tag.contractAddress) === normalizedRefAddress,
         )
 
         if (refTag?.isExternal) continue // Skip already external contracts
@@ -155,12 +139,9 @@ export function useExternalToggle(
         const allFunctionNames = new Set<string>()
 
         // Find the contract data to get ABIs
-        const refContractData = allContracts.find((c) => {
-          const normalizedContractAddr = c.address
-            .toLowerCase()
-            .replace('eth:', '')
-          return normalizedContractAddr === normalizedRefAddress
-        })
+        const refContractData = allContracts.find((c) =>
+          addressesEqual(c.address, ref.address),
+        )
 
         if (refContractData?.abis) {
           for (const abi of refContractData.abis) {
@@ -218,13 +199,9 @@ export function useExternalToggle(
 
     // Map targets to external contracts, using the actual contract address from project data (with prefix)
     const externalContractsList: ExternalContract[] = targets.map((target) => {
-      const normalizedAddress = target.address.toLowerCase().replace('eth:', '')
-      const contract = allContracts.find((c) => {
-        const normalizedContractAddress = c.address
-          .toLowerCase()
-          .replace('eth:', '')
-        return normalizedContractAddress === normalizedAddress
-      })
+      const contract = allContracts.find((c) =>
+        addressesEqual(c.address, target.address),
+      )
       return {
         address: contract?.address || target.address,
         name: target.name || getContractName(target.address),
@@ -235,26 +212,20 @@ export function useExternalToggle(
 
     // Create a set of target addresses for quick lookup
     const targetAddresses = new Set(
-      targets.map((t) => t.address.toLowerCase().replace('eth:', '')),
+      targets.map((t) => normalizeForLookup(t.address)),
     )
 
     // Use referencedBy from project data to find referencing contracts (same as add analysis)
     for (const target of targets) {
-      const normalizedAddress = target.address.toLowerCase().replace('eth:', '')
-      const extContract = allContracts.find((c) => {
-        const normalizedContractAddress = c.address
-          .toLowerCase()
-          .replace('eth:', '')
-        return normalizedContractAddress === normalizedAddress
-      })
+      const extContract = allContracts.find((c) =>
+        addressesEqual(c.address, target.address),
+      )
 
       if (!extContract?.referencedBy) continue
 
       for (const ref of extContract.referencedBy) {
         // Skip contracts being marked internal in this batch
-        const normalizedRefAddress = ref.address
-          .toLowerCase()
-          .replace('eth:', '')
+        const normalizedRefAddress = normalizeForLookup(ref.address)
         if (targetAddresses.has(normalizedRefAddress)) {
           continue
         }
@@ -262,19 +233,15 @@ export function useExternalToggle(
         // Skip already-external contracts (they wouldn't have dependencies on this one)
         const refTag = contractTags.tags.find(
           (tag) =>
-            tag.contractAddress.toLowerCase().replace('eth:', '') ===
-            normalizedRefAddress,
+            normalizeForLookup(tag.contractAddress) === normalizedRefAddress,
         )
         if (refTag?.isExternal) continue
 
         // Get ALL write functions for this contract from ABIs
         const allFunctionNames = new Set<string>()
-        const refContractData = allContracts.find((c) => {
-          const normalizedContractAddr = c.address
-            .toLowerCase()
-            .replace('eth:', '')
-          return normalizedContractAddr === normalizedRefAddress
-        })
+        const refContractData = allContracts.find((c) =>
+          addressesEqual(c.address, ref.address),
+        )
 
         if (refContractData?.abis) {
           for (const abi of refContractData.abis) {
@@ -386,9 +353,8 @@ export function useExternalToggle(
     const newDependencies = externalContracts
       .filter(
         (ext) =>
-          !currentDependencies.some(
-            (dep) =>
-              dep.contractAddress.toLowerCase() === ext.address.toLowerCase(),
+          !currentDependencies.some((dep) =>
+            addressesEqual(dep.contractAddress, ext.address),
           ),
       )
       .map((ext) => ({ contractAddress: ext.address }))
@@ -418,11 +384,11 @@ export function useExternalToggle(
     }
 
     // Remove specified external contracts from dependencies
-    const externalAddresses = externalContracts.map((ext) =>
-      ext.address.toLowerCase(),
-    )
     const newDependencies = currentFunc.dependencies.filter(
-      (dep) => !externalAddresses.includes(dep.contractAddress.toLowerCase()),
+      (dep) =>
+        !externalContracts.some((ext) =>
+          addressesEqual(dep.contractAddress, ext.address),
+        ),
     )
 
     // Update function with filtered dependencies
@@ -535,13 +501,9 @@ export function useExternalToggle(
   // Get initial entity from first target's tag
   const initialEntity = (() => {
     if (targets.length === 0) return undefined
-    const normalizedAddress = targets[0].address
-      .toLowerCase()
-      .replace('eth:', '')
+    const normalized = normalizeForLookup(targets[0].address)
     const tag = contractTags?.tags.find(
-      (tag) =>
-        tag.contractAddress.toLowerCase().replace('eth:', '') ===
-        normalizedAddress,
+      (tag) => normalizeForLookup(tag.contractAddress) === normalized,
     )
     return tag?.entity
   })()

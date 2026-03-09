@@ -1,3 +1,5 @@
+import { normalizeForLookup } from './addressUtils'
+
 /**
  * Builds a map of contract address -> proxyType for O(1) lookups
  * @param projectData - The project data containing entries with contracts
@@ -18,7 +20,7 @@ export function buildProxyTypeMap(projectData: any): Map<string, string> {
 
     allContracts.forEach((contract: any) => {
       if (contract.proxyType) {
-        map.set(contract.address.toLowerCase(), contract.proxyType)
+        map.set(normalizeForLookup(contract.address), contract.proxyType)
       }
     })
   })

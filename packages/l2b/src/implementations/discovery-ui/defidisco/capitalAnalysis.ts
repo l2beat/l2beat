@@ -1,3 +1,4 @@
+import { addressesEqual, normalizeChainAddress } from './addressUtils'
 import { CallGraphTraverser } from './callGraphTraversal'
 import type {
   AdminDetail,
@@ -45,10 +46,10 @@ export class CapitalAnalysisCalculator {
     functionName: string,
   ): boolean {
     // Case-insensitive lookup for the contract
-    const normalizedAddress = contractAddress.toLowerCase()
+    const normalizedAddress = normalizeChainAddress(contractAddress)
     const contractEntry = Object.entries(
       this.functionsData.contracts ?? {},
-    ).find(([key]) => key.toLowerCase() === normalizedAddress)
+    ).find(([key]) => normalizeChainAddress(key) === normalizedAddress)
 
     if (!contractEntry) return false
     const contractFunctions = contractEntry[1]
@@ -89,9 +90,9 @@ export class CapitalAnalysisCalculator {
     if (!this.fundsData?.contracts) return 0
 
     // Case-insensitive lookup
-    const normalizedAddress = contractAddress.toLowerCase()
+    const normalizedAddress = normalizeChainAddress(contractAddress)
     const fundsEntry = Object.entries(this.fundsData.contracts).find(
-      ([key]) => key.toLowerCase() === normalizedAddress,
+      ([key]) => normalizeChainAddress(key) === normalizedAddress,
     )
 
     if (!fundsEntry) return 0
@@ -111,9 +112,9 @@ export class CapitalAnalysisCalculator {
   getContractTokenValue(contractAddress: string): number {
     if (!this.fundsData?.contracts) return 0
 
-    const normalizedAddress = contractAddress.toLowerCase()
+    const normalizedAddress = normalizeChainAddress(contractAddress)
     const fundsEntry = Object.entries(this.fundsData.contracts).find(
-      ([key]) => key.toLowerCase() === normalizedAddress,
+      ([key]) => normalizeChainAddress(key) === normalizedAddress,
     )
 
     if (!fundsEntry) return 0
@@ -147,7 +148,7 @@ export class CapitalAnalysisCalculator {
 
     for (const [addr, data] of traversalResult.reachableContracts) {
       // Skip self-reference (the starting contract)
-      if (addr.toLowerCase() === contractAddress.toLowerCase()) continue
+      if (addressesEqual(addr, contractAddress)) continue
 
       const fundsUsd = this.getContractFunds(addr)
       const tokenValueUsd = this.getContractTokenValue(addr)
@@ -201,7 +202,7 @@ export class CapitalAnalysisCalculator {
     const functionsWithCapital: FunctionCapitalAnalysis[] = []
 
     // Track unique contracts to avoid double-counting
-    // Key: contract address (lowercase), Value: whether funds are at risk
+    // Key: contract address (normalized), Value: whether funds are at risk
     const contractsAtRisk = new Map<string, boolean>()
     const directContracts = new Set<string>()
 
@@ -210,13 +211,13 @@ export class CapitalAnalysisCalculator {
       // Check if we have call graph data for this contract
       const hasCallGraphData =
         this.callGraphData.contracts[func.contractAddress] !== undefined ||
-        Object.keys(this.callGraphData.contracts).some(
-          (addr) => addr.toLowerCase() === func.contractAddress.toLowerCase(),
+        Object.keys(this.callGraphData.contracts).some((addr) =>
+          addressesEqual(addr, func.contractAddress),
         )
 
       if (!hasCallGraphData) {
         // No call graph data - just track direct capital
-        directContracts.add(func.contractAddress.toLowerCase())
+        directContracts.add(normalizeChainAddress(func.contractAddress))
         continue
       }
 
@@ -230,11 +231,11 @@ export class CapitalAnalysisCalculator {
       functionsWithCapital.push(analysis)
 
       // Track direct contracts (always counted since the permissioned function has impact)
-      directContracts.add(func.contractAddress.toLowerCase())
+      directContracts.add(normalizeChainAddress(func.contractAddress))
 
       // Track reachable contracts - only mark as at risk if fundsAtRisk is true
       for (const reachable of analysis.reachableContracts) {
-        const addr = reachable.contractAddress.toLowerCase()
+        const addr = normalizeChainAddress(reachable.contractAddress)
         const existingRisk = contractsAtRisk.get(addr)
         // If any path marks it as at risk, it stays at risk
         if (existingRisk === true || reachable.fundsAtRisk) {

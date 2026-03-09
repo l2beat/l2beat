@@ -1,6 +1,7 @@
 import type { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
+import { ensureChainPrefix } from './addressUtils'
 import type {
   ApiReviewConfigResponse,
   ApiUpdateEntityDescriptionRequest,
@@ -66,9 +67,7 @@ export function updateEntityDescription(
     throw new Error('No review config exists for this project')
   }
 
-  const normalizedAddress = request.address.startsWith('eth:')
-    ? request.address
-    : `eth:${request.address}`
+  const normalizedAddress = ensureChainPrefix(request.address)
 
   const section = config[request.section]
 

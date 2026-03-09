@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { IS_READONLY } from '../../../config/readonly'
+import { findByAddress } from './addressUtils'
 import { useContractTags, useUpdateContractTag } from './hooks/useContractTags'
 
 export function GovernanceIndicator({ address }: { address: string }) {
@@ -9,11 +10,10 @@ export function GovernanceIndicator({ address }: { address: string }) {
   const { data: contractTags } = useContractTags(project)
   const updateContractTag = useUpdateContractTag(project)
 
-  const normalizeAddress = (addr: string) =>
-    addr.toLowerCase().replace('eth:', '')
-
-  const tag = contractTags?.tags.find(
-    (t) => normalizeAddress(t.contractAddress) === normalizeAddress(address),
+  const tag = findByAddress(
+    contractTags?.tags ?? [],
+    (t) => t.contractAddress,
+    address,
   )
   const isGovernance = tag?.isGovernance ?? false
 

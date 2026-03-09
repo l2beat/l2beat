@@ -8,6 +8,11 @@ import { V2ScoringSection } from '../../../defidisco/V2ScoringSection'
 import { usePanelStore } from '../store/panel-store'
 import { FundsSection } from './FundsSection'
 import { formatUsdValue } from '../../../defidisco/scoringShared'
+import {
+  addressesEqual,
+  normalizeForLookup,
+  stripChainPrefix,
+} from './addressUtils'
 import { useContractTags } from './hooks/useContractTags'
 import { resolvePathExpression, UIContractDataAccess } from './ownerResolution'
 import { ProxyTypeTag } from './ProxyTypeTag'
@@ -52,13 +57,11 @@ export function DeFiScanPanel() {
     contracts: Object.fromEntries(
       Object.entries(functions.contracts || {}).filter(
         ([contractAddress, _]) => {
-          // Normalize address format - remove 'eth:' prefix and convert to lowercase
-          const normalizedAddress = contractAddress
-            .replace('eth:', '')
-            .toLowerCase()
-          const tag = contractTags.tags.find(
-            (tag: any) =>
-              tag.contractAddress.toLowerCase() === normalizedAddress,
+          const tag = contractTags.tags.find((tag: any) =>
+            addressesEqual(
+              stripChainPrefix(tag.contractAddress),
+              stripChainPrefix(contractAddress),
+            ),
           )
           return tag?.isExternal !== true
         },
@@ -162,10 +165,8 @@ function StatusOfReviewSection({
 
   allContracts.forEach((contract) => {
     // Check if contract is explicitly marked as external in contract tags
-    // Both contracts and tags use 'eth:0x...' format - just normalize to lowercase
-    const contractAddr = contract.address.toLowerCase()
-    const tag = contractTags.tags.find(
-      (tag: any) => tag.contractAddress.toLowerCase() === contractAddr,
+    const tag = contractTags.tags.find((tag: any) =>
+      addressesEqual(tag.contractAddress, contract.address),
     )
     const isExternal = tag?.isExternal === true
 
@@ -199,9 +200,11 @@ function StatusOfReviewSection({
   // Check for external EOAs and adjust counts
   let externalEoas = 0
   allEoas.forEach((eoa) => {
-    const eoaAddress = eoa.address.replace('eth:', '').toLowerCase()
-    const tag = contractTags.tags.find(
-      (tag: any) => tag.contractAddress?.toLowerCase() === eoaAddress,
+    const tag = contractTags.tags.find((tag: any) =>
+      addressesEqual(
+        stripChainPrefix(tag.contractAddress ?? ''),
+        stripChainPrefix(eoa.address),
+      ),
     )
     if (tag?.isExternal === true) {
       externalEoas++
@@ -331,7 +334,7 @@ function getContractDisplayName(contract: {
   address: string
   name: string
 }): string {
-  const shortAddress = contract.address.replace('eth:', '').slice(0, 10)
+  const shortAddress = stripChainPrefix(contract.address).slice(0, 10)
   return `${contract.name} (${shortAddress}...)`
 }
 
@@ -429,9 +432,9 @@ function ContractsWithPermissionsTable({
   const getContractFunds = (address: string): number => {
     if (!fundsData?.contracts) return 0
     // Funds data keys may have different case, so do case-insensitive lookup
-    const normalizedAddress = address.toLowerCase()
+    const normalizedAddress = normalizeForLookup(address)
     const fundsEntry = Object.entries(fundsData.contracts).find(
-      ([key]) => key.toLowerCase() === normalizedAddress,
+      ([key]) => normalizeForLookup(key) === normalizedAddress,
     )
     if (!fundsEntry) return 0
     const funds = fundsEntry[1]
@@ -646,7 +649,9 @@ function ContractsWithPermissionsTable({
                     {getContractDisplayName(contract)}
                   </span>
                   <ProxyTypeTag
-                    proxyType={proxyTypeMap.get(contract.address.toLowerCase())}
+                    proxyType={proxyTypeMap.get(
+                      normalizeForLookup(contract.address),
+                    )}
                   />
                   {hasFunds && (
                     <span className="text-aux-green">

@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { ControlButton } from '../panel-nodes/controls/ControlButton'
 import { useStore } from '../panel-nodes/store/store'
+import { findByAddress } from './addressUtils'
 import { useContractTags, useUpdateContractTag } from './hooks/useContractTags'
 
 export function GovernanceButton() {
@@ -18,12 +19,12 @@ export function GovernanceButton() {
   const selectionExists = selected.length > 0
 
   const hasGovernanceContract = selectedNodes.some((node) => {
-    const normalizedNodeAddress = node.address.toLowerCase().replace('eth:', '')
-    return contractTags?.tags.some(
-      (tag) =>
-        tag.contractAddress.toLowerCase().replace('eth:', '') ===
-          normalizedNodeAddress && tag.isGovernance,
+    const tag = findByAddress(
+      contractTags?.tags ?? [],
+      (t) => t.contractAddress,
+      node.address,
     )
+    return tag?.isGovernance
   })
 
   const handleToggle = async () => {

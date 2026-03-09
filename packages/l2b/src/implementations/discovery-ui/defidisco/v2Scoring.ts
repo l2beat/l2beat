@@ -5,6 +5,11 @@ import type {
 } from '@l2beat/discovery'
 import { getProject } from '../getProject'
 import {
+  addressesEqual,
+  normalizeChainAddress,
+  stripChainPrefix,
+} from './addressUtils'
+import {
   buildExternalAddressSet,
   buildTagsByAddress,
   findTag,
@@ -150,8 +155,8 @@ class FunctionInventoryModule {
   private getContractName(projectData: any, contractAddress: string): string {
     if (!projectData?.entries) return contractAddress
 
-    // Normalize address for comparison (remove eth: prefix, lowercase for case-insensitive match)
-    const normalizedAddress = contractAddress.replace('eth:', '').toLowerCase()
+    // Normalize address for comparison (remove eth: prefix, checksummed for case-insensitive match)
+    const normalizedAddress = stripChainPrefix(contractAddress)
 
     for (const entry of projectData.entries) {
       // Check both initialContracts and discoveredContracts
@@ -161,8 +166,8 @@ class FunctionInventoryModule {
       ]
 
       for (const contract of contracts) {
-        const entryAddress = contract.address.replace('eth:', '').toLowerCase()
-        if (entryAddress === normalizedAddress) {
+        const entryAddress = stripChainPrefix(contract.address)
+        if (addressesEqual(entryAddress, normalizedAddress)) {
           return contract.name || contractAddress
         }
       }
@@ -181,7 +186,7 @@ class DependencyInventoryModule {
   name = 'dependencies'
 
   calculate(data: ScoringData): DependencyModuleScore {
-    // Build contract name lookup map (lowercase keys for case-insensitive lookup)
+    // Build contract name lookup map (normalized keys for case-insensitive lookup)
     const contractNameMap = new Map<string, string>()
     data.projectData.entries?.forEach((entry: any) => {
       const allContracts = [
@@ -190,7 +195,7 @@ class DependencyInventoryModule {
       ]
       allContracts.forEach((contract: any) => {
         contractNameMap.set(
-          contract.address.toLowerCase(),
+          normalizeChainAddress(contract.address),
           contract.name || 'Unknown Contract',
         )
       })
@@ -220,7 +225,7 @@ class DependencyInventoryModule {
 
             // 1. Auto-detected: external contracts reachable via call graph
             for (const [addr] of traversalResult.reachableContracts) {
-              if (addr.toLowerCase() === contractAddress.toLowerCase()) continue
+              if (addressesEqual(addr, contractAddress)) continue
               if (!isExternalAddress(addr, externalAddresses)) continue
 
               this.addDependency(
@@ -273,7 +278,7 @@ class DependencyInventoryModule {
     callerContractAddress: string,
     callerFunctionName: string,
   ) {
-    const normalizedDep = depAddress.toLowerCase()
+    const normalizedDep = normalizeChainAddress(depAddress)
 
     // Get or create dependency entry
     if (!dependenciesMap.has(normalizedDep)) {
@@ -300,7 +305,7 @@ class DependencyInventoryModule {
       depData.functions.push({
         contractAddress: callerContractAddress,
         contractName:
-          contractNameMap.get(callerContractAddress.toLowerCase()) ||
+          contractNameMap.get(normalizeChainAddress(callerContractAddress)) ||
           'Unknown Contract',
         functionName: callerFunctionName,
         impact: 'critical' as Impact,
@@ -322,8 +327,8 @@ function mapAdminType(
   normalizedAddress: string,
   proxyTypeMap: Map<string, string>,
 ): ApiAddressType {
-  // Strip eth: prefix for zero address comparison
-  const bareAddress = normalizedAddress.replace(/^eth:/i, '')
+  // Strip chain prefix for zero address comparison
+  const bareAddress = stripChainPrefix(normalizedAddress)
   if (bareAddress === ZERO_ADDRESS) {
     return 'Revoked'
   }
@@ -351,7 +356,7 @@ class AdminInventoryModule {
   name = 'admins'
 
   calculate(data: ScoringData): AdminModuleScore {
-    // Build contract name, type, and proxy type lookup maps (lowercase keys for case-insensitive lookup)
+    // Build contract name, type, and proxy type lookup maps (normalized keys for case-insensitive lookup)
     const contractNameMap = new Map<string, string>()
     const contractTypeMap = new Map<string, ApiAddressType>()
     const proxyTypeMap = new Map<string, string>()
@@ -362,7 +367,7 @@ class AdminInventoryModule {
         ...(entry.discoveredContracts || []),
       ]
       allContracts.forEach((contract: any) => {
-        const addr = contract.address.toLowerCase()
+        const addr = normalizeChainAddress(contract.address)
         contractNameMap.set(addr, contract.name || 'Unknown Contract')
         contractTypeMap.set(addr, contract.type || 'Contract')
         if (contract.proxyType) {
@@ -373,10 +378,13 @@ class AdminInventoryModule {
       // Also add EOAs
       entry.eoas?.forEach((eoa: any) => {
         contractNameMap.set(
-          eoa.address.toLowerCase(),
+          normalizeChainAddress(eoa.address),
           eoa.name || 'Unknown EOA',
         )
-        contractTypeMap.set(eoa.address.toLowerCase(), eoa.type || 'EOA')
+        contractTypeMap.set(
+          normalizeChainAddress(eoa.address),
+          eoa.type || 'EOA',
+        )
       })
     })
 
@@ -420,7 +428,7 @@ class AdminInventoryModule {
 
             // Process each admin address
             adminAddresses.forEach((adminAddr: string) => {
-              const normalizedAdmin = adminAddr.toLowerCase()
+              const normalizedAdmin = normalizeChainAddress(adminAddr)
               // Get or create admin entry
               if (!adminsMap.has(adminAddr)) {
                 const rawType =
@@ -444,7 +452,7 @@ class AdminInventoryModule {
               admin.functions.push({
                 contractAddress,
                 contractName:
-                  contractNameMap.get(contractAddress.toLowerCase()) ||
+                  contractNameMap.get(normalizeChainAddress(contractAddress)) ||
                   'Unknown Contract',
                 functionName: func.functionName,
                 impact: 'critical' as Impact,
@@ -489,7 +497,7 @@ class AdminInventoryModule {
       for (const admin of adminsWithCapital) {
         // Direct contracts (all functions, including those without call graph)
         for (const func of admin.functions) {
-          const addr = func.contractAddress.toLowerCase()
+          const addr = normalizeChainAddress(func.contractAddress)
           if (!contractCapitalMap.has(addr)) {
             contractCapitalMap.set(addr, {
               funds: capitalCalculator.getContractFunds(addr),
@@ -501,7 +509,7 @@ class AdminInventoryModule {
         for (const funcAnalysis of admin.functionsWithCapital) {
           for (const rc of funcAnalysis.reachableContracts) {
             if (!rc.fundsAtRisk) continue
-            const addr = rc.contractAddress.toLowerCase()
+            const addr = normalizeChainAddress(rc.contractAddress)
             if (!contractCapitalMap.has(addr)) {
               contractCapitalMap.set(addr, {
                 funds: rc.fundsUsd,

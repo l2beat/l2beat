@@ -7,6 +7,10 @@ import type {
   DependencyDetail,
   DependencyModuleScore,
 } from '../api/types'
+import {
+  addressesEqual,
+  normalizeForLookup,
+} from '../apps/discovery/defidisco/addressUtils'
 import { useContractTags } from '../apps/discovery/defidisco/hooks/useContractTags'
 import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
@@ -160,15 +164,15 @@ export function DependencyInventoryBreakdown({
     return adminScore.breakdown.filter((admin) => {
       return contractTags.tags.some(
         (tag) =>
-          tag.contractAddress.toLowerCase() ===
-            admin.adminAddress.toLowerCase() && tag.isExternal,
+          addressesEqual(tag.contractAddress, admin.adminAddress) &&
+          tag.isExternal,
       )
     })
   }, [adminScore, contractTags])
 
   // Filter immutable/revoked external owners based on toggle
   const isImmutableOrRevoked = (admin: any) =>
-    proxyTypeMap.get(admin.adminAddress.toLowerCase()) === 'immutable' ||
+    proxyTypeMap.get(normalizeForLookup(admin.adminAddress)) === 'immutable' ||
     isZeroAddress(admin.adminAddress)
 
   const displayedExternalOwners = useMemo(() => {
@@ -300,7 +304,7 @@ export function DependencyInventoryBreakdown({
               <OwnerSection
                 key={admin.adminAddress}
                 admin={admin}
-                proxyType={proxyTypeMap.get(admin.adminAddress.toLowerCase())}
+                proxyType={proxyTypeMap.get(normalizeForLookup(admin.adminAddress))}
               />
             ))}
           </>

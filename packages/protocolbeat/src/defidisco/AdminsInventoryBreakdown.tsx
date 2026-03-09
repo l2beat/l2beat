@@ -6,6 +6,10 @@ import type { AdminModuleScore } from '../api/types'
 import { useContractTags } from '../apps/discovery/defidisco/hooks/useContractTags'
 import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import {
+  addressesEqual,
+  normalizeForLookup,
+} from '../apps/discovery/defidisco/addressUtils'
+import {
   computeDeduplicatedCapital,
   formatUsdValue,
   hasCapitalData,
@@ -47,8 +51,8 @@ export function AdminsInventoryBreakdown({
     if (!contractTags?.tags) return false
     return contractTags.tags.some(
       (tag) =>
-        tag.contractAddress.toLowerCase() ===
-          admin.adminAddress.toLowerCase() && tag.isExternal,
+        addressesEqual(tag.contractAddress, admin.adminAddress) &&
+        tag.isExternal,
     )
   }
 
@@ -56,8 +60,8 @@ export function AdminsInventoryBreakdown({
     if (!contractTags?.tags) return false
     return contractTags.tags.some(
       (tag) =>
-        tag.contractAddress.toLowerCase() ===
-          admin.adminAddress.toLowerCase() && tag.isGovernance,
+        addressesEqual(tag.contractAddress, admin.adminAddress) &&
+        tag.isGovernance,
     )
   }
 
@@ -154,7 +158,7 @@ export function AdminsInventoryBreakdown({
               <OwnerSection
                 key={admin.adminAddress}
                 admin={admin}
-                proxyType={proxyTypeMap.get(admin.adminAddress.toLowerCase())}
+                proxyType={proxyTypeMap.get(normalizeForLookup(admin.adminAddress))}
                 isGovernance={isGovernanceOwner(admin)}
               />
             ))}

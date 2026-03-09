@@ -1,5 +1,6 @@
 import React from 'react'
 import type { ApiAddressType, OwnerDefinition } from '../../../api/types'
+import { stripChainPrefix } from './addressUtils'
 
 interface ResultsSectionProps {
   projectData: any
@@ -168,19 +169,19 @@ function calculateUpgradeabilityStats(
   projectData.entries?.forEach((entry: any) => {
     // Add initial contracts
     entry.initialContracts?.forEach((contract: any) => {
-      const normalizedAddr = contract.address.replace('eth:', '').toLowerCase()
+      const normalizedAddr = stripChainPrefix(contract.address).toLowerCase()
       addressTypeMap.set(normalizedAddr, contract.type)
     })
 
     // Add discovered contracts
     entry.discoveredContracts?.forEach((contract: any) => {
-      const normalizedAddr = contract.address.replace('eth:', '').toLowerCase()
+      const normalizedAddr = stripChainPrefix(contract.address).toLowerCase()
       addressTypeMap.set(normalizedAddr, contract.type)
     })
 
     // Add EOAs
     entry.eoas?.forEach((eoa: any) => {
-      const normalizedAddr = eoa.address.replace('eth:', '').toLowerCase()
+      const normalizedAddr = stripChainPrefix(eoa.address).toLowerCase()
       addressTypeMap.set(normalizedAddr, eoa.type || 'EOA')
     })
   })
@@ -226,7 +227,7 @@ function calculateUpgradeabilityStats(
               )
 
               ownerAddresses.forEach((address) => {
-                const normalizedAddr = address.replace('eth:', '').toLowerCase()
+                const normalizedAddr = stripChainPrefix(address).toLowerCase()
                 const addressType = addressTypeMap.get(normalizedAddr)
 
                 if (addressType) {

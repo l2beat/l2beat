@@ -8,6 +8,7 @@ import type {
   ApiAddressType,
   FunctionCapitalAnalysis,
 } from '../api/types'
+import { stripChainPrefix } from '../apps/discovery/defidisco/addressUtils'
 import { ProxyTypeTag } from '../apps/discovery/defidisco/ProxyTypeTag'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
 
@@ -59,7 +60,7 @@ export function hasCapitalData(admin: any): admin is AdminDetailWithCapital {
 }
 
 export function isZeroAddress(address: string): boolean {
-  const normalized = address.toLowerCase().replace('eth:', '')
+  const normalized = stripChainPrefix(address).toLowerCase()
   return normalized === '0x0000000000000000000000000000000000000000'
 }
 

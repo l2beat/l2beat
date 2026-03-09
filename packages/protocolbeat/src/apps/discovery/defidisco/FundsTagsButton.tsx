@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ControlButton } from '../panel-nodes/controls/ControlButton'
 import { useStore } from '../panel-nodes/store/store'
+import { findByAddress } from './addressUtils'
 import { useContractTags, useUpdateContractTag } from './hooks/useContractTags'
 
 export function FundsTagsButton() {
@@ -24,13 +25,10 @@ export function FundsTagsButton() {
   // Get current funds settings for first selected node
   const getCurrentSettings = () => {
     if (selectedNodes.length > 0 && selectedNodes[0]) {
-      const normalizedNodeAddress = selectedNodes[0].address
-        .toLowerCase()
-        .replace('eth:', '')
-      const tag = contractTags?.tags.find(
-        (tag) =>
-          tag.contractAddress.toLowerCase().replace('eth:', '') ===
-          normalizedNodeAddress,
+      const tag = findByAddress(
+        contractTags?.tags ?? [],
+        (t) => t.contractAddress,
+        selectedNodes[0].address,
       )
       return {
         fetchBalances: tag?.fetchBalances ?? false,
@@ -111,11 +109,10 @@ export function FundsTagsButton() {
 
   // Count selected nodes that have funds fetching enabled
   const fundsEnabledCount = selectedNodes.filter((node) => {
-    const normalizedNodeAddress = node.address.toLowerCase().replace('eth:', '')
-    const tag = contractTags?.tags.find(
-      (tag) =>
-        tag.contractAddress.toLowerCase().replace('eth:', '') ===
-        normalizedNodeAddress,
+    const tag = findByAddress(
+      contractTags?.tags ?? [],
+      (t) => t.contractAddress,
+      node.address,
     )
     return tag?.fetchBalances || tag?.fetchPositions || tag?.isToken
   }).length

@@ -15,6 +15,7 @@ import type {
 } from '../../../api/types'
 import { useCodeStore } from '../../../components/editor/store'
 import { partition } from '../../../utils/partition'
+import { addressesEqual, normalizeForLookup } from './addressUtils'
 import { useMultiViewStore } from '../multi-view/store'
 import { Folder } from '../panel-values/Folder'
 import { usePanelStore } from '../store/panel-store'
@@ -107,16 +108,16 @@ export function PermissionsDisplay({
 
   // Get functions for the specific contracts we're displaying (case-insensitive lookup)
   const getFunctionsForContract = (contractAddress: string) => {
-    const normalizedAddr = contractAddress.toLowerCase()
+    const normalizedAddr = normalizeForLookup(contractAddress)
     const matchingKey = Object.keys(functionsData?.contracts || {}).find(
-      (k) => k.toLowerCase() === normalizedAddr,
+      (k) => normalizeForLookup(k) === normalizedAddr,
     )
     const contractFunctions =
       (matchingKey
         ? functionsData?.contracts?.[matchingKey]?.functions
         : undefined) || []
-    const localFunctionsForContract = localFunctions.filter(
-      (o) => o.contractAddress.toLowerCase() === normalizedAddr,
+    const localFunctionsForContract = localFunctions.filter((o) =>
+      addressesEqual(o.contractAddress, contractAddress),
     )
 
     // Map contract functions to include contractAddress (functions in contracts don't have it)

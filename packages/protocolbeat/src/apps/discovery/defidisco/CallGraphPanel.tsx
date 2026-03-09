@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCallGraphData, getCode } from '../../../api/api'
 import type { ContractCallGraph, ExternalCall } from '../../../api/types'
+import { stripChainPrefix } from './addressUtils'
 import { useCodeStore } from '../../../components/editor/store'
 import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store/panel-store'
@@ -308,7 +309,7 @@ function ContractSection({
             {contract.name}
           </span>
           <span className="text-coffee-400 text-xs">
-            {contract.address.replace('eth:', '').slice(0, 10)}...
+            {stripChainPrefix(contract.address).slice(0, 10)}...
           </span>
         </div>
         <span className={`text-xs ${getStatusColor()}`}>{getStatusText()}</span>

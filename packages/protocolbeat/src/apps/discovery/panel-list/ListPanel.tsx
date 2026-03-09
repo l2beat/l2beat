@@ -12,6 +12,7 @@ import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
+import { addressesEqual } from '../defidisco/addressUtils'
 import { useContractTags } from '../defidisco/hooks/useContractTags'
 import { ListItemExternalDeps } from '../defidisco/ListItemExternalDeps'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
@@ -57,11 +58,9 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
 
   const isExternal = (address: string) => {
     if (!contractTags?.tags) return false
-    const normalized = address.toLowerCase().replace('eth:', '')
     return contractTags.tags.some(
       (tag) =>
-        tag.isExternal &&
-        tag.contractAddress.toLowerCase().replace('eth:', '') === normalized,
+        tag.isExternal && addressesEqual(tag.contractAddress, address),
     )
   }
 

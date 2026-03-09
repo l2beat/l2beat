@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ControlButton } from '../panel-nodes/controls/ControlButton'
 import { useStore } from '../panel-nodes/store/store'
+import { findByAddress } from './addressUtils'
 import { DependencyPropagationDialog } from './DependencyPropagationDialog'
 import { EntitySelector } from './EntitySelector'
 import {
@@ -126,13 +127,10 @@ function AttributePicker({
   // Get current entity from first selected node's tag
   const currentEntity = useMemo(() => {
     if (selectedNodes.length > 0 && selectedNodes[0]) {
-      const normalizedNodeAddress = selectedNodes[0].address
-        .toLowerCase()
-        .replace('eth:', '')
-      const tag = contractTags?.tags.find(
-        (tag) =>
-          tag.contractAddress.toLowerCase().replace('eth:', '') ===
-          normalizedNodeAddress,
+      const tag = findByAddress(
+        contractTags?.tags ?? [],
+        (t) => t.contractAddress,
+        selectedNodes[0].address,
       )
       return tag?.entity
     }

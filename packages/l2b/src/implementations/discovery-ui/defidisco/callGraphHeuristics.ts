@@ -1,5 +1,10 @@
 import type { DiscoveryOutput } from '@l2beat/discovery'
-import { extractEthAddresses } from './callGraph'
+import {
+  addressesEqual,
+  isChainAddress,
+  normalizeChainAddress,
+} from './addressUtils'
+import { extractChainAddresses } from './callGraph'
 import type { ExternalCall, ResolutionCandidate } from './types'
 
 // =============================================================================
@@ -49,7 +54,7 @@ function contractHasFunction(
 ): boolean {
   const abiAddresses = [entry.address]
   const implValue = entry.values?.$implementation
-  if (typeof implValue === 'string' && implValue.startsWith('eth:')) {
+  if (typeof implValue === 'string' && isChainAddress(implValue)) {
     abiAddresses.push(implValue as typeof entry.address)
   }
 
@@ -92,7 +97,7 @@ class VariableChainHeuristic implements ResolutionHeuristic {
     // Look up the caller contract's values first
     const contract = discovered.entries.find(
       (e) =>
-        e.address.toLowerCase() === callerContractAddress.toLowerCase() &&
+        addressesEqual(e.address, callerContractAddress) &&
         e.type === 'Contract',
     )
 
@@ -115,9 +120,9 @@ class VariableChainHeuristic implements ResolutionHeuristic {
 
     const value = contract.values[resolvedVar]
 
-    if (typeof value === 'string' && value.startsWith('eth:')) {
-      const resolvedContract = discovered.entries.find(
-        (e) => e.address.toLowerCase() === value.toLowerCase(),
+    if (typeof value === 'string' && isChainAddress(value)) {
+      const resolvedContract = discovered.entries.find((e) =>
+        addressesEqual(e.address, value),
       )
 
       return {
@@ -133,12 +138,12 @@ class VariableChainHeuristic implements ResolutionHeuristic {
 
     // Handle nested objects (e.g., oracle structs like { aggregator: "eth:0x...", decimals: 8 })
     // Filter to addresses that actually have the called function in their ABI
-    const addresses = extractEthAddresses(value)
+    const addresses = extractChainAddresses(value)
     if (addresses.length > 0) {
       const validMatches = addresses
         .map((addr) => {
-          const entry = discovered.entries.find(
-            (e) => e.address.toLowerCase() === addr.toLowerCase(),
+          const entry = discovered.entries.find((e) =>
+            addressesEqual(e.address, addr),
           )
           return { address: addr, contractName: entry?.name, entry }
         })
@@ -350,7 +355,7 @@ class DiscoveredValuesScanHeuristic implements ResolutionHeuristic {
     // Find the caller contract's values
     const callerContract = discovered.entries.find(
       (e) =>
-        e.address.toLowerCase() === callerContractAddress.toLowerCase() &&
+        addressesEqual(e.address, callerContractAddress) &&
         e.type === 'Contract',
     )
 
@@ -365,8 +370,8 @@ class DiscoveredValuesScanHeuristic implements ResolutionHeuristic {
     // Collect all eth: addresses from the caller's values (one level deep into objects)
     const valueAddresses = new Set<string>()
     for (const value of Object.values(callerContract.values)) {
-      for (const addr of extractEthAddresses(value)) {
-        valueAddresses.add(addr.toLowerCase())
+      for (const addr of extractChainAddresses(value)) {
+        valueAddresses.add(normalizeChainAddress(addr))
       }
     }
 
@@ -380,7 +385,7 @@ class DiscoveredValuesScanHeuristic implements ResolutionHeuristic {
 
     for (const entry of discovered.entries) {
       if (entry.type !== 'Contract') continue
-      if (!valueAddresses.has(entry.address.toLowerCase())) continue
+      if (!valueAddresses.has(normalizeChainAddress(entry.address))) continue
 
       if (contractHasFunction(discovered, entry, functionName)) {
         matches.push({
