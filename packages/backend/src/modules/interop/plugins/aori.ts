@@ -15,6 +15,7 @@ import {
 } from './types'
 
 // https://docs.aori.io/protocol/deployments
+// chainconfeeg
 const AORI_NETWORKS = defineNetworks('aori', [
   {
     chainId: 1,

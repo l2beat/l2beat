@@ -68,6 +68,7 @@ export {
   getDependenciesToDiscoverForProject,
   modelPermissions,
 } from './discovery/modelling/modelPermissions'
+export { type Difference, diff } from './discovery/output/diff'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
   type DiscoveryDiff,

@@ -109,22 +109,17 @@ export const airbender: BaseProject = {
         // Is a dummy to show adi as using airbender proof system. Verifier
         // contract sources are unknown, so the actual hash cannot be computed.
         // Fix once the sources are on etherscan.
-        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            // Based on standard DualVerifier architecture, this contract should be
-            // a verifier router that points to an actual verifier. But it's unverified, so idk
             address: EthereumAddress(
-              '0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE',
+              '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
             ),
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'unsuccessful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        description:
-          'Verifier smart contract sources are not available on Etherscan, hash value is set to 0x0 to indicate that it is not known.',
+        verificationStatus: 'notVerified',
       },
       {
         // Is a dummy to show adi as using airbender proof system. Verifier

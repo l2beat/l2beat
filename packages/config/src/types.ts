@@ -1241,6 +1241,7 @@ export type InteropPluginName =
   | 'squid-coral'
   | 'stargate'
   | 'superform'
+  | 'synthetix-bridge'
   | 'world-id'
   | 'wormhole'
   | 'wormhole-ntt'

@@ -164,6 +164,27 @@ export const OPSTACK_NETWORKS = defineNetworks<OpStackNetwork>('opstack', [
     ),
   },
   {
+    chain: 'ink',
+    l2ToL1MessagePasser: ChainSpecificAddress(
+      'ink:0x4200000000000000000000000000000000000016',
+    ),
+    l2CrossDomainMessenger: ChainSpecificAddress(
+      'ink:0x4200000000000000000000000000000000000007',
+    ),
+    l2StandardBridge: ChainSpecificAddress(
+      'ink:0x4200000000000000000000000000000000000010',
+    ),
+    optimismPortal: ChainSpecificAddress(
+      'eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F',
+    ),
+    l1CrossDomainMessenger: ChainSpecificAddress(
+      'eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f',
+    ),
+    l1StandardBridge: ChainSpecificAddress(
+      'eth:0x88FF1e5b602916615391F55854588EFcBB7663f0',
+    ),
+  },
+  {
     chain: 'celo',
     l2ToL1MessagePasser: ChainSpecificAddress(
       'celo:0x4200000000000000000000000000000000000016',

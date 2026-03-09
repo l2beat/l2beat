@@ -35,6 +35,8 @@ const parseRelay = createEventParser(
   'event Relay(bytes32 transferId, address sender, address receiver, address token, uint256 amount, uint64 srcChainId, bytes32 srcTransferId)',
 )
 
+// https://im-docs.celer.network/developer/contract-addresses-and-rpc-info.html
+// chainconfeeg
 export const CELER_NETWORKS = defineNetworks('celer', [
   { celerChainId: 1, chain: 'ethereum' },
   { celerChainId: 42161, chain: 'arbitrum' },
@@ -45,6 +47,7 @@ export const CELER_NETWORKS = defineNetworks('celer', [
   { celerChainId: 324, chain: 'zksync2' },
   { celerChainId: 59144, chain: 'linea' },
   { celerChainId: 196, chain: 'xlayer' },
+  { celerChainId: 43114, chain: 'avalanche' },
 ])
 
 export const CelerMessage = createInteropEventType<{

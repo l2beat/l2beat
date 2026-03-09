@@ -328,9 +328,10 @@ describe('abstractTokensRouter', () => {
       expect(mockGetCoinDataById).toHaveBeenCalledWith('bitcoin')
     })
 
-    it('returns null when market chart has no prices', async () => {
+    it('returns coin even if market chart has no prices', async () => {
       const coin = {
         id: 'bitcoin',
+        symbol: 'BTC',
         image: {
           large: 'https://example.com/bitcoin.png',
         },
@@ -348,7 +349,15 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockDb, mockCoingeckoClient)
       const result = await caller.checks('bitcoin')
 
-      expect(result).toEqual(null)
+      expect(result).toEqual({
+        error: undefined,
+        data: {
+          id: 'bitcoin',
+          iconUrl: 'https://example.com/bitcoin.png',
+          symbol: 'BTC',
+          listingTimestamp: undefined,
+        },
+      })
     })
 
     it('returns coin data without listing timestamp when market chart fails', async () => {

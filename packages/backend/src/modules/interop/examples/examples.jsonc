@@ -1826,6 +1826,56 @@
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "sorare" }],
     "transfers": ["sorare-base.L1ToL2Transfer"]
   },
+  "synthetix-bridge": {
+    "txs": [
+      // L1 → L2 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xdb75ac17c95ae52986a8c62514da622ee18a1a7417ab177e172a443d2cafa51c"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x39f17fb6f6040661e5785cc1aed3d53fb94a366af2706b84fedb433b5a501e61"
+      },
+      // L2 → L1 withdrawal
+      {
+        "chain": "optimism",
+        "tx": "0xa0f993f78ca209864747f7a102acff91303a0674963b3f18521450b8cab90245"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xfe9a8c5ca5895d057548d6584fea4ddc7e61e372d7b54634814d271bc2cc3390"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.SentMessage" },
+        { "type": "synthetix-bridge.InitiateL1" },
+        { "type": "synthetix-bridge.FinalizeL2" },
+        { "type": "opstack.RelayedMessage" },
+        { "type": "opstack.MessagePassed" },
+        { "type": "synthetix-bridge.InitiateL2" },
+        { "type": "synthetix-bridge.FinalizeL1" },
+        { "type": "opstack.WithdrawalFinalized" }
+      ],
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "synthetix-bridge" },
+        { "type": "opstack.L2ToL1Message", "app": "synthetix-bridge" }
+      ],
+      "transfers": [
+        {
+          "type": "synthetix-bridge.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "sUSD", "amount": 1234.66961 } },
+          "dst": { "financials": { "symbol": "sUSD", "amount": 1234.66961 } }
+        },
+        {
+          "type": "synthetix-bridge.L2ToL1Transfer",
+          "src": { "financials": { "symbol": "sUSD", "amount": 50362.24 } },
+          "dst": { "financials": { "symbol": "sUSD", "amount": 50362.24 } }
+        }
+      ]
+    }
+  },
   "beefy-bridge": {
     "txs": [
       {
@@ -1966,6 +2016,57 @@
       { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
     ],
     "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
+  },
+  "opstack-standardbridge-ink-eth": {
+    "tags": ["opstack"],
+    "description": "ink <-> ethereum (eth)",
+    "txs": [
+      // L1 -> L2: 12.5 ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x9e95331ccfa3f3a1766e2f7a04bbb4d168b9f497225755ec9fd2382eb6e0d0d0"
+      },
+      {
+        "chain": "ink",
+        "tx": "0x9abb7e54d4fa4b2dfd301cdc078e23ccee2fd2a70449ac21d0cce4d0f50bb77c"
+      },
+      // L2 -> L1: ~3257 ETH withdrawal
+      {
+        "chain": "ink",
+        "tx": "0x293f59294066b8089360fc9b8c6dbf4ee0da3dd988ce3c590fd76b0d41a17a16"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x47959e35b2ba0057d888fe44b2eee0416aeb38e33329090869aa73c11fd4464b"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.ETHBridgeInitiatedL1" },
+        { "type": "opstack.SentMessage" },
+        { "type": "opstack.DepositFinalized" },
+        { "type": "opstack.ETHBridgeFinalizedL2" },
+        { "type": "opstack.RelayedMessage" },
+        { "type": "opstack.ETHBridgeInitiatedL2" },
+        { "type": "opstack.MessagePassed" },
+        { "type": "opstack.ETHBridgeFinalizedL1" },
+        { "type": "opstack.WithdrawalFinalized" }
+      ],
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+        { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L2ToL1Transfer",
+          "dst": { "financials": { "symbol": "ETH", "amount": 3257.09284 } }
+        },
+        {
+          "type": "opstack-standardbridge.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "ETH", "amount": 12.5 } }
+        }
+      ]
+    }
   },
   "orbitstack": {
     "txs": [

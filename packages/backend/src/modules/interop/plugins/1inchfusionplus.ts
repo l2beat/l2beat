@@ -18,6 +18,7 @@ import {
  */
 
 // https://business.1inch.com/portal/documentation/overview#supported-chains
+// chainconfeeg
 const ONEINCH_FUSIONPLUS_NETWORKS = defineNetworks('oneinch-fusion-plus', [
   {
     chain: 'ethereum',
@@ -45,12 +46,31 @@ const ONEINCH_FUSIONPLUS_NETWORKS = defineNetworks('oneinch-fusion-plus', [
     chainId: 137,
     address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
   },
-  // no zksync
+  {
+    chain: 'zksync2',
+    chainId: 324,
+    address: EthereumAddress('0x584aEaB186D81dbB52a8a14820c573480c3d4773'),
+  },
   // no abstract
   // no katana
   {
     chain: 'bsc',
     chainId: 56,
+    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
+  },
+  {
+    chain: 'linea',
+    chainId: 59144,
+    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
+  },
+  {
+    chain: 'unichain',
+    chainId: 130,
+    address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
+  },
+  {
+    chain: 'avalanche',
+    chainId: 43114,
     address: EthereumAddress('0xa7bCb4EAc8964306F9e3764f67Db6A7af6DdF99A'),
   },
 ])

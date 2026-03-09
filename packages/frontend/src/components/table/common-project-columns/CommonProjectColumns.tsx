@@ -35,6 +35,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
             src={ctx.row.original.icon}
             width={20}
             height={20}
+            fetchPriority="low"
             alt={`${ctx.row.original.name} logo`}
           />
         )
