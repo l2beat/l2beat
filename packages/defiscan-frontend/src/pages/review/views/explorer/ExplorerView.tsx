@@ -7,12 +7,14 @@ import { AdminsTab } from './AdminsTab'
 import { DepsTab } from './DepsTab'
 import { FundsTab } from './FundsTab'
 import { ContractsTab } from './ContractsTab'
+import { GovernanceTab } from './GovernanceTab'
 
 const TABS = [
   { id: 'overview', label: 'Overview' },
-  { id: 'admins', label: 'Admins' },
-  { id: 'dependencies', label: 'Dependencies' },
   { id: 'funds', label: 'Funds' },
+  { id: 'admins', label: 'Admins' },
+  { id: 'governance', label: 'Governance' },
+  { id: 'dependencies', label: 'Dependencies' },
   { id: 'contracts', label: 'Contracts' },
 ] as const
 
@@ -58,9 +60,10 @@ export function ExplorerView({ review }: ExplorerViewProps) {
       {/* Tab content */}
       <div className="mt-6">
         {activeTab === 'overview' && <OverviewTab review={review} />}
-        {activeTab === 'admins' && <AdminsTab review={review} />}
-        {activeTab === 'dependencies' && <DepsTab review={review} />}
         {activeTab === 'funds' && <FundsTab review={review} />}
+        {activeTab === 'admins' && <AdminsTab review={review} />}
+        {activeTab === 'governance' && <GovernanceTab review={review} />}
+        {activeTab === 'dependencies' && <DepsTab review={review} />}
         {activeTab === 'contracts' && <ContractsTab review={review} />}
       </div>
     </div>
@@ -73,7 +76,10 @@ function getTabCount(
 ): number | null {
   switch (tabId) {
     case 'admins':
-      return getHumanAdmins(review.admins).length
+      return getHumanAdmins(review.admins).filter((a) => !a.isGovernance)
+        .length
+    case 'governance':
+      return review.admins.filter((a) => a.isGovernance).length
     case 'dependencies':
       return computeEntityDependencyCount(review.dependencies)
     case 'funds':

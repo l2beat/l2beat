@@ -335,7 +335,7 @@ export function CapitalFlowDiagram({ review }: CapitalFlowDiagramProps) {
         <rect x="110" width="8" height="8" rx="2" fill="#FEF3C7" stroke="#F59E0B" strokeWidth="0.5" />
         <text x="124" y="8" fill="#6B7280" fontSize="9">Permissioned functions</text>
         <rect x="260" width="8" height="8" rx="2" fill="#DCFCE7" stroke="#10B981" strokeWidth="0.5" />
-        <text x="274" y="8" fill="#6B7280" fontSize="9">Funds locked</text>
+        <text x="274" y="8" fill="#6B7280" fontSize="9">TVL</text>
       </g>
 
       {/* Arrow markers */}

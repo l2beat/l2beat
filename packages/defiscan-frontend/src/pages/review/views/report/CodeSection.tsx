@@ -12,15 +12,15 @@ interface CodeSectionProps {
 }
 
 const SUBTYPE_STYLES: Record<CompiledFrontendSubtype, string> = {
-  official: 'border-green-200 bg-green-50 text-green-700',
-  'third-party': 'border-yellow-200 bg-yellow-50 text-yellow-700',
-  'self-hosted': 'border-orange-200 bg-orange-50 text-orange-700',
+  official: 'border-blue-200 bg-blue-50 text-blue-700',
+  'third-party': 'border-slate-200 bg-slate-50 text-slate-700',
+  'self-hosted': 'border-purple-200 bg-purple-50 text-purple-700',
 }
 
 const SUBTYPE_DOT: Record<CompiledFrontendSubtype, string> = {
-  official: 'bg-green-400',
-  'third-party': 'bg-yellow-400',
-  'self-hosted': 'bg-orange-400',
+  official: 'bg-blue-400',
+  'third-party': 'bg-slate-400',
+  'self-hosted': 'bg-purple-400',
 }
 
 function GitHubIcon({ className }: { className?: string }) {
@@ -270,6 +270,21 @@ export function CodeSection({ review }: CodeSectionProps) {
           · Updated {timeAgo(review.compiledAt)}
         </span>
       </div>
+
+      {/* Compilation disclaimer */}
+      <p className="text-xs text-text-muted mt-4">
+        This review was compiled on{' '}
+        {new Date(review.compiledAt).toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZoneName: 'short',
+        })}
+        . Protocol data may have changed since then. Always verify current
+        on-chain state before making financial decisions.
+      </p>
     </div>
   )
 }

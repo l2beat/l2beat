@@ -11,7 +11,7 @@ export function generateExecutiveSummary(review: CompiledReview): string {
   const parts: string[] = []
 
   parts.push(
-    `${metadata.protocolName} has ${capitalStr} in funds locked across ${totals.contractCount} contracts`,
+    `${metadata.protocolName} has ${capitalStr} in TVL across ${totals.contractCount} contracts`,
   )
 
   if (totals.adminCount > 0) {
@@ -71,7 +71,7 @@ function humanAdminType(type: string): string {
 /** Generate human-readable admin narrative */
 export function generateAdminNarrative(admin: CompiledAdmin): string {
   const capitalStr = admin.totalDirectCapital > 0
-    ? ` with access to ${formatUsdValue(admin.totalDirectCapital)} in locked funds`
+    ? ` with access to ${formatUsdValue(admin.totalDirectCapital)} in TVL`
     : ''
 
   const funcCount = admin.functions.length
@@ -131,7 +131,7 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
     findings.push({
       type: 'critical',
       title: `${eoas.length} EOA${eoas.length > 1 ? 's' : ''} with admin access`,
-      detail: `Externally owned account${eoas.length > 1 ? 's' : ''} can execute critical functions affecting up to ${formatUsdValue(maxCapital)} in locked funds. A single compromised private key could impact user funds.`,
+      detail: `Externally owned account${eoas.length > 1 ? 's' : ''} can execute critical functions affecting up to ${formatUsdValue(maxCapital)} in TVL. A single compromised private key could impact user funds.`,
     })
   }
 
@@ -149,8 +149,8 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
   if (totals.totalCapitalAtRisk > 0) {
     findings.push({
       type: 'info',
-      title: `${formatUsdValue(totals.totalCapitalAtRisk)} in funds locked`,
-      detail: 'Total value of funds locked in the protocol across all contracts.',
+      title: `${formatUsdValue(totals.totalCapitalAtRisk)} TVL`,
+      detail: 'Total value locked in the protocol across all contracts.',
     })
   }
 
@@ -185,7 +185,7 @@ export const GLOSSARY: Record<string, string> = {
   Timelock: 'A smart contract mechanism that enforces a mandatory waiting period before changes take effect, giving users time to react.',
   Proxy: 'A contract pattern that allows upgrading the underlying logic while keeping the same address. Users interact with the proxy, which delegates to an implementation.',
   'Permissioned Function': 'A smart contract function that can only be called by specific addresses (admins), not by the general public.',
-  'Funds Locked': 'The total USD value of funds locked in the protocol that could be affected if an admin key is compromised or misused.',
+  TVL: 'Total Value Locked — the total USD value of funds in the protocol that could be affected if an admin key is compromised or misused.',
   Immutable: 'A contract that cannot be changed after deployment — its code and behavior are permanently fixed on the blockchain.',
   CDP: 'Collateralized Debt Position — a mechanism where users lock collateral to borrow assets, commonly used in stablecoin protocols.',
   Oracle: 'A service that brings external data (like asset prices) onto the blockchain for smart contracts to use.',

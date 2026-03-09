@@ -103,7 +103,7 @@ export function buildRadarData(metrics: ProtocolMetrics[]): RadarDimension[] {
   const maxFunctions = Math.max(...metrics.map((m) => m.permissionedFunctionCount), 1)
 
   const dimensions = [
-    { key: 'capital', fullLabel: 'Funds Locked', normalize: (m: ProtocolMetrics) => (m.totalCapitalAtRisk / maxCapital) * 100 },
+    { key: 'capital', fullLabel: 'TVL', normalize: (m: ProtocolMetrics) => (m.totalCapitalAtRisk / maxCapital) * 100 },
     { key: 'contracts', fullLabel: 'Contracts', normalize: (m: ProtocolMetrics) => (m.contractCount / maxContracts) * 100 },
     { key: 'admins', fullLabel: 'Admin Count', normalize: (m: ProtocolMetrics) => (m.adminCount / maxAdmins) * 100 },
     { key: 'deps', fullLabel: 'Dependencies', normalize: (m: ProtocolMetrics) => (m.dependencyCount / maxDeps) * 100 },

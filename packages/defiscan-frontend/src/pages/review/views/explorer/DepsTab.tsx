@@ -117,7 +117,7 @@ export function DepsTab({ review }: DepsTabProps) {
         )}
         {totalFundsAtRisk > 0 && (
           <span className="text-text-secondary">
-            Funds exposed:{' '}
+            TVL exposed:{' '}
             <UsdValue
               value={totalFundsAtRisk}
               variant="capital"
@@ -165,7 +165,7 @@ export function DepsTab({ review }: DepsTabProps) {
               </th>
               <SortHeader
                 field="fundsAtRisk"
-                label="Funds Exposed"
+                label="TVL Exposed"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -376,7 +376,7 @@ function FunctionList({
         <tr className="text-text-muted">
           <th className="text-left pb-1 font-medium">Contract</th>
           <th className="text-left pb-1 font-medium">Function</th>
-          <th className="text-right pb-1 font-medium">Funds Exposed</th>
+          <th className="text-right pb-1 font-medium">TVL Exposed</th>
         </tr>
       </thead>
       <tbody>

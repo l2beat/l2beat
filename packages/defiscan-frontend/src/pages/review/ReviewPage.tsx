@@ -102,21 +102,6 @@ export function ReviewPage() {
         {view === 'dashboard' && <DashboardView review={review} />}
       </Suspense>
 
-      {/* Review metadata footer */}
-      <div className="mt-16 pt-6 border-t border-border text-center">
-        <p className="text-xs text-text-muted">
-          This review was compiled on{' '}
-          {new Date(review.compiledAt).toLocaleString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            timeZoneName: 'short',
-          })}
-          . Protocol data may have changed since then. Always verify current on-chain state before making financial decisions.
-        </p>
-      </div>
     </div>
   )
 }

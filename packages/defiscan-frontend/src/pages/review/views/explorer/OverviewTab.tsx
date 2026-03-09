@@ -71,7 +71,7 @@ export function OverviewTab({ review }: OverviewTabProps) {
       {/* Key metrics row */}
       <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
         <MetricBox
-          label="Funds Locked"
+          label="TVL"
           value={formatUsdValue(totals.totalCapitalAtRisk)}
           sublabel="in protocol"
           color="text-capital"
@@ -238,7 +238,7 @@ export function OverviewTab({ review }: OverviewTabProps) {
       {/* Capital Flow Diagram */}
       <div className="rounded-lg border border-border bg-white p-4">
         <h3 className="text-sm font-semibold text-text-primary mb-3">
-          Funds under Admin Control
+          TVL under Admin Control
         </h3>
         <CapitalFlowDiagram review={review} />
       </div>

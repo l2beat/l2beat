@@ -81,7 +81,7 @@ export function ProtocolTable({ protocols }: ProtocolTableProps) {
               Type
             </th>
             <SortHeader
-              label="Funds Locked"
+              label="TVL"
               sortKeyValue="capital"
               align="right"
             />

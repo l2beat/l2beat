@@ -161,6 +161,9 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - **Data Model**: Static JSON — reads pre-compiled `compiled-review.json` from `public/data/<slug>/`
 - **Build Script**: `scripts/compile-data.ts` — aggregates compiled reviews into `public/data/index.json` with global stats, entity-grouped dependency counts, and active admin counts (excludes Immutable/Revoked)
 - **Pages**: Landing (protocol table + stats), Review (3 views: Report, Explorer, Dashboard), Compare (side-by-side charts), About (mission, methodology, team)
+- **Explorer Tabs** (in order): Overview, Funds, Admins, Governance, Dependencies, Contracts
+  - **Admins tab**: Shows non-governance human admins only (`getHumanAdmins().filter(!isGovernance)`)
+  - **Governance tab**: Shows governance contracts only (`admins.filter(isGovernance)`), same table layout as Admins but without the Type column
 - **Deployment**: Vercel with SPA rewrites (`vercel.json` — excludes `/data/` from rewrites)
 - **Commands**: `pnpm dev` (dev server), `pnpm build` (production build, runs compile-data first)
 - **Detailed Docs**: See `packages/defiscan-frontend/README.md`

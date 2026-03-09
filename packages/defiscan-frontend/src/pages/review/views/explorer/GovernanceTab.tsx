@@ -1,27 +1,20 @@
 import { useState, useMemo } from 'react'
-import { Badge } from '../../../../components/Badge'
 import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { UsdValue } from '../../../../components/UsdValue'
 import { formatUsdValue } from '../../../../utils/format'
-import { getHumanAdmins } from '../../../../utils/admins'
 import type { CompiledReview, CompiledAdmin } from '../../../../types'
 
-interface AdminsTabProps {
+interface GovernanceTabProps {
   review: CompiledReview
 }
 
-type SortField =
-  | 'name'
-  | 'type'
-  | 'reachableCapital'
-  | 'tokenValue'
-  | 'functions'
+type SortField = 'name' | 'reachableCapital' | 'tokenValue' | 'functions'
 type SortDir = 'asc' | 'desc'
 
-export function AdminsTab({ review }: AdminsTabProps) {
+export function GovernanceTab({ review }: GovernanceTabProps) {
   const { admins, totals } = review
-  const humanAdmins = useMemo(
-    () => getHumanAdmins(admins).filter((a) => !a.isGovernance),
+  const govAdmins = useMemo(
+    () => admins.filter((a) => a.isGovernance),
     [admins],
   )
   const [sortField, setSortField] = useState<SortField>('reachableCapital')
@@ -29,15 +22,12 @@ export function AdminsTab({ review }: AdminsTabProps) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
 
   const sorted = useMemo(() => {
-    const copy = [...humanAdmins]
+    const copy = [...govAdmins]
     copy.sort((a, b) => {
       let cmp = 0
       switch (sortField) {
         case 'name':
           cmp = a.name.localeCompare(b.name)
-          break
-        case 'type':
-          cmp = a.adminType.localeCompare(b.adminType)
           break
         case 'reachableCapital':
           cmp = a.totalReachableCapital - b.totalReachableCapital
@@ -52,7 +42,7 @@ export function AdminsTab({ review }: AdminsTabProps) {
       return sortDir === 'desc' ? -cmp : cmp
     })
     return copy
-  }, [humanAdmins, sortField, sortDir])
+  }, [govAdmins, sortField, sortDir])
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -75,14 +65,15 @@ export function AdminsTab({ review }: AdminsTabProps) {
     })
   }
 
-  if (humanAdmins.length === 0) {
+  if (govAdmins.length === 0) {
     return (
       <div className="rounded-xl border border-green-200 bg-green-50 px-6 py-5">
-        <p className="text-lg font-semibold text-green-700 mb-1">No Admins</p>
+        <p className="text-lg font-semibold text-green-700 mb-1">
+          No Governance Contracts
+        </p>
         <p className="text-sm text-text-secondary leading-relaxed">
-          The protocol's {formatUsdValue(totals.totalCapitalAtRisk)} in locked
-          funds are not subject to any admin control. All contracts are either
-          immutable or controlled by internal protocol logic.
+          This protocol does not use on-chain governance. All admin control is
+          exercised through direct key holders.
         </p>
       </div>
     )
@@ -92,7 +83,12 @@ export function AdminsTab({ review }: AdminsTabProps) {
     <div>
       {/* Summary bar */}
       <div className="flex items-center gap-6 mb-4 text-sm">
-        <AdminsSummaryLabel admins={humanAdmins} />
+        <span className="text-text-secondary">
+          <span className="font-semibold text-text-primary">
+            {govAdmins.length}
+          </span>{' '}
+          governance contract{govAdmins.length !== 1 ? 's' : ''}
+        </span>
         <span className="text-text-secondary">
           TVL:{' '}
           <UsdValue
@@ -120,14 +116,7 @@ export function AdminsTab({ review }: AdminsTabProps) {
             <tr className="border-b border-border bg-bg-muted">
               <SortHeader
                 field="name"
-                label="Admin"
-                current={sortField}
-                dir={sortDir}
-                onClick={handleSort}
-              />
-              <SortHeader
-                field="type"
-                label="Type"
+                label="Governance Contract"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -160,7 +149,7 @@ export function AdminsTab({ review }: AdminsTabProps) {
           </thead>
           <tbody>
             {sorted.map((admin) => (
-              <AdminRow
+              <GovRow
                 key={admin.address}
                 admin={admin}
                 isExpanded={expanded.has(admin.address)}
@@ -170,12 +159,11 @@ export function AdminsTab({ review }: AdminsTabProps) {
           </tbody>
         </table>
       </div>
-
     </div>
   )
 }
 
-function AdminRow({
+function GovRow({
   admin,
   isExpanded,
   onToggle,
@@ -216,11 +204,6 @@ function AdminRow({
             </div>
           </div>
         </td>
-        <td className="px-4 py-2.5">
-          <Badge variant="admin-type" adminType={admin.adminType}>
-            {admin.adminType}
-          </Badge>
-        </td>
         <td className="px-4 py-2.5 text-right tabular-nums">
           {admin.totalReachableCapital > 0 ? (
             <UsdValue
@@ -249,7 +232,7 @@ function AdminRow({
       </tr>
       {isExpanded && (
         <tr>
-          <td colSpan={5} className="px-0 py-0">
+          <td colSpan={4} className="px-0 py-0">
             <ExpandedFunctions admin={admin} />
           </td>
         </tr>
@@ -327,19 +310,6 @@ function ExpandedFunctions({ admin }: { admin: CompiledAdmin }) {
         </table>
       </div>
     </div>
-  )
-}
-
-function AdminsSummaryLabel({ admins }: { admins: CompiledAdmin[] }) {
-  if (admins.length === 0) {
-    return <span className="text-text-muted">No admins</span>
-  }
-
-  return (
-    <span className="text-text-secondary">
-      <span className="font-semibold text-text-primary">{admins.length}</span>
-      {' '}admin{admins.length !== 1 ? 's' : ''}
-    </span>
   )
 }
 

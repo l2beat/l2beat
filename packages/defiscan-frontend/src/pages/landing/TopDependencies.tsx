@@ -21,7 +21,7 @@ export function TopDependencies({ dependencies }: TopDependenciesProps) {
               Entity
             </th>
             <th className="text-right px-4 py-3 font-medium text-text-secondary">
-              Funds at Risk
+              TVL at Risk
             </th>
             <th className="text-right px-4 py-3 font-medium text-text-secondary">
               Protocols

@@ -97,7 +97,7 @@ export function FundsTab({ review }: FundsTabProps) {
       <div className="flex items-center gap-6 mb-4 text-sm flex-wrap">
         <FundsSummaryLabel funds={funds} />
         <span className="text-text-secondary">
-          Total:{' '}
+          TVL:{' '}
           <UsdValue
             value={totalCapital}
             variant="capital"
@@ -106,7 +106,7 @@ export function FundsTab({ review }: FundsTabProps) {
         </span>
         {totalTokenValue > 0 && (
           <span className="text-text-secondary">
-            Market Cap:{' '}
+            Token:{' '}
             <UsdValue
               value={totalTokenValue}
               variant="token"
@@ -120,7 +120,7 @@ export function FundsTab({ review }: FundsTabProps) {
       {chartData.length > 0 && (
         <div className="rounded-lg border border-border bg-white p-4 mb-4">
           <h3 className="text-sm font-semibold text-text-primary mb-3">
-            Fund Distribution (Market Cap vs Total Value Locked)
+            Fund Distribution
           </h3>
           <ResponsiveContainer
             width="100%"
@@ -156,7 +156,7 @@ export function FundsTab({ review }: FundsTabProps) {
                 dataKey="tvl"
                 stackId="total"
                 fill="#10B981"
-                name="Total Value Locked (TVL)"
+                name="TVL"
                 radius={[0, 0, 0, 0]}
               />
               <Bar
@@ -170,8 +170,7 @@ export function FundsTab({ review }: FundsTabProps) {
           </ResponsiveContainer>
           <div className="flex gap-4 mt-2 text-xs text-text-muted">
             <span className="flex items-center gap-1">
-              <span className="w-3 h-3 rounded-sm bg-status-green" /> Total
-              Value Locked (TVL)
+              <span className="w-3 h-3 rounded-sm bg-status-green" /> TVL
             </span>
             <span className="flex items-center gap-1">
               <span className="w-3 h-3 rounded-sm bg-amber-500" /> Market Cap
@@ -213,7 +212,7 @@ export function FundsTab({ review }: FundsTabProps) {
               />
               <SortHeader
                 field="total"
-                label="Total"
+                label="TVL"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -414,7 +413,7 @@ function FundsSummaryLabel({ funds }: { funds: CompiledFundHolder[] }) {
       {tvlCount > 0 && (
         <>
           <span className="font-semibold text-text-primary">{tvlCount}</span>
-          {' '}contract{tvlCount !== 1 ? 's' : ''} holding TVL
+          {' '}contract{tvlCount !== 1 ? 's' : ''} holding funds
         </>
       )}
       {tvlCount > 0 && tokenCount > 0 && ', '}

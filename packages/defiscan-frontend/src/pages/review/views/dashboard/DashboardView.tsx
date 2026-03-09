@@ -33,7 +33,7 @@ export function DashboardView({ review }: DashboardViewProps) {
       {/* Top row: 6 metric cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <MetricCard
-          label="Funds Locked"
+          label="TVL"
           value={formatUsdValue(totalCapitalAtRisk)}
           accent="green"
         />

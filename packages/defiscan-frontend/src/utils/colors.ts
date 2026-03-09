@@ -7,6 +7,8 @@ export function adminTypeColor(adminType: string): string {
       return '#F59E0B'
     case 'Timelock':
       return '#10B981'
+    case 'Governance':
+      return '#8B5CF6'
     case 'Contract':
     case 'Diamond':
     case 'Upgradeable':

@@ -153,7 +153,7 @@ export function AdminCards({ review }: AdminCardsProps) {
           </span>
           , controlling{' '}
           <UsdValue value={totals.totalCapitalAtRisk} variant="capital" />
-          {' '}in locked funds
+          {' '}in TVL
           {totals.totalTokenValueAtRisk > 0 && (
             <>
               {' '}and{' '}
@@ -379,7 +379,7 @@ function FunctionDetail({ fn }: { fn: CompiledAdminFunction }) {
           {riskyContracts.length > 0 && (
             <>
               It can also reach {riskyContracts.length} additional contract
-              {riskyContracts.length !== 1 ? 's' : ''} with funds at risk.
+              {riskyContracts.length !== 1 ? 's' : ''} with TVL at risk.
             </>
           )}
         </p>

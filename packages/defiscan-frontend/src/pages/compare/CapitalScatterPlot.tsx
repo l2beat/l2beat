@@ -59,7 +59,7 @@ export function CapitalScatterPlot({
           <YAxis
             type="number"
             dataKey="y"
-            name="Funds Locked"
+            name="TVL"
             tick={{ fill: '#6B7280', fontSize: 12 }}
             tickFormatter={(v: number) => formatUsdValue(v)}
           />
