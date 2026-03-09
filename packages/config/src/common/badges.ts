@@ -451,7 +451,7 @@ export const badges = [
     },
   },
   {
-    id: 'Orbit',
+    id: 'ArbitrumStack',
     type: BadgeType.Stack,
     name: 'Built on Arbitrum Stack',
     description: 'The project is built on Arbitrum Stack',
