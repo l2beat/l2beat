@@ -18,6 +18,15 @@ If you're a **developer** looking to contribute to the DeFiScan V2 codebase:
 - **[Architecture](developers/architecture.md)** — System design, data flow, and how the backend and UI fit together
 - **[Contributing](developers/contributing.md)** — Development setup, coding guidelines, and PR process
 
+### Feature Documentation
+
+Detailed implementation docs for each feature area:
+
+- **[Permissions](developers/features/permissions.md)** — AI detection, interactive management, monitoring, owner path syntax, data structures
+- **[Call Graph Analysis](developers/features/call-graph-analysis.md)** — Slither integration, heuristic resolution, traversal helpers
+- **[Scoring & Review](developers/features/scoring-and-review.md)** — V2 scoring UI, review builder, generation agent, compiler
+- **[Infrastructure](developers/features/infrastructure.md)** — Contract tags, funds tracking, DeFiScan frontend, continuous monitoring
+
 ## External Links
 
 - **[DeFiScan](https://defiscan.info)** — Our DeFi protocol security ratings and reviews

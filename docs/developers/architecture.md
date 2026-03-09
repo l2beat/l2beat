@@ -24,9 +24,13 @@ Funds data in the backend relies on the [defiscan endpoint](). It calls this end
 
 We support fetching information regarding all balances and DeFi positions a contract might hold, as well as token price and market cap of token contracts.
 
+For implementation details, see [Infrastructure: Funds Tracking](features/infrastructure.md#funds-tracking).
+
 ### Callgraph
 
 The callgraph is a tool that deterministically detects all possible external contract calls made by each function of a contract. It then attempts to maps those calls to known contracts in the discovery. This resolution to known contracts can only be done usually for 10-30% of cases because the contracts called might not be deterministic. Detecting those calls is made using Slither's slitherir feature, which we then parse in `/packages/l2b/src/implementations/discovery-ui/defidisco/callGraph.ts` and store in `call-graph-data.json`.
+
+For implementation details, see [Call Graph Analysis](features/call-graph-analysis.md).
 
 ### Permissions
 
@@ -42,9 +46,13 @@ In addition to detecting permissions, the AI resolves the permission owner where
 
  This data is stored in `functions.json` for each project, it's grouped by contract. The data can be overriden manually by reviewers in the frontend.
 
+For implementation details, see [Permissions](features/permissions.md).
+
 ### Contract Tags
 
 Contract tags are specified by the reviewer/researcher and can only be changed manually. They improve the review by specifying which contract is external to the project, and whether or note we should fetch funds/positions data for the contracts. This is stored in `contracts-tag.json` for each project.
+
+For implementation details, see [Infrastructure: External Contract Attributes](features/infrastructure.md#external-contract-attributes).
 
 ### Review Builder
 
@@ -61,6 +69,8 @@ The Review Builder stores all review configuration in a single `review-config.js
 **AI Generation**: The `/generate-review` Claude Code skill fetches pre-processed data from the l2b API, analyzes the protocol structure, and writes generated descriptions directly to `review-config.json`. Human-specified `resources` (project links) are automatically preserved across regenerations.
 
 **Resources**: The `resources` field is a flat array of `ResourceEntry` objects (`{ url, type, label?, frontendSubtype? }`). Resource types: `frontend` (with subtype: official/third-party/self-hosted), `docs`, `source-code`, `github`, `x`, `other`. Resources are compiled as-is into `compiled-review.json` and rendered in the frontend's "More Information" section.
+
+For implementation details, see [Scoring & Review: Review Builder](features/scoring-and-review.md#review-builder).
 
 ### Continuous Monitoring Service
 
@@ -102,4 +112,4 @@ The public-facing review website is a separate package at `packages/defiscan-fro
 
 **Pages**: Landing (protocol table + global stats), Review (Report / Explorer / Dashboard views), Compare (side-by-side protocol comparison with charts).
 
-See `packages/defiscan-frontend/README.md` for detailed documentation.
+See `packages/defiscan-frontend/README.md` for detailed documentation, and [Infrastructure: DeFiScan Frontend](features/infrastructure.md#defiscan-frontend) for implementation reference.
