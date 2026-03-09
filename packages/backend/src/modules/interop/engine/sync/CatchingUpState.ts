@@ -56,11 +56,6 @@ export class CatchingUpState implements TimeloopState {
 
   async catchUp(): Promise<SyncerState> {
     while (true) {
-      if (this.syncer.latestBlockNumber === undefined) {
-        this.setStatus('waiting for block number')
-        return this
-      }
-
       const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
       if (resyncFrom !== undefined && wipeRequired) {
         this.syncer.waitingForWipe = true
@@ -72,7 +67,7 @@ export class CatchingUpState implements TimeloopState {
       }
 
       if (this.syncer.latestBlockNumber === undefined) {
-        this.status = 'waiting for block number'
+        this.setStatus('waiting for block number')
         return this
       }
 
