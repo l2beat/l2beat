@@ -9,6 +9,5 @@ rm -f static/index.js
 
 node -r esbuild-register ./scripts/hashFiles.ts
 vite build --mode production
-node -r esbuild-register ./scripts/mergeManifests.ts
 
 tsx scripts/buildServer.ts --prod

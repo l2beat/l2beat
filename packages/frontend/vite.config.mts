@@ -2,16 +2,18 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import { defineConfig } from 'vite'
-
-const clientEntry = path.resolve(__dirname, './src/ssr/ClientEntry.tsx')
-const stylesheetEntry = path.resolve(__dirname, './src/styles/globals.css')
+import {
+  CLIENT_ASSETS_DIR,
+  CLIENT_BASE_PATH,
+  CLIENT_OUTPUT_DIR,
+} from './src/paths'
 
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig(({ command }) => {
   const isBuild = command === 'build'
 
   return {
-    base: isBuild ? '/static/' : '/',
+    base: isBuild ? CLIENT_BASE_PATH : '/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
@@ -19,11 +21,10 @@ export default defineConfig(({ command }) => {
       },
     },
     build: {
-      outDir: 'dist/static',
-      emptyOutDir: false,
-      manifest: true,
+      outDir: CLIENT_OUTPUT_DIR,
+      assetsDir: CLIENT_ASSETS_DIR,
+      emptyOutDir: true,
       rollupOptions: {
-        input: [clientEntry, stylesheetEntry],
         output: {
           manualChunks(id) {
             if (!id.includes('/node_modules/')) return
