@@ -26,23 +26,25 @@ type ServerOptions =
       app: express.Application
       vite: ViteDevServer
       render: ServerRenderFunction
-      stylesheetUrl: string
     }
   | {
       dev: false
       app: express.Application
       render: ServerRenderFunction
-      stylesheetUrl: string
     }
 
 export function createServer(baseLogger: Logger, options: ServerOptions) {
   const logger = baseLogger.for('HTTP Server')
-  const { app, render, stylesheetUrl } = options
+  const { app, render } = options
 
   if (options.dev) {
     app.use('/', express.static('./static'))
   } else {
     app.use(compression())
+    app.use(
+      '/static/assets',
+      sirv('./dist/client/assets', { maxAge: 31536000, immutable: true }),
+    )
     app.use(
       '/static',
       sirv('./dist/static', { maxAge: 31536000, immutable: true }),
@@ -51,14 +53,10 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   }
 
   const renderToHtml = async (data: RenderData, url: string) => {
-    const rendered = await render(data, url, {
-      stylesheetUrl,
-    })
-    const template = options.dev
-      ? readFileSync('index.html', 'utf-8')
-      : getTemplate(manifest)
+    const rendered = await render(data, url)
+    const template = await getTemplate(options, url)
 
-    let html = template
+    return template
       .replace('<!--app-head-->', rendered.head)
       .replace('<!--app-html-->', rendered.html)
       .replace(
@@ -69,12 +67,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
         '<!--env-data-->',
         `window.__ENV__=${JSON.stringify(getClientEnvData())}`,
       )
-
-    if (options.dev) {
-      html = await options.vite.transformIndexHtml(url, html)
-    }
-
-    return html
   }
 
   app.use(timeout('25s'))
@@ -142,12 +134,13 @@ function createDevPageRouterMiddleware(
   }
 }
 
-function getTemplate(manifest: Manifest) {
-  const template = readFileSync('index.html', 'utf-8')
-  return template.replace(
-    '/src/ssr/ClientEntry.tsx',
-    manifest.getUrl('/src/ssr/ClientEntry.tsx'),
-  )
+async function getTemplate(options: ServerOptions, url: string) {
+  if (options.dev) {
+    const template = readFileSync('index.html', 'utf-8')
+    return await options.vite.transformIndexHtml(url, template)
+  }
+
+  return readFileSync('dist/client/index.html', 'utf-8')
 }
 
 function getClientEnvData() {

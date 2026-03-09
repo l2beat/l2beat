@@ -3,9 +3,6 @@ import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import { defineConfig } from 'vite'
 
-const clientEntry = path.resolve(__dirname, './src/ssr/ClientEntry.tsx')
-const stylesheetEntry = path.resolve(__dirname, './src/styles/globals.css')
-
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig(({ command }) => {
   const isBuild = command === 'build'
@@ -19,11 +16,9 @@ export default defineConfig(({ command }) => {
       },
     },
     build: {
-      outDir: 'dist/static',
+      outDir: 'dist/client',
       emptyOutDir: false,
-      manifest: true,
       rollupOptions: {
-        input: [clientEntry, stylesheetEntry],
         output: {
           manualChunks(id) {
             if (!id.includes('/node_modules/')) return
