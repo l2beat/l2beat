@@ -6,7 +6,7 @@ import {
   CLIENT_ASSETS_DIR,
   CLIENT_BASE_PATH,
   CLIENT_OUTPUT_DIR,
-} from './src/clientBuild'
+} from './src/paths'
 
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig(({ command }) => {
