@@ -1,5 +1,5 @@
-import type { CommonInteropData, DurationSplitMap } from '../types'
 import { expect } from 'earl'
+import type { CommonInteropData, DurationSplitMap } from '../types'
 import { getAverageDuration } from './getAverageDuration'
 
 describe(getAverageDuration.name, () => {

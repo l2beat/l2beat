@@ -1,8 +1,8 @@
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
-  InteropTransferTypeStatsMap,
   InteropTransferRecord,
+  InteropTransferTypeStatsMap,
 } from '@l2beat/database'
 import {
   assert,
