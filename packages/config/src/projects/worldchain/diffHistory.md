@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x7bf6f59791c49c0b89698c9be8a8cc0c8a312ae2
+
+# Diff at Mon, 09 Mar 2026 10:47:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1772656605
+- current timestamp: 1773053150
+
+## Description
+
+Increase L2 gas limit from 200M to 280M on SystemConfig.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        200000000
++        280000000
+    }
+```
+
 Generated with discovered.json: 0xbb91281b53639e1d32ccd5ddc4ad57e321081e1a
 
 # Diff at Wed, 04 Mar 2026 20:37:52 GMT:
