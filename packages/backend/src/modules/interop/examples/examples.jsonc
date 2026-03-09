@@ -45,6 +45,50 @@
       ]
     }
   },
+  "avalanche": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xd4f2f8b755db7e834e7bffaf5fe619385f3d8af04c0d4a3f588403de427ae4d9"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x4438867ab6043d14073f8784937688bd2bf9b7078ef76ca364be3803e6143649"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x006cf082c0dac7c2f886600e4ea6e9d6085c413a386e1c206725824a4a756aa4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x70fc73af9244945ec066f2a6bff3bc36497e446fc87f01ed4998512fbc7521fe"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "avalanche.Deposit" },
+        { "type": "avalanche.Mint" },
+        { "type": "avalanche.Burn" },
+        { "type": "avalanche.Withdrawal" }
+      ],
+      "messages": [
+        { "type": "avalanche.Message", "app": "avalanche-bridge" },
+        { "type": "avalanche.Message", "app": "avalanche-bridge" }
+      ],
+      "transfers": [
+        {
+          "type": "avalanche.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "avalanche.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": false }
+        }
+      ]
+    }
+  },
   "ccip": {
     "loadConfigs": ["ccip"],
     "txs": [
