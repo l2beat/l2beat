@@ -20,7 +20,7 @@ export const xchain: ScalingProject = arbitrumStackL2({
     name: 'XCHAIN',
     slug: 'xchain',
     description:
-      'XCHAIN is an Optimium based on the Arbitrum Arbitrum Stack. It is built to support IDEX - a high-performance perpetual swaps exchange. It allows for gas free and nearly instant settlement of all IDEX transactions.',
+      'XCHAIN is an Optimium based on the Arbitrum Stack. It is built to support IDEX - a high-performance perpetual swaps exchange. It allows for gas free and nearly instant settlement of all IDEX transactions.',
     links: {
       websites: ['https://idex.io/'],
       bridges: ['https://exchange.idex.io/'],

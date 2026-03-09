@@ -21,7 +21,7 @@ export const reya: ScalingProject = arbitrumStackL2({
     name: 'Reya',
     slug: 'reya',
     description:
-      'Reya is an Arbitrum Arbitrum Stack L2 with AnyTrust data availability, optimizing for trading and liquidity provision.',
+      'Reya is an Arbitrum Stack L2 with AnyTrust data availability, optimizing for trading and liquidity provision.',
     links: {
       websites: ['https://reya.network/'],
       bridges: [
