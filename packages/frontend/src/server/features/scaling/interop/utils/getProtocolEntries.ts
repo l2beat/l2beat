@@ -1,7 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
 import {
-  assert,
   type KnownInteropBridgeType,
   notUndefined,
   type ProjectId,
@@ -14,13 +13,14 @@ import type {
   AggregatedInteropTransferWithTokens,
   ByBridgeTypeData,
   DurationSplitMap,
+  InteropSelectionInput,
   ProtocolEntry,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { buildTransfersTimeModeMap } from './buildTransfersTimeModeMap'
 import { buildDurationSplitMap, getAverageDuration } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
-import type { InteropFlowData } from './getFlows'
+import { flowsMapToSorted } from './getFlows'
 import {
   getProtocolsDataMap,
   getProtocolsDataMapByBridgeType,
@@ -38,6 +38,7 @@ export function getProtocolEntries(
   interopProjects: Project<'interopConfig'>[],
   type: KnownInteropBridgeType | undefined,
   snapshotTimestamp: UnixTime | undefined,
+  selection?: InteropSelectionInput,
 ): {
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
@@ -72,6 +73,7 @@ export function getProtocolEntries(
       tokensDetailsMap,
       durationSplitMap,
       logger,
+      selection,
     )
 
     const bridgeTypes = unique(
@@ -170,6 +172,7 @@ function getByBridgeTypeData(
   tokensDetailsMap: TokensDetailsMap,
   durationSplitMap: DurationSplitMap | undefined,
   logger: Logger,
+  selection: InteropSelectionInput | undefined,
 ): ByBridgeTypeData | undefined {
   const data = protocolsDataByBridgeTypeMap.get(projectId)
   if (!data) return undefined
@@ -198,7 +201,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
-          flows: flowsMapToSorted(data.lockAndMint.flows),
+          flows: flowsMapToSorted(data.lockAndMint.flows, selection),
           netMintedValue:
             data.lockAndMint.mintedValueUsd !== undefined &&
             data.lockAndMint.burnedValueUsd !== undefined
@@ -229,7 +232,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
-          flows: flowsMapToSorted(data.nonMinting.flows),
+          flows: flowsMapToSorted(data.nonMinting.flows, selection),
           averageValueInFlight: data.nonMinting.averageValueInFlight,
         }
       : undefined,
@@ -256,7 +259,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
-          flows: flowsMapToSorted(data.burnAndMint.flows),
+          flows: flowsMapToSorted(data.burnAndMint.flows, selection),
         }
       : undefined,
   }
@@ -269,14 +272,4 @@ function sortBridgeTypesFn(
   b: KnownInteropBridgeType,
 ): number {
   return bridgeTypesOrder.indexOf(a) - bridgeTypesOrder.indexOf(b)
-}
-
-function flowsMapToSorted(flows: Map<string, number>): InteropFlowData[] {
-  return Array.from(flows.entries())
-    .toSorted((a, b) => b[1] - a[1])
-    .map(([key, volume]): InteropFlowData => {
-      const [srcChain, dstChain] = key.split('::')
-      assert(srcChain && dstChain)
-      return { srcChain, dstChain, volume }
-    })
 }

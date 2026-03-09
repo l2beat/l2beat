@@ -1,9 +1,8 @@
-import {
-  assert,
-  getInteropTransferValue,
-  type ProjectId,
-} from '@l2beat/shared-pure'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import { getInteropTransferValue, type ProjectId } from '@l2beat/shared-pure'
+import type {
+  AggregatedInteropTransferWithTokens,
+  InteropSelectionInput,
+} from '../types'
 
 export type InteropFlowData = {
   srcChain: string
@@ -13,6 +12,7 @@ export type InteropFlowData = {
 
 export function getFlows(
   records: AggregatedInteropTransferWithTokens[],
+  selection: InteropSelectionInput,
   subgroupProjects?: Set<ProjectId>,
 ): InteropFlowData[] {
   const map = new Map<string, number>()
@@ -26,13 +26,51 @@ export function getFlows(
     map.set(key, current + (getInteropTransferValue(record) ?? 0))
   }
 
-  return Array.from(map.entries())
-    .toSorted((a, b) => b[1] - a[1])
-    .map(([key, volume]): InteropFlowData => {
-      const [srcChain, dstChain] = key.split('::')
-      assert(srcChain && dstChain)
+  return flowsMapToSorted(map, selection)
+}
 
+export function flowsMapToSorted(
+  flows: Map<string, number>,
+  selection: InteropSelectionInput,
+): InteropFlowData[] {
+  const selectedPairs = getSelectedFlowPairs(selection)
+  return selectedPairs
+    .map(({ srcChain, dstChain }) => {
+      const volume = flows.get(toFlowKey(srcChain, dstChain)) ?? 0
       return { srcChain, dstChain, volume }
     })
-    .slice(0, 2)
+    .toSorted((a, b) => b.volume - a.volume)
+}
+
+function getSelectedFlowPairs(
+  selection: InteropSelectionInput | undefined,
+): Pick<InteropFlowData, 'srcChain' | 'dstChain'>[] {
+  if (!selection) {
+    return []
+  }
+
+  const seen = new Set<string>()
+  const pairs: Pick<InteropFlowData, 'srcChain' | 'dstChain'>[] = []
+
+  for (const srcChain of selection.from) {
+    for (const dstChain of selection.to) {
+      if (srcChain === dstChain) {
+        continue
+      }
+
+      const key = toFlowKey(srcChain, dstChain)
+      if (seen.has(key)) {
+        continue
+      }
+
+      seen.add(key)
+      pairs.push({ srcChain, dstChain })
+    }
+  }
+
+  return pairs
+}
+
+function toFlowKey(srcChain: string, dstChain: string) {
+  return `${srcChain}::${dstChain}`
 }

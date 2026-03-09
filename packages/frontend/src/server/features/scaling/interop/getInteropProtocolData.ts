@@ -52,6 +52,7 @@ export async function getInteropProtocolData(
     [interopProject],
     undefined,
     snapshotTimestamp,
+    params,
   )
   const [projectEntry] = entries.entries
 
@@ -71,7 +72,7 @@ export async function getInteropProtocolData(
       interopProjects: [interopProject],
     }),
     entry: projectEntry,
-    flows: getFlows(records),
+    flows: getFlows(records, params),
     transferSize: getTransferSizeChartData(records, [interopProject])?.[0],
   }
 }
