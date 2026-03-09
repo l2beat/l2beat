@@ -76,6 +76,7 @@ describe(InteropAggregatingIndexer.name, () => {
           dstChain: 'arbitrum',
           abstractTokenId: 'eth',
           transferCount: 1,
+          transferTypeStats: undefined,
           totalDurationSum: 5000,
           volume: 2000,
           minTransferValueUsd: 2000,
