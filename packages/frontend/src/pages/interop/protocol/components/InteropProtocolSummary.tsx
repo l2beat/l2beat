@@ -138,13 +138,8 @@ export function InteropProtocolSummary({
             />
             <div className="mt-2 flex flex-wrap gap-2">
               {breakdownValues.map((value) => (
-                <div
-                  key={value.label}
-                  className="flex items-center gap-[3px]"
-                >
-                  <div
-                    className={cn('size-3.5 rounded-xs', value.className)}
-                  />
+                <div key={value.label} className="flex items-center gap-[3px]">
+                  <div className={cn('size-3.5 rounded-xs', value.className)} />
                   <span className="font-medium text-label-value-12 text-secondary leading-none">
                     {value.label}
                   </span>
