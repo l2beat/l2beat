@@ -10,7 +10,7 @@ export interface AggregatedInteropTransferRecord {
   bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
-  transferTypeStats?: InteropTransferTypeStatsMap
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
   identifiedCount: number
   totalDurationSum: number

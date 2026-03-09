@@ -1299,7 +1299,7 @@ function record({
     id,
     srcChain,
     dstChain,
-    ...(transferTypeStats ? { transferTypeStats } : {}),
+    transferTypeStats,
     transferCount,
     identifiedCount,
     totalDurationSum,
