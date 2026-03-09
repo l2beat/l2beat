@@ -893,7 +893,7 @@ function record({
     srcChain,
     dstChain,
     abstractTokenId,
-    ...(transferTypeStats ? { transferTypeStats } : {}),
+    transferTypeStats,
     transferCount,
     totalDurationSum,
     volume,

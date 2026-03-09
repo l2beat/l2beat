@@ -11,7 +11,7 @@ export interface AggregatedInteropTokenRecord {
   srcChain: string
   dstChain: string
   abstractTokenId: string
-  transferTypeStats?: InteropTransferTypeStatsMap
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
   totalDurationSum: number
   volume: number
