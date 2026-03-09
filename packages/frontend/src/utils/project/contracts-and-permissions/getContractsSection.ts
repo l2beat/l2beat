@@ -4,6 +4,7 @@ import type {
   ProjectContracts,
   ProjectEscrow,
   ReferenceLink,
+  TvsToken,
 } from '@l2beat/config'
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
@@ -11,6 +12,7 @@ import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import { manifest } from '~/utils/Manifest'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import type { TechnologyContract } from '../../../components/projects/sections/ContractEntry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/ContractsSection'
@@ -27,6 +29,7 @@ type ProjectParams = {
   isVerified: boolean
   architectureImage?: string
   contracts?: ProjectContracts
+  tvsConfig?: TvsToken[]
 }
 
 type ContractsSection = Omit<
@@ -45,12 +48,30 @@ export function getContractsSection(
   if (!projectParams.contracts) {
     return undefined
   }
-  if (Object.values(projectParams.contracts.addresses).flat().length === 0) {
+  const activeEscrows =
+    projectParams.contracts.escrows?.filter(
+      (escrow) => escrow.contract && !escrow.isHistorical,
+    ) ?? []
+
+  if (
+    Object.values(projectParams.contracts.addresses).flat().length === 0 &&
+    activeEscrows.length === 0
+  ) {
     return undefined
   }
   const projectChangeReport = projectParams.id
     ? projectsChangeReport?.projects[projectParams.id]
     : undefined
+
+  const escrowTokenIconMap = getEscrowTokenIconMap(projectParams.tvsConfig)
+  const escrows = activeEscrows.sort(moreTokensFirst)
+  const escrowsByAddress = new Map(
+    escrows.map((escrow) => [
+      getEscrowKey(escrow.chain, escrow.address),
+      getEscrowDetails(escrow, escrowTokenIconMap),
+    ]),
+  )
+  const matchedEscrows = new Set<string>()
 
   const contracts = Object.fromEntries(
     Object.entries(projectParams.contracts.addresses ?? {}).map(
@@ -58,12 +79,21 @@ export function getContractsSection(
         return [
           contractUtils.getChainName(chainName),
           contracts.map((contract) => {
+            const escrowKey = getEscrowKey(
+              chainName,
+              ChainSpecificAddress.address(contract.address),
+            )
+            const escrow = escrowsByAddress.get(escrowKey)
+            if (escrow) {
+              matchedEscrows.add(escrowKey)
+            }
             return makeTechnologyContract(
               contract,
               projectParams,
               !contract.isVerified,
               projectChangeReport,
               contractUtils,
+              escrow,
             )
           }),
         ]
@@ -71,28 +101,37 @@ export function getContractsSection(
     ),
   )
 
-  const escrows =
-    projectParams.contracts.escrows
-      ?.filter((escrow) => escrow.contract && !escrow.isHistorical)
-      .sort(moreTokensFirst)
-      .map((escrow) => {
-        const contract = escrowToProjectContract(escrow)
+  for (const escrow of escrows) {
+    const escrowKey = getEscrowKey(escrow.chain, escrow.address)
+    if (matchedEscrows.has(escrowKey)) {
+      continue
+    }
 
-        return makeTechnologyContract(
-          contract,
-          projectParams,
-          !contract.isVerified,
-          projectChangeReport,
-          contractUtils,
-          true,
-        )
-      }) ?? []
+    const chainName = contractUtils.getChainName(escrow.chain)
+    const chainContracts = contracts[chainName] ?? []
+    const escrowDetails = escrowsByAddress.get(escrowKey)
+    assert(escrowDetails, 'Escrow details should exist for active escrows')
+
+    const contract = escrowToProjectContract(escrow)
+
+    contracts[chainName] = [
+      ...chainContracts,
+      makeTechnologyContract(
+        contract,
+        projectParams,
+        !contract.isVerified,
+        projectChangeReport,
+        contractUtils,
+        escrowDetails,
+      ),
+    ]
+  }
 
   const risks = projectParams.contracts.risks.map(toTechnologyRisk)
 
   return {
     contracts,
-    escrows,
+    escrows: [],
     risks,
     diagram: getDiagramParams(
       'architecture',
@@ -114,7 +153,7 @@ function makeTechnologyContract(
   isUnverified: boolean,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   contractUtils: ContractUtils,
-  isEscrow?: boolean,
+  escrow?: TechnologyContract['escrow'],
 ): TechnologyContract {
   const chain = item.chain
   // TODO: sz-piotr: This here is just a stepping stone. Ideally none of this
@@ -188,22 +227,6 @@ function makeTechnologyContract(
     }
   }
 
-  const tokens = projectParams.contracts?.escrows?.find(
-    (x) => x.address === ChainSpecificAddress.address(item.address),
-  )?.tokens
-  // if contract is an escrow we already tweak it's name so we don't need to add this
-  if (tokens && !isEscrow) {
-    const tokenText =
-      tokens === '*'
-        ? 'This contract can store any token.'
-        : `This contract stores the following tokens: ${tokens.join(', ')}.`
-    if (!description) {
-      description = tokenText
-    } else {
-      description += '\n* ' + tokenText
-    }
-  }
-
   const changes = Object.values(projectChangeReport ?? {}).flat()
   const impactfulChangeAddresses = changes.flatMap((c) =>
     c.implementationChange
@@ -241,7 +264,53 @@ function makeTechnologyContract(
     upgradeableBy: item.upgradableBy,
     upgradeConsiderations: item.upgradeConsiderations,
     pastUpgrades: getPastUpgradesData(item.pastUpgrades, explorerUrl),
+    escrow,
   }
+}
+
+function getEscrowDetails(
+  escrow: ProjectEscrow,
+  tokenIconMap: Map<string, string>,
+): NonNullable<TechnologyContract['escrow']> {
+  if (escrow.tokens === '*') {
+    return {
+      tokens: escrow.tokens,
+      tokenIcons: [],
+    }
+  }
+
+  return {
+    tokens: escrow.tokens,
+    tokenIcons: escrow.tokens.map((symbol) => ({
+      symbol,
+      iconUrl:
+        tokenIconMap.get(symbol) ??
+        manifest.getUrl('/images/token-placeholder.png'),
+    })),
+  }
+}
+
+function getEscrowKey(chain: string, address: EthereumAddress | string) {
+  return `${chain}:${address.toString()}`
+}
+
+function getEscrowTokenIconMap(tvsConfig?: TvsToken[]) {
+  const result = new Map<string, string>()
+
+  for (const token of tvsConfig ?? []) {
+    const iconUrl =
+      token.iconUrl ?? manifest.getUrl('/images/token-placeholder.png')
+
+    if (!result.has(token.symbol)) {
+      result.set(token.symbol, iconUrl)
+    }
+
+    if (token.displaySymbol && !result.has(token.displaySymbol)) {
+      result.set(token.displaySymbol, iconUrl)
+    }
+  }
+
+  return result
 }
 
 function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
