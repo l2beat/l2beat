@@ -1545,7 +1545,15 @@ Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutoria
   },
   '0x03cb5216c8cf2902c66127db119ba03a1296205736addc39cfeafc7c14d0bd14': {
     ...ABSOLUTE_PRESTATE('Lisk'),
-    verificationStatus: 'notVerified',
+    programUrl: 'https://github.com/ethereum-optimism/optimism/tree/op-contracts/v1.3.0/op-program',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
+
+1. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/) and make sure it is running.
+2. Check out the correct branch of [optimism](https://github.com/ethereum-optimism/optimism) repo: \`git checkout op-contracts/v1.3.0\` . Commit hash should be  \`e6ef3a900c42c8722e72c2e2314027f85d12ced5\`.
+3. Regenerate the absolute prestate: \`make reproducible-prestate\`. This script will print out the correct hash.
+    `,
   },
   '0x03eb07101fbdeaf3f04d9fb76526362c1eea2824e4c6e970bdb19675b72e4fc8': {
     ...ABSOLUTE_PRESTATE('v1.6.1 (cannon64)'),
