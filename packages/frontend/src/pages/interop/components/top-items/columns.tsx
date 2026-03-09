@@ -118,10 +118,7 @@ export const getTopItemsColumns = (
         cell: (ctx) => {
           if (ctx.row.original.avgDuration === null) return EM_DASH
           return (
-            <AvgDurationCell
-              averageDuration={ctx.row.original.avgDuration}
-              disableTooltip
-            />
+            <AvgDurationCell averageDuration={ctx.row.original.avgDuration} />
           )
         },
         meta: {
