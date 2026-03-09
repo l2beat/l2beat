@@ -35,6 +35,10 @@ export function Head({ manifest, metadata, stylesheetUrl }: HeadProps) {
         sizes="180x180"
       />
       <link rel="stylesheet" href={resolvedStylesheetUrl} />
+      <link
+        rel="modulepreload"
+        href={manifest.getUrl('/src/ssr/ClientEntry.tsx')}
+      />
       {manifest.getImports('/src/ssr/ClientEntry.tsx').map((url) => (
         <link key={url} rel="modulepreload" href={url} />
       ))}
