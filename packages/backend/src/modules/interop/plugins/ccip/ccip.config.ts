@@ -122,7 +122,7 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const reconciled = reconcileNetworks(previous, latest.networks)
 
     if (reconciled.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: CCIPConfig.key,
         removed: reconciled.removed,
       })
