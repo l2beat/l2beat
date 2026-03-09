@@ -458,7 +458,7 @@ export const badges = [
     action: {
       type: 'scalingFilter',
       id: 'stack',
-      value: 'Arbitrum Stack',
+      value: 'Arbitrum',
     },
   },
   {
@@ -469,7 +469,7 @@ export const badges = [
     action: {
       type: 'scalingFilter',
       id: 'stack',
-      value: 'Arbitrum Stack',
+      value: 'Arbitrum',
     },
   },
   {
