@@ -1,10 +1,8 @@
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import type { TokenMap } from '../engine/match/TokenMap'
 import { PacketDelivered, PacketSent } from './layerzero/layerzero-v2.plugin'
 import {
-  getBridgeType,
   parseOFTReceived,
   parseOFTSent,
 } from './layerzero/layerzero-v2-ofts.plugin'
@@ -361,6 +359,18 @@ const StargateV2CreditsReceived = createInteropEventType<{
 const GUID_ZERO =
   '0x0000000000000000000000000000000000000000000000000000000000000000'
 
+function getStargateBridgeType(srcWasBurned: boolean, dstWasMinted: boolean) {
+  if (!srcWasBurned && !dstWasMinted) {
+    return 'nonMinting' // normal case
+  }
+
+  if (srcWasBurned && dstWasMinted) {
+    return 'burnAndMint' // full hydra
+  }
+
+  return 'lockAndMint'
+}
+
 export class StargatePlugin implements InteropPlugin {
   readonly name = 'stargate'
 
@@ -506,7 +516,6 @@ export class StargatePlugin implements InteropPlugin {
   match(
     packetDelivered: InteropEvent,
     db: InteropEventDb,
-    tokenMap: TokenMap,
   ): MatchResult | undefined {
     if (!PacketDelivered.checkType(packetDelivered)) return
 
@@ -567,16 +576,10 @@ export class StargatePlugin implements InteropPlugin {
             dstAmount: matchedOftReceived.args.amountReceivedLD,
             srcWasBurned: oftSentBusRode.args.hydra,
             dstWasMinted: matchedOftReceived.args.hydra,
-            bridgeType: getBridgeType({
-              srcTokenAddress: oftSentBusRode.args.tokenAddress,
-              dstTokenAddress: matchedOftReceived.args.tokenAddress,
-              srcWasBurned: oftSentBusRode.args.hydra,
-              dstWasMinted: matchedOftReceived.args.hydra,
-              srcChain: oftSentBusRode.ctx.chain,
-              dstChain: matchedOftReceived.ctx.chain,
-              tokenMap,
-              defaultBridgeType: 'nonMinting',
-            }),
+            bridgeType: getStargateBridgeType(
+              oftSentBusRode.args.hydra,
+              matchedOftReceived.args.hydra,
+            ),
           }),
         )
       }
@@ -604,16 +607,10 @@ export class StargatePlugin implements InteropPlugin {
           dstAmount: oftReceived.args.amountReceivedLD,
           srcWasBurned: oftSentTaxi.args.hydra,
           dstWasMinted: oftReceived.args.hydra,
-          bridgeType: getBridgeType({
-            srcTokenAddress: oftSentTaxi.args.tokenAddress,
-            dstTokenAddress: oftReceived.args.tokenAddress,
-            srcWasBurned: oftSentTaxi.args.hydra,
-            dstWasMinted: oftReceived.args.hydra,
-            srcChain: oftSentTaxi.ctx.chain,
-            dstChain: oftReceived.ctx.chain,
-            tokenMap,
-            defaultBridgeType: 'nonMinting',
-          }),
+          bridgeType: getStargateBridgeType(
+            oftSentTaxi.args.hydra,
+            oftReceived.args.hydra,
+          ),
         }),
       ]
     }
