@@ -1199,6 +1199,7 @@ export type InteropPluginName =
   | 'agglayer'
   | 'allbridge'
   | 'aori'
+  | 'avalanche'
   | 'axelar'
   | 'axelar-its'
   | 'beefy-bridge'
