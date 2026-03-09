@@ -16,7 +16,7 @@ export function TopTokensCards({ topTokens, frameworks }: Props) {
       <h2 className="mb-4 font-bold text-heading-20 max-md:px-4 md:text-heading-24">
         Top Tokens by Volume
         <span className="ml-2 font-normal text-paragraph-12 text-secondary md:text-paragraph-13">
-          24h
+          Last 24h
         </span>
       </h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 min-[1600px]:grid-cols-4">

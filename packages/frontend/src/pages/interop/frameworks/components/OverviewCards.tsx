@@ -27,7 +27,7 @@ export function OverviewCards({ frameworks }: Props) {
       <h2 className="mb-4 font-bold text-heading-20 max-md:px-4 md:text-heading-24">
         Overview
         <span className="ml-2 font-normal text-paragraph-12 text-secondary md:text-paragraph-13">
-          7-Day
+          Last 7d
         </span>
       </h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 min-[1600px]:grid-cols-4">
@@ -49,7 +49,7 @@ export function OverviewCards({ frameworks }: Props) {
               {formatCurrency(fw.volume)}
             </div>
             <div className="mt-0.5 flex items-center gap-1 text-label-value-12">
-              <span className="text-secondary">7-Day volume</span>
+              <span className="text-secondary">7d volume</span>
               <PercentChange value={fw.volumeChange7d} />
               <span className="text-secondary">/ 7d</span>
             </div>

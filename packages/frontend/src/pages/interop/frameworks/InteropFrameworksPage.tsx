@@ -76,7 +76,7 @@ export function InteropFrameworksPage({
             <h2 className="font-bold text-heading-20 md:text-heading-24">
               Transfer Size Distribution
               <span className="ml-2 font-normal text-paragraph-12 text-secondary md:text-paragraph-13">
-                7-Day
+                Last 7d
               </span>
             </h2>
             <TransferSizeChart
