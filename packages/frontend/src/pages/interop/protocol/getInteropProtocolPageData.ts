@@ -11,12 +11,13 @@ import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
 import { toInteropApiSelection } from '../utils/toInteropApiSelection'
+import type { InteropMode } from '../utils/types'
 
 export async function getInteropProtocolPageData(
   req: Request<{ slug: string }, unknown, unknown, InteropQuery>,
   manifest: Manifest,
+  mode: InteropMode = 'public',
 ): Promise<RenderData | undefined> {
-  const mode = 'public'
   const helpers = getSsrHelpers()
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
