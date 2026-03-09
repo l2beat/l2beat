@@ -203,8 +203,8 @@ function EscrowDetailsEntry({ escrow }: { escrow: TechnologyContractEscrow }) {
     return (
       <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
         <strong className="text-primary">
-          All supported tokens in this escrow are included in the value
-          secured calculation.
+          All supported tokens in this escrow are included in the value secured
+          calculation.
         </strong>
       </p>
     )
