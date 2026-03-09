@@ -1545,7 +1545,8 @@ Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutoria
   },
   '0x03cb5216c8cf2902c66127db119ba03a1296205736addc39cfeafc7c14d0bd14': {
     ...ABSOLUTE_PRESTATE('Lisk'),
-    programUrl: 'https://github.com/ethereum-optimism/optimism/tree/op-contracts/v1.3.0/op-program',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/op-contracts/v1.3.0/op-program',
     verificationStatus: 'successful',
     verificationSteps: `
 Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutorials/absolute-prestate).
