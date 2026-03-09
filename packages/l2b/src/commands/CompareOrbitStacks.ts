@@ -8,7 +8,8 @@ import { discoveryPath } from './args'
 
 const CompareAllOrbitStackProjects = command({
   name: 'compare-orbit-stacks-all',
-  description: 'Compare selected values in all projects using the Arbitrum Stack.',
+  description:
+    'Compare selected values in all projects using the Arbitrum Stack.',
   version: '1.0.0',
   args: { discoveryPath },
   handler: async (args) => {
