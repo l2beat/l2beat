@@ -129,8 +129,12 @@ export function SideNavLayout({
                 '/interop/burn-and-mint',
             },
             {
-              title: 'Framework Comparison',
-              href: '/interop/frameworks',
+              title: 'Multichain Frameworks',
+              href: '/interop/multichain',
+            },
+            {
+              title: 'Intent Protocols',
+              href: '/interop/intent',
             },
           ],
         },

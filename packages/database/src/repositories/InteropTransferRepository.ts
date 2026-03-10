@@ -25,6 +25,8 @@ function isInteropBridgeType(value: string): value is InteropBridgeType {
   return (InteropBridgeTypeValues as readonly string[]).includes(value)
 }
 
+export type TransferFilter = 'excludeNonMinting' | 'onlyLiquidityBased'
+
 export interface InteropTransferRecord {
   plugin: string
   bridgeType: KnownInteropBridgeType | undefined
@@ -404,10 +406,14 @@ export class InteropTransferRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getTransferSpeedStats(typePatterns: string[], since: UnixTime) {
+  async getTransferSpeedStats(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
     if (typePatterns.length === 0) return []
 
-    const query = this.db
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'type',
@@ -427,18 +433,13 @@ export class InteropTransferRepository extends BaseRepository {
       .where('duration', '>', 0)
       .where('timestamp', '>=', UnixTime.toDate(since))
       .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
-      .where((eb) =>
-        eb.or([
-          eb('bridgeType', '!=', 'nonMinting'),
-          eb('bridgeType', 'is', null),
-        ]),
-      )
-      .groupBy('type')
-      .orderBy('cnt', 'desc')
+    query = this.applyTransferFilter(query, filter)
+    query = query.groupBy('type').orderBy('cnt', 'desc')
 
     const rows = await query.execute()
 
-    return rows.map((r) => ({
+    // biome-ignore lint/suspicious/noExplicitAny: kysely query builder loses type after reassignment
+    return rows.map((r: any) => ({
       type: r.type,
       count: Number(r.cnt ?? 0),
       volumeUsd: Number(r.volume_usd ?? 0),
@@ -451,39 +452,29 @@ export class InteropTransferRepository extends BaseRepository {
     }))
   }
 
-  async getChainCoverage(typePatterns: string[], since: UnixTime) {
+  async getChainCoverage(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
     if (typePatterns.length === 0) return []
 
+    let srcQuery = this.db
+      .selectFrom('InteropTransfer')
+      .select(['type', sql<string>`"srcChain"`.as('chain')])
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    srcQuery = this.applyTransferFilter(srcQuery, filter)
+
+    let dstQuery = this.db
+      .selectFrom('InteropTransfer')
+      .select(['type', sql<string>`"dstChain"`.as('chain')])
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    dstQuery = this.applyTransferFilter(dstQuery, filter)
+
     const rows = await this.db
-      .selectFrom(
-        this.db
-          .selectFrom('InteropTransfer')
-          .select(['type', sql<string>`"srcChain"`.as('chain')])
-          .where('timestamp', '>=', UnixTime.toDate(since))
-          .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
-          .where((eb) =>
-            eb.or([
-              eb('bridgeType', '!=', 'nonMinting'),
-              eb('bridgeType', 'is', null),
-            ]),
-          )
-          .unionAll(
-            this.db
-              .selectFrom('InteropTransfer')
-              .select(['type', sql<string>`"dstChain"`.as('chain')])
-              .where('timestamp', '>=', UnixTime.toDate(since))
-              .where((eb) =>
-                eb.or(typePatterns.map((p) => eb('type', 'like', p))),
-              )
-              .where((eb) =>
-                eb.or([
-                  eb('bridgeType', '!=', 'nonMinting'),
-                  eb('bridgeType', 'is', null),
-                ]),
-              ),
-          )
-          .as('sub'),
-      )
+      .selectFrom(srcQuery.unionAll(dstQuery).as('sub'))
       .select([
         'sub.type',
         sql<string[]>`array_agg(DISTINCT sub.chain ORDER BY sub.chain)`.as(
@@ -499,10 +490,14 @@ export class InteropTransferRepository extends BaseRepository {
     }))
   }
 
-  async getTopTokens(typePatterns: string[], since: UnixTime) {
+  async getTopTokens(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
     if (typePatterns.length === 0) return []
 
-    const rows = await this.db
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'type',
@@ -514,18 +509,16 @@ export class InteropTransferRepository extends BaseRepository {
       .where('srcSymbol', 'is not', null)
       .where('timestamp', '>=', UnixTime.toDate(since))
       .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
-      .where((eb) =>
-        eb.or([
-          eb('bridgeType', '!=', 'nonMinting'),
-          eb('bridgeType', 'is', null),
-        ]),
-      )
+    query = this.applyTransferFilter(query, filter)
+
+    const rows = await query
       .groupBy(['type', 'srcSymbol'])
       .orderBy('type')
       .orderBy('volume_usd', 'desc')
       .execute()
 
-    return rows.map((r) => ({
+    // biome-ignore lint/suspicious/noExplicitAny: kysely query builder loses type after reassignment
+    return rows.map((r: any) => ({
       type: r.type,
       symbol: r.srcSymbol as string,
       count: Number(r.cnt ?? 0),
@@ -534,10 +527,14 @@ export class InteropTransferRepository extends BaseRepository {
     }))
   }
 
-  async getChainPairs(typePatterns: string[], since: UnixTime) {
+  async getChainPairs(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
     if (typePatterns.length === 0) return []
 
-    const rows = await this.db
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'type',
@@ -548,12 +545,9 @@ export class InteropTransferRepository extends BaseRepository {
       ])
       .where('timestamp', '>=', UnixTime.toDate(since))
       .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
-      .where((eb) =>
-        eb.or([
-          eb('bridgeType', '!=', 'nonMinting'),
-          eb('bridgeType', 'is', null),
-        ]),
-      )
+    query = this.applyTransferFilter(query, filter)
+
+    const rows = await query
       .groupBy(['type', 'srcChain', 'dstChain'])
       .orderBy('type')
       .orderBy('volume_usd', 'desc')
@@ -568,10 +562,14 @@ export class InteropTransferRepository extends BaseRepository {
     }))
   }
 
-  async getPathSpeedStats(typePatterns: string[], since: UnixTime) {
+  async getPathSpeedStats(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
     if (typePatterns.length === 0) return []
 
-    const rows = await this.db
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'type',
@@ -585,14 +583,9 @@ export class InteropTransferRepository extends BaseRepository {
       .where('duration', '>', 0)
       .where('timestamp', '>=', UnixTime.toDate(since))
       .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
-      .where((eb) =>
-        eb.or([
-          eb('bridgeType', '!=', 'nonMinting'),
-          eb('bridgeType', 'is', null),
-        ]),
-      )
-      .groupBy(['type', 'srcChain', 'dstChain'])
-      .execute()
+    query = this.applyTransferFilter(query, filter)
+
+    const rows = await query.groupBy(['type', 'srcChain', 'dstChain']).execute()
 
     return rows.map((r) => ({
       type: r.type,
@@ -600,6 +593,60 @@ export class InteropTransferRepository extends BaseRepository {
       dstChain: r.dstChain,
       count: Number(r.cnt ?? 0),
       p50Sec: Number(r.p50_sec ?? 0),
+    }))
+  }
+
+  async getTransferSizeDistribution(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
+    if (typePatterns.length === 0) return []
+
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        'type',
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '<', 100)
+          .as('count_under_100'),
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '>=', 100)
+          .filterWhere('srcValueUsd', '<', 1000)
+          .as('count_100_to_1k'),
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '>=', 1000)
+          .filterWhere('srcValueUsd', '<', 10000)
+          .as('count_1k_to_10k'),
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '>=', 10000)
+          .filterWhere('srcValueUsd', '<', 100000)
+          .as('count_10k_to_100k'),
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '>=', 100000)
+          .as('count_over_100k'),
+      ])
+      .where('srcValueUsd', 'is not', null)
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    query = this.applyTransferFilter(query, filter)
+    query = query.groupBy('type')
+
+    const rows = await query.execute()
+
+    // biome-ignore lint/suspicious/noExplicitAny: kysely query builder loses type after reassignment
+    return rows.map((r: any) => ({
+      type: r.type as string,
+      under100: Number(r.count_under_100 ?? 0),
+      from100To1K: Number(r.count_100_to_1k ?? 0),
+      from1KTo10K: Number(r.count_1k_to_10k ?? 0),
+      from10KTo100K: Number(r.count_10k_to_100k ?? 0),
+      over100K: Number(r.count_over_100k ?? 0),
     }))
   }
 
@@ -662,5 +709,21 @@ export class InteropTransferRepository extends BaseRepository {
     }
 
     return result
+  }
+
+  // biome-ignore lint/suspicious/noExplicitAny: kysely query builder loses type after reassignment
+  private applyTransferFilter(query: any, filter: TransferFilter) {
+    if (filter === 'onlyLiquidityBased') {
+      return query
+        .where('srcWasBurned', '=', false)
+        .where('dstWasMinted', '=', false)
+    }
+    // biome-ignore lint/suspicious/noExplicitAny: kysely expression builder type
+    return query.where((eb: any) =>
+      eb.or([
+        eb('bridgeType', '!=', 'nonMinting'),
+        eb('bridgeType', 'is', null),
+      ]),
+    )
   }
 }

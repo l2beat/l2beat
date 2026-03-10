@@ -4,6 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { getInteropBridgesData } from './bridges/getInteropBridgesData'
 import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
 import { getInteropFrameworksData } from './frameworks/getInteropFrameworksData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
@@ -87,7 +88,13 @@ export function createInteropRouter(
     },
   )
 
-  router.get('/interop/frameworks', async (req, res) => {
+  router.get('/interop/intent', async (req, res) => {
+    const data = await getInteropBridgesData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/interop/multichain', async (req, res) => {
     const data = await getInteropFrameworksData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)

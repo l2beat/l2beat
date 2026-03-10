@@ -52,7 +52,7 @@ export function InteropFrameworksPage({
             </>
           }
         >
-          Framework Comparison
+          Multichain Frameworks
         </MainPageHeader>
 
         <div

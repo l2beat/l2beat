@@ -1,25 +1,25 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getFrameworkComparisonData } from '~/server/features/scaling/interop/getFrameworkComparisonData'
+import { getBridgeComparisonData } from '~/server/features/scaling/interop/getBridgeComparisonData'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
-export async function getInteropFrameworksData(
+export async function getInteropBridgesData(
   _req: Request,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
   const appLayoutProps = await getAppLayoutProps()
 
-  const frameworkData = await cache.get(
+  const bridgeData = await cache.get(
     {
-      key: ['interop', 'frameworks', 'data'],
+      key: ['interop', 'bridges', 'data'],
       ttl: 10 * 60,
       staleWhileRevalidate: 50 * 60,
     },
-    () => getFrameworkComparisonData(),
+    () => getBridgeComparisonData(),
   )
 
   return {
@@ -27,16 +27,16 @@ export async function getInteropFrameworksData(
       manifest,
       metadata: getMetadata(manifest, {
         openGraph: {
-          url: '/interop/multichain',
+          url: '/interop/intent',
           image: '/meta-images/interop/summary/opengraph-image.png',
         },
       }),
     },
     ssr: {
-      page: 'InteropFrameworksPage',
+      page: 'InteropBridgesPage',
       props: {
         ...appLayoutProps,
-        ...frameworkData,
+        ...bridgeData,
       },
     },
   }
