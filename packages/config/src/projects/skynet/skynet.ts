@@ -48,7 +48,7 @@ export const skynet: ScalingProject = underReviewL3({
     ],
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   activityConfig: {
     type: 'block',

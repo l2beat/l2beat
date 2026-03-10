@@ -26,7 +26,7 @@ export const flynet: ScalingProject = underReviewL3({
     },
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   dataAvailability: undefined,
   proofSystem: {

@@ -7,7 +7,7 @@
   "updates": [
     {
       "type": "ecosystem",
-      "ecosystemId": "arbitrum-orbit",
+      "ecosystemId": "arbitrum-ecosystem",
       "news": [
         {
           "title": "Robinhood Goes Live on Arbitrum with Tokenized Stocks and Plans for a Dedicated Layer 2",

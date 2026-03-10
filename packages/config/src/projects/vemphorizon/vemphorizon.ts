@@ -28,7 +28,7 @@ export const vemphorizon: ScalingProject = underReviewL3({
     },
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   proofSystem: {
     type: 'Optimistic',

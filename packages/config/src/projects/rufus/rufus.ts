@@ -52,7 +52,7 @@ export const rufus: ScalingProject = underReviewL2({
     ],
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   activityConfig: {
     type: 'block',

@@ -39,7 +39,7 @@ export const conwai: ScalingProject = underReviewL3({
     type: 'Optimistic',
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   chainConfig: {
     name: 'conwai',

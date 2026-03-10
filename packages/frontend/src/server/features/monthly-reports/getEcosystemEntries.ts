@@ -37,7 +37,6 @@ export interface EcosystemMonthlyUpdateEntry
   extends Omit<EcosystemUpdate, 'ecosystemId'> {
   id: string
   name: string
-  iconUrl: string
   colors: ProjectCustomColors
   projects: ProjectId[]
   bannerImg?: string
@@ -169,7 +168,6 @@ function getEcosystemMonthlyUpdateEntry(
   return {
     ...ecosystemUpdateEntry,
     ...ecosystem,
-    iconUrl: manifest.getUrl(`/icons/${ecosystem.slug}.png`),
     bannerImg,
     newProjects:
       ecosystemUpdateEntry.newProjectsIds?.map((p) => {

@@ -7,7 +7,7 @@
   "updates": [
     {
       "type": "ecosystem",
-      "ecosystemId": "arbitrum-orbit",
+      "ecosystemId": "arbitrum-ecosystem",
       "news": [
         {
           "title": "ArbOS Dia Upgrade & Smoother Fees",

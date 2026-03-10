@@ -769,7 +769,7 @@ export function orbitStackL3(
     type: 'layer3',
     ...common,
     ecosystemInfo: {
-      id: ProjectId('arbitrum-orbit'),
+      id: ProjectId('arbitrum-ecosystem'),
     },
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
@@ -827,7 +827,7 @@ export function arbitrumStackL2(
       trackedTxs: getTrackedTxs(templateVars),
     },
     ecosystemInfo: {
-      id: ProjectId('arbitrum-orbit'),
+      id: ProjectId('arbitrum-ecosystem'),
     },
     interopConfig: templateVars.interopConfig,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,

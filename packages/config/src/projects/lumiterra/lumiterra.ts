@@ -30,7 +30,7 @@ export const lumiterra: ScalingProject = upcomingL3({
     },
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   proofSystem: {
     type: 'Optimistic',

@@ -7,7 +7,7 @@
   "updates": [
     {
       "type": "ecosystem",
-      "ecosystemId": "arbitrum-orbit",
+      "ecosystemId": "arbitrum-ecosystem",
       "news": [
         {
           "title": "ArbitrumDAO Voting Underway on Proposal to Remove Nova Cost Cap, Upgrade Executors & Disable Legacy USDT Bridge",

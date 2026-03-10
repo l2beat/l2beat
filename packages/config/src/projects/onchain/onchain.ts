@@ -51,7 +51,7 @@ export const onchain: ScalingProject = underReviewL3({
     ],
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   escrows: [
     {

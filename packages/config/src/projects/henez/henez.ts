@@ -52,7 +52,7 @@ export const henez: ScalingProject = underReviewL3({
     ],
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   escrows: [
     {
