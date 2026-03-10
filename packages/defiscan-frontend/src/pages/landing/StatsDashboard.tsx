@@ -12,7 +12,7 @@ export function StatsDashboard({ data }: StatsDashboardProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <StatCard
-        label="Funds Reviewed"
+        label="TVL Reviewed"
         value={formatUsdValue(globalTotals.totalCapitalAtRisk)}
         sublabel={`across ${globalTotals.protocolsReviewed} protocols`}
       />

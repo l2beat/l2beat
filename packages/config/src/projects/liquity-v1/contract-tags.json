@@ -1,11 +1,12 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-08T22:26:14.287Z",
+  "lastModified": "2026-03-10T08:33:12.258Z",
   "tags": [
     {
       "contractAddress": "eth:0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
       "isExternal": true,
-      "timestamp": "2026-03-02T11:57:56.837Z"
+      "entity": "Chainlink",
+      "timestamp": "2026-03-10T08:33:12.258Z"
     },
     {
       "contractAddress": "eth:0x3d7ae7e594f2f2091ad8798313450130d0aba3a0",

@@ -21,6 +21,7 @@ import {
   addressesEqual,
   getFromAddressRecord,
 } from './addressUtils'
+import { getProject } from '../getProject'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -233,7 +234,54 @@ export class ReviewCompiler {
       // 5. Compute function analysis (rich dependency data with viewOnlyPath)
       const functionAnalysis = computeFunctionAnalysis(this.paths, project)
 
-      // 6. Build the compiled review
+      // 6. Load project data for contract names (applies config name overrides + multisig formatting)
+      const projectData = getProject(configReader, templateService, project)
+
+      // 7. Build flat list of contracts with names from getProject
+      const allProjectContracts: {
+        name: string
+        address: string
+        type: string
+        proxyType?: string
+      }[] = []
+      for (const entry of projectData.entries) {
+        for (const contract of [
+          ...(entry.initialContracts ?? []),
+          ...(entry.discoveredContracts ?? []),
+        ]) {
+          allProjectContracts.push({
+            name: contract.name || contract.address,
+            address: contract.address,
+            type: contract.type,
+            proxyType: contract.proxyType,
+          })
+        }
+        for (const eoa of entry.eoas ?? []) {
+          allProjectContracts.push({
+            name: eoa.address,
+            address: eoa.address,
+            type: 'EOA',
+            proxyType: 'EOA',
+          })
+        }
+      }
+
+      // 8. Collect admin addresses from v2 scoring
+      const adminAddresses = new Set<string>()
+      if (v2Score.inventory.admins.breakdown) {
+        for (const admin of v2Score.inventory.admins.breakdown) {
+          adminAddresses.add(normalizeChainAddress(admin.adminAddress))
+        }
+      }
+
+      // 9. Filter out non-admin EOAs
+      const discoveryEntries = allProjectContracts.filter((e) => {
+        const norm = normalizeChainAddress(e.address)
+        if (e.type === 'EOA' && !adminAddresses.has(norm)) return false
+        return true
+      })
+
+      // 10. Build the compiled review
       const compiled = this.buildCompiledReview(
         project,
         reviewConfig,
@@ -241,15 +289,16 @@ export class ReviewCompiler {
         fundsData,
         contractTags,
         functionAnalysis,
+        discoveryEntries,
       )
 
-      // 7. Resolve template variables in all description fields
+      // 11. Resolve template variables in all description fields
       this.resolveTemplateVariables(compiled, reviewConfig.dataKeys, {
         v2Score,
         fundsData,
       })
 
-      // 8. Write compiled-review.json to defiscan-frontend/public/data/<slug>/
+      // 12. Write compiled-review.json to defiscan-frontend/public/data/<slug>/
       const targetDir = outputDir ?? this.getDefaultOutputDir()
       const slug = reviewConfig.protocolSlug
       const slugDir = path.join(targetDir, slug)
@@ -276,6 +325,7 @@ export class ReviewCompiler {
     fundsData: ApiFundsDataResponse,
     contractTags: ApiContractTagsResponse,
     functionAnalysis: ApiFunctionAnalysisResponse,
+    discoveryEntries: { name?: string; address: string; proxyType?: string }[],
   ): CompiledReview {
     const tagsByAddress = new Map<
       string,
@@ -470,29 +520,66 @@ export class ReviewCompiler {
       })
     }
 
-    // Build functions from v2 scoring breakdown
+    // Build functions from admins data, only including functions controlled by
+    // meaningful admins (EOA, Multisig, Governance, Upgradeable)
+    // governance is checked with isGovernance flag, not the set
+    const meaningfulAdminTypes = new Set(['EOA', 'Multisig', 'Upgradeable'])
     const functions: CompiledFunction[] = []
-    if (v2Score.inventory.functions.breakdown) {
-      for (const func of v2Score.inventory.functions.breakdown) {
-        functions.push({
-          contractAddress: func.contractAddress,
-          contractName: func.contractName,
-          functionName: func.functionName,
-          impact: func.impact,
-        })
+    const seenFunctions = new Set<string>()
+    for (const admin of admins) {
+      if (!meaningfulAdminTypes.has(admin.adminType) && !admin.isGovernance) {
+        continue
+      }
+      for (const fn of admin.functions) {
+        const key = `${normalizeChainAddress(fn.contractAddress)}:${fn.functionName}`
+        if (!seenFunctions.has(key)) {
+          seenFunctions.add(key)
+          functions.push({
+            contractAddress: normalizeChainAddress(fn.contractAddress),
+            contractName: fn.contractName,
+            functionName: fn.functionName,
+            impact: fn.impact,
+          })
+        }
       }
     }
 
-    // Build contracts list (stub — uses tag data)
+    // Build contracts list from discovery entries, enriched with tag data
+    // Build review-config name lookup (admins, dependencies, funds all have name overrides)
+    const configNameMap = new Map<string, string>()
+    for (const section of [
+      reviewConfig.admins,
+      reviewConfig.dependencies,
+      reviewConfig.funds,
+    ]) {
+      for (const [addr, desc] of Object.entries(section ?? {})) {
+        if (desc?.name) {
+          configNameMap.set(normalizeChainAddress(addr), desc.name)
+        }
+      }
+    }
+
     const contracts: CompiledContract[] = []
-    for (const tag of contractTags.tags ?? []) {
+    for (const entry of discoveryEntries) {
+      const addrNorm = normalizeChainAddress(entry.address)
+      const tag = tagsByAddress.get(addrNorm)
+
+      // Resolve name: review-config override > cleaned getProject name > address
+      let name = configNameMap.get(addrNorm) ?? entry.name ?? entry.address
+      // Clean up multisig names: "5/8 63% Safe" → "5/8 Multisig"
+      if (entry.proxyType === 'gnosis safe' && !configNameMap.has(addrNorm)) {
+        name = name
+          .replace(/\s+\d+%/, '') // remove percentage
+          .replace(/\b(GnosisSafe|Safe)\b/, 'Multisig') // replace Safe/GnosisSafe with Multisig
+      }
+
       contracts.push({
-        address: tag.contractAddress,
-        name: tag.contractAddress, // Name resolved from discovery if available
-        isExternal: tag.isExternal ?? false,
-        isGovernance: tag.isGovernance ?? false,
-        entity: tag.entity ?? null,
-        proxyType: null,
+        address: entry.address,
+        name,
+        isExternal: tag?.isExternal ?? false,
+        isGovernance: tag?.isGovernance ?? false,
+        entity: tag?.entity ?? null,
+        proxyType: entry.proxyType ?? null,
       })
     }
 

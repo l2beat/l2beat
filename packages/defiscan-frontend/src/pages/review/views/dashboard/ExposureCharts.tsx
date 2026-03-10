@@ -312,7 +312,7 @@ export function ExposureCharts({ review }: ExposureChartsProps) {
                 />
                 <Bar
                   dataKey="capital"
-                  name="Funds"
+                  name="TVL"
                   stackId="a"
                   radius={[0, 2, 2, 0]}
                 >

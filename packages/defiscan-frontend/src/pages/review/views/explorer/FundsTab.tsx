@@ -66,7 +66,7 @@ export function FundsTab({ review }: FundsTabProps) {
   }
 
   if (funds.length === 0) {
-    return <p className="text-text-muted">No fund data available.</p>
+    return <p className="text-text-muted">No TVL data available.</p>
   }
 
   const totalCapital = funds.reduce(
@@ -120,7 +120,7 @@ export function FundsTab({ review }: FundsTabProps) {
       {chartData.length > 0 && (
         <div className="rounded-lg border border-border bg-white p-4 mb-4">
           <h3 className="text-sm font-semibold text-text-primary mb-3">
-            Fund Distribution
+            TVL Distribution
           </h3>
           <ResponsiveContainer
             width="100%"
@@ -405,7 +405,7 @@ function FundsSummaryLabel({ funds }: { funds: CompiledFundHolder[] }) {
   const tokenCount = funds.filter((f) => f.tokenInfo != null).length
 
   if (tvlCount === 0 && tokenCount === 0) {
-    return <span className="text-text-muted">No fund data</span>
+    return <span className="text-text-muted">No TVL data</span>
   }
 
   return (
@@ -413,7 +413,7 @@ function FundsSummaryLabel({ funds }: { funds: CompiledFundHolder[] }) {
       {tvlCount > 0 && (
         <>
           <span className="font-semibold text-text-primary">{tvlCount}</span>
-          {' '}contract{tvlCount !== 1 ? 's' : ''} holding funds
+          {' '}contract{tvlCount !== 1 ? 's' : ''} holding TVL
         </>
       )}
       {tvlCount > 0 && tokenCount > 0 && ', '}

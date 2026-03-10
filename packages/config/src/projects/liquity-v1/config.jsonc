@@ -28,12 +28,17 @@
     "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112" // Tellor USD feed
   ],
   "names": {
-    "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0": "Chainlink LUSD/USD Price Feed",
     "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "Chainlink ETH/USD Price Feed",
     "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112": "Tellor Price Feed"
   },
   "overrides": {
+    "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0": {
+      "ignoreDiscovery": true
+    },
     "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0": {
       "ignoreDiscovery": true
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
@@ -90,20 +95,6 @@
         "isOwner"
       ]
     },
-    "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0": {
-      "ignoreMethods": [
-        "aggregator"
-      ],
-      "ignoreInWatchMode": [
-        "getAnswer",
-        "getTimestamp",
-        "latestRoundData",
-        "latestTimestamp",
-        "latestAnswer",
-        "latestRound",
-        "proposedLatestRoundData"
-      ]
-    },
     "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F": {
       "ignoreInWatchMode": [
         "getETH",
@@ -147,17 +138,6 @@
     "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112": {
       "ignoreInWatchMode": [
         "getTellorCurrentValue"
-      ]
-    },
-    "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0": {
-      "ignoreInWatchMode": [
-        "currentMiners",
-        "disputesById",
-        "getLastNewValueById",
-        "getNewCurrentVariables",
-        "newValueTimestamps",
-        "totalSupply",
-        "getNewValueCountbyRequestId"
       ]
     },
     "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d": {

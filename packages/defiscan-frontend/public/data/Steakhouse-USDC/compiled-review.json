@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-10T07:48:12.531Z",
+  "compiledAt": "2026-03-10T09:03:14.770Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -16,7 +16,7 @@
     "scoredFunctionCount": 0,
     "adminCount": 7,
     "dependencyCount": 8,
-    "totalCapitalAtRisk": 151942436.87636498,
+    "totalCapitalAtRisk": 169519102.78369424,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0
   },
@@ -33,7 +33,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setCurator",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -42,7 +42,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setIsAllocator",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -51,7 +51,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setSkimRecipient",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -60,7 +60,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitTimelock",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -69,7 +69,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setFee",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -92,7 +92,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setFeeRecipient",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -115,7 +115,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitGuardian",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -124,7 +124,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -146,7 +146,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -155,7 +155,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -164,7 +164,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -185,7 +185,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -210,7 +210,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingTimelock",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -219,7 +219,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingGuardian",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -228,7 +228,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -237,14 +237,14 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 151942436.87636498,
+      "totalDirectCapital": 169519102.78369424,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 151942436.87636498,
+      "totalReachableCapital": 169519102.78369424,
       "totalReachableTokenValue": 0
     },
     {
@@ -259,7 +259,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -281,7 +281,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -290,7 +290,7 @@
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -299,7 +299,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -320,7 +320,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -345,7 +345,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -354,14 +354,14 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 151942436.87636498,
+      "totalDirectCapital": 169519102.78369424,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 151942436.87636498,
+      "totalReachableCapital": 169519102.78369424,
       "totalReachableTokenValue": 0
     },
     {
@@ -376,7 +376,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -397,7 +397,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -418,9 +418,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 151942436.87636498,
+      "totalDirectCapital": 169519102.78369424,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 151942436.87636498,
+      "totalReachableCapital": 169519102.78369424,
       "totalReachableTokenValue": 0
     },
     {
@@ -435,7 +435,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -456,7 +456,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -477,9 +477,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 151942436.87636498,
+      "totalDirectCapital": 169519102.78369424,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 151942436.87636498,
+      "totalReachableCapital": 169519102.78369424,
       "totalReachableTokenValue": 0
     },
     {
@@ -494,7 +494,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -515,7 +515,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -536,9 +536,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 151942436.87636498,
+      "totalDirectCapital": 169519102.78369424,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 151942436.87636498,
+      "totalReachableCapital": 169519102.78369424,
       "totalReachableTokenValue": 0
     },
     {
@@ -553,7 +553,7 @@
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -574,7 +574,7 @@
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -595,9 +595,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 151942436.87636498,
+      "totalDirectCapital": 169519102.78369424,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 151942436.87636498,
+      "totalReachableCapital": 169519102.78369424,
       "totalReachableTokenValue": 0
     },
     {
@@ -612,7 +612,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingTimelock",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -621,7 +621,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingGuardian",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -630,7 +630,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -639,14 +639,14 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 151942436.87636498,
+          "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 151942436.87636498,
+      "totalDirectCapital": 169519102.78369424,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 151942436.87636498,
+      "totalReachableCapital": 169519102.78369424,
       "totalReachableTokenValue": 0
     }
   ],
@@ -821,267 +821,308 @@
   ],
   "funds": [
     {
-      "address": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "name": "MetaMorpho Vault (steakUSDC)",
       "description": "Main vault contract holding all depositor assets. Contains USDC positions across four Morpho Blue lending markets, generating yield through optimized capital allocation. The vault implements a MetaMorpho architecture with timelock-protected governance and curator-managed market selection.",
       "balances": {
-        "totalUsdValue": 0.006014994039210028
+        "totalUsdValue": 0.006014494273977912
       },
       "positions": {
-        "totalUsdValue": 151942436.87034997
+        "totalUsdValue": 169519102.77767974
       },
       "tokenInfo": null
     }
   ],
-  "functions": [],
+  "functions": [
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "setCurator",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "setIsAllocator",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "setSkimRecipient",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "submitTimelock",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "setFee",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "setFeeRecipient",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "submitGuardian",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "submitCap",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "submitMarketRemoval",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "setSupplyQueue",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "updateWithdrawQueue",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "reallocate",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "revokePendingTimelock",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "revokePendingGuardian",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "revokePendingCap",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "functionName": "revokePendingMarketRemoval",
+      "impact": "critical"
+    }
+  ],
   "contracts": [
     {
-      "address": "eth:0xaa0500198b4425dfc4e272fbe42c8e64e21fc03d",
-      "name": "eth:0xaa0500198b4425dfc4e272fbe42c8e64e21fc03d",
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "name": "MetaMorpho Vault (steakUSDC)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8",
+      "name": "Guardian 1/6 Multisig",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
+      "name": "2/4 Multisig",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB",
+      "name": "Steakhouse/Morpho 2/5 Curator Multisig",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "name": "4/9 Multisig",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
+      "name": "Steakhouse 5/8 Multisig",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+      "name": "5/9 Multisig",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2",
+      "name": "ChainlinkOracle",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83",
+      "name": "ChainlinkOracle",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
+      "name": "ConfirmedTransactionModule",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xaa0500198B4425DfC4E272FbE42C8E64E21fc03d",
+      "name": "Governance DAO",
       "isExternal": false,
       "isGovernance": true,
       "entity": null,
-      "proxyType": null
+      "proxyType": "EIP1967 proxy"
     },
     {
-      "address": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
-      "name": "eth:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "name": "Chainlink USDC/USD Price Feed",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "name": "Chainlink USDC/USD Price Feed",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+      "name": "Chainlink USDC/USD Price Feed",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "name": "Chainlink USDC/USD Price Feed",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "name": "Chainlink BTC/USD Price Feed",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "name": "Chainlink USDC/USD Price Feed",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "name": "Morpho Blue",
       "isExternal": true,
       "isGovernance": false,
       "entity": "Morpho",
-      "proxyType": null
+      "proxyType": "immutable"
     },
     {
-      "address": "eth:0xcba28b38103307ec8da98377fff9816c164f9afa",
-      "name": "eth:0xcba28b38103307ec8da98377fff9816c164f9afa",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": "Chainlink",
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x13ca8756e9470b71b8e998352c8741706217f963",
-      "name": "eth:0x13ca8756e9470b71b8e998352c8741706217f963",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x264c86dbbd2e4165fbbf0c35b0ddf0e00aec6b31",
-      "name": "eth:0x264c86dbbd2e4165fbbf0c35b0ddf0e00aec6b31",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xcf263cee139763114faafc5f52865135412f50ec",
-      "name": "eth:0xcf263cee139763114faafc5f52865135412f50ec",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x30e7c016fc702cde9a50720a469d418490b7b652",
-      "name": "eth:0x30e7c016fc702cde9a50720a469d418490b7b652",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xe0aeb6811d33df42a09066857cdafca16b506086",
-      "name": "eth:0xe0aeb6811d33df42a09066857cdafca16b506086",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x69fcefde2b48503d675181448b3d4272128bca9c",
-      "name": "eth:0x69fcefde2b48503d675181448b3d4272128bca9c",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x84d3e4ee550dd5f99e76a548ac59a6be1c8dcf79",
-      "name": "eth:0x84d3e4ee550dd5f99e76a548ac59a6be1c8dcf79",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x8f02b4a44eacd9b8ee7739aa0ba58833dd45d002",
-      "name": "eth:0x8f02b4a44eacd9b8ee7739aa0ba58833dd45d002",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xc100c251bdd297a66795112f04356e6ba5f89d80",
-      "name": "eth:0xc100c251bdd297a66795112f04356e6ba5f89d80",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x21f73d42eb58ba49ddb685dc29d3bf5c0f0373ca",
-      "name": "eth:0x21f73d42eb58ba49ddb685dc29d3bf5c0f0373ca",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": "Chainlink",
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x2e1b5a40edc922bce489668b11749b8eabd67f6b",
-      "name": "eth:0x2e1b5a40edc922bce489668b11749b8eabd67f6b",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": "Chainlink",
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x7052cb84079905400ea52b635cab6a275fda8823",
-      "name": "eth:0x7052cb84079905400ea52b635cab6a275fda8823",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x80efdee7f82d0f2abf3bf29a9a85edf0b42c9e19",
-      "name": "eth:0x80efdee7f82d0f2abf3bf29a9a85edf0b42c9e19",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xb65b6d224351cd61f856c227b2d5cfc611e9b2d8",
-      "name": "eth:0xb65b6d224351cd61f856c227b2d5cfc611e9b2d8",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xb7f0643d4ca8c296564ce335062833e1afa3afdb",
-      "name": "eth:0xb7f0643d4ca8c296564ce335062833e1afa3afdb",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812",
-      "name": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": "Chainlink",
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xfde996f00e42b33bde7c640786333623acc3f298",
-      "name": "eth:0xfde996f00e42b33bde7c640786333623acc3f298",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x05724b9c8c1dde1b2f659d7c0676ff63f6d5e781",
-      "name": "eth:0x05724b9c8c1dde1b2f659d7c0676ff63f6d5e781",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x3f7b49f03375aa588b828a5ffbaac5727fb8202d",
-      "name": "eth:0x3f7b49f03375aa588b828a5ffbaac5727fb8202d",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x47a1dd4e277530fffb5b5f70a43ccbd542f54e17",
-      "name": "eth:0x47a1dd4e277530fffb5b5f70a43ccbd542f54e17",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x480496c0884d61f2f56707adb11697f8018898c2",
-      "name": "eth:0x480496c0884d61f2f56707adb11697f8018898c2",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
-      "name": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": "Chainlink",
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad",
-      "name": "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": "Chainlink",
-      "proxyType": null
-    },
-    {
-      "address": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
-      "name": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": "Chainlink",
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
-      "name": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": "Chainlink",
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
-      "name": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
-      "isExternal": true,
-      "isGovernance": false,
-      "entity": "Chainlink",
-      "proxyType": null
-    },
-    {
-      "address": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
-      "name": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+      "address": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+      "name": "MorphoChainlinkOracleV2",
       "isExternal": false,
       "isGovernance": false,
       "entity": null,
-      "proxyType": null
+      "proxyType": "immutable"
     },
     {
-      "address": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
-      "name": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
+      "address": "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
+      "name": "MorphoChainlinkOracleV2",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1",
+      "name": "MorphoHelper",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EIP1967 proxy"
+    },
+    {
+      "address": "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
+      "name": "PublicAllocator",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
+      "name": "Chainlink wstETH Price Feed",
       "isExternal": true,
       "isGovernance": false,
       "entity": "Chainlink",
-      "proxyType": null
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xfeed46c11F57B7126a773EeC6ae9cA7aE1C03C9a",
+      "name": "EOA (0xfeed...c9a)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EOA"
     }
   ],
   "resources": [],

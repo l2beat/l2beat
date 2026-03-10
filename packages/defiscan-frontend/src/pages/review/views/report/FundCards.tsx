@@ -50,7 +50,7 @@ export function FundCards({ review }: FundCardsProps) {
   if (funds.length === 0) {
     return (
       <p className="text-text-secondary">
-        No fund data is currently available for this protocol.
+        No TVL data is currently available for this protocol.
       </p>
     )
   }
@@ -133,7 +133,7 @@ export function FundCards({ review }: FundCardsProps) {
       {/* Fund Distribution */}
       {chartData.length > 0 && (
         <DistributionChart
-          title="Fund Distribution"
+          title="TVL Distribution"
           entries={chartData}
           total={totalFunds}
           barColors={BAR_COLORS}

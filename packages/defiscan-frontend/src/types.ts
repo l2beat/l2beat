@@ -37,6 +37,7 @@ export interface CompiledReview {
 
 export type CompiledResourceType =
   | 'frontend'
+  | 'website'
   | 'docs'
   | 'source-code'
   | 'github'

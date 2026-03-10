@@ -1,7 +1,7 @@
 import type {
-  CompiledReview,
-  CompiledResourceEntry,
   CompiledFrontendSubtype,
+  CompiledResourceEntry,
+  CompiledReview,
 } from '../../../../types'
 
 const LENS_BASE_URL =
@@ -104,6 +104,24 @@ function GlobeIcon({ className }: { className?: string }) {
   )
 }
 
+function LensIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+  )
+}
+
 function LinkIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -172,65 +190,88 @@ export function CodeSection({ review }: CodeSectionProps) {
   const resources = review.resources ?? []
 
   const frontends = resources.filter((r) => r.type === 'frontend')
+  const websites = resources.filter((r) => r.type === 'website')
   const github = resources.filter((r) => r.type === 'github')
   const x = resources.filter((r) => r.type === 'x')
   const docs = resources.filter((r) => r.type === 'docs')
   const sourceCode = resources.filter((r) => r.type === 'source-code')
   const other = resources.filter((r) => r.type === 'other')
 
-  const hasQuickLinks =
-    github.length > 0 ||
-    x.length > 0 ||
-    docs.length > 0 ||
-    sourceCode.length > 0
-
   return (
     <div className="space-y-6">
-      {/* Quick links row — icon pills for socials, docs, source */}
-      {hasQuickLinks && (
-        <div className="flex flex-wrap gap-2">
-          {github.map((r, i) => (
-            <QuickLinkPill
-              key={`gh-${i}`}
-              href={r.url}
-              icon={<GitHubIcon className="w-4 h-4" />}
-              label={r.label || 'GitHub'}
-            />
-          ))}
-          {x.map((r, i) => (
-            <QuickLinkPill
-              key={`x-${i}`}
-              href={r.url}
-              icon={<XIcon className="w-4 h-4" />}
-              label={r.label || 'X'}
-            />
-          ))}
-          {docs.map((r, i) => (
-            <QuickLinkPill
-              key={`docs-${i}`}
-              href={r.url}
-              icon={<DocsIcon className="w-4 h-4" />}
-              label={r.label || 'Docs'}
-            />
-          ))}
-          {sourceCode.map((r, i) => (
-            <QuickLinkPill
-              key={`src-${i}`}
-              href={r.url}
-              icon={<CodeIcon className="w-4 h-4" />}
-              label={r.label || 'Source Code'}
-            />
-          ))}
+      {/* Quick links row — icon pills for socials, docs, source, lens */}
+      <div className="flex flex-wrap gap-2">
+        {github.map((r, i) => (
+          <QuickLinkPill
+            key={`gh-${i}`}
+            href={r.url}
+            icon={<GitHubIcon className="h-4 w-4" />}
+            label={r.label || 'GitHub'}
+          />
+        ))}
+        {x.map((r, i) => (
+          <QuickLinkPill
+            key={`x-${i}`}
+            href={r.url}
+            icon={<XIcon className="h-4 w-4" />}
+            label={r.label || 'X'}
+          />
+        ))}
+        {docs.map((r, i) => (
+          <QuickLinkPill
+            key={`docs-${i}`}
+            href={r.url}
+            icon={<DocsIcon className="h-4 w-4" />}
+            label={r.label || 'Docs'}
+          />
+        ))}
+        {sourceCode.map((r, i) => (
+          <QuickLinkPill
+            key={`src-${i}`}
+            href={r.url}
+            icon={<CodeIcon className="h-4 w-4" />}
+            label={r.label || 'Source Code'}
+          />
+        ))}
+        <ExternalLink
+          href={lensUrl}
+          className="inline-flex items-center gap-2 rounded-lg border border-purple-200 bg-purple-50 px-3.5 py-2 text-sm font-medium text-purple-700 shadow-sm transition-colors hover:bg-purple-100 hover:text-purple-800"
+        >
+          <LensIcon className="h-4 w-4" />
+          Lens
+        </ExternalLink>
+      </div>
+
+      {/* Websites */}
+      {websites.length > 0 && (
+        <div>
+          <h3 className="mb-3 font-semibold text-sm text-text-primary">
+            Websites
+          </h3>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {websites.map((r, i) => (
+              <ExternalLink
+                key={i}
+                href={r.url}
+                className="group flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 transition-colors hover:shadow-sm"
+              >
+                <GlobeIcon className="h-4 w-4 shrink-0" />
+                <span className="min-w-0 flex-1 truncate font-medium text-sm">
+                  {r.label || displayDomain(r.url)}
+                </span>
+              </ExternalLink>
+            ))}
+          </div>
         </div>
       )}
 
       {/* Frontends — card grid */}
       {frontends.length > 0 && (
         <div>
-          <h3 className="text-sm font-semibold text-text-primary mb-3">
+          <h3 className="mb-3 font-semibold text-sm text-text-primary">
             Frontends
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {frontends.map((r, i) => (
               <FrontendCard key={i} resource={r} />
             ))}
@@ -241,7 +282,7 @@ export function CodeSection({ review }: CodeSectionProps) {
       {/* Other resources */}
       {other.length > 0 && (
         <div>
-          <h3 className="text-sm font-semibold text-text-primary mb-3">
+          <h3 className="mb-3 font-semibold text-sm text-text-primary">
             Other Resources
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -249,7 +290,7 @@ export function CodeSection({ review }: CodeSectionProps) {
               <QuickLinkPill
                 key={`other-${i}`}
                 href={r.url}
-                icon={<LinkIcon className="w-4 h-4" />}
+                icon={<LinkIcon className="h-4 w-4" />}
                 label={r.label || displayDomain(r.url)}
               />
             ))}
@@ -257,34 +298,22 @@ export function CodeSection({ review }: CodeSectionProps) {
         </div>
       )}
 
-      {/* Lens + timestamp footer */}
-      <div className="flex items-center gap-3 pt-2 border-t border-border">
-        <ExternalLink
-          href={lensUrl}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-purple-600 hover:text-purple-800 transition-colors"
-        >
-          <GlobeIcon className="w-4 h-4" />
-          View on Lens
-        </ExternalLink>
-        <span className="text-sm text-text-muted">
-          · Updated {timeAgo(review.compiledAt)}
-        </span>
+      {/* Last updated info */}
+      <div className="border-border border-t pt-3">
+        <div className="flex items-center gap-2 text-sm text-text-muted">
+          <span className="font-medium text-text-secondary">Last updated</span>
+          <span>
+            {new Date(review.compiledAt).toLocaleString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </span>
+          <span className="text-text-muted/60">
+            ({timeAgo(review.compiledAt)})
+          </span>
+        </div>
       </div>
-
-      {/* Compilation disclaimer */}
-      <p className="text-xs text-text-muted mt-4">
-        This review was compiled on{' '}
-        {new Date(review.compiledAt).toLocaleString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          timeZoneName: 'short',
-        })}
-        . Protocol data may have changed since then. Always verify current
-        on-chain state before making financial decisions.
-      </p>
     </div>
   )
 }
@@ -301,7 +330,7 @@ function QuickLinkPill({
   return (
     <ExternalLink
       href={href}
-      className="inline-flex items-center gap-2 rounded-lg border border-border bg-white px-3.5 py-2 text-sm font-medium text-text-secondary shadow-sm hover:bg-bg-muted/40 hover:text-text-primary transition-colors"
+      className="inline-flex items-center gap-2 rounded-lg border border-border bg-white px-3.5 py-2 font-medium text-sm text-text-secondary shadow-sm transition-colors hover:bg-bg-muted/40 hover:text-text-primary"
     >
       {icon}
       {label}
@@ -322,14 +351,14 @@ function FrontendCard({ resource }: { resource: CompiledResourceEntry }) {
         className={`h-2 w-2 shrink-0 rounded-full ${SUBTYPE_DOT[subtype]}`}
       />
       <div className="min-w-0 flex-1">
-        <div className="text-sm font-medium truncate">
+        <div className="truncate font-medium text-sm">
           {resource.label || domain}
         </div>
         {resource.label && (
-          <div className="text-xs opacity-70 truncate">{domain}</div>
+          <div className="truncate text-xs opacity-70">{domain}</div>
         )}
       </div>
-      <span className="text-[10px] font-medium uppercase tracking-wide opacity-60">
+      <span className="font-medium text-[10px] uppercase tracking-wide opacity-60">
         {subtype}
       </span>
     </ExternalLink>

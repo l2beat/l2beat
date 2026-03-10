@@ -406,7 +406,7 @@ function OverviewTab({
       {/* Fund Holders Comparison */}
       <div className="rounded-xl border border-border bg-white shadow-sm overflow-hidden">
         <h3 className="text-lg font-semibold text-text-primary p-5 border-b border-border">
-          Fund Holders Comparison
+          TVL Holders Comparison
         </h3>
         <div
           className="grid gap-0 divide-x divide-border"
@@ -427,7 +427,7 @@ function OverviewTab({
                   className="font-medium text-sm mb-3"
                   style={{ color: selectedMetrics[idx]?.color }}
                 >
-                  {r.metadata.protocolName} ({fundsWithValue.length} with funds)
+                  {r.metadata.protocolName} ({fundsWithValue.length} with TVL)
                 </h4>
                 <div className="space-y-2">
                   {fundsWithValue
@@ -481,7 +481,7 @@ function OverviewTab({
                       </div>
                     ))}
                   {fundsWithValue.length === 0 && (
-                    <p className="text-sm text-text-muted">No fund data</p>
+                    <p className="text-sm text-text-muted">No TVL data</p>
                   )}
                 </div>
               </div>

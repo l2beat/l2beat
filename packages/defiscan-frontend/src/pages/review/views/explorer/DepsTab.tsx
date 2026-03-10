@@ -10,6 +10,7 @@ import {
   getFunctionFunds,
 } from '../../../../utils/dependencies'
 import type { CompiledReview, CompiledDependency } from '../../../../types'
+import { ShareableDiagram } from '../../../../components/ShareableDiagram'
 import { DependencyRiskDiagram } from './svg/DependencyRiskDiagram'
 
 interface DepsTabProps {
@@ -134,12 +135,15 @@ export function DepsTab({ review }: DepsTabProps) {
       </div>
 
       {/* Dependency risk diagram */}
-      <div className="rounded-lg border border-border bg-white p-4 mb-4">
-        <h3 className="text-sm font-semibold text-text-primary mb-3">
-          Dependency Entity Concentration
-        </h3>
+      <ShareableDiagram
+        id="dependency-diagram"
+        title="Dependency Entity Concentration"
+        linkQuery="?view=explorer&tab=dependencies"
+        downloadName="dependency-concentration.png"
+        className="mb-4"
+      >
         <DependencyRiskDiagram dependencies={dependencies} />
-      </div>
+      </ShareableDiagram>
 
       {/* Table */}
       <div className="rounded-lg border border-border bg-white shadow-sm overflow-hidden">

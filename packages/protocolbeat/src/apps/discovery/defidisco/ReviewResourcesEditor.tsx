@@ -6,6 +6,7 @@ import type {
 } from '../../../api/types'
 
 const RESOURCE_TYPES: { value: ResourceType; label: string }[] = [
+  { value: 'website', label: 'Website' },
   { value: 'frontend', label: 'Frontend' },
   { value: 'docs', label: 'Docs' },
   { value: 'source-code', label: 'Source Code' },
@@ -99,6 +100,7 @@ export function ReviewResourcesEditor({
 
 function ResourceTypeBadge({ type }: { type: ResourceType }) {
   const colors: Record<ResourceType, string> = {
+    website: 'bg-teal-900/50 text-teal-300',
     frontend: 'bg-blue-900/50 text-blue-300',
     docs: 'bg-green-900/50 text-green-300',
     'source-code': 'bg-purple-900/50 text-purple-300',
@@ -107,6 +109,7 @@ function ResourceTypeBadge({ type }: { type: ResourceType }) {
     other: 'bg-coffee-700 text-coffee-300',
   }
   const labels: Record<ResourceType, string> = {
+    website: 'Website',
     frontend: 'Frontend',
     docs: 'Docs',
     'source-code': 'Source',

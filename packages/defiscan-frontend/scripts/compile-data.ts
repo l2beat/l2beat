@@ -5,10 +5,6 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-/** Strip chain prefix and lowercase for consistent address comparison */
-function stripChainPrefix(a: string): string {
-  return a.replace(/^[a-z0-9]+:/i, '').toLowerCase()
-}
 
 interface CompiledReview {
   metadata: {
@@ -120,15 +116,14 @@ function main() {
     const fundsDataPath = join(DATA_DIR, slug, 'funds-data.json')
     if (existsSync(fundsDataPath) && review.funds) {
       const fundsData: FundsData = JSON.parse(readFileSync(fundsDataPath, 'utf8'))
-      // Build case-insensitive lookup with chain prefix normalization
+      // Build lookup from funds-data.json (addresses already normalized in compiled review)
       const fundsLookup = new Map<string, FundsData['contracts'][string]>()
       for (const [addr, data] of Object.entries(fundsData.contracts ?? {})) {
-        fundsLookup.set(stripChainPrefix(addr), data)
+        fundsLookup.set(addr, data)
       }
       let patched = 0
       for (const fund of review.funds) {
-        const normalizedAddr = stripChainPrefix(fund.address)
-        const contractFunds = fundsLookup.get(normalizedAddr)
+        const contractFunds = fundsLookup.get(fund.address)
         if (!contractFunds) continue
         if (contractFunds.balances) {
           fund.balances = { totalUsdValue: contractFunds.balances.totalUsdValue }
@@ -206,13 +201,13 @@ function main() {
     // For each dependency, sum capital of admins whose functions use this dependency
     // This avoids attributing the entire protocol TVL to every dependency
     for (const dep of review.dependencies) {
-      const key = stripChainPrefix(dep.address) // normalized for deduplication across protocols
+      const key = dep.address
       // Compute capital controlled by admins that call through this dependency
-      const depContractAddresses = new Set(dep.functions.map((f) => stripChainPrefix(f.contractAddress)))
+      const depContractAddresses = new Set(dep.functions.map((f) => f.contractAddress))
       let depCapital = 0
       for (const admin of review.admins) {
         const usesThisDep = admin.functions.some(
-          (f) => depContractAddresses.has(stripChainPrefix(f.contractAddress)),
+          (f) => depContractAddresses.has(f.contractAddress),
         )
         if (usesThisDep) {
           depCapital += admin.totalDirectCapital

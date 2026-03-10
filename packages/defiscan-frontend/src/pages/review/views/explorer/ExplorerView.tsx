@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import type { CompiledReview } from '../../../../types'
 import { computeEntityDependencyCount } from '../../../../utils/dependencies'
 import { getHumanAdmins } from '../../../../utils/admins'
@@ -11,7 +11,7 @@ import { GovernanceTab } from './GovernanceTab'
 
 const TABS = [
   { id: 'overview', label: 'Overview' },
-  { id: 'funds', label: 'Funds' },
+  { id: 'funds', label: 'TVL' },
   { id: 'admins', label: 'Admins' },
   { id: 'governance', label: 'Governance' },
   { id: 'dependencies', label: 'Dependencies' },
@@ -20,12 +20,35 @@ const TABS = [
 
 type TabId = (typeof TABS)[number]['id']
 
+const VALID_TABS = new Set<string>(TABS.map((t) => t.id))
+
+function isValidTab(v: string | null): v is TabId {
+  return v !== null && VALID_TABS.has(v)
+}
+
 interface ExplorerViewProps {
   review: CompiledReview
 }
 
 export function ExplorerView({ review }: ExplorerViewProps) {
-  const [activeTab, setActiveTab] = useState<TabId>('overview')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const tabParam = searchParams.get('tab')
+  const activeTab: TabId = isValidTab(tabParam) ? tabParam : 'overview'
+
+  function setActiveTab(tab: TabId) {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev)
+        if (tab === 'overview') {
+          next.delete('tab')
+        } else {
+          next.set('tab', tab)
+        }
+        return next
+      },
+      { replace: true },
+    )
+  }
 
   return (
     <div>

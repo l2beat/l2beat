@@ -194,7 +194,7 @@ export function CapitalFlowDiagram({ review }: CapitalFlowDiagramProps) {
         FUNCTIONS
       </text>
       <text x={fundColX + boxW / 2} y={12} textAnchor="middle" fill="#6B7280" fontSize="10" fontWeight="600">
-        FUND HOLDERS
+        TVL HOLDERS
       </text>
 
       {/* Connection lines */}

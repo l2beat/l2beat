@@ -790,6 +790,7 @@ export interface EntityDescription {
 
 export type ResourceType =
   | 'frontend'
+  | 'website'
   | 'docs'
   | 'source-code'
   | 'github'
