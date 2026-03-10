@@ -12,7 +12,7 @@ export const jetstreamchain: ScalingProject = underReviewL3({
     name: 'Jetstream',
     slug: 'jetstreamchain',
     description:
-      'Jetstream Chain is a decentralized trading protocol powered by Arbitrum Orbit, offering ultra-low fees and a smoother trading experience on its own dedicated chain.',
+      'Jetstream Chain is a decentralized trading protocol powered by Arbitrum Stack, offering ultra-low fees and a smoother trading experience on its own dedicated chain.',
     purposes: ['Exchange'],
     stacks: ['Arbitrum'],
     links: {
