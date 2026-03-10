@@ -161,15 +161,6 @@ model UpdateMessage {
   @@id([projectId, timestamp])
 }
 
-model VerifierStatus {
-  address     String   @db.VarChar(255)
-  chainId     Int
-  lastUsed    DateTime @db.Timestamp(6)
-  lastUpdated DateTime @db.Timestamp(6)
-
-  @@id([address, chainId])
-}
-
 model AggregatedLiveness {
   timestamp       DateTime @db.Timestamp(6)
   projectId       String   @db.VarChar(255)

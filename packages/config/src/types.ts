@@ -1,12 +1,10 @@
 import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
-  type ChainId,
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
   type KnownInteropBridgeType,
   type ProjectId,
-  type StringWithAutocomplete,
   TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
@@ -100,9 +98,6 @@ export interface BaseProject {
   daBridge?: ProjectDaBridge
   customDa?: ProjectCustomDa
 
-  // zk catalog data
-  proofVerification?: ProjectProofVerification
-
   // interop data
   interopConfig?: InteropConfig
 
@@ -126,7 +121,6 @@ export interface BaseProject {
 
   // tags
   isScaling?: true
-  isZkCatalog?: true
   isInteropProtocol?: true
   isDaLayer?: true
   isUpcoming?: true
@@ -562,7 +556,6 @@ export interface ProjectScalingStateDerivation {
 export interface ProjectScalingStateValidation {
   description?: string
   categories: ProjectScalingStateValidationCategory[]
-  proofVerification?: ProjectProofVerification
   isUnderReview?: boolean
 }
 
@@ -757,50 +750,7 @@ export type DaChallengeMechanism = 'DA Challenges' | 'None'
 // #endregion
 
 // #region zk catalog data
-export interface ProjectProofVerification {
-  shortDescription?: string
-  aggregation: boolean
-  verifiers: OnchainVerifier[]
-  requiredTools: RequiredTool[]
-}
-
-export type OnchainVerifier = {
-  name: string
-  description: string
-  contractAddress: EthereumAddress
-  /** Link to the smart contract code on an explorer. Automatically set. */
-  url?: string
-  chainId: ChainId
-  subVerifiers: SubVerifier[]
-} & (
-  | {
-      verified: 'yes' | 'failed'
-      /** Details of entity that performed verification */
-      performedBy: {
-        name: string
-        link: string
-      }
-    }
-  | { verified: 'no' }
-)
-
-export interface SubVerifier {
-  name: string
-  proofSystem: string
-  mainArithmetization: string
-  mainPCS: string
-  trustedSetup?: StringWithAutocomplete<'None'>
-  link?: string
-}
-
-export interface RequiredTool {
-  name: string
-  version: string
-  link?: string
-}
-// #endregion
-
-// #region zk catalog v2 data
+// #region zk catalog data
 export interface ProjectZkCatalogInfo {
   creator?: string
   formalVerificationLinks?: {
