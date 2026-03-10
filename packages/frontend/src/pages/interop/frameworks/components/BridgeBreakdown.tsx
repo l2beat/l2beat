@@ -2,10 +2,12 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { FrameworkOverview } from '~/server/features/scaling/interop/getFrameworkComparisonData'
 import { formatCurrency, formatNumber } from '../utils/format'
 
+const BRIDGE_TYPE_ORDER = ['nonMinting', 'lockAndMint', 'burnAndMint'] as const
+
 const BRIDGE_TYPE_COLORS: Record<string, string> = {
-  burnAndMint: '#a78bfa',
-  lockAndMint: '#f97316',
-  nonMinting: '#fbbf24',
+  nonMinting: '#2563eb',
+  lockAndMint: '#a16207',
+  burnAndMint: '#14b8a6',
 }
 
 interface Props {
@@ -23,7 +25,16 @@ export function BridgeBreakdown({ frameworks }: Props) {
       </h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 min-[1600px]:grid-cols-4">
         {frameworks.map((fw) => {
-          const totalVolume = fw.bridgeTypes.reduce((s, b) => s + b.volume, 0)
+          const sorted = [...fw.bridgeTypes].sort(
+            (a, b) =>
+              BRIDGE_TYPE_ORDER.indexOf(
+                a.type as (typeof BRIDGE_TYPE_ORDER)[number],
+              ) -
+              BRIDGE_TYPE_ORDER.indexOf(
+                b.type as (typeof BRIDGE_TYPE_ORDER)[number],
+              ),
+          )
+          const totalVolume = sorted.reduce((s, b) => s + b.volume, 0)
           return (
             <PrimaryCard key={fw.id}>
               <div className="mb-3 flex items-center gap-2">
@@ -35,7 +46,7 @@ export function BridgeBreakdown({ frameworks }: Props) {
               {fw.bridgeTypes.length > 0 ? (
                 <>
                   <div className="mb-3 flex h-2 overflow-hidden rounded-full">
-                    {fw.bridgeTypes.map((b) => (
+                    {sorted.map((b) => (
                       <div
                         key={b.type}
                         style={{
@@ -46,7 +57,7 @@ export function BridgeBreakdown({ frameworks }: Props) {
                     ))}
                   </div>
                   <div className="flex flex-col">
-                    {fw.bridgeTypes.map((b) => (
+                    {sorted.map((b) => (
                       <div
                         key={b.type}
                         className="flex items-center justify-between border-b border-b-divider py-2 text-label-value-14 last:border-b-0"

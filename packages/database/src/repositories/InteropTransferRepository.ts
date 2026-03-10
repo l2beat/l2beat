@@ -556,7 +556,6 @@ export class InteropTransferRepository extends BaseRepository {
       .where('timestamp', '>=', UnixTime.toDate(since))
       .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
       .groupBy(['type', 'srcChain', 'dstChain'])
-      .having(sql`COUNT(*)`, '>=', 3)
       .execute()
 
     return rows.map((r) => ({
