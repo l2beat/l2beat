@@ -157,11 +157,11 @@ export const linea: ScalingProject = {
       lockAndMint: [
         {
           label: 'L1 -> L2',
-          transferTypes: [],
+          transferTypes: ['linea.L1ToL2Transfer'],
         },
         {
           label: 'L2 -> L1',
-          transferTypes: [],
+          transferTypes: ['linea.L2ToL1Transfer'],
         },
       ],
     },

@@ -84,11 +84,11 @@ export const polygonpos: ScalingProject = {
       lockAndMint: [
         {
           label: 'L1 -> L2',
-          transferTypes: [],
+          transferTypes: ['polygon.L1ToL2Transfer'],
         },
         {
           label: 'L2 -> L1',
-          transferTypes: [],
+          transferTypes: ['polygon.L2ToL1Transfer'],
         },
       ],
     },
