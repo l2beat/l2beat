@@ -7,6 +7,7 @@ import {
   diffInteropConfig,
   type InteropConfigDiff,
   interopConfigDiffToMarkdown,
+  removeMutedInteropConfigDiffEntries,
 } from '../config/InteropConfigDiff'
 
 const MAX_ENTRIES_IN_MESSAGE = 200
@@ -40,11 +41,13 @@ export class InteropNotifier {
 
   handleConfigChange(key: string, previous: unknown, current: unknown): void {
     const diff = diffInteropConfig(key, previous, current)
-    if (diff.entries.length === 0) {
+    const filteredDiff = removeMutedInteropConfigDiffEntries(diff)
+
+    if (filteredDiff.entries.length === 0) {
       return
     }
 
-    this.notifyConfigDiff(diff)
+    this.notifyConfigDiff(filteredDiff)
   }
 
   private notifyConfigDiff(diff: InteropConfigDiff): void {
