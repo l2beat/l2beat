@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-10T09:03:14.770Z",
+  "compiledAt": "2026-03-10T10:29:36.396Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -62,7 +62,27 @@
           "impact": "critical",
           "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+                "fieldName": "timelock"
+              },
+              "delaySeconds": 604800
+            },
+            {
+              "type": "valueRange",
+              "description": "Updates the contract's delay",
+              "valueRange": {
+                "min": "1",
+                "max": "14",
+                "unit": "Days"
+              }
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
@@ -84,6 +104,17 @@
               "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Maximum fee is 50%",
+              "valueRange": {
+                "min": "0",
+                "max": "50",
+                "unit": "%"
+              }
             }
           ]
         },
@@ -117,7 +148,18 @@
           "impact": "critical",
           "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+                "fieldName": "timelock"
+              },
+              "delaySeconds": 604800
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
@@ -139,6 +181,17 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
+          ],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+                "fieldName": "timelock"
+              },
+              "delaySeconds": 604800
+            }
           ]
         },
         {
@@ -148,7 +201,18 @@
           "impact": "critical",
           "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+                "fieldName": "timelock"
+              },
+              "delaySeconds": 604800
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
@@ -274,6 +338,17 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
+          ],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+                "fieldName": "timelock"
+              },
+              "delaySeconds": 604800
+            }
           ]
         },
         {
@@ -283,7 +358,18 @@
           "impact": "critical",
           "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+                "fieldName": "timelock"
+              },
+              "delaySeconds": 604800
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
@@ -856,13 +942,44 @@
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "submitTimelock",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "delay",
+          "description": "Delay before execution",
+          "delayRef": {
+            "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+            "fieldName": "timelock"
+          },
+          "delaySeconds": 604800
+        },
+        {
+          "type": "valueRange",
+          "description": "Updates the contract's delay",
+          "valueRange": {
+            "min": "1",
+            "max": "14",
+            "unit": "Days"
+          }
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "setFee",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "valueRange",
+          "description": "Maximum fee is 50%",
+          "valueRange": {
+            "min": "0",
+            "max": "50",
+            "unit": "%"
+          }
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
@@ -874,19 +991,52 @@
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "submitGuardian",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "delay",
+          "description": "Delay before execution",
+          "delayRef": {
+            "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+            "fieldName": "timelock"
+          },
+          "delaySeconds": 604800
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "submitCap",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "delay",
+          "description": "Delay before execution",
+          "delayRef": {
+            "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+            "fieldName": "timelock"
+          },
+          "delaySeconds": 604800
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "submitMarketRemoval",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "delay",
+          "description": "Delay before execution",
+          "delayRef": {
+            "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+            "fieldName": "timelock"
+          },
+          "delaySeconds": 604800
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
