@@ -95,6 +95,7 @@ export interface FrameworkComparisonData {
   chainPairs: ChainPair[]
   transferSizeChartData: TransferSizeDataPoint[]
   chainMap: Record<string, ChainInfo>
+  totalTrackedChains: number
 }
 
 export async function getFrameworkComparisonData(): Promise<FrameworkComparisonData> {
@@ -326,6 +327,7 @@ export async function getFrameworkComparisonData(): Promise<FrameworkComparisonD
     chainPairs,
     transferSizeChartData,
     chainMap,
+    totalTrackedChains: INTEROP_CHAINS.length,
   }
 }
 

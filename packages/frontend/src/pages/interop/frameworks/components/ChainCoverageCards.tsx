@@ -9,12 +9,14 @@ interface Props {
   chainCoverage: ChainCoverageData[]
   frameworks: FrameworkOverview[]
   chainMap: Record<string, ChainInfo>
+  totalTrackedChains: number
 }
 
 export function ChainCoverageCards({
   chainCoverage,
   frameworks,
   chainMap,
+  totalTrackedChains,
 }: Props) {
   const coverageMap = Object.fromEntries(
     chainCoverage.map((c) => [c.frameworkId, c]),
@@ -42,7 +44,7 @@ export function ChainCoverageCards({
                   </span>
                 </div>
                 <span className="text-label-value-12 text-secondary">
-                  {chains.length} chains observed
+                  {chains.length}/{totalTrackedChains} tracked chains
                 </span>
               </div>
               <div className="flex flex-wrap gap-1.5">
