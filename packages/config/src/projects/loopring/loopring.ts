@@ -1,9 +1,4 @@
-import {
-  ChainId,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -18,7 +13,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -412,35 +406,6 @@ export const loopring: ScalingProject = {
         ],
       },
     ],
-    proofVerification: {
-      shortDescription: 'Loopring is a DEX rollup on Ethereum.',
-      aggregation: false,
-      requiredTools: [
-        {
-          name: 'Custom tool',
-          version: 'v3.6.2',
-          link: 'https://github.com/Loopring/trusted_setup/tree/loopring-3.6.2',
-        },
-      ],
-      verifiers: [
-        {
-          name: 'LoopringVerifier',
-          description: 'Loopring utilizes Groth16 for their proving system.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Main circuit',
-              ...PROOFS.GROTH16('POT18'),
-              link: 'https://github.com/Loopring/protocol3-circuits.git',
-            },
-          ],
-        },
-      ],
-    },
   },
   milestones: [
     {
