@@ -4,7 +4,7 @@ import type { BaseProject } from '../../types'
 
 export const arbitrumEcosystem: BaseProject = {
   id: ProjectId('arbitrum-ecosystem'),
-  slug: 'arbitrum',
+  slug: 'arbitrum-ecosystem',
   name: 'Arbitrum',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-04-08')),

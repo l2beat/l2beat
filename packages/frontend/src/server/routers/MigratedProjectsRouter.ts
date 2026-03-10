@@ -36,7 +36,7 @@ export function createMigratedProjectsRouter() {
   })
 
   router.get('/ecosystems/arbitrum-orbit', (_, res) => {
-    res.redirect(301, '/ecosystems/arbitrum')
+    res.redirect(301, '/ecosystems/arbitrum-ecosystem')
   })
 
   return router

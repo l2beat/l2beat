@@ -190,7 +190,7 @@ export function SideNavLayout({
             },
             {
               name: 'Arbitrum',
-              slug: 'arbitrum',
+              slug: 'arbitrum-ecosystem',
             },
             {
               name: 'Superchain',
