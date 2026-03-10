@@ -7,6 +7,7 @@ import { EM_DASH } from '~/consts/characters'
 import { env } from '~/env'
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
+import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -33,7 +34,9 @@ function getCommonColumns<
     subgroup: { name: string; iconUrl: string } | undefined
     isAggregate: boolean | undefined
   },
->(columnHelper: ColumnHelper<T>, getProtocolHref?: (slug: string) => string) {
+>(columnHelper: ColumnHelper<T>) {
+  const { buildUrl } = useInteropSelectedChains()
+
   return [
     columnHelper.display({
       id: 'logo',
@@ -74,10 +77,7 @@ function getCommonColumns<
 
         return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
           <TableLink
-            href={
-              getProtocolHref?.(ctx.row.original.slug) ??
-              `/interop/protocols/${ctx.row.original.slug}`
-            }
+            href={buildUrl(`/interop/protocols/${ctx.row.original.slug}`)}
           >
             {nameCell}
           </TableLink>
@@ -143,11 +143,9 @@ function getTokensByVolumeColumn<
   })
 }
 
-export function getNonMintingColumns(
-  getProtocolHref?: (slug: string) => string,
-) {
+export function getNonMintingColumns() {
   return [
-    ...getCommonColumns(nonMintingColumnHelper, getProtocolHref),
+    ...getCommonColumns(nonMintingColumnHelper),
     getLast24hVolumeColumn(nonMintingColumnHelper),
     nonMintingColumnHelper.accessor('averageValueInFlight', {
       header: 'Last 24h avg.\nin-flight value',
@@ -171,11 +169,9 @@ export function getNonMintingColumns(
   ]
 }
 
-export function getLockAndMintColumns(
-  getProtocolHref?: (slug: string) => string,
-) {
+export function getLockAndMintColumns() {
   return [
-    ...getCommonColumns(lockAndMintColumnHelper, getProtocolHref),
+    ...getCommonColumns(lockAndMintColumnHelper),
     getLast24hVolumeColumn(lockAndMintColumnHelper),
     lockAndMintColumnHelper.accessor('netMintedValue', {
       header: 'Last 24h net\nminted value',
@@ -197,11 +193,9 @@ export function getLockAndMintColumns(
   ]
 }
 
-export function getBurnAndMintColumns(
-  getProtocolHref?: (slug: string) => string,
-) {
+export function getBurnAndMintColumns() {
   return [
-    ...getCommonColumns(burnAndMintColumnHelper, getProtocolHref),
+    ...getCommonColumns(burnAndMintColumnHelper),
     getLast24hVolumeColumn(burnAndMintColumnHelper),
     getTokensByVolumeColumn(burnAndMintColumnHelper, 'burnAndMint'),
   ]

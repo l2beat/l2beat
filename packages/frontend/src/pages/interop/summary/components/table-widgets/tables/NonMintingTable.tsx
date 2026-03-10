@@ -2,7 +2,6 @@ import { getCoreRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { getNonMintingColumns, type NonMintingProtocolRow } from './columns'
 import type { NonMintingProtocolEntry } from './getBridgeTypeEntries'
 
@@ -11,12 +10,7 @@ export function NonMintingTable({
 }: {
   entries: NonMintingProtocolEntry[]
 }) {
-  const { buildUrl } = useInteropSelectedChains()
-  const columns = useMemo(
-    () =>
-      getNonMintingColumns((slug) => buildUrl(`/interop/protocols/${slug}`)),
-    [buildUrl],
-  )
+  const columns = useMemo(() => getNonMintingColumns(), [])
 
   const table = useTable<NonMintingProtocolRow>({
     data: entries,
