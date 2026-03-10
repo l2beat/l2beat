@@ -56,6 +56,7 @@ describe(InteropAggregatingIndexer.name, () => {
           minTransferValueUsd: 2000,
           maxTransferValueUsd: 2000,
           avgValueInFlight: undefined,
+          transferTypeStats: undefined,
           mintedValueUsd: 0,
           burnedValueUsd: 2000,
           countUnder100: 0,
@@ -65,7 +66,6 @@ describe(InteropAggregatingIndexer.name, () => {
           countOver100K: 0,
           identifiedCount: 1,
           bridgeType: 'lockAndMint',
-          transferTypeStats: undefined,
         },
       ]
 
@@ -77,6 +77,7 @@ describe(InteropAggregatingIndexer.name, () => {
           dstChain: 'arbitrum',
           abstractTokenId: 'eth',
           transferCount: 1,
+          transferTypeStats: undefined,
           totalDurationSum: 5000,
           volume: 2000,
           minTransferValueUsd: 2000,
@@ -84,7 +85,6 @@ describe(InteropAggregatingIndexer.name, () => {
           bridgeType: 'lockAndMint',
           mintedValueUsd: 0,
           burnedValueUsd: 2000,
-          transferTypeStats: undefined,
         },
       ]
 

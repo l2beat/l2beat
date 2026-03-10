@@ -24,6 +24,9 @@ describe('aggregation', () => {
       expect(result).toEqual({
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
+        transferTypeStats: {
+          deposit: { transferCount: 1, totalDurationSum: 5000 },
+        },
         transferCount: 1,
         totalDurationSum: 5000,
         srcValueUsd: 2000,
@@ -39,7 +42,6 @@ describe('aggregation', () => {
         count10KTo100K: 0,
         countOver100K: 0,
         identifiedCount: 1,
-        transferTypeStats: undefined,
       })
     })
 
@@ -76,6 +78,9 @@ describe('aggregation', () => {
       expect(result).toEqual({
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
+        transferTypeStats: {
+          deposit: { transferCount: 3, totalDurationSum: 15000 },
+        },
         transferCount: 3,
         totalDurationSum: 15000,
         srcValueUsd: 6500.5,
@@ -91,7 +96,6 @@ describe('aggregation', () => {
         count10KTo100K: 0,
         countOver100K: 0,
         identifiedCount: 3,
-        transferTypeStats: undefined,
       })
     })
 
@@ -120,6 +124,9 @@ describe('aggregation', () => {
       expect(result).toEqual({
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
+        transferTypeStats: {
+          deposit: { transferCount: 2, totalDurationSum: 11000 },
+        },
         transferCount: 2,
         totalDurationSum: 11000,
         srcValueUsd: 3000,
@@ -135,7 +142,6 @@ describe('aggregation', () => {
         count10KTo100K: 0,
         countOver100K: 0,
         identifiedCount: 1,
-        transferTypeStats: undefined,
       })
     })
 
@@ -222,6 +228,9 @@ describe('aggregation', () => {
       expect(result).toEqual({
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
+        transferTypeStats: {
+          deposit: { transferCount: 6, totalDurationSum: 20000 },
+        },
         transferCount: 6,
         totalDurationSum: 20000,
         srcValueUsd: 255550,
@@ -237,7 +246,6 @@ describe('aggregation', () => {
         count10KTo100K: 1,
         countOver100K: 1,
         identifiedCount: 5,
-        transferTypeStats: undefined,
       })
     })
 
@@ -449,6 +457,45 @@ describe('aggregation', () => {
       expect(result.identifiedCount).toEqual(4)
     })
 
+    it('tracks duration stats separately for each transfer type', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          type: 'taxi',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 2000,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+        }),
+        createTransfer({
+          timestamp,
+          type: 'bus',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 8000,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+        }),
+        createTransfer({
+          timestamp,
+          type: 'taxi',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          duration: 3000,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+        }),
+      ]
+
+      const result = getAggregatedTransfer(transfers)
+
+      expect(result.transferTypeStats).toEqual({
+        taxi: { transferCount: 2, totalDurationSum: 5000 },
+        bus: { transferCount: 1, totalDurationSum: 8000 },
+      })
+    })
+
     it('throws error when group is empty', () => {
       const transfers: InteropTransferRecord[] = []
 
@@ -478,6 +525,9 @@ describe('aggregation', () => {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           abstractTokenId: 'eth',
+          transferTypeStats: {
+            deposit: { transferCount: 1, totalDurationSum: 5000 },
+          },
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 2000,
@@ -485,7 +535,6 @@ describe('aggregation', () => {
           maxTransferValueUsd: 2000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
       ])
     })
@@ -512,6 +561,9 @@ describe('aggregation', () => {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           abstractTokenId: 'eth',
+          transferTypeStats: {
+            deposit: { transferCount: 1, totalDurationSum: 5000 },
+          },
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 2000,
@@ -519,12 +571,14 @@ describe('aggregation', () => {
           maxTransferValueUsd: 2000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
         {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           abstractTokenId: 'usdc',
+          transferTypeStats: {
+            deposit: { transferCount: 1, totalDurationSum: 5000 },
+          },
           transferCount: 1,
           totalDurationSum: 5000,
           volume: 1500,
@@ -532,7 +586,6 @@ describe('aggregation', () => {
           maxTransferValueUsd: 1500,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
       ])
     })
@@ -579,6 +632,9 @@ describe('aggregation', () => {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           abstractTokenId: 'eth',
+          transferTypeStats: {
+            deposit: { transferCount: 2, totalDurationSum: 11000 },
+          },
           transferCount: 2,
           totalDurationSum: 11000,
           volume: 5000,
@@ -586,12 +642,14 @@ describe('aggregation', () => {
           maxTransferValueUsd: 3000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
         {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           abstractTokenId: 'usdc',
+          transferTypeStats: {
+            deposit: { transferCount: 1, totalDurationSum: 4000 },
+          },
           transferCount: 1,
           totalDurationSum: 4000,
           volume: 1000,
@@ -599,7 +657,6 @@ describe('aggregation', () => {
           maxTransferValueUsd: 1000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
       ])
     })
@@ -635,6 +692,9 @@ describe('aggregation', () => {
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
         abstractTokenId: 'eth',
+        transferTypeStats: {
+          deposit: { transferCount: 1, totalDurationSum: 6000 },
+        },
         transferCount: 1,
         totalDurationSum: 6000,
         volume: 3000,
@@ -642,7 +702,6 @@ describe('aggregation', () => {
         maxTransferValueUsd: 3000,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
-        transferTypeStats: undefined,
       })
     })
 
@@ -677,6 +736,9 @@ describe('aggregation', () => {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           abstractTokenId: 'eth',
+          transferTypeStats: {
+            deposit: { transferCount: 2, totalDurationSum: 11000 },
+          },
           transferCount: 2,
           totalDurationSum: 11000,
           volume: 3000,
@@ -684,9 +746,42 @@ describe('aggregation', () => {
           maxTransferValueUsd: 3000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
       ])
+    })
+
+    it('tracks duration stats per token for each transfer type', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer({
+          timestamp,
+          type: 'taxi',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          duration: 2000,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+        }),
+        createTransfer({
+          timestamp,
+          type: 'bus',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          duration: 8000,
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+        }),
+      ]
+
+      const result = getAggregatedTokens(transfers)
+
+      expect(result[0]?.transferTypeStats).toEqual({
+        taxi: { transferCount: 1, totalDurationSum: 2000 },
+        bus: { transferCount: 1, totalDurationSum: 8000 },
+      })
     })
 
     it('throws error when group is empty', () => {
@@ -874,6 +969,7 @@ describe('aggregation', () => {
 
 function createTransfer(overrides: {
   timestamp: UnixTime
+  type?: string
   srcChain: string
   dstChain: string
   srcAbstractTokenId?: string
@@ -888,7 +984,7 @@ function createTransfer(overrides: {
     plugin: 'test-plugin',
     bridgeType: undefined,
     transferId: 'test-transfer-id',
-    type: 'deposit',
+    type: overrides.type ?? 'deposit',
     timestamp: overrides.timestamp,
     srcTime: overrides.timestamp,
     srcTxHash: 'random-hash',
