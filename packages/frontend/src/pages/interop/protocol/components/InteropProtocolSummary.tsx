@@ -1,4 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
+import type { CSSProperties } from 'react'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -12,13 +13,13 @@ import { EM_DASH } from '~/consts/characters'
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
 import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { api } from '~/trpc/React'
-import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
 import { BridgeTypeBadge } from '../../components/table/BridgeTypeBadge'
 import { TopTokensCell } from '../../components/top-items/TopTokensCell'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import { transferSizeBuckets } from '../../utils/transferSizeBuckets'
 
 export function InteropProtocolSummary({
   protocol,
@@ -34,28 +35,28 @@ export function InteropProtocolSummary({
   const breakdownValues = [
     {
       value: data?.transferSize?.countUnder100 ?? 0,
-      className: 'bg-[#567FFF]',
-      label: 'Under $100',
+      label: transferSizeBuckets.under100.label,
+      style: { backgroundColor: transferSizeBuckets.under100.color },
     },
     {
       value: data?.transferSize?.count100To1K ?? 0,
-      className: 'bg-[#7AE7C7]',
-      label: '$100-$1K',
+      label: transferSizeBuckets.from100To1K.label,
+      style: { backgroundColor: transferSizeBuckets.from100To1K.color },
     },
     {
       value: data?.transferSize?.count1KTo10K ?? 0,
-      className: 'bg-[#F7CB15]',
-      label: '$1K-$10K',
+      label: transferSizeBuckets.from1KTo10K.label,
+      style: { backgroundColor: transferSizeBuckets.from1KTo10K.color },
     },
     {
       value: data?.transferSize?.count10KTo100K ?? 0,
-      className: 'bg-[#503047]',
-      label: '$10K-$100K',
+      label: transferSizeBuckets.from10KTo100K.label,
+      style: { backgroundColor: transferSizeBuckets.from10KTo100K.color },
     },
     {
       value: data?.transferSize?.countOver100K ?? 0,
-      className: 'bg-[#F55D3E]',
-      label: 'Over $100K',
+      label: transferSizeBuckets.over100K.label,
+      style: { backgroundColor: transferSizeBuckets.over100K.color },
     },
   ]
 
@@ -139,7 +140,7 @@ export function InteropProtocolSummary({
             <div className="mt-2 flex flex-wrap gap-2">
               {breakdownValues.map((value) => (
                 <div key={value.label} className="flex items-center gap-[3px]">
-                  <div className={cn('size-3.5 rounded-xs', value.className)} />
+                  <div className="size-3.5 rounded-xs" style={value.style} />
                   <span className="font-medium text-label-value-12 text-secondary leading-none">
                     {value.label}
                   </span>
@@ -194,7 +195,7 @@ function TransferSizeTooltipContent({
   breakdownValues,
   transferSize,
 }: {
-  breakdownValues: { value: number; className: string; label: string }[]
+  breakdownValues: { value: number; style: CSSProperties; label: string }[]
   transferSize: TransferSizeDataPoint | undefined
 }) {
   const totalTransfers = breakdownValues.reduce((sum, v) => sum + v.value, 0)
@@ -216,7 +217,7 @@ function TransferSizeTooltipContent({
             className="flex items-center justify-between gap-x-6"
           >
             <div className="flex items-center gap-1">
-              <div className={cn('size-3 rounded-xs', entry.className)} />
+              <div className="size-3 rounded-xs" style={entry.style} />
               <span className="font-medium text-label-value-14">
                 {entry.label}
               </span>
