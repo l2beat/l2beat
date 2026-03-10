@@ -101,7 +101,7 @@ function Content({
   return (
     <SideNavLayout childrenWrapperClassName="md:pt-0">
       {!isNavigationEmpty && !showInitialChainSelector && (
-        <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 lg:hidden">
+        <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-40 lg:hidden">
           <MobileSectionNavigation sections={navigationSections} />
         </div>
       )}
