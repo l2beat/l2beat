@@ -93,11 +93,17 @@ export const celo: ScalingProject = opStackL2({
       lockAndMint: [
         {
           label: 'L1 -> L2',
-          transferTypes: [],
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
         },
         {
           label: 'L2 -> L1',
-          transferTypes: [],
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
         },
       ],
     },

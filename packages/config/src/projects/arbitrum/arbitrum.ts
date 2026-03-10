@@ -168,11 +168,11 @@ export const arbitrum: ScalingProject = orbitStackL2({
       lockAndMint: [
         {
           label: 'L1 -> L2',
-          transferTypes: [],
+          transferTypes: ['orbitstack.L1ToL2Transfer'],
         },
         {
           label: 'L2 -> L1',
-          transferTypes: [],
+          transferTypes: ['orbitstack.L2ToL1Transfer'],
         },
       ],
     },
