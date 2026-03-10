@@ -63,7 +63,7 @@ const SUPERFORM_NETWORKS = defineNetworks('superform', [
   {
     chainId: 999,
     eid: 30367,
-    chain: 'hyperliquid',
+    chain: 'hyperevm',
   },
 ])
 

@@ -93,7 +93,7 @@ const OVERRIDES_V2 = [
   { chain: 'sonic', domain: 13 },
   { chain: 'sei', domain: 16 },
   { chain: 'xdc', domain: 18 },
-  { chain: 'hyperliquid', domain: 19 },
+  { chain: 'hyperevm', domain: 19 },
 ]
 
 export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
