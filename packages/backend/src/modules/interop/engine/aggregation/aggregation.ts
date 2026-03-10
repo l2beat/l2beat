@@ -176,7 +176,6 @@ export function getAggregatedTransfer(
     count10KTo100K,
     countOver100K,
     identifiedCount,
-    transferTypeStats: undefined,
   }
 }
 
@@ -338,6 +337,5 @@ export function getAggregatedTokens(
         : undefined,
     mintedValueUsd: data.mintedValueUsd,
     burnedValueUsd: data.burnedValueUsd,
-    transferTypeStats: undefined,
   }))
 }

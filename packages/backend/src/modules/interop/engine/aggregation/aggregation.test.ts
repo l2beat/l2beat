@@ -42,7 +42,6 @@ describe('aggregation', () => {
         count10KTo100K: 0,
         countOver100K: 0,
         identifiedCount: 1,
-        transferTypeStats: undefined,
       })
     })
 
@@ -97,7 +96,6 @@ describe('aggregation', () => {
         count10KTo100K: 0,
         countOver100K: 0,
         identifiedCount: 3,
-        transferTypeStats: undefined,
       })
     })
 
@@ -144,7 +142,6 @@ describe('aggregation', () => {
         count10KTo100K: 0,
         countOver100K: 0,
         identifiedCount: 1,
-        transferTypeStats: undefined,
       })
     })
 
@@ -249,7 +246,6 @@ describe('aggregation', () => {
         count10KTo100K: 1,
         countOver100K: 1,
         identifiedCount: 5,
-        transferTypeStats: undefined,
       })
     })
 
@@ -539,7 +535,6 @@ describe('aggregation', () => {
           maxTransferValueUsd: 2000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
       ])
     })
@@ -576,7 +571,6 @@ describe('aggregation', () => {
           maxTransferValueUsd: 2000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
         {
           srcChain: 'ethereum',
@@ -592,7 +586,6 @@ describe('aggregation', () => {
           maxTransferValueUsd: 1500,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
       ])
     })
@@ -649,7 +642,6 @@ describe('aggregation', () => {
           maxTransferValueUsd: 3000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
         {
           srcChain: 'ethereum',
@@ -665,7 +657,6 @@ describe('aggregation', () => {
           maxTransferValueUsd: 1000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
       ])
     })
@@ -711,7 +702,6 @@ describe('aggregation', () => {
         maxTransferValueUsd: 3000,
         mintedValueUsd: undefined,
         burnedValueUsd: undefined,
-        transferTypeStats: undefined,
       })
     })
 
@@ -756,7 +746,6 @@ describe('aggregation', () => {
           maxTransferValueUsd: 3000,
           mintedValueUsd: undefined,
           burnedValueUsd: undefined,
-          transferTypeStats: undefined,
         },
       ])
     })
