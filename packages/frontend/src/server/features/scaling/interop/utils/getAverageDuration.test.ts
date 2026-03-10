@@ -110,6 +110,41 @@ describe(getAverageDuration.name, () => {
       ],
     })
   })
+
+  it('keeps configured splits even when transfer type stats are empty', () => {
+    const result = getAverageDuration(
+      'stargate',
+      'nonMinting',
+      commonInteropData({
+        transferCount: 4,
+        totalDurationSum: 260,
+        transferTypeStats: undefined,
+      }),
+      new Map([
+        [
+          'stargate',
+          new Map([
+            [
+              'nonMinting',
+              [
+                { label: 'Bus', transferTypes: ['bus'] },
+                { label: 'Taxi', transferTypes: ['taxi'] },
+              ],
+            ],
+          ]),
+        ],
+      ]) satisfies DurationSplitMap,
+    )
+
+    expect(result).toEqual({
+      type: 'split',
+      splits: [
+        { label: 'Bus', duration: null },
+        { label: 'Taxi', duration: null },
+      ],
+    })
+  })
+
   it('uses merged data when all relevant bridge type configs match', () => {
     const result = getAverageDuration(
       'protocol',

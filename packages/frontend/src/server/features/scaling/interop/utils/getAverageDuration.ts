@@ -1,4 +1,5 @@
 import type { InteropDurationSplit, Project } from '@l2beat/config'
+import type { InteropTransferTypeStatsMap } from '@l2beat/database'
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import type {
   AverageDuration,
@@ -23,14 +24,13 @@ export function getAverageDuration(
 
   if (
     durationSplit &&
-    durationSplit.some((split) => split.transferTypes.length > 0) &&
-    data.transferTypeStats
+    durationSplit.some((split) => split.transferTypes.length > 0)
   ) {
     return {
       type: 'split',
       splits: durationSplit.map((split) => ({
         label: split.label,
-        duration: getSplitDuration(split.transferTypes, data),
+        duration: getSplitDuration(split.transferTypes, data.transferTypeStats),
       })),
     }
   }
@@ -97,11 +97,11 @@ function haveSameTransferTypes(a: string[], b: string[]): boolean {
 
 function getSplitDuration(
   transferTypes: string[],
-  data: CommonInteropData,
+  transferTypeStats: InteropTransferTypeStatsMap | undefined,
 ): number | null {
   const matchedStats = [...new Set(transferTypes)]
-    .map((transferType) => data.transferTypeStats?.[transferType])
-    .filter((stats): stats is NonNullable<typeof stats> => stats !== undefined)
+    .map((transferType) => transferTypeStats?.[transferType])
+    .filter((stats) => stats !== undefined)
 
   const transferCount = matchedStats.reduce(
     (acc, stats) => acc + stats.transferCount,
