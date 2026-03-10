@@ -101,6 +101,18 @@ export interface CompiledReachableContract {
   fundsAtRisk: boolean
 }
 
+export interface CompiledDependencyFunction {
+  contractAddress: string
+  contractName: string
+  functionName: string
+  viewOnlyPath: boolean
+  /** Funds on the function's own contract */
+  directFundsUsd: number
+  directTokenValueUsd: number
+  /** Contracts reachable via call graph from this function that hold funds */
+  reachableContracts: CompiledReachableContract[]
+}
+
 export interface CompiledDependency {
   address: string
   name: string
@@ -109,12 +121,11 @@ export interface CompiledDependency {
   isAutoDetected: boolean
   viewOnlyPath: boolean
   calledFunctions: string[]
-  functions: {
-    contractAddress: string
-    contractName: string
-    functionName: string
-    viewOnlyPath: boolean
-  }[]
+  functions: CompiledDependencyFunction[]
+  /** Aggregated funds at risk across all functions that use this dependency (deduplicated by contract) */
+  totalFundsAtRisk: number
+  /** Aggregated token value at risk across all functions that use this dependency (deduplicated by contract) */
+  totalTokenValueAtRisk: number
 }
 
 export interface CompiledFundHolder {
@@ -236,11 +247,16 @@ export class ReviewCompiler {
       // 4. Read contract tags
       const contractTags = getContractTags(this.paths, project)
 
-      // 5. Compute function analysis (rich dependency data with viewOnlyPath)
-      const functionAnalysis = computeFunctionAnalysis(this.paths, project)
-
-      // 5b. Read functions data (for mitigations)
+      // 5. Read functions data (for mitigations + passed to function analysis)
       const functionsData = getFunctions(this.paths, project)
+
+      // 6. Compute function analysis (rich dependency data with viewOnlyPath)
+      // Pass pre-loaded data to avoid redundant file I/O
+      const functionAnalysis = computeFunctionAnalysis(this.paths, project, {
+        functionsData,
+        fundsData,
+        contractTagsData: contractTags,
+      })
 
       // 6. Load project data for contract names (applies config name overrides + multisig formatting)
       const projectData = getProject(configReader, templateService, project)
@@ -463,16 +479,11 @@ export class ReviewCompiler {
       }
     }
 
-    // Build contract name lookup from v2Score admin functions
+    // Build contract name lookup from discovery entries (covers all contracts)
     const contractNameMap = new Map<string, string>()
-    if (v2Score.inventory.admins.breakdown) {
-      for (const admin of v2Score.inventory.admins.breakdown) {
-        for (const fn of admin.functions) {
-          contractNameMap.set(
-            normalizeChainAddress(fn.contractAddress),
-            fn.contractName,
-          )
-        }
+    for (const entry of discoveryEntries) {
+      if (entry.name) {
+        contractNameMap.set(normalizeChainAddress(entry.address), entry.name)
       }
     }
 
@@ -485,12 +496,7 @@ export class ReviewCompiler {
         entity: string | undefined
         isAutoDetected: boolean
         calledFunctions: Set<string>
-        functions: {
-          contractAddress: string
-          contractName: string
-          functionName: string
-          viewOnlyPath: boolean
-        }[]
+        functions: CompiledDependencyFunction[]
       }
     >()
 
@@ -524,6 +530,15 @@ export class ReviewCompiler {
               f.functionName === funcName,
           )
           if (!alreadyAdded) {
+            // Build per-function impact data from functionAnalysis
+            const impact = analysis.impact
+            const directFunds = impact
+              ? getContractFundsFromLookup(fundsLookup, contractAddr)
+              : 0
+            const directTokenValue = impact
+              ? getContractTokenValueFromLookup(fundsLookup, contractAddr)
+              : 0
+
             existing.functions.push({
               contractAddress: contractAddr,
               contractName:
@@ -531,6 +546,19 @@ export class ReviewCompiler {
                 'Unknown Contract',
               functionName: funcName,
               viewOnlyPath: dep.viewOnlyPath,
+              directFundsUsd: directFunds,
+              directTokenValueUsd: directTokenValue,
+              reachableContracts: (impact?.reachableContracts ?? []).map(
+                (r) => ({
+                  address: r.contractAddress,
+                  name: r.contractName,
+                  viewOnlyPath: r.viewOnlyPath,
+                  calledFunctions: r.calledFunctions,
+                  fundsUsd: r.fundsUsd,
+                  tokenValueUsd: r.tokenValueUsd,
+                  fundsAtRisk: r.fundsUsd > 0 || r.tokenValueUsd > 0,
+                }),
+              ),
             })
           }
         }
@@ -541,6 +569,42 @@ export class ReviewCompiler {
     const dependencies: CompiledDependency[] = []
     for (const dep of depMap.values()) {
       const desc = getFromAddressRecord(reviewConfig.dependencies, dep.address)
+
+      // Compute aggregated funds at risk (deduplicated by reachable contract)
+      const mergedContracts = new Map<
+        string,
+        { funds: number; tokenValue: number }
+      >()
+      for (const fn of dep.functions) {
+        // Direct funds on the function's contract
+        if (fn.directFundsUsd > 0 || fn.directTokenValueUsd > 0) {
+          const addr = normalizeChainAddress(fn.contractAddress)
+          const existing = mergedContracts.get(addr)
+          mergedContracts.set(addr, {
+            funds: Math.max(existing?.funds ?? 0, fn.directFundsUsd),
+            tokenValue: Math.max(
+              existing?.tokenValue ?? 0,
+              fn.directTokenValueUsd,
+            ),
+          })
+        }
+        // Reachable contracts
+        for (const rc of fn.reachableContracts) {
+          if (rc.fundsUsd <= 0 && rc.tokenValueUsd <= 0) continue
+          const addr = normalizeChainAddress(rc.address)
+          const existing = mergedContracts.get(addr)
+          mergedContracts.set(addr, {
+            funds: Math.max(existing?.funds ?? 0, rc.fundsUsd),
+            tokenValue: Math.max(existing?.tokenValue ?? 0, rc.tokenValueUsd),
+          })
+        }
+      }
+      let totalFundsAtRisk = 0
+      let totalTokenValueAtRisk = 0
+      for (const { funds, tokenValue } of mergedContracts.values()) {
+        totalFundsAtRisk += funds
+        totalTokenValueAtRisk += tokenValue
+      }
 
       dependencies.push({
         address: dep.address,
@@ -553,6 +617,8 @@ export class ReviewCompiler {
           dep.functions.every((f) => f.viewOnlyPath),
         calledFunctions: Array.from(dep.calledFunctions),
         functions: dep.functions,
+        totalFundsAtRisk,
+        totalTokenValueAtRisk,
       })
     }
 
@@ -837,6 +903,30 @@ export class ReviewCompiler {
 
     return typeof value === 'number' ? value : null
   }
+}
+
+// ============================================================================
+// Funds Lookup Helpers
+// ============================================================================
+
+function getContractFundsFromLookup(
+  fundsLookup: Map<string, ContractFundsData>,
+  contractAddress: string,
+): number {
+  const data = fundsLookup.get(normalizeChainAddress(contractAddress))
+  if (!data) return 0
+  return (
+    (data.balances?.totalUsdValue ?? 0) + (data.positions?.totalUsdValue ?? 0)
+  )
+}
+
+function getContractTokenValueFromLookup(
+  fundsLookup: Map<string, ContractFundsData>,
+  contractAddress: string,
+): number {
+  const data = fundsLookup.get(normalizeChainAddress(contractAddress))
+  if (!data) return 0
+  return data.tokenInfo?.tokenValue ?? 0
 }
 
 // ============================================================================

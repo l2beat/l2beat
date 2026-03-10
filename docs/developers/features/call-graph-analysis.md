@@ -94,8 +94,10 @@ Exported from `callGraph.ts`, used by `functionAnalysis.ts` and `v2Scoring.ts`:
 
 ### Function Analysis (`functionAnalysis.ts`)
 
-- **Impact** (permissioned only): Forward BFS via call graph, filters contracts with funds. Includes `callPath: CallPathStep[]` (shortest path)
+- **ABI-driven iteration**: Iterates ALL write functions from `discovered.json` ABIs (same set shown in the UI's permissions section), not just entries in `functions.json`. This ensures dependency detection covers every write function visible in the UI.
+- **Impact** (permissioned functions or functions with dependencies): Forward BFS via call graph, filters contracts with funds. Includes `callPath: CallPathStep[]` (shortest path)
 - **Dependencies** (all functions): Auto-detected external contracts (BFS + `isExternal` tag) merged with manual deps from `functions.json`. `isAutoDetected` flag distinguishes them
+- **Pre-loaded data**: Accepts optional `FunctionAnalysisPreloadedData` to avoid redundant file I/O when callers (e.g., `v2Scoring.ts`, `reviewCompiler.ts`) have already loaded functions, call graph, funds, or contract tags data
 - Response: `ApiFunctionAnalysisResponse` — `contracts[address][functionName] -> FunctionAnalysis`
 
 ### Key Types (in both backend and frontend `types.ts`)

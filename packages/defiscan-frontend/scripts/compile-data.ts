@@ -6,6 +6,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 
+// Minimal subset of CompiledReview (from src/types.ts) — only fields needed for index aggregation.
+// Keep in sync with the full type when adding new aggregated fields.
 interface CompiledReview {
   metadata: {
     protocolName: string
@@ -35,6 +37,7 @@ interface CompiledReview {
     address: string
     name: string
     entity: string | null
+    totalFundsAtRisk: number
     functions: { contractAddress: string; contractName: string; functionName: string }[]
   }[]
   funds: {
@@ -197,32 +200,18 @@ function main() {
       totalTokenValueAtRisk += protocolTokenValue
     }
 
-    // Aggregate dependencies across protocols
-    // For each dependency, sum capital of admins whose functions use this dependency
-    // This avoids attributing the entire protocol TVL to every dependency
+    // Aggregate dependencies across protocols using pre-computed funds
     for (const dep of review.dependencies) {
       const key = dep.address
-      // Compute capital controlled by admins that call through this dependency
-      const depContractAddresses = new Set(dep.functions.map((f) => f.contractAddress))
-      let depCapital = 0
-      for (const admin of review.admins) {
-        const usesThisDep = admin.functions.some(
-          (f) => depContractAddresses.has(f.contractAddress),
-        )
-        if (usesThisDep) {
-          depCapital += admin.totalDirectCapital
-        }
-      }
-
       const existing = depMap.get(key)
       if (existing) {
         existing.protocols.push({ slug, name: review.metadata.protocolName })
-        existing.totalFundsAtRisk += depCapital
+        existing.totalFundsAtRisk += dep.totalFundsAtRisk
       } else {
         depMap.set(key, {
           name: dep.name,
           entity: dep.entity,
-          totalFundsAtRisk: depCapital,
+          totalFundsAtRisk: dep.totalFundsAtRisk,
           protocols: [{ slug, name: review.metadata.protocolName }],
         })
       }

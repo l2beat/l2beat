@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-10T09:03:16.409Z",
+  "compiledAt": "2026-03-10T14:54:06.399Z",
   "project": "liquity-v1",
   "metadata": {
     "protocolName": "Liquity V1",
@@ -15,7 +15,7 @@
     "permissionedFunctionCount": 17,
     "scoredFunctionCount": 0,
     "adminCount": 4,
-    "dependencyCount": 2,
+    "dependencyCount": 3,
     "totalCapitalAtRisk": 175609673.29952922,
     "totalTokenValueAtRisk": 31203451.700806536,
     "totalTokenValue": 60403451.700806536
@@ -287,7 +287,7 @@
       "description": "Primary oracle for ETH/USD pricing, used by PriceFeed.fetchPrice to determine collateral values for borrowing, liquidation, and redemption. Owned by a Chainlink 4/9 multisig. If the Chainlink feed fails or is frozen, the system automatically falls back to Tellor.",
       "entity": "Chainlink",
       "isAutoDetected": true,
-      "viewOnlyPath": true,
+      "viewOnlyPath": false,
       "calledFunctions": [
         "decimals",
         "latestRoundData",
@@ -295,18 +295,645 @@
       ],
       "functions": [
         {
-          "contractAddress": "eth:0x4c517d4e2c851ca76d7ec94b805269df0f2201de",
-          "contractName": "PriceFeed",
-          "functionName": "fetchPrice",
-          "viewOnlyPath": true
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "addColl",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
         },
         {
-          "contractAddress": "eth:0x4c517d4e2c851ca76d7ec94b805269df0f2201de",
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "adjustTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "closeTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "getETH",
+                "getLUSDDebt",
+                "decreaseLUSDDebt",
+                "increaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "moveETHGainToTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "repayLUSD",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "withdrawColl",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "withdrawLUSD",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+          "contractName": "PriceFeed",
+          "functionName": "fetchPrice",
+          "viewOnlyPath": true,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
           "contractName": "PriceFeed",
           "functionName": "setAddresses",
-          "viewOnlyPath": true
+          "viewOnlyPath": true,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+          "contractName": "StabilityPool",
+          "functionName": "withdrawETHGainToTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 14016796.67580555,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+          "contractName": "StabilityPool",
+          "functionName": "withdrawFromSP",
+          "viewOnlyPath": false,
+          "directFundsUsd": 14016796.67580555,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "returnFromPool"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+          "contractName": "TroveManager",
+          "functionName": "batchLiquidateTroves",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "returnFromPool",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTotalLUSDDeposits",
+                "offset"
+              ],
+              "fundsUsd": 14016796.67580555,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
+              "name": "CollSurplusPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "accountSurplus"
+              ],
+              "fundsUsd": 3224878.719068009,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+          "contractName": "TroveManager",
+          "functionName": "liquidate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "returnFromPool",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTotalLUSDDeposits",
+                "offset"
+              ],
+              "fundsUsd": 14016796.67580555,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
+              "name": "CollSurplusPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "accountSurplus"
+              ],
+              "fundsUsd": 3224878.719068009,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+          "contractName": "TroveManager",
+          "functionName": "liquidateTroves",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "returnFromPool",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTotalLUSDDeposits",
+                "offset"
+              ],
+              "fundsUsd": 14016796.67580555,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
+              "name": "CollSurplusPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "accountSurplus"
+              ],
+              "fundsUsd": 3224878.719068009,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+          "contractName": "TroveManager",
+          "functionName": "redeemCollateral",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "decreaseLUSDDebt",
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getDeploymentStartTime"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
+              "name": "CollSurplusPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "accountSurplus"
+              ],
+              "fundsUsd": 3224878.719068009,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
         }
-      ]
+      ],
+      "totalFundsAtRisk": 175609673.29952922,
+      "totalTokenValueAtRisk": 60403451.700806536
     },
     {
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
@@ -320,18 +947,678 @@
       ],
       "functions": [
         {
-          "contractAddress": "eth:0x4c517d4e2c851ca76d7ec94b805269df0f2201de",
-          "contractName": "PriceFeed",
-          "functionName": "fetchPrice",
-          "viewOnlyPath": true
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "addColl",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
         },
         {
-          "contractAddress": "eth:0x4c517d4e2c851ca76d7ec94b805269df0f2201de",
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "adjustTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "closeTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "getETH",
+                "getLUSDDebt",
+                "decreaseLUSDDebt",
+                "increaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "moveETHGainToTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "openTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "repayLUSD",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "withdrawColl",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+          "contractName": "BorrowerOperations",
+          "functionName": "withdrawLUSD",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
+          "contractName": "PriceFeed",
+          "functionName": "fetchPrice",
+          "viewOnlyPath": true,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
           "contractName": "PriceFeed",
           "functionName": "setAddresses",
-          "viewOnlyPath": false
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+          "contractName": "StabilityPool",
+          "functionName": "withdrawETHGainToTrove",
+          "viewOnlyPath": false,
+          "directFundsUsd": 14016796.67580555,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getETH",
+                "getLUSDDebt",
+                "sendETH",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+          "contractName": "StabilityPool",
+          "functionName": "withdrawFromSP",
+          "viewOnlyPath": false,
+          "directFundsUsd": 14016796.67580555,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "returnFromPool"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+          "contractName": "TroveManager",
+          "functionName": "batchLiquidateTroves",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "returnFromPool",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTotalLUSDDeposits",
+                "offset"
+              ],
+              "fundsUsd": 14016796.67580555,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
+              "name": "CollSurplusPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "accountSurplus"
+              ],
+              "fundsUsd": 3224878.719068009,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+          "contractName": "TroveManager",
+          "functionName": "liquidate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "returnFromPool",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTotalLUSDDeposits",
+                "offset"
+              ],
+              "fundsUsd": 14016796.67580555,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
+              "name": "CollSurplusPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "accountSurplus"
+              ],
+              "fundsUsd": 3224878.719068009,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+          "contractName": "TroveManager",
+          "functionName": "liquidateTroves",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt",
+                "decreaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "returnFromPool",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
+              "name": "StabilityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTotalLUSDDeposits",
+                "offset"
+              ],
+              "fundsUsd": 14016796.67580555,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
+              "name": "CollSurplusPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "accountSurplus"
+              ],
+              "fundsUsd": 3224878.719068009,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+          "contractName": "TroveManager",
+          "functionName": "redeemCollateral",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+              "name": "ActivePool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "sendETH",
+                "decreaseLUSDDebt",
+                "getETH",
+                "getLUSDDebt",
+                "increaseLUSDDebt"
+              ],
+              "fundsUsd": 158367997.90465567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+              "name": "LUSD Stablecoin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "burn"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 31203451.700806536,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "getDeploymentStartTime"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
+              "name": "CollSurplusPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "accountSurplus"
+              ],
+              "fundsUsd": 3224878.719068009,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
         }
-      ]
+      ],
+      "totalFundsAtRisk": 175609673.29952922,
+      "totalTokenValueAtRisk": 60403451.700806536
+    },
+    {
+      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "name": "GnosisSafe",
+      "description": "",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "isValidSignature"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
+          "contractName": "3/8 38% GnosisSafe",
+          "functionName": "execTransaction",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
+          "contractName": "3/8 38% GnosisSafe",
+          "functionName": "isValidSignature",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0
     }
   ],
   "funds": [
@@ -553,7 +1840,7 @@
       "name": "4/9 Multisig",
       "isExternal": true,
       "isGovernance": false,
-      "entity": null,
+      "entity": "Chainlink",
       "proxyType": "gnosis safe"
     },
     {

@@ -98,6 +98,16 @@ export interface CompiledReachableContract {
   fundsAtRisk: boolean
 }
 
+export interface CompiledDependencyFunction {
+  contractAddress: string
+  contractName: string
+  functionName: string
+  viewOnlyPath: boolean
+  directFundsUsd: number
+  directTokenValueUsd: number
+  reachableContracts: CompiledReachableContract[]
+}
+
 export interface CompiledDependency {
   address: string
   name: string
@@ -106,12 +116,9 @@ export interface CompiledDependency {
   isAutoDetected: boolean
   viewOnlyPath: boolean
   calledFunctions: string[]
-  functions: {
-    contractAddress: string
-    contractName: string
-    functionName: string
-    viewOnlyPath: boolean
-  }[]
+  functions: CompiledDependencyFunction[]
+  totalFundsAtRisk: number
+  totalTokenValueAtRisk: number
 }
 
 export interface CompiledFundHolder {

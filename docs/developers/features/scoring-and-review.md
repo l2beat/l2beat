@@ -168,4 +168,6 @@ Protocol links (frontends, docs, GitHub, X, source code, other) stored as `resou
 - **Output**: `compiled-review.json` written to `packages/defiscan-frontend/public/data/<slug>/`
 - **Guard Conditions**: Requires `review-config.json` and `call-graph-data.json`; skips if either is missing
 - **Template Variables**: `{{variableName}}` resolved at compile time via `dataKeys` map
-- **TypeScript interfaces**: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
+- **TypeScript interfaces**: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledDependencyFunction`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
+- **Dependency funds**: Each `CompiledDependency` includes `totalFundsAtRisk` and `totalTokenValueAtRisk` (pre-computed, deduplicated across functions). Each `CompiledDependencyFunction` includes `directFundsUsd`, `directTokenValueUsd`, and `reachableContracts[]` with per-contract funds. These are computed server-side in the compiler, not client-side.
+- **Frontend subset**: `defiscan-frontend/scripts/compile-data.ts` uses a minimal subset of `CompiledReview` (not imported) for index aggregation — keep in sync when adding fields

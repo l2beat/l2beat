@@ -1,13 +1,9 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { Badge } from '../../../../components/Badge'
 import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { GlossaryTooltip } from '../../../../components/GlossaryTooltip'
 import { formatUsdValue } from '../../../../utils/format'
-import {
-  buildFunctionContractFundsMap,
-  computeDepFundsAtRisk,
-  getFunctionFunds,
-} from '../../../../utils/dependencies'
+import { getDepFunctionFunds } from '../../../../utils/dependencies'
 import type { CompiledReview, CompiledDependency } from '../../../../types'
 
 interface DependencyCardsProps {
@@ -26,10 +22,6 @@ const DEP_BAR_COLORS = [
 export function DependencyCards({ review }: DependencyCardsProps) {
   const { dependencies } = review
   const [expandedDeps, setExpandedDeps] = useState<Set<string>>(new Set())
-  const fnContractMap = useMemo(
-    () => buildFunctionContractFundsMap(review),
-    [review],
-  )
 
   if (dependencies.length === 0) {
     return (
@@ -129,7 +121,7 @@ export function DependencyCards({ review }: DependencyCardsProps) {
           // Sort deps by funds at risk descending within each group
           const depsWithFunds = deps.map((dep) => ({
             dep,
-            fundsAtRisk: computeDepFundsAtRisk(dep, fnContractMap),
+            fundsAtRisk: dep.totalFundsAtRisk,
           }))
           depsWithFunds.sort((a, b) => b.fundsAtRisk - a.fundsAtRisk)
           const groupTotal = depsWithFunds.reduce(
@@ -149,7 +141,6 @@ export function DependencyCards({ review }: DependencyCardsProps) {
               groupTotal={groupTotal}
               expandedSet={expandedDeps}
               onToggle={toggleDep}
-              fnContractMap={fnContractMap}
             />
           )
         })}
@@ -164,14 +155,12 @@ function DepDistributionChart({
   groupTotal,
   expandedSet,
   onToggle,
-  fnContractMap,
 }: {
   title: string | undefined
   deps: { dep: CompiledDependency; fundsAtRisk: number }[]
   groupTotal: number
   expandedSet: Set<string>
   onToggle: (key: string) => void
-  fnContractMap: Map<string, Map<string, number>>
 }) {
   const maxFunds = Math.max(...deps.map((d) => d.fundsAtRisk), 0)
 
@@ -239,12 +228,7 @@ function DepDistributionChart({
                 )}
               </button>
 
-              {isExpanded && (
-                <DepExpandedContent
-                  dep={dep}
-                  fnContractMap={fnContractMap}
-                />
-              )}
+              {isExpanded && <DepExpandedContent dep={dep} />}
             </div>
           )
         })}
@@ -253,13 +237,7 @@ function DepDistributionChart({
   )
 }
 
-function DepExpandedContent({
-  dep,
-  fnContractMap,
-}: {
-  dep: CompiledDependency
-  fnContractMap: Map<string, Map<string, number>>
-}) {
+function DepExpandedContent({ dep }: { dep: CompiledDependency }) {
   const readFns = dep.functions.filter((f) => f.viewOnlyPath)
   const writeFns = dep.functions.filter((f) => !f.viewOnlyPath)
 
@@ -310,11 +288,7 @@ function DepExpandedContent({
           </p>
           <div className="space-y-1">
             {dep.functions.map((fn) => {
-              const fnFunds = getFunctionFunds(
-                fn.contractAddress,
-                fn.functionName,
-                fnContractMap,
-              )
+              const fnFunds = getDepFunctionFunds(fn)
               return (
                 <div
                   key={`${fn.contractAddress}-${fn.functionName}`}

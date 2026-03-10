@@ -4,11 +4,7 @@ import { Badge } from '../../../../components/Badge'
 import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { UsdValue } from '../../../../components/UsdValue'
 import { formatUsdValue } from '../../../../utils/format'
-import {
-  buildFunctionContractFundsMap,
-  computeDepFundsAtRisk,
-  getFunctionFunds,
-} from '../../../../utils/dependencies'
+import { getDepFunctionFunds } from '../../../../utils/dependencies'
 import type { CompiledReview, CompiledDependency } from '../../../../types'
 import { ShareableDiagram } from '../../../../components/ShareableDiagram'
 import { DependencyRiskDiagram } from './svg/DependencyRiskDiagram'
@@ -25,19 +21,14 @@ export function DepsTab({ review }: DepsTabProps) {
   const [sortField, setSortField] = useState<SortField>('fundsAtRisk')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
 
-  const fnContractMap = useMemo(
-    () => buildFunctionContractFundsMap(review),
-    [review],
-  )
-
-  // Pre-compute deduplicated funds at risk for each dependency
+  // Use pre-computed funds from compiled review
   const depsWithFunds = useMemo(
     () =>
       dependencies.map((dep) => ({
         dep,
-        fundsAtRisk: computeDepFundsAtRisk(dep, fnContractMap),
+        fundsAtRisk: dep.totalFundsAtRisk,
       })),
-    [dependencies, fnContractMap],
+    [dependencies],
   )
 
   const sorted = useMemo(() => {
@@ -191,7 +182,6 @@ export function DepsTab({ review }: DepsTabProps) {
                 key={dep.address}
                 dep={dep}
                 fundsAtRisk={fundsAtRisk}
-                fnContractMap={fnContractMap}
               />
             ))}
           </tbody>
@@ -204,11 +194,9 @@ export function DepsTab({ review }: DepsTabProps) {
 function DependencyRow({
   dep,
   fundsAtRisk,
-  fnContractMap,
 }: {
   dep: CompiledDependency
   fundsAtRisk: number
-  fnContractMap: Map<string, Map<string, number>>
 }) {
   const [expanded, setExpanded] = useState(false)
 
@@ -287,10 +275,7 @@ function DependencyRow({
             colSpan={5}
             className="px-0 py-0 bg-bg-muted/50 border-b border-border"
           >
-            <ExpandedDependency
-              dep={dep}
-              fnContractMap={fnContractMap}
-            />
+            <ExpandedDependency dep={dep} />
           </td>
         </tr>
       )}
@@ -298,13 +283,7 @@ function DependencyRow({
   )
 }
 
-function ExpandedDependency({
-  dep,
-  fnContractMap,
-}: {
-  dep: CompiledDependency
-  fnContractMap: Map<string, Map<string, number>>
-}) {
+function ExpandedDependency({ dep }: { dep: CompiledDependency }) {
   // Separate read and write functions
   const readFns = dep.functions.filter((f) => f.viewOnlyPath)
   const writeFns = dep.functions.filter((f) => !f.viewOnlyPath)
@@ -346,7 +325,7 @@ function ExpandedDependency({
               write access
             </span>
           </div>
-          <FunctionList functions={writeFns} fnContractMap={fnContractMap} />
+          <FunctionList functions={writeFns} />
         </div>
       )}
 
@@ -360,7 +339,7 @@ function ExpandedDependency({
               read-only access
             </span>
           </div>
-          <FunctionList functions={readFns} fnContractMap={fnContractMap} />
+          <FunctionList functions={readFns} />
         </div>
       )}
     </div>
@@ -369,10 +348,8 @@ function ExpandedDependency({
 
 function FunctionList({
   functions,
-  fnContractMap,
 }: {
   functions: CompiledDependency['functions']
-  fnContractMap: Map<string, Map<string, number>>
 }) {
   return (
     <table className="w-full text-xs">
@@ -385,11 +362,7 @@ function FunctionList({
       </thead>
       <tbody>
         {functions.map((fn) => {
-          const capital = getFunctionFunds(
-            fn.contractAddress,
-            fn.functionName,
-            fnContractMap,
-          )
+          const capital = getDepFunctionFunds(fn)
           return (
             <tr
               key={`${fn.contractAddress}-${fn.functionName}`}
