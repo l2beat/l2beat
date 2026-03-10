@@ -6,8 +6,8 @@ import { HorizontalScrollContainer } from './HorizontalScrollContainer'
 const BRIDGE_TYPE_ORDER = ['lockAndMint', 'burnAndMint'] as const
 
 const BRIDGE_TYPE_COLORS: Record<string, string> = {
-  lockAndMint: '#a16207',
-  burnAndMint: '#14b8a6',
+  lockAndMint: '#cb9800',
+  burnAndMint: '#27ac9f',
 }
 
 interface Props {
