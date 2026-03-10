@@ -71,17 +71,11 @@ export const abstract: ScalingProject = zkStackL2({
       lockAndMint: [
         {
           label: 'L1 -> L2',
-          transferTypes: [
-            'canonical-erc20.L1ToL2Transfer',
-            'canonical-gas.L1ToL2Transfer',
-          ],
+          transferTypes: [],
         },
         {
           label: 'L2 -> L1',
-          transferTypes: [
-            'canonical-erc20.L2ToL1Transfer',
-            'canonical-gas.L2ToL1Transfer',
-          ],
+          transferTypes: [],
         },
       ],
     },
