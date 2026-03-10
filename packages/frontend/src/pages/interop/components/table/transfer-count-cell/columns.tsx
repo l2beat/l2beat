@@ -155,7 +155,7 @@ function TokenAmount({
 }: {
   amount: number | undefined
   symbol: string | undefined
-  iconUrl: string | undefined
+  iconUrl: string
 }) {
   if (amount === undefined) return <NoDataBadge />
 
