@@ -13,6 +13,10 @@ import {
   Result,
 } from './types'
 
+const SUPERFORM_ADDRESS = EthereumAddress(
+  '0xa195608C2306A26f727d5199D5A382a4508308DA',
+)
+
 // https://docs.superform.xyz/integrate-superform/deployment-addresses
 // chainconfeeg
 const SUPERFORM_NETWORKS = defineNetworks('superform', [
@@ -20,55 +24,46 @@ const SUPERFORM_NETWORKS = defineNetworks('superform', [
     chainId: 1,
     eid: 30101,
     chain: 'ethereum',
-    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
   {
     chainId: 42161,
     eid: 30110,
     chain: 'arbitrum',
-    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
   {
     chainId: 8453,
     eid: 30184,
     chain: 'base',
-    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
   {
     chainId: 10,
     eid: 30111,
     chain: 'optimism',
-    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
   {
     chainId: 137,
     eid: 30109,
     chain: 'polygonpos',
-    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
   {
     chainId: 56,
     eid: 30102,
     chain: 'bsc',
-    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
   {
     chainId: 43114,
     eid: 30106,
     chain: 'avalanche',
-    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
   {
     chainId: 130,
     eid: 30320,
     chain: 'unichain',
-    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
   {
     chainId: 999,
     eid: 30367,
     chain: 'hyperliquid',
-    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
 ])
 
@@ -96,7 +91,7 @@ export class SuperformPlugin implements InteropPlugin {
     if (!network) return
 
     const crossChainInitiatedDepositMulti =
-      parseCrossChainInitiatedDepositMulti(input.log, [network.address])
+      parseCrossChainInitiatedDepositMulti(input.log, [SUPERFORM_ADDRESS])
     if (crossChainInitiatedDepositMulti) {
       const $dstChain = findChain(
         SUPERFORM_NETWORKS,
@@ -110,7 +105,7 @@ export class SuperformPlugin implements InteropPlugin {
       ]
     }
     const crossChainInitiatedDepositSingle =
-      parseCrossChainInitiatedDepositSingle(input.log, [network.address])
+      parseCrossChainInitiatedDepositSingle(input.log, [SUPERFORM_ADDRESS])
     if (crossChainInitiatedDepositSingle) {
       const $dstChain = findChain(
         SUPERFORM_NETWORKS,
@@ -124,7 +119,7 @@ export class SuperformPlugin implements InteropPlugin {
       ]
     }
     const crossChainInitiatedWithdrawMulti =
-      parseCrossChainInitiatedWithdrawMulti(input.log, [network.address])
+      parseCrossChainInitiatedWithdrawMulti(input.log, [SUPERFORM_ADDRESS])
     if (crossChainInitiatedWithdrawMulti) {
       const $dstChain = findChain(
         SUPERFORM_NETWORKS,
@@ -138,7 +133,7 @@ export class SuperformPlugin implements InteropPlugin {
       ]
     }
     const crossChainInitiatedWithdrawSingle =
-      parseCrossChainInitiatedWithdrawSingle(input.log, [network.address])
+      parseCrossChainInitiatedWithdrawSingle(input.log, [SUPERFORM_ADDRESS])
     if (crossChainInitiatedWithdrawSingle) {
       const $dstChain = findChain(
         SUPERFORM_NETWORKS,
