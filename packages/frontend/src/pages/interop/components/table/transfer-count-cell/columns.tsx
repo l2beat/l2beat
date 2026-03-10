@@ -1,6 +1,12 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
@@ -28,8 +34,14 @@ export const columns = [
     header: 'Source token',
     enableSorting: false,
     cell: (ctx) => {
-      const { srcAmount, srcSymbol } = ctx.row.original
-      return <TokenAmount amount={srcAmount} symbol={srcSymbol} />
+      const { srcAmount, srcSymbol, srcTokenIconUrl } = ctx.row.original
+      return (
+        <TokenAmount
+          amount={srcAmount}
+          iconUrl={srcTokenIconUrl}
+          symbol={srcSymbol}
+        />
+      )
     },
     meta: {
       headClassName: 'text-2xs',
@@ -40,8 +52,14 @@ export const columns = [
     header: 'Destination token',
     enableSorting: false,
     cell: (ctx) => {
-      const { dstAmount, dstSymbol } = ctx.row.original
-      return <TokenAmount amount={dstAmount} symbol={dstSymbol} />
+      const { dstAmount, dstSymbol, dstTokenIconUrl } = ctx.row.original
+      return (
+        <TokenAmount
+          amount={dstAmount}
+          iconUrl={dstTokenIconUrl}
+          symbol={dstSymbol}
+        />
+      )
     },
     meta: {
       headClassName: 'text-2xs',
@@ -133,9 +151,11 @@ export const columns = [
 function TokenAmount({
   amount,
   symbol,
+  iconUrl,
 }: {
   amount: number | undefined
   symbol: string | undefined
+  iconUrl: string
 }) {
   if (amount === undefined) return <NoDataBadge />
 
@@ -143,9 +163,25 @@ function TokenAmount({
     minimumFractionDigits: 0,
     maximumFractionDigits: 5,
   })
+
   return (
-    <span className="font-medium text-label-value-14 text-primary">
-      {symbol ? `${formattedAmount} ${symbol}` : formattedAmount}
+    <span className="inline-flex items-center gap-1 font-medium text-label-value-14 text-primary">
+      {formattedAmount}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <img src={iconUrl} alt={symbol} className="size-4 rounded-full" />
+        </TooltipTrigger>
+        <TooltipPortal>
+          <TooltipContent
+            className="z-[1000]"
+            side="top"
+            align="center"
+            sideOffset={6}
+          >
+            {symbol}
+          </TooltipContent>
+        </TooltipPortal>
+      </Tooltip>
     </span>
   )
 }

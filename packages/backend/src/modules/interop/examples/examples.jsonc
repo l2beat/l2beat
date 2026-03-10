@@ -3410,7 +3410,7 @@
       ],
       "transfers": [
         {
-          "type": "linea.Transfer",
+          "type": "linea.L1ToL2Transfer",
           "src": {
             "event": {
               "type": "linea.BridgingInitiatedV2",
@@ -3425,7 +3425,7 @@
           }
         },
         {
-          "type": "linea.Transfer",
+          "type": "linea.L2ToL1Transfer",
           "src": {
             "event": {
               "type": "linea.BridgingInitiatedV2",
@@ -3440,7 +3440,7 @@
           }
         },
         {
-          "type": "linea.Transfer",
+          "type": "linea.L1ToL2Transfer",
           "src": {
             "event": {
               "type": "linea.MessageSent",
@@ -3455,7 +3455,7 @@
           }
         },
         {
-          "type": "linea.Transfer",
+          "type": "linea.L2ToL1Transfer",
           "src": {
             "event": {
               "type": "linea.MessageSent",
@@ -3470,7 +3470,7 @@
           }
         },
         {
-          "type": "linea.Transfer",
+          "type": "linea.L1ToL2Transfer",
           "src": {
             "event": {
               "type": "linea.BridgingInitiatedV2",
@@ -3576,7 +3576,11 @@
       { "type": "polygon.Message", "app": "canonical-deposit" },
       { "type": "polygon.Message", "app": "unknown" }
     ],
-    "transfers": ["polygon.Transfer", "polygon.Transfer", "polygon.Transfer"]
+    "transfers": [
+      "polygon.L1ToL2Transfer",
+      "polygon.L1ToL2Transfer",
+      "polygon.L1ToL2Transfer"
+    ]
   },
   "polygon-withdrawal": {
     "loadConfigs": ["polygon"],
@@ -3622,7 +3626,11 @@
       { "type": "polygon.Message", "app": "canonical-withdrawal" },
       { "type": "polygon.Message", "app": "canonical-withdrawal" }
     ],
-    "transfers": ["polygon.Transfer", "polygon.Transfer", "polygon.Transfer"]
+    "transfers": [
+      "polygon.L2ToL1Transfer",
+      "polygon.L2ToL1Transfer",
+      "polygon.L2ToL1Transfer"
+    ]
   },
   "sky-bridge": {
     "txs": [
