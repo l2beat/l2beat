@@ -1,3 +1,4 @@
+import type { InteropSuspiciousTransferRecord } from '@l2beat/database'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
@@ -30,6 +31,10 @@ function formatPercent(value: number | null) {
 function formatGapPercent(value: number | null) {
   if (value === null) return '-'
   return `${value.toFixed(2)}%`
+}
+
+function formatUtcDateTime(timestamp: number) {
+  return new Date(timestamp * 1000).toISOString().replace('T', ' ').slice(0, 19)
 }
 
 function getPercentColor(value: number | null) {
@@ -404,8 +409,82 @@ function AnomaliesTable(props: { stats: DataRowResult[] }) {
   )
 }
 
-function AnomaliesPageLayout(props: { stats: DataRowResult[] }) {
+function SuspiciousTransfersTable(props: {
+  transfers: InteropSuspiciousTransferRecord[]
+  valueDiffThresholdPercent: number
+}) {
+  return (
+    <table id="suspicious-transfers" className="display">
+      <thead>
+        <tr>
+          <th>Timestamp UTC</th>
+          <th>Plugin</th>
+          <th>Transfer ID</th>
+          <th>Type</th>
+          <th>Src chain</th>
+          <th>Dst chain</th>
+          <th>Src value (USD)</th>
+          <th>Dst value (USD)</th>
+          <th>Diff %</th>
+          <th>Src tx</th>
+          <th>Dst tx</th>
+        </tr>
+      </thead>
+      <tbody>
+        {props.transfers.map((transfer) => (
+          <tr
+            key={`${transfer.transferId}-${transfer.srcTxHash}-${transfer.dstTxHash}`}
+          >
+            <td data-order={transfer.timestamp}>
+              {formatUtcDateTime(transfer.timestamp)}
+            </td>
+            <td>{transfer.plugin}</td>
+            <td>{transfer.transferId}</td>
+            <td>{transfer.type}</td>
+            <td>{transfer.srcChain}</td>
+            <td>{transfer.dstChain}</td>
+            <td data-order={transfer.srcValueUsd ?? -1}>
+              {formatDollars(transfer.srcValueUsd)}
+            </td>
+            <td data-order={transfer.dstValueUsd ?? -1}>
+              {formatDollars(transfer.dstValueUsd)}
+            </td>
+            <td data-order={transfer.valueDifferencePercent}>
+              <span
+                style={{
+                  color:
+                    transfer.valueDifferencePercent >
+                    props.valueDiffThresholdPercent
+                      ? '#b91c1c'
+                      : '#15803d',
+                  fontWeight: 700,
+                }}
+              >
+                {formatGapPercent(transfer.valueDifferencePercent)}
+              </span>
+            </td>
+            <td>{transfer.srcTxHash}</td>
+            <td>{transfer.dstTxHash}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}
+
+function AnomaliesPageLayout(props: {
+  stats: DataRowResult[]
+  suspiciousTransfers: InteropSuspiciousTransferRecord[]
+  valueDiffThresholdPercent: number
+  minimumSideValueUsdThreshold: number
+}) {
   const anomaliesTable = <AnomaliesTable stats={props.stats} />
+  const suspiciousTransfersTable = (
+    <SuspiciousTransfersTable
+      transfers={props.suspiciousTransfers}
+      valueDiffThresholdPercent={props.valueDiffThresholdPercent}
+    />
+  )
 
   return (
     <DataTablePage
@@ -435,12 +514,41 @@ function AnomaliesPageLayout(props: { stats: DataRowResult[] }) {
             ],
           },
         },
+        {
+          title: `Suspicious Raw Transfers (Src/Dst mismatch > ${props.valueDiffThresholdPercent.toFixed(2)}%, src & dst > ${formatDollars(props.minimumSideValueUsdThreshold)})`,
+          table: suspiciousTransfersTable,
+          tableId: 'suspicious-transfers',
+          dataTableOptions: {
+            order: [
+              [8, 'desc'],
+              [0, 'desc'],
+            ],
+            scrollX: true,
+            fixedHeader: true,
+            autoWidth: false,
+            columnDefs: [
+              {
+                targets: [0, 8],
+                type: 'num',
+              },
+              {
+                targets: [6, 7],
+                type: 'num-fmt',
+              },
+            ],
+          },
+        },
       ]}
     />
   )
 }
 
-export function renderAnomaliesPage(props: { stats: DataRowResult[] }) {
+export function renderAnomaliesPage(props: {
+  stats: DataRowResult[]
+  suspiciousTransfers: InteropSuspiciousTransferRecord[]
+  valueDiffThresholdPercent: number
+  minimumSideValueUsdThreshold: number
+}) {
   return (
     '<!DOCTYPE html>' + renderToStaticMarkup(<AnomaliesPageLayout {...props} />)
   )

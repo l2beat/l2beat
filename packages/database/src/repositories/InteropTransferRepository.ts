@@ -5,7 +5,7 @@ import {
   type KnownInteropBridgeType,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
@@ -190,6 +190,10 @@ export interface InteropTransfersDetailedStatsRecord {
   dstValueSum: number
 }
 
+export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
+  valueDifferencePercent: number
+}
+
 export class InteropTransferRepository extends BaseRepository {
   async insertMany(records: InteropTransferRecord[]): Promise<number> {
     if (records.length === 0) return 0
@@ -244,6 +248,50 @@ export class InteropTransferRepository extends BaseRepository {
     const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
+  }
+
+  async getValueMismatchTransfers(
+    valueDifferencePercentThreshold: number,
+    minimumSideValueUsdThreshold = 0,
+  ): Promise<InteropSuspiciousTransferRecord[]> {
+    assert(
+      valueDifferencePercentThreshold > 0,
+      'valueDifferencePercentThreshold must be a positive number',
+    )
+    assert(
+      minimumSideValueUsdThreshold >= 0,
+      'minimumSideValueUsdThreshold must be a non-negative number',
+    )
+
+    const valueDifferencePercent = sql<number>`
+      CASE
+        WHEN GREATEST(ABS("srcValueUsd"), ABS("dstValueUsd")) = 0 THEN 0
+        ELSE (ABS("srcValueUsd" - "dstValueUsd") / GREATEST(ABS("srcValueUsd"), ABS("dstValueUsd"))) * 100
+      END
+    `
+
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .select(valueDifferencePercent.as('valueDifferencePercent'))
+      .where('srcValueUsd', 'is not', null)
+      .where('dstValueUsd', 'is not', null)
+      .where(sql<boolean>`ABS("srcValueUsd") > ${minimumSideValueUsdThreshold}`)
+      .where(sql<boolean>`ABS("dstValueUsd") > ${minimumSideValueUsdThreshold}`)
+      .where(
+        sql<boolean>`
+          ${valueDifferencePercent} > ${valueDifferencePercentThreshold}
+        `,
+      )
+      .orderBy(valueDifferencePercent, 'desc')
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .execute()
+
+    return rows.map((row) => ({
+      ...toRecord(row),
+      valueDifferencePercent: Number(row.valueDifferencePercent ?? 0),
+    }))
   }
 
   async getProjectTransfers(options: {
