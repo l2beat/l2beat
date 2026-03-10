@@ -112,5 +112,9 @@ export const pageLoaders = {
 export async function getPage<K extends keyof typeof pageLoaders>(
   page: K,
 ): Promise<Awaited<ReturnType<(typeof pageLoaders)[K]>>> {
-  return await pageLoaders[page]()
+  const loadPage = pageLoaders[page] as () => Promise<
+    Awaited<ReturnType<(typeof pageLoaders)[K]>>
+  >
+
+  return await loadPage()
 }
