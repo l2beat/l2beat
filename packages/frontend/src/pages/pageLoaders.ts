@@ -1,9 +1,3 @@
-import type { PageName, Pages } from './pageTypes'
-
-type PageLoaders = {
-  [K in PageName]: () => Promise<Pages[K]>
-}
-
 export const pageLoaders = {
   ScalingSummaryPage: async () =>
     (await import('./scaling/summary/ScalingSummaryPage')).ScalingSummaryPage,
@@ -113,8 +107,10 @@ export const pageLoaders = {
       .MonthlyUpdatePage,
   PublicationsPage: async () =>
     (await import('./publications/PublicationsPage')).PublicationsPage,
-} satisfies PageLoaders
+}
 
-export async function getPage<K extends PageName>(page: K): Promise<Pages[K]> {
+export async function getPage<K extends keyof typeof pageLoaders>(
+  page: K,
+): Promise<Awaited<ReturnType<(typeof pageLoaders)[K]>>> {
   return await pageLoaders[page]()
 }
