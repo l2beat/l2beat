@@ -8,7 +8,7 @@ import { getInteropChains } from './getInteropChains'
 
 type Params = {
   projectId: string
-  bridgeType: KnownInteropBridgeType | undefined
+  bridgeTypes: KnownInteropBridgeType | KnownInteropBridgeType[] | undefined
   chains: Map<string, CommonInteropData>
   durationSplitMap: DurationSplitMap | undefined
   logger: Logger
@@ -16,7 +16,7 @@ type Params = {
 
 export function getChainsData({
   projectId,
-  bridgeType,
+  bridgeTypes,
   chains,
   durationSplitMap,
   logger,
@@ -32,7 +32,7 @@ export function getChainsData({
 
       const avgDuration = getAverageDuration(
         projectId,
-        bridgeType,
+        bridgeTypes,
         chainData,
         durationSplitMap,
       )

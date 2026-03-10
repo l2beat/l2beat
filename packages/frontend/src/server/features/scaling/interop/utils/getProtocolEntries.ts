@@ -2,10 +2,8 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
 import {
   type KnownInteropBridgeType,
-  notUndefined,
   type ProjectId,
   type UnixTime,
-  unique,
 } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
@@ -23,6 +21,7 @@ import {
   getProtocolsDataMapByBridgeType,
   type ProtocolDataByBridgeType,
 } from './getProtocolsDataMap'
+import { getRelevantBridgeTypes } from './getRelevantBridgeTypes'
 import { getTokensData } from './getTokensData'
 import { getTopItems } from './getTopItems'
 
@@ -61,11 +60,9 @@ export function getProtocolEntries(
       logger,
     )
 
-    const bridgeTypes = unique(
-      project.interopConfig.plugins
-        .map((p) => p.bridgeType)
-        .filter(notUndefined),
-    ).sort(sortBridgeTypesFn)
+    const bridgeTypes = getRelevantBridgeTypes(project, undefined).sort(
+      sortBridgeTypesFn,
+    )
 
     // Show zeros for projects that don't have data but have plugins for the given type
     if (!data && (!type || bridgeTypes.includes(type))) {
@@ -79,7 +76,7 @@ export function getProtocolEntries(
     // Skip projects that don't have data and don't have plugins for the given type
     if (!data) continue
 
-    const relevantBridgeTypes = type ? [type] : bridgeTypes
+    const relevantBridgeTypes = getRelevantBridgeTypes(project, type)
     const averageDuration =
       project.interopConfig.transfersTimeMode === 'unknown'
         ? { type: 'unknown' as const }
@@ -92,7 +89,7 @@ export function getProtocolEntries(
 
     const tokens = getTokensData({
       projectId: project.id,
-      bridgeType: undefined, // No bridge type split for aggregated view
+      bridgeTypes: undefined, // No bridge type split for aggregated view
       tokens: data.tokens,
       tokensDetailsMap,
       durationSplitMap: undefined, // No duration split map for aggregated view
@@ -101,7 +98,7 @@ export function getProtocolEntries(
     })
     const chains = getChainsData({
       projectId: project.id,
-      bridgeType: undefined, // No bridge type split for aggregated view
+      bridgeTypes: undefined, // No bridge type split for aggregated view
       chains: data.chains,
       durationSplitMap: undefined, // No duration split map for aggregated view
       logger,
@@ -164,7 +161,7 @@ function getByBridgeTypeData(
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeType: 'lockAndMint',
+              bridgeTypes: 'lockAndMint',
               tokens: data.lockAndMint.tokens,
               tokensDetailsMap,
               durationSplitMap,
@@ -189,7 +186,7 @@ function getByBridgeTypeData(
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeType: 'nonMinting',
+              bridgeTypes: 'nonMinting',
               tokens: data.nonMinting.tokens,
               tokensDetailsMap,
               durationSplitMap,
@@ -209,7 +206,7 @@ function getByBridgeTypeData(
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeType: 'burnAndMint',
+              bridgeTypes: 'burnAndMint',
               tokens: data.burnAndMint.tokens,
               tokensDetailsMap,
               durationSplitMap,
