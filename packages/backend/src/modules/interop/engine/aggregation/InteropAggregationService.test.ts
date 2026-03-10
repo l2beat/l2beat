@@ -68,6 +68,7 @@ describe(InteropAggregationService.name, () => {
         mintedValueUsd: 5000,
         burnedValueUsd: 0,
         bridgeType: 'lockAndMint',
+        transferTypeStats: undefined,
       })
 
       expect(result.aggregatedTokens).toHaveLength(1)
@@ -85,6 +86,7 @@ describe(InteropAggregationService.name, () => {
         bridgeType: 'lockAndMint',
         mintedValueUsd: 5000,
         burnedValueUsd: 0,
+        transferTypeStats: undefined,
       })
     })
 

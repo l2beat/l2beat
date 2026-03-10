@@ -65,6 +65,7 @@ describe(InteropAggregatingIndexer.name, () => {
           countOver100K: 0,
           identifiedCount: 1,
           bridgeType: 'lockAndMint',
+          transferTypeStats: undefined,
         },
       ]
 
@@ -83,6 +84,7 @@ describe(InteropAggregatingIndexer.name, () => {
           bridgeType: 'lockAndMint',
           mintedValueUsd: 0,
           burnedValueUsd: 2000,
+          transferTypeStats: undefined,
         },
       ]
 
