@@ -4,7 +4,11 @@ import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { UsdValue } from '../../../../components/UsdValue'
 import { formatUsdValue } from '../../../../utils/format'
 import { getHumanAdmins } from '../../../../utils/admins'
-import type { CompiledReview, CompiledAdmin } from '../../../../types'
+import type {
+  CompiledReview,
+  CompiledAdmin,
+  Mitigation,
+} from '../../../../types'
 
 interface AdminsTabProps {
   review: CompiledReview
@@ -170,7 +174,6 @@ export function AdminsTab({ review }: AdminsTabProps) {
           </tbody>
         </table>
       </div>
-
     </div>
   )
 }
@@ -249,7 +252,7 @@ function AdminRow({
       </tr>
       {isExpanded && (
         <tr>
-          <td colSpan={5} className="px-0 py-0">
+          <td colSpan={6} className="px-0 py-0">
             <ExpandedFunctions admin={admin} />
           </td>
         </tr>
@@ -272,6 +275,7 @@ function ExpandedFunctions({ admin }: { admin: CompiledAdmin }) {
             <tr className="text-text-muted">
               <th className="text-left pb-1 font-medium">Contract</th>
               <th className="text-left pb-1 font-medium">Function</th>
+              <th className="text-left pb-1 font-medium">Mitigations</th>
               <th className="text-right pb-1 font-medium">Direct $</th>
               <th className="text-right pb-1 font-medium">
                 Reachable Contracts
@@ -291,6 +295,17 @@ function ExpandedFunctions({ admin }: { admin: CompiledAdmin }) {
                   <span className="font-mono text-text-primary">
                     {fn.functionName}()
                   </span>
+                </td>
+                <td className="py-1.5">
+                  {fn.mitigations && fn.mitigations.length > 0 ? (
+                    <div className="flex flex-wrap gap-0.5">
+                      {fn.mitigations.map((m, i) => (
+                        <MitigationBadge key={i} mitigation={m} />
+                      ))}
+                    </div>
+                  ) : (
+                    <span className="text-text-muted">-</span>
+                  )}
                 </td>
                 <td className="py-1.5 text-right tabular-nums">
                   {fn.directFundsUsd > 0 ? (
@@ -337,8 +352,8 @@ function AdminsSummaryLabel({ admins }: { admins: CompiledAdmin[] }) {
 
   return (
     <span className="text-text-secondary">
-      <span className="font-semibold text-text-primary">{admins.length}</span>
-      {' '}admin{admins.length !== 1 ? 's' : ''}
+      <span className="font-semibold text-text-primary">{admins.length}</span>{' '}
+      admin{admins.length !== 1 ? 's' : ''}
     </span>
   )
 }
@@ -377,5 +392,71 @@ function SortHeader({
         )}
       </span>
     </th>
+  )
+}
+
+function formatDelayLabel(seconds: number): string {
+  if (seconds >= 86400) {
+    const days = seconds / 86400
+    const d = days === Math.floor(days) ? `${days}` : `${days.toFixed(1)}`
+    return `${d}-day Delay`
+  }
+  if (seconds >= 3600) {
+    const hours = seconds / 3600
+    const h = hours === Math.floor(hours) ? `${hours}` : `${hours.toFixed(1)}`
+    return `${h}-hour Delay`
+  }
+  if (seconds >= 60) {
+    const minutes = seconds / 60
+    const m = minutes === Math.floor(minutes) ? `${minutes}` : `${minutes.toFixed(1)}`
+    return `${m}-min Delay`
+  }
+  return `${seconds}s Delay`
+}
+
+function MitigationBadge({ mitigation: m }: { mitigation: Mitigation }) {
+  const colorClass =
+    m.type === 'delay'
+      ? 'bg-cyan-50 text-cyan-700 border-cyan-200'
+      : m.type === 'valueRange'
+        ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
+        : m.type === 'relativeValue'
+          ? 'bg-amber-50 text-amber-700 border-amber-200'
+          : 'bg-gray-50 text-gray-600 border-gray-200'
+
+  let label: string
+  let tooltip: string
+  if (m.type === 'delay') {
+    label =
+      m.delaySeconds !== undefined
+        ? formatDelayLabel(m.delaySeconds)
+        : 'Delay'
+    tooltip = m.description
+  } else if (m.type === 'valueRange') {
+    const parts: string[] = []
+    if (m.valueRange?.min !== undefined) parts.push(m.valueRange.min)
+    if (m.valueRange?.max !== undefined) parts.push(m.valueRange.max)
+    const unit = m.valueRange?.unit ? ` ${m.valueRange.unit}` : ''
+    label = `Range: ${parts.join(' to ')}${unit}`
+    tooltip = m.description || label
+  } else if (m.type === 'relativeValue') {
+    label = 'Relative'
+    tooltip = `Max change: ${m.relativeValue?.maxChangePercent ?? '?'}%`
+    if (m.description) tooltip += ` — ${m.description}`
+  } else {
+    label =
+      m.description.length > 20
+        ? m.description.slice(0, 20) + '…'
+        : m.description
+    tooltip = m.description
+  }
+
+  return (
+    <span
+      className={`inline-block rounded-full border px-1.5 py-0 text-[10px] font-medium leading-4 ${colorClass}`}
+      title={tooltip}
+    >
+      {label}
+    </span>
   )
 }

@@ -107,8 +107,7 @@ export function AdminCards({ review }: AdminCardsProps) {
   )
   const governance = sorted.filter((a) => a.isGovernance)
 
-  const noHumanControl =
-    humanControlled.length === 0 && governance.length === 0
+  const noHumanControl = humanControlled.length === 0 && governance.length === 0
 
   function toggleAdmin(key: string) {
     setExpandedAdmins((prev) => {
@@ -126,16 +125,15 @@ export function AdminCards({ review }: AdminCardsProps) {
     (sum, a) => sum + a.totalDirectCapital,
     0,
   )
-  const govTotal = governance.reduce(
-    (sum, a) => sum + a.totalDirectCapital,
-    0,
-  )
+  const govTotal = governance.reduce((sum, a) => sum + a.totalDirectCapital, 0)
 
   return (
     <div>
       {noHumanControl ? (
         <div className="rounded-xl border border-status-green/30 bg-status-green/5 px-6 py-5 mb-8 max-w-3xl">
-          <p className="text-lg font-semibold text-status-green mb-1">No Admins</p>
+          <p className="text-lg font-semibold text-status-green mb-1">
+            No Admins
+          </p>
           <p className="text-sm text-text-secondary leading-relaxed">
             All admin controls resolve to immutable contracts or revoked
             addresses. No permissioned functions can affect user funds.
@@ -152,15 +150,13 @@ export function AdminCards({ review }: AdminCardsProps) {
             {totals.permissionedFunctionCount} functions
           </span>
           , controlling{' '}
-          <UsdValue value={totals.totalCapitalAtRisk} variant="capital" />
-          {' '}in TVL
+          <UsdValue value={totals.totalCapitalAtRisk} variant="capital" /> in
+          TVL
           {totals.totalTokenValueAtRisk > 0 && (
             <>
-              {' '}and{' '}
-              <UsdValue
-                value={totals.totalTokenValueAtRisk}
-                variant="token"
-              />{' '}
+              {' '}
+              and{' '}
+              <UsdValue value={totals.totalTokenValueAtRisk} variant="token" />{' '}
               in protocol tokens
             </>
           )}
@@ -223,9 +219,7 @@ function AdminDistributionChart({
       <div className="space-y-3">
         {admins.map((admin, index) => {
           const percentage =
-            maxCapital > 0
-              ? (admin.totalDirectCapital / maxCapital) * 100
-              : 0
+            maxCapital > 0 ? (admin.totalDirectCapital / maxCapital) * 100 : 0
           const expandKey = `admin-${admin.address}`
           const isExpanded = expandedSet.has(expandKey)
 
@@ -242,10 +236,7 @@ function AdminDistributionChart({
                       {isExpanded ? '\u25BC' : '\u25B6'}
                     </span>
                     <GlossaryTooltip term={admin.adminType}>
-                      <Badge
-                        variant="admin-type"
-                        adminType={admin.adminType}
-                      >
+                      <Badge variant="admin-type" adminType={admin.adminType}>
                         {admin.adminType}
                       </Badge>
                     </GlossaryTooltip>
@@ -304,8 +295,7 @@ function AdminExpandedContent({ admin }: { admin: CompiledAdmin }) {
       {/* Risk narrative */}
       <div>
         <p className="text-sm text-text-secondary leading-relaxed">
-          {describeAdminType(admin.adminType)}{' '}
-          {generateAdminNarrative(admin)}
+          {describeAdminType(admin.adminType)} {generateAdminNarrative(admin)}
         </p>
       </div>
 
@@ -361,6 +351,58 @@ function FunctionDetail({ fn }: { fn: CompiledAdminFunction }) {
           )}
         </div>
       </div>
+
+      {/* Mitigations */}
+      {fn.mitigations && fn.mitigations.length > 0 && (
+        <div className="mt-1.5 flex flex-wrap gap-1">
+          {fn.mitigations.map((m, i) => (
+            <span
+              key={i}
+              className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                m.type === 'delay'
+                  ? 'bg-cyan-50 text-cyan-700 border border-cyan-200'
+                  : m.type === 'valueRange'
+                    ? 'bg-indigo-50 text-indigo-700 border border-indigo-200'
+                    : m.type === 'relativeValue'
+                      ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                      : 'bg-gray-50 text-gray-600 border border-gray-200'
+              }`}
+              title={m.description}
+            >
+              {m.type === 'delay' && (
+                <>
+                  <svg
+                    className="w-3 h-3"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                  </svg>
+                  {m.description}
+                </>
+              )}
+              {m.type === 'valueRange' && (
+                <>
+                  Range: {m.valueRange?.min !== undefined && m.valueRange.min}
+                  {m.valueRange?.min !== undefined &&
+                    m.valueRange?.max !== undefined &&
+                    '–'}
+                  {m.valueRange?.max !== undefined && m.valueRange.max}
+                  {m.valueRange?.unit && ` ${m.valueRange.unit}`}
+                </>
+              )}
+              {m.type === 'relativeValue' &&
+                m.relativeValue?.maxChangePercent !== undefined && (
+                  <>Max: {m.relativeValue.maxChangePercent}%</>
+                )}
+              {m.type === 'other' && <>{m.description}</>}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Narrative of impact */}
       {(fn.directFundsUsd > 0 || riskyContracts.length > 0) && (
@@ -425,4 +467,3 @@ function FunctionDetail({ fn }: { fn: CompiledAdminFunction }) {
     </div>
   )
 }
-

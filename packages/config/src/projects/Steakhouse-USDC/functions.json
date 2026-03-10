@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-02-26T14:34:04.609Z",
+  "lastModified": "2026-03-10T09:02:37.352Z",
   "contracts": {
     "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
       "functions": [
@@ -58,10 +58,21 @@
             "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
             "fieldName": "timelock"
           },
-          "timestamp": "2026-02-25T08:00:28.289Z",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Updates the contract's delay",
+              "valueRange": {
+                "min": "1",
+                "max": "14",
+                "unit": "Days"
+              }
+            }
+          ],
+          "timestamp": "2026-03-10T09:02:37.352Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-25T08:00:28.289Z"
+            "date": "2026-03-10T09:02:37.352Z"
           }
         },
         {
@@ -72,10 +83,21 @@
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T11:54:31.472Z",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Maximum fee is 50%",
+              "valueRange": {
+                "min": "0",
+                "max": "50",
+                "unit": "%"
+              }
+            }
+          ],
+          "timestamp": "2026-03-10T08:54:17.710Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T11:54:31.472Z"
+            "date": "2026-03-10T08:54:17.710Z"
           }
         },
         {

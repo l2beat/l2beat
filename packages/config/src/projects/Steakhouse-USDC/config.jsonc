@@ -62,6 +62,34 @@
             "extractField": "oracle",
             "sourceField": "marketParams"
           }
+        },
+        "MAX_TIMELOCK": {
+          "handler": {
+            "type": "hardcoded",
+            "value": 1209600
+          },
+          "description": "Maximum timelock delay (2 weeks)"
+        },
+        "MIN_TIMELOCK": {
+          "handler": {
+            "type": "hardcoded",
+            "value": 86400
+          },
+          "description": "Minimum timelock delay (1 day)"
+        },
+        "MAX_QUEUE_LENGTH": {
+          "handler": {
+            "type": "hardcoded",
+            "value": 30
+          },
+          "description": "Maximum number of markets in supply/withdraw queue"
+        },
+        "MAX_FEE": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "500000000000000000"
+          },
+          "description": "Maximum fee (50%, represented as 0.5e18)"
         }
       },
       "ignoreInWatchMode": ["totalAssets", "totalSupply", "lastTotalAssets"]

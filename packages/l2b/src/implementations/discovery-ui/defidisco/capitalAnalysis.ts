@@ -228,6 +228,11 @@ export class CapitalAnalysisCalculator {
         func.impact,
       )
 
+      // Carry mitigations from the admin function entry
+      if (func.mitigations) {
+        analysis.mitigations = func.mitigations
+      }
+
       functionsWithCapital.push(analysis)
 
       // Track direct contracts (always counted since the permissioned function has impact)

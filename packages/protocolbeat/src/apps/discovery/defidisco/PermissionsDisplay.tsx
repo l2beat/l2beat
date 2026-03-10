@@ -11,6 +11,7 @@ import type {
   ApiAbi,
   ApiAbiEntry,
   FunctionEntry,
+  Mitigation,
   OwnerDefinition,
 } from '../../../api/types'
 import { useCodeStore } from '../../../components/editor/store'
@@ -179,16 +180,6 @@ export function PermissionsDisplay({
     await updateFunctionEntry(contractAddress, functionName, { description })
   }
 
-  const handleConstraintsUpdate = async (
-    contractAddress: string,
-    functionName: string,
-    constraints: string,
-  ) => {
-    if (!project) return
-
-    await updateFunctionEntry(contractAddress, functionName, { constraints })
-  }
-
   const handleOwnerDefinitionsUpdate = async (
     contractAddress: string,
     functionName: string,
@@ -219,6 +210,16 @@ export function PermissionsDisplay({
     if (!project) return
 
     await updateFunctionEntry(contractAddress, functionName, { dependencies })
+  }
+
+  const handleMitigationsUpdate = async (
+    contractAddress: string,
+    functionName: string,
+    mitigations: Mitigation[] | null,
+  ) => {
+    if (!project) return
+
+    await updateFunctionEntry(contractAddress, functionName, { mitigations })
   }
 
   const handleAddComment = async (
@@ -316,10 +317,10 @@ export function PermissionsDisplay({
         | 'checked'
         | 'score'
         | 'description'
-        | 'constraints'
         | 'ownerDefinitions'
         | 'delay'
         | 'dependencies'
+        | 'mitigations'
       >
     >,
   ) => {
@@ -338,7 +339,6 @@ export function PermissionsDisplay({
       checked: updates.checked ?? currentFunction?.checked,
       score: updates.score ?? currentFunction?.score,
       description: updates.description ?? currentFunction?.description,
-      constraints: updates.constraints ?? currentFunction?.constraints,
       ownerDefinitions:
         updates.ownerDefinitions ?? currentFunction?.ownerDefinitions,
       delay:
@@ -349,6 +349,10 @@ export function PermissionsDisplay({
         updates.dependencies !== undefined
           ? updates.dependencies
           : currentFunction?.dependencies,
+      mitigations:
+        'mitigations' in updates
+          ? (updates.mitigations ?? undefined)
+          : currentFunction?.mitigations,
       timestamp: new Date().toISOString(),
     }
 
@@ -439,11 +443,11 @@ export function PermissionsDisplay({
               onCheckedToggle={handleCheckedToggle}
               onScoreToggle={handleScoreToggle}
               onDescriptionUpdate={handleDescriptionUpdate}
-              onConstraintsUpdate={handleConstraintsUpdate}
               onOpenInCode={handleOpenInCode}
               onOwnerDefinitionsUpdate={handleOwnerDefinitionsUpdate}
               onDelayUpdate={handleDelayUpdate}
               onDependenciesUpdate={handleDependenciesUpdate}
+              onMitigationsUpdate={handleMitigationsUpdate}
               onAddComment={handleAddComment}
               researcherGithub={researcherInfo?.githubHandle ?? null}
             />
@@ -463,11 +467,11 @@ function PermissionsCode({
   onCheckedToggle,
   onScoreToggle,
   onDescriptionUpdate,
-  onConstraintsUpdate,
   onOpenInCode,
   onOwnerDefinitionsUpdate,
   onDelayUpdate,
   onDependenciesUpdate,
+  onMitigationsUpdate,
   onAddComment,
   researcherGithub,
 }: {
@@ -495,11 +499,6 @@ function PermissionsCode({
     functionName: string,
     description: string,
   ) => void
-  onConstraintsUpdate: (
-    contractAddress: string,
-    functionName: string,
-    constraints: string,
-  ) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (
     contractAddress: string,
@@ -515,6 +514,11 @@ function PermissionsCode({
     contractAddress: string,
     functionName: string,
     dependencies?: { contractAddress: string }[],
+  ) => void
+  onMitigationsUpdate: (
+    contractAddress: string,
+    functionName: string,
+    mitigations: Mitigation[] | null,
   ) => void
   onAddComment: (
     contractAddress: string,
@@ -549,11 +553,11 @@ function PermissionsCode({
           onCheckedToggle={onCheckedToggle}
           onScoreToggle={onScoreToggle}
           onDescriptionUpdate={onDescriptionUpdate}
-          onConstraintsUpdate={onConstraintsUpdate}
           onOpenInCode={onOpenInCode}
           onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
           onDelayUpdate={onDelayUpdate}
           onDependenciesUpdate={onDependenciesUpdate}
+          onMitigationsUpdate={onMitigationsUpdate}
           onAddComment={onAddComment}
           researcherGithub={researcherGithub}
         />
@@ -570,11 +574,11 @@ function WritePermissionsCodeEntries({
   onCheckedToggle,
   onScoreToggle,
   onDescriptionUpdate,
-  onConstraintsUpdate,
   onOpenInCode,
   onOwnerDefinitionsUpdate,
   onDelayUpdate,
   onDependenciesUpdate,
+  onMitigationsUpdate,
   onAddComment,
   researcherGithub,
 }: {
@@ -601,11 +605,6 @@ function WritePermissionsCodeEntries({
     functionName: string,
     description: string,
   ) => void
-  onConstraintsUpdate: (
-    contractAddress: string,
-    functionName: string,
-    constraints: string,
-  ) => void
   onOpenInCode: (contractAddress: string, functionName: string) => void
   onOwnerDefinitionsUpdate: (
     contractAddress: string,
@@ -621,6 +620,11 @@ function WritePermissionsCodeEntries({
     contractAddress: string,
     functionName: string,
     dependencies?: { contractAddress: string }[],
+  ) => void
+  onMitigationsUpdate: (
+    contractAddress: string,
+    functionName: string,
+    mitigations: Mitigation[] | null,
   ) => void
   onAddComment: (
     contractAddress: string,
@@ -664,11 +668,11 @@ function WritePermissionsCodeEntries({
             onCheckedToggle={onCheckedToggle}
             onScoreToggle={onScoreToggle}
             onDescriptionUpdate={onDescriptionUpdate}
-            onConstraintsUpdate={onConstraintsUpdate}
             onOpenInCode={onOpenInCode}
             onOwnerDefinitionsUpdate={onOwnerDefinitionsUpdate}
             onDelayUpdate={onDelayUpdate}
             onDependenciesUpdate={onDependenciesUpdate}
+            onMitigationsUpdate={onMitigationsUpdate}
             onAddComment={onAddComment}
             researcherGithub={researcherGithub}
           />

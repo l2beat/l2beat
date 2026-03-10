@@ -13,12 +13,29 @@ export type json =
 // Scoring type aliases
 export type Impact = 'critical'
 
+// Mitigation types for permissioned functions
+export type MitigationType = 'delay' | 'valueRange' | 'relativeValue' | 'other'
+
+export interface Mitigation {
+  type: MitigationType
+  description: string
+  // For 'delay': reference to a contract field (reuses existing delay pattern)
+  delayRef?: { contractAddress: string; fieldName: string }
+  // For 'delay': resolved value in seconds (populated by v2-score API)
+  delaySeconds?: number
+  // For 'valueRange': MIN/MAX bounds
+  valueRange?: { min?: string; max?: string; unit?: string }
+  // For 'relativeValue': percentage of change limit
+  relativeValue?: { maxChangePercent?: string }
+}
+
 // Function detail for scoring breakdown
 export interface FunctionDetail {
   contractAddress: string
   contractName: string
   functionName: string
   impact: Impact
+  mitigations?: Mitigation[]
 }
 
 // Dependency detail for dependency scoring breakdown
@@ -44,6 +61,7 @@ export interface AdminDetail {
     contractName: string
     functionName: string
     impact: Impact
+    mitigations?: Mitigation[]
   }[]
 }
 
@@ -415,7 +433,6 @@ export interface FunctionEntry {
   score?: 'unscored' | 'critical'
   reason?: string
   description?: string
-  constraints?: string
   timestamp: string
   // Multiple owner definitions using L2BEAT's existing handlers
   ownerDefinitions?: OwnerDefinition[]
@@ -428,6 +445,8 @@ export interface FunctionEntry {
   dependencies?: {
     contractAddress: string
   }[]
+  // Mitigations (valueRange, relativeValue, other — delay is stored separately in `delay` field)
+  mitigations?: Mitigation[]
   // Attribution tracking
   lastChangedBy?: FunctionAttribution
   completedBy?: FunctionAttribution
@@ -456,7 +475,6 @@ export interface ApiFunctionsUpdateRequest {
   score?: 'unscored' | 'critical'
   reason?: string
   description?: string
-  constraints?: string
   ownerDefinitions?: OwnerDefinition[]
   delay?: {
     contractAddress: string
@@ -465,6 +483,8 @@ export interface ApiFunctionsUpdateRequest {
   dependencies?: {
     contractAddress: string
   }[]
+  // Mitigations (valueRange, relativeValue, other — delay mitigations derived from `delay` field)
+  mitigations?: Mitigation[] | null
   // Frontend sends only the text; backend stamps author + date
   newComment?: { text: string }
 }
