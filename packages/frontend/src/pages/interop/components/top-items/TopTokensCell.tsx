@@ -57,6 +57,7 @@ export function TopTokensCell({
             displayName: token.symbol,
             iconUrl: token.iconUrl,
             volume: token.volume,
+            issuer: token.issuer,
             transferCount: token.transferCount,
             avgDuration: token.avgDuration,
             avgValue: token.avgValue,
