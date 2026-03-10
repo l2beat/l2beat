@@ -428,7 +428,10 @@ export class InteropTransferRepository extends BaseRepository {
       .where('timestamp', '>=', UnixTime.toDate(since))
       .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
       .where((eb) =>
-        eb.or([eb('bridgeType', '!=', 'nonMinting'), eb('bridgeType', 'is', null)]),
+        eb.or([
+          eb('bridgeType', '!=', 'nonMinting'),
+          eb('bridgeType', 'is', null),
+        ]),
       )
       .groupBy('type')
       .orderBy('cnt', 'desc')
@@ -459,7 +462,10 @@ export class InteropTransferRepository extends BaseRepository {
           .where('timestamp', '>=', UnixTime.toDate(since))
           .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
           .where((eb) =>
-            eb.or([eb('bridgeType', '!=', 'nonMinting'), eb('bridgeType', 'is', null)]),
+            eb.or([
+              eb('bridgeType', '!=', 'nonMinting'),
+              eb('bridgeType', 'is', null),
+            ]),
           )
           .unionAll(
             this.db
@@ -470,7 +476,10 @@ export class InteropTransferRepository extends BaseRepository {
                 eb.or(typePatterns.map((p) => eb('type', 'like', p))),
               )
               .where((eb) =>
-                eb.or([eb('bridgeType', '!=', 'nonMinting'), eb('bridgeType', 'is', null)]),
+                eb.or([
+                  eb('bridgeType', '!=', 'nonMinting'),
+                  eb('bridgeType', 'is', null),
+                ]),
               ),
           )
           .as('sub'),
@@ -506,7 +515,10 @@ export class InteropTransferRepository extends BaseRepository {
       .where('timestamp', '>=', UnixTime.toDate(since))
       .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
       .where((eb) =>
-        eb.or([eb('bridgeType', '!=', 'nonMinting'), eb('bridgeType', 'is', null)]),
+        eb.or([
+          eb('bridgeType', '!=', 'nonMinting'),
+          eb('bridgeType', 'is', null),
+        ]),
       )
       .groupBy(['type', 'srcSymbol'])
       .orderBy('type')
@@ -537,7 +549,10 @@ export class InteropTransferRepository extends BaseRepository {
       .where('timestamp', '>=', UnixTime.toDate(since))
       .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
       .where((eb) =>
-        eb.or([eb('bridgeType', '!=', 'nonMinting'), eb('bridgeType', 'is', null)]),
+        eb.or([
+          eb('bridgeType', '!=', 'nonMinting'),
+          eb('bridgeType', 'is', null),
+        ]),
       )
       .groupBy(['type', 'srcChain', 'dstChain'])
       .orderBy('type')
@@ -571,7 +586,10 @@ export class InteropTransferRepository extends BaseRepository {
       .where('timestamp', '>=', UnixTime.toDate(since))
       .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
       .where((eb) =>
-        eb.or([eb('bridgeType', '!=', 'nonMinting'), eb('bridgeType', 'is', null)]),
+        eb.or([
+          eb('bridgeType', '!=', 'nonMinting'),
+          eb('bridgeType', 'is', null),
+        ]),
       )
       .groupBy(['type', 'srcChain', 'dstChain'])
       .execute()
