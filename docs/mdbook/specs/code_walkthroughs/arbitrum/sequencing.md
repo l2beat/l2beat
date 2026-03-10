@@ -15,7 +15,7 @@
 
 ## Forced transactions
 
-Before the implementation of the censorship buffer, each transaction could have been censored by the permissioned sequencer for up to 24h. This was a problem for Orbit L3s on Arbitrum One as, in case of censorship, there wouldn't be enough time to play the challenge game on the L2 (for the L3) if the challenge period was set to 7d, as around ~60 moves are needed to finish a game, implying the need of at least 60 days.
+Before the implementation of the censorship buffer, each transaction could have been censored by the permissioned sequencer for up to 24h. This was a problem for Arbitrum Stack L3s on Arbitrum One as, in case of censorship, there wouldn't be enough time to play the challenge game on the L2 (for the L3) if the challenge period was set to 7d, as around ~60 moves are needed to finish a game, implying the need of at least 60 days.
 
 ### High-level flow
 To force transactions on Arbitrum through L1, the following steps are taken:

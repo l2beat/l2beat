@@ -5,7 +5,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('geist')
 
@@ -24,7 +24,7 @@ export const geist: ScalingProject = orbitStackL3({
     name: 'Geist',
     slug: 'geist',
     description:
-      'Geist is an Orbit stack Optimium on Base. It is focused on creating a better gaming and metaverse experience around the AavegotchiDAO and the GHST governance token.',
+      'Geist is an Arbitrum Stack Optimium on Base. It is focused on creating a better gaming and metaverse experience around the AavegotchiDAO and the GHST governance token.',
     links: {
       websites: ['https://playongeist.com/', 'https://dapp.aavegotchi.com/'],
       bridges: [

@@ -5,11 +5,11 @@ import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('appchain')
 
-export const appchain: ScalingProject = orbitStackL2({
+export const appchain: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1744635768), // 2025-04-14T14:42:48Z
   capability: 'universal',
   reasonsForBeingOther: [

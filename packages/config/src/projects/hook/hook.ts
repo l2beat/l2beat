@@ -14,7 +14,7 @@ export const hook: ScalingProject = underReviewL3({
     slug: 'hook',
     stacks: ['Arbitrum'],
     description:
-      'Hook is an Orbit stack L3 Appchain on Arbitrum powering a perpetuals DEX for tokens and NFTs.',
+      'Hook is an Arbitrum Stack L3 Appchain on Arbitrum powering a perpetuals DEX for tokens and NFTs.',
     headerWarning:
       'Hook has been [wound down and withdrawals to EOAs have been executed](https://hook.xyz/).',
     purposes: ['Universal', 'NFT', 'Exchange'],
@@ -36,7 +36,7 @@ export const hook: ScalingProject = underReviewL3({
     type: 'Optimistic',
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   chainConfig: {
     name: 'hook',

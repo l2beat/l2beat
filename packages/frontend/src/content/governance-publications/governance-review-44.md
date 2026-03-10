@@ -86,7 +86,7 @@ Jojo has [created a post](https://forum.arbitrum.foundation/t/arbitrum-d-a-o-gra
 * Education, Community Growth, and Events
 * Gaming
 * Dev Tooling on One and Stylus
-* Orbit Chains
+* Arbitrum Stack Chains
 
 You can check the [Domain allocator hub](https://arbitrumdaogrants.notion.site/the5domains) for more information about the rules or each domain approach. Applications are currently open. You can apply [here]( https://arbitrum.questbook.app/).
 

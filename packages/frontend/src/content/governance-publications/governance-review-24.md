@@ -72,9 +72,9 @@ The aforementioned improvements have all been successfully passed through a Snap
 Curia [submitted an RFC](https://forum.arbitrum.foundation/t/rfc-arbitrumdao-governance-analytics-dashboard/25869) proposing the development of an ArbitrumDAO Governance Analytics Dashboard to support ongoing governance initiatives, enhance transparency, and provide comprehensive insights into governance data. The proposal requests $50,000 (paid in ARB) to maintain the dashboard for six months, after which Curia will seek an additional $50,000 for another six months of maintenance.
 
 
-### **[RFC] Transparency and Standardized Metrics for Orbit Chains**
+### **[RFC] Transparency and Standardized Metrics for Arbitrum Stack Chains**
 
-Tobsch from Growthepie [submitted an RFC](https://forum.arbitrum.foundation/t/non-constitutional-transparency-and-standardized-metrics-for-orbit-chains-on-growthepie-xyz-allowing-data-driven-decision-making/25911) proposing the creation of standardized metrics for tracking Orbit chains. The proposal requests 275,200 ARB to cover the design and development of a dedicated Arbitrum Orbit Stack page over approximately five months. The costs would also cover the maintenance of the dashboard and the tracking of 20 Orbit chains for a year.
+Tobsch from Growthepie [submitted an RFC](https://forum.arbitrum.foundation/t/non-constitutional-transparency-and-standardized-metrics-for-orbit-chains-on-growthepie-xyz-allowing-data-driven-decision-making/25911) proposing the creation of standardized metrics for tracking Arbitrum Stack chains. The proposal requests 275,200 ARB to cover the design and development of a dedicated Arbitrum Stack page over approximately five months. The costs would also cover the maintenance of the dashboard and the tracking of 20 Arbitrum Stack chains for a year.
 
 
 ### **[RFC] Arbitrum Culture Council**

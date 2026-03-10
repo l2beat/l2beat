@@ -9,7 +9,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('l3x')
 
@@ -29,7 +29,7 @@ export const l3x: ScalingProject = orbitStackL3({
     name: 'L3X',
     slug: 'l3x',
     description:
-      'L3X is an Orbit stack Appchain on Arbitrum focusing on DeFi (leveraged trading and liquid restaking).',
+      'L3X is an Arbitrum Stack Appchain on Arbitrum focusing on DeFi (leveraged trading and liquid restaking).',
     links: {
       websites: ['https://l3x.com/'],
       bridges: [

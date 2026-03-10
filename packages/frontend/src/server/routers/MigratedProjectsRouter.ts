@@ -34,5 +34,10 @@ export function createMigratedProjectsRouter() {
   router.get('/data-availability/projects/espressoDA/espressoDA', (_, res) => {
     res.redirect(301, '/data-availability/projects/espresso-da/espresso-da')
   })
+
+  router.get('/ecosystems/arbitrum-orbit', (_, res) => {
+    res.redirect(301, '/ecosystems/arbitrum-ecosystem')
+  })
+
   return router
 }

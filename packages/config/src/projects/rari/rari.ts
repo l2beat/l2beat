@@ -5,7 +5,7 @@ import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('rari')
 

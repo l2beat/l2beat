@@ -4,11 +4,11 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('sxnetwork')
 
-export const sxnetwork: ScalingProject = orbitStackL2({
+export const sxnetwork: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1722430544), // 2024-07-31T12:55:44Z
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
@@ -18,7 +18,7 @@ export const sxnetwork: ScalingProject = orbitStackL2({
     name: 'SX Network',
     slug: 'sxnetwork',
     description:
-      "SX Network is an Orbit stack Optimistic Rollup, built to scale the SX team's existing sports betting platform.",
+      "SX Network is an Arbitrum Stack Optimistic Rollup, built to scale the SX team's existing sports betting platform.",
     links: {
       websites: ['https://sx.technology/'],
       bridges: [

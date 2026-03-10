@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('ebichain')
 
-export const ebichain: ScalingProject = orbitStackL2({
+export const ebichain: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1726563843), // 2024-09-17T09:04:03Z
   archivedAt: UnixTime(1743984000), // 2025-04-07T00:00:00.000Z,
   discovery,

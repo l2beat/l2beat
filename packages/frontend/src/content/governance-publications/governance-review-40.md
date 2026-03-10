@@ -61,7 +61,7 @@ The Arbitrum Foundation [submitted a post](https://forum.arbitrum.foundation/t/c
 
 ### **Proposal: Arbitrum Airdrop 2 - Builder Appreciation Day**
 
-Cupojoseph from Open Dollar [created a post](https://forum.arbitrum.foundation/t/non-constitutional-arbitrum-airdrop-2-builder-appreciation-drop/28428) suggesting the creation of a second Arbitrum Airdrop specifically directed at builders. The idea consists of distributing 500M ARB, 50% of which will go to builders who deployed contracts on Arbitrum or Orbit chains and the other 50 % to Arbitrum users who are part of these chains. This proposal aims to double the current TVL over the next year and simultaneously attract more talent builders to the Arbitrum ecosystem.
+Cupojoseph from Open Dollar [created a post](https://forum.arbitrum.foundation/t/non-constitutional-arbitrum-airdrop-2-builder-appreciation-drop/28428) suggesting the creation of a second Arbitrum Airdrop specifically directed at builders. The idea consists of distributing 500M ARB, 50% of which will go to builders who deployed contracts on Arbitrum or Arbitrum Stack chains and the other 50 % to Arbitrum users who are part of these chains. This proposal aims to double the current TVL over the next year and simultaneously attract more talent builders to the Arbitrum ecosystem.
 
 
 ### **Jumper x Merkl // MAGA 2025 [Make-Arbitrum-Great-Again]**

@@ -4,7 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('popapex')
 
@@ -27,7 +27,7 @@ export const popapex: ScalingProject = orbitStackL3({
     shortName: 'PoP Apex',
     slug: 'popapex',
     description:
-      'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA.',
+      'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum One using the Arbitrum Stack and AnyTrust DA.',
     links: {
       websites: ['https://proofofplay.com/'],
       bridges: [

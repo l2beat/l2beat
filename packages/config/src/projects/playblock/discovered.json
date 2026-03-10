@@ -7,14 +7,13 @@
       "name": "RollupProxy",
       "address": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
       "type": "Contract",
-      "unverified": true,
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
-        null,
+        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
         "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
       ],
       "proxyType": "Arbitrum proxy",
-      "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+      "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators).",
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -108,7 +107,7 @@
         }
       },
       "implementationNames": {
-        "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0": "",
+        "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0": "RollupProxy",
         "arb-nova:0xF7C1c37406626B305f5136364016425f487516a3": "RollupAdminLogic",
         "arb-nova:0x5CAF2e861bB26aA0576583677488694FCf30e514": "RollupUserLogic"
       },
@@ -159,6 +158,11 @@
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
@@ -245,6 +249,7 @@
       "address": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "type": "EOA",
       "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -260,6 +265,83 @@
           "from": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
           "role": "admin",
           "via": [
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
+            { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+            },
             { "address": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
           ]
         }
@@ -293,9 +375,12 @@
       "name": "ProxyAdmin",
       "address": "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
@@ -334,9 +419,12 @@
       ],
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
+      },
       "implementationNames": {
-        "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91": ""
+        "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91": "ProxyAdmin"
       }
     },
     {
@@ -793,6 +881,13 @@
       "function unpause()",
       "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, uint256 tokenTotalFeeAmount, bytes data) returns (uint256)"
     ],
+    "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0": [
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "event UpgradedSecondary(address indexed implementation)",
+      "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
+    ],
     "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -903,6 +998,17 @@
       "function setValidKeyset(bytes keysetBytes)",
       "function totalDelayedMessagesRead() view returns (uint256)",
       "function updateRollupAddress()"
+    ],
+    "arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "arb-nova:0x2964CBfC551A76527D42F57131E7f77f9Dce8921": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
@@ -1300,6 +1406,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1316,5 +1423,5 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "nova": 84402812 },
-  "permissionsConfigHash": "0x4cfd1ce4cae008a03ee0746bb4f08284941602fcb4ead17afca854f4920abb6c"
+  "permissionsConfigHash": "0xb58c0ad672befa048a52a4578189b288edabe94881af8afb8242d6cff019bbb4"
 }

@@ -4,7 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('apechain')
 
@@ -19,7 +19,7 @@ export const apechain: ScalingProject = orbitStackL3({
     name: 'ApeChain',
     slug: 'apechain',
     description:
-      'ApeChain is an Optimium built on the Arbitrum Orbit stack utilizing $APE as its native gas token. It fuels culture by being the chain for digital and IRL communities, builders, creators, collectors, gamers and beyond.',
+      'ApeChain is an Optimium built on the Arbitrum Stack utilizing $APE as its native gas token. It fuels culture by being the chain for digital and IRL communities, builders, creators, collectors, gamers and beyond.',
     links: {
       websites: ['https://apechain.com/'],
       bridges: ['https://apechain.com/portal'],

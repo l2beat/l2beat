@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('everclear')
 
-export const everclear: ScalingProject = orbitStackL2({
+export const everclear: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1726617600), // 2024-09-18T00:00:00Z
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Interoperability'],
@@ -20,7 +20,7 @@ export const everclear: ScalingProject = orbitStackL2({
     name: 'Everclear Hub',
     slug: 'everclear',
     description:
-      'Everclear Hub is an AnyTrust Optimium on Ethereum, built on the Orbit stack. It is used as a liquidity hub (clearing layer) to solve the liquidity fragmentation between modular scaling solutions.',
+      'Everclear Hub is an AnyTrust Optimium on Ethereum, built on the Arbitrum Stack. It is used as a liquidity hub (clearing layer) to solve the liquidity fragmentation between modular scaling solutions.',
     links: {
       websites: ['https://everclear.org'],
       bridges: ['https://bridge.gelato.network/bridge/everclear-mainnet'],

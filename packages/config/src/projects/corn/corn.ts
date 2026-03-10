@@ -8,11 +8,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('corn')
 
-export const corn: ScalingProject = orbitStackL2({
+export const corn: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1724284800), //2024-08-22
   additionalPurposes: ['Bitcoin DApps'],
   additionalBadges: [BADGES.RaaS.Conduit],
@@ -24,7 +24,7 @@ export const corn: ScalingProject = orbitStackL2({
     name: 'Corn',
     slug: 'corn',
     description:
-      'Corn is an Orbit Stack-based Layer 2 focused on Bitcoin-centric DeFi applications. Corn uses Bitcorn (BTCN) as its gas token, the popCORN System for long-term incentives, and LayerZero for cross-chain asset transfers.',
+      'Corn is an Arbitrum Stack-based Layer 2 focused on Bitcoin-centric DeFi applications. Corn uses Bitcorn (BTCN) as its gas token, the popCORN System for long-term incentives, and LayerZero for cross-chain asset transfers.',
     links: {
       websites: ['https://usecorn.com/'],
       bridges: ['https://usecorn.com/app'],

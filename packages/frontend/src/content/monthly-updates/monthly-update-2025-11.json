@@ -7,7 +7,7 @@
   "updates": [
     {
       "type": "ecosystem",
-      "ecosystemId": "arbitrum-orbit",
+      "ecosystemId": "arbitrum-ecosystem",
       "news": [
         {
           "title": "AIP Proposal: New Gas Pricing Mechanism and Minimum Base Fee Adjustment",

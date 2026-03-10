@@ -5,11 +5,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('reya')
 
-export const reya: ScalingProject = orbitStackL2({
+export const reya: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1715019483), // 2024-05-06T18:18:03Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
@@ -21,7 +21,7 @@ export const reya: ScalingProject = orbitStackL2({
     name: 'Reya',
     slug: 'reya',
     description:
-      'Reya is an Arbitrum Orbit stack L2 with AnyTrust data availability, optimizing for trading and liquidity provision.',
+      'Reya is an Arbitrum Stack L2 with AnyTrust data availability, optimizing for trading and liquidity provision.',
     links: {
       websites: ['https://reya.network/'],
       bridges: [

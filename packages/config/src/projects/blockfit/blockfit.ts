@@ -9,12 +9,12 @@ export const blockfit: ScalingProject = underReviewL3({
   addedAt: UnixTime(1739285196), // 2025-02-11T14:46:36Z
   archivedAt: UnixTime(1751446252), //2025-07-02T11:50:52Z
   hostChain: ProjectId('nova'),
-  badges: [BADGES.Stack.Orbit, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
+  badges: [BADGES.Stack.ArbitrumStack, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {
     name: 'BlockFit',
     slug: 'blockfit',
     description:
-      'BlockFit is a scaling solution built on the Orbit stack. It aims to revolutionize healthcare.',
+      'BlockFit is a scaling solution built on the Arbitrum Stack. It aims to revolutionize healthcare.',
     purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {
@@ -44,7 +44,7 @@ export const blockfit: ScalingProject = underReviewL3({
     ],
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   activityConfig: {
     type: 'block',

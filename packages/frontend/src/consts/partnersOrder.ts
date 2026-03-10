@@ -1,5 +1,5 @@
 export const PARTNERS_ORDER = [
-  'arbitrum-orbit',
+  'arbitrum-ecosystem',
   'the-elastic-network',
   'superchain',
   'agglayer',

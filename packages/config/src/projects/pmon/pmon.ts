@@ -12,7 +12,7 @@ export const pmon: ScalingProject = underReviewL3({
   badges: [
     BADGES.L3ParentChain.Arbitrum,
     BADGES.DA.Celestia,
-    BADGES.Stack.Orbit,
+    BADGES.Stack.ArbitrumStack,
     BADGES.VM.EVM,
     BADGES.RaaS.AltLayer,
   ],
@@ -21,7 +21,7 @@ export const pmon: ScalingProject = underReviewL3({
     name: 'PMON Chain',
     slug: 'pmon',
     description:
-      'Polychain Monsters built an Orbit stack Optimium, housing the Onchain Monsters game.',
+      'Polychain Monsters built an Arbitrum Stack Optimium, housing the Onchain Monsters game.',
     purposes: ['Gaming', 'NFT'],
     links: {
       websites: ['https://protocolmonsterlabs.com/'],
@@ -41,7 +41,7 @@ export const pmon: ScalingProject = underReviewL3({
   },
   dataAvailability: undefined,
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   associatedTokens: ['PMON'],
   escrows: [

@@ -117,7 +117,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 4457,
+        "permissionedGamesTotal": 4456,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",

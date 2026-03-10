@@ -451,10 +451,10 @@ export const badges = [
     },
   },
   {
-    id: 'Orbit',
+    id: 'ArbitrumStack',
     type: BadgeType.Stack,
-    name: 'Built on Arbitrum Orbit',
-    description: 'The project is built on Arbitrum Orbit',
+    name: 'Built on Arbitrum Stack',
+    description: 'The project is built on Arbitrum Stack',
     action: {
       type: 'scalingFilter',
       id: 'stack',

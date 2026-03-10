@@ -4,7 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('popboss')
 
@@ -27,7 +27,7 @@ export const popboss: ScalingProject = orbitStackL3({
     shortName: 'PoP Boss',
     slug: 'popboss',
     description:
-      'Proof of Play Boss is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA. It is the second L3 built by Proof of Play.',
+      'Proof of Play Boss is a gaming-focused L3 settling on Arbitrum One using the Arbitrum Stack and AnyTrust DA. It is the second L3 built by Proof of Play.',
     links: {
       websites: ['https://proofofplay.com/'],
       documentation: ['https://docs.proofofplay.com/introduction'],

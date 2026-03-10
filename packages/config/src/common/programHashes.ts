@@ -147,7 +147,7 @@ const BOOJUM_BOOTLOADER = (version: string) => ({
 const WASM_MODULE_ROOT = (version: string) => ({
   title: `ArbOS wasmModuleRoot ${version}`,
   description:
-    'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games.',
+    'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games.',
 })
 
 const ABSOLUTE_PRESTATE = (version: string) => ({
@@ -1425,7 +1425,7 @@ Even though the program is compiled in docker for reproducibility reasons, it gi
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287': {
     title: 'Celestia Nitro 3.2.1 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games, which uses Celestia DA.',
     programUrl: 'https://github.com/celestiaorg/nitro/tree/v3.2.1-rc.1/arbos',
     verificationStatus: 'successful',
     verificationSteps: `
@@ -1448,7 +1448,7 @@ Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindge
   '0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3': {
     title: 'Celestia Nitro 3.3.2 wasmModuleRoot',
     description:
-      'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
+      'A commitment to the exact WASM binary version used for Arbitrum Stack optimistic dispute games, which uses Celestia DA.',
     programUrl:
       'https://github.com/celestiaorg/nitro/tree/celestia-v3.3.2/arbos',
     verificationStatus: 'successful',

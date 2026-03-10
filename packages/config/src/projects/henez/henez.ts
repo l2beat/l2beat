@@ -13,7 +13,7 @@ export const henez: ScalingProject = underReviewL3({
     BADGES.RaaS.Caldera,
     BADGES.L3ParentChain.Arbitrum,
     BADGES.DA.DAC,
-    BADGES.Stack.Orbit,
+    BADGES.Stack.ArbitrumStack,
     BADGES.VM.EVM,
   ],
   dataAvailability: undefined,
@@ -22,7 +22,7 @@ export const henez: ScalingProject = underReviewL3({
     slug: 'henez',
     stacks: ['Arbitrum'],
     description:
-      'Henez is an Orbit stack L3 with AnyTrust DA powering chain- and account-abstracted DeFi applications.',
+      'Henez is an Arbitrum Stack L3 with AnyTrust DA powering chain- and account-abstracted DeFi applications.',
     purposes: ['Universal'],
     links: {
       websites: ['https://henez.fi/'],
@@ -52,7 +52,7 @@ export const henez: ScalingProject = underReviewL3({
     ],
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   escrows: [
     {

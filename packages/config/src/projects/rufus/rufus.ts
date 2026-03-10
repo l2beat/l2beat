@@ -10,7 +10,7 @@ export const rufus: ScalingProject = underReviewL2({
   badges: [
     BADGES.RaaS.Caldera,
     BADGES.DA.DAC,
-    BADGES.Stack.Orbit,
+    BADGES.Stack.ArbitrumStack,
     BADGES.VM.EVM,
   ],
   display: {
@@ -18,7 +18,7 @@ export const rufus: ScalingProject = underReviewL2({
     slug: 'rufus',
     stacks: ['Arbitrum'],
     description:
-      'Rufus is an Orbit stack L2 with AnyTrust DA created for gaming by the team behind the Dogelon (ELON) token.',
+      'Rufus is an Arbitrum Stack L2 with AnyTrust DA created for gaming by the team behind the Dogelon (ELON) token.',
     purposes: ['Gaming'],
     links: {
       websites: ['https://dogelonmars.com/'],
@@ -52,7 +52,7 @@ export const rufus: ScalingProject = underReviewL2({
     ],
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   activityConfig: {
     type: 'block',

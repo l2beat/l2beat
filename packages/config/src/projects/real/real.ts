@@ -8,11 +8,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('real')
 
-export const real: ScalingProject = orbitStackL2({
+export const real: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1715731200), // 2024-05-15T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
@@ -28,7 +28,7 @@ export const real: ScalingProject = orbitStackL2({
     redWarning:
       "re.al halted block production and state updates on June 20, 2025 without prior notice. If state updates are not resumed, the state proposer whitelist gets dropped and anyone can propose state updates. If this happens, but the DAC doesn't serve the necessary data, funds can be compromised as there is no way to challenge invalid state roots.",
     description:
-      'Re.al is an Arbitrum Orbit stack L2 with AnyTrust data availability, focusing on Real World Assets.',
+      'Re.al is an Arbitrum Stack L2 with AnyTrust data availability, focusing on Real World Assets.',
     links: {
       websites: ['https://re.al'],
       bridges: ['https://re.al/bridge/', 'https://re.al/app/bridge/'],

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc3e90d580eff076313ec8de9d88437ac8f59c1f0
+
+# Diff at Tue, 10 Mar 2026 09:14:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f17335469704ab144f3a66923f98447680a4ca98 block: 1769601687
+- current timestamp: 1769601687
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601687 (main branch discovery), not current.
+
+```diff
+    contract L2ToL1MessagePasser (facet:0x4200000000000000000000000000000000000016) {
+    +++ description: L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.
+      sourceHashes.0:
+-        "0x702c17f55cd06de3274ea8306900257e19dc09f5ffeb15cd67a6efb43a2354b6"
++        "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d"
+    }
+```
+
 Generated with discovered.json: 0x2e49a358ceac669737803c14c9c48c60a0ca71bc
 
 # Diff at Wed, 28 Jan 2026 12:02:52 GMT:

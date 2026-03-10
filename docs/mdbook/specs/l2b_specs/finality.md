@@ -14,7 +14,7 @@
     - [Example](#example-1)
   - [Scroll](#scroll)
     - [Time to withdrawal calculation](#time-to-withdrawal-calculation)
-  - [Orbit Stack](#orbit-stack)
+  - [Arbitrum Stack](#arbitrum-stack)
     - [Time to withdrawal calculation](#time-to-withdrawal-calculation-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -339,7 +339,7 @@ event FinalizeBatch(
      `RelayedMessage.timestamp − AppendMessage.timestamp`  
      (includes any additional delay introduced by the relayer)
 
-### Orbit Stack
+### Arbitrum Stack
 
 
 When users initiate a withdrawal on L2 (for example, calling ArbSys.withdrawEth() or an ERC-20 bridge's withdraw function), the sequence of events is:

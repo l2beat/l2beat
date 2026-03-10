@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('oevnetwork')
 
-export const oevnetwork: ScalingProject = orbitStackL2({
+export const oevnetwork: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
   archivedAt: UnixTime(1766143183),
   additionalPurposes: ['Oracles'],
@@ -21,7 +21,7 @@ export const oevnetwork: ScalingProject = orbitStackL2({
     name: 'OEV Network',
     slug: 'oev',
     description:
-      'OEV is an Orbit stack Optimium by API3, designed to capture oracle extractable value and return it to the dApps and users that generated it.',
+      'OEV is an Arbitrum Stack Optimium by API3, designed to capture oracle extractable value and return it to the dApps and users that generated it.',
     links: {
       websites: ['https://api3.org/'],
       bridges: ['https://oev.bridge.api3.org/'],

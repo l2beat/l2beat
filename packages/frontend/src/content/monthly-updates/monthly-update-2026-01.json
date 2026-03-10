@@ -7,7 +7,7 @@
   "updates": [
     {
       "type": "ecosystem",
-      "ecosystemId": "arbitrum-orbit",
+      "ecosystemId": "arbitrum-ecosystem",
       "news": [
         {
           "title": "ArbOS Dia Upgrade & Smoother Fees",
@@ -15,7 +15,7 @@
         },
         {
           "title": "Open House 2026 Goes Global",
-          "content": "One of the most visible [announcements](https://x.com/arbitrum/status/2010698393157574780) is the launch of Open House 2026, Arbitrum’s expanded global builder event series.\n\nOpen House events are designed as hands-on, in-person sessions where developers can:\n\n- Learn Arbitrum tooling directly from core contributors\n- Experiment with Stylus, Orbit, and Nitro-based stacks\n- Connect with ecosystem teams and potential collaborators\n\nFor 2026, the program expands beyond isolated hackathons into a coordinated global initiative, signaling Arbitrum’s intent to compete aggressively for developer mindshare across regions."
+          "content": "One of the most visible [announcements](https://x.com/arbitrum/status/2010698393157574780) is the launch of Open House 2026, Arbitrum’s expanded global builder event series.\n\nOpen House events are designed as hands-on, in-person sessions where developers can:\n\n- Learn Arbitrum tooling directly from core contributors\n- Experiment with Stylus, Stack, and Nitro-based stacks\n- Connect with ecosystem teams and potential collaborators\n\nFor 2026, the program expands beyond isolated hackathons into a coordinated global initiative, signaling Arbitrum’s intent to compete aggressively for developer mindshare across regions."
         },
         {
           "title": "Rust SDK v0.10.0: Stylus Keeps Leveling Up",

@@ -26,7 +26,7 @@ export const sovrun: ScalingProject = upcomingL2({
     },
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   proofSystem: {
     type: 'Optimistic',

@@ -4,7 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('playblock')
 
@@ -24,7 +24,7 @@ export const playblock: ScalingProject = orbitStackL3({
     name: 'PlayBlock',
     slug: 'playblock',
     description:
-      'PlayBlock is an Orbit stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
+      'PlayBlock is an Arbitrum Stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
     links: {
       websites: ['https://playnance.com/'],
       documentation: ['https://docs.playnance.com/'],

@@ -11,7 +11,7 @@ export const rayls: ScalingProject = upcomingL2({
     name: 'Rayls',
     slug: 'rayls',
     description:
-      'Rayls is a compliant, KYC-enabled L2 built on Arbitrum Orbit to bridge $100T in TradFi assets into DeFi.',
+      'Rayls is a compliant, KYC-enabled L2 built on Arbitrum Stack to bridge $100T in TradFi assets into DeFi.',
     purposes: ['Universal', 'RWA'],
     stacks: ['Arbitrum'],
     links: {
@@ -26,7 +26,7 @@ export const rayls: ScalingProject = upcomingL2({
     },
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   proofSystem: {
     type: 'Optimistic',

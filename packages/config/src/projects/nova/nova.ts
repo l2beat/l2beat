@@ -15,12 +15,12 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { DAC } from '../../templates/dac-template'
 import {
+  arbitrumStackL2,
   getNitroGovernance,
-  orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
-} from '../../templates/orbitStack'
+} from '../../templates/arbitrumStack'
+import { DAC } from '../../templates/dac-template'
 
 const discovery = new ProjectDiscovery('nova')
 const discovery_arbitrum = new ProjectDiscovery('arbitrum') // needed for governance section
@@ -109,7 +109,7 @@ const isPostBoLD = discovery.getContractValue<boolean>(
 
 const chainId = 42170
 
-export const nova: ScalingProject = orbitStackL2({
+export const nova: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1660003200), // 2022-08-09T00:00:00Z
   additionalBadges: [
     BADGES.VM.WasmVM,

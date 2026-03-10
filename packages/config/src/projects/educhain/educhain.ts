@@ -4,7 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('educhain')
 
@@ -22,7 +22,7 @@ export const educhain: ScalingProject = orbitStackL3({
     name: 'EDU Chain',
     slug: 'edu-chain',
     description:
-      'EDU Chain is a Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to the blockchain and establish an innovative "Learn Own Earn" model for education.',
+      'EDU Chain is a Layer 3 on Arbitrum, built on the Arbitrum Stack. It is designed to onboard real-world educational economies to the blockchain and establish an innovative "Learn Own Earn" model for education.',
     links: {
       websites: ['https://educhain.xyz/'],
       bridges: ['https://bridge.educhain.xyz/'],

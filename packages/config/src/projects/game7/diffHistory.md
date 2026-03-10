@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x462123b1ea173df65da01f17381e64d02ae6ea5f
+
+# Diff at Tue, 10 Mar 2026 09:09:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f17335469704ab144f3a66923f98447680a4ca98 block: 1768984632
+- current timestamp: 1768984632
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984632 (main branch discovery), not current.
+
+```diff
+    contract L1OrbitUSDCGateway (arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944) {
+    +++ description: Arbitrum Stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally.
+      description:
+-        "Orbit stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally."
++        "Arbitrum Stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally."
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators).
+      description:
+-        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators)."
+    }
+```
+
 Generated with discovered.json: 0x5d6720cca0d74128216b8ed3a4ddd2fa61794dd2
 
 # Diff at Wed, 21 Jan 2026 08:39:08 GMT:

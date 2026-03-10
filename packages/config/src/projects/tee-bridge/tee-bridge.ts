@@ -56,7 +56,7 @@ export const teeBridge: BaseProject = {
       2. **TEE Batch Poster**: The batcher operates within the TEE and must honor Espresso Network confirmations. It cannot reorder transactions or equivocate, providing strong guarantees that transactions will be included and finalized (unless the escape hatch mechanism is enabled).
       
       3. **Batch Consistency Verification**: Before posting to L1, the TEE batcher performs two critical checks:
-         - **Namespace Validation**: Ensures transactions correspond to the correct Arbitrum Nitro/Orbit chain namespace
+         - **Namespace Validation**: Ensures transactions correspond to the correct Arbitrum Nitro/Arbitrum Stack chain namespace
          - **Merkle Proof Verification**: Confirms the batch maps to a valid HotShot block in the Merkle tree maintained by the light client contract
       
       4. **Signature Generation**: The batcher computes blob hashes and signs the combined hash along with calldata, including this signature in the L1 transaction for on-chain verification.

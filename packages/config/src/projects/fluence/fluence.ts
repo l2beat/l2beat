@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('fluence')
 
-export const fluence: ScalingProject = orbitStackL2({
+export const fluence: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1726790400), // 2024-09-20T00:00:00+00:00
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
@@ -20,7 +20,7 @@ export const fluence: ScalingProject = orbitStackL2({
     name: 'Fluence',
     slug: 'fluence',
     description:
-      'Fluence is an Optimium on Ethereum, built on the Orbit stack. It enables a decentralized serverless platform & computing marketplace powered by blockchain economics.',
+      'Fluence is an Optimium on Ethereum, built on the Arbitrum Stack. It enables a decentralized serverless platform & computing marketplace powered by blockchain economics.',
     links: {
       websites: ['https://fluence.network/'],
       bridges: ['https://bridge.fluence.network/'],

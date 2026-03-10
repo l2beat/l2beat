@@ -7,7 +7,7 @@
   "updates": [
     {
       "type": "ecosystem",
-      "ecosystemId": "arbitrum-orbit",
+      "ecosystemId": "arbitrum-ecosystem",
       "news": [
         {
           "title": "Arbitrum Bridge Goes Embedded & Onramp-Ready",
@@ -23,11 +23,11 @@
         },
         {
           "title": "Capx AI Reports 100M Transaction",
-          "content": "Capx AI recently announced it has processed 100,000,000 transactions across over 450,000 wallets with $450M+ in restaked TVL, signaling strong momentum ahead of its mainnet launch. The project is built using Arbitrum Orbit / Nitro to deliver scalable, low-cost, Ethereum-grade security for AI agent applications."
+          "content": "Capx AI recently announced it has processed 100,000,000 transactions across over 450,000 wallets with $450M+ in restaked TVL, signaling strong momentum ahead of its mainnet launch. The project is built using Arbitrum Stack / Nitro to deliver scalable, low-cost, Ethereum-grade security for AI agent applications."
         },
         {
           "title": "ArbOS 50 \"Dia\" Is Coming - Next Stop: Onchain Vote",
-          "content": "Following a successful [temperature check](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0x33754da4006d0ef38666ec5d5e85fd0966a891a594ab9dc21f23beedea2d330b/discussion) on Snapshot (Sept 4), the proposed upgrade to ArbOS 50 Dia is now headed toward an onchain vote. This Constitutional AIP aims to upgrade Arbitrum One and Nova ahead of Ethereum's Fusaka hard fork (expected in November 2025), adding compatibility and unlocking powerful new features.\n\nKey changes include:\n\n- Fusaka EIP support like EIP-2537 (BLS12-381 precompile), EIP-7951 (secp256r1), and EIP-7825 (gas limit caps)\n- A new Native Mint/Burn feature for Orbit chains (disabled on One/Nova)\n- Support for constraint-based gas metering (for future dynamic pricing)\n- RPC enhancements, new opcodes, ModExp security hardening, and more\n\nMost notably, the release also introduces a more flexible block gas model, allowing higher transaction packing efficiency without increasing overall gas throughput.\n\nThe on-chain vote is not live yet, but is expected soon. If passed, the upgrade will roll out post-audit and testing - potentially after Ethereum activates Fusaka.",
+          "content": "Following a successful [temperature check](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0x33754da4006d0ef38666ec5d5e85fd0966a891a594ab9dc21f23beedea2d330b/discussion) on Snapshot (Sept 4), the proposed upgrade to ArbOS 50 Dia is now headed toward an onchain vote. This Constitutional AIP aims to upgrade Arbitrum One and Nova ahead of Ethereum's Fusaka hard fork (expected in November 2025), adding compatibility and unlocking powerful new features.\n\nKey changes include:\n\n- Fusaka EIP support like EIP-2537 (BLS12-381 precompile), EIP-7951 (secp256r1), and EIP-7825 (gas limit caps)\n- A new Native Mint/Burn feature for Arbitrum Stack chains (disabled on One/Nova)\n- Support for constraint-based gas metering (for future dynamic pricing)\n- RPC enhancements, new opcodes, ModExp security hardening, and more\n\nMost notably, the release also introduces a more flexible block gas model, allowing higher transaction packing efficiency without increasing overall gas throughput.\n\nThe on-chain vote is not live yet, but is expected soon. If passed, the upgrade will roll out post-audit and testing - potentially after Ethereum activates Fusaka.",
           "tags": ["governance"]
         },
         {

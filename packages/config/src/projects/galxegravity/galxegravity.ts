@@ -3,11 +3,11 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('galxegravity')
 
-export const galxegravity: ScalingProject = orbitStackL2({
+export const galxegravity: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
@@ -20,7 +20,7 @@ export const galxegravity: ScalingProject = orbitStackL2({
     name: 'Gravity',
     slug: 'galxegravity',
     description:
-      'Gravity is an Optimium built on the Orbit stack. It features onchain questing and has its own gas token - G. Other Galxe products are aiming to integrate with the L2 and a future migration to an L1 of the same name is planned.',
+      'Gravity is an Optimium built on the Arbitrum Stack. It features onchain questing and has its own gas token - G. Other Galxe products are aiming to integrate with the L2 and a future migration to an L1 of the same name is planned.',
     links: {
       websites: ['https://gravity.xyz'],
       bridges: ['https://bridge.gravity.xyz/'],

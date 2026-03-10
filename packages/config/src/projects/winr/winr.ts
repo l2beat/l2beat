@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('winr')
 
@@ -22,7 +22,7 @@ export const winr: ScalingProject = orbitStackL3({
     name: 'WINR',
     slug: 'winr',
     description:
-      'WINR is a Layer 3 on Arbitrum, based on the Orbit stack. It is focused on building a decentralized iGaming infrastructure.',
+      'WINR is a Layer 3 on Arbitrum, based on the Arbitrum Stack. It is focused on building a decentralized iGaming infrastructure.',
     links: {
       websites: ['https://winr.games/'],
       bridges: ['https://just.bet/'],

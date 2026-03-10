@@ -9,7 +9,7 @@ import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('kinto')
 
@@ -47,7 +47,7 @@ const sanctionExpirySeconds = discovery.getContractValue<number>(
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
 
-export const kinto: ScalingProject = orbitStackL2({
+export const kinto: ScalingProject = arbitrumStackL2({
   capability: 'appchain',
   addedAt: UnixTime(1716336000), // 2024-05-22T00:00:00Z
   discovery,
@@ -59,7 +59,7 @@ export const kinto: ScalingProject = orbitStackL2({
     slug: 'kinto',
     architectureImage: 'kinto',
     description:
-      'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
+      'Kinto is an Arbitrum Stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
     headerWarning:
       '[Kinto shut down on September 30, 2025](https://x.com/KintoXYZ/status/1964721235675537573). Remaining assets were removed from the bridges and are redistributed through onchain smart contracts and [the Kinto CVR frontend](https://engen.kinto.xyz/cvr-claim).',
     links: {
@@ -120,7 +120,7 @@ export const kinto: ScalingProject = orbitStackL2({
     inScope: [
       'Ability to deposit, spend, and withdraw the gas token (ETH)',
       SOA.derivationSpec,
-      'Upgradability of standard Orbit stack L1 and L2 core contracts',
+      'Upgradability of standard Arbitrum Stack L1 and L2 core contracts',
       'Upgradability of Kinto-specific L2 contracts: KintoAppRegistry, KintoWalletFactory, KintoID, AccessManager, KintoWallet, EntryPoint',
       'Signer policies and recovery process for the KintoWallet',
       'Forced transaction mechanism via L1 through the EntryPoint and the KintoWallet',
@@ -834,7 +834,7 @@ The permissioned sanctions logic by KYC providers necessitates at least an ${for
       url: 'https://x.com/vincfurc/status/1853891918037463521',
       date: '2024-10-31T00:00:00Z',
       description:
-        'The first correctly resolved fault proof challenge of a mainnet Orbit stack rollup.',
+        'The first correctly resolved fault proof challenge of a mainnet Arbitrum Stack rollup.',
       type: 'general',
     },
     {

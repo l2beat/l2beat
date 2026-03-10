@@ -9,12 +9,12 @@ export const skynet: ScalingProject = underReviewL3({
   addedAt: UnixTime(1739372930), // 2025-02-12T15:08:50Z
   archivedAt: UnixTime(1766143183),
   hostChain: ProjectId('arbitrum'),
-  badges: [BADGES.Stack.Orbit, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
+  badges: [BADGES.Stack.ArbitrumStack, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {
     name: 'Skynet',
     slug: 'skynet',
     description:
-      'Skynet is a scaling solution built on the Orbit stack that aims to act as infrastructure for AI Agents.',
+      'Skynet is a scaling solution built on the Arbitrum Stack that aims to act as infrastructure for AI Agents.',
     purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {
@@ -48,7 +48,7 @@ export const skynet: ScalingProject = underReviewL3({
     ],
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   activityConfig: {
     type: 'block',

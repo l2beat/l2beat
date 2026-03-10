@@ -8,7 +8,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('sanko')
 
@@ -26,7 +26,7 @@ export const sanko: ScalingProject = orbitStackL3({
     name: 'Sanko',
     slug: 'sanko',
     description:
-      'Sanko is an NFT and gaming-focused Orbit stack L3 on Arbitrum with AnyTrust DA and DMT as its native token, created by Sanko GameCorp.',
+      'Sanko is an NFT and gaming-focused Arbitrum Stack L3 on Arbitrum with AnyTrust DA and DMT as its native token, created by Sanko GameCorp.',
     links: {
       websites: ['https://sanko.xyz/'],
       bridges: ['https://sanko.xyz/bridge', 'https://swap.sanko.xyz'],

@@ -5,7 +5,7 @@ import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('molten')
 
@@ -22,7 +22,7 @@ export const molten: ScalingProject = orbitStackL3({
     shortName: 'Molten',
     slug: 'molten',
     description:
-      'Molten is an Orbit stack L3 on Arbitrum with Celestia DA, created by the UniDex team.',
+      'Molten is an Arbitrum Stack L3 on Arbitrum with Celestia DA, created by the UniDex team.',
     links: {
       websites: ['https://moltennetwork.com/'],
       bridges: [

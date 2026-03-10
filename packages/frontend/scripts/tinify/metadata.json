@@ -1435,5 +1435,13 @@
   "static/icons/sp1turbo.png": "767a37fa0928173d50732276315edf41",
   "static/meta-images/zk-catalog/projects/sp1turbo/opengraph-image.png": "2dff7ca2297e41ae848dc3417d7517ce",
   "static/icons/sp1hypercube.png": "bc65955f4da7fa2f7f83faad193fdddf",
-  "static/meta-images/zk-catalog/projects/sp1hypercube/opengraph-image.png": "14c50d8dedc7e7053d91a186c36d04e4"
+  "static/meta-images/zk-catalog/projects/sp1hypercube/opengraph-image.png": "14c50d8dedc7e7053d91a186c36d04e4",
+  "static/images/badges/ArbitrumStack.png": "f35533034958d6dfe282249948182faa",
+  "static/images/monthly-updates/arbitrum-ecosystem.png": "fb651cee810b256c0909deab61aaf43b",
+  "static/partners/arbitrum-ecosystem/build-on.png": "45bb941ac9df4ba124ebe5abdf1166ba",
+  "static/partners/arbitrum-ecosystem/logo.dark.png": "d3ef2d08996764077d99231e1e47fe0e",
+  "static/partners/arbitrum-ecosystem/logo.png": "eaee7cb2352c1a5b2d0a4c0c08c6c57a",
+  "static/partners/arbitrum-ecosystem/main-partner.png": "8b6edcb37cc35807a5a80f76bf6b1895",
+  "static/icons/arbitrum-ecosystem.png": "b9c339f7e46b5282e4c05596100f3cc6",
+  "static/meta-images/ecosystems/arbitrum-ecosystem/opengraph-image.png": "7b92555e07c24a7be627e11b2bb50ffe"
 }

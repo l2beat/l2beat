@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('alephzero')
 
-export const alephzero: ScalingProject = orbitStackL2({
+export const alephzero: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1723420800), // 2024-08-12T00:00:00Z
   archivedAt: UnixTime(1758278706),
   discovery,
@@ -22,7 +22,7 @@ export const alephzero: ScalingProject = orbitStackL2({
     name: 'Aleph Zero EVM',
     slug: 'aleph-zero',
     description:
-      'Aleph Zero is an Optimium on Ethereum, built on the Orbit stack. It aims to offer seamless interoperability with the Aleph Zero Layer 1 and a suite of developer tools for building privacy-enhancing dapps.',
+      'Aleph Zero is an Optimium on Ethereum, built on the Arbitrum Stack. It aims to offer seamless interoperability with the Aleph Zero Layer 1 and a suite of developer tools for building privacy-enhancing dapps.',
     links: {
       websites: ['https://alephzero.org/'],
       bridges: ['https://bridge.gelato.network/bridge/aleph-zero-evm'],

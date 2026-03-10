@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('capx')
 
-export const capx: ScalingProject = orbitStackL2({
+export const capx: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1692958606), // '2023-08-25T10:16:46Z'
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
@@ -19,7 +19,7 @@ export const capx: ScalingProject = orbitStackL2({
     name: 'Capx',
     slug: 'capx',
     description:
-      'Capx is an Orbit stack Optimium focused on simplifying and reducing the cost of building AI agents.',
+      'Capx is an Arbitrum Stack Optimium focused on simplifying and reducing the cost of building AI agents.',
     links: {
       websites: ['https://capx.ai/'],
       bridges: ['https://bridge.capx.fi/'],

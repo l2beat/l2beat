@@ -7,7 +7,7 @@
   "updates": [
     {
       "type": "ecosystem",
-      "ecosystemId": "arbitrum-orbit",
+      "ecosystemId": "arbitrum-ecosystem",
       "news": [
         {
           "title": "Quorum-threshold reduction proposal",
@@ -30,8 +30,8 @@
           "tags": ["upcoming", "governance"]
         },
         {
-          "title": "Lampros DAO Launches Arbitrum Orbit Chains Dune Dashboard",
-          "content": "Lampros DAO [introduced](https://forum.arbitrum.foundation/t/arbitrum-orbit-chains-dune-dashboard-by-lampros-dao/29396?utm_source=chatgpt.com) a Dune Analytics dashboard to monitor on-chain activity across Arbitrum Orbit chains, including Apechain, Corn, and Degen. The dashboard provides insights into transaction performance, gas metrics, and contract activity.",
+          "title": "Lampros DAO Launches Arbitrum Stack Chains Dune Dashboard",
+          "content": "Lampros DAO [introduced](https://forum.arbitrum.foundation/t/arbitrum-orbit-chains-dune-dashboard-by-lampros-dao/29396?utm_source=chatgpt.com) a Dune Analytics dashboard to monitor on-chain activity across Arbitrum Stack chains, including Apechain, Corn, and Degen. The dashboard provides insights into transaction performance, gas metrics, and contract activity.",
           "tags": ["governance"]
         },
         {
@@ -40,7 +40,7 @@
         },
         {
           "title": "ApeChain data goes live on Dune",
-          "content": "Dune [added](https://dune.com/chains/ape) full real-time data support for ApeChain, the L3 built by ApeCoin DAO on Arbitrum Orbit. Developers can now query on-chain activity, create dashboards, and monitor ecosystem growth without running their indexers."
+          "content": "Dune [added](https://dune.com/chains/ape) full real-time data support for ApeChain, the L3 built by ApeCoin DAO on Arbitrum Stack. Developers can now query on-chain activity, create dashboards, and monitor ecosystem growth without running their indexers."
         }
       ]
     },

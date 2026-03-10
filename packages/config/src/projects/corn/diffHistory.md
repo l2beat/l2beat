@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x150aaeea6b43f246867b1aa422524e4ac75b51fb
+
+# Diff at Tue, 10 Mar 2026 09:13:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f17335469704ab144f3a66923f98447680a4ca98 block: 1771857552
+- current timestamp: 1771857552
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771857552 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x09eD7e66Dd7c7129Ec3994498A521B502Ca7D61b) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both called Validators).
+      description:
+-        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators)."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both called Validators)."
+    }
+```
+
 Generated with discovered.json: 0x5cb3f98dfdf8fb6cee3f1e5193602e4d8641ee7b
 
 # Diff at Mon, 23 Feb 2026 14:40:22 GMT:

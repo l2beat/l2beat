@@ -189,8 +189,8 @@ export function SideNavLayout({
               slug: 'agglayer',
             },
             {
-              name: 'Arbitrum Orbit',
-              slug: 'arbitrum-orbit',
+              name: 'Arbitrum',
+              slug: 'arbitrum-ecosystem',
             },
             {
               name: 'Superchain',

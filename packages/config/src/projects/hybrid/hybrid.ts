@@ -10,7 +10,7 @@ export const hybrid: ScalingProject = upcomingL2({
     name: 'Hybrid',
     slug: 'hybrid',
     description:
-      'Hybrid is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It is focused on building consumer AI products like the custom AI Agent infrastructure and Atlas. Transitioned from a Layer 1 blockchain to an Orbit Layer 2.',
+      'Hybrid is an upcoming Layer 2 on Ethereum, built on the Arbitrum Stack. It is focused on building consumer AI products like the custom AI Agent infrastructure and Atlas. Transitioned from a Layer 1 blockchain to an Arbitrum Stack Layer 2.',
     purposes: ['AI'],
     stacks: ['Arbitrum'],
     links: {
@@ -25,7 +25,7 @@ export const hybrid: ScalingProject = upcomingL2({
     },
   },
   ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
+    id: ProjectId('arbitrum-ecosystem'),
   },
   proofSystem: {
     type: 'Optimistic',

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x02513147097a3cfcfec710ff8f7f9c4d1be02bd7
+
+# Diff at Tue, 10 Mar 2026 08:39:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@478b5c0b112cf2c65ec3957b41646506cb28f74e block: 1754054742
+- current timestamp: 1754054742
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754054742 (main branch discovery), not current.
+
+```diff
+    contract Bridger (eth:0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8) {
+    +++ description: A Routing contract to the standard Arbitrum Stack bridge of the L2.
+      description:
+-        "A Routing contract to the standard orbit stack bridge of the L2."
++        "A Routing contract to the standard Arbitrum Stack bridge of the L2."
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators).
+      description:
+-        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators)."
+    }
+```
+
 Generated with discovered.json: 0x178c5a54b9d91676d3231ce77cb7cf747870a5a1
 
 # Diff at Fri, 26 Sep 2025 13:12:16 GMT:

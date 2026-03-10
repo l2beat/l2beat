@@ -4,7 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL3 } from '../../templates/orbitStack'
+import { orbitStackL3 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('muster')
 
@@ -22,7 +22,7 @@ export const muster: ScalingProject = orbitStackL3({
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
-      'Muster Network is an Arbitrum Orbit L3 gaming chain aiming to transform digital ownership for brands and games while managing blockchain infrastructure and security.',
+      'Muster Network is an Arbitrum Stack L3 gaming chain aiming to transform digital ownership for brands and games while managing blockchain infrastructure and security.',
     links: {
       websites: ['https://cometh.io/'],
       bridges: [

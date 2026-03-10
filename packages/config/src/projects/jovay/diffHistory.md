@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x5138008d4b8f9b0cef129d760f06f3b3674dcd9f
+
+# Diff at Tue, 10 Mar 2026 09:14:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f17335469704ab144f3a66923f98447680a4ca98 block: 1762443722
+- current timestamp: 1762443722
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762443722 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b) {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1","role":"admin"},{"permission":"upgrade","from":"eth:0x9869A90FDAc287519E48aff4cCE329907a995162","role":"admin"},{"permission":"upgrade","from":"eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1","role":"admin"}]
+      values.owner:
++        "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77"
+      implementationNames.eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1","role":"admin"},{"permission":"upgrade","from":"eth:0x9869A90FDAc287519E48aff4cCE329907a995162","role":"admin"},{"permission":"upgrade","from":"eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1","role":"admin"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x83088c8Dd196a83f43140ddBD7B4727bD1d43AD4)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4bc01823401e1c0f1a7d3a8f56a1afd00e5d115a
 
 # Diff at Fri, 31 Oct 2025 10:59:58 GMT:

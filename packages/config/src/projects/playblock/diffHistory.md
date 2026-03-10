@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x5574f46cbab3c80c89744d3f56f3541891ced2cc
+
+# Diff at Tue, 10 Mar 2026 09:42:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f17335469704ab144f3a66923f98447680a4ca98 block: 1765379686
+- current timestamp: 1765379686
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765379686 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators).
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      description:
+-        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators)."
++        "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Arbitrum Stack, these two roles are both held by the Validators)."
+      implementationNames.arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0:
+-        ""
++        "RollupProxy"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91","role":".owner"}
+    }
+```
+
+```diff
+    EOA  (arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91) {
+    +++ description: None
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","role":"admin"},{"permission":"upgrade","from":"arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591","role":"admin"},{"permission":"upgrade","from":"arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad","role":"admin"}]
+      values.owner:
++        "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
+      implementationNames.arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","role":"admin"},{"permission":"upgrade","from":"arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591","role":"admin"},{"permission":"upgrade","from":"arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad","role":"admin"}]
+    }
+```
+
 Generated with discovered.json: 0xdba1df039a07ad0ee4c1c6a20cd757175e319c7c
 
 # Diff at Mon, 05 Jan 2026 17:44:54 GMT:

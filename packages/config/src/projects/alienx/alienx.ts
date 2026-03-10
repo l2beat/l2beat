@@ -4,11 +4,11 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { arbitrumStackL2 } from '../../templates/arbitrumStack'
 
 const discovery = new ProjectDiscovery('alienx')
 
-export const alienx: ScalingProject = orbitStackL2({
+export const alienx: ScalingProject = arbitrumStackL2({
   addedAt: UnixTime(1719187200), // 2024-06-24T00:00:00Z
   additionalPurposes: ['Gaming', 'AI', 'NFT'],
   additionalBadges: [BADGES.RaaS.Caldera],
@@ -20,7 +20,7 @@ export const alienx: ScalingProject = orbitStackL2({
     name: 'AlienX',
     slug: 'alienx',
     description:
-      'AlienX is an Orbit stack Optimium on Ethereum focused on Gaming, AI and NFTs.',
+      'AlienX is an Arbitrum Stack Optimium on Ethereum focused on Gaming, AI and NFTs.',
     links: {
       websites: ['https://alienxchain.io/'],
       bridges: ['https://bridge.alienxchain.io/', 'https://alienswap.xyz/'],
