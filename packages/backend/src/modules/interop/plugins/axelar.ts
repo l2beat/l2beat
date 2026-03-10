@@ -71,6 +71,7 @@ export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Polygon', chain: 'polygonpos' },
   { axelarChainName: 'celo', chain: 'celo' },
   { axelarChainName: 'Avalanche', chain: 'avalanche' },
+  { axelarChainName: 'hyperliquid', chain: 'hyperevm' },
 ])
 
 export const SquidExpressExecutedWithToken = createInteropEventType<{
