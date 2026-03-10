@@ -244,9 +244,12 @@ function getAbstractTokenIds(transfers: InteropTransferRecord[]): string[] {
 function getTokenIconUrl(
   abstractTokenId: string | undefined,
   tokensDetailsMap: TokensDetailsMap,
-): string | undefined {
-  if (!abstractTokenId) return undefined
-  return tokensDetailsMap.get(abstractTokenId)?.iconUrl
+): string {
+  if (!abstractTokenId) return '/images/token-placeholder.png'
+  return (
+    tokensDetailsMap.get(abstractTokenId)?.iconUrl ??
+    '/images/token-placeholder.png'
+  )
 }
 
 function getTxHashHref(
