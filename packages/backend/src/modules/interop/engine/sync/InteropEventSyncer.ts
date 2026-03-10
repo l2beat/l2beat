@@ -190,6 +190,8 @@ export class InteropEventSyncer extends TimeLoop {
   async processNewestBlock(block: Block, logs: Log[]) {
     this.latestBlockNumber = BigInt(block.number)
 
+    // It's fine to do this check outside of the exclusiveExecutionMutex because
+    // even if we skip block, FollowingState will notice and switch to CatchingUpState
     if (this.state.type === 'timeLoop') {
       return
     }
