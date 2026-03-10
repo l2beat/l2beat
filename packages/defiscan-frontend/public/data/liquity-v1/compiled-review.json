@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-09T08:01:28.118Z",
+  "compiledAt": "2026-03-10T07:48:32.919Z",
   "project": "liquity-v1",
   "metadata": {
     "protocolName": "Liquity V1",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "cdp",
     "tokenName": "LUSD",
-    "description": "Liquity V1 is an immutable, governance-free borrowing protocol on Ethereum that issues LUSD stablecoins against ETH collateral at a minimum 110% collateralization ratio. All smart contracts are non-upgradeable with ownership renounced to the zero address, making the protocol fully autonomous. The system relies on Chainlink and Tellor as dual oracle sources for ETH/USD pricing, with an automatic fallback mechanism between the two. The protocol holds $171.00M in total value across its contracts."
+    "description": "Liquity V1 is an immutable, governance-free borrowing protocol on Ethereum that issues LUSD stablecoins against ETH collateral at a minimum 110% collateralization ratio. All smart contracts are non-upgradeable with ownership renounced to the zero address, making the protocol fully autonomous. The system relies on Chainlink and Tellor as dual oracle sources for ETH/USD pricing, with an automatic fallback mechanism between the two. The protocol holds $176.57M in total value across its contracts."
   },
   "totals": {
     "contractCount": 21,
@@ -16,9 +16,9 @@
     "scoredFunctionCount": 0,
     "adminCount": 4,
     "dependencyCount": 2,
-    "totalCapitalAtRisk": 170998266.4502013,
-    "totalTokenValueAtRisk": 31186229.33313115,
-    "totalTokenValue": 58286229.33313115
+    "totalCapitalAtRisk": 176571820.82451588,
+    "totalTokenValueAtRisk": 31140939.867594585,
+    "totalTokenValue": 58940939.867594585
   },
   "admins": [
     {
@@ -56,7 +56,7 @@
           "contractName": "ActivePool",
           "functionName": "setAddresses",
           "impact": "critical",
-          "directFundsUsd": 153710009.63589987,
+          "directFundsUsd": 159156264.74405178,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -74,7 +74,7 @@
           "contractName": "CollSurplusPool",
           "functionName": "setAddresses",
           "impact": "critical",
-          "directFundsUsd": 3089916.467254967,
+          "directFundsUsd": 3193611.943124625,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -94,7 +94,7 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 27100000.000000004,
+              "tokenValueUsd": 27800000.000000004,
               "fundsAtRisk": false
             }
           ]
@@ -140,7 +140,7 @@
           "contractName": "StabilityPool",
           "functionName": "setAddresses",
           "impact": "critical",
-          "directFundsUsd": 14198340.347046478,
+          "directFundsUsd": 14221944.137339488,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -154,9 +154,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 170998266.4502013,
+      "totalDirectCapital": 176571820.82451588,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 170998266.4502013,
+      "totalReachableCapital": 176571820.82451588,
       "totalReachableTokenValue": 0
     },
     {
@@ -181,7 +181,7 @@
           "functionName": "burn",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31186229.33313115,
+          "directTokenValueUsd": 31140939.867594585,
           "reachableContracts": []
         },
         {
@@ -190,14 +190,14 @@
           "functionName": "returnFromPool",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31186229.33313115,
+          "directTokenValueUsd": 31140939.867594585,
           "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 31186229.33313115,
+      "totalDirectTokenValue": 31140939.867594585,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 31186229.33313115
+      "totalReachableTokenValue": 31140939.867594585
     },
     {
       "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
@@ -221,7 +221,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31186229.33313115,
+          "directTokenValueUsd": 31140939.867594585,
           "reachableContracts": []
         },
         {
@@ -230,14 +230,14 @@
           "functionName": "burn",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31186229.33313115,
+          "directTokenValueUsd": 31140939.867594585,
           "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 31186229.33313115,
+      "totalDirectTokenValue": 31140939.867594585,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 31186229.33313115
+      "totalReachableTokenValue": 31140939.867594585
     },
     {
       "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
@@ -252,7 +252,7 @@
           "functionName": "burn",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31186229.33313115,
+          "directTokenValueUsd": 31140939.867594585,
           "reachableContracts": []
         },
         {
@@ -261,7 +261,7 @@
           "functionName": "sendToPool",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31186229.33313115,
+          "directTokenValueUsd": 31140939.867594585,
           "reachableContracts": []
         },
         {
@@ -270,14 +270,14 @@
           "functionName": "returnFromPool",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31186229.33313115,
+          "directTokenValueUsd": 31140939.867594585,
           "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 31186229.33313115,
+      "totalDirectTokenValue": 31140939.867594585,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 31186229.33313115
+      "totalReachableTokenValue": 31140939.867594585
     }
   ],
   "dependencies": [
@@ -340,7 +340,7 @@
       "name": "ActivePool (ETH)",
       "description": "Holds (N/A) in ETH collateral deposited by borrowers with active troves. This is the primary collateral pool backing all outstanding LUSD debt.",
       "balances": {
-        "totalUsdValue": 153710009.63589987
+        "totalUsdValue": 159156264.74405178
       },
       "positions": null,
       "tokenInfo": null
@@ -350,7 +350,7 @@
       "name": "StabilityPool (LUSD + ETH)",
       "description": "Holds (N/A) in LUSD deposits from stability providers and ETH gains from liquidations. Stability depositors absorb liquidated debt in exchange for discounted ETH collateral.",
       "balances": {
-        "totalUsdValue": 14198340.347046478
+        "totalUsdValue": 14221944.137339488
       },
       "positions": null,
       "tokenInfo": null
@@ -360,7 +360,7 @@
       "name": "CollSurplusPool (ETH)",
       "description": "Holds (N/A) in excess ETH collateral from liquidated troves that exceeded the 110% ratio at liquidation time. Borrowers can claim their surplus collateral from this pool.",
       "balances": {
-        "totalUsdValue": 3089916.467254967
+        "totalUsdValue": 3193611.943124625
       },
       "positions": null,
       "tokenInfo": null
@@ -370,7 +370,7 @@
       "name": "GasPool (LUSD)",
       "description": "Holds (N/A) in LUSD reserved as gas compensation for liquidators. Each trove deposits 200 LUSD into the GasPool at opening, which is returned or used to compensate the liquidator upon closure.",
       "balances": {
-        "totalUsdValue": 21284.42341423196
+        "totalUsdValue": 20848.68478193575
       },
       "positions": null,
       "tokenInfo": null
@@ -383,9 +383,9 @@
       "positions": null,
       "tokenInfo": {
         "symbol": "LQTY",
-        "price": 0.271,
+        "price": 0.278,
         "totalSupply": "100000000000000000000000000",
-        "tokenValue": 27100000.000000004
+        "tokenValue": 27800000.000000004
       }
     },
     {
@@ -396,9 +396,9 @@
       "positions": null,
       "tokenInfo": {
         "symbol": "LUSD",
-        "price": 1.0135439721062838,
+        "price": 1.0120720767929976,
         "totalSupply": "30769488242648096976632102",
-        "tokenValue": 31186229.33313115
+        "tokenValue": 31140939.867594585
       }
     }
   ],
