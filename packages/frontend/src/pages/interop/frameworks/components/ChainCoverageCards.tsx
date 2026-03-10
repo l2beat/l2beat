@@ -27,9 +27,9 @@ export function ChainCoverageCards({
   return (
     <div>
       <h2 className="mb-4 font-bold text-heading-20 max-md:px-4 md:text-heading-24">
-        Chain Coverage
+        Observed Coverage
         <span className="ml-2 font-normal text-paragraph-12 text-secondary md:text-paragraph-13">
-          Last 24h
+          Chains with transfers in last 24h
         </span>
       </h2>
       <HorizontalScrollContainer>
