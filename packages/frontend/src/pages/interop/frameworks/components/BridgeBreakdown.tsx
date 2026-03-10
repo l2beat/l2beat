@@ -1,6 +1,7 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { FrameworkOverview } from '~/server/features/scaling/interop/getFrameworkComparisonData'
 import { formatCurrency, formatNumber } from '../utils/format'
+import { HorizontalScrollContainer } from './HorizontalScrollContainer'
 
 const BRIDGE_TYPE_ORDER = ['lockAndMint', 'burnAndMint'] as const
 
@@ -22,7 +23,7 @@ export function BridgeBreakdown({ frameworks }: Props) {
           Last 7d
         </span>
       </h2>
-      <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto">
+      <HorizontalScrollContainer>
         {frameworks.map((fw) => {
           const sorted = [...fw.bridgeTypes].sort(
             (a, b) =>
@@ -86,7 +87,7 @@ export function BridgeBreakdown({ frameworks }: Props) {
             </PrimaryCard>
           )
         })}
-      </div>
+      </HorizontalScrollContainer>
     </div>
   )
 }

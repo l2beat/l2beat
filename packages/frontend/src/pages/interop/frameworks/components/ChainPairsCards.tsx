@@ -6,6 +6,7 @@ import type {
   FrameworkOverview,
 } from '~/server/features/scaling/interop/getFrameworkComparisonData'
 import { formatCurrency, formatNumber } from '../utils/format'
+import { HorizontalScrollContainer } from './HorizontalScrollContainer'
 
 interface Props {
   chainPairs: ChainPair[]
@@ -34,7 +35,7 @@ export function ChainPairsCards({ chainPairs, frameworks, chainMap }: Props) {
           Last 24h
         </span>
       </h2>
-      <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto">
+      <HorizontalScrollContainer>
         {frameworks.map((fw) => {
           const pairs = chainPairs
             .filter((p) => p.frameworkId === fw.id)
@@ -77,7 +78,7 @@ export function ChainPairsCards({ chainPairs, frameworks, chainMap }: Props) {
             </PrimaryCard>
           )
         })}
-      </div>
+      </HorizontalScrollContainer>
     </div>
   )
 }

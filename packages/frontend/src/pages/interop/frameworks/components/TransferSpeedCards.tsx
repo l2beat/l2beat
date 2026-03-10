@@ -20,6 +20,7 @@ import type {
 import { cn } from '~/utils/cn'
 import { FW_COLORS } from '../utils/constants'
 import { formatNumber } from '../utils/format'
+import { HorizontalScrollContainer } from './HorizontalScrollContainer'
 
 interface Props {
   transferSpeed: TransferSpeedStats[]
@@ -51,7 +52,7 @@ export function TransferSpeedCards({
           Last 24h
         </span>
       </h2>
-      <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto">
+      <HorizontalScrollContainer>
         {frameworks.map((fw) => {
           const stats = speedMap[fw.id]
           const paths = pathSpeed
@@ -69,7 +70,7 @@ export function TransferSpeedCards({
             />
           )
         })}
-      </div>
+      </HorizontalScrollContainer>
       <RouteComparisonDialog
         route={selectedRoute}
         onClose={() => setSelectedRoute(null)}

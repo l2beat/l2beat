@@ -4,6 +4,7 @@ import type {
   TopToken,
 } from '~/server/features/scaling/interop/getFrameworkComparisonData'
 import { formatCurrency, formatNumber } from '../utils/format'
+import { HorizontalScrollContainer } from './HorizontalScrollContainer'
 
 interface Props {
   topTokens: TopToken[]
@@ -19,7 +20,7 @@ export function TopTokensCards({ topTokens, frameworks }: Props) {
           Last 24h
         </span>
       </h2>
-      <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto">
+      <HorizontalScrollContainer>
         {frameworks.map((fw) => {
           const tokens = topTokens
             .filter((t) => t.frameworkId === fw.id)
@@ -67,7 +68,7 @@ export function TopTokensCards({ topTokens, frameworks }: Props) {
             </PrimaryCard>
           )
         })}
-      </div>
+      </HorizontalScrollContainer>
     </div>
   )
 }

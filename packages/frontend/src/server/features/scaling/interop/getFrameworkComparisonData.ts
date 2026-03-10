@@ -122,6 +122,7 @@ export async function getFrameworkComparisonData(): Promise<FrameworkComparisonD
     topTokensRaw,
     chainPairsRaw,
     sizeDistRaw,
+    syncedChainIds,
   ] = await Promise.all([
     db.aggregatedInteropTransfer.getSevenDayAggregatedByFramework([
       ...FRAMEWORK_IDS,
@@ -139,6 +140,7 @@ export async function getFrameworkComparisonData(): Promise<FrameworkComparisonD
     db.aggregatedInteropTransfer.getSevenDaySizeDistribution([
       ...FRAMEWORK_IDS,
     ]),
+    db.interopPluginSyncedRange.getSyncedChains(),
   ])
 
   const seriesByFw = Object.fromEntries(
@@ -331,11 +333,14 @@ export async function getFrameworkComparisonData(): Promise<FrameworkComparisonD
     chainPairs,
     transferSizeChartData,
     chainMap,
-    allTrackedChains: INTEROP_CHAINS.map((c) => ({
-      id: c.id,
-      name: c.name,
-      iconUrl: manifest.getUrl(`/icons/${c.iconSlug ?? c.id}.png`),
-    })),
+    allTrackedChains: syncedChainIds.map((id) => {
+      const known = interopChainMap[id]
+      return {
+        id,
+        name: known?.name ?? id.charAt(0).toUpperCase() + id.slice(1),
+        iconUrl: manifest.getUrl(`/icons/${known?.iconSlug ?? id}.png`),
+      }
+    }),
   }
 }
 

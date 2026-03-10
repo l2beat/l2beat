@@ -16,6 +16,7 @@ import { formatCurrency as formatCurrencyStandard } from '~/utils/number-format/
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { FW_COLORS_HEX } from '../utils/constants'
 import { formatCurrency, formatNumber } from '../utils/format'
+import { HorizontalScrollContainer } from './HorizontalScrollContainer'
 
 interface Props {
   frameworks: FrameworkOverview[]
@@ -30,7 +31,7 @@ export function OverviewCards({ frameworks }: Props) {
           Last 7d
         </span>
       </h2>
-      <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto">
+      <HorizontalScrollContainer>
         {frameworks.map((fw) => (
           <PrimaryCard key={fw.id} className="md:min-w-[240px] md:flex-1">
             <div className="mb-3 flex items-center justify-between">
@@ -82,7 +83,7 @@ export function OverviewCards({ frameworks }: Props) {
             </div>
           </PrimaryCard>
         ))}
-      </div>
+      </HorizontalScrollContainer>
     </div>
   )
 }

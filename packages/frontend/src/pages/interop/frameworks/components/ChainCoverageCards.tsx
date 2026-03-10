@@ -5,6 +5,7 @@ import type {
   FrameworkOverview,
 } from '~/server/features/scaling/interop/getFrameworkComparisonData'
 import { cn } from '~/utils/cn'
+import { HorizontalScrollContainer } from './HorizontalScrollContainer'
 
 interface Props {
   chainCoverage: ChainCoverageData[]
@@ -31,7 +32,7 @@ export function ChainCoverageCards({
           Last 24h
         </span>
       </h2>
-      <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto">
+      <HorizontalScrollContainer>
         {frameworks.map((fw) => {
           const coverage = coverageMap[fw.id]
           const observedSet = new Set(coverage?.chains ?? [])
@@ -75,7 +76,7 @@ export function ChainCoverageCards({
             </PrimaryCard>
           )
         })}
-      </div>
+      </HorizontalScrollContainer>
     </div>
   )
 }
