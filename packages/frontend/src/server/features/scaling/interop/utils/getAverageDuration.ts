@@ -54,7 +54,8 @@ function getDurationSplit(
   const firstDurationSplit = projectDurationSplits?.get(firstBridgeType)
   if (!firstDurationSplit) return undefined
 
-  const normalizedFirstDurationSplit = normalizeDurationSplit(firstDurationSplit)
+  const normalizedFirstDurationSplit =
+    normalizeDurationSplit(firstDurationSplit)
   const hasSameDurationSplit = restBridgeTypes.every((bridgeType) => {
     const durationSplit = projectDurationSplits?.get(bridgeType)
     return durationSplit !== undefined
