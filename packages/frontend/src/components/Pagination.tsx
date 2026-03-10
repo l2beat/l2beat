@@ -120,7 +120,52 @@ function PaginationEllipsis({
   )
 }
 
+type PaginationItem =
+  | { type: 'page'; index: number }
+  | { type: 'ellipsis'; key: string }
+
+function getPaginationItems(pageCount: number, currentPage: number) {
+  const edgeCount = 2
+  const siblingCount = 1
+
+  const pages = new Set<number>()
+
+  for (let i = 0; i < Math.min(edgeCount, pageCount); i++) {
+    pages.add(i)
+  }
+
+  for (let i = Math.max(pageCount - edgeCount, 0); i < pageCount; i++) {
+    pages.add(i)
+  }
+
+  for (
+    let i = Math.max(currentPage - siblingCount, 0);
+    i <= Math.min(currentPage + siblingCount, pageCount - 1);
+    i++
+  ) {
+    pages.add(i)
+  }
+
+  const sortedPages = Array.from(pages).sort((a, b) => a - b)
+  const items: PaginationItem[] = []
+
+  for (const page of sortedPages) {
+    const previous = items[items.length - 1]
+    if (previous?.type === 'page' && page - previous.index > 1) {
+      items.push({
+        type: 'ellipsis',
+        key: `${previous.index}-${page}`,
+      })
+    }
+
+    items.push({ type: 'page', index: page })
+  }
+
+  return items
+}
+
 export {
+  getPaginationItems,
   Pagination,
   PaginationContent,
   PaginationEllipsis,
