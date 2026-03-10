@@ -1,8 +1,7 @@
 import { getCoreRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { getNonMintingColumns, type NonMintingProtocolRow } from './columns'
+import { type NonMintingProtocolRow, nonMintingColumns } from './columns'
 import type { NonMintingProtocolEntry } from './getBridgeTypeEntries'
 
 export function NonMintingTable({
@@ -10,11 +9,9 @@ export function NonMintingTable({
 }: {
   entries: NonMintingProtocolEntry[]
 }) {
-  const columns = useMemo(() => getNonMintingColumns(), [])
-
   const table = useTable<NonMintingProtocolRow>({
     data: entries,
-    columns,
+    columns: nonMintingColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
     manualFiltering: true,

@@ -1,8 +1,7 @@
 import { getCoreRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { getLockAndMintColumns, type LockAndMintProtocolRow } from './columns'
+import { type LockAndMintProtocolRow, lockAndMintColumns } from './columns'
 import type { LockAndMintProtocolEntry } from './getBridgeTypeEntries'
 
 export function LockAndMintTable({
@@ -10,11 +9,9 @@ export function LockAndMintTable({
 }: {
   entries: LockAndMintProtocolEntry[]
 }) {
-  const columns = useMemo(() => getLockAndMintColumns(), [])
-
   const table = useTable<LockAndMintProtocolRow>({
     data: entries,
-    columns,
+    columns: lockAndMintColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
     manualFiltering: true,

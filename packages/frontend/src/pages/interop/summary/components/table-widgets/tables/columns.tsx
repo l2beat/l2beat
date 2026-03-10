@@ -1,13 +1,8 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
-import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
-import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
-import { env } from '~/env'
-import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
-import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -16,6 +11,7 @@ import type {
   LockAndMintProtocolEntry,
   NonMintingProtocolEntry,
 } from './getBridgeTypeEntries'
+import { InteropNameCell } from './InteropNameCell'
 
 export type NonMintingProtocolRow = NonMintingProtocolEntry & BasicTableRow
 export type LockAndMintProtocolRow = LockAndMintProtocolEntry & BasicTableRow
@@ -35,8 +31,6 @@ function getCommonColumns<
     isAggregate: boolean | undefined
   },
 >(columnHelper: ColumnHelper<T>) {
-  const { buildUrl } = useInteropSelectedChains()
-
   return [
     columnHelper.display({
       id: 'logo',
@@ -58,33 +52,7 @@ function getCommonColumns<
     }),
     columnHelper.accessor((row) => row.shortName ?? row.name, {
       header: 'Name',
-      cell: (ctx) => {
-        const nameCell = (
-          <TwoRowCell>
-            <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-              <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-                {ctx.row.original.shortName ?? ctx.row.original.name}
-              </div>
-              {ctx.row.original.subgroup && (
-                <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
-              )}
-            </TwoRowCell.First>
-            <TwoRowCell.Second>
-              {ctx.row.original.isAggregate && 'Aggregate'}
-            </TwoRowCell.Second>
-          </TwoRowCell>
-        )
-
-        return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
-          <TableLink
-            href={buildUrl(`/interop/protocols/${ctx.row.original.slug}`)}
-          >
-            {nameCell}
-          </TableLink>
-        ) : (
-          nameCell
-        )
-      },
+      cell: (ctx) => <InteropNameCell {...ctx.row.original} />,
       meta: {
         cellClassName: 'whitespace-normal md:pl-2!',
         headClassName: 'text-2xs md:pl-2!',
@@ -143,60 +111,54 @@ function getTokensByVolumeColumn<
   })
 }
 
-export function getNonMintingColumns() {
-  return [
-    ...getCommonColumns(nonMintingColumnHelper),
-    getLast24hVolumeColumn(nonMintingColumnHelper),
-    nonMintingColumnHelper.accessor('averageValueInFlight', {
-      header: 'Last 24h avg.\nin-flight value',
-      invertSorting: true,
-      meta: {
-        align: 'right',
-        headClassName: 'text-2xs',
-        tooltip:
-          'The average USD value of funds in transit at any given second over the past 24 hours.',
-      },
-      cell: (ctx) => {
-        if (ctx.row.original.averageValueInFlight === undefined) return '-'
-        return (
-          <span className="font-medium text-label-value-15">
-            {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
-          </span>
-        )
-      },
-    }),
-    getTokensByVolumeColumn(nonMintingColumnHelper, 'nonMinting'),
-  ]
-}
-
-export function getLockAndMintColumns() {
-  return [
-    ...getCommonColumns(lockAndMintColumnHelper),
-    getLast24hVolumeColumn(lockAndMintColumnHelper),
-    lockAndMintColumnHelper.accessor('netMintedValue', {
-      header: 'Last 24h net\nminted value',
-      meta: {
-        align: 'right',
-        headClassName: 'text-2xs',
-        tooltip:
-          "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
-      },
-      cell: (ctx) => (
+export const nonMintingColumns = [
+  ...getCommonColumns(nonMintingColumnHelper),
+  getLast24hVolumeColumn(nonMintingColumnHelper),
+  nonMintingColumnHelper.accessor('averageValueInFlight', {
+    header: 'Last 24h avg.\nin-flight value',
+    invertSorting: true,
+    meta: {
+      align: 'right',
+      headClassName: 'text-2xs',
+      tooltip:
+        'The average USD value of funds in transit at any given second over the past 24 hours.',
+    },
+    cell: (ctx) => {
+      if (ctx.row.original.averageValueInFlight === undefined) return '-'
+      return (
         <span className="font-medium text-label-value-15">
-          {ctx.row.original.netMintedValue
-            ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
-            : EM_DASH}
+          {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
         </span>
-      ),
-    }),
-    getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
-  ]
-}
+      )
+    },
+  }),
+  getTokensByVolumeColumn(nonMintingColumnHelper, 'nonMinting'),
+]
 
-export function getBurnAndMintColumns() {
-  return [
-    ...getCommonColumns(burnAndMintColumnHelper),
-    getLast24hVolumeColumn(burnAndMintColumnHelper),
-    getTokensByVolumeColumn(burnAndMintColumnHelper, 'burnAndMint'),
-  ]
-}
+export const lockAndMintColumns = [
+  ...getCommonColumns(lockAndMintColumnHelper),
+  getLast24hVolumeColumn(lockAndMintColumnHelper),
+  lockAndMintColumnHelper.accessor('netMintedValue', {
+    header: 'Last 24h net\nminted value',
+    meta: {
+      align: 'right',
+      headClassName: 'text-2xs',
+      tooltip:
+        "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
+    },
+    cell: (ctx) => (
+      <span className="font-medium text-label-value-15">
+        {ctx.row.original.netMintedValue
+          ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
+          : EM_DASH}
+      </span>
+    ),
+  }),
+  getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
+]
+
+export const burnAndMintColumns = [
+  ...getCommonColumns(burnAndMintColumnHelper),
+  getLast24hVolumeColumn(burnAndMintColumnHelper),
+  getTokensByVolumeColumn(burnAndMintColumnHelper, 'burnAndMint'),
+]
