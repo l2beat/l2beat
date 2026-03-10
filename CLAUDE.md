@@ -78,6 +78,8 @@ git fetch upstream && git merge upstream/main
 
 Detailed documentation for each feature is in `docs/developers/features/`. Read the relevant doc when working on a specific feature.
 
+**Data Pipeline**: See `docs/developers/architecture.md` § "Data Pipeline: From Discovery to Frontend" for the end-to-end transformation chain (5 stages) covering how admins, dependencies, and funds flow from source data through scoring, compilation, and into the frontend.
+
 ### Permissions — `docs/developers/features/permissions.md`
 - AI-Based Permission Detection (GPT-4 / Claude, endpoint + prompt engineering)
 - Interactive Permission Management (ValuesPanelExtensions, 4 attributes, delay field)
