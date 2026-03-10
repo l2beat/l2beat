@@ -43,5 +43,9 @@ export function createMigratedProjectsRouter() {
     res.redirect(301, '/zk-catalog/sp1-vector')
   })
 
+  router.get('/ecosystems/arbitrum-orbit', (_, res) => {
+    res.redirect(301, '/ecosystems/arbitrum')
+  })
+
   return router
 }

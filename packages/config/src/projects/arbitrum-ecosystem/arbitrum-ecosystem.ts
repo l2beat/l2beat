@@ -2,10 +2,10 @@ import { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { BaseProject } from '../../types'
 
-export const arbitrumOrbit: BaseProject = {
-  id: ProjectId('arbitrum-orbit'),
-  slug: 'arbitrum-orbit',
-  name: 'Arbitrum Orbit',
+export const arbitrumEcosystem: BaseProject = {
+  id: ProjectId('arbitrum-ecosystem'),
+  slug: 'arbitrum',
+  name: 'Arbitrum',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-04-08')),
   display: {
