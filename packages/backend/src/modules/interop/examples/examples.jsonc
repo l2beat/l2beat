@@ -3100,7 +3100,10 @@
       { "type": "zkstack.Message", "app": "canonical-gas" },
       { "type": "zkstack.Message", "app": "canonical-gas" }
     ],
-    "transfers": ["canonical-gas.Transfer", "canonical-gas.Transfer"]
+    "transfers": [
+      "canonical-gas.Transfer",
+      "canonical-gas.Transfer"
+    ]
   },
   "zkstack-deposit-erc20": {
     // important: the example runner only prepares RPCs of the chains in the `txs` array
@@ -3142,7 +3145,10 @@
       { "type": "zkstack.Message", "app": "canonical-erc20" },
       { "type": "zkstack.Message", "app": "canonical-erc20" }
     ],
-    "transfers": ["canonical-erc20.Transfer", "canonical-erc20.Transfer"]
+    "transfers": [
+      "canonical-erc20.Transfer",
+      "canonical-erc20.Transfer"
+    ]
   },
   "zkstack-unsupported": {
     "loadConfigs": ["zkstack"],
@@ -3225,7 +3231,10 @@
       { "type": "zkstack.Message", "app": "canonical-gas" },
       { "type": "zkstack.Message", "app": "canonical-gas" }
     ],
-    "transfers": ["canonical-gas.Transfer", "canonical-gas.Transfer"]
+    "transfers": [
+      "canonical-gas.Transfer",
+      "canonical-gas.Transfer"
+    ]
   },
   "zkstack-withdrawal-erc20": {
     "loadConfigs": ["zkstack"],
@@ -3410,7 +3419,7 @@
       ],
       "transfers": [
         {
-          "type": "linea.Transfer",
+          "type": "linea.L1ToL2Transfer",
           "src": {
             "event": {
               "type": "linea.BridgingInitiatedV2",
@@ -3425,7 +3434,7 @@
           }
         },
         {
-          "type": "linea.Transfer",
+          "type": "linea.L2ToL1Transfer",
           "src": {
             "event": {
               "type": "linea.BridgingInitiatedV2",
@@ -3440,7 +3449,7 @@
           }
         },
         {
-          "type": "linea.Transfer",
+          "type": "linea.L1ToL2Transfer",
           "src": {
             "event": {
               "type": "linea.MessageSent",
@@ -3455,7 +3464,7 @@
           }
         },
         {
-          "type": "linea.Transfer",
+          "type": "linea.L2ToL1Transfer",
           "src": {
             "event": {
               "type": "linea.MessageSent",
@@ -3470,7 +3479,7 @@
           }
         },
         {
-          "type": "linea.Transfer",
+          "type": "linea.L1ToL2Transfer",
           "src": {
             "event": {
               "type": "linea.BridgingInitiatedV2",
@@ -3576,7 +3585,11 @@
       { "type": "polygon.Message", "app": "canonical-deposit" },
       { "type": "polygon.Message", "app": "unknown" }
     ],
-    "transfers": ["polygon.Transfer", "polygon.Transfer", "polygon.Transfer"]
+    "transfers": [
+      "polygon.L1ToL2Transfer",
+      "polygon.L1ToL2Transfer",
+      "polygon.L1ToL2Transfer"
+    ]
   },
   "polygon-withdrawal": {
     "loadConfigs": ["polygon"],
@@ -3622,7 +3635,11 @@
       { "type": "polygon.Message", "app": "canonical-withdrawal" },
       { "type": "polygon.Message", "app": "canonical-withdrawal" }
     ],
-    "transfers": ["polygon.Transfer", "polygon.Transfer", "polygon.Transfer"]
+    "transfers": [
+      "polygon.L2ToL1Transfer",
+      "polygon.L2ToL1Transfer",
+      "polygon.L2ToL1Transfer"
+    ]
   },
   "sky-bridge": {
     "txs": [

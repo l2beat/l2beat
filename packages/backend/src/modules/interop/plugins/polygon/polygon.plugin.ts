@@ -376,7 +376,7 @@ export class PolygonPlugin implements InteropPluginResyncable {
           srcEvent: stateSynced,
           dstEvent: event,
         }),
-        Result.Transfer('polygon.Transfer', {
+        Result.Transfer('polygon.L1ToL2Transfer', {
           srcEvent: stateSynced,
           srcTokenAddress,
           srcAmount: stateSynced.args.srcAmount,
@@ -406,7 +406,7 @@ export class PolygonPlugin implements InteropPluginResyncable {
           srcEvent: withdrawal,
           dstEvent: event,
         }),
-        Result.Transfer('polygon.Transfer', {
+        Result.Transfer('polygon.L2ToL1Transfer', {
           srcEvent: withdrawal,
           srcTokenAddress,
           srcAmount: withdrawal.args.amount,
