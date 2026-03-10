@@ -67,18 +67,6 @@ export const abstract: ScalingProject = zkStackL2({
     ],
   },
   interopConfig: {
-    durationSplit: {
-      lockAndMint: [
-        {
-          label: 'L1 -> L2',
-          transferTypes: [],
-        },
-        {
-          label: 'L2 -> L1',
-          transferTypes: [],
-        },
-      ],
-    },
     plugins: [
       {
         plugin: 'zkstack',

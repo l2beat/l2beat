@@ -52,18 +52,6 @@ export const zksync2: ScalingProject = zkStackL2({
   },
   // zkVerifierContractsReproducible: true,   uncomment when verifier regenerated
   interopConfig: {
-    durationSplit: {
-      lockAndMint: [
-        {
-          label: 'L1 -> L2',
-          transferTypes: [],
-        },
-        {
-          label: 'L2 -> L1',
-          transferTypes: [],
-        },
-      ],
-    },
     plugins: [
       {
         plugin: 'zkstack',
