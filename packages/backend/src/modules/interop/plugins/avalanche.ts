@@ -115,11 +115,11 @@ const TOKEN_RELATION_RANK = {
 } satisfies Record<TokenRelation, number>
 
 // Drop burns that are too old to plausibly belong to this withdrawal.
-const MAX_WITHDRAWAL_DELAY = 1 * UnixTime.DAY
+const MAX_WITHDRAWAL_DELAY = 1 * UnixTime.HOUR
 // Prefer very recent burns when ranking candidates.
-const STRONG_TIME_WINDOW = 10 * UnixTime.MINUTE
+const STRONG_TIME_WINDOW = 1 * UnixTime.MINUTE
 // Keep a wider fallback window when nothing lands in the strong window.
-const SECONDARY_TIME_WINDOW = 12 * UnixTime.HOUR
+const SECONDARY_TIME_WINDOW = 10 * UnixTime.MINUTE
 // Treat candidates with nearly identical timing as ambiguous.
 const AMBIGUOUS_TIME_DELTA = UnixTime.MINUTE
 // Treat candidates with nearly identical fee gaps as ambiguous.
