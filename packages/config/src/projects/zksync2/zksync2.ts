@@ -53,18 +53,16 @@ export const zksync2: ScalingProject = zkStackL2({
   // zkVerifierContractsReproducible: true,   uncomment when verifier regenerated
   interopConfig: {
     durationSplit: {
-      lockAndMint: {
-        in: {
+      lockAndMint: [
+        {
           label: 'L1 -> L2',
-          from: 'ethereum',
-          to: 'zksync2',
+          transferTypes: [],
         },
-        out: {
+        {
           label: 'L2 -> L1',
-          from: 'zksync2',
-          to: 'ethereum',
+          transferTypes: [],
         },
-      },
+      ],
     },
     plugins: [
       {

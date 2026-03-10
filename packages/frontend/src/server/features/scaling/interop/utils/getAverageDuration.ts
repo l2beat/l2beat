@@ -1,4 +1,5 @@
 import type { InteropDurationSplit, Project } from '@l2beat/config'
+import type { InteropTransferTypeStatsMap } from '@l2beat/database'
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import type {
   AverageDuration,
@@ -9,40 +10,112 @@ import type {
 
 export function getAverageDuration(
   projectId: string,
-  bridgeType: KnownInteropBridgeType | undefined,
+  bridgeTypes: KnownInteropBridgeType | KnownInteropBridgeType[] | undefined,
   data: CommonInteropData,
   durationSplitMap: DurationSplitMap | undefined,
 ): Exclude<AverageDuration, UnknownAverageDuration> | null {
-  const durationSplit =
-    bridgeType !== undefined
-      ? durationSplitMap?.get(projectId)?.get(bridgeType)
-      : undefined
+  const durationSplit = getDurationSplit(
+    projectId,
+    bridgeTypes,
+    durationSplitMap,
+  )
 
-  if (durationSplit) {
+  if (data.transferCount <= 0) return null
+
+  if (
+    durationSplit &&
+    durationSplit.some((split) => split.transferTypes.length > 0)
+  ) {
     return {
       type: 'split',
-      in: {
-        label: durationSplit.in.label,
-        duration:
-          data.inTransferCount > 0
-            ? Math.floor(data.inDurationSum / data.inTransferCount)
-            : null,
-      },
-      out: {
-        label: durationSplit.out.label,
-        duration:
-          data.outTransferCount > 0
-            ? Math.floor(data.outDurationSum / data.outTransferCount)
-            : null,
-      },
+      splits: durationSplit.map((split) => ({
+        label: split.label,
+        duration: getSplitDuration(split.transferTypes, data.transferTypeStats),
+      })),
     }
   }
 
-  if (data.transferCount <= 0) return null
   return {
     type: 'single',
     duration: Math.floor(data.totalDurationSum / data.transferCount),
   }
+}
+
+function getDurationSplit(
+  projectId: string,
+  bridgeTypes: KnownInteropBridgeType | KnownInteropBridgeType[] | undefined,
+  durationSplitMap: DurationSplitMap | undefined,
+): InteropDurationSplit | undefined {
+  const relevantBridgeTypes =
+    bridgeTypes === undefined
+      ? undefined
+      : Array.isArray(bridgeTypes)
+        ? bridgeTypes
+        : [bridgeTypes]
+
+  const [firstBridgeType, ...restBridgeTypes] = relevantBridgeTypes ?? []
+  if (!firstBridgeType) return undefined
+
+  const projectDurationSplits = durationSplitMap?.get(projectId)
+  const firstDurationSplit = projectDurationSplits?.get(firstBridgeType)
+  if (!firstDurationSplit) return undefined
+
+  const hasSameDurationSplit = restBridgeTypes.every((bridgeType) => {
+    const durationSplit = projectDurationSplits?.get(bridgeType)
+    return (
+      durationSplit !== undefined &&
+      areDurationSplitsEqual(firstDurationSplit, durationSplit)
+    )
+  })
+
+  return hasSameDurationSplit ? firstDurationSplit : undefined
+}
+
+function areDurationSplitsEqual(
+  a: InteropDurationSplit,
+  b: InteropDurationSplit,
+): boolean {
+  return (
+    a.length === b.length &&
+    a.every((split, i) => {
+      const other = b[i]
+      if (!other || split.label !== other.label) return false
+
+      return haveSameTransferTypes(split.transferTypes, other.transferTypes)
+    })
+  )
+}
+
+function haveSameTransferTypes(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) return false
+
+  const aSorted = [...a].sort()
+  const bSorted = [...b].sort()
+
+  return aSorted.every((transferType, i) => transferType === bSorted[i])
+}
+
+function getSplitDuration(
+  transferTypes: string[],
+  transferTypeStats: InteropTransferTypeStatsMap | undefined,
+): number | null {
+  const matchedStats = [...new Set(transferTypes)]
+    .map((transferType) => transferTypeStats?.[transferType])
+    .filter((stats) => stats !== undefined)
+
+  const transferCount = matchedStats.reduce(
+    (acc, stats) => acc + stats.transferCount,
+    0,
+  )
+
+  if (transferCount <= 0) return null
+
+  const totalDurationSum = matchedStats.reduce(
+    (acc, stats) => acc + stats.totalDurationSum,
+    0,
+  )
+
+  return Math.floor(totalDurationSum / transferCount)
 }
 
 export function buildDurationSplitMap(

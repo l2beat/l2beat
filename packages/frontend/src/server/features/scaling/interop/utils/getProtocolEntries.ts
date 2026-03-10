@@ -16,7 +16,6 @@ import type {
   ProtocolEntry,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
-import { buildTransfersTimeModeMap } from './buildTransfersTimeModeMap'
 import { buildDurationSplitMap, getAverageDuration } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
 import {
@@ -41,18 +40,8 @@ export function getProtocolEntries(
   zeroTransferProtocols: { name: string; iconUrl: string }[]
 } {
   const durationSplitMap = buildDurationSplitMap(interopProjects)
-  const transfersTimeModeMap = buildTransfersTimeModeMap(interopProjects)
-
-  const protocolsDataMap = getProtocolsDataMap(
-    records,
-    transfersTimeModeMap,
-    durationSplitMap,
-  )
-  const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(
-    records,
-    durationSplitMap,
-    transfersTimeModeMap,
-  )
+  const protocolsDataMap = getProtocolsDataMap(records)
+  const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(records)
 
   const entries: ProtocolEntry[] = []
   const zeroTransferProtocols: { name: string; iconUrl: string }[] = []
@@ -90,19 +79,16 @@ export function getProtocolEntries(
     // Skip projects that don't have data and don't have plugins for the given type
     if (!data) continue
 
+    const relevantBridgeTypes = type ? [type] : bridgeTypes
     const averageDuration =
       project.interopConfig.transfersTimeMode === 'unknown'
         ? { type: 'unknown' as const }
-        : bridgeTypes.length === 1
-          ? // Show average duration in the All protocols table only if there is only one bridge type
-            getAverageDuration(
-              project.id,
-              // biome-ignore lint/style/noNonNullAssertion: it's there
-              bridgeTypes[0]!,
-              data,
-              durationSplitMap,
-            )
-          : getAverageDuration(project.id, undefined, data, undefined)
+        : getAverageDuration(
+            project.id,
+            relevantBridgeTypes,
+            data,
+            durationSplitMap,
+          )
 
     const tokens = getTokensData({
       projectId: project.id,
