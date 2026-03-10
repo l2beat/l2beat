@@ -136,12 +136,16 @@ export class AvalanchePlugin implements InteropPluginResyncable {
         type: 'event',
         signature: transferLog,
         addresses: '*',
+        // chains: ['ethereum']
+        //    AND
+        // topic1(from): [AVALANCHE_BRIDGE_EOA] OR topic2(to): [AVALANCHE_BRIDGE_EOA]
       },
       {
         type: 'event',
         signature: mintLog,
         includeTxEvents: [transferLog],
         addresses: '*',
+        // chains: ['avalanche']
       },
       {
         type: 'event',
@@ -149,6 +153,7 @@ export class AvalanchePlugin implements InteropPluginResyncable {
         includeTxEvents: [transferLog],
         includeTx: true,
         addresses: '*',
+        // chains: ['avalanche']
       },
     ]
   }
