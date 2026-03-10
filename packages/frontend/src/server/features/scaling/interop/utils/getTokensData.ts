@@ -13,7 +13,7 @@ import { getAverageDuration } from './getAverageDuration'
 
 type Params = {
   projectId: string
-  bridgeTypes: KnownInteropBridgeType | KnownInteropBridgeType[] | undefined
+  bridgeTypes: KnownInteropBridgeType[] | undefined
   tokens: Map<
     string,
     CommonInteropData & { flows?: Map<string, TokenFlowData> }

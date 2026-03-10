@@ -8,7 +8,7 @@ import { getInteropChains } from './getInteropChains'
 
 type Params = {
   projectId: string
-  bridgeTypes: KnownInteropBridgeType | KnownInteropBridgeType[] | undefined
+  bridgeTypes: KnownInteropBridgeType[] | undefined
   chains: Map<string, CommonInteropData>
   durationSplitMap: DurationSplitMap | undefined
   logger: Logger

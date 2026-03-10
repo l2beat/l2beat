@@ -6,7 +6,7 @@ describe(getAverageDuration.name, () => {
   it('returns transfer-type based split durations from config order', () => {
     const result = getAverageDuration(
       'stargate',
-      'nonMinting',
+      ['nonMinting'],
       commonInteropData({
         transferCount: 7,
         totalDurationSum: 730,
@@ -44,7 +44,7 @@ describe(getAverageDuration.name, () => {
   it('falls back to a single duration while transfer type config is still empty', () => {
     const result = getAverageDuration(
       'canonical',
-      'lockAndMint',
+      ['lockAndMint'],
       commonInteropData({
         transferCount: 3,
         totalDurationSum: 480,
@@ -78,7 +78,7 @@ describe(getAverageDuration.name, () => {
   it('keeps configured splits even when a subset has no matching transfers', () => {
     const result = getAverageDuration(
       'stargate',
-      'nonMinting',
+      ['nonMinting'],
       commonInteropData({
         transferCount: 4,
         totalDurationSum: 260,
@@ -114,7 +114,7 @@ describe(getAverageDuration.name, () => {
   it('keeps configured splits even when transfer type stats are empty', () => {
     const result = getAverageDuration(
       'stargate',
-      'nonMinting',
+      ['nonMinting'],
       commonInteropData({
         transferCount: 4,
         totalDurationSum: 260,
@@ -173,6 +173,50 @@ describe(getAverageDuration.name, () => {
               [
                 { label: 'Bus', transferTypes: ['express', 'bus'] },
                 { label: 'Taxi', transferTypes: ['taxi'] },
+              ],
+            ],
+          ]),
+        ],
+      ]) satisfies DurationSplitMap,
+    )
+
+    expect(result).toEqual({
+      type: 'split',
+      splits: [
+        { label: 'Bus', duration: 50 },
+        { label: 'Taxi', duration: 80 },
+      ],
+    })
+  })
+
+  it('matches split configs even when entries are configured in different order', () => {
+    const result = getAverageDuration(
+      'protocol',
+      ['lockAndMint', 'nonMinting'],
+      commonInteropData({
+        transferCount: 6,
+        totalDurationSum: 390,
+        transferTypeStats: {
+          bus: { transferCount: 3, totalDurationSum: 150 },
+          taxi: { transferCount: 3, totalDurationSum: 240 },
+        },
+      }),
+      new Map([
+        [
+          'protocol',
+          new Map([
+            [
+              'lockAndMint',
+              [
+                { label: 'Bus', transferTypes: ['bus', 'express'] },
+                { label: 'Taxi', transferTypes: ['taxi'] },
+              ],
+            ],
+            [
+              'nonMinting',
+              [
+                { label: 'Taxi', transferTypes: ['taxi'] },
+                { label: 'Bus', transferTypes: ['express', 'bus'] },
               ],
             ],
           ]),

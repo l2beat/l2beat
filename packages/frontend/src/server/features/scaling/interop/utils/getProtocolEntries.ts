@@ -161,7 +161,7 @@ function getByBridgeTypeData(
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeTypes: 'lockAndMint',
+              bridgeTypes: ['lockAndMint'],
               tokens: data.lockAndMint.tokens,
               tokensDetailsMap,
               durationSplitMap,
@@ -186,7 +186,7 @@ function getByBridgeTypeData(
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeTypes: 'nonMinting',
+              bridgeTypes: ['nonMinting'],
               tokens: data.nonMinting.tokens,
               tokensDetailsMap,
               durationSplitMap,
@@ -206,7 +206,7 @@ function getByBridgeTypeData(
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeTypes: 'burnAndMint',
+              bridgeTypes: ['burnAndMint'],
               tokens: data.burnAndMint.tokens,
               tokensDetailsMap,
               durationSplitMap,
