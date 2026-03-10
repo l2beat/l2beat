@@ -4,19 +4,20 @@ import type {
   ChainInfo,
   FrameworkOverview,
 } from '~/server/features/scaling/interop/getFrameworkComparisonData'
+import { cn } from '~/utils/cn'
 
 interface Props {
   chainCoverage: ChainCoverageData[]
   frameworks: FrameworkOverview[]
   chainMap: Record<string, ChainInfo>
-  totalTrackedChains: number
+  allTrackedChains: ChainInfo[]
 }
 
 export function ChainCoverageCards({
   chainCoverage,
   frameworks,
   chainMap,
-  totalTrackedChains,
+  allTrackedChains,
 }: Props) {
   const coverageMap = Object.fromEntries(
     chainCoverage.map((c) => [c.frameworkId, c]),
@@ -33,7 +34,7 @@ export function ChainCoverageCards({
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 min-[1600px]:grid-cols-4">
         {frameworks.map((fw) => {
           const coverage = coverageMap[fw.id]
-          const chains = coverage?.chains ?? []
+          const observedSet = new Set(coverage?.chains ?? [])
           return (
             <PrimaryCard key={fw.id}>
               <div className="mb-3 flex items-center justify-between">
@@ -44,33 +45,32 @@ export function ChainCoverageCards({
                   </span>
                 </div>
                 <span className="text-label-value-12 text-secondary">
-                  {chains.length}/{totalTrackedChains} tracked chains
+                  {observedSet.size}/{allTrackedChains.length} tracked chains
                 </span>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {chains.map((chainId) => {
-                  const info = chainMap[chainId]
+                {allTrackedChains.map((chain) => {
+                  const observed = observedSet.has(chain.id)
+                  const info = chainMap[chain.id] ?? chain
                   return (
                     <span
-                      key={chainId}
-                      className="flex items-center gap-1.5 rounded border border-divider bg-surface-secondary px-2 py-1 text-2xs"
-                    >
-                      {info && (
-                        <img
-                          src={info.iconUrl}
-                          alt={info.name}
-                          className="size-4"
-                        />
+                      key={chain.id}
+                      className={cn(
+                        'flex items-center gap-1.5 rounded border px-2 py-1 text-2xs',
+                        observed
+                          ? 'border-positive/30 bg-positive/10'
+                          : 'border-divider bg-surface-secondary opacity-40',
                       )}
-                      {info?.name ?? chainId}
+                    >
+                      <img
+                        src={info.iconUrl}
+                        alt={info.name}
+                        className={cn('size-4', !observed && 'grayscale')}
+                      />
+                      {info.name}
                     </span>
                   )
                 })}
-                {chains.length === 0 && (
-                  <span className="text-label-value-12 text-secondary">
-                    No data
-                  </span>
-                )}
               </div>
             </PrimaryCard>
           )

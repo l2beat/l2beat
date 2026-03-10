@@ -24,7 +24,7 @@ export function InteropFrameworksPage({
   chainPairs,
   transferSizeChartData,
   chainMap,
-  totalTrackedChains,
+  allTrackedChains,
   ...props
 }: Props) {
   return (
@@ -70,7 +70,7 @@ export function InteropFrameworksPage({
             chainCoverage={chainCoverage}
             frameworks={frameworks}
             chainMap={chainMap}
-            totalTrackedChains={totalTrackedChains}
+            allTrackedChains={allTrackedChains}
           />
           <TopTokensCards topTokens={topTokens} frameworks={frameworks} />
           <BridgeBreakdown frameworks={frameworks} />

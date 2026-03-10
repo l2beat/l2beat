@@ -95,7 +95,7 @@ export interface FrameworkComparisonData {
   chainPairs: ChainPair[]
   transferSizeChartData: TransferSizeDataPoint[]
   chainMap: Record<string, ChainInfo>
-  totalTrackedChains: number
+  allTrackedChains: ChainInfo[]
 }
 
 export async function getFrameworkComparisonData(): Promise<FrameworkComparisonData> {
@@ -327,7 +327,11 @@ export async function getFrameworkComparisonData(): Promise<FrameworkComparisonD
     chainPairs,
     transferSizeChartData,
     chainMap,
-    totalTrackedChains: INTEROP_CHAINS.length,
+    allTrackedChains: INTEROP_CHAINS.map((c) => ({
+      id: c.id,
+      name: c.name,
+      iconUrl: manifest.getUrl(`/icons/${c.iconSlug ?? c.id}.png`),
+    })),
   }
 }
 
