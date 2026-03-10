@@ -2972,7 +2972,7 @@
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
-        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [

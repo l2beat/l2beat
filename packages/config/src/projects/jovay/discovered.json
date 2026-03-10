@@ -78,6 +78,64 @@
       }
     },
     {
+      "name": "",
+      "address": "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9869A90FDAc287519E48aff4cCE329907a995162",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe0a28B8918a62edB825055221a1dF12c7C81Bac1",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
+          "role": ".owner"
+        }
+      ],
+      "sinceTimestamp": 1758618407,
+      "sinceBlock": 23424727,
+      "values": {
+        "$admin": "eth:0x83088c8Dd196a83f43140ddBD7B4727bD1d43AD4",
+        "$implementation": "eth:0x3D99cAc6f6c0e466b45d6FBF1E8E0971352d9527",
+        "$pastUpgrades": [
+          [
+            "2025-09-23T09:06:47.000Z",
+            "0x320278ab9f6f8e254faebd1c1733c84137f9e4b4f04faa067717f789a721fdff",
+            ["eth:0x3D99cAc6f6c0e466b45d6FBF1E8E0971352d9527"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77": "",
+        "eth:0x3D99cAc6f6c0e466b45d6FBF1E8E0971352d9527": ""
+      }
+    },
+    {
       "name": "DaimoP256Verifier",
       "address": "eth:0x783377992FCA09009eaD952D4fBa6519e25726b4",
       "type": "Contract",
@@ -120,6 +178,26 @@
       "implementationNames": {
         "eth:0x79241BbE3646d8405849Cbe8608e77b82c402892": "",
         "eth:0x621Dd8d71526D7Df51Fa1AA8D098f5eAEc81C573": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0x83088c8Dd196a83f43140ddBD7B4727bD1d43AD4",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1758618407,
+      "sinceBlock": 23424727,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x83088c8Dd196a83f43140ddBD7B4727bD1d43AD4": ""
       }
     },
     {
@@ -364,12 +442,15 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
+      ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0x922248Db4A99bB542539ae7165FB9D7A546FB9F1",
@@ -388,9 +469,12 @@
       ],
       "sinceTimestamp": 1758377243,
       "sinceBlock": 23404766,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x4815b8773E6686d0b6Ee16191Aef1ae6c50d6B77"
+      },
       "implementationNames": {
-        "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": ""
+        "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": "ProxyAdmin"
       }
     },
     {
@@ -731,9 +815,21 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xe2f33Bd70B301F53f61CB7b22D852bC8e3D95E2b": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "jovay/AutomataDcapAttestationFee": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/DcapAttestationRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "jovay/L1ETHBridge": "0x9f1260719db2abb008347c8137fabdb0709ce0fa5e33f48f35437eb36c9d8d11",
@@ -744,5 +840,5 @@
     "jovay/TEEVerifierProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23741202 },
-  "permissionsConfigHash": "0x519465cb7e1e84c96fef130afd717a0553a0369133c7edb08542054a77898879"
+  "permissionsConfigHash": "0x3ae77442a3678b2feb4ae2f62257b5cd846233fcb0253cfac3363d1907044de5"
 }

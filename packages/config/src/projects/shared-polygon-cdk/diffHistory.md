@@ -6609,7 +6609,7 @@ rollupIDs:
 1: pol zkEVM 1101 (type6) 🚀 ✔️
 2: astar 3776 (type4) 🚀 ✔️
 3: OkX X Layer 196 (type8) 🚀 ✔️
-4: OEV network chainid 4913 (type4) X (pivoted to arbitrum stack)😵
+4: OEV network chainid 4913 (type4) X (pivoted to orbit)😵
 5: gptprotocol.org 1511670449 (type4) 🚀 ✔️😵
 6: witnesschain 1702448187 (type4) 🚀 ✔️😵
 7: lumia.org 994873017 (type4) 🚀✔️
@@ -8143,7 +8143,7 @@ Current rollupIDs:
     1: pol zkEVM 1101 (type3) 🚀 ✔️
 	2: astar 3776 (type4) 🚀 ✔️
 	3: OkX X Layer 196 (type4) 🚀 ✔️
-	4: OEV network chainid 4913 (type4) X (pivoted to arbitrum stack)
+	4: OEV network chainid 4913 (type4) X (pivoted to orbit)
 	5: gptprotocol.org 1511670449 (type4) 🚀 ✔️
 	6: witnesschain 1702448187 (type4) 🚀 ✔️
 	7: prism (by prism bridge?) 994873017 (type4) 🚀
