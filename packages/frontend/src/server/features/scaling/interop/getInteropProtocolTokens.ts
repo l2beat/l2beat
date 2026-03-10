@@ -11,14 +11,11 @@ import type {
 } from './types'
 import { accumulateTokens } from './utils/accumulate'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
-import { buildTransfersTimeModeMap } from './utils/buildTransfersTimeModeMap'
 import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
-import {
-  getDirection,
-  INITIAL_COMMON_INTEROP_DATA,
-} from './utils/getProtocolsDataMap'
+import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
+import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getTokensData } from './utils/getTokensData'
 
 type TokenInteropData = CommonInteropData & {
@@ -76,9 +73,9 @@ export async function getInteropProtocolTokens({
   }
 
   const abstractTokenIds = unique(tokens.map((token) => token.abstractTokenId))
-  const transfersTimeModeMap = buildTransfersTimeModeMap([interopProject])
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
   const durationSplitMap = buildDurationSplitMap([interopProject])
+  const relevantBridgeTypes = getRelevantBridgeTypes(interopProject, type)
   const chainIconMap = new Map(
     getInteropChains().map((chain) => [
       chain.id,
@@ -93,15 +90,8 @@ export async function getInteropProtocolTokens({
       flows: new Map<string, TokenFlowData>(),
     }
 
-    const transfersTimeMode = transfersTimeModeMap.get(interopProject.id)
-    const durationSplit =
-      token.bridgeType !== 'unknown'
-        ? durationSplitMap?.get(interopProject.id)?.get(token.bridgeType)
-        : undefined
-    const direction = getDirection(token, durationSplit, transfersTimeMode)
-
     result.set(token.abstractTokenId, {
-      ...accumulateTokens(current, token, direction),
+      ...accumulateTokens(current, token),
       flows: current.flows,
     })
 
@@ -126,7 +116,7 @@ export async function getInteropProtocolTokens({
 
   return getTokensData({
     projectId: id,
-    bridgeType: type,
+    bridgeTypes: relevantBridgeTypes,
     tokens: result,
     tokensDetailsMap,
     durationSplitMap,

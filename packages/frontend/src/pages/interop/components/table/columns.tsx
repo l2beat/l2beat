@@ -168,9 +168,11 @@ export function getAllProtocolsColumns(
           ? undefined
           : row.averageDuration.type === 'single'
             ? row.averageDuration.duration
-            : (row.averageDuration.in.duration ??
-              row.averageDuration.out.duration ??
-              Number.POSITIVE_INFINITY),
+            : Math.min(
+                ...row.averageDuration.splits
+                  .filter((split) => split.duration !== null)
+                  .map((split) => split.duration ?? Number.POSITIVE_INFINITY),
+              ),
       {
         header: 'Last 24h avg.\ntransfer time',
         invertSorting: true,

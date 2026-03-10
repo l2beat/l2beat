@@ -154,18 +154,16 @@ export const linea: ScalingProject = {
   interopConfig: {
     name: 'Linea Canonical',
     durationSplit: {
-      lockAndMint: {
-        in: {
+      lockAndMint: [
+        {
           label: 'L1 -> L2',
-          from: 'ethereum',
-          to: 'linea',
+          transferTypes: ['linea.L1ToL2Transfer'],
         },
-        out: {
+        {
           label: 'L2 -> L1',
-          from: 'linea',
-          to: 'ethereum',
+          transferTypes: ['linea.L2ToL1Transfer'],
         },
-      },
+      ],
     },
     plugins: [
       {
