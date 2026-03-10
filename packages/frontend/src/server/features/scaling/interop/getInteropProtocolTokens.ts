@@ -14,8 +14,8 @@ import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
-import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
+import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getTokensData } from './utils/getTokensData'
 
 type TokenInteropData = CommonInteropData & {

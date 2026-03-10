@@ -1,9 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
-import {
-  type KnownInteropBridgeType,
-  type ProjectId,
-  type UnixTime,
+import type {
+  KnownInteropBridgeType,
+  ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'

@@ -10,8 +10,8 @@ import { accumulateChains } from './utils/accumulate'
 import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { buildDurationSplitMap } from './utils/getAverageDuration'
 import { getChainsData } from './utils/getChainsData'
-import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
+import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 
 export async function getInteropProtocolChains({
   id,
