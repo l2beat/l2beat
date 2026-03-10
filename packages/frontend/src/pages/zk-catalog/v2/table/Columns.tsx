@@ -141,6 +141,8 @@ export const zkCatalogColumns = [
       )
     },
     meta: {
+      tooltip:
+        'Technical attributes of the main proving system itself, which could be a zkVM or circuit-based. For validity L2s, this system produces a proof of valid state transition of one or more L2 blocks, possibly with recursive proving.',
       cellClassName: 'pr-1!',
     },
   }),
@@ -170,6 +172,10 @@ export const zkCatalogColumns = [
           className="md:min-w-[180px]"
         />
       )
+    },
+    meta: {
+      tooltip:
+        'Technical attributes of the final wrap proving system, if applicable. Final wrap is a circuit-based SNARK that compresses the proof from the main prover and produces the proof that is submitted onchain for efficient verification.',
     },
   }),
 ]
