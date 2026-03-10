@@ -353,6 +353,17 @@ export async function getScalingProjectEntry(
 
   const projectWithIcon = withProjectIcon(project)
 
+  if (project.display.executiveSummary) {
+    sections.push({
+      type: 'ExecutiveSummarySection',
+      props: {
+        id: 'executive-summary',
+        title: 'Executive summary',
+        content: project.display.executiveSummary,
+      },
+    })
+  }
+
   if (!project.isUpcoming && scalingTvsSection && tvsProjectStats) {
     sections.push({
       type: 'ScalingTvsSection',

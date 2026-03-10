@@ -85,6 +85,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     },
     display: {
       description: p.display.description,
+      executiveSummary: p.display.executiveSummary,
       links: p.display.links,
       badges: (p.badges ?? []).sort(badgesCompareFn),
     },

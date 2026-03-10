@@ -15,8 +15,8 @@ export function projectDetailsToNavigationSections(
 ): ProjectNavigationSection[] {
   return [
     {
-      id: 'summary',
-      title: 'Summary',
+      id: 'overview',
+      title: 'Overview',
     },
     ...sections
       .map((section) => {

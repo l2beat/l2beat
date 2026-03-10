@@ -4,6 +4,7 @@ import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
+import type { ExecutiveSummarySectionProps } from './ExecutiveSummarySection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
@@ -27,6 +28,7 @@ import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
 import type { VerifiersSectionProps } from './VerifiersSection'
 
 type SectionId =
+  | 'executive-summary'
   | 'tvs'
   | 'activity'
   | 'onchain-costs'
@@ -64,6 +66,11 @@ export type ProjectSectionProps = Omit<
 >
 
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
+
+interface ProjectExecutiveSummarySection {
+  type: 'ExecutiveSummarySection'
+  props: ProjectDetailsProps<ExecutiveSummarySectionProps>
+}
 
 interface ProjectDetailsCostsSection {
   type: 'CostsSection'
@@ -204,6 +211,7 @@ export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
 } & (
+  | ProjectExecutiveSummarySection
   | ProjectDetailsCostsSection
   | ProjectDetailsLivenessSection
   | ProjectDetailsDetailedDescriptionSection
