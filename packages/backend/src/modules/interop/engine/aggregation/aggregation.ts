@@ -2,6 +2,7 @@ import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
   InteropTransferRecord,
+  InteropTransferTypeStatsMap,
 } from '@l2beat/database'
 import {
   assert,
@@ -26,6 +27,25 @@ function getBucket(valueUsd: number | undefined): Bucket {
   return 'over100k'
 }
 
+function addTransferTypeStats(
+  current: InteropTransferTypeStatsMap | undefined,
+  transferType: string,
+  duration: number,
+): InteropTransferTypeStatsMap {
+  const result = current ?? {}
+  const stats = result[transferType] ?? {
+    transferCount: 0,
+    totalDurationSum: 0,
+  }
+
+  result[transferType] = {
+    transferCount: stats.transferCount + 1,
+    totalDurationSum: stats.totalDurationSum + duration,
+  }
+
+  return result
+}
+
 export function getAggregatedTransfer(
   group: InteropTransferRecord[],
   options?: {
@@ -40,6 +60,7 @@ export function getAggregatedTransfer(
   let srcValueUsd: number | undefined = undefined
   let dstValueUsd: number | undefined = undefined
   let valueInFlight: number | undefined = undefined
+  let transferTypeStats: InteropTransferTypeStatsMap | undefined = undefined
   let mintedValueUsd = 0
   let burnedValueUsd = 0
   let identifiedCount = 0
@@ -53,6 +74,11 @@ export function getAggregatedTransfer(
 
   for (const transfer of group) {
     totalDurationSum += transfer.duration
+    transferTypeStats = addTransferTypeStats(
+      transferTypeStats,
+      transfer.type,
+      transfer.duration,
+    )
     if (srcValueUsd === undefined) {
       srcValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd
     } else {
@@ -122,6 +148,7 @@ export function getAggregatedTransfer(
   return {
     srcChain: first.srcChain,
     dstChain: first.dstChain,
+    transferTypeStats,
     transferCount: group.length,
     totalDurationSum,
     srcValueUsd: srcValueUsd ? Math.round(srcValueUsd * 100) / 100 : undefined,
@@ -171,6 +198,7 @@ export function getAggregatedTokens(
       maxTransferValueUsd: number | undefined
       mintedValueUsd: number | undefined
       burnedValueUsd: number | undefined
+      transferTypeStats: InteropTransferTypeStatsMap | undefined
     }
   > = {}
 
@@ -193,6 +221,11 @@ export function getAggregatedTokens(
         transferCount: (currentSrcToken?.transferCount ?? 0) + 1,
         totalDurationSum:
           (currentSrcToken?.totalDurationSum ?? 0) + transfer.duration,
+        transferTypeStats: addTransferTypeStats(
+          currentSrcToken?.transferTypeStats,
+          transfer.type,
+          transfer.duration,
+        ),
         volume: (currentSrcToken?.volume ?? 0) + (transfer.srcValueUsd ?? 0),
         minTransferValueUsd:
           srcTokenTransferValueUsd !== undefined
@@ -241,6 +274,11 @@ export function getAggregatedTokens(
         transferCount: (currentDstToken?.transferCount ?? 0) + 1,
         totalDurationSum:
           (currentDstToken?.totalDurationSum ?? 0) + transfer.duration,
+        transferTypeStats: addTransferTypeStats(
+          currentDstToken?.transferTypeStats,
+          transfer.type,
+          transfer.duration,
+        ),
         volume: (currentDstToken?.volume ?? 0) + (transfer.dstValueUsd ?? 0),
         minTransferValueUsd:
           dstTokenTransferValueUsd !== undefined
@@ -286,6 +324,7 @@ export function getAggregatedTokens(
     srcChain: first.srcChain,
     dstChain: first.dstChain,
     abstractTokenId: abstractTokenId,
+    transferTypeStats: data.transferTypeStats,
     transferCount: data.transferCount,
     totalDurationSum: data.totalDurationSum,
     volume: data.volume,
