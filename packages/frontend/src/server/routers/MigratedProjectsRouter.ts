@@ -35,14 +35,6 @@ export function createMigratedProjectsRouter() {
     res.redirect(301, '/data-availability/projects/espresso-da/espresso-da')
   })
 
-  router.get('/zk-catalog/SP1Blobstream', (_, res) => {
-    res.redirect(301, '/zk-catalog/sp1-blobstream')
-  })
-
-  router.get('/zk-catalog/SP1Vector', (_, res) => {
-    res.redirect(301, '/zk-catalog/sp1-vector')
-  })
-
   router.get('/ecosystems/arbitrum-orbit', (_, res) => {
     res.redirect(301, '/ecosystems/arbitrum')
   })

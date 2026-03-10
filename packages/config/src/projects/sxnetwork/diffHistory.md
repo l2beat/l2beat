@@ -1,14 +1,16 @@
-Generated with discovered.json: 0xcab49155848ea334fc3ed570a653afe2281e1bd7
+Generated with discovered.json: 0xf0bf17333ee6e4efd8d2abb02aaf87deeeae12df
 
-# Diff at Thu, 05 Mar 2026 15:18:08 GMT:
+# Diff at Mon, 09 Mar 2026 12:34:13 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1772489760
-- current timestamp: 1772723799
+- current timestamp: 1773059569
 
 ## Description
 
-SxNetworkMultisig member at index 0 changed from `0x2627...` to `0xC711...`. The new signer now also holds fastconfirm and validate permissions (previously held by the removed signer via the multisig).
+RaaS provider changed from Gelato to Caldera. The executor Safe (0xa4C325e...) is renamed to CalderaMultisig to reflect this.
+
+SxNetworkMultisig member at index 0 rotated from `0x2627...` to `0xC711...`.
 
 ## Watched changes
 
@@ -28,6 +30,21 @@ SxNetworkMultisig member at index 0 changed from `0x2627...` to `0xC711...`. The
       values.$members.0:
 -        "eth:0x262711cA4DA6409Da795D8af9E18DDaF47397f80"
 +        "eth:0xC711f8aCC65306D4f16F874Fe88C43eF23504F5c"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772489760 (main branch discovery), not current.
+
+```diff
+    contract CalderaMultisig (eth:0xa4C325e25215C1fB2405EB28d81d2dFdbfC8D24C) {
+    +++ description: None
+      name:
+-        "Safe"
++        "CalderaMultisig"
     }
 ```
 

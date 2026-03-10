@@ -59,6 +59,10 @@ export type {
   InteropTransfersStatsRecord,
   InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
+export type {
+  InteropTransferTypeStats,
+  InteropTransferTypeStatsMap,
+} from './repositories/InteropTransferTypeStats'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
@@ -86,4 +90,3 @@ export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
 export type { UpdateMonitorRecord } from './repositories/UpdateMonitorRepository'
 export type { UpdateNotifierRecord } from './repositories/UpdateNotifierRepository'
-export type { VerifierStatusRecord } from './repositories/VerifierStatusRepository'

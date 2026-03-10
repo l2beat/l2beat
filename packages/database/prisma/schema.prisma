@@ -161,15 +161,6 @@ model UpdateMessage {
   @@id([projectId, timestamp])
 }
 
-model VerifierStatus {
-  address     String   @db.VarChar(255)
-  chainId     Int
-  lastUsed    DateTime @db.Timestamp(6)
-  lastUpdated DateTime @db.Timestamp(6)
-
-  @@id([address, chainId])
-}
-
 model AggregatedLiveness {
   timestamp       DateTime @db.Timestamp(6)
   projectId       String   @db.VarChar(255)
@@ -545,6 +536,7 @@ model AggregatedInteropTransfer {
   bridgeType          String   @default("unknown") @db.VarChar(255)
   srcChain            String   @db.VarChar(255)
   dstChain            String   @db.VarChar(255)
+  transferTypeStats   Json?
   transferCount       Int
   identifiedCount     Int      @default(0)
   totalDurationSum    Int
@@ -572,6 +564,7 @@ model AggregatedInteropToken {
   dstChain            String   @db.VarChar(255)
   bridgeType          String   @default("unknown") @db.VarChar(255)
   abstractTokenId     String   @db.VarChar(6)
+  transferTypeStats   Json?
   mintedValueUsd      Float?   @db.Real
   burnedValueUsd      Float?   @db.Real
   transferCount       Int
