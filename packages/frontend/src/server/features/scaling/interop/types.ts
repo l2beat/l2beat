@@ -15,11 +15,11 @@ export type ProtocolEntry = {
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
-    | {
-        name: string
-        iconUrl: string
-      }
-    | undefined
+  | {
+    name: string
+    iconUrl: string
+  }
+  | undefined
   volume: number
   tokens: TopItems<TokenData>
   chains: TopItems<ChainData>
@@ -102,8 +102,10 @@ export type InteropProtocolTransferDetailsItem = {
   timestamp: number
   srcAmount: number | undefined
   srcSymbol: string | undefined
+  srcTokenIconUrl: string | undefined
   dstAmount: number | undefined
   dstSymbol: string | undefined
+  dstTokenIconUrl: string | undefined
   valueUsd: number | undefined
   duration: number
   srcChain: string

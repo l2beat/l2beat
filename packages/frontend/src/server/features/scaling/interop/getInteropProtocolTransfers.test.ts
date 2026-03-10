@@ -18,6 +18,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         ['ethereum', 'https://etherscan.io'],
         ['arbitrum', 'https://arbiscan.io'],
       ]),
+      new Map(),
     )
 
     expect(result).toEqual({
@@ -25,8 +26,10 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       timestamp: 123,
       srcAmount: undefined,
       srcSymbol: undefined,
+      srcTokenIconUrl: undefined,
       dstAmount: 12.34,
       dstSymbol: 'USDC',
+      dstTokenIconUrl: undefined,
       valueUsd: 12.34,
       duration: 60,
       srcChain: 'ethereum',
@@ -45,10 +48,15 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         ['ethereum', 'https://etherscan.io'],
         ['arbitrum', 'https://arbiscan.io'],
       ]),
+      new Map([
+        ['eth', { symbol: 'ETH', iconUrl: 'https://token/eth.png', issuer: null }],
+      ]),
     )
 
     expect(result.srcTxHashHref).toEqual('https://etherscan.io/tx/0xsrc')
     expect(result.dstTxHashHref).toEqual('https://arbiscan.io/tx/0xdst')
+    expect(result.srcTokenIconUrl).toEqual('https://token/eth.png')
+    expect(result.dstTokenIconUrl).toEqual('https://token/eth.png')
   })
 })
 

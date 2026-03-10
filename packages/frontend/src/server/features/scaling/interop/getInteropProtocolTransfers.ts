@@ -15,10 +15,15 @@ import type {
   InteropProtocolTransfersParams,
   InteropProtocolTransfersResponse,
 } from './types'
+import {
+  buildTokensDetailsMap,
+  type TokensDetailsMap,
+} from './utils/buildTokensDetailsMap'
 
 interface TransfersWithStats {
   items: InteropTransferRecord[]
   transferStats: InteropProtocolTransferStats
+  tokensDetailsMap: TokensDetailsMap
 }
 
 const VALUE_TOLERANCE_RATIO = 0.01
@@ -62,8 +67,8 @@ export async function getInteropProtocolTransfers({
 
   const plugins = type
     ? interopProject.interopConfig.plugins.filter(
-        (plugin) => plugin.bridgeType === type,
-      )
+      (plugin) => plugin.bridgeType === type,
+    )
     : interopProject.interopConfig.plugins
   if (plugins.length === 0) {
     return {
@@ -120,12 +125,12 @@ export async function getInteropProtocolTransfers({
     startIndex + PAGE_SIZE < result.items.length
       ? startIndex + PAGE_SIZE
       : undefined
-
   return {
     items: pagedItems.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_EXPLORER_URLS,
+        result.tokensDetailsMap,
       ),
     ),
     hasIntegrityMismatch: false,
@@ -168,18 +173,23 @@ async function getFilteredTransfersWithStats({
     volume += getInteropTransferValue(transfer) ?? 0
   }
 
+  const abstractTokenIds = getAbstractTokenIds(items)
+  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
+
   return {
     items,
     transferStats: {
       transferCount,
       volume,
     },
+    tokensDetailsMap,
   }
 }
 
 export function toInteropProtocolTransferDetailsItem(
   transfer: InteropTransferRecord,
   chainExplorerUrlsById: Map<string, string>,
+  tokensDetailsMap: TokensDetailsMap,
 ): InteropProtocolTransferDetailsItem {
   const srcTxHashHref = getTxHashHref(
     chainExplorerUrlsById,
@@ -197,8 +207,10 @@ export function toInteropProtocolTransferDetailsItem(
     timestamp: transfer.timestamp,
     srcAmount: transfer.srcAmount,
     srcSymbol: transfer.srcSymbol,
+    srcTokenIconUrl: getTokenIconUrl(transfer.srcAbstractTokenId, tokensDetailsMap),
     dstAmount: transfer.dstAmount,
     dstSymbol: transfer.dstSymbol,
+    dstTokenIconUrl: getTokenIconUrl(transfer.dstAbstractTokenId, tokensDetailsMap),
     valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
     duration: transfer.duration,
     srcChain: transfer.srcChain,
@@ -208,6 +220,27 @@ export function toInteropProtocolTransferDetailsItem(
     dstTxHash: transfer.dstTxHash,
     dstTxHashHref,
   }
+}
+
+function getAbstractTokenIds(transfers: InteropTransferRecord[]): string[] {
+  return [
+    ...new Set(
+      transfers
+        .flatMap((transfer) => [
+          transfer.srcAbstractTokenId,
+          transfer.dstAbstractTokenId,
+        ])
+        .filter((id): id is string => id !== undefined),
+    ),
+  ]
+}
+
+function getTokenIconUrl(
+  abstractTokenId: string | undefined,
+  tokensDetailsMap: TokensDetailsMap,
+): string | undefined {
+  if (!abstractTokenId) return undefined
+  return tokensDetailsMap.get(abstractTokenId)?.iconUrl
 }
 
 function getTxHashHref(
