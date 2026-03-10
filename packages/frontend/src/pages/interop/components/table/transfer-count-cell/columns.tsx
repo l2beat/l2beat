@@ -169,7 +169,7 @@ function TokenAmount({
       {formattedAmount}
       <Tooltip>
         <TooltipTrigger asChild>
-          <img src={iconUrl} alt={symbol} className="size-4" />
+          <img src={iconUrl} alt={symbol} className="size-4 rounded-full" />
         </TooltipTrigger>
         <TooltipPortal>
           <TooltipContent
