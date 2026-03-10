@@ -16,9 +16,11 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
+import { api } from '~/trpc/React'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InitialChainSelector } from '../components/InitialChainSelector'
+import { InteropEmptyState } from '../summary/components/InteropEmptyState'
 import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
@@ -76,14 +78,25 @@ function Content({
   interopChains: InteropChainWithIcon[]
   onboardingInteropChains: InteropChainWithIcon[]
 }) {
-  const { selectedChains, selectChain } = useInteropSelectedChains()
+  const { selectedChains, selectChain, selectionForApi, isDirty, reset } =
+    useInteropSelectedChains()
   const navigationSections = projectDetailsToNavigationSections(
     projectEntry.sections,
   )
-  const isNavigationEmpty = navigationSections.length === 0
   const showInitialChainSelector =
     mode === 'public' &&
     (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
+  const { data, isLoading } = api.interop.protocol.useQuery(
+    {
+      ...selectionForApi,
+      id: projectEntry.id,
+    },
+    {
+      enabled: !showInitialChainSelector,
+    },
+  )
+  const showEmptyState = !showInitialChainSelector && !isLoading && !data?.entry
+  const isNavigationEmpty = navigationSections.length === 0
 
   return (
     <SideNavLayout childrenWrapperClassName="md:pt-0">
@@ -134,17 +147,27 @@ function Content({
                   protocols={undefined}
                   className="max-md:hidden"
                 />
-                <InteropProtocolSummary protocol={projectEntry} />
-                <div className="border-divider border-b px-4 md:hidden">
-                  <MobileProjectLinks
-                    projectLinks={projectEntry.header.links ?? []}
-                  />
-                </div>
-                <TopToken id={projectEntry.id} />
+                {!showEmptyState ? (
+                  <>
+                    <InteropProtocolSummary protocol={projectEntry} />
+                    <div className="border-divider border-b px-4 md:hidden">
+                      <MobileProjectLinks
+                        projectLinks={projectEntry.header.links ?? []}
+                      />
+                    </div>
+                    <TopToken id={projectEntry.id} />
 
-                <HighlightableLinkContextProvider>
-                  <ProjectDetails items={projectEntry.sections} />
-                </HighlightableLinkContextProvider>
+                    <HighlightableLinkContextProvider>
+                      <ProjectDetails items={projectEntry.sections} />
+                    </HighlightableLinkContextProvider>
+                  </>
+                ) : (
+                  <InteropEmptyState
+                    className="h-[calc(100vh-500px)] md:h-[calc(100vh-300px)]"
+                    showResetButton={mode === 'internal' && isDirty}
+                    onResetButtonClick={reset}
+                  />
+                )}
               </>
             )}
           </div>
