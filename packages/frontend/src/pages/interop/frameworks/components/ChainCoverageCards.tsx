@@ -31,12 +31,12 @@ export function ChainCoverageCards({
           Last 24h
         </span>
       </h2>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 min-[1600px]:grid-cols-4">
+      <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto">
         {frameworks.map((fw) => {
           const coverage = coverageMap[fw.id]
           const observedSet = new Set(coverage?.chains ?? [])
           return (
-            <PrimaryCard key={fw.id}>
+            <PrimaryCard key={fw.id} className="md:min-w-[240px] md:flex-1">
               <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <img src={fw.iconUrl} alt={fw.shortName} className="size-5" />

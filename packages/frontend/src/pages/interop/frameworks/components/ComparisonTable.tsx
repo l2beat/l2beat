@@ -15,12 +15,12 @@ interface Props {
   frameworks: FrameworkOverview[]
 }
 
-// Column order matches article: ITS, NTT, OFT, Warp Token
 const CLAIMS_ORDER: FrameworkId[] = [
   'axelar-its',
   'wormhole-ntt',
   'layerzero',
   'hyperlane-hwr',
+  'ccip',
 ]
 
 export function ComparisonTable({ frameworks }: Props) {
@@ -122,7 +122,7 @@ function SectionHeader({ title }: { title: string }) {
   return (
     <tr>
       <td
-        colSpan={5}
+        colSpan={6}
         className="bg-surface-secondary px-3 py-2.5 font-bold text-2xs text-secondary uppercase tracking-wider"
       >
         {title}

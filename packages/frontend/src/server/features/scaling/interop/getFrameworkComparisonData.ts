@@ -13,6 +13,7 @@ const FRAMEWORK_IDS = [
   'axelar-its',
   'wormhole-ntt',
   'hyperlane-hwr',
+  'ccip',
 ] as const
 
 export type FrameworkId = (typeof FRAMEWORK_IDS)[number]
@@ -22,6 +23,7 @@ const TYPE_PATTERNS: Record<FrameworkId, string> = {
   'axelar-its': 'axelar-its.%',
   'wormhole-ntt': 'wormhole-ntt.%',
   'hyperlane-hwr': 'hyperlane%',
+  ccip: 'ccip.%',
 }
 
 export interface FrameworkOverview {
@@ -145,7 +147,9 @@ export async function getFrameworkComparisonData(): Promise<FrameworkComparisonD
 
   const frameworks: FrameworkOverview[] = FRAMEWORK_IDS.map((id) => {
     const project = frameworkProjects.find((p) => p.id === id)
-    const fwRows = aggregated.filter((r) => r.id === id)
+    const fwRows = aggregated.filter(
+      (r) => r.id === id && r.bridgeType !== 'nonMinting',
+    )
 
     const volume = fwRows.reduce((s, r) => s + r.volumeUsd, 0)
     const transfers = fwRows.reduce((s, r) => s + r.transferCount, 0)
@@ -367,6 +371,11 @@ function getFrameworkLabel(id: FrameworkId) {
       name: 'Warp Routes',
       shortName: 'Warp',
       provider: 'Hyperlane',
+    },
+    ccip: {
+      name: 'Cross-Chain Token',
+      shortName: 'CCT',
+      provider: 'Chainlink',
     },
   }
   return labels[id]

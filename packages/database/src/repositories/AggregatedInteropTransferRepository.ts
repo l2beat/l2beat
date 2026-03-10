@@ -435,6 +435,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         eb.fn.sum('a.countOver100K').as('over_100k'),
       ])
       .where('a.id', 'in', frameworkIds)
+      .where('a.bridgeType', '!=', 'nonMinting')
       .groupBy('a.id')
       .orderBy('a.id')
       .execute()

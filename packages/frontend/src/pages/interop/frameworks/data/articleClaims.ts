@@ -149,6 +149,7 @@ export const ARTICLE_CLAIMS: Record<FrameworkId, Record<string, string>> = {
     developerTools:
       'Easy-to-use CLI with a well-integrated testing framework. Customizable UI template for tokens',
   },
+  ccip: {},
 }
 
 export const TOOLTIPS: Record<string, string> = {

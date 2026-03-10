@@ -2,10 +2,9 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { FrameworkOverview } from '~/server/features/scaling/interop/getFrameworkComparisonData'
 import { formatCurrency, formatNumber } from '../utils/format'
 
-const BRIDGE_TYPE_ORDER = ['nonMinting', 'lockAndMint', 'burnAndMint'] as const
+const BRIDGE_TYPE_ORDER = ['lockAndMint', 'burnAndMint'] as const
 
 const BRIDGE_TYPE_COLORS: Record<string, string> = {
-  nonMinting: '#2563eb',
   lockAndMint: '#a16207',
   burnAndMint: '#14b8a6',
 }
@@ -23,7 +22,7 @@ export function BridgeBreakdown({ frameworks }: Props) {
           Last 7d
         </span>
       </h2>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 min-[1600px]:grid-cols-4">
+      <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto">
         {frameworks.map((fw) => {
           const sorted = [...fw.bridgeTypes].sort(
             (a, b) =>
@@ -36,7 +35,7 @@ export function BridgeBreakdown({ frameworks }: Props) {
           )
           const totalVolume = sorted.reduce((s, b) => s + b.volume, 0)
           return (
-            <PrimaryCard key={fw.id}>
+            <PrimaryCard key={fw.id} className="md:min-w-[240px] md:flex-1">
               <div className="mb-3 flex items-center gap-2">
                 <img src={fw.iconUrl} alt={fw.shortName} className="size-5" />
                 <span className="font-bold text-heading-16">
@@ -95,7 +94,6 @@ export function BridgeBreakdown({ frameworks }: Props) {
 const BRIDGE_TYPE_LABELS: Record<string, string> = {
   burnAndMint: 'Burn & Mint',
   lockAndMint: 'Lock & Mint',
-  nonMinting: 'Non-Minting',
 }
 
 function formatBridgeType(type: string) {

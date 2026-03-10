@@ -149,7 +149,7 @@ function HorizontalTransferSizeChart({
   data: TransferSizeDataPoint[]
 }) {
   return (
-    <div className="relative size-full">
+    <div className="relative h-[350px] w-full">
       <SimpleChartContainer meta={chartMeta}>
         <BarChart
           responsive
@@ -159,7 +159,7 @@ function HorizontalTransferSizeChart({
           margin={{ top: 20 }}
           maxBarSize={28}
           barGap={4}
-          className="size-full min-h-[200px]! md:aspect-auto"
+          className="size-full"
         >
           <ChartLegend
             verticalAlign="top"

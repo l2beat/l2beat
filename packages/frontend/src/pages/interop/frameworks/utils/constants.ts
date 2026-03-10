@@ -3,6 +3,7 @@ export const FW_COLORS: Record<string, string> = {
   'axelar-its': 'bg-[#60a5fa]',
   'wormhole-ntt': 'bg-[#34d399]',
   'hyperlane-hwr': 'bg-[#f472b6]',
+  ccip: 'bg-[#375bd2]',
 }
 
 export const FW_COLORS_HEX: Record<string, string> = {
@@ -10,4 +11,5 @@ export const FW_COLORS_HEX: Record<string, string> = {
   'axelar-its': '#60a5fa',
   'wormhole-ntt': '#34d399',
   'hyperlane-hwr': '#f472b6',
+  ccip: '#375bd2',
 }
