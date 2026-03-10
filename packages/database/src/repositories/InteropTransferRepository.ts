@@ -5,7 +5,7 @@ import {
   type KnownInteropBridgeType,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
@@ -24,6 +24,8 @@ const _interopBridgeTypesMustMatchDbContract: typeof EXPECTED_DB_INTEROP_BRIDGE_
 function isInteropBridgeType(value: string): value is InteropBridgeType {
   return (InteropBridgeTypeValues as readonly string[]).includes(value)
 }
+
+export type TransferFilter = 'excludeNonMinting' | 'onlyLiquidityBased'
 
 export interface InteropTransferRecord {
   plugin: string
@@ -404,6 +406,250 @@ export class InteropTransferRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async getTransferSpeedStats(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
+    if (typePatterns.length === 0) return []
+
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        'type',
+        eb.fn.count('type').as('cnt'),
+        sql<number>`ROUND(SUM("srcValueUsd")::numeric, 0)`.as('volume_usd'),
+        sql<number>`PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY duration)`.as(
+          'p50_sec',
+        ),
+        sql<number>`PERCENTILE_CONT(0.95) WITHIN GROUP (ORDER BY duration)`.as(
+          'p95_sec',
+        ),
+        sql<number>`MIN(duration)`.as('min_sec'),
+        sql<number>`MAX(duration)`.as('max_sec'),
+        sql<number>`COUNT(DISTINCT "srcChain")`.as('src_chain_count'),
+        sql<number>`COUNT(DISTINCT "dstChain")`.as('dst_chain_count'),
+      ])
+      .where('duration', '>', 0)
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    query = this.applyTransferFilter(query, filter)
+    query = query.groupBy('type').orderBy('cnt', 'desc')
+
+    const rows = await query.execute()
+
+    // biome-ignore lint/suspicious/noExplicitAny: kysely query builder loses type after reassignment
+    return rows.map((r: any) => ({
+      type: r.type,
+      count: Number(r.cnt ?? 0),
+      volumeUsd: Number(r.volume_usd ?? 0),
+      p50Sec: Number(r.p50_sec ?? 0),
+      p95Sec: Number(r.p95_sec ?? 0),
+      minSec: Number(r.min_sec ?? 0),
+      maxSec: Number(r.max_sec ?? 0),
+      srcChainCount: Number(r.src_chain_count ?? 0),
+      dstChainCount: Number(r.dst_chain_count ?? 0),
+    }))
+  }
+
+  async getChainCoverage(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
+    if (typePatterns.length === 0) return []
+
+    let srcQuery = this.db
+      .selectFrom('InteropTransfer')
+      .select(['type', sql<string>`"srcChain"`.as('chain')])
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    srcQuery = this.applyTransferFilter(srcQuery, filter)
+
+    let dstQuery = this.db
+      .selectFrom('InteropTransfer')
+      .select(['type', sql<string>`"dstChain"`.as('chain')])
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    dstQuery = this.applyTransferFilter(dstQuery, filter)
+
+    const rows = await this.db
+      .selectFrom(srcQuery.unionAll(dstQuery).as('sub'))
+      .select([
+        'sub.type',
+        sql<string[]>`array_agg(DISTINCT sub.chain ORDER BY sub.chain)`.as(
+          'chains',
+        ),
+      ])
+      .groupBy('sub.type')
+      .execute()
+
+    return rows.map((r) => ({
+      type: r.type,
+      chains: r.chains ?? [],
+    }))
+  }
+
+  async getTopTokens(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
+    if (typePatterns.length === 0) return []
+
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        'type',
+        'srcSymbol',
+        eb.fn.count('type').as('cnt'),
+        sql<number>`ROUND(SUM("srcValueUsd")::numeric, 0)`.as('volume_usd'),
+        eb.fn.min('srcAbstractTokenId').as('abstract_token_id'),
+      ])
+      .where('srcSymbol', 'is not', null)
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    query = this.applyTransferFilter(query, filter)
+
+    const rows = await query
+      .groupBy(['type', 'srcSymbol'])
+      .orderBy('type')
+      .orderBy('volume_usd', 'desc')
+      .execute()
+
+    // biome-ignore lint/suspicious/noExplicitAny: kysely query builder loses type after reassignment
+    return rows.map((r: any) => ({
+      type: r.type,
+      symbol: r.srcSymbol as string,
+      count: Number(r.cnt ?? 0),
+      volumeUsd: Number(r.volume_usd ?? 0),
+      abstractTokenId: (r.abstract_token_id as string) ?? undefined,
+    }))
+  }
+
+  async getChainPairs(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
+    if (typePatterns.length === 0) return []
+
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        'type',
+        'srcChain',
+        'dstChain',
+        eb.fn.count('type').as('cnt'),
+        sql<number>`ROUND(SUM("srcValueUsd")::numeric, 0)`.as('volume_usd'),
+      ])
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    query = this.applyTransferFilter(query, filter)
+
+    const rows = await query
+      .groupBy(['type', 'srcChain', 'dstChain'])
+      .orderBy('type')
+      .orderBy('volume_usd', 'desc')
+      .execute()
+
+    return rows.map((r) => ({
+      type: r.type,
+      srcChain: r.srcChain,
+      dstChain: r.dstChain,
+      count: Number(r.cnt ?? 0),
+      volumeUsd: Number(r.volume_usd ?? 0),
+    }))
+  }
+
+  async getPathSpeedStats(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
+    if (typePatterns.length === 0) return []
+
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        'type',
+        'srcChain',
+        'dstChain',
+        eb.fn.count('type').as('cnt'),
+        sql<number>`PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY duration)`.as(
+          'p50_sec',
+        ),
+      ])
+      .where('duration', '>', 0)
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    query = this.applyTransferFilter(query, filter)
+
+    const rows = await query.groupBy(['type', 'srcChain', 'dstChain']).execute()
+
+    return rows.map((r) => ({
+      type: r.type,
+      srcChain: r.srcChain,
+      dstChain: r.dstChain,
+      count: Number(r.cnt ?? 0),
+      p50Sec: Number(r.p50_sec ?? 0),
+    }))
+  }
+
+  async getTransferSizeDistribution(
+    typePatterns: string[],
+    since: UnixTime,
+    filter: TransferFilter = 'excludeNonMinting',
+  ) {
+    if (typePatterns.length === 0) return []
+
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .select((eb) => [
+        'type',
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '<', 100)
+          .as('count_under_100'),
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '>=', 100)
+          .filterWhere('srcValueUsd', '<', 1000)
+          .as('count_100_to_1k'),
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '>=', 1000)
+          .filterWhere('srcValueUsd', '<', 10000)
+          .as('count_1k_to_10k'),
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '>=', 10000)
+          .filterWhere('srcValueUsd', '<', 100000)
+          .as('count_10k_to_100k'),
+        eb.fn
+          .countAll()
+          .filterWhere('srcValueUsd', '>=', 100000)
+          .as('count_over_100k'),
+      ])
+      .where('srcValueUsd', 'is not', null)
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .where((eb) => eb.or(typePatterns.map((p) => eb('type', 'like', p))))
+    query = this.applyTransferFilter(query, filter)
+    query = query.groupBy('type')
+
+    const rows = await query.execute()
+
+    // biome-ignore lint/suspicious/noExplicitAny: kysely query builder loses type after reassignment
+    return rows.map((r: any) => ({
+      type: r.type as string,
+      under100: Number(r.count_under_100 ?? 0),
+      from100To1K: Number(r.count_100_to_1k ?? 0),
+      from1KTo10K: Number(r.count_1k_to_10k ?? 0),
+      from10KTo100K: Number(r.count_10k_to_100k ?? 0),
+      over100K: Number(r.count_over_100k ?? 0),
+    }))
+  }
+
   async getMissingTokensInfo(): Promise<InteropMissingTokenInfo[]> {
     const rows = await this.db
       .selectFrom('InteropTransfer')
@@ -463,5 +709,21 @@ export class InteropTransferRepository extends BaseRepository {
     }
 
     return result
+  }
+
+  // biome-ignore lint/suspicious/noExplicitAny: kysely query builder loses type after reassignment
+  private applyTransferFilter(query: any, filter: TransferFilter) {
+    if (filter === 'onlyLiquidityBased') {
+      return query
+        .where('srcWasBurned', '=', false)
+        .where('dstWasMinted', '=', false)
+    }
+    // biome-ignore lint/suspicious/noExplicitAny: kysely expression builder type
+    return query.where((eb: any) =>
+      eb.or([
+        eb('bridgeType', '!=', 'nonMinting'),
+        eb('bridgeType', 'is', null),
+      ]),
+    )
   }
 }

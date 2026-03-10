@@ -128,6 +128,14 @@ export function SideNavLayout({
                 selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
                 '/interop/burn-and-mint',
             },
+            {
+              title: 'Multichain Frameworks',
+              href: '/interop/multichain',
+            },
+            {
+              title: 'Intent Protocols',
+              href: '/interop/intent',
+            },
           ],
         },
         {
