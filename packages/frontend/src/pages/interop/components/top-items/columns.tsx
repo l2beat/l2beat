@@ -108,18 +108,17 @@ export const getTopItemsColumns = (
           ? undefined
           : row.avgDuration.type === 'single'
             ? row.avgDuration.duration
-            : (row.avgDuration.in.duration ??
-              row.avgDuration.out.duration ??
-              Number.POSITIVE_INFINITY),
+            : Math.min(
+                ...row.avgDuration.splits
+                  .filter((split) => split.duration !== null)
+                  .map((split) => split.duration ?? Number.POSITIVE_INFINITY),
+              ),
       {
         header: 'Last 24h avg.\ntransfer time',
         cell: (ctx) => {
           if (ctx.row.original.avgDuration === null) return EM_DASH
           return (
-            <AvgDurationCell
-              averageDuration={ctx.row.original.avgDuration}
-              disableTooltip
-            />
+            <AvgDurationCell averageDuration={ctx.row.original.avgDuration} />
           )
         },
         meta: {

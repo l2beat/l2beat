@@ -2,6 +2,7 @@ import type { InteropDurationSplit } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
+  InteropTransferTypeStatsMap,
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -139,10 +140,7 @@ export type CommonInteropData = {
   volume: number
   transferCount: number
   totalDurationSum: number
-  inTransferCount: number
-  inDurationSum: number
-  outTransferCount: number
-  outDurationSum: number
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   minTransferValueUsd: number | undefined
   maxTransferValueUsd: number | undefined
   mintedValueUsd: number | undefined
@@ -196,14 +194,10 @@ export type SingleAverageDuration = {
 
 export type SplitAverageDuration = {
   type: 'split'
-  in: {
+  splits: {
     label: string
     duration: number | null
-  }
-  out: {
-    label: string
-    duration: number | null
-  }
+  }[]
 }
 
 export type UnknownAverageDuration = {

@@ -90,18 +90,22 @@ export const celo: ScalingProject = opStackL2({
   interopConfig: {
     name: 'Celo Canonical',
     durationSplit: {
-      lockAndMint: {
-        in: {
+      lockAndMint: [
+        {
           label: 'L1 -> L2',
-          from: 'ethereum',
-          to: 'celo',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
         },
-        out: {
+        {
           label: 'L2 -> L1',
-          from: 'celo',
-          to: 'ethereum',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
         },
-      },
+      ],
     },
     plugins: [
       {

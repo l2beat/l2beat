@@ -81,18 +81,16 @@ export const polygonpos: ScalingProject = {
   },
   interopConfig: {
     durationSplit: {
-      lockAndMint: {
-        in: {
+      lockAndMint: [
+        {
           label: 'L1 -> L2',
-          from: 'ethereum',
-          to: 'polygonpos',
+          transferTypes: ['polygon.L1ToL2Transfer'],
         },
-        out: {
+        {
           label: 'L2 -> L1',
-          from: 'polygonpos',
-          to: 'ethereum',
+          transferTypes: ['polygon.L2ToL1Transfer'],
         },
-      },
+      ],
     },
     plugins: [
       {

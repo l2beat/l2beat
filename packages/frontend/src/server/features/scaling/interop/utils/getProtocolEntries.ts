@@ -1,11 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Project } from '@l2beat/config'
-import {
-  type KnownInteropBridgeType,
-  notUndefined,
-  type ProjectId,
-  type UnixTime,
-  unique,
+import type {
+  KnownInteropBridgeType,
+  ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
@@ -16,7 +14,6 @@ import type {
   ProtocolEntry,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
-import { buildTransfersTimeModeMap } from './buildTransfersTimeModeMap'
 import { buildDurationSplitMap, getAverageDuration } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
 import {
@@ -24,6 +21,7 @@ import {
   getProtocolsDataMapByBridgeType,
   type ProtocolDataByBridgeType,
 } from './getProtocolsDataMap'
+import { getRelevantBridgeTypes } from './getRelevantBridgeTypes'
 import { getTokensData } from './getTokensData'
 import { getTopItems } from './getTopItems'
 
@@ -41,18 +39,8 @@ export function getProtocolEntries(
   zeroTransferProtocols: { name: string; iconUrl: string }[]
 } {
   const durationSplitMap = buildDurationSplitMap(interopProjects)
-  const transfersTimeModeMap = buildTransfersTimeModeMap(interopProjects)
-
-  const protocolsDataMap = getProtocolsDataMap(
-    records,
-    transfersTimeModeMap,
-    durationSplitMap,
-  )
-  const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(
-    records,
-    durationSplitMap,
-    transfersTimeModeMap,
-  )
+  const protocolsDataMap = getProtocolsDataMap(records)
+  const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(records)
 
   const entries: ProtocolEntry[] = []
   const zeroTransferProtocols: { name: string; iconUrl: string }[] = []
@@ -72,11 +60,9 @@ export function getProtocolEntries(
       logger,
     )
 
-    const bridgeTypes = unique(
-      project.interopConfig.plugins
-        .map((p) => p.bridgeType)
-        .filter(notUndefined),
-    ).sort(sortBridgeTypesFn)
+    const bridgeTypes = getRelevantBridgeTypes(project, undefined).sort(
+      sortBridgeTypesFn,
+    )
 
     // Show zeros for projects that don't have data but have plugins for the given type
     if (!data && (!type || bridgeTypes.includes(type))) {
@@ -90,23 +76,20 @@ export function getProtocolEntries(
     // Skip projects that don't have data and don't have plugins for the given type
     if (!data) continue
 
+    const relevantBridgeTypes = getRelevantBridgeTypes(project, type)
     const averageDuration =
       project.interopConfig.transfersTimeMode === 'unknown'
         ? { type: 'unknown' as const }
-        : bridgeTypes.length === 1
-          ? // Show average duration in the All protocols table only if there is only one bridge type
-            getAverageDuration(
-              project.id,
-              // biome-ignore lint/style/noNonNullAssertion: it's there
-              bridgeTypes[0]!,
-              data,
-              durationSplitMap,
-            )
-          : getAverageDuration(project.id, undefined, data, undefined)
+        : getAverageDuration(
+            project.id,
+            relevantBridgeTypes,
+            data,
+            durationSplitMap,
+          )
 
     const tokens = getTokensData({
       projectId: project.id,
-      bridgeType: undefined, // No bridge type split for aggregated view
+      bridgeTypes: undefined, // No bridge type split for aggregated view
       tokens: data.tokens,
       tokensDetailsMap,
       durationSplitMap: undefined, // No duration split map for aggregated view
@@ -115,7 +98,7 @@ export function getProtocolEntries(
     })
     const chains = getChainsData({
       projectId: project.id,
-      bridgeType: undefined, // No bridge type split for aggregated view
+      bridgeTypes: undefined, // No bridge type split for aggregated view
       chains: data.chains,
       durationSplitMap: undefined, // No duration split map for aggregated view
       logger,
@@ -178,7 +161,7 @@ function getByBridgeTypeData(
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeType: 'lockAndMint',
+              bridgeTypes: ['lockAndMint'],
               tokens: data.lockAndMint.tokens,
               tokensDetailsMap,
               durationSplitMap,
@@ -203,7 +186,7 @@ function getByBridgeTypeData(
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeType: 'nonMinting',
+              bridgeTypes: ['nonMinting'],
               tokens: data.nonMinting.tokens,
               tokensDetailsMap,
               durationSplitMap,
@@ -223,7 +206,7 @@ function getByBridgeTypeData(
           tokens: getTopItems(
             getTokensData({
               projectId,
-              bridgeType: 'burnAndMint',
+              bridgeTypes: ['burnAndMint'],
               tokens: data.burnAndMint.tokens,
               tokensDetailsMap,
               durationSplitMap,
