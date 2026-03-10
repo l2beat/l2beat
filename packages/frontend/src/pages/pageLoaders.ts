@@ -1,10 +1,10 @@
-import type { JSX } from 'react'
-import type { SsrData } from './ClientPageRouter'
+import type { PageName, Pages } from './pageTypes'
 
-// biome-ignore lint/suspicious/noExplicitAny: It's a dynamic import
-type ClientPageLoader = () => Promise<(props: any) => JSX.Element>
+type PageLoaders = {
+  [K in PageName]: () => Promise<Pages[K]>
+}
 
-const pageLoaders = {
+export const pageLoaders = {
   ScalingSummaryPage: async () =>
     (await import('./scaling/summary/ScalingSummaryPage')).ScalingSummaryPage,
   ScalingRiskPage: async () =>
@@ -113,8 +113,8 @@ const pageLoaders = {
       .MonthlyUpdatePage,
   PublicationsPage: async () =>
     (await import('./publications/PublicationsPage')).PublicationsPage,
-} satisfies Record<SsrData['page'], ClientPageLoader>
+} satisfies PageLoaders
 
-export async function getClientPage(page: SsrData['page']) {
+export async function getPage<K extends PageName>(page: K): Promise<Pages[K]> {
   return await pageLoaders[page]()
 }
