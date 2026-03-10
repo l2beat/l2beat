@@ -1,5 +1,4 @@
 import {
-  ChainId,
   ChainSpecificAddress,
   EthereumAddress,
   formatLargeNumber,
@@ -20,7 +19,6 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
@@ -379,54 +377,6 @@ export const starknet: ScalingProject = {
         ],
       },
     ],
-    proofVerification: {
-      shortDescription: 'Starknet is a ZK-CairoVM rollup on Ethereum.',
-      aggregation: true,
-      requiredTools: [],
-      verifiers: [
-        {
-          name: 'SHARPVerifier',
-          description:
-            'Starknet utilizes STARKs for their system. The protocol makes use of recursive aggregation across multiple projects that share the same onchain verifier. SHARP stands for SHARed Prover. Different programs are represented onchain with different program hashes.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            // TODO: change links when this is released: https://github.com/starkware-libs/cairo-lang/commit/0e4dab8a6065d80d1c726394f5d9d23cb451706a
-            {
-              name: 'Main bootloader',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo',
-            },
-            {
-              name: 'Simple bootloader',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/simple_bootloader/simple_bootloader.cairo',
-            },
-            {
-              name: 'Applicative bootloader',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.2a0/src/starkware/cairo/bootloaders/applicative_bootloader/applicative_bootloader.cairo',
-            },
-            {
-              name: 'Recursive Cairo verifier',
-              proofSystem: 'STARK',
-              mainArithmetization: 'AIR',
-              mainPCS: 'FRI',
-              trustedSetup: 'None',
-              link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/cairo/cairo_verifier/layouts/all_cairo',
-            },
-            {
-              name: 'StarknetOS',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os',
-            },
-          ],
-        },
-      ],
-    },
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {

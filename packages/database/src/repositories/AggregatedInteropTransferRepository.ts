@@ -2,6 +2,7 @@ import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropTransfer } from '../kysely/generated/types'
+import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
 export interface AggregatedInteropTransferRecord {
   timestamp: UnixTime
@@ -9,6 +10,7 @@ export interface AggregatedInteropTransferRecord {
   bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
   identifiedCount: number
   totalDurationSum: number
@@ -52,6 +54,9 @@ export function toRecord(
     bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
+    transferTypeStats:
+      (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
+      undefined,
     transferCount: row.transferCount,
     identifiedCount: row.identifiedCount,
     totalDurationSum: row.totalDurationSum,
@@ -79,6 +84,7 @@ export function toRow(
     bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
+    transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
     identifiedCount: record.identifiedCount,
     totalDurationSum: record.totalDurationSum,

@@ -15,11 +15,11 @@ export type ProtocolEntry = {
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
-  | {
-    name: string
-    iconUrl: string
-  }
-  | undefined
+    | {
+        name: string
+        iconUrl: string
+      }
+    | undefined
   volume: number
   tokens: TopItems<TokenData>
   chains: TopItems<ChainData>

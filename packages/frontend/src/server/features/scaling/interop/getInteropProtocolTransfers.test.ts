@@ -49,7 +49,10 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         ['arbitrum', 'https://arbiscan.io'],
       ]),
       new Map([
-        ['eth', { symbol: 'ETH', iconUrl: 'https://token/eth.png', issuer: null }],
+        [
+          'eth',
+          { symbol: 'ETH', iconUrl: 'https://token/eth.png', issuer: null },
+        ],
       ]),
     )
 

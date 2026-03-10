@@ -67,8 +67,8 @@ export async function getInteropProtocolTransfers({
 
   const plugins = type
     ? interopProject.interopConfig.plugins.filter(
-      (plugin) => plugin.bridgeType === type,
-    )
+        (plugin) => plugin.bridgeType === type,
+      )
     : interopProject.interopConfig.plugins
   if (plugins.length === 0) {
     return {
@@ -207,10 +207,16 @@ export function toInteropProtocolTransferDetailsItem(
     timestamp: transfer.timestamp,
     srcAmount: transfer.srcAmount,
     srcSymbol: transfer.srcSymbol,
-    srcTokenIconUrl: getTokenIconUrl(transfer.srcAbstractTokenId, tokensDetailsMap),
+    srcTokenIconUrl: getTokenIconUrl(
+      transfer.srcAbstractTokenId,
+      tokensDetailsMap,
+    ),
     dstAmount: transfer.dstAmount,
     dstSymbol: transfer.dstSymbol,
-    dstTokenIconUrl: getTokenIconUrl(transfer.dstAbstractTokenId, tokensDetailsMap),
+    dstTokenIconUrl: getTokenIconUrl(
+      transfer.dstAbstractTokenId,
+      tokensDetailsMap,
+    ),
     valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
     duration: transfer.duration,
     srcChain: transfer.srcChain,
