@@ -114,6 +114,12 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     chainId: 130,
     solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
   },
+  {
+    chain: 'hyperliquid',
+    gaszipId: 430,
+    chainId: 999,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+  },
 ])
 
 export function getChainByGaszipId(

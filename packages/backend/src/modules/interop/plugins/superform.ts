@@ -64,6 +64,12 @@ const SUPERFORM_NETWORKS = defineNetworks('superform', [
     chain: 'unichain',
     address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
   },
+  {
+    chainId: 999,
+    eid: 30367,
+    chain: 'hyperliquid',
+    address: EthereumAddress('0xa195608C2306A26f727d5199D5A382a4508308DA'),
+  },
 ])
 
 const parseCrossChainInitiatedDepositMulti = createEventParser(

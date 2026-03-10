@@ -59,6 +59,7 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '56', chain: 'bsc' },
   { chainId: '43114', chain: 'avalanche' },
   { chainId: '59144', chain: 'linea' },
+  { chainId: '999', chain: 'hyperliquid' },
 ])
 
 export const Sent = createInteropEventType<{
