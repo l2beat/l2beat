@@ -18,7 +18,6 @@ async function main() {
     app,
     vite,
     render: createDevRender(vite),
-    stylesheetUrl: '/src/styles/globals.css?direct',
   })
 }
 

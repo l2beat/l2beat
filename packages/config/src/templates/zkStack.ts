@@ -1,9 +1,8 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
-  ChainId,
   ChainSpecificAddress,
-  EthereumAddress,
+  type EthereumAddress,
   formatSeconds,
   ProjectId,
   type UnixTime,
@@ -23,7 +22,6 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { PROGRAM_HASHES } from '../common/programHashes'
-import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -601,52 +599,6 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
             'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
         },
       ],
-      proofVerification: {
-        shortDescription: 'ZKsync Era is a ZK-EVM rollup on Ethereum.',
-        aggregation: true,
-        requiredTools: [
-          {
-            name: 'Custom tool',
-            version: 'v14.2.0',
-            link: 'https://github.com/matter-labs/zksync-era/tree/prover-v14.2.0/prover/vk_setup_data_generator_server_fri',
-          },
-        ],
-        verifiers: [
-          {
-            name: 'ZKsyncEraVerifier',
-            description:
-              'ZKsync Era utilizes [Boojum](https://github.com/matter-labs/zksync-crypto/tree/main/crates/boojum) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
-            verified: 'no',
-            contractAddress: EthereumAddress(
-              '0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66',
-            ),
-            chainId: ChainId.ETHEREUM,
-            subVerifiers: [
-              {
-                name: 'Final wrap',
-                ...PROOFS.PLONKSNARK('Aztec ceremony'),
-                link: 'https://github.com/matter-labs/zksync-protocol/blob/main/crates/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs',
-              },
-              {
-                name: 'Aggregation circuit',
-                proofSystem: 'Redshift',
-                mainArithmetization: 'Plonkish',
-                mainPCS: 'LPC',
-                trustedSetup: 'None',
-                link: 'https://github.com/matter-labs/zksync-protocol/blob/7dfcc81eccc3984793646a5a47e4cd68757955a2/crates/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
-              },
-              {
-                name: 'Main circuit',
-                proofSystem: 'Redshift',
-                mainArithmetization: 'Plonkish',
-                mainPCS: 'LPC',
-                trustedSetup: 'None',
-                link: 'https://github.com/matter-labs/zksync-protocol/tree/main/crates/zkevm_circuits',
-              },
-            ],
-          },
-        ],
-      },
     },
     milestones: templateVars.milestones ?? [],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,

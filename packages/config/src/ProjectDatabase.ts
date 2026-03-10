@@ -48,7 +48,6 @@ const schema = {
   daBridge: 'TEXT',
   customDa: 'TEXT',
 
-  proofVerification: 'TEXT',
   zkCatalogInfo: 'TEXT',
 
   interopConfig: 'TEXT',
@@ -69,7 +68,6 @@ const schema = {
   discoveryInfo: 'TEXT',
 
   isScaling: 'BOOLEAN',
-  isZkCatalog: 'BOOLEAN',
   isDaLayer: 'BOOLEAN',
   isInteropProtocol: 'BOOLEAN',
   isUpcoming: 'BOOLEAN',

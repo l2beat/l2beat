@@ -6,11 +6,11 @@ const SERVER_ENTRY_PATH = '/src/ssr/ServerEntry.tsx'
 export function createDevRender(
   vite: Pick<ViteDevServer, 'ssrLoadModule'>,
 ): ServerRenderFunction {
-  return async (data, url, options) => {
+  return async (data, url) => {
     const mod = (await vite.ssrLoadModule(SERVER_ENTRY_PATH)) as {
       render: ServerRenderFunction
     }
 
-    return mod.render(data, url, options)
+    return mod.render(data, url)
   }
 }

@@ -7,6 +7,7 @@
     "eth:0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91"
   ],
   "names": {
-    "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa": "SxNetworkMultisig"
+    "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa": "SxNetworkMultisig",
+    "eth:0xa4C325e25215C1fB2405EB28d81d2dFdbfC8D24C": "CalderaMultisig"
   }
 }

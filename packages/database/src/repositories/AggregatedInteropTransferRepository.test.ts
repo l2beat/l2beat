@@ -23,6 +23,9 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             timestamp: UnixTime(100),
             srcChain: 'ethereum',
             dstChain: 'arbitrum',
+            transferTypeStats: {
+              taxi: { transferCount: 3, totalDurationSum: 120 },
+            },
             transferCount: 5,
             identifiedCount: 1000,
           }),
@@ -1282,6 +1285,7 @@ function record({
   timestamp,
   srcChain,
   dstChain,
+  transferTypeStats,
   transferCount = 1,
   identifiedCount = 1,
   totalDurationSum = 0,
@@ -1303,6 +1307,7 @@ function record({
   timestamp: UnixTime
   srcChain: string
   dstChain: string
+  transferTypeStats?: AggregatedInteropTransferRecord['transferTypeStats']
   transferCount?: number
   identifiedCount?: number
   totalDurationSum?: number
@@ -1325,6 +1330,7 @@ function record({
     id,
     srcChain,
     dstChain,
+    transferTypeStats,
     transferCount,
     identifiedCount,
     totalDurationSum,

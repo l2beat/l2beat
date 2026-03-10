@@ -1,6 +1,5 @@
 import {
   assert,
-  ChainId,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -22,7 +21,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -379,36 +377,6 @@ export const degate3: ScalingProject = {
         ],
       },
     ],
-    proofVerification: {
-      shortDescription:
-        'DeGate is a DEX rollup on Ethereum, based on Loopring V3.',
-      aggregation: false,
-      requiredTools: [
-        {
-          name: 'Custom tool',
-          version: 'v1.1.0',
-          link: 'https://github.com/degatedev/trusted_setup/tree/master',
-        },
-      ],
-      verifiers: [
-        {
-          name: 'BlockVerifier',
-          description: 'DeGate utilizes Groth16 for their proving system.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Main circuit',
-              ...PROOFS.GROTH16('?'),
-              link: 'https://github.com/degatedev/protocols/tree/degate_mainnet/packages/loopring_v3/circuit',
-            },
-          ],
-        },
-      ],
-    },
   },
   permissions: {
     ethereum: {

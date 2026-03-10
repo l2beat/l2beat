@@ -1,1 +1,0 @@
-BlobstreamX is a set of smart contracts that act as a Celestia ZK light client, used to verify DA attestations by projects using Celestia for DA. The BlobstreamX repo can be found [here](https://github.com/succinctlabs/blobstreamx/tree/main).

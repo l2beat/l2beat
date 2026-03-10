@@ -68,13 +68,6 @@ function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
       ),
     )
   }
-  if (project.proofVerification) {
-    for (const verifier of project.proofVerification.verifiers) {
-      const chain = chains.find((x) => x.chainId === verifier.chainId)
-      assert(chain?.explorerUrl, `Missing explorerUrl for: ${verifier.chainId}`)
-      verifier.url = `${chain.explorerUrl}/address/${verifier.contractAddress}#code`
-    }
-  }
   adjustContracts(project, chains)
 }
 

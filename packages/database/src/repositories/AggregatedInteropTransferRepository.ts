@@ -2,6 +2,7 @@ import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropTransfer } from '../kysely/generated/types'
+import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
 export interface AggregatedInteropTransferRecord {
   timestamp: UnixTime
@@ -9,6 +10,7 @@ export interface AggregatedInteropTransferRecord {
   bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
   identifiedCount: number
   totalDurationSum: number
@@ -30,6 +32,8 @@ export interface AggregatedInteropTransferSeriesRecord {
   day: UnixTime
   id: string
   transferCount: number
+  totalSrcValueUsd: number
+  totalDstValueUsd: number
 }
 
 export interface AggregatedInteropTransferIdSeriesRecord {
@@ -50,6 +54,9 @@ export function toRecord(
     bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
+    transferTypeStats:
+      (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
+      undefined,
     transferCount: row.transferCount,
     identifiedCount: row.identifiedCount,
     totalDurationSum: row.totalDurationSum,
@@ -77,6 +84,7 @@ export function toRow(
     bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
+    transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
     identifiedCount: record.identifiedCount,
     totalDurationSum: record.totalDurationSum,
@@ -151,6 +159,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<Date>`"latest_per_day"."day"`.as('day'),
         sql<string>`"latest_per_day"."id"`.as('id'),
         eb.fn.sum('transferCount').as('transfer_count'),
+        eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
+        eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
       ])
       .groupBy(['latest_per_day.day', 'latest_per_day.id'])
       .orderBy('latest_per_day.id', 'asc')
@@ -161,6 +171,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       day: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
+      totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
+      totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),
     }))
   }
 

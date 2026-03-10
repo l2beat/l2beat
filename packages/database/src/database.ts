@@ -40,7 +40,6 @@ import { UpdateDiffRepository } from './repositories/UpdateDiffRepository'
 import { UpdateMessageRepository } from './repositories/UpdateMessageRepository'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
-import { VerifierStatusRepository } from './repositories/VerifierStatusRepository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
 
 export type Database = ReturnType<typeof createDatabase>
@@ -105,7 +104,6 @@ export function createDatabase(
     l2CostPrice: new L2CostPriceRepository(db),
     liveness: new LivenessRepository(db),
     realTimeLiveness: new RealTimeLivenessRepository(db),
-    verifierStatus: new VerifierStatusRepository(db),
     syncMetadata: new SyncMetadataRepository(db),
     notifications: new NotificationsRepository(db),
     // #endregion

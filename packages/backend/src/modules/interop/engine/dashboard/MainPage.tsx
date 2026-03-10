@@ -418,6 +418,8 @@ function MainPageLayout(props: {
       {' | '}
       <a href="/interop/coverage-pies">Coverage pies</a>
       {' | '}
+      <a href="/interop/status">Sync status</a>
+      {' | '}
       <button id="interop-refresh-financials-button" type="button">
         refresh financials
       </button>
@@ -458,6 +460,8 @@ function MainPageLayout(props: {
           `,
         }}
       />
+      {' | '}
+      <a href="/interop/anomalies">Anomalies dashboard</a>
       <DataTablePage
         showHome={false}
         tables={[

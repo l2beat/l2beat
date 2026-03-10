@@ -64,6 +64,7 @@ export async function getLatestAggregatedInteropTransferWithTokens(
         maxTransferValueUsd: token.maxTransferValueUsd,
         mintedValueUsd: token.mintedValueUsd,
         burnedValueUsd: token.burnedValueUsd,
+        transferTypeStats: token.transferTypeStats,
       })),
   }))
 

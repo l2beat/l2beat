@@ -37,8 +37,6 @@ import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
 import { StagesPage } from './stages/StagesPage'
 import { TermsOfServicePage } from './terms-of-service/TermsOfServicePage'
-import { ZkCatalogV1ProjectPage } from './zk-catalog/v1/project/ZkCatalogV1ProjectPage'
-import { ZkCatalogPageV1 } from './zk-catalog/v1/ZkCatalogPageV1'
 import { ZkCatalogProjectPage } from './zk-catalog/v2/project/ZkCatalogProjectPage'
 import { ZkCatalogPage } from './zk-catalog/v2/ZkCatalogPage'
 
@@ -81,8 +79,6 @@ const pages = {
   DataAvailabilityArchivedPage,
   // ZK Catalog
   ZkCatalogPage,
-  ZkCatalogPageV1,
-  ZkCatalogV1ProjectPage,
   ZkCatalogProjectPage,
   // Ecosystems
   EcosystemProjectPage,

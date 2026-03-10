@@ -27,6 +27,9 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           abstractTokenId: 'token1',
+          transferTypeStats: {
+            taxi: { transferCount: 2, totalDurationSum: 90 },
+          },
           transferCount: 5,
           totalDurationSum: 1000,
           volume: 5000,
@@ -893,6 +896,7 @@ function record({
   srcChain,
   dstChain,
   abstractTokenId,
+  transferTypeStats,
   transferCount = 1,
   totalDurationSum = 0,
   bridgeType = 'unknown',
@@ -907,6 +911,7 @@ function record({
   srcChain: string
   dstChain: string
   abstractTokenId: string
+  transferTypeStats?: AggregatedInteropTokenRecord['transferTypeStats']
   transferCount?: number
   totalDurationSum?: number
   bridgeType?: InteropBridgeType
@@ -923,6 +928,7 @@ function record({
     srcChain,
     dstChain,
     abstractTokenId,
+    transferTypeStats,
     transferCount,
     totalDurationSum,
     volume,

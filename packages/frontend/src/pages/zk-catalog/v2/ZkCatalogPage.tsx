@@ -6,7 +6,7 @@ import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { cn } from '~/utils/cn'
 import type { ZkCatalogEntry } from '../../../server/features/zk-catalog/getZkCatalogEntries'
-import { ZkCatalogHeader } from '../v1/components/ZkCatalogHeader'
+import { ZkCatalogHeader } from './components/ZkCatalogHeader'
 import { ZkCatalogTable } from './table/ZkCatalogTable'
 
 interface Props extends AppLayoutProps {
