@@ -104,24 +104,13 @@ function SpeedCard({
       </div>
 
       {stats && (
-        <div className="mb-3 flex items-baseline justify-between">
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-medium text-label-value-14 tabular-nums">
-              {formatNumber(stats.count)}
-            </span>
-            <span className="text-label-value-12 text-secondary">
-              transfers
-            </span>
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-label-value-12 text-secondary">
-              {stats.srcChainCount + stats.dstChainCount} chains
-            </span>
-            <span className="text-label-value-12 text-secondary">·</span>
-            <span className="text-label-value-12 text-secondary">
-              {paths.length} routes
-            </span>
-          </div>
+        <div className="mb-3 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 text-label-value-12 text-secondary">
+          <span className="font-medium text-label-value-14 text-primary tabular-nums">
+            {formatNumber(stats.count)}
+          </span>
+          <span>transfers</span>
+          <span>·</span>
+          <span>{paths.length} routes</span>
         </div>
       )}
 
