@@ -163,32 +163,25 @@ function TokenAmount({
     minimumFractionDigits: 0,
     maximumFractionDigits: 5,
   })
-  if (iconUrl) {
-    return (
-      <span className="inline-flex items-center gap-1 font-medium text-label-value-14 text-primary">
-        {formattedAmount}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <img src={iconUrl} alt={symbol} className="size-4" />
-          </TooltipTrigger>
-          <TooltipPortal>
-            <TooltipContent
-              className="z-[1000]"
-              side="top"
-              align="center"
-              sideOffset={6}
-            >
-              {symbol}
-            </TooltipContent>
-          </TooltipPortal>
-        </Tooltip>
-      </span>
-    )
-  }
 
   return (
-    <span className="font-medium text-label-value-14 text-primary">
-      {symbol ? `${formattedAmount} ${symbol}` : formattedAmount}
+    <span className="inline-flex items-center gap-1 font-medium text-label-value-14 text-primary">
+      {formattedAmount}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <img src={iconUrl} alt={symbol} className="size-4" />
+        </TooltipTrigger>
+        <TooltipPortal>
+          <TooltipContent
+            className="z-[1000]"
+            side="top"
+            align="center"
+            sideOffset={6}
+          >
+            {symbol}
+          </TooltipContent>
+        </TooltipPortal>
+      </Tooltip>
     </span>
   )
 }
