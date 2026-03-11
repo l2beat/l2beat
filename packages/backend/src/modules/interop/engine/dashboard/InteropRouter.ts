@@ -265,13 +265,11 @@ export function createInteropRouter(
     const { pluginName, resyncRequestedFrom } = payload
 
     const defaultFrom = resyncRequestedFrom['*']
-    const existingChains = (
-      await db.interopPluginSyncState.findByPluginName(pluginName)
-    ).map((r) => r.chain)
+    const chains = syncersManager.getChainsForPlugin(pluginName)
 
     const updatedChains = new Set<string>()
     await db.transaction(async () => {
-      for (const chain of existingChains) {
+      for (const chain of chains) {
         const resyncFrom = resyncRequestedFrom[chain] ?? defaultFrom
         if (resyncFrom) {
           await db.interopPluginSyncState.setResyncRequestedFrom(
@@ -295,21 +293,21 @@ export function createInteropRouter(
       .validate(ctx.request.body)
     const { pluginName } = payload
 
-    const existingChains = (
-      await db.interopPluginSyncState.findByPluginName(pluginName)
-    ).map((r) => r.chain)
+    const chains = syncersManager.getChainsForPlugin(pluginName)
 
     await db.transaction(async () => {
-      for (const chain of existingChains) {
-        await db.interopPluginSyncState.updateByPluginNameAndChain(
+      for (const chain of chains) {
+        await db.interopPluginSyncState.upsert({
           pluginName,
           chain,
-          { wipeRequired: true, resyncRequestedFrom: null },
-        )
+          lastError: null,
+          resyncRequestedFrom: null,
+          wipeRequired: true,
+        })
       }
     })
 
-    ctx.body = { updatedChains: existingChains }
+    ctx.body = { updatedChains: chains }
   })
 
   router.post('/interop/refresh-financials', async (ctx) => {
