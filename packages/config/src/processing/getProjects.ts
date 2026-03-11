@@ -152,7 +152,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       p.id,
       p.type === 'layer2' ? p.config.trackedTxs : undefined,
     ),
-    proofVerification: p.stateValidation?.proofVerification,
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
@@ -161,7 +160,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     // tags
     isScaling: true,
     isInteropProtocol: p.interopConfig ? true : undefined,
-    isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     hasTestnet: p.hasTestnet,

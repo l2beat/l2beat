@@ -2,6 +2,7 @@ import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropToken } from '../kysely/generated/types'
+import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
 export interface AggregatedInteropTokenRecord {
   timestamp: UnixTime
@@ -10,6 +11,7 @@ export interface AggregatedInteropTokenRecord {
   srcChain: string
   dstChain: string
   abstractTokenId: string
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
   totalDurationSum: number
   volume: number
@@ -29,6 +31,9 @@ export function toRecord(
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
     abstractTokenId: row.abstractTokenId,
+    transferTypeStats:
+      (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
+      undefined,
     transferCount: row.transferCount,
     totalDurationSum: row.totalDurationSum,
     volume: row.volume,
@@ -49,6 +54,7 @@ export function toRow(
     srcChain: record.srcChain,
     dstChain: record.dstChain,
     abstractTokenId: record.abstractTokenId,
+    transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
     totalDurationSum: record.totalDurationSum,
     volume: record.volume,
@@ -84,6 +90,7 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
     sourceChains: string[],
     destinationChains: string[],
     type?: InteropBridgeType,
+    protocolId?: string,
     options?: {
       includeSameChainTransfers?: boolean
     },
@@ -98,6 +105,10 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .where('srcChain', 'in', sourceChains)
       .where('dstChain', 'in', destinationChains)
+
+    if (protocolId) {
+      query = query.where('id', '=', protocolId)
+    }
 
     if (!options?.includeSameChainTransfers) {
       query = query.whereRef('srcChain', '!=', 'dstChain')

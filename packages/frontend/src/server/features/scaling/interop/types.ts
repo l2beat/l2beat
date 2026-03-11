@@ -2,13 +2,16 @@ import type { InteropDurationSplit } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
+  InteropTransferTypeStatsMap,
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { InteropFlowData } from './utils/getFlows'
 import type { TopItems } from './utils/getTopItems'
 
 export type ProtocolEntry = {
   id: ProjectId
+  slug: string
   iconUrl: string
   name: string
   shortName: string | undefined
@@ -45,22 +48,23 @@ export type ByBridgeTypeData = {
   burnAndMint: BurnAndMintProtocolData | undefined
 }
 
-export type LockAndMintProtocolData = {
+type BridgeTypeCommonData = {
   volume: number
-  netMintedValue: number | undefined
+  transferCount: number
+  averageValue: number | null
   tokens: TopItems<TokenData>
+  flows: InteropFlowData[]
 }
 
-export type NonMintingProtocolData = {
-  volume: number
-  tokens: TopItems<TokenData>
+export type LockAndMintProtocolData = BridgeTypeCommonData & {
+  netMintedValue: number | undefined
+}
+
+export type NonMintingProtocolData = BridgeTypeCommonData & {
   averageValueInFlight: number
 }
 
-export type BurnAndMintProtocolData = {
-  volume: number
-  tokens: TopItems<TokenData>
-}
+export type BurnAndMintProtocolData = BridgeTypeCommonData
 
 export type InteropSelectionInput = v.infer<typeof InteropSelectionInput>
 const InteropSelectionInputShape = {
@@ -73,6 +77,12 @@ export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
+})
+
+export type InteropProtocolParams = v.infer<typeof InteropProtocolParams>
+export const InteropProtocolParams = v.object({
+  id: v.string().transform((value) => ProjectId(value)),
+  ...InteropSelectionInputShape,
 })
 
 export type InteropProtocolTokensParams = v.infer<
@@ -102,8 +112,10 @@ export type InteropProtocolTransferDetailsItem = {
   timestamp: number
   srcAmount: number | undefined
   srcSymbol: string | undefined
+  srcTokenIconUrl: string
   dstAmount: number | undefined
   dstSymbol: string | undefined
+  dstTokenIconUrl: string
   valueUsd: number | undefined
   duration: number
   srcChain: string
@@ -137,10 +149,7 @@ export type CommonInteropData = {
   volume: number
   transferCount: number
   totalDurationSum: number
-  inTransferCount: number
-  inDurationSum: number
-  outTransferCount: number
-  outDurationSum: number
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   minTransferValueUsd: number | undefined
   maxTransferValueUsd: number | undefined
   mintedValueUsd: number | undefined
@@ -194,14 +203,10 @@ export type SingleAverageDuration = {
 
 export type SplitAverageDuration = {
   type: 'split'
-  in: {
+  splits: {
     label: string
     duration: number | null
-  }
-  out: {
-    label: string
-    duration: number | null
-  }
+  }[]
 }
 
 export type UnknownAverageDuration = {

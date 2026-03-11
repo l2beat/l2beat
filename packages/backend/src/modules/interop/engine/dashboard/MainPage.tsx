@@ -460,6 +460,8 @@ function MainPageLayout(props: {
           `,
         }}
       />
+      {' | '}
+      <a href="/interop/anomalies">Anomalies dashboard</a>
       <DataTablePage
         showHome={false}
         tables={[

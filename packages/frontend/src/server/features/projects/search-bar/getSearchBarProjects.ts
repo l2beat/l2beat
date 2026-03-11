@@ -20,6 +20,7 @@ export async function getSearchBarProjects(
       'isDaLayer',
       'isUpcoming',
       'ecosystemConfig',
+      'interopConfig',
       'zkCatalogInfo',
       'contracts',
       'permissions',

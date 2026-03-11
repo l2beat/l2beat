@@ -1,13 +1,10 @@
-import type { InteropDurationSplit } from '@l2beat/config'
 import { assertUnreachable, getInteropTransferValue } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
-  DurationSplitMap,
 } from '../types'
 import { accumulateChains, accumulateTokens } from './accumulate'
-import type { TransfersTimeModeMap } from './buildTransfersTimeModeMap'
-import { computeDurationSplits } from './computeDurationSplits'
+import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export interface ProtocolDataByBridgeType {
   lockAndMint?: ProtocolDataByBridgeTypeCommon & CommonInteropData
@@ -20,6 +17,7 @@ export interface ProtocolDataByBridgeType {
 type ProtocolDataByBridgeTypeCommon = {
   volume: number
   tokens: Map<string, CommonInteropData>
+  flows: Map<string, number>
   transferCount: number
   identifiedTransferCount: number
   minTransferValueUsd: number | undefined
@@ -42,10 +40,7 @@ export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
   volume: 0,
   transferCount: 0,
   totalDurationSum: 0,
-  inTransferCount: 0,
-  inDurationSum: 0,
-  outTransferCount: 0,
-  outDurationSum: 0,
+  transferTypeStats: undefined,
   minTransferValueUsd: undefined,
   maxTransferValueUsd: undefined,
   mintedValueUsd: undefined,
@@ -58,8 +53,6 @@ export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
  */
 export function getProtocolsDataMapByBridgeType(
   records: AggregatedInteropTransferWithTokens[],
-  durationSplitMap: DurationSplitMap | undefined,
-  transfersTimeModeMap: TransfersTimeModeMap,
 ): Map<string, ProtocolDataByBridgeType> {
   const protocolsDataMap = new Map<string, ProtocolDataByBridgeType>()
 
@@ -71,13 +64,6 @@ export function getProtocolsDataMapByBridgeType(
       nonMinting: undefined,
       burnAndMint: undefined,
     }
-
-    const durationSplit = durationSplitMap
-      ?.get(record.id)
-      ?.get(record.bridgeType)
-    const transfersTimeMode = transfersTimeModeMap.get(record.id)
-    const direction = getDirection(record, durationSplit, transfersTimeMode)
-
     switch (record.bridgeType) {
       case 'lockAndMint':
         bridgeTypeMap.lockAndMint = {
@@ -87,8 +73,8 @@ export function getProtocolsDataMapByBridgeType(
           tokens: mergeTokensData(
             bridgeTypeMap.lockAndMint?.tokens,
             record.tokens,
-            direction,
           ),
+          flows: mergeFlowsData(bridgeTypeMap.lockAndMint?.flows, record),
           transferCount:
             (bridgeTypeMap.lockAndMint?.transferCount ?? 0) +
             record.transferCount,
@@ -98,6 +84,10 @@ export function getProtocolsDataMapByBridgeType(
           totalDurationSum:
             (bridgeTypeMap.lockAndMint?.totalDurationSum ?? 0) +
             (record.totalDurationSum ?? 0),
+          transferTypeStats: mergeTransferTypeStats(
+            bridgeTypeMap.lockAndMint?.transferTypeStats,
+            record.transferTypeStats,
+          ),
           minTransferValueUsd:
             record.minTransferValueUsd !== undefined
               ? Math.min(
@@ -121,11 +111,6 @@ export function getProtocolsDataMapByBridgeType(
           burnedValueUsd:
             (bridgeTypeMap.lockAndMint?.burnedValueUsd ?? 0) +
             (record.burnedValueUsd ?? 0),
-          ...computeDurationSplits(
-            bridgeTypeMap.lockAndMint ?? INITIAL_COMMON_INTEROP_DATA,
-            direction,
-            record,
-          ),
         }
         break
       case 'nonMinting':
@@ -136,8 +121,8 @@ export function getProtocolsDataMapByBridgeType(
           tokens: mergeTokensData(
             bridgeTypeMap.nonMinting?.tokens,
             record.tokens,
-            direction,
           ),
+          flows: mergeFlowsData(bridgeTypeMap.nonMinting?.flows, record),
           transferCount:
             (bridgeTypeMap.nonMinting?.transferCount ?? 0) +
             record.transferCount,
@@ -173,8 +158,8 @@ export function getProtocolsDataMapByBridgeType(
           tokens: mergeTokensData(
             bridgeTypeMap.burnAndMint?.tokens,
             record.tokens,
-            direction,
           ),
+          flows: mergeFlowsData(bridgeTypeMap.burnAndMint?.flows, record),
           transferCount:
             (bridgeTypeMap.burnAndMint?.transferCount ?? 0) +
             record.transferCount,
@@ -214,30 +199,23 @@ export function getProtocolsDataMapByBridgeType(
  */
 export function getProtocolsDataMap(
   records: AggregatedInteropTransferWithTokens[],
-  transfersTimeModeMap: TransfersTimeModeMap,
-  durationSplitMap: DurationSplitMap | undefined,
 ): Map<string, ProtocolData> {
   const protocolsDataMap = new Map<string, ProtocolData>()
 
   for (const record of records) {
     const current =
       protocolsDataMap.get(record.id) ?? createInitialProtocolData()
-
-    const transfersTimeMode = transfersTimeModeMap.get(record.id)
-    const durationSplit =
-      record.bridgeType !== 'unknown'
-        ? durationSplitMap?.get(record.id)?.get(record.bridgeType)
-        : undefined
-    const direction = getDirection(record, durationSplit, transfersTimeMode)
-
     protocolsDataMap.set(record.id, {
       volume: current.volume + (getInteropTransferValue(record) ?? 0),
-      tokens: mergeTokensData(current.tokens, record.tokens, direction),
+      tokens: mergeTokensData(current.tokens, record.tokens),
       chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),
-      ...computeDurationSplits(current, direction, record),
+      transferTypeStats: mergeTransferTypeStats(
+        current.transferTypeStats,
+        record.transferTypeStats,
+      ),
       minTransferValueUsd:
         record.minTransferValueUsd !== undefined
           ? current.minTransferValueUsd !== undefined
@@ -277,10 +255,7 @@ function createInitialProtocolData(): ProtocolData {
     chains: new Map<string, CommonInteropData>(),
     transferCount: 0,
     totalDurationSum: 0,
-    inTransferCount: 0,
-    inDurationSum: 0,
-    outTransferCount: 0,
-    outDurationSum: 0,
+    transferTypeStats: undefined,
     minTransferValueUsd: undefined,
     maxTransferValueUsd: undefined,
     averageValueInFlight: undefined,
@@ -290,44 +265,29 @@ function createInitialProtocolData(): ProtocolData {
   }
 }
 
-export function getDirection(
-  record: { srcChain: string; dstChain: string },
-  durationSplit: InteropDurationSplit | undefined,
-  transfersTimeMode: 'unknown' | undefined,
-): 'in' | 'out' | null {
-  if (!durationSplit || transfersTimeMode === 'unknown') return null
-
-  if (
-    record.srcChain === durationSplit.in.from &&
-    record.dstChain === durationSplit.in.to
-  ) {
-    return 'in'
-  }
-  if (
-    record.srcChain === durationSplit.out.from &&
-    record.dstChain === durationSplit.out.to
-  ) {
-    return 'out'
-  }
-  return null
-}
-
 function mergeTokensData(
   currentTokens: Map<string, CommonInteropData> | undefined,
   recordTokens: AggregatedInteropTransferWithTokens['tokens'],
-  direction: 'in' | 'out' | null,
 ): Map<string, CommonInteropData> {
   const result = new Map(currentTokens)
 
   for (const token of recordTokens) {
     const current =
       result.get(token.abstractTokenId) ?? INITIAL_COMMON_INTEROP_DATA
-    result.set(
-      token.abstractTokenId,
-      accumulateTokens(current, token, direction),
-    )
+    result.set(token.abstractTokenId, accumulateTokens(current, token))
   }
 
+  return result
+}
+
+function mergeFlowsData(
+  currentFlows: Map<string, number> | undefined,
+  record: AggregatedInteropTransferWithTokens,
+): Map<string, number> {
+  const result = new Map(currentFlows)
+  const key = `${record.srcChain}::${record.dstChain}`
+  const current = result.get(key) ?? 0
+  result.set(key, current + (getInteropTransferValue(record) ?? 0))
   return result
 }
 

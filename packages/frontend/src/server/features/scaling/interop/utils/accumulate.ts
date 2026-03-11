@@ -3,16 +3,13 @@ import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
 } from '../types'
-import { computeDurationSplits } from './computeDurationSplits'
+import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
   volume: 0,
   transferCount: 0,
   totalDurationSum: 0,
-  inTransferCount: 0,
-  inDurationSum: 0,
-  outTransferCount: 0,
-  outDurationSum: 0,
+  transferTypeStats: undefined,
   minTransferValueUsd: undefined,
   maxTransferValueUsd: undefined,
   mintedValueUsd: undefined,
@@ -22,9 +19,8 @@ export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
 export function accumulateTokens(
   current: CommonInteropData,
   token: AggregatedInteropTransferWithTokens['tokens'][number],
-  direction: 'in' | 'out' | null,
 ) {
-  return accumulate(current, token, direction)
+  return accumulate(current, token)
 }
 
 export function accumulateChains(
@@ -32,19 +28,16 @@ export function accumulateChains(
   record: AggregatedInteropTransferRecord,
   source: 'src' | 'dst',
 ) {
-  return accumulate(
-    current,
-    {
-      volume: source === 'src' ? record.srcValueUsd : record.dstValueUsd,
-      transferCount: record.transferCount,
-      totalDurationSum: record.totalDurationSum,
-      minTransferValueUsd: record.minTransferValueUsd,
-      maxTransferValueUsd: record.maxTransferValueUsd,
-      mintedValueUsd: record.mintedValueUsd,
-      burnedValueUsd: record.burnedValueUsd,
-    },
-    source === 'src' ? 'out' : 'in',
-  )
+  return accumulate(current, {
+    volume: source === 'src' ? record.srcValueUsd : record.dstValueUsd,
+    transferCount: record.transferCount,
+    totalDurationSum: record.totalDurationSum,
+    minTransferValueUsd: record.minTransferValueUsd,
+    maxTransferValueUsd: record.maxTransferValueUsd,
+    mintedValueUsd: record.mintedValueUsd,
+    burnedValueUsd: record.burnedValueUsd,
+    transferTypeStats: record.transferTypeStats,
+  })
 }
 
 function accumulate(
@@ -57,8 +50,8 @@ function accumulate(
     maxTransferValueUsd: number | undefined
     mintedValueUsd: number | undefined
     burnedValueUsd: number | undefined
+    transferTypeStats: AggregatedInteropTransferRecord['transferTypeStats']
   },
-  direction: 'in' | 'out' | null,
 ) {
   const transferCount = record.transferCount ?? 0
   const durationSum = record.totalDurationSum ?? 0
@@ -67,6 +60,10 @@ function accumulate(
     volume: current.volume + (record.volume ?? 0),
     transferCount: current.transferCount + transferCount,
     totalDurationSum: current.totalDurationSum + durationSum,
+    transferTypeStats: mergeTransferTypeStats(
+      current.transferTypeStats,
+      record.transferTypeStats,
+    ),
     minTransferValueUsd:
       record.minTransferValueUsd !== undefined
         ? current.minTransferValueUsd !== undefined
@@ -87,6 +84,5 @@ function accumulate(
       current.burnedValueUsd !== undefined
         ? current.burnedValueUsd + (record.burnedValueUsd ?? 0)
         : record.burnedValueUsd,
-    ...computeDurationSplits(current, direction, record),
   }
 }

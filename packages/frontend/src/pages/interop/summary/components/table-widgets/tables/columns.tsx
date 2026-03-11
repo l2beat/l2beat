@@ -1,9 +1,7 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
-import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
-import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { TopTokensCell } from '~/pages/interop/components/top-items/TopTokensCell'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
@@ -13,6 +11,7 @@ import type {
   LockAndMintProtocolEntry,
   NonMintingProtocolEntry,
 } from './getBridgeTypeEntries'
+import { InteropNameCell } from './InteropNameCell'
 
 export type NonMintingProtocolRow = NonMintingProtocolEntry & BasicTableRow
 export type LockAndMintProtocolRow = LockAndMintProtocolEntry & BasicTableRow
@@ -25,6 +24,7 @@ const burnAndMintColumnHelper = createColumnHelper<BurnAndMintProtocolRow>()
 function getCommonColumns<
   T extends {
     iconUrl: string
+    slug: string
     name: string
     shortName: string | undefined
     subgroup: { name: string; iconUrl: string } | undefined
@@ -52,24 +52,10 @@ function getCommonColumns<
     }),
     columnHelper.accessor((row) => row.shortName ?? row.name, {
       header: 'Name',
-      cell: (ctx) => (
-        <TwoRowCell>
-          <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-            <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-              {ctx.row.original.shortName ?? ctx.row.original.name}
-            </div>
-            {ctx.row.original.subgroup && (
-              <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
-            )}
-          </TwoRowCell.First>
-          <TwoRowCell.Second>
-            {ctx.row.original.isAggregate && 'Aggregate'}
-          </TwoRowCell.Second>
-        </TwoRowCell>
-      ),
+      cell: (ctx) => <InteropNameCell {...ctx.row.original} />,
       meta: {
-        cellClassName: 'whitespace-normal py-1',
-        headClassName: 'text-2xs',
+        cellClassName: 'whitespace-normal md:pl-2!',
+        headClassName: 'text-2xs md:pl-2!',
       },
     }),
   ]

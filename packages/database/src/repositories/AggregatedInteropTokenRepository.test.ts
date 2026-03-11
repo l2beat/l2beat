@@ -27,6 +27,9 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
           abstractTokenId: 'token1',
+          transferTypeStats: {
+            taxi: { transferCount: 2, totalDurationSum: 90 },
+          },
           transferCount: 5,
           totalDurationSum: 1000,
           volume: 5000,
@@ -620,6 +623,40 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
         expect(result).toEqualUnsorted([record1, record3])
       })
 
+      it('filters by protocolId when provided', async () => {
+        const record1 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'token1',
+          transferCount: 5,
+          totalDurationSum: 1000,
+          volume: 5000,
+        })
+        const record2 = record({
+          id: 'protocol2',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'token2',
+          transferCount: 3,
+          totalDurationSum: 2000,
+          volume: 6000,
+        })
+        await repository.insertMany([record1, record2])
+
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+          undefined,
+          'protocol1',
+        )
+
+        expect(result).toEqual([record1])
+      })
+
       it('returns all matching records when bridgeType is undefined', async () => {
         const record1 = record({
           id: 'protocol1',
@@ -715,6 +752,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           UnixTime(100),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
+          undefined,
           undefined,
           { includeSameChainTransfers: true },
         )
@@ -858,6 +896,7 @@ function record({
   srcChain,
   dstChain,
   abstractTokenId,
+  transferTypeStats,
   transferCount = 1,
   totalDurationSum = 0,
   bridgeType = 'unknown',
@@ -872,6 +911,7 @@ function record({
   srcChain: string
   dstChain: string
   abstractTokenId: string
+  transferTypeStats?: AggregatedInteropTokenRecord['transferTypeStats']
   transferCount?: number
   totalDurationSum?: number
   bridgeType?: InteropBridgeType
@@ -888,6 +928,7 @@ function record({
     srcChain,
     dstChain,
     abstractTokenId,
+    transferTypeStats,
     transferCount,
     totalDurationSum,
     volume,

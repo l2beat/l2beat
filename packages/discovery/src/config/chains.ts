@@ -55,7 +55,8 @@ export const chains: ChainConfig[] = [
     shortName: 'arb-nova',
     multicall: getMulticall3Config(1746963),
     explorer: {
-      type: 'etherscan',
+      type: 'blockscout',
+      url: 'https://arbitrum-nova.blockscout.com/api',
     },
     coingeckoPlatform: 'arbitrum-nova',
   },
