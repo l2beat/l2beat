@@ -116,7 +116,7 @@
       "name": "Inbox",
       "address": "eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee",
       "type": "Contract",
-      "template": "aztecnetwork/Inbox",
+      "template": "aztecnetwork/ignition/Inbox",
       "sourceHashes": [
         "0x1d730495f5adaba8d5051f7f6ff89bb87ed039b2f192e27b9f80ef175ed92534"
       ],
@@ -209,7 +209,7 @@
       "name": "Rollup",
       "address": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
       "type": "Contract",
-      "template": "aztecnetwork/Rollup",
+      "template": "aztecnetwork/ignition/Rollup",
       "sourceHashes": [
         "0x31e588d1304692f4bded80c6a0ee63f0cc4371047cb2679da34efa68ee1aa410"
       ],
@@ -504,7 +504,7 @@
       ]
     },
     {
-      "name": "Aztec",
+      "name": "AZTEC Token",
       "address": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
       "type": "Contract",
       "template": "aztecnetwork/Aztec",
@@ -669,7 +669,7 @@
       "name": "FeeJuicePortal",
       "address": "eth:0xe05dc9D5969272831757181fFf1532B066254bf1",
       "type": "Contract",
-      "template": "aztecnetwork/FeeJuicePortal",
+      "template": "aztecnetwork/ignition/FeeJuicePortal",
       "sourceHashes": [
         "0x542e189cee1c3e2c68161b3fd76e431295ff190f00f18202a51059f392f457e1"
       ],
@@ -693,7 +693,7 @@
       "name": "Outbox",
       "address": "eth:0xf006c41097861AFeb18b05e586B921c081411Ee9",
       "type": "Contract",
-      "template": "aztecnetwork/Outbox",
+      "template": "aztecnetwork/ignition/Outbox",
       "sourceHashes": [
         "0xe9ea050e1b0b8a10d023bae844d6efe6d644671b0bef1bffa83987dacfed72a7"
       ],
@@ -1434,23 +1434,23 @@
     "aztecnetwork/Aztec": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "aztecnetwork/AztecTokenPositionRegistry": "0x59976ab5bef1becfde3f9417e435b12d9d791e7ce50906b3a6af408bad767a3e",
     "aztecnetwork/CoinIssuer": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/FeeJuicePortal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/Governance": "0xda08ff2623a515362905771f5aad21b6e8d84a57d8038332ba62ff0bf5163627",
     "aztecnetwork/GovernanceProposer": "0xd251e17ac927ecce11d82c021b46b918e12f5e9be00219536a2945ce7ff509ac",
     "aztecnetwork/GSE": "0xec9f7ba5d907b32bd920bea78fa1b71cf91c320d24fe89f74ef1b91ca411668d",
     "aztecnetwork/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/Inbox": "0x7b9d69a80a28ac213da9476cc0c265646f4a1452b6a2946cf6c71140fa08ceaa",
-    "aztecnetwork/Outbox": "0xa0d40137e5e7237171a464fc6b70a00b177e4cc5d455cfc8138d47cfe6766c04",
+    "aztecnetwork/ignition/FeeJuicePortal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/ignition/Inbox": "0x7b9d69a80a28ac213da9476cc0c265646f4a1452b6a2946cf6c71140fa08ceaa",
+    "aztecnetwork/ignition/Outbox": "0xa0d40137e5e7237171a464fc6b70a00b177e4cc5d455cfc8138d47cfe6766c04",
+    "aztecnetwork/ignition/Rollup": "0x727596b63f29887b1c34bfde5fcd32e313bb538a9820093a24f1a08a29d7e96b",
     "aztecnetwork/ProtocolTreasury": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/Registry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/RewardBooster": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/RewardDistributor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/Rollup": "0x727596b63f29887b1c34bfde5fcd32e313bb538a9820093a24f1a08a29d7e96b",
     "aztecnetwork/Slasher": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24470197 },
-  "permissionsConfigHash": "0x42e4e7ed08fb2908628ce01ea6586f4244caaf9911ba1d01ef820c503a727d7a"
+  "permissionsConfigHash": "0xe46631b522d6cfd8c922ae3f47f43b7aa1cae2632797e75b172718ada5ec7fb1"
 }

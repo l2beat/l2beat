@@ -254,6 +254,134 @@ describeDatabase(InteropEventRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropEventRepository.prototype.getSupportBreakdownByChainArg.name,
+    () => {
+      it('aggregates by $dstChain and uses unsupported as source of truth', async () => {
+        await repository.insertMany([
+          event(
+            'plugin1',
+            'event1',
+            'layerzero-v2.PacketOFTSent',
+            UnixTime(100),
+            UnixTime(200),
+            {
+              unsupported: false,
+              args: { $dstChain: 'base' },
+            },
+          ),
+          event(
+            'plugin1',
+            'event2',
+            'layerzero-v2.PacketOFTSent',
+            UnixTime(110),
+            UnixTime(210),
+            {
+              unsupported: true,
+              args: { $dstChain: 'base' },
+            },
+          ),
+          event(
+            'plugin1',
+            'event3',
+            'layerzero-v2.PacketOFTSent',
+            UnixTime(120),
+            UnixTime(220),
+            {
+              unsupported: false,
+              args: { $dstChain: '' },
+            },
+          ),
+          event(
+            'plugin1',
+            'event4',
+            'layerzero-v2.PacketOFTSent',
+            UnixTime(130),
+            UnixTime(230),
+            {
+              unsupported: false,
+              args: {},
+            },
+          ),
+        ])
+
+        const result = await repository.getSupportBreakdownByChainArg(
+          'layerzero-v2.PacketOFTSent',
+          '$dstChain',
+        )
+
+        expect(result).toEqualUnsorted([
+          {
+            chain: 'base',
+            isSupported: false,
+            count: 2,
+          },
+          {
+            chain: '(unknown)',
+            isSupported: true,
+            count: 2,
+          },
+        ])
+      })
+
+      it('aggregates by $srcChain', async () => {
+        await repository.insertMany([
+          event(
+            'plugin1',
+            'event1',
+            'layerzero-v2.PacketOFTDelivered',
+            UnixTime(100),
+            UnixTime(200),
+            {
+              unsupported: false,
+              args: { $srcChain: 'arbitrum' },
+            },
+          ),
+          event(
+            'plugin1',
+            'event2',
+            'layerzero-v2.PacketOFTDelivered',
+            UnixTime(110),
+            UnixTime(210),
+            {
+              unsupported: false,
+              args: { $srcChain: 'arbitrum' },
+            },
+          ),
+          event(
+            'plugin1',
+            'event3',
+            'layerzero-v2.PacketOFTDelivered',
+            UnixTime(120),
+            UnixTime(220),
+            {
+              unsupported: true,
+              args: { $srcChain: 'base' },
+            },
+          ),
+        ])
+
+        const result = await repository.getSupportBreakdownByChainArg(
+          'layerzero-v2.PacketOFTDelivered',
+          '$srcChain',
+        )
+
+        expect(result).toEqualUnsorted([
+          {
+            chain: 'arbitrum',
+            isSupported: true,
+            count: 2,
+          },
+          {
+            chain: 'base',
+            isSupported: false,
+            count: 1,
+          },
+        ])
+      })
+    },
+  )
+
   describe(InteropEventRepository.prototype.updateMatched.name, () => {
     beforeEach(async () => {
       await repository.insertMany([

@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x7bf6f59791c49c0b89698c9be8a8cc0c8a312ae2
+
+# Diff at Mon, 09 Mar 2026 10:47:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1772656605
+- current timestamp: 1773053150
+
+## Description
+
+Increase L2 gas limit from 200M to 280M on SystemConfig.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        200000000
++        280000000
+    }
+```
+
+Generated with discovered.json: 0xbb91281b53639e1d32ccd5ddc4ad57e321081e1a
+
+# Diff at Wed, 04 Mar 2026 20:37:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1772198395
+- current timestamp: 1772656605
+
+## Description
+
+One member of the Alchemy Multisig 1 (5/8 threshold) was rotated: 0xA351...700a replaced by 0x04a2...7Bd.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a"
++        "eth:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd"
+    }
+```
+
+Generated with discovered.json: 0x6fe3ae36eb7b367e5718fb9b9247becc951a3e55
+
+# Diff at Fri, 27 Feb 2026 13:25:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1771495907
+- current timestamp: 1772198395
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
 Generated with discovered.json: 0xcdae0cdb8a868f85a1ff5a0caf56d9d6937be38e
 
 # Diff at Thu, 19 Feb 2026 10:12:53 GMT:

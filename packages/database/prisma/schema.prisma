@@ -161,15 +161,6 @@ model UpdateMessage {
   @@id([projectId, timestamp])
 }
 
-model VerifierStatus {
-  address     String   @db.VarChar(255)
-  chainId     Int
-  lastUsed    DateTime @db.Timestamp(6)
-  lastUpdated DateTime @db.Timestamp(6)
-
-  @@id([address, chainId])
-}
-
 model AggregatedLiveness {
   timestamp       DateTime @db.Timestamp(6)
   projectId       String   @db.VarChar(255)
@@ -540,41 +531,47 @@ model InteropPluginSyncedRange {
 }
 
 model AggregatedInteropTransfer {
-  timestamp        DateTime @db.Timestamp(6)
-  id               String   @db.VarChar(255)
-  bridgeType       String   @default("unknown") @db.VarChar(255)
-  srcChain         String   @db.VarChar(255)
-  dstChain         String   @db.VarChar(255)
-  transferCount    Int
-  identifiedCount  Int      @default(0)
-  totalDurationSum Int
-  srcValueUsd      Float?   @db.Real
-  dstValueUsd      Float?   @db.Real
-  avgValueInFlight Float?   @db.Real
-  mintedValueUsd   Float?   @db.Real
-  burnedValueUsd   Float?   @db.Real
-  countUnder100    Int      @default(0)
-  count100To1K     Int      @default(0)
-  count1KTo10K     Int      @default(0)
-  count10KTo100K   Int      @default(0)
-  countOver100K    Int      @default(0)
+  timestamp           DateTime @db.Timestamp(6)
+  id                  String   @db.VarChar(255)
+  bridgeType          String   @default("unknown") @db.VarChar(255)
+  srcChain            String   @db.VarChar(255)
+  dstChain            String   @db.VarChar(255)
+  transferTypeStats   Json?
+  transferCount       Int
+  identifiedCount     Int      @default(0)
+  totalDurationSum    Int
+  srcValueUsd         Float?   @db.Real
+  dstValueUsd         Float?   @db.Real
+  minTransferValueUsd Float?   @db.Real
+  maxTransferValueUsd Float?   @db.Real
+  avgValueInFlight    Float?   @db.Real
+  mintedValueUsd      Float?   @db.Real
+  burnedValueUsd      Float?   @db.Real
+  countUnder100       Int      @default(0)
+  count100To1K        Int      @default(0)
+  count1KTo10K        Int      @default(0)
+  count10KTo100K      Int      @default(0)
+  countOver100K       Int      @default(0)
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
 model AggregatedInteropToken {
-  timestamp        DateTime @db.Timestamp(6)
-  id               String   @db.VarChar(255)
-  srcChain         String   @db.VarChar(255)
-  dstChain         String   @db.VarChar(255)
-  bridgeType       String   @default("unknown") @db.VarChar(255)
-  abstractTokenId  String   @db.VarChar(6)
-  mintedValueUsd   Float?   @db.Real
-  burnedValueUsd   Float?   @db.Real
-  transferCount    Int
-  totalDurationSum Int
-  volume           Float    @db.Real
+  timestamp           DateTime @db.Timestamp(6)
+  id                  String   @db.VarChar(255)
+  srcChain            String   @db.VarChar(255)
+  dstChain            String   @db.VarChar(255)
+  bridgeType          String   @default("unknown") @db.VarChar(255)
+  abstractTokenId     String   @db.VarChar(6)
+  transferTypeStats   Json?
+  mintedValueUsd      Float?   @db.Real
+  burnedValueUsd      Float?   @db.Real
+  transferCount       Int
+  totalDurationSum    Int
+  volume              Float    @db.Real
+  minTransferValueUsd Float?   @db.Real
+  maxTransferValueUsd Float?   @db.Real
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id, abstractTokenId])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])

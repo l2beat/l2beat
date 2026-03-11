@@ -1,3 +1,126 @@
+Generated with discovered.json: 0xafd6a86c6d5cf320b1babb5e8a37aa4c4ad7f314
+
+# Diff at Fri, 06 Mar 2026 10:05:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1772143358
+- current timestamp: 1772791434
+
+## Description
+
+New KailuaGame and KailuaTreasury instances deployed with the same implementation code (identical source hashes). The ROLLUP_CONFIG_HASH changed (0x4910...→0x69d9...) in preparation for BOB's Jovian hardfork activation on March 12, 2026 (mainnet timestamp 1773325801). The Kailua config hash includes hardfork timestamps, so adding jovian_time changes the hash. Ref: https://github.com/bob-collective/bob/pull/960. The KailuaTreasury L2_BLOCK_NUMBER also advanced (29576476→29835945).
+
+KailuaGame diff: https://disco.l2beat.com/diff/eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a/eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF
+
+KailuaTreasury diff: https://disco.l2beat.com/diff/eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895/eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a"
++        "eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 0s.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 0s.
+```
+
+Generated with discovered.json: 0xb15c9fd77c1a7287678c8ad8c91872056d324e99
+
+# Diff at Thu, 26 Feb 2026 22:03:44 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1769532258
+- current timestamp: 1772143358
+
+## Description
+
+BOB's Kailua dispute system was updated with new KailuaGame and KailuaTreasury contract instances. The DisputeGameFactory's game1337 implementation changed from 0xe4341585 to 0xe34577E7.
+
+The new KailuaTreasury (0xE99AF5F4) retains the 0.5 ETH participation bond but has no vanguard advantage set (previously 1 month). The source code change is the addition of an OP-Contracts v5 compatibility shim: an `anchorStateRegistry()` function that returns `msg.sender`, allowing withdrawals under op-contracts v5.0.0.
+
+The FPVM image ID also updated (0xf176eb82 → 0x4aca4abd), indicating a new ZK verification image for the RISC Zero prover.
+
+KailuaGame diff: https://disco.l2beat.com/diff/eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b/eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a
+
+KailuaTreasury diff: https://disco.l2beat.com/diff/eth:0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420/eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+```
+
+```diff
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420","description":"propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock.","role":".vanguard"}]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b"
++        "eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 0s.
+```
+
+## Source code changes
+
+```diff
+.../projects/bob/{.flat@1769532258 => .flat}/KailuaTreasury.sol  | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+```
+
 Generated with discovered.json: 0x13d49e446b120492a07f5cb3561b918045e47a85
 
 # Diff at Fri, 13 Feb 2026 11:33:08 GMT:

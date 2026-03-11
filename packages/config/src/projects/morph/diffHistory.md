@@ -1,3 +1,204 @@
+Generated with discovered.json: 0xf8e748ef79c3e06354d352b5b8943f4c2722f894
+
+# Diff at Wed, 04 Mar 2026 10:30:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2a5ae798224824cb1d7a9042127342a177c86d1a block: 1772462455
+- current timestamp: 1772616101
+
+## Description
+
+Upgrade adding external func `commitBatchWithProof()` and rollupDelayPeriod with the apparent intention of permissionless proposing after a delay.
+
+commitBatchWithProof() can be called if any:
+1. last committed batch + rollupDelayPeriod < now
+2. oldest enqueued msg + rollupDelayPeriod < now
+
+`commitBatchWithProof()` currently reverts for non-whitelisted actors since it calls `getStakerBitmap(_msgSender())`, so in practice we still have whitelisted proposals
+
+diff:
+- [Rollup](https://disco.l2beat.com/diff/eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5/eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3)
+- [L1MessageQueueWithGasPriceOracle](https://disco.l2beat.com/diff/eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA/eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa)
+
+## Watched changes
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      sourceHashes.1:
+-        "0x1719cdcf5cd2921747ddc6f0dea1d383d56e48c613a99782597914a32d40e4cd"
++        "0x06be3e07c53c199805b384f80352b668ca35f7bdb1b6d5addc8fcb490ff63eac"
+      values.$implementation:
+-        "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA"
++        "eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa"
+      values.$pastUpgrades.3:
++        ["2026-03-03T06:03:11.000Z","0x29632a0458dbc5cbad5e831228a54c118e8e0746bff06fcf151cad568079a318",["eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.getFirstUnfinalizedMessageEnqueueTime:
++        1772616095
+      implementationNames.eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA:
+-        "L1MessageQueueWithGasPriceOracle"
+      implementationNames.eth:0xf3b7724334cb0aDBC49CAC90e166Af99C07Be6aa:
++        "L1MessageQueueWithGasPriceOracle"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors.
+      sourceHashes.1:
+-        "0xf8331668c19c4399a7caf054895f9dd43a0593e13f4fdb6b7ac6cc2b130da357"
++        "0x8918639fcac94fac40711260ca7cb4027dbac6a2a48b10cd380818ede6636206"
+      values.$implementation:
+-        "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5"
++        "eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3"
+      values.$pastUpgrades.7:
++        ["2026-03-03T06:06:11.000Z","0xc86bc6dc60ad304afbc7f423668a272434c17dbf4a0bb27906d74f0940a6eab1",["eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3"]]
+      values.$upgradeCount:
+-        7
++        8
++++ description: commitBatchWithProof() can be called if any:
+1. last committed batch + rollupDelayPeriod < now
+2. oldest enqueued msg + rollupDelayPeriod < now
+      values.rollupDelayPeriod:
++        604800
+      implementationNames.eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5:
+-        "Rollup"
+      implementationNames.eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3:
++        "Rollup"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1MessageQueueWithGasPriceOracle.sol           |  27 +++++-
+ .../{.flat@1772462455 => .flat}/Rollup/Rollup.sol  | 102 ++++++++++++++++++++-
+ 2 files changed, 121 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772462455 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors.
+      description:
+-        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist."
++        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors."
+      fieldMeta:
++        {"rollupDelayPeriod":{"description":"commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"}}
+    }
+```
+
+Generated with discovered.json: 0x777ba1f64491c98c6bc77cb148fbaf7bf26d902a
+
+# Diff at Mon, 02 Mar 2026 14:47:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1768298606
+- current timestamp: 1772462455
+
+## Description
+
+Add timelock with 0 minDelay.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) {
+    +++ description: None
+      values.owner:
+-        "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
++        "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"
+    }
+```
+
+```diff
+    contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"propose transactions.","role":".Proposer"}
+    }
+```
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"execute transactions that are ready.","role":".Executor"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","description":"manage all access control roles.","role":".defaultAdminAC"}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7","role":"admin","via":[{"address":"eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"},{"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}]}
+      receivedPermissions.0.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.0.from:
+-        "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"
++        "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"
+      receivedPermissions.1.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.1.from:
+-        "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"
++        "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF"
+      receivedPermissions.2.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.2.from:
+-        "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF"
++        "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
+      receivedPermissions.3.via.0.address:
+-        "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
++        "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17"
+      receivedPermissions.3.from:
+-        "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
++        "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"
+      receivedPermissions.4.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.5.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.6.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      receivedPermissions.7.via.1:
++        {"address":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0x542675E90E269F20ecbb9e0095d4751ac155B530","role":".Executor"}
+      directlyReceivedPermissions.0.from:
+-        "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
++        "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0x542675E90E269F20ecbb9e0095d4751ac155B530)
+    +++ description: A timelock with access control. The current minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x31110622D6CA24c9FF307d6ae1715F16E47F16A0.sol} |    0
+ ...:0x8654061457582c867B77A3a9f4ca714dFc84Ec17.sol |  132 ++
+ .../TimelockControllerUpgradeable.sol              | 1386 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  735 +++++++++++
+ 4 files changed, 2253 insertions(+)
+```
+
 Generated with discovered.json: 0x452d1b0cd68967ba7aa0ebd572e66d10b2b200ae
 
 # Diff at Tue, 13 Jan 2026 10:04:33 GMT:

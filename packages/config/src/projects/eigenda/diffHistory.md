@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x57921bb6afa120d578f538664f3942bd2e2ccfd4
+Generated with discovered.json: 0x0834cdd4e515bed0dddd0a3444c11ae58871e184
 
-# Diff at Mon, 23 Feb 2026 13:58:20 GMT:
+# Diff at Wed, 11 Mar 2026 13:45:48 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@63f63cee212ece6f6a4f1b0efbec35399575a1b5 block: 1770908185
-- current timestamp: 1770908185
+- comparing to: main@7821558a34509d47e2b343e48879506088be050d block: 1772118702
+- current timestamp: 1773236668
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Provide description of changes. This section will be preserved.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1770908185 (main branch discovery), not current.
+discovery. Values are for block 1772118702 (main branch discovery), not current.
 
 ```diff
     contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
@@ -109,6 +109,31 @@ discovery. Values are for block 1770908185 (main branch discovery), not current.
     +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
       category:
 +        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+Generated with discovered.json: 0xebbed40e0f32279fcd1ca78b68ee9858b0ff4623
+
+# Diff at Thu, 26 Feb 2026 15:12:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770908185
+- current timestamp: 1772118702
+
+## Description
+
+EigenLayerRewardsInitiatorMultisig: one member removed (0xf20eD26be), reducing signers from 5 to 4. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/4 (75%).
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
     }
 ```
 

@@ -24,14 +24,17 @@ export function MobileCarouselWidget({ topProtocols, isLoading }: Props) {
   return (
     <div className="relative h-full max-md:min-h-[213px] max-md:border-divider max-md:border-b min-[1600px]:hidden">
       <Carousel opts={{ loop: true }} className="h-full">
-        <CarouselContent viewportClassName="h-full" className="-ml-5 h-full">
-          <CarouselItem className="select-none pl-5">
+        <CarouselContent
+          viewportClassName="h-full"
+          className="md:-ml-5 ml-0 h-full"
+        >
+          <CarouselItem className="select-none pl-0 md:pl-5">
             <TopProtocolsByVolume
               topProtocols={topProtocols}
               isLoading={isLoading}
             />
           </CarouselItem>
-          <CarouselItem className="select-none pl-5">
+          <CarouselItem className="select-none pl-0 md:pl-5">
             <TopProtocolsByTransfers
               topProtocols={topProtocols}
               isLoading={isLoading}

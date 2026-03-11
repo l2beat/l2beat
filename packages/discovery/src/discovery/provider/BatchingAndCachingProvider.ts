@@ -571,6 +571,7 @@ export class BatchingAndCachingProvider {
     if (cached !== undefined) {
       duration += performance.now()
       this.stats.mark(ProviderMeasurement.GET_DEPLOYMENT, duration)
+      // legacy, markers no longer inserted
       if (cached === UNDEFINED_MARKER_VALUE) {
         return undefined
       }
@@ -581,8 +582,6 @@ export class BatchingAndCachingProvider {
     const deployment = await this.provider.getDeployment(address)
     if (deployment !== undefined) {
       entry.write(JSON.stringify(deployment))
-    } else {
-      entry.write(UNDEFINED_MARKER_VALUE)
     }
     return deployment
   }

@@ -1,5 +1,4 @@
 import {
-  ChainId,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -22,7 +21,6 @@ import {
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -491,146 +489,6 @@ export const scroll: ScalingProject = {
         ],
       },
     ],
-    proofVerification: {
-      shortDescription: 'Scroll is a ZK-EVM rollup on Ethereum.',
-      aggregation: true,
-      requiredTools: [
-        {
-          name: 'Custom tool',
-          version: 'v0.10.3',
-          link: 'https://github.com/scroll-tech/scroll-prover/tree/v0.10.3?tab=readme-ov-file#verifier-contract',
-        },
-      ],
-      verifiers: [
-        {
-          name: 'PlonkVerifierV0',
-          description:
-            'Scroll verifier using calldata for DA. Corresponds to version v0.9.5 of the circuits.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/aggregator',
-            },
-            {
-              name: 'Main circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierV1',
-          description:
-            'Scroll verifier using blobs for DA. Corresponds to version v0.10.3 of the circuits.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x2293cd12e8564e8219d314b075867c2f66ac6941',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/aggregator',
-            },
-            {
-              name: 'Main circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierV1-1',
-          description:
-            'Scroll verifier using blobs for DA. Corresponds to version v0.11.4 of the circuits (Curie upgrade).',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x03a72B00D036C479105fF98A1953b15d9c510110',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/aggregator',
-            },
-            {
-              name: 'Main verifier',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierV2',
-          description:
-            'Scroll verifier proving bundles (group of batches). Corresponds to version v0.12.0 of the circuits (Darwin upgrade).',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.12.0/aggregator',
-            },
-            {
-              name: 'Main verifier',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.12.0/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierV2-1',
-          description:
-            'Scroll verifier proving bundles (group of batches). Corresponds to version v0.13.0 of the circuits (Darwin v2 upgrade).',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x8c1b52757b5c571ADcB5572E992679d4D48e30f7',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Aggregation circuit',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.13.0/aggregator',
-            },
-            {
-              name: 'Main verifier',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.13.0/zkevm-circuits',
-            },
-          ],
-        },
-        {
-          name: 'PlonkVerifierPostEuclid',
-          description:
-            'Scroll verifier proving bundles (group of batches). Corresponds to openvm zkVM Circuits (Euclid upgrade).',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x9F66505cB1626D06B50EF2597f41De6686e8f79a',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Main verifier',
-              ...PROOFS.HALO2KZG('Powers of Tau 26'),
-              link: 'https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits',
-            },
-          ],
-        },
-      ],
-    },
   },
   contracts: {
     addresses: {
@@ -644,6 +502,14 @@ export const scroll: ScalingProject = {
   },
   upgradesAndGovernance: `All core contracts in the Scroll protocol are upgradable by the \`ProxyAdmin\`, which is controlled by the Security Council through the \`ScrollOwner\` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the \`TimelockSCSlow\`) and upgrading the affected contracts. The Security Council can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the \`updateMessageQueueParameters\` and \`updateEnforcedBatchParameters\` functions or by pausing the \`EnforcedTXGateway\`. Emergency pause of core contracts is managed through the \`PauseController\`, which allows the team to pause batch commitment and finalization in permissioned mode, as well as L1->L2 messaging. Each pause is subject to a cooldown period of ${formatExecutionDelay(cooldownPeriod)}, during which the Security Council minority can unpause, while the Security Council majority is authorized to update and reset the cooldown period. SCR token holders perform onchain voting on governance proposals through the \`AgoraGovernor\` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.`,
   milestones: [
+    {
+      title: 'Emergency verifier upgrade',
+      url: 'https://etherscan.io/tx/0x74e5de74ff014b78b3bfcde9e3bf3c83f60ce10345ec10148ea918abeb2a9799',
+      date: '2026-02-23T00:00:00Z',
+      description:
+        'Emergency verifier replacement due to a bug in the guest prover program.',
+      type: 'incident',
+    },
     {
       title: 'Proposal: Galileo Upgrade',
       url: 'https://gov.scroll.io/proposals/72907322044331380548190357610154468026012921395152333929550231764240959817459',

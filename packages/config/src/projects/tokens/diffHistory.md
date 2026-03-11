@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x498c344e9c867f9c5a77a312b4c507a0ab7c7d76
+
+# Diff at Mon, 02 Mar 2026 14:39:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1772088729
+- current timestamp: 1772462270
+
+## Description
+
+new staking vault.
+
+## Watched changes
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      values.vaultByIndex.0:
+-        "eth:0x576BBdA8b747d39BF16a2723AC6bB6BB3582dDF8"
++        "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x576BBdA8b747d39BF16a2723AC6bB6BB3582dDF8","role":"admin"}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StakingVault (eth:0x576BBdA8b747d39BF16a2723AC6bB6BB3582dDF8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingVault (eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe-eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1}/Safe.sol         | 0
+ .../Safe-eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1}/SafeProxy.p.sol  | 0
+ .../PinnedBeaconProxy.p.sol                                               | 0
+ .../StakingVault.sol                                                      | 0
+ 4 files changed, 0 insertions(+), 0 deletions(-)
+```
+
+Generated with discovered.json: 0x0f3d0e9780d6434a08cfdc11ee9c199c0d01ece8
+
+# Diff at Thu, 26 Feb 2026 06:54:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ebcaaf3f82908bc9d26f2fe45104052f35d6bba block: 1771253897
+- current timestamp: 1772088729
+
+## Description
+
+lido offset phase executed.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "base:0x362DBD4Ff662b2E2b05b9cEDC91da2Dd2c655b26"
++        "base:0xe3B3b4Fc77505EcfAACf6dD21619a8Cc12fcc501"
+    }
+```
+
+```diff
+    contract TwoPhaseFrameConfigUpdate (eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1) {
+    +++ description: None
+      values.isReadyForOffsetPhase:
+-        true
++        false
+      values.offsetPhase.executed:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x18f54f29431bd8be37f4ca9516cca28ad566ece9
 
 # Diff at Mon, 16 Feb 2026 15:01:54 GMT:

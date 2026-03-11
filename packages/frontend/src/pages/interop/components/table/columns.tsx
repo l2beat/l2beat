@@ -1,63 +1,89 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
+import { env } from '~/env'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopTokensCell } from '../top-items/TopTokensCell'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
 import { SubgroupTooltip } from './SubgroupTooltip'
+import { TransferCountCell } from './transfer-count-cell/TransferCountCell'
 
 export type ProtocolRow = ProtocolEntry & BasicTableRow
 
 const columnHelper = createColumnHelper<ProtocolEntry>()
 
-const commonColumns = [
-  columnHelper.display({
-    id: 'logo',
-    cell: (ctx) => (
-      <img
-        className="min-h-[20px] min-w-[20px]"
-        src={ctx.row.original.iconUrl}
-        width={20}
-        height={20}
-        alt={`${ctx.row.original.name} logo`}
-      />
-    ),
-    meta: {
-      headClassName: 'w-0',
-      cellClassName: 'lg:pr-1.5!',
-    },
-    size: 28,
-    enableHiding: false,
-  }),
-  columnHelper.accessor('name', {
-    header: 'Name',
-    cell: (ctx) => (
-      <TwoRowCell>
-        <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-          <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-            {ctx.row.original.name}
-          </div>
-          {ctx.row.original.subgroup && (
-            <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
-          )}
-        </TwoRowCell.First>
-        <TwoRowCell.Second>
-          {ctx.row.original.isAggregate && 'Aggregate'}
-        </TwoRowCell.Second>
-      </TwoRowCell>
-    ),
-    meta: {
-      cellClassName: 'whitespace-normal py-1',
-      headClassName: 'text-2xs',
-    },
-  }),
-]
+function getCommonColumns(getProtocolHref?: (slug: string) => string) {
+  return [
+    columnHelper.display({
+      id: 'logo',
+      cell: (ctx) => (
+        <img
+          className="min-h-[20px] min-w-[20px]"
+          src={ctx.row.original.iconUrl}
+          width={20}
+          height={20}
+          alt={`${ctx.row.original.name} logo`}
+        />
+      ),
+      meta: {
+        headClassName: 'w-0',
+        cellClassName: 'lg:pr-1.5!',
+      },
+      size: 28,
+      enableHiding: false,
+    }),
+    columnHelper.accessor('name', {
+      header: 'Name',
+      cell: (ctx) => {
+        const nameCell = (
+          <TwoRowCell>
+            <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+              <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+                {ctx.row.original.name}
+              </div>
+              {ctx.row.original.subgroup && (
+                <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+              )}
+            </TwoRowCell.First>
+            <TwoRowCell.Second>
+              {ctx.row.original.isAggregate && 'Aggregate'}
+            </TwoRowCell.Second>
+          </TwoRowCell>
+        )
+
+        return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
+          <TableLink
+            href={
+              getProtocolHref?.(ctx.row.original.slug) ??
+              `/interop/protocols/${ctx.row.original.slug}`
+            }
+          >
+            {nameCell}
+          </TableLink>
+        ) : (
+          nameCell
+        )
+      },
+      meta: {
+        cellClassName: 'whitespace-normal',
+        headClassName: 'text-2xs',
+      },
+    }),
+  ]
+}
 
 const last24hVolumeColumn = columnHelper.accessor('volume', {
   header: 'Last 24h\nVolume',
@@ -101,6 +127,7 @@ export function getAllProtocolsColumns(
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
   showNetMintedValueColumn?: boolean,
+  getProtocolHref?: (slug: string) => string,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -113,7 +140,7 @@ export function getAllProtocolsColumns(
       },
       size: 44,
     }),
-    ...commonColumns,
+    ...getCommonColumns(getProtocolHref),
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
         header: 'Type',
@@ -135,9 +162,18 @@ export function getAllProtocolsColumns(
     columnHelper.accessor((row) => row.transferCount, {
       header: 'Last 24h\ntransfer count',
       cell: (ctx) => (
-        <div className="font-medium text-label-value-15">
-          {ctx.row.original.transferCount}
-        </div>
+        <TransferCountCell
+          transferCount={ctx.row.original.transferCount}
+          expectedTransferCount={ctx.row.original.transferCount}
+          expectedVolume={ctx.row.original.volume}
+          snapshotTimestamp={ctx.row.original.snapshotTimestamp}
+          type={type}
+          protocol={{
+            id: ctx.row.original.id,
+            name: ctx.row.original.name,
+            iconUrl: ctx.row.original.iconUrl,
+          }}
+        />
       ),
       meta: {
         align: 'right',
@@ -152,9 +188,11 @@ export function getAllProtocolsColumns(
           ? undefined
           : row.averageDuration.type === 'single'
             ? row.averageDuration.duration
-            : (row.averageDuration.in.duration ??
-              row.averageDuration.out.duration ??
-              Number.POSITIVE_INFINITY),
+            : Math.min(
+                ...row.averageDuration.splits
+                  .filter((split) => split.duration !== null)
+                  .map((split) => split.duration ?? Number.POSITIVE_INFINITY),
+              ),
       {
         header: 'Last 24h avg.\ntransfer time',
         invertSorting: true,
@@ -183,13 +221,56 @@ export function getAllProtocolsColumns(
         tooltip:
           'The average USD value per token transfer completed in the past 24 hours.',
       },
-      cell: (ctx) => (
-        <span className="font-medium text-label-value-15">
-          {ctx.row.original.averageValue
-            ? formatCurrency(ctx.row.original.averageValue, 'usd')
-            : EM_DASH}
-        </span>
-      ),
+      cell: (ctx) => {
+        if (!ctx.row.original.averageValue) return EM_DASH
+
+        const averageValue = formatCurrency(
+          ctx.row.original.averageValue,
+          'usd',
+        )
+        const minTransferSize =
+          ctx.row.original.minTransferValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.minTransferValueUsd, 'usd')
+            : EM_DASH
+        const maxTransferSize =
+          ctx.row.original.maxTransferValueUsd !== undefined
+            ? formatCurrency(ctx.row.original.maxTransferValueUsd, 'usd')
+            : EM_DASH
+
+        return (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="font-medium text-label-value-15 text-primary">
+                {averageValue}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent className="min-w-[200px]">
+              <div className="font-medium text-label-value-14 text-secondary">
+                Transfer value
+              </div>
+              <HorizontalSeparator className="my-1" />
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Minimum</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {minTransferSize}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Average</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {averageValue}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-x-6">
+                <span className="font-medium text-label-value-14">Maximum</span>
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                  {maxTransferSize}
+                </span>
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        )
+      },
     }),
     showAverageInFlightValueColumn && averageInFlightValueColumn,
     showNetMintedValueColumn &&
@@ -227,6 +308,7 @@ export function getAllProtocolsColumns(
               id: ctx.row.original.id,
               name: ctx.row.original.name,
               iconUrl: ctx.row.original.iconUrl,
+              bridgeTypes: ctx.row.original.bridgeTypes,
             }}
             showNetMintedValueColumn={showNetMintedValueColumn}
           />

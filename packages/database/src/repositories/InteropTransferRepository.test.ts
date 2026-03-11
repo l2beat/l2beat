@@ -461,6 +461,45 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(updatedRecord?.isProcessed).toEqual(true)
     })
 
+    it('sets provided fields to null', async () => {
+      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      record.srcAbstractTokenId = 'original-src'
+      record.srcSymbol = 'USDT'
+      record.srcPrice = 1000
+      record.srcAmount = 2
+      record.srcValueUsd = 2000
+      record.dstAbstractTokenId = 'original-dst'
+      record.dstSymbol = 'USDT.e'
+      record.dstPrice = 999
+      record.dstAmount = 2.1
+      record.dstValueUsd = 2097.9
+
+      await repository.insertMany([record])
+
+      await repository.updateFinancials('msg1', {
+        srcAbstractTokenId: null,
+        srcSymbol: null,
+        srcPrice: null,
+        srcAmount: null,
+        srcValueUsd: null,
+      })
+
+      const result = await repository.getAll()
+      const updatedRecord = result[0]
+
+      expect(updatedRecord?.srcAbstractTokenId).toEqual(undefined)
+      expect(updatedRecord?.srcSymbol).toEqual(undefined)
+      expect(updatedRecord?.srcPrice).toEqual(undefined)
+      expect(updatedRecord?.srcAmount).toEqual(undefined)
+      expect(updatedRecord?.srcValueUsd).toEqual(undefined)
+      expect(updatedRecord?.dstAbstractTokenId).toEqual('original-dst')
+      expect(updatedRecord?.dstSymbol).toEqual('USDT.e')
+      expect(updatedRecord?.dstPrice).toEqual(999)
+      expect(updatedRecord?.dstAmount).toEqual(2.1)
+      expect(updatedRecord?.dstValueUsd).toEqual(2097.9)
+      expect(updatedRecord?.isProcessed).toEqual(true)
+    })
+
     it('does not affect other transfers', async () => {
       const records = [
         transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
@@ -554,6 +593,32 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.markAllAsUnprocessed.name,
+    () => {
+      it('sets isProcessed to false for all processed transfers', async () => {
+        const processed = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+        processed.isProcessed = true
+        const alreadyUnprocessed = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+        )
+        alreadyUnprocessed.isProcessed = false
+
+        await repository.insertMany([processed, alreadyUnprocessed])
+
+        const updatedRows = await repository.markAllAsUnprocessed()
+
+        expect(updatedRows).toEqual(1)
+
+        const result = await repository.getAll()
+        expect(result.every((r) => r.isProcessed === false)).toEqual(true)
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.getByRange.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
@@ -594,6 +659,106 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const result = await repository.getByRange(UnixTime(300), UnixTime(300))
 
       expect(result).toEqual([])
+    })
+  })
+
+  describe(InteropTransferRepository.prototype.getProjectTransfers.name, () => {
+    const snapshotTimestamp = UnixTime(2_000_000)
+
+    it('returns all matching transfers ordered by timestamp desc then transferId desc', async () => {
+      await repository.insertMany([
+        transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          snapshotTimestamp - 10,
+          'ethereum',
+          'arbitrum',
+          10,
+        ),
+        transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          snapshotTimestamp - 10,
+          'ethereum',
+          'base',
+          10,
+        ),
+        transfer(
+          'plugin2',
+          'msg3',
+          'deposit',
+          snapshotTimestamp - 9,
+          'optimism',
+          'base',
+          10,
+        ),
+        transfer(
+          'plugin3',
+          'msg4',
+          'deposit',
+          snapshotTimestamp - 8,
+          'optimism',
+          'base',
+          10,
+        ),
+      ])
+
+      const result = await repository.getProjectTransfers({
+        snapshotTimestamp,
+        sourceChains: ['ethereum', 'optimism'],
+        destinationChains: ['arbitrum', 'base'],
+        plugins: ['plugin1', 'plugin2'],
+      })
+
+      expect(result.map((x) => x.transferId)).toEqual(['msg3', 'msg2', 'msg1'])
+    })
+
+    it('excludes same-chain transfers and returns empty when plugins or chains are empty', async () => {
+      await repository.insertMany([
+        transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          snapshotTimestamp - 10,
+          'ethereum',
+          'ethereum',
+          10,
+        ),
+        transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          snapshotTimestamp - 9,
+          'ethereum',
+          'arbitrum',
+          10,
+        ),
+      ])
+
+      const valid = await repository.getProjectTransfers({
+        snapshotTimestamp,
+        sourceChains: ['ethereum'],
+        destinationChains: ['arbitrum', 'ethereum'],
+        plugins: ['plugin1'],
+      })
+      const emptyPlugins = await repository.getProjectTransfers({
+        snapshotTimestamp,
+        sourceChains: ['ethereum'],
+        destinationChains: ['arbitrum'],
+        plugins: [],
+      })
+      const emptyChains = await repository.getProjectTransfers({
+        snapshotTimestamp,
+        sourceChains: [],
+        destinationChains: ['arbitrum'],
+        plugins: ['plugin1'],
+      })
+
+      expect(valid.map((x) => x.transferId)).toEqual(['msg2'])
+      expect(emptyPlugins).toEqual([])
+      expect(emptyChains).toEqual([])
     })
   })
 

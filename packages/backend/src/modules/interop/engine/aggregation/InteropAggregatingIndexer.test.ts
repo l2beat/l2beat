@@ -39,6 +39,7 @@ describe(InteropAggregatingIndexer.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -52,7 +53,10 @@ describe(InteropAggregatingIndexer.name, () => {
           totalDurationSum: 5000,
           srcValueUsd: 2000,
           dstValueUsd: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
           avgValueInFlight: undefined,
+          transferTypeStats: undefined,
           mintedValueUsd: 0,
           burnedValueUsd: 2000,
           countUnder100: 0,
@@ -73,8 +77,11 @@ describe(InteropAggregatingIndexer.name, () => {
           dstChain: 'arbitrum',
           abstractTokenId: 'eth',
           transferCount: 1,
+          transferTypeStats: undefined,
           totalDurationSum: 5000,
           volume: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
           bridgeType: 'lockAndMint',
           mintedValueUsd: 0,
           burnedValueUsd: 2000,
@@ -164,6 +171,7 @@ describe(InteropAggregatingIndexer.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 

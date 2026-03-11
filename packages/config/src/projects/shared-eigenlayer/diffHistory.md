@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x90faa0c35b3e866f245a8badbca385b70a538c72
+Generated with discovered.json: 0x60b0e93c54241c8d0abfb282c41f83b31fba4bb8
 
-# Diff at Mon, 23 Feb 2026 13:58:22 GMT:
+# Diff at Wed, 11 Mar 2026 13:46:37 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@63f63cee212ece6f6a4f1b0efbec35399575a1b5 block: 1770994184
-- current timestamp: 1770994184
+- comparing to: main@7821558a34509d47e2b343e48879506088be050d block: 1772543935
+- current timestamp: 1773236689
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Provide description of changes. This section will be preserved.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1770994184 (main branch discovery), not current.
+discovery. Values are for block 1772543935 (main branch discovery), not current.
 
 ```diff
     contract RewardAllStakersActionGenerator (eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5) {
@@ -341,6 +341,31 @@ discovery. Values are for block 1770994184 (main branch discovery), not current.
     +++ description: Manages software release lifecycle for EigenLayer operator sets, allowing AVS owners to publish versioned releases (containing artifact digests, registry URLs, and upgrade-by deadlines) and metadata URIs that operators can query for required software versions.
       category:
 +        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+Generated with discovered.json: 0x8c3654c798cd1bcc8ff742e02d90818534e78961
+
+# Diff at Thu, 26 Feb 2026 15:12:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770994184
+- current timestamp: 1772118708
+
+## Description
+
+EigenLayerOperationsMultisig: one new member added (0x9B0098A3), increasing signers from 5 to 6. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/6 (50%).
+
+## Watched changes
+
+```diff
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
     }
 ```
 

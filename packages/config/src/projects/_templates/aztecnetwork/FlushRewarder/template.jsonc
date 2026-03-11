@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Incentivizes 'flushing' of the sequencer join queue. Flushing is needed to add sequencers to the active set at a preset rate limit and incurs gas costs. Adding one sequencer is rewarded by {{rewardPerInsertionFmt}} AZTEC as long as supply lasts.",
+  "fields": {
+    "rewardPerInsertionFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function rewardPerInsertion() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    }
+  },
+  "ignoreInWatchMode": ["rewardsAvailable"]
+}

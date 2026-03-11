@@ -19,6 +19,7 @@ export const layerzero: BaseProject = {
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

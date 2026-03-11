@@ -28,6 +28,7 @@ import { layer3s } from './layer3s'
 
 describe('getProjects', () => {
   const projects = getProjects()
+  const projectsById = new Map(projects.map((p) => [p.id, p]))
 
   describe('every project has a unique and valid id and slug', () => {
     const ids = new Set<ProjectId>()
@@ -37,9 +38,9 @@ describe('getProjects', () => {
         expect(project.slug).toMatchRegex(/^[a-z\-\d]+$/)
         expect(ids.has(project.id)).toEqual(false)
         ids.add(project.id)
-        if (project.slug === 'payy' || project.slug === 'near') {
-          // Those two projects are exceptions!
-          // Both should most likely be merged with their duplicates
+        if (project.slug === 'near') {
+          // This project is an exception.
+          // It should most likely be merged with its duplicate
           // Right now it only works because refactored projects are resolved
           // first when querying by slug
           return
@@ -127,21 +128,6 @@ describe('getProjects', () => {
           expect(project.display?.description.endsWith('.')).toEqual(true)
         })
       }
-    }
-  })
-
-  describe('verifier descriptions end with a dot', () => {
-    for (const project of projects) {
-      if (!project.proofVerification) {
-        return
-      }
-      describe(project.name, () => {
-        project.proofVerification?.verifiers.forEach((sV) => {
-          it(sV.name, () => {
-            expect(sV.description.endsWith('.')).toEqual(true)
-          })
-        })
-      })
     }
   })
 
@@ -245,10 +231,30 @@ describe('getProjects', () => {
             ),
           ),
         ).filter((p) => p !== undefined)
+        const usedInVerifiersSet = new Set(usedInVerifiers)
 
         for (const usedIn of usedInVerifiers) {
           it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
             expect(liveTvsProjects.has(usedIn)).toEqual(true)
+          })
+        }
+
+        const currentProjectsForTvsSection = new Set(
+          [...liveTvsProjects].flatMap((tvsProject) => {
+            const tvsProjectConfig = projectsById.get(tvsProject)
+            if (!tvsProjectConfig || tvsProjectConfig.archivedAt) {
+              return []
+            }
+
+            if (tvsProjectConfig.daBridge) return []
+
+            return [tvsProject]
+          }),
+        )
+
+        for (const tvsProject of currentProjectsForTvsSection) {
+          it(`TVS project ${tvsProject} is detected in verifier usage`, () => {
+            expect(usedInVerifiersSet.has(tvsProject)).toEqual(true)
           })
         }
       })
@@ -763,7 +769,7 @@ function getUsageMap(projects: BaseProject[]) {
   }
 
   for (const project of projects) {
-    if (!project.isScaling || !project.contracts) continue
+    if (!(project.isScaling || project.daBridge) || !project.contracts) continue
 
     for (const [chain, contracts] of Object.entries(
       project.contracts.addresses,

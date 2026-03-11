@@ -2,6 +2,7 @@ import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropTransfer } from '../kysely/generated/types'
+import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
 export interface AggregatedInteropTransferRecord {
   timestamp: UnixTime
@@ -9,11 +10,14 @@ export interface AggregatedInteropTransferRecord {
   bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
   identifiedCount: number
   totalDurationSum: number
   srcValueUsd: number | undefined
   dstValueUsd: number | undefined
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
   avgValueInFlight: number | undefined
   mintedValueUsd: number | undefined
   burnedValueUsd: number | undefined
@@ -28,6 +32,8 @@ export interface AggregatedInteropTransferSeriesRecord {
   day: UnixTime
   id: string
   transferCount: number
+  totalSrcValueUsd: number
+  totalDstValueUsd: number
 }
 
 export interface AggregatedInteropTransferIdSeriesRecord {
@@ -48,11 +54,16 @@ export function toRecord(
     bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
+    transferTypeStats:
+      (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
+      undefined,
     transferCount: row.transferCount,
     identifiedCount: row.identifiedCount,
     totalDurationSum: row.totalDurationSum,
     srcValueUsd: row.srcValueUsd ?? undefined,
     dstValueUsd: row.dstValueUsd ?? undefined,
+    minTransferValueUsd: row.minTransferValueUsd ?? undefined,
+    maxTransferValueUsd: row.maxTransferValueUsd ?? undefined,
     avgValueInFlight: row.avgValueInFlight ?? undefined,
     mintedValueUsd: row.mintedValueUsd ?? undefined,
     burnedValueUsd: row.burnedValueUsd ?? undefined,
@@ -73,11 +84,14 @@ export function toRow(
     bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
+    transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
     identifiedCount: record.identifiedCount,
     totalDurationSum: record.totalDurationSum,
     srcValueUsd: record.srcValueUsd,
     dstValueUsd: record.dstValueUsd,
+    minTransferValueUsd: record.minTransferValueUsd,
+    maxTransferValueUsd: record.maxTransferValueUsd,
     avgValueInFlight: record.avgValueInFlight,
     mintedValueUsd: record.mintedValueUsd,
     burnedValueUsd: record.burnedValueUsd,
@@ -145,6 +159,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<Date>`"latest_per_day"."day"`.as('day'),
         sql<string>`"latest_per_day"."id"`.as('id'),
         eb.fn.sum('transferCount').as('transfer_count'),
+        eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
+        eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
       ])
       .groupBy(['latest_per_day.day', 'latest_per_day.id'])
       .orderBy('latest_per_day.id', 'asc')
@@ -155,6 +171,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       day: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
+      totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
+      totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),
     }))
   }
 
@@ -254,20 +272,46 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       : undefined
   }
 
+  async getEarliestTimestampForDay(timestamp: UnixTime) {
+    const result = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => eb.fn.min('timestamp').as('min_timestamp'))
+      .where(
+        sql`date_trunc('day', timestamp)`,
+        '=',
+        sql`date_trunc('day', ${UnixTime.toDate(timestamp)}::timestamp)`,
+      )
+      .executeTakeFirst()
+
+    return result?.min_timestamp
+      ? UnixTime.fromDate(result.min_timestamp)
+      : undefined
+  }
+
   async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    selectedChains: [string, string],
+    sourceChains: string[],
+    destinationChains: string[],
     type?: InteropBridgeType,
+    protocolId?: string,
     options?: {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTransferRecord[]> {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return []
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', selectedChains)
-      .where('dstChain', 'in', selectedChains)
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
+
+    if (protocolId) {
+      query = query.where('id', '=', protocolId)
+    }
 
     if (!options?.includeSameChainTransfers) {
       query = query.whereRef('srcChain', '!=', 'dstChain')
@@ -285,19 +329,27 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getSummedTransferCountsByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    selectedChains: [string, string],
+    sourceChains: string[],
+    destinationChains: string[],
     type?: InteropBridgeType,
     options?: {
       includeSameChainTransfers?: boolean
     },
   ) {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return {
+        transferCount: 0,
+        identifiedCount: 0,
+      }
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .select((eb) => eb.fn.sum('transferCount').as('transferCountSum'))
       .select((eb) => eb.fn.sum('identifiedCount').as('identifiedCountSum'))
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', selectedChains)
-      .where('dstChain', 'in', selectedChains)
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
       .where('id', '=', id)
 
     if (!options?.includeSameChainTransfers) {
@@ -324,18 +376,23 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
-    selectedChains: [string, string],
+    sourceChains: string[],
+    destinationChains: string[],
     type?: InteropBridgeType,
     options?: {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTransferRecord[]> {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return []
+    }
+
     let query = this.db
       .selectFrom('AggregatedInteropTransfer')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', selectedChains)
-      .where('dstChain', 'in', selectedChains)
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
       .where('id', '=', id)
 
     if (!options?.includeSameChainTransfers) {

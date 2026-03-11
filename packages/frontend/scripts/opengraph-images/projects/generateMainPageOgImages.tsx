@@ -59,18 +59,6 @@ const mainPages: MainPage[] = [
     title: 'Burn & Mint',
   },
   {
-    type: 'bridges',
-    title: 'Summary',
-  },
-  {
-    type: 'bridges',
-    title: 'Risk Analysis',
-  },
-  {
-    type: 'bridges',
-    title: 'Archived',
-  },
-  {
     type: 'data-availability',
     title: 'Summary',
   },
@@ -91,6 +79,9 @@ const mainPages: MainPage[] = [
   },
   {
     title: 'About Us',
+  },
+  {
+    title: 'Changelog',
   },
   {
     title: 'Donate',

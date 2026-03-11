@@ -141,7 +141,7 @@ export function ScalingRecategorizedActivityChart({
       }}
       milestones={milestones}
     >
-      <AreaChart data={chartData} margin={{ top: 20 }}>
+      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
         <defs>
           <PinkFillGradientDef id="rollups-fill" />
           <PinkStrokeGradientDef id="rollups-stroke" />

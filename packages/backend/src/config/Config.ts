@@ -1,7 +1,5 @@
 import type {
   BlockDaTrackingConfig,
-  ChainConfig,
-  OnchainVerifier,
   ProjectActivityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
@@ -41,7 +39,6 @@ export interface Config {
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: number | undefined }[]
-  readonly verifiers: VerifiersConfig | false
   readonly daBeat: DaBeatConfig | false
   readonly ecosystems: EcosystemsConfig | false
   readonly chainConfig: ChainApi[]
@@ -64,7 +61,6 @@ export interface ApiConfig {
   readonly cache: {
     readonly tvs: boolean
     readonly liveness: boolean
-    readonly verifiers: boolean
   }
 }
 
@@ -190,11 +186,6 @@ export interface UpdateMonitorConfig {
   }
 }
 
-export interface VerifiersConfig {
-  readonly verifiers: OnchainVerifier[]
-  readonly chains: ChainConfig[]
-}
-
 export interface DiscordConfig {
   readonly token: string
   readonly publicChannelId?: string
@@ -240,6 +231,11 @@ export interface InteropFeatureConfig {
     configIntervalMs: number
   }
   inMemoryEventCap: number
+  notifications:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
 }
 
 export interface DaBeatConfig {

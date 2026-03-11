@@ -1,12 +1,18 @@
 import { INTEROP_CHAINS, type InteropChain } from '@l2beat/config'
 import { env } from '~/env'
 
-export function getInteropChains(): InteropChain[] {
-  const disabledChainIds = env.INTEROP_DISABLED_CHAINS
-  if (!disabledChainIds || disabledChainIds.length === 0) {
-    return INTEROP_CHAINS
-  }
+interface InteropChainWithUpcoming extends InteropChain {
+  isUpcoming: boolean
+}
 
-  const disabledSet = new Set(disabledChainIds)
-  return INTEROP_CHAINS.filter((chain) => !disabledSet.has(chain.id))
+export function getInteropChains(): InteropChainWithUpcoming[] {
+  const disabledSet = new Set(env.INTEROP_DISABLED_CHAINS)
+  const upcomingSet = new Set(env.INTEROP_UPCOMING_CHAINS)
+
+  return INTEROP_CHAINS.filter((chain) => !disabledSet.has(chain.id)).map(
+    (chain) => ({
+      ...chain,
+      isUpcoming: upcomingSet.has(chain.id),
+    }),
+  )
 }

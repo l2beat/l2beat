@@ -1,5 +1,4 @@
 import type { ActivitySectionProps } from './ActivitySection'
-import type { BridgesTvsSectionProps } from './BridgesTvsSection'
 import type { ContractsSectionProps } from './contracts/ContractsSection'
 import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
@@ -7,6 +6,8 @@ import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSecti
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
+import type { InteropTokensSectionProps } from './interop/InteropTokensSection'
+import type { InteropVolumeSectionProps } from './interop/InteropVolumeSection'
 import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
 import type { LivenessSectionProps } from './LivenessSection'
 import type { MarkdownSectionProps } from './MarkdownSection'
@@ -54,6 +55,8 @@ type SectionId =
   | 'trusted-setups'
   | 'verifiers'
   | 'program-hashes'
+  | 'interop-volume'
+  | 'interop-tokens'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -84,11 +87,6 @@ interface ProjectDetailsThroughputSection {
 interface ProjectDetailsScalingTvsSection {
   type: 'ScalingTvsSection'
   props: ProjectDetailsProps<ScalingTvsSectionProps>
-}
-
-interface ProjectDetailsBridgesTvsSection {
-  type: 'BridgesTvsSection'
-  props: ProjectDetailsProps<BridgesTvsSectionProps>
 }
 
 interface ProjectDetailsActivitySection {
@@ -186,6 +184,16 @@ interface ProjectDetailsDataPostedSection {
   props: ProjectDetailsProps<DataPostedSectionProps>
 }
 
+interface ProjectDetailsInteropVolumeSection {
+  type: 'InteropVolumeSection'
+  props: ProjectDetailsProps<InteropVolumeSectionProps>
+}
+
+interface ProjectDetailsInteropTokensSection {
+  type: 'InteropTokensSection'
+  props: ProjectDetailsProps<InteropTokensSectionProps>
+}
+
 interface ProjectDetailsUpcomingDisclaimer {
   type: 'UpcomingDisclaimer'
   excludeFromNavigation: true
@@ -232,10 +240,11 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
   | ProjectDetailsScalingTvsSection
-  | ProjectDetailsBridgesTvsSection
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection
   | ProjectDetailsVerifiersSection
   | ProjectDetailsProgramHashesSection
   | ProjectDetailsZkCatalogTvsSection
+  | ProjectDetailsInteropVolumeSection
+  | ProjectDetailsInteropTokensSection
 )

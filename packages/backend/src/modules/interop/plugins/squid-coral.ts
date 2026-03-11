@@ -60,6 +60,7 @@ const parseOrderFilled = createEventParser(
 )
 
 // https://docs.squidrouter.com/additional-resources/contracts
+// chainconfeeg
 export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '1', chain: 'ethereum' },
   { chainId: '10', chain: 'optimism' },
@@ -68,6 +69,9 @@ export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '137', chain: 'polygonpos' },
   // no zksync2, apechain, abstract supported
   { chainId: '56', chain: 'bsc' },
+  { chainId: '42220', chain: 'celo' },
+  { chainId: '43114', chain: 'avalanche' },
+  // no hyperevm, ink, unichain
 ])
 
 export const LogOrderCreated = createInteropEventType<{

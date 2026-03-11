@@ -33,7 +33,7 @@ function TabsContent({
   ...props
 }: RadixTabs.TabsContentProps) {
   return (
-    <RadixTabs.Content className={cn('py-2', className)} {...props}>
+    <RadixTabs.Content {...props} className={cn('py-2', className)}>
       {children}
     </RadixTabs.Content>
   )

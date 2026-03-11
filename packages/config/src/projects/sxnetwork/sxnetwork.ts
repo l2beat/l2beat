@@ -4,7 +4,6 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('sxnetwork')
@@ -12,17 +11,14 @@ const discovery = new ProjectDiscovery('sxnetwork')
 export const sxnetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1722430544), // 2024-07-31T12:55:44Z
   discovery,
-  additionalBadges: [BADGES.RaaS.Gelato],
+  additionalBadges: [BADGES.RaaS.Caldera],
   additionalPurposes: ['Betting'],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
-  ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'SX Network',
     slug: 'sxnetwork',
     description:
-      "SX Network is an Orbit stack Optimium, built to scale the SX team's existing sports betting platform.",
+      "SX Network is an Orbit stack Optimistic Rollup, built to scale the SX team's existing sports betting platform.",
     links: {
       websites: ['https://sx.technology/'],
       bridges: [
@@ -60,7 +56,6 @@ export const sxnetwork: ScalingProject = orbitStackL2({
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
-  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       // ERC20 Gateway

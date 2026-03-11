@@ -181,4 +181,43 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       expect(results).toEqual([DATA[0]])
     })
   })
+
+  describe(
+    RealTimeAnomaliesRepository.prototype.deleteOngoingByProjectIdAndSubtype
+      .name,
+    () => {
+      it('deletes only ongoing anomalies matching projectId and subtype', async () => {
+        const deleted = await repository.deleteOngoingByProjectIdAndSubtype(
+          PROJECT_B,
+          'batchSubmissions',
+        )
+
+        expect(deleted).toEqual(1)
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted([DATA[0], DATA[1], DATA[3]])
+      })
+
+      it('returns 0 when no matching ongoing anomalies exist', async () => {
+        const deleted = await repository.deleteOngoingByProjectIdAndSubtype(
+          PROJECT_A,
+          'stateUpdates',
+        )
+
+        expect(deleted).toEqual(0)
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted(DATA)
+      })
+
+      it('does not delete recovered anomalies with same projectId and subtype', async () => {
+        const deleted = await repository.deleteOngoingByProjectIdAndSubtype(
+          PROJECT_B,
+          'proofSubmissions',
+        )
+
+        expect(deleted).toEqual(0)
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted(DATA)
+      })
+    },
+  )
 })

@@ -15,7 +15,6 @@ import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import { generateNetworkPairs } from './generateNetworkPairs'
-import { LiveTransfers } from './LiveTransfers'
 import { PluginsStatusTable } from './PluginsStatusTable'
 import {
   type ProcessorsStatus,
@@ -416,7 +415,53 @@ function MainPageLayout(props: {
       </a>
       {' | '}
       <a href="/interop/aggregates">Aggregates dashboard</a>
-      <LiveTransfers />
+      {' | '}
+      <a href="/interop/coverage-pies">Coverage pies</a>
+      {' | '}
+      <a href="/interop/status">Sync status</a>
+      {' | '}
+      <button id="interop-refresh-financials-button" type="button">
+        refresh financials
+      </button>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              var button = document.getElementById('interop-refresh-financials-button');
+              if (!button) return;
+
+              button.addEventListener('click', function() {
+                if (button.disabled) return;
+                var originalText = button.textContent;
+                button.disabled = true;
+                button.textContent = 'refreshing financials...';
+
+                fetch('/interop/refresh-financials', {
+                  method: 'POST'
+                })
+                  .then(function(response) {
+                    if (!response.ok) {
+                      throw new Error('Request failed');
+                    }
+                    return response.json();
+                  })
+                  .then(function(data) {
+                    var updatedTransfers = typeof data.updatedTransfers === 'number'
+                      ? data.updatedTransfers
+                      : 0;
+                    button.textContent = 'refresh requested (' + updatedTransfers + ')';
+                  })
+                  .catch(function() {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                  });
+              });
+            })();
+          `,
+        }}
+      />
+      {' | '}
+      <a href="/interop/anomalies">Anomalies dashboard</a>
       <DataTablePage
         showHome={false}
         tables={[

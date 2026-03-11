@@ -1,7 +1,5 @@
 import { AboutUsPage } from './about/AboutUsPage'
-import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
-import { BridgesProjectPage } from './bridges/project/BridgesProjectPage'
-import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
+import { ChangelogPage } from './changelog/ChangelogPage'
 import { DaRiskFrameworkPage } from './da-risk-framework/DaRiskFrameworkPage'
 import { DataAvailabilityArchivedPage } from './data-availability/archived/DataAvailabilityArchivedPage'
 import { DataAvailabilityLivenessPage } from './data-availability/liveness/DataAvailabilityLivenessPage'
@@ -18,6 +16,7 @@ import { GovernancePage } from './governance/GovernancePage'
 import { InteropBurnAndMintPage } from './interop/burn-and-mint/InteropBurnAndMintPage'
 import { InteropLockAndMintPage } from './interop/lock-and-mint/InteropLockAndMintPage'
 import { InteropNonMintingPage } from './interop/non-minting/InteropNonMintingPage'
+import { InteropProtocolPage } from './interop/protocol/InteropProtocolPage'
 import { InteropSummaryPage } from './interop/summary/InteropSummaryPage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { GovernancePublicationPage } from './publications/governance/GovernancePublicationPage'
@@ -38,8 +37,6 @@ import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
 import { StagesPage } from './stages/StagesPage'
 import { TermsOfServicePage } from './terms-of-service/TermsOfServicePage'
-import { ZkCatalogV1ProjectPage } from './zk-catalog/v1/project/ZkCatalogV1ProjectPage'
-import { ZkCatalogPageV1 } from './zk-catalog/v1/ZkCatalogPageV1'
 import { ZkCatalogProjectPage } from './zk-catalog/v2/project/ZkCatalogProjectPage'
 import { ZkCatalogPage } from './zk-catalog/v2/ZkCatalogPage'
 
@@ -72,10 +69,7 @@ const pages = {
   InteropNonMintingPage,
   InteropLockAndMintPage,
   InteropBurnAndMintPage,
-  // Bridges
-  BridgesSummaryPage,
-  BridgesArchivedPage,
-  BridgesProjectPage,
+  InteropProtocolPage,
   // Data Availability
   DataAvailabilitySummaryPage,
   DataAvailabilityRiskPage,
@@ -85,8 +79,6 @@ const pages = {
   DataAvailabilityArchivedPage,
   // ZK Catalog
   ZkCatalogPage,
-  ZkCatalogPageV1,
-  ZkCatalogV1ProjectPage,
   ZkCatalogProjectPage,
   // Ecosystems
   EcosystemProjectPage,
@@ -98,6 +90,7 @@ const pages = {
   FaqPage,
   GlossaryPage,
   AboutUsPage,
+  ChangelogPage,
   DonatePage,
   DaRiskFrameworkPage,
   MultisigReportPage,

@@ -29,7 +29,7 @@ describe(CatchingUpState.name, () => {
 
       expect(nextState).toEqual(state)
       expect(state.status).toEqual('waiting for block number')
-      expect(getResyncState).not.toHaveBeenCalled()
+      expect(getResyncState).toHaveBeenCalled()
     })
 
     it('resyncs from requested timestamp after wipe, clears flag and switches to following', async () => {
@@ -96,6 +96,23 @@ describe(CatchingUpState.name, () => {
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
     })
 
+    it('waits for wipe even when latest block number is missing', async () => {
+      const syncer = createSyncer({
+        latestBlockNumber: undefined,
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: UnixTime(5),
+          wipeRequired: true,
+        }),
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('waiting for wipe')
+      expect(syncer.waitingForWipe).toEqual(true)
+    })
+
     it('switches to following when already synced to latest block', async () => {
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
       const getLogs = mockFn().resolvesTo([])
@@ -137,6 +154,36 @@ describe(CatchingUpState.name, () => {
         toBlock: 10n,
         toTimestamp: UnixTime(10),
       })
+    })
+
+    it('shows the active range before saving it', async () => {
+      let resolveSaveProducedInteropEvents!: () => void
+      const saveProducedInteropEvents = mockFn().returns(
+        new Promise<void>((resolve) => {
+          resolveSaveProducedInteropEvents = resolve
+        }),
+      )
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 9n }),
+        ),
+        buildLogQuery: mockFn().returns(makeEmptyLogQuery()),
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const catchUpPromise = state.catchUp()
+      await flushAsyncWork()
+
+      expect(state.status).toEqual(
+        'saving events 10-10 (0 behind tip, 0 events)',
+      )
+
+      resolveSaveProducedInteropEvents()
+      const nextState = await catchUpPromise
+
+      expect(nextState).toBeA(FollowingState)
     })
 
     it('syncs multiple ranges until the tip is reached', async () => {
@@ -402,12 +449,14 @@ describe(CatchingUpState.name, () => {
       const firstState = await state.catchUp()
 
       expect(firstState).toEqual(state)
+      expect(state.status).toEqual('retrying smaller range [/2]')
       expect(syncer.logRangeDivider).toEqual(1)
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
 
       const secondState = await state.catchUp()
 
       expect(secondState).toEqual(state)
+      expect(state.status).toEqual('retrying smaller range [/4]')
       expect(syncer.logRangeDivider).toEqual(2)
       const secondCall = getLogs.calls[1]?.args[0]
       expect(secondCall?.fromBlock).toEqual(1n)
@@ -558,6 +607,10 @@ function makeRpcTransaction(
     value: 0n,
     ...overrides,
   }
+}
+
+async function flushAsyncWork() {
+  await new Promise<void>((resolve) => setImmediate(resolve))
 }
 
 const ZERO_HASH = `0x${'00'.repeat(32)}`

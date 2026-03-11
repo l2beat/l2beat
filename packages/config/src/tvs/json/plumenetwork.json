@@ -291,7 +291,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }

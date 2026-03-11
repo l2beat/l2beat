@@ -13,13 +13,23 @@ export interface CCIPNetwork {
   chain: string
   chainSelector: string
   router?: EthereumAddress
-  // Outbound lanes: chain -> onRamp address
+  // Outbound lanes: chain -> onRamp address (v1.0-v1.5 per-lane)
   outboundLanes: Record<string, EthereumAddress>
-  // Inbound lanes: chain -> offRamp address
+  // Inbound lanes: chain -> offRamp address (v1.0-v1.5 per-lane)
   inboundLanes: Record<string, EthereumAddress>
+  // v1.6+ per-chain OnRamp
+  onRamp?: EthereumAddress
+  // v1.6+ per-chain OffRamp
+  offRamp?: EthereumAddress
 }
 
-export const CCIPConfig = defineConfig<CCIPNetwork[]>('ccip')
+export interface CCIPConfigData {
+  networks: CCIPNetwork[]
+  // Maps CCIP chain selectors (uint64) to readable chain names for all chains (including untracked)
+  chainSelectorToName: Record<string, string>
+}
+
+export const CCIPConfig = defineConfig<CCIPConfigData>('ccip')
 
 const CHAINS_URL =
   'https://raw.githubusercontent.com/smartcontractkit/documentation/main/src/config/data/ccip/v1_2_0/mainnet/chains.json'
@@ -57,8 +67,22 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   'soneium-mainnet': 'soneium',
 }
 
-function toL2BeatChainName(chainlinkName: string): string | undefined {
-  return CHAINLINK_TO_L2BEAT[chainlinkName]
+// Maps a Chainlink chain name to an L2Beat chain name, or derives a readable
+// "Unknown_<name>" fallback from the Chainlink naming convention.
+// e.g. "ethereum-mainnet-base-1" → "base", "solana-mainnet" → "Unknown_solana"
+function toChainName(chainlinkName: string): string {
+  const l2beat = CHAINLINK_TO_L2BEAT[chainlinkName]
+  if (l2beat) return l2beat
+
+  // Pattern: "<host>-mainnet-<chain>-<N>" → extract <chain>
+  const subchainMatch = chainlinkName.match(/^.+-mainnet-(.+?)-\d+$/)
+  if (subchainMatch) return `Unknown_${subchainMatch[1]}`
+
+  // Pattern: "<chain>-mainnet" or "<chain>-testnet" → extract <chain>
+  const mainnetMatch = chainlinkName.match(/^(.+?)-(mainnet|testnet)$/)
+  if (mainnetMatch) return `Unknown_${mainnetMatch[1]}`
+
+  return `Unknown_${chainlinkName}`
 }
 
 interface ChainConfig {
@@ -94,26 +118,32 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
   async run() {
     const latest = await this.getLatestNetworks()
 
-    const previous = this.store.get(CCIPConfig)
-    const reconciled = reconcileNetworks(previous, latest)
+    const previous = this.store.get(CCIPConfig)?.networks
+    const reconciled = reconcileNetworks(previous, latest.networks)
 
     if (reconciled.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: CCIPConfig.key,
         removed: reconciled.removed,
       })
     }
 
-    if (reconciled.updated.length > 0) {
+    if (reconciled.updated.length > 0 || !previous) {
       this.logger.info('Networks updated', {
         plugin: CCIPConfig.key,
         count: reconciled.updated.length,
       })
-      this.store.set(CCIPConfig, reconciled.updated)
+      this.store.set(CCIPConfig, {
+        networks: reconciled.updated,
+        chainSelectorToName: latest.chainSelectorToName,
+      })
     }
   }
 
-  async getLatestNetworks(): Promise<CCIPNetwork[]> {
+  async getLatestNetworks(): Promise<{
+    networks: CCIPNetwork[]
+    chainSelectorToName: Record<string, string>
+  }> {
     const [chainsResponse, lanesResponse] = await Promise.all([
       this.http.fetchRaw(CHAINS_URL, { timeout: 10_000 }),
       this.http.fetchRaw(LANES_URL, { timeout: 10_000 }),
@@ -122,18 +152,27 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const chainsJson: ChainsJson = await chainsResponse.json()
     const lanes: LanesJson = await lanesResponse.json()
 
+    // Build selector → readable name map for ALL chains (including untracked)
+    const chainSelectorToName: Record<string, string> = {}
+    for (const [chainlinkChain, chainConfig] of Object.entries(chainsJson)) {
+      chainSelectorToName[chainConfig.chainSelector] =
+        toChainName(chainlinkChain)
+    }
+
     // Only include chains that l2beat tracks
     const trackedChainNames = new Set(this.chains.map((c) => c.name))
 
     const networks: CCIPNetwork[] = []
 
     for (const [chainlinkChain, chainConfig] of Object.entries(chainsJson)) {
-      const l2beatChain = toL2BeatChainName(chainlinkChain)
+      const l2beatChain = CHAINLINK_TO_L2BEAT[chainlinkChain]
       if (!l2beatChain) continue
       if (!trackedChainNames.has(l2beatChain)) continue
 
       const outboundLanes: Record<string, EthereumAddress> = {}
       const inboundLanes: Record<string, EthereumAddress> = {}
+      let onRamp: EthereumAddress | undefined
+      let offRamp: EthereumAddress | undefined
 
       // lanes[chainA][chainB] contains:
       // - onRamp: contract on chainA for sending TO chainB
@@ -143,15 +182,18 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
         for (const [otherChainlink, laneConfig] of Object.entries(
           thisChainLanes,
         )) {
-          const otherL2beat = toL2BeatChainName(otherChainlink)
-          if (!otherL2beat) continue
+          const chainName = toChainName(otherChainlink)
 
           // Outbound: this chain -> other chain (onRamp)
           if (laneConfig.onRamp?.address) {
             try {
-              outboundLanes[otherL2beat] = EthereumAddress(
-                laneConfig.onRamp.address,
-              )
+              const addr = EthereumAddress(laneConfig.onRamp.address)
+              if (laneConfig.onRamp.version?.startsWith('1.6')) {
+                // v1.6+ uses a single per-chain OnRamp contract
+                onRamp = addr
+              } else {
+                outboundLanes[chainName] = addr
+              }
             } catch {
               // Invalid address, skip
             }
@@ -160,9 +202,13 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
           // Inbound: other chain -> this chain (offRamp)
           if (laneConfig.offRamp?.address) {
             try {
-              inboundLanes[otherL2beat] = EthereumAddress(
-                laneConfig.offRamp.address,
-              )
+              const addr = EthereumAddress(laneConfig.offRamp.address)
+              if (laneConfig.offRamp.version?.startsWith('1.6')) {
+                // v1.6+ uses a single per-chain OffRamp contract
+                offRamp = addr
+              } else {
+                inboundLanes[chainName] = addr
+              }
             } catch {
               // Invalid address, skip
             }
@@ -170,10 +216,12 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
         }
       }
 
-      // Only add if we have at least one lane
+      // Only add if we have at least one lane or v1.6 contract
       if (
         Object.keys(outboundLanes).length > 0 ||
-        Object.keys(inboundLanes).length > 0
+        Object.keys(inboundLanes).length > 0 ||
+        onRamp ||
+        offRamp
       ) {
         networks.push({
           chain: l2beatChain,
@@ -183,10 +231,12 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
             : undefined,
           outboundLanes,
           inboundLanes,
+          onRamp,
+          offRamp,
         })
       }
     }
 
-    return networks
+    return { networks, chainSelectorToName }
   }
 }

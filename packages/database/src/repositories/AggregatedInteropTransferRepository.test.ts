@@ -23,6 +23,9 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             timestamp: UnixTime(100),
             srcChain: 'ethereum',
             dstChain: 'arbitrum',
+            transferTypeStats: {
+              taxi: { transferCount: 3, totalDurationSum: 120 },
+            },
             transferCount: 5,
             identifiedCount: 1000,
           }),
@@ -115,6 +118,76 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
       expect(result).toEqualUnsorted(records)
     })
   })
+
+  describe(
+    AggregatedInteropTransferRepository.prototype.getEarliestTimestampForDay
+      .name,
+    () => {
+      it('returns the earliest timestamp for the day of the provided timestamp', async () => {
+        const day1Early = UnixTime(UnixTime.DAY + 100)
+        const day1Mid = UnixTime(UnixTime.DAY + 200)
+        const day1Late = UnixTime(UnixTime.DAY + 300)
+        const day2Early = UnixTime(2 * UnixTime.DAY + 100)
+
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: day1Late,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 5,
+            identifiedCount: 1000,
+          }),
+          record({
+            id: 'id2',
+            timestamp: day1Early,
+            srcChain: 'arbitrum',
+            dstChain: 'ethereum',
+            transferCount: 3,
+            identifiedCount: 2000,
+          }),
+          record({
+            id: 'id3',
+            timestamp: day1Mid,
+            srcChain: 'polygon',
+            dstChain: 'ethereum',
+            transferCount: 7,
+            identifiedCount: 3000,
+          }),
+          record({
+            id: 'id4',
+            timestamp: day2Early,
+            srcChain: 'ethereum',
+            dstChain: 'polygon',
+            transferCount: 2,
+            identifiedCount: 4000,
+          }),
+        ])
+
+        const result = await repository.getEarliestTimestampForDay(day1Mid)
+        expect(result).toEqual(day1Early)
+      })
+
+      it('returns undefined when there are no records for the day', async () => {
+        const existingDay = UnixTime(UnixTime.DAY + 100)
+        const missingDay = UnixTime(3 * UnixTime.DAY + 100)
+
+        await repository.insertMany([
+          record({
+            id: 'id1',
+            timestamp: existingDay,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 5,
+            identifiedCount: 1000,
+          }),
+        ])
+
+        const result = await repository.getEarliestTimestampForDay(missingDay)
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
 
   describe(
     AggregatedInteropTransferRepository.prototype
@@ -620,10 +693,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndTimestamp(UnixTime(300), [
-          'ethereum',
-          'arbitrum',
-        ])
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(300),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+        )
 
         // Should only return record3 which matches timestamp 300
         expect(result).toEqual([record3])
@@ -667,20 +741,22 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const result = await repository.getByChainsAndTimestamp(UnixTime(300), [
-          'ethereum',
-          'arbitrum',
-        ])
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(300),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+        )
 
         // Should return record3 and record4 which match timestamp 300
         expect(result).toEqualUnsorted([record3, record4])
       })
 
       it('returns empty array when no records exist', async () => {
-        const result = await repository.getByChainsAndTimestamp(UnixTime(100), [
-          'ethereum',
-          'arbitrum',
-        ])
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+        )
 
         expect(result).toEqual([])
       })
@@ -720,10 +796,41 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(300),
           ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
         expect(result).toEqualUnsorted([record1, record3])
+      })
+
+      it('filters by protocolId when provided', async () => {
+        const record1 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 1000,
+        })
+        const record2 = record({
+          id: 'protocol2',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 3,
+          identifiedCount: 2000,
+        })
+        await repository.insertMany([record1, record2])
+
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(300),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+          undefined,
+          'protocol1',
+        )
+
+        expect(result).toEqual([record1])
       })
 
       it('returns all matching records when bridgeType is undefined', async () => {
@@ -752,6 +859,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(300),
           ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           undefined,
         )
 
@@ -777,10 +885,11 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         })
         await repository.insertMany([crossChain, sameChain])
 
-        const result = await repository.getByChainsAndTimestamp(UnixTime(300), [
-          'ethereum',
-          'arbitrum',
-        ])
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(300),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+        )
 
         expect(result).toEqual([crossChain])
       })
@@ -807,6 +916,8 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(300),
           ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+          undefined,
           undefined,
           { includeSameChainTransfers: true },
         )
@@ -855,6 +966,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             UnixTime(300),
             'protocol1',
             ['ethereum', 'arbitrum'],
+            ['ethereum', 'arbitrum'],
             'lockAndMint',
           )
 
@@ -869,6 +981,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           await repository.getSummedTransferCountsByChainsIdAndTimestamp(
             UnixTime(300),
             'protocol1',
+            ['ethereum', 'arbitrum'],
             ['ethereum', 'arbitrum'],
           )
 
@@ -903,6 +1016,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           await repository.getSummedTransferCountsByChainsIdAndTimestamp(
             UnixTime(300),
             'protocol1',
+            ['ethereum', 'arbitrum'],
             ['ethereum', 'arbitrum'],
             'lockAndMint',
           )
@@ -939,6 +1053,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             UnixTime(300),
             'protocol1',
             ['ethereum', 'arbitrum'],
+            ['ethereum', 'arbitrum'],
           )
 
         expect(result).toEqual({
@@ -970,6 +1085,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           await repository.getSummedTransferCountsByChainsIdAndTimestamp(
             UnixTime(300),
             'protocol1',
+            ['ethereum', 'arbitrum'],
             ['ethereum', 'arbitrum'],
           )
 
@@ -1003,6 +1119,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             UnixTime(300),
             'protocol1',
             ['ethereum', 'arbitrum'],
+            ['ethereum', 'arbitrum'],
           )
 
         expect(result).toEqual({
@@ -1034,6 +1151,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           await repository.getSummedTransferCountsByChainsIdAndTimestamp(
             UnixTime(300),
             'protocol1',
+            ['ethereum', 'arbitrum'],
             ['ethereum', 'arbitrum'],
             undefined,
             { includeSameChainTransfers: true },
@@ -1087,6 +1205,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(300),
           'protocol1',
           ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -1117,6 +1236,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const result = await repository.getByChainsIdAndTimestamp(
           UnixTime(300),
           'protocol1',
+          ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
@@ -1149,6 +1269,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(300),
           'protocol1',
           ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'lockAndMint',
           { includeSameChainTransfers: true },
         )
@@ -1164,12 +1285,15 @@ function record({
   timestamp,
   srcChain,
   dstChain,
+  transferTypeStats,
   transferCount = 1,
   identifiedCount = 1,
   totalDurationSum = 0,
   bridgeType = 'unknown',
   srcValueUsd,
   dstValueUsd,
+  minTransferValueUsd,
+  maxTransferValueUsd,
   avgValueInFlight,
   mintedValueUsd,
   burnedValueUsd,
@@ -1183,12 +1307,15 @@ function record({
   timestamp: UnixTime
   srcChain: string
   dstChain: string
+  transferTypeStats?: AggregatedInteropTransferRecord['transferTypeStats']
   transferCount?: number
   identifiedCount?: number
   totalDurationSum?: number
   bridgeType?: InteropBridgeType
   srcValueUsd?: number
   dstValueUsd?: number
+  minTransferValueUsd?: number
+  maxTransferValueUsd?: number
   avgValueInFlight?: number
   mintedValueUsd?: number
   burnedValueUsd?: number
@@ -1203,11 +1330,14 @@ function record({
     id,
     srcChain,
     dstChain,
+    transferTypeStats,
     transferCount,
     identifiedCount,
     totalDurationSum,
     srcValueUsd,
     dstValueUsd,
+    minTransferValueUsd,
+    maxTransferValueUsd,
     avgValueInFlight,
     mintedValueUsd,
     burnedValueUsd,

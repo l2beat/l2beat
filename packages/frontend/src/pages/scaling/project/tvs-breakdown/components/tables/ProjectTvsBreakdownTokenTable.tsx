@@ -9,6 +9,7 @@ import { BasicTable, type BasicTableRow } from '~/components/table/BasicTable'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { useTable } from '~/hooks/useTable'
+import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import { MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN } from '~/server/features/scaling/project/const'
 import type { ProjectTvsBreakdownTokenEntry } from '~/server/features/scaling/tvs/breakdown/getProjectTokensEntries'
 import { columns } from './columns'
@@ -22,10 +23,18 @@ export type TokenRow = ProjectTvsBreakdownTokenEntry & BasicTableRow
 
 export function ProjectTvsBreakdownTokenTable(props: Props) {
   const filterEntries = useFilterEntries()
+  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
 
   const filteredEntries = useMemo(
-    () => props.entries.filter(filterEntries),
-    [props.entries, filterEntries],
+    () =>
+      props.entries.filter((entry) => {
+        if (excludeRwaRestrictedTokens && entry.category === 'rwaRestricted') {
+          return false
+        }
+
+        return filterEntries(entry)
+      }),
+    [props.entries, filterEntries, excludeRwaRestrictedTokens],
   )
 
   const table = useTable({

@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1770994155,
+  "timestamp": 1773160404,
   "configHash": "0x7e5006a9cd6e910bbcff7795125cf6ccb79bc0029116463ab977215145232266",
   "entries": [
     {
@@ -10,7 +10,7 @@
       "template": "opstack/Layer2/FeeDisburser",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x62c0410a08a90b339fd9d345a563e2f93aa3afb72082cb32c23ab6dee23706ed"
+        "0x9e4d8a31512b7aaafcbf23f817cbdc9bbe404a0fa262aaf98220120c52fde7cb"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.",
@@ -19,42 +19,34 @@
       "sinceBlock": 6728,
       "values": {
         "$admin": "base:0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221",
-        "$implementation": "base:0x45969D00739d518f0Dde41920B67cE30395135A0",
+        "$implementation": "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75",
         "$pastUpgrades": [
           [
             "2023-09-01T23:06:43.000Z",
             "0x49e50b94dd7c45505380b0015b912b001354b9103fc5549d05a2b4bb7e433278",
             ["base:0x45969D00739d518f0Dde41920B67cE30395135A0"]
+          ],
+          [
+            "2026-03-03T17:36:17.000Z",
+            "0x055b31e8fb8689e5e72d9c41c1c38b5a165fd145aa76bf118194f86a066d0650",
+            ["base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75"]
           ]
         ],
-        "$upgradeCount": 1,
-        "BASIS_POINT_SCALE": 10000,
+        "$upgradeCount": 2,
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-        "lastDisbursementTime": 1770750983,
+        "lastDisbursementTime": 1772323219,
         "netFeeRevenue": 0,
-        "OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS": 250,
-        "OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS": 1500,
-        "OPTIMISM_WALLET": "base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05",
+        "version": "1.0.0",
         "WITHDRAWAL_MIN_GAS": 35000
       },
       "implementationNames": {
         "base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA": "Proxy",
-        "base:0x45969D00739d518f0Dde41920B67cE30395135A0": "FeeDisburser"
+        "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75": "FeeDisburser"
       }
     },
     {
       "address": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "base:0x23d85C88792454DcCffD460bC06C349A21aDb102",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "base:0x3FDf3c4bf8783bB94295b9219DF74a648f397360",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -79,7 +71,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292671094",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292672265",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -295,10 +287,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 136879810,
+        "basefee": 306752372,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 7988643,
+        "blobBaseFee": 17200010,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 139,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -308,15 +300,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xcc425c29b6b28e1b75236d5a0d0546f3d745e613824bfb8e164e90503b34dab3",
+        "hash": "0xbe2413bbd2fe029737a7b9d94f5d443d2c5255d6d98de7201bf13b2cd4b94285",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 24448545,
+        "number": 24628269,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 11,
-        "timestamp": 1770993959,
+        "sequenceNumber": 3,
+        "timestamp": 1773160223,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -754,42 +746,6 @@
       ]
     },
     {
-      "name": "GnosisSafeL2",
-      "address": "base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1690401081,
-      "sinceBlock": 1805867,
-      "values": {
-        "$immutable": false,
-        "$implementation": "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$members": [
-          "base:0x23d85C88792454DcCffD460bC06C349A21aDb102",
-          "base:0xe4149Acb6F5DA74b760a1007F05FB5514F3351ea",
-          "base:0xB2433A0C418Bda24a771489918EF3a7EBC57e24C",
-          "base:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
-          "base:0x3FDf3c4bf8783bB94295b9219DF74a648f397360"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x722e084593c255be784af2d4c4d9ebe8988d5e4bd6bfa83cffe4f8f18e4c1c1a",
-        "getChainId": 8453,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05": "GnosisSafeProxy",
-        "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
-      }
-    },
-    {
       "address": "base:0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221",
       "type": "EOA",
       "proxyType": "EOA",
@@ -802,22 +758,7 @@
       ]
     },
     {
-      "address": "base:0xB2433A0C418Bda24a771489918EF3a7EBC57e24C",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "base:0xe4149Acb6F5DA74b760a1007F05FB5514F3351ea",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "base:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -830,40 +771,6 @@
       "address": "eth:0x000000000000000000000000000000000000dEaD",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "LivenessModule",
-      "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-      "type": "Contract",
-      "template": "gnosisSafeModules/LivenessModule",
-      "sourceHashes": [
-        "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
-      ],
-      "proxyType": "immutable",
-      "description": "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1717149791,
-      "sinceBlock": 19989094,
-      "values": {
-        "$immutable": true,
-        "fallbackOwner": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-        "livenessGuard": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
-        "livenessInterval": "3mo 8d",
-        "minOwners": 8,
-        "ownershipTransferredToFallback": false,
-        "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "thresholdPercentage": 75,
-        "version": "1.2.0"
-      },
-      "implementationNames": {
-        "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
-      }
     },
     {
       "name": "ProxyAdmin",
@@ -930,6 +837,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
           "role": "admin"
         }
       ],
@@ -1004,60 +916,6 @@
       }
     },
     {
-      "address": "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Optimism Guardian Multisig",
-      "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "role": ".guardian"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1716902219,
-      "sinceBlock": 19968607,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": ["eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"],
-        "$threshold": 1,
-        "domainSeparator": "0x441442b08d4fdc9877b881d21b5394f2af9aa0f41ef7184f54e10664ea757773",
-        "getChainId": 1,
-        "GnosisSafe_modules": [
-          "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754"
-        ],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 6,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
-      "address": "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x0E8A99738a50D523871739c6d676554b0E34252f",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1073,6 +931,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
+          "role": ".INCIDENT_RESPONDER"
+        },
         {
           "permission": "interact",
           "from": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
@@ -1106,18 +969,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 13 (23%)",
-        "nonce": 103,
+        "nonce": 104,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
@@ -1184,6 +1042,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xbDE1845c879942fC326F247Ad708677733Dd5594",
           "eth:0x5ff5C78ff194acc24C22DAaDdE4D639ebF18ACC6",
           "eth:0x82C80F34C4b5c153dB76122a11AaD2F77C99E766",
           "eth:0xa8ee754FD1d069fb4B5d652730A0ca5e07a3fb06",
@@ -1195,12 +1054,12 @@
           "eth:0x99DB5BbA0db16e9aD05e3ff53310683CC3C971D2",
           "eth:0x0E8A99738a50D523871739c6d676554b0E34252f"
         ],
-        "$threshold": 7,
+        "$threshold": 8,
         "domainSeparator": "0x1fbfdc61ceb715f63cb17c56922b88c3a980f1d83873df2b9325a579753e8aa3",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "7 of 10 (70%)",
-        "nonce": 5,
+        "multisigThreshold": "8 of 11 (73%)",
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1218,35 +1077,6 @@
       "address": "eth:0x21C7D1e6A81Daca071bA94839ab74C39A25f851F",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "LivenessGuard",
-      "address": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
-      "type": "Contract",
-      "template": "gnosisSafeModules/LivenessGuard",
-      "sourceHashes": [
-        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
-      ],
-      "proxyType": "immutable",
-      "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-          "description": "can remove members of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 3mo 8d.",
-          "role": ".livenessGuard"
-        }
-      ],
-      "sinceTimestamp": 1717149791,
-      "sinceBlock": 19989094,
-      "values": {
-        "$immutable": true,
-        "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "version": "1.0.0"
-      },
-      "implementationNames": {
-        "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
-      }
     },
     {
       "name": "DelayedWETH",
@@ -1273,7 +1103,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "config": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "config": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
         "decimals": 18,
         "delay": 302400,
         "initVersion": 1,
@@ -1282,7 +1112,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
-        "totalSupply": "20080000000000000000",
+        "totalSupply": "20160000000000000000",
         "version": "1.5.0"
       },
       "implementationNames": {
@@ -1297,11 +1127,6 @@
     },
     {
       "address": "eth:0x26c72586FB396325F58718152FEFA94E93Cf177b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x3041BA32f451F5850c147805F5521AC206421623",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1332,7 +1157,7 @@
         "paused": false,
         "proxyAdmin": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
-        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "superchainConfig": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "2.8.0"
       },
@@ -1343,39 +1168,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "Optimism EOA 1",
-      "address": "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "role": ".guardian",
-          "via": [
-            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
-            {
-              "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
-              "condition": "though restricted to the SuperchainConfig's `pause()` function"
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
-          "role": ".deputy",
-          "condition": "though restricted to the SuperchainConfig's `pause()` function"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1384,39 +1176,6 @@
       "address": "eth:0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1678243007,
-      "sinceBlock": 16780617,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
-          "eth:0x4665374939642965EfD8357D4568D2A77f677429"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xc7edf91fb84ec337ffa25b6f502a8c52c3dd4ea86d452728767d2836fa3819e3",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 95,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
     },
     {
       "name": "DisputeGameFactory",
@@ -1467,7 +1226,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 11263,
+        "gameCount": 11864,
         "gameImpls": [
           "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1508,11 +1267,6 @@
     },
     {
       "address": "eth:0x4427683AA1f0ff25ccDC4a5Db83010c1DE9b5fF4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x4665374939642965EfD8357D4568D2A77f677429",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1590,13 +1344,13 @@
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 302400,
         "ethLockbox": "eth:0x0000000000000000000000000000000000000000",
-        "guardian": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+        "guardian": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "initVersion": 3,
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 310736,
-          "prevBlockNum": 24448551
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 24628256
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1605,7 +1359,7 @@
         "RespectedGameString": "FaultDisputeGame",
         "respectedGameType": 0,
         "respectedGameTypeUpdatedAt": 1759862579,
-        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "superchainConfig": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "5.2.0"
       },
@@ -1638,16 +1392,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1663,40 +1407,6 @@
       "address": "eth:0x541a833E4303EB56a45bE7E8E4A908db97568d1e",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "SuperchainProxyAdmin",
-      "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
-      ],
-      "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-          "description": "set and change address mappings.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "role": "admin"
-        }
-      ],
-      "sinceTimestamp": 1685377355,
-      "sinceBlock": 17365800,
-      "values": {
-        "$immutable": true,
-        "addressManager": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-        "isUpgrading": false,
-        "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
-      },
-      "implementationNames": {
-        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
-      }
     },
     {
       "address": "eth:0x5468985B560D966dEDEa2DAF493f5756101137DC",
@@ -1804,65 +1514,6 @@
       ]
     },
     {
-      "name": "SuperchainProxyAdminOwner",
-      "address": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-          "description": "set and change address mappings.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-          "role": ".owner"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1707420875,
-      "sinceBlock": 19185554,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-          "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xdaf670b31fdf41fdaae2643ed0ebe709283539c0e61540c160b5a6403d79073f",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 32,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
       "address": "eth:0x5B154B8587168CB984Ff610F5De74289D8f68874",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1939,7 +1590,7 @@
         "paused": false,
         "proxyAdmin": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
-        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "superchainConfig": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "2.9.0"
       },
@@ -1948,11 +1599,6 @@
         "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9": "L1ERC721Bridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
@@ -2011,7 +1657,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "config": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "config": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
         "decimals": 18,
         "delay": 302400,
         "initVersion": 1,
@@ -2027,16 +1673,6 @@
         "eth:0x64AE5250958CdeB83f6b61f913B5Ac6Ebe8EFd4D": "Proxy",
         "eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998": "DelayedWETH"
       }
-    },
-    {
-      "address": "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6CD3850756b7894774Ab715D136F9dD02837De50",
@@ -2148,7 +1784,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x86dc9ef5cbf4cc436d50678ad7b2abbf9cc1905641ebbeccddbf1adf9b724403"
+        "0xe6e96ed1643d7aa0bde96b58e278bd6716600479c36623c8cbca4da634304c97"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -2157,7 +1793,7 @@
       "sinceBlock": 17482143,
       "values": {
         "$admin": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
-        "$implementation": "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2",
+        "$implementation": "eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44",
         "$pastUpgrades": [
           [
             "2023-06-15T01:51:47.000Z",
@@ -2228,9 +1864,14 @@
             "2026-02-10T16:49:59.000Z",
             "0x7407256ae44170125b2d82c71f0d03cb6ade3c2268e8cd33dcb07fe259fbfd0b",
             ["eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2"]
+          ],
+          [
+            "2026-03-03T17:30:59.000Z",
+            "0xa2dc938704977d2f3d0765832e79e1239d97aa6912efadc21a9705ef7dca42eb",
+            ["eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44"]
           ]
         ],
-        "$upgradeCount": 14,
+        "$upgradeCount": 15,
         "basefeeScalar": 2269,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
@@ -2251,8 +1892,8 @@
           "optimismMintableERC20Factory": "eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84",
           "delayedWETH": "eth:0x0000000000000000000000000000000000000000"
         },
-        "guardian": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-        "initVersion": 3,
+        "guardian": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+        "initVersion": 4,
         "isCustomGasToken": false,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
@@ -2262,7 +1903,7 @@
         "l1StandardBridge": "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "l2ChainId": 8453,
         "maximumGasLimit": 500000000,
-        "minBaseFee": 2000000,
+        "minBaseFee": 5000000,
         "minimumGasLimit": 21000000,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
@@ -2292,10 +1933,10 @@
         "sequencerInbox": "eth:0xFf00000000000000000000000000000000008453",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 17482144,
-        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "superchainConfig": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "eth:0xAf6E19BE0F9cE7f8afd49a1824851023A8249e8a",
-        "version": "3.13.1",
+        "version": "3.13.2",
         "VERSION": 0
       },
       "fieldMeta": {
@@ -2309,51 +1950,9 @@
       },
       "implementationNames": {
         "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072": "Proxy",
-        "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2": "SystemConfig"
+        "eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "name": "DeputyPauseModule",
-      "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
-      "type": "Contract",
-      "template": "opstack/DeputyPauseModule",
-      "sourceHashes": [
-        "0x6d8659eec5f14dbbacd2c5fb2ebcfab040b98237fc8ea869b3317a9e425da7bf"
-      ],
-      "proxyType": "immutable",
-      "description": "Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1748963099,
-      "sinceBlock": 22624903,
-      "values": {
-        "$immutable": true,
-        "deputy": "eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC",
-        "deputyAuthMessageTypehash": "0x92e47526b2e32be4f66cd2600e9cda9147735107631c0b241a067693f49b7f38",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "DeputyPauseModule",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "foundationSafe": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-        "guardianSafe": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-        "pauseMessageTypehash": "0x0ad9a3778ba0f89045b0ba6e23129cdbd178a22b085d85b5dd8a48c8af831b54",
-        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-        "version": "2.1.0"
-      },
-      "implementationNames": {
-        "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": "DeputyPauseModule"
-      }
     },
     {
       "address": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
@@ -2371,6 +1970,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
+          "role": ".guardian"
+        },
         {
           "permission": "interact",
           "from": "eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
@@ -2460,6 +2064,14 @@
           "via": [
             { "address": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -2477,25 +2089,20 @@
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1",
-          "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+          "eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd"
         ],
         "$threshold": 2,
         "domainSeparator": "0xe84c799b3c2ca46c34ff8fa9bfdb5533a5e36e90aadfb803c75e31eac995151d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 13,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Escrow",
@@ -2521,70 +2128,6 @@
       "address": "eth:0x82C80F34C4b5c153dB76122a11AaD2F77C99E766",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "OpFoundationUpgradeSafe",
-      "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "role": ".guardian",
-          "via": [
-            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
-            { "address": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
-            {
-              "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-              "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-          "description": "takes ownership of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-          "role": ".fallbackOwner",
-          "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1707420755,
-      "sinceBlock": 19185544,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
-          "eth:0x3041BA32f451F5850c147805F5521AC206421623",
-          "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
-          "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
-          "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
-          "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
-        ],
-        "$threshold": 5,
-        "domainSeparator": "0xa4a9c312badf3fcaa05eafe5dc9bee8bd9316c78ee8b0bebe3115bb21b732672",
-        "getChainId": 1,
-        "GnosisSafe_modules": [
-          "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
-        ],
-        "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 51,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "GnosisSafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -2656,7 +2199,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293139655",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293150395",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2673,7 +2216,7 @@
         "RELAY_RESERVED_GAS": 40000,
         "ResolvedDelegateProxy_addressManager": "eth:0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
-        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "superchainConfig": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "TX_BASE_GAS": 21000,
         "version": "2.11.0"
@@ -2748,14 +2291,14 @@
           ]
         ],
         "$upgradeCount": 2,
-        "absolutePrestateFromGame": "0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b",
-        "anchorGame": "eth:0x52b22De8c1C74BdbF15232EB5f4443320Fbb0F39",
+        "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
+        "anchorGame": "eth:0x890F8b02D7f7CB6C79b3d66e50abA67502c3b494",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x6c11b50be39b34de9407a054b25774dacce7fe1bf6adbea130f4c1060eef57cd",
-          41797803
+          "0xf224f00db1f32850178e70e2633d0d8aacf2e021d0e1caef66dd7af5b8607953",
+          42881843
         ],
         "getStartingAnchorRoot": {
           "root": "0x9a37fe32cd2b49385bec0236b7b5c2177e71176bb306d19a49a8a77651ce2cd0",
@@ -2769,7 +2312,7 @@
         "RespectedGameString": "FaultDisputeGame",
         "respectedGameType": 0,
         "retirementTimestamp": 1759862579,
-        "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "superchainConfig": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
         "systemConfig": "eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "3.7.0",
         "vmFromGame": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
@@ -2792,76 +2335,6 @@
       ]
     },
     {
-      "address": "eth:0x92827223f6b397CE9F208eE352bacA710765cACb",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "SuperchainConfig",
-      "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-      "type": "Contract",
-      "template": "opstack/SuperchainConfig_expiry",
-      "sourceHashes": [
-        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x53a6b3db7f270298025bbfef7f6c77b420a9808341212fa9cf54a5e157a18567"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
-      "sinceTimestamp": 1705954799,
-      "sinceBlock": 19064589,
-      "values": {
-        "$admin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-        "$implementation": "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957",
-        "$pastUpgrades": [
-          [
-            "2024-01-22T20:19:59.000Z",
-            "0x8ba0e42b89cde22310b644ed30fd44e4a348619a165a54c908e7dc341e9bbd0c",
-            ["eth:0x53c165169401764778F780a69701385eb0FF19B7"]
-          ],
-          [
-            "2024-06-10T18:29:23.000Z",
-            "0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0",
-            ["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
-          ],
-          [
-            "2024-06-10T18:29:23.000Z",
-            "0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0",
-            ["eth:0x53c165169401764778F780a69701385eb0FF19B7"]
-          ],
-          [
-            "2025-04-02T16:50:23.000Z",
-            "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",
-            ["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]
-          ],
-          [
-            "2025-07-24T17:47:23.000Z",
-            "0x46acdce174c8d83ebe2f208d8c76c867e75617483d64c3e407f69ae2f9868716",
-            ["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]
-          ],
-          [
-            "2025-11-25T17:46:35.000Z",
-            "0xf556934cb4de1ab40a4cfba17856cd601cbc8b875b96a9ccd8ee32bcd363abf5",
-            ["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]
-          ]
-        ],
-        "$upgradeCount": 6,
-        "guardian": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
-        "initVersion": 2,
-        "paused": false,
-        "pauseExpiry": 7884000,
-        "pauseExpiryFmt": "3mo 1d",
-        "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-        "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "version": "2.4.0"
-      },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
-      "implementationNames": {
-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "Proxy",
-        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": "SuperchainConfig"
-      },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
       "name": "Base Coordinator Multisig",
       "address": "eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1",
       "type": "Contract",
@@ -2878,15 +2351,19 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd",
-          "eth:0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110"
+          "eth:0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
+          "eth:0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
+          "eth:0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
+          "eth:0x1c870776B168A9ffAE80c51f050C611eDd246741",
+          "eth:0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
+          "eth:0x6CD3850756b7894774Ab715D136F9dD02837De50"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x88aac3dc27cc1618ec43a87b3df21482acd24d172027ba3fbb5a5e625d895a0b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 26,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2898,88 +2375,6 @@
       "address": "eth:0x99DB5BbA0db16e9aD05e3ff53310683CC3C971D2",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "OpFoundationOperationsSafe",
-      "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1610850364,
-      "sinceBlock": 11670007,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
-          "eth:0x3041BA32f451F5850c147805F5521AC206421623",
-          "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
-          "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
-          "eth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-          "eth:0x69acfE2096Dfb8d5A041eF37693553c48d9BFd02",
-          "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
-        ],
-        "$threshold": 5,
-        "domainSeparator": "0x2e5ad244d335c45fbace4ebd1736b0fad81b01591a2819baedad311ead5bce76",
-        "getChainId": 1,
-        "GnosisSafe_modules": [
-          "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
-        ],
-        "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 115,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "Proxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "address": "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Base Multisig 2",
-      "address": "eth:0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1745514179,
-      "sinceBlock": 22340228,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0x6CD3850756b7894774Ab715D136F9dD02837De50",
-          "eth:0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
-          "eth:0x1c870776B168A9ffAE80c51f050C611eDd246741",
-          "eth:0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
-          "eth:0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
-          "eth:0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xfb308368b8deca582e84a807d31c1bfcec6fda754061e2801b4d6be5cb52a8ac",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 6,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
     },
     {
       "name": "wstETHEscrow",
@@ -3111,51 +2506,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SaferSafes",
-      "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
-      "type": "Contract",
-      "template": "gnosisSafeModules/SaferSafes",
-      "sourceHashes": [
-        "0x037b17d0072b90906969c37097eb5ed525df21e4a27ba101d5b0b5de87e66dd7"
-      ],
-      "proxyType": "immutable",
-      "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
-      "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "role": ".guardian",
-          "via": [
-            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
-            { "address": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
-            {
-              "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-              "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
-            },
-            { "address": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-          "role": ".GnosisSafe_modules"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1764596735,
-      "sinceBlock": 23919014,
-      "values": { "$immutable": true, "version": "1.10.1" },
-      "implementationNames": {
-        "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": "SaferSafes"
-      }
-    },
-    {
       "address": "eth:0xa8ee754FD1d069fb4B5d652730A0ca5e07a3fb06",
       "type": "EOA",
       "proxyType": "EOA"
@@ -3171,119 +2521,59 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xB37B2D42cb0C10ebf96279CcECa2cBFc47C6f236",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Optimism Security Council",
-      "address": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+      "name": "SuperchainConfig",
+      "address": "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c",
       "type": "Contract",
-      "template": "GnosisSafe",
+      "template": "opstack/SuperchainConfig_base",
       "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0xa4c6eec89ca5a138c3f0f983a01542174071c7f37870aaa0fba0ef9613c2f530",
+        "0x96cc0e27c01fa6d20f27d851526b1c6c638f8051e7951254dabb531bed30d6d5"
       ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "role": ".guardian",
-          "via": [
-            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
+      "proxyType": "EIP1967 proxy",
+      "description": "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.",
+      "sinceTimestamp": 1771973279,
+      "sinceBlock": 24529846,
+      "values": {
+        "$admin": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
+        "$implementation": "eth:0xc4ceeB264Fa35a022e470aCc3C6A522308f3ec02",
+        "$pastUpgrades": [
+          [
+            "2026-02-24T22:47:59.000Z",
+            "0x29d51cf032651b7bedba5af1030eff2c43e40b676d4fe2cdf6c970a8a01e3a43",
+            ["eth:0xc4ceeB264Fa35a022e470aCc3C6A522308f3ec02"]
           ]
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1707420419,
-      "sinceBlock": 19185517,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073",
-          "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
-          "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
-          "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
-          "eth:0x3A53B4B081Eb7Cb00C46497b16Ea22e65E4Faa94",
-          "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
-          "eth:0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
-          "eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
-          "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
-          "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
-          "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
-          "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
-          "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
         ],
-        "$threshold": 10,
-        "domainSeparator": "0xdf53d510b56e539b90b369ef08fce3631020fbf921e3136ea5f8747c20bce967",
-        "getChainId": 1,
-        "GnosisSafe_modules": [
-          "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
-        ],
-        "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 52,
-        "VERSION": "1.3.0"
+        "$upgradeCount": 1,
+        "guardian": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+        "GUARDIAN": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+        "INCIDENT_RESPONDER": "eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
+        "incidentResponder": "eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
+        "paused": false,
+        "pauseExpiry": 7884000,
+        "pauseExpiryFmt": "3mo 1d",
+        "proxyAdmin": "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
+        "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+        "version": "2.5.0"
       },
+      "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
-        "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
-      "address": "eth:0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "AddressManager",
-      "address": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-      "type": "Contract",
-      "template": "opstack/AddressManager",
-      "sourceHashes": [
-        "0xe5211497d15a7ea75577cf992ab6093dd0f6083f45c955f0136737810e44c205"
-      ],
-      "proxyType": "immutable",
-      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "sinceTimestamp": 1624400033,
-      "sinceBlock": 12686687,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+        "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c": "Proxy",
+        "eth:0xc4ceeB264Fa35a022e470aCc3C6A522308f3ec02": "SuperchainConfig"
       },
-      "implementationNames": {
-        "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
-      },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+      "address": "eth:0xbDE1845c879942fC326F247Ad708677733Dd5594",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0xee44cdb68D618d58F75d9fe0818B640BD7B8A7B7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3486,22 +2776,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "base:0x45969D00739d518f0Dde41920B67cE30395135A0": [
-      "constructor(address _optimismWallet, address _l1Wallet, uint256 _feeDisbursementInterval)",
-      "event FeesDisbursed(uint256 _disbursementTime, uint256 _paidToOptimism, uint256 _totalFeesDisbursed)",
-      "event FeesReceived(address indexed _sender, uint256 _amount)",
-      "event NoFeesCollected()",
-      "function BASIS_POINT_SCALE() view returns (uint32)",
-      "function FEE_DISBURSEMENT_INTERVAL() view returns (uint256)",
-      "function L1_WALLET() view returns (address)",
-      "function OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS() view returns (uint256)",
-      "function OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS() view returns (uint256)",
-      "function OPTIMISM_WALLET() view returns (address)",
-      "function WITHDRAWAL_MIN_GAS() view returns (uint32)",
-      "function disburseFees()",
-      "function lastDisbursementTime() view returns (uint256)",
-      "function netFeeRevenue() view returns (uint256)"
-    ],
     "base:0x4E207bDF8aece56de86821f5370b2b993D08C9E9": [
       "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
       "event Withdrawal(uint256 value, address to, address from)",
@@ -3533,9 +2807,6 @@
       "function getSchema(bytes32 uid) view returns (tuple(bytes32 uid, address resolver, bool revocable, string schema))",
       "function register(string schema, address resolver, bool revocable) returns (bytes32)",
       "function version() view returns (string)"
-    ],
-    "base:0x9c3631dDE5c8316bE5B7554B0CcD2631C15a9A05": [
-      "constructor(address _singleton)"
     ],
     "base:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": [
       "constructor()",
@@ -3709,72 +2980,23 @@
       "function version() view returns (string)",
       "function withdraw()"
     ],
-    "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
-      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": [
-      "constructor(address _safe, address _livenessGuard, uint256 _livenessInterval, uint256 _minOwners, uint256 _thresholdPercentage, address _fallbackOwner)",
-      "error OwnerRemovalFailed(string)",
-      "event OwnershipTransferredToFallback()",
-      "event RemovedOwner(address indexed owner)",
-      "function canRemove(address _owner) view returns (bool canRemove_)",
-      "function fallbackOwner() view returns (address fallbackOwner_)",
-      "function getRequiredThreshold(uint256 _numOwners) view returns (uint256 threshold_)",
-      "function livenessGuard() view returns (address livenessGuard_)",
-      "function livenessInterval() view returns (uint256 livenessInterval_)",
-      "function minOwners() view returns (uint256 minOwners_)",
-      "function ownershipTransferredToFallback() view returns (bool)",
-      "function removeOwners(address[] _previousOwners, address[] _ownersToRemove)",
-      "function safe() view returns (address safe_)",
-      "function thresholdPercentage() view returns (uint256 thresholdPercentage_)",
-      "function version() view returns (string)"
+    "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75": [
+      "constructor(address l1Wallet, uint256 feeDisbursementInterval)",
+      "error FeeVaultMustWithdrawToFeeDisburser()",
+      "error FeeVaultMustWithdrawToL2()",
+      "error IntervalNotReached()",
+      "error IntervalTooLow()",
+      "error ZeroAddress()",
+      "event FeesDisbursed(uint256 disbursementTime, uint256 deprecated, uint256 totalFeesDisbursed)",
+      "event FeesReceived(address indexed sender, uint256 amount)",
+      "event NoFeesCollected()",
+      "function FEE_DISBURSEMENT_INTERVAL() view returns (uint256)",
+      "function L1_WALLET() view returns (address)",
+      "function WITHDRAWAL_MIN_GAS() view returns (uint32)",
+      "function disburseFees()",
+      "function lastDisbursementTime() view returns (uint256)",
+      "function netFeeRevenue() view returns (uint256)",
+      "function version() pure returns (string)"
     ],
     "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E": [
       "constructor(address _owner)",
@@ -3797,6 +3019,82 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
+    "eth:0x0507Aaa21c678976FCdC7e804836ACd6ebc17a44": [
+      "constructor()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "error SystemConfig_InvalidFeatureState()",
+      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
+      "event FeatureSet(bytes32 indexed feature, bool indexed enabled)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BATCH_INBOX_SLOT() view returns (bytes32)",
+      "function DELAYED_WETH_SLOT() view returns (bytes32)",
+      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
+      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
+      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
+      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
+      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
+      "function START_BLOCK_SLOT() view returns (bytes32)",
+      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
+      "function VERSION() view returns (uint256)",
+      "function basefeeScalar() view returns (uint32)",
+      "function batchInbox() view returns (address addr_)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobbasefeeScalar() view returns (uint32)",
+      "function daFootprintGasScalar() view returns (uint16)",
+      "function delayedWETH() view returns (address addr_)",
+      "function disputeGameFactory() view returns (address addr_)",
+      "function eip1559Denominator() view returns (uint32)",
+      "function eip1559Elasticity() view returns (uint32)",
+      "function gasLimit() view returns (uint64)",
+      "function getAddresses() view returns (tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address optimismPortal, address optimismMintableERC20Factory, address delayedWETH))",
+      "function guardian() view returns (address)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address optimismPortal, address optimismMintableERC20Factory, address delayedWETH) _addresses, uint256 _l2ChainId, address _superchainConfig)",
+      "function isCustomGasToken() view returns (bool)",
+      "function isFeatureEnabled(bytes32) view returns (bool)",
+      "function l1CrossDomainMessenger() view returns (address addr_)",
+      "function l1ERC721Bridge() view returns (address addr_)",
+      "function l1StandardBridge() view returns (address addr_)",
+      "function l2ChainId() view returns (uint256)",
+      "function maximumGasLimit() pure returns (uint64)",
+      "function minBaseFee() view returns (uint64)",
+      "function minimumGasLimit() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function optimismMintableERC20Factory() view returns (address addr_)",
+      "function optimismPortal() view returns (address addr_)",
+      "function overhead() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
+      "function scalar() view returns (uint256)",
+      "function setBatcherHash(address _batcher)",
+      "function setBatcherHash(bytes32 _batcherHash)",
+      "function setDAFootprintGasScalar(uint16 _daFootprintGasScalar)",
+      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
+      "function setFeature(bytes32 _feature, bool _enabled)",
+      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
+      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
+      "function setGasLimit(uint64 _gasLimit)",
+      "function setMinBaseFee(uint64 _minBaseFee)",
+      "function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant)",
+      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
+      "function startBlock() view returns (uint256 startBlock_)",
+      "function superchainConfig() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unsafeBlockSigner() view returns (address addr_)",
+      "function version() pure returns (string)"
+    ],
     "eth:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3806,9 +3104,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": [
-      "constructor(address _singleton)"
     ],
     "eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056": [
       "constructor(address _singleton)"
@@ -3865,16 +3160,6 @@
     ],
     "eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": [
-      "constructor(address _safe)",
-      "event OwnerRecorded(address owner)",
-      "function checkAfterExecution(bytes32, bool)",
-      "function checkTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, address msgSender)",
-      "function lastLive(address) view returns (uint256)",
-      "function safe() view returns (address safe_)",
-      "function showLiveness()",
-      "function version() view returns (string)"
     ],
     "eth:0x2453c1216E49704d84eA98a4daCd95738F2fC8Ec": [
       "constructor(address _admin)",
@@ -4078,9 +3363,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": [
-      "constructor(address _singleton)"
-    ],
     "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -4100,27 +3382,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": [
-      "constructor(address _owner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function addressManager() view returns (address)",
-      "function changeProxyAdmin(address _proxy, address _newAdmin)",
-      "function getProxyAdmin(address _proxy) view returns (address)",
-      "function getProxyImplementation(address _proxy) view returns (address)",
-      "function implementationName(address) view returns (string)",
-      "function isUpgrading() view returns (bool)",
-      "function owner() view returns (address)",
-      "function proxyType(address) view returns (uint8)",
-      "function renounceOwnership()",
-      "function setAddress(string _name, address _address)",
-      "function setAddressManager(address _address)",
-      "function setImplementationName(address _address, string _name)",
-      "function setProxyType(address _address, uint8 _type)",
-      "function setUpgrading(bool _upgrading)",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address _proxy, address _implementation)",
-      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
     "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A": [
       "constructor(tuple(uint256 maxGameDepth, uint256 splitDepth, uint64 clockExtension, uint64 maxClockDuration) _params)",
@@ -4222,9 +3483,6 @@
       "function vm() pure returns (address vm_)",
       "function wasRespectedGameTypeWhenCreated() view returns (bool)",
       "function weth() pure returns (address weth_)"
-    ],
-    "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": [
-      "constructor(address _singleton)"
     ],
     "eth:0x608d94945A64503E642E6370Ec598e519a2C1E53": [
       "constructor(address _admin)",
@@ -4441,34 +3699,6 @@
       "function systemConfig() view returns (address)",
       "function version() view returns (string)"
     ],
-    "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": [
-      "constructor(address _guardianSafe, address _foundationSafe, address _superchainConfig, address _deputy, bytes _deputySignature)",
-      "error DeputyPauseModule_ExecutionFailed(string)",
-      "error DeputyPauseModule_InvalidDeputy()",
-      "error DeputyPauseModule_NonceAlreadyUsed()",
-      "error DeputyPauseModule_NotFromSafe()",
-      "error DeputyPauseModule_SuperchainNotPaused()",
-      "error DeputyPauseModule_Unauthorized()",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error InvalidShortString()",
-      "error StringTooLong(string str)",
-      "event DeputySet(address indexed deputy)",
-      "event EIP712DomainChanged()",
-      "event PauseTriggered(address indexed deputy, bytes32 nonce, address identifier)",
-      "function deputy() view returns (address)",
-      "function deputyAuthMessageTypehash() pure returns (bytes32 deputyAuthMessageTypehash_)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function foundationSafe() view returns (address foundationSafe_)",
-      "function guardianSafe() view returns (address guardianSafe_)",
-      "function pause(bytes32 _nonce, address _identifier, bytes _signature)",
-      "function pauseMessageTypehash() pure returns (bytes32 pauseMessageTypehash_)",
-      "function setDeputy(address _deputy, bytes _deputySignature)",
-      "function superchainConfig() view returns (address superchainConfig_)",
-      "function usedNonces(bytes32) view returns (bool)",
-      "function version() view returns (string)"
-    ],
     "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": [
       "constructor(address _singleton)"
     ],
@@ -4481,9 +3711,6 @@
       "function deny(address usr)",
       "function rely(address usr)",
       "function wards(address) view returns (uint256)"
-    ],
-    "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": [
-      "constructor(address _singleton)"
     ],
     "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa": [
       "constructor(address _addressManager, string _implementationName)"
@@ -4512,16 +3739,6 @@
       "function transferOwnership(address newOwner)"
     ],
     "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72": [
-      "constructor(address _admin)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address _admin)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address _implementation)",
-      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -4603,12 +3820,6 @@
     "eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1": [
       "constructor(address _singleton)"
     ],
-    "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": [
-      "constructor(address _masterCopy)"
-    ],
-    "eth:0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110": [
-      "constructor(address _singleton)"
-    ],
     "eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error ErrorNotAdmin()",
@@ -4632,66 +3843,6 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": [
-      "error LivenessModule2_ChallengeAlreadyExists()",
-      "error LivenessModule2_ChallengeDoesNotExist()",
-      "error LivenessModule2_InvalidFallbackOwner()",
-      "error LivenessModule2_InvalidResponsePeriod()",
-      "error LivenessModule2_InvalidVersion()",
-      "error LivenessModule2_ModuleNotConfigured()",
-      "error LivenessModule2_ModuleNotEnabled()",
-      "error LivenessModule2_ModuleStillEnabled()",
-      "error LivenessModule2_OwnershipTransferFailed()",
-      "error LivenessModule2_ResponsePeriodActive()",
-      "error LivenessModule2_ResponsePeriodEnded()",
-      "error LivenessModule2_UnauthorizedCaller()",
-      "error SaferSafes_InsufficientLivenessResponsePeriod()",
-      "error SemverComp_InvalidSemverParts()",
-      "error TimelockGuard_GuardNotConfigured()",
-      "error TimelockGuard_GuardNotEnabled()",
-      "error TimelockGuard_GuardStillEnabled()",
-      "error TimelockGuard_InvalidTimelockDelay()",
-      "error TimelockGuard_InvalidVersion()",
-      "error TimelockGuard_NotOwner()",
-      "error TimelockGuard_TransactionAlreadyCancelled()",
-      "error TimelockGuard_TransactionAlreadyExecuted()",
-      "error TimelockGuard_TransactionAlreadyScheduled()",
-      "error TimelockGuard_TransactionNotReady()",
-      "error TimelockGuard_TransactionNotScheduled()",
-      "event CancellationThresholdUpdated(address indexed safe, uint256 oldThreshold, uint256 newThreshold)",
-      "event ChallengeCancelled(address indexed safe)",
-      "event ChallengeStarted(address indexed safe, uint256 challengeStartTime)",
-      "event ChallengeSucceeded(address indexed safe, address fallbackOwner)",
-      "event GuardConfigured(address indexed safe, uint256 timelockDelay)",
-      "event Message(string message)",
-      "event ModuleCleared(address indexed safe)",
-      "event ModuleConfigured(address indexed safe, uint256 livenessResponsePeriod, address fallbackOwner)",
-      "event TransactionCancelled(address indexed safe, bytes32 indexed txHash)",
-      "event TransactionExecuted(address indexed safe, bytes32 indexed txHash)",
-      "event TransactionScheduled(address indexed safe, bytes32 indexed txHash, uint256 executionTime)",
-      "function cancelTransaction(address _safe, bytes32 _txHash, uint256 _nonce, bytes _signatures)",
-      "function cancellationThreshold(address _safe) view returns (uint256)",
-      "function challenge(address _safe)",
-      "function challengeStartTime(address) view returns (uint256)",
-      "function changeOwnershipToFallback(address _safe)",
-      "function checkAfterExecution(bytes32 _txHash, bool _success)",
-      "function checkTransaction(address _to, uint256 _value, bytes _data, uint8 _operation, uint256 _safeTxGas, uint256 _baseGas, uint256 _gasPrice, address _gasToken, address _refundReceiver, bytes, address _msgSender)",
-      "function clearLivenessModule()",
-      "function clearTimelockGuard()",
-      "function configureLivenessModule(tuple(uint256 livenessResponsePeriod, address fallbackOwner) _config)",
-      "function configureTimelockGuard(uint256 _timelockDelay)",
-      "function getChallengePeriodEnd(address _safe) view returns (uint256)",
-      "function livenessSafeConfiguration(address _safe) view returns (tuple(uint256 livenessResponsePeriod, address fallbackOwner))",
-      "function maxCancellationThreshold(address _safe) view returns (uint256)",
-      "function pendingTransactions(address _safe) view returns (tuple(bytes32 txHash, uint256 executionTime, uint8 state, tuple(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver) params, uint256 nonce)[])",
-      "function respond()",
-      "function scheduleTransaction(address _safe, uint256 _nonce, tuple(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver) _params, bytes _signatures)",
-      "function scheduledTransaction(address _safe, bytes32 _txHash) view returns (tuple(bytes32 txHash, uint256 executionTime, uint8 state, tuple(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver) params, uint256 nonce))",
-      "function signCancellation(bytes32)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function timelockDelay(address _safe) view returns (uint256)",
-      "function version() view returns (string)"
     ],
     "eth:0xaeFd31c2e593Dc971f9Cb42cBbD5d4AD7F1970b6": [
       "constructor(address _otherBridge, address _messenger)",
@@ -4733,37 +3884,15 @@
       "function version() view returns (string)",
       "function wards(address) view returns (uint256)"
     ],
-    "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": [
-      "constructor()",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "error SuperchainConfig_AlreadyPaused(address identifier)",
-      "error SuperchainConfig_NotAlreadyPaused(address identifier)",
-      "error SuperchainConfig_OnlyGuardian()",
-      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event Paused(address identifier)",
-      "event Unpaused(address identifier)",
-      "function expiration(address _identifier) view returns (uint256)",
-      "function extend(address _identifier)",
-      "function guardian() view returns (address)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _guardian)",
-      "function pausable(address _identifier) view returns (bool)",
-      "function pause(address _identifier)",
-      "function pauseExpiry() pure returns (uint256)",
-      "function pauseTimestamps(address) view returns (uint256)",
-      "function paused(address _identifier) view returns (bool)",
-      "function paused() view returns (bool)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function unpause(address _identifier)",
-      "function version() view returns (string)"
+    "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0": [
       "constructor()",
@@ -4849,84 +3978,37 @@
       "function transferOwnership(address newOwner)",
       "function version() view returns (string)"
     ],
-    "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0xd392c27B84b1cA776528F2704BC67B82a62132d2": [
-      "constructor()",
+    "eth:0xc4ceeB264Fa35a022e470aCc3C6A522308f3ec02": [
+      "constructor(address _guardian, address _incidentResponder)",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
       "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
       "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
       "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
       "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
       "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "error SystemConfig_InvalidFeatureState()",
-      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
-      "event FeatureSet(bytes32 indexed feature, bool indexed enabled)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function BATCH_INBOX_SLOT() view returns (bytes32)",
-      "function DELAYED_WETH_SLOT() view returns (bytes32)",
-      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
-      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
-      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
-      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
-      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
-      "function START_BLOCK_SLOT() view returns (bytes32)",
-      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
-      "function VERSION() view returns (uint256)",
-      "function basefeeScalar() view returns (uint32)",
-      "function batchInbox() view returns (address addr_)",
-      "function batcherHash() view returns (bytes32)",
-      "function blobbasefeeScalar() view returns (uint32)",
-      "function daFootprintGasScalar() view returns (uint16)",
-      "function delayedWETH() view returns (address addr_)",
-      "function disputeGameFactory() view returns (address addr_)",
-      "function eip1559Denominator() view returns (uint32)",
-      "function eip1559Elasticity() view returns (uint32)",
-      "function gasLimit() view returns (uint64)",
-      "function getAddresses() view returns (tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address optimismPortal, address optimismMintableERC20Factory, address delayedWETH))",
+      "error SuperchainConfig_AlreadyPaused(address identifier)",
+      "error SuperchainConfig_NotAlreadyPaused(address identifier)",
+      "error SuperchainConfig_OnlyGuardian()",
+      "error SuperchainConfig_OnlyGuardianOrIncidentResponder()",
+      "event PauseExtended(address identifier)",
+      "event Paused(address identifier)",
+      "event Unpaused(address identifier)",
+      "function GUARDIAN() view returns (address)",
+      "function INCIDENT_RESPONDER() view returns (address)",
+      "function expiration(address _identifier) view returns (uint256)",
+      "function extend(address _identifier)",
       "function guardian() view returns (address)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address optimismPortal, address optimismMintableERC20Factory, address delayedWETH) _addresses, uint256 _l2ChainId, address _superchainConfig)",
-      "function isCustomGasToken() view returns (bool)",
-      "function isFeatureEnabled(bytes32) view returns (bool)",
-      "function l1CrossDomainMessenger() view returns (address addr_)",
-      "function l1ERC721Bridge() view returns (address addr_)",
-      "function l1StandardBridge() view returns (address addr_)",
-      "function l2ChainId() view returns (uint256)",
-      "function maximumGasLimit() pure returns (uint64)",
-      "function minBaseFee() view returns (uint64)",
-      "function minimumGasLimit() view returns (uint64)",
-      "function operatorFeeConstant() view returns (uint64)",
-      "function operatorFeeScalar() view returns (uint32)",
-      "function optimismMintableERC20Factory() view returns (address addr_)",
-      "function optimismPortal() view returns (address addr_)",
-      "function overhead() view returns (uint256)",
-      "function owner() view returns (address)",
+      "function incidentResponder() view returns (address)",
+      "function pausable(address _identifier) view returns (bool)",
+      "function pause(address _identifier)",
+      "function pauseExpiry() pure returns (uint256)",
+      "function pauseTimestamps(address) view returns (uint256)",
+      "function paused(address _identifier) view returns (bool)",
       "function paused() view returns (bool)",
       "function proxyAdmin() view returns (address)",
       "function proxyAdminOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
-      "function scalar() view returns (uint256)",
-      "function setBatcherHash(address _batcher)",
-      "function setBatcherHash(bytes32 _batcherHash)",
-      "function setDAFootprintGasScalar(uint16 _daFootprintGasScalar)",
-      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
-      "function setFeature(bytes32 _feature, bool _enabled)",
-      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
-      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
-      "function setGasLimit(uint64 _gasLimit)",
-      "function setMinBaseFee(uint64 _minBaseFee)",
-      "function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant)",
-      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
-      "function startBlock() view returns (uint256 startBlock_)",
-      "function superchainConfig() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unsafeBlockSigner() view returns (address addr_)",
-      "function version() pure returns (string)"
+      "function unpause(address _identifier)",
+      "function version() view returns (string)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -4976,29 +4058,16 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": [
-      "event AddressSet(string indexed _name, address _newAddress, address _oldAddress)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function getAddress(string _name) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function setAddress(string _name, address _address)",
-      "function transferOwnership(address newOwner)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
-    "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lido/L1ERC20TokenBridge": "0x1dbfb76725d8a5de94df533062c2232ad27f9bd9988b137706333c26e2ffc4d7",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
     "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
@@ -5023,9 +4092,9 @@
     "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
+    "opstack/SuperchainConfig_base": "0x103395272d77a2e3ce04a5f4cdef3df2f6d47b5d24f3e8b1137118cfdce7c9a8",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 42102404, "ethereum": 24448561 },
-  "permissionsConfigHash": "0x19130921c45cf41d3d89c74e30e4b62b0c1ba400a8ec71ce144b3eb2a347eab5"
+  "usedBlockNumbers": { "base": 43185528, "ethereum": 24628284 },
+  "permissionsConfigHash": "0x17c4b187cda9f11d312ecebe25d337c2f743f1595d5325538f05e02ef1a67d6a"
 }

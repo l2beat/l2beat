@@ -16,7 +16,8 @@ export const DEPOSIT_CONTRACT_ADDRESS = EthereumAddress(
   '0x2a37D63EAdFe4b4682a3c28C1c2cD4F109Cc2762',
 )
 
-// https://dev.gas.zip/gas/chain-support/inbound
+// https://dev.gas.zip/gas/chain-support/outbound
+// chainconfeeg
 export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
   {
     chain: 'ethereum',
@@ -80,6 +81,44 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     chainId: 56,
     solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
     customGas: true,
+  },
+  {
+    chain: 'celo',
+    gaszipId: 21,
+    chainId: 42220,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    customGas: true,
+  },
+  {
+    chain: 'avalanche',
+    gaszipId: 15,
+    chainId: 43114,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+    customGas: true,
+  },
+  {
+    chain: 'ink',
+    gaszipId: 392,
+    chainId: 57073,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+  },
+  {
+    chain: 'linea',
+    gaszipId: 59,
+    chainId: 59144,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+  },
+  {
+    chain: 'unichain',
+    gaszipId: 362,
+    chainId: 130,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
+  },
+  {
+    chain: 'hyperevm',
+    gaszipId: 430,
+    chainId: 999,
+    solver: EthereumAddress('0x8C826F795466E39acbfF1BB4eEeB759609377ba1'),
   },
 ])
 

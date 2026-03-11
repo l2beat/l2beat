@@ -56,18 +56,6 @@ export const searchBarPages = withIndex([
     href: '/scaling/archived',
   },
   {
-    category: 'bridges',
-    name: 'Summary',
-    tags: ['pages', 'bridges'],
-    href: '/bridges/summary',
-  },
-  {
-    category: 'bridges',
-    name: 'Archived',
-    tags: ['pages', 'bridges'],
-    href: '/bridges/archived',
-  },
-  {
     category: 'da',
     name: 'Summary',
     tags: ['pages', 'da', 'data', 'availability'],
@@ -96,6 +84,30 @@ export const searchBarPages = withIndex([
     name: 'Archived',
     tags: ['pages', 'da', 'data', 'availability', 'archived'],
     href: '/data-availability/archived',
+  },
+  {
+    category: 'interop',
+    name: 'Summary',
+    tags: ['pages', 'interop', 'interoperability'],
+    href: '/interop/summary',
+  },
+  {
+    category: 'interop',
+    name: 'Non-minting',
+    tags: ['pages', 'interop', 'interoperability', 'non-minting'],
+    href: '/interop/non-minting',
+  },
+  {
+    category: 'interop',
+    name: 'Lock & Mint',
+    tags: ['pages', 'interop', 'interoperability', 'lock-and-mint'],
+    href: '/interop/lock-and-mint',
+  },
+  {
+    category: 'interop',
+    name: 'Burn & Mint',
+    tags: ['pages', 'interop', 'interoperability', 'burn-and-mint'],
+    href: '/interop/burn-and-mint',
   },
   {
     category: 'zkCatalog',

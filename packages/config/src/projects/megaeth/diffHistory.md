@@ -1,20 +1,20 @@
-Generated with discovered.json: 0xf49584c2b758e7808dab27d282c45b26df09931a
+Generated with discovered.json: 0x5f68be1d3a69477841d5aa809e245c98287ad147
 
-# Diff at Mon, 23 Feb 2026 13:24:45 GMT:
+# Diff at Wed, 11 Mar 2026 13:45:05 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@c4cf1ff95badc1fe50c3d987fcd0219f3d947c2d block: 1770803234
-- current timestamp: 1771841876
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@7821558a34509d47e2b343e48879506088be050d block: 1772118387
+- current timestamp: 1773236625
 
 ## Description
 
-Link eigenda shared module
+Provide description of changes. This section will be preserved.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1770803234 (main branch discovery), not current.
+discovery. Values are for block 1772118387 (main branch discovery), not current.
 
 ```diff
     contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
@@ -252,6 +252,31 @@ discovery. Values are for block 1770803234 (main branch discovery), not current.
 +   Status: CREATED
     reference EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90)
     +++ description: None
+```
+
+Generated with discovered.json: 0xbb00c55819585f961d3ee733beb81fab25aad383
+
+# Diff at Thu, 26 Feb 2026 15:07:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770803234
+- current timestamp: 1772118387
+
+## Description
+
+EigenLayerRewardsInitiatorMultisig: one member removed (0xf20eD26be), reducing signers from 5 to 4. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/4 (75%).
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
 ```
 
 Generated with discovered.json: 0x9bb8dbe254646e18788dca7d180bc3df1b5297ca

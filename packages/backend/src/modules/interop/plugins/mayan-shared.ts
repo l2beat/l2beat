@@ -24,6 +24,8 @@ const MAYAN_SWAP2 = EthereumAddress(
 )
 
 // Chains where Mayan contracts are deployed
+// https://docs.mayan.finance/integration/forwarder-contract
+// chainconfeeg
 const MAYAN_EVM_CHAINS = [
   'ethereum',
   'arbitrum',
@@ -32,11 +34,16 @@ const MAYAN_EVM_CHAINS = [
   'polygonpos',
   'bsc',
   'avalanche',
+  'unichain',
+  'linea',
+  // no celo
+  'hyperevm',
 ] as const
 
 export const MAYAN_SWIFT_CHAINS = [...MAYAN_EVM_CHAINS]
 export const MAYAN_FORWARDER_CHAINS = [...MAYAN_EVM_CHAINS]
 
+// Fast MCTP and Circle contracts are not deployed on bsc or avalanche
 export const MAYAN_FAST_MCTP_CHAINS = [
   'ethereum',
   'arbitrum',
@@ -80,6 +87,11 @@ const MAYAN_PROTOCOLS_BY_CHAIN: Record<
     mayanCircle: MAYAN_CIRCLE,
     mayanSwap2: MAYAN_SWAP2,
   },
+  bsc: {
+    mayanSwift: MAYAN_SWIFT,
+    mayanSwap: MAYAN_SWAP,
+    mayanSwap2: MAYAN_SWAP2,
+  },
 }
 
 const DEAD_ADDRESS = Address32.from(
@@ -88,6 +100,17 @@ const DEAD_ADDRESS = Address32.from(
 
 export function isBurnAddress(address: Address32): boolean {
   return address === Address32.ZERO || address === DEAD_ADDRESS
+}
+
+export function isMayanWrappedNativeEmitter(
+  chain: string,
+  tokenAddress: Address32,
+): boolean {
+  const wrappedNative = MAYAN_WRAPPED_NATIVE_ADDRESSES[chain]
+  return (
+    wrappedNative !== undefined &&
+    tokenAddress === Address32.from(wrappedNative)
+  )
 }
 
 export function decodeMayanProtocol(chain: string, protocolAddress: string) {

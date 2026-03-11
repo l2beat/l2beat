@@ -1,37 +1,47 @@
-import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type {
   AggregatedInteropTransferWithTokens,
-  SelectedChainsIds,
+  InteropSelectionInput,
 } from '../types'
+import { getAggregatedInteropSnapshotTimestamp } from './getAggregatedInteropTimestamp'
+
+interface AggregatedInteropTransferWithTokensResult {
+  records: AggregatedInteropTransferWithTokens[]
+  snapshotTimestamp: UnixTime | undefined
+}
 
 export async function getLatestAggregatedInteropTransferWithTokens(
-  selectedChains: SelectedChainsIds,
+  selection: InteropSelectionInput,
   type?: KnownInteropBridgeType,
-): Promise<AggregatedInteropTransferWithTokens[]> {
+  protocolId?: string,
+): Promise<AggregatedInteropTransferWithTokensResult> {
   const db = getDb()
 
-  const [firstChain, secondChain] = selectedChains
-  if (!firstChain || !secondChain) {
-    return []
+  const { from, to } = selection
+  if (from.length === 0 || to.length === 0) {
+    return { records: [], snapshotTimestamp: undefined }
   }
 
-  const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
-  if (!latestTimestamp) {
-    return []
+  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
+  if (!snapshotTimestamp) {
+    return { records: [], snapshotTimestamp: undefined }
   }
 
   const [transfers, tokens] = await Promise.all([
     db.aggregatedInteropTransfer.getByChainsAndTimestamp(
-      latestTimestamp,
-      [firstChain, secondChain],
+      snapshotTimestamp,
+      selection.from,
+      selection.to,
       type,
+      protocolId,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
-      latestTimestamp,
-      [firstChain, secondChain],
+      snapshotTimestamp,
+      selection.from,
+      selection.to,
       type,
+      protocolId,
     ),
   ])
 
@@ -50,10 +60,13 @@ export async function getLatestAggregatedInteropTransferWithTokens(
         transferCount: token.transferCount,
         totalDurationSum: token.totalDurationSum,
         volume: token.volume,
+        minTransferValueUsd: token.minTransferValueUsd,
+        maxTransferValueUsd: token.maxTransferValueUsd,
         mintedValueUsd: token.mintedValueUsd,
         burnedValueUsd: token.burnedValueUsd,
+        transferTypeStats: token.transferTypeStats,
       })),
   }))
 
-  return records
+  return { records, snapshotTimestamp }
 }

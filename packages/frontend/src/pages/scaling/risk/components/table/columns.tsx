@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import type { ProjectSectionId } from '~/components/projects/sections/types'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
+import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
-import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/getScalingRiskEntries'
 
 const columnHelper = createColumnHelper<ScalingRiskEntry>()

@@ -73,7 +73,7 @@ export const facet: ScalingProject = {
   },
   proofSystem: {
     type: 'Optimistic',
-    zkCatalogId: ProjectId('sp1'),
+    zkCatalogId: ProjectId('sp1turbo'),
     challengeProtocol: 'Single-step',
   },
   stage: getStage(
@@ -92,8 +92,8 @@ export const facet: ScalingProject = {
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
         noRedTrustedSetups: false,
-        programHashesReproducible: null,
-        proverSourcePublished: null,
+        programHashesReproducible: true,
+        proverSourcePublished: true,
         verifierContractsReproducible: false,
       },
       stage2: {

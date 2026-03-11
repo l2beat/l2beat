@@ -4,7 +4,7 @@ export interface InteropChain {
   type: 'evm'
   display: string
   iconSlug?: string
-  isUpcoming?: boolean
+  explorerUrl: string
 }
 
 export const INTEROP_CHAINS: InteropChain[] = [
@@ -13,18 +13,21 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Ethereum',
     type: 'evm',
     display: 'ETH',
+    explorerUrl: 'https://etherscan.io',
   },
   {
     id: 'arbitrum',
     name: 'Arbitrum One',
     type: 'evm',
     display: 'ARB',
+    explorerUrl: 'https://arbiscan.io',
   },
   {
     id: 'base',
     name: 'Base',
     type: 'evm',
     display: 'BASE',
+    explorerUrl: 'https://basescan.org',
   },
   {
     id: 'optimism',
@@ -32,12 +35,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     iconSlug: 'op-mainnet',
     type: 'evm',
     display: 'OP',
+    explorerUrl: 'https://optimistic.etherscan.io',
   },
   {
     id: 'apechain',
     name: 'ApeChain',
     type: 'evm',
     display: 'APE',
+    explorerUrl: 'https://apescan.io',
   },
   {
     id: 'polygonpos',
@@ -45,6 +50,7 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Polygon PoS',
     type: 'evm',
     display: 'POL',
+    explorerUrl: 'https://polygonscan.com',
   },
   {
     id: 'zksync2',
@@ -52,12 +58,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'ZKsync Era',
     type: 'evm',
     display: 'ZK',
+    explorerUrl: 'https://explorer.zksync.io',
   },
   {
     id: 'abstract',
     name: 'Abstract',
     type: 'evm',
     display: 'ABS',
+    explorerUrl: 'https://abscan.org',
   },
   {
     id: 'katana',
@@ -65,41 +73,42 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Katana',
     type: 'evm',
     display: 'KAT',
+    explorerUrl: 'https://katanascan.com',
   },
   {
     id: 'bsc',
     name: 'BNB Smart Chain',
     type: 'evm',
     display: 'BSC',
-    isUpcoming: true,
+    explorerUrl: 'https://bscscan.com',
   },
   {
     id: 'solana',
     name: 'Solana',
     type: 'evm',
     display: 'SOL',
-    isUpcoming: true,
+    explorerUrl: 'https://solscan.io',
   },
   {
     id: 'starknet',
     name: 'Starknet',
     type: 'evm',
     display: 'STRK',
-    isUpcoming: true,
+    explorerUrl: 'https://starkscan.co',
   },
   {
     id: 'ink',
     name: 'Ink',
     type: 'evm',
     display: 'INK',
-    isUpcoming: true,
+    explorerUrl: 'https://explorer.inkonchain.com',
   },
   {
     id: 'megaeth',
     name: 'MegaETH',
     type: 'evm',
     display: 'MEGA',
-    isUpcoming: true,
+    explorerUrl: 'https://megaeth.blockscout.com',
   },
   {
     id: 'worldchain',
@@ -107,21 +116,21 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'World Chain',
     type: 'evm',
     display: 'WORLD',
-    isUpcoming: true,
+    explorerUrl: 'https://worldscan.org',
   },
   {
     id: 'celo',
     name: 'Celo',
     type: 'evm',
     display: 'CELO',
-    isUpcoming: true,
+    explorerUrl: 'https://celoscan.io',
   },
   {
     id: 'unichain',
     name: 'Unichain',
     type: 'evm',
     display: 'UNI',
-    isUpcoming: true,
+    explorerUrl: 'https://uniscan.xyz',
   },
   {
     id: 'forknet',
@@ -129,5 +138,27 @@ export const INTEROP_CHAINS: InteropChain[] = [
     name: 'Forknet',
     type: 'evm',
     display: 'FORK',
+    explorerUrl: 'https://forkscan.org',
+  },
+  {
+    id: 'linea',
+    name: 'Linea',
+    type: 'evm',
+    display: 'LINEA',
+    explorerUrl: 'https://lineascan.build',
+  },
+  {
+    id: 'avalanche',
+    name: 'Avalanche',
+    type: 'evm',
+    display: 'AVAX',
+    explorerUrl: 'https://snowtrace.io',
+  },
+  {
+    id: 'hyperevm',
+    name: 'HyperEVM',
+    type: 'evm',
+    display: 'HYPER',
+    explorerUrl: 'https://hyperevmscan.io',
   },
 ]

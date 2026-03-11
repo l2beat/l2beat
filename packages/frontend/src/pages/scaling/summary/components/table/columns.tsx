@@ -13,9 +13,9 @@ import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
+import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
-import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import {
   WALK_AWAY_NOT_PASSED_PROJECTS,
   WALK_AWAY_PASSED_PROJECTS,

@@ -142,6 +142,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
         'https://youtube.com/@Arbitrum',
+        'https://linkedin.com/company/arbitrum',
         'https://t.me/arbitrum',
       ],
 
@@ -164,18 +165,16 @@ export const arbitrum: ScalingProject = orbitStackL2({
   interopConfig: {
     name: 'Arbitrum Canonical',
     durationSplit: {
-      lockAndMint: {
-        in: {
+      lockAndMint: [
+        {
           label: 'L1 -> L2',
-          from: 'ethereum',
-          to: 'arbitrum',
+          transferTypes: ['orbitstack.L1ToL2Transfer'],
         },
-        out: {
+        {
           label: 'L2 -> L1',
-          from: 'arbitrum',
-          to: 'ethereum',
+          transferTypes: ['orbitstack.L2ToL1Transfer'],
         },
-      },
+      ],
     },
     plugins: [
       {
@@ -199,6 +198,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'canonical',
   },
   chainConfig: {
     name: 'arbitrum',

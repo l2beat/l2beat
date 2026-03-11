@@ -16,7 +16,6 @@ import { getInteropAggregationConfigs } from './features/interop'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
-import { getVerifiersConfig } from './features/verifiers'
 import { getGitCommitHash } from './getGitCommitHash'
 
 interface MakeConfigOptions {
@@ -94,7 +93,6 @@ export async function makeConfig(
       cache: {
         tvs: flags.isEnabled('cache', 'tvs'),
         liveness: flags.isEnabled('cache', 'liveness'),
-        verifiers: flags.isEnabled('cache', 'verifiers'),
       },
     },
     health: {
@@ -121,7 +119,6 @@ export async function makeConfig(
 
     activity:
       flags.isEnabled('activity') && (await getActivityConfig(ps, env, flags)),
-    verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
     updateMonitor:
@@ -198,6 +195,11 @@ export async function makeConfig(
         ),
       },
       inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
+      notifications: flags.isEnabled('interop', 'notifications') && {
+        discordWebhookUrl: env.string(
+          'INTEROP_NOTIFICATIONS_DISCORD_WEBHOOK_URL',
+        ),
+      },
     },
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last

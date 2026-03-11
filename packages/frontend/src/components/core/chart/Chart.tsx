@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
@@ -53,7 +54,6 @@ export function useChart() {
 }
 
 const chartContainerClassNames = cn(
-  'group relative',
   "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
   // Tooltip cursor line
   '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-2 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
@@ -83,7 +83,6 @@ export interface ChartProject {
 }
 
 function ChartContainer<T extends { timestamp: number }>({
-  className,
   children,
   meta,
   data,
@@ -94,12 +93,9 @@ function ChartContainer<T extends { timestamp: number }>({
   size = 'regular',
   interactiveLegend,
   project,
-  ...props
-}: React.ComponentProps<'div'> & {
+}: {
   meta: ChartMeta
-  children: React.ComponentProps<
-    typeof RechartsPrimitive.ResponsiveContainer
-  >['children']
+  children: React.ReactNode
   data: T[] | undefined
   interactiveLegend?: {
     dataKeys: string[]
@@ -124,26 +120,22 @@ function ChartContainer<T extends { timestamp: number }>({
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
   return (
     <ChartContext.Provider value={{ meta, interactiveLegend }}>
-      <div
-        ref={ref}
-        className={cn(
-          chartContainerClassNames,
-          size === 'regular' &&
-            'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
-          size === 'small' && 'h-[114px] min-h-[114px] w-full',
-          noDataSourcesSelected && [
-            '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
-            '[&_.recharts-reference-area]:hidden',
-          ],
-          className,
-        )}
-        {...props}
-      >
-        <RechartsPrimitive.ResponsiveContainer
-          className={cn((isLoading || !hasData) && 'pointer-events-none')}
+      <div ref={ref} className="group relative">
+        <Slot
+          className={cn(
+            chartContainerClassNames,
+            size === 'regular' &&
+              'h-[188px] min-h-[188px] w-full group-data-project-page/section-wrapper:max-md:h-[50vh] group-data-project-page/section-wrapper:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] group-data-project-page/section-wrapper:md:h-[300px] 2xl:h-[258px] 2xl:min-h-[258px]',
+            size === 'small' && 'h-[114px] min-h-[114px] w-full',
+            noDataSourcesSelected && [
+              '[&_.recharts-tooltip-cursor]:hidden [&_.recharts-tooltip-wrapper]:hidden',
+              '[&_.recharts-reference-area]:hidden',
+            ],
+            (isLoading || !hasData) && 'pointer-events-none',
+          )}
         >
           {children}
-        </RechartsPrimitive.ResponsiveContainer>
+        </Slot>
         {(!!isLoading || !isClient) && (
           <ChartLoader
             className={cn(
@@ -194,27 +186,15 @@ function ChartContainer<T extends { timestamp: number }>({
 ChartContainer.displayName = 'Chart'
 
 function SimpleChartContainer({
-  className,
   children,
   meta,
-  width,
-  height,
-  ...props
-}: React.ComponentProps<'div'> & {
+}: {
   meta: ChartMeta
-  children: React.ComponentProps<
-    typeof RechartsPrimitive.ResponsiveContainer
-  >['children']
-  width?: number | `${number}%` | undefined
-  height?: number | `${number}%` | undefined
+  children: React.ReactNode
 }) {
   return (
     <ChartContext.Provider value={{ meta }}>
-      <div className={cn(chartContainerClassNames, className)} {...props}>
-        <RechartsPrimitive.ResponsiveContainer width={width} height={height}>
-          {children}
-        </RechartsPrimitive.ResponsiveContainer>
-      </div>
+      <Slot className={chartContainerClassNames}>{children}</Slot>
     </ChartContext.Provider>
   )
 }

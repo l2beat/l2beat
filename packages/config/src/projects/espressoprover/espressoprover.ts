@@ -51,21 +51,42 @@ export const espressoprover: BaseProject = {
         ...TRUSTED_SETUPS.AztecIgnition,
       },
     ],
-    verifierHashes: [
+    projectsForTvs: [
       {
-        hash: '0x6f11ed19e494a0f332db714c267d743fe96eaf335405c82f24b6b40ba61a0d9e',
+        projectId: ProjectId('espresso'),
+        sinceTimestamp: UnixTime(1730830799),
+      },
+    ],
+    verifierHashes: [
+      // {
+      //   hash: '0x6f11ed19e494a0f332db714c267d743fe96eaf335405c82f24b6b40ba61a0d9e',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0xa239397d05516d3e44bed853e7ba1e672ddd958f',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of the abi packed flattened VerifyingKey structure returned by getVk() function on the verifier contract.',
+      // },
+      {
+        hash: '0x060faa7957cb2ffdc75de8ea20d1eb50277c7fb0d2f48ecb7e2db7956d0bdad4',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
         knownDeployments: [
           {
             address: EthereumAddress(
-              '0xa239397d05516d3e44bed853e7ba1e672ddd958f',
+              '0x098c593361d12dd638ce7dbf34c8c6a655f8274c',
             ),
             chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',
         description:
-          'Custom verifier ID: SHA256 hash of the abi packed flattened VerifyingKey structure returned by getVk() function on the verifier contract.',
+          'Custom verifier ID: SHA256 hash of the abi packed flattened VerifyingKey structure returned by _getVk() function on the Espresso Light Client contract (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458).',
       },
     ],
   },

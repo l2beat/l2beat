@@ -69,7 +69,7 @@ const cmd = command({
     if (!args.project) {
       let projects = await ps.getProjects({
         select: ['tvsConfig'],
-        optional: ['chainConfig', 'isBridge'],
+        optional: ['chainConfig'],
       })
 
       projects = projects.filter((p) => !DISABLED_PROJECTS.includes(p.id))
@@ -112,19 +112,11 @@ const cmd = command({
           return acc + token.valueForSummary
         }, 0)
 
-        if (project.isBridge) {
-          projectBreakdown.bridgesTvs += valueForSummary
-          projectBreakdown.bridgesProjects.push({
-            projectId: project.id,
-            value: valueForProject,
-          })
-        } else {
-          projectBreakdown.scalingTvs += valueForSummary
-          projectBreakdown.scalingProjects.push({
-            projectId: project.id,
-            value: valueForProject,
-          })
-        }
+        projectBreakdown.scalingTvs += valueForSummary
+        projectBreakdown.scalingProjects.push({
+          projectId: project.id,
+          value: valueForProject,
+        })
       }
 
       logger.info(

@@ -1,7 +1,7 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
 import { getCollectionEntry } from '~/content/getCollection'
-import type { ICache } from '~/server/cache/ICache'
 import type { RenderData, RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
@@ -12,7 +12,7 @@ import { getMonthlyUpdateData } from './monthly-updates/getMonthlyUpdateData'
 export function createPublicationsRouter(
   manifest: Manifest,
   render: RenderFunction,
-  cache: ICache,
+  cache: InMemoryCache,
 ) {
   const router = express.Router()
 
@@ -23,7 +23,7 @@ export function createPublicationsRouter(
       res.status(404).send('Not found')
       return
     }
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -62,7 +62,7 @@ export function createPublicationsRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )

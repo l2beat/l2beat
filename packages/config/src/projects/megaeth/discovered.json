@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1771841876,
+  "timestamp": 1773236625,
   "configHash": "0x41ebe06aeb510eda130b32372516b66d975a6bf8b017740e4c327a31672c52f9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -431,17 +431,14 @@
           "0x4104842f50e49ad930345cd0c3620b615730315b983118d55ddb256fb97ab0d8",
           "0x2e8be17a9566a25a30c37aaaa57a870a922d9713833cd401a0d59d9e67fa9dcc",
           "0x6b9d91f76e2c7d4fa17b0c498144cc857b43c1488f6f7a0cc7ed4a5f4c1fed5a",
-          "0xea61fbbb7f1348ee997d00f89fa83c92ede1d2f2b4962b30e29e46ca39b40e35",
           "0x832c0fae231eb044c5f7ceb2f72a77caef174f46e60c8c257aab5160603b05b3",
           "0x13cb0150a640902f3d32e152e340384441e1c0bcfd3b34cf17b3f76c6030ab82",
           "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
           "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
-          "0x40ade5577b77152036616d1655f9127a6ae08cd8234c1043e08626f59bf8065f",
           "0x960dc057a3b0c24385c25845f5eebe1fafcc4739a94351b4550cb0d0e53d3655",
           "0xfcaffb0c80a3202d233f2b2b037a17528706afb73b1ac21194b3708177c8f301",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
-          "0xa7c993401ecdaacd73e1db1bc2072602f12a88c59f3ea03b138d9589bc5cd900",
           "0x8758fc175c5617a10d5c8c432d3c61dea5aef3a949d3ffcf259a35daa4921871",
           "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
           "0xfc21b74985e0e61048bc1b2ac0ae1ed161df79c844f622d1d196bc0e9c4b1ae6",
@@ -476,7 +473,9 @@
           "0x155ffb09581c003557d6614d7764b3a594a9a689ca705ec6ea5e9dcf29ea9e56",
           "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
           "0xc07a06bef2237cb01b3714510ea2d7e2b0f056081e8fe0ace4c8f3e00f1c2697",
-          "0x4776a2a65d4c3b3a25603e2d581837dded443b840bad2406642d5457d90afc2b"
+          "0x4776a2a65d4c3b3a25603e2d581837dded443b840bad2406642d5457d90afc2b",
+          "0x6c44dee76ef91585c58c16f5dc19694fc94a31fc65808cc7e6a08f4ee209e7db",
+          "0x607bfc20f482482ff1a1585e2d1296146cce65cef0fa271eecba591de650576e"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -768,15 +767,14 @@
           "eth:0x900a9E1D5D5980973f513173249727505FA3bd22",
           "eth:0x5dc74815C14E2D4223B79D2dE94C4ccD5f5f7DA7",
           "eth:0x55688D9211bC00BA573A1e0672e5de050818a360",
-          "eth:0x68bbBD6c18B0bc1B563489A13a398345E9da23d0",
-          "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+          "eth:0x68bbBD6c18B0bc1B563489A13a398345E9da23d0"
         ],
         "$threshold": 3,
         "domainSeparator": "0x6b43785a4eaebc9e965616031ecf6185396cf6e42ef9b1892cca81fe3a655fc2",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 27,
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1386,7 +1384,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292663274",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292663958",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1546,8 +1544,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 515958,
-          "prevBlockNum": 24518880
+          "prevBoughtGas": 514422,
+          "prevBlockNum": 24634500
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1686,7 +1684,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2513,
+        "gameCount": 2900,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -2660,7 +2658,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x9Ae0da50438cF13Ae2eCE7E769c1F87Cb05e4e7D",
+        "lastResolved": "eth:0xB84fD9D07767451EEfAa9A2228fCc9B9b3E4FFD2",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -2821,11 +2819,6 @@
       "implementationNames": {
         "eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1": "MIPS64"
       }
-    },
-    {
-      "address": "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9",
@@ -4513,6 +4506,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24518938 },
-  "permissionsConfigHash": "0x1fc6f09ab74c9e6633ae9eb5b4881179f36f0b5759472a9ee122c615cf497178"
+  "usedBlockNumbers": { "ethereum": 24634602 },
+  "permissionsConfigHash": "0xec85a43227380cee07e3b312e84c71a5ffc4ee79d9aa41017950d223e15464c1"
 }

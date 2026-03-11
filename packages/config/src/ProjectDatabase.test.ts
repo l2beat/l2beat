@@ -53,7 +53,6 @@ describe(ProjectDatabase.name, () => {
       name: 'a',
       shortName: undefined,
       addedAt: 0,
-      isBridge: true,
     }
     const projectB: BaseProject = {
       id: ProjectId('b'),
@@ -61,7 +60,6 @@ describe(ProjectDatabase.name, () => {
       name: 'b',
       shortName: undefined,
       addedAt: 0,
-      isBridge: true,
       isScaling: true,
     }
     const projectC: BaseProject = {
@@ -77,12 +75,12 @@ describe(ProjectDatabase.name, () => {
     await db.saveProject(projectC)
 
     const result = await db.getProjects({
-      select: ['isBridge', 'isScaling'],
-      whereNotNull: ['isBridge'],
+      select: ['isScaling'],
+      whereNotNull: ['isScaling'],
       whereNull: [],
     })
 
-    expect(result).toEqual([{ ...projectA, isScaling: undefined }, projectB])
+    expect(result).toEqual([projectB])
   })
 
   it('can add and retrieve a token', async () => {

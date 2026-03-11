@@ -37,10 +37,8 @@ export async function getInteropDashboardData(
     select: ['interopConfig'],
   })
 
-  const records = await getLatestAggregatedInteropTransferWithTokens(
-    params.selectedChainsIds,
-    params.type,
-  )
+  const { records, snapshotTimestamp } =
+    await getLatestAggregatedInteropTransferWithTokens(params, params.type)
 
   const abstractTokenIds = unique(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
@@ -53,7 +51,7 @@ export async function getInteropDashboardData(
   )
 
   return {
-    flows: getFlows(records, subgroupProjects),
+    flows: getFlows(records, params, subgroupProjects).slice(0, 2),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     topToken: getTopToken({
       records,
@@ -67,6 +65,8 @@ export async function getInteropDashboardData(
       tokensDetailsMap,
       interopProjects,
       params.type,
+      snapshotTimestamp,
+      params,
     ),
   }
 }
@@ -93,24 +93,32 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     {
       id: 'eth001',
       symbol: 'ETH',
+      issuer: 'ethereum',
       iconUrl:
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       volume: 10_000_000,
       transferCount: 1000,
       avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 10_000,
+      minTransferValueUsd: 8_500,
+      maxTransferValueUsd: 12_000,
       netMintedValue: undefined,
+      flows: [],
     },
     {
       id: 'usdc01',
       symbol: 'USDC',
+      issuer: 'circle',
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
       volume: 5_000_000,
       transferCount: 500,
       avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
+      minTransferValueUsd: 9_500,
+      maxTransferValueUsd: 10_500,
       netMintedValue: undefined,
+      flows: [],
     },
   ]
 
@@ -123,6 +131,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 1000,
       avgDuration: { type: 'single', duration: 100_000 } as const,
       avgValue: 8_000,
+      minTransferValueUsd: 6_000,
+      maxTransferValueUsd: 12_000,
       netMintedValue: undefined,
     },
     {
@@ -133,17 +143,19 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transferCount: 500,
       avgDuration: { type: 'single', duration: 50_000 } as const,
       avgValue: 10_000,
+      minTransferValueUsd: 7_500,
+      maxTransferValueUsd: 14_000,
       netMintedValue: undefined,
     },
   ]
 
   const entries: ProtocolEntry[] = interopProjects.map((project) => ({
     id: project.id,
+    slug: project.slug,
     name: project.interopConfig.name ?? project.name,
     shortName: project.interopConfig.shortName,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
-    iconSlug: project.slug,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     bridgeTypes: ['lockAndMint', 'nonMinting', 'burnAndMint'],
     volume: 15_000_000,
@@ -151,10 +163,13 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     chains: { items: mockChains, remainingCount: 4 },
     transferCount: 5000,
     averageValue: 3000,
+    minTransferValueUsd: 100,
+    maxTransferValueUsd: 100_000,
     averageDuration: { type: 'single', duration: 100_000 },
     byBridgeType: undefined,
     averageValueInFlight: undefined,
     netMintedValue: undefined,
+    snapshotTimestamp: undefined,
   }))
 
   const topToken: InteropTopTokenData | undefined = mockTokens[0]
@@ -189,6 +204,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       percentage10KTo100K: 35,
       countOver100K: 1,
       percentageOver100K: 1,
+      minTransferValueUsd: 50,
+      maxTransferValueUsd: 250_000,
+      averageTransferSizeUsd: 12_500,
     },
     {
       name: 'Optimism Canonical',
@@ -203,6 +221,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       percentage10KTo100K: 4,
       countOver100K: 0,
       percentageOver100K: 0,
+      minTransferValueUsd: 75,
+      maxTransferValueUsd: 90_000,
+      averageTransferSizeUsd: 6_700,
     },
     {
       name: 'Base Canonical',
@@ -217,6 +238,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       percentage10KTo100K: 4,
       countOver100K: 0,
       percentageOver100K: 0,
+      minTransferValueUsd: 120,
+      maxTransferValueUsd: 80_000,
+      averageTransferSizeUsd: 5_900,
     },
   ]
 

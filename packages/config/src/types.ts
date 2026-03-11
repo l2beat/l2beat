@@ -1,12 +1,10 @@
 import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
-  type ChainId,
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
   type KnownInteropBridgeType,
   type ProjectId,
-  type StringWithAutocomplete,
   TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
@@ -100,9 +98,6 @@ export interface BaseProject {
   daBridge?: ProjectDaBridge
   customDa?: ProjectCustomDa
 
-  // zk catalog data
-  proofVerification?: ProjectProofVerification
-
   // interop data
   interopConfig?: InteropConfig
 
@@ -125,9 +120,7 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isBridge?: true
   isScaling?: true
-  isZkCatalog?: true
   isInteropProtocol?: true
   isDaLayer?: true
   isUpcoming?: true
@@ -563,7 +556,6 @@ export interface ProjectScalingStateDerivation {
 export interface ProjectScalingStateValidation {
   description?: string
   categories: ProjectScalingStateValidationCategory[]
-  proofVerification?: ProjectProofVerification
   isUnderReview?: boolean
 }
 
@@ -758,50 +750,7 @@ export type DaChallengeMechanism = 'DA Challenges' | 'None'
 // #endregion
 
 // #region zk catalog data
-export interface ProjectProofVerification {
-  shortDescription?: string
-  aggregation: boolean
-  verifiers: OnchainVerifier[]
-  requiredTools: RequiredTool[]
-}
-
-export type OnchainVerifier = {
-  name: string
-  description: string
-  contractAddress: EthereumAddress
-  /** Link to the smart contract code on an explorer. Automatically set. */
-  url?: string
-  chainId: ChainId
-  subVerifiers: SubVerifier[]
-} & (
-  | {
-      verified: 'yes' | 'failed'
-      /** Details of entity that performed verification */
-      performedBy: {
-        name: string
-        link: string
-      }
-    }
-  | { verified: 'no' }
-)
-
-export interface SubVerifier {
-  name: string
-  proofSystem: string
-  mainArithmetization: string
-  mainPCS: string
-  trustedSetup?: StringWithAutocomplete<'None'>
-  link?: string
-}
-
-export interface RequiredTool {
-  name: string
-  version: string
-  link?: string
-}
-// #endregion
-
-// #region zk catalog v2 data
+// #region zk catalog data
 export interface ProjectZkCatalogInfo {
   creator?: string
   formalVerificationLinks?: {
@@ -1203,6 +1152,7 @@ export type InteropPluginName =
   | 'agglayer'
   | 'allbridge'
   | 'aori'
+  | 'avalanche'
   | 'axelar'
   | 'axelar-its'
   | 'beefy-bridge'
@@ -1245,6 +1195,7 @@ export type InteropPluginName =
   | 'squid-coral'
   | 'stargate'
   | 'superform'
+  | 'synthetix-bridge'
   | 'world-id'
   | 'wormhole'
   | 'wormhole-ntt'
@@ -1252,10 +1203,14 @@ export type InteropPluginName =
   | 'wormhole-token-bridge'
   | 'zkstack'
   | 'zklink-nova'
+  | 'linea'
+
+export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
 export interface InteropConfig {
   name?: string
   shortName?: string
+  type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured
@@ -1268,8 +1223,8 @@ export interface InteropConfig {
    */
   subgroupId?: ProjectId
   plugins: InteropPlugin[]
-  /** If configured avg. duration it able will be split into two parts, depending on the config.
-   Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
+  /** If configured avg. duration can be split into custom labeled groups.
+   The listed transfer types are intentionally allowed to be non-exhaustive. */
   durationSplit?: Partial<Record<KnownInteropBridgeType, InteropDurationSplit>>
 }
 
@@ -1281,19 +1236,12 @@ export type InteropPlugin = {
   transferType?: string
 }
 
-export type InteropDurationSplit = {
-  in: {
-    /** Custom label to be shown in the UI */
-    label: string
-    from: string
-    to: string
-  }
-  out: {
-    /** Custom label to be shown in the UI */
-    label: string
-    from: string
-    to: string
-  }
+export type InteropDurationSplit = InteropDurationSplitEntry[]
+
+export type InteropDurationSplitEntry = {
+  /** Custom label to be shown in the UI */
+  label: string
+  transferTypes: string[]
 }
 
 // #endregion

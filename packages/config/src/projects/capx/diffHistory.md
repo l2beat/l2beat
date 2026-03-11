@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x54022d35bea3d5a34d6c9f13577268752cb5e6f3
+
+# Diff at Mon, 23 Feb 2026 14:40:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@223ad9100b05447b13e88b350a283f0fcdd967a4 block: 1769773244
+- current timestamp: 1771857554
+
+## Description
+
+Caldera signer rotation: one member removed from Caldera Multisig 3 (same shared multisig as appchain), threshold unchanged at 4 but now "4 of 7 (57%)" instead of "4 of 8 (50%)".
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0x7b1e2dc07ee4997005a3b4e232e2dafea7f610a0
 
 # Diff at Fri, 30 Jan 2026 11:41:49 GMT:

@@ -45,17 +45,21 @@ function isWithinTolerance(value: bigint, target: bigint): boolean {
 }
 
 // https://docs.debridge.com/dmp-details/dmp/deployed-contracts
+// chainconfeeg
 export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '1', chain: 'ethereum' },
   { chainId: '42161', chain: 'arbitrum' },
   { chainId: '8453', chain: 'base' },
   { chainId: '10', chain: 'optimism' },
-  // { chainId: '33139', chain: 'apechain' }, // not supported
+  // apechain not supported
   { chainId: '137', chain: 'polygonpos' },
-  // { chainId: '324', chain: 'zksync2' }, // not supported
+  // zksync not supported
   { chainId: '2741', chain: 'abstract' },
-  // { chainId: '747474', chain: 'katana' }, // not supported
+  // katana not supported
   { chainId: '56', chain: 'bsc' },
+  { chainId: '43114', chain: 'avalanche' },
+  { chainId: '59144', chain: 'linea' },
+  { chainId: '999', chain: 'hyperevm' },
 ])
 
 export const Sent = createInteropEventType<{

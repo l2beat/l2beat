@@ -1,3 +1,84 @@
+Generated with discovered.json: 0xf9e8d293d9a2d9527f9fdfb1e50708d8f0ebadd8
+
+# Diff at Thu, 05 Mar 2026 10:33:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1771254730
+- current timestamp: 1771254730
+
+## Description
+
+config: move old ignition templates to make space for alpha.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771254730 (main branch discovery), not current.
+
+```diff
+    contract Inbox (eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee) {
+    +++ description: Handles L1-to-L2 messaging. Users deposit funds or send messages here, which are organized into a Merkle tree for the sequencer to include in an L2 block.
+      template:
+-        "aztecnetwork/Inbox"
++        "aztecnetwork/ignition/Inbox"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      template:
+-        "aztecnetwork/Rollup"
++        "aztecnetwork/ignition/Rollup"
+    }
+```
+
+```diff
+    contract FeeJuicePortal (eth:0xe05dc9D5969272831757181fFf1532B066254bf1) {
+    +++ description: A one-way public bridge to deposit AZTEC tokens to the Rollup.
+      template:
+-        "aztecnetwork/FeeJuicePortal"
++        "aztecnetwork/ignition/FeeJuicePortal"
+    }
+```
+
+```diff
+    contract Outbox (eth:0xf006c41097861AFeb18b05e586B921c081411Ee9) {
+    +++ description: Handles L2-to-L1 messaging. It stores Merkle roots of messages exiting the rollup, allowing users to prove inclusion and finalize withdrawals or actions on L1.
+      template:
+-        "aztecnetwork/Outbox"
++        "aztecnetwork/ignition/Outbox"
+    }
+```
+
+Generated with discovered.json: 0x66b1aa14ba13d1e6d8f56a79f297a6bf0dc329cf
+
+# Diff at Fri, 20 Feb 2026 20:44:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@3edf2b3bacf84cf46a7d5d7c744851af89730742 block: 1771254730
+- current timestamp: 1771254730
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771254730 (main branch discovery), not current.
+
+```diff
+    contract AZTEC Token (eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2) {
+    +++ description: AZTEC token contract
+      name:
+-        "Aztec"
++        "AZTEC Token"
+    }
+```
+
 Generated with discovered.json: 0xd11bc141182aa6d49b30900edad6f62b44bda83c
 
 # Diff at Mon, 16 Feb 2026 15:13:21 GMT:

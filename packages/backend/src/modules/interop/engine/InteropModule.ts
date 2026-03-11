@@ -1,8 +1,9 @@
-import { HttpClient } from '@l2beat/shared'
+import { HttpClient, InteropTransferClassifier } from '@l2beat/shared'
 import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
+import { DiscordWebhookClient } from '../../anomalies/clients/DiscordWebhookClient'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
 import {
   createInteropPlugins,
@@ -13,17 +14,17 @@ import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
 import { InteropAggregationService } from './aggregation/InteropAggregationService'
-import { InteropTransferClassifier } from './aggregation/InteropTransferClassifier'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
 import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
 import { InteropCompareLoop } from './compare/InteropCompareLoop'
 import { InteropConfigStore } from './config/InteropConfigStore'
+import { InteropMonitoringConfigStoreProxy } from './config/InteropMonitoringConfigStoreProxy'
 import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
-import { InteropTransferStream } from './stream/InteropTransferStream'
+import { InteropNotifier } from './notifications/InteropNotifier'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
 export function createInteropModule({
@@ -41,7 +42,21 @@ export function createInteropModule({
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
   const eventStore = new InteropEventStore(db, config.interop.inMemoryEventCap)
-  const configStore = new InteropConfigStore(db)
+  let configStore = new InteropConfigStore(db)
+
+  let notificationClient: InteropNotifier | undefined
+
+  if (config.interop.notifications) {
+    const discordClient = new DiscordWebhookClient(
+      config.interop.notifications.discordWebhookUrl,
+    )
+    notificationClient = new InteropNotifier(discordClient, logger)
+    configStore = new InteropMonitoringConfigStoreProxy(
+      configStore,
+      notificationClient,
+    )
+  }
+
   const tokenDbClient = getTokenDbClient({
     apiUrl: config.interop.financials.tokenDbApiUrl,
     authToken: config.interop.financials.tokenDbAuthToken,
@@ -65,8 +80,6 @@ export function createInteropModule({
     db,
     logger,
   )
-
-  const transferStream = new InteropTransferStream()
 
   const processors = []
   if (config.interop.capture.enabled) {
@@ -92,7 +105,6 @@ export function createInteropModule({
     flattenClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id),
     logger,
-    transferStream,
   )
 
   const router = createInteropRouter(
@@ -101,7 +113,6 @@ export function createInteropModule({
     processors,
     syncersManager,
     logger.for('InteropRouter'),
-    transferStream,
   )
 
   const compareLoops = plugins.comparePlugins.map(
