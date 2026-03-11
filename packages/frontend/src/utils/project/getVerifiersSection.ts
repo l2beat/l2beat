@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import type { VerifiersSectionProps } from '~/components/projects/sections/VerifiersSection'
+import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { getZkCatalogLogo } from '~/server/features/zk-catalog/getZkCatalogLogo'
 import { getProjectsUsedIn } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'

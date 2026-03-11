@@ -26,7 +26,7 @@ import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
-import type { VerifiersSectionProps } from './VerifiersSection'
+import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
 type SectionId =
   | 'tvs'

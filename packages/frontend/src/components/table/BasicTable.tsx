@@ -362,7 +362,9 @@ export function BasicTableRow<T extends BasicTableRow>({
       {shouldRenderSubComponentRow && (
         <tr className="border-divider border-b">
           {/* 2nd row is a custom 1 cell row */}
-          <td colSpan={row.getVisibleCells().length}>{renderedSubComponent}</td>
+          <td colSpan={row.getVisibleCells().length} className="max-w-0">
+            {renderedSubComponent}
+          </td>
         </tr>
       )}
     </>
