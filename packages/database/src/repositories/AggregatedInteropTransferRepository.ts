@@ -293,6 +293,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     sourceChains: string[],
     destinationChains: string[],
     type?: InteropBridgeType,
+    protocolId?: string,
     options?: {
       includeSameChainTransfers?: boolean
     },
@@ -307,6 +308,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .where('srcChain', 'in', sourceChains)
       .where('dstChain', 'in', destinationChains)
+
+    if (protocolId) {
+      query = query.where('id', '=', protocolId)
+    }
 
     if (!options?.includeSameChainTransfers) {
       query = query.whereRef('srcChain', '!=', 'dstChain')

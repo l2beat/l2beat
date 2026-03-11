@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
+import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { getAllProtocolsColumns, type ProtocolRow } from './columns'
 
 export function AllProtocolsTable({
@@ -19,6 +20,8 @@ export function AllProtocolsTable({
   showAverageInFlightValueColumn?: boolean
   showNetMintedValueColumn?: boolean
 }) {
+  const { buildUrl } = useInteropSelectedChains()
+
   const columns = useMemo(
     () =>
       getAllProtocolsColumns(
@@ -26,12 +29,14 @@ export function AllProtocolsTable({
         hideTypeColumn,
         showAverageInFlightValueColumn,
         showNetMintedValueColumn,
+        (slug) => buildUrl(`/interop/protocols/${slug}`),
       ),
     [
       type,
       hideTypeColumn,
       showAverageInFlightValueColumn,
       showNetMintedValueColumn,
+      buildUrl,
     ],
   )
 
