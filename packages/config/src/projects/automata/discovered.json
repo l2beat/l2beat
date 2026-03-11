@@ -1,6 +1,6 @@
 {
   "name": "automata",
-  "timestamp": 1743923255,
+  "timestamp": 1773160400,
   "configHash": "0x9a5f529603689785f67d98d3639f6aeb0070a49d18aebaf20478aee96492ce91",
   "entries": [
     {
@@ -641,8 +641,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 200000,
-          "prevBlockNum": 22086408
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 24483657
         },
         "paused": false,
         "superchainConfig": "eth:0xDf87154Ed6cF332931b70014bA3d9dF423074FfF",
@@ -702,10 +702,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 11347200,
-        "latestOutputIndex": 3151,
-        "nextBlockNumber": 11350800,
-        "nextOutputIndex": 3152,
+        "latestBlockNumber": 25963200,
+        "latestOutputIndex": 7211,
+        "nextBlockNumber": 25966800,
+        "nextOutputIndex": 7212,
         "proposer": "eth:0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6",
         "PROPOSER": "eth:0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6",
         "startingBlockNumber": 0,
@@ -1332,6 +1332,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22208279 },
+  "usedBlockNumbers": { "ethereum": 24628283 },
   "permissionsConfigHash": "0x872afb272dab8e402e36e9b1f21ac8e4678738399847acb8174aa92bd331f0a6"
 }
