@@ -64,7 +64,35 @@ export class CapitalAnalysisCalculator {
     // Check if it has a real impact score (not unscored or undefined)
     // Note: We don't check isPermissioned here - a function with high impact
     // is still risky regardless of whether it's permissioned
-    return func.score !== undefined && func.score !== 'unscored'
+    return (
+      func.score !== undefined &&
+      func.score !== 'unscored' &&
+      func.score !== 'no-impact'
+    )
+  }
+
+  /**
+   * Check if a function is explicitly marked as no-impact by the researcher.
+   * Unlike functionHasImpact, this only returns true for the explicit 'no-impact' score,
+   * not for unscored/undefined functions.
+   */
+  private functionIsNoImpact(
+    contractAddress: string,
+    functionName: string,
+  ): boolean {
+    const normalizedAddress = normalizeChainAddress(contractAddress)
+    const contractEntry = Object.entries(
+      this.functionsData.contracts ?? {},
+    ).find(([key]) => normalizeChainAddress(key) === normalizedAddress)
+
+    if (!contractEntry) return false
+    const contractFunctions = contractEntry[1]
+
+    const func = contractFunctions.functions.find(
+      (f) => f.functionName === functionName,
+    )
+
+    return func?.score === 'no-impact'
   }
 
   /**
@@ -133,8 +161,14 @@ export class CapitalAnalysisCalculator {
     impact: Impact,
   ): FunctionCapitalAnalysis {
     // Get direct funds and token value in the contract containing this function
-    const directFundsUsd = this.getContractFunds(contractAddress)
-    const directTokenValueUsd = this.getContractTokenValue(contractAddress)
+    // If function is explicitly marked no-impact, zero out direct funds
+    const isNoImpact = this.functionIsNoImpact(contractAddress, functionName)
+    const directFundsUsd = isNoImpact
+      ? 0
+      : this.getContractFunds(contractAddress)
+    const directTokenValueUsd = isNoImpact
+      ? 0
+      : this.getContractTokenValue(contractAddress)
 
     // Traverse call graph from this function
     const traversalResult = this.traverser.traverseFromFunction(
@@ -215,9 +249,16 @@ export class CapitalAnalysisCalculator {
           addressesEqual(addr, func.contractAddress),
         )
 
+      const isNoImpact = this.functionIsNoImpact(
+        func.contractAddress,
+        func.functionName,
+      )
+
       if (!hasCallGraphData) {
-        // No call graph data - just track direct capital
-        directContracts.add(normalizeChainAddress(func.contractAddress))
+        // No call graph data - just track direct capital (skip no-impact)
+        if (!isNoImpact) {
+          directContracts.add(normalizeChainAddress(func.contractAddress))
+        }
         continue
       }
 
@@ -235,8 +276,10 @@ export class CapitalAnalysisCalculator {
 
       functionsWithCapital.push(analysis)
 
-      // Track direct contracts (always counted since the permissioned function has impact)
-      directContracts.add(normalizeChainAddress(func.contractAddress))
+      // Track direct contracts (skip no-impact functions)
+      if (!isNoImpact) {
+        directContracts.add(normalizeChainAddress(func.contractAddress))
+      }
 
       // Track reachable contracts - only mark as at risk if fundsAtRisk is true
       for (const reachable of analysis.reachableContracts) {

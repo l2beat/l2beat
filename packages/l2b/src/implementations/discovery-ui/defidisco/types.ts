@@ -3,7 +3,7 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 // Scoring type aliases
-export type Impact = 'critical'
+export type Impact = 'critical' | 'no-impact'
 
 // Mitigation types for permissioned functions
 export type MitigationType = 'delay' | 'valueRange' | 'relativeValue' | 'other'
@@ -371,7 +371,7 @@ export interface FunctionEntry {
   functionName: string
   isPermissioned: boolean
   checked?: boolean
-  score?: 'unscored' | 'critical'
+  score?: 'unscored' | 'critical' | 'no-impact'
   reason?: string
   description?: string
   timestamp: string
@@ -413,7 +413,7 @@ export interface ApiFunctionsUpdateRequest {
   functionName: string
   isPermissioned?: boolean
   checked?: boolean
-  score?: 'unscored' | 'critical'
+  score?: 'unscored' | 'critical' | 'no-impact'
   reason?: string
   description?: string
   ownerDefinitions?: OwnerDefinition[]

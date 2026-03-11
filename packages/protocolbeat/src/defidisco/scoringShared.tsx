@@ -83,6 +83,7 @@ export function getAdminTypeColor(type: ApiAddressType): string {
 
 export function getImpactColor(impact: string): string {
   if (impact === 'critical') return '#c084fc'
+  if (impact === 'no-impact') return '#10b981'
   return '#9ca3af'
 }
 

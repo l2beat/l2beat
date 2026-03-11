@@ -11,6 +11,7 @@ import type {
   ContractFundsData,
   ApiFunctionAnalysisResponse,
   ApiFundsDataResponse,
+  Impact,
   Mitigation,
   ResourceEntry,
   ReviewConfig,
@@ -84,7 +85,7 @@ export interface CompiledAdminFunction {
   contractAddress: string
   contractName: string
   functionName: string
-  impact: 'critical'
+  impact: Impact
   directFundsUsd: number
   directTokenValueUsd: number
   reachableContracts: CompiledReachableContract[]
@@ -146,7 +147,7 @@ export interface CompiledFunction {
   contractAddress: string
   contractName: string
   functionName: string
-  impact: 'critical'
+  impact: Impact
   mitigations?: Mitigation[]
 }
 

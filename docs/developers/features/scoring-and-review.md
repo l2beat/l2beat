@@ -44,6 +44,7 @@
 - Both computed in `capitalAnalysis.ts` via `getContractFunds()` and `getContractTokenValue()`
 - Token market cap is pre-computed during funds fetching (stored in `funds-data.json` under `tokenInfo.tokenValue`)
 - Header totals in Owners/Dependencies use `computeDeduplicatedCapital()` to avoid double-counting the same contract across multiple admins
+- Functions with `score: 'no-impact'` are excluded from capital calculations: `functionIsNoImpact()` in `capitalAnalysis.ts` zeros out direct funds and skips the contract from admin-level totals
 
 ## Review Builder
 

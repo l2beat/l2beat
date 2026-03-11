@@ -131,7 +131,7 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
     findings.push({
       type: 'critical',
       title: `${eoas.length} EOA${eoas.length > 1 ? 's' : ''} with admin access`,
-      detail: `Externally owned account${eoas.length > 1 ? 's' : ''} can execute critical functions affecting up to ${formatUsdValue(maxCapital)} in TVL. A single compromised private key could impact user funds.`,
+      detail: `Externally owned account${eoas.length > 1 ? 's' : ''} can execute critical functions affecting up to ${formatUsdValue(maxCapital)} in TVL.`,
     })
   }
 

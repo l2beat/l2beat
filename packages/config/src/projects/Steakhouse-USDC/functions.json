@@ -1,54 +1,58 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-11T10:25:33.517Z",
+  "lastModified": "2026-03-11T16:34:33.472Z",
   "contracts": {
     "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
       "functions": [
         {
           "functionName": "setCurator",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T11:54:31.466Z",
+          "timestamp": "2026-03-11T16:29:58.671Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T11:54:31.466Z"
+            "date": "2026-03-11T16:29:58.671Z"
           }
         },
         {
           "functionName": "setIsAllocator",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T11:54:31.470Z",
+          "timestamp": "2026-03-11T16:14:53.913Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T11:54:31.470Z"
+            "date": "2026-03-11T16:14:53.913Z"
           }
         },
         {
           "functionName": "setSkimRecipient",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T11:54:31.471Z",
+          "timestamp": "2026-03-11T16:14:56.683Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T11:54:31.471Z"
+            "date": "2026-03-11T16:14:56.683Z"
           }
         },
         {
           "functionName": "submitTimelock",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
@@ -69,15 +73,16 @@
               }
             }
           ],
-          "timestamp": "2026-03-10T09:02:37.352Z",
+          "timestamp": "2026-03-11T16:15:15.117Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-10T09:02:37.352Z"
+            "date": "2026-03-11T16:15:15.117Z"
           }
         },
         {
           "functionName": "setFee",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
@@ -104,29 +109,31 @@
               }
             }
           ],
-          "timestamp": "2026-03-11T10:25:33.517Z",
+          "timestamp": "2026-03-11T15:49:29.584Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-11T10:25:33.517Z"
+            "date": "2026-03-11T15:49:29.584Z"
           }
         },
         {
           "functionName": "setFeeRecipient",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T11:54:31.473Z",
+          "timestamp": "2026-03-11T16:14:51.021Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T11:54:31.473Z"
+            "date": "2026-03-11T16:14:51.021Z"
           }
         },
         {
           "functionName": "submitGuardian",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
@@ -136,15 +143,16 @@
             "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
             "fieldName": "timelock"
           },
-          "timestamp": "2026-02-25T08:00:12.412Z",
+          "timestamp": "2026-03-11T16:15:07.869Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-25T08:00:12.412Z"
+            "date": "2026-03-11T16:15:07.869Z"
           }
         },
         {
           "functionName": "submitCap",
           "isPermissioned": true,
+          "score": "unscored",
           "ownerDefinitions": [
             {
               "path": "$self.curator"
@@ -157,15 +165,16 @@
             "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
             "fieldName": "timelock"
           },
-          "timestamp": "2026-02-25T08:00:45.875Z",
+          "timestamp": "2026-03-11T16:34:19.425Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-25T08:00:45.875Z"
+            "date": "2026-03-11T16:34:19.425Z"
           }
         },
         {
           "functionName": "submitMarketRemoval",
           "isPermissioned": true,
+          "score": "unscored",
           "ownerDefinitions": [
             {
               "path": "$self.curator"
@@ -178,18 +187,19 @@
             "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
             "fieldName": "timelock"
           },
-          "timestamp": "2026-02-25T07:59:55.833Z",
+          "timestamp": "2026-03-11T16:28:47.450Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-25T07:59:55.833Z"
+            "date": "2026-03-11T16:28:47.450Z"
           }
         },
         {
           "functionName": "setSupplyQueue",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
-              "path": "$self.isAllocator"
+              "path": "$self.allocators"
             },
             {
               "path": "$self.curator"
@@ -198,15 +208,16 @@
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T11:54:31.475Z",
+          "timestamp": "2026-03-11T16:29:44.202Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T11:54:31.475Z"
+            "date": "2026-03-11T16:29:44.202Z"
           }
         },
         {
           "functionName": "updateWithdrawQueue",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.allocators"
@@ -218,15 +229,16 @@
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T15:34:38.292Z",
+          "timestamp": "2026-03-11T16:34:33.472Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T15:34:38.292Z"
+            "date": "2026-03-11T16:34:33.472Z"
           }
         },
         {
           "functionName": "reallocate",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.allocators"
@@ -238,15 +250,16 @@
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T15:31:16.428Z",
+          "timestamp": "2026-03-11T16:29:27.349Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T15:31:16.428Z"
+            "date": "2026-03-11T16:29:27.349Z"
           }
         },
         {
           "functionName": "revokePendingTimelock",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.guardian"
@@ -255,15 +268,16 @@
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-25T09:05:22.766Z",
+          "timestamp": "2026-03-11T16:14:40.262Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-25T09:05:22.766Z"
+            "date": "2026-03-11T16:14:40.262Z"
           }
         },
         {
           "functionName": "revokePendingGuardian",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.guardian"
@@ -272,15 +286,16 @@
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T11:54:31.478Z",
+          "timestamp": "2026-03-11T16:14:44.855Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T11:54:31.478Z"
+            "date": "2026-03-11T16:14:44.855Z"
           }
         },
         {
           "functionName": "revokePendingCap",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.curator"
@@ -292,15 +307,16 @@
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T11:54:31.479Z",
+          "timestamp": "2026-03-11T16:14:44.160Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T11:54:31.479Z"
+            "date": "2026-03-11T16:14:44.160Z"
           }
         },
         {
           "functionName": "revokePendingMarketRemoval",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.curator"
@@ -312,10 +328,10 @@
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-02-24T11:54:31.479Z",
+          "timestamp": "2026-03-11T16:14:41.459Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-02-24T11:54:31.479Z"
+            "date": "2026-03-11T16:14:41.459Z"
           }
         }
       ]

@@ -48,6 +48,7 @@ import { IconLockClosed } from './IconLockClosed'
 import { IconLockOpen } from './IconLockOpen'
 import { IconOpen } from './IconOpen'
 import { IconVoltage } from './IconVoltage'
+import { IconVoltageSlash } from './IconVoltageSlash'
 import {
   resolveFieldValue,
   resolvePathExpression,
@@ -280,7 +281,7 @@ interface FunctionFolderProps {
   onScoreToggle: (
     contractAddress: string,
     functionName: string,
-    currentScore: 'unscored' | 'critical',
+    currentScore: 'unscored' | 'critical' | 'no-impact',
   ) => void
   onDescriptionUpdate: (
     contractAddress: string,
@@ -853,9 +854,12 @@ export function FunctionFolder({
 
   const canCheck = isCheckingAllowed()
 
-  // Score colors (binary: gray for unscored, red for any score)
+  // Score colors: gray for unscored, red for critical, green for no-impact
   const getScoreColor = (score: string, isHover = false) => {
-    if (score !== 'unscored') {
+    if (score === 'no-impact') {
+      return isHover ? '#6ee7b7' : '#10b981' // green-300 : green-500
+    }
+    if (score === 'critical') {
       return isHover ? '#fca5a5' : '#f87171' // red-300 : red-400
     }
     return isHover ? '#d1d5db' : '#9ca3af' // gray-300 : gray-400
@@ -1225,8 +1229,8 @@ export function FunctionFolder({
                   ? '#fcd34d' // amber-300
                   : '#d1d5db' // gray-300
             const impactTitle = hasImpactData
-              ? `Score: ${scoreStatus}. Funds at risk: ${formatUsdValue((functionAnalysis?.impact?.totalFundsAtRisk ?? 0) + (functionAnalysis?.impact?.totalTokenValueAtRisk ?? 0))}. Click to toggle: unscored ↔ critical`
-              : `Current score: ${scoreStatus}. Click to toggle: unscored ↔ critical`
+              ? `Score: ${scoreStatus}. Funds at risk: ${formatUsdValue((functionAnalysis?.impact?.totalFundsAtRisk ?? 0) + (functionAnalysis?.impact?.totalTokenValueAtRisk ?? 0))}. Click to toggle: unscored → critical → no-impact`
+              : `Current score: ${scoreStatus}. Click to toggle: unscored → critical → no-impact`
             return (
               <button
                 onClick={() =>
@@ -1242,7 +1246,11 @@ export function FunctionFolder({
                   e.currentTarget.style.color = impactColor
                 }}
               >
-                <IconVoltage />
+                {scoreStatus === 'no-impact' ? (
+                  <IconVoltageSlash />
+                ) : (
+                  <IconVoltage />
+                )}
               </button>
             )
           })()}
@@ -1980,7 +1988,11 @@ export function FunctionFolder({
           <div className="border-coffee-700 border-b p-3">
             <label className="mb-1 flex items-center gap-1 text-coffee-300 text-xs">
               <span style={{ color: getScoreColor(scoreStatus) }}>
-                <IconVoltage />
+                {scoreStatus === 'no-impact' ? (
+                  <IconVoltageSlash />
+                ) : (
+                  <IconVoltage />
+                )}
               </span>
               Impact
             </label>

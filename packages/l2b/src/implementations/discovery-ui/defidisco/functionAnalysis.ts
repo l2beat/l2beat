@@ -218,6 +218,20 @@ export function computeFunctionAnalysis(
           fundsLookup,
           functionsMetadata,
         )
+        // If researcher marked as no-impact, zero out all funds
+        // but keep the reachable contracts structure for informational display
+        if (impact && metadata?.score === 'no-impact') {
+          impact = {
+            ...impact,
+            totalFundsAtRisk: 0,
+            totalTokenValueAtRisk: 0,
+            reachableContracts: impact.reachableContracts.map((c) => ({
+              ...c,
+              fundsUsd: 0,
+              tokenValueUsd: 0,
+            })),
+          }
+        }
       }
 
       // Only include functions that have impact data or dependencies

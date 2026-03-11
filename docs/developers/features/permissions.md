@@ -174,10 +174,12 @@
 
 - **Permission Owner System**: Uses generalized path expressions that work with **any** handler's data structure (ACL, AccessControl, custom handlers, future handlers). No special cases or hardcoded logic needed.
 - **Migration**: All existing permission-overrides.json files have been migrated to the new unified path format (one-off migration, October 2025).
-- **Score / Impact (Binary)**:
-  - In `functions.json`, the field is called `score` with values: `'unscored' | 'critical'`
-  - **TypeScript types** use `Impact = 'critical'` (single-value type)
-  - Impact is displayed as a static label in V2 scoring, toggled via binary switch in the Values panel
+- **Score / Impact (3-state)**:
+  - In `functions.json`, the field is called `score` with values: `'unscored' | 'critical' | 'no-impact'`
+  - `'unscored'` = not yet reviewed (default), `'critical'` = confirmed impact, `'no-impact'` = researcher confirmed no fund impact
+  - **TypeScript types** use `Impact = 'critical'` (single-value type for scored functions)
+  - When `'no-impact'`: direct funds and reachable contract funds are zeroed in `functionAnalysis.ts` and `capitalAnalysis.ts`; function is excluded from capital-at-risk totals in `v2Scoring.ts`
+  - UI: toggled via 3-state cycle (gray/unscored -> red/critical -> green+slashed/no-impact) in the Values panel
 - **Mitigations**: Each function can have `mitigations[]` in `functions.json`. Each mitigation has:
   - `type`: `'valueRange'` (MIN/MAX), `'relativeValue'` (% change), or `'other'`
   - `description`: Human-readable explanation of the constraint

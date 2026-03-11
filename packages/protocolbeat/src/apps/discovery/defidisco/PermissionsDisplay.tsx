@@ -159,11 +159,17 @@ export function PermissionsDisplay({
   const handleScoreToggle = async (
     contractAddress: string,
     functionName: string,
-    currentScore: 'unscored' | 'critical',
+    currentScore: 'unscored' | 'critical' | 'no-impact',
   ) => {
     if (!project) return
 
-    const newScore = currentScore === 'critical' ? 'unscored' : 'critical'
+    // Cycle: unscored → critical → no-impact → unscored
+    const newScore =
+      currentScore === 'unscored'
+        ? 'critical'
+        : currentScore === 'critical'
+          ? 'no-impact'
+          : 'unscored'
 
     await updateFunctionEntry(contractAddress, functionName, {
       score: newScore,
@@ -492,7 +498,7 @@ function PermissionsCode({
   onScoreToggle: (
     contractAddress: string,
     functionName: string,
-    currentScore: 'unscored' | 'critical',
+    currentScore: 'unscored' | 'critical' | 'no-impact',
   ) => void
   onDescriptionUpdate: (
     contractAddress: string,
@@ -598,7 +604,7 @@ function WritePermissionsCodeEntries({
   onScoreToggle: (
     contractAddress: string,
     functionName: string,
-    currentScore: 'unscored' | 'critical',
+    currentScore: 'unscored' | 'critical' | 'no-impact',
   ) => void
   onDescriptionUpdate: (
     contractAddress: string,

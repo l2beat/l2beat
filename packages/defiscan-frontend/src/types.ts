@@ -94,11 +94,13 @@ export interface Mitigation {
   mitigatedField?: { contractAddress: string; fieldName: string }
 }
 
+export type Impact = 'critical' | 'no-impact'
+
 export interface CompiledAdminFunction {
   contractAddress: string
   contractName: string
   functionName: string
-  impact: 'critical'
+  impact: Impact
   directFundsUsd: number
   directTokenValueUsd: number
   reachableContracts: CompiledReachableContract[]
@@ -156,7 +158,7 @@ export interface CompiledFunction {
   contractAddress: string
   contractName: string
   functionName: string
-  impact: 'critical'
+  impact: Impact
   mitigations?: Mitigation[]
 }
 

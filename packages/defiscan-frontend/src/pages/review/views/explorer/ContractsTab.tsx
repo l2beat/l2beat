@@ -343,8 +343,8 @@ function ContractRow({
                           {fn.functionName}()
                         </td>
                         <td className="py-1">
-                          <span className="px-1.5 py-0.5 rounded bg-status-red/10 text-status-red text-xs">
-                            {fn.impact}
+                          <span className={`px-1.5 py-0.5 rounded text-xs ${fn.impact === 'no-impact' ? 'bg-status-green/10 text-status-green' : 'bg-status-red/10 text-status-red'}`}>
+                            {fn.impact === 'no-impact' ? 'None' : fn.impact}
                           </span>
                         </td>
                         <td className="py-1 text-text-secondary">

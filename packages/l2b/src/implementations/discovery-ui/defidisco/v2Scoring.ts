@@ -154,13 +154,13 @@ class FunctionInventoryModule {
             if (func.isPermissioned === true) {
               functionCount++
 
-              // Skip if function doesn't have impact (unscored)
+              // Skip unscored functions (not yet reviewed)
               if (!func.score || func.score === 'unscored') {
                 return
               }
 
-              // All scored functions are treated as critical (binary scoring)
-              const impact: Impact = 'critical'
+              const impact: Impact =
+                func.score === 'no-impact' ? 'no-impact' : 'critical'
 
               // Resolve contract name from projectData
               const contractName = this.getContractName(
@@ -239,6 +239,23 @@ class DependencyInventoryModule {
       })
     })
 
+    // Build a lookup for function scores from functions.json
+    const getFunctionScore = (
+      contractAddr: string,
+      funcName: string,
+    ): Impact => {
+      const normalizedAddr = normalizeChainAddress(contractAddr)
+      const contractEntry = Object.entries(
+        data.functions?.contracts ?? {},
+      ).find(([key]) => normalizeChainAddress(key) === normalizedAddr)
+      if (!contractEntry) return 'critical'
+      const contractFunctions = contractEntry[1] as any
+      const func = contractFunctions.functions.find(
+        (f: any) => f.functionName === funcName,
+      )
+      return func?.score === 'no-impact' ? 'no-impact' : 'critical'
+    }
+
     // Group dependencies from pre-computed function analysis by external contract
     const dependenciesMap = new Map<string, DependencyDetail>()
 
@@ -275,7 +292,7 @@ class DependencyInventoryModule {
                 contractNameMap.get(normalizeChainAddress(contractAddress)) ||
                 'Unknown Contract',
               functionName,
-              impact: 'critical' as Impact,
+              impact: getFunctionScore(contractAddress, functionName),
             })
           }
         }
@@ -426,13 +443,15 @@ class AdminInventoryModule {
               const admin = adminsMap.get(adminAddr)!
 
               // Add function to admin's list
+              const funcImpact: Impact =
+                func.score === 'no-impact' ? 'no-impact' : 'critical'
               admin.functions.push({
                 contractAddress,
                 contractName:
                   contractNameMap.get(normalizeChainAddress(contractAddress)) ||
                   'Unknown Contract',
                 functionName: func.functionName,
-                impact: 'critical' as Impact,
+                impact: funcImpact,
                 mitigations: buildMergedMitigations(
                   func,
                   data.paths,
@@ -477,13 +496,18 @@ class AdminInventoryModule {
         { funds: number; tokenValue: number }
       >()
       for (const admin of adminsWithCapital) {
-        // Direct contracts (all functions, including those without call graph)
-        for (const func of admin.functions) {
-          const addr = normalizeChainAddress(func.contractAddress)
+        // Direct contracts from per-function capital analysis (respects no-impact)
+        for (const funcAnalysis of admin.functionsWithCapital) {
+          if (
+            funcAnalysis.directFundsUsd <= 0 &&
+            funcAnalysis.directTokenValueUsd <= 0
+          )
+            continue
+          const addr = normalizeChainAddress(funcAnalysis.contractAddress)
           if (!contractCapitalMap.has(addr)) {
             contractCapitalMap.set(addr, {
-              funds: capitalCalculator.getContractFunds(addr),
-              tokenValue: capitalCalculator.getContractTokenValue(addr),
+              funds: funcAnalysis.directFundsUsd,
+              tokenValue: funcAnalysis.directTokenValueUsd,
             })
           }
         }
