@@ -118,7 +118,7 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
       type: 'positive',
       title: 'Fully immutable protocol',
       detail:
-        'All admin controls resolve to immutable contracts or revoked addresses. No human entity can modify protocol behavior after deployment.',
+        'All admin controls resolve to immutable contracts or revoked addresses. No admin can modify protocol behavior after deployment.',
     })
   }
 

@@ -215,6 +215,7 @@ Full path reference with all examples in `docs/developers/features/permissions.m
 
 **Contract Tags** (`contract-tags.json`): Array of `{ contractAddress, isExternal, isGovernance, entity, timestamp }`. Full schema in `docs/developers/features/infrastructure.md`.
 
+
 ### Panel Development
 
 To add new panels:
@@ -247,6 +248,7 @@ packages/
 │   ├── ReviewDescriptionsEditor.tsx  # Review descriptions editor (Descriptions tab)
 │   ├── ReviewResourcesEditor.tsx    # Resources editor (links, frontends, socials)
 │   ├── addressUtils.ts             # Frontend address utilities (stripChainPrefix, addressesEqual, normalizeForLookup, findByAddress)
+│   ├── ownerResolution.ts          # Shared owner/field path resolution (UI + backend data access)
 │   └── icons/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts
@@ -258,6 +260,7 @@ packages/
 │   ├── callGraphHeuristics.ts        # Heuristic engine for variable-to-address resolution
 │   ├── enhancedTraversal.ts          # Backward BFS governance chains
 │   ├── functionAnalysis.ts           # Forward BFS impact & dependencies
+│   ├── configSeverity.ts            # Auto-severity for mitigated fields in config.jsonc
 │   └── addressUtils.ts              # Backend address utilities (stripChainPrefix, ensureChainPrefix, addressesEqual, isChainAddress)
 ├── defiscan-frontend/                # Standalone public review website
 │   ├── scripts/compile-data.ts       # Build-time data aggregation

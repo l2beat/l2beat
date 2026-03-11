@@ -17,9 +17,11 @@ import type {
   FunctionTraversalResult,
   Mitigation,
   MitigationType,
+  MitigationValue,
   OwnerDefinition,
   TraversalTerminal,
 } from '../../../api/types'
+import { normalizeMitigationValue } from '../../../api/types'
 import * as solidity from '../../../components/editor/languages/solidity'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
@@ -46,7 +48,11 @@ import { IconLockClosed } from './IconLockClosed'
 import { IconLockOpen } from './IconLockOpen'
 import { IconOpen } from './IconOpen'
 import { IconVoltage } from './IconVoltage'
-import { resolvePathExpression, UIContractDataAccess } from './ownerResolution'
+import {
+  resolveFieldValue,
+  resolvePathExpression,
+  UIContractDataAccess,
+} from './ownerResolution'
 
 // ============================================================================
 // Enhanced Traversal Helpers
@@ -397,16 +403,21 @@ export function FunctionFolder({
     return contractEntry?.[1]?.[functionName] ?? null
   }, [analysisData, contractAddress, functionName])
 
+  // All contracts from project data (used by owner resolution and mitigation display)
+  const allContracts = React.useMemo(() => {
+    if (!projectData?.entries) return []
+    return projectData.entries.flatMap((e) => [
+      ...e.initialContracts,
+      ...e.discoveredContracts,
+    ])
+  }, [projectData?.entries])
+
   // Owner resolution using unified path expressions with shared utility
   const resolvedOwners = React.useMemo(() => {
     if (!currentFunction?.ownerDefinitions || !projectData?.entries) {
       return []
     }
 
-    const allContracts = projectData.entries.flatMap((e) => [
-      ...e.initialContracts,
-      ...e.discoveredContracts,
-    ])
     const dataAccess = new UIContractDataAccess(allContracts)
 
     return currentFunction.ownerDefinitions.map((definition) => {
@@ -509,36 +520,60 @@ export function FunctionFolder({
       []
 
     projectData.entries.forEach((entry) => {
-      // Add initial contracts
-      entry.initialContracts
-        .filter((contract) => contract.type === 'Contract')
-        .forEach((contract) => {
+      // Add initial contracts (all types — Untemplatized, Diamond, etc.)
+      entry.initialContracts.forEach((contract) => {
+        contracts.push({
+          address: contract.address,
+          name: contract.name || 'Unknown Contract',
+          source: 'initial',
+        })
+      })
+
+      // Add discovered contracts
+      entry.discoveredContracts.forEach((contract) => {
+        // Avoid duplicates
+        if (
+          !contracts.some((c) => addressesEqual(c.address, contract.address))
+        ) {
           contracts.push({
             address: contract.address,
             name: contract.name || 'Unknown Contract',
-            source: 'initial',
+            source: 'discovered',
           })
-        })
-
-      // Add discovered contracts
-      entry.discoveredContracts
-        .filter((contract) => contract.type === 'Contract')
-        .forEach((contract) => {
-          // Avoid duplicates
-          if (
-            !contracts.some((c) => addressesEqual(c.address, contract.address))
-          ) {
-            contracts.push({
-              address: contract.address,
-              name: contract.name || 'Unknown Contract',
-              source: 'discovered',
-            })
-          }
-        })
+        }
+      })
     })
 
     return contracts
   }, [projectData])
+
+  // Resolve contractAddress prop to the exact string in availableContracts.
+  // contractAddress may be an implementation address — find the parent proxy.
+  const defaultContractAddress = React.useMemo(() => {
+    // Direct match first
+    const direct = availableContracts.find((c) =>
+      addressesEqual(c.address, contractAddress),
+    )
+    if (direct) return direct.address
+
+    // Implementation address — find the proxy that has this in its abis
+    if (projectData?.entries) {
+      for (const entry of projectData.entries) {
+        const allContracts = [
+          ...entry.initialContracts,
+          ...entry.discoveredContracts,
+        ]
+        const proxy = allContracts.find((c) =>
+          c.abis?.some((abi: any) =>
+            addressesEqual(abi.address, contractAddress),
+          ),
+        )
+        if (proxy) return proxy.address
+      }
+    }
+
+    return contractAddress
+  }, [availableContracts, contractAddress, projectData])
 
   // Get available numeric fields for delay (fields that contain time/delay or are numeric)
   const getAvailableDelayFields = (contractAddr: string) => {
@@ -570,6 +605,37 @@ export function FunctionFolder({
             description: field.description || '',
             value: field.value?.type === 'number' ? field.value.value : '',
           }))
+      }
+    }
+    return []
+  }
+
+  // Get all fields for a contract (for mitigated field dropdown)
+  const getAvailableFields = (contractAddr: string) => {
+    if (!projectData?.entries) return []
+
+    for (const entry of projectData.entries) {
+      const contracts = [
+        ...entry.initialContracts,
+        ...entry.discoveredContracts,
+      ]
+      const contract = contracts.find((c) =>
+        addressesEqual(c.address, contractAddr),
+      )
+
+      if (contract?.fields) {
+        return contract.fields.map((field) => ({
+          name: field.name,
+          description: field.description || '',
+          valuePreview:
+            field.value?.type === 'number' || field.value?.type === 'string'
+              ? String(field.value.value)
+              : field.value?.type === 'boolean'
+                ? String(field.value.value)
+                : field.value?.type === 'address'
+                  ? field.value.address?.slice(0, 12) + '...'
+                  : '',
+        }))
       }
     }
     return []
@@ -656,17 +722,60 @@ export function FunctionFolder({
   const [editingMitigationIndex, setEditingMitigationIndex] = useState<
     number | null
   >(null)
+
+  interface MitigationValueFormState {
+    mode: 'hardcoded' | 'fieldRef'
+    value: string
+    fieldPath: string
+  }
+  const emptyMitVal: MitigationValueFormState = {
+    mode: 'hardcoded',
+    value: '',
+    fieldPath: '',
+  }
+
   const [newMitigation, setNewMitigation] = useState<{
     type: MitigationType
     description: string
-    valueRange: { min: string; max: string; unit: string }
-    relativeValue: { maxChangePercent: string }
+    valueRange: {
+      min: MitigationValueFormState
+      max: MitigationValueFormState
+      unit: string
+    }
+    relativeValue: { maxChangePercent: MitigationValueFormState }
+    mitigatedField: {
+      contractAddress: string
+      fieldName: string
+    }
   }>({
     type: 'valueRange',
     description: '',
-    valueRange: { min: '', max: '', unit: '' },
-    relativeValue: { maxChangePercent: '' },
+    valueRange: { min: { ...emptyMitVal }, max: { ...emptyMitVal }, unit: '' },
+    relativeValue: { maxChangePercent: { ...emptyMitVal } },
+    mitigatedField: {
+      contractAddress: defaultContractAddress,
+      fieldName: '',
+    },
   })
+
+  // Sync mitigated field default contract when availableContracts loads
+  React.useEffect(() => {
+    setNewMitigation((prev) => {
+      if (
+        prev.mitigatedField.contractAddress === contractAddress ||
+        prev.mitigatedField.contractAddress === ''
+      ) {
+        return {
+          ...prev,
+          mitigatedField: {
+            ...prev.mitigatedField,
+            contractAddress: defaultContractAddress,
+          },
+        }
+      }
+      return prev
+    })
+  }, [defaultContractAddress])
 
   // State for managing dependencies
   const [isAddingDependency, setIsAddingDependency] = useState(false)
@@ -860,11 +969,33 @@ export function FunctionFolder({
     setNewMitigation({
       type: 'valueRange',
       description: '',
-      valueRange: { min: '', max: '', unit: '' },
-      relativeValue: { maxChangePercent: '' },
+      valueRange: {
+        min: { ...emptyMitVal },
+        max: { ...emptyMitVal },
+        unit: '',
+      },
+      relativeValue: { maxChangePercent: { ...emptyMitVal } },
+      mitigatedField: {
+        contractAddress: defaultContractAddress,
+        fieldName: '',
+      },
     })
     setIsAddingMitigation(false)
     setEditingMitigationIndex(null)
+  }
+
+  // Convert form state to MitigationValue for persistence
+  const formToMitVal = (
+    s: MitigationValueFormState,
+  ): MitigationValue | undefined => {
+    if (s.mode === 'fieldRef') {
+      return s.fieldPath.trim()
+        ? { mode: 'fieldRef', fieldPath: s.fieldPath.trim() }
+        : undefined
+    }
+    return s.value.trim()
+      ? { mode: 'hardcoded', value: s.value.trim() }
+      : undefined
   }
 
   const handleAddMitigation = () => {
@@ -874,22 +1005,29 @@ export function FunctionFolder({
       description: newMitigation.description,
     }
     if (newMitigation.type === 'valueRange') {
+      const min = formToMitVal(newMitigation.valueRange.min)
+      const max = formToMitVal(newMitigation.valueRange.max)
       mitigation.valueRange = {
-        ...(newMitigation.valueRange.min
-          ? { min: newMitigation.valueRange.min }
-          : {}),
-        ...(newMitigation.valueRange.max
-          ? { max: newMitigation.valueRange.max }
-          : {}),
+        ...(min ? { min } : {}),
+        ...(max ? { max } : {}),
         ...(newMitigation.valueRange.unit
           ? { unit: newMitigation.valueRange.unit }
           : {}),
       }
     } else if (newMitigation.type === 'relativeValue') {
+      const maxChange = formToMitVal(
+        newMitigation.relativeValue.maxChangePercent,
+      )
       mitigation.relativeValue = {
-        ...(newMitigation.relativeValue.maxChangePercent
-          ? { maxChangePercent: newMitigation.relativeValue.maxChangePercent }
-          : {}),
+        ...(maxChange ? { maxChangePercent: maxChange } : {}),
+      }
+    }
+
+    // Add mitigated field if a field is selected
+    if (newMitigation.mitigatedField.fieldName.trim()) {
+      mitigation.mitigatedField = {
+        contractAddress: newMitigation.mitigatedField.contractAddress,
+        fieldName: newMitigation.mitigatedField.fieldName.trim(),
       }
     }
 
@@ -915,6 +1053,22 @@ export function FunctionFolder({
     )
   }
 
+  // Convert persisted MitigationValue (or legacy string) to form state
+  const mitValToForm = (
+    val: MitigationValue | string | undefined,
+  ): MitigationValueFormState => {
+    const normalized = normalizeMitigationValue(val as any)
+    if (!normalized) return { ...emptyMitVal }
+    if (normalized.mode === 'fieldRef') {
+      return {
+        mode: 'fieldRef',
+        value: '',
+        fieldPath: normalized.fieldPath || '',
+      }
+    }
+    return { mode: 'hardcoded', value: normalized.value || '', fieldPath: '' }
+  }
+
   const handleEditMitigation = (index: number) => {
     const currentMitigations = currentFunction?.mitigations || []
     const m = currentMitigations[index]
@@ -923,25 +1077,42 @@ export function FunctionFolder({
       type: m.type,
       description: m.description,
       valueRange: {
-        min: m.valueRange?.min || '',
-        max: m.valueRange?.max || '',
+        min: mitValToForm(m.valueRange?.min),
+        max: mitValToForm(m.valueRange?.max),
         unit: m.valueRange?.unit || '',
       },
       relativeValue: {
-        maxChangePercent: m.relativeValue?.maxChangePercent || '',
+        maxChangePercent: mitValToForm(m.relativeValue?.maxChangePercent),
       },
+      mitigatedField: m.mitigatedField
+        ? {
+            contractAddress: m.mitigatedField.contractAddress,
+            fieldName: m.mitigatedField.fieldName,
+          }
+        : {
+            contractAddress: defaultContractAddress,
+            fieldName: '',
+          },
     })
     setEditingMitigationIndex(index)
     setIsAddingMitigation(true)
   }
 
+  // Check if a MitigationValueFormState has a valid value
+  const isMitValFilled = (s: MitigationValueFormState): boolean => {
+    return s.mode === 'fieldRef' ? !!s.fieldPath.trim() : !!s.value.trim()
+  }
+
   const isMitigationFormValid = () => {
     if (!newMitigation.description.trim()) return false
     if (newMitigation.type === 'valueRange') {
-      return !!(newMitigation.valueRange.min || newMitigation.valueRange.max)
+      return (
+        isMitValFilled(newMitigation.valueRange.min) ||
+        isMitValFilled(newMitigation.valueRange.max)
+      )
     }
     if (newMitigation.type === 'relativeValue') {
-      return !!newMitigation.relativeValue.maxChangePercent
+      return isMitValFilled(newMitigation.relativeValue.maxChangePercent)
     }
     // 'other' type just needs description
     return true
@@ -2420,45 +2591,80 @@ export function FunctionFolder({
             {/* Display existing mitigations */}
             {(currentFunction?.mitigations ?? []).map((m, idx) => (
               <div key={idx} className="mb-2 rounded bg-coffee-800 p-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${
-                        m.type === 'valueRange'
-                          ? 'bg-indigo-800 text-indigo-200'
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0 flex-1">
+                    {/* First line: type badge + values */}
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] ${
+                          m.type === 'valueRange'
+                            ? 'bg-indigo-800 text-indigo-200'
+                            : m.type === 'relativeValue'
+                              ? 'bg-amber-800 text-amber-200'
+                              : 'bg-coffee-700 text-coffee-300'
+                        }`}
+                      >
+                        {m.type === 'valueRange'
+                          ? 'RANGE'
                           : m.type === 'relativeValue'
-                            ? 'bg-amber-800 text-amber-200'
-                            : 'bg-coffee-700 text-coffee-300'
-                      }`}
-                    >
-                      {m.type === 'valueRange'
-                        ? 'RANGE'
-                        : m.type === 'relativeValue'
-                          ? 'RELATIVE'
-                          : 'OTHER'}
-                    </span>
-                    <span className="text-coffee-200 text-xs">
+                            ? 'RELATIVE'
+                            : 'OTHER'}
+                      </span>
                       {m.type === 'valueRange' && m.valueRange && (
-                        <span className="mr-1 font-mono text-coffee-100">
-                          {m.valueRange.min !== undefined &&
-                            `min: ${m.valueRange.min}`}
+                        <span className="font-mono text-coffee-100 text-xs">
+                          {m.valueRange.min !== undefined && (
+                            <MitigationValueDisplay
+                              label="min"
+                              val={m.valueRange.min}
+                              contractAddress={contractAddress}
+                              allContracts={allContracts}
+                            />
+                          )}
                           {m.valueRange.min !== undefined &&
                             m.valueRange.max !== undefined &&
                             ', '}
-                          {m.valueRange.max !== undefined &&
-                            `max: ${m.valueRange.max}`}
+                          {m.valueRange.max !== undefined && (
+                            <MitigationValueDisplay
+                              label="max"
+                              val={m.valueRange.max}
+                              contractAddress={contractAddress}
+                              allContracts={allContracts}
+                            />
+                          )}
                           {m.valueRange.unit && ` ${m.valueRange.unit}`}
                         </span>
                       )}
-                      {m.type === 'relativeValue' && m.relativeValue && (
-                        <span className="mr-1 font-mono text-coffee-100">
-                          max change: {m.relativeValue.maxChangePercent}%
+                      {m.type === 'relativeValue' &&
+                        m.relativeValue &&
+                        m.relativeValue.maxChangePercent !== undefined && (
+                          <span className="font-mono text-coffee-100 text-xs">
+                            max change:{' '}
+                            <MitigationValueDisplay
+                              label=""
+                              val={m.relativeValue.maxChangePercent}
+                              contractAddress={contractAddress}
+                              allContracts={allContracts}
+                            />
+                            %
+                          </span>
+                        )}
+                      {m.mitigatedField && (
+                        <span
+                          className="shrink-0 rounded bg-emerald-900/60 px-1.5 py-0.5 font-mono text-[10px] text-emerald-300"
+                          title={`Monitors ${m.mitigatedField.contractAddress}.${m.mitigatedField.fieldName} (HIGH severity)`}
+                        >
+                          monitors: {m.mitigatedField.fieldName}
                         </span>
                       )}
-                      {m.description}
-                    </span>
+                    </div>
+                    {/* Second line: description */}
+                    {m.description && (
+                      <div className="mt-1 text-coffee-300 text-xs">
+                        {m.description}
+                      </div>
+                    )}
                   </div>
-                  <div className="flex gap-1">
+                  <div className="flex shrink-0 gap-1">
                     <button
                       onClick={() => handleEditMitigation(idx)}
                       className="rounded px-1.5 py-0.5 text-coffee-400 text-xs hover:bg-coffee-700 hover:text-coffee-200"
@@ -2489,118 +2695,177 @@ export function FunctionFolder({
             {/* Add/Edit mitigation form */}
             {isAddingMitigation && (
               <div className="rounded bg-coffee-800 p-3">
-                <div className="mb-2">
-                  <label className="mb-1 block text-coffee-300 text-xs">
-                    Type:
+                {/* Monitored field — at the top as the primary question */}
+                <div className="mb-3">
+                  <label className="mb-1.5 block text-coffee-300 text-xs">
+                    Monitored field{' '}
+                    <span className="text-coffee-500">
+                      (auto HIGH severity)
+                    </span>
                   </label>
-                  <select
-                    value={newMitigation.type}
-                    onChange={(e) =>
-                      setNewMitigation((prev) => ({
-                        ...prev,
-                        type: e.target.value as MitigationType,
-                      }))
-                    }
-                    className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
-                  >
-                    <option value="valueRange">Value Range (MIN/MAX)</option>
-                    <option value="relativeValue">
-                      Relative Value (% change)
-                    </option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                {/* Value Range fields */}
-                {newMitigation.type === 'valueRange' && (
-                  <div className="mb-2 flex gap-2">
+                  <div className="flex gap-2">
                     <div className="flex-1">
-                      <label className="mb-1 block text-coffee-300 text-xs">
-                        Min:
-                      </label>
-                      <input
-                        type="text"
-                        value={newMitigation.valueRange.min}
+                      <select
+                        value={newMitigation.mitigatedField.contractAddress}
                         onChange={(e) =>
                           setNewMitigation((prev) => ({
                             ...prev,
-                            valueRange: {
-                              ...prev.valueRange,
-                              min: e.target.value,
+                            mitigatedField: {
+                              ...prev.mitigatedField,
+                              contractAddress: e.target.value,
+                              fieldName: '',
                             },
                           }))
                         }
-                        placeholder="e.g. 0"
-                        className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 font-mono text-coffee-100 text-xs"
-                      />
+                        className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                      >
+                        {availableContracts.map((contract) => (
+                          <option
+                            key={contract.address}
+                            value={contract.address}
+                          >
+                            {contract.name} ({contract.address.slice(0, 10)}...)
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="flex-1">
-                      <label className="mb-1 block text-coffee-300 text-xs">
-                        Max:
-                      </label>
-                      <input
-                        type="text"
-                        value={newMitigation.valueRange.max}
+                      <select
+                        value={newMitigation.mitigatedField.fieldName}
                         onChange={(e) =>
                           setNewMitigation((prev) => ({
                             ...prev,
-                            valueRange: {
-                              ...prev.valueRange,
-                              max: e.target.value,
+                            mitigatedField: {
+                              ...prev.mitigatedField,
+                              fieldName: e.target.value,
                             },
                           }))
                         }
-                        placeholder="e.g. 1000"
-                        className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 font-mono text-coffee-100 text-xs"
-                      />
-                    </div>
-                    <div className="w-20">
-                      <label className="mb-1 block text-coffee-300 text-xs">
-                        Unit:
-                      </label>
-                      <input
-                        type="text"
-                        value={newMitigation.valueRange.unit}
-                        onChange={(e) =>
-                          setNewMitigation((prev) => ({
-                            ...prev,
-                            valueRange: {
-                              ...prev.valueRange,
-                              unit: e.target.value,
-                            },
-                          }))
-                        }
-                        placeholder="e.g. ETH"
-                        className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 font-mono text-coffee-100 text-xs"
-                      />
+                        disabled={!newMitigation.mitigatedField.contractAddress}
+                        className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs disabled:opacity-50"
+                      >
+                        <option value="">No field (skip monitoring)</option>
+                        {newMitigation.mitigatedField.contractAddress &&
+                          getAvailableFields(
+                            newMitigation.mitigatedField.contractAddress,
+                          ).map((field) => (
+                            <option key={field.name} value={field.name}>
+                              {field.name}
+                              {field.valuePreview && ` (${field.valuePreview})`}
+                              {field.description && ` - ${field.description}`}
+                            </option>
+                          ))}
+                      </select>
                     </div>
                   </div>
-                )}
+                </div>
 
-                {/* Relative Value fields */}
-                {newMitigation.type === 'relativeValue' && (
-                  <div className="mb-2">
+                {/* Type + constraint values */}
+                <div className="mb-2 flex gap-2">
+                  <div className="w-48">
                     <label className="mb-1 block text-coffee-300 text-xs">
-                      Max Change (%):
+                      Constraint:
                     </label>
-                    <input
-                      type="text"
-                      value={newMitigation.relativeValue.maxChangePercent}
+                    <select
+                      value={newMitigation.type}
                       onChange={(e) =>
                         setNewMitigation((prev) => ({
                           ...prev,
-                          relativeValue: {
-                            maxChangePercent: e.target.value,
-                          },
+                          type: e.target.value as MitigationType,
                         }))
                       }
-                      placeholder="e.g. 5"
-                      className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 font-mono text-coffee-100 text-xs"
-                    />
+                      className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                    >
+                      <option value="valueRange">Value Range (MIN/MAX)</option>
+                      <option value="relativeValue">Relative (% change)</option>
+                      <option value="other">Other</option>
+                    </select>
                   </div>
-                )}
 
-                {/* Description (required for all types) */}
+                  {/* Inline value fields */}
+                  {newMitigation.type === 'valueRange' && (
+                    <>
+                      <div className="flex-1">
+                        <MitigationValueFormInput
+                          label="Min"
+                          state={newMitigation.valueRange.min}
+                          onChange={(min) =>
+                            setNewMitigation((prev) => ({
+                              ...prev,
+                              valueRange: {
+                                ...prev.valueRange,
+                                min,
+                              },
+                            }))
+                          }
+                          placeholder="e.g. 0"
+                          fieldPlaceholder="$self.minValue"
+                          contractAddress={contractAddress}
+                          allContracts={allContracts}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <MitigationValueFormInput
+                          label="Max"
+                          state={newMitigation.valueRange.max}
+                          onChange={(max) =>
+                            setNewMitigation((prev) => ({
+                              ...prev,
+                              valueRange: {
+                                ...prev.valueRange,
+                                max,
+                              },
+                            }))
+                          }
+                          placeholder="e.g. 1000"
+                          fieldPlaceholder="$self.maxValue"
+                          contractAddress={contractAddress}
+                          allContracts={allContracts}
+                        />
+                      </div>
+                      <div className="w-16">
+                        <label className="mb-1 block text-coffee-300 text-xs">
+                          Unit:
+                        </label>
+                        <input
+                          type="text"
+                          value={newMitigation.valueRange.unit}
+                          onChange={(e) =>
+                            setNewMitigation((prev) => ({
+                              ...prev,
+                              valueRange: {
+                                ...prev.valueRange,
+                                unit: e.target.value,
+                              },
+                            }))
+                          }
+                          placeholder="ETH"
+                          className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 font-mono text-coffee-100 text-xs"
+                        />
+                      </div>
+                    </>
+                  )}
+                  {newMitigation.type === 'relativeValue' && (
+                    <div className="flex-1">
+                      <MitigationValueFormInput
+                        label="Max Change (%)"
+                        state={newMitigation.relativeValue.maxChangePercent}
+                        onChange={(maxChangePercent) =>
+                          setNewMitigation((prev) => ({
+                            ...prev,
+                            relativeValue: { maxChangePercent },
+                          }))
+                        }
+                        placeholder="e.g. 5"
+                        fieldPlaceholder="$self.maxChangePercent"
+                        contractAddress={contractAddress}
+                        allContracts={allContracts}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Description */}
                 <div className="mb-3">
                   <label className="mb-1 block text-coffee-300 text-xs">
                     Description:
@@ -2833,6 +3098,143 @@ export function FunctionFolder({
             )}
           </div>
         </div>
+      )}
+    </div>
+  )
+}
+
+/**
+ * Displays a MitigationValue — handles both hardcoded and field-ref modes.
+ * For field refs, resolves the current value from project data.
+ */
+function MitigationValueDisplay({
+  label,
+  val,
+  contractAddress,
+  allContracts,
+}: {
+  label: string
+  val: MitigationValue | string | undefined
+  contractAddress: string
+  allContracts: any[]
+}) {
+  const normalized = normalizeMitigationValue(val as any)
+  if (!normalized) return null
+
+  if (normalized.mode === 'fieldRef' && normalized.fieldPath) {
+    const dataAccess = new UIContractDataAccess(allContracts)
+    const result = resolveFieldValue(
+      dataAccess,
+      contractAddress,
+      normalized.fieldPath,
+    )
+    const display = result.error
+      ? `[err: ${result.error}]`
+      : String(result.value)
+    return (
+      <span title={`Field: ${normalized.fieldPath}`}>
+        {label ? `${label}: ` : ''}
+        <span className="text-aux-cyan">{normalized.fieldPath}</span>
+        <span className="text-coffee-400"> = {display}</span>
+      </span>
+    )
+  }
+
+  // Hardcoded value
+  return (
+    <span>
+      {label ? `${label}: ` : ''}
+      {normalized.value}
+    </span>
+  )
+}
+
+/**
+ * Form input for a MitigationValue — toggle between hardcoded and field ref.
+ */
+function MitigationValueFormInput({
+  label,
+  state,
+  onChange,
+  placeholder,
+  fieldPlaceholder,
+  contractAddress,
+  allContracts,
+}: {
+  label: string
+  state: { mode: 'hardcoded' | 'fieldRef'; value: string; fieldPath: string }
+  onChange: (s: {
+    mode: 'hardcoded' | 'fieldRef'
+    value: string
+    fieldPath: string
+  }) => void
+  placeholder: string
+  fieldPlaceholder: string
+  contractAddress: string
+  allContracts: any[]
+}) {
+  // Resolve field ref value for display
+  const resolvedValue = React.useMemo(() => {
+    if (state.mode !== 'fieldRef' || !state.fieldPath.trim()) return null
+    const dataAccess = new UIContractDataAccess(allContracts)
+    return resolveFieldValue(dataAccess, contractAddress, state.fieldPath)
+  }, [state.mode, state.fieldPath, contractAddress, allContracts])
+
+  return (
+    <div>
+      <div className="mb-1 flex items-center gap-2">
+        <label className="text-coffee-300 text-xs">{label}:</label>
+        <button
+          type="button"
+          onClick={() =>
+            onChange({
+              ...state,
+              mode: state.mode === 'hardcoded' ? 'fieldRef' : 'hardcoded',
+            })
+          }
+          className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${
+            state.mode === 'fieldRef'
+              ? 'bg-aux-cyan/20 text-aux-cyan'
+              : 'bg-coffee-700 text-coffee-400'
+          }`}
+          title={
+            state.mode === 'hardcoded'
+              ? 'Switch to field reference'
+              : 'Switch to hardcoded value'
+          }
+        >
+          {state.mode === 'fieldRef' ? 'Field' : 'Value'}
+        </button>
+      </div>
+      {state.mode === 'hardcoded' ? (
+        <input
+          type="text"
+          value={state.value}
+          onChange={(e) => onChange({ ...state, value: e.target.value })}
+          placeholder={placeholder}
+          className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 font-mono text-coffee-100 text-xs"
+        />
+      ) : (
+        <>
+          <input
+            type="text"
+            value={state.fieldPath}
+            onChange={(e) => onChange({ ...state, fieldPath: e.target.value })}
+            placeholder={fieldPlaceholder}
+            className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 font-mono text-aux-cyan text-xs"
+          />
+          {resolvedValue && (
+            <div className="mt-0.5 font-mono text-[10px]">
+              {resolvedValue.error ? (
+                <span className="text-red-400">{resolvedValue.error}</span>
+              ) : (
+                <span className="text-coffee-400">
+                  = {String(resolvedValue.value)}
+                </span>
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   )

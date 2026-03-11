@@ -68,13 +68,30 @@ export interface CompiledAdmin {
 // Mitigation types for permissioned functions
 export type MitigationType = 'delay' | 'valueRange' | 'relativeValue' | 'other'
 
+export interface MitigationValue {
+  mode: 'hardcoded' | 'fieldRef'
+  value?: string
+  fieldPath?: string
+}
+
+/** Format a MitigationValue (or legacy string) for display */
+export function displayMitigationValue(
+  val: MitigationValue | string | undefined,
+): string {
+  if (val === undefined) return ''
+  if (typeof val === 'string') return val
+  if (val.mode === 'fieldRef') return val.fieldPath ?? ''
+  return val.value ?? ''
+}
+
 export interface Mitigation {
   type: MitigationType
   description: string
   delayRef?: { contractAddress: string; fieldName: string }
   delaySeconds?: number
-  valueRange?: { min?: string; max?: string; unit?: string }
-  relativeValue?: { maxChangePercent?: string }
+  valueRange?: { min?: MitigationValue; max?: MitigationValue; unit?: string }
+  relativeValue?: { maxChangePercent?: MitigationValue }
+  mitigatedField?: { contractAddress: string; fieldName: string }
 }
 
 export interface CompiledAdminFunction {

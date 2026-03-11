@@ -4,10 +4,11 @@ import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { UsdValue } from '../../../../components/UsdValue'
 import { formatUsdValue } from '../../../../utils/format'
 import { getHumanAdmins } from '../../../../utils/admins'
-import type {
-  CompiledReview,
-  CompiledAdmin,
-  Mitigation,
+import {
+  displayMitigationValue,
+  type CompiledReview,
+  type CompiledAdmin,
+  type Mitigation,
 } from '../../../../types'
 
 interface AdminsTabProps {
@@ -434,14 +435,16 @@ function MitigationBadge({ mitigation: m }: { mitigation: Mitigation }) {
     tooltip = m.description
   } else if (m.type === 'valueRange') {
     const parts: string[] = []
-    if (m.valueRange?.min !== undefined) parts.push(m.valueRange.min)
-    if (m.valueRange?.max !== undefined) parts.push(m.valueRange.max)
+    if (m.valueRange?.min !== undefined)
+      parts.push(displayMitigationValue(m.valueRange.min))
+    if (m.valueRange?.max !== undefined)
+      parts.push(displayMitigationValue(m.valueRange.max))
     const unit = m.valueRange?.unit ? ` ${m.valueRange.unit}` : ''
     label = `Range: ${parts.join(' to ')}${unit}`
     tooltip = m.description || label
   } else if (m.type === 'relativeValue') {
     label = 'Relative'
-    tooltip = `Max change: ${m.relativeValue?.maxChangePercent ?? '?'}%`
+    tooltip = `Max change: ${m.relativeValue?.maxChangePercent !== undefined ? displayMitigationValue(m.relativeValue.maxChangePercent) : '?'}%`
     if (m.description) tooltip += ` — ${m.description}`
   } else {
     label =

@@ -228,10 +228,13 @@ Merges all analysis data with human-written descriptions into a self-contained J
 V2ScoreResult.admins.breakdown (AdminDetailWithCapital[])
   + review-config.json admins descriptions
   + contract-tags.json governance flag
-  + functions.json mitigations
+  + functions.json mitigations (MitigationValue: hardcoded or field-referenced)
+  + configSeverity.ts auto-severity (mitigatedField → config.jsonc HIGH severity)
   → CompiledAdmin[]
 ```
 Each `CompiledAdmin` carries: address, name, description, adminType, isGovernance, functions (with per-function capital), and totals (totalDirectCapital, totalReachableCapital, totalDirectTokenValue, totalReachableTokenValue).
+
+**Mitigation values** can be hardcoded strings or field references using the same path syntax as owner definitions (`$self.field`, `@ref.field`, `eth:0xAddr.field`). Field references are resolved at display time via `resolveFieldValue()` in `ownerResolution.ts`. When a mitigation specifies a `mitigatedField` (contract + field name), `configSeverity.ts` auto-writes `severity: "HIGH"` to `config.jsonc`, ensuring the monitoring service sends priority Discord alerts when that field changes on-chain.
 
 #### Dependencies Pipeline
 ```

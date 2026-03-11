@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-10T09:02:37.352Z",
+  "lastModified": "2026-03-11T10:25:33.517Z",
   "contracts": {
     "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
       "functions": [
@@ -88,16 +88,26 @@
               "type": "valueRange",
               "description": "Maximum fee is 50%",
               "valueRange": {
-                "min": "0",
-                "max": "50",
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "50"
+                },
                 "unit": "%"
+              },
+              "mitigatedField": {
+                "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+                "fieldName": "fee"
               }
             }
           ],
-          "timestamp": "2026-03-10T08:54:17.710Z",
+          "timestamp": "2026-03-11T10:25:33.517Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-10T08:54:17.710Z"
+            "date": "2026-03-11T10:25:33.517Z"
           }
         },
         {

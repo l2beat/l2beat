@@ -5,10 +5,11 @@ import { UsdValue } from '../../../../components/UsdValue'
 import { GlossaryTooltip } from '../../../../components/GlossaryTooltip'
 import { generateAdminNarrative } from '../../../../utils/narrative'
 import { formatUsdValue } from '../../../../utils/format'
-import type {
-  CompiledReview,
-  CompiledAdmin,
-  CompiledAdminFunction,
+import {
+  displayMitigationValue,
+  type CompiledReview,
+  type CompiledAdmin,
+  type CompiledAdminFunction,
 } from '../../../../types'
 
 interface AdminCardsProps {
@@ -391,17 +392,23 @@ function FunctionDetail({ fn }: { fn: CompiledAdminFunction }) {
               )}
               {m.type === 'valueRange' && (
                 <>
-                  Range: {m.valueRange?.min !== undefined && m.valueRange.min}
+                  Range:{' '}
+                  {m.valueRange?.min !== undefined &&
+                    displayMitigationValue(m.valueRange.min)}
                   {m.valueRange?.min !== undefined &&
                     m.valueRange?.max !== undefined &&
                     '–'}
-                  {m.valueRange?.max !== undefined && m.valueRange.max}
+                  {m.valueRange?.max !== undefined &&
+                    displayMitigationValue(m.valueRange.max)}
                   {m.valueRange?.unit && ` ${m.valueRange.unit}`}
                 </>
               )}
               {m.type === 'relativeValue' &&
                 m.relativeValue?.maxChangePercent !== undefined && (
-                  <>Max: {m.relativeValue.maxChangePercent}%</>
+                  <>
+                    Max: {displayMitigationValue(m.relativeValue.maxChangePercent)}
+                    %
+                  </>
                 )}
               {m.type === 'other' && <>{m.description}</>}
             </span>

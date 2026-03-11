@@ -90,6 +90,9 @@
             "value": "500000000000000000"
           },
           "description": "Maximum fee (50%, represented as 0.5e18)"
+        },
+        "fee": {
+          "severity": "HIGH"
         }
       },
       "ignoreInWatchMode": ["totalAssets", "totalSupply", "lastTotalAssets"]

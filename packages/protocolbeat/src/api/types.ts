@@ -16,6 +16,25 @@ export type Impact = 'critical'
 // Mitigation types for permissioned functions
 export type MitigationType = 'delay' | 'valueRange' | 'relativeValue' | 'other'
 
+// A mitigation value can be either a hardcoded literal or a reference to a contract field
+export interface MitigationValue {
+  mode: 'hardcoded' | 'fieldRef'
+  // For 'hardcoded': the literal string value
+  value?: string
+  // For 'fieldRef': path expression using same format as owner definitions
+  // e.g., "$self.maxBorrowRate", "@configurator.supplyCapLimit"
+  fieldPath?: string
+}
+
+// Backward compat: old mitigations stored min/max/% as plain strings
+export function normalizeMitigationValue(
+  val: string | MitigationValue | undefined,
+): MitigationValue | undefined {
+  if (val === undefined) return undefined
+  if (typeof val === 'string') return { mode: 'hardcoded', value: val }
+  return val
+}
+
 export interface Mitigation {
   type: MitigationType
   description: string
@@ -23,10 +42,12 @@ export interface Mitigation {
   delayRef?: { contractAddress: string; fieldName: string }
   // For 'delay': resolved value in seconds (populated by v2-score API)
   delaySeconds?: number
-  // For 'valueRange': MIN/MAX bounds
-  valueRange?: { min?: string; max?: string; unit?: string }
+  // For 'valueRange': MIN/MAX bounds (MitigationValue supports hardcoded or field ref)
+  valueRange?: { min?: MitigationValue; max?: MitigationValue; unit?: string }
   // For 'relativeValue': percentage of change limit
-  relativeValue?: { maxChangePercent?: string }
+  relativeValue?: { maxChangePercent?: MitigationValue }
+  // Which contract field this mitigation constrains (triggers auto HIGH severity)
+  mitigatedField?: { contractAddress: string; fieldName: string }
 }
 
 // Function detail for scoring breakdown

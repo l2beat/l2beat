@@ -178,3 +178,11 @@
   - In `functions.json`, the field is called `score` with values: `'unscored' | 'critical'`
   - **TypeScript types** use `Impact = 'critical'` (single-value type)
   - Impact is displayed as a static label in V2 scoring, toggled via binary switch in the Values panel
+- **Mitigations**: Each function can have `mitigations[]` in `functions.json`. Each mitigation has:
+  - `type`: `'valueRange'` (MIN/MAX), `'relativeValue'` (% change), or `'other'`
+  - `description`: Human-readable explanation of the constraint
+  - `valueRange.min/max` and `relativeValue.maxChangePercent`: Use `MitigationValue` type — either `{ mode: 'hardcoded', value: string }` or `{ mode: 'fieldRef', fieldPath: string }` (same path syntax as owner definitions)
+  - `mitigatedField`: Optional `{ contractAddress, fieldName }` — links the mitigation to a specific contract field. When set, `configSeverity.ts` auto-writes `severity: "HIGH"` to `config.jsonc` so the monitoring service sends priority Discord alerts on field changes
+  - **Backend**: `configSeverity.ts` — `ensureFieldSeverity()` validates field exists in `discovered.json` before writing; `removeFieldSeverityIfAutoOnly()` cleans up when mitigated field is unlinked (only removes severity if no other field config properties exist)
+  - **Frontend**: `resolveFieldValue()` in `ownerResolution.ts` resolves field-referenced values at display time
+  - **Backward compat**: `normalizeMitigationValue()` converts old plain-string values to `MitigationValue` objects

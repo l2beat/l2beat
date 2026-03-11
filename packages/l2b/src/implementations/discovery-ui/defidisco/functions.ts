@@ -6,6 +6,10 @@ import {
   isChainAddress,
   normalizeChainAddress,
 } from './addressUtils'
+import {
+  ensureFieldSeverity,
+  removeFieldSeverityIfAutoOnly,
+} from './configSeverity'
 import { DiscoveredDataAccess, resolvePathExpression } from './ownerResolution'
 import type {
   ApiFunctionsResponse,
@@ -13,6 +17,7 @@ import type {
   ContractFunctions,
   FunctionComment,
   FunctionEntry,
+  Mitigation,
   OwnerDefinition,
 } from './types'
 
@@ -242,6 +247,16 @@ export function updateFunction(
 
   // Write updated data
   fs.writeFileSync(functionsPath, JSON.stringify(updatedData, null, 2))
+
+  // Auto-severity: manage HIGH severity in config.jsonc for mitigated fields
+  if (updateRequest.mitigations !== undefined) {
+    manageMitigatedFieldSeverity(
+      paths,
+      project,
+      existingFunction?.mitigations ?? [],
+      newFunction.mitigations ?? [],
+    )
+  }
 }
 
 export function deleteContractFunctions(
@@ -712,6 +727,52 @@ export function resolveDelayFromDiscovered(
       seconds: 0,
       isResolved: false,
       error: 'Failed to parse discovered.json',
+    }
+  }
+}
+
+/**
+ * Manages HIGH severity in config.jsonc based on mitigatedField changes.
+ * Adds severity for newly linked fields, removes for unlinked fields (if auto-only).
+ */
+function manageMitigatedFieldSeverity(
+  paths: DiscoveryPaths,
+  project: string,
+  oldMitigations: Mitigation[],
+  newMitigations: Mitigation[],
+): void {
+  const toKey = (m: Mitigation) =>
+    m.mitigatedField
+      ? `${normalizeChainAddress(m.mitigatedField.contractAddress)}::${m.mitigatedField.fieldName}`
+      : null
+
+  const oldFields = new Set(
+    oldMitigations.map(toKey).filter((k): k is string => k !== null),
+  )
+  const newFields = new Set(
+    newMitigations.map(toKey).filter((k): k is string => k !== null),
+  )
+
+  // Add severity for newly linked fields (skip already-linked ones)
+  for (const key of newFields) {
+    if (oldFields.has(key)) continue
+    const [addr, field] = key.split('::') as [string, string]
+    try {
+      ensureFieldSeverity(paths, project, addr, field, 'HIGH')
+    } catch (error) {
+      console.error(`Failed to set severity for ${addr}.${field}:`, error)
+    }
+  }
+
+  // Remove severity for fields that were unlinked
+  for (const key of oldFields) {
+    if (!newFields.has(key)) {
+      const [addr, field] = key.split('::') as [string, string]
+      try {
+        removeFieldSeverityIfAutoOnly(paths, project, addr, field)
+      } catch (error) {
+        console.error(`Failed to remove severity for ${addr}.${field}:`, error)
+      }
     }
   }
 }
