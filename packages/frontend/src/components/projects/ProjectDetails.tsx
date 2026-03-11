@@ -8,6 +8,7 @@ import { DataPostedSection } from './sections/data-posted/DataPostedSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { InteropTokensSection } from './sections/interop/InteropTokensSection'
+import { InteropTransfersSection } from './sections/interop/InteropTransfersSection'
 import { InteropVolumeSection } from './sections/interop/InteropVolumeSection'
 import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
 import { LivenessSection } from './sections/LivenessSection'
@@ -202,6 +203,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'InteropTokensSection':
             return (
               <InteropTokensSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'InteropTransfersSection':
+            return (
+              <InteropTransfersSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
