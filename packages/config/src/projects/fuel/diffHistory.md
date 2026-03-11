@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5806c7a9f5392c9c0067c288a4d0b7de510a84de
+
+# Diff at Wed, 11 Mar 2026 13:06:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fade2c5e24fed41bc60645f0e28f64c1f000aa1c block: 1767971446
+- current timestamp: 1773234316
+
+## Description
+
+FuelChainState contract paused for scheduled canonical bridge maintenance (withdrawals paused). See https://forum.fuel.network/t/canonical-bridge-withdrawals-paused-for-maintenance/9707
+
+## Watched changes
+
+```diff
+    contract FuelChainState (eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x0216b08c27dde8dfd308491a9017f4d96b304287
 
 # Diff at Fri, 09 Jan 2026 15:11:53 GMT:
