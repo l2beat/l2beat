@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-04T12:51:18.861Z",
+  "lastModified": "2026-03-10T11:20:49.182Z",
   "contracts": {
     "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007": {
       "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
@@ -180,8 +180,8 @@
           "resolvedAddress": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
           "resolvedContractName": "LUSD Stablecoin Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 90,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -466,8 +466,8 @@
           "resolvedAddress": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
           "resolvedContractName": "LUSD Stablecoin Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 90,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -974,8 +974,8 @@
           "resolvedAddress": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
           "resolvedContractName": "LUSD Stablecoin Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 90,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -1301,6 +1301,30 @@
           "isViewCall": false
         },
         {
+          "callerFunction": "openTrove",
+          "storageVariable": "REF_62",
+          "interfaceType": "IActivePool",
+          "calledFunction": "increaseLUSDDebt",
+          "resolvedAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+          "resolvedContractName": "ActivePool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "openTrove",
+          "storageVariable": "REF_63",
+          "interfaceType": "ILUSDToken",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+          "resolvedContractName": "LUSD Stablecoin Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
           "callerFunction": "repayLUSD",
           "storageVariable": "priceFeed",
           "interfaceType": "IPriceFeed",
@@ -1474,8 +1498,8 @@
           "resolvedAddress": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
           "resolvedContractName": "LUSD Stablecoin Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 90,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -1760,8 +1784,8 @@
           "resolvedAddress": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
           "resolvedContractName": "LUSD Stablecoin Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 90,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -2046,8 +2070,8 @@
           "resolvedAddress": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
           "resolvedContractName": "LUSD Stablecoin Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 90,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -2159,13 +2183,13 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.825Z"
+      "generatedAt": "2026-03-10T11:20:49.120Z"
     },
     "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521": {
       "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
       "name": "CollSurplusPool",
       "externalCalls": [],
-      "generatedAt": "2026-03-04T12:51:18.827Z"
+      "generatedAt": "2026-03-10T11:20:49.123Z"
     },
     "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De": {
       "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
@@ -2242,7 +2266,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.829Z"
+      "generatedAt": "2026-03-10T11:20:49.126Z"
     },
     "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d": {
       "address": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
@@ -2289,13 +2313,13 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.831Z"
+      "generatedAt": "2026-03-10T11:20:49.129Z"
     },
     "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0": {
       "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
       "name": "LUSD Stablecoin Token",
       "externalCalls": [],
-      "generatedAt": "2026-03-04T12:51:18.833Z"
+      "generatedAt": "2026-03-10T11:20:49.133Z"
     },
     "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb": {
       "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
@@ -2528,7 +2552,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.836Z"
+      "generatedAt": "2026-03-10T11:20:49.138Z"
     },
     "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D": {
       "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
@@ -2543,13 +2567,13 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.837Z"
+      "generatedAt": "2026-03-10T11:20:49.142Z"
     },
     "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C": {
       "address": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
       "name": "DefaultPool",
       "externalCalls": [],
-      "generatedAt": "2026-03-04T12:51:18.839Z"
+      "generatedAt": "2026-03-10T11:20:49.145Z"
     },
     "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6": {
       "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
@@ -2612,13 +2636,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.842Z"
+      "generatedAt": "2026-03-10T11:20:49.148Z"
     },
     "eth:0x9555b042F969E561855e5F28cB1230819149A8d9": {
       "address": "eth:0x9555b042F969E561855e5F28cB1230819149A8d9",
       "name": "GasPool",
       "externalCalls": [],
-      "generatedAt": "2026-03-04T12:51:18.843Z"
+      "generatedAt": "2026-03-10T11:20:49.149Z"
     },
     "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2": {
       "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
@@ -2748,6 +2772,54 @@
         },
         {
           "callerFunction": "batchLiquidateTroves",
+          "storageVariable": "activePoolCached",
+          "interfaceType": "IActivePool",
+          "calledFunction": "getLUSDDebt",
+          "resolvedAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+          "resolvedContractName": "ActivePool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "variable-chain",
+          "resolutionConfidence": 100,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "batchLiquidateTroves",
+          "storageVariable": "defaultPoolCached",
+          "interfaceType": "IDefaultPool",
+          "calledFunction": "getLUSDDebt",
+          "resolvedAddress": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
+          "resolvedContractName": "DefaultPool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "variable-chain",
+          "resolutionConfidence": 100,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "batchLiquidateTroves",
+          "storageVariable": "activePoolCached",
+          "interfaceType": "IActivePool",
+          "calledFunction": "getETH",
+          "resolvedAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+          "resolvedContractName": "ActivePool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "variable-chain",
+          "resolutionConfidence": 100,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "batchLiquidateTroves",
+          "storageVariable": "defaultPoolCached",
+          "interfaceType": "IDefaultPool",
+          "calledFunction": "getETH",
+          "resolvedAddress": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
+          "resolvedContractName": "DefaultPool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "variable-chain",
+          "resolutionConfidence": 100,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "batchLiquidateTroves",
           "storageVariable": "collSurplusPool",
           "interfaceType": "ICollSurplusPool",
           "calledFunction": "accountSurplus",
@@ -2837,18 +2909,6 @@
           "resolutionHeuristic": "variable-chain",
           "resolutionConfidence": 100,
           "isViewCall": false
-        },
-        {
-          "callerFunction": "batchLiquidateTroves",
-          "storageVariable": "activePoolCached",
-          "interfaceType": "IActivePool",
-          "calledFunction": "getETH",
-          "resolvedAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-          "resolvedContractName": "ActivePool",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "variable-chain",
-          "resolutionConfidence": 100,
-          "isViewCall": true
         },
         {
           "callerFunction": "batchLiquidateTroves",
@@ -3088,6 +3148,54 @@
         },
         {
           "callerFunction": "liquidate",
+          "storageVariable": "activePoolCached",
+          "interfaceType": "IActivePool",
+          "calledFunction": "getLUSDDebt",
+          "resolvedAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+          "resolvedContractName": "ActivePool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "variable-chain",
+          "resolutionConfidence": 100,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "liquidate",
+          "storageVariable": "defaultPoolCached",
+          "interfaceType": "IDefaultPool",
+          "calledFunction": "getLUSDDebt",
+          "resolvedAddress": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
+          "resolvedContractName": "DefaultPool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "variable-chain",
+          "resolutionConfidence": 100,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "liquidate",
+          "storageVariable": "activePoolCached",
+          "interfaceType": "IActivePool",
+          "calledFunction": "getETH",
+          "resolvedAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
+          "resolvedContractName": "ActivePool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "variable-chain",
+          "resolutionConfidence": 100,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "liquidate",
+          "storageVariable": "defaultPoolCached",
+          "interfaceType": "IDefaultPool",
+          "calledFunction": "getETH",
+          "resolvedAddress": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
+          "resolvedContractName": "DefaultPool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "variable-chain",
+          "resolutionConfidence": 100,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "liquidate",
           "storageVariable": "collSurplusPool",
           "interfaceType": "ICollSurplusPool",
           "calledFunction": "accountSurplus",
@@ -3177,18 +3285,6 @@
           "resolutionHeuristic": "variable-chain",
           "resolutionConfidence": 100,
           "isViewCall": false
-        },
-        {
-          "callerFunction": "liquidate",
-          "storageVariable": "activePoolCached",
-          "interfaceType": "IActivePool",
-          "calledFunction": "getETH",
-          "resolvedAddress": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-          "resolvedContractName": "ActivePool",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "variable-chain",
-          "resolutionConfidence": 100,
-          "isViewCall": true
         },
         {
           "callerFunction": "liquidate",
@@ -3793,7 +3889,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.849Z"
+      "generatedAt": "2026-03-10T11:20:49.165Z"
     },
     "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C": {
       "address": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
@@ -3804,45 +3900,25 @@
           "storageVariable": "TMP_433",
           "interfaceType": "ISignatureValidator",
           "calledFunction": "isValidSignature",
-          "resolvedAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+          "resolvedAddress": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
           "resolvedContractName": "GnosisSafe",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-              "contractName": "GnosisSafe"
-            },
-            {
-              "address": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
-              "contractName": "GnosisSafe"
-            }
-          ]
+          "resolutionConfidence": 99
         },
         {
           "callerFunction": "isValidSignature",
           "storageVariable": "TMP_433",
           "interfaceType": "ISignatureValidator",
           "calledFunction": "isValidSignature",
-          "resolvedAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+          "resolvedAddress": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
           "resolvedContractName": "GnosisSafe",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-              "contractName": "GnosisSafe"
-            },
-            {
-              "address": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
-              "contractName": "GnosisSafe"
-            }
-          ]
+          "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.850Z"
+      "generatedAt": "2026-03-10T11:20:49.167Z"
     },
     "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816": {
       "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
@@ -3869,13 +3945,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.852Z"
+      "generatedAt": "2026-03-10T11:20:49.170Z"
     },
     "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F": {
       "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
       "name": "ActivePool",
       "externalCalls": [],
-      "generatedAt": "2026-03-04T12:51:18.854Z"
+      "generatedAt": "2026-03-10T11:20:49.172Z"
     },
     "eth:0xE84251b93D9524E0d2e621Ba7dc7cb3579F997C0": {
       "address": "eth:0xE84251b93D9524E0d2e621Ba7dc7cb3579F997C0",
@@ -4036,7 +4112,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.856Z"
+      "generatedAt": "2026-03-10T11:20:49.176Z"
     },
     "eth:0xFc92d0E9Fa35df17E3A6d9F40716ca2cE749922B": {
       "address": "eth:0xFc92d0E9Fa35df17E3A6d9F40716ca2cE749922B",
@@ -4113,7 +4189,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-04T12:51:18.861Z"
+      "generatedAt": "2026-03-10T11:20:49.181Z"
     }
   }
 }

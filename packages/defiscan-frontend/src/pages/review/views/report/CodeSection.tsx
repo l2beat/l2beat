@@ -104,6 +104,24 @@ function GlobeIcon({ className }: { className?: string }) {
   )
 }
 
+function ClockIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
+  )
+}
+
 function LensIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -201,6 +219,14 @@ export function CodeSection({ review }: CodeSectionProps) {
     <div className="space-y-6">
       {/* Quick links row — icon pills for socials, docs, source, lens */}
       <div className="flex flex-wrap gap-2">
+        {websites.map((r, i) => (
+          <QuickLinkPill
+            key={`web-${i}`}
+            href={r.url}
+            icon={<GlobeIcon className="h-4 w-4" />}
+            label={r.label || displayDomain(r.url)}
+          />
+        ))}
         {github.map((r, i) => (
           <QuickLinkPill
             key={`gh-${i}`}
@@ -242,34 +268,11 @@ export function CodeSection({ review }: CodeSectionProps) {
         </ExternalLink>
       </div>
 
-      {/* Websites */}
-      {websites.length > 0 && (
-        <div>
-          <h3 className="mb-3 font-semibold text-sm text-text-primary">
-            Websites
-          </h3>
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-            {websites.map((r, i) => (
-              <ExternalLink
-                key={i}
-                href={r.url}
-                className="group flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 transition-colors hover:shadow-sm"
-              >
-                <GlobeIcon className="h-4 w-4 shrink-0" />
-                <span className="min-w-0 flex-1 truncate font-medium text-sm">
-                  {r.label || displayDomain(r.url)}
-                </span>
-              </ExternalLink>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Frontends — card grid */}
+      {/* Apps — card grid */}
       {frontends.length > 0 && (
         <div>
           <h3 className="mb-3 font-semibold text-sm text-text-primary">
-            Frontends
+            Apps
           </h3>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {frontends.map((r, i) => (
@@ -298,10 +301,11 @@ export function CodeSection({ review }: CodeSectionProps) {
         </div>
       )}
 
-      {/* Last updated info */}
-      <div className="border-border border-t pt-3">
-        <div className="flex items-center gap-2 text-sm text-text-muted">
-          <span className="font-medium text-text-secondary">Last updated</span>
+      {/* Last updated — info field row */}
+      <div className="flex flex-wrap gap-2">
+        <div className="inline-flex items-center gap-2 rounded-lg border border-border bg-white px-3.5 py-2 text-sm text-text-secondary shadow-sm">
+          <ClockIcon className="h-4 w-4" />
+          <span className="font-medium">Last updated</span>
           <span>
             {new Date(review.compiledAt).toLocaleString('en-US', {
               year: 'numeric',
@@ -309,7 +313,7 @@ export function CodeSection({ review }: CodeSectionProps) {
               day: 'numeric',
             })}
           </span>
-          <span className="text-text-muted/60">
+          <span className="text-text-muted">
             ({timeAgo(review.compiledAt)})
           </span>
         </div>

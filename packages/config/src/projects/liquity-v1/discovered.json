@@ -1,59 +1,18 @@
 {
   "name": "liquity-v1",
   "timestamp": 1772453602,
-  "configHash": "0xf1984ac6c4189e203af8f556f97fd963ac798e7226693eeeb4d1e67a31ae446e",
+  "configHash": "0xebc80882fdb65cd2a390e449bae46bf4bdfe09959ac207c5eef2de0a782718d3",
   "entries": [
-    {
-      "name": "GnosisSafe",
-      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1603266672,
-      "sinceBlock": 11098253,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-        "$members": [
-          "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
-          "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",
-          "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
-          "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
-          "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
-          "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
-          "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
-          "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
-          "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d"
-        ],
-        "$threshold": 4,
-        "domainSeparator": "0xd1762de5ed4ca058936e50abe6269afdebb65650fe4d14f406c321a5be38e3c8",
-        "getModules": ["eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b"],
-        "GnosisSafe_modules": [
-          "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b"
-        ],
-        "multisigThreshold": "4 of 9 (44%)",
-        "NAME": "Gnosis Safe",
-        "nonce": 2065,
-        "VERSION": "1.1.1"
-      },
-      "implementationNames": {
-        "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": "Proxy",
-        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
-      }
-    },
     {
       "name": "BorrowerOperations",
       "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
       "type": "Contract",
+      "template": "liquity-v2/BorrowerOperations",
       "sourceHashes": [
         "0x3c68132ab520759c42c3104d7483ac017b19b1191517436816f51ce4108910d2"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["getEntireSystemColl", "getEntireSystemDebt"],
       "sinceTimestamp": 1617611189,
       "sinceBlock": 12178582,
       "values": {
@@ -64,15 +23,6 @@
         "CCR": "1500000000000000000",
         "DECIMAL_PRECISION": "1000000000000000000",
         "defaultPool": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
-        "getCompositeDebt": [
-          "200000000000000000000",
-          "200000000000000000001",
-          "200000000000000000002",
-          "200000000000000000003",
-          "200000000000000000004"
-        ],
-        "getEntireSystemColl": "77488366898405683285253",
-        "getEntireSystemDebt": "30769488242648096976632102",
         "isOwner": false,
         "lqtyStaking": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
         "lqtyStakingAddress": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
@@ -87,7 +37,6 @@
         "sortedTroves": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
         "troveManager": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2"
       },
-      "errors": { "getCompositeDebt": "Processing error occurred." },
       "implementationNames": {
         "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007": "BorrowerOperations"
       }
@@ -100,6 +49,7 @@
         "0xc2a950b31e67028159223dfdf3235de6bd4a9adab016009975e4ea90afb4f055"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["getETH"],
       "sinceTimestamp": 1617611161,
       "sinceBlock": 12178578,
       "values": {
@@ -117,47 +67,6 @@
       }
     },
     {
-      "name": "Chainlink LUSD/USD Price Feed",
-      "address": "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x056d4c6b4a8b2539822536f963ddff40d7327819b0a088b558d678ba5f38e984"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1629149569,
-      "sinceBlock": 13038711,
-      "values": {
-        "$immutable": true,
-        "accessController": "eth:0x0000000000000000000000000000000000000000",
-        "decimals": 8,
-        "description": "LUSD / USD",
-        "getAnswer": [0, 0, 0, 0, 0],
-        "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 101526570,
-        "latestRound": "36893488147419110730",
-        "latestRoundData": {
-          "roundId": "36893488147419110730",
-          "answer": 101526570,
-          "startedAt": 1772387032,
-          "updatedAt": 1772387051,
-          "answeredInRound": "36893488147419110730"
-        },
-        "latestTimestamp": 1772387051,
-        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-        "phaseId": 2,
-        "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
-        "version": 6
-      },
-      "errors": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
-      },
-      "implementationNames": {
-        "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0": "EACAggregatorProxy"
-      }
-    },
-    {
       "name": "PriceFeed",
       "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
       "type": "Contract",
@@ -165,6 +74,7 @@
         "0x4117def79066ad76ff6a6dff5c00754f816d3b310d70af492738456db9fe0800"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["lastGoodPrice"],
       "sinceTimestamp": 1617610823,
       "sinceBlock": 12178551,
       "values": {
@@ -196,6 +106,7 @@
         "0xd8c1374deb23a98d5b621f8474f18d95009165158596c7338f16a3719a0c1dcd"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["F_ETH", "F_LUSD", "totalLQTYStaked"],
       "sinceTimestamp": 1617611481,
       "sinceBlock": 12178607,
       "values": {
@@ -234,27 +145,10 @@
         "aggregator": "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5",
         "decimals": 8,
         "description": "ETH / USD",
-        "getAnswer": [0, 0, 0, 0, 0],
-        "getTimestamp": [0, 0, 0, 0, 0],
-        "latestAnswer": 195381863000,
-        "latestRound": "129127208515966887569",
-        "latestRoundData": {
-          "roundId": "129127208515966887569",
-          "answer": 195381863000,
-          "startedAt": 1772451999,
-          "updatedAt": 1772452019,
-          "answeredInRound": "129127208515966887569"
-        },
-        "latestTimestamp": 1772452019,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 7,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
         "version": 6
-      },
-      "errors": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "EACAggregatorProxy"
@@ -268,6 +162,7 @@
         "0x661dca742b39fe8c4265e0ec96c7ee0d958dc3d341cd6f18552ed8a6940d9b4e"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1617611299,
       "sinceBlock": 12178594,
       "values": {
@@ -295,6 +190,14 @@
         "0x98b8604de4b60664e38f64b0bcd7464a5097cfd06024016bd644a119d466a1c2"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "getETH",
+        "getTotalLUSDDeposits",
+        "lastETHError_Offset",
+        "lastLQTYError",
+        "lastLUSDLossError_Offset",
+        "P"
+      ],
       "sinceTimestamp": 1617611020,
       "sinceBlock": 12178565,
       "values": {
@@ -368,117 +271,6 @@
       }
     },
     {
-      "name": "Tellor Tributes Token",
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf4a810ae36a4153cb37ffc28be9874ec4b39f3221b006876104ab914b2ae800f",
-        "0xfee67b0540b9cb199cdaafcb59da18256cfe5b61cf94bd528960cc33552f3f17"
-      ],
-      "proxyType": "ZeppelinOS proxy",
-      "sinceTimestamp": 1613850551,
-      "sinceBlock": 11895800,
-      "values": {
-        "$admin": [],
-        "$immutable": true,
-        "$implementation": "eth:0xD3b9A1DCAbd16c482785Fd4265cB4580B84cdeD7",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "currentMiners": [
-          [2, "eth:0x0000000000000000000000000000000000000000"],
-          [1, "eth:0x0000000000000000000000000000000000000000"],
-          [5, "eth:0x0000000000000000000000000000000000000000"],
-          [3, "eth:0x0000000000000000000000000000000000000000"],
-          [10, "eth:0x0000000000000000000000000000000000000000"]
-        ],
-        "decimals": 18,
-        "disputesById": [
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0,
-            false,
-            false,
-            false,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0xcefd7c5b8e9e7401f0aa17d25979f52b885b690dae9372240d25d045df1c3952",
-            "-78981907738017321593073",
-            true,
-            false,
-            false,
-            "eth:0x260260c3B1AFF1ED9E45e355Ff4D05BEEdD5efeb",
-            "eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E",
-            "eth:0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0xedcb1355296870fb613b2d82f80268a7d1c720bd3a05095fe8883588019ae199",
-            "78981907738017321593073",
-            true,
-            true,
-            false,
-            "eth:0x13cE2ABB82D2484F7aC55a02dd0f5c5e4dd6B5Fa",
-            "eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E",
-            "eth:0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0xe605304535a755840e17560f3fb8f2d8dc2bd22664b792bbdccadbba7abf125b",
-            "78983199404683988259739",
-            true,
-            true,
-            false,
-            "eth:0x90cdBBb44143b87883287589c29Eb869FC906E91",
-            "eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E",
-            "eth:0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x28cd3cec79a427f834edcc3466bdc28f654475265491df388580dc5d1e32f301",
-            "-78983199404683988259739",
-            true,
-            false,
-            false,
-            "eth:0x7034E17f11b382545FFd618620Ca72e271AEa5F6",
-            "eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E",
-            "eth:0x0000000000000000000000000000000000000000"
-          ]
-        ],
-        "getLastNewValueById": [
-          [0, false],
-          [1948219999, true],
-          [0, false],
-          [0, false],
-          [0, false]
-        ],
-        "getNewCurrentVariables": {
-          "_c": "0xf3f9a3bc109661a79f8efed6289fe6bc82e41ba34b785ae085ec14d32b0b34c8",
-          "_r": [1, 1, 1, 1, 1],
-          "_diff": 0,
-          "_tip": 0
-        },
-        "getNewValueCountbyRequestId": [0, 255429, 0, 0, 0],
-        "name": "Tellor Tributes",
-        "newValueTimestamps": [
-          1614021064, 1614031551, 1614098551, 1614118070, 1614119565
-        ],
-        "symbol": "TRB",
-        "totalSupply": "2833732369531244969761964",
-        "verify": 9999
-      },
-      "errors": {
-        "currentMiners": "Processing error occurred.",
-        "disputesById": "Processing error occurred.",
-        "getLastNewValueById": "Processing error occurred.",
-        "getNewValueCountbyRequestId": "Processing error occurred.",
-        "newValueTimestamps": "Processing error occurred."
-      },
-      "implementationNames": {
-        "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0": "TellorMaster",
-        "eth:0xD3b9A1DCAbd16c482785Fd4265cB4580B84cdeD7": "Tellor360"
-      }
-    },
-    {
       "name": "DefaultPool",
       "address": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
       "type": "Contract",
@@ -506,21 +298,17 @@
       "name": "SortedTroves",
       "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
       "type": "Contract",
+      "template": "liquity-v2/SortedTroves_all",
       "sourceHashes": [
         "0x80eced0895f40ebd46a3480f97794df96f0457b6aab692fad4f947d35f468398"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["getSize", "isEmpty", "isFull", "isOwner"],
       "sinceTimestamp": 1617610853,
       "sinceBlock": 12178554,
       "values": {
         "$immutable": true,
         "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-        "data": {
-          "head": "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c",
-          "tail": "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687",
-          "maxSize": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "size": 105
-        },
         "getMaxSize": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "getSize": 105,
         "isEmpty": false,
@@ -553,10 +341,26 @@
       "name": "TroveManager",
       "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
       "type": "Contract",
+      "template": "liquity-v2/TroveManager_all",
       "sourceHashes": [
         "0x412792126fd1350719ab48a6ad14d761d102baa8431f212b8b2e1c279fc742b6"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "baseRate",
+        "getEntireSystemColl",
+        "getEntireSystemDebt",
+        "totalCollateralSnapshot",
+        "totalStakes",
+        "totalStakesSnapshot",
+        "MINUTE_DECAY_FACTOR",
+        "lastFeeOperationTime",
+        "getTroveOwnersCount",
+        "getBorrowingRate",
+        "getBorrowingRateWithDecay",
+        "getRedemptionRate",
+        "getRedemptionRateWithDecay"
+      ],
       "sinceTimestamp": 1617610896,
       "sinceBlock": 12178557,
       "values": {
@@ -569,19 +373,14 @@
         "borrowerOperationsAddress": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
         "BORROWING_FEE_FLOOR": 5000000000000000,
         "CCR": "1500000000000000000",
-        "checkRecoveryMode": [true, true, true, true, true],
         "DECIMAL_PRECISION": "1000000000000000000",
         "defaultPool": "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C",
-        "getBorrowingFee": [0, 0, 0, 0, 0],
-        "getBorrowingFeeWithDecay": [0, 0, 0, 0, 0],
         "getBorrowingRate": 5003327826668194,
         "getBorrowingRateWithDecay": 5001540575279477,
         "getEntireSystemColl": "77488366898405683285253",
         "getEntireSystemDebt": "30769488242648096976632102",
-        "getRedemptionFeeWithDecay": [0, 0, 0, 0],
         "getRedemptionRate": 5003327826668194,
         "getRedemptionRateWithDecay": 5001540575279477,
-        "getTCR": [0, 0, 0, 0, 0],
         "getTroveOwnersCount": 105,
         "isOwner": false,
         "L_ETH": 0,
@@ -609,12 +408,6 @@
         "totalStakes": "77488366898405683285253",
         "totalStakesSnapshot": "77898061772842602270572"
       },
-      "errors": {
-        "checkRecoveryMode": "Processing error occurred.",
-        "getBorrowingFee": "Processing error occurred.",
-        "getBorrowingFeeWithDecay": "Processing error occurred.",
-        "getTCR": "Processing error occurred."
-      },
       "implementationNames": {
         "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2": "TroveManager"
       }
@@ -627,6 +420,7 @@
         "0xb24c0391c41815e708f76e188c57a6cf80ac6584073cf567e7e791a4ae0501eb"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["getTellorCurrentValue"],
       "sinceTimestamp": 1617611268,
       "sinceBlock": 12178590,
       "values": {
@@ -686,6 +480,7 @@
         "0x660f90040fab58be29a08c6a298a1e85a44e476899d585eccab2366384a57abe"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalLQTYIssued"],
       "sinceTimestamp": 1617611537,
       "sinceBlock": 12178614,
       "values": {
@@ -707,11 +502,6 @@
       }
     },
     {
-      "address": "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ActivePool",
       "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
       "type": "Contract",
@@ -719,6 +509,7 @@
         "0x676451cf2cbcb8846fa323a43c34ffb7758ab07d6d4da11cc67666e322a2cb1b"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["getETH", "getLUSDDebt"],
       "sinceTimestamp": 1617610930,
       "sinceBlock": 12178562,
       "values": {
@@ -795,9 +586,6 @@
     }
   ],
   "abis": {
-    "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": [
-      "constructor(address _masterCopy)"
-    ],
     "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007": [
       "event ActivePoolAddressChanged(address _activePoolAddress)",
       "event CollSurplusPoolAddressChanged(address _collSurplusPoolAddress)",
@@ -909,36 +697,6 @@
       "function owner() view returns (address)",
       "function setAddresses(address _borrowerOperationsAddress, address _troveManagerAddress, address _activePoolAddress)",
       "function troveManagerAddress() view returns (address)"
-    ],
-    "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0": [
-      "constructor(address _aggregator, address _accessController)",
-      "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
-      "event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt)",
-      "event OwnershipTransferRequested(address indexed from, address indexed to)",
-      "event OwnershipTransferred(address indexed from, address indexed to)",
-      "function acceptOwnership()",
-      "function accessController() view returns (address)",
-      "function aggregator() view returns (address)",
-      "function confirmAggregator(address _aggregator)",
-      "function decimals() view returns (uint8)",
-      "function description() view returns (string)",
-      "function getAnswer(uint256 _roundId) view returns (int256)",
-      "function getRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
-      "function getTimestamp(uint256 _roundId) view returns (uint256)",
-      "function latestAnswer() view returns (int256)",
-      "function latestRound() view returns (uint256)",
-      "function latestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
-      "function latestTimestamp() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function phaseAggregators(uint16) view returns (address)",
-      "function phaseId() view returns (uint16)",
-      "function proposeAggregator(address _aggregator)",
-      "function proposedAggregator() view returns (address)",
-      "function proposedGetRoundData(uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
-      "function proposedLatestRoundData() view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
-      "function setController(address _accessController)",
-      "function transferOwnership(address _to)",
-      "function version() view returns (uint256)"
     ],
     "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De": [
       "event LastGoodPriceUpdated(uint256 _lastGoodPrice)",
@@ -1167,25 +925,6 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function version() view returns (string)"
     ],
-    "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0": [
-      "constructor(address _tContract, address _oTellor)",
-      "event NewTellorAddress(address _newTellor)",
-      "function _allowances(address, address) view returns (uint256)",
-      "function addresses(bytes32) view returns (address)",
-      "function balances(address, uint256) view returns (uint128 fromBlock, uint128 value)",
-      "function bytesVars(bytes32) view returns (bytes32)",
-      "function changeDeity(address _newDeity)",
-      "function changeOwner(address _newOwner)",
-      "function changeTellorContract(address _tContract)",
-      "function currentMiners(uint256) view returns (uint256 value, address miner)",
-      "function disputeIdByDisputeHash(bytes32) view returns (uint256)",
-      "function disputesById(uint256) view returns (bytes32 hash, int256 tally, bool executed, bool disputeVotePassed, bool isPropFork, address reportedMiner, address reportingParty, address proposedForkAddress)",
-      "function migrated(address) view returns (bool)",
-      "function minersByChallenge(bytes32, address) view returns (bool)",
-      "function newValueTimestamps(uint256) view returns (uint256)",
-      "function requestIdByQueryHash(bytes32) view returns (uint256)",
-      "function uints(bytes32) view returns (uint256)"
-    ],
     "eth:0x896a3F03176f05CFbb4f006BfCd8723F2B0D741C": [
       "event ActivePoolAddressChanged(address _newActivePoolAddress)",
       "event DefaultPoolAddressChanged(address _newDefaultPoolAddress)",
@@ -1349,52 +1088,6 @@
     "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C": [
       "constructor(address _masterCopy)"
     ],
-    "eth:0xD3b9A1DCAbd16c482785Fd4265cB4580B84cdeD7": [
-      "constructor(address _flexAddress)",
-      "event Approval(address indexed _owner, address indexed _spender, uint256 _value)",
-      "event NewOracleAddress(address _newOracle, uint256 _timestamp)",
-      "event NewProposedOracleAddress(address _newProposedOracle, uint256 _timestamp)",
-      "event Transfer(address indexed _from, address indexed _to, uint256 _value)",
-      "function _allowances(address, address) view returns (uint256)",
-      "function addresses(bytes32) view returns (address)",
-      "function allowance(address _user, address _spender) view returns (uint256)",
-      "function allowedToTrade(address _user, uint256 _amount) view returns (bool)",
-      "function approve(address _spender, uint256 _amount) returns (bool)",
-      "function balanceOf(address _user) view returns (uint256)",
-      "function balanceOfAt(address _user, uint256 _blockNumber) view returns (uint256)",
-      "function balances(address, uint256) view returns (uint128 fromBlock, uint128 value)",
-      "function bytesVars(bytes32) view returns (bytes32)",
-      "function currentMiners(uint256) view returns (uint256 value, address miner)",
-      "function decimals() pure returns (uint8)",
-      "function disputeIdByDisputeHash(bytes32) view returns (uint256)",
-      "function disputesById(uint256) view returns (bytes32 hash, int256 tally, bool executed, bool disputeVotePassed, bool isPropFork, address reportedMiner, address reportingParty, address proposedForkAddress)",
-      "function getAddressVars(bytes32 _data) view returns (address)",
-      "function getLastNewValueById(uint256 _requestId) view returns (uint256, bool)",
-      "function getNewCurrentVariables() view returns (bytes32 _c, uint256[5] _r, uint256 _diff, uint256 _tip)",
-      "function getNewValueCountbyRequestId(uint256 _requestId) view returns (uint256)",
-      "function getTimestampbyRequestIDandIndex(uint256 _requestId, uint256 _index) view returns (uint256)",
-      "function getUintVar(bytes32 _data) view returns (uint256)",
-      "function init()",
-      "function isMigrated(address _addy) view returns (bool)",
-      "function migrate()",
-      "function migrated(address) view returns (bool)",
-      "function minersByChallenge(bytes32, address) view returns (bool)",
-      "function mintToOracle()",
-      "function mintToTeam()",
-      "function name() pure returns (string)",
-      "function newValueTimestamps(uint256) view returns (uint256)",
-      "function requestIdByQueryHash(bytes32) view returns (uint256)",
-      "function retrieveData(uint256 _requestId, uint256 _timestamp) view returns (uint256)",
-      "function symbol() pure returns (string)",
-      "function teamTransferDisputedStake(address _from, address _to)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address _to, uint256 _amount) returns (bool success)",
-      "function transferFrom(address _from, address _to, uint256 _amount) returns (bool success)",
-      "function transferOutOfContract()",
-      "function uints(bytes32) view returns (uint256)",
-      "function updateOracleAddress()",
-      "function verify() pure returns (uint256)"
-    ],
     "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816": [
       "constructor()",
       "event LQTYTokenAddressSet(address _lqtyTokenAddress)",
@@ -1479,8 +1172,11 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "Steakhouse-USDC/EACAggregatorProxy": "0x0fad245964397030054e75ef253b2a8b949621a64216059a9930e224f87d6812"
+    "liquity-v2/BorrowerOperations": "0x1fdf9c7f1b0948bbeee91cc4f3924eb35004abed47eff61aef47b6e0a1a6d558",
+    "liquity-v2/SortedTroves_all": "0x7cf8e0c6a4795efd88036d319ed708e1474529d2b0d1439df2c519322c243e16",
+    "liquity-v2/TroveManager_all": "0x5f9ec16b9ba7d92fb18836c540310dd648c6ffb953a61fe31ddb3a2ac51a172f",
+    "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921"
   },
   "usedBlockNumbers": { "ethereum": 24569685 },
-  "permissionsConfigHash": "0x87ead70ce1db2f4ddf565458439e0b1b126e66af5103640f82753cff2637ea79"
+  "permissionsConfigHash": "0x726d49aa0832b7c4a72d3cf75e803b81705e103f430ff37486c5f4acc0606d71"
 }
