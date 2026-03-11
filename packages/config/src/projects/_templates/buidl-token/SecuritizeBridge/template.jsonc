@@ -1,7 +1,17 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "canActIndependently": false,
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
+    "wormholeRelayer": {
+      "permissions": [
+        {
+          "type": "act",
+          "role": ".minter",
+          "description": "Can mint bridged tokens through this bridge when delivering approved Wormhole messages."
+        }
+      ]
+    },
     "remoteBridge": { "handler": { "type": "securitizeRemoteBridge" } }
   }
 }

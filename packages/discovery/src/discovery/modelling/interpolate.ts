@@ -17,7 +17,7 @@ export function interpolateModelTemplate(
       const toLower = lower !== undefined
       const quote = _quote !== undefined
       const orNil = _orNil !== undefined
-      const value = values[key]
+      const value = getInterpolatedValue(values, key)
       if (value === undefined) {
         if (orNil) {
           return 'nil'
@@ -81,6 +81,37 @@ export function tryCastingToName(
 
 export function quoteEthereumAddress(value: string) {
   return ChainSpecificAddress.check(value) ? `"${value.toLowerCase()}"` : value
+}
+
+function getInterpolatedValue(
+  values: Record<string, ContractValue | undefined>,
+  key: string,
+): ContractValue | undefined {
+  const directValue = values[key]
+  if (directValue !== undefined) {
+    return directValue
+  }
+
+  const path = key.split('.')
+  const firstSegment = path[0]
+  if (firstSegment === undefined) {
+    return undefined
+  }
+
+  let current: ContractValue | undefined = values[firstSegment]
+  for (const segment of path.slice(1)) {
+    if (current === undefined) {
+      return undefined
+    }
+    if (Array.isArray(current)) {
+      return undefined
+    }
+    if (typeof current !== 'object') {
+      return undefined
+    }
+    current = current[segment]
+  }
+  return current
 }
 
 // Clingo ids need to start with a lowercase letter

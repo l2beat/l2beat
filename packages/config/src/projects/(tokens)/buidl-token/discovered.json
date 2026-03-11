@@ -13,12 +13,24 @@
         "0x00dba34a21126dfe2e252e8c827e72832bd932440f05e26bbb78e97b3d67475f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator"
         }
       ],
       "sinceTimestamp": 1730729701,
@@ -89,8 +101,152 @@
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+          "role": ".minter"
         }
       ]
     },
@@ -104,12 +260,18 @@
         "0xf4f1d2b6778d48fc434201ff4b4d2bcd0438766b791e8322fd4b765907b1ac1e"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729706,
@@ -285,6 +447,25 @@
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
       ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can mint bridged tokens through this bridge when delivering approved Wormhole messages.",
+          "role": ".minter"
+        }
+      ],
       "sinceTimestamp": 1686939272,
       "sinceBlock": 101833809,
       "values": {
@@ -337,12 +518,18 @@
         "0xe2f73f082a937bd6b85ef1e82f136964144c8b247cb592f141fb3928e1b296f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729705,
@@ -432,8 +619,152 @@
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+          "role": ".minter"
         }
       ]
     },
@@ -605,14 +936,6 @@
         "0x70cc4883f9ee03ac63ae57d6b84f6701e674230bef02ea51c2db71a0fc04fb80"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
-        }
-      ],
       "sinceTimestamp": 1730729699,
       "sinceBlock": 270969348,
       "values": {
@@ -941,8 +1264,63 @@
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -956,14 +1334,6 @@
         "0xaba73346557bd36dae486f8b1925b55987eba55e91551e73ad6578e64f1a393f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
-        }
-      ],
       "sinceTimestamp": 1730729704,
       "sinceBlock": 270969365,
       "values": {
@@ -1003,12 +1373,12 @@
         "0xd79a3cec0442a945713ce4b16e960ac0e4d360a3f9f03163d57996dd7e721a92"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729698,
@@ -1186,12 +1556,18 @@
         "0x4a95cca52f5993a4df0141bc526077f4023f9678f2bd0348f06577b699db0de4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn user-requested tokens before bridging them out.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730902569,
@@ -1321,8 +1697,116 @@
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
-          "role": ".masterRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can upgrade the token, update DS service addresses, and configure token features.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -1378,6 +1862,68 @@
           "permission": "upgrade",
           "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
           "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+          "role": ".minter"
         }
       ]
     },
@@ -1496,12 +2042,18 @@
         "0x8a14d3e5f09615e0edc1a75069ec58c31725171d7b68c02b49a87a16ebf8c6f4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729702,
@@ -1674,8 +2226,152 @@
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x15a3A35FBA367dc3a9ee81b664839A1bCbE7E680" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "avax:0x15a3A35FBA367dc3a9ee81b664839A1bCbE7E680",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xD39D4df31b8e8049c29Dc37BeB4b3a3A72Da6e3B",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -1689,12 +2385,12 @@
         "0xd79a3cec0442a945713ce4b16e960ac0e4d360a3f9f03163d57996dd7e721a92"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729548,
@@ -1786,12 +2482,18 @@
         "0x8a14d3e5f09615e0edc1a75069ec58c31725171d7b68c02b49a87a16ebf8c6f4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729560,
@@ -1884,6 +2586,25 @@
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
       ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can mint bridged tokens through this bridge when delivering approved Wormhole messages.",
+          "role": ".minter"
+        }
+      ],
       "sinceTimestamp": 1686939032,
       "sinceBlock": 31413937,
       "values": {
@@ -1936,12 +2657,18 @@
         "0xf4f1d2b6778d48fc434201ff4b4d2bcd0438766b791e8322fd4b765907b1ac1e"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729571,
@@ -2027,14 +2754,6 @@
         "0xaba73346557bd36dae486f8b1925b55987eba55e91551e73ad6578e64f1a393f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
-        }
-      ],
       "sinceTimestamp": 1730729562,
       "sinceBlock": 52649167,
       "values": {
@@ -2074,12 +2793,18 @@
         "0xe2f73f082a937bd6b85ef1e82f136964144c8b247cb592f141fb3928e1b296f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729569,
@@ -2401,8 +3126,152 @@
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x15a3A35FBA367dc3a9ee81b664839A1bCbE7E680" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "avax:0x15a3A35FBA367dc3a9ee81b664839A1bCbE7E680",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xD39D4df31b8e8049c29Dc37BeB4b3a3A72Da6e3B",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -2767,8 +3636,63 @@
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -2782,12 +3706,18 @@
         "0x4a95cca52f5993a4df0141bc526077f4023f9678f2bd0348f06577b699db0de4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn user-requested tokens before bridging them out.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730902233,
@@ -2836,14 +3766,6 @@
         "0x70cc4883f9ee03ac63ae57d6b84f6701e674230bef02ea51c2db71a0fc04fb80"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
-        }
-      ],
       "sinceTimestamp": 1730729554,
       "sinceBlock": 52649163,
       "values": {
@@ -2928,12 +3850,24 @@
         "0x00dba34a21126dfe2e252e8c827e72832bd932440f05e26bbb78e97b3d67475f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator"
         }
       ],
       "sinceTimestamp": 1730729556,
@@ -3005,8 +3939,116 @@
         {
           "permission": "interact",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
-          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
-          "role": ".masterRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x15a3A35FBA367dc3a9ee81b664839A1bCbE7E680" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can upgrade the token, update DS service addresses, and configure token features.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -3062,6 +4104,68 @@
           "permission": "upgrade",
           "from": "avax:0xf56720a7D78d13650cB497cc3a84d7eF1780D5F9",
           "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "avax:0x15a3A35FBA367dc3a9ee81b664839A1bCbE7E680",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xD39D4df31b8e8049c29Dc37BeB4b3a3A72Da6e3B",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -3199,8 +4303,140 @@
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "bnb:0x296B3fE25Cdb4AbB97ce02414697f5D15f601D28",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF76c116c9C8cDB0C137577C930A982dCd3f8D0D6",
+          "role": ".omnibusOperator"
         }
       ],
       "sinceTimestamp": 1761851844,
@@ -3247,8 +4483,140 @@
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "bnb:0x296B3fE25Cdb4AbB97ce02414697f5D15f601D28",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF76c116c9C8cDB0C137577C930A982dCd3f8D0D6",
+          "role": ".omnibusOperator"
         }
       ],
       "sinceTimestamp": 1761849120,
@@ -3518,14 +4886,6 @@
         "0x70cc4883f9ee03ac63ae57d6b84f6701e674230bef02ea51c2db71a0fc04fb80"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
-        }
-      ],
       "sinceTimestamp": 1759948169,
       "sinceBlock": 63931662,
       "values": {
@@ -3809,12 +5169,18 @@
         "0xe2f73f082a937bd6b85ef1e82f136964144c8b247cb592f141fb3928e1b296f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1759948202,
@@ -3904,8 +5270,152 @@
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "bnb:0x296B3fE25Cdb4AbB97ce02414697f5D15f601D28",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF76c116c9C8cDB0C137577C930A982dCd3f8D0D6",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -4071,12 +5581,18 @@
         "0xf4f1d2b6778d48fc434201ff4b4d2bcd0438766b791e8322fd4b765907b1ac1e"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1759948549,
@@ -4160,8 +5676,63 @@
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF76c116c9C8cDB0C137577C930A982dCd3f8D0D6",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -4175,12 +5746,18 @@
         "0x8a14d3e5f09615e0edc1a75069ec58c31725171d7b68c02b49a87a16ebf8c6f4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1759948185,
@@ -4271,8 +5848,152 @@
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "bnb:0x296B3fE25Cdb4AbB97ce02414697f5D15f601D28",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF76c116c9C8cDB0C137577C930A982dCd3f8D0D6",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -4480,8 +6201,116 @@
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
-          "role": ".masterRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can upgrade the token, update DS service addresses, and configure token features.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -4553,6 +6382,68 @@
           "from": "bnb:0xF76c116c9C8cDB0C137577C930A982dCd3f8D0D6",
           "role": "admin"
         }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "bnb:0x296B3fE25Cdb4AbB97ce02414697f5D15f601D28",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "bnb:0xF76c116c9C8cDB0C137577C930A982dCd3f8D0D6",
+          "role": ".omnibusOperator"
+        }
       ]
     },
     {
@@ -4570,12 +6461,24 @@
         "0x00dba34a21126dfe2e252e8c827e72832bd932440f05e26bbb78e97b3d67475f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator"
         }
       ],
       "sinceTimestamp": 1759948177,
@@ -4665,12 +6568,12 @@
         "0xd79a3cec0442a945713ce4b16e960ac0e4d360a3f9f03163d57996dd7e721a92"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1759948164,
@@ -4762,14 +6665,6 @@
         "0xaba73346557bd36dae486f8b1925b55987eba55e91551e73ad6578e64f1a393f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
-        }
-      ],
       "sinceTimestamp": 1759948193,
       "sinceBlock": 63931695,
       "values": {
@@ -5247,8 +7142,140 @@
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1761851507,
@@ -5480,12 +7507,30 @@
         "0xc448b2bacad0d3f5add1f61af4397da018f8d67898cbd5a017854b4705cfd08c"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn the configured source token during a class swap.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint the configured target token during a class swap.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
+          "description": "Can burn the configured source token during a class swap.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
+          "description": "Can mint the configured target token during a class swap.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1739217671,
@@ -5512,6 +7557,7 @@
         "targetServiceConsumer": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "errors": { "sourceWallets": "Processing error occurred." },
       "implementationNames": {
         "eth:0x1E5d83Ff1a6d32C53F25937664c53E9B57E37021": "ERC1967Proxy",
         "eth:0x6273dB5168094655625A1A3D5e776EF6351b4BE1": "DSTokenClassSwap"
@@ -5527,6 +7573,25 @@
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
       ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can mint bridged tokens through this bridge when delivering approved Wormhole messages.",
+          "role": ".minter"
+        }
+      ],
       "sinceTimestamp": 1686938183,
       "sinceBlock": 17494020,
       "values": {
@@ -5653,12 +7718,18 @@
         "0xf4f1d2b6778d48fc434201ff4b4d2bcd0438766b791e8322fd4b765907b1ac1e"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1734450047,
@@ -5931,8 +8002,152 @@
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
+          "role": ".minter"
         }
       ]
     },
@@ -5946,14 +8161,6 @@
         "0x70cc4883f9ee03ac63ae57d6b84f6701e674230bef02ea51c2db71a0fc04fb80"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
-        }
-      ],
       "sinceTimestamp": 1734449867,
       "sinceBlock": 21423199,
       "values": {
@@ -6110,12 +8317,18 @@
         "0xe2f73f082a937bd6b85ef1e82f136964144c8b247cb592f141fb3928e1b296f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1734450011,
@@ -6389,8 +8602,152 @@
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
+          "role": ".minter"
         }
       ]
     },
@@ -6559,14 +8916,6 @@
         "0xaba73346557bd36dae486f8b1925b55987eba55e91551e73ad6578e64f1a393f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
-        }
-      ],
       "sinceTimestamp": 1734449975,
       "sinceBlock": 21423208,
       "values": {
@@ -6660,8 +9009,63 @@
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -6794,6 +9198,20 @@
         "0x4a95cca52f5993a4df0141bc526077f4023f9678f2bd0348f06577b699db0de4"
       ],
       "proxyType": "EIP1967 proxy",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
+          "description": "Can burn user-requested tokens before bridging them out.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter"
+        }
+      ],
       "sinceTimestamp": 1730901803,
       "sinceBlock": 21129080,
       "values": {
@@ -6928,12 +9346,12 @@
         "0xd79a3cec0442a945713ce4b16e960ac0e4d360a3f9f03163d57996dd7e721a92"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1734449831,
@@ -7025,12 +9443,24 @@
         "0x00dba34a21126dfe2e252e8c827e72832bd932440f05e26bbb78e97b3d67475f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator"
         }
       ],
       "sinceTimestamp": 1734449903,
@@ -7102,8 +9532,116 @@
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
-          "role": ".masterRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can upgrade the token, update DS service addresses, and configure token features.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -7239,6 +9777,68 @@
           "permission": "upgrade",
           "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
           "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
+          "role": ".minter"
         }
       ]
     },
@@ -7423,12 +10023,30 @@
         "0xc448b2bacad0d3f5add1f61af4397da018f8d67898cbd5a017854b4705cfd08c"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn the configured source token during a class swap.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can mint the configured target token during a class swap.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
+          "description": "Can burn the configured source token during a class swap.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
+          "description": "Can mint the configured target token during a class swap.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1741636247,
@@ -7455,6 +10073,7 @@
         "targetServiceConsumer": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "errors": { "sourceWallets": "Processing error occurred." },
       "implementationNames": {
         "eth:0xFC4392dA2C4A3090431Fb87F4F7De63BC6885644": "ERC1967Proxy",
         "eth:0x550265c7301Ebca4AC7192Ee0B5f24a2bB4b4d44": "DSTokenClassSwap"
@@ -7470,12 +10089,18 @@
         "0x8a14d3e5f09615e0edc1a75069ec58c31725171d7b68c02b49a87a16ebf8c6f4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1734449939,
@@ -7585,6 +10210,25 @@
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
       ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can mint bridged tokens through this bridge when delivering approved Wormhole messages.",
+          "role": ".minter"
+        }
+      ],
       "sinceTimestamp": 1686938312,
       "sinceBlock": 43985499,
       "values": {
@@ -7822,8 +10466,152 @@
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
+          "role": ".minter"
         }
       ]
     },
@@ -7837,12 +10625,24 @@
         "0x00dba34a21126dfe2e252e8c827e72832bd932440f05e26bbb78e97b3d67475f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator"
         }
       ],
       "sinceTimestamp": 1730729598,
@@ -7932,14 +10732,6 @@
         "0x70cc4883f9ee03ac63ae57d6b84f6701e674230bef02ea51c2db71a0fc04fb80"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
-        }
-      ],
       "sinceTimestamp": 1730729536,
       "sinceBlock": 63877068,
       "values": {
@@ -8136,14 +10928,6 @@
         "0xaba73346557bd36dae486f8b1925b55987eba55e91551e73ad6578e64f1a393f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
-        }
-      ],
       "sinceTimestamp": 1730729638,
       "sinceBlock": 63877116,
       "values": {
@@ -8181,8 +10965,152 @@
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
+          "role": ".minter"
         }
       ]
     },
@@ -8196,12 +11124,18 @@
         "0xf4f1d2b6778d48fc434201ff4b4d2bcd0438766b791e8322fd4b765907b1ac1e"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729686,
@@ -8287,12 +11221,18 @@
         "0xe2f73f082a937bd6b85ef1e82f136964144c8b247cb592f141fb3928e1b296f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729650,
@@ -8476,8 +11416,63 @@
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
+          "role": ".burner"
         }
       ]
     },
@@ -8684,12 +11679,18 @@
         "0x4a95cca52f5993a4df0141bc526077f4023f9678f2bd0348f06577b699db0de4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn user-requested tokens before bridging them out.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730903112,
@@ -8738,12 +11739,12 @@
         "0xd79a3cec0442a945713ce4b16e960ac0e4d360a3f9f03163d57996dd7e721a92"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729524,
@@ -8834,8 +11835,116 @@
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
-          "role": ".masterRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can upgrade the token, update DS service addresses, and configure token features.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -8892,6 +12001,68 @@
           "from": "matic:0xE944D53eEd3Eb14753275506ea2E5C47E62F6385",
           "role": "admin"
         }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
+          "role": ".minter"
+        }
       ]
     },
     {
@@ -8904,12 +12075,18 @@
         "0x8a14d3e5f09615e0edc1a75069ec58c31725171d7b68c02b49a87a16ebf8c6f4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729616,
@@ -9170,12 +12347,18 @@
         "0xf4f1d2b6778d48fc434201ff4b4d2bcd0438766b791e8322fd4b765907b1ac1e"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729761,
@@ -9259,8 +12442,152 @@
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -9274,12 +12601,18 @@
         "0xe2f73f082a937bd6b85ef1e82f136964144c8b247cb592f141fb3928e1b296f6"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729749,
@@ -9371,12 +12704,12 @@
         "0xd79a3cec0442a945713ce4b16e960ac0e4d360a3f9f03163d57996dd7e721a92"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729691,
@@ -9468,6 +12801,25 @@
         "0x54a3c2ca728fd6aafdaa31a7f0d44cffbdfaa544fba87e938e3447de88b9f006"
       ],
       "proxyType": "EIP1967 proxy",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can mint bridged tokens through this bridge when delivering approved Wormhole messages.",
+          "role": ".minter"
+        }
+      ],
       "sinceTimestamp": 1686939311,
       "sinceBlock": 105670267,
       "values": {
@@ -9602,14 +12954,6 @@
         "0x70cc4883f9ee03ac63ae57d6b84f6701e674230bef02ea51c2db71a0fc04fb80"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
-        }
-      ],
       "sinceTimestamp": 1730729703,
       "sinceBlock": 127565463,
       "values": {
@@ -9694,12 +13038,24 @@
         "0x00dba34a21126dfe2e252e8c827e72832bd932440f05e26bbb78e97b3d67475f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator"
         }
       ],
       "sinceTimestamp": 1730729715,
@@ -9899,8 +13255,152 @@
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -10105,8 +13605,63 @@
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -10120,12 +13675,18 @@
         "0x8a14d3e5f09615e0edc1a75069ec58c31725171d7b68c02b49a87a16ebf8c6f4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730729725,
@@ -10313,12 +13874,18 @@
         "0x4a95cca52f5993a4df0141bc526077f4023f9678f2bd0348f06577b699db0de4"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can mint new tokens and burn existing tokens.",
-          "role": ".issuerRole"
+          "description": "Can burn user-requested tokens before bridging them out.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint bridged tokens delivered from an approved remote bridge.",
+          "role": ".minter"
         }
       ],
       "sinceTimestamp": 1730902853,
@@ -10474,14 +14041,6 @@
         "0xaba73346557bd36dae486f8b1925b55987eba55e91551e73ad6578e64f1a393f"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can force transfer tokens from any account (used for compliance/seizure).",
-          "role": ".transferAgentRole"
-        }
-      ],
       "sinceTimestamp": 1730729737,
       "sinceBlock": 127565480,
       "values": {
@@ -10520,8 +14079,116 @@
         {
           "permission": "interact",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
-          "description": "Can manage roles and execute any token operation including granting/revoking permissions.",
-          "role": ".masterRole"
+          "description": "Can batch issuer-scoped burn calls through IssuerMulticall.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch issuer-scoped mint calls through IssuerMulticall.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch-burn tokens through BulkOperator.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can batch-mint tokens through BulkOperator.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can burn omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can burn tokens.",
+          "role": ".burner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint omnibus-managed tokens through OmnibusTBEController.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can mint tokens, including locked and no-compliance issuance.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can pause or unpause the token, set the initial cap, and use transfer-agent controls such as omnibus burn and seizure.",
+          "role": ".transferController"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can register investors and mint tokens through TokenIssuer.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can relay issuer-approved burn calls through TransactionRelayer.",
+          "role": ".burner",
+          "via": [
+            { "address": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can relay issuer-approved mint calls through TransactionRelayer.",
+          "role": ".minter",
+          "via": [
+            { "address": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can transfer omnibus-managed tokens and update omnibus accounting through OmnibusTBEController.",
+          "role": ".omnibusOperator",
+          "via": [
+            { "address": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can upgrade the token, update DS service addresses, and configure token features.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -10577,6 +14244,68 @@
           "permission": "upgrade",
           "from": "oeth:0xF02c75D5F6c6F3b921e4E1bc348F02Dd81BB02ef",
           "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3",
+          "role": ".issuerOrAbove"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "role": ".omnibusOperator"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+          "role": ".burner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+          "role": ".minter"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
+          "role": ".omnibusOperator"
         }
       ]
     },
@@ -19614,12 +23343,12 @@
     "buidl-token/ComplianceService": "0x7f9c1e817f67e0ac1162f252fdd0967766c43eb4656cf184d1cd096499bf413b",
     "buidl-token/DeliveryProviderImplementation": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "buidl-token/DSToken": "0x8b7cd2731320322d26deac9e9de2130d467d82c3ecdaa25e781d869ae32a8618",
-    "buidl-token/DSTokenClassSwap": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "buidl-token/DSTokenClassSwap": "0x717d32237e22e96aefd88d21a7b847245734fa18234a63439211276526e62c05",
     "buidl-token/IssuerMulticall": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
     "buidl-token/LockManager": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
     "buidl-token/OmnibusTBEController": "0xd416a125ddca4353821de377e881670b3978fda05ffb95ac8de4e401e15f7e3e",
     "buidl-token/RegistryService": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
-    "buidl-token/SecuritizeBridge": "0x4b6456171a778324fd73b60567ed3777363d192ecbcd9e928cd04a67004237d3",
+    "buidl-token/SecuritizeBridge": "0x56e192e522d31b40503fa208c4292df4988282832ed1c3cb702ad0d63dbffd67",
     "buidl-token/TokenIssuer": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
     "buidl-token/TokenReallocator": "0xd416a125ddca4353821de377e881670b3978fda05ffb95ac8de4e401e15f7e3e",
     "buidl-token/TransactionRelayer": "0x47d8db187be47f13886bdf5d602afe8bc738fadc17bc29910463f9ebdf4d8250",
@@ -19636,5 +23365,5 @@
     "optimism": 144853013,
     "polygonpos": 80099855
   },
-  "permissionsConfigHash": "0xa8323ec089153fe5b9f41ed2c4d056aed74a785d011e277546bf6356bfb73f90"
+  "permissionsConfigHash": "0x75a50c2960e2efcb0184f8ee084d145a6fbc1d8e965df9e0c63c0e75fa4028e1"
 }

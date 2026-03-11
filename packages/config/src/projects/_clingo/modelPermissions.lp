@@ -37,6 +37,18 @@ transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, Origina
   permission(Receiver, ViaPermission, Via, ViaDelay, ViaDescription, ViaRole),
   defaultedPermissionCondition(Receiver, ViaPermission, Via, ViaDelay, ViaDescription, ViaRole, ViaCondition),
   ViaPermission == "act",
+  not roleScopedAct(Via),
+  TotalDelay = PreviousTotalDelay + ViaDelay.
+  % OriginalPermission != "act". % we're only interested in the "final" permission, not intermediate "act".
+
+transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, (cons(tuple(Via, ViaPermission, ViaDelay, ViaCondition), IndirectVia))) :-
+  Receiver != Via, % deal with self-loops (e.g. timelock can act on timelock)
+  transitivePermission(Via, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, PreviousTotalDelay, IndirectVia),
+  permission(Receiver, ViaPermission, Via, ViaDelay, ViaDescription, ViaRole),
+  defaultedPermissionCondition(Receiver, ViaPermission, Via, ViaDelay, ViaDescription, ViaRole, ViaCondition),
+  ViaPermission == "act",
+  roleScopedAct(Via),
+  roleScopeCompatible(OriginalRole, ViaRole),
   TotalDelay = PreviousTotalDelay + ViaDelay.
   % OriginalPermission != "act". % we're only interested in the "final" permission, not intermediate "act".
 

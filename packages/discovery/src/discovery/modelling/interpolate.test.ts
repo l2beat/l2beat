@@ -123,6 +123,36 @@ describe(interpolateModelTemplate.name, () => {
     expect(result).toEqual('msg1("hello, world!").msg2("hello, world!").')
   })
 
+  it('properly resolves nested object fields', () => {
+    const modelTemplate =
+      'service(&services.TrustService). raw("&services.TrustService:raw").'
+    const contract: EntryParameters = {
+      type: 'Contract',
+      address: ChainSpecificAddress.from('eth', EthereumAddress.from('0x123')),
+      name: 'ContractA',
+      values: {
+        services: {
+          TrustService: ChainSpecificAddress.from(
+            'eth',
+            EthereumAddress.from('0x456'),
+          ).toString(),
+        },
+      },
+    }
+
+    const values = contractValuesForInterpolation('ethereum', contract)
+    const result = interpolateModelTemplate(modelTemplate, values, {
+      [ChainSpecificAddress.from(
+        'eth',
+        EthereumAddress.from('0x456'),
+      ).toString()]: 'TrustService',
+    })
+
+    expect(result).toEqual(
+      'service(trustService). raw("eth:0x0000000000000000000000000000000000000456").',
+    )
+  })
+
   it('fails for missing values', () => {
     const modelTemplate = `
       one(&one).
