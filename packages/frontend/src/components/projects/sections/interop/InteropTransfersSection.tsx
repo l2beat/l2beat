@@ -94,7 +94,7 @@ export function InteropTransfersSection({
 
   useEffect(() => {
     if (needsMoreRows && !isFetchingNextPage) {
-      void fetchNextPage()
+      fetchNextPage()
     }
   }, [fetchNextPage, isFetchingNextPage, needsMoreRows])
 
@@ -155,11 +155,8 @@ export function InteropTransfersSection({
 
 function TransfersResyncNotice() {
   return (
-    <div className="mb-3 flex items-center gap-2 rounded-lg bg-surface-secondary px-3 py-2 text-paragraph-12 text-secondary">
-      <div className="size-2 shrink-0 animate-pulse rounded-full bg-branding-primary" />
-      <span className="font-medium">
-        Transfer data is resyncing. It will be available soon.
-      </span>
+    <div className="mb-3 flex items-center gap-2 rounded-lg bg-surface-secondary px-3 py-2 font-medium text-paragraph-12 text-secondary">
+      Transfer data is resyncing. It will be available soon.
     </div>
   )
 }
