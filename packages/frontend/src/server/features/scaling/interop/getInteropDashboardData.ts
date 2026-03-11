@@ -51,7 +51,7 @@ export async function getInteropDashboardData(
   )
 
   return {
-    flows: getFlows(records, subgroupProjects),
+    flows: getFlows(records, params, subgroupProjects).slice(0, 2),
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     topToken: getTopToken({
       records,
@@ -66,6 +66,7 @@ export async function getInteropDashboardData(
       interopProjects,
       params.type,
       snapshotTimestamp,
+      params,
     ),
   }
 }
@@ -150,11 +151,11 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
 
   const entries: ProtocolEntry[] = interopProjects.map((project) => ({
     id: project.id,
+    slug: project.slug,
     name: project.interopConfig.name ?? project.name,
     shortName: project.interopConfig.shortName,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
-    iconSlug: project.slug,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
     bridgeTypes: ['lockAndMint', 'nonMinting', 'burnAndMint'],
     volume: 15_000_000,

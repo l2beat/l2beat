@@ -50,6 +50,9 @@ export const pageLoaders = {
   InteropBurnAndMintPage: async () =>
     (await import('./interop/burn-and-mint/InteropBurnAndMintPage'))
       .InteropBurnAndMintPage,
+  InteropProtocolPage: async () =>
+    (await import('./interop/protocol/InteropProtocolPage'))
+      .InteropProtocolPage,
   DataAvailabilitySummaryPage: async () =>
     (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
       .DataAvailabilitySummaryPage,

@@ -1,4 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
+import type { CSSProperties } from 'react'
 
 import { cn } from '~/utils/cn'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
@@ -9,9 +10,10 @@ interface BreakdownProps {
   className?: string
 }
 
-interface BreakdownValue {
+export interface BreakdownValue {
   value: number
-  className: string
+  className?: string
+  style?: CSSProperties
 }
 
 export function Breakdown({ values, gap = 1, className }: BreakdownProps) {
@@ -27,6 +29,7 @@ export function Breakdown({ values, gap = 1, className }: BreakdownProps) {
             g.className,
           )}
           style={{
+            ...g.style,
             width: `${g.weight}%`,
             marginRight: i !== groups.length - 1 ? `${gap}px` : undefined,
           }}
@@ -38,7 +41,8 @@ export function Breakdown({ values, gap = 1, className }: BreakdownProps) {
 
 interface BreakdownGroup {
   weight: number
-  className: string
+  className?: string
+  style?: CSSProperties
 }
 
 function getBreakdownGroups(values: BreakdownValue[]): BreakdownGroup[] {
@@ -55,6 +59,7 @@ function getBreakdownGroups(values: BreakdownValue[]): BreakdownGroup[] {
   const groups = values.map((v) => ({
     weight: (v.value / totalValue) * 100,
     className: v.className,
+    style: v.style,
   }))
 
   const toFilterOut = groups.filter((g) => g.weight < 2)
@@ -78,6 +83,7 @@ function getBreakdownGroups(values: BreakdownValue[]): BreakdownGroup[] {
     return {
       weight,
       className: f.className,
+      style: f.style,
     }
   })
 }

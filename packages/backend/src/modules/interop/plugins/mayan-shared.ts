@@ -37,6 +37,7 @@ const MAYAN_EVM_CHAINS = [
   'unichain',
   'linea',
   // no celo
+  'hyperevm',
 ] as const
 
 export const MAYAN_SWIFT_CHAINS = [...MAYAN_EVM_CHAINS]

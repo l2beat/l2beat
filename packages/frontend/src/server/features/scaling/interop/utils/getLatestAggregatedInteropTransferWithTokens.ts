@@ -14,6 +14,7 @@ interface AggregatedInteropTransferWithTokensResult {
 export async function getLatestAggregatedInteropTransferWithTokens(
   selection: InteropSelectionInput,
   type?: KnownInteropBridgeType,
+  protocolId?: string,
 ): Promise<AggregatedInteropTransferWithTokensResult> {
   const db = getDb()
 
@@ -33,12 +34,14 @@ export async function getLatestAggregatedInteropTransferWithTokens(
       selection.from,
       selection.to,
       type,
+      protocolId,
     ),
     db.aggregatedInteropToken.getByChainsAndTimestamp(
       snapshotTimestamp,
       selection.from,
       selection.to,
       type,
+      protocolId,
     ),
   ])
 

@@ -154,22 +154,26 @@ export class PolygonPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: transferLog,
+        // 3k addresses in practice
         addresses: rootTokens.map((address) =>
           ChainSpecificAddress.fromLong(
             'ethereum',
             Address32.cropToEthereumAddress(address),
           ),
         ),
+        // topic1(from): [DEPOSIT_MANAGER, PREDICATE]
       },
       {
         type: 'event',
         signature: transferLog,
+        // 3k addresses in practice
         addresses: childTokens.map((address) =>
           ChainSpecificAddress.fromLong(
             'polygonpos',
             Address32.cropToEthereumAddress(address),
           ),
         ),
+        // topic2(to): [ZERO_ADDRESS]
       },
       {
         type: 'event',
