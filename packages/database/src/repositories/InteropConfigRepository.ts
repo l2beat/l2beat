@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { sql, type Insertable, type Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropConfig } from '../kysely/generated/types'
 
