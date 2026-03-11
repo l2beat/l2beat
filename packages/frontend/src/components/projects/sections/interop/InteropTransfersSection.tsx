@@ -1,6 +1,6 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import { getCoreRowModel } from '@tanstack/react-table'
-import { useEffect, useMemo, useState } from 'react'
+import { getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
+import { useEffect, useMemo } from 'react'
 import {
   getPaginationItems,
   Pagination,
@@ -37,8 +37,6 @@ export function InteropTransfersSection({
       ...selectionForApi,
       id: projectId,
     })
-  const [pageIndex, setPageIndex] = useState(0)
-
   const entry = protocolData?.entry
   const totalCount = entry?.transferCount ?? 0
   const resolvedType =
@@ -70,11 +68,29 @@ export function InteropTransfersSection({
     [transfersData],
   )
   const hasIntegrityMismatch = !!transfersData?.pages[0]?.hasIntegrityMismatch
-  const pageStart = pageIndex * TRANSFERS_PER_PAGE
+
+  const table = useTable<TransferRow>({
+    data: fetchedItems,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    manualFiltering: true,
+    pageCount: Math.ceil(totalCount / TRANSFERS_PER_PAGE),
+    initialState: {
+      pagination: {
+        pageSize: TRANSFERS_PER_PAGE,
+        pageIndex: 0,
+      },
+    },
+  })
+
+  const currentPage = table.getState().pagination.pageIndex
+  const pageCount = table.getPageCount()
+
   const needsMoreRows =
     !hasIntegrityMismatch &&
     hasNextPage &&
-    fetchedItems.length < pageStart + TRANSFERS_PER_PAGE
+    fetchedItems.length < (currentPage + 1) * TRANSFERS_PER_PAGE
 
   useEffect(() => {
     if (needsMoreRows && !isFetchingNextPage) {
@@ -88,22 +104,9 @@ export function InteropTransfersSection({
       fetchedItems.length === 0) ||
     needsMoreRows
 
-  const tableData = useMemo(
-    () => fetchedItems.slice(pageStart, pageStart + TRANSFERS_PER_PAGE),
-    [fetchedItems, pageStart],
-  )
-
-  const table = useTable<TransferRow>({
-    data: tableData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    manualFiltering: true,
-  })
-
-  const pageCount = Math.ceil(totalCount / TRANSFERS_PER_PAGE)
   const paginationItems = useMemo(
-    () => getPaginationItems(pageCount, pageIndex),
-    [pageCount, pageIndex],
+    () => getPaginationItems(pageCount, currentPage),
+    [pageCount, currentPage],
   )
 
   return (
@@ -134,9 +137,9 @@ export function InteropTransfersSection({
                     size="sm"
                     onClick={(e) => {
                       e.preventDefault()
-                      setPageIndex(item.index)
+                      table.setPageIndex(item.index)
                     }}
-                    isActive={pageIndex === item.index}
+                    isActive={currentPage === item.index}
                   >
                     {item.index + 1}
                   </PaginationLink>
