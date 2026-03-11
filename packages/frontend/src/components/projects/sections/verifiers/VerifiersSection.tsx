@@ -7,6 +7,7 @@ import {
   ProjectsUsedIn,
   type UsedInProjectWithIcon,
 } from '~/components/ProjectsUsedIn'
+import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { VerifiersTable } from './table/VerifiersTable'
@@ -48,13 +49,23 @@ export function VerifiersSection({
         verifiers (e.g. different versions).
       </p>
       {proofSystemVerifiers.map(({ proofSystem, verifierHashes }) => (
-        <VerifiersTable
-          key={proofSystem.id + proofSystem.type}
-          entries={verifierHashes.map((verifierHash) => ({
-            ...verifierHash,
-            proofSystem,
-          }))}
-        />
+        <div key={proofSystem.id + proofSystem.type}>
+          <TechStackTag
+            className="mb-2 w-fit"
+            tag={proofSystem}
+            withTypePrefix
+          />
+          <p className="text-paragraph-14 text-secondary">
+            {proofSystem.description ??
+              'Verifier ID as recorded by the verifier smart contract.'}
+          </p>
+          <VerifiersTable
+            entries={verifierHashes.map((verifierHash) => ({
+              ...verifierHash,
+              proofSystem,
+            }))}
+          />
+        </div>
       ))}
     </ProjectSection>
   )
@@ -71,10 +82,6 @@ export function VerifierRowDetails({
       {verifierHash.knownDeployments.length > 0 && (
         <>
           <div className="space-y-3">
-            <p className="text-paragraph-14 text-secondary">
-              {verifierHash.description ??
-                'Verifier ID as recorded by the verifier smart contract.'}
-            </p>
             <div className="font-bold text-label-value-16">
               Known deployments
             </div>
