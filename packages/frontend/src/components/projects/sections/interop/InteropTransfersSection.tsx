@@ -40,11 +40,9 @@ export function InteropTransfersSection({
   const [pageIndex, setPageIndex] = useState(0)
 
   const entry = protocolData?.entry
+  const totalCount = entry?.transferCount ?? 0
   const resolvedType =
     entry?.bridgeTypes.length === 1 ? entry.bridgeTypes[0] : undefined
-
-  const isTransfersQueryEnabled =
-    !!entry?.snapshotTimestamp && (entry.transferCount ?? 0) > 0
 
   const {
     data: transfersData,
@@ -57,12 +55,12 @@ export function InteropTransfersSection({
       ...selectionForApi,
       id: projectId,
       type: resolvedType,
-      expectedTransferCount: entry?.transferCount ?? 0,
+      expectedTransferCount: totalCount,
       expectedVolume: entry?.volume ?? 0,
       snapshotTimestamp: entry?.snapshotTimestamp ?? 0,
     },
     {
-      enabled: isTransfersQueryEnabled,
+      enabled: !!entry?.snapshotTimestamp && totalCount > 0,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   )
@@ -73,34 +71,23 @@ export function InteropTransfersSection({
   )
   const hasIntegrityMismatch = !!transfersData?.pages[0]?.hasIntegrityMismatch
   const pageStart = pageIndex * TRANSFERS_PER_PAGE
-  const pageEnd = Math.min(
-    pageStart + TRANSFERS_PER_PAGE,
-    entry?.transferCount ?? 0,
-  )
   const needsMoreRows =
     !hasIntegrityMismatch &&
-    pageEnd > 0 &&
-    fetchedItems.length < pageEnd &&
-    !!hasNextPage
+    hasNextPage &&
+    fetchedItems.length < pageStart + TRANSFERS_PER_PAGE
 
   useEffect(() => {
-    if (!isTransfersQueryEnabled || !needsMoreRows || isFetchingNextPage) {
-      return
+    if (needsMoreRows && !isFetchingNextPage) {
+      void fetchNextPage()
     }
-
-    void fetchNextPage()
-  }, [
-    fetchNextPage,
-    isFetchingNextPage,
-    isTransfersQueryEnabled,
-    needsMoreRows,
-  ])
+  }, [fetchNextPage, isFetchingNextPage, needsMoreRows])
 
   const isLoading =
     isProtocolLoading ||
     ((isTransfersLoading || hasIntegrityMismatch) &&
       fetchedItems.length === 0) ||
     needsMoreRows
+
   const tableData = useMemo(
     () => fetchedItems.slice(pageStart, pageStart + TRANSFERS_PER_PAGE),
     [fetchedItems, pageStart],
@@ -113,7 +100,7 @@ export function InteropTransfersSection({
     manualFiltering: true,
   })
 
-  const pageCount = Math.ceil((entry?.transferCount ?? 0) / TRANSFERS_PER_PAGE)
+  const pageCount = Math.ceil(totalCount / TRANSFERS_PER_PAGE)
   const paginationItems = useMemo(
     () => getPaginationItems(pageCount, pageIndex),
     [pageCount, pageIndex],
@@ -122,13 +109,16 @@ export function InteropTransfersSection({
   return (
     <ProjectSection {...sectionProps}>
       <BetweenChainsInfo className="mb-3" />
-      {hasIntegrityMismatch && <TransfersResyncNotice />}
-      <BasicTable
-        skeletonCount={TRANSFERS_PER_PAGE}
-        table={table}
-        tableWrapperClassName="pb-0"
-        isLoading={isLoading}
-      />
+      {hasIntegrityMismatch ? (
+        <TransfersResyncNotice />
+      ) : (
+        <BasicTable
+          skeletonCount={TRANSFERS_PER_PAGE}
+          table={table}
+          tableWrapperClassName="pb-0"
+          isLoading={isLoading}
+        />
+      )}
       {!isLoading && !hasIntegrityMismatch && pageCount > 1 && (
         <div className="mt-4">
           <Pagination className="min-w-full px-1">
