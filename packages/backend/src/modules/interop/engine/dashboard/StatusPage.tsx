@@ -4,6 +4,7 @@ import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
 import { PluginsResyncControls } from './PluginsResyncControls'
 import { PluginsStatusTable } from './PluginsStatusTable'
+import { PluginsSyncFromZeroControls } from './PluginsSyncFromZeroControls'
 
 function StatusPageLayout(props: {
   pluginSyncStatuses: PluginSyncStatus[]
@@ -37,9 +38,14 @@ function StatusPageLayout(props: {
       footer={
         <>
           {props.showResyncControls ? (
-            <PluginsResyncControls
-              pluginSyncStatuses={props.pluginSyncStatuses}
-            />
+            <>
+              <PluginsResyncControls
+                pluginSyncStatuses={props.pluginSyncStatuses}
+              />
+              <PluginsSyncFromZeroControls
+                pluginSyncStatuses={props.pluginSyncStatuses}
+              />
+            </>
           ) : null}
           <script
             dangerouslySetInnerHTML={{

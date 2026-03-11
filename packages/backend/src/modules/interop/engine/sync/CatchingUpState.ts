@@ -62,7 +62,7 @@ export class CatchingUpState implements TimeloopState {
       }
 
       const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
-      if (resyncFrom !== undefined && wipeRequired) {
+      if (wipeRequired) {
         this.syncer.waitingForWipe = true
         this.setStatus('waiting for wipe')
         return this
@@ -298,9 +298,9 @@ export class CatchingUpState implements TimeloopState {
       fullFromTimestamp = syncedRange.fromTimestamp
       nextFrom = syncedRange.toBlock + 1n
     } else {
-      throw new Error(
-        `Can't resync ${this.syncer.cluster.name} cluster without "from" timestamp`,
-      )
+      // No synced range and no forced start — transition to FollowingState
+      // (happens after sync-from-zero wipe clears all state)
+      return undefined
     }
 
     let nextTo: bigint

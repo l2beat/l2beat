@@ -289,6 +289,29 @@ export function createInteropRouter(
     }
   })
 
+  router.post('/interop/sync-from-zero', async (ctx) => {
+    const payload = v
+      .object({ pluginName: v.string() })
+      .validate(ctx.request.body)
+    const { pluginName } = payload
+
+    const existingChains = (
+      await db.interopPluginSyncState.findByPluginName(pluginName)
+    ).map((r) => r.chain)
+
+    await db.transaction(async () => {
+      for (const chain of existingChains) {
+        await db.interopPluginSyncState.updateByPluginNameAndChain(
+          pluginName,
+          chain,
+          { wipeRequired: true, resyncRequestedFrom: null },
+        )
+      }
+    })
+
+    ctx.body = { updatedChains: existingChains }
+  })
+
   router.post('/interop/refresh-financials', async (ctx) => {
     const updatedTransfers = await db.interopTransfer.markAllAsUnprocessed()
 
