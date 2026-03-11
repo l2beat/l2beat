@@ -1,7 +1,7 @@
 {
   "name": "liquity-v1",
   "timestamp": 1772453602,
-  "configHash": "0xebc80882fdb65cd2a390e449bae46bf4bdfe09959ac207c5eef2de0a782718d3",
+  "configHash": "0x2859c2cde70b1ec26c7618b0ae6c7a92bf23e1144ee93bc57ae998c451f84980",
   "entries": [
     {
       "name": "BorrowerOperations",
@@ -35,6 +35,7 @@
         "PERCENT_DIVISOR": 200,
         "priceFeed": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
         "sortedTroves": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
+        "stabilityPoolAddress": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
         "troveManager": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2"
       },
       "implementationNames": {

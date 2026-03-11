@@ -108,7 +108,16 @@
       ],
       "ignoreMethods": [
         "getCompositeDebt"
-      ]
+      ],
+      "fields": {
+        "stabilityPoolAddress": {
+          "handler": {
+            "type": "storage",
+            "slot": 5,
+            "returnType": "address"
+          }
+        }
+      }
     },
     "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521": {
       "ignoreInWatchMode": [

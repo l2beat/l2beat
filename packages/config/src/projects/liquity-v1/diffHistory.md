@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x3fb5fdd539fc54516a832c389c8a88db906235e9
+
+# Diff at Wed, 11 Mar 2026 01:51:01 GMT:
+
+- author: unknown (<unknown>)
+- comparing to: main@b4dc0082bf303b4800a3a7a45bb72d4a3bfb3ed6 block: 1772453602
+- current timestamp: 1772453602
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772453602 (main branch discovery), not current.
+
+```diff
+    contract BorrowerOperations (eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007) {
+    +++ description: None
+      values.stabilityPoolAddress:
++        "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb"
+    }
+```
+
 Generated with discovered.json: 0xfce5aa699409dacd9ec2334380ba782bc2ef8b9a
 
 # Diff at Tue, 10 Mar 2026 11:12:58 GMT:

@@ -168,7 +168,11 @@ export function updateFunction(
   const newFunction: FunctionEntry = {
     functionName: updateRequest.functionName,
     isPermissioned:
-      updateRequest.isPermissioned ?? existingFunction?.isPermissioned ?? false,
+      updateRequest.isPermissioned ??
+      (updateRequest.ownerDefinitions &&
+      updateRequest.ownerDefinitions.length > 0
+        ? true
+        : (existingFunction?.isPermissioned ?? false)),
     checked: updateRequest.checked ?? existingFunction?.checked,
     score: updateRequest.score ?? existingFunction?.score,
     reason: updateRequest.reason ?? existingFunction?.reason,
