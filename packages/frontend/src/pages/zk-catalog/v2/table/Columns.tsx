@@ -1,12 +1,12 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { FilledArrowIcon } from '~/icons/FilledArrow'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
+import { ProjectsUsedInByStatus } from '../components/ProjectsUsedInByStatus'
 import { TechStackCell } from '../components/TechStackCell'
 import { TrustedSetupCell } from '../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
@@ -84,26 +84,6 @@ export const zkCatalogColumns = [
         },
       }),
       columnHelper.display({
-        id: 'used-in',
-        header: 'Used in',
-        cell: (ctx) => {
-          const first = Object.values(
-            ctx.row.original.trustedSetupsByProofSystem,
-          )[0]
-          if (!first) return null
-          return <ProjectsUsedIn usedIn={first.projectsUsedIn} />
-        },
-        meta: {
-          additionalRows: (ctx) => {
-            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
-              .slice(1)
-              .map(([key, ts]) => (
-                <ProjectsUsedIn key={key} usedIn={ts.projectsUsedIn} />
-              ))
-          },
-        },
-      }),
-      columnHelper.display({
         id: 'verifiers',
         header: 'Verifiers',
         cell: (ctx) => {
@@ -121,6 +101,29 @@ export const zkCatalogColumns = [
               .slice(1)
               .map(([key, ts]) => (
                 <VerifiedCountWithDetails key={key} data={ts.verifiers} />
+              ))
+          },
+        },
+      }),
+      columnHelper.display({
+        id: 'used-in',
+        header: 'Used in',
+        cell: (ctx) => {
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
+          )[0]
+          if (!first) return null
+          return <ProjectsUsedInByStatus data={first.projectsUsedInByStatus} />
+        },
+        meta: {
+          additionalRows: (ctx) => {
+            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
+              .slice(1)
+              .map(([key, ts]) => (
+                <ProjectsUsedInByStatus
+                  key={key}
+                  data={ts.projectsUsedInByStatus}
+                />
               ))
           },
         },
