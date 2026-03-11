@@ -13,6 +13,7 @@ import type {
 
 interface AdminCardsProps {
   review: CompiledReview
+  forceExpanded?: boolean
 }
 
 const ADMIN_BAR_COLORS = [
@@ -75,7 +76,7 @@ function sortAdminsByRisk(admins: CompiledAdmin[]): CompiledAdmin[] {
   })
 }
 
-export function AdminCards({ review }: AdminCardsProps) {
+export function AdminCards({ review, forceExpanded }: AdminCardsProps) {
   const { admins, totals } = review
   const [expandedAdmins, setExpandedAdmins] = useState<Set<string>>(new Set())
 
@@ -173,6 +174,7 @@ export function AdminCards({ review }: AdminCardsProps) {
           totalCapital={humanTotal}
           expandedSet={expandedAdmins}
           onToggle={toggleAdmin}
+          forceExpanded={forceExpanded}
         />
       )}
 
@@ -186,6 +188,7 @@ export function AdminCards({ review }: AdminCardsProps) {
             totalCapital={govTotal}
             expandedSet={expandedAdmins}
             onToggle={toggleAdmin}
+            forceExpanded={forceExpanded}
           />
         </div>
       )}
@@ -200,6 +203,7 @@ function AdminDistributionChart({
   totalCapital,
   expandedSet,
   onToggle,
+  forceExpanded,
 }: {
   title: string
   subtitle: string
@@ -207,6 +211,7 @@ function AdminDistributionChart({
   totalCapital: number
   expandedSet: Set<string>
   onToggle: (key: string) => void
+  forceExpanded?: boolean
 }) {
   const maxCapital = Math.max(...admins.map((a) => a.totalDirectCapital), 0)
 
@@ -221,7 +226,7 @@ function AdminDistributionChart({
           const percentage =
             maxCapital > 0 ? (admin.totalDirectCapital / maxCapital) * 100 : 0
           const expandKey = `admin-${admin.address}`
-          const isExpanded = expandedSet.has(expandKey)
+          const isExpanded = forceExpanded || expandedSet.has(expandKey)
 
           return (
             <div key={expandKey} id={expandKey}>
@@ -232,7 +237,7 @@ function AdminDistributionChart({
               >
                 <div className="flex items-center justify-between text-sm mb-1">
                   <span className="text-text-primary font-medium truncate mr-4 flex items-center gap-1.5">
-                    <span className="text-text-muted text-xs">
+                    <span className="text-text-muted text-xs" data-print-hide>
                       {isExpanded ? '\u25BC' : '\u25B6'}
                     </span>
                     <GlossaryTooltip term={admin.adminType}>

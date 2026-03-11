@@ -1,3 +1,101 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media print {
+  /* Force background colors and images to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide site chrome */
+  header,
+  footer {
+    display: none !important;
+  }
+
+  /* Remove sticky positioning */
+  .sticky {
+    position: static !important;
+  }
+
+  /* Clean background */
+  body {
+    background: white !important;
+  }
+
+  /* Remove shadows and simplify borders for print */
+  .shadow-sm {
+    box-shadow: none !important;
+  }
+
+  /* Tighter section spacing */
+  .space-y-16 > :not(:first-child) {
+    margin-top: 1.5rem !important;
+  }
+
+  /* Tighter card internal spacing */
+  .space-y-3 > :not(:first-child) {
+    margin-top: 0.5rem !important;
+  }
+
+  .space-y-4 > :not(:first-child) {
+    margin-top: 0.75rem !important;
+  }
+
+  /* Smart page breaks */
+  .rounded-xl {
+    break-inside: avoid;
+  }
+
+  section {
+    break-inside: avoid;
+  }
+
+  h2 {
+    break-after: avoid;
+  }
+
+  /* Hide expand/collapse arrows in print */
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Remove max-width constraint for full page use */
+  .max-w-4xl {
+    max-width: none !important;
+  }
+
+  .max-w-3xl {
+    max-width: none !important;
+  }
+
+  .max-w-7xl {
+    max-width: none !important;
+  }
+
+  /* Reduce padding */
+  .px-4 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Make section headings more prominent with a bottom border */
+  section > h2 {
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #7C3AED;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Card borders: use solid consistent borders */
+  .rounded-xl {
+    border-color: #E5E1ED !important;
+  }
+
+  /* Smaller text for expanded content in print */
+  .ml-6,
+  .ml-4 {
+    margin-left: 1rem !important;
+  }
+}

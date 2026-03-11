@@ -8,6 +8,7 @@ import type { CompiledReview, CompiledDependency } from '../../../../types'
 
 interface DependencyCardsProps {
   review: CompiledReview
+  forceExpanded?: boolean
 }
 
 const DEP_BAR_COLORS = [
@@ -19,7 +20,7 @@ const DEP_BAR_COLORS = [
   '#10B981',
 ]
 
-export function DependencyCards({ review }: DependencyCardsProps) {
+export function DependencyCards({ review, forceExpanded }: DependencyCardsProps) {
   const { dependencies } = review
   const [expandedDeps, setExpandedDeps] = useState<Set<string>>(new Set())
 
@@ -141,6 +142,7 @@ export function DependencyCards({ review }: DependencyCardsProps) {
               groupTotal={groupTotal}
               expandedSet={expandedDeps}
               onToggle={toggleDep}
+              forceExpanded={forceExpanded}
             />
           )
         })}
@@ -155,12 +157,14 @@ function DepDistributionChart({
   groupTotal,
   expandedSet,
   onToggle,
+  forceExpanded,
 }: {
   title: string | undefined
   deps: { dep: CompiledDependency; fundsAtRisk: number }[]
   groupTotal: number
   expandedSet: Set<string>
   onToggle: (key: string) => void
+  forceExpanded?: boolean
 }) {
   const maxFunds = Math.max(...deps.map((d) => d.fundsAtRisk), 0)
 
@@ -176,7 +180,7 @@ function DepDistributionChart({
           const percentage =
             maxFunds > 0 ? (fundsAtRisk / maxFunds) * 100 : 0
           const expandKey = `dep-${dep.address}`
-          const isExpanded = expandedSet.has(expandKey)
+          const isExpanded = forceExpanded || expandedSet.has(expandKey)
 
           return (
             <div key={expandKey}>
@@ -187,7 +191,7 @@ function DepDistributionChart({
               >
                 <div className="flex items-center justify-between text-sm mb-1">
                   <span className="text-text-primary font-medium truncate mr-4 flex items-center gap-1.5">
-                    <span className="text-text-muted text-xs">
+                    <span className="text-text-muted text-xs" data-print-hide>
                       {isExpanded ? '\u25BC' : '\u25B6'}
                     </span>
                     {dep.entity && (

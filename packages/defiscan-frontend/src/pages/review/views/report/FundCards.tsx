@@ -7,6 +7,7 @@ import type { CompiledReview, CompiledFundHolder, CompiledAdmin } from '../../..
 
 interface FundCardsProps {
   review: CompiledReview
+  forceExpanded?: boolean
 }
 
 const BAR_COLORS = [
@@ -43,7 +44,7 @@ function getAdminsForFund(
   )
 }
 
-export function FundCards({ review }: FundCardsProps) {
+export function FundCards({ review, forceExpanded }: FundCardsProps) {
   const { funds, totals } = review
   const [expandedFunds, setExpandedFunds] = useState<Set<string>>(new Set())
 
@@ -142,6 +143,7 @@ export function FundCards({ review }: FundCardsProps) {
           onToggle={toggleFund}
           keyPrefix="fund"
           review={review}
+          forceExpanded={forceExpanded}
         />
       )}
 
@@ -158,6 +160,7 @@ export function FundCards({ review }: FundCardsProps) {
             onToggle={toggleFund}
             keyPrefix="token"
             review={review}
+            forceExpanded={forceExpanded}
           />
         </div>
       )}
@@ -175,6 +178,7 @@ function DistributionChart({
   onToggle,
   keyPrefix,
   review,
+  forceExpanded,
 }: {
   title: string
   entries: { fund: CompiledFundHolder; fullName: string; value: number }[]
@@ -185,6 +189,7 @@ function DistributionChart({
   onToggle: (key: string) => void
   keyPrefix: string
   review: CompiledReview
+  forceExpanded?: boolean
 }) {
   return (
     <div className="rounded-xl border border-border bg-white p-6 shadow-sm">
@@ -196,7 +201,7 @@ function DistributionChart({
           const percentage =
             total > 0 ? (entry.value / total) * 100 : 0
           const expandKey = `${keyPrefix}-${entry.fund.address}`
-          const isExpanded = expandedSet.has(expandKey)
+          const isExpanded = forceExpanded || expandedSet.has(expandKey)
           const admins = getAdminsForFund(review, entry.fund.address)
 
           return (
@@ -208,7 +213,7 @@ function DistributionChart({
               >
                 <div className="flex items-center justify-between text-sm mb-1">
                   <span className="text-text-primary font-medium truncate mr-4 flex items-center gap-1.5">
-                    <span className="text-text-muted text-xs">
+                    <span className="text-text-muted text-xs" data-print-hide>
                       {isExpanded ? '\u25BC' : '\u25B6'}
                     </span>
                     {entry.fullName}

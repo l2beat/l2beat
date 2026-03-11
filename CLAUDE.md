@@ -105,7 +105,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - External Contract Attributes & Governance Tag (entity grouping, node coloring)
 - Contract Tags data structure (`contract-tags.json`, cleanup rules)
 - Funds Tracking (DeBank API, Morpho vault onchain positions, `funds-data.json`)
-- DeFiScan Frontend (static React app, Vercel deployment)
+- DeFiScan Frontend (static React app, Vercel deployment, shareable report view)
 - Continuous Monitoring Service (GitHub Actions cron, discovery + diff + funds + compile)
 
 ---

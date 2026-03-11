@@ -168,6 +168,15 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - **Commands**: `pnpm dev` (dev server), `pnpm build` (production build, runs compile-data first)
 - **Detailed Docs**: See `packages/defiscan-frontend/README.md`
 
+### Shareable Report View
+
+The Report view (`ReportView.tsx`) includes sharing and export capabilities:
+
+- **PDF Export**: Expands all collapsible sections via `flushSync` then triggers `window.print()`. A print-only branded header is rendered. Sections collapse back via `afterprint` event listener
+- **Share Dropdown**: Copy link, share on X (Twitter), share on Farcaster. Menu closes on outside click via `mousedown` listener
+- **Export for AI**: Converts the compiled review to markdown via `exportMarkdown.ts` utility and copies to clipboard
+- **Section Navigation**: Sticky nav bar with `IntersectionObserver`-based active section tracking and smooth scroll-to-section
+
 ## Continuous Monitoring Service
 
 **Automated change detection, funds refresh, and review compilation**: Runs daily at 8:00 CET via GitHub Actions cron.
