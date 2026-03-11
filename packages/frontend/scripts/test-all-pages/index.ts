@@ -9,7 +9,6 @@ async function main() {
     daLayerProjects,
     daBridgeProjects,
     zkCatalogProjects,
-    zkCatalogV1Projects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
@@ -24,10 +23,6 @@ async function main() {
     }),
     ps.getProjects({
       where: ['zkCatalogInfo'],
-    }),
-    ps.getProjects({
-      where: ['isZkCatalog'],
-      whereNot: ['archivedAt'],
     }),
   ])
   const governancePublications = getCollection('governance-publications')
@@ -66,8 +61,6 @@ async function main() {
     }),
     '/zk-catalog',
     ...zkCatalogProjects.map((p) => `/zk-catalog/${p.slug}`),
-    '/zk-catalog/v1',
-    ...zkCatalogV1Projects.map((p) => `/zk-catalog/v1/${p.slug}`),
     '/about-us',
     '/donate',
     '/governance',

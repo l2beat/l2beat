@@ -21,6 +21,7 @@ import {
   type LongChainName,
   type UnixTime,
 } from '@l2beat/shared-pure'
+import { AsyncMutex } from '../../../../tools/AsyncMutex'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import type {
   InteropEvent,
@@ -127,6 +128,7 @@ export interface BlockProcessorState {
   type: 'blockProcessor'
   name: string
   status: string
+  checkStatus(): Promise<SyncerState>
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
 }
 
@@ -136,6 +138,7 @@ export class InteropEventSyncer extends TimeLoop {
   public waitingForWipe = false
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
+  private readonly exclusiveExecutionMutex = new AsyncMutex()
 
   constructor(
     readonly chain: LongChainName,
@@ -154,15 +157,13 @@ export class InteropEventSyncer extends TimeLoop {
   protected async triggerState<T extends SyncerState>(
     state: T,
     fn: (state: T) => Promise<SyncerState>,
+    options?: { clearError?: boolean },
   ) {
     try {
-      await this.clearChainSyncError()
-      this.state = await fn(state)
-      if (this.state.type === 'timeLoop') {
-        this.unpause()
-      } else {
-        this.pause()
+      if (options?.clearError ?? true) {
+        await this.clearChainSyncError()
       }
+      this.state = await fn(state)
     } catch (error) {
       this.logger.error('Error syncing chain', error, {
         pluginName: this.cluster.name,
@@ -174,20 +175,35 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async run() {
-    const state = this.state
-    if (state.type === 'timeLoop') {
-      await this.triggerState(state, (current) => current.run())
-    }
+    await this.exclusiveExecutionMutex.tryRunExclusive(async () => {
+      const state = this.state
+      if (state.type === 'timeLoop') {
+        await this.triggerState(state, (current) => current.run())
+      } else {
+        await this.triggerState(state, (current) => current.checkStatus(), {
+          clearError: false,
+        })
+      }
+    })
   }
 
   async processNewestBlock(block: Block, logs: Log[]) {
     this.latestBlockNumber = BigInt(block.number)
-    const state = this.state
-    if (state.type === 'blockProcessor') {
-      await this.triggerState(state, (current) =>
-        current.processNewestBlock(block, logs),
-      )
+
+    // It's fine to do this check outside of the exclusiveExecutionMutex because
+    // even if we skip block, FollowingState will notice and switch to CatchingUpState
+    if (this.state.type === 'timeLoop') {
+      return
     }
+
+    await this.exclusiveExecutionMutex.runExclusive(async () => {
+      const state = this.state
+      if (state.type === 'blockProcessor') {
+        await this.triggerState(state, (current) =>
+          current.processNewestBlock(block, logs),
+        )
+      }
+    })
   }
 
   captureLog(logToCapture: LogToCapture) {

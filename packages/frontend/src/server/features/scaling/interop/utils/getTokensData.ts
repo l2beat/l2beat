@@ -13,7 +13,7 @@ import { getAverageDuration } from './getAverageDuration'
 
 type Params = {
   projectId: string
-  bridgeType: KnownInteropBridgeType | undefined
+  bridgeTypes: KnownInteropBridgeType[] | undefined
   tokens: Map<
     string,
     CommonInteropData & { flows?: Map<string, TokenFlowData> }
@@ -26,7 +26,7 @@ type Params = {
 
 export function getTokensData({
   projectId,
-  bridgeType,
+  bridgeTypes,
   tokens,
   tokensDetailsMap,
   durationSplitMap,
@@ -44,7 +44,7 @@ export function getTokensData({
 
       const avgDuration = getAverageDuration(
         projectId,
-        bridgeType,
+        bridgeTypes,
         token,
         durationSplitMap,
       )

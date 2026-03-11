@@ -15,6 +15,7 @@ import { AcrossSettlementOpPlugin } from './across-settlement-op'
 import { AcrossSettlementOrbitPlugin } from './across-settlement-orbit'
 import { AgglayerPlugin } from './agglayer'
 import { AllbridgePlugIn } from './allbridge'
+import { AvalanchePlugin } from './avalanche'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { BeefyBridgePlugin } from './beefy-bridge'
@@ -191,6 +192,7 @@ export function createInteropPlugins(
         ],
       },
       new AllbridgePlugIn(),
+      new AvalanchePlugin(),
       new LineaPlugin(),
       {
         name: 'axelar',
