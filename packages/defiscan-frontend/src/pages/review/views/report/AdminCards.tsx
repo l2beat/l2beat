@@ -6,11 +6,11 @@ import { GlossaryTooltip } from '../../../../components/GlossaryTooltip'
 import { generateAdminNarrative } from '../../../../utils/narrative'
 import { formatUsdValue } from '../../../../utils/format'
 import {
-  displayMitigationValue,
   type CompiledReview,
   type CompiledAdmin,
   type CompiledAdminFunction,
 } from '../../../../types'
+import { MitigationBadge } from '../../../../components/MitigationBadge'
 
 interface AdminCardsProps {
   review: CompiledReview
@@ -53,7 +53,7 @@ function describeAdminType(adminType: string): string {
   }
 }
 
-/** Sort admins by risk: EOAs first, then Multisigs, then Timelocks, then contracts */
+/** Sort admins by funds at risk (descending), then by admin type as tiebreaker */
 function sortAdminsByRisk(admins: CompiledAdmin[]): CompiledAdmin[] {
   const riskOrder: Record<string, number> = {
     EOA: 0,
@@ -69,11 +69,12 @@ function sortAdminsByRisk(admins: CompiledAdmin[]): CompiledAdmin[] {
   }
 
   return [...admins].sort((a, b) => {
+    const fundsDiff = b.totalDirectCapital - a.totalDirectCapital
+    if (fundsDiff !== 0) return fundsDiff
+    // Tiebreaker: riskier admin types first
     const aOrder = riskOrder[a.adminType] ?? 5
     const bOrder = riskOrder[b.adminType] ?? 5
-    if (aOrder !== bOrder) return aOrder - bOrder
-    // Secondary sort: higher capital first
-    return b.totalDirectCapital - a.totalDirectCapital
+    return aOrder - bOrder
   })
 }
 
@@ -170,7 +171,7 @@ export function AdminCards({ review, forceExpanded }: AdminCardsProps) {
       {humanControlled.length > 0 && (
         <AdminDistributionChart
           title="Admins"
-          subtitle="These are the entities that a person or group of people can directly control. They represent the most significant centralization vectors."
+          subtitle="These are the entities that a person or group of people can directly control."
           admins={humanControlled}
           totalCapital={humanTotal}
           expandedSet={expandedAdmins}
@@ -184,7 +185,7 @@ export function AdminCards({ review, forceExpanded }: AdminCardsProps) {
         <div className={humanControlled.length > 0 ? 'mt-6' : ''}>
           <AdminDistributionChart
             title="Governance"
-            subtitle="These are on-chain governance contracts that manage protocol changes through decentralized voting or proposal mechanisms."
+            subtitle="These are onchain governance contracts that manage protocol changes through different voting mechanisms."
             admins={governance}
             totalCapital={govTotal}
             expandedSet={expandedAdmins}
@@ -362,56 +363,7 @@ function FunctionDetail({ fn }: { fn: CompiledAdminFunction }) {
       {fn.mitigations && fn.mitigations.length > 0 && (
         <div className="mt-1.5 flex flex-wrap gap-1">
           {fn.mitigations.map((m, i) => (
-            <span
-              key={i}
-              className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                m.type === 'delay'
-                  ? 'bg-cyan-50 text-cyan-700 border border-cyan-200'
-                  : m.type === 'valueRange'
-                    ? 'bg-indigo-50 text-indigo-700 border border-indigo-200'
-                    : m.type === 'relativeValue'
-                      ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                      : 'bg-gray-50 text-gray-600 border border-gray-200'
-              }`}
-              title={m.description}
-            >
-              {m.type === 'delay' && (
-                <>
-                  <svg
-                    className="w-3 h-3"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 6v6l4 2" />
-                  </svg>
-                  {m.description}
-                </>
-              )}
-              {m.type === 'valueRange' && (
-                <>
-                  Range:{' '}
-                  {m.valueRange?.min !== undefined &&
-                    displayMitigationValue(m.valueRange.min)}
-                  {m.valueRange?.min !== undefined &&
-                    m.valueRange?.max !== undefined &&
-                    '–'}
-                  {m.valueRange?.max !== undefined &&
-                    displayMitigationValue(m.valueRange.max)}
-                  {m.valueRange?.unit && ` ${m.valueRange.unit}`}
-                </>
-              )}
-              {m.type === 'relativeValue' &&
-                m.relativeValue?.maxChangePercent !== undefined && (
-                  <>
-                    Max: {displayMitigationValue(m.relativeValue.maxChangePercent)}
-                    %
-                  </>
-                )}
-              {m.type === 'other' && <>{m.description}</>}
-            </span>
+            <MitigationBadge key={i} mitigation={m} />
           ))}
         </div>
       )}

@@ -125,6 +125,7 @@ export interface CompiledDependencyFunction {
   directFundsUsd: number
   directTokenValueUsd: number
   reachableContracts: CompiledReachableContract[]
+  mitigations?: Mitigation[]
 }
 
 export interface CompiledDependency {

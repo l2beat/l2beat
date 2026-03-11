@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-11T17:12:50.414Z",
+  "compiledAt": "2026-03-11T19:15:36.277Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -13,7 +13,7 @@
   "totals": {
     "contractCount": 23,
     "permissionedFunctionCount": 16,
-    "scoredFunctionCount": 0,
+    "scoredFunctionCount": 14,
     "adminCount": 7,
     "dependencyCount": 9,
     "totalCapitalAtRisk": 169519102.78369424,
@@ -32,7 +32,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setCurator",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -41,7 +41,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setIsAllocator",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -50,7 +50,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setSkimRecipient",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -59,7 +59,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "submitTimelock",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
@@ -88,7 +88,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setFee",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -132,7 +132,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setFeeRecipient",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -155,7 +155,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "submitGuardian",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
@@ -228,7 +228,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -237,7 +237,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -258,7 +258,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -283,7 +283,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingTimelock",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -292,7 +292,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingGuardian",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -301,7 +301,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -310,7 +310,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -385,7 +385,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -394,7 +394,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -415,7 +415,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -440,7 +440,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -449,7 +449,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -471,7 +471,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -480,7 +480,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -501,7 +501,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -539,7 +539,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -548,7 +548,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -569,7 +569,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -607,7 +607,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -616,7 +616,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -637,7 +637,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -675,7 +675,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "setSupplyQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -684,7 +684,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "updateWithdrawQueue",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -705,7 +705,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "reallocate",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
@@ -743,7 +743,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingTimelock",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -752,7 +752,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingGuardian",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -761,7 +761,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -770,7 +770,7 @@
           "contractAddress": "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -1101,7 +1101,28 @@
           "viewOnlyPath": true,
           "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Maximum fee is 50%",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "50"
+                },
+                "unit": "%"
+              },
+              "mitigatedField": {
+                "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+                "fieldName": "fee"
+              }
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
@@ -1119,7 +1140,18 @@
           "viewOnlyPath": true,
           "directFundsUsd": 169519102.78369424,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+                "fieldName": "timelock"
+              },
+              "delaySeconds": 604800
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
@@ -1163,25 +1195,25 @@
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "setCurator",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "setIsAllocator",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "setSkimRecipient",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "submitTimelock",
-      "impact": "critical",
+      "impact": "no-impact",
       "mitigations": [
         {
           "type": "delay",
@@ -1207,7 +1239,7 @@
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "setFee",
-      "impact": "critical",
+      "impact": "no-impact",
       "mitigations": [
         {
           "type": "valueRange",
@@ -1234,13 +1266,13 @@
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "setFeeRecipient",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "submitGuardian",
-      "impact": "critical",
+      "impact": "no-impact",
       "mitigations": [
         {
           "type": "delay",
@@ -1291,43 +1323,43 @@
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "setSupplyQueue",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "updateWithdrawQueue",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "reallocate",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "revokePendingTimelock",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "revokePendingGuardian",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "revokePendingCap",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
       "contractName": "MetaMorpho",
       "functionName": "revokePendingMarketRemoval",
-      "impact": "critical"
+      "impact": "no-impact"
     }
   ],
   "contracts": [

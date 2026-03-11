@@ -264,7 +264,9 @@ packages/
 │   └── addressUtils.ts              # Backend address utilities (stripChainPrefix, ensureChainPrefix, addressesEqual, isChainAddress)
 ├── defiscan-frontend/                # Standalone public review website
 │   ├── scripts/compile-data.ts       # Build-time data aggregation
-│   └── src/                          # React app (see README.md for structure)
+│   └── src/
+│       ├── components/MitigationBadge.tsx  # Mitigation badge display (delay, valueRange, relativeValue, other)
+│       └── pages/review/views/explorer/shared.tsx  # Shared explorer tab components (SortHeader, MitigationsSummary, ExpandedAdminFunctions)
 ├── backend/src/modules/defi-update-monitor/defidisco/
 │   ├── DefidiscoMonitorApplication.ts  # Monitor orchestrator
 │   ├── monitorConfig.ts                # Standalone config

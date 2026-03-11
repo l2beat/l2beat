@@ -112,6 +112,7 @@ export interface CompiledDependencyFunction {
   directTokenValueUsd: number
   /** Contracts reachable via call graph from this function that hold funds */
   reachableContracts: CompiledReachableContract[]
+  mitigations?: Mitigation[]
 }
 
 export interface CompiledDependency {
@@ -560,6 +561,7 @@ export class ReviewCompiler {
                   fundsAtRisk: r.fundsUsd > 0 || r.tokenValueUsd > 0,
                 }),
               ),
+              mitigations: getMitigationsForFunction(contractAddr, funcName),
             })
           }
         }

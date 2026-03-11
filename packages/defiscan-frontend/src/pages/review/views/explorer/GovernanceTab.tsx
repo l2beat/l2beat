@@ -1,8 +1,12 @@
 import { useState, useMemo } from 'react'
 import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { UsdValue } from '../../../../components/UsdValue'
-import { formatUsdValue } from '../../../../utils/format'
 import type { CompiledReview, CompiledAdmin } from '../../../../types'
+import {
+  SortHeader,
+  MitigationsSummary,
+  ExpandedAdminFunctions,
+} from './shared'
 
 interface GovernanceTabProps {
   review: CompiledReview
@@ -137,6 +141,9 @@ export function GovernanceTab({ review }: GovernanceTabProps) {
                 onClick={handleSort}
                 className="text-right"
               />
+              <th className="px-4 py-2 font-medium text-text-secondary text-left">
+                Mitigations
+              </th>
               <SortHeader
                 field="functions"
                 label="Functions"
@@ -226,126 +233,20 @@ function GovRow({
             <span className="text-text-muted">-</span>
           )}
         </td>
+        <td className="px-4 py-2.5">
+          <MitigationsSummary functions={admin.functions} />
+        </td>
         <td className="px-4 py-2.5 text-right font-medium text-text-primary">
           {admin.functions.length}
         </td>
       </tr>
       {isExpanded && (
         <tr>
-          <td colSpan={4} className="px-0 py-0">
-            <ExpandedFunctions admin={admin} />
+          <td colSpan={5} className="px-0 py-0">
+            <ExpandedAdminFunctions admin={admin} />
           </td>
         </tr>
       )}
     </>
-  )
-}
-
-function ExpandedFunctions({ admin }: { admin: CompiledAdmin }) {
-  return (
-    <div className="bg-bg-muted/50 border-t border-border">
-      {admin.description && (
-        <p className="px-6 py-3 text-sm text-text-secondary border-b border-border/50 leading-relaxed">
-          {admin.description}
-        </p>
-      )}
-      <div className="px-6 py-3">
-        <table className="w-full text-xs">
-          <thead>
-            <tr className="text-text-muted">
-              <th className="text-left pb-1 font-medium">Contract</th>
-              <th className="text-left pb-1 font-medium">Function</th>
-              <th className="text-right pb-1 font-medium">Direct $</th>
-              <th className="text-right pb-1 font-medium">
-                Reachable Contracts
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {admin.functions.map((fn) => (
-              <tr
-                key={`${fn.contractAddress}-${fn.functionName}`}
-                className="border-t border-border/30"
-              >
-                <td className="py-1.5 text-text-secondary">
-                  {fn.contractName}
-                </td>
-                <td className="py-1.5">
-                  <span className="font-mono text-text-primary">
-                    {fn.functionName}()
-                  </span>
-                </td>
-                <td className="py-1.5 text-right tabular-nums">
-                  {fn.directFundsUsd > 0 ? (
-                    <span className="text-capital font-medium">
-                      {formatUsdValue(fn.directFundsUsd)}
-                    </span>
-                  ) : (
-                    <span className="text-text-muted">-</span>
-                  )}
-                </td>
-                <td className="py-1.5 text-right">
-                  {fn.reachableContracts.length > 0 ? (
-                    <span className="text-text-primary">
-                      {fn.reachableContracts.length}
-                      {fn.reachableContracts.some((rc) => rc.fundsAtRisk) && (
-                        <span className="ml-1 text-capital">
-                          (
-                          {formatUsdValue(
-                            fn.reachableContracts
-                              .filter((rc) => rc.fundsAtRisk)
-                              .reduce((s, rc) => s + rc.fundsUsd, 0),
-                          )}
-                          )
-                        </span>
-                      )}
-                    </span>
-                  ) : (
-                    <span className="text-text-muted">-</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
-}
-
-function SortHeader({
-  field,
-  label,
-  current,
-  dir,
-  onClick,
-  className,
-}: {
-  field: SortField
-  label: string
-  current: SortField
-  dir: SortDir
-  onClick: (f: SortField) => void
-  className?: string
-}) {
-  const isActive = current === field
-  return (
-    <th
-      className={`px-4 py-2 font-medium text-text-secondary cursor-pointer select-none hover:text-text-primary transition-colors text-left ${className ?? ''}`}
-      onClick={() => onClick(field)}
-    >
-      <span className="inline-flex items-center gap-1">
-        {label}
-        {isActive && (
-          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="currentColor">
-            {dir === 'desc' ? (
-              <path d="M6 8L2 4h8z" />
-            ) : (
-              <path d="M6 4l4 4H2z" />
-            )}
-          </svg>
-        )}
-      </span>
-    </th>
   )
 }

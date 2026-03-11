@@ -4,12 +4,12 @@ import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { UsdValue } from '../../../../components/UsdValue'
 import { formatUsdValue } from '../../../../utils/format'
 import { getHumanAdmins } from '../../../../utils/admins'
+import type { CompiledReview, CompiledAdmin } from '../../../../types'
 import {
-  displayMitigationValue,
-  type CompiledReview,
-  type CompiledAdmin,
-  type Mitigation,
-} from '../../../../types'
+  SortHeader,
+  MitigationsSummary,
+  ExpandedAdminFunctions,
+} from './shared'
 
 interface AdminsTabProps {
   review: CompiledReview
@@ -153,6 +153,9 @@ export function AdminsTab({ review }: AdminsTabProps) {
                 onClick={handleSort}
                 className="text-right"
               />
+              <th className="px-4 py-2 font-medium text-text-secondary text-left">
+                Mitigations
+              </th>
               <SortHeader
                 field="functions"
                 label="Functions"
@@ -247,6 +250,9 @@ function AdminRow({
             <span className="text-text-muted">-</span>
           )}
         </td>
+        <td className="px-4 py-2.5">
+          <MitigationsSummary functions={admin.functions} />
+        </td>
         <td className="px-4 py-2.5 text-right font-medium text-text-primary">
           {admin.functions.length}
         </td>
@@ -254,95 +260,11 @@ function AdminRow({
       {isExpanded && (
         <tr>
           <td colSpan={6} className="px-0 py-0">
-            <ExpandedFunctions admin={admin} />
+            <ExpandedAdminFunctions admin={admin} />
           </td>
         </tr>
       )}
     </>
-  )
-}
-
-function ExpandedFunctions({ admin }: { admin: CompiledAdmin }) {
-  return (
-    <div className="bg-bg-muted/50 border-t border-border">
-      {admin.description && (
-        <p className="px-6 py-3 text-sm text-text-secondary border-b border-border/50 leading-relaxed">
-          {admin.description}
-        </p>
-      )}
-      <div className="px-6 py-3">
-        <table className="w-full text-xs">
-          <thead>
-            <tr className="text-text-muted">
-              <th className="text-left pb-1 font-medium">Contract</th>
-              <th className="text-left pb-1 font-medium">Function</th>
-              <th className="text-left pb-1 font-medium">Mitigations</th>
-              <th className="text-right pb-1 font-medium">Direct $</th>
-              <th className="text-right pb-1 font-medium">
-                Reachable Contracts
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {admin.functions.map((fn) => (
-              <tr
-                key={`${fn.contractAddress}-${fn.functionName}`}
-                className="border-t border-border/30"
-              >
-                <td className="py-1.5 text-text-secondary">
-                  {fn.contractName}
-                </td>
-                <td className="py-1.5">
-                  <span className="font-mono text-text-primary">
-                    {fn.functionName}()
-                  </span>
-                </td>
-                <td className="py-1.5">
-                  {fn.mitigations && fn.mitigations.length > 0 ? (
-                    <div className="flex flex-wrap gap-0.5">
-                      {fn.mitigations.map((m, i) => (
-                        <MitigationBadge key={i} mitigation={m} />
-                      ))}
-                    </div>
-                  ) : (
-                    <span className="text-text-muted">-</span>
-                  )}
-                </td>
-                <td className="py-1.5 text-right tabular-nums">
-                  {fn.directFundsUsd > 0 ? (
-                    <span className="text-capital font-medium">
-                      {formatUsdValue(fn.directFundsUsd)}
-                    </span>
-                  ) : (
-                    <span className="text-text-muted">-</span>
-                  )}
-                </td>
-                <td className="py-1.5 text-right">
-                  {fn.reachableContracts.length > 0 ? (
-                    <span className="text-text-primary">
-                      {fn.reachableContracts.length}
-                      {fn.reachableContracts.some((rc) => rc.fundsAtRisk) && (
-                        <span className="ml-1 text-capital">
-                          (
-                          {formatUsdValue(
-                            fn.reachableContracts
-                              .filter((rc) => rc.fundsAtRisk)
-                              .reduce((s, rc) => s + rc.fundsUsd, 0),
-                          )}
-                          )
-                        </span>
-                      )}
-                    </span>
-                  ) : (
-                    <span className="text-text-muted">-</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
   )
 }
 
@@ -355,111 +277,6 @@ function AdminsSummaryLabel({ admins }: { admins: CompiledAdmin[] }) {
     <span className="text-text-secondary">
       <span className="font-semibold text-text-primary">{admins.length}</span>{' '}
       admin{admins.length !== 1 ? 's' : ''}
-    </span>
-  )
-}
-
-function SortHeader({
-  field,
-  label,
-  current,
-  dir,
-  onClick,
-  className,
-}: {
-  field: SortField
-  label: string
-  current: SortField
-  dir: SortDir
-  onClick: (f: SortField) => void
-  className?: string
-}) {
-  const isActive = current === field
-  return (
-    <th
-      className={`px-4 py-2 font-medium text-text-secondary cursor-pointer select-none hover:text-text-primary transition-colors text-left ${className ?? ''}`}
-      onClick={() => onClick(field)}
-    >
-      <span className="inline-flex items-center gap-1">
-        {label}
-        {isActive && (
-          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="currentColor">
-            {dir === 'desc' ? (
-              <path d="M6 8L2 4h8z" />
-            ) : (
-              <path d="M6 4l4 4H2z" />
-            )}
-          </svg>
-        )}
-      </span>
-    </th>
-  )
-}
-
-function formatDelayLabel(seconds: number): string {
-  if (seconds >= 86400) {
-    const days = seconds / 86400
-    const d = days === Math.floor(days) ? `${days}` : `${days.toFixed(1)}`
-    return `${d}-day Delay`
-  }
-  if (seconds >= 3600) {
-    const hours = seconds / 3600
-    const h = hours === Math.floor(hours) ? `${hours}` : `${hours.toFixed(1)}`
-    return `${h}-hour Delay`
-  }
-  if (seconds >= 60) {
-    const minutes = seconds / 60
-    const m = minutes === Math.floor(minutes) ? `${minutes}` : `${minutes.toFixed(1)}`
-    return `${m}-min Delay`
-  }
-  return `${seconds}s Delay`
-}
-
-function MitigationBadge({ mitigation: m }: { mitigation: Mitigation }) {
-  const colorClass =
-    m.type === 'delay'
-      ? 'bg-cyan-50 text-cyan-700 border-cyan-200'
-      : m.type === 'valueRange'
-        ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
-        : m.type === 'relativeValue'
-          ? 'bg-amber-50 text-amber-700 border-amber-200'
-          : 'bg-gray-50 text-gray-600 border-gray-200'
-
-  let label: string
-  let tooltip: string
-  if (m.type === 'delay') {
-    label =
-      m.delaySeconds !== undefined
-        ? formatDelayLabel(m.delaySeconds)
-        : 'Delay'
-    tooltip = m.description
-  } else if (m.type === 'valueRange') {
-    const parts: string[] = []
-    if (m.valueRange?.min !== undefined)
-      parts.push(displayMitigationValue(m.valueRange.min))
-    if (m.valueRange?.max !== undefined)
-      parts.push(displayMitigationValue(m.valueRange.max))
-    const unit = m.valueRange?.unit ? ` ${m.valueRange.unit}` : ''
-    label = `Range: ${parts.join(' to ')}${unit}`
-    tooltip = m.description || label
-  } else if (m.type === 'relativeValue') {
-    label = 'Relative'
-    tooltip = `Max change: ${m.relativeValue?.maxChangePercent !== undefined ? displayMitigationValue(m.relativeValue.maxChangePercent) : '?'}%`
-    if (m.description) tooltip += ` — ${m.description}`
-  } else {
-    label =
-      m.description.length > 20
-        ? m.description.slice(0, 20) + '…'
-        : m.description
-    tooltip = m.description
-  }
-
-  return (
-    <span
-      className={`inline-block rounded-full border px-1.5 py-0 text-[10px] font-medium leading-4 ${colorClass}`}
-      title={tooltip}
-    >
-      {label}
     </span>
   )
 }

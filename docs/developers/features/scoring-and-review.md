@@ -171,4 +171,13 @@ Protocol links (frontends, docs, GitHub, X, source code, other) stored as `resou
 - **Template Variables**: `{{variableName}}` resolved at compile time via `dataKeys` map
 - **TypeScript interfaces**: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledDependencyFunction`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
 - **Dependency funds**: Each `CompiledDependency` includes `totalFundsAtRisk` and `totalTokenValueAtRisk` (pre-computed, deduplicated across functions). Each `CompiledDependencyFunction` includes `directFundsUsd`, `directTokenValueUsd`, and `reachableContracts[]` with per-contract funds. These are computed server-side in the compiler, not client-side.
+- **Mitigations in compiled review**: Each `CompiledAdminFunction` and `CompiledDependencyFunction` includes an optional `mitigations?: Mitigation[]` field. The compiler populates this from `functions.json` via `getMitigationsForFunction()`, which builds a lookup map keyed by `normalizedAddress|functionName`. Mitigations defined in `functions.json` (see `permissions.md`) flow through to the frontend unchanged.
 - **Frontend subset**: `defiscan-frontend/scripts/compile-data.ts` uses a minimal subset of `CompiledReview` (not imported) for index aggregation — keep in sync when adding fields
+
+### Mitigations Display (defiscan-frontend)
+
+Mitigations are displayed in the Explorer tabs (AdminsTab, DepsTab, GovernanceTab) and Report views (AdminCards, DependencyCards).
+
+- **`MitigationBadge`** (`src/components/MitigationBadge.tsx`): Renders a single mitigation as a colored pill badge. Handles all `MitigationType` values: `delay` (cyan, shows formatted duration), `valueRange` (indigo, shows min/max), `relativeValue` (amber, shows max change %), `other` (gray, truncated description).
+- **`MitigationsSummary`** (`src/pages/review/views/explorer/shared.tsx`): Responsive overflow component for table cells. Collects mitigations from an entity's functions, deduplicates them, measures available width via `ResizeObserver`, and shows as many badges as fit with a `+N` overflow indicator.
+- **Shared explorer components** (`shared.tsx`): Also exports `SortHeader`, `ExpandedAdminFunctions`, `AdminFunctionTable`, and `deduplicateMitigations` — used by AdminsTab, DepsTab, and GovernanceTab to avoid duplication.

@@ -4,6 +4,7 @@ import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { GlossaryTooltip } from '../../../../components/GlossaryTooltip'
 import { formatUsdValue } from '../../../../utils/format'
 import { getDepFunctionFunds } from '../../../../utils/dependencies'
+import { MitigationBadge } from '../../../../components/MitigationBadge'
 import type { CompiledReview, CompiledDependency } from '../../../../types'
 
 interface DependencyCardsProps {
@@ -296,25 +297,32 @@ function DepExpandedContent({ dep }: { dep: CompiledDependency }) {
               return (
                 <div
                   key={`${fn.contractAddress}-${fn.functionName}`}
-                  className="flex items-center justify-between text-sm"
+                  className="text-sm"
                 >
-                  <div className="flex items-center gap-2">
-                    {fn.viewOnlyPath ? (
-                      <span className="text-status-blue text-xs">R</span>
-                    ) : (
-                      <span className="text-status-amber text-xs">W</span>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {fn.viewOnlyPath ? (
+                        <span className="text-status-blue text-xs">R</span>
+                      ) : (
+                        <span className="text-status-amber text-xs">W</span>
+                      )}
+                      <span className="text-text-muted">{fn.contractName}</span>
+                      <span className="text-text-primary font-medium font-mono">
+                        .{fn.functionName}()
+                      </span>
+                    </div>
+                    {fnFunds > 0 && (
+                      <span className="text-capital text-xs font-medium tabular-nums">
+                        {formatUsdValue(fnFunds)}
+                      </span>
                     )}
-                    <span className="text-text-muted">
-                      {fn.contractName}
-                    </span>
-                    <span className="text-text-primary font-medium font-mono">
-                      .{fn.functionName}()
-                    </span>
                   </div>
-                  {fnFunds > 0 && (
-                    <span className="text-capital text-xs font-medium tabular-nums">
-                      {formatUsdValue(fnFunds)}
-                    </span>
+                  {fn.mitigations && fn.mitigations.length > 0 && (
+                    <div className="mt-1 flex flex-wrap gap-1 ml-5">
+                      {fn.mitigations.map((m, i) => (
+                        <MitigationBadge key={i} mitigation={m} />
+                      ))}
+                    </div>
                   )}
                 </div>
               )

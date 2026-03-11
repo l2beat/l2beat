@@ -1,13 +1,14 @@
 import { useState, useMemo } from 'react'
-import { clsx } from 'clsx'
 import { Badge } from '../../../../components/Badge'
 import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { UsdValue } from '../../../../components/UsdValue'
 import { formatUsdValue } from '../../../../utils/format'
 import { getDepFunctionFunds } from '../../../../utils/dependencies'
+import { MitigationBadge } from '../../../../components/MitigationBadge'
 import type { CompiledReview, CompiledDependency } from '../../../../types'
 import { ShareableDiagram } from '../../../../components/ShareableDiagram'
 import { DependencyRiskDiagram } from './svg/DependencyRiskDiagram'
+import { SortHeader, MitigationsSummary } from './shared'
 
 interface DepsTabProps {
   review: CompiledReview
@@ -109,7 +110,7 @@ export function DepsTab({ review }: DepsTabProps) {
         )}
         {totalFundsAtRisk > 0 && (
           <span className="text-text-secondary">
-            TVL exposed:{' '}
+            TVL{' '}
             <UsdValue
               value={totalFundsAtRisk}
               variant="capital"
@@ -160,12 +161,15 @@ export function DepsTab({ review }: DepsTabProps) {
               </th>
               <SortHeader
                 field="fundsAtRisk"
-                label="TVL Exposed"
+                label="TVL"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
                 className="text-right"
               />
+              <th className="px-4 py-2 font-medium text-text-secondary text-left">
+                Mitigations
+              </th>
               <SortHeader
                 field="functions"
                 label="Used By"
@@ -258,6 +262,9 @@ function DependencyRow({
             <span className="text-text-muted">-</span>
           )}
         </td>
+        <td className="px-4 py-2.5">
+          <MitigationsSummary functions={dep.functions} />
+        </td>
         <td className="px-4 py-2.5 text-right">
           <span className="font-medium text-text-primary">
             {dep.functions.length}
@@ -272,7 +279,7 @@ function DependencyRow({
       {expanded && (
         <tr>
           <td
-            colSpan={5}
+            colSpan={6}
             className="px-0 py-0 bg-bg-muted/50 border-b border-border"
           >
             <ExpandedDependency dep={dep} />
@@ -357,7 +364,8 @@ function FunctionList({
         <tr className="text-text-muted">
           <th className="text-left pb-1 font-medium">Contract</th>
           <th className="text-left pb-1 font-medium">Function</th>
-          <th className="text-right pb-1 font-medium">TVL Exposed</th>
+          <th className="text-left pb-1 font-medium">Mitigations</th>
+          <th className="text-right pb-1 font-medium">TVL</th>
         </tr>
       </thead>
       <tbody>
@@ -375,6 +383,17 @@ function FunctionList({
                 <span className="font-mono text-text-primary">
                   {fn.functionName}()
                 </span>
+              </td>
+              <td className="py-1.5">
+                {fn.mitigations && fn.mitigations.length > 0 ? (
+                  <div className="flex flex-wrap gap-0.5">
+                    {fn.mitigations.map((m, i) => (
+                      <MitigationBadge key={i} mitigation={m} />
+                    ))}
+                  </div>
+                ) : (
+                  <span className="text-text-muted">-</span>
+                )}
               </td>
               <td className="py-1.5 text-right tabular-nums">
                 {capital > 0 ? (
@@ -413,45 +432,5 @@ function WriteBadge() {
       </svg>
       Write
     </span>
-  )
-}
-
-function SortHeader({
-  field,
-  label,
-  current,
-  dir,
-  onClick,
-  className,
-}: {
-  field: SortField
-  label: string
-  current: SortField
-  dir: SortDir
-  onClick: (f: SortField) => void
-  className?: string
-}) {
-  const isActive = current === field
-  return (
-    <th
-      className={clsx(
-        'px-4 py-2 font-medium text-text-secondary cursor-pointer select-none hover:text-text-primary transition-colors text-left',
-        className,
-      )}
-      onClick={() => onClick(field)}
-    >
-      <span className="inline-flex items-center gap-1">
-        {label}
-        {isActive && (
-          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="currentColor">
-            {dir === 'desc' ? (
-              <path d="M6 8L2 4h8z" />
-            ) : (
-              <path d="M6 4l4 4H2z" />
-            )}
-          </svg>
-        )}
-      </span>
-    </th>
   )
 }

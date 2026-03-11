@@ -62,20 +62,6 @@ export function DependencyRiskDiagram({ dependencies }: DependencyRiskDiagramPro
     return (count / maxCount) * barAreaWidth
   }
 
-  // Concentration metric: Herfindahl index
-  const hhi = allEntries.reduce((sum, e) => {
-    const share = e.count / totalDeps
-    return sum + share * share
-  }, 0)
-  const concentrationLabel =
-    hhi > 0.5
-      ? 'High concentration'
-      : hhi > 0.25
-        ? 'Moderate concentration'
-        : 'Diversified'
-  const concentrationColor =
-    hhi > 0.5 ? '#EF4444' : hhi > 0.25 ? '#F59E0B' : '#10B981'
-
   return (
     <svg
       viewBox={`0 0 ${svgWidth} ${svgHeight}`}
@@ -85,12 +71,6 @@ export function DependencyRiskDiagram({ dependencies }: DependencyRiskDiagramPro
       {/* Title area */}
       <text x={leftMargin} y={16} fill="#6B7280" fontSize="10" fontWeight="600">
         DEPENDENCY CONTRACTS PER ENTITY
-      </text>
-
-      {/* Concentration indicator */}
-      <circle cx={svgWidth - 100} cy={12} r={5} fill={concentrationColor} />
-      <text x={svgWidth - 90} y={16} fill={concentrationColor} fontSize="9" fontWeight="600">
-        {concentrationLabel}
       </text>
 
       {/* Bars */}
@@ -153,9 +133,6 @@ export function DependencyRiskDiagram({ dependencies }: DependencyRiskDiagramPro
         <text fill="#6B7280" fontSize="9">
           Total: {totalDeps} dependencies across {entityMap.size} entit{entityMap.size !== 1 ? 'ies' : 'y'}
           {untaggedCount > 0 ? ` + ${untaggedCount} untagged` : ''}
-        </text>
-        <text y={14} fill="#9CA3AF" fontSize="9">
-          Higher concentration = greater single-point-of-failure risk
         </text>
       </g>
     </svg>

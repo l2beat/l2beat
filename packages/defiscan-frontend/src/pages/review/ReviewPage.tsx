@@ -6,10 +6,9 @@ import { TYPE_LABELS } from '../../components/ProtocolTypeBadge'
 
 const ReportView = lazy(() => import('./views/report/ReportView').then((m) => ({ default: m.ReportView })))
 const ExplorerView = lazy(() => import('./views/explorer/ExplorerView').then((m) => ({ default: m.ExplorerView })))
-const DashboardView = lazy(() => import('./views/dashboard/DashboardView').then((m) => ({ default: m.DashboardView })))
 
 function isValidView(v: string | null): v is ViewMode {
-  return v === 'report' || v === 'explorer' || v === 'dashboard'
+  return v === 'report' || v === 'explorer'
 }
 
 export function ReviewPage() {
@@ -101,7 +100,6 @@ export function ReviewPage() {
       >
         {view === 'report' && <ReportView review={review} />}
         {view === 'explorer' && <ExplorerView review={review} />}
-        {view === 'dashboard' && <DashboardView review={review} />}
       </Suspense>
 
     </div>

@@ -245,7 +245,7 @@ ApiFunctionAnalysisResponse (per-function dependencies)
   → CompiledDependency[]
 ```
 The compiler iterates all functions → their dependencies, building a deduplicated map keyed by dependency contract address. For each dependency:
-- Collects all calling functions as `CompiledDependencyFunction[]` (with `directFundsUsd`, `reachableContracts[]`)
+- Collects all calling functions as `CompiledDependencyFunction[]` (with `directFundsUsd`, `reachableContracts[]`, `mitigations?`)
 - Computes `totalFundsAtRisk` using `Math.max()` per reachable contract address to avoid double-counting when multiple functions reach the same contract
 
 #### Funds Pipeline
