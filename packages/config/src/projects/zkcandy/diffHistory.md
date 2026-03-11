@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x25d62d72250edf40f0174139bea365c9f888efd3
+
+# Diff at Wed, 11 Mar 2026 11:28:06 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3cb0ee2b734e53d374f2bb187acd95b90cbae4a9 block: 1773057670
+- current timestamp: 1773228424
+
+## Description
+
+Finalized upgrade to v29.2 by setting hash of the L2 system contracts ugpgrade transaction to 0.
+
+BTW for some reason the transaction hash is wrong: it is a trx on Abstract from Oct 2025.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0xF2704433d11842d15aa76BBF0E00407267a99C92) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0x659ab34ba4c5eb8b3eda29d19c9980210ea0af4ec4752a780e002bed0563ce77"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xd859b303bd2657869d0e57d78168b7e28a8c70f6
 
 # Diff at Mon, 09 Mar 2026 12:02:13 GMT:
