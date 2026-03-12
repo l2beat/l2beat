@@ -59,7 +59,7 @@ export class InteropTransferClassifier {
       )
   }
 
-  private groupByBridgeType<TTransfer extends InteropTransferForClassification>(
+  groupByBridgeType<TTransfer extends InteropTransferForClassification>(
     records: TTransfer[],
   ): ClassifiedTransfers<TTransfer> {
     const lockAndMint: TTransfer[] = []

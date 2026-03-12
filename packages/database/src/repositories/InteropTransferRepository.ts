@@ -342,6 +342,28 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getWithPartialAbstractTokenIds(): Promise<InteropTransferRecord[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where((eb) =>
+        eb.or([
+          eb.and([
+            eb('srcAbstractTokenId', 'is', null),
+            eb('dstAbstractTokenId', 'is not', null),
+          ]),
+          eb.and([
+            eb('srcAbstractTokenId', 'is not', null),
+            eb('dstAbstractTokenId', 'is', null),
+          ]),
+        ]),
+      )
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async updateFinancials(
     id: string,
     update: InteropTransferUpdate,

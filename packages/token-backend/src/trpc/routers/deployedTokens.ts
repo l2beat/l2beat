@@ -3,6 +3,7 @@ import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainReposi
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
+import { InteropTransferClassifier } from '../../../../shared/build'
 import { Chain } from '../../chains/Chain'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import type { AbstractTokenRecord } from '../../schemas/AbstractToken'
@@ -311,6 +312,35 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
 
         return suggestions
       }),
+
+    suggestions: readOnlyProcedure.query(async ({ ctx }) => {
+      const partialTransfers =
+        await ctx.db.interopTransfer.getWithPartialAbstractTokenIds()
+      const classifier = new InteropTransferClassifier()
+      const classified = classifier.groupByBridgeType(partialTransfers)
+      const transfersForSuggestions = [
+        ...classified.lockAndMint,
+        ...classified.burnAndMint,
+      ]
+      const map = new Set<string>()
+      for (const transfer of transfersForSuggestions) {
+        if (!transfer.srcAbstractTokenId) {
+          map.add(
+            `${transfer.srcChain}:${transfer.srcTokenAddress}:${transfer.dstAbstractTokenId}`,
+          )
+        }
+        if (!transfer.dstAbstractTokenId) {
+          map.add(
+            `${transfer.dstChain}:${transfer.dstTokenAddress}:${transfer.srcAbstractTokenId}`,
+          )
+        }
+      }
+
+      return Array.from(map.values()).map((value) => {
+        const [chain, address, abstractTokenId] = value.split(':')
+        return { chain, address, abstractTokenId }
+      })
+    }),
   })
 }
 
