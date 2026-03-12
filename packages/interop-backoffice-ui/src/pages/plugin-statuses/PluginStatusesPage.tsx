@@ -1,4 +1,5 @@
-import { RefreshCwIcon } from 'lucide-react'
+import { PauseIcon, PlayIcon, RefreshCwIcon } from 'lucide-react'
+import { useState } from 'react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
@@ -15,10 +16,11 @@ import { PluginStatusesTable } from './table/PluginStatusesTable'
 import type { PluginStatus } from './table/types'
 
 export function PluginStatusesPage() {
+  const [isAutoRefreshEnabled, setIsAutoRefreshEnabled] = useState(true)
   const { data, isLoading, isError, error, refetch, isFetching } =
     api.plugin.status.useQuery(undefined, {
-      refetchInterval: 5_000,
-      refetchOnWindowFocus: true,
+      refetchInterval: isAutoRefreshEnabled ? 5_000 : false,
+      refetchOnWindowFocus: isAutoRefreshEnabled,
     })
 
   const rows: PluginStatus[] = data ?? []
@@ -36,15 +38,29 @@ export function PluginStatusesPage() {
                 seconds).
               </CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => void refetch()}
-              disabled={isFetching}
-            >
-              <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
-              Refresh
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setIsAutoRefreshEnabled((current) => !current)
+                }}
+              >
+                {isAutoRefreshEnabled ? <PauseIcon /> : <PlayIcon />}
+                {isAutoRefreshEnabled
+                  ? 'Pause auto refresh'
+                  : 'Resume auto refresh'}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => void refetch()}
+                disabled={isFetching}
+              >
+                <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
+                Refresh
+              </Button>
+            </div>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
             <Badge variant="secondary">{rows.length} rows</Badge>
