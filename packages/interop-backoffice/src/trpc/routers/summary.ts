@@ -4,9 +4,9 @@ import type {
   InteropEventKind,
   InteropEventStats,
   InteropKnownAppsPerPlugin,
-  InteropMissingTokenInfo,
   InteropMessageDetails,
   InteropMessageStats,
+  InteropMissingTokenInfo,
   InteropTransferDetails,
   InteropTransferStats,
 } from '../embeddings'

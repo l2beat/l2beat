@@ -199,6 +199,9 @@ export function SummaryPage() {
             <Button asChild variant="outline" size="sm">
               <Link to="/processor-statuses">Open processor statuses</Link>
             </Button>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/financials/actions">Open financial actions</Link>
+            </Button>
           </CardContent>
         </Card>
 

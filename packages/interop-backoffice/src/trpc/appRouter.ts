@@ -5,9 +5,9 @@ import type {
   InteropEventKind,
   InteropEventStats,
   InteropKnownAppsPerPlugin,
-  InteropMissingTokenInfo,
   InteropMessageDetails,
   InteropMessageStats,
+  InteropMissingTokenInfo,
   InteropTransferDetails,
   InteropTransferStats,
   PluginStatus,
@@ -41,6 +41,18 @@ interface AppRouterDeps {
     dstChain?: string
   }) => Promise<InteropTransferDetails[]>
   getInteropProcessorStatuses: () => Promise<ProcessorStatus[]>
+  requestInteropResync: (input: {
+    pluginName: string
+    resyncRequestedFrom: Record<string, number>
+  }) => Promise<{
+    updatedChains: string[]
+  }>
+  restartInteropPluginFromNow: (input: { pluginName: string }) => Promise<{
+    updatedChains: string[]
+  }>
+  wipeInteropFinancials: () => Promise<{
+    updatedTransfers: number
+  }>
   getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
   getInteropKnownAppsPerPlugin: () => Promise<InteropKnownAppsPerPlugin[]>
   getInteropChainMetadata: () => Promise<InteropChainMetadata[]>

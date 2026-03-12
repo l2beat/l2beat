@@ -1,6 +1,7 @@
 import {
   ArrowRightLeftIcon,
   BookCheck,
+  CircleDollarSignIcon,
   CpuIcon,
   InboxIcon,
   MessageSquareIcon,
@@ -70,6 +71,11 @@ const items = [
         title: 'Processor statuses',
         url: '/processor-statuses',
         icon: CpuIcon,
+      },
+      {
+        title: 'Financial actions',
+        url: '/financials/actions',
+        icon: CircleDollarSignIcon,
       },
     ],
   },

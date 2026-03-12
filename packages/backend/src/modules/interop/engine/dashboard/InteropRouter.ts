@@ -96,6 +96,15 @@ export function createInteropRouter(
       getInteropProcessorStatuses: () => {
         return Promise.resolve(getInteropProcessorStatuses(processors))
       },
+      requestInteropResync: (input) => {
+        return requestInteropResync(db, syncersManager, input)
+      },
+      restartInteropPluginFromNow: (input) => {
+        return restartInteropPluginFromNow(db, syncersManager, input)
+      },
+      wipeInteropFinancials: () => {
+        return wipeInteropFinancials(db)
+      },
       getInteropMissingTokensInfo: () => {
         return db.interopTransfer.getMissingTokensInfo()
       },
@@ -339,58 +348,18 @@ export function createInteropRouter(
 
   router.post('/interop/resync', async (ctx) => {
     const payload = ResyncRequest.validate(ctx.request.body)
-    const { pluginName, resyncRequestedFrom } = payload
-
-    const defaultFrom = resyncRequestedFrom['*']
-    const chains = syncersManager.getChainsForPlugin(pluginName)
-
-    const updatedChains = new Set<string>()
-    await db.transaction(async () => {
-      for (const chain of chains) {
-        const resyncFrom = resyncRequestedFrom[chain] ?? defaultFrom
-        if (resyncFrom) {
-          await db.interopPluginSyncState.setResyncRequestedFrom(
-            pluginName,
-            chain,
-            resyncFrom,
-          )
-          updatedChains.add(chain)
-        }
-      }
-    })
-
-    ctx.body = {
-      updatedChains: Array.from(updatedChains),
-    }
+    ctx.body = await requestInteropResync(db, syncersManager, payload)
   })
 
   router.post('/interop/restart-from-now', async (ctx) => {
     const payload = v
       .object({ pluginName: v.string() })
       .validate(ctx.request.body)
-    const { pluginName } = payload
-
-    const chains = syncersManager.getChainsForPlugin(pluginName)
-
-    await db.transaction(async () => {
-      for (const chain of chains) {
-        await db.interopPluginSyncState.upsert({
-          pluginName,
-          chain,
-          lastError: null,
-          resyncRequestedFrom: null,
-          wipeRequired: true,
-        })
-      }
-    })
-
-    ctx.body = { updatedChains: chains }
+    ctx.body = await restartInteropPluginFromNow(db, syncersManager, payload)
   })
 
   router.post('/interop/refresh-financials', async (ctx) => {
-    const updatedTransfers = await db.interopTransfer.markAllAsUnprocessed()
-
-    ctx.body = { updatedTransfers }
+    ctx.body = await wipeInteropFinancials(db)
   })
 
   router.get('/interop/events/:kind/:type', async (ctx) => {
@@ -512,6 +481,68 @@ function getInteropProcessorStatuses(processors: InteropBlockProcessor[]) {
   return getProcessorsStatus(processors).sort((a, b) =>
     a.chain.localeCompare(b.chain),
   )
+}
+
+async function requestInteropResync(
+  db: Database,
+  syncersManager: InteropSyncersManager,
+  input: {
+    pluginName: string
+    resyncRequestedFrom: Record<string, number>
+  },
+) {
+  const { pluginName, resyncRequestedFrom } = input
+  const defaultFrom = resyncRequestedFrom['*']
+  const chains = syncersManager.getChainsForPlugin(pluginName)
+
+  const updatedChains = new Set<string>()
+  await db.transaction(async () => {
+    for (const chain of chains) {
+      const resyncFrom = resyncRequestedFrom[chain] ?? defaultFrom
+      if (resyncFrom) {
+        await db.interopPluginSyncState.setResyncRequestedFrom(
+          pluginName,
+          chain,
+          resyncFrom,
+        )
+        updatedChains.add(chain)
+      }
+    }
+  })
+
+  return {
+    updatedChains: Array.from(updatedChains),
+  }
+}
+
+async function restartInteropPluginFromNow(
+  db: Database,
+  syncersManager: InteropSyncersManager,
+  input: {
+    pluginName: string
+  },
+) {
+  const { pluginName } = input
+  const chains = syncersManager.getChainsForPlugin(pluginName)
+
+  await db.transaction(async () => {
+    for (const chain of chains) {
+      await db.interopPluginSyncState.upsert({
+        pluginName,
+        chain,
+        lastError: null,
+        resyncRequestedFrom: null,
+        wipeRequired: true,
+      })
+    }
+  })
+
+  return { updatedChains: chains }
+}
+
+async function wipeInteropFinancials(db: Database) {
+  const updatedTransfers = await db.interopTransfer.markAllAsUnprocessed()
+  return { updatedTransfers }
 }
 
 async function getInteropEventDetails(

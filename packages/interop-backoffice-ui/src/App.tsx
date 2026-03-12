@@ -2,6 +2,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
+import { FinancialsActionsPage } from './pages/financials/FinancialsActionsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PluginStatusesPage } from './pages/plugin-statuses/PluginStatusesPage'
 import { ProcessorStatusesPage } from './pages/processor-statuses/ProcessorStatusesPage'
@@ -68,6 +69,10 @@ export function App() {
             <Route
               path="/processor-statuses"
               element={<ProcessorStatusesPage />}
+            />
+            <Route
+              path="/financials/actions"
+              element={<FinancialsActionsPage />}
             />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
