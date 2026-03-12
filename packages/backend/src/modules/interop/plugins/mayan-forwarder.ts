@@ -195,8 +195,8 @@ function normalizeForwarderLog(log: Log): NormalizedForwarderLog | undefined {
       kind: 'SwapAndForwardedEth',
       mayanProtocol: swapAndForwardedEth.mayanProtocol,
       protocolData: swapAndForwardedEth.mayanData,
-      tokenInFromEvent: Address32.NATIVE,
-      amountInFromEvent: swapAndForwardedEth.amountIn,
+      tokenInFromEvent: Address32.from(swapAndForwardedEth.middleToken),
+      amountInFromEvent: swapAndForwardedEth.middleAmount,
     }
   }
 
@@ -206,8 +206,8 @@ function normalizeForwarderLog(log: Log): NormalizedForwarderLog | undefined {
       kind: 'SwapAndForwardedERC20',
       mayanProtocol: swapAndForwardedERC20.mayanProtocol,
       protocolData: swapAndForwardedERC20.mayanData,
-      tokenInFromEvent: Address32.from(swapAndForwardedERC20.tokenIn),
-      amountInFromEvent: swapAndForwardedERC20.amountIn,
+      tokenInFromEvent: tokenOutOrNative(swapAndForwardedERC20.middleToken),
+      amountInFromEvent: swapAndForwardedERC20.middleAmount,
     }
   }
 }
@@ -226,7 +226,7 @@ function resolveTokenIn(
     )
   }
 
-  // SwapAndForwarded events always carry user-side input token/amount in the event.
+  // SwapAndForwarded events carry the token/amount closest to the bridged asset.
   return normalized.tokenInFromEvent ?? decodedData.tokenIn ?? Address32.NATIVE
 }
 

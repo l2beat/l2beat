@@ -153,7 +153,7 @@ type MayanForwardedEvent = InteropEvent<{
 }>
 
 // Transfer context hierarchy:
-// 1) Protocol/event context (tokenIn/amountIn, tx.value, native token rule => never burn/mint)
+// 1) Protocol/event context (for SwapAnd logs this is middleToken/middleAmount)
 // 2) Wrapped-native Withdrawal (for native-out fulfillment)
 // 3) ERC20 Transfer logs only if token or burn/mint context is still missing
 function findBestTransferForContext(
@@ -576,7 +576,7 @@ function matchFulfilledOrder(
       srcWasBurned,
       dstWasMinted,
       extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
-      bridgeType: 'nonMinting'
+      bridgeType: 'nonMinting',
     }),
   ]
 }
