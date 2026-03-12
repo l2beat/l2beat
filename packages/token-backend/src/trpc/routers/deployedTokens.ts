@@ -1,6 +1,6 @@
 import type { TokenDatabase } from '@l2beat/database'
 import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { Address32, Address32, assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
 import { InteropTransferClassifier } from '../../../../shared/build'
@@ -340,7 +340,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         const [chain, address, abstractTokenId] = value.split(':')
         return {
           chain,
-          address: address.slice(0, 2) + address.slice(-40),
+          address: Address32.cropToEthereumAddress(Address32(address)),
           abstractTokenId,
         }
       })
