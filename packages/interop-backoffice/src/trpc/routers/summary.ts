@@ -3,6 +3,7 @@ import type {
   InteropEventDetails,
   InteropEventKind,
   InteropEventStats,
+  InteropMissingTokenInfo,
   InteropMessageDetails,
   InteropMessageStats,
   InteropTransferDetails,
@@ -31,6 +32,7 @@ type Dependencies = {
     srcChain?: string
     dstChain?: string
   }) => Promise<InteropTransferDetails[]>
+  getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
 }
 
 const InteropEventDetailsRequest = v.object({
@@ -78,4 +80,7 @@ export const createSummaryRouter = (deps: Dependencies) =>
       .query(({ input }) => {
         return deps.getInteropTransferDetails(input)
       }),
+    missingTokens: publicProcedure.query(() => {
+      return deps.getInteropMissingTokensInfo()
+    }),
   })

@@ -12,3 +12,5 @@ export type SummaryTransferDetailsRow =
   RouterOutputs['summary']['transfersDetails'][number]
 export type SummaryTransferPairRow = SummaryTransferRow['chains'][number]
 export type SummaryChainMetadata = RouterOutputs['chains']['metadata'][number]
+export type SummaryMissingTokenRow =
+  RouterOutputs['summary']['missingTokens'][number]

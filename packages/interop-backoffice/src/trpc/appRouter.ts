@@ -4,6 +4,7 @@ import type {
   InteropEventDetails,
   InteropEventKind,
   InteropEventStats,
+  InteropMissingTokenInfo,
   InteropMessageDetails,
   InteropMessageStats,
   InteropTransferDetails,
@@ -37,6 +38,7 @@ interface AppRouterDeps {
     srcChain?: string
     dstChain?: string
   }) => Promise<InteropTransferDetails[]>
+  getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
   getInteropChainMetadata: () => Promise<InteropChainMetadata[]>
 }
 

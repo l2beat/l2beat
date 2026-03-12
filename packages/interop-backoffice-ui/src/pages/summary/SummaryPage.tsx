@@ -16,6 +16,7 @@ import { SummarySubnav } from './components/SummarySubnav'
 import type {
   SummaryEventRow,
   SummaryMessageRow,
+  SummaryMissingTokenRow,
   SummaryTransferRow,
 } from './table/types'
 
@@ -47,17 +48,36 @@ export function SummaryPage() {
     isFetching: isTransfersFetching,
   } = api.summary.transfers.useQuery()
 
+  const {
+    data: missingTokensData,
+    isLoading: isMissingTokensLoading,
+    isError: isMissingTokensError,
+    error: missingTokensError,
+    refetch: refetchMissingTokens,
+    isFetching: isMissingTokensFetching,
+  } = api.summary.missingTokens.useQuery()
+
   const refetchAll = async () => {
-    await Promise.all([refetchEvents(), refetchMessages(), refetchTransfers()])
+    await Promise.all([
+      refetchEvents(),
+      refetchMessages(),
+      refetchTransfers(),
+      refetchMissingTokens(),
+    ])
   }
 
   const eventRows: SummaryEventRow[] = eventsData ?? []
   const messageRows: SummaryMessageRow[] = messagesData ?? []
   const transferRows: SummaryTransferRow[] = transfersData ?? []
+  const missingTokenRows: SummaryMissingTokenRow[] = missingTokensData ?? []
   const totalEvents = eventRows.reduce((sum, row) => sum + row.count, 0)
   const unmatchedEvents = eventRows.reduce((sum, row) => sum + row.unmatched, 0)
   const totalMessages = messageRows.reduce((sum, row) => sum + row.count, 0)
   const totalTransfers = transferRows.reduce((sum, row) => sum + row.count, 0)
+  const totalMissingTokenRecords = missingTokenRows.reduce(
+    (sum, row) => sum + row.count,
+    0,
+  )
   const knownAppMessages = messageRows.reduce(
     (sum, row) => sum + row.knownAppCount,
     0,
@@ -82,12 +102,18 @@ export function SummaryPage() {
               size="sm"
               onClick={() => void refetchAll()}
               disabled={
-                isEventsFetching || isMessagesFetching || isTransfersFetching
+                isEventsFetching ||
+                isMessagesFetching ||
+                isTransfersFetching ||
+                isMissingTokensFetching
               }
             >
               <RefreshCwIcon
                 className={
-                  isEventsFetching || isMessagesFetching || isTransfersFetching
+                  isEventsFetching ||
+                  isMessagesFetching ||
+                  isTransfersFetching ||
+                  isMissingTokensFetching
                     ? 'animate-spin'
                     : ''
                 }
@@ -103,9 +129,19 @@ export function SummaryPage() {
             <Badge variant="secondary">
               {transferRows.length} transfer types
             </Badge>
+            <Badge
+              variant={
+                missingTokenRows.length > 0 ? 'destructive' : 'secondary'
+              }
+            >
+              {missingTokenRows.length} missing tokens
+            </Badge>
             <Badge variant="secondary">{totalEvents} total events</Badge>
             <Badge variant="secondary">{totalMessages} total messages</Badge>
             <Badge variant="secondary">{totalTransfers} total transfers</Badge>
+            <Badge variant="secondary">
+              {totalMissingTokenRecords} missing transfer sides
+            </Badge>
             <Badge variant={unmatchedEvents > 0 ? 'destructive' : 'secondary'}>
               {unmatchedEvents} unmatched
             </Badge>
@@ -132,10 +168,16 @@ export function SummaryPage() {
             <Button asChild variant="outline" size="sm">
               <Link to="/summary/transfers">Open transfers</Link>
             </Button>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/summary/missing-tokens">Open missing tokens</Link>
+            </Button>
           </CardContent>
         </Card>
 
-        {isEventsLoading || isMessagesLoading || isTransfersLoading ? (
+        {isEventsLoading ||
+        isMessagesLoading ||
+        isTransfersLoading ||
+        isMissingTokensLoading ? (
           <LoadingState className="m-2" />
         ) : null}
         {isEventsError ? (
@@ -151,6 +193,11 @@ export function SummaryPage() {
         {isTransfersError ? (
           <div className="px-2 text-destructive text-sm">
             Failed to load summary transfers: {transfersError.message}
+          </div>
+        ) : null}
+        {isMissingTokensError ? (
+          <div className="px-2 text-destructive text-sm">
+            Failed to load summary missing tokens: {missingTokensError.message}
           </div>
         ) : null}
       </div>

@@ -120,3 +120,10 @@ export type InteropTransferDetails = {
   dstValueUsd?: number
   dstWasMinted?: boolean
 }
+
+export type InteropMissingTokenInfo = {
+  chain: string
+  tokenAddress: string
+  count: number
+  plugins: string[]
+}

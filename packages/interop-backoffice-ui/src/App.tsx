@@ -8,6 +8,7 @@ import { SummaryEventDetailsPage } from './pages/summary/events/SummaryEventDeta
 import { SummaryEventsPage } from './pages/summary/events/SummaryEventsPage'
 import { SummaryMessageDetailsPage } from './pages/summary/messages/SummaryMessageDetailsPage'
 import { SummaryMessagesPage } from './pages/summary/messages/SummaryMessagesPage'
+import { SummaryMissingTokensPage } from './pages/summary/missing-tokens/SummaryMissingTokensPage'
 import { SummaryPage } from './pages/summary/SummaryPage'
 import { SummaryTransferDetailsPage } from './pages/summary/transfers/SummaryTransferDetailsPage'
 import { SummaryTransfersPage } from './pages/summary/transfers/SummaryTransfersPage'
@@ -44,6 +45,10 @@ export function App() {
             <Route
               path="/summary/transfers"
               element={<SummaryTransfersPage />}
+            />
+            <Route
+              path="/summary/missing-tokens"
+              element={<SummaryMissingTokensPage />}
             />
             <Route
               path="/summary/transfers/:type"

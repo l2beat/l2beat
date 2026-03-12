@@ -4,6 +4,7 @@ import {
   MessageSquareIcon,
   PanelsTopLeftIcon,
   RefreshCw,
+  View,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -42,6 +43,11 @@ const items = [
         title: 'Transfers',
         url: '/summary/transfers',
         icon: ArrowRightLeftIcon,
+      },
+      {
+        title: 'Missing tokens',
+        url: '/summary/missing-tokens',
+        icon: View,
       },
     ],
   },

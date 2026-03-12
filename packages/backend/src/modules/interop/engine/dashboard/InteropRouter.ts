@@ -93,6 +93,9 @@ export function createInteropRouter(
       getInteropTransferDetails: (input) => {
         return getInteropTransferDetails(db, input)
       },
+      getInteropMissingTokensInfo: () => {
+        return db.interopTransfer.getMissingTokensInfo()
+      },
       getInteropChainMetadata: () => {
         return Promise.resolve(
           INTEROP_CHAINS.map((chain) => ({

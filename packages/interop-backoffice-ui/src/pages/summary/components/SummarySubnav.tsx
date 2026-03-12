@@ -22,6 +22,11 @@ const items = [
     to: '/summary/transfers',
     activePrefixes: ['/summary/transfers', '/interop/transfers'],
   },
+  {
+    label: 'Missing tokens',
+    to: '/summary/missing-tokens',
+    activePrefixes: ['/summary/missing-tokens'],
+  },
 ]
 
 function isItemActive(pathname: string, item: (typeof items)[number]): boolean {
