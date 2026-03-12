@@ -279,13 +279,11 @@ export function createInteropRouter(
     const { pluginName, resyncRequestedFrom } = payload
 
     const defaultFrom = resyncRequestedFrom['*']
-    const existingChains = (
-      await db.interopPluginSyncState.findByPluginName(pluginName)
-    ).map((r) => r.chain)
+    const chains = syncersManager.getChainsForPlugin(pluginName)
 
     const updatedChains = new Set<string>()
     await db.transaction(async () => {
-      for (const chain of existingChains) {
+      for (const chain of chains) {
         const resyncFrom = resyncRequestedFrom[chain] ?? defaultFrom
         if (resyncFrom) {
           await db.interopPluginSyncState.setResyncRequestedFrom(
@@ -301,6 +299,29 @@ export function createInteropRouter(
     ctx.body = {
       updatedChains: Array.from(updatedChains),
     }
+  })
+
+  router.post('/interop/restart-from-now', async (ctx) => {
+    const payload = v
+      .object({ pluginName: v.string() })
+      .validate(ctx.request.body)
+    const { pluginName } = payload
+
+    const chains = syncersManager.getChainsForPlugin(pluginName)
+
+    await db.transaction(async () => {
+      for (const chain of chains) {
+        await db.interopPluginSyncState.upsert({
+          pluginName,
+          chain,
+          lastError: null,
+          resyncRequestedFrom: null,
+          wipeRequired: true,
+        })
+      }
+    })
+
+    ctx.body = { updatedChains: chains }
   })
 
   router.post('/interop/refresh-financials', async (ctx) => {

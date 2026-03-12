@@ -484,16 +484,16 @@ describe(CatchingUpState.name, () => {
       )
     })
 
-    it('throws when no synced range and no resync timestamp', async () => {
+    it('transitions to FollowingState when no synced range and no resync timestamp', async () => {
       const syncer = createSyncer({
         latestBlockNumber: 10n,
         getLastSyncedRange: mockFn().resolvesTo(undefined),
       })
       const state = new CatchingUpState(syncer, Logger.SILENT)
 
-      await expect(async () => await state.catchUp()).toBeRejectedWith(
-        `Can't resync ${CLUSTER_NAME} cluster without "from" timestamp`,
-      )
+      const nextState = await state.catchUp()
+
+      expect(nextState).toBeA(FollowingState)
     })
   })
 })

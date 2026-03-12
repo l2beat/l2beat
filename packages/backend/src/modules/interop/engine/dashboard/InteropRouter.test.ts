@@ -57,29 +57,6 @@ describe(createInteropRouter.name, () => {
         Database['interopPluginSyncState']
       >({
         setResyncRequestedFrom,
-        findByPluginName: mockFn().resolvesTo([
-          {
-            pluginName: 'plugin',
-            chain: 'chain-a',
-            lastError: null,
-            resyncRequestedFrom: null,
-            wipeRequired: false,
-          },
-          {
-            pluginName: 'plugin',
-            chain: 'chain-b',
-            lastError: null,
-            resyncRequestedFrom: null,
-            wipeRequired: false,
-          },
-          {
-            pluginName: 'plugin',
-            chain: 'chain-c',
-            lastError: null,
-            resyncRequestedFrom: null,
-            wipeRequired: false,
-          },
-        ]),
       })
       const db = mockObject<Database>({
         interopPluginSyncState,
@@ -87,6 +64,7 @@ describe(createInteropRouter.name, () => {
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         getPluginSyncStatuses: mockFn().resolvesTo([]),
+        getChainsForPlugin: mockFn().returns(['chain-a', 'chain-b', 'chain-c']),
       })
 
       const router = createInteropRouter(
