@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@koa/router": "^12.0.0",
+    "@l2beat/interop-backoffice": "workspace:*",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",

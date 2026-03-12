@@ -1,6 +1,11 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import {
+  createAppRouter,
+  createKoaMiddleware,
+  createTRPCContext,
+} from '@l2beat/interop-backoffice'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -59,6 +64,19 @@ export function createInteropRouter(
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })
+
+  const trpcMiddleware = createKoaMiddleware({
+    router: createAppRouter({}),
+    prefix: '/interop/trpc',
+    allowMethodOverride: true,
+    createContext: ({ req }) =>
+      createTRPCContext({
+        headers: new Headers(req.headers as Record<string, string>),
+        db,
+      }),
+  })
+
+  router.all(['/interop/trpc', '/interop/trpc/(.*)'], trpcMiddleware)
 
   router.get('/interop/configs', async (ctx) => {
     const configs = await db.interopConfig.getAllLatest()
