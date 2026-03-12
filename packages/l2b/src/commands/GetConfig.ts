@@ -4,6 +4,54 @@ import { command, positional, string } from 'cmd-ts'
 
 // e.g. `l2b getconfig base | jq 'del(.contracts, .permissions, .tvsConfig, .activityConfig, .trackedTxsConfig)' > base.config.json`
 
+type NonBasicProjectKey = Exclude<
+  keyof BaseProject,
+  'id' | 'slug' | 'name' | 'shortName' | 'addedAt'
+>
+
+// ugh
+const ALL_PROJECT_OPTIONAL_KEYS = [
+  'statuses',
+  'display',
+  'colors',
+  'ecosystemColors',
+  'milestones',
+  'chainConfig',
+  'escrows',
+  'bridgeInfo',
+  'bridgeRisks',
+  'bridgeTechnology',
+  'scalingInfo',
+  'scalingStage',
+  'scalingRisks',
+  'scalingDa',
+  'scalingTechnology',
+  'daLayer',
+  'daBridge',
+  'customDa',
+  'interopConfig',
+  'tvsInfo',
+  'tvsConfig',
+  'activityConfig',
+  'livenessInfo',
+  'livenessConfig',
+  'costsInfo',
+  'trackedTxsConfig',
+  'daTrackingConfig',
+  'ecosystemInfo',
+  'ecosystemConfig',
+  'zkCatalogInfo',
+  'permissions',
+  'contracts',
+  'discoveryInfo',
+  'isScaling',
+  'isInteropProtocol',
+  'isDaLayer',
+  'isUpcoming',
+  'archivedAt',
+  'hasTestnet',
+] satisfies NonBasicProjectKey[]
+
 export const GetConfig = command({
   name: 'getconfig',
   description: 'Print the current processed config of a project as JSON.',
@@ -13,7 +61,10 @@ export const GetConfig = command({
   handler: async (args) => {
     const ps = new ProjectService()
     const [project, allProjects] = await Promise.all([
-      ps.getProject({ id: ProjectId(args.project) }),
+      ps.getProject({
+        id: ProjectId(args.project),
+        optional: [...ALL_PROJECT_OPTIONAL_KEYS],
+      }),
       ps.getProjects({ select: ['display'] }),
     ])
 
