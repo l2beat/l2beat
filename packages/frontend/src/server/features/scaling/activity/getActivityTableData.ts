@@ -29,11 +29,17 @@ interface MetricData {
   }
 }
 
+interface TotalCountData {
+  value: number
+  sinceTimestamp: number
+}
+
 export type ActivityProjectTableData = {
   tps: MetricData
   uops: MetricData
   ratio: number
   syncState: SyncState
+  totalCount?: TotalCountData
 }
 type ActivityTableData = Record<string, ActivityProjectTableData | undefined>
 
@@ -48,18 +54,23 @@ export async function getActivityTable(
   const range = optionToRange('30d')
   const [from, to] = await getFullySyncedActivityRange(range)
   assert(from !== null, 'its null')
-  const [records, maxCounts, syncMetadataRecords] = await Promise.all([
-    db.activity.getByProjectsAndTimeRange(
-      [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
-      [from - 30 * UnixTime.DAY, to],
-    ),
+  const [records, maxCounts, syncMetadataRecords, totalCounts] =
+    await Promise.all([
+      db.activity.getByProjectsAndTimeRange(
+        [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
+        [from - 30 * UnixTime.DAY, to],
+      ),
 
-    db.activity.getMaxCountsForProjects(),
-    db.syncMetadata.getByFeatureAndIds('activity', [
-      ProjectId.ETHEREUM,
-      ...projects.map((p) => p.id),
-    ]),
-  ])
+      db.activity.getMaxCountsForProjects(),
+      db.syncMetadata.getByFeatureAndIds('activity', [
+        ProjectId.ETHEREUM,
+        ...projects.map((p) => p.id),
+      ]),
+      db.activity.getTpsTotalsForProjects([
+        ProjectId.ETHEREUM,
+        ...projects.map((p) => p.id),
+      ]),
+    ])
 
   const [recentRecords, thirtyDaysAgoRecords] = partition(
     records,
@@ -89,6 +100,7 @@ export async function getActivityTable(
       }
 
       const syncState = getActivitySyncState(syncMetadata, to)
+      const totalCount = totalCounts[ProjectId(projectId)]
       const syncedUntil = getActivityAdjustedTimestamp(syncState.syncedUntil)
       const pastDayData = records.find((r) => r.timestamp === syncedUntil)
       const sevenDaysAgoData = records.find(
@@ -148,6 +160,12 @@ export async function getActivityTable(
             pastDayData?.count ?? 0,
           ),
           syncState,
+          totalCount: totalCount
+            ? {
+                value: totalCount.count,
+                sinceTimestamp: totalCount.sinceTimestamp,
+              }
+            : undefined,
         },
       ]
     }),
@@ -199,6 +217,10 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           isSynced: true,
           syncedUntil: UnixTime.now(),
           target: UnixTime.now(),
+        },
+        totalCount: {
+          value: 50000,
+          sinceTimestamp: UnixTime.now() - 365 * UnixTime.DAY,
         },
       },
     ]),

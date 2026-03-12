@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import keyBy from 'lodash/keyBy'
 import { BaseRepository } from '../BaseRepository'
 import type { Activity } from '../kysely/generated/types'
 
@@ -187,6 +188,42 @@ export class ActivityRepository extends BaseRepository {
           countTimestamp: UnixTime.fromDate(row.count_timestamp),
         },
       ]),
+    )
+  }
+
+  async getTpsTotalsForProjects(projectIds: ProjectId[]): Promise<
+    Record<
+      ProjectId,
+      {
+        count: number
+        sinceTimestamp: UnixTime
+      }
+    >
+  > {
+    if (projectIds.length === 0) return {}
+
+    const rows = await this.db
+      .selectFrom('Activity')
+      .select([
+        'projectId',
+        (eb) => eb.fn.sum('count').as('total_count'),
+        (eb) => eb.fn.min('timestamp').as('since_timestamp'),
+      ])
+      .where(
+        'projectId',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .groupBy('projectId')
+      .execute()
+
+    return keyBy(
+      rows.map((row) => ({
+        projectId: ProjectId(row.projectId),
+        count: Number(row.total_count),
+        sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
+      })),
+      (p) => p.projectId,
     )
   }
 
