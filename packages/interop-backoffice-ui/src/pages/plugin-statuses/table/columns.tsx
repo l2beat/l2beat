@@ -1,5 +1,5 @@
 import type { ColumnDef, HeaderContext } from '@tanstack/react-table'
-import { ArrowUpDownIcon } from 'lucide-react'
+import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import type { PluginStatus } from './types'
@@ -13,6 +13,8 @@ function SortableHeader(
   props: HeaderContext<PluginStatus, unknown> & { label: string },
 ) {
   const { column, label } = props
+  const sortState = column.getIsSorted()
+
   return (
     <Button
       variant="ghost"
@@ -21,7 +23,13 @@ function SortableHeader(
       onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
     >
       {label}
-      <ArrowUpDownIcon />
+      {sortState === 'asc' ? (
+        <ArrowUpIcon className="text-primary" />
+      ) : sortState === 'desc' ? (
+        <ArrowDownIcon className="text-primary" />
+      ) : (
+        <ArrowUpDownIcon className="opacity-50" />
+      )}
     </Button>
   )
 }
