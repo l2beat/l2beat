@@ -10,7 +10,7 @@ import { cn } from '~/utils/cn'
 export function TechStackTag({
   tag,
   withoutTooltip,
-  displayType,
+  displayType = 'name',
   className,
 }: {
   tag: ZkCatalogTag
@@ -28,7 +28,7 @@ export function TechStackTag({
             className,
           )}
         >
-          {displayType === 'type' ? tag.type : tag.name}
+          {tag[displayType]}
         </div>
       </TooltipTrigger>
       <TooltipContent>
