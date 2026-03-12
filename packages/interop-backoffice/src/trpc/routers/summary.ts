@@ -3,6 +3,7 @@ import type {
   InteropAggregates,
   InteropAnomaliesOverview,
   InteropAnomalySeries,
+  InteropCoveragePies,
   InteropEventDetails,
   InteropEventKind,
   InteropEventStats,
@@ -38,6 +39,7 @@ type Dependencies = {
   }) => Promise<InteropTransferDetails[]>
   getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
   getInteropKnownAppsPerPlugin: () => Promise<InteropKnownAppsPerPlugin[]>
+  getInteropCoveragePies: () => Promise<InteropCoveragePies>
   getInteropAggregates: () => Promise<InteropAggregates | null>
   getInteropAnomalies: () => Promise<InteropAnomaliesOverview>
   getInteropAnomalySeries: (id: string) => Promise<InteropAnomalySeries>
@@ -97,6 +99,9 @@ export const createSummaryRouter = (deps: Dependencies) =>
     }),
     knownApps: publicProcedure.query(() => {
       return deps.getInteropKnownAppsPerPlugin()
+    }),
+    coveragePies: publicProcedure.query(() => {
+      return deps.getInteropCoveragePies()
     }),
     aggregates: publicProcedure.query(() => {
       return deps.getInteropAggregates()

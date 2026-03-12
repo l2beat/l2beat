@@ -168,6 +168,33 @@ export type InteropAggregates = {
   durationSplitCoverage: InteropAggregateDurationSplitCoverage[]
 }
 
+export type InteropCoveragePieSlice = {
+  label: string
+  rawChains: string[]
+  isSupported: boolean
+  count: number
+  pctOfTotal: number
+  color: string
+}
+
+export type InteropCoveragePieChart = {
+  id: string
+  title: string
+  centerLabel: string
+  totalCount: number
+  supportedCount: number
+  unsupportedCount: number
+  supportedPct: number
+  unsupportedPct: number
+  slices: InteropCoveragePieSlice[]
+}
+
+export type InteropCoveragePies = {
+  collapseThresholdPct: number
+  generatedAt: string
+  charts: InteropCoveragePieChart[]
+}
+
 export type InteropAnomalyZScore = {
   robust: number | null
   classic: number | null

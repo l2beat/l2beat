@@ -3,6 +3,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { INTEROP_CHAINS } from '@l2beat/config'
 import type {
   Database,
+  InteropEventSupportBreakdownRecord,
   InteropSuspiciousTransferRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
@@ -116,6 +117,9 @@ export function createInteropRouter(
       getInteropKnownAppsPerPlugin: () => {
         return getInteropKnownAppsPerPlugin(db)
       },
+      getInteropCoveragePies: () => {
+        return getInteropCoveragePies(db)
+      },
       getInteropAggregates: () => {
         return getInteropAggregates(db, config)
       },
@@ -208,62 +212,10 @@ export function createInteropRouter(
   })
 
   const buildCoveragePiesPage = async () => {
-    const chartConfigs = [
-      {
-        id: 'layerzero-packet-oft-sent',
-        title: 'layerzero-v2.PacketOFTSent destination chains',
-        centerLabel: 'PacketOFTSent events',
-        type: 'layerzero-v2.PacketOFTSent',
-        chainArg: '$dstChain' as const,
-      },
-      {
-        id: 'layerzero-packet-oft-delivered',
-        title: 'layerzero-v2.PacketOFTDelivered source chains',
-        centerLabel: 'PacketOFTDelivered events',
-        type: 'layerzero-v2.PacketOFTDelivered',
-        chainArg: '$srcChain' as const,
-      },
-      {
-        id: 'relay-token-sent',
-        title: 'relay.TokenSent destination chains',
-        centerLabel: 'relay.TokenSent events',
-        type: 'relay.TokenSent',
-        chainArg: '$dstChain' as const,
-      },
-      {
-        id: 'relay-token-received',
-        title: 'relay.TokenReceived source chains',
-        centerLabel: 'relay.TokenReceived events',
-        type: 'relay.TokenReceived',
-        chainArg: '$srcChain' as const,
-      },
-      {
-        id: 'ccip-send-requested',
-        title: 'ccip.CCIPSendRequested destination chains',
-        centerLabel: 'CCIPSendRequested events',
-        type: 'ccip.CCIPSendRequested',
-        chainArg: '$dstChain' as const,
-      },
-      {
-        id: 'ccip-execution-state-changed',
-        title: 'ccip.ExecutionStateChanged source chains',
-        centerLabel: 'ExecutionStateChanged events',
-        type: 'ccip.ExecutionStateChanged',
-        chainArg: '$srcChain' as const,
-      },
-    ]
-
-    const rows = await Promise.all(
-      chartConfigs.map((chart) =>
-        db.interopEvent.getSupportBreakdownByChainArg(
-          chart.type,
-          chart.chainArg,
-        ),
-      ),
-    )
+    const rows = await getInteropCoverageBreakdownRows(db)
 
     return renderSupportChartsPage({
-      charts: chartConfigs.map((chart, i) => ({
+      charts: COVERAGE_PIE_CHART_CONFIGS.map((chart, i) => ({
         id: chart.id,
         title: chart.title,
         centerLabel: chart.centerLabel,
@@ -720,6 +672,255 @@ function mapInteropTransferDetails(transfer: InteropTransferRecord) {
     dstAmount: transfer.dstAmount,
     dstValueUsd: transfer.dstValueUsd,
     dstWasMinted: transfer.dstWasMinted,
+  }
+}
+
+const COVERAGE_COLLAPSE_THRESHOLD_PCT = 2
+
+const COVERAGE_CHAIN_ALIASES: Record<string, string> = {
+  Unknown_792703809: 'solana',
+  Unknown_30367: 'hyperevm',
+  Unknown_30383: 'plasma',
+  Unknown_30385: 'dinari',
+  Unknown_30390: 'monad',
+  Unknown_30396: 'stable',
+  Unknown_30292: 'etherlink',
+  Unknown_30403: 'citrea',
+  Unknown_30420: 'tron',
+  Unknown_30362: 'berachain',
+}
+
+const COVERAGE_PIE_CHART_CONFIGS = [
+  {
+    id: 'layerzero-packet-oft-sent',
+    title: 'layerzero-v2.PacketOFTSent destination chains',
+    centerLabel: 'PacketOFTSent events',
+    type: 'layerzero-v2.PacketOFTSent',
+    chainArg: '$dstChain' as const,
+  },
+  {
+    id: 'layerzero-packet-oft-delivered',
+    title: 'layerzero-v2.PacketOFTDelivered source chains',
+    centerLabel: 'PacketOFTDelivered events',
+    type: 'layerzero-v2.PacketOFTDelivered',
+    chainArg: '$srcChain' as const,
+  },
+  {
+    id: 'relay-token-sent',
+    title: 'relay.TokenSent destination chains',
+    centerLabel: 'relay.TokenSent events',
+    type: 'relay.TokenSent',
+    chainArg: '$dstChain' as const,
+  },
+  {
+    id: 'relay-token-received',
+    title: 'relay.TokenReceived source chains',
+    centerLabel: 'relay.TokenReceived events',
+    type: 'relay.TokenReceived',
+    chainArg: '$srcChain' as const,
+  },
+  {
+    id: 'ccip-send-requested',
+    title: 'ccip.CCIPSendRequested destination chains',
+    centerLabel: 'CCIPSendRequested events',
+    type: 'ccip.CCIPSendRequested',
+    chainArg: '$dstChain' as const,
+  },
+  {
+    id: 'ccip-execution-state-changed',
+    title: 'ccip.ExecutionStateChanged source chains',
+    centerLabel: 'ExecutionStateChanged events',
+    type: 'ccip.ExecutionStateChanged',
+    chainArg: '$srcChain' as const,
+  },
+]
+
+type InteropCoveragePieSlice = {
+  label: string
+  rawChains: string[]
+  isSupported: boolean
+  count: number
+  pctOfTotal: number
+  color: string
+}
+
+type InteropCoveragePieChart = {
+  id: string
+  title: string
+  centerLabel: string
+  totalCount: number
+  supportedCount: number
+  unsupportedCount: number
+  supportedPct: number
+  unsupportedPct: number
+  slices: InteropCoveragePieSlice[]
+}
+
+function resolveCoverageChainAlias(chain: string): string {
+  return COVERAGE_CHAIN_ALIASES[chain] ?? chain
+}
+
+function coverageHsl(h: number, s: number, l: number): string {
+  return `hsl(${h} ${s}% ${l}%)`
+}
+
+function addCoverageSliceColors(
+  rows: Omit<InteropCoveragePieSlice, 'color'>[],
+): InteropCoveragePieSlice[] {
+  const supported = rows.filter((row) => row.isSupported)
+  const unsupported = rows.filter((row) => !row.isSupported)
+
+  let supportedIndex = 0
+  let unsupportedIndex = 0
+
+  return rows.map((row) => {
+    if (row.isSupported) {
+      const t =
+        supported.length <= 1 ? 0.5 : supportedIndex / (supported.length - 1)
+      supportedIndex++
+      return { ...row, color: coverageHsl(136, 65, 30 + t * 40) }
+    }
+
+    const t =
+      unsupported.length <= 1
+        ? 0.5
+        : unsupportedIndex / (unsupported.length - 1)
+    unsupportedIndex++
+    return { ...row, color: coverageHsl(0, 75, 30 + t * 40) }
+  })
+}
+
+function getInteropCoverageBreakdownRows(db: Database) {
+  return Promise.all(
+    COVERAGE_PIE_CHART_CONFIGS.map((chart) =>
+      db.interopEvent.getSupportBreakdownByChainArg(chart.type, chart.chainArg),
+    ),
+  )
+}
+
+function buildCoveragePieChartData(input: {
+  id: string
+  title: string
+  centerLabel: string
+  rows: InteropEventSupportBreakdownRecord[]
+}): InteropCoveragePieChart {
+  const grouped = new Map<
+    string,
+    {
+      count: number
+      supportedCount: number
+      unsupportedCount: number
+      rawChains: Set<string>
+    }
+  >()
+
+  for (const row of input.rows) {
+    const label = resolveCoverageChainAlias(row.chain)
+    const current = grouped.get(label) ?? {
+      count: 0,
+      supportedCount: 0,
+      unsupportedCount: 0,
+      rawChains: new Set<string>(),
+    }
+
+    current.count += row.count
+    if (row.isSupported) {
+      current.supportedCount += row.count
+    } else {
+      current.unsupportedCount += row.count
+    }
+    current.rawChains.add(row.chain)
+    grouped.set(label, current)
+  }
+
+  const merged = Array.from(grouped.entries())
+    .map(([label, value]) => ({
+      label,
+      rawChains: Array.from(value.rawChains).sort(),
+      count: value.count,
+      isSupported: value.unsupportedCount === 0,
+    }))
+    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+
+  const totalCount = merged.reduce((acc, row) => acc + row.count, 0)
+  const withPct = merged.map((row) => ({
+    ...row,
+    pctOfTotal: totalCount === 0 ? 0 : (100 * row.count) / totalCount,
+  }))
+
+  const large = withPct.filter(
+    (slice) => slice.pctOfTotal >= COVERAGE_COLLAPSE_THRESHOLD_PCT,
+  )
+  const small = withPct.filter(
+    (slice) => slice.pctOfTotal < COVERAGE_COLLAPSE_THRESHOLD_PCT,
+  )
+
+  const smallSupported = small.filter((slice) => slice.isSupported)
+  const smallUnsupported = small.filter((slice) => !slice.isSupported)
+
+  const collapsed: Omit<InteropCoveragePieSlice, 'color'>[] = [...large]
+
+  if (smallSupported.length > 0) {
+    const count = smallSupported.reduce((acc, slice) => acc + slice.count, 0)
+    collapsed.push({
+      label: `Other supported (<${COVERAGE_COLLAPSE_THRESHOLD_PCT}%, ${smallSupported.length} chains)`,
+      rawChains: smallSupported.flatMap((slice) => slice.rawChains),
+      isSupported: true,
+      count,
+      pctOfTotal: totalCount === 0 ? 0 : (100 * count) / totalCount,
+    })
+  }
+
+  if (smallUnsupported.length > 0) {
+    const count = smallUnsupported.reduce((acc, slice) => acc + slice.count, 0)
+    collapsed.push({
+      label: `Other unsupported (<${COVERAGE_COLLAPSE_THRESHOLD_PCT}%, ${smallUnsupported.length} chains)`,
+      rawChains: smallUnsupported.flatMap((slice) => slice.rawChains),
+      isSupported: false,
+      count,
+      pctOfTotal: totalCount === 0 ? 0 : (100 * count) / totalCount,
+    })
+  }
+
+  const slices = addCoverageSliceColors(
+    collapsed.sort(
+      (a, b) => b.count - a.count || a.label.localeCompare(b.label),
+    ),
+  )
+
+  const supportedCount = slices
+    .filter((slice) => slice.isSupported)
+    .reduce((acc, slice) => acc + slice.count, 0)
+  const unsupportedCount = totalCount - supportedCount
+
+  return {
+    id: input.id,
+    title: input.title,
+    centerLabel: input.centerLabel,
+    totalCount,
+    supportedCount,
+    unsupportedCount,
+    supportedPct: totalCount === 0 ? 0 : (100 * supportedCount) / totalCount,
+    unsupportedPct:
+      totalCount === 0 ? 0 : (100 * unsupportedCount) / totalCount,
+    slices,
+  }
+}
+
+async function getInteropCoveragePies(db: Database) {
+  const rowsByChart = await getInteropCoverageBreakdownRows(db)
+
+  return {
+    collapseThresholdPct: COVERAGE_COLLAPSE_THRESHOLD_PCT,
+    generatedAt: new Date().toISOString(),
+    charts: COVERAGE_PIE_CHART_CONFIGS.map((chart, index) =>
+      buildCoveragePieChartData({
+        id: chart.id,
+        title: chart.title,
+        centerLabel: chart.centerLabel,
+        rows: rowsByChart[index] ?? [],
+      }),
+    ),
   }
 }
 

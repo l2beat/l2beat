@@ -4,6 +4,7 @@ import type {
   InteropAnomaliesOverview,
   InteropAnomalySeries,
   InteropChainMetadata,
+  InteropCoveragePies,
   InteropEventDetails,
   InteropEventKind,
   InteropEventStats,
@@ -58,6 +59,7 @@ interface AppRouterDeps {
   }>
   getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
   getInteropKnownAppsPerPlugin: () => Promise<InteropKnownAppsPerPlugin[]>
+  getInteropCoveragePies: () => Promise<InteropCoveragePies>
   getInteropAggregates: () => Promise<InteropAggregates | null>
   getInteropAnomalies: () => Promise<InteropAnomaliesOverview>
   getInteropAnomalySeries: (id: string) => Promise<InteropAnomalySeries>

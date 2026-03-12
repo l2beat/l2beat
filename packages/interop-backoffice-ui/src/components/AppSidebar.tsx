@@ -9,6 +9,7 @@ import {
   Layers,
   MessageSquareIcon,
   PanelsTopLeftIcon,
+  PieChartIcon,
   RefreshCw,
   View,
 } from 'lucide-react'
@@ -100,6 +101,11 @@ const items = [
         title: 'Suspicious transfers',
         url: '/summary/anomalies/suspicious-transfers',
         icon: HatGlasses,
+      },
+      {
+        title: 'Coverage pies',
+        url: '/summary/coverage-pies',
+        icon: PieChartIcon,
       },
     ],
   },

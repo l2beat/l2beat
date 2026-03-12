@@ -188,6 +188,9 @@ export function SummaryPage() {
               <Link to="/summary/anomalies">Open anomalies</Link>
             </Button>
             <Button asChild variant="outline" size="sm">
+              <Link to="/summary/coverage-pies">Open coverage pies</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
               <Link to="/summary/events">Open events</Link>
             </Button>
             <Button asChild variant="outline" size="sm">

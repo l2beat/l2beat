@@ -30,6 +30,11 @@ const items = [
     ],
   },
   {
+    label: 'Coverage pies',
+    to: '/summary/coverage-pies',
+    activePrefixes: ['/summary/coverage-pies', '/interop/coverage-pies'],
+  },
+  {
     label: 'Events',
     to: '/summary/events',
     activePrefixes: ['/summary/events', '/interop/events'],
