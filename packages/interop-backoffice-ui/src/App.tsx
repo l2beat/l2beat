@@ -9,6 +9,7 @@ import { SummaryEventsPage } from './pages/summary/events/SummaryEventsPage'
 import { SummaryMessageDetailsPage } from './pages/summary/messages/SummaryMessageDetailsPage'
 import { SummaryMessagesPage } from './pages/summary/messages/SummaryMessagesPage'
 import { SummaryPage } from './pages/summary/SummaryPage'
+import { SummaryTransferDetailsPage } from './pages/summary/transfers/SummaryTransferDetailsPage'
 import { SummaryTransfersPage } from './pages/summary/transfers/SummaryTransfersPage'
 import { TRPCReactProvider } from './react-query/trpc'
 
@@ -43,6 +44,14 @@ export function App() {
             <Route
               path="/summary/transfers"
               element={<SummaryTransfersPage />}
+            />
+            <Route
+              path="/summary/transfers/:type"
+              element={<SummaryTransferDetailsPage />}
+            />
+            <Route
+              path="/interop/transfers/:type"
+              element={<SummaryTransferDetailsPage />}
             />
             <Route path="/plugin-statuses" element={<PluginStatusesPage />} />
             <Route path="/not-found" element={<NotFoundPage />} />

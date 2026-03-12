@@ -5,6 +5,7 @@ import type {
   InteropEventStats,
   InteropMessageDetails,
   InteropMessageStats,
+  InteropTransferDetails,
   InteropTransferStats,
 } from '../embeddings'
 import { publicProcedure } from '../procedures'
@@ -24,6 +25,12 @@ type Dependencies = {
     dstChain?: string
   }) => Promise<InteropMessageDetails[]>
   getInteropTransferStats: () => Promise<InteropTransferStats[]>
+  getInteropTransferDetails: (input: {
+    type: string
+    plugin?: string
+    srcChain?: string
+    dstChain?: string
+  }) => Promise<InteropTransferDetails[]>
 }
 
 const InteropEventDetailsRequest = v.object({
@@ -32,6 +39,13 @@ const InteropEventDetailsRequest = v.object({
 })
 
 const InteropMessageDetailsRequest = v.object({
+  type: v.string(),
+  plugin: v.string().optional(),
+  srcChain: v.string().optional(),
+  dstChain: v.string().optional(),
+})
+
+const InteropTransferDetailsRequest = v.object({
   type: v.string(),
   plugin: v.string().optional(),
   srcChain: v.string().optional(),
@@ -59,4 +73,9 @@ export const createSummaryRouter = (deps: Dependencies) =>
     transfers: publicProcedure.query(() => {
       return deps.getInteropTransferStats()
     }),
+    transfersDetails: publicProcedure
+      .input(InteropTransferDetailsRequest)
+      .query(({ input }) => {
+        return deps.getInteropTransferDetails(input)
+      }),
   })

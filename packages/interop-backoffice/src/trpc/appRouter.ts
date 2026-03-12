@@ -6,6 +6,7 @@ import type {
   InteropEventStats,
   InteropMessageDetails,
   InteropMessageStats,
+  InteropTransferDetails,
   InteropTransferStats,
   PluginStatus,
 } from './embeddings'
@@ -30,6 +31,12 @@ interface AppRouterDeps {
     dstChain?: string
   }) => Promise<InteropMessageDetails[]>
   getInteropTransferStats: () => Promise<InteropTransferStats[]>
+  getInteropTransferDetails: (input: {
+    type: string
+    plugin?: string
+    srcChain?: string
+    dstChain?: string
+  }) => Promise<InteropTransferDetails[]>
   getInteropChainMetadata: () => Promise<InteropChainMetadata[]>
 }
 

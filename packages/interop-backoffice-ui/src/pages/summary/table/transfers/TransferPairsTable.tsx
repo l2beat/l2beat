@@ -6,11 +6,13 @@ import { transferPairsColumns } from './pairs-columns'
 interface TransferPairsTableProps {
   data: SummaryTransferPairRow[]
   enableCsvExport?: boolean
+  onPairClick?: (row: SummaryTransferPairRow) => void
 }
 
 export function TransferPairsTable({
   data,
   enableCsvExport = false,
+  onPairClick,
 }: TransferPairsTableProps) {
   const { table, pageSizeOption, setPageSizeOption } = useTanStackTable({
     data,
@@ -29,7 +31,12 @@ export function TransferPairsTable({
       getCsvFilename={() =>
         `interop-transfer-chain-pairs-${new Date().toISOString()}.csv`
       }
-      rowClassName="odd:bg-muted/20 hover:bg-muted/70"
+      onRowClick={onPairClick ? (row) => onPairClick(row.original) : undefined}
+      rowClassName={
+        onPairClick
+          ? 'odd:bg-muted/20 hover:bg-muted/70 cursor-pointer'
+          : 'odd:bg-muted/20 hover:bg-muted/70'
+      }
     />
   )
 }

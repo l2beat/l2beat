@@ -1,5 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table'
+import { Link } from 'react-router-dom'
 import { SortableHeader } from '~/components/table/SortableHeader'
+import { buildTransferDetailsPath } from '../transfers-details/utils'
 import type { SummaryTransferRow } from '../types'
 import { formatDollars, formatDuration } from './utils'
 
@@ -21,6 +23,17 @@ export const transfersColumns: ColumnDef<SummaryTransferRow>[] = [
   {
     accessorKey: 'count',
     header: (props) => <SortableHeader {...props} label="Count" />,
+    cell: ({ row }) => (
+      <Link
+        className="underline underline-offset-4 hover:text-primary"
+        to={buildTransferDetailsPath({
+          type: row.original.type,
+          plugin: row.original.plugin,
+        })}
+      >
+        {row.original.count}
+      </Link>
+    ),
     meta: {
       csvHeader: 'Count',
     },

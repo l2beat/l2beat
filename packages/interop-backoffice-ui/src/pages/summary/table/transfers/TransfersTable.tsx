@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
 import { cn } from '~/utils/cn'
+import { buildTransferDetailsPath } from '../transfers-details/utils'
 import type { SummaryTransferRow } from '../types'
 import { transfersColumns } from './columns'
 import { TransferPairsTable } from './TransferPairsTable'
@@ -21,6 +23,7 @@ export function TransfersTable({
   enableCsvExport = false,
   enablePairsCsvExport = false,
 }: TransfersTableProps) {
+  const navigate = useNavigate()
   const [selectedRowId, setSelectedRowId] = useState<string>()
 
   const { table, pageSizeOption, setPageSizeOption } = useTanStackTable({
@@ -92,10 +95,23 @@ export function TransfersTable({
             <p className="text-muted-foreground text-xs">
               {selectedRow.chains.length} pairs available.
             </p>
+            <p className="text-muted-foreground text-xs">
+              Click a pair row to open detailed transfers for that route.
+            </p>
           </div>
           <TransferPairsTable
             data={selectedRow.chains}
             enableCsvExport={enablePairsCsvExport}
+            onPairClick={(pair) => {
+              navigate(
+                buildTransferDetailsPath({
+                  type: selectedRow.type,
+                  plugin: selectedRow.plugin,
+                  srcChain: pair.srcChain,
+                  dstChain: pair.dstChain,
+                }),
+              )
+            }}
           />
         </div>
       ) : null}

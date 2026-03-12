@@ -93,3 +93,30 @@ export type InteropTransferStats = {
   dstValueSum: number
   chains: InteropTransferChainStats[]
 }
+
+export type InteropTransferDetails = {
+  plugin: string
+  type: string
+  transferId: string
+  bridgeType?: string
+  duration: number
+  timestamp: number
+  srcChain: string
+  srcTxHash: string
+  srcLogIndex: number
+  srcTokenAddress?: string
+  srcAbstractTokenId?: string
+  srcSymbol?: string
+  srcAmount?: number
+  srcValueUsd?: number
+  srcWasBurned?: boolean
+  dstChain: string
+  dstTxHash: string
+  dstLogIndex: number
+  dstTokenAddress?: string
+  dstAbstractTokenId?: string
+  dstSymbol?: string
+  dstAmount?: number
+  dstValueUsd?: number
+  dstWasMinted?: boolean
+}

@@ -90,6 +90,9 @@ export function createInteropRouter(
       getInteropTransferStats: () => {
         return getTransfersStats(db)
       },
+      getInteropTransferDetails: (input) => {
+        return getInteropTransferDetails(db, input)
+      },
       getInteropChainMetadata: () => {
         return Promise.resolve(
           INTEROP_CHAINS.map((chain) => ({
@@ -618,6 +621,49 @@ async function getInteropMessageDetails(
     dstChain: message.dstChain,
     dstTxHash: message.dstTxHash,
     dstLogIndex: message.dstLogIndex,
+  }))
+}
+
+async function getInteropTransferDetails(
+  db: Database,
+  input: {
+    type: string
+    plugin?: string
+    srcChain?: string
+    dstChain?: string
+  },
+) {
+  const transfers = await db.interopTransfer.getByType(input.type, {
+    plugin: input.plugin,
+    srcChain: input.srcChain,
+    dstChain: input.dstChain,
+  })
+
+  return transfers.map((transfer) => ({
+    plugin: transfer.plugin,
+    type: transfer.type,
+    transferId: transfer.transferId,
+    bridgeType: transfer.bridgeType,
+    duration: transfer.duration,
+    timestamp: transfer.timestamp,
+    srcChain: transfer.srcChain,
+    srcTxHash: transfer.srcTxHash,
+    srcLogIndex: transfer.srcLogIndex,
+    srcTokenAddress: transfer.srcTokenAddress,
+    srcAbstractTokenId: transfer.srcAbstractTokenId,
+    srcSymbol: transfer.srcSymbol,
+    srcAmount: transfer.srcAmount,
+    srcValueUsd: transfer.srcValueUsd,
+    srcWasBurned: transfer.srcWasBurned,
+    dstChain: transfer.dstChain,
+    dstTxHash: transfer.dstTxHash,
+    dstLogIndex: transfer.dstLogIndex,
+    dstTokenAddress: transfer.dstTokenAddress,
+    dstAbstractTokenId: transfer.dstAbstractTokenId,
+    dstSymbol: transfer.dstSymbol,
+    dstAmount: transfer.dstAmount,
+    dstValueUsd: transfer.dstValueUsd,
+    dstWasMinted: transfer.dstWasMinted,
   }))
 }
 

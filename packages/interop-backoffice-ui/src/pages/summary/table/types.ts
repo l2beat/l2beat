@@ -8,5 +8,7 @@ export type SummaryMessageDetailsRow =
   RouterOutputs['summary']['messagesDetails'][number]
 export type SummaryMessagePairRow = SummaryMessageRow['chains'][number]
 export type SummaryTransferRow = RouterOutputs['summary']['transfers'][number]
+export type SummaryTransferDetailsRow =
+  RouterOutputs['summary']['transfersDetails'][number]
 export type SummaryTransferPairRow = SummaryTransferRow['chains'][number]
 export type SummaryChainMetadata = RouterOutputs['chains']['metadata'][number]

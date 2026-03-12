@@ -20,7 +20,7 @@ const items = [
   {
     label: 'Transfers',
     to: '/summary/transfers',
-    activePrefixes: ['/summary/transfers'],
+    activePrefixes: ['/summary/transfers', '/interop/transfers'],
   },
 ]
 
