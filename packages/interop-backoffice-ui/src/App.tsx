@@ -4,6 +4,7 @@ import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PluginStatusesPage } from './pages/plugin-statuses/PluginStatusesPage'
+import { ProcessorStatusesPage } from './pages/processor-statuses/ProcessorStatusesPage'
 import { SummaryEventDetailsPage } from './pages/summary/events/SummaryEventDetailsPage'
 import { SummaryEventsPage } from './pages/summary/events/SummaryEventsPage'
 import { SummaryKnownAppsPage } from './pages/summary/known-apps/SummaryKnownAppsPage'
@@ -64,6 +65,10 @@ export function App() {
               element={<SummaryTransferDetailsPage />}
             />
             <Route path="/plugin-statuses" element={<PluginStatusesPage />} />
+            <Route
+              path="/processor-statuses"
+              element={<ProcessorStatusesPage />}
+            />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

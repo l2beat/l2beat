@@ -8,6 +8,12 @@ export type PluginStatus = {
   resyncRequestedFrom?: number
 }
 
+export type ProcessorStatus = {
+  chain: string
+  block: number
+  timestamp: number
+}
+
 export type InteropEventStats = {
   type: string
   direction?: string

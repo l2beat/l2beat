@@ -1,6 +1,7 @@
 import {
   ArrowRightLeftIcon,
   BookCheck,
+  CpuIcon,
   InboxIcon,
   MessageSquareIcon,
   PanelsTopLeftIcon,
@@ -64,6 +65,11 @@ const items = [
         title: 'Resyncable plugins',
         url: '/plugin-statuses',
         icon: RefreshCw,
+      },
+      {
+        title: 'Processor statuses',
+        url: '/processor-statuses',
+        icon: CpuIcon,
       },
     ],
   },

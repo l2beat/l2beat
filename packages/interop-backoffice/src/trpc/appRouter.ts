@@ -11,6 +11,7 @@ import type {
   InteropTransferDetails,
   InteropTransferStats,
   PluginStatus,
+  ProcessorStatus,
 } from './embeddings'
 import { createChainsRouter } from './routers/chains'
 import { helloRouter } from './routers/hello'
@@ -39,6 +40,7 @@ interface AppRouterDeps {
     srcChain?: string
     dstChain?: string
   }) => Promise<InteropTransferDetails[]>
+  getInteropProcessorStatuses: () => Promise<ProcessorStatus[]>
   getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
   getInteropKnownAppsPerPlugin: () => Promise<InteropKnownAppsPerPlugin[]>
   getInteropChainMetadata: () => Promise<InteropChainMetadata[]>

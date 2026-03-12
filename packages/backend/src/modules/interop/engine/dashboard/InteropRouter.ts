@@ -93,6 +93,9 @@ export function createInteropRouter(
       getInteropTransferDetails: (input) => {
         return getInteropTransferDetails(db, input)
       },
+      getInteropProcessorStatuses: () => {
+        return Promise.resolve(getInteropProcessorStatuses(processors))
+      },
       getInteropMissingTokensInfo: () => {
         return db.interopTransfer.getMissingTokensInfo()
       },
@@ -502,6 +505,12 @@ function getProcessorsStatus(processors: InteropBlockProcessor[]) {
           },
         ]
       : [],
+  )
+}
+
+function getInteropProcessorStatuses(processors: InteropBlockProcessor[]) {
+  return getProcessorsStatus(processors).sort((a, b) =>
+    a.chain.localeCompare(b.chain),
   )
 }
 

@@ -196,6 +196,9 @@ export function SummaryPage() {
             <Button asChild variant="outline" size="sm">
               <Link to="/summary/missing-tokens">Open missing tokens</Link>
             </Button>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/processor-statuses">Open processor statuses</Link>
+            </Button>
           </CardContent>
         </Card>
 
