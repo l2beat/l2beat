@@ -96,6 +96,9 @@ export function createInteropRouter(
       getInteropMissingTokensInfo: () => {
         return db.interopTransfer.getMissingTokensInfo()
       },
+      getInteropKnownAppsPerPlugin: () => {
+        return getInteropKnownAppsPerPlugin(db)
+      },
       getInteropChainMetadata: () => {
         return Promise.resolve(
           INTEROP_CHAINS.map((chain) => ({
@@ -668,6 +671,17 @@ async function getInteropTransferDetails(
     dstValueUsd: transfer.dstValueUsd,
     dstWasMinted: transfer.dstWasMinted,
   }))
+}
+
+async function getInteropKnownAppsPerPlugin(db: Database) {
+  const rows = await db.interopMessage.getUniqueAppsPerPlugin()
+
+  return rows
+    .map((row) => ({
+      plugin: row.plugin,
+      apps: [...row.apps].sort((a, b) => a.localeCompare(b)),
+    }))
+    .sort((a, b) => a.plugin.localeCompare(b.plugin))
 }
 
 async function getTransfersStats(db: Database) {

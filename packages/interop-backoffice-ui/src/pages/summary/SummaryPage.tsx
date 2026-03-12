@@ -15,6 +15,7 @@ import { api } from '~/react-query/trpc'
 import { SummarySubnav } from './components/SummarySubnav'
 import type {
   SummaryEventRow,
+  SummaryKnownAppsRow,
   SummaryMessageRow,
   SummaryMissingTokenRow,
   SummaryTransferRow,
@@ -57,12 +58,22 @@ export function SummaryPage() {
     isFetching: isMissingTokensFetching,
   } = api.summary.missingTokens.useQuery()
 
+  const {
+    data: knownAppsData,
+    isLoading: isKnownAppsLoading,
+    isError: isKnownAppsError,
+    error: knownAppsError,
+    refetch: refetchKnownApps,
+    isFetching: isKnownAppsFetching,
+  } = api.summary.knownApps.useQuery()
+
   const refetchAll = async () => {
     await Promise.all([
       refetchEvents(),
       refetchMessages(),
       refetchTransfers(),
       refetchMissingTokens(),
+      refetchKnownApps(),
     ])
   }
 
@@ -70,12 +81,17 @@ export function SummaryPage() {
   const messageRows: SummaryMessageRow[] = messagesData ?? []
   const transferRows: SummaryTransferRow[] = transfersData ?? []
   const missingTokenRows: SummaryMissingTokenRow[] = missingTokensData ?? []
+  const knownAppsRows: SummaryKnownAppsRow[] = knownAppsData ?? []
   const totalEvents = eventRows.reduce((sum, row) => sum + row.count, 0)
   const unmatchedEvents = eventRows.reduce((sum, row) => sum + row.unmatched, 0)
   const totalMessages = messageRows.reduce((sum, row) => sum + row.count, 0)
   const totalTransfers = transferRows.reduce((sum, row) => sum + row.count, 0)
   const totalMissingTokenRecords = missingTokenRows.reduce(
     (sum, row) => sum + row.count,
+    0,
+  )
+  const totalKnownApps = knownAppsRows.reduce(
+    (sum, row) => sum + row.apps.length,
     0,
   )
   const knownAppMessages = messageRows.reduce(
@@ -105,7 +121,8 @@ export function SummaryPage() {
                 isEventsFetching ||
                 isMessagesFetching ||
                 isTransfersFetching ||
-                isMissingTokensFetching
+                isMissingTokensFetching ||
+                isKnownAppsFetching
               }
             >
               <RefreshCwIcon
@@ -113,7 +130,8 @@ export function SummaryPage() {
                   isEventsFetching ||
                   isMessagesFetching ||
                   isTransfersFetching ||
-                  isMissingTokensFetching
+                  isMissingTokensFetching ||
+                  isKnownAppsFetching
                     ? 'animate-spin'
                     : ''
                 }
@@ -127,6 +145,9 @@ export function SummaryPage() {
               {messageRows.length} message types
             </Badge>
             <Badge variant="secondary">
+              {knownAppsRows.length} plugins with known apps
+            </Badge>
+            <Badge variant="secondary">
               {transferRows.length} transfer types
             </Badge>
             <Badge
@@ -138,6 +159,7 @@ export function SummaryPage() {
             </Badge>
             <Badge variant="secondary">{totalEvents} total events</Badge>
             <Badge variant="secondary">{totalMessages} total messages</Badge>
+            <Badge variant="secondary">{totalKnownApps} known apps</Badge>
             <Badge variant="secondary">{totalTransfers} total transfers</Badge>
             <Badge variant="secondary">
               {totalMissingTokenRecords} missing transfer sides
@@ -166,6 +188,9 @@ export function SummaryPage() {
               <Link to="/summary/messages">Open messages</Link>
             </Button>
             <Button asChild variant="outline" size="sm">
+              <Link to="/summary/known-apps">Open known apps</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
               <Link to="/summary/transfers">Open transfers</Link>
             </Button>
             <Button asChild variant="outline" size="sm">
@@ -177,7 +202,8 @@ export function SummaryPage() {
         {isEventsLoading ||
         isMessagesLoading ||
         isTransfersLoading ||
-        isMissingTokensLoading ? (
+        isMissingTokensLoading ||
+        isKnownAppsLoading ? (
           <LoadingState className="m-2" />
         ) : null}
         {isEventsError ? (
@@ -198,6 +224,11 @@ export function SummaryPage() {
         {isMissingTokensError ? (
           <div className="px-2 text-destructive text-sm">
             Failed to load summary missing tokens: {missingTokensError.message}
+          </div>
+        ) : null}
+        {isKnownAppsError ? (
+          <div className="px-2 text-destructive text-sm">
+            Failed to load summary known apps: {knownAppsError.message}
           </div>
         ) : null}
       </div>

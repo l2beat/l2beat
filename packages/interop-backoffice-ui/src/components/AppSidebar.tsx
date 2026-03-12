@@ -1,5 +1,6 @@
 import {
   ArrowRightLeftIcon,
+  BookCheck,
   InboxIcon,
   MessageSquareIcon,
   PanelsTopLeftIcon,
@@ -48,6 +49,11 @@ const items = [
         title: 'Missing tokens',
         url: '/summary/missing-tokens',
         icon: View,
+      },
+      {
+        title: 'Known apps',
+        url: '/summary/known-apps',
+        icon: BookCheck,
       },
     ],
   },

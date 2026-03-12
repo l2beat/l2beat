@@ -4,6 +4,7 @@ import type {
   InteropEventDetails,
   InteropEventKind,
   InteropEventStats,
+  InteropKnownAppsPerPlugin,
   InteropMissingTokenInfo,
   InteropMessageDetails,
   InteropMessageStats,
@@ -39,6 +40,7 @@ interface AppRouterDeps {
     dstChain?: string
   }) => Promise<InteropTransferDetails[]>
   getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
+  getInteropKnownAppsPerPlugin: () => Promise<InteropKnownAppsPerPlugin[]>
   getInteropChainMetadata: () => Promise<InteropChainMetadata[]>
 }
 

@@ -127,3 +127,8 @@ export type InteropMissingTokenInfo = {
   count: number
   plugins: string[]
 }
+
+export type InteropKnownAppsPerPlugin = {
+  plugin: string
+  apps: string[]
+}

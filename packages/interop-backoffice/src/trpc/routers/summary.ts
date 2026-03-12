@@ -3,6 +3,7 @@ import type {
   InteropEventDetails,
   InteropEventKind,
   InteropEventStats,
+  InteropKnownAppsPerPlugin,
   InteropMissingTokenInfo,
   InteropMessageDetails,
   InteropMessageStats,
@@ -33,6 +34,7 @@ type Dependencies = {
     dstChain?: string
   }) => Promise<InteropTransferDetails[]>
   getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
+  getInteropKnownAppsPerPlugin: () => Promise<InteropKnownAppsPerPlugin[]>
 }
 
 const InteropEventDetailsRequest = v.object({
@@ -82,5 +84,8 @@ export const createSummaryRouter = (deps: Dependencies) =>
       }),
     missingTokens: publicProcedure.query(() => {
       return deps.getInteropMissingTokensInfo()
+    }),
+    knownApps: publicProcedure.query(() => {
+      return deps.getInteropKnownAppsPerPlugin()
     }),
   })

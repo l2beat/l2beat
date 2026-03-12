@@ -18,6 +18,11 @@ const items = [
     activePrefixes: ['/summary/messages', '/interop/messages'],
   },
   {
+    label: 'Known apps',
+    to: '/summary/known-apps',
+    activePrefixes: ['/summary/known-apps'],
+  },
+  {
     label: 'Transfers',
     to: '/summary/transfers',
     activePrefixes: ['/summary/transfers', '/interop/transfers'],
