@@ -8,8 +8,11 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
-import { ProjectId } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  ProjectId,
+  type UnixTime,
+} from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -26,6 +29,7 @@ import { linkAddresses } from '~/utils/markdown/linkAddresses'
 import { getActivitySection } from '~/utils/project/activity/getActivitySection'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import { getPastUpgradesData } from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getCostsSection } from '~/utils/project/costs/getCostsSection'
 import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
@@ -587,20 +591,61 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (project.scalingTechnology.upgradesAndGovernance) {
+  const allPastUpgrades = []
+  const seenPastUpgrades = new Set<string>()
+
+  for (const contract of Object.values(
+    project.contracts?.addresses ?? {},
+  ).flat()) {
+    if (!contract.pastUpgrades || contract.pastUpgrades.length === 0) continue
+
+    for (const upgrade of contract.pastUpgrades) {
+      const proxyAddress = ChainSpecificAddress.address(contract.address)
+      const key = `${upgrade.transactionHash}-${upgrade.timestamp}-${proxyAddress}`
+
+      if (!seenPastUpgrades.has(key)) {
+        seenPastUpgrades.add(key)
+        allPastUpgrades.push({
+          ...upgrade,
+          proxyContract: {
+            name: contract.name,
+            address: proxyAddress,
+          },
+        })
+      }
+    }
+  }
+
+  allPastUpgrades.sort((a, b) => b.timestamp - a.timestamp)
+
+  if (
+    project.scalingTechnology.upgradesAndGovernance ||
+    allPastUpgrades.length > 0
+  ) {
     sections.push({
-      type: 'MarkdownSection',
+      type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: linkAddresses(
-          project.scalingTechnology.upgradesAndGovernance,
-          project.contracts,
-          project.permissions,
-        ),
+        content: project.scalingTechnology.upgradesAndGovernance
+          ? linkAddresses(
+              project.scalingTechnology.upgradesAndGovernance,
+              project.contracts,
+              project.permissions,
+            )
+          : undefined,
         diagram: getDiagramParams(
           'upgrades-and-governance',
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
+        ),
+
+        pastUpgrades: getPastUpgradesData(
+          allPastUpgrades,
+          project.chainConfig?.explorerUrl ?? 'https://etherscan.io',
+          {
+            proxyContract: 'Proxy contract',
+            implementations: 'Implementation addresses',
+          },
         ),
         isUnderReview: !!project.statuses.reviewStatus,
       },

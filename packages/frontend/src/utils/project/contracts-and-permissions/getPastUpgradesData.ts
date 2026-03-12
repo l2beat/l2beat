@@ -3,36 +3,91 @@ import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import mean from 'lodash/mean'
 import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
 
+type UpgradeContext = {
+  proxyContract?: {
+    name?: string
+    address: string
+  }
+}
+
+type PastUpgradeWithContext = NonNullable<
+  ProjectContract['pastUpgrades']
+>[number] &
+  UpgradeContext
+
 export function getPastUpgradesData(
-  contractPastUpgrades: ProjectContract['pastUpgrades'],
+  contractPastUpgrades:
+    | PastUpgradeWithContext[]
+    | ProjectContract['pastUpgrades'],
   explorerUrl: string,
+  labels?: NonNullable<TechnologyContract['pastUpgrades']>['labels'],
 ): TechnologyContract['pastUpgrades'] {
-  const pastUpgrades =
-    contractPastUpgrades
-      ?.sort((a, b) => b.timestamp - a.timestamp)
-      .map((upgrade, i) => {
-        const previousUpgrade = contractPastUpgrades?.[i + 1]
-        return {
-          timestamp: upgrade.timestamp,
-          transactionHash: {
-            hash: upgrade.transactionHash,
-            href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
-          },
-          implementations: getImplementations(
-            explorerUrl,
-            upgrade.implementations,
-            previousUpgrade,
-          ),
-        }
-      }) ?? []
+  const sortedUpgrades: PastUpgradeWithContext[] = (contractPastUpgrades ?? [])
+    .map((upgrade) => ({
+      ...upgrade,
+      proxyContract: (upgrade as PastUpgradeWithContext).proxyContract,
+    }))
+    .sort((a, b) => b.timestamp - a.timestamp)
+  const upgradesByProxy = getUpgradeHistoryByProxy(sortedUpgrades)
+  const upgradesByProxyIndex = new Map<string, number>()
+
+  const pastUpgrades = sortedUpgrades.map((upgrade) => {
+    const proxyKey = getProxyKey(upgrade)
+    const currentProxyIndex = upgradesByProxyIndex.get(proxyKey) ?? 0
+    const previousUpgrade =
+      upgradesByProxy.get(proxyKey)?.[currentProxyIndex + 1]
+    upgradesByProxyIndex.set(proxyKey, currentProxyIndex + 1)
+    const proxyAddress = upgrade.proxyContract?.address
+    return {
+      isInitialDeployment: previousUpgrade === undefined,
+      timestamp: upgrade.timestamp,
+      transactionHash: {
+        hash: upgrade.transactionHash,
+        href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
+      },
+      implementations: getImplementations(
+        explorerUrl,
+        upgrade.implementations,
+        previousUpgrade,
+      ),
+      proxyContract: proxyAddress
+        ? {
+            name: upgrade.proxyContract?.name,
+            address: proxyAddress,
+            href: `${explorerUrl}/address/${proxyAddress}#code`,
+          }
+        : undefined,
+    }
+  })
 
   const lastUpgrade = pastUpgrades[0]
   if (!lastUpgrade) return
 
   return {
     upgrades: pastUpgrades,
-    stats: getPastUpgradesStats(pastUpgrades, lastUpgrade),
+    stats: getPastUpgradesStats(pastUpgrades),
+    labels,
   }
+}
+
+function getUpgradeHistoryByProxy(upgrades: PastUpgradeWithContext[]) {
+  const result = new Map<string, PastUpgradeWithContext[]>()
+
+  for (const upgrade of upgrades) {
+    const key = getProxyKey(upgrade)
+    const existing = result.get(key)
+    if (existing) {
+      existing.push(upgrade)
+    } else {
+      result.set(key, [upgrade])
+    }
+  }
+
+  return result
+}
+
+function getProxyKey(upgrade: UpgradeContext) {
+  return upgrade.proxyContract?.address ?? '__single-contract__'
 }
 
 function getImplementations(
@@ -56,27 +111,50 @@ function getImplementations(
 
 function getPastUpgradesStats(
   pastUpgrades: NonNullable<TechnologyContract['pastUpgrades']>['upgrades'],
-  lastUpgrade: NonNullable<
-    TechnologyContract['pastUpgrades']
-  >['upgrades'][number],
 ) {
   const intervals: number[] = []
-  for (let i = 1; i < pastUpgrades.length; i++) {
-    const prevUpgrade = pastUpgrades[i - 1]
-    const currentUpgrade = pastUpgrades[i]
-    if (!prevUpgrade || !currentUpgrade) continue
-    intervals.push(prevUpgrade.timestamp - currentUpgrade.timestamp)
+  let count = 0
+  let lastUpgrade: (typeof pastUpgrades)[number] | undefined
+
+  const upgradesByProxy = new Map<string, typeof pastUpgrades>()
+  for (const upgrade of pastUpgrades) {
+    const key = getProxyKey(upgrade)
+    const existing = upgradesByProxy.get(key)
+    if (existing) {
+      existing.push(upgrade)
+    } else {
+      upgradesByProxy.set(key, [upgrade])
+    }
   }
 
-  // we want to add the interval from the last upgrade to now
-  if (pastUpgrades.length > 1) {
-    intervals.push(UnixTime.now() - lastUpgrade.timestamp)
+  for (const upgrades of upgradesByProxy.values()) {
+    count += Math.max(0, upgrades.length - 1)
+
+    const latestProxyUpgrade = upgrades[0]
+    if (
+      latestProxyUpgrade &&
+      (!lastUpgrade || latestProxyUpgrade.timestamp > lastUpgrade.timestamp)
+    ) {
+      lastUpgrade = latestProxyUpgrade
+    }
+
+    for (let i = 1; i < upgrades.length; i++) {
+      const prevUpgrade = upgrades[i - 1]
+      const currentUpgrade = upgrades[i]
+      if (!prevUpgrade || !currentUpgrade) continue
+      intervals.push(prevUpgrade.timestamp - currentUpgrade.timestamp)
+    }
+
+    // We keep the existing single-contract logic and apply it per proxy.
+    if (upgrades.length > 1 && latestProxyUpgrade) {
+      intervals.push(UnixTime.now() - latestProxyUpgrade.timestamp)
+    }
   }
 
   return {
-    count: pastUpgrades.length - 1,
+    count,
     avgInterval: intervals.length > 0 ? mean(intervals) : null,
     lastInterval:
-      pastUpgrades.length > 1 ? UnixTime.now() - lastUpgrade.timestamp : null,
+      count > 0 && lastUpgrade ? UnixTime.now() - lastUpgrade.timestamp : null,
   }
 }
