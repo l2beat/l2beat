@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-11T07:59:34.233Z",
+  "compiledAt": "2026-03-12T07:59:39.749Z",
   "project": "liquity-v1",
   "metadata": {
     "protocolName": "Liquity V1",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "cdp",
     "tokenName": "LUSD",
-    "description": "Liquity V1 is an immutable, governance-free borrowing protocol on Ethereum that issues LUSD stablecoins against ETH collateral at a minimum 110% collateralization ratio. All smart contracts are non-upgradeable with ownership renounced to the zero address, making the protocol fully autonomous. The system relies on Chainlink and Tellor as dual oracle sources for ETH/USD pricing, with an automatic fallback mechanism between the two. The protocol holds $173.57M in total value across its contracts."
+    "description": "Liquity V1 is an immutable, governance-free borrowing protocol on Ethereum that issues LUSD stablecoins against ETH collateral at a minimum 110% collateralization ratio. All smart contracts are non-upgradeable with ownership renounced to the zero address, making the protocol fully autonomous. The system relies on Chainlink and Tellor as dual oracle sources for ETH/USD pricing, with an automatic fallback mechanism between the two. The protocol holds $175.76M in total value across its contracts."
   },
   "totals": {
     "contractCount": 18,
@@ -16,9 +16,9 @@
     "scoredFunctionCount": 0,
     "adminCount": 6,
     "dependencyCount": 2,
-    "totalCapitalAtRisk": 173573027.09941524,
-    "totalTokenValueAtRisk": 59541165.78398363,
-    "totalTokenValue": 59541165.78398363
+    "totalCapitalAtRisk": 175760158.2647984,
+    "totalTokenValueAtRisk": 60842839.638352185,
+    "totalTokenValue": 60842839.638352185
   },
   "admins": [
     {
@@ -56,7 +56,7 @@
           "contractName": "ActivePool",
           "functionName": "setAddresses",
           "impact": "critical",
-          "directFundsUsd": 156240189.0347017,
+          "directFundsUsd": 158366122.3765416,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -74,7 +74,7 @@
           "contractName": "CollSurplusPool",
           "functionName": "setAddresses",
           "impact": "critical",
-          "directFundsUsd": 3135098.290763106,
+          "directFundsUsd": 3177757.033464675,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -94,7 +94,7 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 28399999.999999996,
+              "tokenValueUsd": 29700000,
               "fundsAtRisk": false
             }
           ]
@@ -140,7 +140,7 @@
           "contractName": "StabilityPool",
           "functionName": "setAddresses",
           "impact": "critical",
-          "directFundsUsd": 14197739.773950422,
+          "directFundsUsd": 14216278.854792105,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -154,9 +154,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 173573027.09941524,
+      "totalDirectCapital": 175760158.2647984,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 173573027.09941524,
+      "totalReachableCapital": 175760158.2647984,
       "totalReachableTokenValue": 0
     },
     {
@@ -171,7 +171,7 @@
           "contractName": "ActivePool",
           "functionName": "decreaseLUSDDebt",
           "impact": "critical",
-          "directFundsUsd": 156240189.0347017,
+          "directFundsUsd": 158366122.3765416,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -180,7 +180,7 @@
           "contractName": "ActivePool",
           "functionName": "increaseLUSDDebt",
           "impact": "critical",
-          "directFundsUsd": 156240189.0347017,
+          "directFundsUsd": 158366122.3765416,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -189,7 +189,7 @@
           "contractName": "ActivePool",
           "functionName": "sendETH",
           "impact": "critical",
-          "directFundsUsd": 156240189.0347017,
+          "directFundsUsd": 158366122.3765416,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -198,7 +198,7 @@
           "contractName": "CollSurplusPool",
           "functionName": "claimColl",
           "impact": "critical",
-          "directFundsUsd": 3135098.290763106,
+          "directFundsUsd": 3177757.033464675,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -217,7 +217,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31141165.783983633,
+          "directTokenValueUsd": 31142839.63835218,
           "reachableContracts": []
         },
         {
@@ -226,7 +226,7 @@
           "functionName": "burn",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31141165.783983633,
+          "directTokenValueUsd": 31142839.63835218,
           "reachableContracts": []
         },
         {
@@ -272,10 +272,10 @@
           ]
         }
       ],
-      "totalDirectCapital": 159375287.32546481,
-      "totalDirectTokenValue": 31141165.783983633,
-      "totalReachableCapital": 159375287.32546481,
-      "totalReachableTokenValue": 31141165.783983633
+      "totalDirectCapital": 161543879.41000628,
+      "totalDirectTokenValue": 31142839.63835218,
+      "totalReachableCapital": 161543879.41000628,
+      "totalReachableTokenValue": 31142839.63835218
     },
     {
       "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
@@ -289,7 +289,7 @@
           "contractName": "ActivePool",
           "functionName": "decreaseLUSDDebt",
           "impact": "critical",
-          "directFundsUsd": 156240189.0347017,
+          "directFundsUsd": 158366122.3765416,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -298,7 +298,7 @@
           "contractName": "ActivePool",
           "functionName": "increaseLUSDDebt",
           "impact": "critical",
-          "directFundsUsd": 156240189.0347017,
+          "directFundsUsd": 158366122.3765416,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -307,7 +307,7 @@
           "contractName": "ActivePool",
           "functionName": "sendETH",
           "impact": "critical",
-          "directFundsUsd": 156240189.0347017,
+          "directFundsUsd": 158366122.3765416,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -316,7 +316,7 @@
           "contractName": "CollSurplusPool",
           "functionName": "accountSurplus",
           "impact": "critical",
-          "directFundsUsd": 3135098.290763106,
+          "directFundsUsd": 3177757.033464675,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -362,7 +362,7 @@
           "functionName": "burn",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31141165.783983633,
+          "directTokenValueUsd": 31142839.63835218,
           "reachableContracts": []
         },
         {
@@ -371,7 +371,7 @@
           "functionName": "returnFromPool",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31141165.783983633,
+          "directTokenValueUsd": 31142839.63835218,
           "reachableContracts": []
         },
         {
@@ -430,7 +430,7 @@
           "contractName": "StabilityPool",
           "functionName": "offset",
           "impact": "critical",
-          "directFundsUsd": 14197739.773950422,
+          "directFundsUsd": 14216278.854792105,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -452,7 +452,7 @@
                 "decreaseLUSDDebt",
                 "sendETH"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -464,16 +464,16 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": false
             }
           ]
         }
       ],
-      "totalDirectCapital": 173573027.09941524,
-      "totalDirectTokenValue": 31141165.783983633,
-      "totalReachableCapital": 173573027.09941524,
-      "totalReachableTokenValue": 31141165.783983633
+      "totalDirectCapital": 175760158.2647984,
+      "totalDirectTokenValue": 31142839.63835218,
+      "totalReachableCapital": 175760158.2647984,
+      "totalReachableTokenValue": 31142839.63835218
     },
     {
       "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
@@ -487,7 +487,7 @@
           "contractName": "ActivePool",
           "functionName": "decreaseLUSDDebt",
           "impact": "critical",
-          "directFundsUsd": 156240189.0347017,
+          "directFundsUsd": 158366122.3765416,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -496,7 +496,7 @@
           "contractName": "ActivePool",
           "functionName": "sendETH",
           "impact": "critical",
-          "directFundsUsd": 156240189.0347017,
+          "directFundsUsd": 158366122.3765416,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -563,7 +563,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -602,7 +602,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": false
             },
             {
@@ -656,7 +656,7 @@
                 "transfer"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 28399999.999999996,
+              "tokenValueUsd": 29700000,
               "fundsAtRisk": false
             },
             {
@@ -678,7 +678,7 @@
           "functionName": "burn",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31141165.783983633,
+          "directTokenValueUsd": 31142839.63835218,
           "reachableContracts": []
         },
         {
@@ -687,7 +687,7 @@
           "functionName": "sendToPool",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31141165.783983633,
+          "directTokenValueUsd": 31142839.63835218,
           "reachableContracts": []
         },
         {
@@ -696,14 +696,14 @@
           "functionName": "returnFromPool",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 31141165.783983633,
+          "directTokenValueUsd": 31142839.63835218,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 156240189.0347017,
-      "totalDirectTokenValue": 31141165.783983633,
-      "totalReachableCapital": 156240189.0347017,
-      "totalReachableTokenValue": 31141165.783983633
+      "totalDirectCapital": 158366122.3765416,
+      "totalDirectTokenValue": 31142839.63835218,
+      "totalReachableCapital": 158366122.3765416,
+      "totalReachableTokenValue": 31142839.63835218
     },
     {
       "address": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
@@ -718,7 +718,7 @@
           "functionName": "transfer",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 28399999.999999996,
+          "directTokenValueUsd": 29700000,
           "reachableContracts": [
             {
               "address": "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B",
@@ -739,7 +739,7 @@
           "functionName": "approve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 28399999.999999996,
+          "directTokenValueUsd": 29700000,
           "reachableContracts": []
         },
         {
@@ -748,7 +748,7 @@
           "functionName": "transferFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 28399999.999999996,
+          "directTokenValueUsd": 29700000,
           "reachableContracts": []
         },
         {
@@ -757,7 +757,7 @@
           "functionName": "increaseAllowance",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 28399999.999999996,
+          "directTokenValueUsd": 29700000,
           "reachableContracts": []
         },
         {
@@ -766,14 +766,14 @@
           "functionName": "decreaseAllowance",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 28399999.999999996,
+          "directTokenValueUsd": 29700000,
           "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 28399999.999999996,
+      "totalDirectTokenValue": 29700000,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 28399999.999999996
+      "totalReachableTokenValue": 29700000
     },
     {
       "address": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
@@ -788,14 +788,14 @@
           "functionName": "sendToLQTYStaking",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 28399999.999999996,
+          "directTokenValueUsd": 29700000,
           "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 28399999.999999996,
+      "totalDirectTokenValue": 29700000,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 28399999.999999996
+      "totalReachableTokenValue": 29700000
     }
   ],
   "dependencies": [
@@ -831,7 +831,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -845,7 +845,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -869,7 +869,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -883,7 +883,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -907,7 +907,7 @@
                 "decreaseLUSDDebt",
                 "increaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -920,7 +920,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -944,7 +944,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -958,7 +958,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -980,7 +980,7 @@
                 "getLUSDDebt",
                 "increaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -992,7 +992,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1016,7 +1016,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1030,7 +1030,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1054,7 +1054,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1068,7 +1068,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1092,7 +1092,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1106,7 +1106,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1134,7 +1134,7 @@
           "contractName": "StabilityPool",
           "functionName": "withdrawETHGainToTrove",
           "viewOnlyPath": false,
-          "directFundsUsd": 14197739.773950422,
+          "directFundsUsd": 14216278.854792105,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1148,7 +1148,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1162,7 +1162,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1173,7 +1173,7 @@
                 "transfer"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 28399999.999999996,
+              "tokenValueUsd": 29700000,
               "fundsAtRisk": true
             }
           ]
@@ -1183,7 +1183,7 @@
           "contractName": "StabilityPool",
           "functionName": "withdrawFromSP",
           "viewOnlyPath": false,
-          "directFundsUsd": 14197739.773950422,
+          "directFundsUsd": 14216278.854792105,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1194,7 +1194,7 @@
                 "returnFromPool"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1205,7 +1205,7 @@
                 "transfer"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 28399999.999999996,
+              "tokenValueUsd": 29700000,
               "fundsAtRisk": true
             }
           ]
@@ -1229,7 +1229,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1242,7 +1242,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1253,7 +1253,7 @@
                 "getTotalLUSDDeposits",
                 "offset"
               ],
-              "fundsUsd": 14197739.773950422,
+              "fundsUsd": 14216278.854792105,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1264,7 +1264,7 @@
               "calledFunctions": [
                 "accountSurplus"
               ],
-              "fundsUsd": 3135098.290763106,
+              "fundsUsd": 3177757.033464675,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1289,7 +1289,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1302,7 +1302,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1313,7 +1313,7 @@
                 "getTotalLUSDDeposits",
                 "offset"
               ],
-              "fundsUsd": 14197739.773950422,
+              "fundsUsd": 14216278.854792105,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1324,7 +1324,7 @@
               "calledFunctions": [
                 "accountSurplus"
               ],
-              "fundsUsd": 3135098.290763106,
+              "fundsUsd": 3177757.033464675,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1349,7 +1349,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1362,7 +1362,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1373,7 +1373,7 @@
                 "getTotalLUSDDeposits",
                 "offset"
               ],
-              "fundsUsd": 14197739.773950422,
+              "fundsUsd": 14216278.854792105,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1384,7 +1384,7 @@
               "calledFunctions": [
                 "accountSurplus"
               ],
-              "fundsUsd": 3135098.290763106,
+              "fundsUsd": 3177757.033464675,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1409,7 +1409,7 @@
                 "getLUSDDebt",
                 "increaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1422,7 +1422,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1433,7 +1433,7 @@
                 "getDeploymentStartTime"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 28399999.999999996,
+              "tokenValueUsd": 29700000,
               "fundsAtRisk": true
             },
             {
@@ -1443,15 +1443,15 @@
               "calledFunctions": [
                 "accountSurplus"
               ],
-              "fundsUsd": 3135098.290763106,
+              "fundsUsd": 3177757.033464675,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 173573027.09941524,
-      "totalTokenValueAtRisk": 59541165.78398363
+      "totalFundsAtRisk": 175760158.2647984,
+      "totalTokenValueAtRisk": 60842839.638352185
     },
     {
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
@@ -1483,7 +1483,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1497,7 +1497,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1521,7 +1521,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1535,7 +1535,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1559,7 +1559,7 @@
                 "decreaseLUSDDebt",
                 "increaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1572,7 +1572,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1596,7 +1596,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1610,7 +1610,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1632,7 +1632,7 @@
                 "getLUSDDebt",
                 "increaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1644,7 +1644,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1668,7 +1668,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1682,7 +1682,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1706,7 +1706,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1720,7 +1720,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1744,7 +1744,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1758,7 +1758,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             }
           ]
@@ -1786,7 +1786,7 @@
           "contractName": "StabilityPool",
           "functionName": "withdrawETHGainToTrove",
           "viewOnlyPath": false,
-          "directFundsUsd": 14197739.773950422,
+          "directFundsUsd": 14216278.854792105,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1800,7 +1800,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1814,7 +1814,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1825,7 +1825,7 @@
                 "transfer"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 28399999.999999996,
+              "tokenValueUsd": 29700000,
               "fundsAtRisk": true
             }
           ]
@@ -1835,7 +1835,7 @@
           "contractName": "StabilityPool",
           "functionName": "withdrawFromSP",
           "viewOnlyPath": false,
-          "directFundsUsd": 14197739.773950422,
+          "directFundsUsd": 14216278.854792105,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1846,7 +1846,7 @@
                 "returnFromPool"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1857,7 +1857,7 @@
                 "transfer"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 28399999.999999996,
+              "tokenValueUsd": 29700000,
               "fundsAtRisk": true
             }
           ]
@@ -1881,7 +1881,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1894,7 +1894,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1905,7 +1905,7 @@
                 "getTotalLUSDDeposits",
                 "offset"
               ],
-              "fundsUsd": 14197739.773950422,
+              "fundsUsd": 14216278.854792105,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1916,7 +1916,7 @@
               "calledFunctions": [
                 "accountSurplus"
               ],
-              "fundsUsd": 3135098.290763106,
+              "fundsUsd": 3177757.033464675,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1941,7 +1941,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1954,7 +1954,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -1965,7 +1965,7 @@
                 "getTotalLUSDDeposits",
                 "offset"
               ],
-              "fundsUsd": 14197739.773950422,
+              "fundsUsd": 14216278.854792105,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1976,7 +1976,7 @@
               "calledFunctions": [
                 "accountSurplus"
               ],
-              "fundsUsd": 3135098.290763106,
+              "fundsUsd": 3177757.033464675,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -2001,7 +2001,7 @@
                 "increaseLUSDDebt",
                 "decreaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2014,7 +2014,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -2025,7 +2025,7 @@
                 "getTotalLUSDDeposits",
                 "offset"
               ],
-              "fundsUsd": 14197739.773950422,
+              "fundsUsd": 14216278.854792105,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2036,7 +2036,7 @@
               "calledFunctions": [
                 "accountSurplus"
               ],
-              "fundsUsd": 3135098.290763106,
+              "fundsUsd": 3177757.033464675,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -2061,7 +2061,7 @@
                 "getLUSDDebt",
                 "increaseLUSDDebt"
               ],
-              "fundsUsd": 156240189.0347017,
+              "fundsUsd": 158366122.3765416,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2074,7 +2074,7 @@
                 "burn"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 31141165.783983633,
+              "tokenValueUsd": 31142839.63835218,
               "fundsAtRisk": true
             },
             {
@@ -2085,7 +2085,7 @@
                 "getDeploymentStartTime"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 28399999.999999996,
+              "tokenValueUsd": 29700000,
               "fundsAtRisk": true
             },
             {
@@ -2095,24 +2095,24 @@
               "calledFunctions": [
                 "accountSurplus"
               ],
-              "fundsUsd": 3135098.290763106,
+              "fundsUsd": 3177757.033464675,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 173573027.09941524,
-      "totalTokenValueAtRisk": 59541165.78398363
+      "totalFundsAtRisk": 175760158.2647984,
+      "totalTokenValueAtRisk": 60842839.638352185
     }
   ],
   "funds": [
     {
       "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
       "name": "ActivePool (ETH)",
-      "description": "Holds $156.24M in ETH collateral deposited by borrowers with active troves. This is the primary collateral pool backing all outstanding LUSD debt.",
+      "description": "Holds $158.37M in ETH collateral deposited by borrowers with active troves. This is the primary collateral pool backing all outstanding LUSD debt.",
       "balances": {
-        "totalUsdValue": 156240189.0347017
+        "totalUsdValue": 158366122.3765416
       },
       "positions": null,
       "tokenInfo": null
@@ -2120,9 +2120,9 @@
     {
       "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
       "name": "StabilityPool (LUSD + ETH)",
-      "description": "Holds $14.20M in LUSD deposits from stability providers and ETH gains from liquidations. Stability depositors absorb liquidated debt in exchange for discounted ETH collateral.",
+      "description": "Holds $14.22M in LUSD deposits from stability providers and ETH gains from liquidations. Stability depositors absorb liquidated debt in exchange for discounted ETH collateral.",
       "balances": {
-        "totalUsdValue": 14197739.773950422
+        "totalUsdValue": 14216278.854792105
       },
       "positions": null,
       "tokenInfo": null
@@ -2130,9 +2130,9 @@
     {
       "address": "eth:0x3D32e8b97Ed5881324241Cf03b2DA5E2EBcE5521",
       "name": "CollSurplusPool (ETH)",
-      "description": "Holds $3.14M in excess ETH collateral from liquidated troves that exceeded the 110% ratio at liquidation time. Borrowers can claim their surplus collateral from this pool.",
+      "description": "Holds $3.18M in excess ETH collateral from liquidated troves that exceeded the 110% ratio at liquidation time. Borrowers can claim their surplus collateral from this pool.",
       "balances": {
-        "totalUsdValue": 3135098.290763106
+        "totalUsdValue": 3177757.033464675
       },
       "positions": null,
       "tokenInfo": null
@@ -2142,7 +2142,7 @@
       "name": "GasPool (LUSD)",
       "description": "Holds $20.85K in LUSD reserved as gas compensation for liquidators. Each trove deposits 200 LUSD into the GasPool at opening, which is returned or used to compensate the liquidator upon closure.",
       "balances": {
-        "totalUsdValue": 20848.83603169258
+        "totalUsdValue": 20849.956667814964
       },
       "positions": null,
       "tokenInfo": null
@@ -2150,14 +2150,14 @@
     {
       "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
       "name": "LQTY Token",
-      "description": "Liquity governance token with a market cap of $28.40M. Used for staking in LQTYStaking to earn borrowing and redemption fee revenue. The token contract includes a one-year lockup mechanism and a multisig-controlled sendToLQTYStaking function, though the token itself is non-upgradeable.",
+      "description": "Liquity governance token with a market cap of $29.70M. Used for staking in LQTYStaking to earn borrowing and redemption fee revenue. The token contract includes a one-year lockup mechanism and a multisig-controlled sendToLQTYStaking function, though the token itself is non-upgradeable.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "LQTY",
-        "price": 0.284,
+        "price": 0.297,
         "totalSupply": "100000000000000000000000000",
-        "tokenValue": 28399999.999999996
+        "tokenValue": 29700000
       }
     },
     {
@@ -2168,9 +2168,9 @@
       "positions": null,
       "tokenInfo": {
         "symbol": "LUSD",
-        "price": 1.0120794190142028,
+        "price": 1.0121338188259692,
         "totalSupply": "30769488242648096976632102",
-        "tokenValue": 31141165.783983633
+        "tokenValue": 31142839.63835218
       }
     }
   ],
