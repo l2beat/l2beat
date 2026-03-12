@@ -6,11 +6,13 @@ import { messagePairsColumns } from './pairs-columns'
 interface MessagePairsTableProps {
   data: SummaryMessagePairRow[]
   enableCsvExport?: boolean
+  onPairClick?: (row: SummaryMessagePairRow) => void
 }
 
 export function MessagePairsTable({
   data,
   enableCsvExport = false,
+  onPairClick,
 }: MessagePairsTableProps) {
   const { table, pageSizeOption, setPageSizeOption } = useTanStackTable({
     data,
@@ -29,7 +31,12 @@ export function MessagePairsTable({
       getCsvFilename={() =>
         `interop-message-chain-pairs-${new Date().toISOString()}.csv`
       }
-      rowClassName="odd:bg-muted/20 hover:bg-muted/70"
+      onRowClick={onPairClick ? (row) => onPairClick(row.original) : undefined}
+      rowClassName={
+        onPairClick
+          ? 'odd:bg-muted/20 hover:bg-muted/70 cursor-pointer'
+          : 'odd:bg-muted/20 hover:bg-muted/70'
+      }
     />
   )
 }

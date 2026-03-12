@@ -84,6 +84,9 @@ export function createInteropRouter(
       getInteropMessageStats: () => {
         return getMessagesStats(db)
       },
+      getInteropMessageDetails: (input) => {
+        return getInteropMessageDetails(db, input)
+      },
       getInteropTransferStats: () => {
         return getTransfersStats(db)
       },
@@ -585,6 +588,37 @@ async function getMessagesStats(db: Database) {
       chains: chainsByType.get(key) ?? [],
     }
   })
+}
+
+async function getInteropMessageDetails(
+  db: Database,
+  input: {
+    type: string
+    plugin?: string
+    srcChain?: string
+    dstChain?: string
+  },
+) {
+  const messages = await db.interopMessage.getByType(input.type, {
+    plugin: input.plugin,
+    srcChain: input.srcChain,
+    dstChain: input.dstChain,
+  })
+
+  return messages.map((message) => ({
+    plugin: message.plugin,
+    type: message.type,
+    messageId: message.messageId,
+    app: message.app,
+    duration: message.duration,
+    timestamp: message.timestamp,
+    srcChain: message.srcChain,
+    srcTxHash: message.srcTxHash,
+    srcLogIndex: message.srcLogIndex,
+    dstChain: message.dstChain,
+    dstTxHash: message.dstTxHash,
+    dstLogIndex: message.dstLogIndex,
+  }))
 }
 
 async function getTransfersStats(db: Database) {

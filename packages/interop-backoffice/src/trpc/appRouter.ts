@@ -4,6 +4,7 @@ import type {
   InteropEventDetails,
   InteropEventKind,
   InteropEventStats,
+  InteropMessageDetails,
   InteropMessageStats,
   InteropTransferStats,
   PluginStatus,
@@ -22,6 +23,12 @@ interface AppRouterDeps {
     type: string,
   ) => Promise<InteropEventDetails[]>
   getInteropMessageStats: () => Promise<InteropMessageStats[]>
+  getInteropMessageDetails: (input: {
+    type: string
+    plugin?: string
+    srcChain?: string
+    dstChain?: string
+  }) => Promise<InteropMessageDetails[]>
   getInteropTransferStats: () => Promise<InteropTransferStats[]>
   getInteropChainMetadata: () => Promise<InteropChainMetadata[]>
 }

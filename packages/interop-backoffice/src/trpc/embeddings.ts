@@ -60,6 +60,21 @@ export type InteropMessageStats = {
   chains: InteropMessageChainStats[]
 }
 
+export type InteropMessageDetails = {
+  plugin: string
+  type: string
+  messageId: string
+  app: string
+  duration?: number
+  timestamp: number
+  srcChain?: string
+  srcTxHash?: string
+  srcLogIndex?: number
+  dstChain?: string
+  dstTxHash?: string
+  dstLogIndex?: number
+}
+
 export type InteropTransferChainStats = {
   srcChain: string
   dstChain: string

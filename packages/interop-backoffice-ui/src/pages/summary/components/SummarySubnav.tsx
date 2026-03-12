@@ -15,7 +15,7 @@ const items = [
   {
     label: 'Messages',
     to: '/summary/messages',
-    activePrefixes: ['/summary/messages'],
+    activePrefixes: ['/summary/messages', '/interop/messages'],
   },
   {
     label: 'Transfers',

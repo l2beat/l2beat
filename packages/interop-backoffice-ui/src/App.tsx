@@ -6,6 +6,7 @@ import { NotFoundPage } from './pages/NotFoundPage'
 import { PluginStatusesPage } from './pages/plugin-statuses/PluginStatusesPage'
 import { SummaryEventDetailsPage } from './pages/summary/events/SummaryEventDetailsPage'
 import { SummaryEventsPage } from './pages/summary/events/SummaryEventsPage'
+import { SummaryMessageDetailsPage } from './pages/summary/messages/SummaryMessageDetailsPage'
 import { SummaryMessagesPage } from './pages/summary/messages/SummaryMessagesPage'
 import { SummaryPage } from './pages/summary/SummaryPage'
 import { SummaryTransfersPage } from './pages/summary/transfers/SummaryTransfersPage'
@@ -31,6 +32,14 @@ export function App() {
               element={<SummaryEventDetailsPage />}
             />
             <Route path="/summary/messages" element={<SummaryMessagesPage />} />
+            <Route
+              path="/summary/messages/:type"
+              element={<SummaryMessageDetailsPage />}
+            />
+            <Route
+              path="/interop/messages/:type"
+              element={<SummaryMessageDetailsPage />}
+            />
             <Route
               path="/summary/transfers"
               element={<SummaryTransfersPage />}
