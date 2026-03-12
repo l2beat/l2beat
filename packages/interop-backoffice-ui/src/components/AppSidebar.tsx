@@ -12,7 +12,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '~/components/core/Sidebar'
-import { SidebarSearch } from './SidebarSearch'
 
 const items = [
   {
@@ -34,7 +33,6 @@ export function AppSidebar() {
         <SidebarGroupLabel className="font-bold text-black text-xs">
           Interop Backoffice
         </SidebarGroupLabel>
-        <SidebarSearch />
       </SidebarHeader>
       <SidebarContent>
         {items.map((item) => (

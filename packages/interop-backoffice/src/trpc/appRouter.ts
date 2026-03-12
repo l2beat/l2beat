@@ -1,12 +1,17 @@
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import type { PluginStatus } from './embeddings'
 import { helloRouter } from './routers/hello'
+import { createPluginRouter } from './routers/plugin'
 import { router } from './trpc'
 
-interface AppRouterDeps {}
+interface AppRouterDeps {
+  getPluginSyncStatus: () => Promise<PluginStatus[]>
+}
 
-export function createAppRouter(_: AppRouterDeps) {
+export function createAppRouter(deps: AppRouterDeps) {
   return router({
     hello: helloRouter,
+    plugin: createPluginRouter(deps),
   })
 }
 

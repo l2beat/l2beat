@@ -66,7 +66,15 @@ export function createInteropRouter(
   })
 
   const trpcMiddleware = createKoaMiddleware({
-    router: createAppRouter({}),
+    router: createAppRouter({
+      getPluginSyncStatus: async () => {
+        const statuses = await syncersManager.getPluginSyncStatuses()
+        return statuses.map((status) => ({
+          ...status,
+          toBlock: status.toBlock?.toString(),
+        }))
+      },
+    }),
     prefix: '/interop/trpc',
     allowMethodOverride: true,
     createContext: ({ req }) =>
