@@ -61,7 +61,7 @@ const items = [
     title: 'Indexing',
     items: [
       {
-        title: 'Sync status',
+        title: 'Resyncable plugins',
         url: '/plugin-statuses',
         icon: RefreshCw,
       },
