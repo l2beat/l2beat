@@ -16,7 +16,6 @@ export function PluginsRestartFromNowControls(props: {
     <section>
       <h2>Wipe & restart from now</h2>
       <table>
-        <caption>Wipe & restart from now</caption>
         <thead>
           <tr>
             <th>plugin</th>
