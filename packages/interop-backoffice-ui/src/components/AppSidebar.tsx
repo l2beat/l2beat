@@ -1,4 +1,5 @@
 import {
+  AlertTriangleIcon,
   ArrowRightLeftIcon,
   BookCheck,
   CircleDollarSignIcon,
@@ -38,6 +39,7 @@ const items = [
         url: '/summary/aggregates',
         icon: Layers,
       },
+
       {
         title: 'Events',
         url: '/summary/events',
@@ -82,6 +84,16 @@ const items = [
         title: 'Financial actions',
         url: '/financials/actions',
         icon: CircleDollarSignIcon,
+      },
+    ],
+  },
+  {
+    title: 'Insights',
+    items: [
+      {
+        title: 'Anomalies',
+        url: '/summary/anomalies',
+        icon: AlertTriangleIcon,
       },
     ],
   },

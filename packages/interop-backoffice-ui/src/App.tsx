@@ -7,6 +7,8 @@ import { NotFoundPage } from './pages/NotFoundPage'
 import { PluginStatusesPage } from './pages/plugin-statuses/PluginStatusesPage'
 import { ProcessorStatusesPage } from './pages/processor-statuses/ProcessorStatusesPage'
 import { SummaryAggregatesPage } from './pages/summary/aggregates/SummaryAggregatesPage'
+import { SummaryAnomaliesPage } from './pages/summary/anomalies/SummaryAnomaliesPage'
+import { SummaryAnomalyDetailsPage } from './pages/summary/anomalies/SummaryAnomalyDetailsPage'
 import { SummaryEventDetailsPage } from './pages/summary/events/SummaryEventDetailsPage'
 import { SummaryEventsPage } from './pages/summary/events/SummaryEventsPage'
 import { SummaryKnownAppsPage } from './pages/summary/known-apps/SummaryKnownAppsPage'
@@ -35,6 +37,22 @@ export function App() {
             <Route
               path="/interop/aggregates"
               element={<SummaryAggregatesPage />}
+            />
+            <Route
+              path="/summary/anomalies"
+              element={<SummaryAnomaliesPage />}
+            />
+            <Route
+              path="/interop/anomalies"
+              element={<SummaryAnomaliesPage />}
+            />
+            <Route
+              path="/summary/anomalies/:id"
+              element={<SummaryAnomalyDetailsPage />}
+            />
+            <Route
+              path="/interop/anomalies/:id"
+              element={<SummaryAnomalyDetailsPage />}
             />
             <Route path="/summary/events" element={<SummaryEventsPage />} />
             <Route

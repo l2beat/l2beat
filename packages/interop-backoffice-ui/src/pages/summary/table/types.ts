@@ -20,3 +20,10 @@ export type SummaryAggregateNotIncludedByPluginRow =
   NonNullable<SummaryAggregatesData>['notIncludedByPlugin'][number]
 export type SummaryAggregateDurationSplitCoverageRow =
   NonNullable<SummaryAggregatesData>['durationSplitCoverage'][number]
+export type SummaryAnomaliesData = RouterOutputs['summary']['anomalies']
+export type SummaryAnomalyRow = SummaryAnomaliesData['stats'][number]
+export type SummaryAnomalySuspiciousTransferRow =
+  SummaryAnomaliesData['suspiciousTransfers'][number]
+export type SummaryAnomalySeriesData = RouterOutputs['summary']['anomalySeries']
+export type SummaryAnomalySeriesPoint =
+  SummaryAnomalySeriesData['points'][number]

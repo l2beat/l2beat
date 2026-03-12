@@ -185,6 +185,9 @@ export function SummaryPage() {
               <Link to="/summary/aggregates">Open aggregates</Link>
             </Button>
             <Button asChild variant="outline" size="sm">
+              <Link to="/summary/anomalies">Open anomalies</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
               <Link to="/summary/events">Open events</Link>
             </Button>
             <Button asChild variant="outline" size="sm">

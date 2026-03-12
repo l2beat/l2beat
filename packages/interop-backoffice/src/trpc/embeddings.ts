@@ -167,3 +167,98 @@ export type InteropAggregates = {
   notIncludedByPlugin: InteropAggregateNotIncludedByPlugin[]
   durationSplitCoverage: InteropAggregateDurationSplitCoverage[]
 }
+
+export type InteropAnomalyZScore = {
+  robust: number | null
+  classic: number | null
+}
+
+export type InteropAnomalyCountStats = {
+  last: number
+  prevDay: number | null
+  prev7d: number | null
+  z: InteropAnomalyZScore
+  isFlatLine: boolean
+  isRatioDrop: boolean
+  isRatioSpike: boolean
+}
+
+export type InteropAnomalyVolumeStats = {
+  valueUsd: {
+    last: number
+    prevDay: number | null
+    prev7d: number | null
+  }
+  avgValuePerTransfer: {
+    last: number | null
+    prevDay: number | null
+    prev7d: number | null
+  }
+  z: InteropAnomalyZScore
+  isRatioDrop: boolean
+  isRatioSpike: boolean
+}
+
+export type InteropAnomalySrcDstDiffStats = {
+  lastPercent: number | null
+  prevDayPercent: number | null
+  prev7dPercent: number | null
+  isHigh: boolean
+}
+
+export type InteropAnomalyDataPoint = {
+  day: string
+  transferCount: number
+  totalSrcValueUsd: number
+  totalDstValueUsd: number
+}
+
+export type InteropAnomalyRow = {
+  id: string
+  timestamp: string
+  interpretation: string
+  counts: InteropAnomalyCountStats
+  srcVolume: InteropAnomalyVolumeStats
+  dstVolume: InteropAnomalyVolumeStats
+  srcDstDiff: InteropAnomalySrcDstDiffStats
+  rawDataPoints: InteropAnomalyDataPoint[]
+  dataPoints: InteropAnomalyDataPoint[]
+}
+
+export type InteropAnomalySuspiciousTransfer = {
+  plugin: string
+  transferId: string
+  type: string
+  timestamp: number
+  srcChain: string
+  dstChain: string
+  srcTokenAddress?: string
+  dstTokenAddress?: string
+  srcSymbol?: string
+  dstSymbol?: string
+  srcValueUsd?: number
+  dstValueUsd?: number
+  srcTxHash: string
+  dstTxHash: string
+  valueDifferencePercent: number
+}
+
+export type InteropAnomaliesOverview = {
+  stats: InteropAnomalyRow[]
+  suspiciousTransfers: InteropAnomalySuspiciousTransfer[]
+  valueDiffThresholdPercent: number
+  minimumSideValueUsdThreshold: number
+}
+
+export type InteropAnomalySeriesPoint = {
+  timestamp: number
+  transferCount: number
+  totalDurationSum: number
+  totalSrcValueUsd: number
+  totalDstValueUsd: number
+}
+
+export type InteropAnomalySeries = {
+  id: string
+  points: InteropAnomalySeriesPoint[]
+}

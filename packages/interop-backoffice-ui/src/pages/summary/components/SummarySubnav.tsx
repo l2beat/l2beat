@@ -13,6 +13,11 @@ const items = [
     activePrefixes: ['/summary/aggregates', '/interop/aggregates'],
   },
   {
+    label: 'Anomalies',
+    to: '/summary/anomalies',
+    activePrefixes: ['/summary/anomalies', '/interop/anomalies'],
+  },
+  {
     label: 'Events',
     to: '/summary/events',
     activePrefixes: ['/summary/events', '/interop/events'],

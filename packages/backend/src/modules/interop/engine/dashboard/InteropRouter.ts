@@ -1,7 +1,11 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import { INTEROP_CHAINS } from '@l2beat/config'
-import type { Database, InteropTransferRecord } from '@l2beat/database'
+import type {
+  Database,
+  InteropSuspiciousTransferRecord,
+  InteropTransferRecord,
+} from '@l2beat/database'
 import {
   createAppRouter,
   createKoaMiddleware,
@@ -22,7 +26,7 @@ import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
 import { renderSupportChartsPage } from './SupportChartsPage'
-import { explore } from './stats'
+import { explore, interpret } from './stats'
 import { renderTransfersPage } from './TransfersPage'
 
 export function createInteropRouter(
@@ -115,6 +119,12 @@ export function createInteropRouter(
       getInteropAggregates: () => {
         return getInteropAggregates(db, config)
       },
+      getInteropAnomalies: () => {
+        return getInteropAnomalies(db)
+      },
+      getInteropAnomalySeries: (id) => {
+        return getInteropAnomalySeries(db, id)
+      },
       getInteropChainMetadata: () => {
         return Promise.resolve(
           INTEROP_CHAINS.map((chain) => ({
@@ -150,23 +160,15 @@ export function createInteropRouter(
   })
 
   router.get('/interop/anomalies', async (ctx) => {
-    const rows = await db.aggregatedInteropTransfer.getDailySeries()
-    const explored = explore(rows)
+    const anomalies = await getInteropAnomaliesRaw(db)
     if (ctx.query.raw === 'true') {
-      ctx.body = explored
+      ctx.body = anomalies.stats
     } else {
-      const VALUE_DIFF_THRESHOLD_PERCENT = 15
-      const MINIMUM_SIDE_VALUE_USD_THRESHOLD = 50
-      const suspiciousTransfers =
-        await db.interopTransfer.getValueMismatchTransfers(
-          VALUE_DIFF_THRESHOLD_PERCENT,
-          MINIMUM_SIDE_VALUE_USD_THRESHOLD,
-        )
       ctx.body = renderAnomaliesPage({
-        stats: explored,
-        suspiciousTransfers,
-        valueDiffThresholdPercent: VALUE_DIFF_THRESHOLD_PERCENT,
-        minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+        stats: anomalies.stats,
+        suspiciousTransfers: anomalies.suspiciousTransfers,
+        valueDiffThresholdPercent: anomalies.valueDiffThresholdPercent,
+        minimumSideValueUsdThreshold: anomalies.minimumSideValueUsdThreshold,
         getExplorerUrl: config.dashboard.getExplorerUrl,
       })
     }
@@ -174,10 +176,18 @@ export function createInteropRouter(
 
   router.get('/interop/anomalies/:id', async (ctx) => {
     const params = v.object({ id: v.string() }).validate(ctx.params)
-    const series = await db.aggregatedInteropTransfer.getDailySeriesById(
-      params.id,
-    )
-    ctx.body = renderAnomalyIdPage({ id: params.id, series })
+    const series = await getInteropAnomalySeries(db, params.id)
+    ctx.body = renderAnomalyIdPage({
+      id: params.id,
+      series: series.points.map((point) => ({
+        id: params.id,
+        timestamp: point.timestamp,
+        transferCount: point.transferCount,
+        totalDurationSum: point.totalDurationSum,
+        totalSrcValueUsd: point.totalSrcValueUsd,
+        totalDstValueUsd: point.totalDstValueUsd,
+      })),
+    })
   })
 
   router.get('/interop/aggregates', async (ctx) => {
@@ -710,6 +720,77 @@ function mapInteropTransferDetails(transfer: InteropTransferRecord) {
     dstAmount: transfer.dstAmount,
     dstValueUsd: transfer.dstValueUsd,
     dstWasMinted: transfer.dstWasMinted,
+  }
+}
+
+const VALUE_DIFF_THRESHOLD_PERCENT = 15
+const MINIMUM_SIDE_VALUE_USD_THRESHOLD = 50
+
+function mapInteropSuspiciousTransfer(
+  transfer: InteropSuspiciousTransferRecord,
+) {
+  return {
+    plugin: transfer.plugin,
+    transferId: transfer.transferId,
+    type: transfer.type,
+    timestamp: transfer.timestamp,
+    srcChain: transfer.srcChain,
+    dstChain: transfer.dstChain,
+    srcTokenAddress: transfer.srcTokenAddress,
+    dstTokenAddress: transfer.dstTokenAddress,
+    srcSymbol: transfer.srcSymbol,
+    dstSymbol: transfer.dstSymbol,
+    srcValueUsd: transfer.srcValueUsd,
+    dstValueUsd: transfer.dstValueUsd,
+    srcTxHash: transfer.srcTxHash,
+    dstTxHash: transfer.dstTxHash,
+    valueDifferencePercent: transfer.valueDifferencePercent,
+  }
+}
+
+async function getInteropAnomalies(db: Database) {
+  const anomalies = await getInteropAnomaliesRaw(db)
+  return {
+    ...anomalies,
+    stats: anomalies.stats.map((row) => ({
+      ...row,
+      interpretation: interpret(row),
+    })),
+    suspiciousTransfers: anomalies.suspiciousTransfers.map(
+      mapInteropSuspiciousTransfer,
+    ),
+  }
+}
+
+async function getInteropAnomaliesRaw(db: Database) {
+  const rows = await db.aggregatedInteropTransfer.getDailySeries()
+  const stats = explore(rows)
+  const suspiciousTransfers =
+    await db.interopTransfer.getValueMismatchTransfers(
+      VALUE_DIFF_THRESHOLD_PERCENT,
+      MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+    )
+
+  return {
+    stats,
+    suspiciousTransfers,
+    valueDiffThresholdPercent: VALUE_DIFF_THRESHOLD_PERCENT,
+    minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+  }
+}
+
+async function getInteropAnomalySeries(db: Database, id: string) {
+  const series = await db.aggregatedInteropTransfer.getDailySeriesById(id)
+
+  return {
+    id,
+    points: series.map((point) => ({
+      timestamp: point.timestamp,
+      transferCount: point.transferCount,
+      totalDurationSum: point.totalDurationSum,
+      totalSrcValueUsd: point.totalSrcValueUsd,
+      totalDstValueUsd: point.totalDstValueUsd,
+    })),
   }
 }
 

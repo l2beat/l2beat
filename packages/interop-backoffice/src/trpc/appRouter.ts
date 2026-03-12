@@ -1,6 +1,8 @@
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type {
   InteropAggregates,
+  InteropAnomaliesOverview,
+  InteropAnomalySeries,
   InteropChainMetadata,
   InteropEventDetails,
   InteropEventKind,
@@ -57,6 +59,8 @@ interface AppRouterDeps {
   getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
   getInteropKnownAppsPerPlugin: () => Promise<InteropKnownAppsPerPlugin[]>
   getInteropAggregates: () => Promise<InteropAggregates | null>
+  getInteropAnomalies: () => Promise<InteropAnomaliesOverview>
+  getInteropAnomalySeries: (id: string) => Promise<InteropAnomalySeries>
   getInteropChainMetadata: () => Promise<InteropChainMetadata[]>
 }
 

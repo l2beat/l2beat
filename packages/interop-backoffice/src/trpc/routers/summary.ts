@@ -1,6 +1,8 @@
 import { v } from '@l2beat/validate'
 import type {
   InteropAggregates,
+  InteropAnomaliesOverview,
+  InteropAnomalySeries,
   InteropEventDetails,
   InteropEventKind,
   InteropEventStats,
@@ -37,6 +39,8 @@ type Dependencies = {
   getInteropMissingTokensInfo: () => Promise<InteropMissingTokenInfo[]>
   getInteropKnownAppsPerPlugin: () => Promise<InteropKnownAppsPerPlugin[]>
   getInteropAggregates: () => Promise<InteropAggregates | null>
+  getInteropAnomalies: () => Promise<InteropAnomaliesOverview>
+  getInteropAnomalySeries: (id: string) => Promise<InteropAnomalySeries>
 }
 
 const InteropEventDetailsRequest = v.object({
@@ -56,6 +60,10 @@ const InteropTransferDetailsRequest = v.object({
   plugin: v.string().optional(),
   srcChain: v.string().optional(),
   dstChain: v.string().optional(),
+})
+
+const InteropAnomalySeriesRequest = v.object({
+  id: v.string(),
 })
 
 export const createSummaryRouter = (deps: Dependencies) =>
@@ -93,4 +101,12 @@ export const createSummaryRouter = (deps: Dependencies) =>
     aggregates: publicProcedure.query(() => {
       return deps.getInteropAggregates()
     }),
+    anomalies: publicProcedure.query(() => {
+      return deps.getInteropAnomalies()
+    }),
+    anomalySeries: publicProcedure
+      .input(InteropAnomalySeriesRequest)
+      .query(({ input }) => {
+        return deps.getInteropAnomalySeries(input.id)
+      }),
   })
