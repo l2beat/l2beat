@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x5806c7a9f5392c9c0067c288a4d0b7de510a84de
+Generated with discovered.json: 0x66b83643b4b88d0f58a18269cb5ff30b844e1fcc
 
-# Diff at Wed, 11 Mar 2026 13:06:35 GMT:
+# Diff at Thu, 12 Mar 2026 12:44:23 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@fade2c5e24fed41bc60645f0e28f64c1f000aa1c block: 1767971446
-- current timestamp: 1773234316
+- comparing to: main@7821558a34509d47e2b343e48879506088be050d block: 1767971446
+- current timestamp: 1773319393
 
 ## Description
 
-FuelChainState contract paused for scheduled canonical bridge maintenance (withdrawals paused). See https://forum.fuel.network/t/canonical-bridge-withdrawals-paused-for-maintenance/9707
+FuelChainState contract unpaused (bridge maintenance complete). New COMMITTER_ROLE member added (0x32da601374b38154f05904B16F44A1911Aa6f314), which is the Fuel Security Council multisig.
 
 ## Watched changes
 
@@ -16,8 +16,10 @@ FuelChainState contract paused for scheduled canonical bridge maintenance (withd
     contract FuelChainState (eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
     +++ description: None
       values.paused:
--        false
-+        true
+-        true
++        false
+      values.accessControl.COMMITTER_ROLE.members.1:
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
     }
 ```
 
