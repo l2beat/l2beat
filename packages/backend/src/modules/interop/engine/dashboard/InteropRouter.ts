@@ -77,6 +77,9 @@ export function createInteropRouter(
       getInteropEventStats: () => {
         return db.interopEvent.getStats()
       },
+      getInteropMessageStats: () => {
+        return getMessagesStats(db)
+      },
     }),
     prefix: '/interop/trpc',
     allowMethodOverride: true,
@@ -477,30 +480,45 @@ function getProcessorsStatus(processors: InteropBlockProcessor[]) {
 async function getMessagesStats(db: Database) {
   const stats = await db.interopMessage.getStats()
   const detailedStats = await db.interopMessage.getDetailedStats()
+  const chainsByType = new Map<
+    string,
+    {
+      plugin: string
+      type: string
+      srcChain: string
+      dstChain: string
+      count: number
+      avgDuration: number
+    }[]
+  >()
 
-  return stats.map((overall) => ({
-    plugin: overall.plugin,
-    type: overall.type,
-    count: Number(overall.count),
-    avgDuration: Number(overall.avgDuration),
-    knownAppCount: Number(overall.knownAppCount),
-    chains: detailedStats
-      .filter(
-        (chain) =>
-          chain.plugin === overall.plugin && chain.type === overall.type,
-      )
-      .map((chain) => {
-        assert(chain.srcChain && chain.dstChain)
-        return {
-          plugin: chain.plugin,
-          type: chain.type,
-          srcChain: chain.srcChain,
-          dstChain: chain.dstChain,
-          count: Number(chain.count),
-          avgDuration: Number(chain.avgDuration),
-        }
-      }),
-  }))
+  for (const chain of detailedStats) {
+    assert(chain.srcChain && chain.dstChain)
+    const key = `${chain.plugin}:${chain.type}`
+    const chains = chainsByType.get(key) ?? []
+    chains.push({
+      plugin: chain.plugin,
+      type: chain.type,
+      srcChain: chain.srcChain,
+      dstChain: chain.dstChain,
+      count: Number(chain.count),
+      avgDuration: Number(chain.avgDuration),
+    })
+    chainsByType.set(key, chains)
+  }
+
+  return stats.map((overall) => {
+    const key = `${overall.plugin}:${overall.type}`
+
+    return {
+      plugin: overall.plugin,
+      type: overall.type,
+      count: Number(overall.count),
+      avgDuration: Number(overall.avgDuration),
+      knownAppCount: Number(overall.knownAppCount),
+      chains: chainsByType.get(key) ?? [],
+    }
+  })
 }
 
 async function getTransfersStats(db: Database) {

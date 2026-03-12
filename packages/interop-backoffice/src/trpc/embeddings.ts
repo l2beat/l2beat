@@ -17,3 +17,19 @@ export type InteropEventStats = {
   oldUnmatched: number
   unsupported: number
 }
+
+export type InteropMessageChainStats = {
+  srcChain: string
+  dstChain: string
+  count: number
+  avgDuration: number
+}
+
+export type InteropMessageStats = {
+  plugin: string
+  type: string
+  count: number
+  avgDuration: number
+  knownAppCount: number
+  chains: InteropMessageChainStats[]
+}

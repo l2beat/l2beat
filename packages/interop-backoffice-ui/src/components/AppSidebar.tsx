@@ -1,4 +1,9 @@
-import { PanelsTopLeftIcon, RefreshCw } from 'lucide-react'
+import {
+  InboxIcon,
+  MessageSquareIcon,
+  PanelsTopLeftIcon,
+  RefreshCw,
+} from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -18,9 +23,19 @@ const items = [
     title: 'Interop',
     items: [
       {
-        title: 'Summary',
+        title: 'Overview',
         url: '/',
         icon: PanelsTopLeftIcon,
+      },
+      {
+        title: 'Events',
+        url: '/summary/events',
+        icon: InboxIcon,
+      },
+      {
+        title: 'Messages',
+        url: '/summary/messages',
+        icon: MessageSquareIcon,
       },
     ],
   },

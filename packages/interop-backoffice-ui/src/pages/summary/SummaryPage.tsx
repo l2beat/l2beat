@@ -1,4 +1,5 @@
 import { RefreshCwIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
@@ -11,60 +12,116 @@ import {
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
-import { EventsTable } from './table/EventsTable'
-import type { SummaryEventRow } from './table/types'
+import { SummarySubnav } from './components/SummarySubnav'
+import type { SummaryEventRow, SummaryMessageRow } from './table/types'
 
 export function SummaryPage() {
-  const { data, isLoading, isError, error, refetch, isFetching } =
-    api.summary.events.useQuery()
+  const {
+    data: eventsData,
+    isLoading: isEventsLoading,
+    isError: isEventsError,
+    error: eventsError,
+    refetch: refetchEvents,
+    isFetching: isEventsFetching,
+  } = api.summary.events.useQuery()
 
-  const rows: SummaryEventRow[] = data ?? []
-  const totalEvents = rows.reduce((sum, row) => sum + row.count, 0)
-  const unmatchedEvents = rows.reduce((sum, row) => sum + row.unmatched, 0)
+  const {
+    data: messagesData,
+    isLoading: isMessagesLoading,
+    isError: isMessagesError,
+    error: messagesError,
+    refetch: refetchMessages,
+    isFetching: isMessagesFetching,
+  } = api.summary.messages.useQuery()
+
+  const refetchAll = async () => {
+    await Promise.all([refetchEvents(), refetchMessages()])
+  }
+
+  const eventRows: SummaryEventRow[] = eventsData ?? []
+  const messageRows: SummaryMessageRow[] = messagesData ?? []
+  const totalEvents = eventRows.reduce((sum, row) => sum + row.count, 0)
+  const unmatchedEvents = eventRows.reduce((sum, row) => sum + row.unmatched, 0)
+  const totalMessages = messageRows.reduce((sum, row) => sum + row.count, 0)
+  const knownAppMessages = messageRows.reduce(
+    (sum, row) => sum + row.knownAppCount,
+    0,
+  )
 
   return (
     <AppLayout className="min-h-screen">
       <div className="flex flex-col gap-4 p-4">
+        <SummarySubnav />
+
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">
             <div className="space-y-1">
-              <CardTitle>Interop summary</CardTitle>
+              <CardTitle>Interop summary: Overview</CardTitle>
               <CardDescription>
-                First migrated table from legacy SSR: event stats overview.
+                Summary has been split into dedicated sub-pages for events and
+                messages.
               </CardDescription>
             </div>
             <Button
               variant="outline"
               size="sm"
-              onClick={() => void refetch()}
-              disabled={isFetching}
+              onClick={() => void refetchAll()}
+              disabled={isEventsFetching || isMessagesFetching}
             >
-              <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
+              <RefreshCwIcon
+                className={
+                  isEventsFetching || isMessagesFetching ? 'animate-spin' : ''
+                }
+              />
               Refresh
             </Button>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{rows.length} types</Badge>
+            <Badge variant="secondary">{eventRows.length} event types</Badge>
+            <Badge variant="secondary">
+              {messageRows.length} message types
+            </Badge>
             <Badge variant="secondary">{totalEvents} total events</Badge>
+            <Badge variant="secondary">{totalMessages} total messages</Badge>
             <Badge variant={unmatchedEvents > 0 ? 'destructive' : 'secondary'}>
               {unmatchedEvents} unmatched
+            </Badge>
+            <Badge variant="secondary">
+              {knownAppMessages} known-app messages
             </Badge>
           </CardContent>
         </Card>
 
-        <Card className="gap-0">
-          <CardContent className="px-0">
-            {isLoading ? <LoadingState className="m-6" /> : null}
-            {isError ? (
-              <div className="px-6 py-4 text-destructive text-sm">
-                Failed to load summary events: {error.message}
-              </div>
-            ) : null}
-            {!isLoading && !isError ? (
-              <EventsTable data={rows} enableCsvExport />
-            ) : null}
+        <Card>
+          <CardHeader>
+            <CardTitle>Summary sections</CardTitle>
+            <CardDescription>
+              Open a dedicated page for each table.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap gap-2">
+            <Button asChild variant="outline" size="sm">
+              <Link to="/summary/events">Open events</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/summary/messages">Open messages</Link>
+            </Button>
           </CardContent>
         </Card>
+
+        {isEventsLoading || isMessagesLoading ? (
+          <LoadingState className="m-2" />
+        ) : null}
+        {isEventsError ? (
+          <div className="px-2 text-destructive text-sm">
+            Failed to load summary events: {eventsError.message}
+          </div>
+        ) : null}
+        {isMessagesError ? (
+          <div className="px-2 text-destructive text-sm">
+            Failed to load summary messages: {messagesError.message}
+          </div>
+        ) : null}
       </div>
     </AppLayout>
   )
