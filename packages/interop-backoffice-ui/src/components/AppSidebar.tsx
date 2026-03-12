@@ -23,7 +23,7 @@ import {
 
 const items = [
   {
-    title: 'Interop',
+    title: 'Data',
     items: [
       {
         title: 'Overview',
@@ -58,7 +58,7 @@ const items = [
     ],
   },
   {
-    title: 'Plugins',
+    title: 'Indexing',
     items: [
       {
         title: 'Sync status',
