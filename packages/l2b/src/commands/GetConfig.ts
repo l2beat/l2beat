@@ -1,7 +1,6 @@
-import type { BaseProject } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { type BaseProject, ProjectService } from '@l2beat/config'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { command, positional, string } from 'cmd-ts'
-import { join } from 'path'
 
 // e.g. `l2b getconfig base | jq 'del(.contracts, .permissions, .tvsConfig, .activityConfig, .trackedTxsConfig)' > base.config.json`
 
@@ -11,43 +10,15 @@ export const GetConfig = command({
   args: {
     project: positional({ type: string, displayName: 'project' }),
   },
-  handler: (args) => {
-    const projects = loadProjects()
-    const project = projects.find(
-      (project) =>
-        String(project.id) === args.project || project.slug === args.project,
-    )
+  handler: async (args) => {
+    const ps = new ProjectService()
+    const project = await ps.getProject({ id: ProjectId(args.project) })
+    const allProjects = await ps.getProjects({ select: ['display'] })
 
-    assert(project, getProjectNotFoundMessage(args.project, projects))
+    assert(project, getProjectNotFoundMessage(args.project, allProjects))
     console.log(JSON.stringify(project, null, 2))
   },
 })
-
-function loadProjects(): BaseProject[] {
-  try {
-    const { getProjects } =
-      require('@l2beat/config/build/processing/getProjects.js') as {
-        getProjects: () => BaseProject[]
-      }
-    return getProjects()
-  } catch (buildError) {
-    try {
-      const sourcePath = join(
-        __dirname,
-        '../../../config/src/processing/getProjects.ts',
-      )
-      const { getProjects } = require(sourcePath) as {
-        getProjects: () => BaseProject[]
-      }
-      return getProjects()
-    } catch (sourceError) {
-      throw new AggregateError(
-        [buildError, sourceError],
-        'Unable to load processed project configs. Build @l2beat/config or run the command from the repository checkout.',
-      )
-    }
-  }
-}
 
 function getProjectNotFoundMessage(
   projectName: string,
