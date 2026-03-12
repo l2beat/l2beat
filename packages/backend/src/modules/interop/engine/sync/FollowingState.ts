@@ -19,10 +19,9 @@ export class FollowingState implements BlockProcessorState {
   ) {}
 
   async checkStatus(): Promise<SyncerState> {
-    const resyncRequested =
-      (await this.syncer.isResyncRequestedFrom()) !== undefined
+    const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
 
-    if (resyncRequested) {
+    if (wipeRequired || resyncFrom !== undefined) {
       return new CatchingUpState(this.syncer, this.logger)
     }
 
