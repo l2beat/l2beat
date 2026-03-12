@@ -101,12 +101,10 @@ type OrderCreatedEvent = InteropEvent<{
   dstTokenAddress?: Address32
 }>
 type MayanForwardedEvent = InteropEvent<{
-  mayanProtocol: string
   methodSignature: `0x${string}`
   tokenIn: Address32
   amountIn?: bigint
   tokenOut?: Address32
-  minAmountOut?: bigint
   $dstChain: string
 }>
 

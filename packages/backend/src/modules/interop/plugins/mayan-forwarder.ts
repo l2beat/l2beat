@@ -14,7 +14,6 @@ import {
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import {
-  decodeMayanProtocol,
   MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
   MAYAN_WRAPPED_NATIVE_ADDRESSES,
@@ -56,24 +55,14 @@ export const parseSwapAndForwardedERC20 = createEventParser(
 )
 
 export const MayanForwarded = createInteropEventType<{
-  mayanProtocol: string
   methodSignature: `0x${string}`
   tokenIn: Address32
   amountIn?: bigint
   tokenOut?: Address32
-  minAmountOut?: bigint
   $dstChain: string
 }>('mayan-forwarder.MayanForwarded')
 
-type ForwarderLogKind =
-  | 'ForwardedEth'
-  | 'ForwardedERC20'
-  | 'SwapAndForwardedEth'
-  | 'SwapAndForwardedERC20'
-
 interface NormalizedForwarderLog {
-  kind: ForwarderLogKind
-  mayanProtocol: string
   protocolData: `0x${string}`
   tokenIn: Address32
   amountIn?: bigint
@@ -135,20 +124,14 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
     if (!decodedData) return
 
     const tokenIn = parsed.tokenIn
-    const amountIn =
-      parsed.amountIn ??
-      (parsed.kind === 'ForwardedEth'
-        ? resolveForwardedEthAmount(input)
-        : undefined)
+    const amountIn = parsed.amountIn ?? resolveForwardedEthAmount(input)
 
     return [
       MayanForwarded.create(input, {
-        mayanProtocol: decodeMayanProtocol(parsed.mayanProtocol),
         methodSignature: decodedData.methodSignature,
         tokenIn,
         amountIn,
         tokenOut: decodedData.tokenOut,
-        minAmountOut: decodedData.minAmountOut,
         $dstChain: decodedData.dstChain,
       }),
     ]
@@ -159,8 +142,6 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
   const forwardedEth = parseForwardedEth(log, null)
   if (forwardedEth) {
     return {
-      kind: 'ForwardedEth',
-      mayanProtocol: forwardedEth.mayanProtocol,
       protocolData: forwardedEth.protocolData,
       tokenIn: Address32.NATIVE,
     }
@@ -169,8 +150,6 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
   const forwardedERC20 = parseForwardedERC20(log, null)
   if (forwardedERC20) {
     return {
-      kind: 'ForwardedERC20',
-      mayanProtocol: forwardedERC20.mayanProtocol,
       protocolData: forwardedERC20.protocolData,
       tokenIn: Address32.from(forwardedERC20.token),
       amountIn: forwardedERC20.amount,
@@ -180,8 +159,6 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
   const swapAndForwardedEth = parseSwapAndForwardedEth(log, null)
   if (swapAndForwardedEth) {
     return {
-      kind: 'SwapAndForwardedEth',
-      mayanProtocol: swapAndForwardedEth.mayanProtocol,
       protocolData: swapAndForwardedEth.mayanData,
       tokenIn: Address32.from(swapAndForwardedEth.middleToken),
       amountIn: swapAndForwardedEth.middleAmount,
@@ -191,8 +168,6 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
   const swapAndForwardedERC20 = parseSwapAndForwardedERC20(log, null)
   if (swapAndForwardedERC20) {
     return {
-      kind: 'SwapAndForwardedERC20',
-      mayanProtocol: swapAndForwardedERC20.mayanProtocol,
       protocolData: swapAndForwardedERC20.mayanData,
       tokenIn: zeroAddressToNative(swapAndForwardedERC20.middleToken),
       amountIn: swapAndForwardedERC20.middleAmount,
@@ -378,7 +353,6 @@ interface DecodedData {
   tokenIn?: Address32
   amountIn?: bigint
   tokenOut?: Address32
-  minAmountOut?: bigint
 }
 
 export function decodeMayanData(
@@ -409,7 +383,6 @@ export function decodeMayanData(
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
         tokenOut: zeroAddressToNative(res.args[2].tokenOut),
-        minAmountOut: res.args[2].minAmountOut,
       }
     }
     case SELECTOR_CREATE_ORDER_WITH_ETH: {
@@ -422,7 +395,6 @@ export function decodeMayanData(
         ),
         tokenIn: Address32.NATIVE,
         tokenOut: zeroAddressToNative(res.args[0].tokenOut),
-        minAmountOut: res.args[0].minAmountOut,
       }
     }
     case SELECTOR_CREATE_ORDER_WITH_SIG: {
@@ -436,7 +408,6 @@ export function decodeMayanData(
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
         tokenOut: zeroAddressToNative(res.args[2].tokenOut),
-        minAmountOut: res.args[2].minAmountOut,
       }
     }
     case SELECTOR_CREATE_ORDER_MAYAN_CIRCLE: {
@@ -456,7 +427,6 @@ export function decodeMayanData(
         tokenIn: Address32.from(args[0].tokenIn),
         amountIn: args[0].amountIn,
         tokenOut: zeroAddressToNative(args[0].tokenOut),
-        minAmountOut: args[0].minAmountOut,
       }
     }
     case SELECTOR_CREATE_ORDER_FAST_MCTP: {
@@ -478,7 +448,6 @@ export function decodeMayanData(
         tokenIn: Address32.from(args[0]),
         amountIn: args[1],
         tokenOut: zeroAddressToNative(args[5].tokenOut),
-        minAmountOut: args[5].amountOutMin,
       }
     }
     case SELECTOR_BRIDGE_WITH_FEE: {
@@ -516,7 +485,6 @@ export function decodeMayanData(
         tokenIn: Address32.from(res.args[5]),
         amountIn: res.args[6],
         tokenOut: zeroAddressToNative(res.args[2]),
-        minAmountOut: res.args[4].amountOutMin,
       }
     }
     case SELECTOR_WRAP_AND_SWAP_ETH: {
@@ -526,7 +494,6 @@ export function decodeMayanData(
         dstChain: getChainFromWormholeId(wormholeNetworks, res.args[3]),
         tokenIn: Address32.NATIVE,
         tokenOut: zeroAddressToNative(res.args[2]),
-        minAmountOut: res.args[4].amountOutMin,
       }
     }
     default:

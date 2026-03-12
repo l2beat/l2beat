@@ -57,14 +57,6 @@ export const MAYAN_WRAPPED_NATIVE_ADDRESSES: Record<
   hyperevm: EthereumAddress('0x5555555555555555555555555555555555555555'),
 }
 
-export function decodeMayanProtocol(protocolAddress: string) {
-  return (
-    Object.entries(MAYAN_PROTOCOLS).find(
-      ([, address]) => address === protocolAddress,
-    )?.[0] ?? `unknown_protocol_${protocolAddress}`
-  )
-}
-
 export function toChainSpecificAddresses(
   chains: readonly string[],
   address: EthereumAddressValue,
