@@ -3,6 +3,8 @@ import { assert } from '@l2beat/shared-pure'
 import { command, positional, string } from 'cmd-ts'
 import { join } from 'path'
 
+// e.g. `l2b getconfig base | jq 'del(.contracts, .permissions, .tvsConfig, .activityConfig, .trackedTxsConfig)' > base.config.json`
+
 export const GetConfig = command({
   name: 'getconfig',
   description: 'Print the current processed config of a project as JSON.',
@@ -23,9 +25,10 @@ export const GetConfig = command({
 
 function loadProjects(): BaseProject[] {
   try {
-    const { getProjects } = require(
-      '@l2beat/config/build/processing/getProjects.js',
-    ) as { getProjects: () => BaseProject[] }
+    const { getProjects } =
+      require('@l2beat/config/build/processing/getProjects.js') as {
+        getProjects: () => BaseProject[]
+      }
     return getProjects()
   } catch (buildError) {
     try {
