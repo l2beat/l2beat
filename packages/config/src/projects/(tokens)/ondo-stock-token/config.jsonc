@@ -1,0 +1,177 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "ondo-stock-token",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0xbA47214eDd2bb43099611b208f75E4b42FDcfEDc", // Google stock token
+  "eth:0xf3e4872e6a4cf365888d93b6146a2baa7348f1a4"   // SRV
+  ], 
+  "names": {
+    "eth:0xbA47214eDd2bb43099611b208f75E4b42FDcfEDc": "GOOGLon GMT Token",
+    "eth:0xf3e4872e6a4cf365888d93b6146a2baa7348f1a4": "SLVon GMT Token",
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": "LayerZero V2 Endpoint",
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": "Chainlink Price Feed",
+  },
+  "overrides": {
+    "eth:0x58d73026C64da97ce858766384477d2E8775E9ec": { // Bridge Registrar
+      "fields": {
+        "tokens": {
+          "handler": {
+            "type": "event",
+            "select": "token",
+            "add": { "event": "TokenRegistered" },
+            "ignoreRelative": true
+          }
+        }
+      }
+    },
+    "eth:0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c": { // GM Token Manager
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x507caaa5b2a5a027bc340a5334d9220583b7d60d846ee2aabc76e37d69a7253b": "ADMIN_MINT_ROLE",
+              "0x023d9737d781c665e5048e4dfd034f07fec540e8ecb2336b3d85a375b90a3a35": "ATTESTATION_SIGNER_ROLE",
+              "0xf45c97b23e2beeefda80e1ce5cb3e234aa7b6888ad5cbabb75bfd654dd8e102d": "CONFIGURER_ROLE",
+              "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": "PAUSER_ROLE",
+              "0x427da25fe773164f88948d3e215c94b6554e2ed5e5f203a821c9f2f6131cf75a": "UNPAUSER_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0xcf6958D69d535FD03BD6Df3F4fe6CDcd127D97df": { // Ondo Id Registry
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xc53827191131104841d7a5b7b667c2fdbe7684fc91b19e368ca2d81ab99f8d7a": "MASTER_CONFIGURER_ROLE",
+              "0x889057569e0bde7affd2c3854adb0e5fac09df9e2c933e40bc1dde0ccc517cba": "RWA_ROLE_MANAGER",
+            }
+          }
+        }
+      }
+    },
+    "eth:0xbC6D5C103a3f586e68bd475942a49d041b171C3e": { //Ondo Owner
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x464b3262bd4aa89a27acb8bcf6561deda534034c68712ef1b8113ec87985b338": "INSPECTOR_ADMIN_ROLE",
+              "0xa04e5740eeb4769693e9a41c3a30a68e0277deb5b3dad3946d7b39a145b6b217": "MESSENGER_ADMIN_ROLE",
+              "0x1e328fafb3c5dd03c8a63a6f201896db03d57ae43b95aee6222e2ffa0d165b8e": "RATE_LIMITER_ADMIN_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0xAcE8E719899F6E91831B18AE746C9A965c2119F1": { // USDCon
+      "fields": { 
+        "$tokenData": { "handler": { "type": "ERC20Data" } },
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xf45c97b23e2beeefda80e1ce5cb3e234aa7b6888ad5cbabb75bfd654dd8e102d": "CONFIGURER_ROLE",
+              "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848": "BURNER_ROLE",
+              "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6": "MINTER_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0xbA47214eDd2bb43099611b208f75E4b42FDcfEDc": {
+      "fields": { 
+        "$tokenData": { "handler": { "type": "ERC20Data" } },
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xf45c97b23e2beeefda80e1ce5cb3e234aa7b6888ad5cbabb75bfd654dd8e102d": "CONFIGURER_ROLE",
+              "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848": "BURNER_ROLE",
+              "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6": "MINTER_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x914D5Cb27cb30E80BdE8215ff577eD63Eb986B79": { // ONDO SanityChecker
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x61c92169ef077349011ff0b1383c894d86c5f0b41d986366b58a6cf31e93beda": "SETTER_ROLE",
+              "0xf45c97b23e2beeefda80e1ce5cb3e234aa7b6888ad5cbabb75bfd654dd8e102d": "CONFIGURER_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x98Db502215Da1ad9F626D4a0090A8A2f4971003c": { // ONDO Rate Limiter
+          "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xa5ff3ec7a96cdbba4d2d5172d66bbc73c6db3885f29b21be5da9fa7a7c025232": "CLIENT_ROLE",
+              "0xf45c97b23e2beeefda80e1ce5cb3e234aa7b6888ad5cbabb75bfd654dd8e102d": "CONFIGURER_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x156F73fc73197555e950743Cb2B23F411c751002": {  // ONDO Compliance
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x889057569e0bde7affd2c3854adb0e5fac09df9e2c933e40bc1dde0ccc517cba": "RWA_ROLE_MANAGER",
+              "0xc53827191131104841d7a5b7b667c2fdbe7684fc91b19e368ca2d81ab99f8d7a": "MASTER_CONFIGURER_ROLE"
+            }
+          }
+        }, 
+        "GMBlocklist": {
+          "handler": {
+            "type": "call",
+            "method": "rwaTokenToBlocklist",
+            "args": ["0x428ECB70E90d1527A5f5e177789f51747b883F34"]
+          }
+        },
+        "GMSactionList": {
+          "handler": {
+            "type": "call",
+            "method": "rwaTokenToSanctionsList",
+            "args": ["0x428ECB70E90d1527A5f5e177789f51747b883F34"]
+          }
+        }
+      }
+    },
+    "eth:0xf3e4872e6a4cf365888d93b6146a2baa7348f1a4": {
+      "fields": { "$tokenData": { "handler": { "type": "ERC20Data" } },
+     "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        } 
+      }
+    },
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": {    
+     // "ignoreDiscovery": true
+    },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {    
+      "ignoreDiscovery": true
+    },
+    "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": {    // Chainlink Price Feed
+      "ignoreRelatives": ["aggregator", "proposedAggregator", "owner", "accessController"],
+    },
+    "eth:0xc04611C43842220fd941515F86d1DDdB15F04e46": {   // Chainlink Price Feed 
+            "ignoreRelatives": ["aggregator", "proposedAggregator", "owner", "accessController"],
+    }
+  }
+}
