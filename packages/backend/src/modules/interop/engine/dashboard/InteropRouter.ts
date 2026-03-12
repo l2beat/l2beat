@@ -79,7 +79,20 @@ export function createInteropRouter(
     if (ctx.query.raw === 'true') {
       ctx.body = explored
     } else {
-      ctx.body = renderAnomaliesPage({ stats: explored })
+      const VALUE_DIFF_THRESHOLD_PERCENT = 15
+      const MINIMUM_SIDE_VALUE_USD_THRESHOLD = 50
+      const suspiciousTransfers =
+        await db.interopTransfer.getValueMismatchTransfers(
+          VALUE_DIFF_THRESHOLD_PERCENT,
+          MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+        )
+      ctx.body = renderAnomaliesPage({
+        stats: explored,
+        suspiciousTransfers,
+        valueDiffThresholdPercent: VALUE_DIFF_THRESHOLD_PERCENT,
+        minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
     }
   })
 
