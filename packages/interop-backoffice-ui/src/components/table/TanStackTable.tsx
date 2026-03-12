@@ -5,6 +5,7 @@ import {
   type Table,
 } from '@tanstack/react-table'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import { type UIEvent, useCallback, useState } from 'react'
 import { Button } from '~/components/core/Button'
 import {
   Select,
@@ -50,6 +51,15 @@ export function TanStackTable<TData extends RowData>({
 }: TanStackTableProps<TData>) {
   const pageCount = Math.max(table.getPageCount(), 1)
   const pageIndex = table.getState().pagination.pageIndex
+  const headerHeightPx = table.getHeaderGroups().length * 40
+  const [showHeaderShadow, setShowHeaderShadow] = useState(false)
+
+  const handleTableScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
+    const shouldShowShadow = event.currentTarget.scrollTop > 0
+    setShowHeaderShadow((current) =>
+      current === shouldShowShadow ? current : shouldShowShadow,
+    )
+  }, [])
 
   return (
     <>
@@ -80,56 +90,81 @@ export function TanStackTable<TData extends RowData>({
         ) : null}
       </div>
 
-      <CoreTable>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows.length === 0 ? (
-            <TableRow>
-              <TableCell
-                colSpan={Math.max(table.getVisibleLeafColumns().length, 1)}
-                className="h-20 text-center text-muted-foreground"
-              >
-                {emptyMessage}
-              </TableCell>
-            </TableRow>
-          ) : (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={getRowDataState?.(row)}
-                className={cn(
-                  typeof rowClassName === 'function'
-                    ? rowClassName(row)
-                    : rowClassName,
-                  onRowClick ? 'cursor-pointer' : undefined,
-                )}
-                onClick={() => onRowClick?.(row)}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+      <div
+        className="relative max-h-[80vh] w-full overflow-auto"
+        onScroll={handleTableScroll}
+      >
+        <div
+          className={cn(
+            '-mt-px pointer-events-none sticky h-3 w-full transition-opacity',
+            showHeaderShadow
+              ? 'z-[25] bg-gradient-to-b from-slate-900/20 to-transparent opacity-100'
+              : 'opacity-0',
+          )}
+          style={{ top: `${headerHeightPx}px` }}
+        />
+
+        <CoreTable containerClassName="overflow-visible">
+          <TableHeader className="[&_tr]:bg-background">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead
+                    key={header.id}
+                    className="sticky bg-background"
+                    style={{
+                      top: `${headerGroup.depth * 40}px`,
+                      zIndex: 30 - headerGroup.depth,
+                    }}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
                 ))}
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </CoreTable>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={Math.max(table.getVisibleLeafColumns().length, 1)}
+                  className="h-20 text-center text-muted-foreground"
+                >
+                  {emptyMessage}
+                </TableCell>
+              </TableRow>
+            ) : (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={getRowDataState?.(row)}
+                  className={cn(
+                    typeof rowClassName === 'function'
+                      ? rowClassName(row)
+                      : rowClassName,
+                    onRowClick ? 'cursor-pointer' : undefined,
+                  )}
+                  onClick={() => onRowClick?.(row)}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </CoreTable>
+      </div>
 
       <div className="flex flex-col gap-3 border-t px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         <span className="text-muted-foreground text-sm">
