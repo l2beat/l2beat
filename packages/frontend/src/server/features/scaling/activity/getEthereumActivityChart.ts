@@ -4,7 +4,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import type { ActivityChartData } from './getActivityChart'
+import type { ActivityChartStats } from './getActivityChart'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { countPerSecond } from './utils/countPerSecond'
 import { getActivitySyncInfo } from './utils/getActivitySyncInfo'
@@ -27,26 +27,7 @@ export type EthereumActivityChartData = {
   data: EthereumActivityChartDataPoint[]
   syncWarning: string | undefined
   syncedUntil: UnixTime
-  stats:
-    | {
-        uops: {
-          pastDayCount: number | null
-          pastDaySum: number | null
-          maxCount: {
-            value: number
-            timestamp: number
-          }
-        }
-        tps: {
-          pastDayCount: number | null
-          pastDaySum: number | null
-          maxCount: {
-            value: number
-            timestamp: number
-          }
-        }
-      }
-    | undefined
+  stats: ActivityChartStats | undefined
 }
 /**
  * A function that computes values for chart data of the activity over time.
@@ -63,10 +44,11 @@ export async function getEthereumActivityChart({
 
   const adjustedRange = await getFullySyncedActivityRange(range)
 
-  const [entries, maxCounts, syncInfo] = await Promise.all([
+  const [entries, maxCounts, syncInfo, totalCounts] = await Promise.all([
     db.activity.getByProjectsAndTimeRange([ProjectId.ETHEREUM], adjustedRange),
     db.activity.getMaxCountsForProjects(),
     getActivitySyncInfo(ProjectId.ETHEREUM, adjustedRange[1]),
+    db.activity.getTpsTotalsForProjects([ProjectId.ETHEREUM]),
   ])
 
   if (!syncInfo.hasSyncData) {
@@ -111,7 +93,11 @@ export async function getEthereumActivityChart({
     ]
   })
 
-  const stats = getEthereumActivityChartStats(data, maxCounts)
+  const stats = getEthereumActivityChartStats(
+    data,
+    maxCounts,
+    totalCounts[ProjectId.ETHEREUM],
+  )
 
   return {
     data,
@@ -132,7 +118,13 @@ function getEthereumActivityChartStats(
       countTimestamp: number
     }
   >,
-): ActivityChartData['stats'] {
+  totalCount:
+    | {
+        count: number
+        sinceTimestamp: number
+      }
+    | undefined,
+): ActivityChartStats | undefined {
   const pastDaySumTps = data.at(-1)?.[1] ?? null
   const pastDaySumUops = data.at(-1)?.[2] ?? pastDaySumTps
 
@@ -158,6 +150,12 @@ function getEthereumActivityChartStats(
         value: countPerSecond(maxCount.count),
         timestamp: maxCount.countTimestamp,
       },
+      totalCount: totalCount
+        ? {
+            value: totalCount.count,
+            sinceTimestamp: totalCount.sinceTimestamp,
+          }
+        : undefined,
     },
   }
 }

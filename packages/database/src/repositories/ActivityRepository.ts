@@ -190,6 +190,35 @@ export class ActivityRepository extends BaseRepository {
     )
   }
 
+  async getTpsTotalsForProjects(projectIds: ProjectId[]) {
+    if (projectIds.length === 0) return {}
+
+    const rows = await this.db
+      .selectFrom('Activity')
+      .select([
+        'projectId',
+        (eb) => eb.fn.sum('count').as('total_count'),
+        (eb) => eb.fn.min('timestamp').as('since_timestamp'),
+      ])
+      .where(
+        'projectId',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .groupBy('projectId')
+      .execute()
+
+    return Object.fromEntries(
+      rows.map((row) => [
+        ProjectId(row.projectId),
+        {
+          count: Number(row.total_count),
+          sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
+        },
+      ]),
+    )
+  }
+
   async getSummedUopsCountForProjectAndTimeRange(
     projectId: ProjectId,
     timeRange: [UnixTime | null, UnixTime],
