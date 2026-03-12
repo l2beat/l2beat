@@ -13,6 +13,7 @@ import { clique } from '../projects/clique/clique'
 import { conwai } from '../projects/conwai/conwai'
 import { datalake } from '../projects/datalake/datalake'
 import { degen } from '../projects/degen/degen'
+import { edgechain } from '../projects/edgechain/edgechain'
 import { deri } from '../projects/deri/deri'
 import { dodochain } from '../projects/dodochain/dodochain'
 import { donatuz } from '../projects/donatuz/donatuz'
@@ -88,6 +89,7 @@ export const layer3s: ScalingProject[] = [
   dodochain,
   donatuz,
   earnm,
+  edgechain,
   educhain,
   ethereal,
   evedex,
