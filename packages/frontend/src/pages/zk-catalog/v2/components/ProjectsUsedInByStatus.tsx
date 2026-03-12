@@ -15,7 +15,7 @@ export function ProjectsUsedInByStatus({ data }: Props) {
   }
 
   return (
-    <div className="flex flex-col items-start gap-1.5">
+    <div className="flex flex-col items-start gap-1.5 py-2">
       {statuses.map((status) => (
         <ProjectsUsedIn
           key={status}
