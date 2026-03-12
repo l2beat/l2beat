@@ -9,7 +9,7 @@ import { orbitStackL3 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('edgechain')
 
 export const edgechain: ScalingProject = orbitStackL3({
-  addedAt: UnixTime(1741996800), // 2025-03-15T00:00:00Z
+  addedAt: UnixTime(1761511538), // 2025-10-26T20:45:38Z
   hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
@@ -19,6 +19,8 @@ export const edgechain: ScalingProject = orbitStackL3({
     REASON_FOR_BEING_OTHER.SMALL_DAC,
   ],
   display: {
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Edge Chain',
     slug: 'edgechain',
     description:
@@ -42,7 +44,7 @@ export const edgechain: ScalingProject = orbitStackL3({
   chainConfig: {
     name: 'edgechain',
     chainId: 3343,
-    sinceTimestamp: UnixTime(1741996800),
+    sinceTimestamp: UnixTime(1761511538),
     apis: [
       {
         type: 'rpc',
