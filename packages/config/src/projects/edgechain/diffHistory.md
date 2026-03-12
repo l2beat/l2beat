@@ -7,7 +7,7 @@ Generated with discovered.json: 0xc9e0f5476cf07c3634e48bdedbe86e65ce495b0e
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery of Edge Chain, an Arbitrum Orbit L3 (AnyTrust) by EdgeX.
 
 ## Initial discovery
 
