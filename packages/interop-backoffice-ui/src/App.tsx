@@ -6,6 +6,7 @@ import { FinancialsActionsPage } from './pages/financials/FinancialsActionsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PluginStatusesPage } from './pages/plugin-statuses/PluginStatusesPage'
 import { ProcessorStatusesPage } from './pages/processor-statuses/ProcessorStatusesPage'
+import { SummaryAggregatesPage } from './pages/summary/aggregates/SummaryAggregatesPage'
 import { SummaryEventDetailsPage } from './pages/summary/events/SummaryEventDetailsPage'
 import { SummaryEventsPage } from './pages/summary/events/SummaryEventsPage'
 import { SummaryKnownAppsPage } from './pages/summary/known-apps/SummaryKnownAppsPage'
@@ -27,6 +28,14 @@ export function App() {
           <Toaster />
           <Routes>
             <Route path="/" element={<SummaryPage />} />
+            <Route
+              path="/summary/aggregates"
+              element={<SummaryAggregatesPage />}
+            />
+            <Route
+              path="/interop/aggregates"
+              element={<SummaryAggregatesPage />}
+            />
             <Route path="/summary/events" element={<SummaryEventsPage />} />
             <Route
               path="/summary/events/:kind/:type"

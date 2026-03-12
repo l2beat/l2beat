@@ -138,3 +138,32 @@ export type InteropKnownAppsPerPlugin = {
   plugin: string
   apps: string[]
 }
+
+export type InteropAggregateNotIncludedByPlugin = {
+  plugin: string
+  bridgeType: string
+  count: number
+  totalValueUsd: number
+}
+
+export type InteropAggregateDurationSplitCoverage = {
+  projectId: string
+  projectName: string
+  bridgeType: string
+  observedTransferTypes: string[]
+  includedSplits: {
+    label: string
+    transferTypes: string[]
+  }[]
+  notIncludedTransferTypes: string[]
+}
+
+export type InteropAggregates = {
+  fromTimestamp: number
+  toTimestamp: number
+  configCount: number
+  latestTransfersCount: number
+  unconsumedTransfers: InteropTransferDetails[]
+  notIncludedByPlugin: InteropAggregateNotIncludedByPlugin[]
+  durationSplitCoverage: InteropAggregateDurationSplitCoverage[]
+}

@@ -182,6 +182,9 @@ export function SummaryPage() {
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
             <Button asChild variant="outline" size="sm">
+              <Link to="/summary/aggregates">Open aggregates</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
               <Link to="/summary/events">Open events</Link>
             </Button>
             <Button asChild variant="outline" size="sm">

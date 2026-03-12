@@ -8,6 +8,11 @@ const items = [
     activePrefixes: ['/'],
   },
   {
+    label: 'Aggregates',
+    to: '/summary/aggregates',
+    activePrefixes: ['/summary/aggregates', '/interop/aggregates'],
+  },
+  {
     label: 'Events',
     to: '/summary/events',
     activePrefixes: ['/summary/events', '/interop/events'],

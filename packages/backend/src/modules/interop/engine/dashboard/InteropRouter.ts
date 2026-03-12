@@ -1,16 +1,17 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import { INTEROP_CHAINS } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
+import type { Database, InteropTransferRecord } from '@l2beat/database'
 import {
   createAppRouter,
   createKoaMiddleware,
   createTRPCContext,
 } from '@l2beat/interop-backoffice'
 import { InteropTransferClassifier } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, getInteropTransferValue, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
+import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { renderAnomaliesPage } from './AnomaliesPage'
@@ -111,6 +112,9 @@ export function createInteropRouter(
       getInteropKnownAppsPerPlugin: () => {
         return getInteropKnownAppsPerPlugin(db)
       },
+      getInteropAggregates: () => {
+        return getInteropAggregates(db, config)
+      },
       getInteropChainMetadata: () => {
         return Promise.resolve(
           INTEROP_CHAINS.map((chain) => ({
@@ -177,37 +181,18 @@ export function createInteropRouter(
   })
 
   router.get('/interop/aggregates', async (ctx) => {
-    const latestTimestamp =
-      await db.aggregatedInteropTransfer.getLatestTimestamp()
-    if (!latestTimestamp) {
+    const aggregates = await getInteropAggregatesRaw(db, config)
+
+    if (!aggregates) {
       return (ctx.body = {
         error: 'No latest timestamp found',
       })
     }
-    const from = latestTimestamp - UnixTime.DAY
-    const transfers = await db.interopTransfer.getByRange(from, latestTimestamp)
-    const configs = config.aggregation ? config.aggregation.configs : []
-
-    const classifier = new InteropTransferClassifier()
-    const consumedIds = new Set<string>()
-    for (const aggConfig of configs) {
-      const classified = classifier.classifyTransfers(
-        transfers,
-        aggConfig.plugins,
-      )
-      for (const records of Object.values(classified)) {
-        for (const r of records) {
-          consumedIds.add(r.transferId)
-        }
-      }
-    }
-
-    const unconsumed = transfers.filter((t) => !consumedIds.has(t.transferId))
 
     ctx.body = renderAggregatesPage({
-      transfers: unconsumed,
-      latestTransfers: transfers,
-      configs,
+      transfers: aggregates.unconsumedTransfers,
+      latestTransfers: aggregates.latestTransfers,
+      configs: aggregates.configs,
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
   })
@@ -685,7 +670,22 @@ async function getInteropTransferDetails(
     dstChain: input.dstChain,
   })
 
-  return transfers.map((transfer) => ({
+  return transfers.map(mapInteropTransferDetails)
+}
+
+async function getInteropKnownAppsPerPlugin(db: Database) {
+  const rows = await db.interopMessage.getUniqueAppsPerPlugin()
+
+  return rows
+    .map((row) => ({
+      plugin: row.plugin,
+      apps: [...row.apps].sort((a, b) => a.localeCompare(b)),
+    }))
+    .sort((a, b) => a.plugin.localeCompare(b.plugin))
+}
+
+function mapInteropTransferDetails(transfer: InteropTransferRecord) {
+  return {
     plugin: transfer.plugin,
     type: transfer.type,
     transferId: transfer.transferId,
@@ -710,18 +710,185 @@ async function getInteropTransferDetails(
     dstAmount: transfer.dstAmount,
     dstValueUsd: transfer.dstValueUsd,
     dstWasMinted: transfer.dstWasMinted,
-  }))
+  }
 }
 
-async function getInteropKnownAppsPerPlugin(db: Database) {
-  const rows = await db.interopMessage.getUniqueAppsPerPlugin()
+async function getInteropAggregates(
+  db: Database,
+  config: InteropFeatureConfig,
+) {
+  const aggregates = await getInteropAggregatesRaw(db, config)
+  if (!aggregates) {
+    return null
+  }
 
-  return rows
-    .map((row) => ({
-      plugin: row.plugin,
-      apps: [...row.apps].sort((a, b) => a.localeCompare(b)),
-    }))
-    .sort((a, b) => a.plugin.localeCompare(b.plugin))
+  return {
+    fromTimestamp: aggregates.fromTimestamp,
+    toTimestamp: aggregates.toTimestamp,
+    configCount: aggregates.configs.length,
+    latestTransfersCount: aggregates.latestTransfers.length,
+    unconsumedTransfers: aggregates.unconsumedTransfers.map(
+      mapInteropTransferDetails,
+    ),
+    notIncludedByPlugin: buildNotIncludedInAggregatesRows(
+      aggregates.unconsumedTransfers,
+    ),
+    durationSplitCoverage: buildDurationSplitCoverageRows(
+      aggregates.latestTransfers,
+      aggregates.configs,
+    ),
+  }
+}
+
+async function getInteropAggregatesRaw(
+  db: Database,
+  config: InteropFeatureConfig,
+) {
+  const latestTimestamp =
+    await db.aggregatedInteropTransfer.getLatestTimestamp()
+  if (!latestTimestamp) {
+    return null
+  }
+
+  const fromTimestamp = latestTimestamp - UnixTime.DAY
+  const latestTransfers = await db.interopTransfer.getByRange(
+    fromTimestamp,
+    latestTimestamp,
+  )
+  const configs = config.aggregation ? config.aggregation.configs : []
+
+  const classifier = new InteropTransferClassifier()
+  const consumedIds = new Set<string>()
+
+  for (const aggConfig of configs) {
+    const classified = classifier.classifyTransfers(
+      latestTransfers,
+      aggConfig.plugins,
+    )
+    for (const records of Object.values(classified)) {
+      for (const record of records) {
+        consumedIds.add(record.transferId)
+      }
+    }
+  }
+
+  const unconsumedTransfers = latestTransfers.filter(
+    (transfer) => !consumedIds.has(transfer.transferId),
+  )
+
+  return {
+    fromTimestamp,
+    toTimestamp: latestTimestamp,
+    latestTransfers,
+    unconsumedTransfers,
+    configs,
+  }
+}
+
+function buildNotIncludedInAggregatesRows(transfers: InteropTransferRecord[]) {
+  const grouped = new Map<string, { count: number; totalValueUsd: number }>()
+
+  for (const transfer of transfers) {
+    const bridgeType =
+      transfer.bridgeType ?? InteropTransferClassifier.inferBridgeType(transfer)
+    const key = `${transfer.plugin}:${bridgeType}`
+    const valueUsd = getInteropTransferValue(transfer) ?? 0
+    const existing = grouped.get(key)
+
+    if (existing) {
+      existing.count += 1
+      existing.totalValueUsd += valueUsd
+    } else {
+      grouped.set(key, {
+        count: 1,
+        totalValueUsd: valueUsd,
+      })
+    }
+  }
+
+  return Array.from(grouped.entries())
+    .map(([key, value]) => {
+      const separatorIndex = key.indexOf(':')
+      const plugin = separatorIndex === -1 ? key : key.slice(0, separatorIndex)
+      const bridgeType =
+        separatorIndex === -1 ? 'unknown' : key.slice(separatorIndex + 1)
+      return {
+        plugin,
+        bridgeType,
+        count: value.count,
+        totalValueUsd: value.totalValueUsd,
+      }
+    })
+    .sort((a, b) => b.totalValueUsd - a.totalValueUsd || b.count - a.count)
+}
+
+function buildDurationSplitCoverageRows(
+  transfers: InteropTransferRecord[],
+  configs: InteropAggregationConfig[],
+) {
+  const classifier = new InteropTransferClassifier()
+  const rows: {
+    projectId: string
+    projectName: string
+    bridgeType: string
+    observedTransferTypes: string[]
+    includedSplits: {
+      label: string
+      transferTypes: string[]
+    }[]
+    notIncludedTransferTypes: string[]
+  }[] = []
+
+  for (const config of configs) {
+    if (!config.durationSplit) {
+      continue
+    }
+
+    const classifiedTransfers = classifier.classifyTransfers(
+      transfers,
+      config.plugins,
+    )
+    const entries = Object.entries(config.durationSplit) as Array<
+      [string, { label: string; transferTypes: string[] }[]]
+    >
+
+    for (const [bridgeType, durationSplit] of entries) {
+      const includedSplits = durationSplit.map((split) => ({
+        label: split.label,
+        transferTypes: [...new Set(split.transferTypes)].sort(),
+      }))
+      const includedTransferTypes = new Set(
+        includedSplits.flatMap((split) => split.transferTypes),
+      )
+      const observedTransferTypes = [
+        ...new Set(
+          (
+            classifiedTransfers[
+              bridgeType as keyof typeof classifiedTransfers
+            ] ?? []
+          ).map((transfer) => transfer.type),
+        ),
+      ].sort()
+
+      rows.push({
+        projectId: config.id,
+        projectName: config.shortName ?? config.name ?? config.id,
+        bridgeType,
+        observedTransferTypes,
+        includedSplits,
+        notIncludedTransferTypes: observedTransferTypes.filter(
+          (transferType) => !includedTransferTypes.has(transferType),
+        ),
+      })
+    }
+  }
+
+  return rows.sort(
+    (a, b) =>
+      b.notIncludedTransferTypes.length - a.notIncludedTransferTypes.length ||
+      a.projectName.localeCompare(b.projectName) ||
+      a.bridgeType.localeCompare(b.bridgeType),
+  )
 }
 
 async function getTransfersStats(db: Database) {

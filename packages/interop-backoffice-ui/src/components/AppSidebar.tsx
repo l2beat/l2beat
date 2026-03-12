@@ -4,6 +4,7 @@ import {
   CircleDollarSignIcon,
   CpuIcon,
   InboxIcon,
+  Layers,
   MessageSquareIcon,
   PanelsTopLeftIcon,
   RefreshCw,
@@ -31,6 +32,11 @@ const items = [
         title: 'Overview',
         url: '/',
         icon: PanelsTopLeftIcon,
+      },
+      {
+        title: 'Aggregates',
+        url: '/summary/aggregates',
+        icon: Layers,
       },
       {
         title: 'Events',
