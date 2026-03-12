@@ -4,6 +4,7 @@ import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { ChevronIcon } from '~/icons/Chevron'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import { cn } from '~/utils/cn'
+import { formatAddress } from '~/utils/formatAddress'
 import type { VerifierRow } from './VerifiersTable'
 
 const columnHelper = createColumnHelper<VerifierRow>()
@@ -14,8 +15,7 @@ export const verifiersColumns = [
     cell: (ctx) => (
       <div className="flex items-baseline gap-1.5">
         <span className="font-medium text-label-value-14 md:text-label-value-15">
-          {ctx.row.original.hash.slice(0, 6)}...
-          {ctx.row.original.hash.slice(-4)}
+          {formatAddress(ctx.row.original.hash)}
         </span>
       </div>
     ),
@@ -83,7 +83,7 @@ export const verifiersColumns = [
       const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
       return (
         <button
-          className="flex h-full items-center justify-end"
+          className="flex h-full items-center justify-end p-8"
           onClick={toggleExpandedHandler}
         >
           <ChevronIcon
