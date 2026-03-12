@@ -29,7 +29,7 @@ export const edgechain: ScalingProject = orbitStackL3({
       websites: ['https://edgex.exchange'],
       bridges: ['https://pro.edgex.exchange'],
       documentation: ['https://edgex-1.gitbook.io/edgeX-documentation'],
-      explorers: ['https://edge-mainnet.explorer.alchemy.com/'],
+      explorers: ['https://pro.edgex.exchange/en-US/explorer'],
       socialMedia: [
         'https://x.com/edgeX_exchange',
         'https://discord.com/invite/edgeX',
