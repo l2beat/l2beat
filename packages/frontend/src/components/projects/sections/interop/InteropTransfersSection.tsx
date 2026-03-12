@@ -123,7 +123,7 @@ export function InteropTransfersSection({
           isLoading={isLoading}
         />
       )}
-      {!isLoading && !hasIntegrityMismatch && pageCount > 1 && (
+      {!hasIntegrityMismatch && pageCount > 1 && (
         <div className="mt-4">
           <Pagination className="min-w-full px-1">
             <PaginationContent className="justify-center">
