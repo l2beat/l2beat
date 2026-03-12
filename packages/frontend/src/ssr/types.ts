@@ -1,4 +1,4 @@
-import type { SsrData } from '../pages/ClientPageRouter'
+import type { SsrData } from '../pages/pageTypes'
 import type { HeadProps } from './head/Head'
 
 export interface RenderData {

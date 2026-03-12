@@ -7,9 +7,9 @@ import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
-import { renderAggregatesPage } from './AggregatesPage'
 import { renderAnomaliesPage } from './AnomaliesPage'
 import { renderAnomalyIdPage } from './AnomalyIdPage'
+import { renderAggregatesPage } from './aggregates/AggregatesPage'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
@@ -134,6 +134,7 @@ export function createInteropRouter(
 
     ctx.body = renderAggregatesPage({
       transfers: unconsumed,
+      latestTransfers: transfers,
       configs,
       getExplorerUrl: config.dashboard.getExplorerUrl,
     })
