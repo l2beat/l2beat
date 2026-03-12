@@ -9,7 +9,7 @@ import { orbitStackL3 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('edgechain')
 
 export const edgechain: ScalingProject = orbitStackL3({
-  addedAt: UnixTime(1761511538), // 2025-10-26T20:45:38Z
+  addedAt: UnixTime(1773273600), // 2026-03-12T00:00:00Z
   hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
