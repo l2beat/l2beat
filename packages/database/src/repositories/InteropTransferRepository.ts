@@ -263,10 +263,16 @@ export class InteropTransferRepository extends BaseRepository {
       'minimumSideValueUsdThreshold must be a non-negative number',
     )
 
+    const maxSideValueUsd = sql<number>`
+      GREATEST(ABS("srcValueUsd"::numeric), ABS("dstValueUsd"::numeric))
+    `
+    const absoluteValueDifferenceUsd = sql<number>`
+      ABS("srcValueUsd"::numeric - "dstValueUsd"::numeric)
+    `
     const valueDifferencePercent = sql<number>`
       CASE
-        WHEN GREATEST(ABS("srcValueUsd"), ABS("dstValueUsd")) = 0 THEN 0
-        ELSE (ABS("srcValueUsd" - "dstValueUsd") / GREATEST(ABS("srcValueUsd"), ABS("dstValueUsd"))) * 100
+        WHEN ${maxSideValueUsd} = 0 THEN 0
+        ELSE (${absoluteValueDifferenceUsd} / ${maxSideValueUsd}) * 100
       END
     `
 
@@ -280,7 +286,8 @@ export class InteropTransferRepository extends BaseRepository {
       .where(sql<boolean>`ABS("dstValueUsd") > ${minimumSideValueUsdThreshold}`)
       .where(
         sql<boolean>`
-          ${valueDifferencePercent} > ${valueDifferencePercentThreshold}
+          ${maxSideValueUsd} > 0
+          AND (${absoluteValueDifferenceUsd} * 100) > (${valueDifferencePercentThreshold} * ${maxSideValueUsd})
         `,
       )
       .orderBy(valueDifferencePercent, 'desc')
