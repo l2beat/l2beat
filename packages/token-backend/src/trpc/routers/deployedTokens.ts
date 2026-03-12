@@ -338,7 +338,11 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
 
       return Array.from(map.values()).map((value) => {
         const [chain, address, abstractTokenId] = value.split(':')
-        return { chain, address, abstractTokenId }
+        return {
+          chain,
+          address: address.slice(0, 2) + address.slice(-40),
+          abstractTokenId,
+        }
       })
     }),
   })
