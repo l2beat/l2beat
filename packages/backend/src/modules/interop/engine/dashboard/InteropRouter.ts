@@ -27,6 +27,21 @@ export function createInteropRouter(
 ) {
   const router = new Router()
   let coveragePiesCache: string | undefined
+  const dangerousOperationsDisabledResponse = {
+    error: 'Interop resync and restart operations are disabled',
+  }
+
+  const ensureDangerousOperationsEnabled = (
+    ctx: Router.RouterContext,
+  ): boolean => {
+    if (config.dangerousOperationsEnabled) {
+      return true
+    }
+
+    ctx.status = 403
+    ctx.body = dangerousOperationsDisabledResponse
+    return false
+  }
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
@@ -68,7 +83,8 @@ export function createInteropRouter(
 
   router.get('/interop/status', async (ctx) => {
     const pluginSyncStatuses = await syncersManager.getPluginSyncStatuses()
-    const showResyncControls = ctx.query.showResync !== undefined
+    const showResyncControls =
+      config.dangerousOperationsEnabled && ctx.query.showResync !== undefined
 
     ctx.body = renderStatusPage({ pluginSyncStatuses, showResyncControls })
   })
@@ -275,6 +291,10 @@ export function createInteropRouter(
   })
 
   router.post('/interop/resync', async (ctx) => {
+    if (!ensureDangerousOperationsEnabled(ctx)) {
+      return
+    }
+
     const payload = ResyncRequest.validate(ctx.request.body)
     const { pluginName, resyncRequestedFrom } = payload
 
@@ -302,6 +322,10 @@ export function createInteropRouter(
   })
 
   router.post('/interop/restart-from-now', async (ctx) => {
+    if (!ensureDangerousOperationsEnabled(ctx)) {
+      return
+    }
+
     const payload = v
       .object({ pluginName: v.string() })
       .validate(ctx.request.body)

@@ -60,7 +60,9 @@ function StatusPageLayout(props: {
                 pluginSyncStatuses={props.pluginSyncStatuses}
               />
             </>
-          ) : null}
+          ) : (
+            <b>Resync operations disabled by environment variable</b>
+          )}
           <script
             dangerouslySetInnerHTML={{
               __html: `
