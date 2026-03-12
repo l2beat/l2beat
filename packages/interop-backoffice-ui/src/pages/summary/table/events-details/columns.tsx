@@ -1,34 +1,8 @@
-import type { ColumnDef, HeaderContext } from '@tanstack/react-table'
-import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react'
-import { Button } from '~/components/core/Button'
+import type { ColumnDef } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
+import { SortableHeader } from '~/components/table/SortableHeader'
 import type { SummaryEventDetailsRow } from '../types'
 import { formatEventTimestamp, shortenHash, toCsvIsoTimestamp } from './utils'
-
-function SortableHeader(
-  props: HeaderContext<SummaryEventDetailsRow, unknown> & { label: string },
-) {
-  const { column, label } = props
-  const sortState = column.getIsSorted()
-
-  return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className="-ml-3"
-      onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-    >
-      {label}
-      {sortState === 'asc' ? (
-        <ArrowUpIcon className="text-primary" />
-      ) : sortState === 'desc' ? (
-        <ArrowDownIcon className="text-primary" />
-      ) : (
-        <ArrowUpDownIcon className="opacity-50" />
-      )}
-    </Button>
-  )
-}
 
 interface CreateEventDetailsColumnsOptions {
   getExplorerUrl: (chain: string) => string | undefined

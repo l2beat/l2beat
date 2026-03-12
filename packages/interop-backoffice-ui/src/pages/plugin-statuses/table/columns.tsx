@@ -1,38 +1,12 @@
-import type { ColumnDef, HeaderContext } from '@tanstack/react-table'
-import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react'
+import type { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '~/components/core/Badge'
-import { Button } from '~/components/core/Button'
+import { SortableHeader } from '~/components/table/SortableHeader'
 import type { PluginStatus } from './types'
 import {
   getDistanceFromNow,
   getResyncFrom,
   getSyncModeBadgeVariant,
 } from './utils'
-
-function SortableHeader(
-  props: HeaderContext<PluginStatus, unknown> & { label: string },
-) {
-  const { column, label } = props
-  const sortState = column.getIsSorted()
-
-  return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className="-ml-3"
-      onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-    >
-      {label}
-      {sortState === 'asc' ? (
-        <ArrowUpIcon className="text-primary" />
-      ) : sortState === 'desc' ? (
-        <ArrowDownIcon className="text-primary" />
-      ) : (
-        <ArrowUpDownIcon className="opacity-50" />
-      )}
-    </Button>
-  )
-}
 
 export const pluginStatusesColumns: ColumnDef<PluginStatus>[] = [
   {
