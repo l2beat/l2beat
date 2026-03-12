@@ -12,8 +12,10 @@ export const GetConfig = command({
   },
   handler: async (args) => {
     const ps = new ProjectService()
-    const project = await ps.getProject({ id: ProjectId(args.project) })
-    const allProjects = await ps.getProjects({ select: ['display'] })
+    const [project, allProjects] = await Promise.all([
+      ps.getProject({ id: ProjectId(args.project) }),
+      ps.getProjects({ select: ['display'] }),
+    ])
 
     assert(project, getProjectNotFoundMessage(args.project, allProjects))
     console.log(JSON.stringify(project, null, 2))
@@ -33,9 +35,11 @@ function getProjectNotFoundMessage(
     .filter((candidate) => candidate.toLowerCase().includes(query))
     .slice(0, 5)
 
+  const buildCallout =
+    "If you've just added a project, please rebuild config package."
   if (suggestions.length === 0) {
-    return `Project "${projectName}" not found.`
+    return `Project "${projectName}" not found. ${buildCallout}`
   }
 
-  return `Project "${projectName}" not found. Did you mean: ${suggestions.join(', ')}?`
+  return `Project "${projectName}" not found. Did you mean: ${suggestions.join(', ')}? ${buildCallout}`
 }
