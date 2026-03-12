@@ -1,6 +1,6 @@
 import type { TokenDatabase } from '@l2beat/database'
 import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
-import { Address32, Address32, assert, type UnixTime } from '@l2beat/shared-pure'
+import { Address32, assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
 import { InteropTransferClassifier } from '../../../../shared/build'
