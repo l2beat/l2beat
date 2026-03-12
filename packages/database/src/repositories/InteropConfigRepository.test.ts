@@ -109,6 +109,51 @@ describeDatabase(InteropConfigRepository.name, (database) => {
     })
   })
 
+  describe(
+    InteropConfigRepository.prototype.deleteAllButLatestPerKey.name,
+    () => {
+      it('keeps latest N records per key', async () => {
+        const keyA = [
+          mockConfig('a', { version: 1 }),
+          mockConfig('a', { version: 2 }),
+          mockConfig('a', { version: 3 }),
+          mockConfig('a', { version: 4 }),
+        ]
+        const keyB = [
+          mockConfig('b', { version: 1 }),
+          mockConfig('b', { version: 2 }),
+          mockConfig('b', { version: 3 }),
+        ]
+        const keyC = [mockConfig('c', { version: 1 })]
+
+        keyA.forEach((r, i) => (r.timestamp = UnixTime(1000 + i)))
+        keyB.forEach((r, i) => (r.timestamp = UnixTime(2000 + i)))
+        keyC.forEach((r, i) => (r.timestamp = UnixTime(3000 + i)))
+
+        for (const record of [...keyA, ...keyB, ...keyC]) {
+          await repository.insert(record)
+        }
+
+        const deleted = await repository.deleteAllButLatestPerKey(2)
+        const all = await repository.getAll()
+        const versionsFor = (key: string) =>
+          all
+            .filter((r) => r.key === key)
+            .map((r) => (r.value as { version: number }).version)
+            .sort((a, b) => a - b)
+
+        expect(deleted).toEqual(3)
+        expect(versionsFor('a')).toEqual([3, 4])
+        expect(versionsFor('b')).toEqual([2, 3])
+        expect(versionsFor('c')).toEqual([1])
+      })
+
+      it('throws for keepLatest < 1', async () => {
+        await expect(repository.deleteAllButLatestPerKey(0)).toBeRejected()
+      })
+    },
+  )
+
   afterEach(async () => {
     await repository.deleteAll()
   })
