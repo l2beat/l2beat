@@ -91,6 +91,7 @@ export function createInteropRouter(
         suspiciousTransfers,
         valueDiffThresholdPercent: VALUE_DIFF_THRESHOLD_PERCENT,
         minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
       })
     }
   })

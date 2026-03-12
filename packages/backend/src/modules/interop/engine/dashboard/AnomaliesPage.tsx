@@ -1,8 +1,10 @@
 import type { InteropSuspiciousTransferRecord } from '@l2beat/database'
+import { Address32 } from '@l2beat/shared-pure'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
+import { ShortenedHash } from './ShortenedHash'
 import {
   type DataRowResult,
   interpret,
@@ -412,6 +414,7 @@ function AnomaliesTable(props: { stats: DataRowResult[] }) {
 function SuspiciousTransfersTable(props: {
   transfers: InteropSuspiciousTransferRecord[]
   valueDiffThresholdPercent: number
+  getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
     <table id="suspicious-transfers" className="display">
@@ -423,6 +426,8 @@ function SuspiciousTransfersTable(props: {
           <th>Type</th>
           <th>Src chain</th>
           <th>Dst chain</th>
+          <th>Src token</th>
+          <th>Dst token</th>
           <th>Src value (USD)</th>
           <th>Dst value (USD)</th>
           <th>Diff %</th>
@@ -443,6 +448,20 @@ function SuspiciousTransfersTable(props: {
             <td>{transfer.type}</td>
             <td>{transfer.srcChain}</td>
             <td>{transfer.dstChain}</td>
+            <td>
+              <TokenUiLink
+                chain={transfer.srcChain}
+                tokenAddress={transfer.srcTokenAddress}
+                tokenSymbol={transfer.srcSymbol}
+              />
+            </td>
+            <td>
+              <TokenUiLink
+                chain={transfer.dstChain}
+                tokenAddress={transfer.dstTokenAddress}
+                tokenSymbol={transfer.dstSymbol}
+              />
+            </td>
             <td data-order={transfer.srcValueUsd ?? -1}>
               {formatDollars(transfer.srcValueUsd)}
             </td>
@@ -463,8 +482,20 @@ function SuspiciousTransfersTable(props: {
                 {formatGapPercent(transfer.valueDifferencePercent)}
               </span>
             </td>
-            <td>{transfer.srcTxHash}</td>
-            <td>{transfer.dstTxHash}</td>
+            <td>
+              <TransferTxHash
+                chain={transfer.srcChain}
+                txHash={transfer.srcTxHash}
+                getExplorerUrl={props.getExplorerUrl}
+              />
+            </td>
+            <td>
+              <TransferTxHash
+                chain={transfer.dstChain}
+                txHash={transfer.dstTxHash}
+                getExplorerUrl={props.getExplorerUrl}
+              />
+            </td>
           </tr>
         ))}
       </tbody>
@@ -472,17 +503,99 @@ function SuspiciousTransfersTable(props: {
   )
 }
 
+function TransferTxHash(props: {
+  chain: string
+  txHash: string
+  getExplorerUrl: (chain: string) => string | undefined
+}) {
+  const explorerUrl = props.getExplorerUrl(props.chain)
+  if (!explorerUrl) {
+    return <>{props.txHash}</>
+  }
+
+  return (
+    <a target="_blank" href={`${explorerUrl}/tx/${props.txHash}`}>
+      <ShortenedHash hash={props.txHash} />
+    </a>
+  )
+}
+
+function TokenUiLink(props: {
+  chain: string
+  tokenAddress: string | undefined
+  tokenSymbol: string | undefined
+}) {
+  const href = getTokenUiHref({
+    chain: props.chain,
+    tokenAddress: props.tokenAddress,
+  })
+  const label = getTokenLabel(props.tokenSymbol, props.tokenAddress)
+
+  if (!href) {
+    return <>{label}</>
+  }
+
+  return (
+    <a target="_blank" href={href}>
+      {label}
+    </a>
+  )
+}
+
+function getTokenUiHref(props: {
+  chain: string
+  tokenAddress: string | undefined
+}): string | undefined {
+  if (!props.chain || !props.tokenAddress) {
+    return undefined
+  }
+
+  let address = props.tokenAddress
+
+  if (props.tokenAddress !== Address32.NATIVE) {
+    address = Address32.cropToEthereumAddress(Address32(props.tokenAddress))
+  }
+
+  return `https://tokens.l2beat.com/tokens/${props.chain}/${address}`
+}
+
+function getTokenLabel(
+  tokenSymbol: string | undefined,
+  tokenAddress: string | undefined,
+) {
+  if (tokenSymbol) {
+    return tokenSymbol
+  }
+
+  if (!tokenAddress) {
+    return '-'
+  }
+
+  if (tokenAddress === Address32.NATIVE) {
+    return 'native'
+  }
+
+  if (tokenAddress === Address32.ZERO) {
+    return '0x0'
+  }
+
+  const address = Address32.cropToEthereumAddress(Address32(tokenAddress))
+  return <ShortenedHash hash={address} />
+}
+
 function AnomaliesPageLayout(props: {
   stats: DataRowResult[]
   suspiciousTransfers: InteropSuspiciousTransferRecord[]
   valueDiffThresholdPercent: number
   minimumSideValueUsdThreshold: number
+  getExplorerUrl: (chain: string) => string | undefined
 }) {
   const anomaliesTable = <AnomaliesTable stats={props.stats} />
   const suspiciousTransfersTable = (
     <SuspiciousTransfersTable
       transfers={props.suspiciousTransfers}
       valueDiffThresholdPercent={props.valueDiffThresholdPercent}
+      getExplorerUrl={props.getExplorerUrl}
     />
   )
 
@@ -520,7 +633,7 @@ function AnomaliesPageLayout(props: {
           tableId: 'suspicious-transfers',
           dataTableOptions: {
             order: [
-              [8, 'desc'],
+              [10, 'desc'],
               [0, 'desc'],
             ],
             scrollX: true,
@@ -528,11 +641,11 @@ function AnomaliesPageLayout(props: {
             autoWidth: false,
             columnDefs: [
               {
-                targets: [0, 8],
+                targets: [0, 10],
                 type: 'num',
               },
               {
-                targets: [6, 7],
+                targets: [8, 9],
                 type: 'num-fmt',
               },
             ],
@@ -548,6 +661,7 @@ export function renderAnomaliesPage(props: {
   suspiciousTransfers: InteropSuspiciousTransferRecord[]
   valueDiffThresholdPercent: number
   minimumSideValueUsdThreshold: number
+  getExplorerUrl: (chain: string) => string | undefined
 }) {
   return (
     '<!DOCTYPE html>' + renderToStaticMarkup(<AnomaliesPageLayout {...props} />)
