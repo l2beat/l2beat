@@ -8,6 +8,7 @@ import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { findParsedAround } from './hyperlane-hwr'
 import {
   decodeMayanData,
+  findNativeAmountInTx,
   forwardedERC20Log,
   forwardedEthLog,
   logToProtocolData,
@@ -16,8 +17,9 @@ import {
   swapAndForwardedEthLog,
 } from './mayan-forwarder'
 import {
-  MAYAN_SWIFT,
-  MAYAN_SWIFT_CHAINS,
+  MAYAN_EVM_CHAINS,
+  MAYAN_FORWARDER,
+  MAYAN_PROTOCOLS,
   toChainSpecificAddresses,
 } from './mayan-shared'
 import {
@@ -171,7 +173,12 @@ function findSingleSettlementSentInTx(
 ) {
   for (const log of input.txLogs) {
     const logMsg = parseLogMessagePublished(log, null)
-    if (!logMsg || EthereumAddress(logMsg.sender) !== MAYAN_SWIFT) continue
+    if (
+      !logMsg ||
+      EthereumAddress(logMsg.sender) !== MAYAN_PROTOCOLS.mayanSwift
+    ) {
+      continue
+    }
 
     const msgType = getMayanSwiftSettlementMsgType(logMsg.payload)
     // Only single UNLOCK is captured here. BATCH_UNLOCK is handled in mayan-swift-settlement plugin.
@@ -207,17 +214,16 @@ function captureOrderCreated(
   if (!orderCreated) return
 
   const parsed = findOrderData(input, wormholeNetworks)
-  const txValue = input.tx.value
+  const nativeAmount = findNativeAmountInTx(input, [
+    MAYAN_PROTOCOLS.mayanSwift,
+    MAYAN_FORWARDER,
+  ])
   const srcTokenAddress =
     parsed?.tokenIn ??
-    (txValue !== undefined && txValue > 0n ? Address32.NATIVE : undefined)
+    (nativeAmount !== undefined ? Address32.NATIVE : undefined)
   const amountIn =
     parsed?.amountIn ??
-    (srcTokenAddress === Address32.NATIVE &&
-    txValue !== undefined &&
-    txValue > 0n
-      ? txValue
-      : undefined)
+    (srcTokenAddress === Address32.NATIVE ? nativeAmount : undefined)
 
   return [
     OrderCreated.create(input, {
@@ -308,14 +314,15 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
 
   getDataRequests(): DataRequest[] {
     const mayanSwiftAddresses = toChainSpecificAddresses(
-      MAYAN_SWIFT_CHAINS,
-      MAYAN_SWIFT,
+      MAYAN_EVM_CHAINS,
+      MAYAN_PROTOCOLS.mayanSwift,
     )
 
     return [
       {
         type: 'event',
         signature: orderCreatedLog,
+        includeTx: true,
         includeTxEvents: [
           forwardedEthLog,
           forwardedERC20Log,

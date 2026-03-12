@@ -2,8 +2,8 @@ import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import { getChainFromCctpDomain } from './mayan-forwarder'
 import {
-  MAYAN_FAST_MCTP,
   MAYAN_FAST_MCTP_CHAINS,
+  MAYAN_PROTOCOLS,
   toChainSpecificAddresses,
 } from './mayan-shared'
 import {
@@ -33,7 +33,7 @@ export class MayanMctpFastPlugin implements InteropPluginResyncable {
   getDataRequests(): DataRequest[] {
     const fastMctpAddresses = toChainSpecificAddresses(
       MAYAN_FAST_MCTP_CHAINS,
-      MAYAN_FAST_MCTP,
+      MAYAN_PROTOCOLS.fastMCTP,
     )
 
     return [

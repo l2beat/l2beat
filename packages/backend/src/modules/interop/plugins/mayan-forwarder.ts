@@ -4,7 +4,13 @@ ForwardedEth can arrive through wrappers, so outer tx.value may be zero even whe
 */
 
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
-import { decodeFunctionData, type Log, parseAbi } from 'viem'
+import {
+  decodeAbiParameters,
+  decodeFunctionData,
+  type Log,
+  parseAbi,
+  parseAbiParameters,
+} from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import { findBestTransferLog } from './hyperlane-hwr'
@@ -12,8 +18,8 @@ import {
   decodeMayanProtocol,
   isBurnAddress,
   isMayanWrappedNativeEmitter,
+  MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
-  MAYAN_FORWARDER_CHAINS,
   MAYAN_WRAPPED_NATIVE_ADDRESSES,
   toChainSpecificAddresses,
 } from './mayan-shared'
@@ -86,7 +92,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
 
   getDataRequests(): DataRequest[] {
     const forwarderAddresses = toChainSpecificAddresses(
-      MAYAN_FORWARDER_CHAINS,
+      MAYAN_EVM_CHAINS,
       MAYAN_FORWARDER,
     )
 
@@ -94,6 +100,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: forwardedEthLog,
+        includeTx: true,
         includeTxEvents: [wethWithdrawalLog],
         addresses: forwarderAddresses,
       },
@@ -145,7 +152,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
 
     return [
       MayanForwarded.create(input, {
-        mayanProtocol: decodeMayanProtocol(input.chain, parsed.mayanProtocol),
+        mayanProtocol: decodeMayanProtocol(parsed.mayanProtocol),
         methodSignature: decodedData.methodSignature,
         tokenIn,
         amountIn,
@@ -203,17 +210,7 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
 }
 
 function resolveForwardedEthAmount(input: LogToCapture): bigint | undefined {
-  const txValue = input.tx.value
-  if (txValue !== undefined && txValue > 0n) return txValue
-
-  const wrappedNative = MAYAN_WRAPPED_NATIVE_ADDRESSES[input.chain]
-  if (!wrappedNative) return undefined
-
-  return findWrappedNativeWithdrawalBefore(
-    input.txLogs,
-    input.log.logIndex,
-    wrappedNative,
-  )
+  return findNativeAmountInTx(input, [MAYAN_FORWARDER])
 }
 
 function findWrappedNativeWithdrawalBefore(
@@ -231,6 +228,95 @@ function findWrappedNativeWithdrawalBefore(
     const withdrawal = parseWethWithdrawal(candidate, null)
     if (withdrawal) return withdrawal.wad
   }
+}
+
+// CALLDATA decoding for AA support
+
+const executeAbi = parseAbi([
+  'function execute(bytes32 mode, bytes executionData)',
+])
+const executeBatchParams = parseAbiParameters('bytes[]')
+const executeCallParams = parseAbiParameters(
+  '(address to, uint256 value, bytes data)[]',
+)
+
+export function findNativeAmountInTx(
+  input: Pick<LogToCapture, 'tx' | 'txLogs' | 'log' | 'chain'>,
+  targets: EthereumAddress[],
+): bigint | undefined {
+  const txValue = input.tx.value
+  if (txValue !== undefined && txValue > 0n) return txValue
+
+  const nestedValue = findExecuteCallValue(
+    typeof input.tx.data === 'string'
+      ? (input.tx.data as `0x${string}`)
+      : undefined,
+    targets,
+  )
+  if (nestedValue !== undefined && nestedValue > 0n) return nestedValue
+
+  const wrappedNative = MAYAN_WRAPPED_NATIVE_ADDRESSES[input.chain]
+  if (!wrappedNative) return undefined
+
+  return findWrappedNativeWithdrawalBefore(
+    input.txLogs,
+    input.log.logIndex,
+    wrappedNative,
+  )
+}
+
+function findExecuteCallValue(
+  txData: `0x${string}` | undefined,
+  targets: EthereumAddress[],
+): bigint | undefined {
+  if (!txData) return
+
+  let decoded
+  try {
+    decoded = decodeFunctionData({
+      abi: executeAbi,
+      data: txData,
+    })
+  } catch {
+    return undefined
+  }
+
+  if (decoded.functionName !== 'execute') return undefined
+
+  const calls = decodeExecuteCalls(decoded.args[0], decoded.args[1])
+  const targetSet = new Set(targets.map((target) => target.toLowerCase()))
+
+  const directMatch = calls.find(
+    (call) => call.value > 0n && targetSet.has(call.to.toLowerCase()),
+  )
+  if (directMatch) return directMatch.value
+
+  const positiveCalls = calls.filter((call) => call.value > 0n)
+  if (positiveCalls.length === 1) return positiveCalls[0].value
+
+  return undefined
+}
+
+function decodeExecuteCalls(
+  mode: `0x${string}`,
+  executionData: `0x${string}`,
+): Array<{ to: `0x${string}`; value: bigint }> {
+  const modeId = mode.slice(0, 22)
+
+  if (modeId === '0x01000000000078210002') {
+    const [batches] = decodeAbiParameters(executeBatchParams, executionData)
+    return batches.flatMap((batch) => decodeExecuteCalls(mode, batch))
+  }
+
+  if (
+    modeId !== '0x01000000000000000000' &&
+    modeId !== '0x01000000000078210001'
+  ) {
+    return []
+  }
+
+  const [calls] = decodeAbiParameters(executeCallParams, executionData)
+  return calls.map((call) => ({ to: call.to, value: call.value }))
 }
 
 function inferSrcWasBurned(
