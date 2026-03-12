@@ -1,4 +1,8 @@
-import { ChainSpecificAddress, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -68,9 +72,7 @@ export const syndicate: ScalingProject = orbitStackL2({
       {
         sinceBlock: 1,
         batchSize: 150,
-        address: EthereumAddress(
-          '0xcA11bde05977b3631167028862bE2a173976CA11',
-        ),
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
         version: '3',
       },
     ],
