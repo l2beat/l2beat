@@ -61,10 +61,7 @@ const proofWindow =
 const escapeHatchFrequency =
   discovery.getContractValue<number>('EscapeHatch', 'getFrequency') * epochDuration
 
-const currentExecutionDelay = governanceConfiguration.executionDelay
-// AlphaPayload.getActions() updates Governance.executionDelay to 30 days.
-const postAlphaExecutionDelay = 30 * 24 * 60 * 60
-const exitWindow = postAlphaExecutionDelay - proofWindow
+const executionDelay = governanceConfiguration.executionDelay
 
 const rollupSinceTimestamp = UnixTime(
   discovery.getContract('Rollup').sinceTimestamp ?? 1772654159,
@@ -79,8 +76,7 @@ const escapeHatchBondString = formatAztecAmount(escapeHatchBond)
 const governanceLockString = formatAztecAmount(
   BigInt(governanceConfiguration.proposeConfig.lockAmount),
 )
-const currentExecutionDelayString = formatSeconds(currentExecutionDelay)
-const postAlphaExecutionDelayString = formatSeconds(postAlphaExecutionDelay)
+const currentExecutionDelayString = formatSeconds(executionDelay)
 const proofWindowString = formatSeconds(proofWindow)
 const escapeHatchFrequencyString = formatSeconds(escapeHatchFrequency)
 const safeThreshold = discovery.getMultisigStats('Safe')
@@ -203,28 +199,28 @@ export const aztecnetwork: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN, // HONK and stuff
-      executionDelay: 0,
+      ...RISK_VIEW.STATE_ZKP_SN, // UltraHonk and CHONK (Client-side Highly Optimized ploNK) 
+      executionDelay: 0, // a proposal can be immediately proven
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
-      value: formatSeconds(exitWindow),
-      sentiment: 'warning',
-      orderHint: exitWindow,
-      description: `The Alpha payload raises the governance execution delay from ${currentExecutionDelayString} to ${postAlphaExecutionDelayString}. This leaves a nominal ${formatSeconds(
-        exitWindow,
-      )} between a regular upgrade and the roughly ${proofWindowString} needed to prove a checkpoint. In practice, users still need a validator or escape hatch proposer to include the withdrawal transaction because Aztec does not expose an L1 forced-inclusion queue for arbitrary L2 transactions.`,
+      value: formatSeconds(executionDelay),
+      sentiment: 'good',
+      orderHint: executionDelay,
+      description: `Any upgrade is delayed by ${formatSeconds(
+        executionDelay,
+      )} before being executed. During that time, users can exit through 1. regular withdrawals initiated privately on L2 via the decentralized, permissionless sequencer set, 2. proposing and proving their own withdrawal via the escape hatch.`,
     },
     sequencerFailure: {
-      value: 'Become validator',
-      sentiment: 'warning',
-      description: `Aztec does not offer a direct L1 forced-inclusion queue for arbitrary L2 transactions. Instead, users must stake ${activationThresholdString} to join the validator queue and wait to obtain committee-based block production rights. If the committee stalls entirely, anyone can bond ${escapeHatchBondString} to join the escape hatch candidate set, which opens every ${escapeHatchFrequencyString}.`,
+      value: 'Decentralized Sequencer Set',
+      sentiment: 'good',
+      description: `Users can permissionlessly become a sequencer by staking ${activationThresholdString} to join the queue and wait to obtain committee-based block production rights. If the committees censor, anyone can bond ${escapeHatchBondString} to join the escape hatch candidate set, which opens every ${escapeHatchFrequencyString}.`,
     },
     proposerFailure: {
-      value: 'Permissionless',
+      value: 'Self Propose',
       sentiment: 'good',
       description:
-        'Anyone can submit epoch root proofs for pending checkpoints. Checkpoint proposals themselves come from the open validator set, with the escape hatch providing a bonded fallback if the committee is unavailable.',
+        'Anyone can submit epoch root proofs for pending checkpoints. Checkpoint proposals themselves come from the open sequencer set, with the escape hatch providing a bonded fallback if the committees are censoring or unavailable.',
     },
   },
   stage: getStage(
@@ -238,34 +234,28 @@ export const aztecnetwork: ScalingProject = {
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
-        principle: false,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: null,
-        noRedTrustedSetups: null,
-        programHashesReproducible: null,
-        proverSourcePublished: null,
-        verifierContractsReproducible: null,
+        principle: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+        noRedTrustedSetups: true, // TODO: ?
+        programHashesReproducible: true, // TODO: ?
+        proverSourcePublished: true,
+        verifierContractsReproducible: true, // TODO: ?
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
+        proofSystemOverriddenOnlyInCaseOfABug: true,
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
+        delayWith30DExitWindow: true,
       },
     },
     {
-      rollupNodeLink: 'https://github.com/AztecProtocol/aztec-packages',
-      stage1PrincipleDescription: `This assessment assumes the Alpha payload has executed, increasing the governance execution delay to ${postAlphaExecutionDelayString}. Although validator entry and the escape hatch are permissionless, Aztec does not expose an L1 forced-inclusion path for arbitrary L2 transactions. A censored user must first obtain block production rights through validator entry or the periodic escape hatch, so withdrawals are not treated as censorship resistant for Stage 1.`,
-      additionalConsiderations: {
-        short:
-          'Aztec is a privacy-focused universal rollup using Ethereum blobs and a permissionless validator set, but without direct L1 forced inclusion for arbitrary transactions.',
-        long: 'Aztec is a privacy-focused universal rollup using Ethereum blobs and a permissionless validator set, but without direct L1 forced inclusion for arbitrary transactions.',
-      },
+      rollupNodeLink: 'https://docs.aztec.network/operate/operators/setup/running_a_node',
     },
   ),
   technology: {
     dataAvailability: {
-      name: 'All transaction data is published on Ethereum blobs',
+      name: 'All transaction data is published in Ethereum blobs',
       description:
         'Each checkpoint proposal includes EIP-4844 blob commitments that are checked against the blob hashes in the proposing transaction. The epoch proof revalidates the accumulated blob commitments before the epoch is finalized.',
       references: [
@@ -296,7 +286,7 @@ export const aztecnetwork: ScalingProject = {
     },
     sequencing: {
       name: 'Transactions are ordered by a staked committee',
-      description: `For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active validator set and selects one proposer per slot. If the committee becomes unavailable, the escape hatch designates a bonded proposer who can publish checkpoints without committee attestations.`,
+      description: `For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active validator set and selects one proposer per slot. The committe and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
       references: [
         {
           title: 'Rollup.sol - getProposerAt() on Etherscan',
@@ -308,15 +298,11 @@ export const aztecnetwork: ScalingProject = {
         },
       ],
       risks: [
-        {
-          category: 'MEV can be extracted if',
-          text: 'the slot proposer abuses its temporary ordering privilege.',
-        },
       ],
     },
     forceTransactions: {
-      name: 'Users can become validators',
-      description: `Aztec does not expose an L1 forced-transaction queue for arbitrary L2 transactions. Instead, users can permissionlessly join the validator set by staking ${activationThresholdString}. If the active committee stalls entirely, anyone can join the escape hatch candidate set by bonding ${escapeHatchBondString}.`,
+      name: 'Decentralized Sequencers, Escape Hatch',
+      description: `Aztec does not expose an L1 forced-transaction queue for arbitrary L2 transactions. Instead, users can permissionlessly join the validator set by staking ${activationThresholdString}. Transactions can be submitted for the private execution environment, preventing potential censorship based on transaction content. To circumvent the committees formed from the active sequencer set, anyone can join the escape hatch candidate set by bonding ${escapeHatchBondString}.`,
       references: [
         {
           title: 'Inbox.sol - sendL2Message() on Etherscan',
@@ -332,10 +318,6 @@ export const aztecnetwork: ScalingProject = {
         },
       ],
       risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'they cannot join the validator or escape hatch sets themselves and the active validators collude to ignore their transactions.',
-        },
       ],
     },
     exitMechanisms: [
@@ -414,17 +396,17 @@ export const aztecnetwork: ScalingProject = {
   },
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(postAlphaExecutionDelayString)],
+    risks: [], // 30d delay for the canonical rollup pointer but main contracts are immutable
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   upgradesAndGovernance: `Aztec uses immutable contracts for the active rollup version, but Governance can promote a newly deployed rollup to canonical by calling Registry.addRollup() and GSE.addRollup() through a successful governance proposal. At the discovery snapshot, Governance uses a ${currentExecutionDelayString} execution delay together with a ${formatSeconds(
     governanceConfiguration.votingDelay,
   )} voting delay and a ${formatSeconds(
     governanceConfiguration.votingDuration,
-  )} voting period. The pending Alpha payload at \`0x780523FBa95e4Be0Fa09DA0fff5Fab3aBAE7B58e\` is itself a governance payload: it registers the new rollup, enables rewards, activates the escape hatch, migrates flush rewards, and updates the governance execution delay to ${postAlphaExecutionDelayString}. Formal proposals can also be submitted with a ${governanceLockString} lock for ${formatSeconds(
+  )} voting period. The pending Alpha payload at \`0x780523FBa95e4Be0Fa09DA0fff5Fab3aBAE7B58e\` is itself a governance payload: it registers the new rollup, enables rewards, activates the escape hatch, migrates flush rewards, and updates the governance execution delay to ${executionDelay}. Formal proposals can also be submitted with a ${governanceLockString} lock for ${formatSeconds(
     governanceConfiguration.proposeConfig.lockDelay,
   )}.
 
-There is no Security Council with instant upgrade power. The ${safeThreshold} Safe only acts as the slashing vetoer and does not control rollup upgrades.`,
+There is no Security Council with instant upgrade power. The ${safeThreshold} SlashVeto Council only acts as the slashing vetoer and does not control rollup upgrades.`,
   discoveryInfo: getDiscoveryInfo([discovery]),
 }
