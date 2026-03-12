@@ -2,6 +2,7 @@ import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type {
   InteropEventStats,
   InteropMessageStats,
+  InteropTransferStats,
   PluginStatus,
 } from './embeddings'
 import { helloRouter } from './routers/hello'
@@ -13,6 +14,7 @@ interface AppRouterDeps {
   getPluginSyncStatus: () => Promise<PluginStatus[]>
   getInteropEventStats: () => Promise<InteropEventStats[]>
   getInteropMessageStats: () => Promise<InteropMessageStats[]>
+  getInteropTransferStats: () => Promise<InteropTransferStats[]>
 }
 
 export function createAppRouter(deps: AppRouterDeps) {

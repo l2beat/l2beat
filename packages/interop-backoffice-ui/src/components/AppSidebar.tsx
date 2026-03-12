@@ -1,4 +1,5 @@
 import {
+  ArrowRightLeftIcon,
   InboxIcon,
   MessageSquareIcon,
   PanelsTopLeftIcon,
@@ -36,6 +37,11 @@ const items = [
         title: 'Messages',
         url: '/summary/messages',
         icon: MessageSquareIcon,
+      },
+      {
+        title: 'Transfers',
+        url: '/summary/transfers',
+        icon: ArrowRightLeftIcon,
       },
     ],
   },

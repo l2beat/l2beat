@@ -80,6 +80,9 @@ export function createInteropRouter(
       getInteropMessageStats: () => {
         return getMessagesStats(db)
       },
+      getInteropTransferStats: () => {
+        return getTransfersStats(db)
+      },
     }),
     prefix: '/interop/trpc',
     allowMethodOverride: true,
@@ -524,16 +527,46 @@ async function getMessagesStats(db: Database) {
 async function getTransfersStats(db: Database) {
   const stats = await db.interopTransfer.getStats()
   const detailedStats = await db.interopTransfer.getDetailedStats()
+  const chainsByType = new Map<
+    string,
+    {
+      plugin: string
+      type: string
+      srcChain: string
+      dstChain: string
+      count: number
+      avgDuration: number
+      srcValueSum: number
+      dstValueSum: number
+    }[]
+  >()
 
-  return stats.map((overall) => ({
-    plugin: overall.plugin,
-    type: overall.type,
-    count: overall.count,
-    avgDuration: overall.avgDuration,
-    srcValueSum: overall.srcValueSum,
-    dstValueSum: overall.dstValueSum,
-    chains: detailedStats.filter(
-      (chain) => chain.plugin === overall.plugin && chain.type === overall.type,
-    ),
-  }))
+  for (const chain of detailedStats) {
+    const key = `${chain.plugin}:${chain.type}`
+    const chains = chainsByType.get(key) ?? []
+    chains.push({
+      plugin: chain.plugin,
+      type: chain.type,
+      srcChain: chain.srcChain,
+      dstChain: chain.dstChain,
+      count: chain.count,
+      avgDuration: chain.avgDuration,
+      srcValueSum: chain.srcValueSum,
+      dstValueSum: chain.dstValueSum,
+    })
+    chainsByType.set(key, chains)
+  }
+
+  return stats.map((overall) => {
+    const key = `${overall.plugin}:${overall.type}`
+    return {
+      plugin: overall.plugin,
+      type: overall.type,
+      count: overall.count,
+      avgDuration: overall.avgDuration,
+      srcValueSum: overall.srcValueSum,
+      dstValueSum: overall.dstValueSum,
+      chains: chainsByType.get(key) ?? [],
+    }
+  })
 }

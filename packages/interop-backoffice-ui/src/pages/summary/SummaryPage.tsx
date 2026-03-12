@@ -13,7 +13,11 @@ import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { SummarySubnav } from './components/SummarySubnav'
-import type { SummaryEventRow, SummaryMessageRow } from './table/types'
+import type {
+  SummaryEventRow,
+  SummaryMessageRow,
+  SummaryTransferRow,
+} from './table/types'
 
 export function SummaryPage() {
   const {
@@ -34,15 +38,26 @@ export function SummaryPage() {
     isFetching: isMessagesFetching,
   } = api.summary.messages.useQuery()
 
+  const {
+    data: transfersData,
+    isLoading: isTransfersLoading,
+    isError: isTransfersError,
+    error: transfersError,
+    refetch: refetchTransfers,
+    isFetching: isTransfersFetching,
+  } = api.summary.transfers.useQuery()
+
   const refetchAll = async () => {
-    await Promise.all([refetchEvents(), refetchMessages()])
+    await Promise.all([refetchEvents(), refetchMessages(), refetchTransfers()])
   }
 
   const eventRows: SummaryEventRow[] = eventsData ?? []
   const messageRows: SummaryMessageRow[] = messagesData ?? []
+  const transferRows: SummaryTransferRow[] = transfersData ?? []
   const totalEvents = eventRows.reduce((sum, row) => sum + row.count, 0)
   const unmatchedEvents = eventRows.reduce((sum, row) => sum + row.unmatched, 0)
   const totalMessages = messageRows.reduce((sum, row) => sum + row.count, 0)
+  const totalTransfers = transferRows.reduce((sum, row) => sum + row.count, 0)
   const knownAppMessages = messageRows.reduce(
     (sum, row) => sum + row.knownAppCount,
     0,
@@ -58,19 +73,23 @@ export function SummaryPage() {
             <div className="space-y-1">
               <CardTitle>Interop summary: Overview</CardTitle>
               <CardDescription>
-                Summary has been split into dedicated sub-pages for events and
-                messages.
+                Summary has been split into dedicated sub-pages for events,
+                messages, and transfers.
               </CardDescription>
             </div>
             <Button
               variant="outline"
               size="sm"
               onClick={() => void refetchAll()}
-              disabled={isEventsFetching || isMessagesFetching}
+              disabled={
+                isEventsFetching || isMessagesFetching || isTransfersFetching
+              }
             >
               <RefreshCwIcon
                 className={
-                  isEventsFetching || isMessagesFetching ? 'animate-spin' : ''
+                  isEventsFetching || isMessagesFetching || isTransfersFetching
+                    ? 'animate-spin'
+                    : ''
                 }
               />
               Refresh
@@ -81,8 +100,12 @@ export function SummaryPage() {
             <Badge variant="secondary">
               {messageRows.length} message types
             </Badge>
+            <Badge variant="secondary">
+              {transferRows.length} transfer types
+            </Badge>
             <Badge variant="secondary">{totalEvents} total events</Badge>
             <Badge variant="secondary">{totalMessages} total messages</Badge>
+            <Badge variant="secondary">{totalTransfers} total transfers</Badge>
             <Badge variant={unmatchedEvents > 0 ? 'destructive' : 'secondary'}>
               {unmatchedEvents} unmatched
             </Badge>
@@ -106,10 +129,13 @@ export function SummaryPage() {
             <Button asChild variant="outline" size="sm">
               <Link to="/summary/messages">Open messages</Link>
             </Button>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/summary/transfers">Open transfers</Link>
+            </Button>
           </CardContent>
         </Card>
 
-        {isEventsLoading || isMessagesLoading ? (
+        {isEventsLoading || isMessagesLoading || isTransfersLoading ? (
           <LoadingState className="m-2" />
         ) : null}
         {isEventsError ? (
@@ -120,6 +146,11 @@ export function SummaryPage() {
         {isMessagesError ? (
           <div className="px-2 text-destructive text-sm">
             Failed to load summary messages: {messagesError.message}
+          </div>
+        ) : null}
+        {isTransfersError ? (
+          <div className="px-2 text-destructive text-sm">
+            Failed to load summary transfers: {transfersError.message}
           </div>
         ) : null}
       </div>

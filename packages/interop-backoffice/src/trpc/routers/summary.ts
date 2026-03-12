@@ -1,10 +1,15 @@
-import type { InteropEventStats, InteropMessageStats } from '../embeddings'
+import type {
+  InteropEventStats,
+  InteropMessageStats,
+  InteropTransferStats,
+} from '../embeddings'
 import { publicProcedure } from '../procedures'
 import { router } from '../trpc'
 
 type Dependencies = {
   getInteropEventStats: () => Promise<InteropEventStats[]>
   getInteropMessageStats: () => Promise<InteropMessageStats[]>
+  getInteropTransferStats: () => Promise<InteropTransferStats[]>
 }
 
 export const createSummaryRouter = (deps: Dependencies) =>
@@ -14,5 +19,8 @@ export const createSummaryRouter = (deps: Dependencies) =>
     }),
     messages: publicProcedure.query(() => {
       return deps.getInteropMessageStats()
+    }),
+    transfers: publicProcedure.query(() => {
+      return deps.getInteropTransferStats()
     }),
   })

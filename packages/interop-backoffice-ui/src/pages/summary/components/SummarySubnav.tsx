@@ -14,6 +14,10 @@ const items = [
     label: 'Messages',
     to: '/summary/messages',
   },
+  {
+    label: 'Transfers',
+    to: '/summary/transfers',
+  },
 ]
 
 export function SummarySubnav() {

@@ -7,6 +7,7 @@ import { PluginStatusesPage } from './pages/plugin-statuses/PluginStatusesPage'
 import { SummaryEventsPage } from './pages/summary/events/SummaryEventsPage'
 import { SummaryMessagesPage } from './pages/summary/messages/SummaryMessagesPage'
 import { SummaryPage } from './pages/summary/SummaryPage'
+import { SummaryTransfersPage } from './pages/summary/transfers/SummaryTransfersPage'
 import { TRPCReactProvider } from './react-query/trpc'
 
 export function App() {
@@ -21,6 +22,10 @@ export function App() {
             <Route path="/" element={<SummaryPage />} />
             <Route path="/summary/events" element={<SummaryEventsPage />} />
             <Route path="/summary/messages" element={<SummaryMessagesPage />} />
+            <Route
+              path="/summary/transfers"
+              element={<SummaryTransfersPage />}
+            />
             <Route path="/plugin-statuses" element={<PluginStatusesPage />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />

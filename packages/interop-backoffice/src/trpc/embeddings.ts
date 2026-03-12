@@ -33,3 +33,22 @@ export type InteropMessageStats = {
   knownAppCount: number
   chains: InteropMessageChainStats[]
 }
+
+export type InteropTransferChainStats = {
+  srcChain: string
+  dstChain: string
+  count: number
+  avgDuration: number
+  srcValueSum: number
+  dstValueSum: number
+}
+
+export type InteropTransferStats = {
+  plugin: string
+  type: string
+  count: number
+  avgDuration: number
+  srcValueSum: number
+  dstValueSum: number
+  chains: InteropTransferChainStats[]
+}
