@@ -1,4 +1,4 @@
-import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -76,6 +76,7 @@ export async function getActivityChart({
     .map((p) => p.id)
     .concat(ProjectId.ETHEREUM)
   const isSingleProject = projects.length === 2 // Ethereum + 1 other project
+  const projectId = isSingleProject ? projects[0] : undefined
   const adjustedRange = await getFullySyncedActivityRange(range)
 
   const [entries, maxCounts, totalCounts] = await Promise.all([
@@ -90,9 +91,7 @@ export async function getActivityChart({
 
   // ...but if we are looking at a single project, we check the last day we have data for,
   // and use that as the cutoff.
-  if (isSingleProject) {
-    const projectId = projects[0]
-    assert(projectId, 'Project ID is required')
+  if (projectId) {
     const syncInfo = await getActivitySyncInfo(projectId, adjustedRange[1])
     if (!syncInfo.hasSyncData) {
       return {
@@ -142,14 +141,8 @@ export async function getActivityChart({
     ]
   })
 
-  const nonEthereumProject = projects.find((p) => p !== ProjectId.ETHEREUM)
-  const stats = isSingleProject
-    ? getActivityChartStats(
-        projects,
-        data,
-        maxCounts,
-        nonEthereumProject ? totalCounts?.[nonEthereumProject] : undefined,
-      )
+  const stats = projectId
+    ? getActivityChartStats(projects, data, maxCounts, totalCounts?.[projectId])
     : undefined
 
   return {
