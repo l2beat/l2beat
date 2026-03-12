@@ -74,6 +74,7 @@ export function InteropTransfersSection({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    autoResetPageIndex: false,
     manualFiltering: true,
     pageCount: Math.ceil(totalCount / TRANSFERS_PER_PAGE),
     initialState: {
