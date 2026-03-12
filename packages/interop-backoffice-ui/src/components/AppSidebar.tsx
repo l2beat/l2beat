@@ -4,6 +4,7 @@ import {
   BookCheck,
   CircleDollarSignIcon,
   CpuIcon,
+  HatGlasses,
   InboxIcon,
   Layers,
   MessageSquareIcon,
@@ -95,6 +96,11 @@ const items = [
         url: '/summary/anomalies',
         icon: AlertTriangleIcon,
       },
+      {
+        title: 'Suspicious transfers',
+        url: '/summary/anomalies/suspicious-transfers',
+        icon: HatGlasses,
+      },
     ],
   },
 ]
@@ -104,7 +110,7 @@ export function AppSidebar() {
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader>
         <SidebarGroupLabel className="font-bold text-black text-xs">
-          Interop Backoffice
+          Interop Back Office
         </SidebarGroupLabel>
       </SidebarHeader>
       <SidebarContent>

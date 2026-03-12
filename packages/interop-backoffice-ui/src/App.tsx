@@ -9,6 +9,7 @@ import { ProcessorStatusesPage } from './pages/processor-statuses/ProcessorStatu
 import { SummaryAggregatesPage } from './pages/summary/aggregates/SummaryAggregatesPage'
 import { SummaryAnomaliesPage } from './pages/summary/anomalies/SummaryAnomaliesPage'
 import { SummaryAnomalyDetailsPage } from './pages/summary/anomalies/SummaryAnomalyDetailsPage'
+import { SummarySuspiciousTransfersPage } from './pages/summary/anomalies/SummarySuspiciousTransfersPage'
 import { SummaryEventDetailsPage } from './pages/summary/events/SummaryEventDetailsPage'
 import { SummaryEventsPage } from './pages/summary/events/SummaryEventsPage'
 import { SummaryKnownAppsPage } from './pages/summary/known-apps/SummaryKnownAppsPage'
@@ -45,6 +46,14 @@ export function App() {
             <Route
               path="/interop/anomalies"
               element={<SummaryAnomaliesPage />}
+            />
+            <Route
+              path="/summary/anomalies/suspicious-transfers"
+              element={<SummarySuspiciousTransfersPage />}
+            />
+            <Route
+              path="/interop/anomalies/suspicious-transfers"
+              element={<SummarySuspiciousTransfersPage />}
             />
             <Route
               path="/summary/anomalies/:id"

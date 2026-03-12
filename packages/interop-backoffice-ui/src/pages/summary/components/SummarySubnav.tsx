@@ -16,6 +16,18 @@ const items = [
     label: 'Anomalies',
     to: '/summary/anomalies',
     activePrefixes: ['/summary/anomalies', '/interop/anomalies'],
+    excludedPrefixes: [
+      '/summary/anomalies/suspicious-transfers',
+      '/interop/anomalies/suspicious-transfers',
+    ],
+  },
+  {
+    label: 'Suspicious transfers',
+    to: '/summary/anomalies/suspicious-transfers',
+    activePrefixes: [
+      '/summary/anomalies/suspicious-transfers',
+      '/interop/anomalies/suspicious-transfers',
+    ],
   },
   {
     label: 'Events',
@@ -47,6 +59,15 @@ const items = [
 function isItemActive(pathname: string, item: (typeof items)[number]): boolean {
   if (item.to === '/') {
     return pathname === '/'
+  }
+
+  if (item.excludedPrefixes) {
+    const isExcluded = item.excludedPrefixes.some(
+      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+    )
+    if (isExcluded) {
+      return false
+    }
   }
 
   return item.activePrefixes.some(

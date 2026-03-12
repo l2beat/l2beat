@@ -1,5 +1,5 @@
 import { RefreshCwIcon } from 'lucide-react'
-import { useCallback, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
@@ -14,46 +14,10 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { SummarySubnav } from '../components/SummarySubnav'
 import { AnomaliesTable } from '../table/anomalies/AnomaliesTable'
-import { SuspiciousTransfersTable } from '../table/anomalies/SuspiciousTransfersTable'
-import type { SummaryChainMetadata } from '../table/types'
 
 export function SummaryAnomaliesPage() {
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    refetch: refetchAnomalies,
-    isFetching: isAnomaliesFetching,
-  } = api.summary.anomalies.useQuery()
-  const {
-    data: chainsData,
-    isError: isChainsError,
-    error: chainsError,
-    refetch: refetchChains,
-    isFetching: isChainsFetching,
-  } = api.chains.metadata.useQuery()
-
-  const chains: SummaryChainMetadata[] = chainsData ?? []
-
-  const explorerUrlsByChain = useMemo(() => {
-    const map = new Map<string, string>()
-    for (const chain of chains) {
-      if (chain.explorerUrl) {
-        map.set(chain.id, chain.explorerUrl)
-      }
-    }
-    return map
-  }, [chains])
-
-  const getExplorerUrl = useCallback(
-    (chain: string) => explorerUrlsByChain.get(chain),
-    [explorerUrlsByChain],
-  )
-
-  const refetch = async () => {
-    await Promise.all([refetchAnomalies(), refetchChains()])
-  }
+  const { data, isLoading, isError, error, refetch, isFetching } =
+    api.summary.anomalies.useQuery()
 
   const anomaliesData = data ?? null
   const hasAnomaliesData = anomaliesData !== null
@@ -79,17 +43,13 @@ export function SummaryAnomaliesPage() {
               variant="outline"
               size="sm"
               onClick={() => void refetch()}
-              disabled={isAnomaliesFetching || isChainsFetching}
+              disabled={isFetching}
             >
-              <RefreshCwIcon
-                className={
-                  isAnomaliesFetching || isChainsFetching ? 'animate-spin' : ''
-                }
-              />
+              <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
               Refresh
             </Button>
           </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
+          <CardContent className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">{rows.length} anomaly IDs</Badge>
             <Badge variant={highGapCount > 0 ? 'destructive' : 'secondary'}>
               {highGapCount} src/dst mismatch alerts
@@ -101,6 +61,11 @@ export function SummaryAnomaliesPage() {
             >
               {suspiciousTransfers.length} suspicious transfers
             </Badge>
+            <Button variant="outline" size="sm" asChild>
+              <Link to="/summary/anomalies/suspicious-transfers">
+                Open suspicious transfers
+              </Link>
+            </Button>
           </CardContent>
         </Card>
 
@@ -110,52 +75,21 @@ export function SummaryAnomaliesPage() {
             Failed to load anomalies: {error.message}
           </div>
         ) : null}
-        {isChainsError ? (
-          <div className="px-2 text-destructive text-sm">
-            Failed to load chain metadata ({chainsError.message}). Tx hashes are
-            shown without explorer links.
-          </div>
-        ) : null}
 
         {!isLoading && !isError && hasAnomaliesData ? (
-          <>
-            <Card className="gap-0">
-              <CardHeader>
-                <CardTitle>
-                  Aggregated transfer anomalies (latest per ID)
-                </CardTitle>
-                <CardDescription>
-                  Statistical signals by transfer ID with quick trend previews.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="px-0">
-                <AnomaliesTable data={rows} enableCsvExport />
-              </CardContent>
-            </Card>
-
-            <Card className="gap-0">
-              <CardHeader>
-                <CardTitle>
-                  Suspicious raw transfers (src/dst mismatch)
-                </CardTitle>
-                <CardDescription>
-                  Diff threshold:{' '}
-                  {anomaliesData.valueDiffThresholdPercent.toFixed(2)}%, minimum
-                  side value: ${anomaliesData.minimumSideValueUsdThreshold}.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="px-0">
-                <SuspiciousTransfersTable
-                  data={suspiciousTransfers}
-                  valueDiffThresholdPercent={
-                    anomaliesData.valueDiffThresholdPercent
-                  }
-                  getExplorerUrl={getExplorerUrl}
-                  enableCsvExport
-                />
-              </CardContent>
-            </Card>
-          </>
+          <Card className="gap-0">
+            <CardHeader>
+              <CardTitle>
+                Aggregated transfer anomalies (latest per ID)
+              </CardTitle>
+              <CardDescription>
+                Statistical signals by transfer ID with quick trend previews.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-0">
+              <AnomaliesTable data={rows} enableCsvExport />
+            </CardContent>
+          </Card>
         ) : null}
       </div>
     </AppLayout>
