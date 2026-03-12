@@ -75,5 +75,14 @@ export function getInteropProtocolEntry(
     },
   })
 
+  sections.push({
+    type: 'InteropTransfersSection',
+    props: {
+      id: 'interop-transfers',
+      projectId: project.id,
+      title: 'Transfers',
+    },
+  })
+
   return { ...common, sections }
 }
