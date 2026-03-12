@@ -47,8 +47,8 @@ export class InteropDataCleaner extends TimeLoop {
       return
     }
 
-    const isSyncFromZero = syncStates.every(
-      (s) => s.resyncRequestedFrom === null,
+    const isSyncFromZero = this.syncers.every(
+      (syncer) => statesByChain.get(syncer.chain)?.resyncRequestedFrom === null,
     )
 
     await this.db.transaction(async () => {
