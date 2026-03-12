@@ -1,5 +1,6 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
+import { INTEROP_CHAINS } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import {
   createAppRouter,
@@ -77,11 +78,23 @@ export function createInteropRouter(
       getInteropEventStats: () => {
         return db.interopEvent.getStats()
       },
+      getInteropEventDetails: (kind, type) => {
+        return getInteropEventDetails(db, kind, type)
+      },
       getInteropMessageStats: () => {
         return getMessagesStats(db)
       },
       getInteropTransferStats: () => {
         return getTransfersStats(db)
+      },
+      getInteropChainMetadata: () => {
+        return Promise.resolve(
+          INTEROP_CHAINS.map((chain) => ({
+            id: chain.id,
+            display: chain.display,
+            explorerUrl: config.dashboard.getExplorerUrl(chain.id),
+          })),
+        )
       },
     }),
     prefix: '/interop/trpc',
@@ -478,6 +491,56 @@ function getProcessorsStatus(processors: InteropBlockProcessor[]) {
         ]
       : [],
   )
+}
+
+async function getInteropEventDetails(
+  db: Database,
+  kind: 'all' | 'matched' | 'unmatched' | 'old-unmatched' | 'unsupported',
+  type: string,
+) {
+  let events
+
+  if (kind === 'matched') {
+    events = await db.interopEvent.getByType(type, { matched: true })
+  } else if (kind === 'unmatched') {
+    events = await db.interopEvent.getByType(type, {
+      matched: false,
+      unsupported: false,
+    })
+  } else if (kind === 'unsupported') {
+    events = await db.interopEvent.getByType(type, { unsupported: true })
+  } else if (kind === 'old-unmatched') {
+    const now = new Date()
+    const cutoffTime = new Date(now.toISOString())
+    cutoffTime.setUTCHours(cutoffTime.getUTCHours() - 2)
+    events = await db.interopEvent.getByType(type, {
+      matched: false,
+      unsupported: false,
+      oldCutoff: UnixTime.fromDate(cutoffTime),
+    })
+  } else {
+    events = await db.interopEvent.getByType(type)
+  }
+
+  return events.map((event) => {
+    const srcChain = (event.args as { $srcChain?: string }).$srcChain
+    const dstChain = (event.args as { $dstChain?: string }).$dstChain
+
+    return {
+      plugin: event.plugin,
+      type: event.type,
+      direction: event.direction,
+      timestamp: event.timestamp,
+      chain: event.chain,
+      txHash: event.ctx.txHash,
+      logIndex: event.ctx.logIndex,
+      srcChain,
+      dstChain,
+      args: JSON.stringify(event.args, (_, value) =>
+        typeof value === 'bigint' ? `BigInt(${value})` : value,
+      ),
+    }
+  })
 }
 
 async function getMessagesStats(db: Database) {

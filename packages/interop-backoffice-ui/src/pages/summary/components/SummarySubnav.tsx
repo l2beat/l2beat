@@ -5,20 +5,34 @@ const items = [
   {
     label: 'Overview',
     to: '/',
+    activePrefixes: ['/'],
   },
   {
     label: 'Events',
     to: '/summary/events',
+    activePrefixes: ['/summary/events', '/interop/events'],
   },
   {
     label: 'Messages',
     to: '/summary/messages',
+    activePrefixes: ['/summary/messages'],
   },
   {
     label: 'Transfers',
     to: '/summary/transfers',
+    activePrefixes: ['/summary/transfers'],
   },
 ]
+
+function isItemActive(pathname: string, item: (typeof items)[number]): boolean {
+  if (item.to === '/') {
+    return pathname === '/'
+  }
+
+  return item.activePrefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  )
+}
 
 export function SummarySubnav() {
   const location = useLocation()
@@ -29,7 +43,9 @@ export function SummarySubnav() {
         <Button
           key={item.to}
           asChild
-          variant={location.pathname === item.to ? 'secondary' : 'outline'}
+          variant={
+            isItemActive(location.pathname, item) ? 'secondary' : 'outline'
+          }
           size="sm"
         >
           <Link to={item.to}>{item.label}</Link>

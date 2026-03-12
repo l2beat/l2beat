@@ -18,6 +18,32 @@ export type InteropEventStats = {
   unsupported: number
 }
 
+export type InteropEventKind =
+  | 'all'
+  | 'matched'
+  | 'unmatched'
+  | 'old-unmatched'
+  | 'unsupported'
+
+export type InteropEventDetails = {
+  plugin: string
+  type: string
+  direction?: string
+  timestamp: number
+  chain: string
+  txHash: string
+  logIndex: number
+  srcChain?: string
+  dstChain?: string
+  args: string
+}
+
+export type InteropChainMetadata = {
+  id: string
+  display: string
+  explorerUrl?: string
+}
+
 export type InteropMessageChainStats = {
   srcChain: string
   dstChain: string

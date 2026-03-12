@@ -4,6 +4,7 @@ import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PluginStatusesPage } from './pages/plugin-statuses/PluginStatusesPage'
+import { SummaryEventDetailsPage } from './pages/summary/events/SummaryEventDetailsPage'
 import { SummaryEventsPage } from './pages/summary/events/SummaryEventsPage'
 import { SummaryMessagesPage } from './pages/summary/messages/SummaryMessagesPage'
 import { SummaryPage } from './pages/summary/SummaryPage'
@@ -21,6 +22,14 @@ export function App() {
           <Routes>
             <Route path="/" element={<SummaryPage />} />
             <Route path="/summary/events" element={<SummaryEventsPage />} />
+            <Route
+              path="/summary/events/:kind/:type"
+              element={<SummaryEventDetailsPage />}
+            />
+            <Route
+              path="/interop/events/:kind/:type"
+              element={<SummaryEventDetailsPage />}
+            />
             <Route path="/summary/messages" element={<SummaryMessagesPage />} />
             <Route
               path="/summary/transfers"
