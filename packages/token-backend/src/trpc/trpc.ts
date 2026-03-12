@@ -7,15 +7,15 @@ import { getSession } from '../utils/getSession'
 export const createTRPCContext = async (opts: {
   headers: Headers
   config: Config
-  db: TokenDatabase
+  tokenDb: TokenDatabase
   jwtVerifyFn?: typeof jwtVerify
 }) => {
-  const { headers, config, db, jwtVerifyFn } = opts
+  const { headers, config, tokenDb, jwtVerifyFn } = opts
   const session = await getSession(headers, config, { jwtVerifyFn })
 
   return {
     headers,
-    db,
+    tokenDb,
     session,
   }
 }

@@ -441,7 +441,7 @@ function createRouter(
       email: 'test@example.com',
       permissions: ['read', 'write'],
     },
-    db: mockDb,
+    tokenDb: mockDb,
   })
 }
 
@@ -469,6 +469,6 @@ function createRouterWithEtherscanKey(
       email: 'test@example.com',
       permissions: ['read', 'write'],
     },
-    db: mockDb,
+    tokenDb: mockDb,
   })
 }

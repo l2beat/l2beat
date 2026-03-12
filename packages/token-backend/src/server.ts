@@ -36,7 +36,7 @@ function main() {
         createTRPCContext({
           headers: new Headers(req.headers as Record<string, string>),
           config,
-          db,
+          tokenDb: db,
         }),
     }),
   )
