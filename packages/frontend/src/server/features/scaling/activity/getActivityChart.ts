@@ -142,12 +142,13 @@ export async function getActivityChart({
     ]
   })
 
+  const nonEthereumProject = projects.find((p) => p !== ProjectId.ETHEREUM)
   const stats = isSingleProject
     ? getActivityChartStats(
         projects,
         data,
         maxCounts,
-        Object.values(totalCounts ?? {})[0],
+        nonEthereumProject ? totalCounts?.[nonEthereumProject] : undefined,
       )
     : undefined
 
