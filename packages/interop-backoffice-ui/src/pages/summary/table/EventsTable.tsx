@@ -25,8 +25,8 @@ import {
   TableRow,
 } from '~/components/core/Table'
 import { ExportTableCsvButton } from '~/components/table/ExportTableCsvButton'
-import { pluginStatusesColumns } from './columns'
-import type { PluginStatus } from './types'
+import { eventsColumns } from './columns'
+import type { SummaryEventRow } from './types'
 
 type PageSizeOption = '10' | '25' | '50' | '100' | 'all'
 
@@ -37,21 +37,21 @@ function toPageSize(option: PageSizeOption, rowsCount: number) {
   return Number(option)
 }
 
-interface PluginStatusesTableProps {
-  data: PluginStatus[]
+interface EventsTableProps {
+  data: SummaryEventRow[]
   enableCsvExport?: boolean
 }
 
-export function PluginStatusesTable({
+export function EventsTable({
   data,
   enableCsvExport = false,
-}: PluginStatusesTableProps) {
+}: EventsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [pageSizeOption, setPageSizeOption] = useState<PageSizeOption>('25')
 
   const table = useReactTable({
     data,
-    columns: pluginStatusesColumns,
+    columns: eventsColumns,
     state: {
       sorting,
     },
@@ -60,12 +60,13 @@ export function PluginStatusesTable({
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
+      sorting: [{ id: 'type', desc: false }],
       pagination: {
         pageIndex: 0,
         pageSize: toPageSize(pageSizeOption, data.length),
       },
     },
-    getRowId: (row) => `${row.pluginName}-${row.chain}`,
+    getRowId: (row) => `${row.type}-${row.direction ?? ''}`,
   })
 
   useEffect(() => {
@@ -108,9 +109,7 @@ export function PluginStatusesTable({
         {enableCsvExport ? (
           <ExportTableCsvButton
             table={table}
-            getFilename={() =>
-              `plugin-statuses-${new Date().toISOString()}.csv`
-            }
+            getFilename={() => `interop-events-${new Date().toISOString()}.csv`}
           />
         ) : null}
       </div>
@@ -136,10 +135,10 @@ export function PluginStatusesTable({
           {table.getRowModel().rows.length === 0 ? (
             <TableRow>
               <TableCell
-                colSpan={pluginStatusesColumns.length}
+                colSpan={eventsColumns.length}
                 className="h-20 text-center text-muted-foreground"
               >
-                No plugin statuses found.
+                No events found.
               </TableCell>
             </TableRow>
           ) : (

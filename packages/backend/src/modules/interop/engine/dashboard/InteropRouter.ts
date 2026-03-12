@@ -74,6 +74,9 @@ export function createInteropRouter(
           toBlock: status.toBlock?.toString(),
         }))
       },
+      getInteropEventStats: () => {
+        return db.interopEvent.getStats()
+      },
     }),
     prefix: '/interop/trpc',
     allowMethodOverride: true,
