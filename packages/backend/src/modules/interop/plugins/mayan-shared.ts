@@ -1,5 +1,4 @@
 import {
-  Address32,
   ChainSpecificAddress,
   EthereumAddress,
   type EthereumAddress as EthereumAddressValue,
@@ -56,25 +55,6 @@ export const MAYAN_WRAPPED_NATIVE_ADDRESSES: Record<
   unichain: EthereumAddress('0x4200000000000000000000000000000000000006'),
   linea: EthereumAddress('0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f'),
   hyperevm: EthereumAddress('0x5555555555555555555555555555555555555555'),
-}
-
-const DEAD_ADDRESS = Address32.from(
-  '0x000000000000000000000000000000000000dEaD',
-)
-
-export function isBurnAddress(address: Address32): boolean {
-  return address === Address32.ZERO || address === DEAD_ADDRESS
-}
-
-export function isMayanWrappedNativeEmitter(
-  chain: string,
-  tokenAddress: Address32,
-): boolean {
-  const wrappedNative = MAYAN_WRAPPED_NATIVE_ADDRESSES[chain]
-  return (
-    wrappedNative !== undefined &&
-    tokenAddress === Address32.from(wrappedNative)
-  )
 }
 
 export function decodeMayanProtocol(protocolAddress: string) {

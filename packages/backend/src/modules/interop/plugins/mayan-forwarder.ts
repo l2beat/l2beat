@@ -13,11 +13,8 @@ import {
 } from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
-import { findBestTransferLog } from './hyperlane-hwr'
 import {
   decodeMayanProtocol,
-  isBurnAddress,
-  isMayanWrappedNativeEmitter,
   MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
   MAYAN_WRAPPED_NATIVE_ADDRESSES,
@@ -43,8 +40,6 @@ export const swapAndForwardedEthLog =
 export const swapAndForwardedERC20Log =
   'event SwapAndForwardedERC20(address tokenIn, uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)'
 const wethWithdrawalLog = 'event Withdrawal(address indexed src, uint256 wad)'
-const transferLog =
-  'event Transfer(address indexed from, address indexed to, uint256 value)'
 
 const parseWethWithdrawal = createEventParser(wethWithdrawalLog)
 
@@ -65,7 +60,6 @@ export const MayanForwarded = createInteropEventType<{
   methodSignature: `0x${string}`
   tokenIn: Address32
   amountIn?: bigint
-  srcWasBurned?: boolean
   tokenOut?: Address32
   minAmountOut?: bigint
   $dstChain: string
@@ -81,7 +75,7 @@ interface NormalizedForwarderLog {
   kind: ForwarderLogKind
   mayanProtocol: string
   protocolData: `0x${string}`
-  tokenIn?: Address32
+  tokenIn: Address32
   amountIn?: bigint
 }
 
@@ -107,7 +101,6 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: forwardedERC20Log,
-        includeTxEvents: [transferLog],
         addresses: forwarderAddresses,
       },
       {
@@ -118,7 +111,6 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: swapAndForwardedERC20Log,
-        includeTxEvents: [transferLog],
         addresses: forwarderAddresses,
       },
     ]
@@ -142,10 +134,9 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
     )
     if (!decodedData) return
 
-    const tokenIn = parsed.tokenIn ?? decodedData.tokenIn ?? Address32.NATIVE
+    const tokenIn = parsed.tokenIn
     const amountIn =
       parsed.amountIn ??
-      decodedData.amountIn ??
       (parsed.kind === 'ForwardedEth'
         ? resolveForwardedEthAmount(input)
         : undefined)
@@ -156,7 +147,6 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
         methodSignature: decodedData.methodSignature,
         tokenIn,
         amountIn,
-        srcWasBurned: inferSrcWasBurned(input, amountIn, tokenIn),
         tokenOut: decodedData.tokenOut,
         minAmountOut: decodedData.minAmountOut,
         $dstChain: decodedData.dstChain,
@@ -172,6 +162,7 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
       kind: 'ForwardedEth',
       mayanProtocol: forwardedEth.mayanProtocol,
       protocolData: forwardedEth.protocolData,
+      tokenIn: Address32.NATIVE,
     }
   }
 
@@ -319,39 +310,6 @@ function decodeExecuteCalls(
   return calls.map((call) => ({ to: call.to, value: call.value }))
 }
 
-function inferSrcWasBurned(
-  input: LogToCapture,
-  amountIn: bigint | undefined,
-  tokenIn: Address32 | undefined,
-): boolean | undefined {
-  // Native source token is never burned; ERC20 burn inference needs amount+matching Transfer.
-  if (tokenIn === Address32.NATIVE) {
-    return false
-  }
-
-  if (
-    input.log.logIndex === null ||
-    amountIn === undefined ||
-    amountIn === 0n ||
-    tokenIn === undefined
-  ) {
-    return undefined
-  }
-
-  const transfer = findBestTransferLog(
-    input.txLogs,
-    amountIn,
-    input.log.logIndex,
-  ).transfer
-  if (!transfer) return undefined
-  if (transfer.logAddress !== tokenIn) return undefined
-  if (!isBurnAddress(transfer.to)) return false
-
-  // Wrapped-native burn-like Transfer events come from unwrap/deposit mechanics.
-  // They are not interop bridge burn semantics.
-  return !isMayanWrappedNativeEmitter(input.chain, transfer.logAddress)
-}
-
 export function logToProtocolData(
   log: Log,
   wormholeNetworks: { chain: string; wormholeChainId: number }[],
@@ -361,7 +319,7 @@ export function logToProtocolData(
   const decoded = decodeMayanData(parsed.protocolData, wormholeNetworks, [])
   if (!decoded) return
 
-  if (parsed.tokenIn !== undefined) decoded.tokenIn = parsed.tokenIn
+  decoded.tokenIn = parsed.tokenIn
   if (parsed.amountIn !== undefined) decoded.amountIn = parsed.amountIn
   return decoded
 }
@@ -429,10 +387,6 @@ export function decodeMayanData(
   cctpNetworks: { chain: string; domain: number }[],
 ): DecodedData | undefined {
   const methodSignature = data.slice(0, 10) as `0x${string}`
-  const fallback: DecodedData = {
-    methodSignature,
-    dstChain: 'unknown',
-  }
   let res
   try {
     res = decodeFunctionData({
@@ -445,9 +399,9 @@ export function decodeMayanData(
 
   switch (methodSignature) {
     case SELECTOR_CREATE_ORDER_WITH_TOKEN: {
-      if (res.functionName !== 'createOrderWithToken') return fallback
+      if (res.functionName !== 'createOrderWithToken') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(
           wormholeNetworks,
           res.args[2].destChainId,
@@ -459,9 +413,9 @@ export function decodeMayanData(
       }
     }
     case SELECTOR_CREATE_ORDER_WITH_ETH: {
-      if (res.functionName !== 'createOrderWithEth') return fallback
+      if (res.functionName !== 'createOrderWithEth') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(
           wormholeNetworks,
           res.args[0].destChainId,
@@ -472,9 +426,9 @@ export function decodeMayanData(
       }
     }
     case SELECTOR_CREATE_ORDER_WITH_SIG: {
-      if (res.functionName !== 'createOrderWithSig') return fallback
+      if (res.functionName !== 'createOrderWithSig') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(
           wormholeNetworks,
           res.args[2].destChainId,
@@ -486,7 +440,7 @@ export function decodeMayanData(
       }
     }
     case SELECTOR_CREATE_ORDER_MAYAN_CIRCLE: {
-      if (res.functionName !== 'createOrder') return fallback
+      if (res.functionName !== 'createOrder') return
       const args = res.args as unknown as readonly [
         {
           tokenIn: `0x${string}`
@@ -497,7 +451,7 @@ export function decodeMayanData(
         },
       ]
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(wormholeNetworks, args[0].destChain),
         tokenIn: Address32.from(args[0].tokenIn),
         amountIn: args[0].amountIn,
@@ -506,7 +460,7 @@ export function decodeMayanData(
       }
     }
     case SELECTOR_CREATE_ORDER_FAST_MCTP: {
-      if (res.functionName !== 'createOrder') return fallback
+      if (res.functionName !== 'createOrder') return
       const args = res.args as unknown as readonly [
         `0x${string}`,
         bigint,
@@ -519,7 +473,7 @@ export function decodeMayanData(
         },
       ]
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromCctpDomain(cctpNetworks, args[3]),
         tokenIn: Address32.from(args[0]),
         amountIn: args[1],
@@ -528,36 +482,36 @@ export function decodeMayanData(
       }
     }
     case SELECTOR_BRIDGE_WITH_FEE: {
-      if (res.functionName !== 'bridgeWithFee') return fallback
+      if (res.functionName !== 'bridgeWithFee') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromCctpDomain(cctpNetworks, res.args[5]),
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
       }
     }
     case SELECTOR_BRIDGE_WITH_LOCKED_FEE: {
-      if (res.functionName !== 'bridgeWithLockedFee') return fallback
+      if (res.functionName !== 'bridgeWithLockedFee') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromCctpDomain(cctpNetworks, res.args[4]),
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
       }
     }
     case SELECTOR_BRIDGE_FAST_MCTP: {
-      if (res.functionName !== 'bridge') return fallback
+      if (res.functionName !== 'bridge') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromCctpDomain(cctpNetworks, res.args[6]),
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
       }
     }
     case SELECTOR_SWAP: {
-      if (res.functionName !== 'swap') return fallback
+      if (res.functionName !== 'swap') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(wormholeNetworks, res.args[3]),
         tokenIn: Address32.from(res.args[5]),
         amountIn: res.args[6],
@@ -566,9 +520,9 @@ export function decodeMayanData(
       }
     }
     case SELECTOR_WRAP_AND_SWAP_ETH: {
-      if (res.functionName !== 'wrapAndSwapETH') return fallback
+      if (res.functionName !== 'wrapAndSwapETH') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(wormholeNetworks, res.args[3]),
         tokenIn: Address32.NATIVE,
         tokenOut: zeroAddressToNative(res.args[2]),
@@ -576,6 +530,6 @@ export function decodeMayanData(
       }
     }
     default:
-      return fallback
+      return undefined
   }
 }
