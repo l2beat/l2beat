@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
   "description": "Registry for EigenDA disperser info such as disperser key to address mapping.",
   "fields": {
     "dispersers": {
