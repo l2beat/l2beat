@@ -2,9 +2,9 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
+import { PluginsRestartFromNowControls } from './PluginsRestartFromNowControls'
 import { PluginsResyncControls } from './PluginsResyncControls'
 import { PluginsStatusTable } from './PluginsStatusTable'
-import { PluginsSyncFromZeroControls } from './PluginsSyncFromZeroControls'
 
 function StatusPageLayout(props: {
   pluginSyncStatuses: PluginSyncStatus[]
@@ -42,7 +42,7 @@ function StatusPageLayout(props: {
               <PluginsResyncControls
                 pluginSyncStatuses={props.pluginSyncStatuses}
               />
-              <PluginsSyncFromZeroControls
+              <PluginsRestartFromNowControls
                 pluginSyncStatuses={props.pluginSyncStatuses}
               />
             </>

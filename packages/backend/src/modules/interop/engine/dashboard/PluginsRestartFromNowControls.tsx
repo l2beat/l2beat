@@ -1,7 +1,7 @@
 import React from 'react'
 import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 
-export function PluginsSyncFromZeroControls(props: {
+export function PluginsRestartFromNowControls(props: {
   pluginSyncStatuses: PluginSyncStatus[]
 }) {
   const pluginNames = Array.from(
@@ -14,9 +14,9 @@ export function PluginsSyncFromZeroControls(props: {
 
   return (
     <section>
-      <h2>Sync from zero</h2>
+      <h2>Wipe & restart from now</h2>
       <table>
-        <caption>Sync from zero</caption>
+        <caption>Wipe & restart from now</caption>
         <thead>
           <tr>
             <th>plugin</th>
@@ -30,10 +30,10 @@ export function PluginsSyncFromZeroControls(props: {
               <td>
                 <button
                   type="button"
-                  className="interop-sync-from-zero-button"
+                  className="interop-restart-from-now-button"
                   data-plugin-name={pluginName}
                 >
-                  Sync from zero
+                  Wipe & restart from now
                 </button>
               </td>
             </tr>
@@ -47,13 +47,13 @@ export function PluginsSyncFromZeroControls(props: {
               document.addEventListener('click', function(event) {
                 var target = event.target;
                 if (!target || target.tagName !== 'BUTTON') return;
-                if (!target.classList.contains('interop-sync-from-zero-button')) return;
+                if (!target.classList.contains('interop-restart-from-now-button')) return;
 
                 var pluginName = target.getAttribute('data-plugin-name');
                 if (!pluginName) return;
 
                 var input = prompt(
-                  'This will DELETE ALL DATA for "' + pluginName + '" and restart syncing from scratch.\\n\\n' +
+                  'This will DELETE ALL DATA for "' + pluginName + '" and restart syncing from now. Existing history will not be replayed.\\n\\n' +
                   'Type the plugin name to confirm:'
                 );
                 if (input !== pluginName) return;
@@ -61,7 +61,7 @@ export function PluginsSyncFromZeroControls(props: {
                 var originalText = target.textContent;
                 target.disabled = true;
 
-                fetch('/interop/sync-from-zero', {
+                fetch('/interop/restart-from-now', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ pluginName: pluginName })
@@ -71,7 +71,7 @@ export function PluginsSyncFromZeroControls(props: {
                     return response.json();
                   })
                   .then(function() {
-                    target.textContent = 'Sync from zero requested';
+                    target.textContent = 'Restart from now requested';
                   })
                   .catch(function() {
                     target.disabled = false;

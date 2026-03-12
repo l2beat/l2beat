@@ -287,7 +287,7 @@ export function createInteropRouter(
     }
   })
 
-  router.post('/interop/sync-from-zero', async (ctx) => {
+  router.post('/interop/restart-from-now', async (ctx) => {
     const payload = v
       .object({ pluginName: v.string() })
       .validate(ctx.request.body)

@@ -299,7 +299,7 @@ export class CatchingUpState implements TimeloopState {
       nextFrom = syncedRange.toBlock + 1n
     } else {
       // No synced range and no forced start — transition to FollowingState
-      // (happens after sync-from-zero wipe clears all state)
+      // (happens after restart-from-now clears all synced state)
       return undefined
     }
 

@@ -47,13 +47,13 @@ export class InteropDataCleaner extends TimeLoop {
       return
     }
 
-    const isSyncFromZero = this.syncers.every(
+    const isRestartFromNow = this.syncers.every(
       (syncer) => statesByChain.get(syncer.chain)?.resyncRequestedFrom === null,
     )
 
     await this.db.transaction(async () => {
       await this.wipeClusterData()
-      if (isSyncFromZero) {
+      if (isRestartFromNow) {
         await this.db.interopPluginSyncedRange.deleteByPluginName(
           this.cluster.name,
         )
@@ -67,8 +67,8 @@ export class InteropDataCleaner extends TimeLoop {
     })
 
     this.logger.info(
-      isSyncFromZero
-        ? 'Cluster data wiped for sync from zero'
+      isRestartFromNow
+        ? 'Cluster data wiped for restart from now'
         : 'Cluster data wiped for resync',
       { pluginName: this.cluster.name },
     )
