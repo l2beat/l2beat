@@ -74,7 +74,7 @@ export function ProcessorStatusesPage() {
           </CardContent>
         </Card>
 
-        <Card className="gap-0">
+        <Card className="gap-0 py-0">
           <CardContent className="px-0">
             {isLoading ? <LoadingState className="m-6" /> : null}
             {isError ? (

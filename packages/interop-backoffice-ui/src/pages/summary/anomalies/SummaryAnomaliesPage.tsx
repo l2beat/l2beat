@@ -77,7 +77,7 @@ export function SummaryAnomaliesPage() {
         ) : null}
 
         {!isLoading && !isError && hasAnomaliesData ? (
-          <Card className="gap-0">
+          <Card className="gap-0 py-0">
             <CardHeader>
               <CardTitle>
                 Aggregated transfer anomalies (latest per ID)

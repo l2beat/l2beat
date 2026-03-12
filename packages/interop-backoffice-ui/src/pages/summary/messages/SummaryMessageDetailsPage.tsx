@@ -137,7 +137,7 @@ export function SummaryMessageDetailsPage() {
           </CardContent>
         </Card>
 
-        <Card className="gap-0">
+        <Card className="gap-0 py-0">
           <CardContent className="px-0">
             {!hasValidParams ? (
               <div className="px-6 py-4 text-destructive text-sm">

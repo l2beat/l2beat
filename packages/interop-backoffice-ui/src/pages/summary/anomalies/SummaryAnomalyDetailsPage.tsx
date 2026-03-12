@@ -148,7 +148,7 @@ export function SummaryAnomalyDetailsPage() {
               </CardContent>
             </Card>
 
-            <Card className="gap-0">
+            <Card className="gap-0 py-0">
               <CardHeader>
                 <CardTitle>Daily series table</CardTitle>
                 <CardDescription>

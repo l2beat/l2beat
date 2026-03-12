@@ -116,7 +116,7 @@ export function SummarySuspiciousTransfersPage() {
         ) : null}
 
         {!isLoading && !isError && hasData ? (
-          <Card className="gap-0">
+          <Card className="gap-0 py-0">
             <CardContent className="px-0">
               <SuspiciousTransfersTable
                 data={rows}
