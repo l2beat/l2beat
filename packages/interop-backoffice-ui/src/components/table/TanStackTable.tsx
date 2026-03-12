@@ -5,7 +5,7 @@ import {
   type Table,
 } from '@tanstack/react-table'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
-import { type UIEvent, useCallback, useState } from 'react'
+import { type UIEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from '~/components/core/Button'
 import {
   Select,
@@ -51,15 +51,55 @@ export function TanStackTable<TData extends RowData>({
 }: TanStackTableProps<TData>) {
   const pageCount = Math.max(table.getPageCount(), 1)
   const pageIndex = table.getState().pagination.pageIndex
-  const headerHeightPx = table.getHeaderGroups().length * 40
-  const [showHeaderShadow, setShowHeaderShadow] = useState(false)
+  const headerGroups = table.getHeaderGroups()
+  const headerHeightPx = headerGroups.length * 40
+  const scrollViewportRef = useRef<HTMLDivElement>(null)
+  const [scrollState, setScrollState] = useState({
+    showHeaderShadow: false,
+    scrollWidth: 0,
+  })
 
-  const handleTableScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
-    const shouldShowShadow = event.currentTarget.scrollTop > 0
-    setShowHeaderShadow((current) =>
-      current === shouldShowShadow ? current : shouldShowShadow,
+  const syncScrollState = useCallback((element: HTMLDivElement) => {
+    const nextState = {
+      showHeaderShadow: element.scrollTop > 0,
+      scrollWidth: element.scrollWidth,
+    }
+
+    setScrollState((current) =>
+      current.showHeaderShadow === nextState.showHeaderShadow &&
+      current.scrollWidth === nextState.scrollWidth
+        ? current
+        : nextState,
     )
   }, [])
+
+  const handleTableScroll = useCallback(
+    (event: UIEvent<HTMLDivElement>) => {
+      syncScrollState(event.currentTarget)
+    },
+    [syncScrollState],
+  )
+
+  useEffect(() => {
+    const element = scrollViewportRef.current
+    if (!element) return
+
+    syncScrollState(element)
+
+    if (typeof ResizeObserver === 'undefined') {
+      return
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      syncScrollState(element)
+    })
+
+    resizeObserver.observe(element)
+
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [syncScrollState])
 
   return (
     <>
@@ -92,21 +132,25 @@ export function TanStackTable<TData extends RowData>({
 
       <div
         className="relative max-h-[80vh] w-full overflow-auto"
+        ref={scrollViewportRef}
         onScroll={handleTableScroll}
       >
-        <div
-          className={cn(
-            '-mt-px pointer-events-none sticky h-3 w-full transition-opacity',
-            showHeaderShadow
-              ? 'z-[25] bg-gradient-to-b from-slate-900/20 to-transparent opacity-100'
-              : 'opacity-0',
-          )}
-          style={{ top: `${headerHeightPx}px` }}
-        />
+        {scrollState.showHeaderShadow ? (
+          <div
+            className="-mt-px pointer-events-none sticky z-[25] h-3 bg-gradient-to-b from-slate-900/20 to-transparent"
+            style={{
+              top: `${headerHeightPx}px`,
+              width:
+                scrollState.scrollWidth > 0
+                  ? `${scrollState.scrollWidth}px`
+                  : '100%',
+            }}
+          />
+        ) : null}
 
         <CoreTable containerClassName="overflow-visible">
           <TableHeader className="[&_tr]:bg-background">
-            {table.getHeaderGroups().map((headerGroup) => (
+            {headerGroups.map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead

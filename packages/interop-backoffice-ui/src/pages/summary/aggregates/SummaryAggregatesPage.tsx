@@ -141,7 +141,7 @@ export function SummaryAggregatesPage() {
 
         {!isLoading && !isError && hasAggregatesData ? (
           <>
-            <Card className="gap-0 py-0">
+            <Card className="gap-0">
               <CardHeader>
                 <CardTitle>
                   Not included in latest aggregates by plugins
@@ -158,7 +158,7 @@ export function SummaryAggregatesPage() {
               </CardContent>
             </Card>
 
-            <Card className="gap-0 py-0">
+            <Card className="gap-0">
               <CardHeader>
                 <CardTitle>Not included in latest aggregates</CardTitle>
                 <CardDescription>
@@ -174,7 +174,7 @@ export function SummaryAggregatesPage() {
               </CardContent>
             </Card>
 
-            <Card className="gap-0 py-0">
+            <Card className="gap-0">
               <CardHeader>
                 <CardTitle>Transfer split coverage by protocol</CardTitle>
                 <CardDescription>
