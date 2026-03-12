@@ -179,5 +179,23 @@ Protocol links (frontends, docs, GitHub, X, source code, other) stored as `resou
 Mitigations are displayed in the Explorer tabs (AdminsTab, DepsTab, GovernanceTab) and Report views (AdminCards, DependencyCards).
 
 - **`MitigationBadge`** (`src/components/MitigationBadge.tsx`): Renders a single mitigation as a colored pill badge. Handles all `MitigationType` values: `delay` (cyan, shows formatted duration), `valueRange` (indigo, shows min/max), `relativeValue` (amber, shows max change %), `other` (gray, truncated description).
-- **`MitigationsSummary`** (`src/pages/review/views/explorer/shared.tsx`): Responsive overflow component for table cells. Collects mitigations from an entity's functions, deduplicates them, measures available width via `ResizeObserver`, and shows as many badges as fit with a `+N` overflow indicator.
-- **Shared explorer components** (`shared.tsx`): Also exports `SortHeader`, `ExpandedAdminFunctions`, `AdminFunctionTable`, and `deduplicateMitigations` — used by AdminsTab, DepsTab, and GovernanceTab to avoid duplication.
+- **`MitigationsSummary`** (`src/pages/review/views/explorer/shared.tsx`): Responsive overflow component for table cells. Collects mitigations from an entity's functions, deduplicates them, measures available width via `ResizeObserver`, and shows as many badges as fit with a `+N` overflow indicator. Note: uses `td.closest('td')` for measurement — only works inside `<table>` cells, not reusable in report card buttons.
+- **Report card inline badges** (`AdminCards.tsx`, `DependencyCards.tsx`): Admin and dependency card rows render deduplicated mitigation badges inline after the entity name using an IIFE that collects mitigations from all functions, deduplicates via `deduplicateMitigations()`, and maps to `MitigationBadge` components. This is separate from `MitigationsSummary` because report cards use `<button>` elements, not table cells.
+- **Shared explorer components** (`shared.tsx`): Also exports `SortHeader`, `ExpandedAdminFunctions`, `AdminFunctionTable`, and `deduplicateMitigations` — used by AdminsTab, DepsTab, GovernanceTab, and report card components to avoid duplication.
+
+### Key Findings — Mitigations
+
+The `getKeyFindings()` function in `src/utils/narrative.ts` generates a mitigations key finding (type: `info`, blue card) when mitigations exist on any admin or dependency function:
+
+- **Coverage**: Counts fund-impacting permissioned functions (admin + dependency functions with `directFundsUsd > 0` or risky reachable contracts) vs those with mitigations. Reports "All" or "Some" coverage
+- **Types**: Lists distinct mitigation type labels: Timelocks, Value Ranges, Relative Value Caps, Other Constraints
+- **Visibility**: Only shown when at least one mitigation exists across all functions
+
+### Key Findings — TVS (Total Value Secured)
+
+The TVS key finding replaces the former TVL-only finding. Title shows the combined TVS amount (e.g., "$220M TVS"). Detail text explains the breakdown:
+- Both TVL + token: "Total Value Secured by the protocol: $X in TVL (tokens held in contracts) and $Y in protocol token market cap."
+- TVL only: "Total Value Locked in protocol contracts."
+- Token only: "Protocol token market cap."
+
+TVS = `totalCapitalAtRisk + (totalTokenValue ?? totalTokenValueAtRisk)` from review totals.

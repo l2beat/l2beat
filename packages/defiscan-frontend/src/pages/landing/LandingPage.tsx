@@ -5,12 +5,12 @@ import { formatUsdValue } from '../../utils/format'
 import { adminTypeColor } from '../../utils/colors'
 import { Badge } from '../../components/Badge'
 import { ProtocolTypeBadge } from '../../components/ProtocolTypeBadge'
-import { UsdValue } from '../../components/UsdValue'
+
 import { StatCard } from '../../components/StatCard'
 import type { CompiledReview } from '../../types'
 import { getHumanAdmins } from '../../utils/admins'
 
-type SortKey = 'name' | 'capital' | 'tokenValue' | 'dependencies'
+type SortKey = 'name' | 'tvs' | 'dependencies'
 
 function hasGovernance(review: CompiledReview): boolean {
   return review.admins.some((a) => a.isGovernance)
@@ -20,7 +20,7 @@ export function LandingPage() {
   const { data: indexData, isLoading: indexLoading } = useIndex()
   const { data: allReviews, isLoading: reviewsLoading } = useAllReviews()
 
-  const [sortKey, setSortKey] = useState<SortKey>('capital')
+  const [sortKey, setSortKey] = useState<SortKey>('tvs')
   const [sortAsc, setSortAsc] = useState(false)
 
   const isLoading = indexLoading || reviewsLoading
@@ -43,12 +43,12 @@ export function LandingPage() {
         case 'name':
           cmp = a.name.localeCompare(b.name)
           break
-        case 'capital':
-          cmp = a.totals.totalCapitalAtRisk - b.totals.totalCapitalAtRisk
+        case 'tvs': {
+          const aTvs = a.totals.totalCapitalAtRisk + (a.totals.totalTokenValue ?? a.totals.totalTokenValueAtRisk)
+          const bTvs = b.totals.totalCapitalAtRisk + (b.totals.totalTokenValue ?? b.totals.totalTokenValueAtRisk)
+          cmp = aTvs - bTvs
           break
-        case 'tokenValue':
-          cmp = (a.totals.totalTokenValue ?? a.totals.totalTokenValueAtRisk) - (b.totals.totalTokenValue ?? b.totals.totalTokenValueAtRisk)
-          break
+        }
         case 'dependencies':
           cmp = a.totals.dependencyCount - b.totals.dependencyCount
           break
@@ -111,8 +111,7 @@ export function LandingPage() {
             <tr className="border-b border-border bg-bg-muted">
               <SortHeader label="Protocol" sortKey="name" current={sortKey} asc={sortAsc} onToggle={toggleSort} />
               <th className="text-left px-3 py-3 font-medium text-text-secondary text-xs uppercase tracking-wide">Type</th>
-              <SortHeader label="TVL" sortKey="capital" current={sortKey} asc={sortAsc} onToggle={toggleSort} align="right" />
-              <SortHeader label="Protocol Token" sortKey="tokenValue" current={sortKey} asc={sortAsc} onToggle={toggleSort} align="right" />
+              <SortHeader label="TVS (TVL + Token)" sortKey="tvs" current={sortKey} asc={sortAsc} onToggle={toggleSort} />
               <th className="px-3 py-3 text-xs uppercase tracking-wide font-medium text-text-secondary text-left whitespace-nowrap w-[1%]">Admins</th>
               <th className="px-3 py-3 text-xs uppercase tracking-wide font-medium text-text-secondary text-center whitespace-nowrap w-[1%]">Governance</th>
               <SortHeader label="Dependencies" sortKey="dependencies" current={sortKey} asc={sortAsc} onToggle={toggleSort} align="right" shrink />
@@ -133,9 +132,22 @@ export function LandingPage() {
                     <div className="text-xs text-text-muted mt-0.5">{p.chain}</div>
                   </td>
                   <td className="px-3 py-3"><ProtocolTypeBadge type={p.projectType} /></td>
-                  <td className="px-3 py-3 text-right"><UsdValue value={p.totals.totalCapitalAtRisk} variant="capital" /></td>
-                  <td className="px-3 py-3 text-right">
-                    {(p.totals.totalTokenValue ?? p.totals.totalTokenValueAtRisk) > 0 ? <UsdValue value={p.totals.totalTokenValue ?? p.totals.totalTokenValueAtRisk} variant="token" /> : <span className="text-text-muted">-</span>}
+                  <td className="px-3 py-3">
+                    {(() => {
+                      const tvl = p.totals.totalCapitalAtRisk
+                      const token = p.totals.totalTokenValue ?? p.totals.totalTokenValueAtRisk
+                      const tvs = tvl + token
+                      return (
+                        <span className="tabular-nums">
+                          <span className="font-semibold text-capital">{formatUsdValue(tvs)}</span>
+                          {tvl > 0 && token > 0 && (
+                            <span className="text-text-muted text-xs ml-1">
+                              ({formatUsdValue(tvl)} + {formatUsdValue(token)})
+                            </span>
+                          )}
+                        </span>
+                      )
+                    })()}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap"><AdminTypeBar breakdown={adminBreakdown} /></td>
                   <td className="px-3 py-3 text-center whitespace-nowrap text-xs">
@@ -181,12 +193,12 @@ function AdminTypeBar({ breakdown }: { breakdown: Record<string, number> }) {
 }
 
 function SortHeader({ label, sortKey, current, asc, onToggle, align = 'left', shrink }: {
-  label: string; sortKey: SortKey; current: SortKey; asc: boolean; onToggle: (k: SortKey) => void; align?: 'left' | 'right'; shrink?: boolean
+  label: string; sortKey: SortKey; current: SortKey; asc: boolean; onToggle: (k: SortKey) => void; align?: 'left' | 'right' | 'center'; shrink?: boolean
 }) {
   const active = current === sortKey
   return (
     <th
-      className={`px-3 py-3 font-medium text-text-secondary cursor-pointer select-none hover:text-purple-600 transition-colors text-xs uppercase tracking-wide whitespace-nowrap ${align === 'right' ? 'text-right' : 'text-left'} ${shrink ? 'w-[1%]' : ''}`}
+      className={`px-3 py-3 font-medium text-text-secondary cursor-pointer select-none hover:text-purple-600 transition-colors text-xs uppercase tracking-wide whitespace-nowrap ${align === 'right' ? 'text-right' : align === 'center' ? 'text-center' : 'text-left'} ${shrink ? 'w-[1%]' : ''}`}
       onClick={() => onToggle(sortKey)}
     >
       {label}

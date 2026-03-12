@@ -164,6 +164,11 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - **Explorer Tabs** (in order): Overview, Funds, Admins, Governance, Dependencies, Contracts
   - **Admins tab**: Shows non-governance human admins only (`getHumanAdmins().filter(!isGovernance)`)
   - **Governance tab**: Shows governance contracts only (`admins.filter(isGovernance)`), same table layout as Admins but without the Type column
+- **TVS Metric**: "Total Value Secured" = TVL (tokens held in contracts) + protocol token market cap. Used consistently across landing page table and report view fund charts
+- **Landing Page**: Protocol table with sortable TVS column showing combined value + muted breakdown `($TVL + $Token)` when both are non-zero
+- **Report View — Fund Chart**: Unified stacked bar chart with purple (TVL) + amber (token market cap) segments. "Include Protocol Tokens" checkbox (default: checked) toggles between TVS and TVL-only modes. Legend explains the two color palettes
+- **Report View — Mitigation Badges**: Admin and dependency card rows display inline deduplicated mitigation badges (from `deduplicateMitigations()`) next to entity names, matching the explorer tab pattern
+- **Key Findings**: Narrative-generated info cards include a mitigations finding (coverage + types) when mitigations exist, and a TVS finding showing the value breakdown
 - **Deployment**: Vercel with SPA rewrites (`vercel.json` — excludes `/data/` from rewrites)
 - **Commands**: `pnpm dev` (dev server), `pnpm build` (production build, runs compile-data first)
 - **Detailed Docs**: See `packages/defiscan-frontend/README.md`

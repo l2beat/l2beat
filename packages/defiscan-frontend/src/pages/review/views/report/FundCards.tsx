@@ -3,7 +3,11 @@ import { AddressDisplay } from '../../../../components/AddressDisplay'
 import { Badge } from '../../../../components/Badge'
 import { UsdValue } from '../../../../components/UsdValue'
 import { formatUsdValue } from '../../../../utils/format'
-import type { CompiledReview, CompiledFundHolder, CompiledAdmin } from '../../../../types'
+import type {
+  CompiledReview,
+  CompiledFundHolder,
+  CompiledAdmin,
+} from '../../../../types'
 
 interface FundCardsProps {
   review: CompiledReview
@@ -15,8 +19,6 @@ const BAR_COLORS = [
   '#8B5CF6',
   '#A78BFA',
   '#C4B5FD',
-  '#3B82F6',
-  '#10B981',
 ]
 
 const TOKEN_BAR_COLORS = [
@@ -47,6 +49,8 @@ function getAdminsForFund(
 export function FundCards({ review, forceExpanded }: FundCardsProps) {
   const { funds, totals } = review
   const [expandedFunds, setExpandedFunds] = useState<Set<string>>(new Set())
+  const hasTokens = funds.some((f) => f.tokenInfo && f.tokenInfo.tokenValue > 0)
+  const [includeTokens, setIncludeTokens] = useState(true)
 
   if (funds.length === 0) {
     return (
@@ -56,43 +60,36 @@ export function FundCards({ review, forceExpanded }: FundCardsProps) {
     )
   }
 
-  const totalFunds = funds.reduce(
-    (sum, f) =>
-      sum +
-      (f.balances?.totalUsdValue ?? 0) +
-      (f.positions?.totalUsdValue ?? 0),
+  const unifiedData = funds
+    .map((f) => {
+      const tvl =
+        (f.balances?.totalUsdValue ?? 0) + (f.positions?.totalUsdValue ?? 0)
+      const tokenValue = f.tokenInfo?.tokenValue ?? 0
+      return { fund: f, tvl, tokenValue }
+    })
+    .filter(
+      (d) => d.tvl > 0 || (includeTokens && hasTokens && d.tokenValue > 0),
+    )
+    .sort((a, b) => {
+      const showTokens = includeTokens && hasTokens
+      const aTotal = a.tvl + (showTokens ? a.tokenValue : 0)
+      const bTotal = b.tvl + (showTokens ? b.tokenValue : 0)
+      return bTotal - aTotal
+    })
+
+  const showTokens = includeTokens && hasTokens
+  const chartTotal = unifiedData.reduce(
+    (sum, d) => sum + d.tvl + (showTokens ? d.tokenValue : 0),
     0,
   )
-
-  const chartData = funds
-    .map((f) => ({
-      fund: f,
-      fullName: f.name,
-      value:
-        (f.balances?.totalUsdValue ?? 0) + (f.positions?.totalUsdValue ?? 0),
-    }))
-    .filter((d) => d.value > 0)
-    .sort((a, b) => b.value - a.value)
-
-  // Separate token entries (funds with tokenInfo)
-  const tokenFunds = funds.filter((f) => f.tokenInfo)
-  const totalTokenValue = tokenFunds.reduce(
-    (sum, f) => sum + (f.tokenInfo?.tokenValue ?? 0),
-    0,
-  )
-  const tokenChartData = tokenFunds
-    .map((f) => ({
-      fund: f,
-      fullName: `${f.tokenInfo!.symbol} (${f.name})`,
-      value: f.tokenInfo!.tokenValue,
-    }))
-    .filter((d) => d.value > 0)
-    .sort((a, b) => b.value - a.value)
-
-  // Build token names list for pretext
-  const tokenNames = tokenFunds
+  // Token names for intro text
+  const tokenNames = funds
+    .filter((f) => f.tokenInfo)
     .map((f) => f.tokenInfo!.symbol)
     .filter((s, i, arr) => arr.indexOf(s) === i)
+
+  const totalTvl = unifiedData.reduce((sum, d) => sum + d.tvl, 0)
+  const totalTokenValue = unifiedData.reduce((sum, d) => sum + d.tokenValue, 0)
 
   function toggleFund(key: string) {
     setExpandedFunds((prev) => {
@@ -106,140 +103,170 @@ export function FundCards({ review, forceExpanded }: FundCardsProps) {
     })
   }
 
+  const chartTitle = showTokens
+    ? 'TVS Distribution (Total Value Secured)'
+    : 'TVL Distribution'
+
   return (
     <div>
       <p className="text-lg text-text-secondary leading-relaxed max-w-3xl mb-8">
-        The protocol holds{' '}
-        <span className="font-semibold text-capital">
-          {formatUsdValue(totalFunds)}
-        </span>{' '}
-        across {funds.length} contract{funds.length !== 1 ? 's' : ''}.
-        {totalTokenValue > 0 && tokenNames.length > 0 && (
+        {showTokens ? (
           <>
-            {' '}
-            Additionally, the protocol{tokenNames.length === 1 ? "'s native token" : ' issues'}{' '}
-            {tokenNames.map((name, i) => (
-              <span key={name}>
-                {i > 0 && (i === tokenNames.length - 1 ? ' and ' : ', ')}
-                <span className="font-semibold text-token">{name}</span>
-              </span>
-            ))}{' '}
-            {tokenNames.length === 1 ? 'has' : 'have'} a combined market cap of{' '}
-            <UsdValue value={totalTokenValue} variant="token" />.
+            The protocol secures{' '}
+            <span className="font-semibold text-text-primary">
+              {formatUsdValue(chartTotal)}
+            </span>{' '}
+            in Total Value Secured across {funds.length} contract
+            {funds.length !== 1 ? 's' : ''}, combining{' '}
+            <span className="font-semibold text-capital">
+              {formatUsdValue(totalTvl)}
+            </span>{' '}
+            in TVL and{' '}
+            <span className="font-semibold text-token">
+              {formatUsdValue(totalTokenValue)}
+            </span>{' '}
+            in protocol token market cap.
+          </>
+        ) : (
+          <>
+            The protocol holds{' '}
+            <span className="font-semibold text-capital">
+              {formatUsdValue(totalTvl)}
+            </span>{' '}
+            across {funds.length} contract{funds.length !== 1 ? 's' : ''}.
+            {totals.totalTokenValueAtRisk > 0 && tokenNames.length > 0 && (
+              <>
+                {' '}
+                Additionally, the protocol
+                {tokenNames.length === 1 ? "'s native token" : ' issues'}{' '}
+                {tokenNames.map((name, i) => (
+                  <span key={name}>
+                    {i > 0 && (i === tokenNames.length - 1 ? ' and ' : ', ')}
+                    <span className="font-semibold text-token">{name}</span>
+                  </span>
+                ))}{' '}
+                {tokenNames.length === 1 ? 'has' : 'have'} a combined market
+                cap of{' '}
+                <UsdValue value={totals.totalTokenValueAtRisk} variant="token" />
+                .
+              </>
+            )}
           </>
         )}{' '}
         Here's where the money sits and what controls it.
       </p>
 
-      {/* Fund Distribution */}
-      {chartData.length > 0 && (
-        <DistributionChart
-          title="TVL Distribution"
-          entries={chartData}
-          total={totalFunds}
-          barColors={BAR_COLORS}
-          valueVariant="capital"
-          expandedSet={expandedFunds}
-          onToggle={toggleFund}
-          keyPrefix="fund"
-          review={review}
-          forceExpanded={forceExpanded}
-        />
-      )}
-
-      {/* Token Distribution */}
-      {tokenChartData.length > 0 && (
-        <div className="mt-6">
-          <DistributionChart
-            title="Protocol Token Distribution"
-            entries={tokenChartData}
-            total={totalTokenValue}
-            barColors={TOKEN_BAR_COLORS}
-            valueVariant="token"
-            expandedSet={expandedFunds}
-            onToggle={toggleFund}
-            keyPrefix="token"
-            review={review}
-            forceExpanded={forceExpanded}
-          />
+      {/* Unified Distribution Chart */}
+      <div className="rounded-xl border border-border bg-white p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-1">
+          <h3 className="text-base font-semibold text-text-primary">
+            {chartTitle}
+          </h3>
+          {hasTokens && (
+            <label className="flex items-center gap-2 text-sm text-text-secondary cursor-pointer select-none" data-print-hide>
+              <input
+                type="checkbox"
+                checked={includeTokens}
+                onChange={(e) => setIncludeTokens(e.target.checked)}
+                className="rounded border-border text-purple-600 focus:ring-purple-500"
+              />
+              Include Protocol Tokens
+            </label>
+          )}
         </div>
-      )}
-    </div>
-  )
-}
 
-function DistributionChart({
-  title,
-  entries,
-  total,
-  barColors,
-  valueVariant,
-  expandedSet,
-  onToggle,
-  keyPrefix,
-  review,
-  forceExpanded,
-}: {
-  title: string
-  entries: { fund: CompiledFundHolder; fullName: string; value: number }[]
-  total: number
-  barColors: string[]
-  valueVariant: 'capital' | 'token'
-  expandedSet: Set<string>
-  onToggle: (key: string) => void
-  keyPrefix: string
-  review: CompiledReview
-  forceExpanded?: boolean
-}) {
-  return (
-    <div className="rounded-xl border border-border bg-white p-6 shadow-sm">
-      <h3 className="text-base font-semibold text-text-primary mb-4">
-        {title}
-      </h3>
-      <div className="space-y-3">
-        {entries.map((entry, index) => {
-          const percentage =
-            total > 0 ? (entry.value / total) * 100 : 0
-          const expandKey = `${keyPrefix}-${entry.fund.address}`
-          const isExpanded = forceExpanded || expandedSet.has(expandKey)
-          const admins = getAdminsForFund(review, entry.fund.address)
+        {/* Legend */}
+        <div className="flex items-center gap-4 mb-4 text-xs text-text-secondary">
+          <span className="flex items-center gap-1.5">
+            <span
+              className="inline-block w-3 h-3 rounded-full"
+              style={{ backgroundColor: BAR_COLORS[0] }}
+            />
+            TVL
+          </span>
+          {showTokens && (
+            <span className="flex items-center gap-1.5">
+              <span
+                className="inline-block w-3 h-3 rounded-full"
+                style={{ backgroundColor: TOKEN_BAR_COLORS[0] }}
+              />
+              Token Market Cap
+            </span>
+          )}
+        </div>
 
-          return (
-            <div key={expandKey}>
-              <button
-                type="button"
-                onClick={() => onToggle(expandKey)}
-                className="w-full text-left cursor-pointer group"
-              >
-                <div className="flex items-center justify-between text-sm mb-1">
-                  <span className="text-text-primary font-medium truncate mr-4 flex items-center gap-1.5">
-                    <span className="text-text-muted text-xs" data-print-hide>
-                      {isExpanded ? '\u25BC' : '\u25B6'}
+        <div className="space-y-3">
+          {unifiedData.map((entry, index) => {
+            const entryTotal =
+              entry.tvl + (showTokens ? entry.tokenValue : 0)
+            const tvlPct =
+              chartTotal > 0 ? (entry.tvl / chartTotal) * 100 : 0
+            const tokenPct =
+              showTokens && chartTotal > 0
+                ? (entry.tokenValue / chartTotal) * 100
+                : 0
+            const expandKey = `fund-${entry.fund.address}`
+            const isExpanded = forceExpanded || expandedFunds.has(expandKey)
+            const admins = getAdminsForFund(review, entry.fund.address)
+
+            // Use token symbol in name for token-only entries
+            const displayName =
+              entry.tvl === 0 && entry.fund.tokenInfo
+                ? `${entry.fund.tokenInfo.symbol} (${entry.fund.name})`
+                : entry.fund.name
+
+            return (
+              <div key={expandKey}>
+                <button
+                  type="button"
+                  onClick={() => toggleFund(expandKey)}
+                  className="w-full text-left cursor-pointer group"
+                >
+                  <div className="flex items-center justify-between text-sm mb-1">
+                    <span className="text-text-primary font-medium truncate mr-4 flex items-center gap-1.5">
+                      <span
+                        className="text-text-muted text-xs"
+                        data-print-hide
+                      >
+                        {isExpanded ? '\u25BC' : '\u25B6'}
+                      </span>
+                      {displayName}
                     </span>
-                    {entry.fullName}
-                  </span>
-                  <span className={`font-semibold shrink-0 ${valueVariant === 'token' ? 'text-token' : 'text-capital'}`}>
-                    {formatUsdValue(entry.value)}
-                  </span>
-                </div>
-                <div className="h-3 rounded-full bg-bg-muted overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all"
-                    style={{
-                      width: `${Math.max(percentage, 1)}%`,
-                      backgroundColor:
-                        barColors[index % barColors.length],
-                    }}
-                  />
-                </div>
-              </button>
+                    <span className="font-semibold shrink-0 text-capital">
+                      {formatUsdValue(entryTotal)}
+                    </span>
+                  </div>
+                  <div className="h-3 rounded-full bg-bg-muted overflow-hidden flex">
+                    {tvlPct > 0 && (
+                      <div
+                        className="h-full transition-all first:rounded-l-full"
+                        style={{
+                          width: `${Math.max(tvlPct, 0.5)}%`,
+                          backgroundColor:
+                            BAR_COLORS[index % BAR_COLORS.length],
+                        }}
+                      />
+                    )}
+                    {tokenPct > 0 && (
+                      <div
+                        className="h-full transition-all last:rounded-r-full"
+                        style={{
+                          width: `${Math.max(tokenPct, 0.5)}%`,
+                          backgroundColor:
+                            TOKEN_BAR_COLORS[index % TOKEN_BAR_COLORS.length],
+                        }}
+                      />
+                    )}
+                  </div>
+                </button>
 
-              {isExpanded && (
-                <FundExpandedContent fund={entry.fund} admins={admins} />
-              )}
-            </div>
-          )
-        })}
+                {isExpanded && (
+                  <FundExpandedContent fund={entry.fund} admins={admins} />
+                )}
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
   )

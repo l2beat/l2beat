@@ -5,7 +5,12 @@ import { GlossaryTooltip } from '../../../../components/GlossaryTooltip'
 import { formatUsdValue } from '../../../../utils/format'
 import { getDepFunctionFunds } from '../../../../utils/dependencies'
 import { MitigationBadge } from '../../../../components/MitigationBadge'
-import type { CompiledReview, CompiledDependency } from '../../../../types'
+import type {
+  CompiledReview,
+  CompiledDependency,
+  Mitigation,
+} from '../../../../types'
+import { deduplicateMitigations } from '../explorer/shared'
 
 interface DependencyCardsProps {
   review: CompiledReview
@@ -190,8 +195,8 @@ function DepDistributionChart({
                 onClick={() => onToggle(expandKey)}
                 className="w-full text-left cursor-pointer group"
               >
-                <div className="flex items-center justify-between text-sm mb-1">
-                  <span className="text-text-primary font-medium truncate mr-4 flex items-center gap-1.5">
+                <div className="flex items-center justify-between text-sm mb-1 gap-2">
+                  <span className="text-text-primary font-medium truncate flex items-center gap-1.5">
                     <span className="text-text-muted text-xs" data-print-hide>
                       {isExpanded ? '\u25BC' : '\u25B6'}
                     </span>
@@ -212,6 +217,16 @@ function DepDistributionChart({
                       </GlossaryTooltip>
                     )}
                     {dep.name}
+                    {(() => {
+                      const all: Mitigation[] = []
+                      for (const fn of dep.functions) {
+                        if (fn.mitigations) all.push(...fn.mitigations)
+                      }
+                      const unique = deduplicateMitigations(all)
+                      return unique.map((m, i) => (
+                        <MitigationBadge key={i} mitigation={m} />
+                      ))
+                    })()}
                   </span>
                   {fundsAtRisk > 0 && (
                     <span className="font-semibold shrink-0 text-capital">

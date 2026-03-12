@@ -99,13 +99,14 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Review Builder (`review-config.json`, entity descriptions, resources, templates)
 - Review Generation Agent (`/generate-review` Claude Code skill)
 - Review Compiler (`compiled-review.json`, template variable resolution)
+- Mitigations Display (badges in explorer tabs + report cards, key findings card, `deduplicateMitigations`)
 
 ### Infrastructure — `docs/developers/features/infrastructure.md`
 - DeFiScan Panel (contract analysis dashboard)
 - External Contract Attributes & Governance Tag (entity grouping, node coloring)
 - Contract Tags data structure (`contract-tags.json`, cleanup rules)
 - Funds Tracking (DeBank API, Morpho vault onchain positions, `funds-data.json`)
-- DeFiScan Frontend (static React app, Vercel deployment, shareable report view)
+- DeFiScan Frontend (static React app, Vercel deployment, shareable report view, TVS metric, mitigation badges in report cards)
 - Continuous Monitoring Service (GitHub Actions cron, discovery + diff + funds + compile)
 
 ---
