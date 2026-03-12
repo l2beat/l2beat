@@ -3,7 +3,6 @@ import type {
   AvailWsClient,
   BeaconChainClient,
   CelestiaRpcClient,
-  EspressoClient,
   NearClient,
 } from '../../clients'
 import { DaBeatStatsProvider } from './DaBeatStatsProvider'
