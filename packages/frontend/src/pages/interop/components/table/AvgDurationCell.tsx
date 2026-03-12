@@ -9,11 +9,16 @@ import type {
   AverageDuration,
   SplitAverageDuration,
 } from '~/server/features/scaling/interop/types'
+import { cn } from '~/utils/cn'
 
 export function AvgDurationCell({
   averageDuration,
+  className,
+  splitClassName,
 }: {
   averageDuration: AverageDuration
+  className?: string
+  splitClassName?: string
 }) {
   switch (averageDuration.type) {
     case 'unknown':
@@ -32,13 +37,18 @@ export function AvgDurationCell({
       )
     case 'single':
       return (
-        <div className="font-medium text-label-value-15">
+        <div className={cn('font-medium text-label-value-15', className)}>
           {formatSeconds(averageDuration.duration)}
         </div>
       )
     case 'split':
       return (
-        <div className="flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5">
+        <div
+          className={cn(
+            'flex flex-col items-end gap-0.5 font-medium text-label-value-15 md:gap-1.5',
+            splitClassName,
+          )}
+        >
           {averageDuration.splits.map((split) => (
             <DurationCellItem key={split.label} split={split} />
           ))}
@@ -55,7 +65,7 @@ function DurationCellItem({
   split: SplitAverageDuration['splits'][number]
 }) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-baseline">
       <span className="text-[13px] text-secondary leading-none">
         {split.label}:{' '}
       </span>

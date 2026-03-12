@@ -48,45 +48,57 @@ export function mapToReferenceNodes(
 }
 
 // Traverse the graph and return all addresses
-// that are reachable from initial entrypoints
+// that are reachable from initial entrypoints.
+// maxDepth=0 means "only entrypoints", 1 means "entrypoints + direct refs", etc.
 export function getReachableAddresses(
   nodes: ReferenceNode[],
   entrypoints: ChainSpecificAddress[],
+  maxDepth = Number.POSITIVE_INFINITY,
 ): ChainSpecificAddress[] {
   const nodeByAddress: Record<ChainSpecificAddress, ReferenceNode> = {}
   nodes.forEach((node) => (nodeByAddress[node.address] = node))
 
-  const visited = new Set<ChainSpecificAddress>()
+  const shortestDepthByAddress = new Map<ChainSpecificAddress, number>()
+  const queue = entrypoints.map((address) => ({ address, depth: 0 }))
 
-  function visit(address: ChainSpecificAddress) {
-    if (visited.has(address)) {
-      return
+  for (const item of queue) {
+    const { address, depth } = item
+    const previousDepth = shortestDepthByAddress.get(address)
+    if (previousDepth !== undefined && previousDepth <= depth) {
+      continue
     }
-    visited.add(address)
+
+    shortestDepthByAddress.set(address, depth)
+
+    if (depth >= maxDepth) {
+      continue
+    }
 
     const node = nodeByAddress[address]
     if (!node) {
       // It's possible to reference nodes that don't exist
       // e.g. due to "ignoreDiscovery" flag, etc.
-      return
+      continue
     }
+
     for (const ref of node.references) {
-      visit(ref)
+      queue.push({ address: ref, depth: depth + 1 })
     }
   }
 
-  entrypoints.forEach(visit)
-  return Array.from(visited)
+  return Array.from(shortestDepthByAddress.keys())
 }
 
 export function getReachableEntries(
   entries: EntryParameters[],
   entrypoints: ChainSpecificAddress[],
+  maxDepth = Number.POSITIVE_INFINITY,
 ): EntryParameters[] {
   const asReferenceNodes = mapToReferenceNodes(entries)
   const reachableAddresses = getReachableAddresses(
     asReferenceNodes,
     entrypoints,
+    maxDepth,
   )
   const reachableSet = new Set(reachableAddresses)
   return entries.filter((e) => reachableSet.has(e.address))

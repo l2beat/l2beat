@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
   "description": "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)",
   "fields": {
     "getQuorumAdversaryThresholdPercentage": {

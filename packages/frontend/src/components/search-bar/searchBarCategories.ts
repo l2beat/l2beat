@@ -5,6 +5,9 @@ export const searchBarCategories = {
   da: {
     name: 'Data Availability',
   },
+  interop: {
+    name: 'Interoperability',
+  },
   zkCatalog: {
     name: 'ZK Catalog',
   },

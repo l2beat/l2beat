@@ -7,6 +7,7 @@ import type {
 import {
   ConfigReader,
   getDiscoveryPaths,
+  getReachableEntries,
   RolePermissionEntries,
 } from '@l2beat/discovery'
 import {
@@ -47,6 +48,13 @@ import {
 
 const paths = getDiscoveryPaths()
 
+interface ProjectDiscoveryOptions {
+  reachableEntries?: {
+    use: boolean
+    maxDepth?: number
+  }
+}
+
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
   private readonly reachableEntries: EntryParameters[]
@@ -56,6 +64,7 @@ export class ProjectDiscovery {
   constructor(
     public readonly projectName: string,
     public readonly configReader = new ConfigReader(paths.discovery),
+    public readonly options?: ProjectDiscoveryOptions,
   ) {
     // TODO: Legacy behavior - we blindly create new ProjectDiscovery instances in tests
     try {
@@ -65,10 +74,9 @@ export class ProjectDiscovery {
     }
 
     // always the base discovery
-    // TODO: Uncomment me once cross-chain permissions are implemented
-    // const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(
-    //   (e) => e.address,
-    // )
+    const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(
+      (e) => e.address,
+    )
 
     // Removing Reference entries because otherwise we get duplicates
     // and incomplete data.
@@ -77,13 +85,13 @@ export class ProjectDiscovery {
     this.discoveries.forEach((d) => removeReferences(d))
 
     // TODO: Uncomment me once cross-chain permissions are implemented
-    // this.reachableEntries = getReachableEntries(
-    //   this.discoveries.flatMap((discovery) => discovery.entries),
-    //   entrypoints,
-    // )
-    this.reachableEntries = this.discoveries.flatMap(
-      (discovery) => discovery.entries,
-    )
+    this.reachableEntries = this.options?.reachableEntries?.use
+      ? getReachableEntries(
+          this.discoveries.flatMap((discovery) => discovery.entries),
+          entrypoints,
+          this.options.reachableEntries.maxDepth,
+        )
+      : this.discoveries.flatMap((discovery) => discovery.entries)
 
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
@@ -1098,6 +1106,9 @@ export class ProjectDiscovery {
     eoaActors: ProjectPermission[],
   ): ProjectUpgradeableActor[] {
     return upgradableBy.map((upgradableBy) => {
+      if (upgradableBy.unreachable === true) {
+        return upgradableBy
+      }
       const eoaActor = eoaActors.find((e) => e.name === upgradableBy.name)
       if (eoaActor) {
         return {

@@ -11,11 +11,13 @@ import type {
   AggregatedInteropTransferWithTokens,
   ByBridgeTypeData,
   DurationSplitMap,
+  InteropSelectionInput,
   ProtocolEntry,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { buildDurationSplitMap, getAverageDuration } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
+import { flowsMapToSorted } from './getFlows'
 import {
   getProtocolsDataMap,
   getProtocolsDataMapByBridgeType,
@@ -34,6 +36,7 @@ export function getProtocolEntries(
   interopProjects: Project<'interopConfig'>[],
   type: KnownInteropBridgeType | undefined,
   snapshotTimestamp: UnixTime | undefined,
+  selection: InteropSelectionInput,
 ): {
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
@@ -58,6 +61,7 @@ export function getProtocolEntries(
       tokensDetailsMap,
       durationSplitMap,
       logger,
+      selection,
     )
 
     const bridgeTypes = getRelevantBridgeTypes(project, undefined).sort(
@@ -106,6 +110,7 @@ export function getProtocolEntries(
 
     entries.push({
       id: project.id,
+      slug: project.slug,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       name: project.interopConfig.name ?? project.name,
       shortName: project.interopConfig.shortName,
@@ -150,6 +155,7 @@ function getByBridgeTypeData(
   tokensDetailsMap: TokensDetailsMap,
   durationSplitMap: DurationSplitMap | undefined,
   logger: Logger,
+  selection: InteropSelectionInput,
 ): ByBridgeTypeData | undefined {
   const data = protocolsDataByBridgeTypeMap.get(projectId)
   if (!data) return undefined
@@ -158,6 +164,12 @@ function getByBridgeTypeData(
     lockAndMint: data.lockAndMint
       ? {
           volume: data.lockAndMint.volume,
+          transferCount: data.lockAndMint.transferCount,
+          averageValue:
+            data.lockAndMint.identifiedTransferCount > 0
+              ? data.lockAndMint.volume /
+                data.lockAndMint.identifiedTransferCount
+              : null,
           tokens: getTopItems(
             getTokensData({
               projectId,
@@ -172,6 +184,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
+          flows: flowsMapToSorted(data.lockAndMint.flows, selection),
           netMintedValue:
             data.lockAndMint.mintedValueUsd !== undefined &&
             data.lockAndMint.burnedValueUsd !== undefined
@@ -183,6 +196,11 @@ function getByBridgeTypeData(
     nonMinting: data.nonMinting
       ? {
           volume: data.nonMinting.volume,
+          transferCount: data.nonMinting.transferCount,
+          averageValue:
+            data.nonMinting.identifiedTransferCount > 0
+              ? data.nonMinting.volume / data.nonMinting.identifiedTransferCount
+              : null,
           tokens: getTopItems(
             getTokensData({
               projectId,
@@ -197,12 +215,19 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
+          flows: flowsMapToSorted(data.nonMinting.flows, selection),
           averageValueInFlight: data.nonMinting.averageValueInFlight,
         }
       : undefined,
     burnAndMint: data.burnAndMint
       ? {
           volume: data.burnAndMint.volume,
+          transferCount: data.burnAndMint.transferCount,
+          averageValue:
+            data.burnAndMint.identifiedTransferCount > 0
+              ? data.burnAndMint.volume /
+                data.burnAndMint.identifiedTransferCount
+              : null,
           tokens: getTopItems(
             getTokensData({
               projectId,
@@ -217,6 +242,7 @@ function getByBridgeTypeData(
             }),
             TOP_ITEMS_LIMIT,
           ),
+          flows: flowsMapToSorted(data.burnAndMint.flows, selection),
         }
       : undefined,
   }

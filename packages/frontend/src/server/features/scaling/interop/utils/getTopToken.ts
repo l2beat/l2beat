@@ -19,7 +19,7 @@ export interface GetTopTokenParams {
   records: AggregatedInteropTransferWithTokens[]
   tokensDetailsMap: TokensDetailsMap
   interopProjects: Project<'interopConfig'>[]
-  subgroupProjects: Set<ProjectId>
+  subgroupProjects?: Set<ProjectId>
 }
 
 export function getTopToken({
@@ -48,7 +48,7 @@ export function getTopToken({
 
   for (const record of records) {
     // Skip projects that are part of other projects to not double count
-    if (subgroupProjects.has(record.id as ProjectId)) continue
+    if (subgroupProjects?.has(record.id as ProjectId)) continue
 
     for (const token of record.tokens) {
       const tokenDetails = tokensDetailsMap.get(token.abstractTokenId)

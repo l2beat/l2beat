@@ -1273,11 +1273,60 @@ Verify:
     `,
   },
   '0x0059b74a8fd03c44462de3916b45ebeedb9f1158e3037e8c40b8941cbe438d7e': {
-    title: 'Morph Guest Program (zkEVM Executor)',
+    title: 'Morph Guest program (v0.4.5 release)',
     description:
       'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+    programUrl:
+      'https://github.com/morph-l2/morph/tree/v0.4.5/prover/bin/client',
     proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Rebuilding this program vkey requires specific docker image and sp1 version. The docker image requires a linux platform or some emulation workarounds. To prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v3.4.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v 3.4.0\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [morph repo](https://github.com/morph-l2/morph): \`git checkout v0.4.5\`. Commit hash should be \`2223d9836827b3c13ec0fbd7f769fed4b5235a9a\`
+2. Make sure docker is running by running \`docker ps\`
+3. Pull the specific SP1 docker image: \`docker pull ghcr.io/succinctlabs/sp1@sha256:\`
+\`aa6c43a119183f8e4af65405e692760310562b0bae580be164bf4ce0f1f9b3cd\`
+4. Create a local Docker tag for the pulled image: \`docker tag ghcr.io/succinctlabs/sp1@sha256:\`
+\`aa6c43a119183f8e4af65405e692760310562b0bae580be164bf4ce0f1f9b3cd ghcr.io/succinctlabs/sp1:v3.4.0-local.1\`
+5. Build the program binary from \`prover/bin/client\` dir: \`cargo prove build --docker --tag v3.4.0-local.1\`
+6. The generated elf binary \`verifier-client\` will be placed in \`prover/target/elf-compilation/docker/riscv32im-succinct-zkvm-elf/release\`. Move it to \`prover/bin/client/elf\` and rename to \`riscv32im-succinct-zkvm-elf\`.
+7. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
+  `,
+  },
+  '0x00ad538a51c761c06f5075d11f3ee64d5d00c272a741ccf098e1d9f062fee13d': {
+    title: 'Morph Guest program (v0.4.9 release)',
+    description:
+      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
+    programUrl:
+      'https://github.com/morph-l2/morph/tree/v0.4.9/prover/bin/client',
+    proverSystemProject: ProjectId('sp1turbo'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Rebuilding this program vkey requires specific docker image and sp1 version. The docker image requires a linux platform or some emulation workarounds. To prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain v3.4.0: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v 3.4.0\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [morph repo](https://github.com/morph-l2/morph): \`git checkout v0.4.9\`. Commit hash should be \`1f4e42cf4c0e6680285770885477bc7450e5e900\`
+2. Make sure docker is running by running \`docker ps\`
+3. Pull the specific SP1 docker image: \`docker pull ghcr.io/succinctlabs/sp1@sha256:\`
+\`aa6c43a119183f8e4af65405e692760310562b0bae580be164bf4ce0f1f9b3cd\`
+4. Create a local Docker tag for the pulled image: \`docker tag ghcr.io/succinctlabs/sp1@sha256:\`
+\`aa6c43a119183f8e4af65405e692760310562b0bae580be164bf4ce0f1f9b3cd ghcr.io/succinctlabs/sp1:v3.4.0-local.1\`
+5. Build the program binary from \`prover/bin/client\` dir: \`cargo prove build --docker --tag v3.4.0-local.1\`
+6. The generated elf binary \`verifier-client\` will be placed in \`prover/target/elf-compilation/docker/riscv32im-succinct-zkvm-elf/release\`. Move it to \`prover/bin/client/elf\` and rename to \`riscv32im-succinct-zkvm-elf\`.
+7. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
+  `,
   },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
@@ -1322,15 +1371,6 @@ Verify:
 2. Make sure docker is running by running  \`docker ps\`
 3. From the root dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
   `,
-  },
-  '0x00ad538a51c761c06f5075d11f3ee64d5d00c272a741ccf098e1d9f062fee13d': {
-    title: 'Morph Guest program (v0.4.9 release)',
-    description:
-      'Proves the correct execution of the Morph L2 state transition function (based on the Geth EVM) for a batch of blocks using the SP1 zkVM.',
-    programUrl:
-      'https://github.com/morph-l2/morph/tree/v0.4.9/prover/bin/client',
-    proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
   },
   '0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a': {
     ...WASM_MODULE_ROOT('v40'),

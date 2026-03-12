@@ -1094,6 +1094,9 @@ export interface ProjectUpgradeableActor {
   name: string
   /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
   delay: string
+  /** Actor is not reachable from discovery entrypoints (probably due to depth limit)
+   * and is therefore not listed in permissions. */
+  unreachable?: boolean
 }
 
 export interface ProjectEscrow {

@@ -115,11 +115,11 @@ const TOKEN_RELATION_RANK = {
 } satisfies Record<TokenRelation, number>
 
 // Drop burns that are too old to plausibly belong to this withdrawal.
-const MAX_WITHDRAWAL_DELAY = 1 * UnixTime.DAY
+const MAX_WITHDRAWAL_DELAY = 1 * UnixTime.HOUR
 // Prefer very recent burns when ranking candidates.
-const STRONG_TIME_WINDOW = 10 * UnixTime.MINUTE
+const STRONG_TIME_WINDOW = 1 * UnixTime.MINUTE
 // Keep a wider fallback window when nothing lands in the strong window.
-const SECONDARY_TIME_WINDOW = 12 * UnixTime.HOUR
+const SECONDARY_TIME_WINDOW = 10 * UnixTime.MINUTE
 // Treat candidates with nearly identical timing as ambiguous.
 const AMBIGUOUS_TIME_DELTA = UnixTime.MINUTE
 // Treat candidates with nearly identical fee gaps as ambiguous.
@@ -136,12 +136,16 @@ export class AvalanchePlugin implements InteropPluginResyncable {
         type: 'event',
         signature: transferLog,
         addresses: '*',
+        // chains: ['ethereum']
+        //    AND
+        // topic1(from): [AVALANCHE_BRIDGE_EOA] OR topic2(to): [AVALANCHE_BRIDGE_EOA]
       },
       {
         type: 'event',
         signature: mintLog,
         includeTxEvents: [transferLog],
         addresses: '*',
+        // chains: ['avalanche']
       },
       {
         type: 'event',
@@ -149,6 +153,7 @@ export class AvalanchePlugin implements InteropPluginResyncable {
         includeTxEvents: [transferLog],
         includeTx: true,
         addresses: '*',
+        // chains: ['avalanche']
       },
     ]
   }
@@ -274,7 +279,7 @@ export class AvalanchePlugin implements InteropPluginResyncable {
           srcEvent: deposit,
           dstEvent: event,
         }),
-        Result.Transfer('avalanche.Transfer', {
+        Result.Transfer('avalanche.DepositTransfer', {
           srcEvent: deposit,
           srcTokenAddress: deposit.args.srcTokenAddress,
           srcAmount: deposit.args.srcAmount,
@@ -299,7 +304,7 @@ export class AvalanchePlugin implements InteropPluginResyncable {
         srcEvent: burn,
         dstEvent: event,
       }),
-      Result.Transfer('avalanche.Transfer', {
+      Result.Transfer('avalanche.WithdrawalTransfer', {
         srcEvent: burn,
         srcTokenAddress: burn.args.srcTokenAddress,
         srcAmount: burn.args.srcAmount,
