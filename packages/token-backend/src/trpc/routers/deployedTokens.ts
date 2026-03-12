@@ -107,7 +107,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
     findByChainAndAddress: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(async ({ ctx, input }) => {
-        const result = await ctx.db.deployedToken.findByChainAndAddress({
+        const result = await ctx.tokenDb.deployedToken.findByChainAndAddress({
           chain: input.chain,
           address: input.address,
         })
@@ -117,7 +117,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
     checkIfExists: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(async ({ ctx, input }) => {
-        const result = await ctx.db.deployedToken.findByChainAndAddress({
+        const result = await ctx.tokenDb.deployedToken.findByChainAndAddress({
           chain: input.chain,
           address: input.address,
         })
@@ -127,13 +127,13 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
     getByChainAndAddress: readOnlyProcedure
       .input(v.array(v.object({ chain: v.string(), address: v.string() })))
       .query(async ({ ctx, input }) =>
-        ctx.db.deployedToken.getByChainAndAddress(input),
+        ctx.tokenDb.deployedToken.getByChainAndAddress(input),
       ),
 
     checks: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(async ({ ctx, input }) => {
-        const result = await ctx.db.deployedToken.findByChainAndAddress({
+        const result = await ctx.tokenDb.deployedToken.findByChainAndAddress({
           chain: input.chain,
           address: input.address,
         })
@@ -154,7 +154,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
           }
         }
 
-        const chainRecord = await ctx.db.chain.findByName(input.chain)
+        const chainRecord = await ctx.tokenDb.chain.findByName(input.chain)
         assert(chainRecord, 'Chain not found')
 
         const chain = createChain(chainRecord)
@@ -202,14 +202,14 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         }
 
         const coin = await getCoinByChainAndAddress(
-          ctx.db,
+          ctx.tokenDb,
           input.chain,
           input.address,
         )
         if (coin === null) {
           let abstractTokenSuggestions: AbstractTokenSuggestion[] | undefined
           if (symbol) {
-            const allAbstractTokens = await ctx.db.abstractToken.getAll()
+            const allAbstractTokens = await ctx.tokenDb.abstractToken.getAll()
             abstractTokenSuggestions = findSimilarAbstractTokens(
               symbol,
               allAbstractTokens,
@@ -236,7 +236,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         }
 
         const abstractToken = coin.id
-          ? await ctx.db.abstractToken.findByCoingeckoId(coin.id)
+          ? await ctx.tokenDb.abstractToken.findByCoingeckoId(coin.id)
           : undefined
 
         return {
@@ -262,7 +262,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         if (!coin) {
           return []
         }
-        const chains = await ctx.db.chain.getAll()
+        const chains = await ctx.tokenDb.chain.getAll()
 
         const aliasToChain = new Map([
           ...chains.map((chain) => [chain.name, chain.name] as const),
@@ -273,7 +273,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         ])
 
         const deployedTokens =
-          await ctx.db.deployedToken.getByChainsAndAddresses(
+          await ctx.tokenDb.deployedToken.getByChainsAndAddresses(
             Object.entries(coin.platforms)
               .map(([platform, address]) => {
                 const chain = aliasToChain.get(platform)

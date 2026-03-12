@@ -1,6 +1,7 @@
 import type { createRemoteJWKSet } from 'jose'
 
 export interface Config {
+  readonly tokenDatabase: DatabaseConfig
   readonly database: DatabaseConfig
   readonly auth: AuthConfig | false
   readonly coingeckoApiKey: string | undefined

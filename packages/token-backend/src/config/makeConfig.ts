@@ -9,6 +9,7 @@ interface MakeConfigOptions {
 
 export function makeConfig(env: Env, options: MakeConfigOptions): Config {
   return {
+    tokenDatabase: getTokenDatabaseConfig(env, options),
     database: getDatabaseConfig(env, options),
     auth: options.isLocal ? false : getAuthConfig(env),
     coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
@@ -44,6 +45,35 @@ function getDatabaseConfig(
 
         min: 20,
         max: env.integer('DATABASE_MAX_POOL_SIZE', 20),
+      }
+}
+
+function getTokenDatabaseConfig(
+  env: Env,
+  options: MakeConfigOptions,
+): DatabaseConfig {
+  const localDbUrl = env.string(
+    'LOCAL_TOKEN_DB_URL',
+    'postgresql://postgres:password@localhost:5432/l2beat_local',
+  )
+  return options.isLocal
+    ? {
+        connectionString: localDbUrl,
+        application_name: options.name,
+        ssl: !localDbUrl.includes('localhost')
+          ? { rejectUnauthorized: false }
+          : undefined,
+
+        min: 2,
+        max: 10,
+      }
+    : {
+        connectionString: env.string('TOKEN_DATABASE_URL'),
+        application_name: env.string('TOKEN_DATABASE_APP_NAME', options.name),
+        ssl: { rejectUnauthorized: false },
+
+        min: 20,
+        max: env.integer('TOKEN_DATABASE_MAX_POOL_SIZE', 20),
       }
 }
 
