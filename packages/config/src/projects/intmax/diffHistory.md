@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x7d911154dc2400adf1b818af5e0bceb9d34a635b
+
+# Diff at Mon, 23 Feb 2026 13:58:21 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@63f63cee212ece6f6a4f1b0efbec35399575a1b5 block: 1771280072
+- current timestamp: 1771280072
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771280072 (main branch discovery), not current.
+
+```diff
+    contract PredicateServiceManager (eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2) {
+    +++ description: None
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
 Generated with discovered.json: 0xab33e41c784444f8e1f52531be06e35aece10c0f
 
 # Diff at Mon, 16 Feb 2026 22:15:37 GMT:

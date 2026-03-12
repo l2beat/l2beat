@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
   "description": "Registry for EigenDA relay keys, maps key to address.",
   "fields": {
     "relayers": {

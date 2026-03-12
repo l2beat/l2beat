@@ -154,4 +154,11 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'AVAX',
     explorerUrl: 'https://snowtrace.io',
   },
+  {
+    id: 'hyperevm',
+    name: 'HyperEVM',
+    type: 'evm',
+    display: 'HYPER',
+    explorerUrl: 'https://hyperevmscan.io',
+  },
 ]

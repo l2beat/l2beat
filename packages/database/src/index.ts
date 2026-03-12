@@ -54,6 +54,7 @@ export type {
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
 export type {
   InteropMissingTokenInfo,
+  InteropSuspiciousTransferRecord,
   InteropTransferRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,

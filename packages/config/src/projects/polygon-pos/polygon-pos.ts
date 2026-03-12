@@ -83,11 +83,11 @@ export const polygonpos: ScalingProject = {
     durationSplit: {
       lockAndMint: [
         {
-          label: 'L1 -> L2',
+          label: 'Deposit',
           transferTypes: ['polygon.L1ToL2Transfer'],
         },
         {
-          label: 'L2 -> L1',
+          label: 'Withdrawal',
           transferTypes: ['polygon.L2ToL1Transfer'],
         },
       ],

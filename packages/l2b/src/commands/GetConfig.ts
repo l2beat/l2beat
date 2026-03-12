@@ -1,0 +1,96 @@
+import { type BaseProject, ProjectService } from '@l2beat/config'
+import { assert, ProjectId } from '@l2beat/shared-pure'
+import { command, positional, string } from 'cmd-ts'
+
+// e.g. `l2b getconfig base | jq 'del(.contracts, .permissions, .tvsConfig, .activityConfig, .trackedTxsConfig)' > base.config.json`
+
+type NonBasicProjectKey = Exclude<
+  keyof BaseProject,
+  'id' | 'slug' | 'name' | 'shortName' | 'addedAt'
+>
+
+// ugh
+const ALL_PROJECT_OPTIONAL_KEYS = [
+  'statuses',
+  'display',
+  'colors',
+  'ecosystemColors',
+  'milestones',
+  'chainConfig',
+  'escrows',
+  'bridgeInfo',
+  'bridgeRisks',
+  'bridgeTechnology',
+  'scalingInfo',
+  'scalingStage',
+  'scalingRisks',
+  'scalingDa',
+  'scalingTechnology',
+  'daLayer',
+  'daBridge',
+  'customDa',
+  'interopConfig',
+  'tvsInfo',
+  'tvsConfig',
+  'activityConfig',
+  'livenessInfo',
+  'livenessConfig',
+  'costsInfo',
+  'trackedTxsConfig',
+  'daTrackingConfig',
+  'ecosystemInfo',
+  'ecosystemConfig',
+  'zkCatalogInfo',
+  'permissions',
+  'contracts',
+  'discoveryInfo',
+  'isScaling',
+  'isInteropProtocol',
+  'isDaLayer',
+  'isUpcoming',
+  'archivedAt',
+  'hasTestnet',
+] satisfies NonBasicProjectKey[]
+
+export const GetConfig = command({
+  name: 'getconfig',
+  description: 'Print the current processed config of a project as JSON.',
+  args: {
+    project: positional({ type: string, displayName: 'project' }),
+  },
+  handler: async (args) => {
+    const ps = new ProjectService()
+    const [project, allProjects] = await Promise.all([
+      ps.getProject({
+        id: ProjectId(args.project),
+        optional: [...ALL_PROJECT_OPTIONAL_KEYS],
+      }),
+      ps.getProjects({ select: ['display'] }),
+    ])
+
+    assert(project, getProjectNotFoundMessage(args.project, allProjects))
+    console.log(JSON.stringify(project, null, 2))
+  },
+})
+
+function getProjectNotFoundMessage(
+  projectName: string,
+  projects: BaseProject[],
+): string {
+  const query = projectName.toLowerCase()
+  const suggestions = [
+    ...new Set(
+      projects.flatMap((project) => [String(project.id), project.slug]),
+    ),
+  ]
+    .filter((candidate) => candidate.toLowerCase().includes(query))
+    .slice(0, 5)
+
+  const buildCallout =
+    "If you've just added a project, please rebuild config package."
+  if (suggestions.length === 0) {
+    return `Project "${projectName}" not found. ${buildCallout}`
+  }
+
+  return `Project "${projectName}" not found. Did you mean: ${suggestions.join(', ')}? ${buildCallout}`
+}

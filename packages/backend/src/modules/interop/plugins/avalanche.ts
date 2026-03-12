@@ -279,7 +279,7 @@ export class AvalanchePlugin implements InteropPluginResyncable {
           srcEvent: deposit,
           dstEvent: event,
         }),
-        Result.Transfer('avalanche.Transfer', {
+        Result.Transfer('avalanche.DepositTransfer', {
           srcEvent: deposit,
           srcTokenAddress: deposit.args.srcTokenAddress,
           srcAmount: deposit.args.srcAmount,
@@ -304,7 +304,7 @@ export class AvalanchePlugin implements InteropPluginResyncable {
         srcEvent: burn,
         dstEvent: event,
       }),
-      Result.Transfer('avalanche.Transfer', {
+      Result.Transfer('avalanche.WithdrawalTransfer', {
         srcEvent: burn,
         srcTokenAddress: burn.args.srcTokenAddress,
         srcAmount: burn.args.srcAmount,

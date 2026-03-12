@@ -1,6 +1,6 @@
 {
   "name": "mode",
-  "timestamp": 1772198388,
+  "timestamp": 1773160414,
   "configHash": "0xe5e6db1447a05653e34d70dc6ffa9a5021c5e48ffd910b3ff72418c956861534",
   "entries": [
     {
@@ -360,7 +360,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 95,
+        "nonce": 97,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -492,7 +492,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 13 (31%)",
-        "nonce": 239,
+        "nonce": 244,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1154,7 +1154,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 1036,
+        "gameCount": 1080,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1169,7 +1169,7 @@
         "initVersion": 1,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "permissionedGameArgs": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb908eb9d917868276cee5457609dbbf470fde41bade81c823d585b2b4325a0db845cebe32fc7ad67514a000000000000000000000000000000000000000000000000000000000000868b674f64d64ddc198db83cd9047df54bf89ccd0ddb9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
-        "permissionedGamesTotal": 1036,
+        "permissionedGamesTotal": 1080,
         "proposerFromDGF": "eth:0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "proxyAdmin": "eth:0x470d87b1dae09a454A43D1fD772A561a03276aB7",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -1446,7 +1446,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 24548409
+          "prevBlockNum": 24627352
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1632,7 +1632,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292841619",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292841757",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1711,7 +1711,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 115,
+        "nonce": 116,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1948,13 +1948,13 @@
         ],
         "$upgradeCount": 2,
         "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
-        "anchorGame": "eth:0xE052AEeB9A5DD598b78E84a6Df1fD73B0b1a0C70",
+        "anchorGame": "eth:0x53a349882141430007854c1206b25C496066bD5a",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x6f13EFadABD9269D6cEAd22b448d434A1f1B433E",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x2dc68cc34a8dc46e0ec410195e4a08c482734a5e03e6e500eb8a09cc3a462636",
-          35711296
+          "0x8bc75139f35ce7e3a10e3157adb2e52eb4fd29dac8b72ca8eed6e1e52b1ab83e",
+          36186418
         ],
         "getStartingAnchorRoot": {
           "root": "0x16c3e07a1a410f8bb836fa8466d817610e0acb71bfa3e5839aae19cd20d38790",
@@ -3013,6 +3013,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24548521 },
+  "usedBlockNumbers": { "ethereum": 24628284 },
   "permissionsConfigHash": "0xdef8ebbac6c68e1a961df1b84d38e7eec88589f488504bd7683717c6b194508e"
 }

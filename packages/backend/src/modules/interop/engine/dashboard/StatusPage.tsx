@@ -11,12 +11,26 @@ function StatusPageLayout(props: {
   showResyncControls: boolean
 }) {
   const tableId = 'pluginsStatusTable'
+  const refreshToggleId = 'pluginsStatusAutoRefresh'
   const statusTable = (
-    <PluginsStatusTable
-      pluginSyncStatuses={props.pluginSyncStatuses}
-      tableId={tableId}
-      className="display"
-    />
+    <>
+      <div style={{ marginBottom: 12 }}>
+        <label htmlFor={refreshToggleId}>
+          <input
+            id={refreshToggleId}
+            type="checkbox"
+            defaultChecked
+            style={{ marginRight: 8 }}
+          />
+          Refresh every 5 seconds
+        </label>
+      </div>
+      <PluginsStatusTable
+        pluginSyncStatuses={props.pluginSyncStatuses}
+        tableId={tableId}
+        className="display"
+      />
+    </>
   )
 
   return (
@@ -24,7 +38,7 @@ function StatusPageLayout(props: {
       showHome={true}
       tables={[
         {
-          title: 'Plugins status (refreshes every 5s)',
+          title: 'Plugins status',
           table: statusTable,
           tableId,
           dataTableOptions: {
@@ -51,7 +65,10 @@ function StatusPageLayout(props: {
             dangerouslySetInnerHTML={{
               __html: `
             setInterval(function() {
-              window.location.reload();
+              var refreshToggle = document.getElementById('${refreshToggleId}');
+              if (!refreshToggle || refreshToggle.checked) {
+                window.location.reload();
+              }
             }, 5000);
           `,
             }}

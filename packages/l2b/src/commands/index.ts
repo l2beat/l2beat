@@ -22,6 +22,7 @@ import { FindUnusedShapes } from './FindUnusedShapes'
 import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { Flatten } from './Flatten'
 import { GenerateEntrypoints } from './GenerateEntrypoints'
+import { GetConfig } from './GetConfig'
 import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
@@ -68,6 +69,7 @@ export function getSubcommands() {
     FixDiscoverySchemaPaths,
     Flatten,
     GenerateEntrypoints,
+    GetConfig,
     GetTokenMinters,
     Init,
     InitTemplate,

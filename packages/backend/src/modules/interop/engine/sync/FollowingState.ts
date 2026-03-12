@@ -18,6 +18,18 @@ export class FollowingState implements BlockProcessorState {
     private readonly logger: Logger,
   ) {}
 
+  async checkStatus(): Promise<SyncerState> {
+    const resyncRequested =
+      (await this.syncer.isResyncRequestedFrom()) !== undefined
+
+    if (resyncRequested) {
+      return new CatchingUpState(this.syncer, this.logger)
+    }
+
+    this.status = 'idle'
+    return this
+  }
+
   async processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState> {
     this.status = 'processing'
 
