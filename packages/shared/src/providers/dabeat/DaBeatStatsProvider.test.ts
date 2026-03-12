@@ -3,6 +3,7 @@ import type {
   AvailWsClient,
   BeaconChainClient,
   CelestiaRpcClient,
+  EspressoClient,
   NearClient,
 } from '../../clients'
 import { DaBeatStatsProvider } from './DaBeatStatsProvider'
@@ -19,6 +20,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const provider = new DaBeatStatsProvider(
         mockBeaconChainClient,
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -47,6 +49,7 @@ describe(DaBeatStatsProvider.name, () => {
         mockNearClient,
         undefined,
         undefined,
+        undefined,
       )
 
       const result = await provider.getStats('near-da')
@@ -71,6 +74,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         mockCelestiaClient,
+        undefined,
         undefined,
       )
 
@@ -99,6 +103,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         mockAvailWsClient,
+        undefined,
       )
 
       const result = await provider.getStats('avail')
@@ -112,6 +117,7 @@ describe(DaBeatStatsProvider.name, () => {
 
     it('throws error for unknown project ID', async () => {
       const provider = new DaBeatStatsProvider(
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -138,6 +144,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         undefined,
+        undefined,
       )
 
       const result = await provider.getEthereumStats()
@@ -151,6 +158,7 @@ describe(DaBeatStatsProvider.name, () => {
 
     it('throws error when BeaconChain client is not provided', async () => {
       const provider = new DaBeatStatsProvider(
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -182,6 +190,7 @@ describe(DaBeatStatsProvider.name, () => {
         mockNearClient,
         undefined,
         undefined,
+        undefined,
       )
 
       const result = await provider.getNearStats()
@@ -207,6 +216,7 @@ describe(DaBeatStatsProvider.name, () => {
         mockNearClient,
         undefined,
         undefined,
+        undefined,
       )
 
       const result = await provider.getNearStats()
@@ -220,6 +230,7 @@ describe(DaBeatStatsProvider.name, () => {
 
     it('throws error when Near client is not provided', async () => {
       const provider = new DaBeatStatsProvider(
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -246,6 +257,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         mockCelestiaClient,
+        undefined,
         undefined,
       )
 
@@ -292,6 +304,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         mockCelestiaClient,
         undefined,
+        undefined,
       )
 
       const result = await provider.getCelestiaStats()
@@ -306,6 +319,7 @@ describe(DaBeatStatsProvider.name, () => {
 
     it('throws error when Celestia client is not provided', async () => {
       const provider = new DaBeatStatsProvider(
+        undefined,
         undefined,
         undefined,
         undefined,
@@ -349,6 +363,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         mockAvailWsClient,
+        undefined,
       )
 
       const result = await provider.getAvailStats()
@@ -381,6 +396,7 @@ describe(DaBeatStatsProvider.name, () => {
         undefined,
         undefined,
         mockAvailWsClient,
+        undefined,
       )
 
       await expect(provider.getAvailStats()).toBeRejectedWith(
@@ -391,6 +407,7 @@ describe(DaBeatStatsProvider.name, () => {
 
     it('throws error when Avail WS client is not provided', async () => {
       const provider = new DaBeatStatsProvider(
+        undefined,
         undefined,
         undefined,
         undefined,
