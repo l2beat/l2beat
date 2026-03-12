@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xb317a8ca3c7d716a7ea930b5046744e276f1a6a8
+
+# Diff at Wed, 11 Mar 2026 13:06:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fade2c5e24fed41bc60645f0e28f64c1f000aa1c block: 1769773251
+- current timestamp: 1773234253
+
+## Description
+
+New EOA 0x8af97264482B59c7AA11010907710DEe6d8D8c6C granted EXECUTOR_ROLE on the UpgradeExecutor. This EOA can now execute upgrades on all system contracts without the multisig.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (eth:0x20195677a6De5f0f7dF4e21cE48F0D24e5477110) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "eth:0x8af97264482B59c7AA11010907710DEe6d8D8c6C"
+      values.executors.1:
++        "eth:0x8af97264482B59c7AA11010907710DEe6d8D8c6C"
+    }
+```
+
 Generated with discovered.json: 0x3dd71ee0500996a6a06a6682f926fa4d62b4285e
 
 # Diff at Fri, 30 Jan 2026 11:42:00 GMT:

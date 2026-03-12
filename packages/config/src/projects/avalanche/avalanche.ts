@@ -20,6 +20,27 @@ export const avalanche: BaseProject = {
     links: {},
     badges: [],
   },
+  interopConfig: {
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'Deposit',
+          transferTypes: ['avalanche.DepositTransfer'],
+        },
+        {
+          label: 'Withdrawal',
+          transferTypes: ['avalanche.WithdrawalTransfer'],
+        },
+      ],
+    },
+    plugins: [
+      {
+        plugin: 'avalanche',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   chainConfig: {
     name: 'avalanche',
     chainId: 43114,

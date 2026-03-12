@@ -29,7 +29,7 @@ describe(CatchingUpState.name, () => {
 
       expect(nextState).toEqual(state)
       expect(state.status).toEqual('waiting for block number')
-      expect(getResyncState).not.toHaveBeenCalled()
+      expect(getResyncState).toHaveBeenCalled()
     })
 
     it('resyncs from requested timestamp after wipe, clears flag and switches to following', async () => {
@@ -94,6 +94,23 @@ describe(CatchingUpState.name, () => {
       expect(state.status).toEqual('waiting for wipe')
       expect(syncer.waitingForWipe).toEqual(true)
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
+    })
+
+    it('waits for wipe even when latest block number is missing', async () => {
+      const syncer = createSyncer({
+        latestBlockNumber: undefined,
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: UnixTime(5),
+          wipeRequired: true,
+        }),
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('waiting for wipe')
+      expect(syncer.waitingForWipe).toEqual(true)
     })
 
     it('switches to following when already synced to latest block', async () => {
