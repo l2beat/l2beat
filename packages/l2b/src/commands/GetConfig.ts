@@ -11,7 +11,7 @@ export const GetConfig = command({
   args: {
     project: positional({ type: string, displayName: 'project' }),
   },
-  handler: async (args) => {
+  handler: (args) => {
     const projects = loadProjects()
     const project = projects.find(
       (project) =>
