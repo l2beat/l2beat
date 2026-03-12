@@ -576,6 +576,7 @@ function matchFulfilledOrder(
       srcWasBurned,
       dstWasMinted,
       extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
+      bridgeType: 'nonMinting'
     }),
   ]
 }
