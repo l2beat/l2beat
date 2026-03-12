@@ -191,14 +191,13 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('ESP'),
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
-    // TODO: add economicSecurity token config once DaBeatStatsProvider supports espresso
-    // economicSecurity: {
-    //   token: {
-    //     symbol: 'ESP',
-    //     decimals: 18,
-    //     coingeckoId: 'espresso',
-    //   },
-    // },
+    economicSecurity: {
+      token: {
+        symbol: 'ESP',
+        decimals: 18,
+        coingeckoId: 'espresso',
+      },
+    },
     throughput: [
       {
         size: 1000000, // 1 MB max_block_size (from genesis config)
@@ -207,8 +206,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       },
     ],
     validators: {
-      type: 'static', // permissionless PoS, but active set is always top 100 by ESP stake
-      count: 100,
+      type: 'dynamic',
     },
   },
   daBridge: {
