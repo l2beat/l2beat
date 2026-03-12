@@ -150,12 +150,12 @@ export function ProjectActivityChart({
             className="max-md:h-7"
             isLoading={isLoading}
           >
-            {chart?.stats?.totalCount ? (
+            {chart?.stats?.tps.totalCount ? (
               <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
-                <div>{formatInteger(chart?.stats?.totalCount.value)}</div>
+                <div>{formatInteger(chart?.stats?.tps.totalCount.value)}</div>
                 <div className="font-medium text-label-value-14 text-secondary">
                   since{' '}
-                  {formatTimestamp(chart?.stats?.totalCount.sinceTimestamp)}
+                  {formatTimestamp(chart?.stats?.tps.totalCount.sinceTimestamp)}
                 </div>
               </div>
             ) : (

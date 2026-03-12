@@ -35,11 +35,10 @@ interface TotalCountData {
 }
 
 export type ActivityProjectTableData = {
-  tps: MetricData
+  tps: MetricData & { totalCount?: TotalCountData }
   uops: MetricData
   ratio: number
   syncState: SyncState
-  totalCount?: TotalCountData
 }
 type ActivityTableData = Record<string, ActivityProjectTableData | undefined>
 
@@ -132,6 +131,12 @@ export async function getActivityTable(
               value: countPerSecond(maxCount.count),
               timestamp: maxCount.countTimestamp,
             },
+            totalCount: totalCount
+              ? {
+                  value: totalCount.count,
+                  sinceTimestamp: totalCount.sinceTimestamp,
+                }
+              : undefined,
           },
           uops: {
             pastDayCount: {
@@ -160,12 +165,6 @@ export async function getActivityTable(
             pastDayData?.count ?? 0,
           ),
           syncState,
-          totalCount: totalCount
-            ? {
-                value: totalCount.count,
-                sinceTimestamp: totalCount.sinceTimestamp,
-              }
-            : undefined,
         },
       ]
     }),
@@ -197,6 +196,10 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
             value: 30,
             timestamp: UnixTime.now(),
           },
+          totalCount: {
+            value: 50000,
+            sinceTimestamp: UnixTime.now() - 365 * UnixTime.DAY,
+          },
         },
         uops: {
           pastDayCount: {
@@ -217,10 +220,6 @@ async function getMockActivityTableData(): Promise<ActivityTableData> {
           isSynced: true,
           syncedUntil: UnixTime.now(),
           target: UnixTime.now(),
-        },
-        totalCount: {
-          value: 50000,
-          sinceTimestamp: UnixTime.now() - 365 * UnixTime.DAY,
         },
       },
     ]),

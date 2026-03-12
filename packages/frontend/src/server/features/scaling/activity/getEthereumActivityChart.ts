@@ -150,13 +150,13 @@ function getEthereumActivityChartStats(
         value: countPerSecond(maxCount.count),
         timestamp: maxCount.countTimestamp,
       },
+      totalCount: totalCount
+        ? {
+            value: totalCount.count,
+            sinceTimestamp: totalCount.sinceTimestamp,
+          }
+        : undefined,
     },
-    totalCount: totalCount
-      ? {
-          value: totalCount.count,
-          sinceTimestamp: totalCount.sinceTimestamp,
-        }
-      : undefined,
   }
 }
 

@@ -36,6 +36,10 @@ type ScalingActivityTableEntry = ScalingActivityEntry & {
           value: number
           timestamp: number
         }
+        totalCount?: {
+          value: number
+          sinceTimestamp: number
+        }
       }
     | undefined
 }

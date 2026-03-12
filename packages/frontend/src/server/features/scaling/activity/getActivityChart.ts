@@ -44,10 +44,11 @@ interface ActivityMetricStats {
 
 export interface ActivityChartStats {
   uops: ActivityMetricStats
-  tps: ActivityMetricStats
-  totalCount?: {
-    value: number
-    sinceTimestamp: number
+  tps: ActivityMetricStats & {
+    totalCount?: {
+      value: number
+      sinceTimestamp: number
+    }
   }
 }
 
@@ -198,13 +199,13 @@ function getActivityChartStats(
         value: countPerSecond(maxCount.count),
         timestamp: maxCount.countTimestamp,
       },
+      totalCount: totalCount
+        ? {
+            value: totalCount.count,
+            sinceTimestamp: totalCount.sinceTimestamp,
+          }
+        : undefined,
     },
-    totalCount: totalCount
-      ? {
-          value: totalCount.count,
-          sinceTimestamp: totalCount.sinceTimestamp,
-        }
-      : undefined,
   }
 }
 

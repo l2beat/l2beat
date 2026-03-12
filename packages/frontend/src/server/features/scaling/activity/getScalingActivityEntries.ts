@@ -54,14 +54,12 @@ export interface ScalingActivityEntry extends CommonScalingEntry {
   stacks: ProjectScalingStack[] | undefined
   data:
     | {
-        tps: ActivityData
+        tps: ActivityData & {
+          totalCount?: { value: number; sinceTimestamp: number }
+        }
         uops: ActivityData
         ratio: number
         isSynced: boolean
-        totalCount?: {
-          value: number
-          sinceTimestamp: number
-        }
       }
     | undefined
 }
@@ -99,7 +97,6 @@ function getScalingProjectActivityEntry(
       uops: data.uops,
       ratio: data.ratio,
       isSynced: !syncWarning,
-      totalCount: data.totalCount,
     },
   }
 }
@@ -125,7 +122,6 @@ function getEthereumEntry(
       uops: data.uops,
       ratio: data.ratio,
       isSynced: !syncWarning,
-      totalCount: data.totalCount,
     },
     statuses: undefined,
   }
