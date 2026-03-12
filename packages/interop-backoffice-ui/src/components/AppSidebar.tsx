@@ -1,4 +1,4 @@
-import { PanelsTopLeftIcon } from 'lucide-react'
+import { PanelsTopLeftIcon, RefreshCw } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -21,6 +21,16 @@ const items = [
         title: 'Summary',
         url: '/',
         icon: PanelsTopLeftIcon,
+      },
+    ],
+  },
+  {
+    title: 'Plugins',
+    items: [
+      {
+        title: 'Sync status',
+        url: '/plugin-statuses',
+        icon: RefreshCw,
       },
     ],
   },

@@ -1,4 +1,3 @@
-import type { RouterOutputs } from '@l2beat/interop-backoffice'
 import { RefreshCwIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
@@ -9,61 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '~/components/core/Table'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
-
-type PluginStatus = RouterOutputs['plugin']['status'][number]
-
-function formatDistanceFromNow(timestamp: number): string {
-  const nowMs = Date.now()
-  const timestampMs = timestamp * 1000
-  const diffMs = Math.max(0, nowMs - timestampMs)
-  if (diffMs < 60_000) {
-    return '<1m'
-  }
-
-  const totalMinutes = Math.ceil(diffMs / 60_000)
-  const days = Math.floor(totalMinutes / 1440)
-  const hours = Math.floor((totalMinutes % 1440) / 60)
-  const minutes = totalMinutes % 60
-  const parts: string[] = []
-
-  if (days) {
-    parts.push(`${days}d`)
-  }
-  if (hours) {
-    parts.push(`${hours}h`)
-  }
-  if (minutes || parts.length === 0) {
-    parts.push(`${minutes}m`)
-  }
-
-  return parts.join(' ')
-}
-
-function getSyncModeBadgeVariant(syncMode?: string) {
-  if (!syncMode) {
-    return 'outline' as const
-  }
-
-  const normalized = syncMode.toLowerCase()
-  if (normalized.includes('error')) {
-    return 'destructive' as const
-  }
-  if (normalized.includes('synced')) {
-    return 'default' as const
-  }
-  return 'secondary' as const
-}
+import { PluginStatusesTable } from './table/PluginStatusesTable'
+import type { PluginStatus } from './table/types'
 
 export function PluginStatusesPage() {
   const { data, isLoading, isError, error, refetch, isFetching } =
@@ -114,59 +63,7 @@ export function PluginStatusesPage() {
               </div>
             ) : null}
             {!isLoading && !isError ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Plugin</TableHead>
-                    <TableHead>Chain</TableHead>
-                    <TableHead>Sync mode</TableHead>
-                    <TableHead>Distance from now</TableHead>
-                    <TableHead>To block</TableHead>
-                    <TableHead>Last error</TableHead>
-                    <TableHead>Resync from</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {rows.length === 0 ? (
-                    <TableRow>
-                      <TableCell
-                        colSpan={7}
-                        className="h-20 text-center text-muted-foreground"
-                      >
-                        No plugin statuses found.
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    rows.map((row) => (
-                      <TableRow key={`${row.pluginName}-${row.chain}`}>
-                        <TableCell>{row.pluginName}</TableCell>
-                        <TableCell>{row.chain}</TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={getSyncModeBadgeVariant(row.syncMode)}
-                          >
-                            {row.syncMode ?? '?'}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          {row.toTimestamp !== undefined
-                            ? formatDistanceFromNow(row.toTimestamp)
-                            : 'n/a'}
-                        </TableCell>
-                        <TableCell>{row.toBlock ?? 'n/a'}</TableCell>
-                        <TableCell className="max-w-[420px] whitespace-normal break-words">
-                          {row.lastError ?? ''}
-                        </TableCell>
-                        <TableCell>
-                          {row.resyncRequestedFrom !== undefined
-                            ? formatDistanceFromNow(row.resyncRequestedFrom)
-                            : ''}
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
+              <PluginStatusesTable data={rows} enableCsvExport />
             ) : null}
           </CardContent>
         </Card>

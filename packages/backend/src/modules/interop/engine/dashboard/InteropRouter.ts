@@ -69,6 +69,7 @@ export function createInteropRouter(
     router: createAppRouter({
       getPluginSyncStatus: async () => {
         const statuses = await syncersManager.getPluginSyncStatuses()
+        console.dir({ statuses })
         return statuses.map((status) => ({
           ...status,
           toBlock: status.toBlock?.toString(),
