@@ -1447,6 +1447,10 @@ Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindge
     ...WASM_MODULE_ROOT('Apechain'),
     verificationStatus: 'notVerified',
   },
+  '0x2c9a9d645ae56304c483709fc710a58a0935ed43893179fe4b275e1400503ea7': {
+    ...WASM_MODULE_ROOT('Syndicate'),
+    verificationStatus: 'notVerified',
+  },
   '0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a': {
     ...WASM_MODULE_ROOT('v41'),
     programUrl:
