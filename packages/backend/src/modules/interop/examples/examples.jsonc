@@ -3088,18 +3088,6 @@
       }
     ]
   },
-  "gz": {
-    "txs": [
-      {
-        "chain": "zksync2",
-        "tx": "0x7f911d7955e1ba84bbab699c6c0eb51b828c00e4658ba75803eb40243572a4c0"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x4379e5493802f2e625fc1b9f924eda0d4537c3b0af8dc64b1f24f191e7bd2ae0"
-      }
-    ]
-  },
   "gaszip": {
     "txs": [
       {

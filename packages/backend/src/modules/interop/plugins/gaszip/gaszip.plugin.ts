@@ -16,12 +16,7 @@ import {
   Result,
   type TxToCapture,
 } from '../types'
-import {
-  DEPOSIT_CONTRACT_ADDRESS,
-  DEPOSIT_EOA_ADDRESS,
-  GASZIP_NETWORKS,
-  getChainNameByGaszipId,
-} from './gaszip.config'
+import { GASZIP_NETWORKS, getChainNameByGaszipId } from './gaszip.config'
 import { decodeGasZipDeposit, extractFirstTwentyHex } from './gaszip.decoder'
 
 const parseDeposit = createEventParser(
@@ -75,7 +70,7 @@ export class GasZipPlugin implements InteropPlugin {
     const network = getGasZipNetwork(input.chain)
     if (!network) return
 
-    if (input.tx.to === DEPOSIT_EOA_ADDRESS) {
+    if (input.tx.to === network.depositEoa) {
       let decoded
       try {
         decoded = decodeGasZipDeposit((input.tx.data ?? '0x') as string)
@@ -127,7 +122,7 @@ export class GasZipPlugin implements InteropPlugin {
       return
     }
 
-    const deposit = parseDeposit(input.log, [DEPOSIT_CONTRACT_ADDRESS])
+    const deposit = parseDeposit(input.log, [network.depositContract])
     if (!deposit) return
 
     // Decode the chains parameter (packed as 16-bit values)
