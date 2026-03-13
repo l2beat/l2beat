@@ -60,8 +60,6 @@ type SectionId =
   | 'interop-volume'
   | 'interop-transfers'
   | 'interop-tokens'
-  | 'upgrades-and-governance'
-
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
