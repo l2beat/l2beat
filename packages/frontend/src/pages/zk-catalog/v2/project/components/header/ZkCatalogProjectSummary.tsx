@@ -67,7 +67,10 @@ export function TrustedSetupsByProofSystemSection({
       {/* Mobile */}
       <div className="space-y-4 md:hidden">
         {Object.entries(trustedSetupsByProofSystem).map(
-          ([key, { trustedSetups, projectsUsedIn, verifiers, onchainVerifiers }]) => {
+          ([
+            key,
+            { trustedSetups, projectsUsedIn, verifiers, onchainVerifiers },
+          ]) => {
             const proofSystem = trustedSetups[0]?.proofSystem
             if (trustedSetups.length === 0 || !proofSystem) return null
 
@@ -111,7 +114,10 @@ export function TrustedSetupsByProofSystemSection({
         <table className="w-full border-separate border-spacing-y-4">
           <tbody>
             {Object.entries(trustedSetupsByProofSystem).map(
-              ([key, { trustedSetups, projectsUsedIn, verifiers, onchainVerifiers }]) => {
+              ([
+                key,
+                { trustedSetups, projectsUsedIn, verifiers, onchainVerifiers },
+              ]) => {
                 const proofSystem = trustedSetups[0]?.proofSystem
                 if (trustedSetups.length === 0 || !proofSystem) return null
 
@@ -129,7 +135,9 @@ export function TrustedSetupsByProofSystemSection({
                           <p className="font-medium text-label-value-12 text-secondary">
                             Onchain verifier
                           </p>
-                          <OnchainVerifiers onchainVerifiers={onchainVerifiers} />
+                          <OnchainVerifiers
+                            onchainVerifiers={onchainVerifiers}
+                          />
                         </div>
                       )}
                     </td>

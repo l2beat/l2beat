@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, assert } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { CONTRACTS } from '../common'
 import { BADGES, badgesCompareFn } from '../common/badges'

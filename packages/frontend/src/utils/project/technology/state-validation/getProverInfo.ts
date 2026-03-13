@@ -74,10 +74,17 @@ function getOnchainVerifiers(
   contractUtils: ContractUtils,
 ) {
   const verifiers = zkCatalogProject.zkCatalogInfo.verifierHashes
-    .filter((v) => `${v.proofSystem.type}-${v.proofSystem.id}` === proofSystemKey)
+    .filter(
+      (v) => `${v.proofSystem.type}-${v.proofSystem.id}` === proofSystemKey,
+    )
     .flatMap((v) => v.knownDeployments)
     .filter((d) =>
-      isDeploymentUsedInProject(zkCatalogProject.id, d, projectId, contractUtils),
+      isDeploymentUsedInProject(
+        zkCatalogProject.id,
+        d,
+        projectId,
+        contractUtils,
+      ),
     )
     .map((d) => getOnchainVerifier(d.chain, d.address, projectContracts))
     .filter(notUndefined)
@@ -94,8 +101,8 @@ function isDeploymentUsedInProject(
   const usedIn = deployment.overrideUsedIn
     ? deployment.overrideUsedIn
     : contractUtils
-      .getUsedIn(zkCatalogProjectId, deployment.chain, deployment.address)
-      .map((project) => project.id)
+        .getUsedIn(zkCatalogProjectId, deployment.chain, deployment.address)
+        .map((project) => project.id)
 
   return usedIn.includes(projectId)
 }
