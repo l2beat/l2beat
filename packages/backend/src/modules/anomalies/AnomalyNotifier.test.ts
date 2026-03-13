@@ -6,13 +6,13 @@ import type {
   RealTimeLivenessRecord,
   UpdateDiffRecord,
 } from '@l2beat/database'
+import type { DiscordClient } from '@l2beat/shared'
 import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject, TrackedTxsConfig } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
 import type { Clock } from '../../tools/Clock'
 import { AnomalyNotifier } from './AnomalyNotifier'
-import type { DiscordWebhookClient } from './clients/DiscordWebhookClient'
 
 describe(AnomalyNotifier.name, () => {
   describe(AnomalyNotifier.prototype.anomalyDetected.name, () => {
@@ -27,7 +27,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
           updateDiff: updateDiffRepository,
@@ -93,7 +93,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
         }),
@@ -134,7 +134,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
           updateDiff: updateDiffRepository,
@@ -208,7 +208,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
           updateDiff: updateDiffRepository,
@@ -284,7 +284,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
           updateDiff: updateDiffRepository,
@@ -352,7 +352,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
           updateDiff: updateDiffRepository,
@@ -419,7 +419,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
           updateDiff: updateDiffRepository,
@@ -485,7 +485,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
         }),
@@ -539,7 +539,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
         }),
@@ -580,7 +580,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
           updateDiff: updateDiffRepository,
@@ -654,7 +654,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
         }),
@@ -709,7 +709,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           notifications: notificationsRepository,
         }),
@@ -748,7 +748,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({ notifications: notificationsRepository }),
         0,
         mockTrackedTxsConfig([]),
@@ -790,7 +790,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({ notifications: notificationsRepository }),
         0,
         mockTrackedTxsConfig([]),
@@ -835,7 +835,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           realTimeAnomalies: realTimeAnomaliesRepository,
           updateDiff: updateDiffRepository,
@@ -884,7 +884,7 @@ describe(AnomalyNotifier.name, () => {
       const notifier = new AnomalyNotifier(
         Logger.SILENT,
         mockObject<Clock>(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<DiscordClient>(),
         mockDatabase({
           realTimeAnomalies: realTimeAnomaliesRepository,
           updateDiff: updateDiffRepository,
