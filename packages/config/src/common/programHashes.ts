@@ -573,7 +573,7 @@ Verify:
     proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
-Prepare:
+Prepare: 
 
 1. Install cargo make: \`cargo install --debug --locked cargo-make\`
 2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
