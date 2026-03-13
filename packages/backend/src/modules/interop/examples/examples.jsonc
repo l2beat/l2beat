@@ -3160,6 +3160,23 @@
       {
         "chain": "arbitrum",
         "tx": "0x9ff0c8056035b0dabb3b42c9a60ada4cf80080f23d23f2955a33a730493213aa"
+      },
+      // earlier fill must not consume a later deposit
+      {
+        "chain": "arbitrum",
+        "tx": "0xbd974cf83e594079aa215adb93416f00a5eec385fea7ac5f9719c972b818d831"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xd89c61cbd50db4df2295dbb16324df5d1828a447c52e8af86fa7a9f5fa86fed1"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x7f911d7955e1ba84bbab699c6c0eb51b828c00e4658ba75803eb40243572a4c0"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4379e5493802f2e625fc1b9f924eda0d4537c3b0af8dc64b1f24f191e7bd2ae0"
       }
     ]
   },
