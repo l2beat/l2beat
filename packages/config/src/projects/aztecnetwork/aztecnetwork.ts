@@ -7,7 +7,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -52,14 +51,19 @@ const targetCommitteeSize = discovery.getContractValue<number>(
   'Rollup',
   'getTargetCommitteeSize',
 )
-const slotDuration = discovery.getContractValue<number>('Rollup', 'getSlotDuration')
+const slotDuration = discovery.getContractValue<number>(
+  'Rollup',
+  'getSlotDuration',
+)
 const epochDuration =
-  discovery.getContractValue<number>('Rollup', 'getEpochDuration') * slotDuration
+  discovery.getContractValue<number>('Rollup', 'getEpochDuration') *
+  slotDuration
 const proofWindow =
   epochDuration *
   (discovery.getContractValue<number>('Rollup', 'getProofSubmissionEpochs') + 1)
 const escapeHatchFrequency =
-  discovery.getContractValue<number>('EscapeHatch', 'getFrequency') * epochDuration
+  discovery.getContractValue<number>('EscapeHatch', 'getFrequency') *
+  epochDuration
 
 const executionDelay = governanceConfiguration.executionDelay
 
@@ -81,12 +85,18 @@ const proofWindowString = formatSeconds(proofWindow)
 const escapeHatchFrequencyString = formatSeconds(escapeHatchFrequency)
 const safeThreshold = discovery.getMultisigStats('Safe')
 
-const rollupAddress = EthereumAddress('0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962')
+const rollupAddress = EthereumAddress(
+  '0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962',
+)
 const verifierAddress = EthereumAddress(
   '0x70aEDda427f26480D240bc0f4308ceDec8d31348',
 )
-const inboxAddress = EthereumAddress('0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578')
-const outboxAddress = EthereumAddress('0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0')
+const inboxAddress = EthereumAddress(
+  '0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578',
+)
+const outboxAddress = EthereumAddress(
+  '0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0',
+)
 const governanceAddress = EthereumAddress(
   '0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e',
 )
@@ -99,11 +109,7 @@ export const aztecnetwork: ScalingProject = {
   id: ProjectId('aztecnetwork'),
   capability: 'universal',
   addedAt: UnixTime(1773273600), // 2026-03-12T00:00:00Z
-  badges: [
-    BADGES.VM.AztecVM,
-    BADGES.DA.EthereumBlobs,
-    BADGES.Other.Governance,
-  ],
+  badges: [BADGES.VM.AztecVM, BADGES.DA.EthereumBlobs, BADGES.Other.Governance],
   display: {
     name: 'Aztec Network',
     shortName: 'Aztec',
@@ -126,8 +132,7 @@ export const aztecnetwork: ScalingProject = {
     },
     liveness: {
       warnings: {
-        batchSubmissions:
-          'Checkpoints that are posted to Ethereum but not yet proven can be pruned once the proof submission window expires.',
+        batchSubmissions: `Checkpoints that are posted to Ethereum but not yet proven can be pruned once the proof submission window of ${proofWindowString} expires.`,
       },
       explanation:
         'Aztec posts checkpoint data to Ethereum blobs and finalizes checkpoints once an epoch root proof is verified on Ethereum. Transactions should be considered final only after the corresponding epoch proof is accepted on L1.',
@@ -138,14 +143,20 @@ export const aztecnetwork: ScalingProject = {
     name: 'Honk',
   },
   scopeOfAssessment: {
-    inScope: [SOA.l1Contracts, SOA.gasToken],
-    notInScope: [
-      SOA.l2Contracts,
-      SOA.nonGasTokens,
+    inScope: [
+      SOA.l1Contracts,
+      SOA.gasToken,
       SOA.derivationSpec,
       SOA.sourceCodeToProgramHash,
       SOA.sourceCodeToVerificationKeys,
+      SOA.sequencerPolicy,
       SOA.trustedSetup,
+    ],
+    notInScope: [
+      SOA.l2Contracts,
+      SOA.nonGasTokens,
+      SOA.trustedSetup,
+      SOA.specToSourceCode,
     ],
   },
   config: {
@@ -199,7 +210,7 @@ export const aztecnetwork: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN, // UltraHonk and CHONK (Client-side Highly Optimized ploNK) 
+      ...RISK_VIEW.STATE_ZKP_SN, // UltraHonk and CHONK (Client-side Highly Optimized ploNK)
       executionDelay: 0, // a proposal can be immediately proven
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -250,7 +261,8 @@ export const aztecnetwork: ScalingProject = {
       },
     },
     {
-      rollupNodeLink: 'https://docs.aztec.network/operate/operators/setup/running_a_node',
+      rollupNodeLink:
+        'https://docs.aztec.network/operate/operators/setup/running_a_node',
     },
   ),
   technology: {
@@ -297,8 +309,7 @@ export const aztecnetwork: ScalingProject = {
           url: 'https://etherscan.io/address/0x8c189ead28D5987A48e522162f9225124D50AD1B#code',
         },
       ],
-      risks: [
-      ],
+      risks: [],
     },
     forceTransactions: {
       name: 'Decentralized Sequencers, Escape Hatch',
@@ -317,8 +328,7 @@ export const aztecnetwork: ScalingProject = {
           url: 'https://etherscan.io/address/0x8c189ead28D5987A48e522162f9225124D50AD1B#code',
         },
       ],
-      risks: [
-      ],
+      risks: [],
     },
     exitMechanisms: [
       {
@@ -368,7 +378,7 @@ export const aztecnetwork: ScalingProject = {
       'Each epoch root proof is verified on Ethereum before the proven checkpoint number is advanced and the epoch outbox root is inserted into the Outbox.',
     categories: [
       {
-        title: 'Proof verification',
+        title: 'State root proposals',
         description:
           'The rollup only advances the proven chain after submitEpochRootProof() succeeds. That call verifies the epoch proof and then inserts the epoch outbox root for L2->L1 messaging.',
         references: [
