@@ -28,7 +28,7 @@ const parseDeposit = createEventParser(
   'event Deposit(address from, uint256 chains, uint256 amount, bytes32 to)',
 )
 
-export const GasZipDeposit = createInteropEventType<{
+interface GasZipDepositArgs {
   $dstChain: string
   depositor: Address32
   amount: bigint
@@ -36,13 +36,35 @@ export const GasZipDeposit = createInteropEventType<{
   depositType: string
   destinationChains: string
   destinationAddress?: Address32
-}>('gaszip.Deposit', { direction: 'outgoing' })
+}
 
-export const GasZipFill = createInteropEventType<{
+interface GasZipFillArgs {
   receiver: Address32
   amount: bigint
   tokenAddress: Address32
-}>('gaszip.Fill', { direction: 'incoming' })
+}
+
+type GasZipDepositEvent = InteropEvent<GasZipDepositArgs>
+type GasZipFillEvent = InteropEvent<GasZipFillArgs>
+type GasZipCandidate = {
+  deposit: GasZipDepositEvent
+  timeDelta: number
+  amountDelta?: bigint
+}
+
+const GASZIP_AMOUNT_TOLERANCE_UP = 0.1 // see examples, 5% was too low
+const GASZIP_AMOUNT_TOLERANCE_DOWN = 0.03 // for some reason some fills are more
+const TOLERANCE_PRECISION = 10_000n
+
+export const GasZipDeposit = createInteropEventType<GasZipDepositArgs>(
+  'gaszip.Deposit',
+  { direction: 'outgoing' },
+)
+
+export const GasZipFill = createInteropEventType<GasZipFillArgs>(
+  'gaszip.Fill',
+  { direction: 'incoming' },
+)
 
 export class GasZipPlugin implements InteropPlugin {
   readonly name = 'gaszip'
@@ -50,7 +72,7 @@ export class GasZipPlugin implements InteropPlugin {
   constructor(private logger: Logger) {}
 
   captureTx(input: TxToCapture) {
-    const network = GASZIP_NETWORKS.find((n) => n.chain === input.chain)
+    const network = getGasZipNetwork(input.chain)
     if (!network) return
 
     if (input.tx.to === DEPOSIT_EOA_ADDRESS) {
@@ -88,11 +110,7 @@ export class GasZipPlugin implements InteropPlugin {
       }
       return events
     }
-    if (
-      input.tx.from &&
-      EthereumAddress(input.tx.from) ===
-        GASZIP_NETWORKS.find((n) => n.chain === input.chain)?.solver
-    ) {
+    if (input.tx.from && EthereumAddress(input.tx.from) === network.solver) {
       return [
         GasZipFill.createTx(input, {
           receiver: input.tx.to ? Address32.from(input.tx.to) : Address32.ZERO,
@@ -104,7 +122,7 @@ export class GasZipPlugin implements InteropPlugin {
   }
 
   capture(input: LogToCapture) {
-    const network = GASZIP_NETWORKS.find((b) => b.chain === input.chain)
+    const network = getGasZipNetwork(input.chain)
     if (!network) {
       return
     }
@@ -149,34 +167,7 @@ export class GasZipPlugin implements InteropPlugin {
   match(gasZipFill: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (!GasZipFill.checkType(gasZipFill)) return
 
-    let gasZipDeposits = db.findApproximate(
-      GasZipDeposit,
-      {
-        $dstChain: gasZipFill.ctx.chain,
-        destinationAddress: gasZipFill.args.receiver,
-      },
-      {
-        key: 'amount',
-        valueBigInt: gasZipFill.args.amount,
-        toleranceUp: 0.1, // see examples, 5% was too low
-        toleranceDown: 0.03, // for some reason some fills are more
-      },
-    )
-
-    const dst = GASZIP_NETWORKS.find((n) => n.chain === gasZipFill.ctx.chain)
-    const srcChain = gasZipDeposits[0]?.args.$dstChain
-    const src = srcChain
-      ? GASZIP_NETWORKS.find((n) => n.chain === srcChain)
-      : undefined
-
-    // fallback to matching by sender only in case of non-eth gastoken
-    if (!dst || !src || dst.customGas || src.customGas) {
-      gasZipDeposits = db.findAll(GasZipDeposit, {
-        $dstChain: gasZipFill.ctx.chain,
-        destinationAddress: gasZipFill.args.receiver,
-      })
-    }
-    const gasZipDeposit = gasZipDeposits[0]
+    const gasZipDeposit = findMatchingDeposit(gasZipFill, db)
     if (!gasZipDeposit) return
 
     return [
@@ -197,4 +188,109 @@ export class GasZipPlugin implements InteropPlugin {
       }),
     ]
   }
+}
+
+function getGasZipNetwork(chain: string) {
+  return GASZIP_NETWORKS.find((network) => network.chain === chain)
+}
+
+// Split candidates into amount-comparable (who use the same token) and
+// fallback buckets, then pick the
+// most plausible earlier source transfer for this fill.
+function findMatchingDeposit(
+  fill: GasZipFillEvent,
+  db: InteropEventDb,
+): GasZipDepositEvent | undefined {
+  const destination = getGasZipNetwork(fill.ctx.chain)
+  if (!destination) return
+
+  const comparableCandidates: GasZipCandidate[] = []
+  const fallbackCandidates: GasZipCandidate[] = []
+
+  for (const deposit of db.findAll(GasZipDeposit, {
+    $dstChain: fill.ctx.chain,
+    destinationAddress: fill.args.receiver,
+  })) {
+    const candidate = createCandidate(deposit, fill, destination)
+    if (!candidate) continue
+
+    if (candidate.amountDelta !== undefined) {
+      comparableCandidates.push(candidate)
+    } else {
+      fallbackCandidates.push(candidate)
+    }
+  }
+
+  if (comparableCandidates.length > 0) {
+    comparableCandidates.sort(compareComparableCandidates)
+    return comparableCandidates[0]?.deposit
+  }
+
+  fallbackCandidates.sort(compareFallbackCandidates)
+  return fallbackCandidates[0]?.deposit
+}
+
+// Reject impossible source events and compute the ranking fields used by the
+// matcher. Custom-gas routes skip amount comparison entirely.
+function createCandidate(
+  deposit: GasZipDepositEvent,
+  fill: GasZipFillEvent,
+  destination: (typeof GASZIP_NETWORKS)[number],
+): GasZipCandidate | undefined {
+  if (deposit.ctx.timestamp > fill.ctx.timestamp) return
+
+  const timeDelta = fill.ctx.timestamp - deposit.ctx.timestamp
+  const source = getGasZipNetwork(deposit.ctx.chain)
+
+  if (!source || destination.customGas || source.customGas) {
+    return { deposit, timeDelta }
+  }
+
+  if (!matchesApproximateAmount(deposit.args.amount, fill.args.amount)) {
+    return
+  }
+
+  return {
+    deposit,
+    timeDelta,
+    amountDelta: absBigInt(deposit.args.amount - fill.args.amount),
+  }
+}
+
+function matchesApproximateAmount(depositAmount: bigint, fillAmount: bigint) {
+  const minValue =
+    fillAmount -
+    (fillAmount * BigInt(Math.floor(GASZIP_AMOUNT_TOLERANCE_DOWN * 10_000))) /
+      TOLERANCE_PRECISION
+  const maxValue =
+    fillAmount +
+    (fillAmount * BigInt(Math.floor(GASZIP_AMOUNT_TOLERANCE_UP * 10_000))) /
+      TOLERANCE_PRECISION
+
+  return depositAmount >= minValue && depositAmount <= maxValue
+}
+
+// For normal gas routes, prefer the closest earlier source event and only use
+// amount proximity as a tie-breaker.
+function compareComparableCandidates(a: GasZipCandidate, b: GasZipCandidate) {
+  if (a.timeDelta !== b.timeDelta) {
+    return a.timeDelta - b.timeDelta
+  }
+
+  if (a.amountDelta === b.amountDelta) {
+    return 0
+  }
+
+  if (a.amountDelta === undefined) return 1
+  if (b.amountDelta === undefined) return -1
+  return a.amountDelta < b.amountDelta ? -1 : 1
+}
+
+// For custom-gas routes, timing is the only reliable ranking signal.
+function compareFallbackCandidates(a: GasZipCandidate, b: GasZipCandidate) {
+  return a.timeDelta - b.timeDelta
+}
+
+function absBigInt(value: bigint) {
+  return value >= 0n ? value : -value
 }

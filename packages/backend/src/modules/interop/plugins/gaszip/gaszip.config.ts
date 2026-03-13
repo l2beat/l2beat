@@ -12,6 +12,8 @@ export interface GasZipNetwork {
 export const DEPOSIT_EOA_ADDRESS = EthereumAddress(
   '0x391E7C679d29bD940d63be94AD22A25d25b5A604',
 )
+
+// 0x252fb662e4D7435D2a5DED8EC94d8932CF76C178 for zksync
 export const DEPOSIT_CONTRACT_ADDRESS = EthereumAddress(
   '0x2a37D63EAdFe4b4682a3c28C1c2cD4F109Cc2762',
 )
