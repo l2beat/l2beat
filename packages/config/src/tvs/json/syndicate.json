@@ -7756,6 +7756,39 @@
     },
     {
       "mode": "auto",
+      "id": "syndicate-SYND",
+      "priceId": "syndicate-3",
+      "symbol": "SYND",
+      "name": "Syndicate",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69122/large/synd.png?1757576144",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1bAB804803159aD84b8854581AA53AC72455614E",
+            "chain": "ethereum",
+            "escrowAddress": "0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277",
+            "decimals": 18,
+            "sinceTimestamp": 1758153600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1bAB804803159aD84b8854581AA53AC72455614E",
+            "chain": "ethereum",
+            "escrowAddress": "0x6CA109706c6EBe5379c45f20B3311441D50cb711",
+            "decimals": 18,
+            "sinceTimestamp": 1758153600
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
       "id": "syndicate-T",
       "priceId": "threshold-network-token",
       "symbol": "T",
