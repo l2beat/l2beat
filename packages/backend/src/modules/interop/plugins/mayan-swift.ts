@@ -23,6 +23,7 @@ import {
   toChainSpecificAddresses,
 } from './mayan-shared'
 import {
+  extractMayanSwiftFulfillSourceChainFromTxData,
   extractMayanSwiftSettlementDestChain,
   getMayanSwiftSettlementMsgType,
   MAYAN_SWIFT_MSG_TYPE_UNLOCK,
@@ -140,6 +141,21 @@ function captureOrderFulfilled(
     orderFulfilled.key,
     orderFulfilled.sequence,
   )
+  const txData =
+    typeof input.tx.data === 'string'
+      ? (input.tx.data as `0x${string}`)
+      : undefined
+  const fulfilledSrcChainId =
+    extractMayanSwiftFulfillSourceChainFromTxData(txData)
+  const $srcChain =
+    settlementSent?.args.$dstChain ??
+    (fulfilledSrcChainId === undefined || wormholeNetworks.length === 0
+      ? undefined
+      : findChain(
+          wormholeNetworks,
+          (x) => x.wormholeChainId,
+          fulfilledSrcChainId,
+        ))
 
   const events: ReturnType<
     typeof OrderFulfilled.create | typeof SettlementSent.create
@@ -147,7 +163,7 @@ function captureOrderFulfilled(
     OrderFulfilled.create(input, {
       key: orderFulfilled.key,
       dstAmount: orderFulfilled.netAmount,
-      $srcChain: settlementSent?.args.$dstChain,
+      $srcChain,
     }),
   ]
   if (settlementSent) {
@@ -321,6 +337,7 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
         type: 'event',
         signature: orderFulfilledLog,
         includeTxEvents: [logMessagePublishedLog],
+        includeTx: true,
         addresses: mayanSwiftAddresses,
       },
       {
