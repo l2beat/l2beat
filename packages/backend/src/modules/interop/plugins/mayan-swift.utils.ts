@@ -76,14 +76,6 @@ export function getMayanSwiftSettlementMsgType(
   return decodeMayanSwiftSettlementPayload(payload)?.msgType
 }
 
-export function extractMayanSwiftSettlementOrderKey(
-  payload: string,
-): string | undefined {
-  const decoded = decodeMayanSwiftSettlementPayload(payload)
-  if (!decoded || decoded.msgType !== MAYAN_SWIFT_MSG_TYPE_UNLOCK) return
-  return decoded.key
-}
-
 export function extractMayanSwiftSettlementDestChain(
   payload: string,
 ): number | undefined {
