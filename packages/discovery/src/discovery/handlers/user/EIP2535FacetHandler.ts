@@ -6,7 +6,7 @@ import {
 import { v } from '@l2beat/validate'
 import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type EIP2535FacetHandlerDefinition = v.infer<
   typeof EIP2535FacetHandlerDefinition
@@ -68,3 +68,8 @@ export class EIP2535FacetHandler implements Handler {
     }
   }
 }
+
+export const EIP2535FacetHandlerBundle = declareHandler('eip2535Facets', {
+  definition: EIP2535FacetHandlerDefinition,
+  create: ({ field, definition }) => new EIP2535FacetHandler(field, definition),
+})

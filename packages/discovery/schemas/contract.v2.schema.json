@@ -170,20 +170,37 @@
               {
                 "type": "object",
                 "properties": {
-                  "type": { "const": "array" },
+                  "type": {
+                    "const": "array",
+                    "description": "The type of the array"
+                  },
                   "indices": {
                     "anyOf": [
                       { "type": "array", "items": { "type": "number" } },
                       { "type": "string" }
-                    ]
+                    ],
+                    "description": "An array of numbers, e.g. `[1,3,5]` a reference to another field, e.g. `{{ value }}` that will be used as indices to access a given array"
                   },
-                  "method": { "type": "string" },
+                  "method": {
+                    "type": "string",
+                    "description": "Name or abi of the method to be called. If omitted the name of the field is used. The abi should be provided in the human readable abi format"
+                  },
                   "length": {
-                    "anyOf": [{ "type": "number" }, { "type": "string" }]
+                    "anyOf": [{ "type": "number" }, { "type": "string" }],
+                    "description": "A number, e.g. `3` or a reference to another field, e.g. `{{ value }}` that will be used to determine the number of calls. If this is not provided the method is called until it reverts"
                   },
-                  "maxLength": { "type": "number" },
-                  "startIndex": { "type": "number" },
-                  "ignoreRelative": { "type": "boolean" }
+                  "maxLength": {
+                    "type": "number",
+                    "description": "A guard against infinite loops. Prevents the method to be called an excessive number of times. Defaults to 100"
+                  },
+                  "startIndex": {
+                    "type": "number",
+                    "description": "The index of the first element to be read. Defaults to `0`"
+                  },
+                  "ignoreRelative": {
+                    "type": "boolean",
+                    "description": "If set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered."
+                  }
                 },
                 "additionalProperties": false,
                 "required": ["type"]

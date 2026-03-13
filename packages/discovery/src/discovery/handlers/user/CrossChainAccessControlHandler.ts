@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type CrossChainAccessControlHandlerDefinition = v.infer<
   typeof CrossChainAccessControlHandlerDefinition
@@ -262,3 +262,12 @@ function parseRoleLog(
     ),
   } as const
 }
+
+export const CrossChainAccessControlHandlerBundle = declareHandler(
+  'crossChainAccessControl',
+  {
+    definition: CrossChainAccessControlHandlerDefinition,
+    create: ({ field, definition, abi }) =>
+      new CrossChainAccessControlHandler(field, definition, abi),
+  },
+)

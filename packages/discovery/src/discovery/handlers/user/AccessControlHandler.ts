@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type AccessControlHandlerDefinition = v.infer<
   typeof AccessControlHandlerDefinition
@@ -185,3 +185,9 @@ function parseRoleLog(
     adminRole: event.args.newAdminRole as string,
   } as const
 }
+
+export const AccessControlHandlerBundle = declareHandler('accessControl', {
+  definition: AccessControlHandlerDefinition,
+  create: ({ field, definition, abi }) =>
+    new AccessControlHandler(field, definition, abi),
+})

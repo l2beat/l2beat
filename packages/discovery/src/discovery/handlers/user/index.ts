@@ -1,259 +1,106 @@
 import { v } from '@l2beat/validate'
 
-import type { Handler } from '../Handler'
-import {
-  AccessControlHandler,
-  AccessControlHandlerDefinition,
-} from './AccessControlHandler'
-import {
-  ArbitrumActorsHandler,
-  ArbitrumActorsHandlerDefinition,
-} from './ArbitrumActorsHandler'
-import {
-  ArbitrumDACKeysetHandler,
-  ArbitrumDACKeysetHandlerDefinition,
-} from './ArbitrumDACKeysetHandler'
-import {
-  ArbitrumScheduledTransactionsHandler,
-  ArbitrumScheduledTransactionsHandlerDefinition,
-} from './ArbitrumScheduledTransactionsHandler'
-import {
-  ArbitrumSequencerVersionDefinition,
-  ArbitrumSequencerVersionHandler,
-} from './ArbitrumSequencerVersionHandler'
-import { ArrayHandler, ArrayHandlerDefinition } from './ArrayHandler'
-import { CallHandler, CallHandlerDefinition } from './CallHandler'
-import {
-  ConstructorArgsDefinition,
-  ConstructorArgsHandler,
-} from './ConstructorArgsHandler'
-import {
-  CrossChainAccessControlHandler,
-  CrossChainAccessControlHandlerDefinition,
-} from './CrossChainAccessControlHandler'
-import {
-  DynamicArrayHandler,
-  DynamicArrayHandlerDefinition,
-} from './DynamicArrayHandler'
-import {
-  EIP2535FacetHandler,
-  EIP2535FacetHandlerDefinition,
-} from './EIP2535FacetHandler'
-import {
-  ERC20DataDefinition,
-  ERC20DataHandler,
-} from './ERC20DataHandler/ERC20DataHandler'
-import {
-  EventCountHandler,
-  EventCountHandlerDefinition,
-} from './EventCountHandler'
-import { EventHandler, EventHandlerDefinition } from './EventHandler'
-import {
-  EventTraceHandler,
-  EventTraceHandlerDefinition,
-} from './EventTraceHandler'
-import { HardCodedDefinition, HardCodedHandler } from './HardcodedHandler'
-import {
-  KintoAccessControlHandler,
-  KintoAccessControlHandlerDefinition,
-} from './KintoAccessControlHandler'
-import {
-  LayerZeroMultisigHandler,
-  LayerZeroMultisigHandlerDefinition,
-} from './LayerZeroMultisigHandler'
-import {
-  LineaRolesModuleHandler,
-  LineaRolesModuleHandlerDefinition,
-} from './LineaRolesModuleHandler'
-import {
-  OpStackDAHandler,
-  OpStackDAHandlerDefinition,
-} from './OpDaHandler/OpDAHandler'
-import {
-  OpStackSequencerInboxHandler,
-  OpStackSequencerInboxHandlerDefinition,
-} from './OpSequencerInboxHandler'
-import {
-  OrbitPostsBlobsDefinition,
-  OrbitPostsBlobsHandler,
-} from './OrbitPostsBlobsHandler'
-import {
-  PolygonCDKScheduledTransactionHandler,
-  PolygonCDKScheduledTransactionsHandlerDefinition,
-} from './PolygonCDKScheduledTransactionHandler'
-import {
-  ScrollAccessControlHandler,
-  ScrollAccessControlHandlerDefinition,
-} from './ScrollAccessControlHandler'
-import {
-  StarkWareGovernanceHandler,
-  StarkWareGovernanceHandlerDefinition,
-} from './StarkWareGovernanceHandler'
-import {
-  StarkWareNamedStorageHandler,
-  StarkWareNamedStorageHandlerDefinition,
-} from './StarkWareNamedStorageHandler'
-import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
-import {
-  TradableDefinition,
-  TradableHandler,
-} from './TradableHandler/TradableHandler'
-import {
-  YieldFiMintersDefinition,
-  YieldFiMintersHandler,
-} from './YieldFiMintersHandler'
-import {
-  ZKsyncEraScheduledTransactionHandler,
-  ZKsyncEraScheduledTransactionsHandlerDefinition,
-} from './ZKsyncEraScheduledTransactionHandler'
-import {
-  ZKsyncEraValidatorsHandler,
-  ZKsyncEraValidatorsHandlerDefinition,
-} from './ZKsyncEraValidatorsHandler'
+import { type Handler, type HandlerFactoryDeps, mapTuple } from '../Handler'
+import { AccessControlHandlerBundle } from './AccessControlHandler'
+import { ArbitrumActorsHandlerBundle } from './ArbitrumActorsHandler'
+import { ArbitrumDACKeysetHandlerBundle } from './ArbitrumDACKeysetHandler'
+import { ArbitrumScheduledTransactionsHandlerBundle } from './ArbitrumScheduledTransactionsHandler'
+import { ArbitrumSequencerVersionHandlerBundle } from './ArbitrumSequencerVersionHandler'
+import { ArrayHandlerBundle } from './ArrayHandler'
+import { CallHandlerBundle } from './CallHandler'
+import { ConstructorArgsHandlerBundle } from './ConstructorArgsHandler'
+import { CrossChainAccessControlHandlerBundle } from './CrossChainAccessControlHandler'
+import { DynamicArrayHandlerBundle } from './DynamicArrayHandler'
+import { EIP2535FacetHandlerBundle } from './EIP2535FacetHandler'
+import { ERC20DataHandlerBundle } from './ERC20DataHandler/ERC20DataHandler'
+import { EventCountHandlerBundle } from './EventCountHandler'
+import { EventHandlerBundle } from './EventHandler'
+import { EventTraceHandlerBundle } from './EventTraceHandler'
+import { HardCodedHandlerBundle } from './HardcodedHandler'
+import { KintoAccessControlHandlerBundle } from './KintoAccessControlHandler'
+import { LayerZeroMultisigHandlerBundle } from './LayerZeroMultisigHandler'
+import { LineaRolesModuleHandlerBundle } from './LineaRolesModuleHandler'
+import { OpStackDAHandlerBundle } from './OpDaHandler/OpDAHandler'
+import { OpStackSequencerInboxHandlerBundle } from './OpSequencerInboxHandler'
+import { OrbitPostsBlobsHandlerBundle } from './OrbitPostsBlobsHandler'
+import { PolygonCDKScheduledTransactionHandlerBundle } from './PolygonCDKScheduledTransactionHandler'
+import { ScrollAccessControlHandlerBundle } from './ScrollAccessControlHandler'
+import { StarkWareGovernanceHandlerBundle } from './StarkWareGovernanceHandler'
+import { StarkWareNamedStorageHandlerBundle } from './StarkWareNamedStorageHandler'
+import { StorageHandlerBundle } from './StorageHandler'
+import { TradableHandlerBundle } from './TradableHandler/TradableHandler'
+import { YieldFiMintersHandlerBundle } from './YieldFiMintersHandler'
+import { ZKsyncEraScheduledTransactionHandlerBundle } from './ZKsyncEraScheduledTransactionHandler'
+import { ZKsyncEraValidatorsHandlerBundle } from './ZKsyncEraValidatorsHandler'
 
-const DEFINITIONS = [
-  StorageHandlerDefinition,
-  DynamicArrayHandlerDefinition,
-  ArrayHandlerDefinition,
-  CallHandlerDefinition,
-  EventHandlerDefinition,
-  StarkWareNamedStorageHandlerDefinition,
-  AccessControlHandlerDefinition,
-  ScrollAccessControlHandlerDefinition,
-  KintoAccessControlHandlerDefinition,
-  LineaRolesModuleHandlerDefinition,
-  ConstructorArgsDefinition,
-  EventCountHandlerDefinition,
-  HardCodedDefinition,
-  StarkWareGovernanceHandlerDefinition,
-  LayerZeroMultisigHandlerDefinition,
-  ArbitrumActorsHandlerDefinition,
-  ArbitrumScheduledTransactionsHandlerDefinition,
-  OpStackDAHandlerDefinition,
-  OpStackSequencerInboxHandlerDefinition,
-  ArbitrumSequencerVersionDefinition,
-  ArbitrumDACKeysetHandlerDefinition,
-  EIP2535FacetHandlerDefinition,
-  ZKsyncEraScheduledTransactionsHandlerDefinition,
-  ZKsyncEraValidatorsHandlerDefinition,
-  OrbitPostsBlobsDefinition,
-  PolygonCDKScheduledTransactionsHandlerDefinition,
-  ERC20DataDefinition,
-  TradableDefinition,
-  YieldFiMintersDefinition,
-  EventTraceHandlerDefinition,
-  CrossChainAccessControlHandlerDefinition,
+export const HANDLER_BUNDLES = [
+  StorageHandlerBundle,
+  DynamicArrayHandlerBundle,
+  ArrayHandlerBundle,
+  CallHandlerBundle,
+  EventHandlerBundle,
+  StarkWareNamedStorageHandlerBundle,
+  AccessControlHandlerBundle,
+  ScrollAccessControlHandlerBundle,
+  KintoAccessControlHandlerBundle,
+  LineaRolesModuleHandlerBundle,
+  ConstructorArgsHandlerBundle,
+  EventCountHandlerBundle,
+  HardCodedHandlerBundle,
+  StarkWareGovernanceHandlerBundle,
+  LayerZeroMultisigHandlerBundle,
+  ArbitrumActorsHandlerBundle,
+  ArbitrumScheduledTransactionsHandlerBundle,
+  OpStackDAHandlerBundle,
+  OpStackSequencerInboxHandlerBundle,
+  ArbitrumSequencerVersionHandlerBundle,
+  ArbitrumDACKeysetHandlerBundle,
+  EIP2535FacetHandlerBundle,
+  ZKsyncEraScheduledTransactionHandlerBundle,
+  ZKsyncEraValidatorsHandlerBundle,
+  OrbitPostsBlobsHandlerBundle,
+  PolygonCDKScheduledTransactionHandlerBundle,
+  ERC20DataHandlerBundle,
+  TradableHandlerBundle,
+  YieldFiMintersHandlerBundle,
+  EventTraceHandlerBundle,
+  CrossChainAccessControlHandlerBundle,
 ] as const
 
-type AvailableHandlers = (typeof DEFINITIONS)[number]
-type HandlerType = v.infer<AvailableHandlers>['type']
-
-export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
-export const UserHandlerDefinition = v.union([...DEFINITIONS])
-
-export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
-  storage: StorageHandlerDefinition,
-  dynamicArray: DynamicArrayHandlerDefinition,
-  array: ArrayHandlerDefinition,
-  call: CallHandlerDefinition,
-  event: EventHandlerDefinition,
-  starkWareNamedStorage: StarkWareNamedStorageHandlerDefinition,
-  accessControl: AccessControlHandlerDefinition,
-  kintoAccessControl: KintoAccessControlHandlerDefinition,
-  scrollAccessControl: ScrollAccessControlHandlerDefinition,
-  lineaRolesModule: LineaRolesModuleHandlerDefinition,
-  constructorArgs: ConstructorArgsDefinition,
-  eventCount: EventCountHandlerDefinition,
-  hardcoded: HardCodedDefinition,
-  starkWareGovernance: StarkWareGovernanceHandlerDefinition,
-  layerZeroMultisig: LayerZeroMultisigHandlerDefinition,
-  arbitrumActors: ArbitrumActorsHandlerDefinition,
-  arbitrumScheduledTransactions: ArbitrumScheduledTransactionsHandlerDefinition,
-  opStackDA: OpStackDAHandlerDefinition,
-  opStackSequencerInbox: OpStackSequencerInboxHandlerDefinition,
-  arbitrumSequencerVersion: ArbitrumSequencerVersionDefinition,
-  arbitrumDACKeyset: ArbitrumDACKeysetHandlerDefinition,
-  eip2535Facets: EIP2535FacetHandlerDefinition,
-  zksynceraScheduledTransactions:
-    ZKsyncEraScheduledTransactionsHandlerDefinition,
-  zksynceraValidators: ZKsyncEraValidatorsHandlerDefinition,
-  orbitPostsBlobs: OrbitPostsBlobsDefinition,
-  polygoncdkScheduledTransactions:
-    PolygonCDKScheduledTransactionsHandlerDefinition,
-  ERC20Data: ERC20DataDefinition,
-  tradable: TradableDefinition,
-  YieldFiMinters: YieldFiMintersDefinition,
-  eventTrace: EventTraceHandlerDefinition,
-  crossChainAccessControl: CrossChainAccessControlHandlerDefinition,
+type UserHandlerBundle = (typeof HANDLER_BUNDLES)[number]
+type UserHandlerBundleByType = {
+  [K in UserHandlerBundle['type']]: Extract<UserHandlerBundle, { type: K }>
 }
 
-export function getUserHandler(
+type BundleDefinition<TBundle extends UserHandlerBundle> = v.infer<
+  TBundle['definition']
+>
+
+export type UserHandlerDefinition = BundleDefinition<UserHandlerBundle>
+export const UserHandlerDefinition = v.union([
+  ...mapTuple(HANDLER_BUNDLES, (bundle) => bundle.definition),
+])
+
+type UserHandlerDefinitionByType = {
+  [K in UserHandlerBundle['type']]: BundleDefinition<UserHandlerBundleByType[K]>
+}
+
+export const UserHandlers = Object.fromEntries(
+  HANDLER_BUNDLES.map((bundle) => [bundle.type, bundle]),
+)
+
+export function getUserHandler<T extends UserHandlerDefinition['type']>(
   field: string,
-  definition: UserHandlerDefinition,
+  definition: UserHandlerDefinitionByType[T],
   abi: string[],
 ): Handler {
-  switch (definition.type) {
-    case 'storage':
-      return new StorageHandler(field, definition)
-    case 'dynamicArray':
-      return new DynamicArrayHandler(field, definition)
-    case 'array':
-      return new ArrayHandler(field, definition, abi)
-    case 'call':
-      return new CallHandler(field, definition, abi)
-    case 'event':
-      return new EventHandler(field, definition, abi)
-    case 'starkWareNamedStorage':
-      return new StarkWareNamedStorageHandler(field, definition)
-    case 'accessControl':
-      return new AccessControlHandler(field, definition, abi)
-    case 'kintoAccessControl':
-      return new KintoAccessControlHandler(field, definition, abi)
-    case 'scrollAccessControl':
-      return new ScrollAccessControlHandler(field, definition, abi)
-    case 'lineaRolesModule':
-      return new LineaRolesModuleHandler(field, definition, abi)
-    case 'constructorArgs':
-      return new ConstructorArgsHandler(field, definition, abi)
-    case 'eventCount':
-      return new EventCountHandler(field, definition)
-    case 'hardcoded':
-      return new HardCodedHandler(field, definition)
-    case 'starkWareGovernance':
-      return new StarkWareGovernanceHandler(field, definition, abi)
-    case 'layerZeroMultisig':
-      return new LayerZeroMultisigHandler(field, abi)
-    case 'arbitrumActors':
-      return new ArbitrumActorsHandler(field, definition)
-    case 'arbitrumScheduledTransactions':
-      return new ArbitrumScheduledTransactionsHandler(field, abi)
-    case 'opStackDA':
-      return new OpStackDAHandler(field, definition)
-    case 'opStackSequencerInbox':
-      return new OpStackSequencerInboxHandler(field, definition)
-    case 'arbitrumSequencerVersion':
-      return new ArbitrumSequencerVersionHandler(field, definition)
-    case 'arbitrumDACKeyset':
-      return new ArbitrumDACKeysetHandler(field, definition)
-    case 'eip2535Facets':
-      return new EIP2535FacetHandler(field, definition)
-    case 'zksynceraScheduledTransactions':
-      return new ZKsyncEraScheduledTransactionHandler(field, abi)
-    case 'zksynceraValidators':
-      return new ZKsyncEraValidatorsHandler(field, abi)
-    case 'orbitPostsBlobs':
-      return new OrbitPostsBlobsHandler(field, definition)
-    case 'polygoncdkScheduledTransactions':
-      return new PolygonCDKScheduledTransactionHandler(field, abi)
-    case 'ERC20Data':
-      return new ERC20DataHandler(field, definition)
-    case 'tradable':
-      return new TradableHandler(field)
-    case 'YieldFiMinters':
-      return new YieldFiMintersHandler(field, definition, abi)
-    case 'eventTrace':
-      return new EventTraceHandler(field, definition, abi)
-    case 'crossChainAccessControl':
-      return new CrossChainAccessControlHandler(field, definition, abi)
+  const bundle = UserHandlers[definition.type]
+  if (!bundle) {
+    throw new Error(`Handler bundle not found for type: ${definition.type}`)
   }
+
+  const create = bundle.create as (
+    deps: HandlerFactoryDeps<UserHandlerDefinitionByType[T]>,
+  ) => Handler
+  return create({ field, definition, abi })
 }

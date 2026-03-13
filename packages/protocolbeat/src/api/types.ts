@@ -122,8 +122,12 @@ export interface ApiHandlersResponse {
   handlers: {
     type: string
     schema: json
-    docs: string
-    examples: string[]
+    docs?: string
+    examples: {
+      title: string
+      description?: string
+      code: string
+    }[]
   }[]
 }
 

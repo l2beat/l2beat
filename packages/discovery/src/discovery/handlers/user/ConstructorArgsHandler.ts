@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type ConstructorArgsDefinition = v.infer<
   typeof ConstructorArgsDefinition
@@ -208,3 +208,9 @@ function popLeadingZeros(data: string): string {
 
   return bytes.slice(index, bytes.length).toString()
 }
+
+export const ConstructorArgsHandlerBundle = declareHandler('constructorArgs', {
+  definition: ConstructorArgsDefinition,
+  create: ({ field, definition, abi }) =>
+    new ConstructorArgsHandler(field, definition, abi),
+})

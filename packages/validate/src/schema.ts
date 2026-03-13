@@ -46,52 +46,67 @@ function decompose(imp: Imp<unknown>, state: State): object {
   }
   state.skipRefs = false
 
+  let result: object
+
   switch (imp.meta.type) {
     case 'unknown':
       // Anything is accepted
-      return {}
+      result = {}
+      break
     case 'boolean':
-      return { type: 'boolean' }
+      result = { type: 'boolean' }
+      break
     case 'number':
-      return { type: 'number' }
+      result = { type: 'number' }
+      break
     case 'string':
-      return { type: 'string' }
+      result = { type: 'string' }
+      break
     case 'null':
-      return { type: 'null' }
+      result = { type: 'null' }
+      break
     case 'bigint':
     case 'undefined':
       // Those are not supported so we cannot say anything about them
-      return {}
+      result = {}
+      break
     case 'literal':
       if (typeof imp.meta.value === 'bigint') {
-        return {}
+        result = {}
+      } else {
+        result = { const: imp.meta.value }
       }
-      return { const: imp.meta.value }
+      break
     case 'enum':
-      return { enum: imp.meta.values }
+      result = { enum: imp.meta.values }
+      break
     case 'check':
     case 'transform':
     case 'catch':
     case 'default': // NOTE: Json schema does support this, but not sure if needed
     case 'optional':
-      return decompose(imp.meta.parent, state)
+      result = decompose(imp.meta.parent, state)
+      break
     case 'array':
-      return {
+      result = {
         type: 'array',
         items: decompose(imp.meta.element, state),
       }
+      break
     case 'tuple':
-      return {
+      result = {
         type: 'array',
         items: imp.meta.values.map((x) => decompose(x, state)),
         additionalItems: false,
       }
+      break
     case 'union':
-      return {
+      result = {
         anyOf: imp.meta.values.map((x) => decompose(x, state)),
       }
+      break
     case 'object': {
-      const result: Record<string, unknown> = {
+      const schema: Record<string, unknown> = {
         type: 'object',
         properties: Object.fromEntries(
           Object.entries(imp.meta.schema).map(([k, v]) => [
@@ -111,22 +126,24 @@ function decompose(imp: Imp<unknown>, state: State): object {
         )
         .map(([k]) => k)
       if (required.length > 0) {
-        result.required = required
+        schema.required = required
       }
-      return result
+      result = schema
+      break
     }
     case 'record': {
-      const result: Record<string, unknown> = {
+      const schema: Record<string, unknown> = {
         type: 'object',
         propertyNames: recordKey(imp.meta.key),
         additionalProperties: decompose(imp.meta.value, state),
       }
       if (imp.meta.key.meta.type === 'enum') {
-        result.required = imp.meta.key.meta.values.map((x) =>
+        schema.required = imp.meta.key.meta.values.map((x) =>
           (x as string | number).toString(),
         )
       }
-      return result
+      result = schema
+      break
     }
     case 'lazy': {
       state.lazyCounter++
@@ -137,9 +154,17 @@ function decompose(imp: Imp<unknown>, state: State): object {
       return { $ref }
     }
   }
+
+  // Meta fields
+  if (imp.description) {
+    result = { ...result, description: imp.description }
+  }
+
+  return result
 }
 
 function recordKey(imp: Imp<unknown>): object {
+  let result: object
   switch (imp.meta.type) {
     case 'unknown':
     case 'string':
@@ -151,23 +176,38 @@ function recordKey(imp: Imp<unknown>): object {
     case 'object':
     case 'record':
     case 'lazy':
-      return { type: 'string' }
+      result = { type: 'string' }
+      break
     case 'boolean':
-      return { enum: ['true', 'false'] }
+      result = { enum: ['true', 'false'] }
+      break
     case 'number':
-      return { type: 'string', pattern: '\\d+(\\.\\d*)?' }
+      result = {
+        type: 'string',
+        pattern: '\\d+(\\.\\d*)?',
+        description: imp.description,
+      }
+      break
     case 'literal':
       if (typeof imp.meta.value === 'string') {
-        return { const: imp.meta.value }
+        result = { const: imp.meta.value }
+        break
       }
       if (typeof imp.meta.value === 'number') {
-        return { const: imp.meta.value.toString() }
+        result = {
+          const: imp.meta.value.toString(),
+          description: imp.description,
+        }
+        break
       }
-      return { type: 'string' }
+      result = { type: 'string' }
+      break
     case 'enum':
-      return {
+      result = {
         enum: imp.meta.values.map((x) => (x as string | number).toString()),
+        description: imp.description,
       }
+      break
     case 'check':
     case 'transform':
     case 'catch':
@@ -175,8 +215,13 @@ function recordKey(imp: Imp<unknown>): object {
     case 'optional':
       return recordKey(imp.meta.parent)
     case 'union':
-      return {
+      result = {
         anyOf: imp.meta.values.map(recordKey),
       }
+      break
   }
+  if (imp.description) {
+    result = { ...result, description: imp.description }
+  }
+  return result
 }

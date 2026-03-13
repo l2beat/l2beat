@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
 
 export type StarkWareNamedStorageHandlerDefinition = v.infer<
@@ -48,3 +48,12 @@ export class StarkWareNamedStorageHandler implements Handler {
     }
   }
 }
+
+export const StarkWareNamedStorageHandlerBundle = declareHandler(
+  'starkWareNamedStorage',
+  {
+    definition: StarkWareNamedStorageHandlerDefinition,
+    create: ({ field, definition }) =>
+      new StarkWareNamedStorageHandler(field, definition),
+  },
+)

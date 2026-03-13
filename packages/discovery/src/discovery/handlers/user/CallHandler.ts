@@ -8,7 +8,7 @@ import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import {
   generateReferenceInput,
   getReferencedName,
@@ -156,3 +156,9 @@ function isViewFragment(fragment: utils.FunctionFragment): boolean {
     fragment.constant
   )
 }
+
+export const CallHandlerBundle = declareHandler('call', {
+  definition: CallHandlerDefinition,
+  create: ({ field, definition, abi }) =>
+    new CallHandler(field, definition, abi),
+})

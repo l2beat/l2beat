@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import {
   generateReferenceInput,
   getReferencedName,
@@ -122,3 +122,8 @@ function hashBigints(values: bigint[]): bigint {
     ),
   )
 }
+
+export const DynamicArrayHandlerBundle = declareHandler('dynamicArray', {
+  definition: DynamicArrayHandlerDefinition,
+  create: ({ field, definition }) => new DynamicArrayHandler(field, definition),
+})

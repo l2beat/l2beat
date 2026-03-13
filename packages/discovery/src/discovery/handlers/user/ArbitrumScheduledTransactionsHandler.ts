@@ -4,7 +4,7 @@ import { ethers, utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type ArbitrumScheduledTransactionsHandlerDefinition = v.infer<
@@ -288,3 +288,12 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
 function getSighash(data: string): string {
   return Bytes.fromHex(data).toString().slice(0, 10)
 }
+
+export const ArbitrumScheduledTransactionsHandlerBundle = declareHandler(
+  'arbitrumScheduledTransactions',
+  {
+    definition: ArbitrumScheduledTransactionsHandlerDefinition,
+    create: ({ field, abi }) =>
+      new ArbitrumScheduledTransactionsHandler(field, abi),
+  },
+)

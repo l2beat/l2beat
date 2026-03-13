@@ -2,7 +2,7 @@ import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 import type { IProvider } from '../../../provider/IProvider'
-import type { Handler, HandlerResult } from '../../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../../Handler'
 
 const abi = [
   'event DealDeployed(string indexed id, address indexed deal, address indexed manager)',
@@ -61,3 +61,8 @@ function parseDealDeployed(
     manager: ChainSpecificAddress.from(chainShortName, manager),
   }
 }
+
+export const TradableHandlerBundle = declareHandler('tradable', {
+  definition: TradableDefinition,
+  create: ({ field }) => new TradableHandler(field),
+})

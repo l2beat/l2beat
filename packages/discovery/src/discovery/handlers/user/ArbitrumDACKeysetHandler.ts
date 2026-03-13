@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 
 import { base64 } from 'ethers/lib/utils'
 import type { IProvider } from '../../provider/IProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type ArbitrumDACKeysetHandlerDefinition = v.infer<
   typeof ArbitrumDACKeysetHandlerDefinition
@@ -92,3 +92,12 @@ function decodeLastEvent(events: providers.Log[]): {
     blsSignatures,
   }
 }
+
+export const ArbitrumDACKeysetHandlerBundle = declareHandler(
+  'arbitrumDACKeyset',
+  {
+    definition: ArbitrumDACKeysetHandlerDefinition,
+    create: ({ field, definition }) =>
+      new ArbitrumDACKeysetHandler(field, definition),
+  },
+)

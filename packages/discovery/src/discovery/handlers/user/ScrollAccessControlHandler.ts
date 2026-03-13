@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 
 import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type ScrollAccessControlHandlerDefinition = v.infer<
   typeof ScrollAccessControlHandlerDefinition
@@ -241,3 +241,12 @@ function parseRoleLog(
     adminRole: event.args.newAdminRole as string,
   } as const
 }
+
+export const ScrollAccessControlHandlerBundle = declareHandler(
+  'scrollAccessControl',
+  {
+    definition: ScrollAccessControlHandlerDefinition,
+    create: ({ field, definition, abi }) =>
+      new ScrollAccessControlHandler(field, definition, abi),
+  },
+)
