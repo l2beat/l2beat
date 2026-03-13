@@ -7,6 +7,7 @@ import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropTokensSectionProps } from './interop/InteropTokensSection'
+import type { InteropTransfersSectionProps } from './interop/InteropTransfersSection'
 import type { InteropVolumeSectionProps } from './interop/InteropVolumeSection'
 import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
 import type { LivenessSectionProps } from './LivenessSection'
@@ -56,6 +57,7 @@ type SectionId =
   | 'verifiers'
   | 'program-hashes'
   | 'interop-volume'
+  | 'interop-transfers'
   | 'interop-tokens'
 
 type GroupId = 'da-layer' | 'da-bridge'
@@ -189,6 +191,11 @@ interface ProjectDetailsInteropVolumeSection {
   props: ProjectDetailsProps<InteropVolumeSectionProps>
 }
 
+interface ProjectDetailsInteropTransfersSection {
+  type: 'InteropTransfersSection'
+  props: ProjectDetailsProps<InteropTransfersSectionProps>
+}
+
 interface ProjectDetailsInteropTokensSection {
   type: 'InteropTokensSection'
   props: ProjectDetailsProps<InteropTokensSectionProps>
@@ -246,5 +253,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsProgramHashesSection
   | ProjectDetailsZkCatalogTvsSection
   | ProjectDetailsInteropVolumeSection
+  | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
 )

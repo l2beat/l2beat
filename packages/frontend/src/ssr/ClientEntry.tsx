@@ -1,12 +1,13 @@
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import { ClientPageRouter } from '../pages/ClientPageRouter'
+import { getPageElement } from '../pages/getPageElement'
 
-// biome-ignore lint/style/noNonNullAssertion: It's there
-const root = document.getElementById('root')!
-hydrateRoot(
-  root,
-  <StrictMode>
-    <ClientPageRouter ssrData={window.__SSR_DATA__} />
-  </StrictMode>,
-)
+async function main() {
+  // biome-ignore lint/style/noNonNullAssertion: It's there
+  const root = document.getElementById('root')!
+  const pageElement = await getPageElement(window.__SSR_DATA__)
+
+  hydrateRoot(root, <StrictMode>{pageElement}</StrictMode>)
+}
+
+void main()

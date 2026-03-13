@@ -159,6 +159,41 @@ describeDatabase(ActivityRepository.name, (db) => {
       })
     })
   })
+
+  describe(ActivityRepository.prototype.getTpsTotalsForProjects.name, () => {
+    it('should return all-time TPS totals and first timestamps per project', async () => {
+      await repository.upsertMany([
+        record('a', START + 2 * UnixTime.DAY, 4, 7),
+        record('a', START, 1, 2),
+        record('a', START + 1 * UnixTime.DAY, 3, 4),
+        record('b', START + 1 * UnixTime.DAY, 6, 6),
+        record('b', START + 2 * UnixTime.DAY, 5, 8),
+        record('c', START, 0, 0),
+      ])
+
+      const result = await repository.getTpsTotalsForProjects([
+        ProjectId('a'),
+        ProjectId('b'),
+        ProjectId('c'),
+      ])
+
+      expect(result).toEqual({
+        [ProjectId('a')]: {
+          count: 8,
+          sinceTimestamp: START,
+        },
+        [ProjectId('b')]: {
+          count: 11,
+          sinceTimestamp: START + 1 * UnixTime.DAY,
+        },
+        [ProjectId('c')]: {
+          count: 0,
+          sinceTimestamp: START,
+        },
+      })
+    })
+  })
+
   describe(
     ActivityRepository.prototype.getSummedUopsCountForProjectAndTimeRange.name,
     () => {

@@ -144,6 +144,25 @@ export function ProjectActivityChart({
             ? formatInteger(chart?.stats?.[metric].pastDaySum)
             : 'No data'}
         </ChartStatsItem>
+        {metric === 'tps' && (
+          <ChartStatsItem
+            label="Total Txs"
+            className="max-md:h-7"
+            isLoading={isLoading}
+          >
+            {chart?.stats?.tps.totalCount ? (
+              <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
+                <div>{formatInteger(chart?.stats?.tps.totalCount.value)}</div>
+                <div className="font-medium text-label-value-14 text-secondary">
+                  since{' '}
+                  {formatTimestamp(chart?.stats?.tps.totalCount.sinceTimestamp)}
+                </div>
+              </div>
+            ) : (
+              'No data'
+            )}
+          </ChartStatsItem>
+        )}
         <ChartStatsItem
           label={`Max. ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
           tooltip={`Shows the maximum sustained ${metric === 'uops' ? 'UOPS' : 'TPS'}, calculated as an average over the count for a day.`}

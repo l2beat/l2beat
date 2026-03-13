@@ -12,6 +12,7 @@ describe(InteropCleanerLoop.name, () => {
       const deleteMessageBefore = mockFn().resolvesTo(10)
       const deleteTransferBefore = mockFn().resolvesTo(15)
       const deletePricesBefore = mockFn().resolvesTo(20)
+      const deleteConfigs = mockFn().resolvesTo(7)
       const deleteSyncStateNotIn = mockFn().resolvesTo(2)
       const deleteSyncedRangeNotIn = mockFn().resolvesTo(3)
 
@@ -28,6 +29,9 @@ describe(InteropCleanerLoop.name, () => {
         }),
         interopRecentPrices: mockObject<Database['interopRecentPrices']>({
           deleteBefore: deletePricesBefore,
+        }),
+        interopConfig: mockObject<Database['interopConfig']>({
+          deleteAllButLatestPerKey: deleteConfigs,
         }),
         interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
           deleteNotInPluginNames: deleteSyncStateNotIn,
@@ -48,7 +52,16 @@ describe(InteropCleanerLoop.name, () => {
         ] as InteropPlugins['eventPlugins'],
       }
 
-      const cleaner = new InteropCleanerLoop(store, db, plugins, Logger.SILENT)
+      const KEEP_LATEST = 3
+
+      const cleaner = new InteropCleanerLoop(
+        store,
+        db,
+        plugins,
+        Logger.SILENT,
+        undefined,
+        KEEP_LATEST,
+      )
 
       await cleaner.run()
 
@@ -56,6 +69,7 @@ describe(InteropCleanerLoop.name, () => {
       expect(deleteMessageBefore).toHaveBeenCalledTimes(1)
       expect(deleteTransferBefore).toHaveBeenCalledTimes(1)
       expect(deletePricesBefore).toHaveBeenCalledTimes(1)
+      expect(deleteConfigs).toHaveBeenCalledWith(KEEP_LATEST)
       expect(deleteSyncStateNotIn).toHaveBeenCalledWith([
         'plugin-a',
         'plugin-b',
@@ -74,6 +88,7 @@ describe(InteropCleanerLoop.name, () => {
         deleteExpired: mockFn().resolvesTo(0),
       })
 
+      const deleteConfigs = mockFn().resolvesTo(0)
       const db = mockObject<Database>({
         interopMessage: mockObject<Database['interopMessage']>({
           deleteBefore: mockFn().resolvesTo(0),
@@ -83,6 +98,9 @@ describe(InteropCleanerLoop.name, () => {
         }),
         interopRecentPrices: mockObject<Database['interopRecentPrices']>({
           deleteBefore: mockFn().resolvesTo(0),
+        }),
+        interopConfig: mockObject<Database['interopConfig']>({
+          deleteAllButLatestPerKey: deleteConfigs,
         }),
         interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
           deleteNotInPluginNames: deleteSyncStateNotIn,

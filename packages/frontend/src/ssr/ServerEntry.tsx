@@ -1,16 +1,16 @@
 import { StrictMode } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
-import { ClientPageRouter } from '../pages/ClientPageRouter'
+import { getPageElement } from '../pages/getPageElement'
 import { Head } from './head/Head'
 import type { RenderData, RenderResult } from './types'
 
-export function render(data: RenderData, url: string): RenderResult {
+export async function render(
+  data: RenderData,
+  url: string,
+): Promise<RenderResult> {
   globalThis.__FIX_SSR_URL__ = url
-  const html = renderToString(
-    <StrictMode>
-      <ClientPageRouter ssrData={data.ssr} />
-    </StrictMode>,
-  )
+  const pageElement = await getPageElement(data.ssr)
+  const html = renderToString(<StrictMode>{pageElement}</StrictMode>)
   const head = renderToStaticMarkup(
     <StrictMode>
       <Head {...data.head} />

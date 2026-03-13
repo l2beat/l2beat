@@ -26,7 +26,13 @@ export function getFlows(
     map.set(key, current + (getInteropTransferValue(record) ?? 0))
   }
 
-  return flowsMapToSorted(map, selection)
+  const sortedFlows = flowsMapToSorted(map, selection)
+
+  if (sortedFlows.every((flow) => flow.volume === 0)) {
+    return []
+  }
+
+  return sortedFlows
 }
 
 export function flowsMapToSorted(

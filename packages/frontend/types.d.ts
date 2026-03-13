@@ -1,7 +1,7 @@
 import '@tanstack/react-table'
 import type { CellContext } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
-import type { SsrData } from '../pages/ClientPageRouter'
+import type { SsrData } from './src/pages/pageTypes'
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {

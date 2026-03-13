@@ -213,6 +213,7 @@ export interface InteropFeatureConfig {
   }
   matching: boolean
   cleaner: boolean
+  dangerousOperationsEnabled: boolean
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined

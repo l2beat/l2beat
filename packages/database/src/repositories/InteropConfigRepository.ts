@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropConfig } from '../kysely/generated/types'
 
@@ -55,6 +55,38 @@ export class InteropConfigRepository extends BaseRepository {
   async insert(record: InteropConfigRecord): Promise<void> {
     const row = toRow(record)
     await this.db.insertInto('InteropConfig').values(row).execute()
+  }
+
+  async deleteAllButLatestPerKey(keepLatest: number): Promise<number> {
+    if (keepLatest < 1) {
+      throw new Error('keepLatest must be >= 1')
+    }
+
+    const query = this.db
+      .with('ranked', (eb) =>
+        eb.selectFrom('InteropConfig').select([
+          'key',
+          'timestamp',
+          sql<number>`row_number() over (
+            partition by "key"
+            order by "timestamp" desc
+          )`.as('rn'),
+        ]),
+      )
+      .deleteFrom('InteropConfig')
+      .where(({ eb, exists }) =>
+        exists(
+          eb
+            .selectFrom('ranked')
+            .select('key')
+            .whereRef('ranked.key', '=', 'InteropConfig.key')
+            .whereRef('ranked.timestamp', '=', 'InteropConfig.timestamp')
+            .where('ranked.rn', '>', keepLatest),
+        ),
+      )
+
+    const result = await query.executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   // Test only methods

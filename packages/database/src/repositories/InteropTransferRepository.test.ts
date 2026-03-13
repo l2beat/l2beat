@@ -275,6 +275,124 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     })
   })
 
+  describe(
+    InteropTransferRepository.prototype.getValueMismatchTransfers.name,
+    () => {
+      it('returns transfers above mismatch threshold ordered by mismatch desc', async () => {
+        const lowMismatch = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+          5000,
+        )
+        lowMismatch.srcValueUsd = 100
+        lowMismatch.dstValueUsd = 94 // 6%
+
+        const thresholdEdge = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+          'ethereum',
+          'optimism',
+          5000,
+        )
+        thresholdEdge.srcValueUsd = 100
+        thresholdEdge.dstValueUsd = 95 // 5%
+
+        const mediumMismatch = transfer(
+          'plugin2',
+          'msg3',
+          'withdraw',
+          UnixTime(300),
+          'arbitrum',
+          'ethereum',
+          5000,
+        )
+        mediumMismatch.srcValueUsd = 100
+        mediumMismatch.dstValueUsd = 60 // 40%
+
+        const highMismatch = transfer(
+          'plugin2',
+          'msg4',
+          'withdraw',
+          UnixTime(400),
+          'base',
+          'ethereum',
+          5000,
+        )
+        highMismatch.srcValueUsd = 200
+        highMismatch.dstValueUsd = 100 // 50%
+
+        const belowValueThreshold = transfer(
+          'plugin2',
+          'msg7',
+          'withdraw',
+          UnixTime(450),
+          'base',
+          'ethereum',
+          5000,
+        )
+        belowValueThreshold.srcValueUsd = 100
+        belowValueThreshold.dstValueUsd = 40 // below value threshold
+
+        const missingSrcValue = transfer(
+          'plugin3',
+          'msg5',
+          'deposit',
+          UnixTime(500),
+          'polygon',
+          'ethereum',
+          5000,
+        )
+        missingSrcValue.srcValueUsd = undefined
+        missingSrcValue.dstValueUsd = 10
+
+        const zeroValues = transfer(
+          'plugin3',
+          'msg6',
+          'deposit',
+          UnixTime(600),
+          'polygon',
+          'ethereum',
+          5000,
+        )
+        zeroValues.srcValueUsd = 0
+        zeroValues.dstValueUsd = 0
+
+        await repository.insertMany([
+          lowMismatch,
+          thresholdEdge,
+          mediumMismatch,
+          highMismatch,
+          belowValueThreshold,
+          missingSrcValue,
+          zeroValues,
+        ])
+
+        const result = await repository.getValueMismatchTransfers(5, 50)
+
+        expect(result.map((x) => x.transferId)).toEqual([
+          'msg4',
+          'msg3',
+          'msg1',
+        ])
+        expect(result.map((x) => x.valueDifferencePercent)).toEqual([50, 40, 6])
+      })
+
+      it('throws for negative thresholds', async () => {
+        await expect(repository.getValueMismatchTransfers(-1)).toBeRejected()
+      })
+
+      it('throws for negative value threshold', async () => {
+        await expect(repository.getValueMismatchTransfers(5, -1)).toBeRejected()
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.deleteBefore.name, () => {
     it('deletes transfers before specified timestamp', async () => {
       await repository.insertMany([

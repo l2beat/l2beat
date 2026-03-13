@@ -26,15 +26,7 @@ export default defineConfig(({ command }) => {
       emptyOutDir: true,
       rollupOptions: {
         output: {
-          manualChunks(id) {
-            if (!id.includes('/node_modules/')) return
-
-            if (id.includes('/recharts/') || id.includes('/d3-')) {
-              return 'charts-vendor'
-            }
-
-            return 'vendor'
-          },
+          experimentalMinChunkSize: 1024,
         },
       },
     },
