@@ -168,6 +168,10 @@ export async function makeConfig(
       },
       matching: flags.isEnabled('interop', 'matching'),
       cleaner: flags.isEnabled('interop', 'cleaner'),
+      dangerousOperationsEnabled: env.boolean(
+        'INTEROP_DANGEROUS_OPERATIONS_ENABLED',
+        false,
+      ),
       dashboard: {
         enabled: flags.isEnabled('interop', 'dashboard'),
         getExplorerUrl: (chain: string) => {
