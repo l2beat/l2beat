@@ -3,6 +3,7 @@ import type {
   AvailWsClient,
   BeaconChainClient,
   CelestiaRpcClient,
+  EspressoClient,
   NearClient,
 } from '../../clients'
 import { DaBeatStatsProvider } from './DaBeatStatsProvider'
@@ -110,6 +111,33 @@ describe(DaBeatStatsProvider.name, () => {
       expect(result).toEqual({
         totalStake: 1000n,
         thresholdStake: 666n, // (1000n * 200n) / 300n = 666n
+        numberOfValidators: 2,
+      })
+    })
+
+    it('routes to getEspressoStats for espresso project', async () => {
+      const mockEspressoClient = mockObject<EspressoClient>({
+        getStakeTable: async () => ({
+          stake_table: [
+            { stake_table_entry: { stake_amount: '1000' } },
+            { stake_table_entry: { stake_amount: '2000' } },
+          ],
+        }),
+      })
+
+      const provider = new DaBeatStatsProvider(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        mockEspressoClient,
+      )
+
+      const result = await provider.getStats('espresso')
+
+      expect(result).toEqual({
+        totalStake: 3000n,
+        thresholdStake: 2000n, // (3000n * 200n) / 300n = 2000n
         numberOfValidators: 2,
       })
     })
@@ -415,6 +443,75 @@ describe(DaBeatStatsProvider.name, () => {
 
       await expect(provider.getAvailStats()).toBeRejectedWith(
         'Avail WS client not found',
+      )
+    })
+  })
+
+  describe(DaBeatStatsProvider.prototype.getEspressoStats.name, () => {
+    it('returns correct stats from Espresso client', async () => {
+      const mockEspressoClient = mockObject<EspressoClient>({
+        getStakeTable: async () => ({
+          stake_table: [
+            { stake_table_entry: { stake_amount: '1000' } },
+            { stake_table_entry: { stake_amount: '2000' } },
+            { stake_table_entry: { stake_amount: '100' } },
+            { stake_table_entry: { stake_amount: '3050' } },
+          ],
+        }),
+      })
+
+      const provider = new DaBeatStatsProvider(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        mockEspressoClient,
+      )
+
+      const result = await provider.getEspressoStats()
+
+      expect(result).toEqual({
+        totalStake: 6150n,
+        thresholdStake: (6150n * 2n) / 3n,
+        numberOfValidators: 4,
+      })
+    })
+
+    it('handles empty validators list', async () => {
+      const mockEspressoClient = mockObject<EspressoClient>({
+        getStakeTable: async () => ({
+          stake_table: [],
+        }),
+      })
+
+      const provider = new DaBeatStatsProvider(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        mockEspressoClient,
+      )
+
+      const result = await provider.getEspressoStats()
+
+      expect(result).toEqual({
+        totalStake: 0n,
+        thresholdStake: 0n,
+        numberOfValidators: 0,
+      })
+    })
+
+    it('throws error when Espresso client is not provided', async () => {
+      const provider = new DaBeatStatsProvider(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      )
+
+      await expect(provider.getEspressoStats()).toBeRejectedWith(
+        'Espresso client not found',
       )
     })
   })

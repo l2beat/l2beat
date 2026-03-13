@@ -132,7 +132,7 @@ export class DaBeatStatsProvider {
 
     return {
       totalStake,
-      thresholdStake: (totalStake * 200n) / 300n,
+      thresholdStake: (totalStake * 2n) / 3n,
       numberOfValidators: stake_table.length,
     }
   }
