@@ -1451,7 +1451,7 @@ Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindge
   },
   '0x5b82aa008989d331bf6f3cf75b85a04c9ee809447c19b85fecaf3b7d749a6576': {
     ...WASM_MODULE_ROOT('Apechain'),
-    verificationStatus: 'successful', // Apechain has closed challengers, so I think it doesn't make sense to mark them red for non reproducible program
+    verificationStatus: 'notVerified', // Apechain has closed challengers, so I think it doesn't make sense to mark them red for non reproducible program
     verificationSteps:
       'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
   },
