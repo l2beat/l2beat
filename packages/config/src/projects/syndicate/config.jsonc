@@ -7,7 +7,7 @@
     "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A", // RollupProxy
     "eth:0x6CA109706c6EBe5379c45f20B3311441D50cb711" // L1 Standard Gateway (ERC20 escrow)
   ],
-  "sharedModules": [],
+  "sharedModules": ["shared-eigenlayer"],
   "names": {
     "eth:0xABf2988264170a7f94E6Fa76ECA5965B906E229d": "ChallengeManager",
     "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277": "Bridge"
