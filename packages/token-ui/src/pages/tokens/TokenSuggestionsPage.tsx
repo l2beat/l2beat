@@ -71,12 +71,13 @@ export function TokenSuggestionsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="text-right">#</TableHead>
                   <TableHead>Chain</TableHead>
                   <TableHead>Address</TableHead>
                   <TableHead>Suggested abstract token</TableHead>
                   <TableHead>Action</TableHead>
                 </TableRow>
-                {suggestions?.map((suggestion) => {
+                {suggestions?.map((suggestion, index) => {
                   const chain = chains?.find(
                     (chain) => chain.name === suggestion.chain,
                   )
@@ -84,6 +85,9 @@ export function TokenSuggestionsPage() {
                     <TableRow
                       key={`${suggestion.chain}-${suggestion.address}-${suggestion.abstractTokenId}`}
                     >
+                      <TableCell className="text-right tabular-nums">
+                        {index + 1}
+                      </TableCell>
                       <TableCell>{suggestion.chain}</TableCell>
                       <TableCell>
                         {chain?.explorerUrl ? (
