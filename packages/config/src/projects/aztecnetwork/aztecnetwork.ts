@@ -1,7 +1,5 @@
 import {
   ChainSpecificAddress,
-  EthereumAddress,
-  formatLargeNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -25,6 +23,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { formatEther } from 'ethers/lib/utils'
 
 const discovery = new ProjectDiscovery('aztecnetwork')
 
@@ -67,12 +66,27 @@ const escapeHatchFrequency =
 
 const executionDelay = governanceConfiguration.executionDelay
 
-const rollupSinceTimestamp = UnixTime(
-  discovery.getContract('Rollup').sinceTimestamp ?? 1772654159,
-)
+const feeJuicePortal = discovery.getContract('FeeJuicePortal')
+const governance = discovery.getContract('Governance')
+const honkVerifier = discovery.getContract('HonkVerifier')
+const inbox = discovery.getContract('Inbox')
+const outbox = discovery.getContract('Outbox')
+const registry = discovery.getContract('Registry')
+const rollup = discovery.getContract('Rollup')
+const escapeHatch = discovery.getContract('EscapeHatch')
+
+const rollupAddress = ChainSpecificAddress.address(rollup.address)
+const verifierAddress = ChainSpecificAddress.address(honkVerifier.address)
+const inboxAddress = ChainSpecificAddress.address(inbox.address)
+const outboxAddress = ChainSpecificAddress.address(outbox.address)
+const governanceAddress = ChainSpecificAddress.address(governance.address)
+const registryAddress = ChainSpecificAddress.address(registry.address)
+const escapeHatchAddress = ChainSpecificAddress.address(escapeHatch.address)
+
+const alphaGenesisTimestamp = UnixTime(1774839144) // Monday, 30 March 2026 04:52 GMT+2
 
 function formatAztecAmount(amount: bigint): string {
-  return `${formatLargeNumber(Number(amount / 10n ** 18n))} AZTEC`
+  return `${formatEther(amount)} AZTEC`
 }
 
 const activationThresholdString = formatAztecAmount(activationThreshold)
@@ -85,30 +99,11 @@ const proofWindowString = formatSeconds(proofWindow)
 const escapeHatchFrequencyString = formatSeconds(escapeHatchFrequency)
 const safeThreshold = discovery.getMultisigStats('Safe')
 
-const rollupAddress = EthereumAddress(
-  '0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962',
-)
-const verifierAddress = EthereumAddress(
-  '0x70aEDda427f26480D240bc0f4308ceDec8d31348',
-)
-const inboxAddress = EthereumAddress(
-  '0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578',
-)
-const outboxAddress = EthereumAddress(
-  '0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0',
-)
-const governanceAddress = EthereumAddress(
-  '0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e',
-)
-const registryAddress = EthereumAddress(
-  '0x35b22e09Ee0390539439E24f06Da43D83f90e298',
-)
-
 export const aztecnetwork: ScalingProject = {
   type: 'layer2',
   id: ProjectId('aztecnetwork'),
   capability: 'universal',
-  addedAt: UnixTime(1773273600), // 2026-03-12T00:00:00Z
+  addedAt: UnixTime(1773405732),
   badges: [BADGES.VM.AztecVM, BADGES.DA.EthereumBlobs, BADGES.Other.Governance],
   display: {
     name: 'Aztec Network',
@@ -120,12 +115,14 @@ export const aztecnetwork: ScalingProject = {
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],
       documentation: ['https://docs.aztec.network/'],
-      explorers: ['https://aztecscan.xyz', 'https://aztecexplorer.xyz'],
+      explorers: ['https://aztecscan.xyz', 'https://aztecexplorer.xyz', 'https://dashtec.xyz/', 'https://slashveto.me/'],
+      bridges: [], // TODO
       repositories: ['https://github.com/AztecProtocol/aztec-packages'],
       socialMedia: [
-        'https://twitter.com/aztecnetwork',
-        'https://medium.com/aztec-protocol',
-        'https://t.me/aztecprotocol',
+        'https://x.com/aztecnetwork',
+        'https://aztec.network/blog',
+        'https://t.me/AztecAnnouncements_Official',
+        'https://forum.aztec.network/',
         'https://youtube.com/@aztecnetwork',
         'https://discord.com/invite/aztec',
       ],
@@ -141,6 +138,7 @@ export const aztecnetwork: ScalingProject = {
   proofSystem: {
     type: 'Validity',
     name: 'Honk',
+    // zkCatalogId: // TODO Sergey
   },
   scopeOfAssessment: {
     inScope: [
@@ -163,13 +161,8 @@ export const aztecnetwork: ScalingProject = {
     associatedTokens: ['AZTEC'],
     escrows: [
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress(
-          'eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617',
-        ),
+        address: feeJuicePortal.address,
         tokens: ['AZTEC'],
-        includeInTotal: false,
-        description:
-          'One-way fee bridge for the AZTEC gas token. Deposits are minted on L2 via the Inbox, while L1 withdrawals from this escrow are reserved for paying sequencers and provers.',
       }),
     ],
     trackedTxs: [
@@ -184,7 +177,7 @@ export const aztecnetwork: ScalingProject = {
           selector: '0x85b98fd8',
           functionSignature:
             'function propose((bytes32,(int256),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256)),(bytes,bytes),address[],(uint8,bytes32,bytes32),bytes)',
-          sinceTimestamp: rollupSinceTimestamp,
+          sinceTimestamp: alphaGenesisTimestamp,
         },
       },
       {
@@ -198,7 +191,7 @@ export const aztecnetwork: ScalingProject = {
           selector: '0xd8ea4277',
           functionSignature:
             'function submitEpochRootProof((uint256,uint256,(bytes32,bytes32,bytes32,address),bytes32[],(bytes,bytes),bytes,bytes))',
-          sinceTimestamp: rollupSinceTimestamp,
+          sinceTimestamp: alphaGenesisTimestamp,
         },
       },
     ],
@@ -211,7 +204,7 @@ export const aztecnetwork: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN, // UltraHonk and CHONK (Client-side Highly Optimized ploNK)
-      executionDelay: 0, // a proposal can be immediately proven
+      executionDelay: 0, // a proposed checkpoint can be immediately proven
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
@@ -220,7 +213,7 @@ export const aztecnetwork: ScalingProject = {
       orderHint: executionDelay,
       description: `Any upgrade is delayed by ${formatSeconds(
         executionDelay,
-      )} before being executed. During that time, users can exit through 1. regular withdrawals initiated privately on L2 via the decentralized, permissionless sequencer set, 2. proposing and proving their own withdrawal via the escape hatch.`,
+      )} before being executed. During that time, users can exit through 1) regular withdrawals initiated privately on L2 via the decentralized, permissionless sequencer set and 2) proposing and proving their own withdrawal via the escape hatch.`,
     },
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
@@ -306,7 +299,7 @@ export const aztecnetwork: ScalingProject = {
         },
         {
           title: 'EscapeHatch.sol - selectCandidates() on Etherscan',
-          url: 'https://etherscan.io/address/0x8c189ead28D5987A48e522162f9225124D50AD1B#code',
+          url: `https://etherscan.io/address/${escapeHatchAddress.toString()}#code`,
         },
       ],
       risks: [],
@@ -325,7 +318,7 @@ export const aztecnetwork: ScalingProject = {
         },
         {
           title: 'EscapeHatch.sol - joinCandidateSet() on Etherscan',
-          url: 'https://etherscan.io/address/0x8c189ead28D5987A48e522162f9225124D50AD1B#code',
+          url: `https://etherscan.io/address/${escapeHatchAddress.toString()}#code`,
         },
       ],
       risks: [],
@@ -404,14 +397,47 @@ export const aztecnetwork: ScalingProject = {
     risks: [], // 30d delay for the canonical rollup pointer but main contracts are immutable
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
-  upgradesAndGovernance: `Aztec uses immutable contracts for the active rollup version, but Governance can promote a newly deployed rollup to canonical by calling Registry.addRollup() and GSE.addRollup() through a successful governance proposal. At the discovery snapshot, Governance uses a ${currentExecutionDelayString} execution delay together with a ${formatSeconds(
-    governanceConfiguration.votingDelay,
-  )} voting delay and a ${formatSeconds(
-    governanceConfiguration.votingDuration,
-  )} voting period. The pending Alpha payload at \`0x780523FBa95e4Be0Fa09DA0fff5Fab3aBAE7B58e\` is itself a governance payload: it registers the new rollup, enables rewards, activates the escape hatch, migrates flush rewards, and updates the governance execution delay to ${executionDelay}. Formal proposals can also be submitted with a ${governanceLockString} lock for ${formatSeconds(
-    governanceConfiguration.proposeConfig.lockDelay,
-  )}.
+  upgradesAndGovernance: `
+# Standard Path (Signaling)
+Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum.
 
-There is no Security Council with instant upgrade power. The ${safeThreshold} SlashVeto Council only acts as the slashing vetoer and does not control rollup upgrades.`,
+## 1. The Signaling Phase (`GovernanceProposer`)
+Aztec uses an onchain "Empire" signaling system. Active sequencers call `signal(payloadAddress)` on the L1 `GovernanceProposer` contract during their designated L2 slots to support a specific upgrade payload. 
+*   A voting round consists of `ROUND_SIZE` slots
+*   To win a round and become a formal proposal, a payload must receive signals from at least `QUORUM_SIZE` slots.
+*   Once quorum is reached, the payload is submitted to the L1 `Governance` contract.
+
+## 2. The Voting Phase (`Governance`)
+Once submitted, the proposal enters a delay and voting flow:
+*   **Pending (`votingDelay`):** At the end of this delay, voting power is snapshotted.
+*   **Active (`votingDuration`):** AZTEC token holders can vote. To pass, a proposal must reach a XX% Quorum of all staked power, and the `yea` votes must exceed a required margin of XX.
+*   **Queued (`executionDelay`):** If successful, the proposal enters an execution delay. This acts as an exit window, allowing dissenting validators to initiate a withdrawal of their staked tokens before the malicious/disagreed-upon code is executed.
+*   Executable (`gracePeriod`): The proposal enters a grace period where anyone can call `execute()`. If not executed, it expires.
+
+Total standard delay from proposal to execution: **XX Days**.
+
+### Emergency Path (Circumvent Signaling)
+If the L2 sequencer set is offline, censoring, or acting maliciously, the `GovernanceProposer` cannot be used. To ensure liveness, anyone can bypass the Sequencer signaling phase using the `proposeWithLock` function directly on the `Governance` contract.
+*   An actor must lock 258.75 Million AZTEC**, roughly 2.5% of total supply
+*   These funds are locked for an extended `lockDelay` of 90 Days.
+*   Once proposed, the payload enters the exact same 17-day Voting Phase (Pending -> Active -> Queued -> Executable) as the standard path.
+
+### Validator Governance & The GSE (Governance Staking Escrow)
+The system relies on the `GSE.sol` contract to bridge L2 network security with L1 governance.
+*   To become an L2 validator, an entity deposits **`ACTIVATION_THRESHOLD` AZTEC** into the GSE.
+*   The GSE takes all validator deposits and stakes them directly into the L1 `Governance` contract, aggregating the voting power.
+*   When a proposal is Active on L1, validators call `vote()` on the GSE, which calculates their specific share of the staked power and forwards the vote to the main Governance contract.
+*   If a proposal upgrades the system to a new canonical rollup, validators do not need to manually unstake and restake. The GSE can automatically migrate the voting power and stake of all active validators to the new rollup version if they staked to a special `BONUS_INSTANCE_ADDRESS` instead of a specific immutable rollup.
+
+### Slashing and the SlashVeto Council
+Aztec features onchain slashing for equivocation or missing attestations, managed by `Slasher` and `TallySlashingProposer`. 
+
+There is a protective **Vetoer** role held by the SlashVeto Council. The Council cannot upgrade the protocol, alter governance, or steal funds. Instead it is limited to two permissions:
+*   call `vetoPayload()` to stop a specific slashing event.
+*   call `setSlashingEnabled(false)`, which pauses all slashing in the protocol for a period of `SLASHING_DISABLE_DURATION`.
+
+### Economics & Treasury
+*   **Coin Issuer:** The `CoinIssuer` contract is owned by Governance and is authorized to mint new AZTEC tokens up to a cap of `NOMINAL_ANNUAL_PERCENTAGE_CAP`.
+*   **Protocol Treasury:** Funds owned by the DAO sit in the `ProtocolTreasury`. The Treasury has a hardcoded `GATED_UNTIL` timestamp (approx. Dec 2026). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds can only be moved with a Governance Proposal.`,
   discoveryInfo: getDiscoveryInfo([discovery]),
 }
