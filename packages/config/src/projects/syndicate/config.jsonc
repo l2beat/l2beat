@@ -15,10 +15,7 @@
   "overrides": {
     "eth:0x12ad349e5d72B582856290736e0f13FE5fA57Aa4": {
       "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": [
-        "batchCount",
-        "totalDelayedMessagesRead"
-      ],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "ignoreRelatives": ["reader4844"],
       "fields": {
         "sequencerVersion": {
