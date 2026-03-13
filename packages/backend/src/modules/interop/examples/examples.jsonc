@@ -676,7 +676,13 @@
         "wormhole.LogTransferRedeemed"
       ],
       "messages": ["wormhole.Message"],
-      "transfers": ["wormhole-tokenbridge.Transfer"]
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": false }
+        }
+      ]
     }
   },
   // This tx goes through a Portal Token Bridge Relayer contract, which emits
@@ -700,7 +706,13 @@
         "wormhole.LogTransferRedeemed"
       ],
       "messages": ["wormhole.Message"],
-      "transfers": ["wormhole-tokenbridge.Transfer"]
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": false }
+        }
+      ]
     }
   },
   "mayan-mctp": {
@@ -1425,7 +1437,79 @@
         "chain": "base",
         "tx": "0xcc4a19dfa0dd4ca8b1f010083a89e5bc23d72f9cbb1194b57f3c040d35a412ac"
       }
-    ]
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed",
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed",
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message", "wormhole.Message", "wormhole.Message"],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "wasMinted": true }
+        }
+      ]
+    }
+  },
+  // Wrapped-to-wrapped transfers (both sides are Wormhole-wrapped WETH, canonical on Ethereum).
+  // Both directions should be burn/mint since neither chain holds the native token.
+  "wormhole-tokenbridge-polygon-avax": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "polygonpos",
+        "tx": "0x93257339849d2b65cfeac0abafba344d851fae8b3fe83b78a3163bc9acb94f05"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x0d44a8dd467cf3e40366084bc8f6ef851624336a16cacaf010728fb4c2b63ed0"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0xae431ef3b41d6caca2f0bfa8901c1bc6cb033e31b3146c677d80c9e91d7ee864"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xc0cb4eb819e983288bd8e4df39b065efbf0b846bdbfcce104e9951f3bc203c44"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed",
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message", "wormhole.Message"],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": true }
+        }
+      ]
+    }
   },
   // Portal Token Bridge transfer to Solana (chain 1) - should be marked unsupported
   "wormhole-tokenbridge-unsupported": {

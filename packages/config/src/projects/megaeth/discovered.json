@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1773236625,
+  "timestamp": 1773318433,
   "configHash": "0x41ebe06aeb510eda130b32372516b66d975a6bf8b017740e4c327a31672c52f9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -474,8 +474,7 @@
           "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
           "0xc07a06bef2237cb01b3714510ea2d7e2b0f056081e8fe0ace4c8f3e00f1c2697",
           "0x4776a2a65d4c3b3a25603e2d581837dded443b840bad2406642d5457d90afc2b",
-          "0x6c44dee76ef91585c58c16f5dc19694fc94a31fc65808cc7e6a08f4ee209e7db",
-          "0x607bfc20f482482ff1a1585e2d1296146cce65cef0fa271eecba591de650576e"
+          "0x6c44dee76ef91585c58c16f5dc19694fc94a31fc65808cc7e6a08f4ee209e7db"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -1384,7 +1383,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292663958",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292663992",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1545,7 +1544,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 24634500
+          "prevBlockNum": 24641287
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1684,7 +1683,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2900,
+        "gameCount": 2923,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -2658,7 +2657,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0xB84fD9D07767451EEfAa9A2228fCc9B9b3E4FFD2",
+        "lastResolved": "eth:0x0bAa2923F1A4Ecde2bD0DC8c08D029Fbc80A0030",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -4506,6 +4505,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24634602 },
+  "usedBlockNumbers": { "ethereum": 24641380 },
   "permissionsConfigHash": "0xec85a43227380cee07e3b312e84c71a5ffc4ee79d9aa41017950d223e15464c1"
 }
