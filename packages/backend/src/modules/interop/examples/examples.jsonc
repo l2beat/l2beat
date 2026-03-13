@@ -886,6 +886,15 @@
       {
         "chain": "base",
         "tx": "0xe6ceacc75b0e8a0c8f724bde613c551edb976045835e24681d7646e1f6aad53e"
+      },
+      // orphan fulfill events with exotic signatures that should correctly decode their $srcChain as solana
+      {
+        "chain": "arbitrum",
+        "tx": "0x0dcc9091d25564ff14333455d40376c78c148ec7d7e7da477301fc0d25b80d4c"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xead243cb6f81932a16cd922556b91bcd95cec094bfe9cbb0d86fbfb76d531f14"
       }
     ],
     "expects": {
@@ -900,6 +909,7 @@
         "mayan-forwarder.MayanForwarded",
         "mayan-forwarder.MayanForwarded",
         "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
         "mayan-swift.OrderCreated",
         "mayan-swift.OrderCreated",
         "mayan-swift.OrderCreated",
@@ -911,6 +921,8 @@
         "mayan-swift.OrderCreated",
         "mayan-swift.OrderCreated",
         "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderFulfilled",
         "mayan-swift.OrderFulfilled",
         "mayan-swift.OrderFulfilled",
         "mayan-swift.OrderFulfilled",
