@@ -4,6 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -23,7 +24,6 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { formatEther } from 'ethers/lib/utils'
 
 const discovery = new ProjectDiscovery('aztecnetwork')
 
@@ -63,6 +63,40 @@ const proofWindow =
 const escapeHatchFrequency =
   discovery.getContractValue<number>('EscapeHatch', 'getFrequency') *
   epochDuration
+const governanceSignalQuorumSize = discovery.getContractValue<number>(
+  'GovernanceProposer',
+  'QUORUM_SIZE',
+)
+const governanceSignalRoundSize = discovery.getContractValue<number>(
+  'GovernanceProposer',
+  'ROUND_SIZE',
+)
+const gseActivationThreshold = discovery.getContractValueBigInt(
+  'GSE',
+  'ACTIVATION_THRESHOLD',
+)
+const bonusInstanceAddress = ChainSpecificAddress.address(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'GSE',
+    'BONUS_INSTANCE_ADDRESS',
+  ),
+)
+const slashingDisableDuration = discovery.getContractValue<number>(
+  'Slasher',
+  'SLASHING_DISABLE_DURATION',
+)
+const coinIssuerNominalAnnualPercentageCap = discovery.getContractValue<string>(
+  'CoinIssuer',
+  'NOMINAL_ANNUAL_PERCENTAGE_CAP',
+)
+const protocolTreasuryGatedUntil = discovery.getContractValue<number>(
+  'ProtocolTreasury',
+  'GATED_UNTIL',
+)
+const aztecTotalSupply = discovery.getContractValueBigInt(
+  'AZTEC Token',
+  'totalSupply',
+)
 
 const executionDelay = governanceConfiguration.executionDelay
 
@@ -89,15 +123,79 @@ function formatAztecAmount(amount: bigint): string {
   return `${formatEther(amount)} AZTEC`
 }
 
+function formatPercentage(value: string): string {
+  const tenthsOfPercent = (BigInt(value) * 1000n) / 10n ** 18n
+  const whole = tenthsOfPercent / 10n
+  const tenths = tenthsOfPercent % 10n
+  return tenths === 0n ? `${whole}%` : `${whole}.${tenths}%`
+}
+
+function formatFractionAsPercentage(
+  numerator: bigint,
+  denominator: bigint,
+): string {
+  const tenthsOfPercent = (numerator * 1000n) / denominator
+  const whole = tenthsOfPercent / 10n
+  const tenths = tenthsOfPercent % 10n
+  return tenths === 0n ? `${whole}%` : `${whole}.${tenths}%`
+}
+
+function formatMonthYear(timestamp: number): string {
+  return new Date(timestamp * 1000).toLocaleDateString('en-US', {
+    month: 'short',
+    timeZone: 'UTC',
+    year: 'numeric',
+  })
+}
+
 const activationThresholdString = formatAztecAmount(activationThreshold)
 const escapeHatchBondString = formatAztecAmount(escapeHatchBond)
-const governanceLockString = formatAztecAmount(
-  BigInt(governanceConfiguration.proposeConfig.lockAmount),
+const gseActivationThresholdString = formatAztecAmount(gseActivationThreshold)
+const governanceLockAmount = BigInt(
+  governanceConfiguration.proposeConfig.lockAmount,
 )
-const currentExecutionDelayString = formatSeconds(executionDelay)
+const governanceLockString = formatAztecAmount(governanceLockAmount)
+const governanceSignalQuorumSizeString =
+  governanceSignalQuorumSize.toLocaleString('en-US')
+const governanceSignalRoundSizeString =
+  governanceSignalRoundSize.toLocaleString('en-US')
+const governanceVotingDelayString = formatSeconds(
+  governanceConfiguration.votingDelay,
+)
+const governanceVotingDurationString = formatSeconds(
+  governanceConfiguration.votingDuration,
+)
+const governanceExecutionDelayString = formatSeconds(
+  governanceConfiguration.executionDelay,
+)
+const governanceGracePeriodString = formatSeconds(
+  governanceConfiguration.gracePeriod,
+)
+const governanceLockDelayString = formatSeconds(
+  governanceConfiguration.proposeConfig.lockDelay,
+)
+const governanceQuorumString = formatPercentage(governanceConfiguration.quorum)
+const governanceRequiredYeaMarginString = formatPercentage(
+  governanceConfiguration.requiredYeaMargin,
+)
+const governanceTotalDelayString = formatSeconds(
+  governanceConfiguration.votingDelay +
+    governanceConfiguration.votingDuration +
+    governanceConfiguration.executionDelay,
+)
+const governanceLockShareOfSupplyString = formatFractionAsPercentage(
+  governanceLockAmount,
+  aztecTotalSupply,
+)
+const coinIssuerNominalAnnualPercentageCapString = formatPercentage(
+  coinIssuerNominalAnnualPercentageCap,
+)
+const protocolTreasuryGatedUntilString = formatMonthYear(
+  protocolTreasuryGatedUntil,
+)
 const proofWindowString = formatSeconds(proofWindow)
 const escapeHatchFrequencyString = formatSeconds(escapeHatchFrequency)
-const safeThreshold = discovery.getMultisigStats('Safe')
+const slashingDisableDurationString = formatSeconds(slashingDisableDuration)
 
 export const aztecnetwork: ScalingProject = {
   type: 'layer2',
@@ -115,7 +213,12 @@ export const aztecnetwork: ScalingProject = {
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],
       documentation: ['https://docs.aztec.network/'],
-      explorers: ['https://aztecscan.xyz', 'https://aztecexplorer.xyz', 'https://dashtec.xyz/', 'https://slashveto.me/'],
+      explorers: [
+        'https://aztecscan.xyz',
+        'https://aztecexplorer.xyz',
+        'https://dashtec.xyz/',
+        'https://slashveto.me/',
+      ],
       bridges: [], // TODO
       repositories: ['https://github.com/AztecProtocol/aztec-packages'],
       socialMedia: [
@@ -401,43 +504,43 @@ export const aztecnetwork: ScalingProject = {
 # Standard Path (Signaling)
 Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum.
 
-## 1. The Signaling Phase (`GovernanceProposer`)
-Aztec uses an onchain "Empire" signaling system. Active sequencers call `signal(payloadAddress)` on the L1 `GovernanceProposer` contract during their designated L2 slots to support a specific upgrade payload. 
-*   A voting round consists of `ROUND_SIZE` slots
-*   To win a round and become a formal proposal, a payload must receive signals from at least `QUORUM_SIZE` slots.
-*   Once quorum is reached, the payload is submitted to the L1 `Governance` contract.
+## 1. The Signaling Phase (\`GovernanceProposer\`)
+Aztec uses an onchain "Empire" signaling system. Active sequencers call \`signal(payloadAddress)\` on the L1 \`GovernanceProposer\` contract during their designated L2 slots to support a specific upgrade payload. 
+*   A voting round consists of ${governanceSignalRoundSizeString} slots
+*   To win a round and become a formal proposal, a payload must receive signals from at least ${governanceSignalQuorumSizeString} slots.
+*   Once quorum is reached, the payload is submitted to the L1 \`Governance\` contract.
 
-## 2. The Voting Phase (`Governance`)
+## 2. The Voting Phase (\`Governance\`)
 Once submitted, the proposal enters a delay and voting flow:
-*   **Pending (`votingDelay`):** At the end of this delay, voting power is snapshotted.
-*   **Active (`votingDuration`):** AZTEC token holders can vote. To pass, a proposal must reach a XX% Quorum of all staked power, and the `yea` votes must exceed a required margin of XX.
-*   **Queued (`executionDelay`):** If successful, the proposal enters an execution delay. This acts as an exit window, allowing dissenting validators to initiate a withdrawal of their staked tokens before the malicious/disagreed-upon code is executed.
-*   Executable (`gracePeriod`): The proposal enters a grace period where anyone can call `execute()`. If not executed, it expires.
+*   **Pending (${governanceVotingDelayString}):** At the end of this delay, voting power is snapshotted.
+*   **Active (${governanceVotingDurationString}):** AZTEC token holders can vote. To pass, a proposal must reach a ${governanceQuorumString} Quorum of all staked power, and the \`yea\` votes must exceed a required margin of ${governanceRequiredYeaMarginString}.
+*   **Queued (${governanceExecutionDelayString}):** If successful, the proposal enters an execution delay. This acts as an exit window, allowing dissenting validators to initiate a withdrawal of their staked tokens before the malicious/disagreed-upon code is executed.
+*   Executable (${governanceGracePeriodString}): The proposal enters a grace period where anyone can call \`execute()\`. If not executed, it expires.
 
-Total standard delay from proposal to execution: **XX Days**.
+Total standard delay from proposal to execution: **${governanceTotalDelayString}**.
 
 ### Emergency Path (Circumvent Signaling)
-If the L2 sequencer set is offline, censoring, or acting maliciously, the `GovernanceProposer` cannot be used. To ensure liveness, anyone can bypass the Sequencer signaling phase using the `proposeWithLock` function directly on the `Governance` contract.
-*   An actor must lock 258.75 Million AZTEC**, roughly 2.5% of total supply
-*   These funds are locked for an extended `lockDelay` of 90 Days.
-*   Once proposed, the payload enters the exact same 17-day Voting Phase (Pending -> Active -> Queued -> Executable) as the standard path.
+If the L2 sequencer set is offline, censoring, or acting maliciously, the \`GovernanceProposer\` cannot be used. To ensure liveness, anyone can bypass the Sequencer signaling phase using the \`proposeWithLock()\` function directly on the \`Governance\` contract.
+*   An actor must lock **${governanceLockString}**, roughly ${governanceLockShareOfSupplyString} of total supply
+*   These funds are locked for an extended ${governanceLockDelayString}.
+*   Once proposed, the payload enters the exact same ${governanceTotalDelayString} Voting Phase (Pending -> Active -> Queued -> Executable) as the standard path.
 
 ### Validator Governance & The GSE (Governance Staking Escrow)
-The system relies on the `GSE.sol` contract to bridge L2 network security with L1 governance.
-*   To become an L2 validator, an entity deposits **`ACTIVATION_THRESHOLD` AZTEC** into the GSE.
-*   The GSE takes all validator deposits and stakes them directly into the L1 `Governance` contract, aggregating the voting power.
-*   When a proposal is Active on L1, validators call `vote()` on the GSE, which calculates their specific share of the staked power and forwards the vote to the main Governance contract.
-*   If a proposal upgrades the system to a new canonical rollup, validators do not need to manually unstake and restake. The GSE can automatically migrate the voting power and stake of all active validators to the new rollup version if they staked to a special `BONUS_INSTANCE_ADDRESS` instead of a specific immutable rollup.
+The system relies on the \`GSE.sol\` contract to bridge L2 network security with L1 governance.
+*   To become an L2 validator, an entity deposits **${gseActivationThresholdString}** into the GSE.
+*   The GSE takes all validator deposits and stakes them directly into the L1 \`Governance\` contract, aggregating the voting power.
+*   When a proposal is Active on L1, validators call \`vote()\` on the GSE, which calculates their specific share of the staked power and forwards the vote to the main Governance contract.
+*   If a proposal upgrades the system to a new canonical rollup, validators do not need to manually unstake and restake. The GSE can automatically migrate the voting power and stake of all active validators to the new rollup version if they staked to the special address \`${bonusInstanceAddress.toString()}\` instead of a specific immutable rollup.
 
 ### Slashing and the SlashVeto Council
-Aztec features onchain slashing for equivocation or missing attestations, managed by `Slasher` and `TallySlashingProposer`. 
+Aztec features onchain slashing for equivocation or missing attestations, managed by \`Slasher\` and \`TallySlashingProposer\`. 
 
 There is a protective **Vetoer** role held by the SlashVeto Council. The Council cannot upgrade the protocol, alter governance, or steal funds. Instead it is limited to two permissions:
-*   call `vetoPayload()` to stop a specific slashing event.
-*   call `setSlashingEnabled(false)`, which pauses all slashing in the protocol for a period of `SLASHING_DISABLE_DURATION`.
+*   call \`vetoPayload()\` to stop a specific slashing event.
+*   call \`setSlashingEnabled(false)\`, which pauses all slashing in the protocol for a period of ${slashingDisableDurationString}.
 
 ### Economics & Treasury
-*   **Coin Issuer:** The `CoinIssuer` contract is owned by Governance and is authorized to mint new AZTEC tokens up to a cap of `NOMINAL_ANNUAL_PERCENTAGE_CAP`.
-*   **Protocol Treasury:** Funds owned by the DAO sit in the `ProtocolTreasury`. The Treasury has a hardcoded `GATED_UNTIL` timestamp (approx. Dec 2026). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds can only be moved with a Governance Proposal.`,
+*   **Coin Issuer:** The \`CoinIssuer\` contract is owned by Governance and is authorized to mint new AZTEC tokens up to a cap of ${coinIssuerNominalAnnualPercentageCapString}.
+*   **Protocol Treasury:** Funds owned by the DAO sit in the \`ProtocolTreasury\`. The Treasury has a hardcoded timestamp (approx. ${protocolTreasuryGatedUntilString}). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds can only be moved with a Governance Proposal.`,
   discoveryInfo: getDiscoveryInfo([discovery]),
 }
