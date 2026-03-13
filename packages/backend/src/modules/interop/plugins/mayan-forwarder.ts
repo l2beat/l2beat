@@ -321,6 +321,7 @@ export function getChainFromCctpDomain(
 const abiItems = parseAbi([
   // mayanSwift 0xC38e4e6A15593f908255214653d3D947CA1c2338
   'function createOrderWithToken(address tokenIn, uint256 amountIn, (bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random))',
+  'function createOrderWithToken(address tokenIn, uint256 amountIn, (uint8 traderType, bytes32 trader, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, uint8 referrerBps, uint8 auctionMode, bytes32 random), bytes customPayload)',
   'function createOrderWithEth((bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random))',
   'function createOrderWithSig(address tokenIn, uint256 amountIn, (bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random), uint256 submissionFee, bytes signedOrderHash, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
   // mayanCircle 0x875d6d37EC55c8cF220B9E5080717549d8Aa8EcA
@@ -337,6 +338,7 @@ const abiItems = parseAbi([
 ])
 
 const SELECTOR_CREATE_ORDER_WITH_TOKEN = '0x8e8d142b'
+const SELECTOR_CREATE_ORDER_WITH_TOKEN_V2 = '0xa3a30834'
 const SELECTOR_CREATE_ORDER_WITH_ETH = '0xb866e173'
 const SELECTOR_CREATE_ORDER_WITH_SIG = '0x3a30b37f'
 const SELECTOR_CREATE_ORDER_MAYAN_CIRCLE = '0x1c59b7fc'
@@ -383,6 +385,25 @@ export function decodeMayanData(
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
         tokenOut: zeroAddressToNative(res.args[2].tokenOut),
+      }
+    }
+    case SELECTOR_CREATE_ORDER_WITH_TOKEN_V2: {
+      if (res.functionName !== 'createOrderWithToken') return
+      const args = res.args as unknown as readonly [
+        `0x${string}`,
+        bigint,
+        {
+          destChainId: number
+          tokenOut: `0x${string}`
+        },
+        `0x${string}`,
+      ]
+      return {
+        methodSignature,
+        dstChain: getChainFromWormholeId(wormholeNetworks, args[2].destChainId),
+        tokenIn: zeroAddressToNative(args[0]),
+        amountIn: args[1],
+        tokenOut: zeroAddressToNative(args[2].tokenOut),
       }
     }
     case SELECTOR_CREATE_ORDER_WITH_ETH: {
