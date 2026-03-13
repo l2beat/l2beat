@@ -2,5 +2,14 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "aztecnetwork",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298"]
+  "initialAddresses": [
+    "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+    "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
+    "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958"
+  ],
+  "overrides": {
+    "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12": {
+      "ignoreDiscovery": true
+    }
+  }
 }

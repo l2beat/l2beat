@@ -26,7 +26,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const discovery = new ProjectDiscovery('aztecnetwork-alphapayload')
+const discovery = new ProjectDiscovery('aztecnetwork')
 
 const governanceConfiguration = discovery.getContractValue<{
   proposeConfig: { lockDelay: number; lockAmount: string }
@@ -113,7 +113,7 @@ export const aztecnetwork: ScalingProject = {
   display: {
     name: 'Aztec Network',
     shortName: 'Aztec',
-    slug: 'aztec-network',
+    slug: 'aztecnetwork',
     description:
       'Aztec Network is a privacy-preserving ZK rollup that uses the AztecVM and Noir to support private and public smart contracts on Ethereum.',
     purposes: ['Universal', 'Privacy'],
@@ -364,12 +364,7 @@ export const aztecnetwork: ScalingProject = {
             url: `https://etherscan.io/address/${governanceAddress.toString()}#code`,
           },
         ],
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'Governance approves a malicious new canonical rollup implementation.',
-          },
-        ],
+        risks: [],
       },
     ],
   },

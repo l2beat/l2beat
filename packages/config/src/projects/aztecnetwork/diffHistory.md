@@ -1,3 +1,224 @@
+Generated with discovered.json: 0xa583ca65bc2d07d25dbe369981163aae13ae4b71
+
+# Diff at Fri, 13 Mar 2026 12:06:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@701a1d1ad3b6c6bb36a1a5ed8937206d44c94fb9 block: 1771254730
+- current timestamp: 1773403504
+
+## Description
+
+config: forcibly register post-alpha contracts. remove from config.jsonc as soon as the payload is executed.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract EscapeHatch (eth:0x8c189ead28D5987A48e522162f9225124D50AD1B) {
+    +++ description: Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      name:
++        "EscapeHatch"
+      template:
++        "aztecnetwork/EscapeHatch"
+      sourceHashes:
++        ["0x075ee4b441a07410b5aa3c5fc868789251bc02707bc5ba28a174648dafad785d"]
+      description:
++        "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates."
+      sinceTimestamp:
++        1772654171
+      sinceBlock:
++        24586323
+      values:
++        {"$immutable":true,"getActiveDuration":2,"getBondSize":"332000000000000000000000000","getBondSizeFmt":"332,000,000","getBondToken":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","getCandidateCount":0,"getCurrentHatch":2,"getFailedHatchPunishment":"9600000000000000000000000","getFailedHatchPunishmentFmt":"9,600,000","getFrequency":112,"getLagInHatches":1,"getProposingExitDelay":2592000,"getRollup":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","getWithdrawalTax":"1660000000000000000000000","LAG_IN_EPOCHS_FOR_RANDAO":1,"LAG_IN_EPOCHS_FOR_SET_SIZE":2}
+      fieldMeta:
++        {"getBondSizeFmt":{"description":"The amount of tokens required to join the candidate set."},"getCandidateCount":{"severity":"HIGH","description":"Hatch proposer candidates who posted the bond."},"getBondToken":{"description":"The ERC20 token used for candidate bonds."},"getFailedHatchPunishmentFmt":{"description":"The amount deducted from the bond if the designated proposer fails to fulfill their duties."},"getWithdrawalTax":{"description":"The amount deducted from the bond when a candidate voluntarily exits the active set."},"getFrequency":{"description":"The number of epochs between escape hatch windows."},"getActiveDuration":{"description":"The number of epochs an escape hatch remains open."},"getLagInHatches":{"description":"The number of hatches ahead for which candidates are deterministically selected."},"getProposingExitDelay":{"description":"The additional time (in seconds) a proposer must wait after their hatch ends before they can exit."},"LAG_IN_EPOCHS_FOR_RANDAO":{"description":"The number of epochs to look back from the start of the hatch for a stable RANDAO seed."},"LAG_IN_EPOCHS_FOR_SET_SIZE":{"description":"The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."},"getRollup":{"description":"The address of the core Rollup contract."}}
+      implementationNames:
++        {"eth:0x8c189ead28D5987A48e522162f9225124D50AD1B":"EscapeHatch"}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract TallySlashingProposer (eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958) {
+    +++ description: Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      name:
++        "TallySlashingProposer"
+      template:
++        "aztecnetwork/TallySlashingProposer"
+      sourceHashes:
++        ["0x0b4f1c707812b207e031a78710120f6962597aca1d9bfa47b0aa4c940fadbbdb"]
+      description:
++        "Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher."
+      sinceTimestamp:
++        1772654159
+      sinceBlock:
++        24586322
+      values:
++        {"$immutable":true,"COMMITTEE_SIZE":48,"eip712Domain":{"fields":"0x0f","name":"TallySlashingProposer","version":"1","chainId":1,"verifyingContract":"eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"EXECUTION_DELAY_IN_ROUNDS":28,"getCurrentRound":81,"INSTANCE":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","LIFETIME_IN_ROUNDS":34,"MAX_ROUND_SIZE":1024,"QUORUM":65,"ROUND_SIZE":128,"ROUND_SIZE_IN_EPOCHS":4,"ROUNDABOUT_SIZE":128,"SLASH_AMOUNT_LARGE":"2000000000000000000000","SLASH_AMOUNT_MEDIUM":"2000000000000000000000","SLASH_AMOUNT_SMALL":"2000000000000000000000","SLASH_OFFSET_IN_ROUNDS":2,"SLASH_PAYLOAD_IMPLEMENTATION":"eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445","SLASHER":"eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb","SLASHING_PROPOSER_TYPE":1,"VOTE_TYPEHASH":"0x18b6b90f234e6d028d4c9800043cedef34624eedddd14e60eba01934728014fe"}
+      implementationNames:
++        {"eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958":"TallySlashingProposer"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RewardBooster (eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80)
+    +++ description: Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation.
+```
+
+```diff
++   Status: CREATED
+    contract FeeJuicePortal (eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617)
+    +++ description: One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.
+```
+
+```diff
++   Status: CREATED
+    contract Slasher (eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb)
+    +++ description: The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.
+```
+
+```diff
++   Status: CREATED
+    contract HonkVerifier (eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348)
+    +++ description: ZK proof verification contract.
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578)
+    +++ description: Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1, accumulates them in an append-only frontier tree per checkpoint, and forces the Sequencers and the Rollup contract to sequentially consume the roots of these message trees, ensuring message inclusion.
+```
+
+```diff
++   Status: CREATED
+    contract SlashPayloadCloneable (eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445)
+    +++ description: A template for specific slashing payload contracts deployed deterministically to encode a slashing action (who to slash and how much) that the Slasher executes.
+```
+
+```diff
++   Status: CREATED
+    contract Rollup (eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962)
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0)
+    +++ description: Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.
+```
+
+## Source code changes
+
+```diff
+.../projects/aztecnetwork/.flat/EscapeHatch.sol    |  3918 +++++++
+ .../projects/aztecnetwork/.flat/FeeJuicePortal.sol |   656 ++
+ .../projects/aztecnetwork/.flat/HonkVerifier.sol   |  2165 ++++
+ .../src/projects/aztecnetwork/.flat/Inbox.sol      |  1857 +++
+ .../src/projects/aztecnetwork/.flat/Outbox.sol     |   628 +
+ .../projects/aztecnetwork/.flat/RewardBooster.sol  |  2269 ++++
+ .../src/projects/aztecnetwork/.flat/Rollup.sol     | 11484 +++++++++++++++++++
+ .../src/projects/aztecnetwork/.flat/Safe/Safe.sol  |  1088 ++
+ .../aztecnetwork/.flat/Safe/SafeProxy.p.sol        |    37 +
+ .../aztecnetwork/.flat/SlashPayloadCloneable.sol   |   445 +
+ .../src/projects/aztecnetwork/.flat/Slasher.sol    |    80 +
+ .../aztecnetwork/.flat/TallySlashingProposer.sol   |  4765 ++++++++
+ 12 files changed, 29392 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771254730 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Inbox (eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee)
+    +++ description: Handles L1-to-L2 messaging. Users deposit funds or send messages here, which are organized into a Merkle tree for the sequencer to include in an L2 block.
+```
+
+```diff
+-   Status: DELETED
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12)
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+```
+
+```diff
+-   Status: DELETED
+    contract RewardBooster (eth:0x7101a6703491A4D808aeAbE9F62bC1Dc6a20bdf4)
+    +++ description: Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation.
+```
+
+```diff
+-   Status: DELETED
+    contract HonkVerifier (eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5)
+    +++ description: ZK proof verification contract.
+```
+
+```diff
+-   Status: DELETED
+    contract TallySlashingProposer (eth:0x7a318c3DaA9f21f8fc8238c65755eB0394Fbf189)
+    +++ description: Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.
+```
+
+```diff
+-   Status: DELETED
+    contract SlashPayloadCloneable (eth:0x82c592b4Bb7E1f50f68E75d86743c3330beAaba4)
+    +++ description: A template for specific slashing payload contracts deployed deterministically to encode a slashing action (who to slash and how much) that the Slasher executes.
+```
+
+```diff
+-   Status: DELETED
+    contract Slasher (eth:0x91A3745c685c220595B997E53311EbF660144889)
+    +++ description: The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FeeJuicePortal (eth:0xe05dc9D5969272831757181fFf1532B066254bf1)
+    +++ description: A one-way public bridge to deposit AZTEC tokens to the Rollup.
+```
+
+```diff
+-   Status: DELETED
+    contract Outbox (eth:0xf006c41097861AFeb18b05e586B921c081411Ee9)
+    +++ description: Handles L2-to-L1 messaging. It stores Merkle roots of messages exiting the rollup, allowing users to prove inclusion and finalize withdrawals or actions on L1.
+```
+
 Generated with discovered.json: 0xf9e8d293d9a2d9527f9fdfb1e50708d8f0ebadd8
 
 # Diff at Thu, 05 Mar 2026 10:33:02 GMT:
