@@ -874,7 +874,8 @@ git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
     {
       ...SIMPLE_BOOTLOADER('StarkWare_GpsStatementVerifier_2025_11'),
       verificationStatus: 'unsuccessful',
-      verificationSteps: 'We were not able to identify the sources of this program.'
+      verificationSteps:
+        'We were not able to identify the sources of this program.',
     },
   '160268921359133235574810995023520895391777547407923205700393332203861498631':
     {
@@ -910,7 +911,8 @@ git checkout v0.13.5
     {
       ...APPLICATIVE_BOOTLOADER('StarkWare_GpsStatementVerifier_2025_11'),
       verificationStatus: 'unsuccessful',
-      verificationSteps: 'We were not able to identify the sources of this program.'
+      verificationSteps:
+        'We were not able to identify the sources of this program.',
     },
   '1104316318711847786071125527957082259001554753246760931396914052122269757907':
     {
@@ -946,7 +948,8 @@ git checkout v0.13.5
     {
       ...APPLICATIVE_BOOTLOADER('StarkWare_GpsStatementVerifier_2025_12'),
       verificationStatus: 'unsuccessful',
-      verificationSteps: 'We were not able to identify the sources of this program.'
+      verificationSteps:
+        'We were not able to identify the sources of this program.',
     },
   '1701025211190912681772481128523426351562426117847395998223683709327746845867':
     {
@@ -1449,7 +1452,8 @@ Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindge
   '0x5b82aa008989d331bf6f3cf75b85a04c9ee809447c19b85fecaf3b7d749a6576': {
     ...WASM_MODULE_ROOT('Apechain'),
     verificationStatus: 'successful', // Apechain has closed challengers, so I think it doesn't make sense to mark them red for non reproducible program
-    verificationSteps: `The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.`,
+    verificationSteps:
+      'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
   },
   '0xa18d6266cef250802c3cb2bfefe947ea1aa9a32dd30a8d1dfc4568a8714d3a7a': {
     ...WASM_MODULE_ROOT('v41'),
