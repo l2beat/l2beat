@@ -7,21 +7,16 @@ describe(EspressoClient.name, () => {
   describe(EspressoClient.prototype.getStakeTable.name, () => {
     it('returns stake table', async () => {
       const mockResponse = {
-        epoch: 284,
         stake_table: [
           {
             stake_table_entry: {
-              stake_key: 'BLS_VER_KEY~abc',
               stake_amount: '0x56bc75e2d63100000',
             },
-            state_ver_key: 'SCHNORR_VER_KEY~xyz',
           },
           {
             stake_table_entry: {
-              stake_key: 'BLS_VER_KEY~def',
               stake_amount: '0xad78ebc5ac6200000',
             },
-            state_ver_key: 'SCHNORR_VER_KEY~uvw',
           },
         ],
       }
@@ -29,13 +24,14 @@ describe(EspressoClient.name, () => {
       const http = mockObject<HttpClient>({
         fetch: async () => mockResponse,
       })
-      const client = mockClient({ http })
+      const apiUrl = 'https://example.com'
+      const client = mockClient({ http, apiUrl })
 
       const result = await client.getStakeTable()
 
       expect(result).toEqual(mockResponse)
       expect(http.fetch).toHaveBeenOnlyCalledWith(
-        'https://query.main.net.espresso.network/v0/node/stake-table/current',
+        `${apiUrl}/v0/node/stake-table/current`,
         {
           method: 'GET',
           timeout: undefined,
@@ -59,7 +55,10 @@ describe(EspressoClient.name, () => {
     it('returns false when response includes error', () => {
       const client = mockClient({})
       const validationInfo = client.validateResponse({
-        error: 'something went wrong',
+        Custom: {
+          message: 'something went wrong',
+          status: 400,
+        },
       })
 
       expect(validationInfo.success).toEqual(false)
@@ -77,13 +76,14 @@ describe(EspressoClient.name, () => {
   })
 })
 
-function mockClient(deps: { http?: HttpClient; timeout?: number }) {
+function mockClient(deps: {
+  http?: HttpClient
+  apiUrl?: string
+  timeout?: number
+}) {
   return new EspressoClient({
     sourceName: 'espresso',
-    apiUrl:
-      deps.http !== undefined
-        ? 'https://query.main.net.espresso.network'
-        : 'API_URL',
+    apiUrl: deps.apiUrl ?? 'API_URL',
     http: deps.http ?? mockObject<HttpClient>({}),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',

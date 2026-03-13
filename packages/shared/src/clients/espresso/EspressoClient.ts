@@ -1,6 +1,6 @@
 import type { json } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import { EspressoStakeTable } from './types'
+import { EspressoError, EspressoStakeTable } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   apiUrl: string
@@ -23,7 +23,7 @@ export class EspressoClient extends ClientCore {
 
     if (!parsed.success) {
       this.$.logger.warn('Invalid response', {
-        endpoint: 'stake-table',
+        endpoint: 'stake-table/current',
         response: JSON.stringify(response),
       })
       throw new Error('Error during stake table parsing')
@@ -36,13 +36,11 @@ export class EspressoClient extends ClientCore {
     success: boolean
     message?: string
   } {
-    if (
-      typeof response === 'object' &&
-      response !== null &&
-      'error' in response
-    ) {
+    const parsedError = EspressoError.safeParse(response)
+
+    if (parsedError.success) {
       this.$.logger.warn('Response validation error', {
-        error: JSON.stringify(response),
+        error: parsedError.data,
       })
       return { success: false }
     }
