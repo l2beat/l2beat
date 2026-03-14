@@ -2317,6 +2317,71 @@
       "orbitstack.L1ToL2Transfer"
     ]
   },
+  "orbitstack-apechain": {
+    "description": "ApeChain (L3 on Arbitrum) orbit stack messaging with APE gas token",
+    "txs": [
+      // apechain -> arbitrum (APE withdrawal, finalized on Arbitrum)
+      {
+        "chain": "apechain",
+        "tx": "0x25cbceed336c0fe949b1c72ecb3ef4715b89642c11ed841a0a1639769fb529f5"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xa4bd8e558f4fc7ed083a15ee5b95fe064476350d5948f59bc95b28e70a567fc7"
+      },
+      // arbitrum -> apechain (APE deposit)
+      {
+        "chain": "arbitrum",
+        "tx": "0xcefe44ff09a0c940c5829aa245f5a14f0f594b8db9b9ade271737a39c49e55cb"
+      },
+      {
+        "chain": "apechain",
+        "tx": "0x06f81bddf37181b52936b017dd5bc1627645cf23f5836da1e16748600b4caf0d"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "orbitstack.L2ToL1Tx",
+          "args": { "amount": "43407671213737294" }
+        },
+        { "type": "orbitstack.OutBoxTransactionExecuted" },
+        { "type": "orbitstack.MessageDelivered" },
+        {
+          "type": "orbitstack.RedeemScheduled",
+          "args": { "ethAmount": "219496937447239530000" }
+        }
+      ],
+      "messages": [
+        { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" }
+      ],
+      "transfers": [
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAddress": "native",
+            "tokenAmount": "43407671213737294"
+          },
+          "dst": {
+            "tokenAddress": "0x0000000000000000000000007f9fbf9bdd3f4105c478b996b648fe6e828a1e98",
+            "tokenAmount": "43407671213737294"
+          }
+        },
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000007f9fbf9bdd3f4105c478b996b648fe6e828a1e98",
+            "tokenAmount": "219496937447239530000"
+          },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "219496937447239530000"
+          }
+        }
+      ]
+    }
+  },
   "orbitstack-contract-deposit": {
     "description": "ETH deposits via contract (tx.value != callvalue)",
     "txs": [

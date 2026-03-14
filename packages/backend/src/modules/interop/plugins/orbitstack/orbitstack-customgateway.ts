@@ -1,4 +1,15 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+/*
+Custom gateway plugin. Handles ERC20 deposits/withdrawals through
+project-specific gateways (e.g. DAI, LPT, GRT, wstETH on Arbitrum).
+Each gateway is identified by a `key` used in the app name for matching.
+*/
+
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
@@ -20,9 +31,11 @@ import {
   RedeemScheduled,
 } from './orbitstack'
 
+const addr = ChainSpecificAddress.address
+
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-// == L1 -> L2 ERC20 deposits for custom gateways ==
+// --- L1→L2 ERC20 deposits ---
 
 const DepositInitiatedMessageDelivered = createInteropEventType<{
   chain: string
@@ -48,7 +61,7 @@ const parseDepositFinalized = createEventParser(
   'event DepositFinalized(address indexed l1Token, address indexed from, address indexed to, uint256 amount)',
 )
 
-// == L2 -> L1 ERC20 withdrawals for custom gateways ==
+// --- L2→L1 ERC20 withdrawals ---
 
 const WithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   chain: string
@@ -85,140 +98,153 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
   readonly name = 'orbitstack-customgateway'
 
   capture(input: LogToCapture) {
-    if (input.chain === 'ethereum') {
-      const network = ORBITSTACK_NETWORKS.find((network) =>
-        network.customGateways?.some(
-          (gateway) => gateway.l1Gateway === EthereumAddress(input.log.address),
-        ),
+    const isParentChain = ORBITSTACK_NETWORKS.some(
+      (n) => n.parentChain === input.chain,
+    )
+    if (isParentChain) {
+      const logAddress = EthereumAddress(input.log.address)
+      const network = ORBITSTACK_NETWORKS.find(
+        (network) =>
+          network.parentChain === input.chain &&
+          network.customGateways?.some(
+            (gateway) => addr(gateway.l1Gateway) === logAddress,
+          ),
       )
-      if (!network) return
 
-      const gateway = network.customGateways?.find(
-        (g) => g.l1Gateway === EthereumAddress(input.log.address),
-      )
-      if (!gateway) return
-
-      const depositInitiated = parseDepositInitiated(input.log, [
-        gateway.l1Gateway,
-      ])
-      if (depositInitiated) {
-        const messageDeliveredLog = input.txLogs.find((log) => {
-          const parsed = parseMessageDelivered(log, [network.bridge])
-          return (
-            parsed !== undefined &&
-            parsed.messageIndex === depositInitiated._sequenceNumber
-          )
-        })
-
-        if (messageDeliveredLog) {
-          const messageDelivered = parseMessageDelivered(messageDeliveredLog, [
-            network.bridge,
+      if (network) {
+        const gateway = network.customGateways?.find(
+          (g) => addr(g.l1Gateway) === logAddress,
+        )
+        if (gateway) {
+          const depositInitiated = parseDepositInitiated(input.log, [
+            addr(gateway.l1Gateway),
           ])
-          if (messageDelivered) {
-            return [
-              DepositInitiatedMessageDelivered.create(input, {
-                chain: network.chain,
-                messageNum: messageDelivered.messageIndex.toString(),
-                l1Token: Address32.from(depositInitiated._l1Token),
-                amount: depositInitiated._amount,
-                gatewayKey: gateway.key,
-              }),
-            ]
+          if (depositInitiated) {
+            const messageDeliveredLog = input.txLogs.find((log) => {
+              const parsed = parseMessageDelivered(log, [addr(network.bridge)])
+              return (
+                parsed !== undefined &&
+                parsed.messageIndex === depositInitiated._sequenceNumber
+              )
+            })
+
+            if (messageDeliveredLog) {
+              const messageDelivered = parseMessageDelivered(
+                messageDeliveredLog,
+                [addr(network.bridge)],
+              )
+              if (messageDelivered) {
+                return [
+                  DepositInitiatedMessageDelivered.create(input, {
+                    chain: network.chain,
+                    messageNum: messageDelivered.messageIndex.toString(),
+                    l1Token: Address32.from(depositInitiated._l1Token),
+                    amount: depositInitiated._amount,
+                    gatewayKey: gateway.key,
+                  }),
+                ]
+              }
+            }
+          }
+
+          const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
+            addr(gateway.l1Gateway),
+          ])
+          if (withdrawalFinalized) {
+            const outBoxTxLog = input.txLogs.find((log) => {
+              const parsed = parseOutBoxTransactionExecuted(log, [
+                addr(network.outbox),
+              ])
+              return parsed !== undefined
+            })
+
+            if (outBoxTxLog) {
+              const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
+                addr(network.outbox),
+              ])
+              if (outBoxTx) {
+                return [
+                  WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
+                    chain: network.chain,
+                    position: Number(outBoxTx.transactionIndex),
+                    l1Token: Address32.from(withdrawalFinalized.l1Token),
+                    amount: withdrawalFinalized._amount,
+                    gatewayKey: gateway.key,
+                  }),
+                ]
+              }
+            }
           }
         }
       }
+    }
 
-      const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
-        gateway.l1Gateway,
-      ])
-      if (withdrawalFinalized) {
-        const outBoxTxLog = input.txLogs.find((log) => {
-          const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
-          return parsed !== undefined
-        })
+    // A chain can be both parent and child (e.g. Arbitrum is parent for ApeChain)
+    const childNetwork = ORBITSTACK_NETWORKS.find(
+      (n) => n.chain === input.chain,
+    )
+    if (!childNetwork) return
 
-        if (outBoxTxLog) {
-          const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-            network.outbox,
-          ])
-          if (outBoxTx) {
-            return [
-              WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
-                chain: network.chain,
-                position: Number(outBoxTx.transactionIndex),
-                l1Token: Address32.from(withdrawalFinalized.l1Token),
-                amount: withdrawalFinalized._amount,
-                gatewayKey: gateway.key,
-              }),
-            ]
-          }
-        }
-      }
-    } else {
-      const network = ORBITSTACK_NETWORKS.find((n) => n.chain === input.chain)
-      if (!network) return
+    const gateway = childNetwork.customGateways?.find(
+      (g) => addr(g.l2Gateway) === EthereumAddress(input.log.address),
+    )
+    if (!gateway) return
 
-      const gateway = network.customGateways?.find(
-        (g) => g.l2Gateway === EthereumAddress(input.log.address),
+    const depositFinalized = parseDepositFinalized(input.log, [
+      addr(gateway.l2Gateway),
+    ])
+    if (depositFinalized) {
+      const l2Token = findMintedTokenAddress(
+        input.txLogs,
+        depositFinalized.to,
+        depositFinalized.amount,
       )
-      if (!gateway) return
+      if (!l2Token) return
 
-      const depositFinalized = parseDepositFinalized(input.log, [
-        gateway.l2Gateway,
-      ])
-      if (depositFinalized) {
-        const l2Token = findMintedTokenAddress(
-          input.txLogs,
-          depositFinalized.to,
-          depositFinalized.amount,
+      return [
+        DepositFinalized.create(input, {
+          chain: childNetwork.chain,
+          l1Token: Address32.from(depositFinalized.l1Token),
+          l2Token,
+          amount: depositFinalized.amount,
+          gatewayKey: gateway.key,
+        }),
+      ]
+    }
+
+    const withdrawalInitiated = parseWithdrawalInitiated(input.log, [
+      addr(gateway.l2Gateway),
+    ])
+    if (withdrawalInitiated) {
+      const l2ToL1TxLog = input.txLogs.find((log) => {
+        const parsed = parseL2ToL1Tx(log, [addr(childNetwork.arbsys)])
+        return (
+          parsed !== undefined &&
+          Number(parsed.position) === Number(withdrawalInitiated._l2ToL1Id)
         )
-        if (!l2Token) return
+      })
+      if (!l2ToL1TxLog) return
 
-        return [
-          DepositFinalized.create(input, {
-            chain: network.chain,
-            l1Token: Address32.from(depositFinalized.l1Token),
-            l2Token,
-            amount: depositFinalized.amount,
-            gatewayKey: gateway.key,
-          }),
-        ]
-      }
+      const l2ToL1Tx = parseL2ToL1Tx(l2ToL1TxLog, [addr(childNetwork.arbsys)])
+      if (!l2ToL1Tx) return
 
-      const withdrawalInitiated = parseWithdrawalInitiated(input.log, [
-        gateway.l2Gateway,
-      ])
-      if (withdrawalInitiated) {
-        const l2ToL1TxLog = input.txLogs.find((log) => {
-          const parsed = parseL2ToL1Tx(log, [network.arbsys])
-          return (
-            parsed !== undefined &&
-            Number(parsed.position) === Number(withdrawalInitiated._l2ToL1Id)
-          )
-        })
-        if (!l2ToL1TxLog) return
+      const l2Token = findBurnedTokenAddress(
+        input.txLogs,
+        withdrawalInitiated._from,
+        withdrawalInitiated._amount,
+      )
+      if (!l2Token) return
 
-        const l2ToL1Tx = parseL2ToL1Tx(l2ToL1TxLog, [network.arbsys])
-        if (!l2ToL1Tx) return
-
-        const l2Token = findBurnedTokenAddress(
-          input.txLogs,
-          withdrawalInitiated._from,
-          withdrawalInitiated._amount,
-        )
-        if (!l2Token) return
-
-        return [
-          WithdrawalInitiatedL2ToL1Tx.create(input, {
-            chain: network.chain,
-            position: Number(l2ToL1Tx.position),
-            l1Token: Address32.from(withdrawalInitiated.l1Token),
-            l2Token,
-            amount: withdrawalInitiated._amount,
-            gatewayKey: gateway.key,
-          }),
-        ]
-      }
+      return [
+        WithdrawalInitiatedL2ToL1Tx.create(input, {
+          chain: childNetwork.chain,
+          position: Number(l2ToL1Tx.position),
+          l1Token: Address32.from(withdrawalInitiated.l1Token),
+          l2Token,
+          amount: withdrawalInitiated._amount,
+          gatewayKey: gateway.key,
+        }),
+      ]
     }
   }
 

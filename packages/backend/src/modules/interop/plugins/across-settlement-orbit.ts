@@ -1,4 +1,8 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import {
   MessageDelivered,
   ORBITSTACK_NETWORKS,
@@ -19,9 +23,11 @@ import {
 // Across HubPool address on Ethereum
 const HUB_POOL = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
 
+const addr = ChainSpecificAddress.address
+
 // Build lookup map from bridge address to network (OrbitStack)
 const ORBIT_BRIDGE_TO_NETWORK = new Map(
-  ORBITSTACK_NETWORKS.map((n) => [n.bridge.toString(), n]),
+  ORBITSTACK_NETWORKS.map((n) => [addr(n.bridge).toString(), n]),
 )
 
 // L1 event: MessageRelayed from HubPool + MessageDelivered combined (OrbitStack)
@@ -57,7 +63,7 @@ export class AcrossSettlementOrbitPlugin implements InteropPlugin {
         const orbitNetwork = ORBIT_BRIDGE_TO_NETWORK.get(bridgeLog.address)
         if (orbitNetwork) {
           const messageDelivered = parseMessageDelivered(bridgeLog, [
-            orbitNetwork.bridge,
+            addr(orbitNetwork.bridge),
           ])
           if (!messageDelivered) return
 

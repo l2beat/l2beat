@@ -56,6 +56,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   'hype-evm': 'hyperevm',
   megaeth: 'megaeth',
   polygon: 'polygon',
+  ape: 'apechain',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
