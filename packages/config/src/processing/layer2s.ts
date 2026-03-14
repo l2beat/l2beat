@@ -203,6 +203,7 @@ import { swan } from '../projects/swan/swan'
 import { swell } from '../projects/swell/swell'
 import { sxnetwork } from '../projects/sxnetwork/sxnetwork'
 import { sxt } from '../projects/sxt/sxt'
+import { syndicate } from '../projects/syndicate/syndicate'
 import { t1 } from '../projects/t1/t1'
 import { taiko } from '../projects/taiko/taiko'
 import { tea } from '../projects/tea/tea'
@@ -437,6 +438,7 @@ export const layer2s: ScalingProject[] = [
   surge,
   swan,
   swell,
+  syndicate,
   sxnetwork,
   sxt,
   t1,
