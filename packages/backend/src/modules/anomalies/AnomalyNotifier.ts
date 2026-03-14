@@ -7,7 +7,7 @@ import type {
   RealTimeLivenessRecord,
   UpdateDiffRecord,
 } from '@l2beat/database'
-import type { TrackedTxLivenessConfig } from '@l2beat/shared'
+import type { DiscordClient, TrackedTxLivenessConfig } from '@l2beat/shared'
 import {
   type Block,
   ChainSpecificAddress,
@@ -18,7 +18,6 @@ import {
 import type { TrackedTxProject, TrackedTxsConfig } from '../../config/Config'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
-import type { DiscordWebhookClient } from './clients/DiscordWebhookClient'
 import { formatDuration, formatSubtype } from './format'
 
 export type AnomalyNotificationType =
@@ -37,7 +36,7 @@ export class AnomalyNotifier {
   constructor(
     logger: Logger,
     private readonly clock: Clock,
-    private readonly discordClient: DiscordWebhookClient,
+    private readonly discordClient: DiscordClient,
     private readonly db: Database,
     private readonly minDuration: number,
     private readonly trackedTxsConfig: TrackedTxsConfig,
@@ -244,7 +243,7 @@ export class AnomalyNotifier {
 
   async sendDiscordNotification(message: string): Promise<string | undefined> {
     try {
-      return await this.discordClient.sendMessage(message)
+      return await this.discordClient.sendMessageToWebhook(message)
     } catch (error) {
       this.logger.error('Failed to send Discord notification', {
         error,
