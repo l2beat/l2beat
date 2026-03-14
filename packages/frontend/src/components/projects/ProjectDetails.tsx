@@ -5,6 +5,7 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { ExecutiveSummarySection } from './sections/ExecutiveSummarySection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { InteropTokensSection } from './sections/interop/InteropTokensSection'
@@ -48,6 +49,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           : `${index + 1}`
 
         switch (item.type) {
+          case 'ExecutiveSummarySection':
+            return (
+              <ExecutiveSummarySection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
           case 'ScalingTvsSection':
             return (
               <ScalingTvsSection

@@ -150,6 +150,7 @@ export interface ProjectStatuses {
 
 export interface ProjectDisplay {
   description: string
+  executiveSummary?: string
   links: ProjectLinks
   badges: Badge[]
 }

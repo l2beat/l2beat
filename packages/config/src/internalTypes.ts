@@ -144,6 +144,8 @@ export interface ProjectScalingDisplay {
   emergencyWarning?: string
   /** A few sentences describing the scaling project */
   description: string
+  /** Executive summary shown above detailed sections */
+  executiveSummary?: string
   /** Detailed description of the scaling project, will be visible in detailed description section */
   detailedDescription?: string
   /** A short (<20 characters) description of the use case */

@@ -1,7 +1,7 @@
 import type { SvgIconProps } from './SvgIcon'
 import { SvgIcon } from './SvgIcon'
 
-export function SummaryIcon(props: SvgIconProps) {
+export function OverviewIcon(props: SvgIconProps) {
   return (
     <SvgIcon
       width="20"

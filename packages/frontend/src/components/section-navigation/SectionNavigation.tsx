@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react'
 import { Fragment, useCallback, useEffect, useRef } from 'react'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
-import { SummaryIcon } from '~/icons/Summary'
+import { OverviewIcon } from '~/icons/Overview'
 import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scrollToItem'
 
@@ -21,7 +21,7 @@ export function SectionNavigation({
   className?: string
   style?: CSSProperties
 }) {
-  const indexOffset = sections.some((section) => section.id === 'summary')
+  const indexOffset = sections.some((section) => section.id === 'overview')
     ? -1
     : 0
   const currentSection = useCurrentSection()
@@ -68,8 +68,8 @@ export function SectionNavigation({
               className="group flex flex-row gap-1.5"
               data-selected={selected}
             >
-              {item.id === 'summary' ? (
-                <SummaryIcon className="-left-px relative size-5 opacity-80 group-hover:opacity-100 group-data-[selected=true]:opacity-100" />
+              {item.id === 'overview' ? (
+                <OverviewIcon className="-left-px relative size-5 opacity-80 group-hover:opacity-100 group-data-[selected=true]:opacity-100" />
               ) : (
                 <NavigationListIndex index={i + indexOffset + 1} />
               )}
