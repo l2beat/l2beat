@@ -186,6 +186,15 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('DataAvailability')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigurationId(configurationId: string): Promise<number> {
     const result = await this.db
       .deleteFrom('DataAvailability')

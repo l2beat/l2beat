@@ -1,15 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider } from '@l2beat/shared'
-import {
-  assert,
-  type Configuration,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import partition from 'lodash/partition'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
-import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+  RemovalConfiguration,
+} from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { BlockTimestampConfig } from '../types'
 
@@ -103,19 +103,38 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
-    for (const configuration of configurations) {
+    const [configsWithRange, configsWithoutRange] = partition(
+      configurations,
+      (c) => c.type === 'trim',
+    )
+
+    if (configsWithoutRange.length > 0) {
+      const deletedRecords =
+        await this.$.db.tvsBlockTimestamp.deleteByConfigIds(
+          configsWithoutRange.map((c) => c.id),
+        )
+      if (deletedRecords > 0) {
+        this.logger.info('Wiped records for configurations', {
+          configurations: configsWithoutRange.length,
+          deletedRecords,
+        })
+      }
+    }
+
+    for (const configuration of configsWithRange) {
+      const [from, to] = configuration.range
       const deletedRecords =
         await this.$.db.tvsBlockTimestamp.deleteByConfigInTimeRange(
           configuration.id,
-          UnixTime(configuration.from),
-          UnixTime(configuration.to),
+          from,
+          to,
         )
 
       if (deletedRecords > 0) {
-        this.logger.info('Deleted records for configuration', {
+        this.logger.info('Trimmed records for configuration', {
           id: configuration.id,
-          from: configuration.from,
-          to: configuration.to,
+          from,
+          to,
           deletedRecords,
         })
       }

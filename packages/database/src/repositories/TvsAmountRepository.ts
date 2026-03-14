@@ -90,6 +90,15 @@ export class TvsAmountRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('TvsAmount')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigs(
     configs: {
       configurationId: string

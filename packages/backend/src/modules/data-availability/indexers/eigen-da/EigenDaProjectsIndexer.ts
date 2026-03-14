@@ -1,16 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
-import {
-  assert,
-  type Configuration,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiIndexer'
-import type { ManagedMultiIndexerOptions } from '../../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+  RemovalConfiguration,
+} from '../../../../tools/uif/multi/types'
 
 export interface Dependencies
   extends Omit<
@@ -158,15 +157,17 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
   override async removeData(
     configurations: RemovalConfiguration[],
   ): Promise<void> {
-    //this function should only run with this flag enabled
     assert(this.options.configurationsTrimmingDisabled)
 
-    for (const c of configurations) {
-      const deletedRecords =
-        await this.$.db.dataAvailability.deleteByConfigurationId(c.id)
+    if (configurations.length === 0) return
 
-      this.logger.info('Wiped DA records for configuration', {
-        id: c.id,
+    const deletedRecords = await this.$.db.dataAvailability.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
+
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped DA records for configurations', {
+        configurations: configurations.length,
         deletedRecords,
       })
     }

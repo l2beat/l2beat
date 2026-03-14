@@ -3,13 +3,10 @@ import {
   type TrackedTxConfigEntry,
   type TrackedTxLivenessConfig,
 } from '@l2beat/shared'
-import {
-  ProjectId,
-  type SavedConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { TrackedTxProject } from '../../../../../config/Config'
+import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getActiveConfigurations } from './getActiveConfigurations'
 
 describe(getActiveConfigurations.name, () => {

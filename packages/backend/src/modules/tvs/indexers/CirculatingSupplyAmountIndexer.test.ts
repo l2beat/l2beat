@@ -286,8 +286,16 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       )
 
       const removalConfigs = [
-        { id: 'config-1', from: 100, to: 200 },
-        { id: 'config-2', from: 300, to: 400 },
+        {
+          type: 'trim' as const,
+          id: 'config-1',
+          range: [100, 200] as [number, number],
+        },
+        {
+          type: 'trim' as const,
+          id: 'config-2',
+          range: [300, 400] as [number, number],
+        },
       ]
 
       await indexer.removeData(removalConfigs)

@@ -147,15 +147,17 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
   override async removeData(
     configurations: RemovalConfiguration[],
   ): Promise<void> {
-    //this function should only run with this flag enabled
     assert(this.options.configurationsTrimmingDisabled)
 
-    for (const c of configurations) {
-      const deletedRecords =
-        await this.$.db.dataAvailability.deleteByConfigurationId(c.id)
+    if (configurations.length === 0) return
 
-      this.logger.info('Wiped DA records for configuration', {
-        id: c.id,
+    const deletedRecords = await this.$.db.dataAvailability.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
+
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped DA records for configurations', {
+        configurations: configurations.length,
         deletedRecords,
       })
     }

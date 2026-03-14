@@ -61,6 +61,15 @@ export class TvsBlockTimestampRepository extends BaseRepository {
     return row?.blockNumber
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('TvsBlockTimestamp')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigInTimeRange(
     configId: string,
     fromInclusive: UnixTime,

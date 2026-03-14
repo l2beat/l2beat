@@ -390,6 +390,57 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
+  describe(TokenValueRepository.prototype.deleteByConfigIds.name, () => {
+    it('deletes all rows for given configuration ids', async () => {
+      await repository.upsertMany([
+        tokenValue('a', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
+        tokenValue('a', 'ethereum', UnixTime(2), 2, 2000, 1600, 1000, 20),
+        tokenValue('b', 'arbitrum', UnixTime(1), 1000, 1000, 800, 500, 30),
+        tokenValue('c', 'ethereum', UnixTime(1), 3, 3000, 2400, 1500, 40),
+      ])
+
+      const deleted = await repository.deleteByConfigIds([
+        'a'.repeat(12),
+        'b'.repeat(12),
+      ])
+
+      expect(deleted).toEqual(3)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        tokenValue('c', 'ethereum', UnixTime(1), 3, 3000, 2400, 1500, 40),
+      ])
+    })
+
+    it('returns 0 for empty ids', async () => {
+      await repository.upsertMany([
+        tokenValue('a', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
+      ])
+
+      const deleted = await repository.deleteByConfigIds([])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
+      ])
+    })
+
+    it('returns 0 when no matching config found', async () => {
+      await repository.upsertMany([
+        tokenValue('a', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
+      ])
+
+      const deleted = await repository.deleteByConfigIds(['b'.repeat(12)])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
+      ])
+    })
+  })
+
   describe(
     TokenValueRepository.prototype.deleteByConfigInTimeRange.name,
     () => {

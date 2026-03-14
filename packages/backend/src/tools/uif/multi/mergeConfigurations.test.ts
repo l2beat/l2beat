@@ -1,11 +1,8 @@
 import { expect } from 'earl'
 
 import { mergeConfigurations } from './mergeConfigurations'
-import type {
-  Configuration,
-  RemovalConfiguration,
-  SavedConfiguration,
-} from './types'
+import { trimRemoval, wipeRemoval } from './test/mockConfigurations'
+import type { Configuration, SavedConfiguration } from './types'
 
 const SERIALIZE = (v: unknown) => JSON.stringify(v)
 const EMPTY_DIFF = {
@@ -154,7 +151,7 @@ describe(mergeConfigurations.name, () => {
         diff: {
           ...EMPTY_DIFF,
           toDelete: ['a'],
-          toWipeDataAfterDelete: [removal('a', 100, 300)],
+          toWipeDataAfterDelete: [wipeRemoval('a')],
         },
         configurations: [{ ...actual('b', 200, 400), currentHeight: 300 }],
         safeHeight: 300,
@@ -186,7 +183,7 @@ describe(mergeConfigurations.name, () => {
       expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
-          toTrimDataAfterUpdate: [removal('a', 201, 300)],
+          toTrimDataAfterUpdate: [trimRemoval('a', 201, 300)],
           toUpdate: [{ ...actual('a', 100, 200), currentHeight: 200 }],
         },
         configurations: [{ ...actual('a', 100, 200), currentHeight: 200 }],
@@ -235,7 +232,7 @@ describe(mergeConfigurations.name, () => {
       expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
-          toTrimDataAfterUpdate: [removal('a', 100, 199)],
+          toTrimDataAfterUpdate: [trimRemoval('a', 100, 199)],
           toUpdate: [{ ...actual('a', 200, 400), currentHeight: 300 }],
         },
         configurations: [{ ...actual('a', 200, 400), currentHeight: 300 }],
@@ -253,7 +250,7 @@ describe(mergeConfigurations.name, () => {
         diff: {
           ...EMPTY_DIFF,
           // TODO: this possibly could be wiped
-          toTrimDataAfterUpdate: [removal('a', 100, 999)],
+          toTrimDataAfterUpdate: [trimRemoval('a', 100, 999)],
           toUpdate: [{ ...actual('a', 1000, null), currentHeight: null }],
         },
         configurations: [{ ...actual('a', 1000, null), currentHeight: null }],
@@ -270,7 +267,7 @@ describe(mergeConfigurations.name, () => {
       expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
-          toWipeDataAfterUpdate: [removal('a', 200, 300)],
+          toWipeDataAfterUpdate: [wipeRemoval('a')],
           toUpdate: [{ ...actual('a', 100, 400), currentHeight: null }],
         },
         configurations: [{ ...actual('a', 100, 400), currentHeight: null }],
@@ -288,8 +285,8 @@ describe(mergeConfigurations.name, () => {
         diff: {
           ...EMPTY_DIFF,
           toTrimDataAfterUpdate: [
-            removal('a', 100, 199),
-            removal('a', 301, 400),
+            trimRemoval('a', 100, 199),
+            trimRemoval('a', 301, 400),
           ],
           toUpdate: [{ ...actual('a', 200, 300), currentHeight: 300 }],
         },
@@ -339,7 +336,7 @@ describe(mergeConfigurations.name, () => {
         expect(result).toEqual({
           diff: {
             ...EMPTY_DIFF,
-            toWipeDataAfterUpdate: [removal('a', 100, 300)],
+            toWipeDataAfterUpdate: [wipeRemoval('a')],
             toUpdate: [{ ...actual('a', 200, 400), currentHeight: null }],
           },
           configurations: [{ ...actual('a', 200, 400), currentHeight: null }],
@@ -357,7 +354,7 @@ describe(mergeConfigurations.name, () => {
         expect(result).toEqual({
           diff: {
             ...EMPTY_DIFF,
-            toWipeDataAfterUpdate: [removal('a', 100, 300)],
+            toWipeDataAfterUpdate: [wipeRemoval('a')],
             toUpdate: [{ ...actual('a', 100, 200), currentHeight: null }],
           },
           configurations: [{ ...actual('a', 100, 200), currentHeight: null }],
@@ -380,8 +377,8 @@ describe(mergeConfigurations.name, () => {
               // but writing code to handle this edge case would introduce complexity
               // so we will trigger two deletes, second will do nothing
               // situation like this is anyway very unlikely to happen
-              removal('a', 100, 400),
-              removal('a', 100, 400),
+              wipeRemoval('a'),
+              wipeRemoval('a'),
             ],
             toUpdate: [{ ...actual('a', 200, 300), currentHeight: null }],
           },
@@ -416,8 +413,4 @@ function saved(
     maxHeight,
     currentHeight,
   }
-}
-
-function removal(id: string, from: number, to: number): RemovalConfiguration {
-  return { id, from, to }
 }

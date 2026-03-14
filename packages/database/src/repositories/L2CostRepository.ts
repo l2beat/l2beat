@@ -103,6 +103,15 @@ export class L2CostRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('L2Cost')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigInTimeRange(
     configId: string,
     fromInclusive: UnixTime,

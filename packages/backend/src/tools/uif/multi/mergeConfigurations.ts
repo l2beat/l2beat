@@ -1,17 +1,18 @@
 import { assert } from '@l2beat/shared-pure'
 import type {
   Configuration,
-  RemovalConfiguration,
   SavedConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from './types'
 
 export interface ConfigurationsDiff<T> {
   toAdd: Configuration<T>[]
   toUpdate: SavedConfiguration<T>[]
-  toTrimDataAfterUpdate: RemovalConfiguration[]
-  toWipeDataAfterUpdate: RemovalConfiguration[]
   toDelete: string[]
-  toWipeDataAfterDelete: RemovalConfiguration[]
+  toTrimDataAfterUpdate: TrimRemovalConfiguration[]
+  toWipeDataAfterUpdate: WipeRemovalConfiguration[]
+  toWipeDataAfterDelete: WipeRemovalConfiguration[]
 }
 
 export interface MergeResult<T> {
@@ -30,10 +31,10 @@ export function mergeConfigurations<T>(
 
   const toAdd: Configuration<T>[] = []
   const toUpdate: SavedConfiguration<T>[] = []
-  const toTrimDataAfterUpdate: RemovalConfiguration[] = []
-  const toWipeDataAfterUpdate: RemovalConfiguration[] = []
+  const toTrimDataAfterUpdate: TrimRemovalConfiguration[] = []
+  const toWipeDataAfterUpdate: WipeRemovalConfiguration[] = []
   const toDelete: string[] = []
-  const toWipeDataAfterDelete: RemovalConfiguration[] = []
+  const toWipeDataAfterDelete: WipeRemovalConfiguration[] = []
   const configurations: SavedConfiguration<T>[] = []
 
   for (const c of actual) {
@@ -51,9 +52,8 @@ export function mergeConfigurations<T>(
       // We will re-download everything from the beginning
       if (stored.currentHeight !== null) {
         toWipeDataAfterUpdate.push({
+          type: 'wipe',
           id: stored.id,
-          from: stored.minHeight,
-          to: stored.currentHeight,
         })
       }
       currentHeight = null
@@ -62,17 +62,16 @@ export function mergeConfigurations<T>(
       if (configurationsTrimmingDisabled) {
         if (stored.currentHeight) {
           toWipeDataAfterUpdate.push({
+            type: 'wipe',
             id: stored.id,
-            from: stored.minHeight,
-            to: stored.currentHeight,
           })
           currentHeight = null
         }
       } else {
         toTrimDataAfterUpdate.push({
+          type: 'trim',
           id: stored.id,
-          from: stored.minHeight,
-          to: c.minHeight - 1,
+          range: [stored.minHeight, c.minHeight - 1],
         })
         if (currentHeight !== null && currentHeight < c.minHeight) {
           currentHeight = null
@@ -84,9 +83,8 @@ export function mergeConfigurations<T>(
       if (configurationsTrimmingDisabled) {
         if (stored.currentHeight) {
           toWipeDataAfterUpdate.push({
+            type: 'wipe',
             id: stored.id,
-            from: stored.minHeight,
-            to: stored.currentHeight,
           })
           currentHeight = null
         }
@@ -97,9 +95,9 @@ export function mergeConfigurations<T>(
           c.maxHeight < currentHeight
         ) {
           toTrimDataAfterUpdate.push({
+            type: 'trim',
             id: stored.id,
-            from: c.maxHeight + 1,
-            to: currentHeight,
+            range: [c.maxHeight + 1, currentHeight],
           })
           currentHeight = c.maxHeight
         }
@@ -124,9 +122,8 @@ export function mergeConfigurations<T>(
 
       if (c.currentHeight !== null) {
         toWipeDataAfterDelete.push({
+          type: 'wipe',
           id: c.id,
-          from: c.minHeight,
-          to: c.currentHeight,
         })
       }
     }

@@ -591,6 +591,57 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     },
   )
 
+  describe(DataAvailabilityRepository.prototype.deleteByConfigIds.name, () => {
+    it('deletes all rows for given configuration ids', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        record('project-a', 'layer-a', 'config-id-1', START + 1, 200n),
+        record('project-b', 'layer-a', 'config-id-2', START, 300n),
+        record('project-c', 'layer-a', 'config-id-3', START, 400n),
+      ])
+
+      const deleted = await repository.deleteByConfigIds([
+        'config-id-1',
+        'config-id-2',
+      ])
+
+      expect(deleted).toEqual(3)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        record('project-c', 'layer-a', 'config-id-3', START, 400n),
+      ])
+    })
+
+    it('returns 0 for empty ids', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', 'config-id-1', START, 100n),
+      ])
+
+      const deleted = await repository.deleteByConfigIds([])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        record('project-a', 'layer-a', 'config-id-1', START, 100n),
+      ])
+    })
+
+    it('returns 0 when no matching config found', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', 'config-id-1', START, 100n),
+      ])
+
+      const deleted = await repository.deleteByConfigIds(['non-existent-id'])
+      expect(deleted).toEqual(0)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        record('project-a', 'layer-a', 'config-id-1', START, 100n),
+      ])
+    })
+  })
+
   describe(
     DataAvailabilityRepository.prototype.deleteByConfigurationId.name,
     () => {
