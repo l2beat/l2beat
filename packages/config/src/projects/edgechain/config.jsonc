@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "edgechain",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+    "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20"
+  ]
+}
