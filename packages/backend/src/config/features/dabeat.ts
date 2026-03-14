@@ -49,5 +49,9 @@ export async function getDaBeatConfig(
       ['AVAIL_WS_URL_FOR_DA_BEAT', 'AVAIL_WS_URL'],
       'wss://avail-rpc.publicnode.com',
     ),
+    espressoApiUrl: env.string(
+      ['ESPRESSO_API_URL_FOR_DA_BEAT', 'ESPRESSO_API_URL'],
+      'https://query.main.net.espresso.network',
+    ),
   }
 }

@@ -181,6 +181,7 @@ describe('getProjects', () => {
       'celestia',
       'avail',
       'near-da',
+      'espresso',
     ]
 
     for (const project of projects) {
@@ -198,6 +199,7 @@ describe('getProjects', () => {
       'celestia',
       'avail',
       'near-da',
+      'espresso',
     ]
 
     for (const project of projects) {

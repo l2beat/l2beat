@@ -117,6 +117,7 @@ export class Providers {
       this.clients.near,
       this.clients.celestiaDaBeat,
       this.clients.availWs,
+      this.clients.espresso,
     )
 
     if (ethereumRpcClient) {
